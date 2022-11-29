@@ -51,6 +51,7 @@ case class InstagramBlockElement(html: Option[String]) extends BlockElement
 case class VineBlockElement(html: Option[String]) extends BlockElement
 case class MapBlockElement(html: Option[String]) extends BlockElement
 case class UnknownBlockElement(html: Option[String]) extends BlockElement
+case class UnsupportedBlockElement(html: Option[String]) extends BlockElement
 case class InteractiveBlockElement(html: Option[String], scriptUrl: Option[String] = None) extends BlockElement
 
 case class MembershipBlockElement(
@@ -176,6 +177,7 @@ object BlockElement {
       case Form            => Some(FormBlockElement(None))
 
       case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
+      case Callout                   => Some(UnsupportedBlockElement(None))
 
     }
   }
@@ -226,6 +228,7 @@ object BlockElement {
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
+  implicit val UnsupportedBlockElementWrites: Writes[UnsupportedBlockElement] = Json.writes[UnsupportedBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsObject =

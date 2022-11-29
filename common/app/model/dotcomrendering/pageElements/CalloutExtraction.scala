@@ -1,5 +1,6 @@
 package model.dotcomrendering.pageElements
 
+import com.gu.contentapi.client.model.v1.CalloutElementFields
 import org.jsoup.Jsoup
 import play.api.libs.json._
 
@@ -62,6 +63,11 @@ object CalloutExtraction {
       .filter(c => (c \ "fields" \ "tagName").asOpt[String].getOrElse("") == tagName)
       .map(_.asInstanceOf[JsObject])
       .headOption
+  }
+
+  private def extractCampaignByCampaignId(campaignId: Option[String], campaigns: JsValue): Option[JsObject] = {
+    val campaigns2 = campaigns.asInstanceOf[JsArray].value
+    campaigns2.filter(c => (c \ "id").asOpt[String] == campaignId).map(_.asInstanceOf[JsObject]).headOption
   }
 
   private def formFieldItemToCalloutFormFieldBase(item: JsValue): Option[CalloutFormFieldBase] = {
@@ -151,7 +157,7 @@ object CalloutExtraction {
       formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
     } yield {
       val formFields2 = formFields1.value
-        .flatMap(formFieldItemToCalloutFormField(_))
+        .flatMap(formFieldItemToCalloutFormField)
         .toList
       CalloutBlockElement(
         id,
@@ -163,6 +169,41 @@ object CalloutExtraction {
         description,
         tagName,
         formFields2,
+      )
+    }
+  }
+
+  private def campaignJsObjectToCalloutBlockElementV2(
+      campaign: JsObject,
+      isNonCollapsible: Option[Boolean],
+      calloutsUrl: Option[String],
+  ): Option[CalloutBlockElementV2] = {
+    for {
+      id <- (campaign \ "id").asOpt[String]
+      activeFrom <- (campaign \ "activeFrom").asOpt[Long]
+      displayOnSensitive <- (campaign \ "displayOnSensitive").asOpt[Boolean]
+      formId <- (campaign \ "fields" \ "formId").asOpt[Int]
+      title <- (campaign \ "fields" \ "callout").asOpt[String]
+      description <- (campaign \ "fields" \ "description").asOpt[String]
+      tagName <- (campaign \ "fields" \ "tagName").asOpt[String]
+      formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
+    } yield {
+      val formFields2 = formFields1.value
+        .flatMap(formFieldItemToCalloutFormField)
+        .toList
+
+      CalloutBlockElementV2(
+        id,
+        calloutsUrl,
+        activeFrom,
+        (campaign \ "activeUntil").asOpt[Long],
+        displayOnSensitive,
+        formId,
+        title,
+        description,
+        tagName,
+        formFields2,
+        isNonCollapsible.getOrElse(false),
       )
     }
   }
@@ -300,6 +341,20 @@ object CalloutExtraction {
       cpgs <- campaigns
       campaign <- extractCampaignPerTagName(cpgs, name)
       element <- campaignJsObjectToCalloutBlockElement(campaign, calloutsUrl)
+    } yield {
+      element
+    }
+  }
+
+  def extractCalloutByCampaignId(
+      callout: CalloutElementFields,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+  ): Option[CalloutBlockElementV2] = {
+    for {
+      cpgs <- campaigns
+      campaign <- extractCampaignByCampaignId(callout.campaignId, cpgs)
+      element <- campaignJsObjectToCalloutBlockElementV2(campaign, callout.isNonCollapsible, calloutsUrl)
     } yield {
       element
     }
