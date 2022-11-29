@@ -208,7 +208,7 @@ trait FaciaController
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
         log.info(
-          s"Front Geo Request (212): ${EditionalisedCountry.fromHeaderString(request)} ${request.headers.toSimpleMap
+          s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap
             .getOrElse("X-GU-GeoLocation", "country:row")}",
         )
         withVaryHeader(
@@ -231,7 +231,7 @@ trait FaciaController
             } else if (request.isJson) {
               if (request.forceDCR) {
                 log.info(
-                  s"Front Geo Request (237): ${EditionalisedCountry.fromHeaderString(request)} ${request.headers.toSimpleMap
+                  s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
                     .getOrElse("X-GU-GeoLocation", "country:row")}",
                 )
                 JsonComponent.fromWritable(
