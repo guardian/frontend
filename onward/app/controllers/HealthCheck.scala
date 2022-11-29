@@ -10,5 +10,4 @@ class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerCompon
     executionContext: ExecutionContext,
 ) extends AllGoodCachedHealthCheck(
       NeverExpiresSingleHealthCheck("/top-stories.json"),
-      NeverExpiresSingleHealthCheck("/most-read/society.json"),
     )(wsClient, executionContext)
