@@ -10,7 +10,7 @@ templates:
     type: autoscaling
     parameters:
       bucketSsmKey: /account/services/dotcom-artifact.bucket
-      bucketSsmLookup: true
+     
       warmupGrace: 60
     dependencies:
     - frontend-static
