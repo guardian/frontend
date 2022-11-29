@@ -91,7 +91,11 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
           RevalidatableResult.Ok(
             CrosswordHtmlPage.html(
               AccessibleCrosswordPage(
-                CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
+                CrosswordContent.make(
+                  CrosswordData
+                    .fromCrossword(crossword.copy(name = s"Accessible version of ${crossword.name}"), content),
+                  content,
+                ),
                 AccessibleCrosswordRows(crossword),
               ),
             ),
