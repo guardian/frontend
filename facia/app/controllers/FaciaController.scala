@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import agents.MostViewedAgent
 import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
@@ -21,6 +22,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
+import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
@@ -40,6 +42,7 @@ trait FaciaController
 
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
+  val mostViewedAgent: MostViewedAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
@@ -204,7 +207,21 @@ trait FaciaController
           if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
-        withVaryHeader(remoteRenderer.getFront(ws, faciaPage, pageType)(request), targetedTerritories)
+        log.info(
+          s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap
+            .getOrElse("X-GU-GeoLocation", "country:row")}",
+        )
+        withVaryHeader(
+          remoteRenderer.getFront(
+            ws = ws,
+            page = faciaPage,
+            pageType = pageType,
+            mostViewed = mostViewedAgent.mostViewed(Edition(request)),
+            mostCommented = mostViewedAgent.mostCommented,
+            mostShared = mostViewedAgent.mostShared,
+          )(request),
+          targetedTerritories,
+        )
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(
           Cached(CacheTime.Facia)(
@@ -213,11 +230,18 @@ trait FaciaController
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
             } else if (request.isJson) {
               if (request.forceDCR) {
+                log.info(
+                  s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
+                    .getOrElse("X-GU-GeoLocation", "country:row")}",
+                )
                 JsonComponent.fromWritable(
                   DotcomFrontsRenderingDataModel(
                     page = faciaPage,
                     request = request,
                     pageType = PageType(faciaPage, request, context),
+                    mostViewed = mostViewedAgent.mostViewed(Edition(request)),
+                    mostCommented = mostViewedAgent.mostCommented,
+                    mostShared = mostViewedAgent.mostShared,
                   ),
                 )
               } else JsonFront(faciaPage)
@@ -488,5 +512,6 @@ class FaciaControllerImpl(
     val frontJsonFapi: FrontJsonFapiLive,
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
+    val mostViewedAgent: MostViewedAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController
