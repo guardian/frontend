@@ -9,7 +9,8 @@ templates:
   frontend:
     type: autoscaling
     parameters:
-      bucket: aws-frontend-artifacts
+      bucketSsmKey: /account/services/dotcom-artifact.bucket
+     
       warmupGrace: 60
     dependencies:
     - frontend-static
