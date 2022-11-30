@@ -81,3 +81,40 @@
         z-index: $zindex-ads;
     }
 }
+
+.top-bar__user-account-notification-badge:after {
+    content: '!';
+    background-color: $news-main;
+    color: $brightness-100;
+    width: 18px;
+    height: 17px;
+    padding-bottom: 1px;
+    border-radius: 9px;
+    text-align: center;
+    line-height: 1;
+}
+
+.top-bar__item .top-bar__user-account-notification-badge:after {
+    position: absolute;
+    font-size: 16px;
+    top: 3px;
+    left: 7px;
+    @include mq(tablet) {
+        top: 3px;
+        left: 15px;
+    }
+}
+
+.dropdown-menu__item .top-bar__user-account-notification-badge:after {
+    width: 22px;
+    height: 21px;
+    padding-bottom: 1px;
+    border-radius: 11px;
+    font-size: 18px;
+    float: right;
+    margin-top: 6px;
+}
+
+.dropdown-menu__notification {
+    font-size: 12px;
+}

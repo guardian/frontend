@@ -414,6 +414,10 @@ interface Trac {
 	post: () => this;
 }
 
+interface NotificationEvent {
+	target: string;
+	message: string;
+}
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -429,6 +433,7 @@ interface Window {
 		commercial?: {
 			dfpEnv?: DfpEnv;
 		};
+		notificationEventHistory?: NotificationEvent[];
 	};
 	ootag: {
 		queue: Array<() => void>;

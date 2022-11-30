@@ -64,6 +64,7 @@
                         for="my-account-toggle" data-link-name="nav3 : topbar: my account" tabindex="0">
                         @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
                         My account
+                        <span class="top-bar__user-account-notification-badge js-user-account-notification-badge is-hidden"></span>
                     </label>
                     <div class="my-account__overlay"></div>
 
@@ -76,7 +77,7 @@
                         <li class="@{(List(" dropdown-menu__item") ++ item.parentClassList).mkString(" ")}">
                             <a class="@{(List(" dropdown-menu__title") ++ item.classList).mkString(" ")}"
                                 @if(item.href.isDefined) { href="@item.href" } @if(item.linkName.isDefined) {
-                                data-link-name="nav3 : topbar : @item.linkName" }>
+                                data-link-name="nav3 : topbar : @item.linkName" } data-link-id="@item.linkId">
                                 @(item.icon.map { icon =>
                                 views.html.fragments.inlineSvg(icon, "icon", isPresentation = true)
                                 })
