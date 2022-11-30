@@ -68,7 +68,7 @@ describe('initialise', () => {
 			_maxNestedIframes: 10,
 			_mediaTypePriceGranularity: {},
 			_priceGranularity: 'custom',
-			_publisherDomain: 'http://testurl.theguardian.com',
+			_publisherDomain: null,
 			_sendAllBids: true,
 			_timeoutBuffer: 400,
 			_useBidCache: false,
@@ -105,13 +105,23 @@ describe('initialise', () => {
 			maxNestedIframes: 10,
 			mediaTypePriceGranularity: {},
 			priceGranularity: 'custom',
-			publisherDomain: 'http://testurl.theguardian.com',
+			publisherDomain: null,
 			s2sConfig: {
 				adapter: 'prebidServer',
 				adapterOptions: {},
 				allowUnknownBidderCodes: false,
 				bidders: [],
 				maxBids: 1,
+				ortbNative: {
+					context: 1,
+					eventtrackers: [
+						{
+							event: 1,
+							methods: [1],
+						},
+					],
+					plcmttype: 1,
+				},
 				syncTimeout: 1000,
 				syncUrlModifier: {},
 				timeout: 1000,
