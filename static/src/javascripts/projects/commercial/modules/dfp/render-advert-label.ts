@@ -25,15 +25,21 @@ const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 	);
 
 const createAdCloseDiv = (): HTMLElement => {
-	const closeDiv: HTMLElement = document.createElement('button');
-	closeDiv.className = 'ad-slot__close-button';
-	closeDiv.innerHTML = crossIcon.markup;
-	closeDiv.onclick = () => {
-		const container: HTMLElement | null = closeDiv.closest(
+	const buttonDiv: HTMLElement = document.createElement('button');
+	buttonDiv.className = 'ad-slot__close-button';
+	buttonDiv.innerHTML = crossIcon.markup;
+	buttonDiv.onclick = () => {
+		const container: HTMLElement | null = buttonDiv.closest(
 			'.mobilesticky-container',
 		);
 		if (container) container.remove();
 	};
+
+	const closeDiv: HTMLElement = document.createElement('div');
+	closeDiv.style.cssText =
+		'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
+	closeDiv.appendChild(buttonDiv);
+
 	return closeDiv;
 };
 
@@ -88,12 +94,10 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
-				const closeButtonDiv: HTMLElement =
-					document.createElement('div');
-				closeButtonDiv.style.cssText =
-					'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
-				closeButtonDiv.appendChild(createAdCloseDiv());
-				adSlotNode.insertBefore(closeButtonDiv, adSlotNode.firstChild);
+				adSlotNode.insertBefore(
+					createAdCloseDiv(),
+					adSlotNode.firstChild,
+				);
 				if (shouldRenderAdTestLabel()) {
 					adSlotNode.insertBefore(
 						createAdTestCookieRemovalLink(),
