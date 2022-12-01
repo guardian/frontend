@@ -57,7 +57,6 @@ const createAdTestLabel = (): string => {
 
 	if (shouldRender && val) {
 		adTestLabel += ` [?adtest=${val}] `;
-		//the functionality to clear the adtest cookie will be reimplemented in a future ticket
 	}
 
 	return adTestLabel;
