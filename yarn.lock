@@ -2207,10 +2207,10 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/libs@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-4.1.0.tgz#a189f524379b71a19143050d364f9447ed70524b"
-  integrity sha512-aCpwmw93fbiY8ZpEdKl1pefknrm6BmlrRzMm7at0/UMKMZbwBidqRnj1YnzEiWzwKPm8A00WKXhhzr3U5CEEpg==
+"@guardian/libs@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.0.0.tgz#3624e5ead3a9f4ffb6244327d3ee5c3d55d688fa"
+  integrity sha512-N6+5e0DrusWryaZCH6/cppJlLEksuZWFyYnQjHbe/HXM2cLe2i3GAU5kRhIh98pOlPTPer5GennBAYQ6gzQofg==
 
 "@guardian/libs@^7.1.4":
   version "7.1.4"
@@ -11885,15 +11885,15 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-prebid.js@guardian/Prebid.js#9a38021:
+prebid.js@guardian/Prebid.js#7.26.0:
   version "7.26.0"
-  resolved "https://codeload.github.com/guardian/Prebid.js/tar.gz/9a3802165bcd909db3d4d70e725d07c338e694dd"
+  resolved "https://codeload.github.com/guardian/Prebid.js/tar.gz/85322101bfbd32b55da3e61e8c6780733f31edcd"
   dependencies:
     "@babel/core" "^7.16.7"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
-    "@guardian/libs" "^4.1.0"
+    "@guardian/libs" "^10.0.0"
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
