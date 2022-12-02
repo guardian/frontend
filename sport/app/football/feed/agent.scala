@@ -154,8 +154,26 @@ class CompetitionAgent(
         }
       }
 
+      val allMatches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate
+
       //it is important that newMatches are at the start of the list here
-      comp.copy(matches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
+      comp.copy(matches = allMatches.filter(footballMatch => {
+        if (isPlaceholderMatch(footballMatch)) {
+          allMatches.find(_.date == footballMatch.date) match {
+            case Some(_) => false
+            case None    => true
+          }
+        } else {
+          true
+        }
+      }))
+    }
+
+  def isPlaceholderMatch(footballMatch: FootballMatch): Boolean =
+    footballMatch.homeTeam.name match {
+      case s"Winner Group ${_}"    => true
+      case s"Runner-up Group ${_}" => true
+      case _                       => false
     }
 
   def refresh(clock: Clock)(implicit executionContext: ExecutionContext): Unit = {
