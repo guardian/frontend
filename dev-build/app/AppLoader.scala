@@ -2,6 +2,7 @@ import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
+import agents.{CuratedContentAgent, MostViewedAgent}
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
@@ -33,7 +34,6 @@ import services._
 import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import agents.CuratedContentAgent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -83,6 +83,7 @@ trait AppComponents
   override lazy val blockingOperations = wire[BlockingOperations]
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
+  override lazy val mostViewedAgent = wire[MostViewedAgent]
 
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
@@ -117,6 +118,7 @@ trait AppComponents
       wire[StocksDataLifecycle],
       wire[NewsletterSignupLifecycle],
       wire[TopicLifecycle],
+      wire[MostViewedLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
