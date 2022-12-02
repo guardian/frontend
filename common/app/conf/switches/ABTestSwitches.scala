@@ -67,7 +67,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "liveblog-desktop-outstream",
+    "ab-liveblog-desktop-outstream",
     "Test the impact of enabling outstream on inline2+ on liveblogs on desktop",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
