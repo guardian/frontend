@@ -26,6 +26,27 @@ const updateCommentLink = (commentItems: Element[]): void => {
 	}
 };
 
+const trackFirstImpression = (el: HTMLElement): void => {
+	let hasBeenSeen = false;
+
+	if ('IntersectionObserver' in window) {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					if (!hasBeenSeen) {
+						hasBeenSeen = true;
+						// Track impression
+					}
+				}
+			},
+			{
+				threshold: 1.0,
+			},
+		);
+		observer.observe(el);
+	}
+};
+
 const groupNotificationsByTarget = (
 	notifications: NotificationEvent[],
 ): Record<string, string[]> => {
@@ -40,7 +61,7 @@ const groupNotificationsByTarget = (
 	return notificationsMap;
 };
 
-const showNotifications = (notifications: NotificationEvent[]): void => {
+const addNotifications = (notifications: NotificationEvent[]): void => {
 	void fastdom
 		.measure(() => ({
 			badge: document.querySelector(
@@ -78,6 +99,7 @@ const showNotifications = (notifications: NotificationEvent[]): void => {
 									'dropdown-menu__notification',
 								);
 								messageEl.innerText = message;
+								trackFirstImpression(messageEl);
 								return messageEl;
 							});
 							const notificationsContainerEl =
@@ -85,9 +107,7 @@ const showNotifications = (notifications: NotificationEvent[]): void => {
 									'.js-user-account-menu-notifications-container',
 								);
 							if (notificationsContainerEl) {
-								notificationsContainerEl.replaceChildren(
-									...messageEls,
-								);
+								notificationsContainerEl.append(...messageEls);
 							}
 						}
 					},
@@ -136,8 +156,8 @@ const showMyAccountIfNecessary = (): void => {
 					let notifications: NotificationEvent[] = [];
 
 					bufferedNotificationListener.on((event) => {
-						notifications = [...notifications, event.detail];
-						showNotifications(notifications);
+						notifications = [event.detail];
+						addNotifications(notifications);
 					});
 				});
 		});
