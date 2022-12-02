@@ -50,35 +50,35 @@ class FrontsController(
     }
 
   def matchDay(competitionId: String): Action[AnyContent] =
-  Action.async { implicit request =>
-    val foResult =
-      if ("all" == competitionId) {
-        val snapFields = SnapFields(
-          SNAP_TYPE,
-          SNAP_CSS,
-          s"$host/football/live.json",
-          s"${Configuration.site.host}/football/live",
-          "Live matches",
-          "Today's matches",
-        )
-        FutureOpt.fromFuture(previewFrontsComponent(snapFields))
-      } else {
-        for {
-          season <- getCompetition(competitionId)
-          competitionName = PA.competitionName(season)
-          snapFields = SnapFields(
+    Action.async { implicit request =>
+      val foResult =
+        if ("all" == competitionId) {
+          val snapFields = SnapFields(
             SNAP_TYPE,
             SNAP_CSS,
-            s"$host/football/$competitionId/live.json",
+            s"$host/football/live.json",
             s"${Configuration.site.host}/football/live",
-            s"$competitionName results",
-            s"View today's live $competitionName matches",
+            "Live matches",
+            "Today's matches",
           )
-          previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
-        } yield previewContent
-      }
-    foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
-  }
+          FutureOpt.fromFuture(previewFrontsComponent(snapFields))
+        } else {
+          for {
+            season <- getCompetition(competitionId)
+            competitionName = PA.competitionName(season)
+            snapFields = SnapFields(
+              SNAP_TYPE,
+              SNAP_CSS,
+              s"$host/football/$competitionId/live.json",
+              s"${Configuration.site.host}/football/live",
+              s"$competitionName results",
+              s"View today's live $competitionName matches",
+            )
+            previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
+          } yield previewContent
+        }
+      foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
+    }
 
   def resultsRedirect: Action[AnyContent] =
     Action { implicit request =>
