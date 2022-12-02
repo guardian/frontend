@@ -1,3 +1,4 @@
+
 @(competitions: List[pa.Season], teams: List[pa.Team])(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @views.html.football.main("Fronts components") {
@@ -13,9 +14,15 @@
     <div class="row">
         <div class="col-sm-12">
             <p>
-                <a href="/admin/football/fronts/live" class="btn btn-success">Today's matches</a>
+                <a href="/admin/football/fronts/live/all" class="btn btn-success">All today's matches</a>
             </p>
         </div>
+    </div>
+    <div class="col-sm-12">
+        <form class="form-inline" role="form" action="/admin/football/fronts/live/redirect" method="post">
+            @views.html.football.fragments.chooseLeague("competition", competitions)
+            <button type="submit" class="btn btn-success">Competition matches</button>
+        </form>
     </div>
     <div class="row">
         <div class="col-sm-12">

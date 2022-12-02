@@ -141,7 +141,8 @@ GET         /admin/football/tables/league/:competitionId                        
 GET         /admin/football/tables/league/:competitionId/:focus                                     controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
 GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                          controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
 GET         /admin/football/fronts                                                                  controllers.admin.FrontsController.index
-GET         /admin/football/fronts/live                                                             controllers.admin.FrontsController.matchDay
+POST        /admin/football/fronts/live/redirect                                                    controllers.admin.FrontsController.matchDayRedirect
+GET         /admin/football/fronts/live/:competition                                                controllers.admin.FrontsController.matchDay(competition: String)
 POST        /admin/football/fronts/results/redirect                                                 controllers.admin.FrontsController.resultsRedirect
 GET         /admin/football/fronts/results/:competition                                             controllers.admin.FrontsController.results(competition: String)
 POST        /admin/football/fronts/fixtures/redirect                                                controllers.admin.FrontsController.fixturesRedirect
