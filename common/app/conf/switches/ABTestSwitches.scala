@@ -65,7 +65,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-    Switch(
+  Switch(
     ABTests,
     "liveblog-desktop-outstream",
     "Test the impact of enabling outstream on inline2+ on liveblogs on desktop",
