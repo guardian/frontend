@@ -1,4 +1,5 @@
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { log } from '@guardian/libs';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { liveblogDesktopOutstream } from 'common/modules/experiments/tests/liveblog-desktop-outstream';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
@@ -184,11 +185,23 @@ export const init = (): Promise<void> => {
 
 	return fastdom
 		.measure(() => {
+			const isServerSideAdsMode =
+				document.querySelector('.ad-slot--inline1') !== null;
+			if (isServerSideAdsMode) {
+				throw Error;
+			}
+
 			WINDOWHEIGHT = getWindowHeight();
 			return WINDOWHEIGHT;
 		})
 		.then(getSpaceFillerRules)
-		.then(fill);
+		.then(fill)
+		.catch(() => {
+			log(
+				'commercial',
+				'Server side inline ads mode. No client-side inline ad slots inserted',
+			);
+		});
 };
 
 export const _ = { getSlotName };
