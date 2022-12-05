@@ -1,5 +1,4 @@
 {
- "../../../../../Prebid.js/build/dist/prebid.js": [],
  "../lib/$$.ts": [
   "../../../../node_modules/csstype/index.d.ts"
  ],
@@ -322,11 +321,11 @@
   "../lib/report-error.ts"
  ],
  "../projects/commercial/modules/dfp/prepare-prebid.ts": [
-  "../../../../../Prebid.js/build/dist/prebid.js",
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
+  "../../../../node_modules/prebid.js/build/dist/prebid.js",
   "../lib/detect-google-proxy.ts",
   "../projects/commercial/modules/dfp/dfp-env.ts",
   "../projects/commercial/modules/header-bidding/prebid/prebid.ts",
