@@ -7,6 +7,7 @@ import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Span}
+import test.FootballTestData.fixture
 
 import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.time.ZoneId
@@ -109,4 +110,31 @@ import java.time.ZoneId
     eventually(comps.competitions(0).leagueTable(0).team.id should be("23"))
   }
 
+  it should "recognise placeholder games" in {
+    val comps = testCompetitionsService(
+      Competition(
+        "700",
+        "/football/world-cup-2022",
+        "World Cup 2022",
+        "World Cup 2022",
+        "Internationals",
+        showInTeamsList = true,
+        tableDividers = List(2),
+      ),
+    )
+
+    val competitionAgent = comps.competitionAgents.head
+    val date = ZonedDateTime.of(2022, 12, 3, 15, 0, 0, 0, ZoneId.of("Europe/London"))
+
+    assert(competitionAgent.isPlaceholderMatch(
+      fixture("Winner Group A", "Runner-Up Group B", date)) === true)
+    assert(competitionAgent.isPlaceholderMatch(
+      fixture("England", "France", date)) === false)
+    assert(competitionAgent.isPlaceholderMatch(
+      fixture("Wnr Gp F/R-Up Gp E", "Wnr Gp H/R-Up Gp G", date)) === true)
+    assert(competitionAgent.isPlaceholderMatch(
+      fixture("Winner Q/F 3", "Winner Q/F 4", date)) === true)
+    assert(competitionAgent.isPlaceholderMatch(
+      fixture("Loser SF1", "Loser SF2", date)) === true)
+  }
 }

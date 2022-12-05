@@ -169,12 +169,10 @@ class CompetitionAgent(
       }))
     }
 
-  def isPlaceholderMatch(footballMatch: FootballMatch): Boolean =
-    footballMatch.homeTeam.name match {
-      case s"Winner Group ${_}"    => true
-      case s"Runner-up Group ${_}" => true
-      case _                       => false
-    }
+  def isPlaceholderMatch(footballMatch: FootballMatch): Boolean = {
+    val placeholderIndicator = Set("Winner", "Runner-up", "Wnr Gp", "R-Up Gp", "Loser")
+    placeholderIndicator.exists(indicator => footballMatch.homeTeam.name.contains(indicator))
+  }
 
   def refresh(clock: Clock)(implicit executionContext: ExecutionContext): Unit = {
     refreshFixtures()
