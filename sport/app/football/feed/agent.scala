@@ -156,9 +156,10 @@ class CompetitionAgent(
 
       val allMatches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate
 
-      val updatedMatches = allMatches.filter(
-        footballMatch => (!isPlaceholderMatch(footballMatch)) ||
-          (isPlaceholderMatch(footballMatch) && !nonPlaceHolderMatchWithSameDateExists(allMatches, footballMatch)))
+      val updatedMatches = allMatches.filter(footballMatch =>
+        (!isPlaceholderMatch(footballMatch)) ||
+          (isPlaceholderMatch(footballMatch) && !nonPlaceHolderMatchWithSameDateExists(allMatches, footballMatch)),
+      )
 
       comp.copy(matches = updatedMatches)
     }
@@ -168,8 +169,13 @@ class CompetitionAgent(
     placeholderIndicator.exists(indicator => footballMatch.homeTeam.name.contains(indicator))
   }
 
-  def nonPlaceHolderMatchWithSameDateExists(allMatches: Seq[FootballMatch], placeHolderMatch: FootballMatch): Boolean = {
-    allMatches.exists(footballMatch => footballMatch.date == placeHolderMatch.date && !isPlaceholderMatch(footballMatch))
+  def nonPlaceHolderMatchWithSameDateExists(
+      allMatches: Seq[FootballMatch],
+      placeHolderMatch: FootballMatch,
+  ): Boolean = {
+    allMatches.exists(footballMatch =>
+      footballMatch.date == placeHolderMatch.date && !isPlaceholderMatch(footballMatch),
+    )
   }
 
   def refresh(clock: Clock)(implicit executionContext: ExecutionContext): Unit = {
