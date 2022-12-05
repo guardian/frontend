@@ -169,7 +169,7 @@ class CompetitionAgent(
     placeholderIndicator.exists(indicator => footballMatch.homeTeam.name.contains(indicator))
   }
 
-  def nonPlaceHolderMatchWithSameDateExists(
+  private def nonPlaceHolderMatchWithSameDateExists(
       allMatches: Seq[FootballMatch],
       placeHolderMatch: FootballMatch,
   ): Boolean = {
