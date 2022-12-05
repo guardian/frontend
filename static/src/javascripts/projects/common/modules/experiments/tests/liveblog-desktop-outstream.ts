@@ -1,5 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { noop } from '../../../../../lib/noop';
+import { bypassMetricsSampling } from '../utils';
 
 export const liveblogDesktopOutstream: ABTest = {
 	id: 'LiveblogDesktopOutstream',
@@ -8,13 +9,13 @@ export const liveblogDesktopOutstream: ABTest = {
 	author: 'Jake Lee Kennedy',
 	description:
 		'Test the impact of enabling outstream on inline2+ on liveblogs on desktop',
-	audience: 95 / 100,
+	audience: 5 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'Opt in',
 	successMeasure: 'No significant impact to CWV',
 	canRun: () => true,
 	variants: [
 		{ id: 'control', test: () => noop },
-		{ id: 'variant', test: () => noop },
+		{ id: 'variant', test: () => bypassMetricsSampling },
 	],
 };

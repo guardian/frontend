@@ -120,7 +120,8 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 				ad,
 				false,
 				isInVariantSynchronous(liveblogDesktopOutstream, 'variant')
-					? {
+					? {}
+					: {
 							phablet: [
 								adSizes.outstreamDesktop,
 								adSizes.outstreamGoogleDesktop,
@@ -129,8 +130,7 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 								adSizes.outstreamDesktop,
 								adSizes.outstreamGoogleDesktop,
 							],
-					  }
-					: {},
+					  },
 			);
 		});
 };
