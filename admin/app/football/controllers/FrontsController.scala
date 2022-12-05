@@ -71,7 +71,7 @@ class FrontsController(
               SNAP_CSS,
               s"$host/football/$competitionId/live.json",
               s"${Configuration.site.host}/football/live",
-              s"$competitionName results",
+              s"$competitionName matches",
               s"View today's live $competitionName matches",
             )
             previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
