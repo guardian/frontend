@@ -9,7 +9,8 @@ import fastdom from '../../../../lib/fastdom-promise';
 
 const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 	!(
-		adSlotNode.classList.contains('ad-slot--fluid') ||
+		(adSlotNode.classList.contains('ad-slot--fluid') &&
+			!adSlotNode.classList.contains('ad-slot--interscroller')) ||
 		adSlotNode.classList.contains('ad-slot--frame') ||
 		adSlotNode.classList.contains('ad-slot--gc') ||
 		adSlotNode.classList.contains('u-h') ||
@@ -24,15 +25,21 @@ const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 	);
 
 const createAdCloseDiv = (): HTMLElement => {
-	const closeDiv: HTMLElement = document.createElement('button');
-	closeDiv.className = 'ad-slot__close-button';
-	closeDiv.innerHTML = crossIcon.markup;
-	closeDiv.onclick = () => {
-		const container: HTMLElement | null = closeDiv.closest(
+	const buttonDiv: HTMLElement = document.createElement('button');
+	buttonDiv.className = 'ad-slot__close-button';
+	buttonDiv.innerHTML = crossIcon.markup;
+	buttonDiv.onclick = () => {
+		const container: HTMLElement | null = buttonDiv.closest(
 			'.mobilesticky-container',
 		);
 		if (container) container.remove();
 	};
+
+	const closeDiv: HTMLElement = document.createElement('div');
+	closeDiv.style.cssText =
+		'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
+	closeDiv.appendChild(buttonDiv);
+
 	return closeDiv;
 };
 
@@ -41,100 +48,73 @@ const shouldRenderAdTestLabel = (): boolean =>
 		name: 'adtestInLabels',
 		shouldMemoize: true,
 	});
-
 // If `adtest` cookie is set, display its value in the ad label
-// Furthermore, provide a link to clear the cookie
-const createAdTestLabel = (): HTMLElement => {
-	const adTestLabel = document.createElement('span');
+const createAdTestLabel = (
+	shouldRender: boolean,
+	adTestName: string | null,
+): string => {
+	let adTestLabel = '';
 
-	const shouldRender = shouldRenderAdTestLabel();
-	const val = getCookie({ name: 'adtest', shouldMemoize: true });
-
-	if (shouldRender && val) {
-		adTestLabel.innerHTML += ` [?adtest=${val}] `;
-
-		const url = new URL(window.location.href);
-		url.searchParams.set('adtest', 'clear');
-
-		const clearLink = document.createElement('a');
-		clearLink.href = url.href;
-		clearLink.innerHTML = 'clear';
-		adTestLabel.appendChild(clearLink);
+	if (shouldRender && adTestName) {
+		adTestLabel += ` [?adtest=${adTestName}] `;
 	}
 
 	return adTestLabel;
 };
 
-const createAdLabel = (): HTMLElement => {
-	const adLabel = document.createElement('div');
-	adLabel.className = 'ad-slot__label';
-	adLabel.innerHTML = 'Advertisement';
-	adLabel.appendChild(createAdTestLabel());
-	adLabel.appendChild(createAdCloseDiv());
-	return adLabel;
+const createAdTestCookieRemovalLink = (
+	adTestName: string | null,
+): HTMLElement => {
+	const adTestCookieRemovalLink = document.createElement('div');
+	adTestCookieRemovalLink.style.cssText =
+		'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
+
+	if (adTestName) {
+		const url = new URL(window.location.href);
+		url.searchParams.set('adtest', 'clear');
+		const clearLink = document.createElement('a');
+		clearLink.className = 'ad-slot__adtest-cookie-clear-link';
+		clearLink.href = url.href;
+		clearLink.innerHTML = 'clear';
+		adTestCookieRemovalLink.appendChild(clearLink);
+	}
+
+	return adTestCookieRemovalLink;
 };
 
 /**
- *  **Dynamic labels:**
- *  Advert labels are historically inserted dynamically as a child of the advert slot node.
- *  This causes a cumulative layout shift (CLS) as content below is pushed down. This is
- *  particularly noticeable when ads are refreshed as the advert slot contents are deleted.
- *
- *  **Toggled labels:**
- *  To prevent CLS the label inserted on the server with its visibility initially hidden.
- *  Its visibility and width is toggled once the ad and its width is known.
- *  Currently only for dfp-ad--top-above-nav.
  * @param {HTMLElement} adSlotNode
  */
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
-	let renderDynamic = true;
-	const shouldRender = shouldRenderLabel(adSlotNode);
-
 	return fastdom.measure(() => {
-		if (adSlotNode.id === 'dfp-ad--top-above-nav') {
-			const labelToggle = document.querySelector<HTMLElement>(
-				'.ad-slot__label.ad-slot__label--toggle',
-			);
-			if (labelToggle) {
-				// found a toggled label so don't render dynamically
-				renderDynamic = false;
-				if (shouldRender) {
-					void fastdom.mutate(() => {
-						labelToggle.classList.remove('hidden');
-						labelToggle.classList.add('visible');
-					});
-				} else {
-					// some ads should not have a label
-					// for example fabric ads can have an embedded label
-					// so don't display and remove from layout
-					return fastdom.mutate(() => {
-						labelToggle.style.display = 'none';
-					});
-				}
-			}
-		}
-
-		if (renderDynamic && shouldRender) {
+		if (shouldRenderLabel(adSlotNode)) {
+			const renderAdTestLabel = shouldRenderAdTestLabel();
+			const adTestCookieName = getCookie({
+				name: 'adtest',
+				shouldMemoize: true,
+			});
+			const adLabelContent = `Advertisement${createAdTestLabel(
+				renderAdTestLabel,
+				adTestCookieName,
+			)}`;
 			return fastdom.mutate(() => {
-				adSlotNode.prepend(createAdLabel());
+				adSlotNode.setAttribute('data-label-show', 'true');
+				adSlotNode.setAttribute('ad-label-text', adLabelContent);
+				adSlotNode.insertBefore(
+					createAdCloseDiv(),
+					adSlotNode.firstChild,
+				);
+				if (renderAdTestLabel) {
+					adSlotNode.insertBefore(
+						createAdTestCookieRemovalLink(adTestCookieName),
+						adSlotNode.firstChild,
+					);
+				}
 			});
 		}
 		return Promise.resolve();
 	});
 };
-
-const renderInterscrollerAdLabel = (adSlotNode: HTMLElement): Promise<void> =>
-	fastdom.measure(() => {
-		const adSlotLabel: HTMLElement = document.createElement('div');
-		adSlotLabel.classList.add('ad-slot__label');
-		adSlotLabel.style.cssText = `
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;`;
-		adSlotLabel.innerHTML = 'Advertisement';
-		adSlotNode.appendChild(adSlotLabel);
-	});
 
 const renderStickyScrollForMoreLabel = (
 	adSlotNode: HTMLElement,
@@ -156,9 +136,7 @@ const renderStickyScrollForMoreLabel = (
 
 export {
 	renderAdvertLabel,
-	renderInterscrollerAdLabel,
 	renderStickyScrollForMoreLabel,
 	shouldRenderLabel,
 	createAdCloseDiv,
-	createAdLabel,
 };

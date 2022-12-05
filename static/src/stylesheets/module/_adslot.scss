@@ -35,45 +35,6 @@
     }
 }
 
-.ad-slot__label {
-    @include font-size(12, 20);
-    position: relative;
-    height: $mpu-ad-label-height;
-    max-height: $mpu-ad-label-height;
-    background-color: $brightness-97;
-    padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $brightness-86;
-    color: $brightness-46;
-    text-align: left;
-    box-sizing: border-box;
-    font-family: $f-sans-serif-text;
-
-    .ad-slot--dark & {
-        color: $brightness-86;
-        border-top-color: $brightness-20;
-        background-color: transparent;
-    }
-
-    .ad-slot--sky & {
-        width: $mpu-skyscraper-width;
-    }
-
-    &--toggle {
-        margin: 0 auto;
-        @include mq($until: tablet) {
-            display: none;
-        }
-    }
-
-    &.visible {
-        visibility: initial;
-    }
-
-    &.hidden {
-        visibility: hidden;
-    }
-}
-
 /**
  * Banner ads
  */
@@ -128,12 +89,6 @@
 
 .ad-slot--top-banner-ad {
     text-align: center;
-
-    .ad-slot__label {
-        @include mq(wide) {
-            margin: 0;
-        }
-    }
 
     .has-page-skin & {
         @include mq(wide) {
@@ -307,7 +262,7 @@
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
 
-        & > div:not(.ad-slot__label) {
+        & > div {
             width: 300px;
             margin-left: auto;
             margin-right: auto;
@@ -316,11 +271,6 @@
 }
 .ad-slot--liveblog-inline {
     background-color: $brightness-93;
-
-    .ad-slot__label {
-        color: $brightness-46;
-        border-top-color: $brightness-86;
-    }
 }
 .ad-slot--mpu-banner-ad {
     display: none;
@@ -487,12 +437,6 @@
     }
 }
 
-.ad-slot--gc {
-    .ad-slot__label {
-        display: none;
-    }
-}
-
 .ad-slot--fabric-v1 {
     min-height: 250px;
 }
@@ -517,10 +461,6 @@
     width: auto;
     margin-left: 0;
     padding: 0;
-
-    .ad-slot__label {
-        display: none;
-    }
 }
 
 .ad-slot--fluid250 {
@@ -576,7 +516,7 @@
     display: none;
     position: absolute;
     right: 3px;
-    top: 3px;
+    top: -21px;
     padding: 0;
     border: 0;
     height: $mpu-ad-label-height - 3px;
@@ -594,7 +534,7 @@
     text-align: center;
 }
 
-.ad-slot--mobile-sticky .ad-slot__label .ad-slot__close-button {
+.ad-slot--mobile-sticky .ad-slot__close-button {
     display: block;
 }
 
@@ -628,4 +568,73 @@
     height: 85vh;
     margin-bottom: 12px;
     position: relative;
+}
+
+.ad-slot:not[data-label-show='true']::before {
+    content: '';
+    display: block;
+    height: $mpu-ad-label-height;
+    visibility: hidden;
+}
+
+.ad-slot[data-label-show='true']:not(.ad-slot--dark):not(.ad-slot--interscroller)::before {
+    @include font-size(12, 20);
+    content: attr(ad-label-text);
+    display: block;
+    visibility: visible;
+    position: relative;
+    height: $mpu-ad-label-height;
+    background-color: $brightness-97;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $brightness-86;
+    color: $brightness-46;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.ad-slot--dark[data-label-show='true']::before {
+    @include font-size(12, 20);
+    content: attr(ad-label-text);
+    display: block;
+    visibility: visible;
+    position: relative;
+    height: $mpu-ad-label-height;
+    background-color: transparent;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $brightness-20;
+    color: $brightness-86;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.ad-slot--interscroller[data-label-show='true']::before {
+    content: 'Advertisement';
+    display: block;
+    visibility: visible;
+    height: $mpu-ad-label-height;
+    background-color: transparent;
+    padding: 0 ($gs-baseline/3)*2;
+    border: 0;
+    border-top: 1px solid $brightness-20;
+    color: $brightness-86;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.ad-slot__adtest-cookie-clear-link {
+    @include font-size(12, 20);
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    text-align: left;
+    position: absolute;
+    right: 3px;
+    top: -22px;
+    padding: 0;
+    border: 0;
 }
