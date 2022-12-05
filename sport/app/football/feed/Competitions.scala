@@ -132,6 +132,7 @@ object CompetitionsProvider {
       showInTeamsList = true,
       tableDividers = List(2),
       startDate = Some(LocalDate.of(2022, 11, 1)),
+      finalMatchSVG = Some("world_cup_2022_badge"),
     ),
     Competition(
       "423",
