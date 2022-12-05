@@ -16,8 +16,7 @@ object FrontChecks {
     Set(
       /*
     "dynamic/slow-mpu",
-      pending https://github.com/guardian/dotcom-rendering/issues/5926 and
-      https://github.com/guardian/dotcom-rendering/issues/5821
+      pending https://github.com/guardian/dotcom-rendering/issues/5926
        */
 
       /*
@@ -33,18 +32,6 @@ object FrontChecks {
       /*
     "dynamic/package",
       pending https://github.com/guardian/dotcom-rendering/issues/5196 and
-      https://github.com/guardian/dotcom-rendering/issues/5267
-       */
-
-      /*
-    "news/most-popular"
-      pending https://github.com/guardian/frontend/issues/25448 and
-      https://github.com/guardian/dotcom-rendering/issues/5902
-       */
-
-      /*
-    "dynamic/fast"
-      pending https://github.com/guardian/dotcom-rendering/issues/5782
        */
 
       /*
@@ -53,16 +40,19 @@ object FrontChecks {
        */
 
       "dynamic/slow",
+      "dynamic/fast",
       "fixed/small/slow-I",
       "fixed/small/slow-III",
       "fixed/small/slow-IV",
       "fixed/small/slow-V-third",
       "fixed/small/fast-VIII",
       "fixed/medium/slow-VI",
+      "fixed/medium/slow-VII",
       "fixed/medium/fast-XII",
-      "fixed/large/slow-XIV",
+      "fixed/medium/fast-XI",
       "fixed/large/slow-XIV",
       "nav/list",
+      "news/most-popular",
     )
 
   def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
