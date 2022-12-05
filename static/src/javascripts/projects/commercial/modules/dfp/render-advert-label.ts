@@ -49,28 +49,27 @@ const shouldRenderAdTestLabel = (): boolean =>
 		shouldMemoize: true,
 	});
 // If `adtest` cookie is set, display its value in the ad label
-const createAdTestLabel = (): string => {
+const createAdTestLabel = (
+	shouldRender: boolean,
+	adTestName: string | null,
+): string => {
 	let adTestLabel = '';
 
-	const shouldRender = shouldRenderAdTestLabel();
-	const val = getCookie({ name: 'adtest', shouldMemoize: true });
-
-	if (shouldRender && val) {
-		adTestLabel += ` [?adtest=${val}] `;
+	if (shouldRender && adTestName) {
+		adTestLabel += ` [?adtest=${adTestName}] `;
 	}
 
 	return adTestLabel;
 };
 
-const createAdTestCookieRemovalLink = (): HTMLElement => {
-	const shouldRender = shouldRenderAdTestLabel();
-	const val = getCookie({ name: 'adtest', shouldMemoize: true });
-
+const createAdTestCookieRemovalLink = (
+	adTestName: string | null,
+): HTMLElement => {
 	const adTestCookieRemovalLink = document.createElement('div');
 	adTestCookieRemovalLink.style.cssText =
 		'position: relative;padding: 0 0.5rem;text-align: left;box-sizing: border-box;';
 
-	if (shouldRender && val) {
+	if (adTestName) {
 		const url = new URL(window.location.href);
 		url.searchParams.set('adtest', 'clear');
 		const clearLink = document.createElement('a');
@@ -89,7 +88,15 @@ const createAdTestCookieRemovalLink = (): HTMLElement => {
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	return fastdom.measure(() => {
 		if (shouldRenderLabel(adSlotNode)) {
-			const adLabelContent = `Advertisement${createAdTestLabel()}`;
+			const renderAdTestLabel = shouldRenderAdTestLabel();
+			const adTestCookieName = getCookie({
+				name: 'adtest',
+				shouldMemoize: true,
+			});
+			const adLabelContent = `Advertisement${createAdTestLabel(
+				renderAdTestLabel,
+				adTestCookieName,
+			)}`;
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
@@ -97,9 +104,9 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 					createAdCloseDiv(),
 					adSlotNode.firstChild,
 				);
-				if (shouldRenderAdTestLabel()) {
+				if (renderAdTestLabel) {
 					adSlotNode.insertBefore(
-						createAdTestCookieRemovalLink(),
+						createAdTestCookieRemovalLink(adTestCookieName),
 						adSlotNode.firstChild,
 					);
 				}
