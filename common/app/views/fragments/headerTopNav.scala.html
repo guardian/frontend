@@ -81,7 +81,8 @@
                                 @(item.icon.map { icon =>
                                 views.html.fragments.inlineSvg(icon, "icon", isPresentation = true)
                                 })
-                                @item.label
+                                <div class="js-user-account-menu-label">@item.label</div>
+                                <div class="js-user-account-menu-notifications-container"></div>
                             </a>
                         </li>
                         }

@@ -64,9 +64,13 @@ const showNotifications = (notifications: NotificationEvent[]): void => {
 						const menuItem = menu.querySelector(
 							`a[data-link-id=${target}]`,
 						);
-						if (menuItem?.textContent) {
-							const labelEl = document.createElement('div');
-							labelEl.innerText = menuItem.textContent.trim();
+						if (menuItem) {
+							const labelEl = menuItem.querySelector(
+								'.js-user-account-menu-label',
+							);
+							labelEl?.classList.add(
+								'top-bar__user-account-notification-badge',
+							);
 
 							const messageEls = messages.map((message) => {
 								const messageEl = document.createElement('div');
@@ -76,14 +80,15 @@ const showNotifications = (notifications: NotificationEvent[]): void => {
 								messageEl.innerText = message;
 								return messageEl;
 							});
-
-							menuItem.innerHTML = '';
-							labelEl.classList.add(
-								'top-bar__user-account-notification-badge',
-							);
-							[labelEl, ...messageEls].forEach((e) =>
-								menuItem.appendChild(e),
-							);
+							const notificationsContainerEl =
+								menuItem.querySelector(
+									'.js-user-account-menu-notifications-container',
+								);
+							if (notificationsContainerEl) {
+								notificationsContainerEl.replaceChildren(
+									...messageEls,
+								);
+							}
 						}
 					},
 				);
