@@ -1,5 +1,4 @@
 import type { ABTest } from '@guardian/ab-core';
-import { noop } from '../../../../../lib/noop';
 import { bypassMetricsSampling } from '../utils';
 
 export const liveblogDesktopOutstream: ABTest = {
@@ -15,7 +14,7 @@ export const liveblogDesktopOutstream: ABTest = {
 	successMeasure: 'No significant impact to CWV',
 	canRun: () => true,
 	variants: [
-		{ id: 'control', test: () => noop },
+		{ id: 'control', test: () => bypassMetricsSampling },
 		{ id: 'variant', test: () => bypassMetricsSampling },
 	],
 };

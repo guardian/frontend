@@ -119,9 +119,8 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 			addSlot(
 				ad,
 				false,
-				isInVariantSynchronous(liveblogDesktopOutstream, 'variant')
-					? {}
-					: {
+				!isInVariantSynchronous(liveblogDesktopOutstream, 'control')
+					? {
 							phablet: [
 								adSizes.outstreamDesktop,
 								adSizes.outstreamGoogleDesktop,
@@ -130,7 +129,8 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 								adSizes.outstreamDesktop,
 								adSizes.outstreamGoogleDesktop,
 							],
-					  },
+					  }
+					: {},
 			);
 		});
 };
