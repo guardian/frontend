@@ -1,4 +1,6 @@
-import { createAdSlot } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { liveblogDesktopOutstream } from 'common/modules/experiments/tests/liveblog-desktop-outstream';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../lib/fastdom-promise';
@@ -114,7 +116,22 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 			}
 		})
 		.then(() => {
-			addSlot(ad, false);
+			addSlot(
+				ad,
+				false,
+				!isInVariantSynchronous(liveblogDesktopOutstream, 'control')
+					? {
+							phablet: [
+								adSizes.outstreamDesktop,
+								adSizes.outstreamGoogleDesktop,
+							],
+							desktop: [
+								adSizes.outstreamDesktop,
+								adSizes.outstreamGoogleDesktop,
+							],
+					  }
+					: {},
+			);
 		});
 };
 

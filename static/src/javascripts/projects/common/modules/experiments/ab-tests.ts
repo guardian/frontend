@@ -2,6 +2,7 @@ import type { ABTest } from '@guardian/ab-core';
 import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { integrateIma } from './tests/integrate-ima';
+import { liveblogDesktopOutstream } from './tests/liveblog-desktop-outstream';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { removePrebidA9Canada } from './tests/removePrebidA9Canada';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -17,4 +18,5 @@ export const concurrentTests: readonly ABTest[] = [
 	consentlessAds,
 	integrateIma,
 	removePrebidA9Canada,
+	liveblogDesktopOutstream,
 ];
