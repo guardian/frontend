@@ -156,15 +156,15 @@ class CompetitionAgent(
 
       val allMatches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate
 
-      val updatedMatches = allMatches.filter(footballMatch =>
-        (!isPlaceholderMatch(footballMatch)) ||
-          (isPlaceholderMatch(footballMatch) && !nonPlaceHolderMatchWithSameDateExists(allMatches, footballMatch)),
+      comp.copy(matches =
+        allMatches.filterNot(footballMatch =>
+          isPlaceholderMatch(footballMatch) &&
+            nonPlaceHolderMatchWithSameDateExists(allMatches, footballMatch),
+        ),
       )
-
-      comp.copy(matches = updatedMatches)
     }
 
-  def isPlaceholderMatch(footballMatch: FootballMatch): Boolean = {
+  private def isPlaceholderMatch(footballMatch: FootballMatch): Boolean = {
     val placeholderIndicator = Set("Winner", "Runner-up", "Wnr Gp", "R-Up Gp", "Loser")
     placeholderIndicator.exists(indicator => footballMatch.homeTeam.name.contains(indicator))
   }
