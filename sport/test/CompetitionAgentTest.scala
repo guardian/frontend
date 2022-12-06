@@ -114,9 +114,8 @@ import scala.concurrent.duration._
   it should "not contain matches with known opponents as placeholders" in {
     val date1 = ZonedDateTime.of(2022, 12, 9, 15, 0, 0, 0, ZoneId.of("Europe/London"))
     val date2 = ZonedDateTime.of(2022, 12, 10, 15, 0, 0, 0, ZoneId.of("Europe/London"))
-    val placeHolderMatches = Seq(
-      fixture("Wnr Gp E/R-Up Gp F", "Wnr Gp G/R-Up Gp H", date1),
-      fixture("Winner Q/F 3", "Winner Q/F 4", date2))
+    val placeHolderMatches =
+      Seq(fixture("Wnr Gp E/R-Up Gp F", "Wnr Gp G/R-Up Gp H", date1), fixture("Winner Q/F 3", "Winner Q/F 4", date2))
 
     val comps = testCompetitionsService(
       Competition(
@@ -137,9 +136,7 @@ import scala.concurrent.duration._
     assert(competitionAgent.competition.matches.contains(placeHolderMatches.head))
     assert(competitionAgent.competition.matches.contains(placeHolderMatches(1)))
 
-    val matchesWithKnownOpponents = Seq(
-      fixture("Brazil", "Croatia", date1),
-      fixture("Spain", "Portugal", date2))
+    val matchesWithKnownOpponents = Seq(fixture("Brazil", "Croatia", date1), fixture("Spain", "Portugal", date2))
     Await.result(competitionAgent.addMatches(matchesWithKnownOpponents), 2.second)
 
     assert(competitionAgent.competition.matches.length === 2)
