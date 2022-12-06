@@ -7,11 +7,10 @@ import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Span}
-import test.FootballTestData.{competitions, fixture}
+import test.FootballTestData.fixture
 
 import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.time.ZoneId
-import scala.concurrent.Future
 import scala.concurrent.duration._
 
 @DoNotDiscover class CompetitionAgentTest
@@ -112,32 +111,12 @@ import scala.concurrent.duration._
     eventually(comps.competitions(0).leagueTable(0).team.id should be("23"))
   }
 
-  it should "recognise placeholder games" in {
-    val comps = testCompetitionsService(
-      Competition(
-        "700",
-        "/football/world-cup-2022",
-        "World Cup 2022",
-        "World Cup 2022",
-        "Internationals",
-        showInTeamsList = true,
-        tableDividers = List(2),
-      ),
-    )
-
-    val competitionAgent = comps.competitionAgents.head
-    val date = ZonedDateTime.of(2022, 12, 3, 15, 0, 0, 0, ZoneId.of("Europe/London"))
-
-    assert(competitionAgent.isPlaceholderMatch(fixture("Winner Group A", "Runner-Up Group B", date)) === true)
-    assert(competitionAgent.isPlaceholderMatch(fixture("England", "France", date)) === false)
-    assert(competitionAgent.isPlaceholderMatch(fixture("Wnr Gp F/R-Up Gp E", "Wnr Gp H/R-Up Gp G", date)) === true)
-    assert(competitionAgent.isPlaceholderMatch(fixture("Winner Q/F 3", "Winner Q/F 4", date)) === true)
-    assert(competitionAgent.isPlaceholderMatch(fixture("Loser SF1", "Loser SF2", date)) === true)
-  }
-
   it should "not contain matches with known opponents as placeholders" in {
-    val date = ZonedDateTime.of(2022, 12, 9, 15, 0, 0, 0, ZoneId.of("Europe/London"))
-    val placeHolderMatch = fixture("Wnr Gp E/R-Up Gp F", "Wnr Gp G/R-Up Gp H", date)
+    val date1 = ZonedDateTime.of(2022, 12, 9, 15, 0, 0, 0, ZoneId.of("Europe/London"))
+    val date2 = ZonedDateTime.of(2022, 12, 10, 15, 0, 0, 0, ZoneId.of("Europe/London"))
+    val placeHolderMatches = Seq(
+      fixture("Wnr Gp E/R-Up Gp F", "Wnr Gp G/R-Up Gp H", date1),
+      fixture("Winner Q/F 3", "Winner Q/F 4", date2))
 
     val comps = testCompetitionsService(
       Competition(
@@ -148,20 +127,24 @@ import scala.concurrent.duration._
         "Internationals",
         showInTeamsList = true,
         tableDividers = List(2),
-        matches = Seq(placeHolderMatch),
+        matches = placeHolderMatches,
       ),
     )
 
     val competitionAgent = comps.competitionAgents.head
 
-    assert(competitionAgent.competition.matches.length === 1)
-    assert(competitionAgent.competition.matches.head === placeHolderMatch)
+    assert(competitionAgent.competition.matches.length === 2)
+    assert(competitionAgent.competition.matches.contains(placeHolderMatches.head))
+    assert(competitionAgent.competition.matches.contains(placeHolderMatches(1)))
 
-    val matchWithKnownOpponents = fixture("Brazil", "Croatia", date)
-    Await.result(competitionAgent.addMatches(Seq(matchWithKnownOpponents)), 2.second)
+    val matchesWithKnownOpponents = Seq(
+      fixture("Brazil", "Croatia", date1),
+      fixture("Spain", "Portugal", date2))
+    Await.result(competitionAgent.addMatches(matchesWithKnownOpponents), 2.second)
 
-    assert(competitionAgent.competition.matches.length === 1)
-    assert(competitionAgent.competition.matches.head === matchWithKnownOpponents)
+    assert(competitionAgent.competition.matches.length === 2)
+    assert(competitionAgent.competition.matches.contains(matchesWithKnownOpponents.head))
+    assert(competitionAgent.competition.matches.contains(matchesWithKnownOpponents(1)))
   }
 
   it should "still contain placeholder matches with unknown opponents" in {

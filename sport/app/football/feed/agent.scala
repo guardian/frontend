@@ -164,7 +164,7 @@ class CompetitionAgent(
       comp.copy(matches = updatedMatches)
     }
 
-  def isPlaceholderMatch(footballMatch: FootballMatch): Boolean = {
+  private def isPlaceholderMatch(footballMatch: FootballMatch): Boolean = {
     val placeholderIndicator = Set("Winner", "Runner-up", "Wnr Gp", "R-Up Gp", "Loser")
     placeholderIndicator.exists(indicator => footballMatch.homeTeam.name.contains(indicator))
   }
