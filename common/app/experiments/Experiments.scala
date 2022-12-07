@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       TableOfContents,
       EuropeNetworkFront,
       DCRJavascriptBundle,
-      BillboardsInMerchSlots,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -72,13 +71,4 @@ object EuropeNetworkFront
       owners = Seq(Owner.withGithub("rowannekabalan")),
       sellByDate = LocalDate.of(2023, 3, 1),
       participationGroup = Perc0D,
-    )
-
-object BillboardsInMerchSlots
-    extends Experiment(
-      name = "billboards-in-merch-slots",
-      description = "Test commercial impact of serving billboard sized ads in merchandising slots",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 2, 1),
-      participationGroup = Perc0E,
     )
