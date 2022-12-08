@@ -57,6 +57,7 @@ object FrontChecks {
       "fixed/medium/fast-XI",
       "fixed/large/slow-XIV",
       "nav/list",
+      "nav/media-list",
       "news/most-popular",
     )
 
