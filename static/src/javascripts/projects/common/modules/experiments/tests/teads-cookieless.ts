@@ -7,7 +7,7 @@ export const teadsCookieless: ABTest = {
 	expiry: '2023-12-31',
 	author: 'Jake Lee Kennedy',
 	description: 'Test the impact of enabling the Teads cookieless tag',
-	audience: 1 / 100,
+	audience: 0,
 	audienceOffset: 5 / 100,
 	audienceCriteria: 'Opt in',
 	successMeasure: 'No significant impact to UX',
