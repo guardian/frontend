@@ -51,9 +51,9 @@ object FooterLinks {
 
   val auListOne = List(
     FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
-    help("au"),
     FooterLink("Information", "/info", "au : footer : information"),
     complaintsAndCorrections,
+    help("au"),
     secureDrop,
     FooterLink(
       "Vacancies",
