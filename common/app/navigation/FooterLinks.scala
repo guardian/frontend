@@ -27,33 +27,33 @@ object FooterLinks {
 
   val ukListOne = List(
     FooterLink("About us", "/about", "uk : footer : about us"),
-    FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
+    help("uk"),
     complaintsAndCorrections,
     secureDrop,
     workForUs("uk"),
     privacyPolicy,
     cookiePolicy,
     termsAndConditions,
-    help("uk"),
+    FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
   )
 
   val usListOne = List(
     FooterLink("About us", "/info/about-guardian-us", "us : footer : about us"),
-    FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
+    help("us"),
     complaintsAndCorrections,
     secureDrop,
     workForUs("us"),
     privacyPolicy,
     cookiePolicy,
     termsAndConditions,
-    help("us"),
+    FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
   )
 
   val auListOne = List(
     FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
+    help("au"),
     FooterLink("Information", "/info", "au : footer : information"),
     complaintsAndCorrections,
-    FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
     secureDrop,
     FooterLink(
       "Vacancies",
@@ -62,18 +62,18 @@ object FooterLinks {
     ),
     privacyPolicy,
     termsAndConditions,
-    help("au"),
+    FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
   )
 
   val intListOne = List(
-    FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
+    help("international"),
     complaintsAndCorrections,
     secureDrop,
     workForUs("international"),
     privacyPolicy,
     cookiePolicy,
     termsAndConditions,
-    help("international"),
+    FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
   )
 
   // Footer column two
