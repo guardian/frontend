@@ -94,4 +94,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2023, 1, 30)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-no-carrot-ads-near-newsletter-signup-blocks",
+    "Test the impact of preventing spacefinder from positioning carrot ads near newsletter signup blocks",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 2, 1)),
+    exposeClientSide = true,
+  )
 }
