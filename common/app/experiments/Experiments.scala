@@ -49,7 +49,7 @@ object TableOfContents
       name = "table-of-contents",
       description = "When ON, a table of contents will be rendered for qualifying articles",
       owners = Seq(Owner.withName("journalism team")),
-      sellByDate = LocalDate.of(2022, 12, 7),
+      sellByDate = LocalDate.of(2023, 1, 10),
       participationGroup = Perc0C,
     )
 
