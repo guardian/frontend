@@ -49,7 +49,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
         Redirect(url, queryString)
 
       case Some(latest) =>
-        Found(latest.metadata.url)
+        Found(latest.metadata.url).withHeaders("X-Robots-Tag" -> "noindex")
 
       case None =>
         NotFound
