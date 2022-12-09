@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeNetworkFront,
       DCRJavascriptBundle,
       BillboardsInMerchSlots,
-      HeaderTopBarSearchCapi,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -82,13 +81,4 @@ object BillboardsInMerchSlots
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 2, 1),
       participationGroup = Perc0E,
-    )
-
-object HeaderTopBarSearchCapi
-    extends Experiment(
-      name = "header-top-bar-search-capi",
-      description = "Adds CAPI search to the top nav",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 2, 1),
-      participationGroup = Perc1B,
     )
