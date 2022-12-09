@@ -2207,10 +2207,10 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/libs@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.0.0.tgz#3624e5ead3a9f4ffb6244327d3ee5c3d55d688fa"
-  integrity sha512-N6+5e0DrusWryaZCH6/cppJlLEksuZWFyYnQjHbe/HXM2cLe2i3GAU5kRhIh98pOlPTPer5GennBAYQ6gzQofg==
+"@guardian/libs@^10.0.0", "@guardian/libs@^10.1.1":
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
+  integrity sha512-OdWReBHRWhdbErVmS15hihVzlkdU8DkKrjDsUIN0P8QZiF4twuzcU3qsPwto2UfibAwPkWqKkNwH1k8b6xNclA==
 
 "@guardian/libs@^7.1.4":
   version "7.1.4"
