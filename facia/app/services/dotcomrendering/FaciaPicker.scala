@@ -15,11 +15,6 @@ object FrontChecks {
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
       /*
-    "fixed/thrasher",
-      pending https://github.com/guardian/dotcom-rendering/issues/5134
-       */
-
-      /*
     "dynamic/slow-mpu",
       pending https://github.com/guardian/dotcom-rendering/issues/5926
        */
