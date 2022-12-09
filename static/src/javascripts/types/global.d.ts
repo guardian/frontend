@@ -420,9 +420,12 @@ interface Trac {
 	post: () => this;
 }
 
-interface NotificationEvent {
+interface HeaderNotification {
+	id: string;
 	target: string;
 	message: string;
+	ophanLabel: string;
+	logImpression: () => void;
 }
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
@@ -439,7 +442,7 @@ interface Window {
 		commercial?: {
 			dfpEnv?: DfpEnv;
 		};
-		notificationEventHistory?: NotificationEvent[];
+		notificationEventHistory?: HeaderNotification[][];
 	};
 	ootag: {
 		queue: Array<() => void>;

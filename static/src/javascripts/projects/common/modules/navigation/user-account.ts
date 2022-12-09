@@ -48,7 +48,7 @@ const trackFirstImpression = (el: HTMLElement): void => {
 };
 
 const groupNotificationsByTarget = (
-	notifications: NotificationEvent[],
+	notifications: HeaderNotification[],
 ): Record<string, string[]> => {
 	const notificationsMap: Record<string, string[]> = {};
 	notifications.forEach(({ message, target }) => {
@@ -61,7 +61,7 @@ const groupNotificationsByTarget = (
 	return notificationsMap;
 };
 
-const addNotifications = (notifications: NotificationEvent[]): void => {
+const addNotifications = (notifications: HeaderNotification[]): void => {
 	void fastdom
 		.measure(() => ({
 			badge: document.querySelector(
@@ -153,10 +153,8 @@ const showMyAccountIfNecessary = (): void => {
 				.then(() => {
 					updateCommentLink(commentItems);
 
-					let notifications: NotificationEvent[] = [];
-
 					bufferedNotificationListener.on((event) => {
-						notifications = [event.detail];
+						const notifications = event.detail;
 						addNotifications(notifications);
 					});
 				});

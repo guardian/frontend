@@ -1,5 +1,8 @@
 import { bufferedNotificationListener } from './bufferedNotificationListener';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function -- no-op
+const noOp = () => {};
+
 describe('bufferedNotificationListener', () => {
 	afterEach(() => {
 		window.guardian.notificationEventHistory = [];
@@ -10,28 +13,38 @@ describe('bufferedNotificationListener', () => {
 			done();
 		});
 		bufferedNotificationListener.on(callback);
-		const notification = {
-			target: 'settings',
-			message: 'Your card has expired',
-		};
+		const notifications = [
+			{
+				id: '1234abcde',
+				target: 'settings',
+				message: 'Your card has expired',
+				ophanLabel: 'settings-label',
+				logImpression: noOp,
+			},
+		];
 
-		bufferedNotificationListener.emit(notification);
+		bufferedNotificationListener.emit(notifications);
 
 		expect(callback).toHaveBeenCalledTimes(1);
 		expect(callback).toHaveBeenLastCalledWith(
 			expect.objectContaining({
-				detail: notification,
+				detail: notifications,
 			}),
 		);
 	});
 
 	describe('when an event listener is registered after an event', () => {
 		it('replays missed events', (done) => {
-			const notification = {
-				target: 'settings',
-				message: 'Your card has expired',
-			};
-			bufferedNotificationListener.emit(notification);
+			const notifications = [
+				{
+					id: '1234abcde',
+					target: 'settings',
+					message: 'Your card has expired',
+					ophanLabel: 'settings-label',
+					logImpression: noOp,
+				},
+			];
+			bufferedNotificationListener.emit(notifications);
 			const callback = jest.fn(() => {
 				done();
 			});
@@ -41,7 +54,7 @@ describe('bufferedNotificationListener', () => {
 			expect(callback).toHaveBeenCalledTimes(1);
 			expect(callback).toHaveBeenLastCalledWith(
 				expect.objectContaining({
-					detail: notification,
+					detail: notifications,
 				}),
 			);
 		});
