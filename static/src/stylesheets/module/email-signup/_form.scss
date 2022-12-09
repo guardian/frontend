@@ -254,6 +254,18 @@
     }
 }
 
+.email-sub__form--thrasher-documentaries {
+    .email-sub__thrasher-embed-label {
+        color: $brightness-7;
+    }
+
+    .email-sub__thrasher-embed-button {
+        background-color: $brightness-7;
+        color: $brightness-100;
+        fill: $brightness-100;
+    }
+}
+
 .email-sub__form--thrasher-us-morning-newsletter,
 .email-sub__form--thrasher-morning-mail,
 .email-sub__form--thrasher-afternoon-update,
