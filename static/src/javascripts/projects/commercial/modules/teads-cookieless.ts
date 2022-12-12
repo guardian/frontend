@@ -12,10 +12,14 @@ const initTeadsCookieless = async (): Promise<void> => {
 
 	const hasConsent = getConsentFor('teads', consentState);
 
+	// Teads only runs on these content types, so lets not give them any more data than necessary
+	const allowedContentTypes = ['Article', 'LiveBlog'];
+
 	if (
 		hasConsent &&
 		window.guardian.config.switches.teadsCookieless &&
-		isInVariantSynchronous(teadsCookielessTest, 'variant')
+		isInVariantSynchronous(teadsCookielessTest, 'variant') &&
+		allowedContentTypes.includes(window.guardian.config.page.contentType)
 	) {
 		window.teads_analytics = window.teads_analytics ?? {};
 		window.teads_analytics.analytics_tag_id = 'PUB_2167';
