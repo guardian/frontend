@@ -183,25 +183,24 @@ export const init = (): Promise<void> => {
 		return Promise.resolve();
 	}
 
+	const isServerSideAdsMode =
+		window.guardian.config.tests?.serverSideLiveblogInlineAdsVariant ===
+		'variant';
+	if (isServerSideAdsMode) {
+		log(
+			'commercial',
+			'Server side inline ads mode. No client-side inline ad slots inserted',
+		);
+		return Promise.resolve();
+	}
+
 	return fastdom
 		.measure(() => {
-			const isServerSideAdsMode =
-				document.querySelector('.ad-slot--inline1') !== null;
-			if (isServerSideAdsMode) {
-				throw Error;
-			}
-
 			WINDOWHEIGHT = getWindowHeight();
 			return WINDOWHEIGHT;
 		})
 		.then(getSpaceFillerRules)
-		.then(fill)
-		.catch(() => {
-			log(
-				'commercial',
-				'Server side inline ads mode. No client-side inline ad slots inserted',
-			);
-		});
+		.then(fill);
 };
 
 export const _ = { getSlotName };

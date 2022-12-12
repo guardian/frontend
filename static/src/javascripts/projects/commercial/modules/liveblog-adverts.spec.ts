@@ -55,7 +55,7 @@ describe('Liveblog Dynamic Adverts', () => {
 				<div class="block x11"></div>
 				<div class="block x12"></div>
 			</div>';
-			`;
+		`;
 	});
 
 	afterEach(() => {
@@ -102,26 +102,10 @@ describe('Liveblog Dynamic Adverts', () => {
 		});
 	});
 
-	it('should NOT insert ad slots if in the server-side ad slot test variant', () => {
-		document.body.innerHTML = `
-			<div class="js-liveblog-body">
-				<div class="block x1"></div>
-				<div class="block x2"></div>
-				<div class="ad-slot--inline1"></div>
-				<div class="block x3"></div>
-				<div class="block x4"></div>
-				<div class="block x5"></div>
-				<div class="block x6"></div>
-				<div class="block x7"></div>
-				<div class="block x8"></div>
-				<div class="block x9"></div>
-				<div class="block x10"></div>
-				<div class="block x11"></div>
-				<div class="block x12"></div>
-			</div>';
-			`;
-
-		console.log('document.body.innerHTML', document.body.innerHTML);
+	it('should insert ad slots if in the server-side ad slot test CONTROL group', async () => {
+		window.guardian.config.tests = window.guardian.config.tests ?? {};
+		window.guardian.config.tests.serverSideLiveblogInlineAdsControl =
+			'control';
 
 		const block1 = document.querySelector<HTMLElement>('.x1');
 		const block2 = document.querySelector<HTMLElement>('.x12');
@@ -133,8 +117,32 @@ describe('Liveblog Dynamic Adverts', () => {
 			createFillSpaceMock([block1, block2]),
 		);
 
-		expect(() => {
-			void init();
-		}).toThrow();
+		await init().then(() => {
+			expect(
+				document.querySelector('.js-liveblog-body')?.children.length,
+			).toBe(14);
+		});
+	});
+
+	it('should NOT insert ad slots if in the server-side ad slot test VARIANT group', async () => {
+		window.guardian.config.tests = window.guardian.config.tests ?? {};
+		window.guardian.config.tests.serverSideLiveblogInlineAdsVariant =
+			'variant';
+
+		const block1 = document.querySelector<HTMLElement>('.x1');
+		const block2 = document.querySelector<HTMLElement>('.x12');
+		if (block1 === null || block2 === null) {
+			throw Error();
+		}
+
+		spaceFillerStub.mockImplementationOnce(
+			createFillSpaceMock([block1, block2]),
+		);
+
+		await init().then(() => {
+			expect(
+				document.querySelector('.js-liveblog-body')?.children.length,
+			).toBe(12);
+		});
 	});
 });
