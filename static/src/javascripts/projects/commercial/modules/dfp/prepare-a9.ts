@@ -12,18 +12,18 @@ import { a9 } from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 import { dfpEnv } from './dfp-env';
 
-const setupA9 = (): Promise<void | boolean> => {
-	const shouldLoadA9 =
-		// There are two articles that InfoSec would like to avoid loading scripts on
-		!commercialFeatures.isSecureContact &&
-		!isGoogleProxy() &&
-		dfpEnv.hbImpl.a9 &&
-		commercialFeatures.dfpAdvertising &&
-		!commercialFeatures.adFree &&
-		!window.guardian.config.page.hasPageSkin &&
-		!isInCanada();
+const shouldLoadA9 = () =>
+	// There are two articles that InfoSec would like to avoid loading scripts on
+	!commercialFeatures.isSecureContact &&
+	!isGoogleProxy() &&
+	dfpEnv.hbImpl.a9 &&
+	commercialFeatures.dfpAdvertising &&
+	!commercialFeatures.adFree &&
+	!window.guardian.config.page.hasPageSkin &&
+	!isInCanada();
 
-	if (shouldLoadA9 || shouldIncludeOnlyA9) {
+const setupA9 = (): Promise<void | boolean> => {
+	if (shouldLoadA9() || shouldIncludeOnlyA9) {
 		// Load a9 third party stub
 		a9Apstag();
 
