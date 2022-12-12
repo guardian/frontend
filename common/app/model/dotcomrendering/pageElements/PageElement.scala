@@ -1334,8 +1334,8 @@ object PageElement {
           .map(d =>
             DocumentBlockElement(
               getEmbedUrl(d.html),
-              d.width,
               d.height,
+              d.width,
               d.title,
               d.isMandatory,
               containsThirdPartyTracking(element.tracking),
