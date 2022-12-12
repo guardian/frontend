@@ -215,6 +215,7 @@
  ],
  "../projects/commercial/modules/dfp/fill-advert-slots.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/dist/types/index.d.ts",
   "../lib/detect-breakpoint.ts",
   "../projects/commercial/modules/dfp/Advert.ts",

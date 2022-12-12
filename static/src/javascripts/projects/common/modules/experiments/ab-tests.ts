@@ -1,4 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
+import { billboardsInMerch } from './tests/billboards-in-merch';
 import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { integrateIma } from './tests/integrate-ima';
@@ -21,4 +22,5 @@ export const concurrentTests: readonly ABTest[] = [
 	removePrebidA9Canada,
 	liveblogDesktopOutstream,
 	teadsCookieless,
+	billboardsInMerch,
 ];

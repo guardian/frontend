@@ -1,5 +1,8 @@
+import type { SizeMapping } from '@guardian/commercial-core';
 import { adSizes, createAdSize } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { billboardsInMerch } from 'common/modules/experiments/tests/billboards-in-merch';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { removeDisabledSlots } from '../remove-slots';
@@ -11,15 +14,37 @@ import { displayLazyAds } from './display-lazy-ads';
 import { setupPrebidOnce } from './prepare-prebid';
 import { queueAdvert } from './queue-advert';
 
-// Pre-rendered ad slots that were rendered on the page by the server are collected here.
-// For dynamic ad slots that are created at js-runtime, see:
-//  article-aside-adverts
-//  article-body-adverts
-//  liveblog-adverts
-//  high-merch
+const decideAdditionalSizes = (adSlot: HTMLElement): SizeMapping => {
+	const { contentType } = window.guardian.config.page;
+	const { name } = adSlot.dataset;
+	if (contentType === 'Gallery' && name?.includes('inline')) {
+		return {
+			desktop: [adSizes.billboard, createAdSize(900, 250)],
+		};
+	} else if (
+		isInVariantSynchronous(billboardsInMerch, 'variant') &&
+		name?.includes('merchandising')
+	) {
+		return {
+			desktop: [adSizes.billboard],
+		};
+	} else {
+		return {};
+	}
+};
+
+/**
+ * Pre-rendered ad slots that were rendered on the page by the server are collected here.
+ *
+ * For dynamic ad slots that are created at js-runtime, see:
+ *  - article-aside-adverts
+ *  - article-body-adverts
+ *  - liveblog-adverts
+ *  - high-merch
+ */
 const fillAdvertSlots = async (): Promise<void> => {
 	// This module has the following strict dependencies. These dependencies must be
-	// fulfilled before fillAdvertSlots can execute reliably. The bootstrap (commercial.js)
+	// fulfilled before fillAdvertSlots can execute reliably. The bootstrap
 	// initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
 	const dependencies: Array<Promise<void>> = [removeDisabledSlots()];
 
@@ -53,17 +78,7 @@ const fillAdvertSlots = async (): Promise<void> => {
 			(adSlot) => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'),
 		)
 		.map((adSlot) => {
-			let additionalSizes = {};
-
-			if (
-				window.guardian.config.page.contentType === 'Gallery' &&
-				adSlot.dataset.name?.includes('inline')
-			) {
-				additionalSizes = {
-					desktop: [adSizes.billboard, createAdSize(900, 250)],
-				};
-			}
-
+			const additionalSizes = decideAdditionalSizes(adSlot);
 			return createAdvert(adSlot, additionalSizes);
 		})
 		.filter((advert): advert is Advert => advert !== null);
