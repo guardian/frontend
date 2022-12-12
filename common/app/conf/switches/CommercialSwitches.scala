@@ -564,7 +564,7 @@ trait PrebidSwitches {
   val teadsCookieless: Switch = Switch(
     group = Commercial,
     name = "teads-cookieless",
-    description = "Enable Teads cookieless tag",
+    description = "Enable the Teads cookieless tag on articles and liveblogs",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
