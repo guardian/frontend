@@ -303,6 +303,12 @@ interface IasPET {
 	pubId?: string;
 }
 
+interface TeadsAnalytics {
+	analytics_tag_id?: string;
+	share?: () => void;
+	shared_data?: unknown[];
+}
+
 interface OptOutInitializeOptions {
 	publisher: number;
 	onlyNoConsent?: 0 | 1;
@@ -454,6 +460,7 @@ interface Window {
 	permutive?: Permutive;
 	_comscore?: ComscoreGlobals[];
 	__iasPET?: IasPET;
+	teads_analytics?: TeadsAnalytics;
 
 	// https://www.iab.com/wp-content/uploads/2014/08/SafeFrames_v1.1_final.pdf
 	$sf: SafeFrameAPI;

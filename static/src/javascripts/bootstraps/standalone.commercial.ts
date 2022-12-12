@@ -14,6 +14,7 @@
 
 import { EventTimer } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
+import { initTeadsCookieless } from 'commercial/modules/teads-cookieless';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { consentlessAds } from 'common/modules/experiments/tests/consentlessAds';
 import { reportError } from '../lib/report-error';
@@ -75,6 +76,7 @@ const commercialExtraModules: Modules = [
 	['cm-closeDisabledSlots', closeDisabledSlots],
 	['cm-comscore', initComscore],
 	['cm-ipsosmori', initIpsosMori],
+	['cm-teadsCookieless', initTeadsCookieless],
 	['cm-trackScrollDepth', initTrackScrollDepth],
 	['cm-trackLabsContainer', initTrackLabsContainer],
 	['cm-trackGpcSignal', initTrackGpcSignal],

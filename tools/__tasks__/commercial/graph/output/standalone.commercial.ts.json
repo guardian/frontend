@@ -544,6 +544,10 @@
   "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
   "../lib/fastdom-promise.ts"
  ],
+ "../projects/commercial/modules/teads-cookieless.ts": [
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/libs/dist/types/index.d.ts"
+ ],
  "../projects/commercial/modules/third-party-tags.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
@@ -684,6 +688,7 @@
   "../projects/commercial/modules/remove-slots.ts",
   "../projects/commercial/modules/set-adtest-cookie.ts",
   "../projects/commercial/modules/set-adtest-in-labels-cookie.ts",
+  "../projects/commercial/modules/teads-cookieless.ts",
   "../projects/commercial/modules/third-party-tags.ts",
   "../projects/commercial/modules/track-gpc-signal.ts",
   "../projects/commercial/modules/track-labs-container.ts",
