@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
     exposeClientSide = true,
   )
 
@@ -21,87 +21,7 @@ trait ABTestSwitches {
     "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 1)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-control-uk",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-control-na",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-control-aunz",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-control-eu",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-variant-uk",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-variant-na",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-variant-aunz",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-mandatory-long-test-variant-eu",
-    "Long mandatory sign in gate trial",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
     exposeClientSide = true,
   )
 
@@ -111,7 +31,7 @@ trait ABTestSwitches {
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 12)),
+    sellByDate = Some(LocalDate.of(2023, 2, 13)),
     exposeClientSide = true,
   )
 
@@ -142,6 +62,36 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("domlander")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-liveblog-desktop-outstream",
+    "Test the impact of enabling outstream on inline2+ on liveblogs on desktop",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-teads-cookieless",
+    "Test UX impact of cookieless Teads",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2022, 12, 30)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-billboards-in-merch",
+    "Test the commercial impact of showing billboard adverts in merchandising slots",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 1, 30)),
     exposeClientSide = true,
   )
 }

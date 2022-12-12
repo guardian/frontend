@@ -246,10 +246,23 @@
 .email-sub__form--thrasher-tech-scape,
 .email-sub__form--thrasher-the-breakdown,
 .email-sub__form--thrasher-the-long-read,
-.email-sub__form--thrasher-house-to-home {
+.email-sub__form--thrasher-house-to-home,
+.email-sub__form--thrasher-five-great-reads {
 
     .email-sub__thrasher-embed-label {
         color: $brightness-7;
+    }
+}
+
+.email-sub__form--thrasher-documentaries {
+    .email-sub__thrasher-embed-label {
+        color: $brightness-7;
+    }
+
+    .email-sub__thrasher-embed-button {
+        background-color: $brightness-7;
+        color: $brightness-100;
+        fill: $brightness-100;
     }
 }
 

@@ -280,14 +280,15 @@ object ContentFormat {
 
   def parseTheme(s: String): Theme =
     s match {
-      case "NewsPillar"         => NewsPillar
-      case "OpinionPillar"      => OpinionPillar
-      case "SportPillar"        => SportPillar
-      case "CulturePillar"      => CulturePillar
-      case "LifestylePillar"    => LifestylePillar
-      case "SpecialReportTheme" => SpecialReportTheme
-      case "Labs"               => Labs
-      case _                    => NewsPillar
+      case "NewsPillar"            => NewsPillar
+      case "OpinionPillar"         => OpinionPillar
+      case "SportPillar"           => SportPillar
+      case "CulturePillar"         => CulturePillar
+      case "LifestylePillar"       => LifestylePillar
+      case "SpecialReportTheme"    => SpecialReportTheme
+      case "SpecialReportAltTheme" => SpecialReportAltTheme
+      case "Labs"                  => Labs
+      case _                       => NewsPillar
     }
 
   def parseDisplay(s: String): Display =

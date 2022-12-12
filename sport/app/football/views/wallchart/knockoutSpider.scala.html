@@ -1,3 +1,7 @@
+@import java.time.format.DateTimeFormatter
+@import java.time.ZonedDateTime
+@import common.Edition
+@import java.time.LocalTime
 @(competition: model.Competition, knockoutStage: _root_.football.model.KnockoutSpider)(implicit request: RequestHeader)
 
 @football.views.html.wallchart.knockoutList(competition, knockoutStage, true)
@@ -63,5 +67,5 @@
         }
     </div>
 
-    <div class="football-knockout-chart__timezone">All matches are in UK time</div>
+    <div class="football-knockout-chart__timezone">All matches are in <span class="football-matches__timezone">@DateTimeFormatter.ofPattern("z").format(ZonedDateTime.of(knockoutStage.matches.head.date.toLocalDate, LocalTime.of(0, 0), Edition(request).timezoneId))</span> time</div>
 </div>

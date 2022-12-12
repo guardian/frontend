@@ -5,6 +5,7 @@ import implicits.Football
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
+import play.api.test.FakeRequest
 
 @DoNotDiscover class MatchDayListTest
     extends AnyFreeSpec
@@ -23,12 +24,16 @@ import test.ConfiguredTestSuite
       }
 
       "should group matches correctly by date" in {
-        matches.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today))
+        val request = FakeRequest()
+        matches.matchesGroupedByDateAndCompetition(request).map(_._1) should equal(List(today))
       }
 
       "should subgroup matches correctly league, with the leagues ordered correctly" in {
-        val (_, competitionMatches1) = matches.matchesGroupedByDateAndCompetition(0)
-        competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(List("500", "100"))
+        val request = FakeRequest()
+        val (_, competitionMatches1) = matches.matchesGroupedByDateAndCompetition(request)(0)
+        competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(
+          List("500", "100"),
+        )
       }
 
       "should show all matches happening today" in {

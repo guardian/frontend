@@ -560,4 +560,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val teadsCookieless: Switch = Switch(
+    group = Commercial,
+    name = "teads-cookieless",
+    description = "Enable Teads cookieless tag",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }

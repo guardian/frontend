@@ -5,7 +5,7 @@
     @shareItems.map { item: model.ShareLink =>
         <a class="rounded-icon block-share__item block-share__item--@item.css js-blockshare-link" href="@item.href" target="_blank" data-link-name="social @item.css">
             @fragments.inlineSvg("share-" + item.css, "icon")
-            <span class="u-h">@item.text</span>
+            <span class="u-h">Share on @item.text</span>
         </a>
     }
 </div>

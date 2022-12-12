@@ -86,13 +86,13 @@
                     @if(mediaWrapper.contains(ImmersiveMainMedia)) {
                         <div class='gs-container'>
                             <div class='content__main-column'>
-                                <div class='youtube-media-atom__immersive-interface'>
+                                <button class='youtube-media-atom__immersive-interface' style="border: none;">
                                     <div class="youtube-media-atom__play-button vjs-control-text">
                                         Play Video
                                         @fragments.inlineSvg("play", "icon")
                                     </div>
                                     <div class="youtube-media-atom__bottom-bar__duration"></div>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     } else {
@@ -109,9 +109,9 @@
                                 }
                             }
                         }
-                        <div class="youtube-media-atom__play-button vjs-control-text">
+                        <button class="youtube-media-atom__play-button vjs-control-text" style="border: none;">
                             Play Video @fragments.inlineSvg("play", "icon")
-                        </div>
+                        </button>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
                             @if(duration != "0:00") {
                                 <div class="youtube-media-atom__bottom-bar">

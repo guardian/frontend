@@ -87,9 +87,9 @@ const getSpaceFillerRules = (
 const insertAdAtPara = (para: Node): Promise<void> => {
 	const container: HTMLElement = document.createElement('div');
 	container.className = `ad-slot-container`;
-
+	const name = `inline${AD_COUNTER + 1}`;
 	const adSlot = createAdSlot('inline', {
-		name: `inline${AD_COUNTER + 1}`,
+		name,
 		classes: 'liveblog-inline',
 	});
 
@@ -103,7 +103,7 @@ const insertAdAtPara = (para: Node): Promise<void> => {
 			}
 		})
 		.then(() => {
-			defineSlot(adSlot, 'inline');
+			defineSlot(adSlot, name, 'inline');
 		});
 };
 

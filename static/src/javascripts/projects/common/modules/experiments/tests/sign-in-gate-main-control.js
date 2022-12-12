@@ -4,7 +4,7 @@
 export const signInGateMainControl = {
 	id: 'SignInGateMainControl',
 	start: '2020-05-20',
-	expiry: '2022-12-01',
+	expiry: '2025-12-01',
 	author: 'Mahesh Makani',
 	description:
 		'Show sign in gate to 100% of users on 3rd article view of simple article templates, with higher priority over banners and epic. Control Audience.',

@@ -303,6 +303,12 @@ interface IasPET {
 	pubId?: string;
 }
 
+interface TeadsAnalytics {
+	analytics_tag_id?: string;
+	share?: () => void;
+	shared_data?: unknown[];
+}
+
 interface OptOutInitializeOptions {
 	publisher: number;
 	onlyNoConsent?: 0 | 1;
@@ -414,6 +420,10 @@ interface Trac {
 	post: () => this;
 }
 
+interface NotificationEvent {
+	target: string;
+	message: string;
+}
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object
 	guardian: {
@@ -429,11 +439,17 @@ interface Window {
 		commercial?: {
 			dfpEnv?: DfpEnv;
 		};
+		notificationEventHistory?: NotificationEvent[];
 	};
 	ootag: {
 		queue: Array<() => void>;
 		initializeOo: (o: OptOutInitializeOptions) => void;
 		addParameter: (key: string, value: string | string[]) => void;
+		addParameterForSlot: (
+			slotId: string,
+			key: string,
+			value: string | string[],
+		) => void;
 		defineSlot: (o: OptOutAdSlot) => void;
 		makeRequests: () => void;
 		refreshSlot: (slotId: string) => void;
@@ -444,6 +460,7 @@ interface Window {
 	permutive?: Permutive;
 	_comscore?: ComscoreGlobals[];
 	__iasPET?: IasPET;
+	teads_analytics?: TeadsAnalytics;
 
 	// https://www.iab.com/wp-content/uploads/2014/08/SafeFrames_v1.1_final.pdf
 	$sf: SafeFrameAPI;

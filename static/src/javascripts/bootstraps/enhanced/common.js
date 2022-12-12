@@ -47,10 +47,12 @@ import {
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
-import { brazeBanner } from 'common/modules/commercial/braze/brazeBanner';
+import { buildBrazeBanner } from 'common/modules/commercial/braze/brazeBanner';
+import { buildBrazeMessaging } from 'common/modules/commercial/braze/buildBrazeMessaging';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
+import { bufferedNotificationListener } from 'common/modules/bufferedNotificationListener';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -254,7 +256,26 @@ const initPublicApi = () => {
     window.guardian.api = {};
 };
 
-const initialiseBanner = () => {
+const initialiseHeaderNotifications = (brazeCardsPromise) => {
+    brazeCardsPromise.then(brazeCards => {
+        return brazeCards.getCardsForProfileBadge();
+    }).then(cards => {
+        cards.filter((card) => {
+            return Boolean(card.extras.target && card.extras.message);
+        }).forEach((card) => {
+            const notification = {
+                target: card.extras.target,
+                message: card.extras.message,
+            };
+
+            bufferedNotificationListener.emit(notification);
+        })
+    })
+};
+
+const initialiseBanner = (brazeMessagesPromise) => {
+    const brazeBanner = buildBrazeBanner(brazeMessagesPromise);
+
     const isPreview = config.get('page.isPreview', false)
     // ordered by priority
     // in preview we don't want to show most banners as they are an unnecessary interruption
@@ -274,6 +295,21 @@ const initialiseBanner = () => {
 
     initBannerPicker(bannerList);
 };
+
+const initialiseMessageSlots = () => {
+    const brazeMessagingPromise = buildBrazeMessaging();
+
+    const brazeMessagesPromise = brazeMessagingPromise.then(
+        ({ brazeMessages }) => brazeMessages
+    );
+    const brazeCardsPromise = brazeMessagingPromise.then(
+        ({ brazeCards }) => brazeCards
+    );
+
+    initialiseBanner(brazeMessagesPromise);
+    initialiseHeaderNotifications(brazeCardsPromise);
+};
+
 
 const initialiseConsentCookieTracking = () =>
     trackConsentCookies(getAllAdConsentsWithState());
@@ -309,7 +345,7 @@ const init = () => {
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
-        ['c-banner-picker', initialiseBanner],
+        ['c-message-slots', initialiseMessageSlots],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
         ['c-load-google-analytics', loadGoogleAnalytics],

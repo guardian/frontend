@@ -416,7 +416,7 @@ object Content {
     val apifields = apiContent.fields
     val references: Map[String, String] =
       apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
-    val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent, TrailMetaData.empty)
+    val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent)
 
     Content(
       trail = trail,

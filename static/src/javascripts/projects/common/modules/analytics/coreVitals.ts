@@ -1,8 +1,8 @@
 import {
 	bypassCoreWebVitalsSampling,
-	getCookie,
 	initCoreWebVitals,
-} from '@guardian/libs';
+} from '@guardian/core-web-vitals';
+import { getCookie } from '@guardian/libs';
 import { shouldCaptureMetrics } from './shouldCaptureMetrics';
 
 const coreVitals = (): void => {

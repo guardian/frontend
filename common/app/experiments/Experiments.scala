@@ -40,7 +40,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2022, 12, 6),
+      sellByDate = LocalDate.of(2023, 1, 10),
       participationGroup = Perc0B,
     )
 
@@ -49,7 +49,7 @@ object TableOfContents
       name = "table-of-contents",
       description = "When ON, a table of contents will be rendered for qualifying articles",
       owners = Seq(Owner.withName("journalism team")),
-      sellByDate = LocalDate.of(2022, 12, 7),
+      sellByDate = LocalDate.of(2023, 1, 10),
       participationGroup = Perc0C,
     )
 
