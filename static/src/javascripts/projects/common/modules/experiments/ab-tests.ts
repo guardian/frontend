@@ -5,7 +5,6 @@ import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer'
 import { integrateIma } from './tests/integrate-ima';
 import { liveblogDesktopOutstream } from './tests/liveblog-desktop-outstream';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
-import { removePrebidA9Canada } from './tests/removePrebidA9Canada';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 import { teadsCookieless } from './tests/teads-cookieless';
@@ -19,7 +18,6 @@ export const concurrentTests: readonly ABTest[] = [
 	deeplyReadArticleFooterTest,
 	consentlessAds,
 	integrateIma,
-	removePrebidA9Canada,
 	liveblogDesktopOutstream,
 	teadsCookieless,
 	billboardsInMerch,
