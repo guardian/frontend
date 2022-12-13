@@ -3,14 +3,14 @@
 @import views.support.Commercial.topAboveNavSlot
 
 <div class="@topAboveNavSlot.cssClasses(page.metadata)">
-    <!--
+    @{ /*
         This is a special type of ad which, when filled, blocks
         all other ads on the page. This allows us to run "exclusion
         campaigns" against certain breaking news pages. Exclusion
         ads are used for consentless advertising only. They are
         ignored by GAM, which has a different mechanism to achieve
         the same thing.
-    -->
+    */ }
     @fragments.commercial.standardAd(
         "exclusion",
         Seq.empty[String],
