@@ -2185,10 +2185,10 @@
   dependencies:
     "@guardian/libs" "^7.1.4"
 
-"@guardian/core-web-vitals@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-1.0.0.tgz#f5624eabbf7123f8a764c00674e640a10a80e2da"
-  integrity sha512-3WTUK6FmZpVUQGoc+hlAcuYx8yVKdYfpcP7HWkBmy1yaWV5yJ81HBxxoACwUeMrZrKLMlCMriPTC9CLhPgGGUQ==
+"@guardian/core-web-vitals@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-1.0.1.tgz#f3bbf7e60a82d988228698f054664cadc9cd0886"
+  integrity sha512-F7vCWwXA5YbSEEMcn28+Xe6pXLCqqFA5h6E+pzvmLyL21y7v5UsAU+A59BB7k3yJLaFXyYi3sSRXxXGPxkCvog==
 
 "@guardian/eslint-config-typescript@^0.7.0":
   version "0.7.0"
@@ -2209,10 +2209,10 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/libs@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.0.0.tgz#3624e5ead3a9f4ffb6244327d3ee5c3d55d688fa"
-  integrity sha512-N6+5e0DrusWryaZCH6/cppJlLEksuZWFyYnQjHbe/HXM2cLe2i3GAU5kRhIh98pOlPTPer5GennBAYQ6gzQofg==
+"@guardian/libs@^10.0.0", "@guardian/libs@^10.1.1":
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
+  integrity sha512-OdWReBHRWhdbErVmS15hihVzlkdU8DkKrjDsUIN0P8QZiF4twuzcU3qsPwto2UfibAwPkWqKkNwH1k8b6xNclA==
 
 "@guardian/libs@^7.1.4":
   version "7.1.4"
@@ -14361,6 +14361,11 @@ tslib@^2.0.0, tslib@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
+
+tslib@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
+  integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
 
 tsml@1.0.1:
   version "1.0.1"
