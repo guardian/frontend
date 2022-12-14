@@ -53,7 +53,7 @@ jobs:
                   working-directory: ./dcr
 
             - name: Build DCR
-              run: make build-ci
+              run: make build
               working-directory: ./dcr/dotcom-rendering
 
             - name: Run Cypress
