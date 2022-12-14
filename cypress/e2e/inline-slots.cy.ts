@@ -40,7 +40,7 @@ describe('Slots and iframes load on article pages', () => {
 
 describe('Slots and iframes load on liveblog pages', () => {
 	beforeEach(() => {
-		cy.useConsentedSession();
+		cy.useConsentedSession('liveblog-consented-2');
 	});
 	liveBlogPages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
