@@ -76,6 +76,10 @@ Cypress.Commands.add('useConsentedSession', (name: string) => {
 		);
 
 		cy.visit(articles[0].path);
+		localStorage.setItem(
+			'gu.prefs.engagementBannerLastClosedAt',
+			`{"value":"${new Date().toISOString()}"}`,
+		);
 		cy.allowAllConsent();
 		cy.wait('@consentAll');
 	});
