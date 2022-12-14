@@ -1,11 +1,12 @@
 import { allPages } from '../fixtures/pages';
 
 describe('top-above-nav on pages', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('top-above-nav-consented');
+	});
 	allPages.forEach(({ path }) => {
 		it(`Test ${path} has top-above-nav slot and iframe`, () => {
 			cy.visit(path);
-
-			cy.allowAllConsent();
 
 			cy.window().then((window) => {
 				const { isImmersive } = window.guardian.config.page;

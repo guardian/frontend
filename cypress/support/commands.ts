@@ -1,3 +1,4 @@
+import { articles } from '../fixtures/pages';
 // ***********************************************
 // For comprehensive examples of custom
 // commands please read more here:
@@ -55,10 +56,10 @@ Cypress.Commands.add('hydrate', () => {
 		.each((el) => {
 			cy.log(`Scrolling to ${el.attr('name')}`);
 			cy.wrap(el)
-			.scrollIntoView({ duration: 1000, timeout: 30000 })
-			.should('have.attr', 'data-gu-ready', 'true', {
-				timeout: 30000,
-			});
+				.scrollIntoView({ duration: 1000, timeout: 30000 })
+				.should('have.attr', 'data-gu-ready', 'true', {
+					timeout: 30000,
+				});
 		})
 		.then(() => {
 			cy.scrollTo('top');
@@ -66,4 +67,16 @@ Cypress.Commands.add('hydrate', () => {
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
 			cy.wait(5000);
 		});
+});
+
+Cypress.Commands.add('useConsentedSession', (name: string) => {
+	cy.session(name, () => {
+		cy.intercept('**/graun.vendors~Prebid.js.commercial.js').as(
+			'consentAll',
+		);
+
+		cy.visit(articles[0].path);
+		cy.allowAllConsent();
+		cy.wait('@consentAll');
+	});
 });

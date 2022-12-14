@@ -32,6 +32,8 @@ declare global {
 			rejectAllConsent(): void;
 
 			hydrate(): Chainable<JQuery<HTMLElement>>;
+
+			useConsentedSession(name: string): void;
 		}
 
 		/**

@@ -4,11 +4,12 @@ import { bidderURLs, wins } from '../fixtures/prebid';
 const gamUrl = 'https://securepubads.g.doubleclick.net/gampad/ads?**';
 
 describe('GAM targeting', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('targeting-consented');
+	});
 	it(`checks that a request is made`, () => {
 		const { path } = articles[0];
 		cy.visit(path);
-
-		cy.allowAllConsent();
 
 		cy.intercept(gamUrl).as('gamRequest');
 
@@ -18,8 +19,6 @@ describe('GAM targeting', () => {
 	it(`checks the gdpr_consent param`, () => {
 		const { path } = articles[0];
 		cy.visit(path);
-
-		cy.allowAllConsent();
 
 		cy.intercept({ url: gamUrl }, function (req) {
 			const url = new URL(req.url);
@@ -38,8 +37,6 @@ describe('GAM targeting', () => {
 			throw new Error('No sensitive articles found to run test.');
 
 		cy.visit(sensitivePage.path);
-
-		cy.allowAllConsent();
 
 		cy.intercept({ url: gamUrl }, function (req) {
 			const url = new URL(req.url);
@@ -103,8 +100,6 @@ describe('Prebid targeting', () => {
 		url.searchParams.set('adrefresh', 'false');
 		url.searchParams.delete('adtest');
 		cy.visit(url.toString());
-
-		cy.allowAllConsent();
 
 		cy.getIframeBody('google_ads_iframe_')
 			.find('[data-cy="test-creative"]')
