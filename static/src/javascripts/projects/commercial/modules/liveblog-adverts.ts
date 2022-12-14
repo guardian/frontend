@@ -1,4 +1,5 @@
 import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { log } from '@guardian/libs';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { liveblogDesktopOutstream } from 'common/modules/experiments/tests/liveblog-desktop-outstream';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
@@ -179,6 +180,17 @@ const onUpdate = () => {
  */
 export const init = (): Promise<void> => {
 	if (!commercialFeatures.liveblogAdverts) {
+		return Promise.resolve();
+	}
+
+	const isServerSideAdsMode =
+		window.guardian.config.tests?.serverSideLiveblogInlineAdsVariant ===
+		'variant';
+	if (isServerSideAdsMode) {
+		log(
+			'commercial',
+			'Server side inline ads mode. No client-side inline ad slots inserted',
+		);
 		return Promise.resolve();
 	}
 

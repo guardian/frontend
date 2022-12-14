@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeNetworkFront,
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
+      ServerSideLiveblogInlineAds,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -81,4 +82,14 @@ object HeaderTopBarSearchCapi
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 2, 1),
       participationGroup = Perc1B,
+    )
+
+object ServerSideLiveblogInlineAds
+    extends Experiment(
+      name = "server-side-liveblog-inline-ads",
+      description =
+        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 2, 1),
+      participationGroup = Perc0E,
     )
