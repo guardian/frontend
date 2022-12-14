@@ -1,4 +1,4 @@
-import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial/core';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import fastdom from '../../../lib/fastdom-promise';
 import { mediator } from '../../../lib/mediator';

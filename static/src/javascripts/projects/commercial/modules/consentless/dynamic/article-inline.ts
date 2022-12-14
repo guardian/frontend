@@ -1,4 +1,4 @@
-import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial/core';
 import {
 	computeStickyHeights,
 	insertHeightStyles,

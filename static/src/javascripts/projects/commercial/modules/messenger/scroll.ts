@@ -1,4 +1,4 @@
-import type { RegisterListener } from '@guardian/commercial-core';
+import type { RegisterListener } from '@guardian/commercial/core';
 import type { Viewport } from '../../../../lib/detect-viewport';
 import { getViewport } from '../../../../lib/detect-viewport';
 import { addEventListener } from '../../../../lib/events';

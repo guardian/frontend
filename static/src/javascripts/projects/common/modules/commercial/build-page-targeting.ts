@@ -1,5 +1,5 @@
-import type { PageTargeting } from '@guardian/commercial-core';
-import { buildPageTargeting } from '@guardian/commercial-core';
+import type { PageTargeting } from '@guardian/commercial/core';
+import { buildPageTargeting } from '@guardian/commercial/core';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { log } from '@guardian/libs';
 import { once } from 'lodash-es';

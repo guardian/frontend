@@ -1,5 +1,5 @@
-import { createAdSize } from '@guardian/commercial-core';
-import type { PageTargeting } from '@guardian/commercial-core';
+import { createAdSize } from '@guardian/commercial/core';
+import type { PageTargeting } from '@guardian/commercial/core';
 import {
 	isInAuOrNz as isInAuOrNz_,
 	isInRow as isInRow_,

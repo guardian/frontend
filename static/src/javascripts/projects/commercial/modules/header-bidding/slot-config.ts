@@ -1,5 +1,5 @@
-import { adSizes, createAdSize } from '@guardian/commercial-core';
-import type { AdSize } from '@guardian/commercial-core';
+import { adSizes, createAdSize } from '@guardian/commercial/core';
+import type { AdSize } from '@guardian/commercial/core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import { getBreakpointKey, shouldIncludeMobileSticky } from './utils';
 

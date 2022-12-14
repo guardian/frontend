@@ -1,4 +1,4 @@
-import { createAdSize } from '@guardian/commercial-core';
+import { createAdSize } from '@guardian/commercial/core';
 import type { CountryCode } from '@guardian/libs';
 import { _ } from 'common/modules/commercial/geo-utils';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';

@@ -1,5 +1,5 @@
-import type { AdSize } from '@guardian/commercial-core';
-import { createAdSize } from '@guardian/commercial-core';
+import type { AdSize } from '@guardian/commercial/core';
+import { createAdSize } from '@guardian/commercial/core';
 import { isString } from '@guardian/libs';
 import { reportError } from '../../../../lib/report-error';
 import { dfpEnv } from './dfp-env';

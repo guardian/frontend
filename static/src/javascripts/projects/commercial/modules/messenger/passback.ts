@@ -1,5 +1,5 @@
-import { adSizes } from '@guardian/commercial-core';
-import type { RegisterListener } from '@guardian/commercial-core';
+import { adSizes } from '@guardian/commercial/core';
+import type { RegisterListener } from '@guardian/commercial/core';
 import { log } from '@guardian/libs';
 import { breakpoints } from '@guardian/source-foundations';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';

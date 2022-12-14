@@ -1,4 +1,4 @@
-import { createAdSlot } from '@guardian/commercial-core';
+import { createAdSlot } from '@guardian/commercial/core';
 import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from './dfp/add-slot';
 import { shouldIncludeMobileSticky } from './header-bidding/utils';

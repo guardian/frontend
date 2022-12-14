@@ -1,4 +1,4 @@
-import type { RegisterListener } from '@guardian/commercial-core';
+import type { RegisterListener } from '@guardian/commercial/core';
 import { isString } from '@guardian/libs';
 import { trackNativeAdLinkClick } from '../../../common/modules/analytics/google';
 

@@ -1,5 +1,5 @@
-import type { AdSize, SizeMapping } from '@guardian/commercial-core';
-import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import type { AdSize, SizeMapping } from '@guardian/commercial/core';
+import { adSizes, createAdSlot } from '@guardian/commercial/core';
 import { createAdvertBorder } from 'common/modules/spacefinder-debug-tools';
 import {
 	getCurrentBreakpoint,

@@ -1,4 +1,4 @@
-import type { SizeMapping, SlotName } from '@guardian/commercial-core';
+import type { SizeMapping, SlotName } from '@guardian/commercial/core';
 import { breakpoints as sourceBreakpoints } from '@guardian/source-foundations';
 import { once } from 'lodash-es';
 import type { IasPETSlot, IasTargeting } from 'types/ias';

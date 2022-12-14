@@ -1,4 +1,4 @@
-import { createAdSlot } from '@guardian/commercial-core';
+import { createAdSlot } from '@guardian/commercial/core';
 import { getUrlVars } from 'lib/url';
 import fastdom from '../../../../../lib/fastdom-promise';
 import { spaceFiller } from '../../../../common/modules/article/space-filler';

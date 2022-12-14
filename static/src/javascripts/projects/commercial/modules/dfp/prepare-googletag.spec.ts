@@ -1,4 +1,4 @@
-import type * as CommercialCore from '@guardian/commercial-core';
+import type * as CommercialCore from '@guardian/commercial/core';
 import {
 	getConsentFor,
 	onConsent,
@@ -89,9 +89,9 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 		dfpAdvertising: true,
 	},
 }));
-jest.mock('@guardian/commercial-core', (): MockCommercialCore => {
+jest.mock('@guardian/commercial/core', (): MockCommercialCore => {
 	const commercialCore: typeof CommercialCore = jest.requireActual(
-		'@guardian/commercial-core',
+		'@guardian/commercial/core',
 	);
 	const { createAdSize } = commercialCore;
 	return {

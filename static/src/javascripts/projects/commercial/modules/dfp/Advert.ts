@@ -2,8 +2,8 @@ import {
 	concatSizeMappings,
 	createAdSize,
 	slotSizeMappings,
-} from '@guardian/commercial-core';
-import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial-core';
+} from '@guardian/commercial/core';
+import type { AdSize, SizeMapping, SlotName } from '@guardian/commercial/core';
 import { breakpoints as sourceBreakpoints } from '@guardian/source-foundations';
 import fastdom from '../../../../lib/fastdom-promise';
 import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';

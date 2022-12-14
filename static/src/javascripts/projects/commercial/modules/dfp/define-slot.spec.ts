@@ -1,5 +1,5 @@
-import type { SizeMapping } from '@guardian/commercial-core';
-import { adSizes } from '@guardian/commercial-core';
+import type { SizeMapping } from '@guardian/commercial/core';
+import { adSizes } from '@guardian/commercial/core';
 import { toGoogleTagSize } from 'common/modules/commercial/lib/googletag-ad-size';
 import { _, defineSlot } from './define-slot';
 

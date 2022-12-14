@@ -1,4 +1,4 @@
-import { adSizes, createAdSlot } from '@guardian/commercial-core';
+import { adSizes, createAdSlot } from '@guardian/commercial/core';
 import { log } from '@guardian/libs';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
 import { getUrlVars } from 'lib/url';
