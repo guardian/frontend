@@ -21,10 +21,22 @@ import play.api.test.Helpers._
   lazy val latestIndexController =
     new LatestIndexController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
+  private val seriesTagPath = "football/series/thefiver"
+
   it should "redirect to latest for a series" in {
-    val result = latestIndexController.latest("football/series/thefiver")(TestRequest())
+    val result = latestIndexController.latest(seriesTagPath)(TestRequest())
     status(result) should be(Found)
     header("Location", result).head should include("/football/20")
+  }
+
+  it should "redirect while indicating that the redirecting url should not appear in Google Search results" in {
+    val result = latestIndexController.latest(seriesTagPath)(TestRequest())
+    // We've noticed /latest paths appearing in Google Search results - probably as a result of using /latest in
+    // standfirsts etc. Inadvertently this gives these redirect urls search-rank authority. It's possible that as a
+    // result /latest may be cannibalising the search authority of liveblogs that take series tags (due to the
+    // association of latest liveblog with the redirect).
+    // https://developers.google.com/search/docs/crawling-indexing/block-indexing
+    header("X-Robots-Tag", result).head should include("noindex")
   }
 
   it should "redirect to latest email for a blog" in {
