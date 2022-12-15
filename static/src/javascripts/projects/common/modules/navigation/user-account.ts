@@ -1,6 +1,9 @@
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
+import { submitInsertEvent } from '../commercial/acquisitions-ophan';
+
+const NOTIFICATION_COMPONENT_TYPE = 'RETENTION_HEADER';
 
 const updateCommentLink = (commentItems: Element[]): void => {
 	const user = getUserFromCookie();
@@ -26,7 +29,39 @@ const updateCommentLink = (commentItems: Element[]): void => {
 	}
 };
 
-const trackFirstImpression = (el: HTMLElement): void => {
+const buildOphanComponentWithNotifications = (
+	target: string,
+	notifications: HeaderNotification[],
+) => {
+	if (notifications.length > 0) {
+		return {
+			componentType: NOTIFICATION_COMPONENT_TYPE,
+			id: target,
+			labels: notifications.map((n) => n.ophanLabel),
+		};
+	}
+
+	return undefined;
+};
+
+const trackNotificationsInsert = (
+	target: string,
+	notifications: HeaderNotification[],
+): void => {
+	const ophanComponent = buildOphanComponentWithNotifications(
+		target,
+		notifications,
+	);
+	if (ophanComponent) {
+		submitInsertEvent(ophanComponent);
+	}
+};
+
+const setupTrackNotificationsView = (
+	el: HTMLElement,
+	target: string,
+	notifications: HeaderNotification[],
+): void => {
 	let hasBeenSeen = false;
 
 	if ('IntersectionObserver' in window) {
@@ -36,6 +71,14 @@ const trackFirstImpression = (el: HTMLElement): void => {
 					if (!hasBeenSeen) {
 						hasBeenSeen = true;
 						// Track impression
+						const ophanComponent =
+							buildOphanComponentWithNotifications(
+								target,
+								notifications,
+							);
+						if (ophanComponent) {
+							submitInsertEvent(ophanComponent);
+						}
 					}
 				}
 			},
@@ -49,13 +92,13 @@ const trackFirstImpression = (el: HTMLElement): void => {
 
 const groupNotificationsByTarget = (
 	notifications: HeaderNotification[],
-): Record<string, string[]> => {
-	const notificationsMap: Record<string, string[]> = {};
-	notifications.forEach(({ message, target }) => {
-		if (Array.isArray(notificationsMap[target])) {
-			notificationsMap[target].push(message);
+): Record<string, HeaderNotification[]> => {
+	const notificationsMap: Record<string, HeaderNotification[]> = {};
+	notifications.forEach((notification) => {
+		if (Array.isArray(notificationsMap[notification.target])) {
+			notificationsMap[notification.target].push(notification);
 		} else {
-			notificationsMap[target] = [message];
+			notificationsMap[notification.target] = [notification];
 		}
 	});
 	return notificationsMap;
@@ -81,7 +124,7 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 					groupNotificationsByTarget(notifications);
 
 				Object.entries(groupedNotifications).map(
-					([target, messages]) => {
+					([target, notifications]) => {
 						const menuItem = menu.querySelector(
 							`a[data-link-id=${target}]`,
 						);
@@ -93,20 +136,28 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 								'top-bar__user-account-notification-badge',
 							);
 
-							const messageEls = messages.map((message) => {
-								const messageEl = document.createElement('div');
-								messageEl.classList.add(
-									'dropdown-menu__notification',
-								);
-								messageEl.innerText = message;
-								trackFirstImpression(messageEl);
-								return messageEl;
-							});
+							const messageEls = notifications.map(
+								(notification) => {
+									const messageEl =
+										document.createElement('div');
+									messageEl.classList.add(
+										'dropdown-menu__notification',
+									);
+									messageEl.innerText = notification.message;
+									return messageEl;
+								},
+							);
 							const notificationsContainerEl =
 								menuItem.querySelector(
 									'.js-user-account-menu-notifications-container',
 								);
 							if (notificationsContainerEl) {
+								trackNotificationsInsert(target, notifications);
+								setupTrackNotificationsView(
+									notificationsContainerEl,
+									target,
+									notifications,
+								);
 								notificationsContainerEl.append(...messageEls);
 							}
 						}
