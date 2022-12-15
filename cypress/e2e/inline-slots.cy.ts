@@ -9,6 +9,10 @@ const liveBlogPages = liveblogs.filter(
 );
 
 describe('Slots and iframes load on article pages', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('article-consented');
+	});
+
 	pages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has at least ${expectedMinInlineSlotsOnPage} inline total slots at breakpoint ${breakpoint}`, () => {
@@ -19,8 +23,6 @@ describe('Slots and iframes load on article pages', () => {
 						mockIntersectionObserver(win, '.ad-slot--inline');
 					},
 				});
-
-				cy.allowAllConsent();
 
 				cy.get('.ad-slot--inline')
 					.should(
@@ -37,6 +39,9 @@ describe('Slots and iframes load on article pages', () => {
 });
 
 describe('Slots and iframes load on liveblog pages', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('liveblog-consented-2');
+	});
 	liveBlogPages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has at least ${expectedMinInlineSlotsOnPage} inline total slots at breakpoint ${breakpoint}`, () => {
@@ -50,8 +55,6 @@ describe('Slots and iframes load on liveblog pages', () => {
 						);
 					},
 				});
-
-				cy.allowAllConsent();
 
 				cy.get('.ad-slot--liveblog-inline').should(
 					'have.length.at.least',

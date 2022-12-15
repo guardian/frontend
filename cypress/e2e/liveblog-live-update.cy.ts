@@ -5,6 +5,10 @@ import { mockIntersectionObserver } from '../lib/util';
 const pages = [...liveblogs];
 
 describe('Liveblog live updates', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('liveblog-live-update-consented');
+	});
+
 	pages.forEach(({ path, expectedMinInlineSlotsOnPage }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ads are inserted when liveblogs live update, breakpoint: ${breakpoint}`, () => {
@@ -15,8 +19,6 @@ describe('Liveblog live updates', () => {
 						mockIntersectionObserver(win, '#top-of-blog');
 					},
 				});
-
-				cy.allowAllConsent();
 
 				cy.get('#liveblog-body .ad-slot').its('length').as('adCount');
 

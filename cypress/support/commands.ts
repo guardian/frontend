@@ -1,3 +1,6 @@
+import { articles } from '../fixtures/pages';
+import { storage } from '@guardian/libs';
+
 // ***********************************************
 // For comprehensive examples of custom
 // commands please read more here:
@@ -55,10 +58,10 @@ Cypress.Commands.add('hydrate', () => {
 		.each((el) => {
 			cy.log(`Scrolling to ${el.attr('name')}`);
 			cy.wrap(el)
-			.scrollIntoView({ duration: 1000, timeout: 30000 })
-			.should('have.attr', 'data-gu-ready', 'true', {
-				timeout: 30000,
-			});
+				.scrollIntoView({ duration: 1000, timeout: 30000 })
+				.should('have.attr', 'data-gu-ready', 'true', {
+					timeout: 30000,
+				});
 		})
 		.then(() => {
 			cy.scrollTo('top');
@@ -66,4 +69,22 @@ Cypress.Commands.add('hydrate', () => {
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
 			cy.wait(5000);
 		});
+});
+
+Cypress.Commands.add('useConsentedSession', (name: string) => {
+	cy.session(name, () => {
+		storage.local.set('gu.geo.override', 'GB');
+
+		cy.intercept('**/graun.vendors~Prebid.js.commercial.js').as(
+			'consentAll',
+		);
+
+		cy.visit(articles[0].path);
+		localStorage.setItem(
+			'gu.prefs.engagementBannerLastClosedAt',
+			`{"value":"${new Date().toISOString()}"}`,
+		);
+		cy.allowAllConsent();
+		cy.wait('@consentAll');
+	});
 });

@@ -3,6 +3,9 @@ import { articles, liveblogs } from '../fixtures/pages';
 import { mockIntersectionObserver } from '../lib/util';
 
 describe('merchandising-high slot on pages', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('merchandising-high-consented');
+	});
 	[...articles, ...liveblogs].forEach(({ path }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
@@ -16,8 +19,6 @@ describe('merchandising-high slot on pages', () => {
 						);
 					},
 				});
-
-				cy.allowAllConsent();
 
 				cy.get('#dfp-ad--merchandising-high')
 					.scrollIntoView({ duration: 200 })

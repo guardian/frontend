@@ -3,6 +3,9 @@ import { articles, liveblogs } from '../fixtures/pages';
 import { mockIntersectionObserver } from '../lib/util';
 
 describe('mostpop slot on pages', () => {
+	beforeEach(() => {
+		cy.useConsentedSession('mostpop-consented');
+	});
 	[...articles, ...liveblogs].forEach(({ path }) => {
 		breakpoints.forEach(({ breakpoint, width, height }) => {
 			it(`Test ${path} has correct slot and iframe at breakpoint ${breakpoint}`, () => {
@@ -13,8 +16,6 @@ describe('mostpop slot on pages', () => {
 						mockIntersectionObserver(win, '#dfp-ad--mostpop');
 					},
 				});
-
-				cy.allowAllConsent();
 
 				// Check that the mostpop ad slot is on the page
 				cy.get('#dfp-ad--mostpop').should('exist');
