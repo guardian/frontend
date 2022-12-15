@@ -41,6 +41,7 @@ const hasShowcaseMainElement =
 	window.guardian.config.page.hasShowcaseMainElement;
 
 const adSlotContainerClass = 'ad-slot-container';
+const adSlotClass = 'ad-slot';
 
 const adSlotContainerRules: RuleSpacing = {
 	minAbove: 500,
@@ -157,8 +158,8 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<boolean> => {
 	const hasLeftCol = ['leftCol', 'wide'].includes(tweakpoint);
 
 	const ignoreList = hasLeftCol
-		? ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])`
-		: ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(#sign-in-gate):not(.sfdebug)`;
+		? ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(.${adSlotClass}):not(#sign-in-gate):not(.sfdebug):not([data-spacefinder-role="richLink"])`
+		: ` > :not(p):not(h2):not(.${adSlotContainerClass}):not(.${adSlotClass}):not(#sign-in-gate):not(.sfdebug)`;
 
 	const isImmersive = window.guardian.config.page.isImmersive;
 
