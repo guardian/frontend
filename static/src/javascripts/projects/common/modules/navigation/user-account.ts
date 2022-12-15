@@ -1,7 +1,10 @@
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
-import { submitInsertEvent } from '../commercial/acquisitions-ophan';
+import {
+	submitInsertEvent,
+	submitViewEvent,
+} from '../commercial/acquisitions-ophan';
 
 const NOTIFICATION_COMPONENT_TYPE = 'RETENTION_HEADER';
 
@@ -58,7 +61,7 @@ const trackNotificationsInsert = (
 };
 
 const setupTrackNotificationsView = (
-	el: HTMLElement,
+	el: Element,
 	target: string,
 	notifications: HeaderNotification[],
 ): void => {
@@ -77,8 +80,9 @@ const setupTrackNotificationsView = (
 								notifications,
 							);
 						if (ophanComponent) {
-							submitInsertEvent(ophanComponent);
+							submitViewEvent(ophanComponent);
 						}
+						notifications.forEach((n) => n.logImpression());
 					}
 				}
 			},
