@@ -1,4 +1,6 @@
 import { articles } from '../fixtures/pages';
+import { storage } from '@guardian/libs';
+
 // ***********************************************
 // For comprehensive examples of custom
 // commands please read more here:
@@ -71,6 +73,8 @@ Cypress.Commands.add('hydrate', () => {
 
 Cypress.Commands.add('useConsentedSession', (name: string) => {
 	cy.session(name, () => {
+		storage.local.set('gu.geo.override', 'GB');
+
 		cy.intercept('**/graun.vendors~Prebid.js.commercial.js').as(
 			'consentAll',
 		);
