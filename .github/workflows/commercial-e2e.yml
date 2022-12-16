@@ -15,8 +15,8 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    test:
-        name: Test
+    build:
+        name: Build
         runs-on: ubuntu-latest
         steps:
             # Frontend
@@ -34,6 +34,10 @@ jobs:
               uses: bahmutov/npm-install@v1
               with:
                   working-directory: ./frontend
+
+            - name: Build Frontend
+              run: make commercial-compile-dev
+              working-directory: ./frontend
 
             # DCR
             - name: Checkout DCR
@@ -56,25 +60,46 @@ jobs:
               run: make build
               working-directory: ./dcr/dotcom-rendering
 
+            - name: Upload the built files
+              uses: actions/upload-artifact@v3
+              with:
+                  name: build
+                  path: |
+                      frontend/static/target/javascripts/commercial
+                      dcr/dotcom-rendering/dist
+    e2e:
+        name: E2E Tests
+        runs-on: ubuntu-latest
+        container: ubuntu-latest
+        needs: build
+        strategy:
+            fail-fast: false
+            matrix:
+                # run copies of the current job in parallel
+                containers: [1, 2, 3]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Download the build folders
+              uses: actions/download-artifact@v3
+              with:
+                  name: build
+
             - name: Run Cypress
               uses: cypress-io/github-action@v4
               with:
                   install: false
-                  start: make -C ../dcr/dotcom-rendering start-ci, make commercial-dev
+                  start: make -C ../dcr/dotcom-rendering start-ci, make commercial-serve
                   working-directory: frontend
                   wait-on: 'http://localhost:3030, http://localhost:3031/graun.standalone.commercial.js'
                   wait-on-timeout: 30
-                  browser: chrome
-                  spec: cypress/e2e/**/*
+                  command: yarn cy2 run --parallel --record --key 'Commercial E2E Tests' --ci-build-id '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}' --spec cypress/e2e/**/*
               env:
                   PORT: 3030
                   COMMERCIAL_BUNDLE_URL: http://localhost:3031/graun.standalone.commercial.js
-
-            - uses: actions/upload-artifact@v2
-              if: always()
-              with:
-                  name: cypress-videos
-                  path: frontend/cypress/videos
+                  DISABLE_SNAPSHOT_REQUIRE: true
+                  CYPRESS_API_URL: https://sorry-cypress.code.dev-gutools.co.uk
 
             - uses: actions/upload-artifact@v2
               if: failure()

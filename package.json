@@ -101,6 +101,7 @@
 		"cpy": "^7.3.0",
 		"cssstats": "^3.1.0",
 		"csstype": "^3.0.6",
+		"cy2": "^3.4.3",
 		"cypress": "^12.1.0",
 		"eslint": "^7.17.0",
 		"eslint-config-prettier": "^7.1.0",
@@ -119,6 +120,7 @@
 		"glob": "^7.2.0",
 		"gzip-size": "^3.0.0",
 		"hasha": "^3.0.0",
+		"http-server": "^14.1.1",
 		"jest": "^26.6.3",
 		"jest-environment-jsdom": "^26.6.2",
 		"jest-environment-jsdom-global": "^2.0.4",
@@ -223,7 +225,8 @@
 		"cypress:open": "cypress open --e2e --browser=chrome",
 		"cypress:run": "cypress run --spec 'cypress/e2e/**/*'",
 		"cypress:open:snapshot": "cypress open --e2e --browser=chrome --config specPattern='cypress/snapshot/**/*'",
-		"cypress:run:snapshot": "percy exec -- cypress run --config specPattern='cypress/snapshot/**/*'"
+		"cypress:run:snapshot": "percy exec -- cypress run --config specPattern='cypress/snapshot/**/*'",
+		"cypress:run:parallel": "DISABLE_SNAPSHOT_REQUIRE=true CYPRESS_API_URL=\"https://sorry-cypress.code.dev-gutools.co.uk\" cy2 run --parallel --record --key commercial-e2e --ci-build-id commercial-e2e"
 	},
 	"prettier": "@guardian/prettier"
 }

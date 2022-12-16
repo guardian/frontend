@@ -130,6 +130,9 @@ commercial: install
 commercial-compile: install # PRIVATE
 	@./tools/task-runner/runner commercial/compile
 
+commercial-compile-dev: install # PRIVATE
+	@./tools/task-runner/runner commercial/compile --dev
+
 commercial-validate: install # PRIVATE
 	@./tools/task-runner/runner commercial/validate
 
@@ -141,3 +144,6 @@ commercial-watch: commercial-compile
 
 commercial-dev:
 	@OVERRIDE_BUNDLE=true yarn webpack-dev-server -c ./webpack.config.commercial.dev.js
+
+commercial-serve:
+	@yarn http-server -p 3031 static/target/javascripts/commercial
