@@ -99,6 +99,7 @@ case class DotcomRenderingDataModel(
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
     onwards: Option[Seq[OnwardCollectionResponse]],
+    showTableOfContents: Boolean,
 )
 
 object DotcomRenderingDataModel {
@@ -173,6 +174,7 @@ object DotcomRenderingDataModel {
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
         "promotedNewsletter" -> model.promotedNewsletter,
+        "showTableOfContents" -> model.showTableOfContents,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -525,6 +527,7 @@ object DotcomRenderingDataModel {
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
       onwards = onwards,
+      showTableOfContents = content.fields.showTableOfContents.getOrElse(false),
     )
   }
 }

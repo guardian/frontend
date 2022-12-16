@@ -77,6 +77,7 @@ object Fields {
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJoda),
       lang = apiContent.fields.flatMap(_.lang),
       showAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks),
+      showTableOfContents = apiContent.fields.flatMap(_.showTableOfContents),
     )
   }
 
@@ -114,6 +115,7 @@ final case class Fields(
     firstPublicationDate: Option[DateTime],
     lang: Option[String],
     showAffiliateLinks: Option[Boolean],
+    showTableOfContents: Option[Boolean],
 ) {
 
   lazy val shortUrlId = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
