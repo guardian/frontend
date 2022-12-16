@@ -165,7 +165,11 @@ const getSlots = (
 		{
 			key: 'inline1',
 			sizes: isArticle
-				? [adSizes.outstreamMobile, adSizes.mpu]
+				? [
+						adSizes.outstreamMobile,
+						adSizes.mpu,
+						adSizes.portraitInterstitial,
+				  ]
 				: [adSizes.mpu],
 		},
 		{
