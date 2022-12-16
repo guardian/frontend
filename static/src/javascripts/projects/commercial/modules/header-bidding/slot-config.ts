@@ -1,17 +1,7 @@
 import { adSizes, createAdSize } from '@guardian/commercial-core';
 import type { AdSize } from '@guardian/commercial-core';
 import type { Advert } from 'commercial/modules/dfp/Advert';
-import {
-	getBreakpointKey,
-	shouldIncludeMobileSticky,
-	stripMobileSuffix,
-	stripTrailingNumbersAbove1,
-} from './utils';
-
-const slotKeyMatchesAd = (pbs: HeaderBiddingSlot, ad: Advert): boolean =>
-	stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(pbs.key);
-
-const REGEX_DFP_AD = /^dfp-ad--\d+/;
+import { getBreakpointKey, shouldIncludeMobileSticky } from './utils';
 
 const getHbBreakpoint = () => {
 	switch (getBreakpointKey()) {
@@ -53,37 +43,62 @@ const filterBySizeMapping =
 		};
 	};
 
-const filterByAdvert = (
-	ad: Advert,
-	slots: HeaderBiddingSlot[],
-): HeaderBiddingSlot[] => {
-	const adUnits = slots.filter((slot) => {
-		if (slot.key === 'banner') {
-			// Special case for interactive banner slots
-			// as they are currently incorrectly identified.
-			const isDfpAd = (id: string) => !!REGEX_DFP_AD.exec(id);
-			return (
-				(isDfpAd(ad.id) &&
-					ad.node.classList.contains('ad-slot--banner-ad-desktop')) ||
-				slotKeyMatchesAd(slot, ad)
-			);
-		}
+const getHeaderBiddingKey = (
+	slotName: HeaderBiddingSlotName[],
+	name: string | undefined,
+): HeaderBiddingSizeKey | undefined => {
+	if (slotName.some((key) => key === name)) {
+		return name as HeaderBiddingSizeKey;
+	}
 
-		return slotKeyMatchesAd(slot, ad);
-	});
-	return adUnits;
+	if (name?.includes('inline')) {
+		return 'inline';
+	}
+
+	return undefined;
 };
 
-const getSlots = (
+const getSlotNamesFromSizeMapping = (
+	sizeMapping: HeaderBiddingSizeMapping,
+): HeaderBiddingSlotName[] =>
+	Object.keys(sizeMapping).filter(
+		(key): key is HeaderBiddingSlotName => key !== 'inline',
+	);
+
+const filterByAdvert = (
+	ad: Advert,
 	breakpoint: 'mobile' | 'tablet' | 'desktop',
+	sizeMapping: HeaderBiddingSizeMapping,
 ): HeaderBiddingSlot[] => {
+	const slotNames = getSlotNamesFromSizeMapping(sizeMapping);
+	const key = getHeaderBiddingKey(slotNames, ad.node.dataset.name);
+
+	if (!key) {
+		return [];
+	}
+
+	const sizes = sizeMapping[key][breakpoint];
+
+	if (!sizes || sizes.length < 1) {
+		return [];
+	}
+
+	return [
+		{
+			key,
+			sizes,
+		},
+	];
+};
+
+const getSlots = (): HeaderBiddingSizeMapping => {
 	const { contentType, hasShowcaseMainElement } = window.guardian.config.page;
 	const isArticle = contentType === 'Article';
 	const isCrossword = contentType === 'Crossword';
 	const hasExtendedMostPop =
 		isArticle && window.guardian.config.switches.extendedMostPopular;
 
-	const slots: HeaderBiddingSizeMapping = {
+	return {
 		right: {
 			desktop: hasShowcaseMainElement
 				? [adSizes.mpu]
@@ -122,6 +137,15 @@ const getSlots = (
 				  ]
 				: [adSizes.mpu],
 		},
+		inline2: {
+			desktop: isArticle
+				? [adSizes.skyscraper, adSizes.halfPage, adSizes.mpu]
+				: [adSizes.mpu],
+			tablet: [adSizes.mpu],
+			mobile: isArticle
+				? [adSizes.mpu, adSizes.portraitInterstitial]
+				: [adSizes.mpu],
+		},
 		mostpop: {
 			desktop: hasExtendedMostPop
 				? [adSizes.halfPage, adSizes.mpu]
@@ -157,16 +181,6 @@ const getSlots = (
 			tablet: isCrossword ? [adSizes.leaderboard] : [],
 		},
 	};
-
-	return Object.entries(slots)
-		.map(([key, sizes]) => {
-			const _key = key as keyof HeaderBiddingSizeMapping;
-			return {
-				key: _key,
-				sizes: sizes[breakpoint] ?? [],
-			};
-		})
-		.filter(({ sizes }) => sizes.length > 0);
 };
 
 export const getHeaderBiddingAdSlots = (
@@ -174,13 +188,9 @@ export const getHeaderBiddingAdSlots = (
 	slotFlatMap: SlotFlatMap = (s) => [s],
 ): HeaderBiddingSlot[] => {
 	const breakpoint = getHbBreakpoint();
-	const headerBiddingSlots = filterByAdvert(ad, getSlots(breakpoint));
+	const headerBiddingSlots = filterByAdvert(ad, breakpoint, getSlots());
 	return headerBiddingSlots
 		.map(filterBySizeMapping(ad.sizes[breakpoint]))
 		.map(slotFlatMap)
 		.reduce((acc, elt) => acc.concat(elt), []); // the "flat" in "flatMap"
-};
-
-export const _ = {
-	getSlots,
 };

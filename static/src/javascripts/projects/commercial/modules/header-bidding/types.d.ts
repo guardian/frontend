@@ -3,30 +3,25 @@ import type { AdSize } from '@guardian/commercial-core';
 declare global {
 	type HeaderBiddingSize = AdSize;
 
+	type HeaderBiddingSlotName =
+		| 'banner'
+		| 'comments'
+		| 'crossword-banner'
+		| 'mobile-sticky'
+		| 'mostpop'
+		| 'right'
+		| 'top-above-nav'
+		| `inline${number}`;
+
+	type HeaderBiddingSizeKey = HeaderBiddingSlotName | 'inline';
+
 	type HeaderBiddingSlot = {
-		key:
-			| 'top-above-nav'
-			| 'right'
-			| 'inline1'
-			| 'inline'
-			| 'mostpop'
-			| 'comments'
-			| 'mobile-sticky'
-			| 'banner'
-			| 'crossword-banner';
+		key: HeaderBiddingSizeKey;
 		sizes: HeaderBiddingSize[];
 	};
 
 	type HeaderBiddingSizeMapping = Record<
-		| 'top-above-nav'
-		| 'right'
-		| 'inline1'
-		| 'inline'
-		| 'mostpop'
-		| 'comments'
-		| 'mobile-sticky'
-		| 'banner'
-		| 'crossword-banner',
+		HeaderBiddingSizeKey,
 		Partial<Record<'desktop' | 'tablet' | 'mobile', AdSize[]>>
 	>;
 
