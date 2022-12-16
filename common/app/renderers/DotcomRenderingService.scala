@@ -41,6 +41,17 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import model.dotcomrendering.Trail
 
+sealed trait Platform {
+  val dcrPath: String
+}
+
+case object Web extends Platform {
+  val dcrPath = "/Article"
+}
+case object MobileApps extends Platform {
+  val dcrPath = "/apps/Article"
+}
+
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
 case class DCRTimeoutException(message: String) extends TimeoutException(message)
@@ -169,6 +180,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
       onwards: Option[Seq[OnwardCollectionResponse]],
+      platform: Platform = Web,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
@@ -187,7 +199,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Article", page.metadata.cacheTime)
+    post(ws, json, Configuration.rendering.baseURL + platform.dcrPath, page.metadata.cacheTime)
   }
 
   def getBlocks(

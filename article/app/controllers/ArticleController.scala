@@ -12,7 +12,7 @@ import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import renderers.DotcomRenderingService
+import renderers.{DotcomRenderingService, MobileApps}
 import services.{CAPILookup, NewsletterService}
 import services.dotcomrendering.{ArticlePicker, OnwardsPicker, PressedArticle, RemoteRender}
 import views.support._
@@ -52,6 +52,27 @@ class ArticleController(
       mapModel(path, ArticleBlocks) { (article, blocks) =>
         render(path, article, blocks)
       }
+    }
+  }
+
+  def renderMobileApps(path: String, edition: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      mapModel(path, ArticleBlocks) { (article, blocks) => {
+        val pageType: PageType = PageType(article, request, context)
+        val newsletter = newsletterService.getNewsletterForArticle(article)
+        remoteRenderer.getArticle(
+          ws,
+          article,
+          blocks,
+          pageType,
+          filterKeyEvents = false,
+          false,
+          newsletter = newsletter,
+          topicResult = None,
+          onwards = None,
+          platform = MobileApps,
+        )
+      }}
     }
   }
 
