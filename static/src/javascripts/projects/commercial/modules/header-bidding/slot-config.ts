@@ -83,88 +83,38 @@ const getSlots = (
 	const hasExtendedMostPop =
 		isArticle && window.guardian.config.switches.extendedMostPopular;
 
-	const commonSlots: HeaderBiddingSlot[] = [
-		{
-			key: 'right',
-			sizes: hasShowcaseMainElement
+	const slots: HeaderBiddingSizeMapping = {
+		right: {
+			desktop: hasShowcaseMainElement
+				? [adSizes.mpu]
+				: [adSizes.halfPage, adSizes.mpu],
+			tablet: hasShowcaseMainElement
+				? [adSizes.mpu]
+				: [adSizes.halfPage, adSizes.mpu],
+			mobile: hasShowcaseMainElement
 				? [adSizes.mpu]
 				: [adSizes.halfPage, adSizes.mpu],
 		},
-	];
-	const desktopSlots: HeaderBiddingSlot[] = [
-		{
-			key: 'top-above-nav',
-			sizes: [adSizes.billboard, adSizes.leaderboard],
+		'top-above-nav': {
+			desktop: [adSizes.billboard, adSizes.leaderboard],
+			tablet: [adSizes.leaderboard],
+			mobile: [adSizes.mpu],
 		},
-		{
-			key: 'inline',
-			sizes: isArticle
+		inline: {
+			desktop: isArticle
 				? [adSizes.skyscraper, adSizes.halfPage, adSizes.mpu]
 				: [adSizes.mpu],
+			tablet: [adSizes.mpu],
+			mobile: [adSizes.mpu],
 		},
-		{
-			key: 'inline1',
-			sizes: isArticle
+		inline1: {
+			desktop: isArticle
 				? [adSizes.mpu, adSizes.outstreamDesktop]
 				: [adSizes.mpu],
-		},
-		{
-			key: 'mostpop',
-			sizes: hasExtendedMostPop
-				? [adSizes.halfPage, adSizes.mpu]
-				: [adSizes.mpu],
-		},
-		{
-			key: 'comments',
-			sizes: [adSizes.skyscraper, adSizes.mpu, adSizes.halfPage],
-		},
-		// Banner slots appear on interactives, like on
-		// https://www.theguardian.com/us-news/ng-interactive/2018/nov/06/midterm-elections-2018-live-results-latest-winners-and-seats
-		{
-			key: 'banner',
-			sizes: [
-				createAdSize(88, 70),
-				adSizes.leaderboard,
-				adSizes.cascade,
-				createAdSize(900, 250),
-				adSizes.billboard,
-			],
-		},
-	];
-	const tabletSlots: HeaderBiddingSlot[] = [
-		{
-			key: 'top-above-nav',
-			sizes: [adSizes.leaderboard],
-		},
-		{
-			key: 'inline',
-			sizes: [adSizes.mpu],
-		},
-		{
-			key: 'inline1',
-			sizes: isArticle
+			tablet: isArticle
 				? [adSizes.mpu, adSizes.outstreamDesktop]
 				: [adSizes.mpu],
-		},
-		{
-			key: 'mostpop',
-			sizes: hasExtendedMostPop
-				? [adSizes.halfPage, adSizes.mpu, adSizes.leaderboard]
-				: [adSizes.mpu],
-		},
-	];
-	const mobileSlots: HeaderBiddingSlot[] = [
-		{
-			key: 'top-above-nav',
-			sizes: [adSizes.mpu],
-		},
-		{
-			key: 'inline',
-			sizes: [adSizes.mpu],
-		},
-		{
-			key: 'inline1',
-			sizes: isArticle
+			mobile: isArticle
 				? [
 						adSizes.outstreamMobile,
 						adSizes.mpu,
@@ -172,34 +122,51 @@ const getSlots = (
 				  ]
 				: [adSizes.mpu],
 		},
-		{
-			key: 'mostpop',
-			sizes: [adSizes.mpu],
+		mostpop: {
+			desktop: hasExtendedMostPop
+				? [adSizes.halfPage, adSizes.mpu]
+				: [adSizes.mpu],
+			tablet: hasExtendedMostPop
+				? [adSizes.halfPage, adSizes.mpu, adSizes.leaderboard]
+				: [adSizes.mpu],
+			mobile: [adSizes.mpu],
 		},
-	];
-	const mobileStickySlot: HeaderBiddingSlot = {
-		key: 'mobile-sticky',
-		sizes: [adSizes.mobilesticky],
-	};
-
-	const crosswordBannerSlot: HeaderBiddingSlot = {
-		key: 'crossword-banner',
-		sizes: [adSizes.leaderboard],
-	};
-
-	const crosswordSlots = isCrossword ? [crosswordBannerSlot] : [];
-
-	switch (breakpoint) {
-		case 'mobile':
-			return shouldIncludeMobileSticky() &&
+		comments: {
+			desktop: [adSizes.skyscraper, adSizes.mpu, adSizes.halfPage],
+		},
+		banner: {
+			// Banner slots appear on interactives, like on
+			// https://www.theguardian.com/us-news/ng-interactive/2018/nov/06/midterm-elections-2018-live-results-latest-winners-and-seats
+			desktop: [
+				createAdSize(88, 70),
+				adSizes.leaderboard,
+				adSizes.cascade,
+				createAdSize(900, 250),
+				adSizes.billboard,
+			],
+		},
+		'mobile-sticky': {
+			mobile:
+				shouldIncludeMobileSticky() &&
 				window.guardian.config.switches.mobileStickyPrebid
-				? commonSlots.concat([...mobileSlots, mobileStickySlot])
-				: commonSlots.concat(mobileSlots);
-		case 'tablet':
-			return commonSlots.concat(tabletSlots, crosswordSlots);
-		default:
-			return commonSlots.concat(desktopSlots, crosswordSlots);
-	}
+					? [adSizes.mobilesticky]
+					: [],
+		},
+		'crossword-banner': {
+			desktop: isCrossword ? [adSizes.leaderboard] : [],
+			tablet: isCrossword ? [adSizes.leaderboard] : [],
+		},
+	};
+
+	return Object.entries(slots)
+		.map(([key, sizes]) => {
+			const _key = key as keyof HeaderBiddingSizeMapping;
+			return {
+				key: _key,
+				sizes: sizes[breakpoint] ?? [],
+			};
+		})
+		.filter(({ sizes }) => sizes.length > 0);
 };
 
 export const getHeaderBiddingAdSlots = (

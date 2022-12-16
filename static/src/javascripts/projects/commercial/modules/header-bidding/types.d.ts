@@ -17,6 +17,19 @@ declare global {
 		sizes: HeaderBiddingSize[];
 	};
 
+	type HeaderBiddingSizeMapping = Record<
+		| 'top-above-nav'
+		| 'right'
+		| 'inline1'
+		| 'inline'
+		| 'mostpop'
+		| 'comments'
+		| 'mobile-sticky'
+		| 'banner'
+		| 'crossword-banner',
+		Partial<Record<'desktop' | 'tablet' | 'mobile', AdSize[]>>
+	>;
+
 	type PrebidOzoneParams = {
 		publisherId: string;
 		siteId: string;
