@@ -171,14 +171,13 @@ const getSlots = (
 
 export const getHeaderBiddingAdSlots = (
 	ad: Advert,
-	slotFlatMap?: SlotFlatMap,
+	slotFlatMap: SlotFlatMap = (s) => [s],
 ): HeaderBiddingSlot[] => {
-	const effectiveSlotFlatMap = slotFlatMap ?? ((s) => [s]); // default to identity
 	const breakpoint = getHbBreakpoint();
 	const headerBiddingSlots = filterByAdvert(ad, getSlots(breakpoint));
 	return headerBiddingSlots
 		.map(filterBySizeMapping(ad.sizes[breakpoint]))
-		.map(effectiveSlotFlatMap)
+		.map(slotFlatMap)
 		.reduce((acc, elt) => acc.concat(elt), []); // the "flat" in "flatMap"
 };
 
