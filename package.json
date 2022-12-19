@@ -96,6 +96,7 @@
     "chance": "^1.0.11",
     "chokidar": "^3.5.2",
     "circular-dependency-plugin": "^5.0.1",
+    "copy-webpack-plugin": "6",
     "core-js": "^3.19.1",
     "cp-file": "^7.0.0",
     "cpy": "^7.3.0",
