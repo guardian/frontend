@@ -81,7 +81,6 @@ jobs:
               env:
                   PORT: 3030
                   COMMERCIAL_BUNDLE_URL: http://localhost:3031/graun.standalone.commercial.js
-                  DISABLE_SNAPSHOT_REQUIRE: true
                   CYPRESS_API_URL: https://sorry-cypress.code.dev-gutools.co.uk
 
             - uses: actions/upload-artifact@v2
