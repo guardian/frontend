@@ -22,6 +22,7 @@ const createAdvert = (
 				feature: 'commercial',
 			},
 			false,
+			1 / 100,
 		);
 
 		return null;
