@@ -16,12 +16,7 @@ const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 		adSlotNode.classList.contains('u-h') ||
 		// set for out-of-page (1x1) and empty (2x2) ads
 		adSlotNode.classList.contains('ad-slot--collapse') ||
-		adSlotNode.getAttribute('data-label') === 'false' ||
-		// Don't render an ad slot label if there's one already present in the slot
-		// It's fine for a hidden toggled label to be present
-		adSlotNode.querySelectorAll(
-			'.ad-slot__label:not(.ad-slot__label--toggle.hidden)',
-		).length
+		adSlotNode.getAttribute('data-label') === 'false'
 	);
 
 const createAdCloseDiv = (): HTMLElement => {
