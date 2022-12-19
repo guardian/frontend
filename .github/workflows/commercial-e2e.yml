@@ -39,8 +39,7 @@ jobs:
               uses: bahmutov/npm-install@v1
               with:
                   working-directory: ./frontend
-              env:
-                  HUSKY: 0
+                  install-command: yarn --frozen-lockfile --silent --ignore-scripts
 
             - name: Build Frontend
               run: make commercial-compile-dev
@@ -62,8 +61,7 @@ jobs:
               uses: bahmutov/npm-install@v1
               with:
                   working-directory: ./dcr
-              env:
-                  HUSKY: 0
+                  install-command: yarn --frozen-lockfile --silent --ignore-scripts
 
             - name: Build DCR
               run: make build
