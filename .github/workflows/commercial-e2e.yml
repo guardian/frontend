@@ -24,27 +24,6 @@ jobs:
                 # run copies of the current job in parallel
                 containers: [1, 2, 3]
         steps:
-            # Frontend
-            - name: Checkout frontend
-              uses: actions/checkout@v3
-              with:
-                  path: ./frontend
-
-            - name: Setup frontend node
-              uses: actions/setup-node@v3
-              with:
-                  node-version-file: './frontend/.nvmrc'
-
-            - name: Install Frontend dependencies
-              uses: bahmutov/npm-install@v1
-              with:
-                  working-directory: ./frontend
-                  install-command: yarn --frozen-lockfile --silent --ignore-scripts
-
-            - name: Build Frontend
-              run: make commercial-compile-dev
-              working-directory: ./frontend
-
             # DCR
             - name: Checkout DCR
               uses: actions/checkout@v3
@@ -66,6 +45,27 @@ jobs:
             - name: Build DCR
               run: make build
               working-directory: ./dcr/dotcom-rendering
+
+            # Frontend
+            - name: Checkout frontend
+              uses: actions/checkout@v3
+              with:
+                  path: ./frontend
+
+            - name: Setup frontend node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: './frontend/.nvmrc'
+
+            - name: Install Frontend dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./frontend
+                  install-command: yarn --frozen-lockfile --silent --ignore-scripts
+
+            - name: Build Frontend
+              run: make commercial-compile-dev
+              working-directory: ./frontend
 
             - name: Run Cypress
               uses: cypress-io/github-action@v4
