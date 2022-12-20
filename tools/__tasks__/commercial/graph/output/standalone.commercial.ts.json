@@ -4,8 +4,8 @@
  ],
  "../lib/detect-adblock.ts": [],
  "../lib/detect-breakpoint.ts": [
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
   "../lib/detect-viewport.ts"
  ],
  "../lib/detect-google-proxy.ts": [],
@@ -162,7 +162,7 @@
  "../projects/commercial/modules/dfp/Advert.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
   "../lib/fastdom-promise.ts",
   "../projects/commercial/modules/dfp/breakpoint-name-to-attribute.ts",
   "../projects/commercial/modules/dfp/define-slot.ts"
@@ -186,7 +186,7 @@
  ],
  "../projects/commercial/modules/dfp/define-slot.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
   "../../../../node_modules/@types/lodash-es/index.d.ts",
   "../lib/url.ts",
   "../projects/common/modules/commercial/lib/googletag-ad-size.ts",
@@ -346,7 +346,7 @@
   "../projects/common/modules/commercial/geo-utils.ts"
  ],
  "../projects/commercial/modules/dfp/refresh-on-resize.ts": [
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
   "../lib/detect-breakpoint.ts",
   "../lib/mediator.ts",
   "../projects/commercial/modules/dfp/Advert.ts",
@@ -492,7 +492,7 @@
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
   "../lib/detect-breakpoint.ts",
   "../lib/fastdom-promise.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts"
@@ -543,7 +543,7 @@
  ],
  "../projects/commercial/modules/sticky-inlines.ts": [
   "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
-  "../../../../node_modules/@guardian/source-foundations/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/source-foundations/cjs/index.d.ts",
   "../lib/fastdom-promise.ts"
  ],
  "../projects/commercial/modules/teads-cookieless.ts": [
