@@ -14,8 +14,8 @@ export const noCarrotAdsNearNewsletterSignupBlocks: ABTest = {
 	description:
 		'Test the impact of preventing spacefinder from positioning carrot ads near newsletter signup blocks',
 	variants: [
-		{ id: 'control', test: bypassMetricsSampling() },
-		{ id: 'variant', test: bypassMetricsSampling() },
+		{ id: 'control', test: bypassMetricsSampling },
+		{ id: 'variant', test: bypassMetricsSampling },
 	],
 	canRun: () => true,
 };
