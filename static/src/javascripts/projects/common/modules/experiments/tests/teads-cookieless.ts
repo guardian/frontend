@@ -13,7 +13,7 @@ export const teadsCookieless: ABTest = {
 	successMeasure: 'No significant impact to UX',
 	canRun: () => true,
 	variants: [
-		{ id: 'control', test: () => bypassMetricsSampling },
-		{ id: 'variant', test: () => bypassMetricsSampling },
+		{ id: 'control', test: bypassMetricsSampling },
+		{ id: 'variant', test: bypassMetricsSampling },
 	],
 };
