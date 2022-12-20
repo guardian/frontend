@@ -1,4 +1,4 @@
-import type { PageTargeting } from '@guardian/commercial/core';
+import type { PageTargeting } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { pbTestNameMap } from '../../../../../lib/url';
 import {

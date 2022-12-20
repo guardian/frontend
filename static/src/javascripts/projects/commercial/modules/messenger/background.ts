@@ -1,4 +1,4 @@
-import type { RegisterListener } from '@guardian/commercial/core';
+import type { RegisterListener } from '@guardian/commercial-core';
 import { isObject } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
 import {

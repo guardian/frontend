@@ -1,4 +1,4 @@
-import { a9Apstag } from '@guardian/commercial/core';
+import { a9Apstag } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,

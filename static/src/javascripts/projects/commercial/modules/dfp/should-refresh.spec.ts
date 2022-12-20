@@ -1,4 +1,4 @@
-import { adSizes, createAdSize } from '@guardian/commercial/core';
+import { adSizes, createAdSize } from '@guardian/commercial-core';
 import { Advert } from './Advert';
 import { shouldRefresh } from './should-refresh';
 

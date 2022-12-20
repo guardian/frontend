@@ -1,4 +1,4 @@
-import { initMessenger } from '@guardian/commercial/core';
+import { initMessenger } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,

@@ -1,4 +1,4 @@
-import type { RegisterListener } from '@guardian/commercial/core';
+import type { RegisterListener } from '@guardian/commercial-core';
 
 /**
  * Register a listener for iframes to request shared ad targeting

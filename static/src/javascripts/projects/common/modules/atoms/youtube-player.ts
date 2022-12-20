@@ -1,11 +1,11 @@
-import type { AdsConfigDisabled } from '@guardian/commercial/core';
-import { getPermutivePFPSegments } from '@guardian/commercial/core';
+import type { AdsConfigDisabled } from '@guardian/commercial-core';
+import { getPermutivePFPSegments } from '@guardian/commercial-core';
 import type {
 	AdsConfigBasic,
 	AdsConfigCCPAorAus,
 	AdsConfigEnabled,
 	AdsConfigTCFV2,
-} from '@guardian/commercial/core/dist/cjs/types';
+} from '@guardian/commercial-core/dist/cjs/types';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { loadScript, log } from '@guardian/libs';
@@ -147,7 +147,7 @@ const createAdsConfigDisabled = (): AdsConfigDisabled => {
 };
 
 /**
- * TODO: Use buildAdsConfig from `@guardian/commercial/core`
+ * TODO: Use buildAdsConfig from `@guardian/commercial-core`
  * @param consentState
  * @returns A valid YouTube ads config
  */

@@ -1,7 +1,7 @@
 import {
 	EventTimer,
 	bypassCommercialMetricsSampling as switchOffSampling,
-} from '@guardian/commercial/core';
+} from '@guardian/commercial-core';
 import { loadScript, log } from '@guardian/libs';
 import { getAdvertById } from '../dfp/get-advert-by-id';
 import { refreshAdvert } from '../dfp/load-advert';

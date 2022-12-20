@@ -1,4 +1,4 @@
-import { postMessage } from '@guardian/commercial/core';
+import { postMessage } from '@guardian/commercial-core';
 
 const send = (type: string, payload: unknown): string => {
 	const msg = {

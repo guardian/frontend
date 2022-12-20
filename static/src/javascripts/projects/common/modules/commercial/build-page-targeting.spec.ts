@@ -1,4 +1,4 @@
-import { buildPageTargeting as buildPageTargeting_ } from '@guardian/commercial/core';
+import { buildPageTargeting as buildPageTargeting_ } from '@guardian/commercial-core';
 import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { getPageTargeting } from './build-page-targeting';
 
@@ -12,7 +12,7 @@ jest.mock('../../../../lib/geolocation', () => ({
 jest.mock('../experiments/ab', () => ({
 	getSynchronousParticipations: jest.fn(),
 }));
-jest.mock('@guardian/commercial/core', () => ({
+jest.mock('@guardian/commercial-core', () => ({
 	buildPageTargeting: jest.fn(),
 }));
 

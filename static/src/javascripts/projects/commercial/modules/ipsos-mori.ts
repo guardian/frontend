@@ -1,4 +1,4 @@
-import { ipsosMoriStub } from '@guardian/commercial/core';
+import { ipsosMoriStub } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,

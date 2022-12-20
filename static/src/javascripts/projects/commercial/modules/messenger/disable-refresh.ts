@@ -1,4 +1,4 @@
-import type { RegisterListener } from '@guardian/commercial/core';
+import type { RegisterListener } from '@guardian/commercial-core';
 import { dfpEnv } from '../dfp/dfp-env';
 
 // This message is intended to be used with a DFP creative wrapper.

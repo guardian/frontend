@@ -1,5 +1,5 @@
-import { EventTimer } from '@guardian/commercial/core';
-import type { RegisterListener } from '@guardian/commercial/core';
+import { EventTimer } from '@guardian/commercial-core';
+import type { RegisterListener } from '@guardian/commercial-core';
 import { isObject, isString } from '@guardian/libs';
 
 // This message is intended to be used with a GAM creative wrapper.

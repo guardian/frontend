@@ -1,4 +1,4 @@
-import type { SizeMapping } from '@guardian/commercial/core';
+import type { SizeMapping } from '@guardian/commercial-core';
 import { reportError } from 'lib/report-error';
 import type { Advert } from './Advert';
 import { createAdvert } from './create-advert';

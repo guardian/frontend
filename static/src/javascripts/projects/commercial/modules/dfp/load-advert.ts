@@ -1,5 +1,5 @@
-import type { AdSize } from '@guardian/commercial/core';
-import { EventTimer } from '@guardian/commercial/core';
+import type { AdSize } from '@guardian/commercial-core';
+import { EventTimer } from '@guardian/commercial-core';
 import { a9 } from '../header-bidding/a9/a9';
 import { prebid } from '../header-bidding/prebid/prebid';
 import { stripDfpAdPrefixFrom } from '../header-bidding/utils';

@@ -1,4 +1,4 @@
-import { adSizes } from '@guardian/commercial/core';
+import { adSizes } from '@guardian/commercial-core';
 import { mocked } from 'ts-jest/utils';
 import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import fastdom from '../../../lib/fastdom-promise';

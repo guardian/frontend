@@ -1,4 +1,4 @@
-import type { AdSize } from '@guardian/commercial/core';
+import type { AdSize } from '@guardian/commercial-core';
 
 export const toGoogleTagSize = (size: AdSize): googletag.SingleSize => {
 	// not using width and height here as to maintain compatibility with plain arrays

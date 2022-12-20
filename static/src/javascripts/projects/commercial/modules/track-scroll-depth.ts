@@ -1,4 +1,4 @@
-import { initTrackScrollDepth } from '@guardian/commercial/core';
+import { initTrackScrollDepth } from '@guardian/commercial-core';
 import { onConsent } from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 

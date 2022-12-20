@@ -1,5 +1,5 @@
 import 'lib/dotcom-rendering/public-path';
-import { EventTimer } from '@guardian/commercial/core';
+import { EventTimer } from '@guardian/commercial-core';
 import { amIUsed } from 'commercial/am-i-used';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';

@@ -1,6 +1,6 @@
-import type { AdSize, PageTargeting } from '@guardian/commercial/core';
-import { createAdSize, EventTimer, pubmatic } from '@guardian/commercial/core';
-import { PREBID_TIMEOUT } from '@guardian/commercial/core/dist/esm/constants';
+import type { AdSize, PageTargeting } from '@guardian/commercial-core';
+import { createAdSize, EventTimer, pubmatic } from '@guardian/commercial-core';
+import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';
 import { onConsent } from '@guardian/consent-management-platform';
 import type { Framework } from '@guardian/consent-management-platform/dist/types';
 import { isString, log } from '@guardian/libs';

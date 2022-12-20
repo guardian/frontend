@@ -1,4 +1,4 @@
-import { createAdSize } from '@guardian/commercial/core';
+import { createAdSize } from '@guardian/commercial-core';
 import { isString } from '@guardian/libs';
 import { once } from 'lodash-es';
 import {

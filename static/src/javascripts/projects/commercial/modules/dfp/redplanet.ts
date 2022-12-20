@@ -1,4 +1,4 @@
-import { launchpad } from '@guardian/commercial/core';
+import { launchpad } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,

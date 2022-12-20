@@ -1,4 +1,4 @@
-import type { ThirdPartyTag } from '@guardian/commercial/core';
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,

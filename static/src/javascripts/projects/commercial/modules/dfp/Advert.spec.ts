@@ -17,8 +17,8 @@ const slots = {
 	},
 };
 
-import { slotSizeMappings } from '@guardian/commercial/core';
-import type * as CommercialCore from '@guardian/commercial/core';
+import { slotSizeMappings } from '@guardian/commercial-core';
+import type * as CommercialCore from '@guardian/commercial-core';
 import { _, Advert } from './Advert';
 /* eslint-enable import/first */
 
@@ -31,9 +31,9 @@ const { getSlotSizeMapping } = _;
 jest.mock('../../../../lib/raven');
 jest.mock('ophan/ng', () => null);
 
-jest.mock('@guardian/commercial/core', (): MockCommercialCore => {
+jest.mock('@guardian/commercial-core', (): MockCommercialCore => {
 	const commercialCore: typeof CommercialCore = jest.requireActual(
-		'@guardian/commercial/core',
+		'@guardian/commercial-core',
 	);
 	return {
 		...commercialCore,

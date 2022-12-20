@@ -1,4 +1,4 @@
-import { constants, outstreamSizes } from '@guardian/commercial/core';
+import { constants, outstreamSizes } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import fastdom from '../../../../lib/fastdom-promise';
 import { getUrlVars } from '../../../../lib/url';

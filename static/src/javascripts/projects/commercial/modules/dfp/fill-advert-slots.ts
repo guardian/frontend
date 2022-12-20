@@ -1,5 +1,5 @@
-import type { SizeMapping } from '@guardian/commercial/core';
-import { adSizes, createAdSize } from '@guardian/commercial/core';
+import type { SizeMapping } from '@guardian/commercial-core';
+import { adSizes, createAdSize } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { billboardsInMerch } from 'common/modules/experiments/tests/billboards-in-merch';

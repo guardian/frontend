@@ -6,8 +6,8 @@ import {
 	permutive,
 	remarketing,
 	twitter,
-} from '@guardian/commercial/core';
-import type { ThirdPartyTag } from '@guardian/commercial/core';
+} from '@guardian/commercial-core';
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 import {
 	getConsentFor,
 	onConsent,

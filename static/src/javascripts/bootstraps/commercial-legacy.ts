@@ -3,7 +3,7 @@
  * All other pages use the standalone bundle.
  */
 
-import { EventTimer } from '@guardian/commercial/core';
+import { EventTimer } from '@guardian/commercial-core';
 import { initAdblockAsk } from 'commercial/adblock-ask';
 import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
