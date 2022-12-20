@@ -166,7 +166,7 @@ module.exports = {
         }),
         new CopyPlugin({
           patterns: [
-            { from: "node_modules/@guardian/commercial/standalone/build", to: "static/target/javascripts/commercial" },
+            { from: "node_modules/@guardian/commercial-standalone/build", to: "commercial" },
           ],
         }),
     ],
