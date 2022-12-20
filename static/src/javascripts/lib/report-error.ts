@@ -25,9 +25,10 @@ const reportError = (
 	err: unknown,
 	tags: Record<string, string>,
 	shouldThrow = true,
+	sampleRate = 1,
 ): void => {
 	const localError: FrontendError = convertError(err);
-	raven.captureException(localError, { tags });
+	raven.captureException(localError, { tags, sampleRate });
 	if (shouldThrow) {
 		// Flag to ensure it is not reported to Sentry again via global handlers
 		localError.reported = true;

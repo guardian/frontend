@@ -14,7 +14,7 @@ jest.mock('raven-js', () => ({
 describe('report-error', () => {
 	const error = new Error('Something broke.');
 	const tags = { test: 'testValue' };
-	const ravenMetaData = { tags: tags };
+	const ravenMetaData = { tags: tags, sampleRate: 1 };
 
 	test('Does NOT throw an error', () => {
 		expect(() => {
