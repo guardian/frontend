@@ -155,7 +155,7 @@ from scrolling */
     float: right;
     margin-top: 10px;
     margin-right: $veggie-burger + 12px;
-    margin-bottom: $gs-baseline * 2;
+    margin-bottom: 10px;
 
     @include mq(mobileMedium) {
         margin-right: $gs-gutter / 2;
