@@ -2185,10 +2185,10 @@
   dependencies:
     "@guardian/libs" "^7.1.4"
 
-"@guardian/core-web-vitals@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-1.0.1.tgz#f3bbf7e60a82d988228698f054664cadc9cd0886"
-  integrity sha512-F7vCWwXA5YbSEEMcn28+Xe6pXLCqqFA5h6E+pzvmLyL21y7v5UsAU+A59BB7k3yJLaFXyYi3sSRXxXGPxkCvog==
+"@guardian/core-web-vitals@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-2.0.1.tgz#b04f12ff36f66db800a68b81b65eedfc86289211"
+  integrity sha512-xm5oDtRBu37KPmiT61z+E/Wz3HHifayJjVMwd/nfLxNRd1eFOVmplaeTDtygGKy4KjIwX90R5j/Sjs9apTVnLA==
 
 "@guardian/eslint-config-typescript@^0.7.0":
   version "0.7.0"
