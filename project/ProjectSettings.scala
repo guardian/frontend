@@ -4,12 +4,14 @@ import com.gu.versioninfo.VersionInfo
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt._
 import sbt.Keys._
-import com.gu.riffraff.artifact.RiffRaffArtifact
+import com.gu.riffraff.artifact.{BuildInfo, RiffRaffArtifact}
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import com.gu.Dependencies._
 import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
+import sbtbuildinfo.{BuildInfoKey, BuildInfoOption, BuildInfoPlugin}
+import sbtbuildinfo.BuildInfoKeys.{buildInfoKeys, buildInfoOptions, buildInfoPackage}
 
 object ProjectSettings {
 
@@ -122,14 +124,28 @@ object ProjectSettings {
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
-      .enablePlugins(PlayScala, UniversalPlugin)
+      .enablePlugins(PlayScala, UniversalPlugin, BuildInfoPlugin)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(macwire, commonsIo))
       .settings(Universal / packageName := applicationName)
+      .settings(buildInfoSettings(s"frontend.${applicationName.replaceAll("-", "")}"))
   }
+
+  def buildInfoSettings(buildInfoPackageName: String): Seq[Def.Setting[_]] = Seq(
+    buildInfoPackage := buildInfoPackageName,
+    buildInfoOptions += BuildInfoOption.Traits("app.FrontendBuildInfo"),
+    buildInfoKeys := {
+      lazy val buildInfo = BuildInfo(baseDirectory.value)
+      Seq[BuildInfoKey](
+        "buildNumber" -> buildInfo.buildIdentifier,
+        "gitCommitId" -> buildInfo.revision,
+        "buildTime" -> System.currentTimeMillis
+      )
+    }
+  )
 
   def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName))

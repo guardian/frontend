@@ -18,13 +18,15 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.1")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.3")
 
-addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "1.1.9")
+addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "1.1.18")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
 
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.0")
 
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.9.0")
+
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.11.0")
 
 /*
    Without setting VersionScheme.Always here on `scala-xml`, sbt 1.8.0 will raise fatal 'version conflict' errors when

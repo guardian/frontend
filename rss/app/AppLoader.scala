@@ -1,5 +1,5 @@
 import akka.actor.ActorSystem
-import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
+import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
@@ -58,6 +58,7 @@ trait AppComponents extends FrontendComponents {
     ContentApiMetrics.ContentApiRequestsMetric,
   )
 
+  val frontendBuildInfo: FrontendBuildInfo = frontend.rss.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   def actorSystem: ActorSystem

@@ -24,7 +24,9 @@ class PreviewFilters(
     httpConfiguration,
   )
 
-  val filters = previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters.common
+  val filters = previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters.common(
+    frontend.preview.BuildInfo,
+  )
 }
 
 // OBVIOUSLY this is only for the preview server
