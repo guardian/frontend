@@ -21,7 +21,9 @@ const convertError = (err: unknown): Error => {
  *  for uncaught exceptions. This is optional because sometimes we log errors for tracking
  *  non-error data.
  * @param sampleRate - A sampling rate to apply to events, used for highly frequent errors.
- *  A value of 0 will send no events, and a value of 1 will send all events (default).
+ *  A value of 0 will send no events, and a value of 1 (default) will send an event for
+ *  users that have downloaded the raven client (0.8% of all users).
+ *  See https://github.com/guardian/frontend/blob/faf2bb4f5e4aa123d1da86ea98cbd693c4e8ffd0/static/src/javascripts/lib/raven.ts#L68
  */
 const reportError = (
 	err: unknown,
