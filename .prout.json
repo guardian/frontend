@@ -1,7 +1,14 @@
 {
     "checkpoints": {
-        "PROD": {
-            "url": "https://frontend.gutools.co.uk/deploys?stage=PROD&pageSize=50",
+        "FRONTS-PROD": {
+            "url": "https://www.theguardian.com/uk",
+            "overdue": "30M",
+            "messages": {
+                "seen": "prout/seen.md"
+            }
+        },
+        "ADMIN-PROD": {
+            "url": "https://frontend.gutools.co.uk/login",
             "overdue": "30M",
             "messages": {
                 "seen": "prout/seen.md"
