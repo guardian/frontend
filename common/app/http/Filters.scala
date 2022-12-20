@@ -1,8 +1,8 @@
 package http
 
 import javax.inject.Inject
-
 import akka.stream.Materializer
+import app.FrontendBuildInfo
 import conf.switches.Switches
 import implicits.Responses._
 import model.{ApplicationContext, Cached}
@@ -46,16 +46,17 @@ class JsonVaryHeadersFilter(implicit val mat: Materializer, executionContext: Ex
 }
 
 // this lets the CDN log the exact part of the backend this response came from
-class BackendHeaderFilter(implicit
+class BackendHeaderFilter(frontendBuildInfo: FrontendBuildInfo)(implicit
     val mat: Materializer,
     context: ApplicationContext,
     executionContext: ExecutionContext,
 ) extends Filter {
 
   private lazy val backendHeader = "X-Gu-Backend-App" -> context.applicationIdentity.name
+  private lazy val gitCommitHeader = "X-Gu-Frontend-Git-Commit-Id" -> frontendBuildInfo.gitCommitId
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    nextFilter(request).map(_.withHeaders(backendHeader))
+    nextFilter(request).map(_.withHeaders(backendHeader, gitCommitHeader))
   }
 }
 
@@ -116,7 +117,7 @@ class PanicSheddingFilter(implicit val mat: Materializer, executionContext: Exec
 
 object Filters {
   // NOTE: filters are executed in *reverse* order, and the order is important.
-  def common(implicit
+  def common(frontendBuildInfo: FrontendBuildInfo)(implicit
       materializer: Materializer,
       applicationContext: ApplicationContext,
       executionContext: ExecutionContext,
@@ -127,7 +128,7 @@ object Filters {
       new JsonVaryHeadersFilter,
       new ExperimentsFilter,
       new Gzipper,
-      new BackendHeaderFilter,
+      new BackendHeaderFilter(frontendBuildInfo),
       new SurrogateKeyFilter,
       new AmpFilter,
     )
@@ -143,12 +144,12 @@ object Filters {
 
 }
 
-class CommonFilters(implicit
+class CommonFilters(frontendBuildInfo: FrontendBuildInfo)(implicit
     mat: Materializer,
     applicationContext: ApplicationContext,
     executionContext: ExecutionContext,
 ) extends HttpFilters {
-  val filters = Filters.common
+  val filters = Filters.common(frontendBuildInfo)
 }
 
 class PreloadFilters(implicit

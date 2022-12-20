@@ -25,5 +25,5 @@ class AdminFilters(httpConfiguration: HttpConfiguration)(implicit
     httpConfiguration,
   )
 
-  val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common
+  val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common(frontend.admin.BuildInfo)
 }

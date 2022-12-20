@@ -1,6 +1,6 @@
 import agents.MostViewedAgent
 import akka.actor.ActorSystem
-import app.{FrontendApplicationLoader, FrontendComponents}
+import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
@@ -71,6 +71,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     DCRMetrics.DCRRequestCountMetric,
   )
 
+  val frontendBuildInfo: FrontendBuildInfo = frontend.facia.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters ++ wire[PreloadFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 

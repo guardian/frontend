@@ -1,6 +1,6 @@
 import akka.actor.ActorSystem
 import http.{CommonFilters, CorsHttpErrorHandler}
-import app.{FrontendApplicationLoader, FrontendComponents}
+import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
 import com.softwaremill.macwire._
 import common._
@@ -83,6 +83,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     ContentApiMetrics.ContentApiRequestsMetric,
   )
 
+  val frontendBuildInfo: FrontendBuildInfo = frontend.onward.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
