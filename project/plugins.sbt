@@ -38,7 +38,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.11.0")
     meaning that for version x.y.z, `x` & `y` *must match exactly* for versions to be considered compatible by sbt.
 
     By setting VersionScheme.Always here on `scala-xml`, we're overriding its declared version-compatability scheme,
-    choosing to tolerate the risk of binary incompatibility. We consider this a safe operation because when set under
+    choosing to tolerate the risk of binary incompatibility. We consider this to be safe because when set under
     `projects/` (ie *not* in `build.sbt` itself) it only affects the compilation of build.sbt, not of the application
     build itself. Once the build has succeeded, there is no further risk (ie of a runtime exception due to clashing
     versions of `scala-xml`).
