@@ -4,8 +4,6 @@ import {
 	onConsentChange,
 } from '@guardian/consent-management-platform';
 import { getCookie, loadScript } from '@guardian/libs';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { teadsCookieless as teadsCookielessTest } from 'common/modules/experiments/tests/teads-cookieless';
 
 const initTeadsCookieless = async (): Promise<void> => {
 	const consentState = await onConsent();
@@ -18,7 +16,6 @@ const initTeadsCookieless = async (): Promise<void> => {
 	if (
 		hasConsent &&
 		window.guardian.config.switches.teadsCookieless &&
-		isInVariantSynchronous(teadsCookielessTest, 'variant') &&
 		allowedContentTypes.includes(window.guardian.config.page.contentType)
 	) {
 		window.teads_analytics = window.teads_analytics ?? {};
