@@ -111,7 +111,7 @@ object IpsosTags {
     "uk/tv-and-radio" -> "tvandradio",
     "au/tv-and-radio" -> "tvandradio",
     "uk-news" -> "uknews",
-    "us-news" -> "us-news",
+    "us-news" -> "usnews",
     "voluntary-sector-network" -> "voluntarysector",
     "world" -> "world",
     "world/coronavirus-outbreak" -> "coronavirusoutbreak",
@@ -132,8 +132,10 @@ object IpsosTags {
     "lifeandstyle/health-and-wellbeing" -> "healthandwellbeing",
     "au/lifeandstyle/health-and-wellbeing" -> "healthandwellbeing",
     "jobs" -> "jobs",
-    "australia-news/indigenous-australians" -> "indigenous-australians",
-    "guardian-labs-australia" -> "advertisement-features",
+    "australia-news/indigenous-australians" -> "indigenousaustralians",
+    "indigenous-australians" -> "indigenousaustralians",
+    "guardian-labs-australia" -> "advertisementfeatures",
+    "advertisement-features" -> "advertisementfeatures",
   )
 
   // Default to top level `guardian` tag if key is not found
