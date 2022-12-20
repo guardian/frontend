@@ -49,7 +49,7 @@ case object Web extends Platform {
   val dcrPath = "/Article"
 }
 case object MobileApps extends Platform {
-  val dcrPath = "/apps/Article"
+  val dcrPath = "/mobile-apps/Article"
 }
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise

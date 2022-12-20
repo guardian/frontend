@@ -28,6 +28,9 @@ GET     /*path/email                controllers.ArticleController.renderEmail(pa
 GET     /*path/email/headline.txt   controllers.ArticleController.renderHeadline(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
+# Apps Rendering
+GET     /*path/mobile-apps          controllers.ArticleController.renderMobileApps(path)
+
 
 # Newspaper pages paths
 # gallery format (?)
@@ -41,7 +44,4 @@ GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(pa
 GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                 controllers.PublicationController.publishedOn(publication, year, month, day, tail)
 
 GET     /*path                      controllers.ArticleController.renderArticle(path)
-
-# Apps Rendering
-GET        /mobile-apps/rendered/*path                controllers.ArticleController.renderMobileApps(path)
 

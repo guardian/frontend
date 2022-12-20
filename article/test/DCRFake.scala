@@ -7,6 +7,7 @@ import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage, To
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import renderers.{Platform, Web}
 
 import scala.collection.mutable.{ArrayBuffer, Queue}
 import scala.concurrent.{ExecutionContext, Future}
@@ -29,6 +30,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
       mostPopular: Option[Seq[OnwardCollectionResponse]],
+      platform: Platform = Web,
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     requestedBlogs.enqueue(article)

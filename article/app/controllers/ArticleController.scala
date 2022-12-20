@@ -55,24 +55,26 @@ class ArticleController(
     }
   }
 
-  def renderMobileApps(path: String, edition: String): Action[AnyContent] = {
+  def renderMobileApps(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) { (article, blocks) => {
-        val pageType: PageType = PageType(article, request, context)
-        val newsletter = newsletterService.getNewsletterForArticle(article)
-        remoteRenderer.getArticle(
-          ws,
-          article,
-          blocks,
-          pageType,
-          filterKeyEvents = false,
-          false,
-          newsletter = newsletter,
-          topicResult = None,
-          onwards = None,
-          platform = MobileApps,
-        )
-      }}
+      mapModel(path, ArticleBlocks) { (article, blocks) =>
+        {
+          val pageType: PageType = PageType(article, request, context)
+          val newsletter = newsletterService.getNewsletterForArticle(article)
+          remoteRenderer.getArticle(
+            ws,
+            article,
+            blocks,
+            pageType,
+            filterKeyEvents = false,
+            false,
+            newsletter = newsletter,
+            topicResult = None,
+            onwards = None,
+            platform = MobileApps,
+          )
+        }
+      }
     }
   }
 

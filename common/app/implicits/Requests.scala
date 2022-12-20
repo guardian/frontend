@@ -66,6 +66,8 @@ trait Requests {
 
     lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
+    lazy val isMobileApps: Boolean = r.path.endsWith("/mobile-apps")
+
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(
       EMAIL_SUFFIX,
     ) || isEmailJson || isEmailTxt
@@ -73,7 +75,7 @@ trait Requests {
     lazy val isHeadlineText: Boolean =
       r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 
-    lazy val isModified = isJson || isRss || isEmail || isHeadlineText
+    lazy val isModified = isJson || isRss || isEmail || isMobileApps || isHeadlineText
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
