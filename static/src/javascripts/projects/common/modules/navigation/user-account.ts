@@ -38,9 +38,11 @@ const buildOphanComponentWithNotifications = (
 ) => {
 	if (notifications.length > 0) {
 		return {
-			componentType: NOTIFICATION_COMPONENT_TYPE,
-			id: target,
-			labels: notifications.map((n) => n.ophanLabel),
+			component: {
+				componentType: NOTIFICATION_COMPONENT_TYPE,
+				id: target,
+				labels: notifications.map((n) => n.ophanLabel),
+			},
 		};
 	}
 
