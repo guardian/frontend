@@ -2400,12 +2400,6 @@
                 "title" : "Football",
                 "url" : "/football",
                 "children" : [ {
-                    "title" : "World Cup 2022",
-                    "url" : "/football/world-cup-2022",
-                    "longTitle" : "football/world-cup-2022",
-                    "children" : [ ],
-                    "classList" : [ ]
-                }, {
                     "title" : "Live scores",
                     "url" : "/football/live",
                     "longTitle" : "football/live",
@@ -2439,12 +2433,6 @@
                     "title" : "Clubs",
                     "url" : "/football/teams",
                     "longTitle" : "football/teams",
-                    "children" : [ ],
-                    "classList" : [ ]
-                }, {
-                    "title" : "Qatar: beyond the football",
-                    "url" : "/news/series/qatar-beyond-the-football",
-                    "longTitle" : "/news/series/qatar-beyond-the-football",
                     "children" : [ ],
                     "classList" : [ ]
                 } ],
