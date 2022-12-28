@@ -30,7 +30,9 @@ Cypress.Commands.add('findAdSlotIframeBySlotId', (adSlotId: string) => {
 	cy.get(`#${adSlotId}`).find('iframe', { timeout: 30000 });
 });
 
-const allowAll = 'Yes, I’m happy';
+const allowAllButtons = ['Yes, I’m happy', 'Accept all'].map(
+	(title) => `button[title="${title}"]`,
+).join(',');
 const manageConsent = 'Manage my cookies';
 const rejectAll = 'Reject all';
 
@@ -47,7 +49,7 @@ Cypress.Commands.add('rejectAllConsent', () => {
 
 Cypress.Commands.add('allowAllConsent', () => {
 	cy.getIframeBody('sp_message_iframe_')
-		.find(`button[title="${allowAll}"]`, { timeout: 30000 })
+		.find(allowAllButtons, { timeout: 30000 })
 		.click();
 	cy.wait(100);
 });
