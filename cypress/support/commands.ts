@@ -30,9 +30,9 @@ Cypress.Commands.add('findAdSlotIframeBySlotId', (adSlotId: string) => {
 	cy.get(`#${adSlotId}`).find('iframe', { timeout: 30000 });
 });
 
-const allowAllButtons = ['Yes, I’m happy', 'Accept all'].map(
-	(title) => `button[title="${title}"]`,
-).join(',');
+const allowAllButtons = ['Yes, I’m happy', 'Accept all']
+	.map((title) => `button[title="${title}"]`)
+	.join(',');
 const manageConsent = 'Manage my cookies';
 const rejectAll = 'Reject all';
 
@@ -58,12 +58,17 @@ Cypress.Commands.add('hydrate', () => {
 	return cy
 		.get('gu-island')
 		.each((el) => {
-			cy.log(`Scrolling to ${el.attr('name')}`);
-			cy.wrap(el)
-				.scrollIntoView({ duration: 1000, timeout: 30000 })
-				.should('have.attr', 'data-gu-ready', 'true', {
-					timeout: 30000,
-				});
+			const deferuntil = el.attr('deferuntil');
+			if (['idle', 'visible', undefined].includes(deferuntil)) {
+				cy.log(`Scrolling to island: ${el.attr('name')} defer: ${el.attr('deferuntil')}`);
+				cy.wrap(el)
+					.scrollIntoView({ duration: 1000, timeout: 30000 })
+					.should('have.attr', 'data-gu-ready', 'true', {
+						timeout: 30000,
+					});
+			} else {
+				cy.log(`Skipping island: ${el.attr('name')} defer: ${el.attr('deferuntil')}`);
+			}
 		})
 		.then(() => {
 			cy.scrollTo('top');
