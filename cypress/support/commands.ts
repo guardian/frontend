@@ -30,7 +30,7 @@ Cypress.Commands.add('findAdSlotIframeBySlotId', (adSlotId: string) => {
 	cy.get(`#${adSlotId}`).find('iframe', { timeout: 30000 });
 });
 
-const allowAllButtons = ['Yes, I’m happy', 'Accept all']
+const allowAllButtons = ['Yes, I’m happy', 'Accept all', 'Yes, ok']
 	.map((title) => `button[title="${title}"]`)
 	.join(',');
 const manageConsent = 'Manage my cookies';
