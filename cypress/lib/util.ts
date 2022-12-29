@@ -12,7 +12,7 @@ export const getTestUrl = (
 	stage: 'code' | 'prod' | 'dev',
 	path: string,
 	{ isDcr } = { isDcr: false },
-	adtest = 'fixed-puppies',
+	adtest = 'fixed-puppies-ci',
 ) => {
 	let url = '';
 	switch (stage) {
