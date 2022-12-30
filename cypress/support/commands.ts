@@ -90,6 +90,6 @@ Cypress.Commands.add('useConsentedSession', (name: string) => {
 			`{"value":"${new Date().toISOString()}"}`,
 		);
 		cy.allowAllConsent();
-		cy.wait('@consentAll');
+		cy.wait('@consentAll', { timeout: 30000 });
 	});
 });
