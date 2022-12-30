@@ -1,26 +1,27 @@
-import { articles } from '../fixtures/pages';
+import { getStage, getTestUrl } from '../lib/util';
 import { stubApiRequests } from '../lib/stubApiRequests';
 import '@percy/cypress';
 
 describe('Visually snapshot standard article', () => {
-	[articles[0]].forEach(({ path }) => {
-		it(`snapshots ${path}`, () => {
-			// stub all api requests
-			stubApiRequests();
-			// load article
-			cy.visit(path);
-			cy.allowAllConsent();
-			// check we have top-above-nav
-			cy.get('#dfp-ad--top-above-nav').should('exist');
-			cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should(
-				'exist',
-			);
-			// scroll to and hydrate all islands
-			cy.hydrate();
-			// snapshot
-			cy.percySnapshot('article-standard', {
-				widths: [320, 740, 1300],
-			});
+	it(`snapshots standard article`, () => {
+		const path = getTestUrl(
+			getStage(),
+			'/politics/2022/feb/10/keir-starmer-says-stop-the-war-coalition-gives-help-to-authoritarians-like-putin',
+			{ isDcr: true },
+		);
+		// stub all api requests
+		stubApiRequests();
+		// load article
+		cy.visit(path);
+		cy.allowAllConsent();
+		// check we have top-above-nav
+		cy.get('#dfp-ad--top-above-nav').should('exist');
+		cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should('exist');
+		// scroll to and hydrate all islands
+		cy.hydrate();
+		// snapshot
+		cy.percySnapshot('article-standard', {
+			widths: [320, 740, 1300],
 		});
 	});
 });
