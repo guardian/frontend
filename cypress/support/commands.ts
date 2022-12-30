@@ -66,6 +66,9 @@ Cypress.Commands.add('hydrate', () => {
 					.should('have.attr', 'data-gu-ready', 'true', {
 						timeout: 30000,
 					});
+				// Additional wait to ensure island defer=visible has triggered
+				// eslint-disable-next-line cypress/no-unnecessary-waiting
+				cy.wait(1000);
 			} else {
 				cy.log(`Skipping island: ${el.attr('name')} defer: ${el.attr('deferuntil')}`);
 			}
