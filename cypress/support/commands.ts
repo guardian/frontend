@@ -59,8 +59,11 @@ Cypress.Commands.add('hydrate', () => {
 		.get('gu-island')
 		.each((el) => {
 			const deferuntil = el.attr('deferuntil');
+			const name = el.attr('name');
+			const defer = el.attr('deferuntil');
+			const islandMeta = `island: ${name} defer: ${defer}`;
 			if (['idle', 'visible', undefined].includes(deferuntil)) {
-				cy.log(`Scrolling to island: ${el.attr('name')} defer: ${el.attr('deferuntil')}`);
+				cy.log(`Scrolling to ${islandMeta}`);
 				cy.wrap(el)
 					.scrollIntoView({ duration: 1000, timeout: 30000 })
 					.should('have.attr', 'data-gu-ready', 'true', {
@@ -70,7 +73,7 @@ Cypress.Commands.add('hydrate', () => {
 				// eslint-disable-next-line cypress/no-unnecessary-waiting
 				cy.wait(1000);
 			} else {
-				cy.log(`Skipping island: ${el.attr('name')} defer: ${el.attr('deferuntil')}`);
+				cy.log(`Skipping ${islandMeta}`);
 			}
 		})
 		.then(() => {
