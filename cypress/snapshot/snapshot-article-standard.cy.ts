@@ -18,7 +18,7 @@ describe('Visually snapshot standard article', () => {
 			// scroll to and hydrate all islands
 			cy.hydrate();
 			// snapshot
-			cy.percySnapshot('top-above-nav', {
+			cy.percySnapshot('article-standard', {
 				widths: [320, 740, 1300],
 			});
 		});
