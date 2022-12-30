@@ -19,7 +19,7 @@ describe('Visually snapshot standard article', () => {
 			cy.hydrate();
 			// snapshot
 			cy.percySnapshot('top-above-nav', {
-				widths: [740, 1300],
+				widths: [320, 740, 1300],
 			});
 		});
 	});
