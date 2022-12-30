@@ -81,6 +81,28 @@ Cypress.Commands.add('hydrate', () => {
 		});
 });
 
+Cypress.Commands.add('checkAdsRendered', () => {
+	return cy
+		.get('.ad-slot')
+		.each((el) => {
+			cy.log(`Scrolling to ad: ${el.attr('id')}`);
+			cy.wrap(el)
+				.scrollIntoView({ duration: 1000, timeout: 30000 })
+				.should('have.class', 'ad-slot--rendered', {
+					timeout: 30000,
+				});
+			// Additional wait to ensure visbility has triggered
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(1000);
+		})
+		.then(() => {
+			cy.scrollTo('top');
+			// Additional wait to ensure layout shift has completed post hydration
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(5000);
+		});
+});
+
 Cypress.Commands.add('useConsentedSession', (name: string) => {
 	cy.session(name, () => {
 		storage.local.set('gu.geo.override', 'GB');
