@@ -19,6 +19,8 @@ describe('Visually snapshot standard article', () => {
 		cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should('exist');
 		// scroll to and hydrate all islands
 		cy.hydrate();
+		// scroll to and check all ads rendered
+		cy.checkAdsRendered();
 		// snapshot
 		cy.percySnapshot('article-standard', {
 			widths: [320, 740, 1300],
