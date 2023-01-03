@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Test UX impact of cookieless Teads",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2022, 12, 30)),
+    sellByDate = Some(LocalDate.of(2023, 1, 31)),
     exposeClientSide = true,
   )
 
