@@ -108,18 +108,12 @@ object NavLinks {
     "Football",
     "/football",
     children = List(
-      NavLink("World Cup 2022", "/football/world-cup-2022", Some("football/world-cup-2022")),
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
       NavLink("Results", "/football/results", Some("football/results")),
       NavLink("Competitions", "/football/competitions", Some("football/competitions")),
       NavLink("Clubs", "/football/teams", Some("football/teams")),
-      NavLink(
-        "Qatar: beyond the football",
-        "/news/series/qatar-beyond-the-football",
-        Some("/news/series/qatar-beyond-the-football"),
-      ),
     ),
   )
   val soccer = football.copy(title = "Soccer")
