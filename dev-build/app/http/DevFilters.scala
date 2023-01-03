@@ -57,5 +57,6 @@ class DevFilters(implicit
     applicationContext: ApplicationContext,
     executionContext: ExecutionContext,
 ) extends HttpFilters {
-  override def filters: Seq[EssentialFilter] = new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common
+  override def filters: Seq[EssentialFilter] =
+    new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common(frontend.devbuild.BuildInfo)
 }
