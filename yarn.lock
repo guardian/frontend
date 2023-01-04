@@ -2171,10 +2171,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-8.1.3.tgz#47adc4892716904a62afa62da66f31eae059d56b"
   integrity sha512-Tol4O7A3ErmzgCd9YtkajJUfCps/1RCNXhtaUBwgT8u0OUPRmfk4jjD7cS3nok5gDTEUVemKwT2yysx1CxfWaw==
 
-"@guardian/commercial-core@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.1.1.tgz#ee3ff71ea483fc9eff11837abf3c9f1ca6ffabef"
-  integrity sha512-G6ZFuWTGqJumrPL6Zqy4OBvBVWCaaDyAy0lMWePb573sa/jhqkyh0LaTob4TVoketyXPPvPdvH18/aBfx8BMQA==
+"@guardian/commercial-core@^5.1.3":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.1.3.tgz#f7e845d8ae6e8ee6eaaf51fcce3400d94db81a59"
+  integrity sha512-B7Sa7O0zHHP3jN36XdGHOZ9fAgjEMfRYuRURqX+ziiJE8+lmr7rkLX3MLgbYUJCIUfhagNkj559JZDXTLQoZ6g==
   dependencies:
     type-fest "2.12.2"
 
