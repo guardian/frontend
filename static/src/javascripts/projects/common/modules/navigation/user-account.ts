@@ -1,3 +1,4 @@
+import type { OphanComponentType } from '@guardian/libs';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
@@ -6,7 +7,7 @@ import {
 	submitViewEvent,
 } from '../commercial/acquisitions-ophan';
 
-const NOTIFICATION_COMPONENT_TYPE = 'RETENTION_HEADER';
+const NOTIFICATION_COMPONENT_TYPE: OphanComponentType = 'RETENTION_HEADER';
 
 const updateCommentLink = (commentItems: Element[]): void => {
 	const user = getUserFromCookie();
@@ -76,11 +77,10 @@ const setupTrackNotificationsView = (
 					if (!hasBeenSeen) {
 						hasBeenSeen = true;
 						// Track impression
-						const ophanComponent =
-							buildOphanComponentWithNotifications(
-								target,
-								notifications,
-							);
+						const ophanComponent = buildOphanComponentWithNotifications(
+							target,
+							notifications,
+						);
 						if (ophanComponent) {
 							submitViewEvent(ophanComponent);
 						}
@@ -113,9 +113,7 @@ const groupNotificationsByTarget = (
 const addNotifications = (notifications: HeaderNotification[]): void => {
 	void fastdom
 		.measure(() => ({
-			badge: document.querySelector(
-				'.js-user-account-notification-badge',
-			),
+			badge: document.querySelector('.js-user-account-notification-badge'),
 			menu: document.querySelector('#my-account-dropdown'),
 		}))
 		.then((els) => {
@@ -126,49 +124,36 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 				badge.classList.remove('is-hidden');
 
 				// Add messages to the relevant menu item(s)
-				const groupedNotifications =
-					groupNotificationsByTarget(notifications);
+				const groupedNotifications = groupNotificationsByTarget(notifications);
 
-				Object.entries(groupedNotifications).map(
-					([target, notifications]) => {
-						const menuItem = menu.querySelector(
-							`a[data-link-id=${target}]`,
+				Object.entries(groupedNotifications).map(([target, notifications]) => {
+					const menuItem = menu.querySelector(`a[data-link-id=${target}]`);
+					if (menuItem) {
+						const labelEl = menuItem.querySelector(
+							'.js-user-account-menu-label',
 						);
-						if (menuItem) {
-							const labelEl = menuItem.querySelector(
-								'.js-user-account-menu-label',
-							);
-							labelEl?.classList.add(
-								'top-bar__user-account-notification-badge',
-							);
+						labelEl?.classList.add('top-bar__user-account-notification-badge');
 
-							const messageEls = notifications.map(
-								(notification) => {
-									const messageEl =
-										document.createElement('div');
-									messageEl.classList.add(
-										'dropdown-menu__notification',
-									);
-									messageEl.innerText = notification.message;
-									return messageEl;
-								},
+						const messageEls = notifications.map((notification) => {
+							const messageEl = document.createElement('div');
+							messageEl.classList.add('dropdown-menu__notification');
+							messageEl.innerText = notification.message;
+							return messageEl;
+						});
+						const notificationsContainerEl = menuItem.querySelector(
+							'.js-user-account-menu-notifications-container',
+						);
+						if (notificationsContainerEl) {
+							trackNotificationsInsert(target, notifications);
+							setupTrackNotificationsView(
+								notificationsContainerEl,
+								target,
+								notifications,
 							);
-							const notificationsContainerEl =
-								menuItem.querySelector(
-									'.js-user-account-menu-notifications-container',
-								);
-							if (notificationsContainerEl) {
-								trackNotificationsInsert(target, notifications);
-								setupTrackNotificationsView(
-									notificationsContainerEl,
-									target,
-									notifications,
-								);
-								notificationsContainerEl.append(...messageEls);
-							}
+							notificationsContainerEl.append(...messageEls);
 						}
-					},
-				);
+					}
+				});
 			}
 		});
 };
@@ -180,9 +165,7 @@ const showMyAccountIfNecessary = (): void => {
 
 	void fastdom
 		.measure(() => ({
-			signIns: Array.from(
-				document.querySelectorAll('.js-navigation-sign-in'),
-			),
+			signIns: Array.from(document.querySelectorAll('.js-navigation-sign-in')),
 			accountActionsLists: Array.from(
 				document.querySelectorAll('.js-navigation-account-actions'),
 			),
