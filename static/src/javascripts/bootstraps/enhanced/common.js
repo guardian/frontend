@@ -257,19 +257,31 @@ const initPublicApi = () => {
 };
 
 const initialiseHeaderNotifications = (brazeCardsPromise) => {
+    const isValid = (card) => Boolean(
+        card.extras.target
+        && card.extras.message
+        && card.extras.ophanLabel
+    );
+
     brazeCardsPromise.then(brazeCards => {
         return brazeCards.getCardsForProfileBadge();
     }).then(cards => {
-        cards.filter((card) => {
-            return Boolean(card.extras.target && card.extras.message);
-        }).forEach((card) => {
-            const notification = {
-                target: card.extras.target,
-                message: card.extras.message,
-            };
-
-            bufferedNotificationListener.emit(notification);
+        const notifications = cards.filter((card) => isValid(card))
+            .map((card) => {
+                return {
+                    id: card.id,
+                    target: card.extras.target,
+                    message: card.extras.message,
+                    ophanLabel: card.extras.ophanLabel,
+                    logImpression: () => {
+                        card.logImpression();
+                    }
+                };
         })
+
+        if (notifications.length > 0) {
+            bufferedNotificationListener.emit(notifications);
+        }
     })
 };
 
