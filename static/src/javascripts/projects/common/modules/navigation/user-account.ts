@@ -1,3 +1,4 @@
+import type { OphanComponentType } from '@guardian/libs';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
@@ -6,7 +7,7 @@ import {
 	submitViewEvent,
 } from '../commercial/acquisitions-ophan';
 
-const NOTIFICATION_COMPONENT_TYPE = 'RETENTION_HEADER';
+const NOTIFICATION_COMPONENT_TYPE: OphanComponentType = 'RETENTION_HEADER';
 
 const updateCommentLink = (commentItems: Element[]): void => {
 	const user = getUserFromCookie();
