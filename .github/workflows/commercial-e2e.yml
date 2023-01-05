@@ -130,7 +130,7 @@ jobs:
               uses: cypress-io/github-action@v5.0.2
               with:
                   install: false
-                  start: make -C ../dcr/dotcom-rendering start-ci, make commercial-serve
+                  start: node ../dcr/dotcom-rendering/dist/frontend.server.js, make commercial-serve
                   working-directory: frontend
                   wait-on: 'http://localhost:3030, http://localhost:3031/graun.standalone.commercial.js'
                   wait-on-timeout: 30
@@ -139,6 +139,7 @@ jobs:
                   PORT: 3030
                   COMMERCIAL_BUNDLE_URL: http://localhost:3031/graun.standalone.commercial.js
                   CYPRESS_API_URL: https://sorry-cypress.code.dev-gutools.co.uk
+                  DISABLE_LOGGING_AND_METRICS: true
 
             - uses: actions/upload-artifact@v2
               if: failure()
