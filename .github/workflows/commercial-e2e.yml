@@ -15,14 +15,9 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    e2e:
-        name: E2E Tests
+    build:
+        name: Build
         runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                # run copies of the current job in parallel
-                containers: [1, 2, 3]
         steps:
             # DCR
             - name: Checkout DCR
@@ -61,14 +56,77 @@ jobs:
               uses: bahmutov/npm-install@v1
               with:
                   working-directory: ./frontend
+                  cache: yarn
                   install-command: yarn --frozen-lockfile --silent --ignore-scripts
+              env:
+                  CYPRESS_INSTALL_BINARY: 0
 
             - name: Build Frontend
               run: make commercial-compile-dev
               working-directory: ./frontend
 
+            - name: Upload build
+              uses: actions/upload-artifact@v2
+              with:
+                  name: build
+                  path: |
+                      ./dcr/dotcom-rendering/dist
+                      ./frontend/static/target
+    e2e:
+        name: E2E Tests
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                # run copies of the current job in parallel
+                containers: [1, 2, 3]
+        steps:
+            # DCR
+            - name: Checkout DCR
+              uses: actions/checkout@v3
+              with:
+                  repository: guardian/dotcom-rendering
+                  path: ./dcr
+
+            - name: Setup DCR node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: './dcr/.nvmrc'
+
+            - name: Install DCR dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./dcr
+                  install-command: yarn --frozen-lockfile --silent --ignore-scripts
+
+            # Frontend
+            - name: Checkout frontend
+              uses: actions/checkout@v3
+              with:
+                  path: ./frontend
+
+            - name: Setup frontend node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: './frontend/.nvmrc'
+
+            - name: Download build
+              uses: actions/download-artifact@v2
+              with:
+                  name: build
+
+            - name: Cache Cypress
+              id: cache-cypress
+              uses: actions/cache@v1
+              with:
+                  path: ~/.cache/Cypress
+                  key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+
+            - run: yarn install http-server
+            - run: yarn cypress install
+
             - name: Run Cypress
-              uses: cypress-io/github-action@v4
+              uses: cypress-io/github-action@v5.0.2
               with:
                   install: false
                   start: make -C ../dcr/dotcom-rendering start-ci, make commercial-serve
