@@ -111,22 +111,19 @@ jobs:
               with:
                   node-version-file: './frontend/.nvmrc'
 
+            - name: Install Frontend dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./frontend
+                  install-command: yarn --frozen-lockfile --silent --ignore-scripts
+
             - name: Download build
               uses: actions/download-artifact@v2
               with:
                   name: build
 
-            - name: Cache Cypress
-              id: cache-cypress
-              uses: actions/cache@v1
-              with:
-                  path: ~/.cache/Cypress
-                  key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
-
-            - run: yarn install http-server
-              working-directory: ./frontend
-
-            - run: yarn cypress install
+            - name: Install Cypress
+              run: yarn cypress install
               working-directory: ./frontend
 
             - name: Run Cypress
