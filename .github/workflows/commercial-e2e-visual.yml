@@ -77,7 +77,7 @@ jobs:
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
             - name: Wait for Percy Snapshots
-              run: yarn percy build:wait --verbose --fail-on-changes --project commercial --commit ${{ github.head_ref }}
+              run: yarn percy build:wait --verbose --fail-on-changes --project ced09b1a/commercial --commit ${{ github.head_ref }}
               working-directory: frontend
 
             - uses: actions/upload-artifact@v2
