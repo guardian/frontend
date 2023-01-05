@@ -503,7 +503,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-    val Callout = Switch(
+  val Callout = Switch(
     SwitchGroup.Feature,
     "callouts",
     "When ON, shows the new callout block component",
