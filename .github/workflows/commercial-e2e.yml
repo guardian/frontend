@@ -124,11 +124,10 @@ jobs:
                   key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
 
             - run: yarn install http-server
-              with:
-                  working-directory: ./frontend
+              working-directory: ./frontend
+
             - run: yarn cypress install
-              with:
-                  working-directory: ./frontend
+              working-directory: ./frontend
 
             - name: Run Cypress
               uses: cypress-io/github-action@v5.0.2
