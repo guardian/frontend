@@ -75,6 +75,7 @@ jobs:
     e2e:
         name: E2E Tests
         runs-on: ubuntu-latest
+        needs: build
         strategy:
             fail-fast: false
             matrix:
