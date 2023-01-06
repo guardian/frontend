@@ -34,10 +34,15 @@ from scrolling */
         display: flex;
         justify-content: start;
         font-weight: bold;
+        height: 30px;
         padding-right: 96px;
+        padding-left: 12px;
 
         @include mq($from: desktop) {
             justify-content: end;
+            height: 35px;
+            padding-right: 0;
+            padding-left: 0;
         }
 
         a.top-bar__item {
@@ -54,12 +59,15 @@ from scrolling */
             }
 
             @include mq($until: desktop) {
+                font-weight: 400;
                 padding: 3px 10px;
             }
         }
     }
 
     .header-top-nav__item {
+        display: flex;
+        align-items: center;
         position: relative;
         margin-right: 0;
 
@@ -153,7 +161,7 @@ from scrolling */
 
 .header-top-nav__logo {
     float: right;
-    margin-top: 10px;
+    margin-top: 6px;
     margin-right: $veggie-burger + 12px;
     margin-bottom: 10px;
 
@@ -167,7 +175,7 @@ from scrolling */
 
     @include mq(desktop) {
         margin-top: 5px;
-        margin-bottom: $gs-baseline + ($gs-baseline / 2);
+        margin-bottom: 12px;
         position: relative;
         z-index: $zindex-main-menu + 1;
     }
