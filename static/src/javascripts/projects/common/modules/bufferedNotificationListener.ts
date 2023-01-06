@@ -10,7 +10,9 @@ const eventName = 'my_account_notification';
  * object.
  */
 const bufferedNotificationListener = {
-	on: (callback: (event: CustomEvent<NotificationEvent>) => void): void => {
+	on: (
+		callback: (event: CustomEvent<HeaderNotification[]>) => void,
+	): void => {
 		// See https://github.com/microsoft/TypeScript/issues/28357 for why we have to cast here
 		document.addEventListener(eventName, callback as EventListener);
 
@@ -20,7 +22,7 @@ const bufferedNotificationListener = {
 			});
 		}
 	},
-	emit: (payload: NotificationEvent): void => {
+	emit: (payload: HeaderNotification[]): void => {
 		const event = new CustomEvent(eventName, {
 			detail: payload,
 		});

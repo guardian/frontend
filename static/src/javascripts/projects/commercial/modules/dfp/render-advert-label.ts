@@ -24,6 +24,9 @@ const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
 		).length
 	);
 
+const shouldRenderCloseButton = (adSlotNode: HTMLElement): boolean =>
+	adSlotNode.classList.contains('ad-slot--mobile-sticky');
+
 const createAdCloseDiv = (): HTMLElement => {
 	const buttonDiv: HTMLElement = document.createElement('button');
 	buttonDiv.className = 'ad-slot__close-button';
@@ -100,10 +103,12 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
-				adSlotNode.insertBefore(
-					createAdCloseDiv(),
-					adSlotNode.firstChild,
-				);
+				if (shouldRenderCloseButton(adSlotNode)) {
+					adSlotNode.insertBefore(
+						createAdCloseDiv(),
+						adSlotNode.firstChild,
+					);
+				}
 				if (renderAdTestLabel) {
 					adSlotNode.insertBefore(
 						createAdTestCookieRemovalLink(adTestCookieName),

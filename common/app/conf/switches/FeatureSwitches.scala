@@ -502,4 +502,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val Callout = Switch(
+    SwitchGroup.Feature,
+    "callouts",
+    "When ON, shows the new callout block component",
+    owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }
