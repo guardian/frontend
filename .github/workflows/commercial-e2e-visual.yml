@@ -56,29 +56,26 @@ jobs:
               run: make build
               working-directory: ./dcr/dotcom-rendering
 
-            - name: Run Cypress
-              uses: cypress-io/github-action@v4
-              with:
-                  runTests: false
-                  install: false
-                  start: make -C ../dcr/dotcom-rendering start-ci, make commercial-dev
-                  working-directory: frontend
-                  wait-on: 'http://localhost:3030, http://localhost:3031/graun.standalone.commercial.js'
-                  wait-on-timeout: 30
-                  browser: chrome
+            - name: Start Commercial server
+              run: make commercial-dev & npx wait-on -v -i 1000 http://localhost:3031/graun.standalone.commercial.js
+              working-directory: ./frontend
+
+            - name: Start DCR server
+              run: make start-ci & npx wait-on -v -i 1000 http://localhost:3030
+              working-directory: ./dcr/dotcom-rendering
               env:
                   PORT: 3030
                   COMMERCIAL_BUNDLE_URL: http://localhost:3031/graun.standalone.commercial.js
 
             - name: Run Percy Visual Regression Tests
               run: yarn cypress:run:snapshot
-              working-directory: frontend
+              working-directory: ./frontend
               env:
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
             - name: Wait for Percy Snapshots
               run: yarn percy build:wait --verbose --fail-on-changes --project ced09b1a/commercial --commit ${{ github.event.pull_request.head.sha }} --timeout 900000 --interval 5000
-              working-directory: frontend
+              working-directory: ./frontend
               env:
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
