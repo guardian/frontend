@@ -3,6 +3,7 @@ import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
 import {
+	submitClickEvent,
 	submitInsertEvent,
 	submitViewEvent,
 } from '../commercial/acquisitions-ophan';
@@ -60,6 +61,22 @@ const trackNotificationsInsert = (
 	);
 	if (ophanComponent) {
 		submitInsertEvent(ophanComponent);
+	}
+};
+
+const setupTrackNotificationsClick = (
+	el: Element,
+	target: string,
+	notifications: HeaderNotification[],
+): void => {
+	const ophanComponent = buildOphanComponentWithNotifications(
+		target,
+		notifications,
+	);
+	if (ophanComponent) {
+		el.addEventListener('click', () => {
+			submitClickEvent(ophanComponent);
+		});
 	}
 };
 
@@ -162,6 +179,11 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 								trackNotificationsInsert(target, notifications);
 								setupTrackNotificationsView(
 									notificationsContainerEl,
+									target,
+									notifications,
+								);
+								setupTrackNotificationsClick(
+									menuItem,
 									target,
 									notifications,
 								);
