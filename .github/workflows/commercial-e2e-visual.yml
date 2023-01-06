@@ -11,7 +11,7 @@ on:
             - .github/workflows/commercial-e2e-visual.yml
 
 concurrency:
-    group: 'commercial-e2e-${{ github.head_ref }}'
+    group: 'commercial-e2e-visual-${{ github.head_ref }}'
     cancel-in-progress: true
 
 jobs:
