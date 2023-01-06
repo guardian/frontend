@@ -22,7 +22,6 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
-import services.dotcomrendering.OnwardsPicker
 import services.fronts.FrontJsonFapiLive
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
@@ -53,7 +52,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
-  lazy val onwardsPicker = wire[OnwardsPicker]
   lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]

@@ -55,5 +55,4 @@ trait OnwardControllers {
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
   lazy val storyPackageController = wire[StoryPackageController]
-  lazy val onwardResponseController = wire[OnwardResponseController]
 }

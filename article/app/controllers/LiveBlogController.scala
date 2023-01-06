@@ -190,7 +190,6 @@ class LiveBlogController(
                 availableTopics,
                 newsletter = None,
                 topicResult,
-                onwards = None,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)

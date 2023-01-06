@@ -11,7 +11,6 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.NewsletterService
-import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class PublicationControllerTest
@@ -41,7 +40,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       wsClient,
       new DCRFake(),
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-      new OnwardsPicker(new CuratedContentAgent(fapi)),
     )
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
