@@ -1,25 +1,34 @@
 import { mostReadGeo } from '../fixtures/api/most-read-geo';
 import { mostRead } from '../fixtures/api/most-read';
 import { regularStories } from '../fixtures/api/regular-stories';
+import { longRead } from '../fixtures/api/long-read';
 
-const stubApiRequest = (url: string, response: object) =>
-	cy.intercept(url, (req) => req.reply({ body: response }));
+const stubApiRequest = (matchUrl: string, response: object) =>
+	cy.intercept(matchUrl, (req) => {
+		console.log('matching', req.url, matchUrl);
+		req.reply({ body: response });
+	});
 
 const stubApiRequests = () => {
-	// stub most viewed right
+	// most viewed right
 	stubApiRequest(
 		'https://api.nextgen.guardianapps.co.uk/most-read-geo.json?dcr=true',
 		mostReadGeo,
 	);
-	// stub headlines
+	// headlines
 	stubApiRequest(
 		'https://api.nextgen.guardianapps.co.uk/container/data/uk-alpha/news/regular-stories.json',
 		regularStories,
 	);
-	// stub most viewed bottom
+	// most viewed bottom
 	stubApiRequest(
-		'https://api.nextgen.guardianapps.co.uk/most-read/politics.json?dcr=true',
+		'https://api.nextgen.guardianapps.co.uk/most-read/*',
 		mostRead,
+	);
+	// long read
+	stubApiRequest(
+		'https://api.nextgen.guardianapps.co.uk/series/news/series/the-long-read**/**',
+		longRead,
 	);
 };
 
