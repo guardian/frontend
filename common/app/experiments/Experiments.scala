@@ -95,7 +95,7 @@ object ServerSideLiveblogInlineAds
       participationGroup = Perc5A,
     )
 
-object Callouts
+object CalloutElements
     extends Experiment(
       name = "callout-elements",
       description = "When ON, callout elements will be visible",
