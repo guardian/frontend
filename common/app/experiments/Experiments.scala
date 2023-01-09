@@ -14,7 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
-      Callouts,
+      CalloutElements,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
