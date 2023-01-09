@@ -22,28 +22,36 @@ const stubApiRequest = (matchUrl: string, response: object) =>
 const stubApiRequests = () => {
 	// most viewed right
 	stubApiRequest(
-		'https://api.nextgen.guardianapps.co.uk/most-read-geo.json?dcr=true',
+		// variations:
+		// https://api.nextgen.guardianapps.co.uk/most-read-geo.json?dcr=true
+		// https://code.api.nextgen.guardianapps.co.uk/most-read-geo.json?dcr=true
+		'https://*api.nextgen.guardianapps.co.uk/most-read-geo.json?dcr=true',
 		mostReadGeo,
 	);
 	// headlines
 	stubApiRequest(
-		'https://api.nextgen.guardianapps.co.uk/container/data/uk-alpha/news/regular-stories.json',
+		// variations:
+		// https://api.nextgen.guardianapps.co.uk/container/data/uk-alpha/news/regular-stories.json
+		// https://code.api.nextgen.guardianapps.co.uk/container/data/uk-alpha/news/regular-stories.json
+		'https://*api.nextgen.guardianapps.co.uk/container/data/uk-alpha/news/regular-stories.json',
 		regularStories,
 	);
 	// most viewed bottom
 	stubApiRequest(
 		// variations:
 		// https://api.nextgen.guardianapps.co.uk/most-read/politics.json?dcr=true
+		// https://code.api.nextgen.guardianapps.co.uk/most-read/politics.json?dcr=true
 		// https://api.nextgen.guardianapps.co.uk/most-read/business.json?dcr=true
 		// https://api.nextgen.guardianapps.co.uk/most-read/football.json?dcr=true
-		'https://api.nextgen.guardianapps.co.uk/most-read/*',
+		'https://*api.nextgen.guardianapps.co.uk/most-read/*',
 		mostRead,
 	);
 	// long read
 	stubApiRequest(
 		// variations:
 		// https://api.nextgen.guardianapps.co.uk/series/news/series/the-long-read.json?dcr&shortUrl=/p/y8ykh
-		'https://api.nextgen.guardianapps.co.uk/series/news/series/the-long-read**/**',
+		// https://code.api.nextgen.guardianapps.co.uk/series/news/series/the-long-read.json?dcr&shortUrl=/p/y8ykh
+		'https://*api.nextgen.guardianapps.co.uk/series/news/series/the-long-read**/**',
 		longRead,
 	);
 };
