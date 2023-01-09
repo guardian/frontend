@@ -14,7 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
-      CalloutElements,
+      Callouts,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -95,9 +95,9 @@ object ServerSideLiveblogInlineAds
       participationGroup = Perc5A,
     )
 
-object CalloutElements
+object Callouts
     extends Experiment(
-      name = "callout-elements",
+      name = "callouts",
       description = "When ON, callout elements will be visible",
       owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
       sellByDate = LocalDate.of(2023, 6, 1),
