@@ -97,7 +97,7 @@ object ServerSideLiveblogInlineAds
 
 object Callouts
     extends Experiment(
-      name = "callouts",
+      name = "callout-elements",
       description = "When ON, callout elements will be visible",
       owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
       sellByDate = LocalDate.of(2023, 6, 1),
