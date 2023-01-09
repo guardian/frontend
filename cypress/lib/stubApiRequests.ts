@@ -9,6 +9,16 @@ const stubApiRequest = (matchUrl: string, response: object) =>
 		req.reply({ body: response });
 	});
 
+/**
+ * Cypress matches URLs using a glob pattern via minimatch.
+ * You can test if the pattern will match the intended URLs here:
+ * https://lironzluf.github.io/minimatch-playground/
+ *
+ * Be careful when changing these patterns. An incorrect glob
+ * could mean Cypress will not intercept and stub the request.
+ * Snapshot tests will pass locally but visual regression tests
+ * in Percy will fail.
+ */
 const stubApiRequests = () => {
 	// most viewed right
 	stubApiRequest(
@@ -22,11 +32,17 @@ const stubApiRequests = () => {
 	);
 	// most viewed bottom
 	stubApiRequest(
+		// variations:
+		// https://api.nextgen.guardianapps.co.uk/most-read/politics.json?dcr=true
+		// https://api.nextgen.guardianapps.co.uk/most-read/business.json?dcr=true
+		// https://api.nextgen.guardianapps.co.uk/most-read/football.json?dcr=true
 		'https://api.nextgen.guardianapps.co.uk/most-read/*',
 		mostRead,
 	);
 	// long read
 	stubApiRequest(
+		// variations:
+		// https://api.nextgen.guardianapps.co.uk/series/news/series/the-long-read.json?dcr&shortUrl=/p/y8ykh
 		'https://api.nextgen.guardianapps.co.uk/series/news/series/the-long-read**/**',
 		longRead,
 	);
