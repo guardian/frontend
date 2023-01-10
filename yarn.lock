@@ -2238,10 +2238,10 @@
   dependencies:
     mini-svg-data-uri "^1.3.3"
 
-"@guardian/source-react-components-development-kitchen@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-8.2.0.tgz#b7c9ff6b494f55d42e39acdde897193780dd1e76"
-  integrity sha512-1oDFsjgfEUStb7zTOo7NutBSt1L5OvaNPC9VUR8qvEqkQ31PfYmvBeIo5OEm9uHfvageUBcVS862jz9jn2PDvg==
+"@guardian/source-react-components-development-kitchen@8.2.1":
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-8.2.1.tgz#c55927fcb9b3d63e6ad20c7b9193c99e9ebfe4f4"
+  integrity sha512-9UOl6PZiKyZ/+H4HgHO2PYAimdqVQIfM6Au+mEzUyGL+Rne9qfz63tyPue2FdMSzexTPkcV5Mi/gZFDs3kbk/g==
 
 "@guardian/source-react-components@^9.1.1":
   version "9.1.1"
