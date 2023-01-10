@@ -104,7 +104,7 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 						adSlotNode.firstChild,
 					);
 				}
-				if (renderAdTestLabel) {
+				if (renderAdTestLabel && adTestCookieName) {
 					adSlotNode.insertBefore(
 						createAdTestCookieRemovalLink(adTestCookieName),
 						adSlotNode.firstChild,
