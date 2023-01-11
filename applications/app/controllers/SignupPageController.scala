@@ -13,6 +13,7 @@ import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
 import services.RemoteRenderPage
 
+import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
 class SignupPageController(
@@ -67,7 +68,9 @@ class SignupPageController(
     }
   }
 
-  def renderNewslettersPage(): Action[AnyContent] =
+  def renderNewslettersPage()(
+    implicit executionContext: ExecutionContext = this.executionContext
+  ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
         val renderDcr: Boolean = getShouldUseRemoteRender()

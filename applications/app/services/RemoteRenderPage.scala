@@ -8,6 +8,7 @@ import services.newsletters.model.NewsletterResponse
 
 import implicits.Requests._
 import renderers.DotcomRenderingService
+import scala.concurrent.{ExecutionContext, Future, duration, Await}
 
 object RemoteRenderPage {
 
@@ -15,8 +16,14 @@ object RemoteRenderPage {
 
   def newslettersPage(newsletters: List[NewsletterResponse], ws: WSClient)(implicit
       request: RequestHeader,
+      executionContext: ExecutionContext,
   ): Result = {
 
-    NoCache(InternalServerError(newsletters.toString()))
+    val testStringResultFromRenderer = Await.result(
+      Future.apply(remoteRenderer.getClass().toString()),
+      duration.Duration.Inf,
+    )
+
+    NoCache(InternalServerError(testStringResult.toString()))
   }
 }
