@@ -9,7 +9,9 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, R
 import play.filters.csrf.CSRFAddToken
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
+import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
+import services.RemoteRenderPage
 
 import scala.concurrent.duration._
 
@@ -53,7 +55,16 @@ class SignupPageController(
       request: RequestHeader,
   ): Result = {
 
-    NoCache(InternalServerError)
+    val newsletters: Either[String, List[NewsletterResponse]] =
+      newsletterSignupAgent.getNewsletters()
+
+    newsletters match {
+      case Right(newsletters) =>
+        RemoteRenderPage.newslettersPage(newsletters, wsClient)
+      case Left(e) =>
+        log.error(s"API call to get newsletters failed: $e")
+        NoCache(InternalServerError)
+    }
   }
 
   def renderNewslettersPage(): Action[AnyContent] =
