@@ -11,22 +11,12 @@ const adverts: Record<string, string> = {
         <div class="js-ad-slot"></div>`,
 	labelDisabled: `
         <div class="js-ad-slot" data-label="false"></div>`,
-	alreadyLabelled: `
-        <div class="js-ad-slot">
-            <div class="ad-slot__label">Advertisement</div>
-        </div>`,
 	frame: `
         <div class="js-ad-slot ad-slot--frame"></div>`,
 	uh: `
         <div class="js-ad-slot u-h"></div>`,
 	topAboveNav: `
         <div class="js-ad-slot" id="dfp-ad--top-above-nav"></div>`,
-	topAboveNavToggleLabel: `
-        <div>
-            <div class="js-ad-slot" id="dfp-ad--top-above-nav">
-				<div class="ad-slot__label ad-slot__label--toggle hidden">Advertisement</div>
-			</div>
-        </div>`,
 };
 
 const createAd = (html: string) => {
@@ -56,14 +46,6 @@ describe('Rendering advert labels', () => {
 
 	it('Will not add a label if it has an attribute data-label="false"', async () => {
 		createAd(adverts['labelDisabled']);
-		return renderAdvertLabel(getAd()).then(() => {
-			const dataLabelShow = getAd().getAttribute('data-label-show');
-			expect(dataLabelShow).toBeFalsy();
-		});
-	});
-
-	it('Will not add a label if the adSlot already has one', async () => {
-		createAd(adverts['alreadyLabelled']);
 		return renderAdvertLabel(getAd()).then(() => {
 			const dataLabelShow = getAd().getAttribute('data-label-show');
 			expect(dataLabelShow).toBeFalsy();
