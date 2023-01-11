@@ -11,6 +11,7 @@ import services.NewsletterData
 import implicits.Requests._
 import renderers.DotcomRenderingService
 import scala.concurrent.{ExecutionContext, Future, duration, Await}
+import java.util.concurrent.{TimeUnit}
 
 object RemoteRenderPage {
 
@@ -49,7 +50,7 @@ object RemoteRenderPage {
 
     Await.result(
       remoteRenderer.getEmailNewsletters(ws, newslettersToJson(newsletters)),
-      duration.Duration.Inf,
+      duration.Duration.create(5, TimeUnit.SECONDS),
     )
   }
 }
