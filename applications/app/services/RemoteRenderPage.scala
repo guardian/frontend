@@ -14,16 +14,21 @@ object RemoteRenderPage {
 
   val remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService()
 
+  private def newslettersToJson(newsletters: List[NewsletterResponse]):String = {
+    val count = newsletters.count(n=>true);
+    val json = s"{\"count\": ${count}, \"testValue\": \"fooBar\"}"
+
+    json
+  }
+
   def newslettersPage(newsletters: List[NewsletterResponse], ws: WSClient)(implicit
       request: RequestHeader,
       executionContext: ExecutionContext,
   ): Result = {
 
-    val testStringResultFromRenderer = Await.result(
-      Future.apply(remoteRenderer.getClass().toString()),
+    Await.result(
+      remoteRenderer.getEmailNewsletters(ws, newslettersToJson(newsletters)),
       duration.Duration.Inf,
     )
-
-    NoCache(InternalServerError(testStringResult.toString()))
   }
 }

@@ -16,6 +16,8 @@ import model.dotcomrendering.{
   PageType,
 }
 import services.NewsletterData
+import services.newsletters.model.NewsletterResponse
+
 import model.{
   CacheTime,
   Cached,
@@ -256,6 +258,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
+  }
+
+  def getEmailNewsletters(
+      ws: WSClient,
+      json: String,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.baseURL + "/email-newsletters", CacheTime.NotFound)
   }
 }
 
