@@ -68,8 +68,8 @@ class SignupPageController(
     }
   }
 
-  def renderNewslettersPage()(
-    implicit executionContext: ExecutionContext = this.executionContext
+  def renderNewslettersPage()(implicit
+      executionContext: ExecutionContext = this.executionContext,
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
