@@ -1,4 +1,4 @@
-import type { OphanComponentType } from '@guardian/libs';
+import type { OphanComponent, OphanComponentType } from '@guardian/libs';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
@@ -7,6 +7,7 @@ import {
 	submitInsertEvent,
 	submitViewEvent,
 } from '../commercial/acquisitions-ophan';
+import { addTrackingToUrl } from './linkTracking';
 
 const NOTIFICATION_COMPONENT_TYPE: OphanComponentType = 'RETENTION_HEADER';
 
@@ -37,53 +38,56 @@ const updateCommentLink = (commentItems: Element[]): void => {
 const buildOphanComponentWithNotifications = (
 	target: string,
 	notifications: HeaderNotification[],
-) => {
+): OphanComponent | undefined => {
 	if (notifications.length > 0) {
 		return {
-			component: {
-				componentType: NOTIFICATION_COMPONENT_TYPE,
-				id: target,
-				labels: notifications.map((n) => n.ophanLabel),
-			},
+			componentType: NOTIFICATION_COMPONENT_TYPE,
+			id: target,
+			labels: notifications.map((n) => n.ophanLabel),
 		};
 	}
 
 	return undefined;
 };
 
-const trackNotificationsInsert = (
-	target: string,
-	notifications: HeaderNotification[],
-): void => {
-	const ophanComponent = buildOphanComponentWithNotifications(
-		target,
-		notifications,
-	);
-	if (ophanComponent) {
-		submitInsertEvent(ophanComponent);
-	}
+const trackNotificationsInsert = (ophanComponent: OphanComponent): void => {
+	submitInsertEvent({ component: ophanComponent });
 };
 
 const setupTrackNotificationsClick = (
 	el: Element,
-	target: string,
-	notifications: HeaderNotification[],
+	ophanComponent: OphanComponent,
 ): void => {
-	const ophanComponent = buildOphanComponentWithNotifications(
-		target,
-		notifications,
-	);
-	if (ophanComponent) {
-		el.addEventListener('click', () => {
-			submitClickEvent(ophanComponent);
-		});
+	el.addEventListener('click', () => {
+		submitClickEvent({ component: ophanComponent });
+	});
+};
+
+const addTrackingToLink = (
+	el: Element,
+	ophanComponent: OphanComponent,
+): void => {
+	const linkUrl = el.getAttribute('href');
+
+	if (linkUrl) {
+		const referrerUrl = window.location.origin + window.location.pathname;
+		const referrerPageviewId = window.guardian.config.ophan.pageViewId;
+
+		const urlWithTracking = addTrackingToUrl(
+			linkUrl,
+			ophanComponent,
+			referrerUrl,
+			referrerPageviewId,
+		);
+
+		el.setAttribute('href', urlWithTracking.toString());
 	}
 };
 
 const setupTrackNotificationsView = (
 	el: Element,
-	target: string,
 	notifications: HeaderNotification[],
+	ophanComponent: OphanComponent,
 ): void => {
 	let hasBeenSeen = false;
 
@@ -93,15 +97,7 @@ const setupTrackNotificationsView = (
 				if (entry.isIntersecting) {
 					if (!hasBeenSeen) {
 						hasBeenSeen = true;
-						// Track impression
-						const ophanComponent =
-							buildOphanComponentWithNotifications(
-								target,
-								notifications,
-							);
-						if (ophanComponent) {
-							submitViewEvent(ophanComponent);
-						}
+						submitViewEvent({ component: ophanComponent });
 						notifications.forEach((n) => n.logImpression());
 					}
 				}
@@ -175,18 +171,23 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 								menuItem.querySelector(
 									'.js-user-account-menu-notifications-container',
 								);
-							if (notificationsContainerEl) {
-								trackNotificationsInsert(target, notifications);
-								setupTrackNotificationsView(
-									notificationsContainerEl,
+							const ophanComponent =
+								buildOphanComponentWithNotifications(
 									target,
 									notifications,
+								);
+							if (notificationsContainerEl && ophanComponent) {
+								trackNotificationsInsert(ophanComponent);
+								setupTrackNotificationsView(
+									notificationsContainerEl,
+									notifications,
+									ophanComponent,
 								);
 								setupTrackNotificationsClick(
 									menuItem,
-									target,
-									notifications,
+									ophanComponent,
 								);
+								addTrackingToLink(menuItem, ophanComponent);
 								notificationsContainerEl.append(...messageEls);
 							}
 						}
