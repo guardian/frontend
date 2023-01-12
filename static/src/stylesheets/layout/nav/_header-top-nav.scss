@@ -35,14 +35,17 @@ from scrolling */
         justify-content: start;
         font-weight: bold;
         height: 30px;
-        padding-right: 96px;
-        padding-left: 12px;
 
         @include mq($from: desktop) {
             justify-content: end;
             height: 35px;
             padding-right: 0;
             padding-left: 0;
+        }
+
+        @include mq($from: wide) {
+            padding-right: 96px;
+            padding-left: 12px;
         }
 
         a.top-bar__item {
