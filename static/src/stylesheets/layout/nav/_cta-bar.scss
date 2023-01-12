@@ -14,7 +14,7 @@
 
     @include mq(tablet) {
         padding-top: 4px;
-        padding-bottom: 20px;
+        padding-bottom: 12px;
     }
 
     @include mq(desktop) {
