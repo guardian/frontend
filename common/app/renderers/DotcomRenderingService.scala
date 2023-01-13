@@ -264,7 +264,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       json: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    post(ws, json, Configuration.rendering.baseURL + "/email-newsletters", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
   }
 }
 
