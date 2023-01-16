@@ -4,10 +4,11 @@ import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
 import common._
 import contentapi.ContentApiClient
+import layout.DiscussionSettings
 import model.ContentFormat
 import model.dotcomrendering.OnwardCollectionResponse
 import play.api.libs.json._
-import services.{OphanApi, OphanDeeplyReadItem}
+import services.{FaciaContentConvert, OphanApi, OphanDeeplyReadItem}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
@@ -104,6 +105,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       starRating = None,
       avatarUrl = None,
       branding = None,
+      discussion = DiscussionSettings.fromTrail(FaciaContentConvert.contentToFaciaContent(content)),
     )
   }
 
