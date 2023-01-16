@@ -91,7 +91,7 @@ class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
     val maybeFirstChar = Try(badCharacters.replaceAllIn(asAscii(s).toLowerCase, "").charAt(0)).toOption
 
     if (maybeFirstChar.isEmpty) {
-      log.error(s"Tag without alpha index, being shoved into 1-9: $s")
+      log.info(s"Tag without alpha index, being shoved into 1-9: $s")
     }
 
     maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
