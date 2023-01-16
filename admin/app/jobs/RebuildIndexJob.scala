@@ -96,7 +96,16 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
       contributors <- contentApiTagsEnumerator.enumerateTagType("contributor")
     } yield {
       val contributorsByNameOrder: Map[String, Set[Tag]] = contributors.toSet
-        .groupBy(tag => tagPages.alphaIndexKey(tag.lastName orElse tag.firstName getOrElse tag.webTitle))
+        .groupBy(tag => {
+
+          /**
+            * The alphaIndexKey function looks at the first alphanumeric character in the string passed to it.
+            * Concatenating these three strings therefore allows us to use firstName and webTitle as fallbacks
+            * if lastName is None or "".
+            * */
+          val indexString = tag.lastName.getOrElse("").trim + tag.firstName.getOrElse("").trim + tag.webTitle
+          tagPages.alphaIndexKey(indexString)
+        })
 
       blocking {
         saveToS3("contributors", tagPages.toPages(contributorsByNameOrder)(alphaTitle, tagPages.nameOrder))
