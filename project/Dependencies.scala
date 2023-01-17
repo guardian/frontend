@@ -80,7 +80,7 @@ object Dependencies {
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
-  val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
+  val okhttp = "com.squareup.okhttp3" % "okhttp" % "4.10.0"
 
   /*
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
