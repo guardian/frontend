@@ -28,7 +28,6 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      mostPopular: Option[Seq[OnwardCollectionResponse]],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     requestedBlogs.enqueue(article)

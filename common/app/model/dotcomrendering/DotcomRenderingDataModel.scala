@@ -98,7 +98,6 @@ case class DotcomRenderingDataModel(
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
-    onwards: Option[Seq[OnwardCollectionResponse]],
     showTableOfContents: Boolean,
 )
 
@@ -222,7 +221,6 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       newsletter: Option[NewsletterData],
-      onwards: Option[Seq[OnwardCollectionResponse]],
   ): DotcomRenderingDataModel = {
     val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
     val linkedData =
@@ -247,7 +245,6 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = newsletter,
       topicResult = None,
-      onwards = onwards,
     )
   }
 
@@ -352,7 +349,6 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      onwards: Option[Seq[OnwardCollectionResponse]] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -526,7 +522,6 @@ object DotcomRenderingDataModel {
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
-      onwards = onwards,
       showTableOfContents = content.fields.showTableOfContents.getOrElse(false),
     )
   }
