@@ -4,7 +4,7 @@ import com.github.nscala_time.time.Imports.DateTimeZone
 import com.gu.commercial.branding.{Branding, BrandingType, Dimensions, Logo => CommercialLogo}
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
-import layout.ContentCard
+import layout.{ContentCard, DiscussionSettings}
 import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import model.pressed.PressedContent
 import play.api.libs.json.{Json, Writes}
@@ -32,6 +32,7 @@ case class Trail(
     starRating: Option[Int],
     avatarUrl: Option[String],
     branding: Option[Branding],
+    discussion: DiscussionSettings,
 )
 
 object Trail {
@@ -49,6 +50,8 @@ object Trail {
   implicit val logoWrites = Json.writes[CommercialLogo]
 
   implicit val brandingWrites = Json.writes[Branding]
+
+  implicit val discussionWrites = Json.writes[DiscussionSettings]
 
   implicit val OnwardItemWrites = Json.writes[Trail]
 
@@ -129,6 +132,7 @@ object Trail {
       starRating = contentCard.starRating,
       avatarUrl = contentCardToAvatarUrl(contentCard),
       branding = contentCard.branding,
+      discussion = contentCard.discussionSettings,
     )
   }
 
@@ -163,6 +167,7 @@ object Trail {
       starRating = content.card.starRating,
       avatarUrl = None,
       branding = content.branding(Edition(request)),
+      discussion = DiscussionSettings.fromTrail(content),
     )
   }
 }
