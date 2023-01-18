@@ -103,7 +103,8 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
             * Concatenating these three strings therefore allows us to use firstName and webTitle as fallbacks
             * if lastName is None or "".
             * */
-          val indexString = tag.lastName.getOrElse("").trim + tag.firstName.getOrElse("").trim + tag.webTitle
+          val indexString =
+            tag.lastName.getOrElse("").trim.concat(tag.firstName.getOrElse("").trim).concat(tag.webTitle)
           tagPages.alphaIndexKey(indexString)
         })
 
