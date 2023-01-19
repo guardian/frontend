@@ -9,12 +9,12 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DCRFronts,
       OfferHttp3,
-      TableOfContents,
       EuropeNetworkFront,
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
       CalloutElements,
+      RemoveKickerSlashes,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -46,12 +46,12 @@ object OfferHttp3
       participationGroup = Perc0B,
     )
 
-object TableOfContents
+object RemoveKickerSlashes
     extends Experiment(
-      name = "table-of-contents",
-      description = "When ON, a table of contents will be rendered for qualifying articles",
-      owners = Seq(Owner.withName("journalism team")),
-      sellByDate = LocalDate.of(2023, 3, 10),
+      name = "remove-kicker-slashes",
+      description = "Implement kickers without slashes on fronts cards. Used to iterate on feature before launch.",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 2, 1),
       participationGroup = Perc0C,
     )
 
