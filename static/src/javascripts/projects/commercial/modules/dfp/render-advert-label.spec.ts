@@ -1,4 +1,4 @@
-import { renderAdvertLabel } from './render-advert-label';
+import { renderAdvertLabel, shouldRenderLabel } from './render-advert-label';
 
 jest.mock('../../../common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: {},
@@ -17,6 +17,16 @@ const adverts: Record<string, string> = {
         <div class="js-ad-slot u-h"></div>`,
 	topAboveNav: `
         <div class="js-ad-slot" id="dfp-ad--top-above-nav"></div>`,
+	fluid: `
+        <div class="js-ad-slot ad-slot--fluid"></div>`,
+	interscroller: `
+        <div class="js-ad-slot ad-slot--interscroller"></div>`,
+	collapse: `
+        <div class="js-ad-slot ad-slot--collapse"></div>`,
+	dataLabelTrue: `
+        <div class="js-ad-slot" data-label="true"></div>`,
+	dataLabelFalse: `
+        <div class="js-ad-slot" data-label="false"></div>`,
 };
 
 const createAd = (html: string) => {
@@ -25,6 +35,60 @@ const createAd = (html: string) => {
 
 const getAd = (): HTMLElement =>
 	document.querySelector(adSelector) as HTMLElement;
+
+describe('shouldRenderLabel', () => {
+	afterEach(() => {
+		document.body.innerHTML = '';
+	});
+
+	it('renders an ad label for normal ads', async () => {
+		createAd(adverts['withLabel']);
+		return renderAdvertLabel(getAd()).then(() => {
+			const ad = getAd();
+			expect(shouldRenderLabel(ad)).toBeTruthy();
+		});
+	});
+
+	it('renders an ad label for interscroller ads', async () => {
+		createAd(adverts['interscroller']);
+		return renderAdvertLabel(getAd()).then(() => {
+			const ad = getAd();
+			expect(shouldRenderLabel(ad)).toBeTruthy();
+		});
+	});
+
+	it('does NOT render an ad label for fluid ads', async () => {
+		createAd(adverts['fluid']);
+		return renderAdvertLabel(getAd()).then(() => {
+			const ad = getAd();
+			expect(shouldRenderLabel(ad)).toBeFalsy();
+		});
+	});
+
+	it('does NOT render an ad label for collapsed ads', async () => {
+		createAd(adverts['collapse']);
+		return renderAdvertLabel(getAd()).then(() => {
+			const ad = getAd();
+			expect(shouldRenderLabel(ad)).toBeFalsy();
+		});
+	});
+
+	it('renders an ad label when data label attribute is true', async () => {
+		createAd(adverts['dataLabelTrue']);
+		return renderAdvertLabel(getAd()).then(() => {
+			const ad = getAd();
+			expect(shouldRenderLabel(ad)).toBeTruthy();
+		});
+	});
+
+	it('does NOT render an ad label when data label attribute is false', async () => {
+		createAd(adverts['dataLabelFalse']);
+		return renderAdvertLabel(getAd()).then(() => {
+			const ad = getAd();
+			expect(shouldRenderLabel(ad)).toBeFalsy();
+		});
+	});
+});
 
 describe('Rendering advert labels', () => {
 	afterEach(() => {
