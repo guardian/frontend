@@ -194,7 +194,7 @@ $weather-large-size: 50px;
         font-weight: 400;
         width: 100%;
         display: block;
-        padding: 0 2rem 0 2rem;
+        padding: 0 2rem;
         box-sizing: border-box;
         transition: background-color .2s ease-in-out;
 
@@ -243,7 +243,7 @@ $weather-large-size: 50px;
 .weather__close-location,
 .weather__edit-location {
     position: absolute;
-    top: 0.7rem;
+    top: .7rem;
     display: block;
     z-index: 5;
 
@@ -253,11 +253,11 @@ $weather-large-size: 50px;
 }
 
 .weather__close-location {
-    right: 0.6rem;
+    right: .6rem;
 }
 
 .weather__edit-location {
-    left: 0.6rem;
+    left: .6rem;
     pointer-events: none;
 }
 
