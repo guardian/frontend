@@ -7,17 +7,26 @@ import { getCookie } from '@guardian/libs';
 import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
 
-const shouldRenderLabel = (adSlotNode: HTMLElement): boolean =>
-	!(
-		(adSlotNode.classList.contains('ad-slot--fluid') &&
-			!adSlotNode.classList.contains('ad-slot--interscroller')) ||
+const shouldRenderLabel = (adSlotNode: HTMLElement): boolean => {
+	if (
+		adSlotNode.classList.contains('ad-slot--fluid') &&
+		!adSlotNode.classList.contains('ad-slot--interscroller')
+	) {
+		return false;
+	}
+
+	if (
 		adSlotNode.classList.contains('ad-slot--frame') ||
 		adSlotNode.classList.contains('ad-slot--gc') ||
 		adSlotNode.classList.contains('u-h') ||
 		// set for out-of-page (1x1) and empty (2x2) ads
 		adSlotNode.classList.contains('ad-slot--collapse') ||
 		adSlotNode.getAttribute('data-label') === 'false'
-	);
+	)
+		return false;
+
+	return true;
+};
 
 const shouldRenderCloseButton = (adSlotNode: HTMLElement): boolean =>
 	adSlotNode.classList.contains('ad-slot--mobile-sticky');
@@ -46,6 +55,7 @@ const shouldRenderAdTestLabel = (): boolean =>
 		name: 'adtestInLabels',
 		shouldMemoize: true,
 	});
+
 // If `adtest` cookie is set, display its value in the ad label
 const createAdTestLabel = (
 	shouldRender: boolean,
@@ -70,19 +80,18 @@ const createAdTestCookieRemovalLink = (
 	if (adTestName) {
 		const url = new URL(window.location.href);
 		url.searchParams.set('adtest', 'clear');
+
 		const clearLink = document.createElement('a');
 		clearLink.className = 'ad-slot__adtest-cookie-clear-link';
 		clearLink.href = url.href;
 		clearLink.innerHTML = 'clear';
+
 		adTestCookieRemovalLink.appendChild(clearLink);
 	}
 
 	return adTestCookieRemovalLink;
 };
 
-/**
- * @param {HTMLElement} adSlotNode
- */
 const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 	return fastdom.measure(() => {
 		if (shouldRenderLabel(adSlotNode)) {
@@ -91,13 +100,16 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 				name: 'adtest',
 				shouldMemoize: true,
 			});
+
 			const adLabelContent = `Advertisement${createAdTestLabel(
 				renderAdTestLabel,
 				adTestCookieName,
 			)}`;
+
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
+
 				if (shouldRenderCloseButton(adSlotNode)) {
 					adSlotNode.insertBefore(
 						createAdCloseDiv(),
@@ -112,6 +124,7 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 				}
 			});
 		}
+
 		return Promise.resolve();
 	});
 };
@@ -131,6 +144,7 @@ const renderStickyScrollForMoreLabel = (
 			});
 			event.preventDefault();
 		};
+
 		adSlotNode.appendChild(scrollForMoreLabel);
 	});
 
