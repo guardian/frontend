@@ -61,7 +61,11 @@ class SignupPageController(
 
     newsletters match {
       case Right(newsletters) =>
-        RemoteRenderPage.newslettersPage(newsletters, wsClient)
+        RemoteRenderPage.newslettersPage(
+          newsletters,
+          StaticPages.dcrSimplenewsletterPage(request.path),
+          wsClient,
+        )
       case Left(e) =>
         log.error(s"API call to get newsletters failed: $e")
         NoCache(InternalServerError)

@@ -50,25 +50,10 @@ object RemoteRenderPage {
     json.toString()
   }
 
-  def newslettersPage(newsletters: List[NewsletterResponse], ws: WSClient)(implicit
+  def newslettersPage(newsletters: List[NewsletterResponse], page: SimplePage, ws: WSClient)(implicit
       request: RequestHeader,
       executionContext: ExecutionContext,
   ): Result = {
-
-    // TO DO - move this to the controller
-    val page: SimplePage = SimplePage(
-      MetaData.make(
-        id = request.path,
-        section = Option(SectionId(value = "newsletter-signup-page")),
-        webTitle = "Guardian newsletters: Sign up for our free newsletters",
-        description = Some(
-          "Scroll less and understand more about the subjects you care about with the Guardian's brilliant email newsletters, free to your inbox.",
-        ),
-        contentType = Some(DotcomContentType.Signup),
-        iosType = None,
-        shouldGoogleIndex = true,
-      ),
-    )
 
     Await.result(
       remoteRenderer.getEmailNewsletters(ws, newslettersToJson(newsletters), page),
