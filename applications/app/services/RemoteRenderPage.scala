@@ -32,20 +32,22 @@ object RemoteRenderPage {
     )
   }
 
-  private def newslettersToJson(newsletters: List[NewsletterResponse])(implicit
+  private def buildJson(newsletters: List[NewsletterResponse], page: SimplePage)(implicit
       request: RequestHeader,
   ): String = {
-    // TO DO - move this to DotcomRenderingDataModel so the oginal list can be sent to
-    // DotcomRenderingService
+
     val newsletterData = newsletters
       .filter((newsletter) => newsletter.cancelled == false && newsletter.paused == false)
       .map((newsletter) => convertNewsletterResponseToData(newsletter))
 
     val json = Json.obj(
       "newsletters" -> newsletterData,
-      "id" -> "metaData.id",
-      "webTitle" -> "metaData.webTitle",
-      "description" -> "metaData.description",
+      "id" -> page.metadata.id,
+      "webTitle" -> page.metadata.webTitle,
+      "description" -> page.metadata.description,
+      "config" -> page.getJavascriptConfig,
+      "openGraphData" -> page.getOpenGraphProperties,
+      "twitterData" -> page.getTwitterProperties,
     )
     json.toString()
   }
@@ -56,7 +58,7 @@ object RemoteRenderPage {
   ): Result = {
 
     Await.result(
-      remoteRenderer.getEmailNewsletters(ws, newslettersToJson(newsletters), page),
+      remoteRenderer.getEmailNewsletters(ws, buildJson(newsletters, page)),
       duration.Duration.create(5, TimeUnit.SECONDS),
     )
   }

@@ -263,14 +263,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getEmailNewsletters(
       ws: WSClient,
-      newslettersJson: String,
-      page: SimplePage,
+      newslettersPageJson: String
   )(implicit request: RequestHeader): Future[Result] = {
-
-    // TO DO: use the page for meta data
-    // simple page has no content - DotcomRenderingDataModel won't work
-
-    post(ws, newslettersJson, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
+    post(ws, newslettersPageJson, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
   }
 }
 
