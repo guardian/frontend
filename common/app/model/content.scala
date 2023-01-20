@@ -27,6 +27,7 @@ import conf.switches.Switches.InteractiveHeaderSwitch
 
 sealed trait ContentType {
   def content: Content
+  def apiContent: contentapi.Content
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
   final def fields: Fields = content.fields
@@ -37,7 +38,7 @@ sealed trait ContentType {
   final def sharelinks: ShareLinks = content.sharelinks
 }
 
-final case class GenericContent(override val content: Content) extends ContentType
+final case class GenericContent(override val content: Content, apiContent: contentapi.Content) extends ContentType
 
 final case class Content(
     trail: Trail,
@@ -395,12 +396,13 @@ object Content {
     val content = make(apiContent)
 
     apiContent match {
-      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
-      case _ if apiContent.isGallery                                                 => Gallery.make(content)
-      case _ if apiContent.isVideo                                                   => Video.make(content)
-      case _ if apiContent.isAudio                                                   => Audio.make(content)
-      case _ if apiContent.isImageContent                                            => ImageContent.make(content)
-      case _                                                                         => GenericContent(content)
+      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku =>
+        Article.make(content, apiContent)
+      case _ if apiContent.isGallery      => Gallery.make(content, apiContent)
+      case _ if apiContent.isVideo        => Video.make(content, apiContent)
+      case _ if apiContent.isAudio        => Audio.make(content, apiContent)
+      case _ if apiContent.isImageContent => ImageContent.make(content, apiContent)
+      case _                              => GenericContent(content, apiContent)
     }
   }
 
@@ -553,7 +555,7 @@ object Article {
   }
 
   // Perform a copy of the content object to enable Article to override Content.
-  def make(content: Content): Article = {
+  def make(content: Content, apiContent: contentapi.Content): Article = {
 
     val fields = content.fields
     val elements = content.elements
@@ -579,7 +581,7 @@ object Article {
       sharelinks = sharelinks,
     )
 
-    Article(contentOverrides, lightboxProperties)
+    Article(contentOverrides, lightboxProperties, apiContent)
   }
 
   private def authorOrPA: String => String = {
@@ -588,8 +590,11 @@ object Article {
   }
 }
 
-final case class Article(override val content: Content, lightboxProperties: GenericLightboxProperties)
-    extends ContentType {
+final case class Article(
+    override val content: Content,
+    lightboxProperties: GenericLightboxProperties,
+    apiContent: contentapi.Content,
+) extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
@@ -621,7 +626,7 @@ final case class Article(override val content: Content, lightboxProperties: Gene
 }
 
 object Audio {
-  def make(content: Content): Audio = {
+  def make(content: Content, apiContent: contentapi.Content): Audio = {
 
     val contentType = DotcomContentType.Audio
     val section = content.metadata.sectionId
@@ -649,11 +654,11 @@ object Audio {
       metadata = metadata,
     )
 
-    Audio(contentOverrides)
+    Audio(contentOverrides, apiContent)
   }
 }
 
-final case class Audio(override val content: Content) extends ContentType {
+final case class Audio(override val content: Content, apiContent: contentapi.Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
@@ -681,7 +686,7 @@ object AtomProperties {
 }
 
 object Video {
-  def make(content: Content): Video = {
+  def make(content: Content, apiContent: contentapi.Content): Video = {
 
     val contentType = DotcomContentType.Video
     val elements = content.elements
@@ -727,12 +732,16 @@ object Video {
       metadata = metadata,
     )
 
-    Video(contentOverrides, source, content.media.headOption)
+    Video(contentOverrides, source, content.media.headOption, apiContent)
   }
 }
 
-final case class Video(override val content: Content, source: Option[String], mediaAtom: Option[MediaAtom])
-    extends ContentType {
+final case class Video(
+    override val content: Content,
+    source: Option[String],
+    mediaAtom: Option[MediaAtom],
+    apiContent: contentapi.Content,
+) extends ContentType {
 
   lazy val bylineWithSource: Option[String] = {
     val videoSource: Option[String] = source.orElse(mediaAtom.flatMap(_.source))
@@ -771,7 +780,7 @@ final case class Video(override val content: Content, source: Option[String], me
 }
 
 object Gallery {
-  def make(content: Content): Gallery = {
+  def make(content: Content, apiContent: contentapi.Content): Gallery = {
 
     val contentType = DotcomContentType.Gallery
     val fields = content.fields
@@ -821,12 +830,15 @@ object Gallery {
         .orElse(lightbox.galleryImages.headOption.flatMap(_.images.largestImage)),
     )
 
-    Gallery(contentOverrides, lightboxProperties)
+    Gallery(contentOverrides, lightboxProperties, apiContent)
   }
 }
 
-final case class Gallery(override val content: Content, lightboxProperties: GalleryLightboxProperties)
-    extends ContentType {
+final case class Gallery(
+    override val content: Content,
+    lightboxProperties: GalleryLightboxProperties,
+    apiContent: contentapi.Content,
+) extends ContentType {
 
   val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
 
@@ -954,7 +966,8 @@ case class GenericLightbox(
   }
 }
 
-final case class Interactive(override val content: Content, maybeBody: Option[String]) extends ContentType {
+final case class Interactive(override val content: Content, maybeBody: Option[String], apiContent: contentapi.Content)
+    extends ContentType {
 
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
@@ -985,12 +998,12 @@ object Interactive {
     val contentOverrides = content.copy(
       metadata = metadata,
     )
-    Interactive(contentOverrides, maybeBody = apiContent.fields.flatMap(_.body))
+    Interactive(contentOverrides, maybeBody = apiContent.fields.flatMap(_.body), apiContent)
   }
 }
 
 object ImageContent {
-  def make(content: Content): ImageContent = {
+  def make(content: Content, apiContent: contentapi.Content): ImageContent = {
     val contentType = DotcomContentType.ImageContent
     val fields = content.fields
     val section = content.metadata.sectionId
@@ -1016,20 +1029,23 @@ object ImageContent {
     val contentOverrides = content.copy(
       metadata = metadata,
     )
-    ImageContent(contentOverrides, lightboxProperties)
+    ImageContent(contentOverrides, lightboxProperties, apiContent)
   }
 }
 
-final case class ImageContent(override val content: Content, lightboxProperties: GenericLightboxProperties)
-    extends ContentType {
+final case class ImageContent(
+    override val content: Content,
+    lightboxProperties: GenericLightboxProperties,
+    apiContent: contentapi.Content,
+) extends ContentType {
 
   val lightBox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 }
 
 object CrosswordContent {
-  def make(crossword: CrosswordData, apicontent: contentapi.Content): CrosswordContent = {
+  def make(crossword: CrosswordData, apiContent: contentapi.Content): CrosswordContent = {
 
-    val content = Content(apicontent)
+    val content = Content(apiContent)
     val contentType = DotcomContentType.Crossword
 
     val metadata = content.metadata.copy(
@@ -1042,11 +1058,15 @@ object CrosswordContent {
 
     val contentOverrides = content.content.copy(metadata = metadata)
 
-    CrosswordContent(contentOverrides, crossword)
+    CrosswordContent(contentOverrides, crossword, apiContent)
   }
 }
 
-final case class CrosswordContent(override val content: Content, crossword: CrosswordData) extends ContentType
+final case class CrosswordContent(
+    override val content: Content,
+    crossword: CrosswordData,
+    apiContent: contentapi.Content,
+) extends ContentType
 
 case class Tweet(id: String, images: Seq[String]) {
   val firstImage: Option[String] = images.headOption
