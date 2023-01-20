@@ -146,9 +146,8 @@ const addErrorHandler = () => {
     };
 
     // Report unhandled promise rejections
-    // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
-    window.addEventListener('unhandledRejection', event => {
-        const error = event.detail.reason;
+    window.addEventListener('unhandledrejection', event => {
+        const error = event.reason;
 
         if (error && !error.reported) {
             raven.captureException(error);
