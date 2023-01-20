@@ -1,6 +1,6 @@
 package model.dotcomrendering
 
-import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
+import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks, Content => CAPIContent}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
@@ -104,11 +104,27 @@ case class DotcomRenderingDataModel(
     showTableOfContents: Boolean,
     lang: Option[String],
     isRightToLeftLang: Boolean,
+    capiContent: CAPIContent,
 )
 
 object DotcomRenderingDataModel {
 
   implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val apiContentWrites = new Writes[CAPIContent] {
+    def writes(model: CAPIContent) = {
+      Json.obj(
+        "id" -> model.id,
+        "type" -> JsString(model.`type`.toString),
+        "sectionId" -> model.sectionId,
+        "sectionName" -> model.sectionName,
+        "webPublicationDate" -> model.webPublicationDate.map(_.iso8601),
+        "webTitle" -> model.webTitle,
+        "webUrl" -> model.webUrl,
+        "apiUrl" -> model.apiUrl,
+//        "fields" -> model.fields,
+      )
+    }
+  }
 
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
@@ -182,6 +198,7 @@ object DotcomRenderingDataModel {
         "showTableOfContents" -> model.showTableOfContents,
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
+        "capiContent" -> model.capiContent,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -564,6 +581,7 @@ object DotcomRenderingDataModel {
       showTableOfContents = content.fields.showTableOfContents.getOrElse(false),
       lang = content.fields.lang,
       isRightToLeftLang = content.fields.isRightToLeftLang,
+      capiContent = content.apiContent,
     )
   }
 }

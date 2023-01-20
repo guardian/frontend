@@ -168,7 +168,7 @@ class ArticleController(
       case Right(article: Article) =>
         Right((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Left(r) => Left(r)
-      case _       => Left(NotFound)
+      case _        => Left(NotFound)
     }
   }
 
