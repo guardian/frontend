@@ -4,6 +4,7 @@
 @import views.html.fragments.inlineSvg
 @import views.html.fragments.items.elements.facia_cards.image
 @import views.support.Commercial.CssClassBuilder
+@import experiments.{ActiveExperiments, RemoveKickerSlashes}
 
 @(item: layout.PaidCard,
   omnitureId: String,
@@ -23,8 +24,11 @@
         <h2 class="advert__title">
             @for(icon <- item.icon){@inlineSvg(icon, "icon")}
             @for(kicker <- item.kicker){
-                <span class="advert__kicker">@kicker</span>
-            }
+                @if(ActiveExperiments.isParticipating(RemoveKickerSlashes)) {
+                    <span class="advert__kicker__without_slash ">@kicker<br/></span>
+                } else {
+                    <span class="advert__kicker">@kicker</span>
+                }            }
             @Html(item.headline)
         </h2>
         <div class="advert__image-container
