@@ -39,6 +39,31 @@ object ItemKickerImplicits {
         case _: FreeHtmlKickerWithLink => Set(fcItemKicker)
       }
 
+    /**
+      * @return a set of classes for kickers. It should be the same as the set returned by `linkClasses` for
+      *         each case, except that it will include an extra class which removes the `:after` pseudo-element
+      *         added by the standard kicker styles.
+      *
+     * This allows us to keep the rest of the kicker styling while just targeting the 'slash'. Once the
+      * `RemoveKickerSlash` test has completed the original `.fc-item__kicker:after` rule should be removed,
+      * and uses of this method should be switched back to using `linkClasses` instead.
+      */
+    def linkClassesWithoutSlash: Set[String] = {
+      val WithoutSlash = "fc-item__kicker--without-slash"
+      itemKicker match {
+        case BreakingNewsKicker        => Set(fcItemKicker, WithoutSlash, fcItemKickerBreakingNews)
+        case LiveKicker                => Set(fcItemKicker, WithoutSlash, fcItemKickerBreakingNews)
+        case AnalysisKicker            => Set(fcItemKicker, WithoutSlash)
+        case ReviewKicker              => Set(fcItemKicker, WithoutSlash)
+        case CartoonKicker             => Set(fcItemKicker, WithoutSlash)
+        case _: PodcastKicker          => Set(fcItemKicker, WithoutSlash)
+        case _: TagKicker              => Set(fcItemKicker, WithoutSlash)
+        case _: SectionKicker          => Set(fcItemKicker, WithoutSlash)
+        case _: FreeHtmlKicker         => Set(fcItemKicker, WithoutSlash)
+        case _: FreeHtmlKickerWithLink => Set(fcItemKicker, WithoutSlash)
+      }
+    }
+
     def kickerHtml: String =
       itemKicker match {
         case BreakingNewsKicker                 => "Breaking news"

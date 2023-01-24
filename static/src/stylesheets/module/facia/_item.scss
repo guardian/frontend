@@ -425,6 +425,14 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item__kicker.fc-item__kicker--without-slash,
+.fc-item__kicker--breaking-news.fc-item__kicker--without-slash {
+    &:after {
+        content: none;
+    }
+}
+
+
 // dream snaps
 .fc-item__kicker--dreamsnap {
     @include fs-header(2);
