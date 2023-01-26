@@ -105,20 +105,9 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  //SignInGateCopyTestControl
   Switch(
     ABTests,
-    "ab-sign-in-gate-copy-test-control",
-    "Test the impact of changing the copy in the sign in gate",
-    owners = Seq(Owner.withEmail("personalisation.dev@theguardian.com")),
-    safeState = On,
-    sellByDate = Some(LocalDate.of(2023, 2, 1)),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-copy-test-variants",
+    "ab-sign-in-gate-copy-test",
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation.dev@theguardian.com")),
     safeState = On,
