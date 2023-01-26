@@ -14,7 +14,7 @@ import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, QuizAtom}
 import model.pressed._
 import org.jsoup.{Jsoup, nodes}
-import org.jsoup.safety.Whitelist
+import org.jsoup.safety.Safelist
 import com.github.nscala_time.time.Imports._
 import play.api.libs.json._
 import views.support._
@@ -453,7 +453,7 @@ object Content {
         .toSeq
         .distinct,
       javascriptReferences = apiContent.references.toSeq.map(ref => Reference.toJavaScript(ref.id)),
-      wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
+      wordCount = Jsoup.clean(fields.body, Safelist.none()).split("\\s+").length,
       showByline =
         fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
       rawOpenGraphImage = FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
