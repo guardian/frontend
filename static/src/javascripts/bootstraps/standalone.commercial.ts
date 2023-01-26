@@ -214,17 +214,18 @@ const bootCommercial = async (): Promise<void> => {
  */
 const chooseAdvertisingTag = async () => {
 	const consentState = await onConsent();
-	if (getConsentFor('googletag', consentState)) {
+	// Only load the Opt Out tag in TCF regions when there is no consent for Googletag
+	if (consentState.tcfv2 && !getConsentFor('googletag', consentState)) {
+		void import(
+			/* webpackChunkName: "consentless" */
+			'./commercial.consentless'
+		).then(({ bootConsentless }) => bootConsentless(consentState));
+	} else {
 		if (window.guardian.mustardCut || window.guardian.polyfilled) {
 			void bootCommercial();
 		} else {
 			window.guardian.queue.push(bootCommercial);
 		}
-	} else {
-		void import(
-			/* webpackChunkName: "consentless" */
-			'./commercial.consentless'
-		).then(({ bootConsentless }) => bootConsentless(consentState));
 	}
 };
 
