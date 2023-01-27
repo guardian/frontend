@@ -118,7 +118,7 @@ describe.skip('Cross-frame messenger: scroll', () => {
 		});
 
 		it('should call respond1 but not respond2 at the top of the page', () => {
-			if (!iframe1 || !iframe2) return false;
+			if (!iframe1 || !iframe2) return;
 
 			mockIframePosition(iframe1, 8);
 			mockIframePosition(iframe2, 6320);
@@ -128,14 +128,14 @@ describe.skip('Cross-frame messenger: scroll', () => {
 					{ target: iframe2, intersectionRatio: 0 },
 				]);
 			}
-			return onScroll().then(() => {
+			void onScroll().then(() => {
 				expect(respond1).toHaveBeenCalledTimes(2);
 				expect(respond2).toHaveBeenCalledTimes(1);
 			});
 		});
 
 		it('should call respond2 but not respond1 at the bottom of the page', () => {
-			if (!iframe1 || !iframe2) return false;
+			if (!iframe1 || !iframe2) return;
 
 			mockIframePosition(iframe1, -6304);
 			mockIframePosition(iframe2, 8);
@@ -145,7 +145,7 @@ describe.skip('Cross-frame messenger: scroll', () => {
 					{ target: iframe2, intersectionRatio: 0.5 },
 				]);
 			}
-			return onScroll().then(() => {
+			void onScroll().then(() => {
 				expect(respond1).toHaveBeenCalledTimes(1);
 				expect(respond2).toHaveBeenCalledTimes(2);
 			});

@@ -59,11 +59,4 @@ describe('Article Body Adverts', () => {
 			expect(spaceFillerStub).not.toHaveBeenCalled();
 		});
 	});
-
-	describe('When merchandising components enabled', () => {
-		beforeEach(() => {
-			mockViewport(375, 600);
-			window.guardian.config.page.hasInlineMerchandise = true;
-		});
-	});
 });

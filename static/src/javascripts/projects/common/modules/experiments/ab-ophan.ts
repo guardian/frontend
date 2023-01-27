@@ -64,7 +64,7 @@ const buildOphanSubmitter = (
  */
 const registerCompleteEvent =
 	(complete: boolean) =>
-	(test: Runnable): void => {
+	(test: Runnable<ABTest>): void => {
 		const variant = test.variantToRun;
 		const listener =
 			(complete ? variant.success : variant.impression) ?? noop;
@@ -76,14 +76,14 @@ const registerCompleteEvent =
 		}
 	};
 
-export const registerCompleteEvents = (tests: readonly Runnable[]): void =>
+export const registerCompleteEvents = (tests: readonly Runnable<ABTest>[]): void =>
 	tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (tests: readonly Runnable[]): void =>
+export const registerImpressionEvents = (tests: readonly Runnable<ABTest>[]): void =>
 	tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
 export const buildOphanPayload = (
-	tests: readonly Runnable[],
+	tests: readonly Runnable<ABTest>[],
 ): OphanABPayload => {
 	try {
 		const testsConfig = window.guardian.config.tests ?? {};
@@ -112,6 +112,6 @@ export const buildOphanPayload = (
 		return {};
 	}
 };
-export const trackABTests = (tests: readonly Runnable[]): void =>
+export const trackABTests = (tests: readonly Runnable<ABTest>[]): void =>
 	submit(buildOphanPayload(tests));
 export { buildOphanSubmitter };

@@ -99,7 +99,6 @@ describe('getCurrentBreakpoint', () => {
 	it.each(widths)(
 		'For %f, gets the correct breakpoint: %s',
 		(width, breakpoint) => {
-			// @ts-expect-error -- not read-only in test
 			window.innerWidth = width;
 			expect(getCurrentBreakpoint()).toEqual(breakpoint);
 		},
