@@ -1,28 +1,27 @@
-// Main test is a feature switch where we roll out winning changes from other AB sign in gate tests
-// variant audience sees the gate
-
-export const signInGateMainVariant = {
-	id: 'SignInGateMainVariant',
-	start: '2020-05-20',
+export const signInGateCopyTest = {
+	id: 'SignInGateCopyTest',
+	start: '2023-01-23',
 	expiry: '2025-12-01',
-	author: 'Mahesh Makani',
-	description:
-		'TODO',
-	audience: 0.9,
+	author: 'Lindsey Dew',
+	description: 'TODO',
+	audience: 0.1,
 	audienceOffset: 0.0,
 	successMeasure: 'Users sign in or create a Guardian account',
-	audienceCriteria:
-		'TODO',
-	ophanComponentId: 'main_variant_4',
-	dataLinkNames: 'SignInGateMain',
+	audienceCriteria: 'TODO',
+	dataLinkNames: 'SignInGateCopyTest',
 	idealOutcome:
 		'Increase the number of users signed in whilst running at a reasonable scale',
 	showForSensitive: false,
 	canRun: () => true,
+	// take out sign-in-gate-copy
 	variants: [
 		{
-			id: 'sign-in-gate-copy-variant',
+			id: 'sign-in-gate-copy-quick-and-easy',
 			test: () => {},
 		},
+		{
+			id: 'sign-in-gate-copy-take-a-moment',
+			test: () => {},
+		}
 	],
 };
