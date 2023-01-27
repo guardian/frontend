@@ -112,6 +112,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withEmail("personalisation.dev@theguardian.com")),
     safeState = On,
     sellByDate = Some(LocalDate.of(2023, 2, 1)),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 }
