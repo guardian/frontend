@@ -9,6 +9,8 @@
 @import conf.audio.FlagshipFrontContainer
 @import conf.AudioFlagship
 
+@import experiments.{ActiveExperiments, RemoveKickerSlashes}
+
 @(containerDefinition: layout.FaciaContainer, frontProperties: FrontProperties)(implicit request: RequestHeader)
 
 
@@ -78,12 +80,21 @@
                                 <div class="fc-podcast-container__episode-details">
                                     <div class="fc-item__header">
                                         <h2 class="fc-item__title">
+                                        @if(ActiveExperiments.isParticipating(RemoveKickerSlashes)) {
+                                            <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="article">
+                                                <div class="fc-item__kicker fc-item__kicker--without-slash">Podcast<br /></div>
+                                                <div class="u-faux-block-link__cta fc-item__headline">
+                                                    <span class="js-headline-text">@RemoveOuterParaHtml(card.header.headline)</span>
+                                                </div>
+                                            </a>
+                                        } else {
                                             <a @Html(card.header.url.hrefWithRel) class="fc-item__link" data-link-name="article">
                                                 <div class="fc-item__kicker">Podcast</div>
                                                 <div class="u-faux-block-link__cta fc-item__headline">
                                                     <span class="js-headline-text">@RemoveOuterParaHtml(card.header.headline)</span>
                                                 </div>
                                             </a>
+                                        }
                                         </h2>
                                     </div>
                                     <div class="fc-item__standfirst-wrapper">
