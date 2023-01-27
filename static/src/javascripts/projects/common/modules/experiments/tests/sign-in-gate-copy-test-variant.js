@@ -13,14 +13,13 @@ export const signInGateCopyTest = {
 		'Increase the number of users signed in whilst running at a reasonable scale',
 	showForSensitive: false,
 	canRun: () => true,
-	// take out sign-in-gate-copy
 	variants: [
 		{
-			id: 'sign-in-gate-copy-quick-and-easy',
+			id: 'quick-and-easy',
 			test: () => {},
 		},
 		{
-			id: 'sign-in-gate-copy-take-a-moment',
+			id: 'take-a-moment',
 			test: () => {},
 		}
 	],
