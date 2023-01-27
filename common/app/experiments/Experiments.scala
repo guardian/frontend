@@ -14,7 +14,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
       CalloutElements,
-      RemoveKickerSlashes,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -44,15 +43,6 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 1, 31),
       participationGroup = Perc0B,
-    )
-
-object RemoveKickerSlashes
-    extends Experiment(
-      name = "remove-kicker-slashes",
-      description = "Implement kickers without slashes on fronts cards. Used to iterate on feature before launch.",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 2, 1),
-      participationGroup = Perc0C,
     )
 
 object EuropeNetworkFront
