@@ -79,17 +79,14 @@ import scala.util.matching.Regex
     val html = Jsoup.parse(contentAsString(result))
 
     val videoEl = html.getElementsByTag("video")
-    val sources = videoEl.html.split("\n").toList
+    val sources = videoEl.select("source")
 
-    sources.length should be(3)
+    sources.size() should be(3)
 
-    val m3u8 = new Regex("\"video/m3u8\">$").findFirstIn(sources(0).trim())
-    val mp4 = new Regex("\"video/mp4\">$").findFirstIn(sources(1).trim())
-    val webm = new Regex("\"video/webm\">$").findFirstIn(sources(2).trim())
+    sources.get(0).attr("type") should equal("video/m3u8")
+    sources.get(1).attr("type") should equal("video/mp4")
+    sources.get(2).attr("type") should equal("video/webm")
 
-    m3u8.isDefined should be(true)
-    mp4.isDefined should be(true)
-    webm.isDefined should be(true)
   }
 
   val audioUrl = "/news/audio/2019/may/16/facing-up-europe-far-right-podcast"
