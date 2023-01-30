@@ -4,7 +4,6 @@
 @import views.support._
 @import layout.FrontendLatestSnap
 @import implicits.ItemKickerImplicits._
-@import experiments.{ActiveExperiments, RemoveKickerSlashes}
 
 @icon = {
 @if(header.isExternal) {
@@ -23,65 +22,27 @@
     <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>
 }
 
-@*
-The code inside this block is being largely duplicated while a new kicker format is
-being developed behind a 0% test (the `RemoveKickerSlashes` test).
-Once all of the changes for this new format have been made, the codepath for the old
-format will be removed from this template.
-nb. If any other changes are made to the kicker in prod before the switch is made, please
-replicate these changes in both codepaths.
-*@
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
-    @* New version, behind test: remove slash from kicker and add line break after *@
-    @if(ActiveExperiments.isParticipating(RemoveKickerSlashes)) {
-        @if(isPaidFor) {
-            @articleLink {
-                <span class="fc-item__kicker fc-item__kicker--without-slash">Advertiser content</span>
-                @headline()
-            }
-
-        } else {
-            @header.kicker match {
-                case Some(kicker) => {
-                    @articleLink {
-                        <span class="@kicker.linkClassesWithoutSlash.mkString(" ")">@Html(kicker.kickerHtml)</span>
-                        <br />
-                        @headline()
-                    }
-                }
-                case _ => {
-                    @articleLink {
-                        @headline()
-                    }
-                }
-            }
+    @if(isPaidFor) {
+        @articleLink {
+            <span class="fc-item__kicker">Advertiser content</span><br />
+            @headline()
         }
-        @*
-        Old version which is served if request is not participating in the test.
-        This codepath will be removed once the new format is released publicly.
-        *@
+
     } else {
-        @if(isPaidFor) {
-            @articleLink {
-                <span class="fc-item__kicker--with-slash">Advertiser content</span>
-                @headline()
-            }
-
-        } else {
-            @header.kicker match {
-                case Some(kicker) => {
-                    @articleLink {
-                        <span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span>
-                        @headline()
-                    }
+        @header.kicker match {
+            case Some(kicker) => {
+                @articleLink {
+                    <span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span>
+                    <br />
+                    @headline()
                 }
-                case _ => {
-                    @articleLink {
-                        @headline()
-                    }
+            }
+            case _ => {
+                @articleLink {
+                    @headline()
                 }
             }
         }
-
     }
 }

@@ -216,20 +216,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     position: relative;
     font-weight: 700;
-
-    &:after {
-        content: '/';
-        display: inline-block;
-        font-weight: 900;
-        margin-left: 4px;
-    }
-}
-
-.fc-item__kicker.fc-item__kicker--without-slash,
-.fc-item__kicker--breaking-news.fc-item__kicker--without-slash {
-    &:after {
-        content: none;
-    }
 }
 
 .fc-item__byline {
