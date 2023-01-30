@@ -104,14 +104,13 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2023, 2, 1)),
     exposeClientSide = true,
   )
-
   Switch(
     ABTests,
     "ab-sign-in-gate-copy-test",
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation.dev@theguardian.com")),
-    safeState = On,
+    safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 2, 1)),
-    exposeClientSide = true,
+    exposeClientSide = true
   )
 }
