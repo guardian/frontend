@@ -23,7 +23,7 @@ import scala.io.Source
     val expectedDoc = Jsoup.parse(expectedCleanedDocFromSource.mkString)
 
     val actualResult = InteractiveHtmlCleaner.removeScripts(originalDoc)
-    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+    actualResult should be(expectedDoc)
   }
 
 }
