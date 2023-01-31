@@ -6,19 +6,13 @@
 @import implicits.ItemKickerImplicits._
 
 @headline() = {
-@if(header.quoted) {
     <span class="@labelCssClasses fc-item__headline">
-        @fragments.inlineSvg("garnett-quote", "icon")
+        @if(header.quoted){ @fragments.inlineSvg("garnett-quote", "icon")}
         <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span>
+        @if(header.isExternal) { @fragments.inlineSvg("external-link", "icon")}
     </span>
 }
-@if(header.isExternal) {
-    <span class="@labelCssClasses fc-item__headline">
-        <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span>
-        @fragments.inlineSvg("external-link", "icon")
-    </span>
-}
-}
+
 
 @articleLink(html: Html) = {
     <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>
