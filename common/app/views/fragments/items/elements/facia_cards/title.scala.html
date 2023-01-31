@@ -25,7 +25,7 @@
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @if(isPaidFor) {
         @articleLink {
-            <span class="fc-item__kicker">Advertiser content</span><br />
+            <div class="fc-item__kicker">Advertiser content</div>
             @headline()
         }
 
@@ -33,8 +33,7 @@
         @header.kicker match {
             case Some(kicker) => {
                 @articleLink {
-                    <span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span>
-                    <br />
+                    <div class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</div>
                     @headline()
                 }
             }

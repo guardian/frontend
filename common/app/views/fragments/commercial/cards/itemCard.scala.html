@@ -23,7 +23,7 @@
         <h2 class="advert__title">
             @for(icon <- item.icon){@inlineSvg(icon, "icon")}
             @for(kicker <- item.kicker){
-                    <span class="advert__kicker">@kicker<br/></span>
+                    <div class="advert__kicker">@kicker</div>
             }
             @Html(item.headline)
         </h2>
