@@ -15,7 +15,6 @@ const initTeadsCookieless = async (): Promise<void> => {
 
 	if (
 		hasConsent &&
-		window.guardian.config.switches.teadsCookieless &&
 		allowedContentTypes.includes(window.guardian.config.page.contentType)
 	) {
 		window.teads_analytics = window.teads_analytics ?? {};
