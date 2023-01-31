@@ -108,6 +108,14 @@
   "../projects/commercial/modules/dfp/load-advert.ts",
   "../projects/common/modules/commercial/commercial-features.ts"
  ],
+ "../projects/commercial/modules/comments-expanded-advert.ts": [
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/constants/index.d.ts",
+  "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
+  "../lib/fastdom-promise.ts",
+  "../projects/commercial/modules/dfp/add-slot.ts",
+  "../projects/common/modules/commercial/commercial-features.ts"
+ ],
  "../projects/commercial/modules/comscore.ts": [
   "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
@@ -674,6 +682,7 @@
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.ts",
   "../projects/commercial/modules/comment-adverts.ts",
+  "../projects/commercial/modules/comments-expanded-advert.ts",
   "../projects/commercial/modules/comscore.ts",
   "../projects/commercial/modules/dfp/dfp-env-globals.ts",
   "../projects/commercial/modules/dfp/prepare-a9.ts",
