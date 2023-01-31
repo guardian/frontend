@@ -5,18 +5,14 @@
 @import layout.FrontendLatestSnap
 @import implicits.ItemKickerImplicits._
 
-@icon = {
-@if(header.isExternal) {
-    @fragments.inlineSvg("external-link", "icon")
-}
-@if(header.quoted) {
-    @fragments.inlineSvg("garnett-quote", "icon")
-}
+@headline() = {
+    <span class="@labelCssClasses fc-item__headline">
+        @if(header.quoted){ @fragments.inlineSvg("garnett-quote", "icon")}
+        <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span>
+        @if(header.isExternal) { @fragments.inlineSvg("external-link", "icon")}
+    </span>
 }
 
-@headline() = {
-    <span class="@labelCssClasses fc-item__headline">@icon <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span></span>
-}
 
 @articleLink(html: Html) = {
     <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>
