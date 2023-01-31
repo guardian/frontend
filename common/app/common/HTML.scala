@@ -2,8 +2,8 @@ package common
 
 import org.apache.commons.lang.StringEscapeUtils
 import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
+import org.jsoup.safety.Safelist
 
 object HTML {
-  def noHtml(headline: String): String = StringEscapeUtils.unescapeHtml(Jsoup.clean(headline, Whitelist.none()))
+  def noHtml(headline: String): String = StringEscapeUtils.unescapeHtml(Jsoup.clean(headline, Safelist.none()))
 }
