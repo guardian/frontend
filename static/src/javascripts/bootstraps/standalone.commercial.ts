@@ -13,6 +13,10 @@
  */
 
 import { EventTimer } from '@guardian/commercial-core';
+import {
+	getConsentFor,
+	onConsent,
+} from '@guardian/consent-management-platform';
 import { log } from '@guardian/libs';
 import { initTeadsCookieless } from 'commercial/modules/teads-cookieless';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -205,15 +209,33 @@ const bootCommercial = async (): Promise<void> => {
 	}
 };
 
+/**
+ * Choose whether to launch Googletag or Opt Out tag (ootag) based on consent state
+ */
+const chooseAdvertisingTag = async () => {
+	const consentState = await onConsent();
+	// Only load the Opt Out tag in TCF regions when there is no consent for Googletag
+	if (consentState.tcfv2 && !getConsentFor('googletag', consentState)) {
+		void import(
+			/* webpackChunkName: "consentless" */
+			'./commercial.consentless'
+		).then(({ bootConsentless }) => bootConsentless(consentState));
+	} else {
+		if (window.guardian.mustardCut || window.guardian.polyfilled) {
+			void bootCommercial();
+		} else {
+			window.guardian.queue.push(bootCommercial);
+		}
+	}
+};
+
 /* Provide consentless advertising in the variant of a zero-percent test,
    regardless of consent state. This is currently just for testing purposes.
 
    If not in the variant, get the usual commercial experience
 */
 if (isInVariantSynchronous(consentlessAds, 'variant')) {
-	void import(
-		/* webpackChunkName: "consentless" */ './commercial.consentless'
-	).then(({ bootConsentless }) => bootConsentless());
+	void chooseAdvertisingTag();
 } else {
 	if (window.guardian.mustardCut || window.guardian.polyfilled) {
 		void bootCommercial();

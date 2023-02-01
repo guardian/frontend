@@ -1,4 +1,4 @@
-import { onConsent } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { initArticleInline } from 'commercial/modules/consentless/dynamic/article-inline';
 import { initLiveblogInline } from 'commercial/modules/consentless/dynamic/liveblog-inline';
 import { initFixedSlots } from 'commercial/modules/consentless/init-fixed-slots';
@@ -10,7 +10,7 @@ import {
 import { init as setAdTestCookie } from '../projects/commercial/modules/set-adtest-cookie';
 import { init as setAdTestInLabelsCookie } from '../projects/commercial/modules/set-adtest-in-labels-cookie';
 
-const bootConsentless = async (): Promise<void> => {
+const bootConsentless = async (consentState: ConsentState): Promise<void> => {
 	/*  In the consented ad stack, we set the ad free cookie for users who
 		don't consent to targeted ads in order to hide empty ads slots.
 		We remove the cookie here so that we can show Opt Out ads.
@@ -18,8 +18,6 @@ const bootConsentless = async (): Promise<void> => {
 		consentless ads are rolled out to all users.
  	*/
 	maybeUnsetAdFreeCookie(AdFreeCookieReasons.ConsentOptOut);
-
-	const consentState = await onConsent();
 
 	await Promise.all([
 		setAdTestCookie(),
