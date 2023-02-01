@@ -29,6 +29,7 @@ import { init as prepareAdVerification } from '../projects/commercial/modules/ad
 import { init as initArticleAsideAdverts } from '../projects/commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from '../projects/commercial/modules/article-body-adverts';
 import { initCommentAdverts } from '../projects/commercial/modules/comment-adverts';
+import { initCommentsExpandedAdverts } from '../projects/commercial/modules/comments-expanded-advert';
 import { init as initComscore } from '../projects/commercial/modules/comscore';
 import { adSlotIdPrefix } from '../projects/commercial/modules/dfp/dfp-env-globals';
 import { init as prepareA9 } from '../projects/commercial/modules/dfp/prepare-a9';
@@ -107,6 +108,7 @@ if (!commercialFeatures.adFree) {
 		['cm-redplanet', initRedplanet],
 		['cm-paidContainers', paidContainers],
 		['cm-commentAdverts', initCommentAdverts],
+		['cm-commentsExpandedAdverts', initCommentsExpandedAdverts],
 		['rr-adblock-ask', initAdblockAsk],
 	);
 }
