@@ -97,6 +97,11 @@
     }
 }
 
+.ad-slot-container:has(div.ad-slot--top-above-nav[data-label-show='true']) {
+    margin: 0 auto;
+    width: fit-content;
+}
+
 .ad-slot--crossword-banner,
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
