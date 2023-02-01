@@ -2,11 +2,12 @@
 
 @import views.support.setSvgClasses
 
-<span @title.map{ t => title="@t" } class="inline-@file @if(path){inline-@path} @classes.mkString(" ")" @if(isPresentation){role="presentation" aria-hidden="true"}>
+<span class="inline-@file @if(path){inline-@path} @classes.mkString(" ")" @if(isPresentation){role="presentation" aria-hidden="true"}>
     @defining((
         path + "/" + file + ".svg",
-        classes ++ Seq("inline-" + file, "inline-" + path)
-    )) { case (pathToSvg, classNames) =>
-        @Html(setSvgClasses(common.Assets.inlineSvg(pathToSvg), classNames))
+        classes ++ Seq("inline-" + file, "inline-" + path),
+        title
+    )) { case (pathToSvg, classNames, title) =>
+        @Html(setSvgClasses(common.Assets.inlineSvg(pathToSvg), classNames, title))
     }
 </span>

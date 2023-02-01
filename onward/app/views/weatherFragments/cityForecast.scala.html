@@ -5,11 +5,11 @@
 
 @for((forecast, index) <- forecasts.drop(1).zipWithIndex) {
     @defining(forecast.temperatureForEdition(Edition(request))) { temp =>
-        <li class="forecast__item forecast__item--@index" aria-label="@(s"${forecast.hourString}: ${temp}, ${forecast.weatherText.toLowerCase()}.")" role="text">
+        <li class="forecast__item forecast__item--@index">
             <div class="weather__time" aria-hidden="true">
                 <time class="weather__time-value">@forecast.hourString</time>
             </div>
-            @fragments.inlineSvg(s"weather-${forecast.weatherIcon}", "weather", Seq("weather__icon", "js-weather-icon"), Some(forecast.weatherText), true)
+            @fragments.inlineSvg(s"weather-${forecast.weatherIcon}", "weather", Seq("weather__icon", "js-weather-icon"), Some(s"${forecast.hourString}: ${temp}, ${forecast.weatherText.toLowerCase()}."))
             <div class="weather__temp" aria-hidden="true">
                 <span class="weather__temp-value">@temp</span>
             </div>

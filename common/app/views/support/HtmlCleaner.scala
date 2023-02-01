@@ -753,12 +753,15 @@ case class AtomsCleaner(
 }
 
 object setSvgClasses {
-  def apply(svg: String, classes: Seq[String] = List()): String = {
+  def apply(svg: String, classes: Seq[String] = List(), label: Option[String] = None): String = {
     val document = Jsoup.parse(svg)
     val svgHtml = document.getElementsByTag("svg")
     val modifiedClasses = classes.map(_.concat("__svg")).mkString(" ")
 
     svgHtml.addClass(modifiedClasses)
+    label.map(text => {
+      svgHtml.attr("aria-label", text)
+    })
     svgHtml.toString
   }
 }
