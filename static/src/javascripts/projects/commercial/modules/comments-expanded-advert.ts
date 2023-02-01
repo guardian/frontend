@@ -10,9 +10,7 @@ const tallestCommentsExpandedAd = adSizes.halfPage.height + AD_LABEL_HEIGHT;
 
 const insertAd = (anchor: HTMLElement): Promise<void> => {
 	log('commercial', 'Inserting comments-expanded advert');
-
 	const slot = createAdSlot('comments-expanded', {
-		name: 'comments-expanded',
 		classes: 'comments-expanded',
 	});
 
@@ -66,12 +64,10 @@ const createResizeObserver = (rightColumnNode: HTMLElement) => {
 		if (isEnoughSpaceForAd(rightColumnNode)) {
 			void insertAd(rightColumnNode);
 
-			log('commercial', 'Removing resize observer');
 			resizeObserver.unobserve(rightColumnNode);
 		}
 	});
 
-	log('commercial', 'Creating resize observer');
 	resizeObserver.observe(rightColumnNode);
 };
 
@@ -96,15 +92,12 @@ const handleCommentsExpandedEvent = async (): Promise<void> => {
 		return;
 	}
 
-	// Watch the right column and insert an ad when the comments are loaded.
+	// Watch the right column and try to insert an ad when the comments are loaded.
 	createResizeObserver(rightColumnNode);
-
-	return;
 };
 
 export const initCommentsExpandedAdverts = (): Promise<void> => {
 	document.addEventListener('comments-expanded', () => {
-		log('commercial', 'comments expanded event received');
 		void handleCommentsExpandedEvent();
 	});
 
