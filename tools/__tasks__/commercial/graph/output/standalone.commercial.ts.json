@@ -662,7 +662,7 @@
   "../types/dates.ts"
  ],
  "commercial.consentless.ts": [
-  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/types/index.d.ts",
   "../lib/manage-ad-free-cookie.ts",
   "../projects/commercial/modules/consentless/dynamic/article-inline.ts",
   "../projects/commercial/modules/consentless/dynamic/liveblog-inline.ts",
@@ -673,6 +673,7 @@
  ],
  "standalone.commercial.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
+  "../../../../node_modules/@guardian/consent-management-platform/dist/index.d.ts",
   "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
   "../lib/report-error.ts",
   "../lib/robust.ts",
