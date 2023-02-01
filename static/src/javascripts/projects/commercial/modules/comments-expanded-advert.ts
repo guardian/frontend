@@ -17,7 +17,7 @@ const insertAd = (anchor: HTMLElement): Promise<void> => {
 	const adSlotContainer = document.createElement('div');
 	adSlotContainer.className = 'ad-slot-container';
 	adSlotContainer.style.position = 'sticky';
-	adSlotContainer.style.top = '1em';
+	adSlotContainer.style.top = '0';
 
 	adSlotContainer.appendChild(slot);
 
