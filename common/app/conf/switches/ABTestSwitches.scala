@@ -108,9 +108,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-sign-in-gate-copy-test-jan-2023",
     "Test the impact of changing the copy in the sign in gate",
-    owners = Seq(Owner.withEmail("personalisation.dev@theguardian.com")),
+    owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 2, 1)),
+    sellByDate = Some(LocalDate.of(2023, 5, 1)),
     exposeClientSide = true,
   )
 }
