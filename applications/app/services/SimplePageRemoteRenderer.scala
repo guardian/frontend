@@ -17,6 +17,8 @@ import implicits.Requests._
 import renderers.DotcomRenderingService
 import scala.concurrent.{ExecutionContext, Future, duration, Await}
 import java.util.concurrent.{TimeUnit}
+import navigation.Nav
+import navigation.ReaderRevenueLinks
 
 object SimplePageRemoteRenderer {
 
@@ -46,6 +48,19 @@ object SimplePageRemoteRenderer {
       .map((newsletter) => convertNewsletterResponseToData(newsletter))
 
     val edition = Edition(request)
+
+    val navMenu = Nav.apply(page, edition)
+
+    val navJson = Json.obj(
+      "currentUrl" -> navMenu.currentUrl,
+      "pillars" -> navMenu.pillars,
+      "otherLinks" -> navMenu.otherLinks,
+      "brandExtensions" -> navMenu.brandExtensions,
+      // "currentNavLinkTitle" -> navMenu.currentNavLink.map(NavLink.id),
+      // "currentPillarTitle" -> navMenu.currentPillar.map(NavLink.id),
+      // "subNavSections" -> navMenu.subNavSections,
+      "readerRevenueLinks" -> ReaderRevenueLinks.all,
+    )
 
     val switches: Map[String, Boolean] = conf.switches.Switches.all
       .filter(_.exposeClientSide)
@@ -81,6 +96,7 @@ object SimplePageRemoteRenderer {
       "config" -> combinedConfig,
       "openGraphData" -> page.getOpenGraphProperties,
       "twitterData" -> page.getTwitterProperties,
+      "nav" -> navJson,
     )
     json.toString()
   }
