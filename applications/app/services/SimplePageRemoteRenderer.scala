@@ -17,7 +17,7 @@ import implicits.Requests._
 import renderers.DotcomRenderingService
 import scala.concurrent.{ExecutionContext, Future, duration, Await}
 import java.util.concurrent.{TimeUnit}
-import navigation.Nav
+import navigation.{Nav, NavMenu, NavLink}
 import navigation.ReaderRevenueLinks
 
 object SimplePageRemoteRenderer {
@@ -49,12 +49,13 @@ object SimplePageRemoteRenderer {
 
     val edition = Edition(request)
 
-    val navMenu = Nav.apply(page, edition)
+    val nav = Nav.apply(page, edition)
+    val navMenu = NavMenu(page, edition)
 
     val navJson = Json.obj(
-      "currentUrl" -> navMenu.currentUrl,
-      "pillars" -> navMenu.pillars,
-      "otherLinks" -> navMenu.otherLinks,
+      "currentUrl" -> nav.currentUrl,
+      "pillars" -> nav.pillars,
+      "otherLinks" -> nav.otherLinks,
       "brandExtensions" -> navMenu.brandExtensions,
       // "currentNavLinkTitle" -> navMenu.currentNavLink.map(NavLink.id),
       // "currentPillarTitle" -> navMenu.currentPillar.map(NavLink.id),
