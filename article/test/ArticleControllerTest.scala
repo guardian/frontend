@@ -10,7 +10,6 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
 import services.NewsletterService
-import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest
@@ -34,7 +33,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     wsClient,
     new DCRFake(),
     new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-    new OnwardsPicker(new CuratedContentAgent(fapi)),
   )
 
   "Article Controller" should "200 when content type is article" in {

@@ -31,7 +31,6 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
-import services.dotcomrendering.OnwardsPicker
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
 
@@ -90,7 +89,6 @@ trait AppComponents
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
 
-  lazy val onwardsPicker = wire[OnwardsPicker]
   lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   def actorSystem: ActorSystem

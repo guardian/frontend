@@ -3,7 +3,6 @@ package controllers
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import experiments.{ActiveExperiments, DCROnwardsData}
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
@@ -14,7 +13,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.{CAPILookup, NewsletterService}
-import services.dotcomrendering.{ArticlePicker, OnwardsPicker, PressedArticle, RemoteRender}
+import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
 import views.support._
 
 import scala.concurrent.Future
@@ -25,7 +24,6 @@ class ArticleController(
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
-    onwardsPicker: OnwardsPicker,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -95,13 +93,10 @@ class ArticleController(
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
     val edition = Edition(request)
-    val onwards =
-      if (ActiveExperiments.isParticipating(DCROnwardsData)(request)) Some(onwardsPicker.forArticle(article, edition))
-      else None
 
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel
-        .forArticle(article, blocks, request, pageType, newsletter, onwards),
+        .forArticle(article, blocks, request, pageType, newsletter),
     )
   }
 
@@ -135,7 +130,6 @@ class ArticleController(
           false,
           newsletter = newsletter,
           topicResult = None,
-          onwards = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))

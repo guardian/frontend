@@ -111,14 +111,6 @@
 }
 
 .advert__kicker {
-    &::after {
-        content: '/';
-        display: inline-block;
-        margin-left: .2em;
-        color: mix(#ffffff, $brightness-46, 20%);
-
-    }
-
     color: $brightness-46;
 }
 

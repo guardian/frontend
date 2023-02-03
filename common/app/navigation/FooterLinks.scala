@@ -55,11 +55,7 @@ object FooterLinks {
     complaintsAndCorrections,
     help("au"),
     secureDrop,
-    FooterLink(
-      "Vacancies",
-      "https://www.theguardian.com/info/2015/aug/04/guardian-australia-job-vacancies",
-      "au : footer : vacancies",
-    ),
+    workForUs("australia"),
     privacyPolicy,
     termsAndConditions,
     FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),

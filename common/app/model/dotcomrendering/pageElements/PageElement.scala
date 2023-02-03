@@ -1333,14 +1333,14 @@ object PageElement {
         element.documentTypeData
           .map(d =>
             DocumentBlockElement(
-              getEmbedUrl(d.html),
-              d.width,
-              d.height,
-              d.title,
-              d.isMandatory,
-              containsThirdPartyTracking(element.tracking),
-              d.source,
-              d.sourceDomain,
+              embedUrl = getEmbedUrl(d.html),
+              height = d.height,
+              width = d.width,
+              title = d.title,
+              isMandatory = d.isMandatory,
+              isThirdPartyTracking = containsThirdPartyTracking(element.tracking),
+              source = d.source,
+              sourceDomain = d.sourceDomain,
             ),
           )
           .toList

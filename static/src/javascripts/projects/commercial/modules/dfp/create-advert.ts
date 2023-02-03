@@ -10,10 +10,12 @@ const createAdvert = (
 	try {
 		const advert = new Advert(adSlot, additionalSizes);
 		return advert;
-	} catch {
+	} catch (error) {
 		const errMsg = `Could not create advert. Ad slot: ${
 			adSlot.id
-		}. Additional Sizes: ${JSON.stringify(additionalSizes)}`;
+		}. Additional Sizes: ${JSON.stringify(additionalSizes)}. Error: ${
+			error instanceof Error ? error.message : 'Unknown error'
+		}`;
 
 		log('commercial', errMsg);
 		reportError(

@@ -116,7 +116,9 @@ const defineSlot = (
 
 	const googletagSizeMapping = buildGoogletagSizeMapping(sizeMapping);
 	if (!googletagSizeMapping) {
-		throw new Error(`Could not define slot for ${id}`);
+		throw new Error(
+			`Could not define slot for ${id}. A googletag size mapping could not be created.`,
+		);
 	}
 
 	const sizes = collectSizes(googletagSizeMapping);

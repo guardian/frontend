@@ -57,41 +57,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-remove-prebid-a9-canada",
-    "Remove the initialisation of Prebid and A9 in the Canada region",
-    owners = Seq(Owner.withGithub("domlander")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-liveblog-desktop-outstream",
-    "Test the impact of enabling outstream on inline2+ on liveblogs on desktop",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-teads-cookieless",
-    "Test UX impact of cookieless Teads",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-billboards-in-merch",
     "Test the commercial impact of showing billboard adverts in merchandising slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 1, 30)),
+    sellByDate = Some(LocalDate.of(2023, 3, 30)),
     exposeClientSide = true,
   )
 
@@ -101,7 +71,7 @@ trait ABTestSwitches {
     "Test the impact of preventing spacefinder from positioning carrot ads near newsletter signup blocks",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 2, 1)),
+    sellByDate = Some(LocalDate.of(2023, 4, 4)),
     exposeClientSide = true,
   )
 }

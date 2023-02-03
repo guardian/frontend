@@ -216,13 +216,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     position: relative;
     font-weight: 700;
-
-    &:after {
-        content: '/';
-        display: inline-block;
-        font-weight: 900;
-        margin-left: 4px;
-    }
 }
 
 .fc-item__byline {

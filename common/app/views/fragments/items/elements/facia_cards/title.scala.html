@@ -5,27 +5,38 @@
 @import layout.FrontendLatestSnap
 @import implicits.ItemKickerImplicits._
 
-@icon = {
-    @if(header.isExternal) { @fragments.inlineSvg("external-link", "icon") }
-    @if(header.quoted) { @fragments.inlineSvg("garnett-quote", "icon") }
-}
-
 @headline() = {
-    <span class="@labelCssClasses fc-item__headline">@icon <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span></span>
+    <span class="@labelCssClasses fc-item__headline">
+        @if(header.quoted){ @fragments.inlineSvg("garnett-quote", "icon")}
+        <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span>
+        @if(header.isExternal) { @fragments.inlineSvg("external-link", "icon")}
+    </span>
 }
 
-@articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
+
+@articleLink(html: Html) = {
+    <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>
+}
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @if(isPaidFor) {
-        @articleLink{<span class="fc-item__kicker">Advertiser content</span> @headline()}
+        @articleLink {
+            <div class="fc-item__kicker">Advertiser content</div>
+            @headline()
+        }
+
     } else {
         @header.kicker match {
             case Some(kicker) => {
-                @articleLink{<span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span> @headline()}
+                @articleLink {
+                    <div class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</div>
+                    @headline()
+                }
             }
             case _ => {
-                @articleLink{@headline()}
+                @articleLink {
+                    @headline()
+                }
             }
         }
     }

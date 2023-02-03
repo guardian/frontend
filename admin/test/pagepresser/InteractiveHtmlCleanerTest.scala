@@ -20,10 +20,10 @@ import scala.io.Source
       getClass.getClassLoader
         .getResourceAsStream("pagepresser/r2/interactivePageWithScriptsRemovedAndJQueryRetained.html"),
     )
-    val expectedDoc = Jsoup.parse(expectedCleanedDocFromSource.mkString)
+    val expectedDoc = Jsoup.parse(expectedCleanedDocFromSource.mkString);
 
-    val actualResult = InteractiveHtmlCleaner.removeScripts(originalDoc)
-    actualResult.html().replace(" ", "") should be(expectedDoc.html().replace(" ", ""))
+    val actualResult = InteractiveHtmlCleaner.removeScripts(originalDoc);
+    actualResult.toString().replaceAll("\\s+", "") should be(expectedDoc.toString().replaceAll("\\s+", ""))
   }
 
 }

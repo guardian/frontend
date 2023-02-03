@@ -333,6 +333,12 @@ const addMobileInlineAds = (): Promise<boolean> => {
 				i === 0 ? 'top-above-nav' : `inline${i}`,
 				i === 0 ? 'top-above-nav' : 'inline',
 				'inline',
+				// Add the mobile portrait interstitial size to inline1 and inline2
+				i == 1 || i == 2
+					? {
+							mobile: [adSizes.portraitInterstitial],
+					  }
+					: undefined,
 			),
 		);
 		await Promise.all(slots);
