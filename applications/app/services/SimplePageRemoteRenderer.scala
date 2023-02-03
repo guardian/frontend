@@ -13,7 +13,7 @@ import renderers.DotcomRenderingService
 import scala.concurrent.{ExecutionContext, Future, duration, Await}
 import java.util.concurrent.{TimeUnit}
 
-object RemoteRenderPage {
+object SimplePageRemoteRenderer {
 
   val remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService()
 

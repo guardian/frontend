@@ -11,7 +11,7 @@ import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersRespons
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
-import services.RemoteRenderPage
+import services.SimplePageRemoteRenderer
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
@@ -61,7 +61,7 @@ class SignupPageController(
 
     newsletters match {
       case Right(newsletters) =>
-        RemoteRenderPage.newslettersPage(
+        SimplePageRemoteRenderer.newslettersPage(
           newsletters,
           StaticPages.dcrSimplenewsletterPage(request.path),
           wsClient,
