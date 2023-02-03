@@ -4,11 +4,14 @@ import play.api.mvc.Results._
 import play.api.mvc.{Action, RequestHeader, Result}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.libs.json.{JsValue, Json, JsObject}
-import model.{ApplicationContext, DotcomContentType, Cached, NoCache, MetaData, SectionId, SimplePage}
 import common.{CanonicalLink, Edition}
 import conf.Configuration
+import experiments.ActiveExperiments
+import model.{ApplicationContext, DotcomContentType, Cached, NoCache, MetaData, SectionId, SimplePage}
+import model.dotcomrendering.{Config, DotcomRenderingUtils}
 import services.newsletters.model.NewsletterResponse
 import services.NewsletterData
+import views.support.{CamelCase, JavaScriptPage}
 
 import implicits.Requests._
 import renderers.DotcomRenderingService
@@ -44,6 +47,27 @@ object SimplePageRemoteRenderer {
 
     val edition = Edition(request)
 
+    val switches: Map[String, Boolean] = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+
+    val config = Config(
+      switches = switches,
+      abTests = ActiveExperiments.getJsMap(request),
+      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
+      googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    )
+
+    val combinedConfig: JsObject = {
+      val jsPageConfig: Map[String, JsValue] =
+        JavaScriptPage.getMap(page, Edition(request), isPreview = false, request)
+      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    }
+
     val json = Json.obj(
       "newsletters" -> newsletterData,
       "id" -> page.metadata.id,
@@ -54,7 +78,7 @@ object SimplePageRemoteRenderer {
       "contributionsServiceUrl" -> Configuration.contributionsService.url,
       "webTitle" -> page.metadata.webTitle,
       "description" -> page.metadata.description,
-      "config" -> page.getJavascriptConfig,
+      "config" -> combinedConfig,
       "openGraphData" -> page.getOpenGraphProperties,
       "twitterData" -> page.getTwitterProperties,
     )
