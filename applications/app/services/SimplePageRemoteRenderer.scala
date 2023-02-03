@@ -5,6 +5,7 @@ import play.api.mvc.{Action, RequestHeader, Result}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.libs.json.{JsValue, Json, JsObject}
 import model.{ApplicationContext, DotcomContentType, Cached, NoCache, MetaData, SectionId, SimplePage}
+import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import services.newsletters.model.NewsletterResponse
 import services.NewsletterData
 
@@ -40,9 +41,13 @@ object SimplePageRemoteRenderer {
       .filter((newsletter) => newsletter.cancelled == false && newsletter.paused == false)
       .map((newsletter) => convertNewsletterResponseToData(newsletter))
 
+    val edition = Edition(request)
+
     val json = Json.obj(
       "newsletters" -> newsletterData,
       "id" -> page.metadata.id,
+      "editionId" -> edition.id,
+      "editionLongForm" -> Edition(request).displayName,
       "webTitle" -> page.metadata.webTitle,
       "description" -> page.metadata.description,
       "config" -> page.getJavascriptConfig,
