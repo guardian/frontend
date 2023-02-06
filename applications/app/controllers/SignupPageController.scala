@@ -7,16 +7,14 @@ import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import play.filters.csrf.CSRFAddToken
+import renderers.DotcomRenderingService
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
-import renderers.DotcomRenderingService
-import scala.concurrent.Future
-import scala.concurrent.Await
 
 class SignupPageController(
     wsClient: WSClient,
