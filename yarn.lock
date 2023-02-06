@@ -2166,10 +2166,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-8.1.3.tgz#47adc4892716904a62afa62da66f31eae059d56b"
-  integrity sha512-Tol4O7A3ErmzgCd9YtkajJUfCps/1RCNXhtaUBwgT8u0OUPRmfk4jjD7cS3nok5gDTEUVemKwT2yysx1CxfWaw==
+"@guardian/braze-components@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-9.0.1.tgz#c6c53de37d677eeb6e19037aca05be22758a5379"
+  integrity sha512-bVNhC5+jEjM0LKMgtX9fE4I1eHTNX7UMpdf7P4cBfY37kcT1ULFsw83/k3uvD1ondvSNmngurugBGY790ZoKqg==
 
 "@guardian/commercial-core@^5.2.1":
   version "5.2.1"
