@@ -54,7 +54,7 @@ object StaticPages {
       groupedNewsletterResponses,
     )
 
-  def dcrSimplenewsletterPage(
+  def dcrSimpleNewsletterPage(
       id: String,
   ): SimplePage =
     SimplePage(

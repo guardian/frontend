@@ -68,7 +68,7 @@ class SignupPageController(
           remoteRenderer.getEmailNewsletters(
             ws = wsClient,
             newsletters = newsletters,
-            page = StaticPages.dcrSimplenewsletterPage(request.path),
+            page = StaticPages.dcrSimpleNewsletterPage(request.path),
           ),
           3.seconds,
         )
