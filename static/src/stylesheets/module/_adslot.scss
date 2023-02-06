@@ -97,9 +97,45 @@
     }
 }
 
+.ad-slot-container:has(div.ad-slot--inline),
+.ad-slot-container:has(div.ad-slot--container-inline),
+.ad-slot-container:has(div.ad-slot--container-inline.ad-slot--fluid),
+.ad-slot-container:has(div.ad-slot--gallery-inline),
+.ad-slot-container:has(div.ad-slot--liveblog-inline) {
+    margin: $gs-baseline auto;
+}
+
+.ad-slot-container:has(div.ad-slot[data-label-show='true']) {
+    width: fit-content;
+}
+
 .ad-slot-container:has(div.ad-slot--top-above-nav[data-label-show='true']) {
     margin: 0 auto;
-    width: fit-content;
+}
+
+.ad-slot-container:has(div.ad-slot--mostpop) {
+    margin: $gs-baseline auto 0;
+
+    @include mq(desktop) {
+        margin: 0 0 0 $gs-gutter;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            margin: ($gs-baseline / 2) 0 0 ($gs-gutter / 2);
+        }
+    }
+}
+
+.ad-slot-container:has(div.ad-slot--liveblog-inline),
+.ad-slot-container:has(div.ad-slot--container-inline),
+.ad-slot-container:has(div.ad-slot--container-inline.ad-slot--fluid) {
+    @include mq(mobileLandscape) {
+        margin-top: 0;
+    }
+    @include mq(tablet) {
+        margin: 0 $gs-gutter/2;
+    }
 }
 
 .ad-slot--crossword-banner,
@@ -158,7 +194,6 @@
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     width: $mpu-original-width;
-    margin: $gs-baseline auto;
     min-width: $mpu-original-width;
     min-height: $mpu-original-height + $mpu-ad-label-height;
     text-align: center;
@@ -177,17 +212,6 @@
     }
 }
 
-.ad-slot--liveblog-inline,
-
-.ad-slot--container-inline,
-.ad-slot--container-inline.ad-slot--fluid {
-    @include mq(mobileLandscape) {
-        margin-top: 0;
-    }
-    @include mq(tablet) {
-        margin: 0 $gs-gutter/2;
-    }
-}
 .ad-slot--gallery-inline {
     background-color: $brightness-7;
     margin-left: 0;

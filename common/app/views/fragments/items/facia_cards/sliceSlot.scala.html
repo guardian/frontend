@@ -7,12 +7,14 @@
         case (true, 0) => "top-above-nav"
         case _         => s"inline$id"
     }) { case(slotName) =>
-        @fragments.commercial.adSlot(
-            slotName,
-            Seq("container-inline") ++ (if(isMobile) Some("mobile") else None),
-            Map(),
-            optId = if(isMobile) Some(s"$slotName--mobile") else None,
-            optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
-        ){ }
+        <div class="ad-slot-container">
+            @fragments.commercial.adSlot(
+                slotName,
+                Seq("container-inline") ++ (if(isMobile) Some("mobile") else None),
+                Map(),
+                optId = if(isMobile) Some(s"$slotName--mobile") else None,
+                optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
+            ){ }
+        </div>
     }
 }
