@@ -61,7 +61,7 @@ class SignupPageController(
 
     newsletters match {
       case Right(newsletters) =>
-        SimplePageRemoteRenderer.newslettersPage(
+        SimplePageRemoteRenderer.renderNewslettersPage(
           newsletters,
           StaticPages.dcrSimplenewsletterPage(request.path),
           wsClient,

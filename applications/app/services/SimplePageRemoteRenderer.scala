@@ -15,17 +15,13 @@ object SimplePageRemoteRenderer {
 
   val remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService()
 
-  def newslettersPage(newsletters: List[NewsletterResponse], page: SimplePage, ws: WSClient)(implicit
+  def renderNewslettersPage(newsletters: List[NewsletterResponse], page: SimplePage, ws: WSClient)(implicit
       request: RequestHeader,
       executionContext: ExecutionContext,
   ): Result = {
 
     Await.result(
-      remoteRenderer.getEmailNewsletters(
-        ws,
-        newsletters,
-        page,
-      ),
+      remoteRenderer.getEmailNewsletters(ws, newsletters, page),
       duration.Duration.create(5, TimeUnit.SECONDS),
     )
   }
