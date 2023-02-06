@@ -11,10 +11,12 @@ import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersRespons
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
-import services.SimplePageRemoteRenderer
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
+import renderers.DotcomRenderingService
+import scala.concurrent.Future
+import scala.concurrent.Await
 
 class SignupPageController(
     wsClient: WSClient,
@@ -27,14 +29,15 @@ class SignupPageController(
     with GuLogging {
 
   val defaultCacheDuration: Duration = 15.minutes
+  val remoteRenderer = DotcomRenderingService()
 
-  def getShouldUseRemoteRender()(implicit
+  private def getShouldUseRemoteRender()(implicit
       request: RequestHeader,
   ): Boolean = {
     request.getQueryString("dcr").contains("true")
   }
 
-  def localRenderNewslettersPage()(implicit
+  private def localRenderNewslettersPage()(implicit
       request: RequestHeader,
   ): Result = {
     val groupedNewsletters: Either[String, GroupedNewslettersResponse] =
@@ -52,7 +55,7 @@ class SignupPageController(
     }
   }
 
-  def remoteRenderNewslettersPage()(implicit
+  private def remoteRenderNewslettersPage()(implicit
       request: RequestHeader,
   ): Result = {
 
@@ -61,10 +64,13 @@ class SignupPageController(
 
     newsletters match {
       case Right(newsletters) =>
-        SimplePageRemoteRenderer.renderNewslettersPage(
-          newsletters,
-          StaticPages.dcrSimplenewsletterPage(request.path),
-          wsClient,
+        Await.result(
+          remoteRenderer.getEmailNewsletters(
+            ws = wsClient,
+            newsletters = newsletters,
+            page = StaticPages.dcrSimplenewsletterPage(request.path),
+          ),
+          3.seconds,
         )
       case Left(e) =>
         log.error(s"API call to get newsletters failed: $e")
@@ -77,9 +83,7 @@ class SignupPageController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val renderDcr: Boolean = getShouldUseRemoteRender()
-
-        if (renderDcr) {
+        if (getShouldUseRemoteRender()) {
           remoteRenderNewslettersPage()
         } else {
           localRenderNewslettersPage()
