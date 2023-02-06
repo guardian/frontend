@@ -12,6 +12,7 @@ import model.{SimplePage}
 import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
+  DotcomNewslettersPageRenderingDataModel,
   DotcomRenderingDataModel,
   OnwardCollectionResponse,
   PageType,
@@ -262,9 +263,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getEmailNewsletters(
       ws: WSClient,
-      newslettersPageJson: String
+      newsletters: List[NewsletterResponse],
+      page: SimplePage,
   )(implicit request: RequestHeader): Future[Result] = {
-    post(ws, newslettersPageJson, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
+
+    val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
+    val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
   }
 }
 
