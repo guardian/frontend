@@ -321,10 +321,41 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  // TODO Remove this switch once the per-server switches are being used on DCR
   val ampPrebid: Switch = Switch(
     group = CommercialPrebid,
     name = "amp-prebid",
     description = "Amp inventory is being auctioned through Prebid",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
+  )
+
+  val ampPrebidPubmatic: Switch = Switch(
+    group = CommercialPrebid,
+    name = "amp-prebid-pubmatic",
+    description = "Amp inventory is being auctioned through Pubmatic's Prebid Server",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
+  )
+
+  val ampPrebidCriteo: Switch = Switch(
+    group = CommercialPrebid,
+    name = "amp-prebid-criteo",
+    description = "Amp inventory is being auctioned through Criteo's Prebid Server",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
+  )
+
+  val ampPrebidOzone: Switch = Switch(
+    group = CommercialPrebid,
+    name = "amp-prebid-ozone",
+    description = "Amp inventory is being auctioned through Ozone's Prebid Server",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
