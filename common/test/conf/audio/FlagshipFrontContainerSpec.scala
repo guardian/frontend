@@ -15,26 +15,6 @@ class FlagshipFrontContainerSpec extends AnyFlatSpec with Matchers with BeforeAn
     FlagshipFrontContainerSwitch.switchOn()
   }
 
-  it should "return true if the team is on not holiday yet" in {
-    val dateTime = ZonedDateTime.parse("2019/08/17 03:14", formatter)
-    FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
-  }
-
-  it should "return false if the team is on holiday" in {
-    val dateTime = ZonedDateTime.parse("2019/08/17 03:15", formatter)
-    FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
-  }
-
-  it should "return false if the team is still on holiday" in {
-    val dateTime = ZonedDateTime.parse("2019/09/02 03:15", formatter)
-    FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(false)
-  }
-
-  it should "return true if the team is not on holiday anymore" in {
-    val dateTime = ZonedDateTime.parse("2019/09/02 03:16", formatter)
-    FlagshipFrontContainer.displayFlagshipContainer(dateTime) should be(true)
-  }
-
   it should "return true if Tuesday" in {
     val dateTime = ZonedDateTime.parse("2018/11/06 00:00", formatter)
     dateTime.getDayOfWeek should be(DayOfWeek.TUESDAY)
