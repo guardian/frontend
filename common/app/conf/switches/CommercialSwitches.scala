@@ -339,7 +339,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
+    exposeClientSide = true,
   )
 
   val ampPrebidCriteo: Switch = Switch(
@@ -349,7 +349,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
+    exposeClientSide = true,
   )
 
   val ampPrebidOzone: Switch = Switch(
@@ -359,7 +359,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
+    exposeClientSide = true,
   )
 
   val prebidUserSync: Switch = Switch(
