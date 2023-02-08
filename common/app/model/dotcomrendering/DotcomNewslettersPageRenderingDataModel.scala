@@ -1,6 +1,6 @@
 package model.dotcomrendering
 
-import common.Edition
+import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
@@ -32,6 +32,7 @@ case class DotcomNewslettersPageRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageFooter: PageFooter,
     isAdFreeUser: Boolean,
+    canonicalUrl: String,
 )
 
 object DotcomNewslettersPageRenderingDataModel {
@@ -91,6 +92,7 @@ object DotcomNewslettersPageRenderingDataModel {
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
     )
   }
 
