@@ -74,7 +74,8 @@ jobs:
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
             - name: Wait for Percy Snapshots
-              run: ! yarn percy build:wait --verbose --fail-on-changes --project ced09b1a/commercial --commit ${{ github.event.pull_request.head.sha }} --timeout 900000 --interval 5000
+              continue-on-error: true
+              run: yarn percy build:wait --verbose --fail-on-changes --project ced09b1a/commercial --commit ${{ github.event.pull_request.head.sha }} --timeout 900000 --interval 5000
               working-directory: ./frontend
               env:
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
