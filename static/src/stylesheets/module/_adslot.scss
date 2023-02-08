@@ -100,7 +100,7 @@
 .ad-slot-container:has(div.ad-slot--inline),
 .ad-slot-container:has(div.ad-slot--container-inline),
 .ad-slot-container:has(div.ad-slot--container-inline.ad-slot--fluid),
-.ad-slot-container:has(div.ad-slot--gallery-inline),
+.gallery__img-container:has(div.ad-slot--gallery-inline),
 .ad-slot-container:has(div.ad-slot--liveblog-inline) {
     margin: $gs-baseline auto;
 }
