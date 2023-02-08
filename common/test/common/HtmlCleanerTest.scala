@@ -32,7 +32,8 @@ class InteractiveImmersiveHtmlCleanerTest extends AnyFlatSpec with Matchers {
               |</html>""".stripMargin)
 
     val cleanedDoc = InteractiveImmersiveHtmlCleaner.hideReaderRevenue(doc)
-    cleanedDoc.getElementsByTag("script").text() should equal(
+    val cleanEl = cleanedDoc.getElementsByTag("script").first()
+    cleanEl.data() should equal(
       "window.guardian.config.page.shouldHideReaderRevenue=true",
     )
   }

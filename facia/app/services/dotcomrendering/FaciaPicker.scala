@@ -20,21 +20,6 @@ object FrontChecks {
        */
 
       /*
-    "dynamic/slow-mpu",
-      pending https://github.com/guardian/dotcom-rendering/issues/5926
-       */
-
-      /*
-    "fixed/small/slow-V-mpu",
-      pending https://github.com/guardian/dotcom-rendering/issues/5926
-       */
-
-      /*
-    "fixed/medium/slow-XII-mpu",
-      pending https://github.com/guardian/dotcom-rendering/issues/5926
-       */
-
-      /*
     "dynamic/package",
       pending https://github.com/guardian/dotcom-rendering/issues/5196 and
        */
@@ -44,6 +29,9 @@ object FrontChecks {
       pending https://github.com/guardian/dotcom-rendering/issues/5149
        */
 
+      "dynamic/slow-mpu",
+      "fixed/small/slow-V-mpu",
+      "fixed/medium/slow-XII-mpu",
       "dynamic/slow",
       "dynamic/fast",
       "fixed/small/slow-I",
@@ -90,16 +78,12 @@ object FrontChecks {
     )
   }
 
-  def isNotPaidContent(faciaPage: PressedPage): Boolean = {
+  def hasNoPaidCards(faciaPage: PressedPage): Boolean = {
     // We don't support paid content
     // See: https://github.com/guardian/dotcom-rendering/issues/5945
-    !faciaPage.collections.exists(_.curated.exists(card => card.properties.isPaidFor))
-  }
-
-  def hasNoPaidForCards(faciaPage: PressedPage): Boolean = {
-    // We don't support labs containers
     // See: https://github.com/guardian/dotcom-rendering/issues/5150
-    !faciaPage.collections.exists(collection => collection.curated.exists(card => card.isPaidFor))
+
+    !faciaPage.collections.exists(_.curated.exists(card => card.isPaidFor))
   }
 
   def hasNoRegionalAusTargetedContainers(faciaPage: PressedPage): Boolean = {
@@ -126,8 +110,7 @@ object FaciaPicker extends GuLogging {
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
-      ("isNotPaidContent", FrontChecks.isNotPaidContent(faciaPage)),
-      ("hasNoPaidForCards", FrontChecks.hasNoPaidForCards(faciaPage)),
+      ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
     )
   }

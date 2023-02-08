@@ -10,7 +10,7 @@ object Dependencies {
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
-  val playJsonVersion = "2.9.2"
+  val playJsonVersion = "2.9.4"
   val playJsonExtensionsVersion = "0.42.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
@@ -31,7 +31,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.5"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.19.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.20.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play27" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
@@ -39,7 +39,7 @@ object Dependencies {
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
-  val jSoup = "org.jsoup" % "jsoup" % "1.10.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.15.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.4"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
@@ -80,7 +80,7 @@ object Dependencies {
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
-  val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
+  val okhttp = "com.squareup.okhttp3" % "okhttp" % "4.10.0"
 
   /*
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
@@ -117,7 +117,7 @@ object Dependencies {
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
   val jquery = "org.webjars" % "jquery" % "3.2.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.12.1"
-  val lodash = "org.webjars" % "lodash" % "4.17.4"
+  val lodash = "org.webjars" % "lodash" % "4.17.15"
   val react = "org.webjars" % "react" % "15.6.1"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "3.5.17"

@@ -20,11 +20,11 @@
                 Close change location</span> @fragments.inlineSvg("close", "icon", List("weather__close-icon"))
             </button>
         </div>
-        <div class="u-unstyled forecast__item forecast__item--current js-weather-current" aria-label="@(s"The weather now: ${math.round(temp.Value)}°${temp.Unit}, ${weatherResponse.WeatherText.toLowerCase()}")">
+        <div class="forecast__item forecast__item--current js-weather-current">
             <div class="weather__time" aria-hidden="true">
                 <span class="weather__time-value">Now</span>
             </div>
-            @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon", "js-weather-icon"), Some(weatherResponse.WeatherText), true)
+            @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon", "js-weather-icon"), Some(s"The weather now: ${math.round(temp.Value)}°${temp.Unit}, ${weatherResponse.WeatherText.toLowerCase()}"))
             <div class="weather__temp" aria-hidden="true">
                 <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
             </div>

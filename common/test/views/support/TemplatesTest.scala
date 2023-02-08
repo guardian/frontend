@@ -24,7 +24,7 @@ import scala.xml.XML
 class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
-    RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be(" foo <b>bar</b> ")
+    RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be("foo <b>bar</b>")
   }
 
   it should "not modify text that is not enclosed in p tags" in {

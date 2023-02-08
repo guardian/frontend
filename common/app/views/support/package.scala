@@ -11,7 +11,7 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.safety.{Cleaner, Whitelist}
+import org.jsoup.safety.{Cleaner, Safelist}
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{RequestHeader, Result}
@@ -200,12 +200,12 @@ object cleanTrailText {
 }
 
 object StripHtmlTags {
-  def apply(html: String): String = Jsoup.clean(html, "", Whitelist.none())
+  def apply(html: String): String = Jsoup.clean(html, "", Safelist.none())
 }
 
 object StripHtmlTagsAndUnescapeEntities {
   def apply(html: String): String = {
-    val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
+    val doc = new Cleaner(Safelist.none()).clean(Jsoup.parse(html))
     val stripped = doc.body.html
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
     unescaped.replace("\"", "&#34;") //double quotes will break HTML attributes

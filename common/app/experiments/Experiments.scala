@@ -14,7 +14,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
       CalloutElements,
-      RemoveKickerSlashes,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -25,7 +24,7 @@ object DCRJavascriptBundle
       description = "DCR Javascript bundle experiment",
       owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc1A,
+      participationGroup = Perc20A,
     )
 
 object DCRFronts
@@ -42,17 +41,8 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 1, 31),
+      sellByDate = LocalDate.of(2023, 3, 31),
       participationGroup = Perc0B,
-    )
-
-object RemoveKickerSlashes
-    extends Experiment(
-      name = "remove-kicker-slashes",
-      description = "Implement kickers without slashes on fronts cards. Used to iterate on feature before launch.",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 2, 1),
-      participationGroup = Perc0C,
     )
 
 object EuropeNetworkFront
@@ -69,7 +59,7 @@ object HeaderTopBarSearchCapi
       name = "header-top-bar-search-capi",
       description = "Adds CAPI search to the top nav",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 2, 1),
+      sellByDate = LocalDate.of(2023, 4, 4),
       participationGroup = Perc1B,
     )
 
@@ -79,7 +69,7 @@ object ServerSideLiveblogInlineAds
       description =
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 2, 1),
+      sellByDate = LocalDate.of(2023, 3, 1),
       participationGroup = Perc5A,
     )
 

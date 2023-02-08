@@ -2171,10 +2171,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-8.1.3.tgz#47adc4892716904a62afa62da66f31eae059d56b"
   integrity sha512-Tol4O7A3ErmzgCd9YtkajJUfCps/1RCNXhtaUBwgT8u0OUPRmfk4jjD7cS3nok5gDTEUVemKwT2yysx1CxfWaw==
 
-"@guardian/commercial-core@^5.1.3":
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.1.3.tgz#f7e845d8ae6e8ee6eaaf51fcce3400d94db81a59"
-  integrity sha512-B7Sa7O0zHHP3jN36XdGHOZ9fAgjEMfRYuRURqX+ziiJE8+lmr7rkLX3MLgbYUJCIUfhagNkj559JZDXTLQoZ6g==
+"@guardian/commercial-core@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.2.1.tgz#8b36cea466f4232f1bc06df9fe1efbbfd141d089"
+  integrity sha512-IH5K9j1DUXyDXoFsp6Ve+/wMkzmcislfU3Hh6y4TM8L5INmxoUnRETiySjEjP2uVY6FLhrxYqQqgXd8rbnAOKg==
   dependencies:
     type-fest "2.12.2"
 
@@ -2231,12 +2231,12 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-7.0.1.tgz#b838ab2cf0e2d7b93a617552730eec5b86f6292c"
-  integrity sha512-23dyR0Z/dmly9H2H+6Z0YLOP3vpThE979k9b+jDND6TExcSxo6GTFllvUYNRJb7KZ3pJPqG0wYMGg1q+2o9ogQ==
+"@guardian/source-foundations@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-7.0.3.tgz#2d30d8a76ac1a5382774bbaaaa39a84551d4709d"
+  integrity sha512-XDShUQ1MvQlTaa1Va+QbLSjHA2hg/lBhfoP31wQAFd0mqpGeCjGnwI6snSX31EdpkniLqJH4Y7gGcOsZ1SqtQg==
   dependencies:
-    mini-svg-data-uri "^1.3.3"
+    mini-svg-data-uri "1.4.4"
 
 "@guardian/source-react-components-development-kitchen@8.2.0":
   version "8.2.0"
@@ -10591,10 +10591,10 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-mini-svg-data-uri@^1.3.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.3.tgz#43177b2e93766ba338931a3e2a84a3dfd3a222b8"
-  integrity sha512-gSfqpMRC8IxghvMcxzzmMnWpXAChSA+vy4cia33RgerMS8Fex95akUyQZPbxJJmeBGiGmK7n/1OpUX8ksRjIdA==
+mini-svg-data-uri@1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz#8ab0aabcdf8c29ad5693ca595af19dd2ead09939"
+  integrity sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
