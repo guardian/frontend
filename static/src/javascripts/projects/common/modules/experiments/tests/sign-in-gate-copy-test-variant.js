@@ -4,7 +4,7 @@ export const signInGateCopyTestJan2023 = {
 	expiry: '2023-05-01',
 	author: 'Lindsey Dew',
 	description: 'Test varying the copy in the call to action for sign in gate',
-	audience: 0.2,
+	audience: 0.1,
 	audienceOffset: 0.0,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria: '3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
@@ -21,6 +21,10 @@ export const signInGateCopyTestJan2023 = {
 		{
 			id: 'take-a-moment',
 			test: () => {},
+		},
+		{
+			id: 'sign-in-copy-control',
+			test: () => {}
 		}
 	],
 };
