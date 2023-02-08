@@ -12,6 +12,7 @@ import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersRespons
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
+import implicits.Requests.RichRequestHeader
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -28,12 +29,6 @@ class SignupPageController(
 
   val defaultCacheDuration: Duration = 15.minutes
   val remoteRenderer = DotcomRenderingService()
-
-  private def getShouldUseRemoteRender()(implicit
-      request: RequestHeader,
-  ): Boolean = {
-    request.getQueryString("dcr").contains("true")
-  }
 
   private def localRenderNewslettersPage()(implicit
       request: RequestHeader,
@@ -81,7 +76,7 @@ class SignupPageController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        if (getShouldUseRemoteRender()) {
+        if (request.forceDCR) {
           remoteRenderNewslettersPage()
         } else {
           localRenderNewslettersPage()
