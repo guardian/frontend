@@ -16,7 +16,7 @@ describe('Visually snapshot long read article', () => {
 		cy.allowAllConsent();
 		// scroll to and hydrate all islands
 		cy.hydrate();
-		// scroll to and check all ads rendered
+		// scroll to and check all ads are rendered
 		cy.checkAdsRendered();
 		// snapshot
 		cy.percySnapshot('article-long-read', {
