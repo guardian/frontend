@@ -47,7 +47,7 @@ deployments:
     type: aws-s3
     parameters:
       bucket: aws-frontend-static
-      cacheControl: public, max-age=315360000
+      cacheControl: public, max-age=315360000, immutable
       prefixStack: false
       publicReadAcl: false
   update-ami:
