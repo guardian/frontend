@@ -156,6 +156,7 @@ case class CalloutBlockElementV2(
     tagName: String,
     formFields: List[CalloutFormField],
     isNonCollapsible: Boolean,
+    contacts: Option[Seq[Contact]],
 ) extends PageElement
 
 object CalloutBlockElementV2 {

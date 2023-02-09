@@ -68,6 +68,21 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
         "callout": "Share your stories",
         "_type": "callout",
         "description": "<p>If you have been affected</p>",
+        "contacts": [
+        {
+        "name": "whatsapp",
+         "value": "+4488739383",
+        "urlPrefix": "http://whatsapp.com",
+        "guidance": "this is the guidance"
+        },
+        {
+        "name": "signal",
+         "value": "+4488736683",
+        "urlPrefix": "http://signal.com",
+        "guidance": "this is the guidance"
+
+        }
+        ],
         "formFields": [
           {
             "name": "share_your_experiences_here",
@@ -130,6 +145,12 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
       "callout-coronavirus",
       expectedRadioFields,
       false,
+      Some(
+        List(
+          Contact("whatsapp", "+4488739383", "http://whatsapp.com", Some("this is the guidance")),
+          Contact("signal", "+4488736683", "http://signal.com", Some("this is the guidance")),
+        ),
+      ),
     )
   }
 
