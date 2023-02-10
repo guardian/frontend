@@ -101,6 +101,7 @@
 .ad-slot-container:has(div.ad-slot--container-inline),
 .ad-slot-container:has(div.ad-slot--container-inline.ad-slot--fluid),
 .gallery__img-container:has(div.ad-slot--gallery-inline),
+.ad-slot-container:has(div.ad-slot--top-above-nav--mobile),
 .ad-slot-container:has(div.ad-slot--liveblog-inline) {
     margin: $gs-baseline auto;
 }
@@ -109,7 +110,7 @@
     width: fit-content;
 }
 
-.ad-slot-container:has(div.ad-slot--top-above-nav[data-label-show='true']) {
+.ad-slot-container:has(div#dfp-ad--top-above-nav[data-label-show='true']) {
     margin: 0 auto;
 }
 
@@ -138,10 +139,9 @@
     }
 }
 
-.ad-slot-container:has(div.ad-slot--mobile) {
-    div {
-        margin: auto;
-    }
+.ad-slot-container .ad-slot--mobile {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ad-slot--crossword-banner,
