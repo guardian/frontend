@@ -11,6 +11,7 @@ GET        /sitemaps/news.xml                                                   
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
 GET        /email-newsletters                                                   controllers.SignupPageController.renderNewslettersPage()
+GET        /email-newsletters.json                                              controllers.SignupPageController.renderNewslettersJson()
 
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()

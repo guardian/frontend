@@ -16,6 +16,8 @@ import implicits.Requests.RichRequestHeader
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
+import model.dotcomrendering.DotcomNewslettersPageRenderingDataModel
+import model.SimplePage
 
 class SignupPageController(
     wsClient: WSClient,
@@ -84,4 +86,26 @@ class SignupPageController(
       }
     }
 
+  def renderNewslettersJson()(implicit
+      executionContext: ExecutionContext = this.executionContext,
+  ): Action[AnyContent] =
+    csrfAddToken {
+      Action { implicit request =>
+        val newsletters: Either[String, List[NewsletterResponse]] =
+          newsletterSignupAgent.getNewsletters()
+
+        newsletters match {
+          case Right(newsletters) => {
+            val page = StaticPages.dcrSimpleNewsletterPage(request.path)
+            val dataModel =
+              DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
+            val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
+            common.renderJson(dataJson, page).as("application/json")
+          }
+          case Left(e) =>
+            log.error(s"API call to get newsletters failed: $e")
+            throw new RuntimeException()
+        }
+      }
+    }
 }
