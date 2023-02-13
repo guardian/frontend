@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import type {
 	SpacefinderExclusions,
 	SpacefinderItem,
@@ -64,6 +65,26 @@ const addHoverListener = (
 ) => {
 	tooClose.forEach((opponent) => {
 		candidate.addEventListener('mouseenter', () => {
+			if (!document.body.contains(opponent.element)) {
+				// The element blocking the candidate has been removed from the DOM
+				// since spacefinder ran. This means we aren't able to highlight it
+				// as usual, but we can still provide some details in the console
+				addOverlay(
+					candidate,
+					`Blocking element(s) removed from DOM: see console for details`,
+				);
+
+				log(
+					'commercial',
+					`Spacefinder: blocking element removed from DOM.\nCandidate:`,
+					candidate,
+					`\nBlocking element:`,
+					opponent.element,
+				);
+
+				return;
+			}
+
 			opponent.element.style.cssText = `
 				box-shadow: 0px 0px 0px 10px ${colours.red};
 				z-index:10;
