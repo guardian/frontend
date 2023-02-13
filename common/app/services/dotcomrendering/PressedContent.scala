@@ -211,6 +211,7 @@ object PressedContent {
     "/environment/ng-interactive/2020/oct/05/the-guardian-climate-pledge-2020-environment-emergency-carbon-emissions",
     "/music/ng-interactive/2020/oct/07/the-months-best-album-reviews",
     "/world/ng-interactive/2020/oct/15/justice-on-trial-three-years-after-murder-daphne-caruana-galizia",
+    "/us-news/ng-interactive/2020/oct/20/trump-us-dirtier-planet-warmer-75-ways",
     "/us-news/ng-interactive/2020/oct/30/electoral-college-explained-how-biden-faces-an-uphill-battle-in-the-us-election",
     "/us-news/ng-interactive/2020/oct/30/build-your-own-us-election-result-plot-a-win-for-biden-or-trump",
     "/us-news/ng-interactive/2020/nov/07/how-did-joe-biden-win-presidency-visual-guide",

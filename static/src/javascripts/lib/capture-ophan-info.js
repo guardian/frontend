@@ -44,6 +44,11 @@ const captureOphanInfo = () => {
         ophanInfo = { ...ophanInfo, ...{ experiences: 'dcrCouldRender' } };
     }
 
+    const edition = config.get('page.edition', false);
+    if (edition) {
+        ophanInfo = { ...ophanInfo, ...{ edition } };
+    }
+
     ophan.record({
         ...ophanInfo,
         ...{
