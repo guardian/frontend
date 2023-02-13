@@ -43,9 +43,9 @@ const exclusionTypes = {
 const isExclusionType = (type: string): type is keyof typeof exclusionTypes =>
 	type in exclusionTypes;
 
-const addDistanceExplainer = (element: HTMLElement, text: string) => {
+const addOverlay = (element: HTMLElement, text: string) => {
 	const explainer = document.createElement('div');
-	explainer.className = 'distanceExplainer sfdebug';
+	explainer.className = 'overlay sfdebug';
 	explainer.appendChild(document.createTextNode(text));
 	explainer.style.cssText = `
 		position:absolute;
@@ -70,7 +70,7 @@ const addHoverListener = (
 				position:relative
 			`;
 
-			addDistanceExplainer(
+			addOverlay(
 				opponent.element,
 				`${opponent.actual}px/${opponent.required}px`,
 			);
@@ -79,7 +79,7 @@ const addHoverListener = (
 		candidate.addEventListener('mouseleave', () => {
 			opponent.element.style.cssText = '';
 			document
-				.querySelectorAll('.distanceExplainer')
+				.querySelectorAll('.sfdebug.overlay')
 				.forEach((el) => el.remove());
 		});
 	});
