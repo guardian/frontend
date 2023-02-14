@@ -24,7 +24,7 @@ object DCRJavascriptBundle
       description = "DCR Javascript bundle experiment",
       owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc20A,
+      participationGroup = Perc1A,
     )
 
 object DCRFronts
