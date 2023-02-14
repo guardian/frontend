@@ -1,5 +1,7 @@
 package model.dotcomrendering
 
+import org.apache.thrift.transport.TIOStreamTransport
+import org.apache.thrift.protocol.TSimpleJSONProtocol
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks, Content => CAPIContent}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
@@ -108,6 +110,18 @@ case class DotcomRenderingDataModel(
 
 object DotcomRenderingDataModel {
 
+  // we Json.parse this into a JsValue to ensure we get the raw JSON
+  // from the Content API rather than a Json.stringified version
+  private def contentApiToJsonValue(apiContent: CAPIContent): JsValue = {
+    val protocolFactory = new TSimpleJSONProtocol.Factory
+
+    val buffer = new java.io.ByteArrayOutputStream
+    val protocol = protocolFactory.getProtocol(new TIOStreamTransport(buffer))
+
+    CAPIContent.encode(apiContent, protocol)
+    Json.parse(new String(buffer.toByteArray, "UTF-8"))
+  }
+
   implicit val pageElementWrites = PageElement.pageElementWrites
   implicit val apiContentWrites = new Writes[CAPIContent] {
     def writes(model: CAPIContent) = {
@@ -197,7 +211,7 @@ object DotcomRenderingDataModel {
         "showTableOfContents" -> model.showTableOfContents,
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
-        "capiContent" -> model.capiContent,
+        "capiContent" -> contentApiToJsonValue(model.capiContent),
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
