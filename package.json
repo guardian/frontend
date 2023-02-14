@@ -24,7 +24,7 @@
     "@guardian/libs": "^13.1.0",
     "@guardian/shimport": "^1.0.2",
     "@guardian/source-foundations": "^7.0.3",
-    "@guardian/source-react-components": "^9.1.1",
+    "@guardian/source-react-components": "^9.1.2",
     "@guardian/source-react-components-development-kitchen": "8.2.0",
     "@guardian/support-dotcom-components": "1.0.7",
     "bean": "~1.0.14",
