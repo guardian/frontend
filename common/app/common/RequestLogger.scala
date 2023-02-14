@@ -24,6 +24,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       "Fastly-SSL",
       "Fastly-Digest",
       "Accept-Encoding", // TODO remove if seen after 2021/09/03
+      "X-Request-ID"
     )
 
     val allHeadersFields = request

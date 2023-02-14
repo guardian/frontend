@@ -65,10 +65,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val start = currentTimeMillis()
 
-    val resp = ws
+    val req = ws
       .url(endpoint)
       .withRequestTimeout(timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
+
+    request.headers.get("X-Request-ID").foreach(requestId => req.addHttpHeaders("X-Request-ID"-> requestId))
+
+    val resp = req
       .post(payload)
 
     resp.foreach(_ => {
