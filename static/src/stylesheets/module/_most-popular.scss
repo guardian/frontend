@@ -97,10 +97,22 @@
 
 .most-popular__mpu {
     #dfp-ad--mostpop {
+        margin: $gs-baseline auto 0;
+
+        @include mq(desktop) {
+            margin: 0 0 0 $gs-gutter;
+        }
+
         @include mq($from: tablet, $until: desktop) {
             min-height: $leaderboard-height + $mpu-ad-label-height;
             width: $leaderboard-width;
             left: - ($gs-gutter / 2);
+        }
+
+        body:not(.has-page-skin) & {
+            @include mq(leftCol) {
+                margin: ($gs-baseline / 2) 0 0 ($gs-gutter / 2);
+            }
         }
     }
 }

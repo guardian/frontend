@@ -109,6 +109,17 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
+				if (
+					adSlotNode.parentElement?.classList.contains(
+						'ad-slot-container',
+					) &&
+					adSlotNode.id == 'dfp-ad--top-above-nav'
+				) {
+					adSlotNode.parentElement.setAttribute(
+						'top-above-nav-ad-rendered',
+						'true',
+					);
+				}
 
 				if (shouldRenderCloseButton(adSlotNode)) {
 					adSlotNode.insertBefore(
