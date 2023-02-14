@@ -201,9 +201,6 @@ object DotcomRenderingDataModel {
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
         "capiContent" -> contentApiToJsonValue(model.capiContent),
-        "lang" -> model.lang,
-        "isRightToLeftLang" -> model.isRightToLeftLang,
-        "capiContent" -> model.capiContent,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
