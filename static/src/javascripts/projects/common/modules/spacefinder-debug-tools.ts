@@ -208,7 +208,7 @@ const runDebugTool = (
 	rules: SpacefinderRules,
 ): void => {
 	document.addEventListener(
-		'adverts-created',
+		'spacefiller-complete',
 		() => {
 			if (rules.minAbove && rules.body instanceof HTMLElement) {
 				debugMinAbove(rules.body, rules.minAbove);
@@ -222,7 +222,7 @@ const runDebugTool = (
 
 const createAdvertBorder = (advert: HTMLElement): void => {
 	document.addEventListener(
-		'adverts-created',
+		'spacefiller-complete',
 		() => {
 			advert.style.cssText += `outline: 4px solid ${colours.darkRed};`;
 		},
