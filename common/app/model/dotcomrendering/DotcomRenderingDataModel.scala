@@ -100,6 +100,7 @@ case class DotcomRenderingDataModel(
     promotedNewsletter: Option[NewsletterData],
     showTableOfContents: Boolean,
     lang: Option[String],
+    isRightToLeftLang: Boolean,
 )
 
 object DotcomRenderingDataModel {
@@ -176,6 +177,7 @@ object DotcomRenderingDataModel {
         "promotedNewsletter" -> model.promotedNewsletter,
         "showTableOfContents" -> model.showTableOfContents,
         "lang" -> model.lang,
+        "isRightToLeftLang" -> model.isRightToLeftLang,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -526,6 +528,7 @@ object DotcomRenderingDataModel {
       promotedNewsletter = newsletter,
       showTableOfContents = content.fields.showTableOfContents.getOrElse(false),
       lang = content.fields.lang,
+      isRightToLeftLang = content.fields.isRightToLeftLang,
     )
   }
 }
