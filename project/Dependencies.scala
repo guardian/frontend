@@ -60,7 +60,7 @@ object Dependencies {
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
-  val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"
+  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.5"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
