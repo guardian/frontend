@@ -88,6 +88,7 @@ object PressedContent {
     "/cities/ng-interactive/2016/nov/10/subterranean-london",
     "/music/2016/nov/11/the-future-50-the-rising-stars-to-look-out-for",
     "/science/2016/nov/21/magic-numbers-can-maths-equations-be-beautiful",
+    "/info/ng-interactive/2016/nov/22/the-guardian-independence-matters",
     "/film/2016/nov/29/the-50-best-uk-films-of-2016-full-list",
     "/film/2016/nov/29/50-best-us-film-of-2016-the-full-list",
     "/music/2016/nov/30/the-best-albums-of-2016",
