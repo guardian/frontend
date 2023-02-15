@@ -5,6 +5,7 @@ import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer'
 import { integrateIma } from './tests/integrate-ima';
 import { noCarrotAdsNearNewsletterSignupBlocks } from './tests/no-carrot-ads-near-newsletter-signup-blocks';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
+import { signInGateCopyTestJan2023 } from './tests/sign-in-gate-copy-test-variant';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 
@@ -13,6 +14,7 @@ import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 export const concurrentTests: readonly ABTest[] = [
 	signInGateMainVariant,
 	signInGateMainControl,
+	signInGateCopyTestJan2023,
 	remoteRRHeaderLinksTest,
 	deeplyReadArticleFooterTest,
 	consentlessAds,
