@@ -271,7 +271,7 @@ describe('A/B', () => {
 				...expectedSynchronousTestsToRun,
 			};
 
-			const checkTests = (tests: readonly Runnable<ABTest>[]) =>
+			const checkTests = (tests: ReadonlyArray<Runnable<ABTest>>) =>
 				expect(runnableTestsToParticipations(tests)).toEqual(
 					expectedTestsToRun,
 				);

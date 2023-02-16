@@ -87,13 +87,18 @@ export const runnableTest = (test: ABTest): Runnable<ABTest> | null => {
 
 export const allRunnableTests = (
 	tests: readonly ABTest[],
-): readonly Runnable<ABTest>[] =>
-	tests.reduce<readonly Runnable<ABTest>[]>((accumulator, currentValue) => {
-		const rt = runnableTest(currentValue);
-		return rt ? [...accumulator, rt] : accumulator;
-	}, []);
+): ReadonlyArray<Runnable<ABTest>> =>
+	tests.reduce<ReadonlyArray<Runnable<ABTest>>>(
+		(accumulator, currentValue) => {
+			const rt = runnableTest(currentValue);
+			return rt ? [...accumulator, rt] : accumulator;
+		},
+		[],
+	);
 
-export const firstRunnableTest = (tests: readonly ABTest[]): Runnable<ABTest> | null =>
+export const firstRunnableTest = (
+	tests: readonly ABTest[],
+): Runnable<ABTest> | null =>
 	tests
 		.map((test: ABTest) => runnableTest(test))
 		.find((rt?: Runnable<ABTest> | null) => rt !== null) ?? null;
