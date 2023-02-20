@@ -1,4 +1,4 @@
-import type { Runnable, ABTest } from '@guardian/ab-core';
+import type { Runnable } from '@guardian/ab-core';
 import {
 	getAsyncTestsToRun,
 	getSynchronousTestsToRun,
@@ -271,7 +271,7 @@ describe('A/B', () => {
 				...expectedSynchronousTestsToRun,
 			};
 
-			const checkTests = (tests: ReadonlyArray<Runnable<ABTest>>) =>
+			const checkTests = (tests: readonly Runnable[]) =>
 				expect(runnableTestsToParticipations(tests)).toEqual(
 					expectedTestsToRun,
 				);

@@ -38,11 +38,13 @@ type PermutiveSchema = {
 	};
 };
 
-type PermutiveConfigValue = string | string[] | boolean | null | undefined;
-
 const isEmpty = (
 	value:
-		| PermutiveConfigValue
+		| boolean
+		| string
+		| string[]
+		| null
+		| undefined
 		| PermutiveSchema['content']
 		| PermutiveSchema['user'],
 ): boolean =>
@@ -62,7 +64,7 @@ const removeEmpty = <
 		if (typeof payload[key] === 'object') {
 			removeEmpty(payload[key]);
 		}
-		if (isEmpty(payload[key] as PermutiveConfigValue)) {
+		if (isEmpty(payload[key])) {
 			delete payload[key];
 		}
 	}
@@ -141,7 +143,7 @@ const runPermutive = (
 	logger: typeof reportError,
 ): void => {
 	try {
-		if (!permutiveGlobal?.addon) {
+		if (!permutiveGlobal || !permutiveGlobal.addon) {
 			throw new Error('Global Permutive setup error');
 		}
 

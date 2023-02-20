@@ -254,7 +254,7 @@ describe('initialise', () => {
 				hasPrebidSize: false,
 			};
 
-			if (!window.pbjs) return;
+			if (!window.pbjs) return false;
 			window.pbjs.onEvent = jest.fn((eventName, eventHandler) => {
 				bidWonEventName = eventName;
 				bidWonEventHandler = eventHandler;

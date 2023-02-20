@@ -36,7 +36,7 @@ export const genAbTest = (
 export const genRunnableAbTestWhereControlIsRunnable = (
 	id: string,
 	canRun?: boolean,
-): Runnable<ABTest> => {
+): Runnable => {
 	const abTest = genAbTest(id, canRun);
 	return { ...abTest, variantToRun: abTest.variants[0] };
 };
@@ -44,7 +44,7 @@ export const genRunnableAbTestWhereControlIsRunnable = (
 export const genRunnableAbTestWhereVariantIsRunnable = (
 	id: string,
 	canRun?: boolean,
-): Runnable<ABTest> => {
+): Runnable => {
 	const abTest = genAbTest(id, canRun);
 	return { ...abTest, variantToRun: abTest.variants[1] };
 };
