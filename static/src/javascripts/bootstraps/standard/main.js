@@ -220,7 +220,9 @@ const bootStandard = () => {
         handleMembershipAccess();
     }
 
-    if(window.guardian.config.switches.headerTopNav) {
+    if(window.guardian.config.switches.headerTopNav
+        && document.querySelector('.header-top-nav')
+        ) {
         headerTopNavInit();
     } else {
         newHeaderInit();
