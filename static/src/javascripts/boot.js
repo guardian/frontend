@@ -167,12 +167,10 @@ const go = () => {
 
 
         // eslint-disable-next-line no-nested-ternary
-        const fetchCommercial =
-            config.get('switches.commercial') &&
-            !config.get('page.isAdFree', false)
-                ? (markTime('commercial request'),
-                    commercialBundle())
-                : Promise.resolve(fakeBootCommercial);
+        const fetchCommercial = config.get('switches.commercial')
+            ? (markTime('commercial request'),
+                commercialBundle())
+            : Promise.resolve(fakeBootCommercial);
 
 
         const fetchEnhanced = window.guardian.isEnhanced
