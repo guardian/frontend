@@ -22,7 +22,7 @@ class DevParametersHttpRequestHandler(
 
   /*
     IMPORTANT
-    these params are only whitelisted on dev machines, they will not make it through the CDN on www.theguardian.com
+    these params are only allowed on dev machines, they will not make it through the CDN on www.theguardian.com
     this means that the server side **CANNOT** rely on them. They may be used by Javascript, or simply in the
     development environment
    */
@@ -53,8 +53,9 @@ class DevParametersHttpRequestHandler(
     "pbjs_debug", // set to `true` to enable prebid debugging,
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
-    "dcr",
+    "dcr", // force page to render in DCR
     "topics", // used for filtering the liveblog blocks
+    "apps", // force page to render in Apps format
   )
 
   val commercialParams = Seq(

@@ -141,28 +141,59 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
-  )(implicit request: RequestHeader): Future[Result] = {
+  )(implicit request: RequestHeader): Future[Result] =
+    baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, None, newsletter, None)
 
-    val dataModel = page match {
-      case liveblog: LiveBlogPage =>
-        DotcomRenderingDataModel.forLiveblog(
-          liveblog,
-          blocks,
-          request,
-          pageType,
-          filterKeyEvents,
-          forceLive = false,
-          newsletter = newsletter,
-          topicResult = None,
-        )
-      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
-    }
-    val json = DotcomRenderingDataModel.toJson(dataModel)
-
-    post(ws, json, Configuration.rendering.baseURL + "/AMPArticle", page.metadata.cacheTime)
-  }
+  def getAppsArticle(
+      ws: WSClient,
+      page: PageWithStoryPackage,
+      blocks: Blocks,
+      pageType: PageType,
+      newsletter: Option[NewsletterData],
+      filterKeyEvents: Boolean = false,
+      forceLive: Boolean = false,
+      availableTopics: Option[Seq[Topic]] = None,
+      topicResult: Option[TopicResult] = None,
+  )(implicit request: RequestHeader): Future[Result] =
+    baseArticleRequest(
+      "/AppsArticle",
+      ws,
+      page,
+      blocks,
+      pageType,
+      filterKeyEvents,
+      forceLive,
+      availableTopics,
+      newsletter,
+      topicResult,
+    )
 
   def getArticle(
+      ws: WSClient,
+      page: PageWithStoryPackage,
+      blocks: Blocks,
+      pageType: PageType,
+      newsletter: Option[NewsletterData],
+      filterKeyEvents: Boolean = false,
+      forceLive: Boolean = false,
+      availableTopics: Option[Seq[Topic]] = None,
+      topicResult: Option[TopicResult] = None,
+  )(implicit request: RequestHeader): Future[Result] =
+    baseArticleRequest(
+      "/Article",
+      ws,
+      page,
+      blocks,
+      pageType,
+      filterKeyEvents,
+      forceLive,
+      availableTopics,
+      newsletter,
+      topicResult,
+    )
+
+  private def baseArticleRequest(
+      path: String,
       ws: WSClient,
       page: PageWithStoryPackage,
       blocks: Blocks,
@@ -190,7 +221,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Article", page.metadata.cacheTime)
+    post(ws, json, Configuration.rendering.baseURL + path, page.metadata.cacheTime)
   }
 
   def getBlocks(
