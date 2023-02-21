@@ -113,7 +113,7 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 					adSlotNode.parentElement?.classList.contains(
 						'ad-slot-container',
 					) &&
-					adSlotNode.id == 'dfp-ad--top-above-nav'
+					adSlotNode.id === 'dfp-ad--top-above-nav'
 				) {
 					adSlotNode.parentElement.setAttribute(
 						'top-above-nav-ad-rendered',
