@@ -644,6 +644,7 @@
   "../types/membership.ts"
  ],
  "../projects/common/modules/spacefinder-debug-tools.ts": [
+  "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
   "../projects/common/modules/spacefinder.ts"
  ],
  "../projects/common/modules/spacefinder.ts": [
