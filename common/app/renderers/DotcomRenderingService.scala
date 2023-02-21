@@ -8,14 +8,18 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.{SimplePage}
 import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
+  DotcomNewslettersPageRenderingDataModel,
   DotcomRenderingDataModel,
   OnwardCollectionResponse,
   PageType,
 }
 import services.NewsletterData
+import services.newsletters.model.NewsletterResponse
+
 import model.{
   CacheTime,
   Cached,
@@ -255,6 +259,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
+  }
+
+  def getEmailNewsletters(
+      ws: WSClient,
+      newsletters: List[NewsletterResponse],
+      page: SimplePage,
+  )(implicit request: RequestHeader): Future[Result] = {
+
+    val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
+    val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
   }
 }
 
