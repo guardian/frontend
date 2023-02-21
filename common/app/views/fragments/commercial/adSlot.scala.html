@@ -12,18 +12,20 @@
 @import views.support.Commercial
 @import implicits.Requests._
 
-<div
-    id="dfp-ad--@optId.getOrElse(name)"
-    class="js-ad-slot ad-slot ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ") @optClassNames"
-    data-link-name="ad slot @name"
-    data-name="@name"
-    @if(!showLabel) { data-label="false" }
-    @if(!refresh) { data-refresh="false" }
-    @if(outOfPage) { data-out-of-page="true" }
-    @sizeMapping.map { case(breakpoint, sizes) =>
-        data-@breakpoint="@sizes.mkString("|")"
-    }
-    aria-hidden="true"
-    >
-    @placeholderContent
+<div class="ad-slot-container">
+    <div
+        id="dfp-ad--@optId.getOrElse(name)"
+        class="js-ad-slot ad-slot ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ") @optClassNames"
+        data-link-name="ad slot @name"
+        data-name="@name"
+        @if(!showLabel) { data-label="false" }
+        @if(!refresh) { data-refresh="false" }
+        @if(outOfPage) { data-out-of-page="true" }
+        @sizeMapping.map { case(breakpoint, sizes) =>
+            data-@breakpoint="@sizes.mkString("|")"
+        }
+        aria-hidden="true"
+        >
+        @placeholderContent
+    </div>
 </div>
