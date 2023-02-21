@@ -232,7 +232,7 @@ object NavLinks {
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
-  val guardianLicensing = NavLink("Guardian content licensing site", s"https://licensing.theguardian.com/")
+  val guardianLicensing = NavLink("Guardian licensing", s"https://licensing.theguardian.com/")
   val jobsRecruiter = NavLink(
     "Hire with Guardian Jobs",
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
