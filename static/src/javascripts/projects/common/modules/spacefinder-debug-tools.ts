@@ -1,3 +1,4 @@
+import { log } from '@guardian/libs';
 import type {
 	SpacefinderExclusions,
 	SpacefinderItem,
@@ -43,9 +44,9 @@ const exclusionTypes = {
 const isExclusionType = (type: string): type is keyof typeof exclusionTypes =>
 	type in exclusionTypes;
 
-const addDistanceExplainer = (element: HTMLElement, text: string) => {
+const addOverlay = (element: HTMLElement, text: string) => {
 	const explainer = document.createElement('div');
-	explainer.className = 'distanceExplainer sfdebug';
+	explainer.className = 'overlay sfdebug';
 	explainer.appendChild(document.createTextNode(text));
 	explainer.style.cssText = `
 		position:absolute;
@@ -64,13 +65,33 @@ const addHoverListener = (
 ) => {
 	tooClose.forEach((opponent) => {
 		candidate.addEventListener('mouseenter', () => {
+			if (!document.body.contains(opponent.element)) {
+				// The element blocking the candidate has been removed from the DOM
+				// since spacefinder ran. This means we aren't able to highlight it
+				// as usual, but we can still provide some details in the console
+				addOverlay(
+					candidate,
+					`Blocking element(s) removed from DOM: see console for details`,
+				);
+
+				log(
+					'commercial',
+					`Spacefinder: blocking element removed from DOM.\nCandidate:`,
+					candidate,
+					`\nBlocking element:`,
+					opponent.element,
+				);
+
+				return;
+			}
+
 			opponent.element.style.cssText = `
 				box-shadow: 0px 0px 0px 10px ${colours.red};
 				z-index:10;
 				position:relative
 			`;
 
-			addDistanceExplainer(
+			addOverlay(
 				opponent.element,
 				`${opponent.actual}px/${opponent.required}px`,
 			);
@@ -79,7 +100,7 @@ const addHoverListener = (
 		candidate.addEventListener('mouseleave', () => {
 			opponent.element.style.cssText = '';
 			document
-				.querySelectorAll('.distanceExplainer')
+				.querySelectorAll('.sfdebug.overlay')
 				.forEach((el) => el.remove());
 		});
 	});
@@ -187,7 +208,7 @@ const runDebugTool = (
 	rules: SpacefinderRules,
 ): void => {
 	document.addEventListener(
-		'adverts-created',
+		'spacefiller-complete',
 		() => {
 			if (rules.minAbove && rules.body instanceof HTMLElement) {
 				debugMinAbove(rules.body, rules.minAbove);
@@ -201,7 +222,7 @@ const runDebugTool = (
 
 const createAdvertBorder = (advert: HTMLElement): void => {
 	document.addEventListener(
-		'adverts-created',
+		'spacefiller-complete',
 		() => {
 			advert.style.cssText += `outline: 4px solid ${colours.darkRed};`;
 		},

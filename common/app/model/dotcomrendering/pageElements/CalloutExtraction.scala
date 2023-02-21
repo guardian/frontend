@@ -46,14 +46,19 @@ case class CalloutFormFieldSelect(
     label: String,
     options: JsArray,
 ) extends CalloutFormField
-
 object CalloutFormField {
   implicit val CalloutFormFieldBaseWrites: Writes[CalloutFormFieldBase] = Json.writes[CalloutFormFieldBase]
   implicit val CalloutFormFieldRadioWrites: Writes[CalloutFormFieldRadio] = Json.writes[CalloutFormFieldRadio]
   implicit val CalloutFormFieldCheckboxWrites: Writes[CalloutFormFieldCheckbox] = Json.writes[CalloutFormFieldCheckbox]
   implicit val CalloutFormFieldSelectWrites: Writes[CalloutFormFieldSelect] = Json.writes[CalloutFormFieldSelect]
-
   implicit val CalloutFormFieldWrites: Writes[CalloutFormField] = Json.writes[CalloutFormField]
+}
+
+case class Contact(name: String, value: String, urlPrefix: String, guidance: Option[String])
+
+object Contact {
+  implicit val ContactWrites: Writes[Contact] = Json.writes[Contact]
+  implicit val ContactReads: Reads[Contact] = Json.reads[Contact]
 }
 
 object CalloutExtraction {
@@ -188,6 +193,8 @@ object CalloutExtraction {
       tagName <- (campaign \ "fields" \ "tagName").asOpt[String]
       formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
     } yield {
+      val contacts = (campaign \ "fields" \ "contacts").asOpt[Seq[Contact]]
+
       val formFields2 = formFields1.value
         .flatMap(formFieldItemToCalloutFormField)
         .toList
@@ -204,6 +211,7 @@ object CalloutExtraction {
         tagName,
         formFields2,
         isNonCollapsible.getOrElse(false),
+        contacts,
       )
     }
   }

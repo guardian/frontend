@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.254"
   val awsVersion = "1.12.205"
-  val capiVersion = "19.1.1"
-  val faciaVersion = "4.0.4"
+  val capiVersion = "19.2.1"
+  val faciaVersion = "4.0.5"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -70,7 +70,7 @@ object Dependencies {
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client" % "1.1.2"
+  val targetingClient = "com.gu" %% "targeting-client" % "1.1.4"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.7"

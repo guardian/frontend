@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 2, 13)),
+    sellByDate = Some(LocalDate.of(2023, 4, 13)),
     exposeClientSide = true,
   )
 
@@ -49,7 +49,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-integrate-ima",
     "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
-    owners = Seq(Owner.withGithub("zekehuntergreen")),
+    owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 4, 4)),
     exposeClientSide = true,
@@ -72,6 +72,15 @@ trait ABTestSwitches {
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 4, 4)),
+    exposeClientSide = true,
+  )
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-copy-test-jan-2023",
+    "Test the impact of changing the copy in the sign in gate",
+    owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 5, 1)),
     exposeClientSide = true,
   )
 }

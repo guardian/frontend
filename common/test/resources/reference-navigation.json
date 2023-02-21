@@ -809,7 +809,7 @@
             "children" : [ ],
             "classList" : [ ]
         }, {
-            "title" : "Guardian content licensing site",
+            "title" : "Guardian Licensing",
             "url" : "https://licensing.theguardian.com/",
             "children" : [ ],
             "classList" : [ ]
@@ -1375,7 +1375,7 @@
             "children" : [ ],
             "classList" : [ ]
         }, {
-            "title" : "Guardian content licensing site",
+            "title" : "Guardian Licensing",
             "url" : "https://licensing.theguardian.com/",
             "children" : [ ],
             "classList" : [ ]
@@ -1977,12 +1977,13 @@
             "children" : [ ],
             "classList" : [ ]
         }, {
-            "title" : "Guardian content licensing site",
+            "title" : "Guardian Licensing",
             "url" : "https://licensing.theguardian.com/",
             "children" : [ ],
             "classList" : [ ]
         } ]
     },
+    "tagPages" : [ "us-news/us-politics", "australia-news/australian-politics", "australia-news/australian-immigration-and-asylum", "australia-news/indigenous-australians", "uk/scotland", "uk/wales", "uk/northernireland", "world/europe-news", "world/americas", "world/asia", "world/africa", "world/middleeast", "business/economics", "business/banking", "business/retail", "business/stock-markets", "business/eurozone", "us/sustainable-business", "business/diversity-and-equality", "business/us-small-business", "environment/climate-change", "environment/climate-crisis", "environment/wildlife", "environment/energy", "environment/pollution", "money/property", "money/pensions", "money/savings", "money/debt", "money/work-and-careers", "cartoons/archive", "type/cartoon", "profile/editorial", "au/index/contributors", "index/contributors", "commentisfree/series/comment-is-free-weekly", "sport/rugby-union", "sport/cricket", "sport/tennis", "sport/cycling", "sport/golf", "sport/us-sport", "sport/horse-racing", "sport/rugbyleague", "sport/boxing", "sport/formulaone", "sport/nfl", "sport/mlb", "football/mls", "sport/nba", "sport/nhl", "sport/afl", "football/a-league", "sport/nrl", "music/classicalmusicandopera", "food", "tone/recipes", "lifeandstyle/health-and-wellbeing", "lifeandstyle/family", "lifeandstyle/home-and-garden", "lifeandstyle/love-and-sex", "au/lifeandstyle/fashion", "au/lifeandstyle/food-and-drink", "au/lifeandstyle/relationships", "au/lifeandstyle/health-and-wellbeing", "travel/uk", "travel/europe", "travel/usa", "travel/skiing", "travel/australasia", "travel/asia", "theguardian", "observer", "football/live", "football/tables", "football/competitions", "football/results", "football/fixtures", "crosswords/crossword-blog", "crosswords/series/crossword-editor-update", "crosswords/series/quick", "crosswords/series/cryptic", "crosswords/series/prize", "crosswords/series/weekend-crossword", "crosswords/series/quiptic", "crosswords/series/genius", "crosswords/series/speedy", "crosswords/series/everyman", "crosswords/series/azed", "fashion/beauty", "technology/motoring", "commentisfree/commentisfree", "education/education" ],
     "international" : {
         "newsPillar" : {
             "title" : "News",
@@ -2708,11 +2709,10 @@
             "children" : [ ],
             "classList" : [ ]
         }, {
-            "title" : "Guardian content licensing site",
+            "title" : "Guardian Licensing",
             "url" : "https://licensing.theguardian.com/",
             "children" : [ ],
             "classList" : [ ]
         } ]
-    },
-    "tagPages" : [ "us-news/us-politics", "australia-news/australian-politics", "australia-news/australian-immigration-and-asylum", "australia-news/indigenous-australians", "uk/scotland", "uk/wales", "uk/northernireland", "world/europe-news", "world/americas", "world/asia", "world/africa", "world/middleeast", "business/economics", "business/banking", "business/retail", "business/stock-markets", "business/eurozone", "us/sustainable-business", "business/diversity-and-equality", "business/us-small-business", "environment/climate-change", "environment/climate-crisis", "environment/wildlife", "environment/energy", "environment/pollution", "money/property", "money/pensions", "money/savings", "money/debt", "money/work-and-careers", "cartoons/archive", "type/cartoon", "profile/editorial", "au/index/contributors", "index/contributors", "commentisfree/series/comment-is-free-weekly", "sport/rugby-union", "sport/cricket", "sport/tennis", "sport/cycling", "sport/golf", "sport/us-sport", "sport/horse-racing", "sport/rugbyleague", "sport/boxing", "sport/formulaone", "sport/nfl", "sport/mlb", "football/mls", "sport/nba", "sport/nhl", "sport/afl", "football/a-league", "sport/nrl", "music/classicalmusicandopera", "food", "tone/recipes", "lifeandstyle/health-and-wellbeing", "lifeandstyle/family", "lifeandstyle/home-and-garden", "lifeandstyle/love-and-sex", "au/lifeandstyle/fashion", "au/lifeandstyle/food-and-drink", "au/lifeandstyle/relationships", "au/lifeandstyle/health-and-wellbeing", "travel/uk", "travel/europe", "travel/usa", "travel/skiing", "travel/australasia", "travel/asia", "theguardian", "observer", "football/live", "football/tables", "football/competitions", "football/results", "football/fixtures", "crosswords/crossword-blog", "crosswords/series/crossword-editor-update", "crosswords/series/quick", "crosswords/series/cryptic", "crosswords/series/prize", "crosswords/series/weekend-crossword", "crosswords/series/quiptic", "crosswords/series/genius", "crosswords/series/speedy", "crosswords/series/everyman", "crosswords/series/azed", "fashion/beauty", "technology/motoring", "commentisfree/commentisfree", "education/education" ]
+    }
 }

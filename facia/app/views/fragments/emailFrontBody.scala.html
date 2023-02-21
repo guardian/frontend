@@ -25,7 +25,7 @@
     @row(Seq("headline")) {
         <a @Html(card.header.url.hrefWithRel) class="fc-link">
             @card.header.kicker.map { kicker =>
-                <span class="fc__kicker">@Html(kicker.kickerHtml) <span class="kicker-separator">/</span></span>
+                <div class="fc__kicker">@Html(kicker.kickerHtml) </div>
             }
 
             @if(card.header.quoted) {

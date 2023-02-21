@@ -10,7 +10,7 @@ templates:
     type: autoscaling
     parameters:
       bucketSsmKey: /account/services/dotcom-artifact.bucket
-     
+
       warmupGrace: 60
     dependencies:
     - frontend-static
@@ -46,8 +46,8 @@ deployments:
   frontend-static:
     type: aws-s3
     parameters:
-      bucket: aws-frontend-static
-      cacheControl: public, max-age=315360000
+      bucketSsmKey: /account/services/dotcom-static.bucket
+      cacheControl: public, max-age=315360000, immutable
       prefixStack: false
       publicReadAcl: false
   update-ami:

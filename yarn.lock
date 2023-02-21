@@ -2171,10 +2171,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-8.1.3.tgz#47adc4892716904a62afa62da66f31eae059d56b"
   integrity sha512-Tol4O7A3ErmzgCd9YtkajJUfCps/1RCNXhtaUBwgT8u0OUPRmfk4jjD7cS3nok5gDTEUVemKwT2yysx1CxfWaw==
 
-"@guardian/commercial-core@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.2.1.tgz#8b36cea466f4232f1bc06df9fe1efbbfd141d089"
-  integrity sha512-IH5K9j1DUXyDXoFsp6Ve+/wMkzmcislfU3Hh6y4TM8L5INmxoUnRETiySjEjP2uVY6FLhrxYqQqgXd8rbnAOKg==
+"@guardian/commercial-core@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.4.0.tgz#cfee79a2eebdb1b774152003573b364c6ce7ec1d"
+  integrity sha512-J054cBZ7jk7icnRlPiJa2CE3A6pmuT+V1Pv6gKyBMxzh2NnDGZe6/h/UByQepisUJU3s8J4uZ6Z/1/vts/6pRg==
   dependencies:
     type-fest "2.12.2"
 
@@ -2209,10 +2209,15 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/libs@^10.0.0", "@guardian/libs@^10.1.1":
+"@guardian/libs@^10.0.0":
   version "10.1.1"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
   integrity sha512-OdWReBHRWhdbErVmS15hihVzlkdU8DkKrjDsUIN0P8QZiF4twuzcU3qsPwto2UfibAwPkWqKkNwH1k8b6xNclA==
+
+"@guardian/libs@^13.1.0":
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-13.1.0.tgz#5a7a0ec9e2d432fc3176884072b9c7c22a00a95b"
+  integrity sha512-iffG2zIDmMtIHSesClxmimZIwAce3IBbSEihX0IRK65Lm2TSIfsb8ZRFRsMYDW+GE2h3yKFuU8tqVKvQXpzXQg==
 
 "@guardian/libs@^7.1.4":
   version "7.1.4"
@@ -2243,10 +2248,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-8.2.0.tgz#b7c9ff6b494f55d42e39acdde897193780dd1e76"
   integrity sha512-1oDFsjgfEUStb7zTOo7NutBSt1L5OvaNPC9VUR8qvEqkQ31PfYmvBeIo5OEm9uHfvageUBcVS862jz9jn2PDvg==
 
-"@guardian/source-react-components@^9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-9.1.1.tgz#7e9c7fab80b0faa4d4cd48a6156d07d6a5326dd0"
-  integrity sha512-TfxTVcG3sYPIOdKhMbtL9Jpac060Jjyxmnq0Yk57NdNv/a8uDhIRmJG7HAeObpKmzCIXTwMIzjQe5sj0zgFGCQ==
+"@guardian/source-react-components@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-9.1.2.tgz#2afe6b660773449ffbedbaa74f2fc1a79cb7c3f8"
+  integrity sha512-cBw9vj9K8UrHrqAARI11fv81hnHQB4fIVVsCUhuzl/J2nvoUCicA4mo4mBl23TtlMRo+mmD+N9dn9HiZYiW95Q==
 
 "@guardian/src-foundations@^3.5.0":
   version "3.12.0"
