@@ -55,6 +55,10 @@ Cypress.Commands.add('allowAllConsent', () => {
 });
 
 Cypress.Commands.add('hydrate', () => {
+	// force all islands to trigger in case Cypress cannot find the scroll position
+	cy.scrollTo('bottom', { duration: 1000 });
+	cy.scrollTo('top', { duration: 1000 });
+	// individually wait for all islands to hydrate
 	return cy
 		.get('gu-island')
 		.each((el) => {
