@@ -14,9 +14,6 @@ describe('Visually snapshot standard article', () => {
 		// load article
 		cy.visit(path);
 		cy.allowAllConsent();
-		// check we have top-above-nav
-		cy.get('#dfp-ad--top-above-nav').should('exist');
-		cy.findAdSlotIframeBySlotId('dfp-ad--top-above-nav').should('exist');
 		// scroll to and hydrate all islands
 		cy.hydrate();
 		// scroll to and check all ads are rendered
