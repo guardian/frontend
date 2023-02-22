@@ -28,7 +28,7 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
       completionMatcher = completionMatcher,
       failureMatcher = failureMatcher,
       bufferSize = 1024,
-      overflowStrategy = OverflowStrategy.dropNew,
+      overflowStrategy = OverflowStrategy.dropTail,
     )
     .throttle(1, 500.millisecond, 1, ThrottleMode.Shaping)
     .to(Sink.actorRef(self, NotUsed, t => Failure(t)))
