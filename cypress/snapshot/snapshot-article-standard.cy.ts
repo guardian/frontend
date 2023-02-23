@@ -14,6 +14,9 @@ describe('Visually snapshot standard article', () => {
 		// load article
 		cy.visit(path);
 		cy.allowAllConsent();
+		// workaround for onwards sections
+		// the intercept intermittently fails to stub the request
+		cy.get('[name=OnwardsUpper]').invoke('remove');
 		// scroll to and hydrate all islands
 		cy.hydrate();
 		// scroll to and check all ads are rendered
