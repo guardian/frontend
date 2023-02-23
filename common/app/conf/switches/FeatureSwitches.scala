@@ -512,9 +512,9 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
-  val PersonaliseSignInAfterCheckout = Switch(
+  val PersonaliseSignInAfterCheckoutGate = Switch(
     SwitchGroup.Feature,
-    "personalise-sign-in-after-checkout",
+    "personalise-sign-in-after-checkout-gate",
     "When ON, the sign in gate shows a personalised message to subscribers and supporters",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = On,
