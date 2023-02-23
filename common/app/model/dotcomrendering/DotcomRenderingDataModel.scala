@@ -107,6 +107,8 @@ case class DotcomRenderingDataModel(
     lang: Option[String],
     isRightToLeftLang: Boolean,
     capiContent: CAPIContent,
+    lang: Option[String],
+    isRightToLeftLang: Boolean,
 )
 
 object DotcomRenderingDataModel {
@@ -201,6 +203,8 @@ object DotcomRenderingDataModel {
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
         "capiContent" -> contentApiToJsonValue(model.capiContent),
+        "lang" -> model.lang,
+        "isRightToLeftLang" -> model.isRightToLeftLang,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -596,6 +600,8 @@ object DotcomRenderingDataModel {
       lang = content.fields.lang,
       isRightToLeftLang = content.fields.isRightToLeftLang,
       capiContent = content.apiContent,
+      lang = content.fields.lang,
+      isRightToLeftLang = content.fields.isRightToLeftLang,
     )
   }
 }
