@@ -1,3 +1,4 @@
+import { storage } from '@guardian/libs';
 import { getStage, getTestUrl } from '../lib/util';
 import { stubApiRequests } from '../lib/stubApiRequests';
 import '@percy/cypress';
@@ -11,6 +12,8 @@ describe('Visually snapshot standard article', () => {
 		);
 		// stub all api requests
 		stubApiRequests();
+		// force geolocation to UK
+		storage.local.set('gu.geo.override', 'GB');
 		// load article
 		cy.visit(path);
 		cy.allowAllConsent();
