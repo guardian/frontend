@@ -19,7 +19,7 @@ object HostedMetadata {
     val productionOffice = item.fields.flatMap(_.productionOffice.map(_.name)).getOrElse("")
     val owner = {
       val hostedTag = item.tags.find(_.paidContentType.contains("HostedContent"))
-      val sponsorship = hostedTag.flatMap(_.activeSponsorships).map(_.head)
+      val sponsorship = hostedTag.flatMap(_.activeSponsorships).flatMap(_.headOption)
       sponsorship.map(_.sponsorName).getOrElse("")
     }
 
