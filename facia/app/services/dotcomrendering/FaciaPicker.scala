@@ -4,6 +4,8 @@ import common.GuLogging
 import experiments.{ActiveExperiments, DCRFronts}
 import implicits.Requests._
 import model.PressedPage
+import model.facia.PressedCollection
+import model.pressed.{LatestSnap, LinkSnap}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -99,6 +101,18 @@ object FrontChecks {
     )
   }
 
+  def hasNoSnapLinkCards(faciaPage: PressedPage): Boolean = {
+    def containsSnapLink(collection: PressedCollection) = {
+      collection.curated.exists(card =>
+        card match {
+          case _: LinkSnap => true
+          case _           => false
+        },
+      )
+    }
+    !faciaPage.collections.exists(collection => containsSnapLink(collection))
+  }
+
 }
 
 object FaciaPicker extends GuLogging {
@@ -112,6 +126,7 @@ object FaciaPicker extends GuLogging {
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
       ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
+      ("hasNoSnapLinkCards", FrontChecks.hasNoSnapLinkCards(faciaPage)),
     )
   }
 
