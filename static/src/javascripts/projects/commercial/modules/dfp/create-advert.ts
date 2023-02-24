@@ -18,14 +18,17 @@ const createAdvert = (
 		}`;
 
 		log('commercial', errMsg);
-		reportError(
-			new Error(errMsg),
-			{
-				feature: 'commercial',
-			},
-			false,
-			1 / 100,
-		);
+
+		if (!navigator.userAgent.includes('DuckDuckGo')) {
+			reportError(
+				new Error(errMsg),
+				{
+					feature: 'commercial',
+				},
+				false,
+				1 / 100,
+			);
+		}
 
 		return null;
 	}
