@@ -32,7 +32,7 @@ object DCRFronts
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc0A,
+      participationGroup = Perc1C,
     )
 
 object OfferHttp3
