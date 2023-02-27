@@ -54,11 +54,6 @@
   "../projects/common/modules/commercial/user-features.ts"
  ],
  "../projects/commercial/am-i-used.ts": [],
- "../projects/commercial/modules/ad-free-slot-remove.ts": [
-  "../../../../node_modules/@types/lodash-es/index.d.ts",
-  "../projects/commercial/modules/remove-slots.ts",
-  "../projects/common/modules/commercial/commercial-features.ts"
- ],
  "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts": [
   "../../../../node_modules/@guardian/commercial-core/dist/cjs/index.d.ts",
   "../../../../node_modules/@guardian/libs/cjs/index.d.ts",
@@ -679,7 +674,6 @@
   "../lib/report-error.ts",
   "../lib/robust.ts",
   "../projects/commercial/adblock-ask.ts",
-  "../projects/commercial/modules/ad-free-slot-remove.ts",
   "../projects/commercial/modules/ad-verification/prepare-ad-verification.ts",
   "../projects/commercial/modules/article-aside-adverts.ts",
   "../projects/commercial/modules/article-body-adverts.ts",
