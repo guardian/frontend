@@ -17,13 +17,13 @@ describe('Visually snapshot long read article', () => {
 		// load article
 		cy.visit(path);
 		cy.allowAllConsent();
-		// workaround for onwards sections
-		// the intercept intermittently fails to stub the request
-		cy.get('[name=OnwardsUpper]').invoke('remove');
 		// scroll to and hydrate all islands
 		cy.hydrate();
 		// scroll to and check all ads are rendered
 		cy.checkAdsRendered();
+		// workaround for onwards sections
+		// the intercept intermittently fails to stub the request
+		cy.get('[name=OnwardsUpper]').invoke('remove');
 		// snapshot
 		cy.percySnapshot('article-long-read', {
 			widths: [320, 740, 1300],
