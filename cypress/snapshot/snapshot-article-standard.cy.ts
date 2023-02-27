@@ -7,7 +7,7 @@ describe('Visually snapshot standard article', () => {
 	it(`snapshots standard article`, () => {
 		const path = getTestUrl(
 			getStage(),
-			'/politics/2022/feb/10/keir-starmer-says-stop-the-war-coalition-gives-help-to-authoritarians-like-putin',
+			'commentisfree/2023/feb/27/dont-believe-those-who-claim-science-proves-masks-dont-work',
 			{ isDcr: true },
 		);
 		// stub all api requests
