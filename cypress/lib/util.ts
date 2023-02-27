@@ -27,7 +27,7 @@ export const getTestUrl = (
 		default: {
 			// The local bundle can be served from DCR by using COMMERCIAL_BUNDLE_URL when starting DCR to test changes locally without needing to launch frontend
 			if (isDcr) {
-				url = `http://localhost:3030/Article?url=https://theguardian.com${path}`;
+				url = `http://localhost:3030/Article/https://theguardian.com${path}`;
 			} else {
 				url = `http://localhost:9000${path}`;
 			}
