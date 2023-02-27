@@ -84,7 +84,7 @@ Cypress.Commands.add('hydrate', () => {
 			cy.scrollTo('top');
 			// Additional wait to ensure layout shift has completed post hydration
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
-			cy.wait(5000);
+			cy.wait(10000);
 		});
 });
 
@@ -106,7 +106,7 @@ Cypress.Commands.add('checkAdsRendered', () => {
 			cy.scrollTo('top');
 			// Additional wait to ensure layout shift has completed post hydration
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
-			cy.wait(5000);
+			cy.wait(10000);
 		});
 });
 
