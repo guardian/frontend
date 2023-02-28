@@ -14,6 +14,7 @@ case class CalloutFormFieldBase(
     description: Option[String],
     required: Boolean,
     hideLabel: Boolean,
+    hidden: Boolean,
     label: String,
 ) extends CalloutFormField
 case class CalloutFormFieldRadio(
@@ -23,6 +24,7 @@ case class CalloutFormFieldRadio(
     description: Option[String],
     required: Boolean,
     hideLabel: Boolean,
+    hidden: Boolean,
     label: String,
     options: JsArray,
 ) extends CalloutFormField
@@ -33,6 +35,7 @@ case class CalloutFormFieldCheckbox(
     description: Option[String],
     required: Boolean,
     hideLabel: Boolean,
+    hidden: Boolean,
     label: String,
     options: JsArray,
 ) extends CalloutFormField
@@ -43,6 +46,7 @@ case class CalloutFormFieldSelect(
     description: Option[String],
     required: Boolean,
     hideLabel: Boolean,
+    hidden: Boolean,
     label: String,
     options: JsArray,
 ) extends CalloutFormField
@@ -85,7 +89,8 @@ object CalloutExtraction {
       hideLabel <- (item \ "hide_label").asOpt[String]
       label <- (item \ "label").asOpt[String]
     } yield {
-      CalloutFormFieldBase(id, type_, name, description, required == "1", hideLabel == "1", label)
+      val hidden = (item \ "hidden").asOpt[String].getOrElse("0")
+      CalloutFormFieldBase(id, type_, name, description, required == "1", hideLabel == "1", hidden == "1", label)
     }
   }
 
@@ -100,7 +105,18 @@ object CalloutExtraction {
       label <- (item \ "label").asOpt[String]
       options <- (item \ "options").asOpt[JsArray]
     } yield {
-      CalloutFormFieldRadio(id, type_, name, description, required == "1", hideLabel == "1", label, options)
+      val hidden = (item \ "hidden").asOpt[String].getOrElse("0")
+      CalloutFormFieldRadio(
+        id,
+        type_,
+        name,
+        description,
+        required == "1",
+        hideLabel == "1",
+        hidden == "1",
+        label,
+        options,
+      )
     }
   }
 
@@ -115,7 +131,18 @@ object CalloutExtraction {
       label <- (item \ "label").asOpt[String]
       options <- (item \ "options").asOpt[JsArray]
     } yield {
-      CalloutFormFieldCheckbox(id, type_, name, description, required == "1", hideLabel == "1", label, options)
+      val hidden = (item \ "hidden").asOpt[String].getOrElse("0")
+      CalloutFormFieldCheckbox(
+        id,
+        type_,
+        name,
+        description,
+        required == "1",
+        hideLabel == "1",
+        hidden == "1",
+        label,
+        options,
+      )
     }
   }
 
@@ -130,7 +157,18 @@ object CalloutExtraction {
       label <- (item \ "label").asOpt[String]
       options <- (item \ "options").asOpt[JsArray]
     } yield {
-      CalloutFormFieldSelect(id, type_, name, description, required == "1", hideLabel == "1", label, options)
+      val hidden = (item \ "hidden").asOpt[String].getOrElse("0")
+      CalloutFormFieldSelect(
+        id,
+        type_,
+        name,
+        description,
+        required == "1",
+        hideLabel == "1",
+        hidden == "1",
+        label,
+        options,
+      )
     }
   }
 
