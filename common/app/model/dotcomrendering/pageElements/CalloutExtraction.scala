@@ -143,6 +143,8 @@ object CalloutExtraction {
       case Some("radio")    => formFieldItemToCalloutFormFieldRadio(item: JsValue)
       case Some("checkbox") => formFieldItemToCalloutFormFieldCheckbox(item: JsValue)
       case Some("select")   => formFieldItemToCalloutFormFieldSelect(item: JsValue)
+      case Some("email")    => formFieldItemToCalloutFormFieldBase(item)
+      case Some("phone")    => formFieldItemToCalloutFormFieldBase(item)
       case _                => None
     }
   }
