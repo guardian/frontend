@@ -111,18 +111,6 @@ case class DotcomRenderingDataModel(
 
 object DotcomRenderingDataModel {
 
-  // we Json.parse this into a JsValue to ensure we get the raw JSON
-  // from the Content API rather than a Json.stringified version
-  private def contentApiToJsonValue(apiContent: CAPIContent): JsValue = {
-    val protocolFactory = new TSimpleJSONProtocol.Factory
-
-    val buffer = new java.io.ByteArrayOutputStream
-    val protocol = protocolFactory.getProtocol(new TIOStreamTransport(buffer))
-
-    CAPIContent.encode(apiContent, protocol)
-    Json.parse(new String(buffer.toByteArray, "UTF-8"))
-  }
-
   implicit val pageElementWrites = PageElement.pageElementWrites
   implicit val apiContentWrites = new Writes[CAPIContent] {
     def writes(model: CAPIContent) = {
@@ -217,6 +205,18 @@ object DotcomRenderingDataModel {
 
       ElementsEnhancer.enhanceDcrObject(obj)
     }
+  }
+
+  // we Json.parse this into a JsValue to ensure we get the raw JSON
+  // from the Content API rather than a Json.stringified version
+  private def contentApiToJsonValue(apiContent: CAPIContent): JsValue = {
+    val protocolFactory = new TSimpleJSONProtocol.Factory
+
+    val buffer = new java.io.ByteArrayOutputStream
+    val protocol = protocolFactory.getProtocol(new TIOStreamTransport(buffer))
+
+    CAPIContent.encode(apiContent, protocol)
+    Json.parse(new String(buffer.toByteArray, "UTF-8"))
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {
