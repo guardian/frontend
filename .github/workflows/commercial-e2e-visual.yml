@@ -1,14 +1,14 @@
 name: Commercial E2E Visual Tests
-on:
-    pull_request:
-        paths:
-            - static/src/javascripts/projects/common/modules/commercial/**
-            - static/src/javascripts/projects/commercial/**
-            - static/src/javascripts/projects/common/modules/spacefinder-*
-            - commercial/**
-            - cypress/**
-            - cypress.config.ts
-            - .github/workflows/commercial-e2e-visual.yml
+on: workflow_dispatch
+    # pull_request:
+    #     paths:
+    #         - static/src/javascripts/projects/common/modules/commercial/**
+    #         - static/src/javascripts/projects/commercial/**
+    #         - static/src/javascripts/projects/common/modules/spacefinder-*
+    #         - commercial/**
+    #         - cypress/**
+    #         - cypress.config.ts
+    #         - .github/workflows/commercial-e2e-visual.yml
 
 concurrency:
     group: 'commercial-e2e-visual-${{ github.head_ref }}'
