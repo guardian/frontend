@@ -134,7 +134,7 @@ describe('tcfv2 consent', () => {
 
 		expectAdFree([AdFreeCookieReasons.ConsentOptOut]);
 
-		cy.get(`[data-name="top-above-nav"]`).should('not.exist');
+		cy.get(`[data-name="top-above-nav"]`).should('be.hidden');
 
 		// Check the header still shows support message
 		cy.get('[name="SupportTheG"]')
