@@ -76,11 +76,6 @@ const dcrWebpackBundler = webpack(require('../webpack.config.dcr.dev.js'));
 
 dcrWebpackBundler.watch(...watchArguments);
 
-// Watch changes to the standalone commercial bundle
-const commercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
-
-commercialWebpackBundler.watch(...watchArguments);
-
 // ********************************** Sass **********************************
 
 const chokidar = require('chokidar');
