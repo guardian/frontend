@@ -23,6 +23,7 @@ describe('Visually snapshot standard article', () => {
 		cy.checkAdsRendered();
 		// workaround for onwards sections
 		// the intercept intermittently fails to stub the request
+		cy.get('section:has(gu-island[name="Carousel"])').invoke('remove');
 		cy.get('[name=OnwardsUpper]').invoke('remove');
 		// snapshot
 		cy.percySnapshot('article-standard', {

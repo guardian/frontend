@@ -100,7 +100,7 @@ Cypress.Commands.add('checkAdsRendered', () => {
 				});
 			// Additional wait to ensure visbility has triggered
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
-			cy.wait(2500);
+			cy.wait(2000);
 		})
 		.then(() => {
 			cy.scrollTo('top');
