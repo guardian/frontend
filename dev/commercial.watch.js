@@ -69,10 +69,6 @@ mainWebpackBundler.run(() => {
     console.log(chalk.blue('initial frontend bundle created, only watching commercial now'))
 });
 
-const CommercialWebpackBundler = webpack(require('../webpack.config.commercial.dev.js'));
-
-CommercialWebpackBundler.watch(...watchArguments);
-
 // ********************************** Sass **********************************
 
 const chokidar = require('chokidar');
