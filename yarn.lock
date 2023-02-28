@@ -2760,6 +2760,93 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@npmcli/fs@^1.0.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@npmcli/fs/-/fs-1.1.1.tgz#72f719fe935e687c56a4faecf3c03d06ba593257"
+  integrity sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ==
+  dependencies:
+    "@gar/promisify" "^1.0.1"
+    semver "^7.3.5"
+
+"@npmcli/move-file@^1.0.1":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@npmcli/move-file/-/move-file-1.1.2.tgz#1a82c3e372f7cae9253eb66d72543d6b8685c674"
+  integrity sha512-1SUf/Cg2GzGDyaf15aR9St9TWlb+XvbZXWpDx8YKs7MLzMH/BCeopv+y9vzrzgkfykCGuWOlSu3mZhj2+FQcrg==
+  dependencies:
+    mkdirp "^1.0.4"
+    rimraf "^3.0.2"
+
+"@octokit/auth-token@^3.0.0":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@octokit/auth-token/-/auth-token-3.0.3.tgz#ce7e48a3166731f26068d7a7a7996b5da58cbe0c"
+  integrity sha512-/aFM2M4HVDBT/jjDBa84sJniv1t9Gm/rLkalaz9htOm+L+8JMj1k9w0CkUdcxNyNxZPlTxKPVko+m1VlM58ZVA==
+  dependencies:
+    "@octokit/types" "^9.0.0"
+
+"@octokit/core@^4.0.5":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@octokit/core/-/core-4.2.0.tgz#8c253ba9605aca605bc46187c34fcccae6a96648"
+  integrity sha512-AgvDRUg3COpR82P7PBdGZF/NNqGmtMq2NiPqeSsDIeCfYFOZ9gddqWNQHnFdEUf+YwOj4aZYmJnlPp7OXmDIDg==
+  dependencies:
+    "@octokit/auth-token" "^3.0.0"
+    "@octokit/graphql" "^5.0.0"
+    "@octokit/request" "^6.0.0"
+    "@octokit/request-error" "^3.0.0"
+    "@octokit/types" "^9.0.0"
+    before-after-hook "^2.2.0"
+    universal-user-agent "^6.0.0"
+
+"@octokit/endpoint@^7.0.0":
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-7.0.5.tgz#2bb2a911c12c50f10014183f5d596ce30ac67dd1"
+  integrity sha512-LG4o4HMY1Xoaec87IqQ41TQ+glvIeTKqfjkCEmt5AIwDZJwQeVZFIEYXrYY6yLwK+pAScb9Gj4q+Nz2qSw1roA==
+  dependencies:
+    "@octokit/types" "^9.0.0"
+    is-plain-object "^5.0.0"
+    universal-user-agent "^6.0.0"
+
+"@octokit/graphql@^5.0.0":
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/@octokit/graphql/-/graphql-5.0.5.tgz#a4cb3ea73f83b861893a6370ee82abb36e81afd2"
+  integrity sha512-Qwfvh3xdqKtIznjX9lz2D458r7dJPP8l6r4GQkIdWQouZwHQK0mVT88uwiU2bdTU2OtT1uOlKpRciUWldpG0yQ==
+  dependencies:
+    "@octokit/request" "^6.0.0"
+    "@octokit/types" "^9.0.0"
+    universal-user-agent "^6.0.0"
+
+"@octokit/openapi-types@^16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-16.0.0.tgz#d92838a6cd9fb4639ca875ddb3437f1045cc625e"
+  integrity sha512-JbFWOqTJVLHZSUUoF4FzAZKYtqdxWu9Z5m2QQnOyEa04fOFljvyh7D3GYKbfuaSWisqehImiVIMG4eyJeP5VEA==
+
+"@octokit/request-error@^3.0.0":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@octokit/request-error/-/request-error-3.0.3.tgz#ef3dd08b8e964e53e55d471acfe00baa892b9c69"
+  integrity sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==
+  dependencies:
+    "@octokit/types" "^9.0.0"
+    deprecation "^2.0.0"
+    once "^1.4.0"
+
+"@octokit/request@^6.0.0":
+  version "6.2.3"
+  resolved "https://registry.yarnpkg.com/@octokit/request/-/request-6.2.3.tgz#76d5d6d44da5c8d406620a4c285d280ae310bdb4"
+  integrity sha512-TNAodj5yNzrrZ/VxP+H5HiYaZep0H3GU0O7PaF+fhDrt8FPrnkei9Aal/txsN/1P7V3CPiThG0tIvpPDYUsyAA==
+  dependencies:
+    "@octokit/endpoint" "^7.0.0"
+    "@octokit/request-error" "^3.0.0"
+    "@octokit/types" "^9.0.0"
+    is-plain-object "^5.0.0"
+    node-fetch "^2.6.7"
+    universal-user-agent "^6.0.0"
+
+"@octokit/types@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-9.0.0.tgz#6050db04ddf4188ec92d60e4da1a2ce0633ff635"
+  integrity sha512-LUewfj94xCMH2rbD5YJ+6AQ4AVjFYTgpp6rboWM5T7N3IsIF65SBEOVcYMGAEzO/kKNiNaW4LoWtoThOhH06gw==
+  dependencies:
+    "@octokit/openapi-types" "^16.0.0"
+
 "@percy/cli-app@1.20.0":
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/@percy/cli-app/-/cli-app-1.20.0.tgz#6822396655d013abac27f45b6b8d09b04926e93f"
@@ -12506,7 +12593,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-"prebid.js@github:guardian/prebid.js#2e3b96d":
+prebid.js@guardian/prebid.js#2e3b96d:
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
