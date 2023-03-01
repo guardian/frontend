@@ -2284,10 +2284,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-8.1.3.tgz#47adc4892716904a62afa62da66f31eae059d56b"
   integrity sha512-Tol4O7A3ErmzgCd9YtkajJUfCps/1RCNXhtaUBwgT8u0OUPRmfk4jjD7cS3nok5gDTEUVemKwT2yysx1CxfWaw==
 
-"@guardian/commercial-bundle@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-1.2.1.tgz#dff9627b10a61632a896360fe30448149fe0b556"
-  integrity sha512-eywyAIttsIR8kEHRqF0InVYqPw2UDyJ/19yj3XdaajGgKV+zphOqmEMMFDiMRZxgv8kY7yFVw5SpeUJZ4V8Z4Q==
+"@guardian/commercial-bundle@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-1.2.2.tgz#9ba9642c298b2e25002b012be0f42c23ff85b68d"
+  integrity sha512-ziiqPjmXsp0gor1xy1EGdy8082d19BRLlwoOYq9NhjMHIATeI79H30E91+EmR0RcE8eUWKDbW0qkNX8nUT7adQ==
   dependencies:
     "@guardian/ab-core" "^2.0.0"
     "@guardian/commercial-core" "^5.3.0"
@@ -2307,8 +2307,6 @@
     prebid.js guardian/prebid.js#2e3b96d
     process "^0.11.10"
     raven-js "^3.27.2"
-    raw-loader "^4.0.2"
-    svg-loader "^0.0.2"
     tslib "^2.4.1"
     web-vitals "^2.1.2"
     wolfy87-eventemitter "^5.2.9"
@@ -12970,14 +12968,6 @@ raw-loader@^0.5.1:
   resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
   integrity sha1-DD0L6u2KAclm2Xh793goElKpeao=
 
-raw-loader@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-4.0.2.tgz#1aac6b7d1ad1501e66efdac1522c73e59a584eb6"
-  integrity sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-
 rc@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
@@ -14758,11 +14748,6 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
-
-svg-loader@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/svg-loader/-/svg-loader-0.0.2.tgz#601ab2fdaa1dadae3ca9975b550de92a07e1d92b"
-  integrity sha512-otmaUALijTGJJpvPVTHhHIzseEsrB7DyJJxygb0XkiZPeJT9t+PiK7tDT9YWSUDqHqqqutTqF0ldXth/+T72wg==
 
 svgo@^2.3.0:
   version "2.8.0"
