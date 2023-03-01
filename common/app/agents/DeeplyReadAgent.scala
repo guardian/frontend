@@ -77,6 +77,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
     val contentFormat: ContentFormat = ContentFormat(content.design, content.theme, content.display)
 
+    val faciaContentVersion = FaciaContentConvert.contentToFaciaContent(content)
+
     for {
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
@@ -105,7 +107,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       starRating = None,
       avatarUrl = None,
       branding = None,
-      discussion = DiscussionSettings.fromTrail(FaciaContentConvert.contentToFaciaContent(content)),
+      discussion = DiscussionSettings.fromTrail(faciaContentVersion),
+      showQuotedHeadline = faciaContentVersion.display.showQuotedHeadline,
     )
   }
 

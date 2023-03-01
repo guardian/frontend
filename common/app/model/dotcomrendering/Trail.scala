@@ -33,6 +33,7 @@ case class Trail(
     avatarUrl: Option[String],
     branding: Option[Branding],
     discussion: DiscussionSettings,
+    showQuotedHeadline: Boolean,
 )
 
 object Trail {
@@ -133,6 +134,7 @@ object Trail {
       avatarUrl = contentCardToAvatarUrl(contentCard),
       branding = contentCard.branding,
       discussion = contentCard.discussionSettings,
+      showQuotedHeadline = contentCard.displaySettings.showQuotedHeadline,
     )
   }
 
@@ -168,6 +170,7 @@ object Trail {
       avatarUrl = None,
       branding = content.branding(Edition(request)),
       discussion = DiscussionSettings.fromTrail(content),
+      showQuotedHeadline = content.display.showQuotedHeadline,
     )
   }
 }
