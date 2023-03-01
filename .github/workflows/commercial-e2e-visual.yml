@@ -1,0 +1,92 @@
+name: Commercial E2E Visual Tests
+on: workflow_dispatch
+    # pull_request:
+    #     paths:
+    #         - static/src/javascripts/projects/common/modules/commercial/**
+    #         - static/src/javascripts/projects/commercial/**
+    #         - static/src/javascripts/projects/common/modules/spacefinder-*
+    #         - commercial/**
+    #         - cypress/**
+    #         - cypress.config.ts
+    #         - .github/workflows/commercial-e2e-visual.yml
+
+concurrency:
+    group: 'commercial-e2e-visual-${{ github.head_ref }}'
+    cancel-in-progress: true
+
+jobs:
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        steps:
+            # Frontend
+            - name: Checkout frontend
+              uses: actions/checkout@v3
+              with:
+                  path: ./frontend
+
+            - name: Setup frontend node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: './frontend/.nvmrc'
+
+            - name: Install Frontend dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./frontend
+
+            # DCR
+            - name: Checkout DCR
+              uses: actions/checkout@v3
+              with:
+                  repository: guardian/dotcom-rendering
+                  path: ./dcr
+
+            - name: Setup DCR node
+              uses: actions/setup-node@v3
+              with:
+                  node-version-file: './dcr/.nvmrc'
+
+            - name: Install DCR dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: ./dcr
+
+            - name: Build DCR
+              run: make build
+              working-directory: ./dcr/dotcom-rendering
+
+            - name: Start Commercial server
+              run: make commercial-dev & npx wait-on -v -i 1000 http://localhost:3031/graun.standalone.commercial.js
+              working-directory: ./frontend
+
+            - name: Start DCR server
+              run: make start-ci & npx wait-on -v -i 1000 http://localhost:3030
+              working-directory: ./dcr/dotcom-rendering
+              env:
+                  PORT: 3030
+                  COMMERCIAL_BUNDLE_URL: http://localhost:3031/graun.standalone.commercial.js
+
+            - name: Run Percy Visual Regression Tests
+              run: yarn cypress:run:snapshot
+              working-directory: ./frontend
+              env:
+                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
+            - name: Wait for Percy Snapshots
+              run: yarn percy build:wait --verbose --fail-on-changes --project ced09b1a/commercial --commit ${{ github.event.pull_request.head.sha }} --timeout 900000 --interval 5000
+              working-directory: ./frontend
+              env:
+                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
+            - uses: actions/upload-artifact@v2
+              if: always()
+              with:
+                  name: cypress-videos
+                  path: frontend/cypress/videos
+
+            - uses: actions/upload-artifact@v2
+              if: failure()
+              with:
+                  name: cypress-screenshots
+                  path: frontend/cypress/screenshots

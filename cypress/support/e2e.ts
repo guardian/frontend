@@ -34,6 +34,8 @@ declare global {
 			hydrate(): Chainable<JQuery<HTMLElement>>;
 
 			useConsentedSession(name: string): void;
+
+			checkAdsRendered(): void;
 		}
 
 		/**

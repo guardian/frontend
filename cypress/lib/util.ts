@@ -12,7 +12,7 @@ export const getTestUrl = (
 	stage: 'code' | 'prod' | 'dev',
 	path: string,
 	{ isDcr } = { isDcr: false },
-	adtest = 'fixed-puppies',
+	adtest = 'fixed-puppies-ci',
 ) => {
 	let url = '';
 	switch (stage) {
@@ -37,6 +37,8 @@ export const getTestUrl = (
 	if (adtest) {
 		const builder = new URL(url);
 		builder.searchParams.append('adtest', adtest);
+		// force an invalid epic so it is not shown
+		builder.searchParams.append('force-epic', '9999:CONTROL');
 		url = builder.toString();
 	}
 	return url;
