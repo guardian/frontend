@@ -426,6 +426,7 @@ interface HeaderNotification {
 	message: string;
 	ophanLabel: string;
 	logImpression: () => void;
+	logClick: () => void;
 }
 interface Window {
 	// eslint-disable-next-line id-denylist -- this *is* the guardian object

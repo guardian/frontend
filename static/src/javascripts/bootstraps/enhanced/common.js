@@ -275,7 +275,10 @@ const initialiseHeaderNotifications = (brazeCardsPromise) => {
                     ophanLabel: card.extras.ophanLabel,
                     logImpression: () => {
                         card.logImpression();
-                    }
+                    },
+                    logClick: () => {
+                        card.logCardClick();
+                    },
                 };
         })
 

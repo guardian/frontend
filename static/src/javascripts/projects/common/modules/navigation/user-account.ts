@@ -56,10 +56,12 @@ const trackNotificationsInsert = (ophanComponent: OphanComponent): void => {
 
 const setupTrackNotificationsClick = (
 	el: Element,
+	notifications: HeaderNotification[],
 	ophanComponent: OphanComponent,
 ): void => {
 	el.addEventListener('click', () => {
 		submitClickEvent({ component: ophanComponent });
+		notifications.forEach((n) => n.logClick());
 	});
 };
 
@@ -185,6 +187,7 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 								);
 								setupTrackNotificationsClick(
 									menuItem,
+									notifications,
 									ophanComponent,
 								);
 								addTrackingToLink(menuItem, ophanComponent);
