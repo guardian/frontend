@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
       PoorDeviceConnectivity,
+      FastlyNextGenWAF,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -83,3 +84,13 @@ object PoorDeviceConnectivity
     ) {
   override val extraHeader = Some(ExperimentHeader("X-GU-Poor-Device-Connectivity", "true"))
 }
+
+object FastlyNextGenWAF
+    extends Experiment(
+      name = "fastly-next-gen-waf",
+      description =
+        "We're using a participation group that we don't want other people to use. The experiment is used as a placeholder because the actual switch is happening at the Fastly level. PR here: https://github.com/guardian/fastly-edge-cache/pull/966",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc10A,
+    )
