@@ -101,16 +101,24 @@ object FrontChecks {
     )
   }
 
-  def hasNoSnapLinkCards(faciaPage: PressedPage): Boolean = {
-    def containsSnapLink(collection: PressedCollection) = {
+  def hasNoUnsupportedSnapLinkCards(faciaPage: PressedPage): Boolean = {
+    def containsUnsupportedSnapLink(collection: PressedCollection) = {
       collection.curated.exists(card =>
         card match {
+          case card: LinkSnap if card.properties.embedType.contains("link") => false
+          // We don't support interactive embeds yet
+          case card: LinkSnap if card.properties.embedType.contains("interactive") => true
+          // We don't support json.html embeds yet
+          case card: LinkSnap if card.properties.embedType.contains("json.html") => true
+          // Because embedType is typed as Option[String] it's hard to know whether we've
+          // identified all possible embedTypes. If it's an unidentified embedType then
+          // assume we can't render it.
           case _: LinkSnap => true
           case _           => false
         },
       )
     }
-    !faciaPage.collections.exists(collection => containsSnapLink(collection))
+    !faciaPage.collections.exists(collection => containsUnsupportedSnapLink(collection))
   }
 
 }
@@ -126,7 +134,7 @@ object FaciaPicker extends GuLogging {
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
       ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
-      ("hasNoSnapLinkCards", FrontChecks.hasNoSnapLinkCards(faciaPage)),
+      ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
     )
   }
 
