@@ -20,6 +20,7 @@ describe('bufferedNotificationListener', () => {
 				message: 'Your card has expired',
 				ophanLabel: 'settings-label',
 				logImpression: noOp,
+				logClick: noOp,
 			},
 		];
 
@@ -42,6 +43,7 @@ describe('bufferedNotificationListener', () => {
 					message: 'Your card has expired',
 					ophanLabel: 'settings-label',
 					logImpression: noOp,
+					logClick: noOp,
 				},
 			];
 			bufferedNotificationListener.emit(notifications);
