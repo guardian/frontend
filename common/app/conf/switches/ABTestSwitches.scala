@@ -68,7 +68,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-elements-manager",
-    "Show billboard adverts in merchandising slots to browsers in the variant",
+    "Test serving GEM assets in ad slots on page",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 6, 30)),
