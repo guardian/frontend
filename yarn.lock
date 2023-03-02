@@ -2392,10 +2392,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
   integrity sha512-OdWReBHRWhdbErVmS15hihVzlkdU8DkKrjDsUIN0P8QZiF4twuzcU3qsPwto2UfibAwPkWqKkNwH1k8b6xNclA==
 
-"@guardian/libs@^13.1.0":
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-13.1.0.tgz#5a7a0ec9e2d432fc3176884072b9c7c22a00a95b"
-  integrity sha512-iffG2zIDmMtIHSesClxmimZIwAce3IBbSEihX0IRK65Lm2TSIfsb8ZRFRsMYDW+GE2h3yKFuU8tqVKvQXpzXQg==
+"@guardian/libs@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-14.0.0.tgz#07022b652430a1c5d6b16f8aa105ae3d73da4e7c"
+  integrity sha512-rB4h4FlD3EcoCY66f3xjO7alnXiimPOynL9znvX/xP2nAVpG4UyedJnIpupw4KPqJuB0lZMih6EeXq0a1XnI3w==
 
 "@guardian/libs@^7.1.4":
   version "7.1.4"
