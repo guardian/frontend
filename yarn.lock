@@ -2284,10 +2284,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-10.0.0.tgz#9ff9f6e3cfb681f309808c6e47d0e2cf1a012650"
   integrity sha512-cpR3NBmZrUfCvUlBphbVelLAgcuVth4Lo7M1Ohk7dhfgFrocrie/oQT1ZOWX6a90DuAEQZuKTlebmbHJ0XlFcQ==
 
-"@guardian/commercial-bundle@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-1.3.0.tgz#07b6d628d528218b6bbedf11ec33c1f55a196fd4"
-  integrity sha512-ShXVwOlUmn1/w5aTet7EOsm6XMoWK2uLRcW6PNeFrbbDcGv+da7cIO7S2sMruCWIEjVBFFYRGh8qHaMvFO7b4g==
+"@guardian/commercial-bundle@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-1.4.0.tgz#7653958f38bc90325f4686cf870451e55ddf9904"
+  integrity sha512-Y8FA4+fxbRilCj0S+2MDDyrm0usDUtQgF7wV3bcxDodDNefQsHvzf7vSQF3uSdtpYSNzPsSkTQTQt7u9DOI1Xg==
   dependencies:
     "@guardian/ab-core" "^2.0.0"
     "@guardian/commercial-core" "^5.3.0"
@@ -2296,7 +2296,7 @@
     "@guardian/eslint-config-typescript" "^3.0.0"
     "@guardian/libs" "^10.0.0"
     "@guardian/prettier" "^2.1.1"
-    "@guardian/source-foundations" "^7.0.1"
+    "@guardian/source-foundations" "^9.0.0"
     "@guardian/support-dotcom-components" "^1.0.7"
     "@octokit/core" "^4.0.5"
     csstype "^3.1.1"
@@ -2413,13 +2413,6 @@
   integrity sha512-o35TxvMFfpQTGL6flW0ggIfU4tPlXp0PqY9vPL2Fx+68qy+s+uX4T0+dN3+JeoBad9QrRZoHfZPALvZlrRWfHw==
   dependencies:
     tslib "^2.0.0"
-
-"@guardian/source-foundations@^7.0.1":
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-7.0.3.tgz#2d30d8a76ac1a5382774bbaaaa39a84551d4709d"
-  integrity sha512-XDShUQ1MvQlTaa1Va+QbLSjHA2hg/lBhfoP31wQAFd0mqpGeCjGnwI6snSX31EdpkniLqJH4Y7gGcOsZ1SqtQg==
-  dependencies:
-    mini-svg-data-uri "1.4.4"
 
 "@guardian/source-foundations@^9.0.0":
   version "9.0.1"
@@ -12598,7 +12591,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-prebid.js@guardian/prebid.js#2e3b96d:
+"prebid.js@github:guardian/prebid.js#2e3b96d":
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
