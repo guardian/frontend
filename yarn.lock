@@ -2279,10 +2279,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-8.1.3.tgz#47adc4892716904a62afa62da66f31eae059d56b"
-  integrity sha512-Tol4O7A3ErmzgCd9YtkajJUfCps/1RCNXhtaUBwgT8u0OUPRmfk4jjD7cS3nok5gDTEUVemKwT2yysx1CxfWaw==
+"@guardian/braze-components@^10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-10.0.0.tgz#9ff9f6e3cfb681f309808c6e47d0e2cf1a012650"
+  integrity sha512-cpR3NBmZrUfCvUlBphbVelLAgcuVth4Lo7M1Ohk7dhfgFrocrie/oQT1ZOWX6a90DuAEQZuKTlebmbHJ0XlFcQ==
 
 "@guardian/commercial-bundle@^1.3.0":
   version "1.3.0"
@@ -2414,22 +2414,29 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^7.0.1", "@guardian/source-foundations@^7.0.3":
+"@guardian/source-foundations@^7.0.1":
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-7.0.3.tgz#2d30d8a76ac1a5382774bbaaaa39a84551d4709d"
   integrity sha512-XDShUQ1MvQlTaa1Va+QbLSjHA2hg/lBhfoP31wQAFd0mqpGeCjGnwI6snSX31EdpkniLqJH4Y7gGcOsZ1SqtQg==
   dependencies:
     mini-svg-data-uri "1.4.4"
 
-"@guardian/source-react-components-development-kitchen@8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-8.2.0.tgz#b7c9ff6b494f55d42e39acdde897193780dd1e76"
-  integrity sha512-1oDFsjgfEUStb7zTOo7NutBSt1L5OvaNPC9VUR8qvEqkQ31PfYmvBeIo5OEm9uHfvageUBcVS862jz9jn2PDvg==
+"@guardian/source-foundations@^9.0.0":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-9.0.1.tgz#133704bdf14e870fc2168c5adc0a071f74ef6864"
+  integrity sha512-LK4ymc3U72dNzlfQ04ZKn5cY1omSVzvKhbInvTBbWi7hoTQK8U9mikbkYG1uTMLgS8YlO1JckjYT/JpmG3TwqQ==
+  dependencies:
+    mini-svg-data-uri "1.4.4"
 
-"@guardian/source-react-components@^9.1.2":
-  version "9.1.2"
-  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-9.1.2.tgz#2afe6b660773449ffbedbaa74f2fc1a79cb7c3f8"
-  integrity sha512-cBw9vj9K8UrHrqAARI11fv81hnHQB4fIVVsCUhuzl/J2nvoUCicA4mo4mBl23TtlMRo+mmD+N9dn9HiZYiW95Q==
+"@guardian/source-react-components-development-kitchen@9.2.0":
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-9.2.0.tgz#c141b39ec16f883ae2a28e17eada7a7856d1d8d7"
+  integrity sha512-yNOq4u7lZOCbv1fGRXXzrFDCHZEs8jfzt7OxL6qQVY2+hGnEhTBD26FtsBjs0SpzmneaazAlxAR9dg2BjUbKlw==
+
+"@guardian/source-react-components@^11.2.0":
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-11.4.0.tgz#e08b07cdfdc55158282273613c346299b1042785"
+  integrity sha512-dDOSOFRnvopVebMYcNx1a/6oNRtaO7WMbN6r1yk+X17f4evZCK3g+9D1bNaqIVKqEZuKVKx4caHQYmbrm4gs/g==
 
 "@guardian/src-foundations@^3.5.0":
   version "3.12.0"
