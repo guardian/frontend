@@ -65,7 +65,7 @@ object LiveBlogHelpers extends GuLogging {
       range: BlockRange,
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
-  ): Either[LiveBlogPage, Status] = {
+  ): Either[Status, LiveBlogPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -99,7 +99,7 @@ object LiveBlogHelpers extends GuLogging {
           content = liveBlog.content.copy(metadata = liveBlog.content.metadata.copy(cacheTime = cacheTime)),
         )
 
-        Left(
+        Right(
           LiveBlogPage(
             article = liveBlogCache,
             currentPage = pageModel,
@@ -108,7 +108,7 @@ object LiveBlogHelpers extends GuLogging {
           ),
         )
       }
-      .getOrElse(Right(NotFound))
+      .getOrElse(Left(NotFound))
 
   }
 

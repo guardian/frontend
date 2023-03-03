@@ -33,9 +33,9 @@ object `package`
       request: RequestHeader,
       context: ApplicationContext,
       log: Logger,
-  ): PartialFunction[Throwable, Either[T, Result]] = {
+  ): PartialFunction[Throwable, Either[Result, T]] = {
 
-    convertApiExceptionsWithoutEither.andThen(Right(_))
+    convertApiExceptionsWithoutEither.andThen(Left(_))
   }
 
   def convertApiExceptionsWithoutEither[T](implicit

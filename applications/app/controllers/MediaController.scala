@@ -30,8 +30,8 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
   def renderInfoJson(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(path) map {
-        case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
-        case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
+        case Right(model) => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
+        case Left(other)  => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
       } map { mediaInfo =>
         Cached(60)(JsonComponent.fromWritable(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
       }
@@ -70,8 +70,8 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     lookup(path) map {
-      case Left(model)  => renderMedia(model)
-      case Right(other) => RenderOtherStatus(other)
+      case Right(model) => renderMedia(model)
+      case Left(other)  => RenderOtherStatus(other)
     }
 
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio

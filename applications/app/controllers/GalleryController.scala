@@ -27,10 +27,10 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
     val isTrail = request.getBooleanParameter("trail") getOrElse false
 
     lookup(path, index, isTrail) map {
-      case Left(model) if model.gallery.content.isExpired =>
+      case Right(model) if model.gallery.content.isExpired =>
         RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
-      case Left(model)  => renderGallery(model)
-      case Right(other) => RenderOtherStatus(other)
+      case Right(model) => renderGallery(model)
+      case Left(other)  => RenderOtherStatus(other)
     }
   }
 
@@ -38,8 +38,8 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
     Action.async { implicit request =>
       val index = request.getIntParameter("index") getOrElse 1
       lookup(path, index, isTrail = false) map {
-        case Right(other) => RenderOtherStatus(other)
-        case Left(model)  => Cached(model) { JsonComponent.fromWritable(model.gallery.lightbox.javascriptConfig) }
+        case Left(other)  => RenderOtherStatus(other)
+        case Right(model) => Cached(model) { JsonComponent.fromWritable(model.gallery.lightbox.javascriptConfig) }
       }
     }
 

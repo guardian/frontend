@@ -144,21 +144,22 @@ class ArticleController(
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
       }
   }
 
   private def responseToModelOrResult(
       response: ItemResponse,
-  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
+  )(implicit request: RequestHeader): Either[Result, (ArticlePage, Blocks)] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     ModelOrResult(supportedContent, response) match {
-      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
+      case Right(article: Article) =>
+        Right((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
+      case Left(r) => Left(r)
+      case _       => Left(NotFound)
     }
   }
 
