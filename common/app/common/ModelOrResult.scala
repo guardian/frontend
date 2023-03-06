@@ -26,10 +26,11 @@ private object ItemOrRedirect extends ItemResponses with GuLogging {
 
   def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit
       request: RequestHeader,
-  ): Either[T, Result] = {
-
-    maybeSection map redirectSection(item, request) getOrElse redirectArticle(item, response, request)
-  }
+  ): Either[T, Result] =
+    maybeSection match {
+      case Some(section) => redirectSection(item, request, section)
+      case None          => redirectArticle(item, response, request)
+    }
 
   private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[T, Result] = {
     canonicalPath(response) match {
@@ -40,7 +41,7 @@ private object ItemOrRedirect extends ItemResponses with GuLogging {
 
   }
 
-  private def redirectSection[T](item: T, request: RequestHeader)(section: ApiSection): Either[T, Result] = {
+  private def redirectSection[T](item: T, request: RequestHeader, section: ApiSection): Either[T, Result] = {
 
     if (
       request.path.endsWith("/all") &&
