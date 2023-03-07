@@ -2311,17 +2311,10 @@
     web-vitals "^2.1.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/commercial-core@^5.3.0":
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.4.2.tgz#1c07bf0655d5dadc015ef6d54e7f40a864e83562"
-  integrity sha512-jy59ewwnJ3210gh7OSuYe2E0z6wQcWcDvDzG96tfvhvKaA0j35YW3Mex7/WkvBIRgOoBIGFLi3pvEjIja5Qa4Q==
-  dependencies:
-    type-fest "2.12.2"
-
-"@guardian/commercial-core@^5.4.3":
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.4.3.tgz#054d4cfe9cf026e54e73b099ba3cc088cca9ee85"
-  integrity sha512-6uAzzALVa/KQoYu0xpS/IQ6PwIX9S0X3MDkhEwyuVgX33ptO8vGPxJHAuSc9wp0Q3s+nYlSa4xaWGMkiEGcbDQ==
+"@guardian/commercial-core@^5.3.0", "@guardian/commercial-core@^5.4.4":
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-5.4.4.tgz#671064c6fb495b6876c43520b6b9d622cd20b450"
+  integrity sha512-mYerRRQ5YXfUr8hINbLn1MEe6JLa0S7E/yAJIfSSVc1TC1BrsZ2LUnZ6rN3ZWy8ktgFLFAWUgJHZgF+dvYF58g==
   dependencies:
     type-fest "2.12.2"
 
@@ -12591,8 +12584,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-"prebid.js@github:guardian/prebid.js#2e3b96d":
+prebid.js@guardian/prebid.js#2e3b96d:
   version "7.26.0"
+  uid "2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
     "@babel/core" "^7.16.7"
