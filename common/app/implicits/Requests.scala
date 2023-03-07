@@ -69,9 +69,11 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
+    lazy val isAmp: Boolean = r
+      .getQueryString("amp")
+      .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
 
-    lazy val isApps: Boolean = r.getQueryString("apps").isDefined
+    lazy val isApps: Boolean = r.getQueryString("dcr").contains("apps")
 
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(
       EMAIL_SUFFIX,

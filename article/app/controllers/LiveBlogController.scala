@@ -205,7 +205,7 @@ class LiveBlogController(
               blog,
               blocks,
               pageType,
-              None,
+              newsletter = None,
               filterKeyEvents,
               request.forceLive,
               availableTopics,
