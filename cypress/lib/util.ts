@@ -12,7 +12,7 @@ export const getTestUrl = (
 	stage: 'code' | 'prod' | 'dev',
 	path: string,
 	{ isDcr } = { isDcr: false },
-	adtest = 'fixed-puppies',
+	adtest = 'fixed-puppies-ci',
 ) => {
 	let url = '';
 	switch (stage) {
@@ -27,7 +27,7 @@ export const getTestUrl = (
 		default: {
 			// The local bundle can be served from DCR by using COMMERCIAL_BUNDLE_URL when starting DCR to test changes locally without needing to launch frontend
 			if (isDcr) {
-				url = `http://localhost:3030/Article?url=https://theguardian.com${path}`;
+				url = `http://localhost:3030/Article/https://theguardian.com${path}`;
 			} else {
 				url = `http://localhost:9000${path}`;
 			}
@@ -37,6 +37,8 @@ export const getTestUrl = (
 	if (adtest) {
 		const builder = new URL(url);
 		builder.searchParams.append('adtest', adtest);
+		// force an invalid epic so it is not shown
+		builder.searchParams.append('force-epic', '9999:CONTROL');
 		url = builder.toString();
 	}
 	return url;

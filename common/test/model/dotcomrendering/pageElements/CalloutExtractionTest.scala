@@ -91,6 +91,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
             "label": "Share your experiences here",
             "id": "87320974",
             "type": "textarea",
+            "hidden": "1",
             "required": "1"
           },
           {
@@ -101,6 +102,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
             "label": "Name",
             "id": "87320975",
             "type": "text",
+            "hidden": "0",
             "required": "1"
           },
           {
@@ -181,6 +183,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
         Some("Please include as much detail as possible"),
         true,
         false,
+        true,
         "Share your experiences here",
       ),
       CalloutFormFieldBase(
@@ -190,6 +193,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
         Some("You do not need to use your full name"),
         true,
         false,
+        false,
         "Name",
       ),
       CalloutFormFieldRadio(
@@ -198,6 +202,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
         "can_we_publish_your_response",
         None,
         true,
+        false,
         false,
         "Can we publish your response?",
         expectedRadioOptions,

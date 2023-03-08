@@ -69,6 +69,7 @@ object css {
   def emailFront(implicit context: ApplicationContext): String = inline("head.email-front")
   def interactive(implicit context: ApplicationContext): String = inline("head.interactive")
   def inlineAtom(atomType: String)(implicit content: ApplicationContext): String = inline(s"head.atom-$atomType")
+  def adFree(implicit context: ApplicationContext): String = inline("head.ad-free")
 
   def projectCss(
       projectOverride: Option[String],

@@ -13,6 +13,7 @@ import play.api.libs.json._
 import model.IpsosTags.getScriptTag
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
+import views.support.Commercial.isAdFree
 
 object JavaScriptPage {
 
@@ -100,6 +101,7 @@ object JavaScriptPage {
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
+      ("isAdFree", JsBoolean(isAdFree(request))),
     ) ++ commercialBundleUrl
   }.toMap
 }

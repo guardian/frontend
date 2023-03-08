@@ -13,6 +13,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
+      PoorDeviceConnectivity,
+      FastlyNextGenWAF,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -32,7 +34,7 @@ object DCRFronts
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc0A,
+      participationGroup = Perc1C,
     )
 
 object OfferHttp3
@@ -49,7 +51,7 @@ object EuropeNetworkFront
       name = "europe-network-front",
       description = "Test new europe network front",
       owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 3, 1),
+      sellByDate = LocalDate.of(2023, 5, 31),
       participationGroup = Perc0D,
     )
 
@@ -69,5 +71,26 @@ object ServerSideLiveblogInlineAds
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
-      participationGroup = Perc0C,
+      participationGroup = Perc5A,
+    )
+
+object PoorDeviceConnectivity
+    extends Experiment(
+      name = "poor-device-connectivity",
+      description = "Reduce the load of the site for users experiencing poor device connectivity",
+      owners = Seq(Owner.withEmail("open.journalism@theguardian.com")),
+      sellByDate = LocalDate.of(2023, 4, 4),
+      participationGroup = Perc20A,
+    ) {
+  override val extraHeader = Some(ExperimentHeader("X-GU-Poor-Device-Connectivity", "true"))
+}
+
+object FastlyNextGenWAF
+    extends Experiment(
+      name = "fastly-next-gen-waf",
+      description =
+        "We're using a participation group that we don't want other people to use. The experiment is used as a placeholder because the actual switch is happening at the Fastly level. PR here: https://github.com/guardian/fastly-edge-cache/pull/966",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc10A,
     )

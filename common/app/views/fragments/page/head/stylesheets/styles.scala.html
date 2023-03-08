@@ -1,6 +1,7 @@
 @(styles: html.Styles)(implicit applicationContext: model.ApplicationContext, request: RequestHeader)
 
 @import conf.switches.Switches.{FontSwitch}
+@import views.support.Commercial.isAdFree
 @import conf.Static
 
 @if(FontSwitch.isSwitchedOn) {
@@ -58,5 +59,9 @@
 @styles.criticalCss
 @styles.linkCss
 <!--<![endif]-->
-
+<style class="js-loggable">
+    @if(isAdFree(request)) {
+        @Html(common.Assets.css.adFree)
+    }
+</style>
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
