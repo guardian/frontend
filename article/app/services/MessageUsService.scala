@@ -29,12 +29,6 @@ class MessageUsService(messageUsS3Client: S3Client[MessageUsConfigData]) extends
       .map(response => {
         messageUsConfigData send Some(response.toMap)
         log.info("successfully refreshed message us configs")
-
-//        val test: Option[Map[String, MessageUsConfigData]] = messageUsConfigData.get()
-//        test.map { x =>
-//          x.foreach(x => println(s"${x._1}: ${x._2}"))
-//        }
-//        println("end of print")
       })
       .recover {
         case e =>
