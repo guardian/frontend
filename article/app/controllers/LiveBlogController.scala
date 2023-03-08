@@ -185,7 +185,7 @@ class LiveBlogController(
                 blog,
                 blocks,
                 pageType,
-                None,
+                newsletter = None,
                 filterKeyEvents,
                 request.forceLive,
                 availableTopics,
@@ -196,7 +196,7 @@ class LiveBlogController(
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, None, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case (blog: LiveBlogPage, AppsFormat) =>
