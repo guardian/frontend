@@ -55,7 +55,6 @@ class DevParametersHttpRequestHandler(
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
     "dcr", // force page to render in DCR
     "topics", // used for filtering the liveblog blocks
-    "apps", // force page to render in Apps format
   )
 
   val commercialParams = Seq(
