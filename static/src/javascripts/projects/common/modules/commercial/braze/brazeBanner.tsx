@@ -60,6 +60,7 @@ const renderBanner = (
 			document.body.appendChild(container);
 
 			const Component = brazeModule.BrazeBannerComponent;
+			const newsletterUrl = `${config.get('page.idApiUrl')}/users/me/newsletters`;
 
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- IE does not support shadow DOM, so instead we just render
 			if (!container.attachShadow) {
@@ -71,6 +72,16 @@ const renderBanner = (
 						}}
 						submitComponentEvent={submitComponentEvent}
 						brazeMessageProps={extras}
+						subscribeToNewsletter={async (newsletterId: string) => {
+							await fetch(newsletterUrl, {
+								method: 'PATCH',
+								body: JSON.stringify({
+									id: newsletterId,
+									subscribed: true,
+								}),
+								credentials: 'include',
+							});
+						}}
 					/>,
 					container,
 				);
@@ -97,6 +108,16 @@ const renderBanner = (
 							}}
 							submitComponentEvent={submitComponentEvent}
 							brazeMessageProps={extras}
+							subscribeToNewsletter={async (newsletterId: string) => {
+								await fetch(newsletterUrl, {
+									method: 'PATCH',
+									body: JSON.stringify({
+										id: newsletterId,
+										subscribed: true,
+									}),
+									credentials: 'include',
+								});
+							}}
 						/>
 					</CacheProvider>
 				);
