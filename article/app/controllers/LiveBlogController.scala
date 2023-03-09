@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content =
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common._
 import contentapi.ContentApiClient
-import implicits.{AmpFormat, HtmlFormat}
+import implicits.{AmpFormat, AppsFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
@@ -185,10 +185,10 @@ class LiveBlogController(
                 blog,
                 blocks,
                 pageType,
+                newsletter = None,
                 filterKeyEvents,
                 request.forceLive,
                 availableTopics,
-                newsletter = None,
                 topicResult,
               )
             } else {
@@ -199,6 +199,18 @@ class LiveBlogController(
             remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+          case (blog: LiveBlogPage, AppsFormat) =>
+            remoteRenderer.getAppsArticle(
+              ws,
+              blog,
+              blocks,
+              pageType,
+              newsletter = None,
+              filterKeyEvents,
+              request.forceLive,
+              availableTopics,
+              topicResult,
+            )
           case _ => Future.successful(NotFound)
         }
       }

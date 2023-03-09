@@ -3,7 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import implicits.{AmpFormat, AppsFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model._
@@ -126,13 +126,18 @@ class ArticleController(
           article,
           blocks,
           pageType,
-          filterKeyEvents = false,
-          false,
-          newsletter = newsletter,
-          topicResult = None,
+          newsletter,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AppsFormat =>
+        remoteRenderer.getAppsArticle(
+          ws,
+          article,
+          blocks,
+          pageType,
+          newsletter,
+        )
     }
   }
 
