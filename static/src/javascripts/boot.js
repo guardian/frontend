@@ -176,7 +176,7 @@ const go = () => {
 
 			return import(
 				/* webpackChunkName: "commercial" */
-				'bootstraps/commercial-legacy'
+				'bootstraps/commercial-hosted-legacy'
 			);
 		};
 
