@@ -29,7 +29,7 @@ class S3ClientImpl[T](optionalBucket: Option[String])(implicit genericType: Clas
         s3ObjectList.map(_.getKey)
       } match {
         case Success(value) =>
-          println(s"got list of ${value.length} $genericTypeName items from S3")
+          log.info(s"got list of ${value.length} $genericTypeName items from S3")
           Future.successful(value)
         case Failure(exception) =>
           log.error(s"failed in getting the list of $genericTypeName items from S3", exception)
