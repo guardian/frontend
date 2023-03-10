@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated
+ */
+
 import checkIcon from 'svgs/icon/tick.svg';
 import config from '../../../../lib/config';
 import { hasUserAcknowledgedBanner, Message } from '../ui/message';
