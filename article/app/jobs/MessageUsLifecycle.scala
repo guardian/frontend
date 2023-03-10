@@ -27,7 +27,7 @@ class MessageUsLifecycle(
     descheduleJobs()
     scheduleJobs()
 
-    // refresh top mentions when app starts
+    // refresh message us data when app starts
     akkaAsync.after1s {
       messageUsService.refreshMessageUsData()
     }
