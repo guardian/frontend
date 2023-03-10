@@ -4,11 +4,11 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.{GetObjectRequest, S3Object}
 import com.amazonaws.util.IOUtils
 import common.GuLogging
-import conf.Configuration
 import play.api.libs.json.{JsError, JsSuccess, Json, Reads}
 
 import scala.concurrent.Future
 import scala.jdk.CollectionConverters._
+import scala.reflect.ClassTag
 import scala.util.{Failure, Success, Try}
 
 trait S3Client[T] {
@@ -17,7 +17,10 @@ trait S3Client[T] {
   def getObject(key: String)(implicit read: Reads[T]): Future[T]
 }
 
-class S3ClientImpl[T](optionalBucket: Option[String]) extends S3Client[T] with S3 with GuLogging {
+class S3ClientImpl[T](optionalBucket: Option[String])(implicit genericType: ClassTag[T])
+    extends S3Client[T]
+    with S3
+    with GuLogging {
 
   def getListOfKeys(): Future[List[String]] = {
     getClient { client =>
@@ -26,10 +29,10 @@ class S3ClientImpl[T](optionalBucket: Option[String]) extends S3Client[T] with S
         s3ObjectList.map(_.getKey)
       } match {
         case Success(value) =>
-          log.info(s"got list of ${value.length} items from S3")
+          println(s"got list of ${value.length} $genericTypeName items from S3")
           Future.successful(value)
         case Failure(exception) =>
-          log.error(s"failed in getting the list of items from S3", exception)
+          log.error(s"failed in getting the list of $genericTypeName items from S3", exception)
           Future.failed(exception)
       }
     }
@@ -42,10 +45,10 @@ class S3ClientImpl[T](optionalBucket: Option[String]) extends S3Client[T] with S
         parseResponse(client.getObject(request))
       }.flatten match {
         case Success(value) =>
-          log.info(s"got response from S3 for key ${key}")
+          log.info(s"got $genericTypeName response from S3 for key ${key}")
           Future.successful(value)
         case Failure(exception) =>
-          log.error(s"S3 retrieval failed for key ${key}", exception)
+          log.error(s"S3 retrieval failed for $genericTypeName key ${key}", exception)
           Future.failed(exception)
       }
     }
@@ -53,7 +56,7 @@ class S3ClientImpl[T](optionalBucket: Option[String]) extends S3Client[T] with S
 
   private def getBucket() = {
     optionalBucket.getOrElse(
-      throw new RuntimeException("bucket config is empty, make sure config parameter has value"),
+      throw new RuntimeException(s"bucket config is empty for $genericTypeName, make sure config parameter has value"),
     )
   }
 
@@ -68,14 +71,14 @@ class S3ClientImpl[T](optionalBucket: Option[String]) extends S3Client[T] with S
 
     Json.fromJson[T](json) match {
       case JsSuccess(response, __) =>
-        log.debug(s"Parsed response from S3 for key ${s3Object.getKey}")
+        log.debug(s"Parsed $genericTypeName response from S3 for key ${s3Object.getKey}")
         Success(response)
       case JsError(errors) =>
         val errorPaths = errors.map { error => error._1.toString() }.mkString(",")
-        log.error(s"Error parsing response from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
+        log.error(s"Error parsing $genericTypeName response from S3 for key ${s3Object.getKey} paths: ${errorPaths}")
         Failure(
           new Exception(
-            s"could not parse S3 response json. Errors paths(s): $errors",
+            s"could not parse S3 $genericTypeName response json. Errors paths(s): $errors",
           ),
         )
     }
@@ -89,4 +92,6 @@ class S3ClientImpl[T](optionalBucket: Option[String]) extends S3Client[T] with S
       s3ObjectContent.close()
     }
   }
+
+  private def genericTypeName = genericType.runtimeClass.getSimpleName
 }
