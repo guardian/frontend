@@ -215,11 +215,7 @@
 	},
 	"scripts": {
 		"eslint-fix": "eslint --color --fix",
-		"test": "jest",
-		"cypress:open": "cypress open --e2e --browser=chrome",
-		"cypress:run": "cypress run --spec 'cypress/e2e/**/*'",
-		"cypress:open:snapshot": "cypress open --e2e --browser=chrome --config specPattern='cypress/snapshot/**/*'",
-		"cypress:run:snapshot": "percy exec -- cypress run --config specPattern='cypress/snapshot/**/*'"
+		"test": "jest"
 	},
 	"prettier": "@guardian/prettier"
 }
