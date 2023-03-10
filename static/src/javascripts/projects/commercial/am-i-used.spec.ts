@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import type { amIUsed as amIUsed_, AmIUsedLoggingEvent } from './am-i-used';
 
 const { amIUsed }: { amIUsed: typeof amIUsed_ } =

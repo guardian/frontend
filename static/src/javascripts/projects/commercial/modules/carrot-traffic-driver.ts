@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import { createAdSlot } from '@guardian/commercial-core';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { noCarrotAdsNearNewsletterSignupBlocks } from 'common/modules/experiments/tests/no-carrot-ads-near-newsletter-signup-blocks';

@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import type { AdSize, PageTargeting } from '@guardian/commercial-core';
 import { createAdSize, EventTimer, pubmatic } from '@guardian/commercial-core';
 import { PREBID_TIMEOUT } from '@guardian/commercial-core/dist/esm/constants';

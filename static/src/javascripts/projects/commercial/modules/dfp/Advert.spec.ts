@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 /* eslint-disable import/first -- variables must be available to be used when the mock is hoisted before the imports by jest */
 const slots = {
 	'mobile-only-slot': {

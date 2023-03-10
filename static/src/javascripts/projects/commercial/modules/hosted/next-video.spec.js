@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import { load } from './next-video';
 import { fetchJson } from '../../../../lib/fetch-json';
 import config from '../../../../lib/config';
