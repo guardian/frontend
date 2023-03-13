@@ -95,3 +95,7 @@ object MessageUsConfigData {
 
   implicit val MessageUsConfigDataJf: Format[MessageUsConfigData] = Json.format[MessageUsConfigData]
 }
+
+object MessageUsData {
+  implicit val MessageUsDataJf: Format[MessageUsData] = Json.format[MessageUsData]
+}
