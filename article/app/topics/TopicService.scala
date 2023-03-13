@@ -1,11 +1,12 @@
 package topics
 
 import common.{Box, GuLogging}
-import model.{TopicsApiResponse, TopicResult, Topic}
+import model.{Topic, TopicResult, TopicsApiResponse}
+import services.S3Client
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TopicService(topicS3Client: TopicS3Client) extends GuLogging {
+class TopicService(topicS3Client: S3Client[TopicsApiResponse]) extends GuLogging {
 
   private val MAX_LIVEBLOGS_WITH_TOPICS = 50
   private val topicsDetails = Box[Option[Map[String, TopicsApiResponse]]](None)
