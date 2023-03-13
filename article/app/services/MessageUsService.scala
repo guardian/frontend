@@ -1,7 +1,7 @@
 package services
 
 import common.{Box, GuLogging}
-import model.{MessageUsConfigData, MessageUsData}
+import model.{MessageUsConfigData}
 
 import scala.concurrent.{ExecutionContext, Future}
 
