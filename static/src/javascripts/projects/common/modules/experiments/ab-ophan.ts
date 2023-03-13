@@ -76,11 +76,13 @@ const registerCompleteEvent =
 		}
 	};
 
-export const registerCompleteEvents = (tests: ReadonlyArray<Runnable<ABTest>>): void =>
-	tests.forEach(registerCompleteEvent(true));
+export const registerCompleteEvents = (
+	tests: ReadonlyArray<Runnable<ABTest>>,
+): void => tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (tests: ReadonlyArray<Runnable<ABTest>>): void =>
-	tests.filter(defersImpression).forEach(registerCompleteEvent(false));
+export const registerImpressionEvents = (
+	tests: ReadonlyArray<Runnable<ABTest>>,
+): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
 export const buildOphanPayload = (
 	tests: ReadonlyArray<Runnable<ABTest>>,

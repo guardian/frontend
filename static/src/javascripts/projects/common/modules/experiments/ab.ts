@@ -25,8 +25,9 @@ import {
 export const getSynchronousTestsToRun = memoize(() =>
 	allRunnableTests(concurrentTests),
 );
-export const getAsyncTestsToRun = (): Promise<ReadonlyArray<Runnable<ABTest>>> =>
-	Promise.all([]).then((tests) => tests.filter(Boolean));
+export const getAsyncTestsToRun = (): Promise<
+	ReadonlyArray<Runnable<ABTest>>
+> => Promise.all([]).then((tests) => tests.filter(Boolean));
 
 // This excludes epic & banner tests
 export const getSynchronousParticipations = (): Participations =>
