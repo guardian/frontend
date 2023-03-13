@@ -31,6 +31,7 @@ import model.{
   RelatedContentItem,
   Topic,
   TopicResult,
+  MessageUsData,
 }
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -154,6 +155,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]] = None,
       topicResult: Option[TopicResult] = None,
+      messageUs: Option[MessageUsData] = None,
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(
       "/AppsArticle",
@@ -166,6 +168,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       availableTopics,
       newsletter,
       topicResult,
+      messageUs,
     )
 
   def getArticle(
@@ -178,6 +181,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       forceLive: Boolean = false,
       availableTopics: Option[Seq[Topic]] = None,
       topicResult: Option[TopicResult] = None,
+      messageUs: Option[MessageUsData] = None,
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(
       "/Article",
@@ -190,6 +194,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       availableTopics,
       newsletter,
       topicResult,
+      messageUs,
     )
 
   private def baseArticleRequest(
@@ -203,6 +208,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      messageUs: Option[MessageUsData],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = page match {
       case liveblog: LiveBlogPage =>
@@ -216,6 +222,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           availableTopics,
           newsletter,
           topicResult,
+          messageUs,
         )
       case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
     }

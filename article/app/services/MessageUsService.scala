@@ -1,7 +1,7 @@
 package services
 
 import common.{Box, GuLogging}
-import model.MessageUsConfigData
+import model.{MessageUsConfigData, MessageUsData}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,7 +36,7 @@ class MessageUsService(messageUsS3Client: S3Client[MessageUsConfigData]) extends
       }
   }
 
-  def getBlogMessageUsConfigData(blogId: String): Option[MessageUsConfigData] = {
+  def getBlogMessageUsConfigData(blogId: String): Option[MessageUsData] = {
     messageUsConfigData.get().flatMap(_.get(blogId))
   }
 

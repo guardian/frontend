@@ -22,6 +22,7 @@ import model.{
   PageWithStoryPackage,
   Topic,
   TopicResult,
+  MessageUsData,
 }
 import navigation._
 import play.api.libs.json._
@@ -41,6 +42,7 @@ case class DotcomRenderingDataModel(
     main: String,
     availableTopics: Option[Seq[Topic]],
     selectedTopics: Option[Seq[Topic]],
+    messageUs: Option[MessageUsData],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -112,6 +114,7 @@ object DotcomRenderingDataModel {
       val obj = Json.obj(
         "availableTopics" -> model.availableTopics,
         "selectedTopics" -> model.selectedTopics,
+        "messageUs" -> model.messageUs,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -216,6 +219,7 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = None,
       topicResult = None,
+      messageUs = None,
     )
   }
 
@@ -249,6 +253,7 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = newsletter,
       topicResult = None,
+      messageUs = None,
     )
   }
 
@@ -274,6 +279,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      messageUs: Option[MessageUsData],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -332,6 +338,7 @@ object DotcomRenderingDataModel {
       availableTopics,
       newsletter,
       topicResult,
+      messageUs,
     )
   }
 
@@ -353,6 +360,7 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]],
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
+      messageUs: Option[MessageUsData],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -492,6 +500,7 @@ object DotcomRenderingDataModel {
       mainMediaElements = mainMediaElements,
       matchUrl = matchData.map(_.matchUrl),
       matchType = matchData.map(_.matchType),
+      messageUs = messageUs,
       nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),

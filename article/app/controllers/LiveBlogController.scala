@@ -18,7 +18,7 @@ import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.dotcomrendering.DotcomponentsLogger
-import services.{CAPILookup, NewsletterService}
+import services.{CAPILookup, NewsletterService, MessageUsService}
 import topics.TopicService
 import views.support.RenderOtherStatus
 
@@ -33,6 +33,7 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
+    messageUsService: MessageUsService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -66,6 +67,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topicResult = if (filter) None else getTopicResult(path, topics)
       val availableTopics = topicService.getAvailableTopics(path)
+      val messageUs = messageUsService.getBlogMessageUsConfigData(path)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -75,6 +77,7 @@ class LiveBlogController(
             filter,
             topicResult,
             availableTopics,
+            messageUs,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -89,6 +92,7 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
+                messageUs,
               ) // no page param
             case None =>
               renderWithRange(
@@ -97,6 +101,7 @@ class LiveBlogController(
                 filter,
                 None,
                 availableTopics,
+                messageUs,
               ) // no page param
           }
         }
@@ -148,6 +153,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
       availableTopics: Option[Seq[Topic]],
+      messageUs: Option[MessageUsData],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -190,6 +196,7 @@ class LiveBlogController(
                 request.forceLive,
                 availableTopics,
                 topicResult,
+                messageUs,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
@@ -360,6 +367,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
+      messageUs: Option[MessageUsData],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
@@ -375,6 +383,7 @@ class LiveBlogController(
         availableTopics,
         newsletter,
         topicResult,
+        messageUs,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
