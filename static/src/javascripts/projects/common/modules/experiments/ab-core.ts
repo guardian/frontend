@@ -67,7 +67,7 @@ const computeVariantFromMvtCookie = (test: ABTest): Variant | null => {
 //
 // This function can be called at any time, before or after participations are
 // persisted to localStorage. It should always give the same result for a given pageview.
-export const runnableTest = (test: ABTest): Runnable | null => {
+export const runnableTest = (test: ABTest): Runnable<ABTest> | null => {
 	const fromUrl = getVariantFromUrl(test);
 	const fromLocalStorage = getVariantFromLocalStorage(test);
 	const fromCookie = computeVariantFromMvtCookie(test);
@@ -87,13 +87,18 @@ export const runnableTest = (test: ABTest): Runnable | null => {
 
 export const allRunnableTests = (
 	tests: readonly ABTest[],
-): readonly Runnable[] =>
-	tests.reduce<readonly Runnable[]>((accumulator, currentValue) => {
-		const rt = runnableTest(currentValue);
-		return rt ? [...accumulator, rt] : accumulator;
-	}, []);
+): ReadonlyArray<Runnable<ABTest>> =>
+	tests.reduce<ReadonlyArray<Runnable<ABTest>>>(
+		(accumulator, currentValue) => {
+			const rt = runnableTest(currentValue);
+			return rt ? [...accumulator, rt] : accumulator;
+		},
+		[],
+	);
 
-export const firstRunnableTest = (tests: readonly ABTest[]): Runnable | null =>
+export const firstRunnableTest = (
+	tests: readonly ABTest[],
+): Runnable<ABTest> | null =>
 	tests
 		.map((test: ABTest) => runnableTest(test))
-		.find((rt?: Runnable | null) => rt !== null) ?? null;
+		.find((rt?: Runnable<ABTest> | null) => rt !== null) ?? null;
