@@ -143,7 +143,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
-    baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, None, newsletter, None)
+    baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, None, newsletter, None, None)
 
   def getAppsArticle(
       ws: WSClient,

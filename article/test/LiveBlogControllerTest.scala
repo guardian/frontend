@@ -10,7 +10,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, Topic, TopicResult, TopicType}
+import model.{LiveBlogPage, Topic, TopicResult, TopicType, MessageUsData}
 import topics.TopicService
 import services.{NewsletterService, MessageUsService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
@@ -40,6 +40,9 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       count = 1,
       percentage_blocks = 1.2f,
     )
+    val messageUsResult = MessageUsData(
+      formId = "mock-form-id",
+    )
 
     val fakeAvailableTopics = Vector(
       Topic(TopicType.Gpe, "United Kingdom", Some(6)),
@@ -64,6 +67,12 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       fakeTopicService.getAvailableTopics(path),
     ) thenReturn Some(
       fakeAvailableTopics,
+    )
+
+    when(
+      fakeMessageUsService.getBlogMessageUsConfigData(path),
+    ) thenReturn Some(
+      messageUsResult,
     )
 
     lazy val liveBlogController = new LiveBlogController(
@@ -287,6 +296,52 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
   it should "not filter when the filter parameter is not provided" in new Setup {
     liveBlogController.shouldFilter(None) should be(false)
+  }
+
+  it should "return the message us data, if available" in new Setup {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"${path}.json?dcr=true",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      path,
+      page = None,
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(false),
+      topics = None,
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+    content should include("\"messageUs\":{\"formId\":\"mock-form-id\"}")
+  }
+
+  it should "return no message us data, if not available" in new Setup {
+    when(
+      fakeMessageUsService.getBlogMessageUsConfigData(path),
+    ) thenReturn None
+
+    val fakeRequest = FakeRequest(
+      GET,
+      s"${path}.json?dcr=true",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      path,
+      page = None,
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(false),
+      topics = None,
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+    content should not include("\"messageUs\":{\"formId\":\"mock-form-id\"}")
   }
 
   "getTopicResult" should "returns none given no automatic filter query parameter" in new Setup {

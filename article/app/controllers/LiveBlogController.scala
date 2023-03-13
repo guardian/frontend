@@ -67,7 +67,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topicResult = if (filter) None else getTopicResult(path, topics)
       val availableTopics = topicService.getAvailableTopics(path)
-      val messageUs = messageUsService.getBlogMessageUsConfigData(path).map(c => MessageUsData(c.formId))
+      val messageUs = messageUsService.getBlogMessageUsConfigData(path)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -123,6 +123,7 @@ class LiveBlogController(
       val topicResult = getTopicResult(path, topics)
       val range = getRange(lastUpdate, page, topicResult)
       val availableTopics = topicService.getAvailableTopics(path)
+      val messageUs = messageUsService.getBlogMessageUsConfigData(path)
 
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
