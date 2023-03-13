@@ -67,7 +67,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topicResult = if (filter) None else getTopicResult(path, topics)
       val availableTopics = topicService.getAvailableTopics(path)
-      val messageUs = messageUsService.getBlogMessageUsConfigData(path)
+      val messageUs = messageUsService.getBlogMessageUsConfigData(path).map(c => MessageUsData(c.formId))
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -127,7 +127,7 @@ class LiveBlogController(
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult))
+          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult, messageUs))
         case (blog: LiveBlogPage, blocks) =>
           getJson(
             blog,

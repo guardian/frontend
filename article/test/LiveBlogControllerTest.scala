@@ -12,7 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import model.{LiveBlogPage, Topic, TopicResult, TopicType}
 import topics.TopicService
-import services.NewsletterService
+import services.{NewsletterService, MessageUsService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class LiveBlogControllerTest
@@ -31,6 +31,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
   trait Setup {
     var fakeTopicService = mock[TopicService]
+    var fakeMessageUsService = mock[MessageUsService]
     var fakeDcr = new DCRFake()
     val topicResult = TopicResult(
       name = "Fifa",
@@ -72,6 +73,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       fakeDcr,
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       fakeTopicService,
+      fakeMessageUsService,
     )
   }
 

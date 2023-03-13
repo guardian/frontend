@@ -3,7 +3,7 @@ package test
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.{OnwardCollectionResponse, PageType}
-import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage, Topic, TopicResult}
+import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage, Topic, TopicResult, MessageUsData}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
@@ -28,6 +28,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       forceLive: Boolean,
       availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
+      messageUs: Option[MessageUsData],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     requestedBlogs.enqueue(article)
