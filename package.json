@@ -19,7 +19,7 @@
 		"@guardian/automat-modules": "^0.3.8",
 		"@guardian/braze-components": "^10.0.0",
 		"@guardian/commercial-bundle": "1.5.0",
-		"@guardian/commercial-core": "^5.4.4",
+		"@guardian/commercial-core": "5.4.4",
 		"@guardian/consent-management-platform": "^10.11.1",
 		"@guardian/core-web-vitals": "^2.0.1",
 		"@guardian/libs": "^13.1.0",
