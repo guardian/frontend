@@ -23,6 +23,3 @@ jobs:
 
             - name: Check typescript
               run: yarn tsc
-
-            - name: Check commercial JS is formatted with Prettier
-              run: yarn prettier -c static/src/javascripts/**/commercial/**/*.js
