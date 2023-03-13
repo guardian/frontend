@@ -38,6 +38,8 @@ type PermutiveSchema = {
 	};
 };
 
+type PermutiveConfigValue = string | string[] | boolean | null | undefined;
+
 const isEmpty = (
 	value:
 		| boolean
@@ -64,7 +66,7 @@ const removeEmpty = <
 		if (typeof payload[key] === 'object') {
 			removeEmpty(payload[key]);
 		}
-		if (isEmpty(payload[key])) {
+		if (isEmpty(payload[key] as PermutiveConfigValue)) {
 			delete payload[key];
 		}
 	}
