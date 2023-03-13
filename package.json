@@ -69,7 +69,7 @@
 		"@babel/runtime": "^7.11.2",
 		"@cypress/webpack-preprocessor": "^5.12.0",
 		"@guardian/eslint-config-typescript": "^0.7.0",
-		"@guardian/prettier": "^2.1.5",
+		"@guardian/prettier": "^3.0.0",
 		"@percy/cli": "^1.20.0",
 		"@percy/cypress": "^3.1.2",
 		"@types/google.analytics": "^0.0.42",
