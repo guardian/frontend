@@ -72,10 +72,6 @@ const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
 
 mainWebpackBundler.watch(...watchArguments);
 
-const dcrWebpackBundler = webpack(require('../webpack.config.dcr.dev.js'));
-
-dcrWebpackBundler.watch(...watchArguments);
-
 // ********************************** Sass **********************************
 
 const chokidar = require('chokidar');
