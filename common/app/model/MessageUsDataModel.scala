@@ -3,7 +3,7 @@ package model
 import model.FieldType.FieldType
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
-import play.api.libs.json._
+import play.api.libs.json.{Format, JsPath, Json, Reads}
 
 import scala.language.implicitConversions
 
@@ -94,8 +94,4 @@ object MessageUsConfigData {
   implicit val fieldWriteFmt: Writes[Field] = Json.writes[Field]
 
   implicit val MessageUsConfigDataJf: Format[MessageUsConfigData] = Json.format[MessageUsConfigData]
-}
-
-object MessageUsData {
-  implicit val MessageUsDataJf: Format[MessageUsData] = Json.format[MessageUsData]
 }
