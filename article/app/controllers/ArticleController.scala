@@ -89,7 +89,10 @@ class ArticleController(
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
-  private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
+  /**
+    * Returns a JSON representation of the payload that's sent to DCR when rendering the Article.
+    */
+  private def getDCRJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
     val edition = Edition(request)
@@ -111,7 +114,7 @@ class ArticleController(
     val pageType: PageType = PageType(article, request, context)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
-        Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
+        Future.successful(common.renderJson(getDCRJson(article, blocks), article).as("application/json"))
       case JsonFormat =>
         Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat =>
