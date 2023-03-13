@@ -7,9 +7,7 @@ import play.api.mvc.RequestHeader
 object Preload {
 
   def commercialBundleNameAsset(implicit request: RequestHeader): Seq[PreloadAsset] =
-    if (conf.switches.Switches.StandaloneCommercialBundle.isSwitchedOn)
-      Seq.empty
-    else Seq(JsPreloadAsset("javascripts/graun.commercial.js"))
+    Seq.empty
 
   def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn)
