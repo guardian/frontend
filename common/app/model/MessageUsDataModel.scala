@@ -1,12 +1,84 @@
 package model
 
-import play.api.libs.json.{Format, Json}
+import model.FieldType.FieldType
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json.{Format, JsPath, Json, Reads}
 
-case class MessageUsConfigData(articleId: String, formId: String)
+import scala.language.implicitConversions
+
+case class MessageUsConfigData(articleId: String, formId: String, formFields: List[Field])
 case class MessageUsData(formId: String)
 
+sealed trait Field {
+  def id: String
+  def label: String
+  def name: String
+  def `type`: FieldType
+}
+
+case class EmailField(
+    id: String,
+    label: String = "email",
+    name: String,
+    `type`: FieldType = FieldType.Email,
+) extends Field
+
+case class NameField(
+    id: String,
+    label: String = "name",
+    name: String,
+    `type`: FieldType = FieldType.Name,
+) extends Field
+
+case class TextAreaField(
+    id: String,
+    label: String = "textarea",
+    name: String,
+    minlength: Int = 0,
+    maxlength: Int = 1000,
+    `type`: FieldType = FieldType.TextArea,
+) extends Field
+
+object FieldType extends Enumeration {
+  type FieldType = Value
+
+  val Name = Value(1, "text")
+  val Email = Value(2, "email")
+  val TextArea = Value(3, "textarea")
+
+  implicit val format: Format[FieldType] = Json.formatEnum(this)
+
+}
+
 object MessageUsConfigData {
-  implicit val MessageUsConfigDataJf: Format[MessageUsConfigData] = Json.format[MessageUsConfigData]
+
+  private val commonFieldReads = (JsPath \ "id").read[String] and
+    (JsPath \ "label").read[String] and
+    (JsPath \ "name").read[String]
+
+  implicit val nameFieldRead: Reads[NameField] = (commonFieldReads and
+    Reads.pure(FieldType.Name))(NameField.apply _)
+
+  implicit val emailFieldRead: Reads[EmailField] = (commonFieldReads and
+    Reads.pure(FieldType.Name))(EmailField.apply _)
+
+  implicit val textAreaFieldRead: Reads[TextAreaField] = (commonFieldReads and
+    (JsPath \ "minlength").read[Int] and
+    (JsPath \ "maxlength").read[Int] and
+    Reads.pure(FieldType.Name))(TextAreaField.apply _)
+
+  implicit val fieldReadFmt: Reads[Field] = Reads { js =>
+    val fieldType = (JsPath \ "type").read[FieldType].reads(js)
+
+    fieldType.flatMap {
+      case FieldType.Name     => nameFieldRead.reads(js)
+      case FieldType.Email    => emailFieldRead.reads(js)
+      case FieldType.TextArea => textAreaFieldRead.reads(js)
+    }
+  }
+
+  implicit val MessageUsConfigDataJf: Reads[MessageUsConfigData] = Json.reads[MessageUsConfigData]
 }
 
 object MessageUsData {
