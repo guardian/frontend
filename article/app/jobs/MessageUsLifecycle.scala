@@ -34,8 +34,8 @@ class MessageUsLifecycle(
   }
 
   private def scheduleJobs(): Unit = {
-    // This job runs every 2 minutes
-    jobs.scheduleEvery("MessageUsAgentRefreshJob", 2.minutes) {
+    // This job runs every 8 minutes
+    jobs.scheduleEvery("MessageUsAgentRefreshJob", 8.minutes) {
       messageUsService.refreshMessageUsData()
     }
   }
