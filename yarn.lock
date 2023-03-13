@@ -2329,11 +2329,6 @@
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-11.0.0.tgz#240083bbe4e8c4c22410cfa4c867b608e7c0e92f"
   integrity sha512-j97gI5NbhVLXy1s8465lyT/w/nU3K+HewkfHIQ/NLOvzBS2mmcgB6A6sRXsKCOYRt4W8eNoTX5xgAdemFgvLAw==
 
-"@guardian/core-web-vitals@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-2.0.1.tgz#b04f12ff36f66db800a68b81b65eedfc86289211"
-  integrity sha512-xm5oDtRBu37KPmiT61z+E/Wz3HHifayJjVMwd/nfLxNRd1eFOVmplaeTDtygGKy4KjIwX90R5j/Sjs9apTVnLA==
-
 "@guardian/core-web-vitals@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-4.0.0.tgz#e09bf40ee896ae92c0223fa57399b1b0b5f9bdb2"

@@ -21,7 +21,7 @@
 		"@guardian/commercial-bundle": "^1.5.1",
 		"@guardian/commercial-core": "^5.4.5",
 		"@guardian/consent-management-platform": "^11.0.0",
-		"@guardian/core-web-vitals": "^2.0.1",
+		"@guardian/core-web-vitals": "^4.0.0",
 		"@guardian/libs": "^14.0.0",
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "^9.0.0",
