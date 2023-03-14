@@ -112,21 +112,6 @@ case class DotcomRenderingDataModel(
 object DotcomRenderingDataModel {
 
   implicit val pageElementWrites = PageElement.pageElementWrites
-  implicit val apiContentWrites = new Writes[CAPIContent] {
-    def writes(model: CAPIContent) = {
-      Json.obj(
-        "id" -> model.id,
-        "type" -> JsString(model.`type`.toString),
-        "sectionId" -> model.sectionId,
-        "sectionName" -> model.sectionName,
-        "webPublicationDate" -> model.webPublicationDate.map(_.iso8601),
-        "webTitle" -> model.webTitle,
-        "webUrl" -> model.webUrl,
-        "apiUrl" -> model.apiUrl,
-//        "fields" -> model.fields,
-      )
-    }
-  }
 
   implicit val writes = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
