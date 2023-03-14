@@ -1,6 +1,6 @@
 package services
 
-import model.MessageUsConfigData
+import model.{MessageUsConfigData, MessageUsData}
 import org.mockito.ArgumentMatchers.{startsWith, eq => mockitoEq}
 import org.mockito.Matchers.{any, anyString}
 import org.scalatest.BeforeAndAfterAll
@@ -76,7 +76,7 @@ class MessageUsServiceTest
     val messageUsService = new MessageUsService(fakeClient)
 
     val refreshJob = Await.result(messageUsService.refreshMessageUsData(), 1.second)
-    val result = messageUsService.getBlogMessageUsConfigData("key2")
+    val result = messageUsService.getBlogMessageUsData("key2")
 
     result should equal(None)
   }
@@ -87,8 +87,9 @@ class MessageUsServiceTest
     val messageUsService = new MessageUsService(fakeClient)
 
     val refreshJob = Await.result(messageUsService.refreshMessageUsData(), 1.second)
-    val result = messageUsService.getBlogMessageUsConfigData("key1")
+    val result = messageUsService.getBlogMessageUsData("key1")
 
-    result should equal(Some(successResponse))
+    val expected = MessageUsData(formId = "form1")
+    result should equal(Some(expected))
   }
 }
