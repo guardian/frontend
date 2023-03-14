@@ -33,7 +33,7 @@ class MostViewedVideoController(
         .map { response =>
           val videos = response.results.toList.map(apiContent => {
             val content = Content.make(apiContent)
-            Video.make(content)
+            Video.make(content, apiContent)
           })
 
           val seriesTitle = response.results.toList.lift(1).flatMap { result =>

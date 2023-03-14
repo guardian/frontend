@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
+      DCRCapiData,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -70,4 +71,13 @@ object ServerSideLiveblogInlineAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
       participationGroup = Perc0A,
+    )
+
+object DCRCapiData
+    extends Experiment(
+      name = "dcr-capi-data",
+      description = "Pass unmodified CAPI data straight to DCR alongside the existing model",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 5, 1),
+      participationGroup = Perc1D,
     )
