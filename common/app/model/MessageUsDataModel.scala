@@ -35,9 +35,9 @@ case class TextAreaField(
     id: String,
     label: String = "textarea",
     name: String,
+    `type`: FieldType = FieldType.TextArea,
     minlength: Int = 0,
     maxlength: Int = 1000,
-    `type`: FieldType = FieldType.TextArea,
 ) extends Field
 
 object FieldType extends Enumeration {
@@ -64,9 +64,9 @@ object MessageUsConfigData {
     Reads.pure(FieldType.Name))(EmailField.apply _)
 
   implicit val textAreaFieldRead: Reads[TextAreaField] = (commonFieldReads and
+    Reads.pure(FieldType.Name) and
     (JsPath \ "minlength").read[Int] and
-    (JsPath \ "maxlength").read[Int] and
-    Reads.pure(FieldType.Name))(TextAreaField.apply _)
+    (JsPath \ "maxlength").read[Int])(TextAreaField.apply _)
 
   implicit val fieldReadFmt: Reads[Field] = Reads { js =>
     val fieldType = (JsPath \ "type").read[FieldType].reads(js)

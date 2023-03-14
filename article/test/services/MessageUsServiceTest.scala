@@ -1,6 +1,6 @@
 package services
 
-import model.{MessageUsConfigData, MessageUsData}
+import model.{FieldType, EmailField, MessageUsConfigData, MessageUsData, NameField, TextAreaField}
 import org.mockito.ArgumentMatchers.{startsWith, eq => mockitoEq}
 import org.mockito.Matchers.{any, anyString}
 import org.scalatest.BeforeAndAfterAll
@@ -24,7 +24,12 @@ class MessageUsServiceTest
 
   val fakeClient = mock[S3Client[MessageUsConfigData]]
 
-  val successResponse = MessageUsConfigData(articleId = "key1", formId = "form1")
+  val formFields = List(
+    NameField("nameField1", "name", "name", FieldType.Name),
+    EmailField("emailField1", "email", "email", FieldType.Email),
+    TextAreaField("textAreaField1", "textArea", "textArea", FieldType.TextArea),
+  )
+  val successResponse = MessageUsConfigData(articleId = "key1", formId = "form1", formFields = formFields)
 
   "refreshMessageUsData" should "return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))
