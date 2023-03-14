@@ -17,6 +17,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       BorkFID,
       ActionCardRedesign,
       Okta,
+      DCRCapiData,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -119,4 +120,13 @@ object Okta
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 7, 24),
       participationGroup = Perc0E,
+    )
+
+object DCRCapiData
+    extends Experiment(
+      name = "dcr-capi-data",
+      description = "Pass unmodified CAPI data straight to DCR alongside the existing model",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 5, 1),
+      participationGroup = Perc1D,
     )

@@ -9,7 +9,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
-import experiments.ActiveExperiments
+import experiments.{ActiveExperiments, DCRCapiData, DCRFronts}
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
@@ -106,7 +106,7 @@ case class DotcomRenderingDataModel(
     showTableOfContents: Boolean,
     lang: Option[String],
     isRightToLeftLang: Boolean,
-    capiContent: CAPIContent,
+    capiContent: Option[CAPIContent],
 )
 
 object DotcomRenderingDataModel {
@@ -185,7 +185,7 @@ object DotcomRenderingDataModel {
         "showTableOfContents" -> model.showTableOfContents,
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
-        "capiContent" -> contentApiToJsonValue(model.capiContent),
+        "capiContent" -> model.capiContent.map(contentApiToJsonValue),
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -509,6 +509,10 @@ object DotcomRenderingDataModel {
 
     val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
+    val participatingInCapiTest = ActiveExperiments.isParticipating(DCRCapiData)(request)
+    println(participatingInCapiTest)
+    val capiContent = if (participatingInCapiTest) Some(content.apiContent) else None
+
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -581,6 +585,7 @@ object DotcomRenderingDataModel {
       capiContent = content.apiContent,
       lang = content.fields.lang,
       isRightToLeftLang = content.fields.isRightToLeftLang,
+      capiContent = capiContent,
     )
   }
 }
