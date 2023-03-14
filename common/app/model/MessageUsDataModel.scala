@@ -90,6 +90,7 @@ object MessageUsConfigData {
   implicit val nameFieldWrite = Json.writes[NameField]
   implicit val emailFieldWrite = Json.writes[EmailField]
   implicit val textAreaFieldWrite = Json.writes[TextAreaField]
+
   implicit val fieldWriteFmt: Writes[Field] = Json.writes[Field]
 
   implicit val MessageUsConfigDataJf: Format[MessageUsConfigData] = Json.format[MessageUsConfigData]
