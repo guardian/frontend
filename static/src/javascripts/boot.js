@@ -167,16 +167,13 @@ const go = () => {
 
 			markTime('commercial request');
 
-			if (
-				config.get('switches.standaloneCommercialBundle') &&
-				!config.get('page.isHosted', false)
-			) {
+			if (!config.get('page.isHosted', false)) {
 				return loadScript(config.get('page.commercialBundleUrl')).then(noop);
 			}
 
 			return import(
 				/* webpackChunkName: "commercial" */
-				'bootstraps/commercial-legacy'
+				'bootstraps/commercial-hosted-legacy'
 			);
 		};
 

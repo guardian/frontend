@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import type { PageTargeting } from '@guardian/commercial-core';
 import { buildAppNexusTargetingObject } from '../../../../common/modules/commercial/build-page-targeting';
 import { isInAuOrNz } from '../../../../common/modules/commercial/geo-utils';

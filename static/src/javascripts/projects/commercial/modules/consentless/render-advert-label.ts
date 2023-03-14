@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 /* eslint-disable @typescript-eslint/no-misused-promises
 -- Fastdom measure and mutate signatures are Promise<void>
 -- Nested fastdom measure-mutate promises throw the error:

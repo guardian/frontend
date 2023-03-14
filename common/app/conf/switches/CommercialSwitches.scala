@@ -16,16 +16,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val StandaloneCommercialBundle = Switch(
-    Commercial,
-    "standalone-commercial-bundle",
-    "Serve the standalone commercial bundle on all platforms",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",

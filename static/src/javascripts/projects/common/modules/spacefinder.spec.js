@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated
+ */
+
 import { _ } from 'common/modules/spacefinder';
 
 jest.mock('commercial/modules/dfp/wait-for-advert', () =>
