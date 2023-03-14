@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Test running prebid earlier in the page lifecycle",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 4, 30)),
+    sellByDate = Some(LocalDate.of(2023, 5, 1)),
     exposeClientSide = true,
   )
 
