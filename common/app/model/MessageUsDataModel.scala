@@ -3,7 +3,7 @@ package model
 import model.FieldType.FieldType
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
-import play.api.libs.json.{Format, JsPath, Json, Reads}
+import play.api.libs.json.{Format, JsPath, JsResult, Json, Reads}
 
 import scala.language.implicitConversions
 
@@ -14,6 +14,7 @@ sealed trait Field {
   def id: String
   def label: String
   def name: String
+  def required: Boolean
   def `type`: FieldType
 }
 
@@ -21,6 +22,7 @@ case class EmailField(
     id: String,
     label: String = "email",
     name: String,
+    required: Boolean,
     `type`: FieldType = FieldType.Email,
 ) extends Field
 
@@ -28,6 +30,7 @@ case class NameField(
     id: String,
     label: String = "name",
     name: String,
+    required: Boolean,
     `type`: FieldType = FieldType.Name,
 ) extends Field
 
@@ -35,6 +38,7 @@ case class TextAreaField(
     id: String,
     label: String = "textarea",
     name: String,
+    required: Boolean,
     `type`: FieldType = FieldType.TextArea,
     minlength: Int = 0,
     maxlength: Int = 1000,
@@ -55,7 +59,8 @@ object MessageUsConfigData {
 
   private val commonFieldReads = (JsPath \ "id").read[String] and
     (JsPath \ "label").read[String] and
-    (JsPath \ "name").read[String]
+    (JsPath \ "name").read[String] and
+    (JsPath \ "required").read[Boolean]
 
   implicit val nameFieldRead: Reads[NameField] = (commonFieldReads and
     Reads.pure(FieldType.Name))(NameField.apply _)
@@ -69,7 +74,7 @@ object MessageUsConfigData {
     (JsPath \ "maxlength").read[Int])(TextAreaField.apply _)
 
   implicit val fieldReadFmt: Reads[Field] = Reads { js =>
-    val fieldType = (JsPath \ "type").read[FieldType].reads(js)
+    val fieldType: JsResult[FieldType] = (JsPath \ "type").read[FieldType].reads(js)
 
     fieldType.flatMap {
       case FieldType.Name     => nameFieldRead.reads(js)

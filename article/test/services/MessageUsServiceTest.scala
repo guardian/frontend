@@ -25,9 +25,9 @@ class MessageUsServiceTest
   val fakeClient = mock[S3Client[MessageUsConfigData]]
 
   val formFields = List(
-    NameField("nameField1", "name", "name", FieldType.Name),
-    EmailField("emailField1", "email", "email", FieldType.Email),
-    TextAreaField("textAreaField1", "textArea", "textArea", FieldType.TextArea),
+    NameField("nameField1", "name", "name", true, FieldType.Name),
+    EmailField("emailField1", "email", "email", true, FieldType.Email),
+    TextAreaField("textAreaField1", "textArea", "textArea", true, FieldType.TextArea),
   )
   val successResponse = MessageUsConfigData(articleId = "key1", formId = "form1", formFields = formFields)
 
