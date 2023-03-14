@@ -36,7 +36,7 @@ class MessageUsService(messageUsS3Client: S3Client[MessageUsConfigData]) extends
       }
   }
 
-  def getBlogMessageUsConfigData(blogId: String): Option[MessageUsData] = {
+  def getBlogMessageUsData(blogId: String): Option[MessageUsData] = {
     messageUsConfigData.get().flatMap(_.get(blogId)).map(c => MessageUsData(c.formId))
   }
 

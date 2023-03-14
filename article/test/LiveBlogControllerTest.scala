@@ -70,7 +70,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     )
 
     when(
-      fakeMessageUsService.getBlogMessageUsConfigData(path),
+      fakeMessageUsService.getBlogMessageUsData(path),
     ) thenReturn Some(
       messageUsResult,
     )
@@ -321,7 +321,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
   it should "return no message us data, if not available" in new Setup {
     when(
-      fakeMessageUsService.getBlogMessageUsConfigData(path),
+      fakeMessageUsService.getBlogMessageUsData(path),
     ) thenReturn None
 
     val fakeRequest = FakeRequest(
@@ -341,7 +341,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     status(result) should be(200)
 
     val content = contentAsString(result)
-    content should not include("\"messageUs\":{\"formId\":\"mock-form-id\"}")
+    content should not include ("\"messageUs\":{\"formId\":\"mock-form-id\"}")
   }
 
   "getTopicResult" should "returns none given no automatic filter query parameter" in new Setup {
