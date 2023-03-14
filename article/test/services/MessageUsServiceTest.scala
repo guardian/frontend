@@ -94,7 +94,7 @@ class MessageUsServiceTest
     val refreshJob = Await.result(messageUsService.refreshMessageUsData(), 1.second)
     val result = messageUsService.getBlogMessageUsData("key1")
 
-    val expected = MessageUsData(formId = "form1")
+    val expected = MessageUsData(formId = "form1", formFields = formFields)
     result should equal(Some(expected))
   }
 }
