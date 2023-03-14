@@ -10,7 +10,18 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, Topic, TopicResult, TopicType, MessageUsData, FieldType, EmailField, MessageUsConfigData, NameField, TextAreaField}
+import model.{
+  LiveBlogPage,
+  Topic,
+  TopicResult,
+  TopicType,
+  MessageUsData,
+  FieldType,
+  EmailField,
+  MessageUsConfigData,
+  NameField,
+  TextAreaField,
+}
 import topics.TopicService
 import services.{NewsletterService, MessageUsService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
@@ -46,7 +57,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
         NameField("nameField1", "name", "name", true, FieldType.Name),
         EmailField("emailField1", "email", "email", true, FieldType.Email),
         TextAreaField("textAreaField1", "textArea", "textArea", true, FieldType.TextArea),
-      )
+      ),
     )
 
     val fakeAvailableTopics = Vector(
@@ -321,7 +332,9 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     status(result) should be(200)
 
     val content = contentAsString(result)
-    content should include("messageUs\":{\"formId\":\"mock-form-id\",\"formFields\":[{\"_type\":\"model.NameField\",\"id\":\"nameField1\",\"label\":\"name\",\"name\":\"name\",\"required\":true,\"type\":\"text\"},{\"_type\":\"model.EmailField\",\"id\":\"emailField1\",\"label\":\"email\",\"name\":\"email\",\"required\":true,\"type\":\"email\"},{\"_type\":\"model.TextAreaField\",\"id\":\"textAreaField1\",\"label\":\"textArea\",\"name\":\"textArea\",\"required\":true,\"type\":\"textarea\",\"minlength\":0,\"maxlength\":1000}]}")
+    content should include(
+      "messageUs\":{\"formId\":\"mock-form-id\",\"formFields\":[{\"_type\":\"model.NameField\",\"id\":\"nameField1\",\"label\":\"name\",\"name\":\"name\",\"required\":true,\"type\":\"text\"},{\"_type\":\"model.EmailField\",\"id\":\"emailField1\",\"label\":\"email\",\"name\":\"email\",\"required\":true,\"type\":\"email\"},{\"_type\":\"model.TextAreaField\",\"id\":\"textAreaField1\",\"label\":\"textArea\",\"name\":\"textArea\",\"required\":true,\"type\":\"textarea\",\"minlength\":0,\"maxlength\":1000}]}",
+    )
   }
 
   it should "return no message us data, if not available" in new Setup {
