@@ -356,10 +356,13 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       filterKeyEvents = Some(false),
       topics = None,
     )(fakeRequest)
+
     status(result) should be(200)
 
     val content = contentAsString(result)
-    content should not include ("\"messageUs\":{\"formId\":\"mock-form-id\"}")
+    content should not include (
+      "messageUs\":{\"formId\":\"mock-form-id\",\"formFields\":[{\"_type\":\"model.NameField\",\"id\":\"nameField1\",\"label\":\"name\",\"name\":\"name\",\"required\":true,\"type\":\"text\"},{\"_type\":\"model.EmailField\",\"id\":\"emailField1\",\"label\":\"email\",\"name\":\"email\",\"required\":true,\"type\":\"email\"},{\"_type\":\"model.TextAreaField\",\"id\":\"textAreaField1\",\"label\":\"textArea\",\"name\":\"textArea\",\"required\":true,\"type\":\"textarea\",\"minlength\":0,\"maxlength\":1000}]}",
+    )
   }
 
   "getTopicResult" should "returns none given no automatic filter query parameter" in new Setup {
