@@ -44,9 +44,9 @@ case class TextAreaField(
 object FieldType extends Enumeration {
   type FieldType = Value
 
-  val Name: model.FieldType.Value = Value(1, "text")
-  val Email: model.FieldType.Value = Value(2, "email")
-  val TextArea: model.FieldType.Value = Value(3, "textarea")
+  val Name = Value(1, "text")
+  val Email = Value(2, "email")
+  val TextArea = Value(3, "textarea")
 
   implicit val format: Format[FieldType] = Json.formatEnum(this)
 
@@ -79,9 +79,9 @@ sealed trait FieldFormats {
     }
   }
 
-  implicit val nameFieldWrite: OWrites[NameField] = Json.writes[NameField]
-  implicit val emailFieldWrite: OWrites[EmailField] = Json.writes[EmailField]
-  implicit val textAreaFieldWrite: OWrites[TextAreaField] = Json.writes[TextAreaField]
+  implicit val nameFieldWrite = Json.writes[NameField]
+  implicit val emailFieldWrite = Json.writes[EmailField]
+  implicit val textAreaFieldWrite = Json.writes[TextAreaField]
 
   implicit val fieldWriteFmt: Writes[Field] = Json.writes[Field]
 }
