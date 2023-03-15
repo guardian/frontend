@@ -17,12 +17,12 @@ class EmbedController(contentApiClient: ContentApiClient, val controllerComponen
   def render(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(path) map {
-        case Left(model)  => renderVideo(EmbedPage(model, model.trail.headline))
-        case Right(other) => renderOther(other)
+        case Right(model) => renderVideo(EmbedPage(model, model.trail.headline))
+        case Left(other)  => renderOther(other)
       }
     }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Video, Result]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Result, Video]] = {
     val edition = Edition(request)
 
     log.info(s"Fetching video: $path for edition $edition")
@@ -37,8 +37,8 @@ class EmbedController(contentApiClient: ContentApiClient, val controllerComponen
       val modelOption: Option[Video] = response.content.map(Content(_)).collect { case v: Video => v }
 
       modelOption match {
-        case Some(x) => Left(x)
-        case _       => Right(NotFound)
+        case Some(x) => Right(x)
+        case _       => Left(NotFound)
       }
     }
 

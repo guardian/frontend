@@ -43,8 +43,8 @@ class ImageContentController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     image(Edition(request), path).map {
-      case Left(content) => renderImageContent(content)
-      case Right(result) => RenderOtherStatus(result)
+      case Right(content) => renderImageContent(content)
+      case Left(result)   => RenderOtherStatus(result)
     }
 
   private def isSupported(c: ApiContent) = c.isImageContent

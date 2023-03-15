@@ -403,8 +403,8 @@ class LiveBlogController(
       .map(responseToModelOrResult(range, filterKeyEvents, topicResult))
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
       }
   }
 
@@ -412,16 +412,16 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
-  )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
+  )(response: ItemResponse)(implicit request: RequestHeader): Either[Result, (PageWithStoryPackage, Blocks)] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
+    val supportedContentResult: Either[Result, ContentType] = ModelOrResult(supportedContent, response)
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    val content = supportedContentResult.left.flatMap {
+    val content = supportedContentResult.flatMap {
       case minute: Article if minute.isTheMinute =>
-        Left(MinutePage(minute, StoryPackages(minute.metadata.id, response)), blocks)
+        Right(MinutePage(minute, StoryPackages(minute.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
-        Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
+        Right(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
         createLiveBlogModel(
           liveBlog,
@@ -429,11 +429,10 @@ class LiveBlogController(
           range,
           filterKeyEvents,
           topicResult,
-        ).left
-          .map(_ -> blocks)
+        ).map(_ -> blocks)
       case unknown =>
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
-        Right(InternalServerError)
+        Left(InternalServerError)
     }
 
     content
