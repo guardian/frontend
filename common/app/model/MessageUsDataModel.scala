@@ -3,12 +3,12 @@ package model
 import model.FieldType.FieldType
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
-import play.api.libs.json.{Format, JsPath, Json, Reads}
+import play.api.libs.json._
 
 import scala.language.implicitConversions
 
+case class MessageUsData(formId: String, formFields: List[Field])
 case class MessageUsConfigData(articleId: String, formId: String, formFields: List[Field])
-case class MessageUsData(formId: String)
 
 sealed trait Field {
   def id: String
@@ -56,6 +56,38 @@ object FieldType extends Enumeration {
 }
 
 object MessageUsData {
+  private val commonFieldReads = (JsPath \ "id").read[String] and
+    (JsPath \ "label").read[String] and
+    (JsPath \ "name").read[String] and
+    (JsPath \ "required").read[Boolean]
+
+  implicit val nameFieldRead: Reads[NameField] = (commonFieldReads and
+    Reads.pure(FieldType.Name))(NameField.apply _)
+
+  implicit val emailFieldRead: Reads[EmailField] = (commonFieldReads and
+    Reads.pure(FieldType.Name))(EmailField.apply _)
+
+  implicit val textAreaFieldRead: Reads[TextAreaField] = (commonFieldReads and
+    Reads.pure(FieldType.Name) and
+    (JsPath \ "minlength").read[Int] and
+    (JsPath \ "maxlength").read[Int])(TextAreaField.apply _)
+
+  implicit val fieldReadFmt: Reads[Field] = Reads { js =>
+    val fieldType: JsResult[FieldType] = (JsPath \ "type").read[FieldType].reads(js)
+
+    fieldType.flatMap {
+      case FieldType.Name     => nameFieldRead.reads(js)
+      case FieldType.Email    => emailFieldRead.reads(js)
+      case FieldType.TextArea => textAreaFieldRead.reads(js)
+    }
+  }
+
+  implicit val nameFieldWrite = Json.writes[NameField]
+  implicit val emailFieldWrite = Json.writes[EmailField]
+  implicit val textAreaFieldWrite = Json.writes[TextAreaField]
+
+  implicit val fieldWriteFmt: Writes[Field] = Json.writes[Field]
+
   implicit val MessageUsDataJf: Format[MessageUsData] = Json.format[MessageUsData]
 }
 
