@@ -4,7 +4,6 @@ import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { elementsManager } from './tests/elements-manager';
 import { integrateIma } from './tests/integrate-ima';
-import { noCarrotAdsNearNewsletterSignupBlocks } from './tests/no-carrot-ads-near-newsletter-signup-blocks';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateCopyTestJan2023 } from './tests/sign-in-gate-copy-test-variant';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -21,6 +20,5 @@ export const concurrentTests: readonly ABTest[] = [
 	consentlessAds,
 	integrateIma,
 	billboardsInMerch,
-	noCarrotAdsNearNewsletterSignupBlocks,
 	elementsManager,
 ];
