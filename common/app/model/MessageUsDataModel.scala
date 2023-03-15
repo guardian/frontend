@@ -62,10 +62,10 @@ sealed trait FieldFormats {
     Reads.pure(FieldType.Name))(NameField.apply _)
 
   implicit val emailFieldRead: Reads[EmailField] = (commonFieldReads and
-    Reads.pure(FieldType.Name))(EmailField.apply _)
+    Reads.pure(FieldType.Email))(EmailField.apply _)
 
   implicit val textAreaFieldRead: Reads[TextAreaField] = (commonFieldReads and
-    Reads.pure(FieldType.Name) and
+    Reads.pure(FieldType.TextArea) and
     (JsPath \ "minlength").read[Int] and
     (JsPath \ "maxlength").read[Int])(TextAreaField.apply _)
 
