@@ -8,12 +8,6 @@ import { getMessageFromUrlFragment } from './getMessageFromUrlFragment';
 
 let message: BrazeMessageInterface | undefined;
 
-export const taylorReportIsLive = (now: Date): boolean => {
-	const start = Date.parse('2023-03-24');
-	const end = Date.parse('2023-04-05');
-	return now.valueOf() >= start && now.valueOf() < end;
-};
-
 const buildCanShow = (
 	brazeMessagesPromise: Promise<BrazeMessagesInterface>,
 ) => {
@@ -25,7 +19,7 @@ const buildCanShow = (
 		}
 
 		// Suppress all braze banners during this period
-		if (taylorReportIsLive(new Date())) {
+		if (config.get('switches.brazeTaylorReport')) {
 			return false;
 		}
 
