@@ -430,6 +430,18 @@ class LiveBlogController(
           filterKeyEvents,
           topicResult,
         ).map(_ -> blocks)
+      case nonLiveBlogArticle: Article =>
+        /**
+          * If `isLiveBlog` is false, it must be because the article has no blocks, or lacks
+          * the `tone/minutebyminute` tag, or both.
+          * Logging these values will help us to identify which is causing the issue.
+          */
+        val hasBlocks = nonLiveBlogArticle.fields.blocks.nonEmpty;
+        val hasMinuteByMinuteTag = nonLiveBlogArticle.tags.isLiveBlog;
+        log.error(
+          s"Requested non-liveblog article as liveblog: ${nonLiveBlogArticle.metadata.id}: { hasBlocks: ${hasBlocks}, hasMinuteByMinuteTag: ${hasMinuteByMinuteTag} }",
+        )
+        Left(InternalServerError)
       case unknown =>
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
         Left(InternalServerError)
