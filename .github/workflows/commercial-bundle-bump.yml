@@ -1,0 +1,53 @@
+name: Bump @guardian/commercial-bundle
+
+on:
+    - workflow_dispatch
+
+jobs:
+    bump:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+
+            - run: yarn add @guardian/commercial-bundle@latest
+
+            - name: Check for existing pull request
+              id: check
+              uses: actions/github-script@v3
+              with:
+                  github-token: ${{secrets.GITHUB_TOKEN}}
+                  script: |
+                      const { data: pullRequests } = await github.pulls.list({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          state: 'open',
+                          head: 'commercial-bundle-bump-${{ steps.version.outputs.VERSION }}',
+                      })
+                      if (pullRequests.length > 0) {
+                          console.log('There is already a pull request open for this version')
+                          process.exit(1)
+                      }
+
+            - run: echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
+              id: version
+
+            - run: |
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --global user.name "github-actions[bot]"
+                  git checkout -b commercial-bundle-bump-${{ steps.version.outputs.VERSION }}
+                  git add package.json yarn.lock
+                  git commit -m "Bump @guardian/commercial-bundle to ${{ steps.version.outputs.VERSION }}"
+                  git push --set-upstream origin commercial-bundle-bump-${{ steps.version.outputs.VERSION }}
+
+            - uses: actions/github-script@v3
+              with:
+                  github-token: ${{secrets.GITHUB_TOKEN}}
+                  script: |
+                      github.pulls.create({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          title: 'Bump @guardian/commercial-bundle to ${{ steps.version.outputs.VERSION }}',
+                          head: 'commercial-bundle-bump-${{ steps.version.outputs.VERSION }}',
+                          base: 'main',
+                          body: 'Bump @guardian/commercial-bundle to ${{ steps.version.outputs.VERSION }}\n\nChangelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ steps.version.outputs.VERSION }}',
+                      })
