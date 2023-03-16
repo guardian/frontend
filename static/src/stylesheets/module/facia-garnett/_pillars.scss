@@ -412,10 +412,10 @@ $pillars: (
         }
     }
 
-    background-color: $special-report-alt-faded !important;
+    background-color: $special-report-alt-faded;
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: $special-report-alt-faded !important;
+        background-color: $special-report-alt-faded;
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
