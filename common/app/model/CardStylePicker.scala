@@ -11,20 +11,31 @@ object CardStylePicker {
 
   def apply(content: CapiContent): CardStyle = {
     val tags = content.tags.map(_.id).toSeq
-    extractCampaigns(tags) match {
-      case Nil                                                                         => CardStyle(content, TrailMetaData.empty)
-      case campaign :: Nil if campaign.id.toString.toLowerCase() == "specialreportalt" => SpecialReportAlt
-      case _                                                                           => SpecialReport
+    val campaigns = extractCampaigns(tags)
+    campaigns match {
+      case Nil => CardStyle(content, TrailMetaData.empty)
+      case _   => getCardStyleForReport(campaigns)
     }
   }
 
   def apply(content: FaciaContent): CardStyle = {
     val tags = FaciaContentUtils.tags(content).map(_.id)
-    extractCampaigns(tags) match {
-      case Nil                                                                         => FaciaContentUtils.cardStyle(content)
-      case campaign :: Nil if campaign.id.toString.toLowerCase() == "specialreportalt" => SpecialReportAlt
-      case _                                                                           => SpecialReport
+    val campaigns = extractCampaigns(tags)
+    campaigns match {
+      case Nil => FaciaContentUtils.cardStyle(content)
+      case _   => getCardStyleForReport(campaigns)
     }
+  }
+
+  def getCardStyleForReport(campaigns: List[Campaign]): CardStyle = {
+    if (containsSpecialReportAltCampaign(campaigns)) SpecialReportAlt else SpecialReport
+  }
+
+  private def containsSpecialReportAltCampaign(campaigns: List[Campaign]): Boolean = {
+    val specialReportAltCampaigns = campaigns.filter(campaign =>
+      campaign.fields.asInstanceOf[ReportFields].campaignId.toLowerCase() == "specialreportalt",
+    )
+    specialReportAltCampaigns.nonEmpty
   }
 
   private def extractCampaigns(tags: Seq[String]): List[Campaign] = {
