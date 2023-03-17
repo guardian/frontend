@@ -67,13 +67,14 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-no-carrot-ads-near-newsletter-signup-blocks",
-    "Test the impact of preventing spacefinder from positioning carrot ads near newsletter signup blocks",
+    "ab-elements-manager",
+    "Test serving GEM assets in ad slots on page",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 4, 4)),
+    sellByDate = Some(LocalDate.of(2023, 6, 30)),
     exposeClientSide = true,
   )
+
   Switch(
     ABTests,
     "ab-sign-in-gate-copy-test-jan-2023",

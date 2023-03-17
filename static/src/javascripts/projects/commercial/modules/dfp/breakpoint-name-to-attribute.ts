@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 // Regex to match a lowercase letter followed by an uppercase letter
 const regex = /([a-z])([A-Z])/g;
 

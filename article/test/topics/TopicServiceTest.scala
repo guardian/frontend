@@ -1,13 +1,15 @@
 package topics
 
 import model.{Topic, TopicResult, TopicType, TopicsApiResponse}
-import org.mockito.Matchers.anyString
+import services.S3Client
+import org.mockito.Matchers.{any, anyString}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import test.WithTestExecutionContext
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.libs.json.Reads
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
@@ -19,7 +21,7 @@ class TopicServiceTest
     with WithTestExecutionContext
     with MockitoSugar {
 
-  val fakeClient = mock[TopicS3Client]
+  val fakeClient = mock[S3Client[TopicsApiResponse]]
   val topicResult =
     TopicResult(
       name = "name1",
@@ -61,7 +63,7 @@ class TopicServiceTest
     results should be(None)
   }
 
-  "refreshTopics" should "return successful future given one of the S3 object calls fails" in {
+  "refreshMessageUsData" should "return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
     when(fakeClient.getObject("key2")) thenReturn Future.failed(new Throwable("error happend"))
@@ -92,7 +94,7 @@ class TopicServiceTest
   "refreshTopics" should "update in memory topics with only the first 50 items given 60 records in S3" in {
     val keys = (1 until 60).map(key => s"key${key}").toList
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(keys)
-    when(fakeClient.getObject(anyString())) thenReturn Future.successful(successResponse)
+    when(fakeClient.getObject(any())(any[Reads[TopicsApiResponse]])) thenReturn Future.successful(successResponse)
 
     val topicService = new TopicService(fakeClient)
 

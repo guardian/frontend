@@ -1,23 +1,24 @@
 package controllers
 
-import agents.{CuratedContentAgent}
+import agents.CuratedContentAgent
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient
-import model.ApplicationContext
+import model.{ApplicationContext, TopicsApiResponse}
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
-import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
+import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, S3Client, MessageUsService}
 import services.newsletters.NewsletterSignupAgent
-import topics.{TopicS3Client, TopicService}
+import topics.{TopicService}
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient
   def controllerComponents: ControllerComponents
   def wsClient: WSClient
   def remoteRender: DotcomRenderingService
-  def topicS3Client: TopicS3Client
+  def topicS3Client: S3Client[TopicsApiResponse]
   def topicService: TopicService
+  def messageUsService: MessageUsService
   def newsletterSignupAgent: NewsletterSignupAgent
   def curatedContentAgent: CuratedContentAgent
 

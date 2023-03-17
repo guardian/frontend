@@ -4,6 +4,7 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
+GET            /email-newsletters.json                                                                                           controllers.SignupPageController.renderNewslettersJson()
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)

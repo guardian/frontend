@@ -16,16 +16,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val StandaloneCommercialBundle = Switch(
-    Commercial,
-    "standalone-commercial-bundle",
-    "Serve the standalone commercial bundle on all platforms",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
@@ -319,17 +309,6 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
-  )
-
-  // TODO Remove this switch once the per-server switches are being used on DCR
-  val ampPrebid: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid",
-    description = "Amp inventory is being auctioned through Prebid",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
   )
 
   val ampPrebidPubmatic: Switch = Switch(

@@ -4,6 +4,8 @@
 @import play.api.Mode.Dev
 @import conf.Static
 @import html.HtmlPageHelpers.{ContentCSSFile}
+@import views.support.Commercial.isAdFree
+@import experiments.{ActiveExperiments, PoorDeviceConnectivity}
 
 @if(FontSwitch.isSwitchedOn) {
     @fragments.fontFaces()
@@ -75,4 +77,9 @@
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
 
 <!--<![endif]-->
+<style class="js-loggable">
+    @if(isAdFree(request) || ActiveExperiments.isParticipating(PoorDeviceConnectivity)) {
+        @Html(common.Assets.css.adFree)
+    }
+</style>
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />

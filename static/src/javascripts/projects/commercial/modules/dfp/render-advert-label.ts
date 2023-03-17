@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 /* eslint-disable @typescript-eslint/no-misused-promises
 -- Fastdom measure and mutate signatures are Promise<void>
 -- Nested fastdom measure-mutate promises throw the error:
@@ -109,6 +115,17 @@ const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<Promise<void>> => {
 			return fastdom.mutate(() => {
 				adSlotNode.setAttribute('data-label-show', 'true');
 				adSlotNode.setAttribute('ad-label-text', adLabelContent);
+				if (
+					adSlotNode.parentElement?.classList.contains(
+						'ad-slot-container',
+					) &&
+					adSlotNode.id === 'dfp-ad--top-above-nav'
+				) {
+					adSlotNode.parentElement.setAttribute(
+						'top-above-nav-ad-rendered',
+						'true',
+					);
+				}
 
 				if (shouldRenderCloseButton(adSlotNode)) {
 					adSlotNode.insertBefore(

@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import type { SizeMapping } from '@guardian/commercial-core';
 import { log } from '@guardian/libs';
 import { reportError } from '../../../../lib/report-error';
@@ -18,14 +24,17 @@ const createAdvert = (
 		}`;
 
 		log('commercial', errMsg);
-		reportError(
-			new Error(errMsg),
-			{
-				feature: 'commercial',
-			},
-			false,
-			1 / 100,
-		);
+
+		if (!navigator.userAgent.includes('DuckDuckGo')) {
+			reportError(
+				new Error(errMsg),
+				{
+					feature: 'commercial',
+				},
+				false,
+				1 / 100,
+			);
+		}
 
 		return null;
 	}

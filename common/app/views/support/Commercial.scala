@@ -12,6 +12,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
 object Commercial {
+  // some users get an ad-free experience
   def isAdFree(request: RequestHeader): Boolean = {
     try {
       request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
@@ -26,6 +27,7 @@ object Commercial {
     (!isPaidContent && (content.tags.isAudio || content.tags.isVideo))
   }
 
+  // sometimes we don't _want_ to show ads (e.g. on sensitive content)
   def shouldShowAds(page: Page)(implicit request: RequestHeader): Boolean = {
     if (request.queryString.get("forceads").isDefined) {
       true

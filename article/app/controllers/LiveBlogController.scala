@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content =
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common._
 import contentapi.ContentApiClient
-import implicits.{AmpFormat, HtmlFormat}
+import implicits.{AmpFormat, AppsFormat, HtmlFormat}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
@@ -18,7 +18,7 @@ import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.dotcomrendering.DotcomponentsLogger
-import services.{CAPILookup, NewsletterService}
+import services.{CAPILookup, NewsletterService, MessageUsService}
 import topics.TopicService
 import views.support.RenderOtherStatus
 
@@ -33,6 +33,7 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
+    messageUsService: MessageUsService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -66,6 +67,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topicResult = if (filter) None else getTopicResult(path, topics)
       val availableTopics = topicService.getAvailableTopics(path)
+      val messageUs = messageUsService.getBlogMessageUsData(path)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -75,6 +77,7 @@ class LiveBlogController(
             filter,
             topicResult,
             availableTopics,
+            messageUs,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -89,6 +92,7 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
+                messageUs,
               ) // no page param
             case None =>
               renderWithRange(
@@ -97,6 +101,7 @@ class LiveBlogController(
                 filter,
                 None,
                 availableTopics,
+                messageUs,
               ) // no page param
           }
         }
@@ -118,11 +123,12 @@ class LiveBlogController(
       val topicResult = getTopicResult(path, topics)
       val range = getRange(lastUpdate, page, topicResult)
       val availableTopics = topicService.getAvailableTopics(path)
+      val messageUs = messageUsService.getBlogMessageUsData(path)
 
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult))
+          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult, messageUs))
         case (blog: LiveBlogPage, blocks) =>
           getJson(
             blog,
@@ -148,6 +154,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
       availableTopics: Option[Seq[Topic]],
+      messageUs: Option[MessageUsData],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -185,11 +192,12 @@ class LiveBlogController(
                 blog,
                 blocks,
                 pageType,
+                newsletter = None,
                 filterKeyEvents,
                 request.forceLive,
                 availableTopics,
-                newsletter = None,
                 topicResult,
+                messageUs,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
@@ -199,6 +207,18 @@ class LiveBlogController(
             remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+          case (blog: LiveBlogPage, AppsFormat) =>
+            remoteRenderer.getAppsArticle(
+              ws,
+              blog,
+              blocks,
+              pageType,
+              newsletter = None,
+              filterKeyEvents,
+              request.forceLive,
+              availableTopics,
+              topicResult,
+            )
           case _ => Future.successful(NotFound)
         }
       }
@@ -348,6 +368,7 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
+      messageUs: Option[MessageUsData],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
@@ -363,6 +384,7 @@ class LiveBlogController(
         availableTopics,
         newsletter,
         topicResult,
+        messageUs,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
@@ -381,8 +403,8 @@ class LiveBlogController(
       .map(responseToModelOrResult(range, filterKeyEvents, topicResult))
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
       }
   }
 
@@ -390,16 +412,16 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
-  )(response: ItemResponse)(implicit request: RequestHeader): Either[(PageWithStoryPackage, Blocks), Result] = {
+  )(response: ItemResponse)(implicit request: RequestHeader): Either[Result, (PageWithStoryPackage, Blocks)] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    val supportedContentResult: Either[ContentType, Result] = ModelOrResult(supportedContent, response)
+    val supportedContentResult: Either[Result, ContentType] = ModelOrResult(supportedContent, response)
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    val content = supportedContentResult.left.flatMap {
+    val content = supportedContentResult.flatMap {
       case minute: Article if minute.isTheMinute =>
-        Left(MinutePage(minute, StoryPackages(minute.metadata.id, response)), blocks)
+        Right(MinutePage(minute, StoryPackages(minute.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
-        Left(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
+        Right(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
       case liveBlog: Article if liveBlog.isLiveBlog =>
         createLiveBlogModel(
           liveBlog,
@@ -407,11 +429,22 @@ class LiveBlogController(
           range,
           filterKeyEvents,
           topicResult,
-        ).left
-          .map(_ -> blocks)
+        ).map(_ -> blocks)
+      case nonLiveBlogArticle: Article =>
+        /**
+          * If `isLiveBlog` is false, it must be because the article has no blocks, or lacks
+          * the `tone/minutebyminute` tag, or both.
+          * Logging these values will help us to identify which is causing the issue.
+          */
+        val hasBlocks = nonLiveBlogArticle.fields.blocks.nonEmpty;
+        val hasMinuteByMinuteTag = nonLiveBlogArticle.tags.isLiveBlog;
+        log.error(
+          s"Requested non-liveblog article as liveblog: ${nonLiveBlogArticle.metadata.id}: { hasBlocks: ${hasBlocks}, hasMinuteByMinuteTag: ${hasMinuteByMinuteTag} }",
+        )
+        Left(InternalServerError)
       case unknown =>
         log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
-        Right(InternalServerError)
+        Left(InternalServerError)
     }
 
     content

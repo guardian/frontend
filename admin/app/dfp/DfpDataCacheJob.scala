@@ -24,10 +24,12 @@ class DfpDataCacheJob(
       val start = System.currentTimeMillis
       val data = loadLineItems()
       val sponsorshipLineItemIds = dfpApi.readSponsorshipLineItemIds()
+      val currentLineItems = loadCurrentLineItems()
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
       Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
+      writeInlineMerchandisingTargetedTags(currentLineItems)
     }
 
   /*
@@ -44,6 +46,17 @@ class DfpDataCacheJob(
     } {
       loadLineItems()
     }
+  }
+
+  private def loadCurrentLineItems(): DfpDataExtractor = {
+    val currentLineItems = dfpApi.readCurrentLineItems
+
+    val loadSummary = LineItemLoadSummary(
+      validLineItems = currentLineItems.validItems,
+      invalidLineItems = currentLineItems.invalidItems,
+    )
+
+    DfpDataExtractor(loadSummary.validLineItems, loadSummary.invalidLineItems)
   }
 
   private def loadLineItems(): DfpDataExtractor = {
@@ -133,11 +146,6 @@ class DfpDataCacheJob(
     if (data.hasValidLineItems) {
       val now = printLondonTime(DateTime.now())
 
-      val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
-      Store.putInlineMerchandisingSponsorships(
-        stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))),
-      )
-
       val targetedHighMerchandisingLineItems = data.targetedHighMerchandisingLineItems
       Store.putHighMerchandisingSponsorships(
         stringify(toJson(HighMerchandisingTargetedTagsReport(now, targetedHighMerchandisingLineItems))),
@@ -150,6 +158,18 @@ class DfpDataCacheJob(
 
       Store.putTopAboveNavSlotTakeovers(
         stringify(toJson(LineItemReport(now, data.topAboveNavSlotTakeovers, Seq.empty))),
+      )
+    }
+  }
+
+  private def writeInlineMerchandisingTargetedTags(data: DfpDataExtractor): Unit = {
+
+    if (data.hasValidLineItems) {
+      val now = printLondonTime(DateTime.now())
+
+      val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
+      Store.putInlineMerchandisingSponsorships(
+        stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))),
       )
     }
   }

@@ -97,6 +97,20 @@
     }
 }
 
+.ad-slot-container {
+    width: 100%;
+}
+
+.ad-slot-container[top-above-nav-ad-rendered='true'] {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.ad-slot-container .ad-slot--mobile {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .ad-slot--crossword-banner,
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
@@ -173,7 +187,6 @@
 }
 
 .ad-slot--liveblog-inline,
-
 .ad-slot--container-inline,
 .ad-slot--container-inline.ad-slot--fluid {
     @include mq(mobileLandscape) {
@@ -183,6 +196,7 @@
         margin: 0 $gs-gutter/2;
     }
 }
+
 .ad-slot--gallery-inline {
     background-color: $brightness-7;
     margin-left: 0;

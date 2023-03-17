@@ -7,18 +7,15 @@ import model._
 import implicits.ItemResponses
 import java.net.URI
 
-// TODO 'Convention dictates that Left is used for failure and Right is used for success.'
-// We got this the other way around, it not an error, but we should fix it.
-// Assuming that 'I can serve this to the user' is the least error state.
 object ModelOrResult extends Results with GuLogging {
 
   def apply[T](item: Option[T], response: ItemResponse, maybeSection: Option[ApiSection] = None)(implicit
       request: RequestHeader,
-  ): Either[T, Result] =
+  ): Either[Result, T] =
     item
       .map(i => ItemOrRedirect(i, response, maybeSection))
-      .orElse(InternalRedirect(response).map(Right(_)))
-      .getOrElse(Right(NoCache(NotFound)))
+      .orElse(InternalRedirect(response).map(Left(_)))
+      .getOrElse(Left(NoCache(NotFound)))
 }
 
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
@@ -26,33 +23,34 @@ private object ItemOrRedirect extends ItemResponses with GuLogging {
 
   def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit
       request: RequestHeader,
-  ): Either[T, Result] = {
+  ): Either[Result, T] =
+    maybeSection match {
+      case Some(section) => redirectSection(item, request, section)
+      case None          => redirectArticle(item, response, request)
+    }
 
-    maybeSection map redirectSection(item, request) getOrElse redirectArticle(item, response, request)
-  }
-
-  private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[T, Result] = {
+  private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[Result, T] = {
     canonicalPath(response) match {
       case Some(canonicalPath) if canonicalPath != request.pathWithoutModifiers && !request.isModified =>
-        Right(Found(canonicalPath + paramString(request)))
-      case _ => Left(item)
+        Left(Found(canonicalPath + paramString(request)))
+      case _ => Right(item)
     }
 
   }
 
-  private def redirectSection[T](item: T, request: RequestHeader)(section: ApiSection): Either[T, Result] = {
+  private def redirectSection[T](item: T, request: RequestHeader, section: ApiSection): Either[Result, T] = {
 
     if (
       request.path.endsWith("/all") &&
       pathWithoutEdition(section) != request.path.stripSuffix("/all")
     )
-      Right(Found(pathWithoutEdition(section) + "/all"))
+      Left(Found(pathWithoutEdition(section) + "/all"))
     else if (
       request.getQueryString("page").exists(_ != "1") &&
       pathWithoutEdition(section) != request.path
     )
-      Right(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
-    else Left(item)
+      Left(Found(s"${pathWithoutEdition(section)}?${request.rawQueryString}"))
+    else Right(item)
 
   }
 

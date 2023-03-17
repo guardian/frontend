@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated
+ */
+
 import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import config from '../../../../lib/config';
 import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';

@@ -16,7 +16,7 @@ trait ImageQuery extends ConciergeRepository {
   def image(edition: Edition, path: String)(implicit
       request: RequestHeader,
       context: ApplicationContext,
-  ): Future[Either[ImageContentPage, PlayResult]] = {
+  ): Future[Either[PlayResult, ImageContentPage]] = {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
     val response = contentApiClient.getResponse(
       contentApiClient
@@ -26,10 +26,10 @@ trait ImageQuery extends ConciergeRepository {
       val mainContent = response.content.filter(_.isImageContent).map(Content(_))
       mainContent
         .map {
-          case content: ImageContent => Left(ImageContentPage(content, StoryPackages(content.metadata.id, response)))
-          case _                     => Right(NotFound)
+          case content: ImageContent => Right(ImageContentPage(content, StoryPackages(content.metadata.id, response)))
+          case _                     => Left(NotFound)
         }
-        .getOrElse(Right(NotFound))
+        .getOrElse(Left(NotFound))
     }
 
     response recover convertApiExceptions

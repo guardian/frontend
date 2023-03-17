@@ -3,7 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import implicits.{AmpFormat, AppsFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model._
@@ -126,13 +126,19 @@ class ArticleController(
           article,
           blocks,
           pageType,
-          filterKeyEvents = false,
-          false,
-          newsletter = newsletter,
-          topicResult = None,
+          newsletter,
+          messageUs = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AppsFormat =>
+        remoteRenderer.getAppsArticle(
+          ws,
+          article,
+          blocks,
+          pageType,
+          newsletter,
+        )
     }
   }
 
@@ -144,21 +150,22 @@ class ArticleController(
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
       }
   }
 
   private def responseToModelOrResult(
       response: ItemResponse,
-  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
+  )(implicit request: RequestHeader): Either[Result, (ArticlePage, Blocks)] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     ModelOrResult(supportedContent, response) match {
-      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
+      case Right(article: Article) =>
+        Right((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
+      case Left(r) => Left(r)
+      case _       => Left(NotFound)
     }
   }
 

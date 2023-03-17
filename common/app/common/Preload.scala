@@ -6,11 +6,6 @@ import play.api.mvc.RequestHeader
 
 object Preload {
 
-  def commercialBundleNameAsset(implicit request: RequestHeader): Seq[PreloadAsset] =
-    if (conf.switches.Switches.StandaloneCommercialBundle.isSwitchedOn)
-      Seq.empty
-    else Seq(JsPreloadAsset("javascripts/graun.commercial.js"))
-
   def isPolyFillIOFallbackMin: Seq[PreloadAsset] =
     if (conf.switches.Switches.PolyfillIOFallbackMin.isSwitchedOn)
       Seq(JsPreloadAsset("javascripts/vendor/polyfillio.minimum.fallback.js"))
@@ -25,7 +20,7 @@ object Preload {
         JsPreloadAsset("javascripts/vendor/polyfillio.fallback.js")
       },
       JsPreloadAsset("javascripts/graun.standard.js"),
-    ) ++ isPolyFillIOFallbackMin ++ commercialBundleNameAsset
+    ) ++ isPolyFillIOFallbackMin
 
   def faciaDefaultPreloads(implicit request: RequestHeader): Seq[PreloadAsset] =
     Seq(
@@ -36,7 +31,7 @@ object Preload {
         JsPreloadAsset("javascripts/vendor/polyfillio.fallback.js")
       },
       JsPreloadAsset("javascripts/graun.standard.js"),
-    ) ++ isPolyFillIOFallbackMin ++ commercialBundleNameAsset
+    ) ++ isPolyFillIOFallbackMin
 
   def config(implicit request: RequestHeader): Map[ApplicationIdentity, Seq[PreloadAsset]] =
     Map(

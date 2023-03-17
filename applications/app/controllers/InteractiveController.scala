@@ -73,14 +73,14 @@ class InteractiveController(
 
   def toModel(response: ItemResponse)(implicit
       request: RequestHeader,
-  ): Either[(InteractivePage, Blocks), Result] = {
+  ): Either[Result, (InteractivePage, Blocks)] = {
     val interactive = response.content map { Interactive.make }
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
     val page = interactive.map(i => InteractivePage(i, StoryPackages(i.metadata.id, response)))
 
     ModelOrResult(page, response) match {
-      case Left(page)       => Left((page, blocks))
-      case Right(exception) => Right(exception)
+      case Right(page)     => Right((page, blocks))
+      case Left(exception) => Left(exception)
     }
   }
 
@@ -115,9 +115,9 @@ class InteractiveController(
     val requestFormat = request.getRequestFormat
     val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
 
-    def render(model: Either[(InteractivePage, Blocks), Result]): Future[Result] = {
+    def render(model: Either[Result, (InteractivePage, Blocks)]): Future[Result] = {
       model match {
-        case Left((page, blocks)) => {
+        case Right((page, blocks)) => {
           val tier = InteractivePicker.getRenderingTier(path)
 
           (requestFormat, tier) match {
@@ -128,7 +128,7 @@ class InteractiveController(
             case _                                => renderNonDCR(page)
           }
         }
-        case Right(result) => Future.successful(result)
+        case Left(result) => Future.successful(result)
       }
     }
 

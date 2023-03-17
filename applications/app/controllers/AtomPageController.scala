@@ -110,7 +110,7 @@ class AtomPageController(
   ): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(s"atom/$atomType/$id") map {
-        case Left(atom: AudioAtom) => {
+        case Right(atom: AudioAtom) => {
 
           /*
           mark: 57cadc98-16c0-49ac-8bba-c96144c488a7
@@ -133,25 +133,25 @@ class AtomPageController(
           val html2: Html = views.html.fragments.atoms.audio(atom.id, Html(html1), css, js)
           Ok(html2)
         }
-        case Left(atom: ChartAtom) =>
+        case Right(atom: ChartAtom) =>
           renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-        case Left(atom: GuideAtom) =>
+        case Right(atom: GuideAtom) =>
           renderAtom(GuideAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-        case Left(atom: InteractiveAtom) =>
+        case Right(atom: InteractiveAtom) =>
           renderAtom(
             InteractiveAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar),
           )
-        case Left(atom: MediaAtom) =>
+        case Right(atom: MediaAtom) =>
           renderAtom(MediaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-        case Left(atom: ProfileAtom) =>
+        case Right(atom: ProfileAtom) =>
           renderAtom(ProfileAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-        case Left(atom: QandaAtom) =>
+        case Right(atom: QandaAtom) =>
           renderAtom(QandaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-        case Left(atom: TimelineAtom) =>
+        case Right(atom: TimelineAtom) =>
           renderAtom(TimelineAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-        case Left(_) =>
+        case Right(_) =>
           renderOther(NotFound)
-        case Right(other) =>
+        case Left(other) =>
           renderOther(other)
       }
     }
@@ -161,11 +161,11 @@ class AtomPageController(
       TinyResponse.noContent(Some("POST, OPTIONS"))
     }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Atom, Result]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Result, Atom]] = {
     val edition = Edition(request)
     contentApiClient
       .getResponse(contentApiClient.item(path, edition))
-      .map(makeAtom _ andThen { _.toLeft(NotFound) })
+      .map(makeAtom _ andThen { _.toRight(NotFound) })
       .recover(convertApiExceptions)
   }
 

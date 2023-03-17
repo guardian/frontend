@@ -42,7 +42,7 @@ trait Index extends ConciergeRepository {
 
   def index(leftSide: String, rightSide: String, page: Int, isRss: Boolean)(implicit
       request: RequestHeader,
-  ): Future[Either[IndexPage, PlayResult]] = {
+  ): Future[Either[PlayResult, IndexPage]] = {
 
     val section = leftSide.split('/').head
 
@@ -75,15 +75,15 @@ trait Index extends ConciergeRepository {
       .map { response =>
         val trails = response.results.map(IndexPageItem(_)).toList
         trails match {
-          case Nil => Right(NotFound)
+          case Nil => Left(NotFound)
           case head :: _ =>
             val tag1 = findTag(head.item, firstTag)
             val tag2 = findTag(head.item, secondTag)
             if (tag1.isDefined && tag2.isDefined) {
               val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
-              Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+              Right(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
             } else {
-              Right(NotFound)
+              Left(NotFound)
             }
         }
       }
@@ -91,7 +91,7 @@ trait Index extends ConciergeRepository {
     promiseOfResponse
       .recover({
         //this is the best handle we have on a wrong 'page' number
-        case ContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
+        case ContentApiError(400, _, _) => Left(Found(s"/$leftSide+$rightSide"))
       })
       .recover(convertApiExceptions)
 
@@ -123,7 +123,7 @@ trait Index extends ConciergeRepository {
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit
       request: RequestHeader,
-  ): Future[Either[IndexPage, PlayResult]] = {
+  ): Future[Either[PlayResult, IndexPage]] = {
 
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
     val blocks = if (isRss) Some(TrailsToRss.BlocksToGenerateRssIntro) else None
@@ -178,7 +178,7 @@ trait Index extends ConciergeRepository {
     promiseOfResponse
       .recover({
         //this is the best handle we have on a wrong 'page' number
-        case ContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
+        case ContentApiError(400, _, _) if pageNum != 1 => Left(Found(s"/$path"))
       })
       .recover(convertApiExceptions)
   }

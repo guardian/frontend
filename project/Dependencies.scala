@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.254"
   val awsVersion = "1.12.205"
-  val capiVersion = "19.1.2"
-  val faciaVersion = "4.0.4"
+  val capiVersion = "19.2.1"
+  val faciaVersion = "4.0.5"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -44,7 +44,7 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.5"
-  val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.1.1"
+  val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.2.7"
   val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v28" % "0.18"
   val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "0.18"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
@@ -117,7 +117,7 @@ object Dependencies {
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
   val jquery = "org.webjars" % "jquery" % "3.2.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.12.1"
-  val lodash = "org.webjars" % "lodash" % "4.17.15"
+  val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
   val react = "org.webjars" % "react" % "15.6.1"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "3.5.17"
