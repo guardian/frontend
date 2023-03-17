@@ -3,8 +3,6 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 const CopyPlugin = require("copy-webpack-plugin");
 
-const isDEV = process.env.NODE_ENV !== 'production';
-
 module.exports = {
     entry: {
         standard: path.join(
@@ -165,18 +163,6 @@ module.exports = {
 
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        }),
-        // Copy the commercial bundle dist to Frontend's static output location:
-        // static/target/javascripts/commercial
-        // In development mode the hashed directory structure is discarded and all files are copied to '/commercial'
-        // In production mode the hashed directory structure is copied as is
-        new CopyPlugin({
-          patterns: [
-            {
-                from: "node_modules/@guardian/commercial-bundle/dist",
-                to: isDEV ? "commercial/[name].[ext]" : "commercial"
-            },
-          ],
         }),
     ],
     externals: {
