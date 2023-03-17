@@ -3,6 +3,8 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 const CopyPlugin = require("copy-webpack-plugin");
 
+const isDEV = process.env.NODE_ENV !== 'production';
+
 module.exports = {
     entry: {
         standard: path.join(
@@ -166,7 +168,10 @@ module.exports = {
         }),
         new CopyPlugin({
           patterns: [
-            { from: "node_modules/@guardian/commercial-bundle/dist", to: "commercial" },
+            {
+                from: "node_modules/@guardian/commercial-bundle/dist",
+                to: isDEV ? "commercial/[name].[ext]" : "commercial"
+            },
           ],
         }),
     ],
