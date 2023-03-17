@@ -55,6 +55,7 @@ class LeagueTableController(
     "Women's Euro 2022",
     "World Cup 2022 qualifying",
     "Nations League",
+    "European Championship",
   )
 
   def sortedCompetitions: Seq[Competition] =
