@@ -60,9 +60,15 @@
 
         // darken on hover
         .u-faux-block-link--hover {
-            background-color: darken($color1, 5%);
+            @if $pillar == special-report-alt {
+                background-color: darken($color1, 2%);
+            } @else {
+                background-color: darken($color1, 5%);
+            }
 
-            .fc-item__kicker::before {
+            @if $pillar == special-report-alt {
+                background-color: darken($color1, 2%);
+            } @else {
                 background-color: darken($color1, 5%);
             }
         }
@@ -94,4 +100,4 @@
 @include overide-live-blog-colours(sport, $sport-dark, $sport-pastel);
 @include overide-live-blog-colours(arts, $culture-dark, $culture-pastel);
 @include overide-live-blog-colours(lifestyle, $lifestyle-dark, $lifestyle-pastel);
-@include overide-live-blog-colours(special-report-alt, $special-report-alt-pastel, $special-report-alt-dark);
+@include overide-live-blog-colours(special-report-alt, $special-report-alt-faded, $special-report-alt-dark);
