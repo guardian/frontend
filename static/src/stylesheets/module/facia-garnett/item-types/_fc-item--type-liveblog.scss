@@ -17,11 +17,19 @@
         }
 
         .fc-item__headline {
-            color: #ffffff;
+            @if $pillar == special-report-alt {
+                color: $color2;
+            } @else {
+                color: #ffffff;
+            }
         }
 
         .fc-item__standfirst {
-            color: #ffffff;
+            @if $pillar == special-report-alt {
+                color: $color2;
+            } @else {
+                color: #ffffff;
+            }
         }
 
         .fc-item__meta {
@@ -39,7 +47,11 @@
         }
 
         .fc-sublink__link {
-            color: #ffffff;
+            @if $pillar == special-report-alt {
+                color: $color2;
+            } @else {
+                color: #ffffff;
+            }
         }
 
         .fc-sublink__kicker {
