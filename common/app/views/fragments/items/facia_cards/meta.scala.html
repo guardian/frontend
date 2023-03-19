@@ -1,17 +1,32 @@
+@import model.pressed.SpecialReportAlt
 @(item: layout.ContentCard)(implicit request: RequestHeader)
 
 @import views.support.GuDateFormatLegacy
 
+
+
 <div class="fc-item__meta js-item__meta">
     @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {
-        <time class="fc-item__timestamp@if(timeStampDisplay.javaScriptUpdate){ js-item__timestamp}"
-        datetime="@publishedAt.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-        data-timestamp="@publishedAt.getMillis"
-        data-relativeformat="short">
-            @fragments.inlineSvg("clock", "icon")
-        <span class="fc-timestamp__text">
-            <span class="u-h">Published: </span>@GuDateFormatLegacy(publishedAt, timeStampDisplay.formatString)
-        </span>
-        </time>
+        @if(item.cardStyle == SpecialReportAlt) {
+            <time class="fc-item__timestamp_dark@if(timeStampDisplay.javaScriptUpdate) { js-item__timestamp}"
+            datetime="@publishedAt.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+            data-timestamp="@publishedAt.getMillis"
+            data-relativeformat="short">
+                @fragments.inlineSvg("clock", "icon")
+                <span class="fc-timestamp__text">
+                    <span class="u-h">Published: </span>@GuDateFormatLegacy(publishedAt, timeStampDisplay.formatString)
+                </span>
+            </time>
+        } else {
+            <time class="fc-item__timestamp@if(timeStampDisplay.javaScriptUpdate) { js-item__timestamp}"
+            datetime="@publishedAt.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+            data-timestamp="@publishedAt.getMillis"
+            data-relativeformat="short">
+                @fragments.inlineSvg("clock", "icon")
+                <span class="fc-timestamp__text">
+                    <span class="u-h">Published: </span>@GuDateFormatLegacy(publishedAt, timeStampDisplay.formatString)
+                </span>
+            </time>
+        }
     }
 </div>

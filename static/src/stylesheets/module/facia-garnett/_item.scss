@@ -399,6 +399,19 @@ $block-height: 58px;
     svg {
         height: 11px;
         width: 11px;
+
+    }
+}
+
+.fc-item__timestamp_dark .inline-icon {
+    height: 11px;
+    width: 11px;
+    margin-top: 1px;
+
+    svg {
+        height: 11px;
+        width: 11px;
+        fill: $special-report-alt-dark;
     }
 }
 
