@@ -1,7 +1,7 @@
 package model
 
 import com.gu.facia.api.utils.{CardStyle, FaciaContentUtils, SpecialReport, SpecialReportAlt}
-import com.gu.facia.client.models.{MetaDataCommonFields, TrailMetaData}
+import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.{Campaign, ReportFields}
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.facia.api.models.FaciaContent
@@ -11,36 +11,39 @@ object CardStylePicker {
 
   def apply(content: CapiContent): CardStyle = {
     val tags = content.tags.map(_.id).toSeq
-    val campaigns = extractCampaigns(tags)
-    campaigns match {
-      case Nil => CardStyle(content, TrailMetaData.empty)
-      case _   => getCardStyleForReport(campaigns)
+    extractCampaigns(tags) match {
+      case OtherCampaign            => CardStyle(content, TrailMetaData.empty)
+      case SpecialReportCampaign    => SpecialReport
+      case SpecialReportAltCampaign => SpecialReportAlt
     }
   }
 
   def apply(content: FaciaContent): CardStyle = {
     val tags = FaciaContentUtils.tags(content).map(_.id)
-    val campaigns = extractCampaigns(tags)
-    campaigns match {
-      case Nil => FaciaContentUtils.cardStyle(content)
-      case _   => getCardStyleForReport(campaigns)
+    extractCampaigns(tags) match {
+      case OtherCampaign            => FaciaContentUtils.cardStyle(content)
+      case SpecialReportCampaign    => SpecialReport
+      case SpecialReportAltCampaign => SpecialReportAlt
     }
   }
 
-  def getCardStyleForReport(campaigns: List[Campaign]): CardStyle = {
-    if (containsSpecialReportAltCampaign(campaigns)) SpecialReportAlt else SpecialReport
-  }
+  sealed trait CampaignType
+  case object SpecialReportCampaign extends CampaignType
+  case object SpecialReportAltCampaign extends CampaignType
+  case object OtherCampaign extends CampaignType
 
-  private def containsSpecialReportAltCampaign(campaigns: List[Campaign]): Boolean = {
-    val specialReportAltCampaigns = campaigns.filter(campaign =>
-      campaign.fields.asInstanceOf[ReportFields].campaignId.toLowerCase() == "specialreportalt",
-    )
-    specialReportAltCampaigns.nonEmpty
-  }
+  private def extractCampaigns(tags: Seq[String]): CampaignType =
+    getCampaignType(CampaignAgent.getCampaignsForTags(tags))
 
-  private def extractCampaigns(tags: Seq[String]): List[Campaign] = {
-    CampaignAgent
-      .getCampaignsForTags(tags)
-      .filter(_.fields.isInstanceOf[ReportFields])
+  def getCampaignType(campaigns: Seq[Campaign]): CampaignType = {
+    campaigns match {
+      case Nil => OtherCampaign
+      case head :: tail =>
+        head.fields match {
+          case ReportFields(campaignId) =>
+            if (campaignId.toLowerCase() == "specialreportalt") SpecialReportAltCampaign else SpecialReportCampaign
+          case _ => getCampaignType(tail)
+        }
+    }
   }
 }
