@@ -127,8 +127,14 @@ class LiveBlogController(
 
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
+
+        /**
+          * When DCR requests new blocks from the client, it will add a `lastUpdate` parameter.
+          * If no such parameter is present, we should return a JSON representation of the whole
+          * payload that would be sent to DCR when initially server side rendering the LiveBlog page.
+          */
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderGuuiJson(blog, blocks, filter, availableTopics, topicResult, messageUs))
+          Future.successful(renderDCRJson(blog, blocks, filter, availableTopics, topicResult, messageUs))
         case (blog: LiveBlogPage, blocks) =>
           getJson(
             blog,
@@ -362,7 +368,10 @@ class LiveBlogController(
     }
   }
 
-  private[this] def renderGuuiJson(
+  /**
+    * Returns a JSON representation of the payload that's sent to DCR when rendering the whole LiveBlog page.
+    */
+  private[this] def renderDCRJson(
       blog: LiveBlogPage,
       blocks: Blocks,
       filterKeyEvents: Boolean,
