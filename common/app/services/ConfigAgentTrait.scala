@@ -88,24 +88,8 @@ object ConfigAgent extends GuLogging {
     canonicalCollectionMap.get(frontId).flatten
   }
 
-  def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
-    val config = configAgent.get()
-    config
-      .flatMap(_.fronts.get(id).map(_.collections))
-      .map(
-        _.flatMap(collectionId =>
-          getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig)),
-        ),
-      )
-  }
-
   def getConfig(id: String): Option[CollectionConfig] =
     configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
-
-  def getAllCollectionIds: List[String] = {
-    val config = configAgent.get()
-    config.map(_.collections.keys.toList).getOrElse(Nil)
-  }
 
   def contentsAsJsonString: String = Json.prettyPrint(Json.toJson(configAgent.get()))
 
@@ -159,16 +143,6 @@ object ConfigAgent extends GuLogging {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
   }
 
-  def editorsPicksForCollection(collectionId: String): Option[Seq[String]] =
-    configAgent
-      .get()
-      .map(
-        _.fronts
-          .filter { case (_, front) => front.collections.headOption == Option(collectionId) }
-          .keys
-          .toSeq,
-      )
-      .filter(_.nonEmpty)
 }
 
 class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
