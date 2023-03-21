@@ -54,12 +54,12 @@ object ConfigAgent extends GuLogging {
     configAgent.alter(Option(config))
   }
 
-  def refreshAndReturn(implicit ec: ExecutionContext): Future[Option[ConfigJson]] =
+  def refreshAndReturn(implicit ec: ExecutionContext): Future[Unit] =
     getClient.config
-      .flatMap(config => configAgent.alter { _ => Option(config) })
+      .map(config => configAgent.send(Option(config)))
       .fallbackTo {
         log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
-        Future.successful(configAgent.get())
+        Future.successful(())
       }
 
   def getPathIds: List[String] = {
