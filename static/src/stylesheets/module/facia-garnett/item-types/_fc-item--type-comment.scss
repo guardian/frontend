@@ -282,6 +282,10 @@
     // if pillar news we override news pallete with opinion palette for comment cards
     &.fc-item--pillar-news {
         @include colours(map-get($pillars, opinion));
+
+        &.fc-item--pillar-special-report-alt {
+            @include colours(map-get($pillars, special-report-alt));
+        }
     }
 }
 
