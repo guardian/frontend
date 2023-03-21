@@ -470,7 +470,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       val frontProperties: FrontProperties = ConfigAgent
-        .fetchFrontProperties(path)
+        .getFrontProperties(path)
         .copy(
           editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
           /*

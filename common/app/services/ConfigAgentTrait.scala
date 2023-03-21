@@ -114,19 +114,23 @@ object ConfigAgent extends GuLogging {
     }
   }
 
-  def fetchFrontProperties(id: String): FrontProperties = {
+  def getFrontProperties(id: String): FrontProperties = {
     val frontOption: Option[FrontJson] = configAgent.get().flatMap(_.fronts.get(id))
 
-    FrontProperties(
-      onPageDescription = frontOption.flatMap(_.onPageDescription),
-      imageUrl = frontOption.flatMap(_.imageUrl),
-      imageWidth = frontOption.flatMap(_.imageWidth).map(_.toString),
-      imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
-      isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
-      editorialType = None, // value found in Content API
-      commercial = None, // value found in Content API
-      priority = frontOption.flatMap(_.priority),
-    )
+    frontOption
+      .map(frontJson =>
+        FrontProperties(
+          onPageDescription = frontJson.onPageDescription,
+          imageUrl = frontJson.imageUrl,
+          imageWidth = frontJson.imageWidth.map(_.toString),
+          imageHeight = frontJson.imageHeight.map(_.toString),
+          isImageDisplayed = frontJson.isImageDisplayed.getOrElse(false),
+          editorialType = None, // value found in Content API
+          commercial = None, // value found in Content API
+          priority = frontJson.priority,
+        ),
+      )
+      .getOrElse(FrontProperties.empty)
   }
 
   def isFrontHidden(id: String): Boolean =
