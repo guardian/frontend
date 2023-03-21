@@ -10,6 +10,8 @@ const defaultClientSideTests: ABTest[] = [
 
 const serverSideTests: ServerSideABTest[] = [
 	/* linter, please keep this array multi-line */
+	'poorDeviceConnectivityVariant',
+	'poorDeviceConnectivityControl',
 ];
 
 /**
