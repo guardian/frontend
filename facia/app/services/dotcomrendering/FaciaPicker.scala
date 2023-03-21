@@ -60,12 +60,6 @@ object FrontChecks {
     !faciaPage.isNetworkFront
   }
 
-  def isNotAdFree()(implicit request: RequestHeader): Boolean = {
-    // We don't support the signed in experience
-    // See: https://github.com/guardian/dotcom-rendering/issues/5926
-    !Commercial.isAdFree(request)
-  }
-
   def hasNoPageSkin(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
     // We don't support page skin ads
     // See: https://github.com/guardian/dotcom-rendering/issues/5490
@@ -129,7 +123,6 @@ object FaciaPicker extends GuLogging {
     Map(
       ("allCollectionsAreSupported", FrontChecks.allCollectionsAreSupported(faciaPage)),
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
-      ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
       ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
