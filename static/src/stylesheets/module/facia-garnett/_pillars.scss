@@ -415,7 +415,7 @@ $pillars: (
     background-color: $special-report-alt-faded;
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($special-report-alt-faded, 2%);
+        background-color: darken($special-report-alt-pastel, 5%);
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
