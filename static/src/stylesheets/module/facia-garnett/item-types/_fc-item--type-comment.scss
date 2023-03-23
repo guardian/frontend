@@ -284,14 +284,33 @@
         @include colours(map-get($pillars, opinion));
 
         &.fc-item--pillar-special-report-alt {
-            @include colours(map-get($pillars, special-report-alt));
+            background-color: $special-report-alt-faded;
+
+            .fc-item__timestamp,
+            .fc-trail__count--commentcount {
+                background-color: $special-report-alt-faded;
+            }
+
+            .fc-item__meta {
+                color: $special-report-alt-dark;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($special-report-alt-pastel, 5%);
+
+                .fc-item__timestamp,
+                .fc-trail__count--commentcount {
+                    background-color: darken($special-report-alt-pastel, 5%);
+
+                }
+            }
         }
     }
 }
 
 .fc-item--pillar-special-report-alt {
     .fc-item__container > .fc-item__meta {
-        @include multiline(3, rgba(60, 60, 60, .3));
+        @include multiline(3, rgba(112, 112, 112, .3));
 
         display: flex;
         position: absolute;
