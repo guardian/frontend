@@ -4,10 +4,10 @@ import { bypassMetricsSampling } from '../utils';
 export const eagerPrebid: ABTest = {
 	id: 'EagerPrebid',
 	author: '@commercial-dev',
-	start: '2023-03-13',
-	expiry: '2023-05-01',
-	audience: 5 / 100,
-	audienceOffset: 35 / 100,
+	start: '2023-03-23',
+	expiry: '2023-04-7',
+	audience: 0 / 100,
+	audienceOffset: 0 / 100,
 	audienceCriteria: 'All pageviews',
 	successMeasure:
 		'Ads lazy load faster, without affecting the page load time',
