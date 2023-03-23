@@ -338,6 +338,14 @@ $block-height: 58px;
     color: #ffffff;
 }
 
+.fc-item--pillar-special-report-alt {
+    .fc-item__meta {
+        .inline-icon {
+            fill: $special-report-alt-dark;
+        }
+    }
+}
+
 .fc-item__meta {
     @include fs-textSans(1);
     color: $brightness-46;
