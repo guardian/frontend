@@ -11,80 +11,92 @@
     "https://manage.theguardian.com/email-prefs"
 }
 
+@*
+    Temporary change - the newsletter with this number needs to be
+    set up in advance but hidden on this page until the journalism
+    it refers to is published.
+*@
+@listIdOfEmailToExclude = @{
+    6029
+}
+
 @emailListCategoryList(theme: String, emailListings: List[NewsletterResponse]) = {
     <div class="newsletters-category__heading">
         @theme
     </div>
     <div class="newsletter-card__wrapper">
     @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
-        <div class="newsletter-card" data-component="newsletter-card @emailListing.identityName">
-            <div class="newsletter-card__content js-newsletter-content">
-                <div class="newsletter-card__name">
-                    @emailListing.name
-                </div>
-                <div>
-                    @emailListing.description
-                </div>
-            </div>
 
-            <div class="newsletter-card__meta js-newsletter-meta">
-
-                <div class="newsletter-card__frequency">
-                    @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
-                    @emailListing.frequency
-                </div>
-
-
-                <div class="signup-confirmation is-hidden js-signup-confirmation">
-                    <div class="signup-confirmation__success-headline-container">
-                        @fragments.inlineSvg("envelope", "icon")
-                        <h3 class="signup-confirmation--heading">@Html(emailListing.emailEmbed.successHeadline)</h3>
+        @if(emailListing.listId != listIdOfEmailToExclude) {
+            <div class="newsletter-card" data-component="newsletter-card @emailListing.identityName">
+                <div class="newsletter-card__content js-newsletter-content">
+                    <div class="newsletter-card__name">
+                        @emailListing.name
                     </div>
-                    <div class="newsletter-card__content">
-                        <p class="signup-confirmation--description">@Html(emailListing.emailEmbed.successDescription)</p>
+                    <div>
+                        @emailListing.description
                     </div>
                 </div>
 
-                <div class="signup-confirmation is-hidden js-signup-fail-message">
-                    <div class="signup-confirmation__success-headline-container">
-                        @fragments.inlineSvg("cross", "icon")
-                        <h3 class="signup-confirmation--heading">Sign up failed</h3>
+                <div class="newsletter-card__meta js-newsletter-meta">
+
+                    <div class="newsletter-card__frequency">
+                        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                        @emailListing.frequency
                     </div>
-                    <div class="newsletter-card__content">
-                        <p class="signup-confirmation--description">Please try again or contact <a href="mailto:customer.help@@theguardian.com" target="_blank">customer.help@@theguardian.com</a></p>
-                    </div>
-                </div>
 
-                <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup" name="newsletter-signup-@emailListing.identityName">
-                    @if(EmailSignupRecaptcha.isSwitchedOn) {
-                        @fragments.email.signup.recaptchaContainer()
-                    }
-                    @helper.CSRF.formField
-                    <label aria-hidden="true">
-                        <input tabindex="-1" class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
-                    </label>
-                    <label>
-                        <span class="u-h">email address</span>
-                        <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required aria-label="Enter email address" title="Email address"/>
-                    </label>
-                    <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.identityName" aria-hidden="true"/>
 
-                    <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.identityName" type="submit" value="@emailListing.listIdV1">
-                        <span>Sign up</span>
-                    </button>
-                </form>
-
-                <div class="newsletter-card__example js-newsletter-preview is-hidden">
-                @if(emailListing.exampleUrl.isDefined) {
-                    <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
-                        <div class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.identityName">
-                            <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
+                    <div class="signup-confirmation is-hidden js-signup-confirmation">
+                        <div class="signup-confirmation__success-headline-container">
+                            @fragments.inlineSvg("envelope", "icon")
+                            <h3 class="signup-confirmation--heading">@Html(emailListing.emailEmbed.successHeadline)</h3>
                         </div>
-                    </a>
-                }
+                        <div class="newsletter-card__content">
+                            <p class="signup-confirmation--description">@Html(emailListing.emailEmbed.successDescription)</p>
+                        </div>
+                    </div>
+
+                    <div class="signup-confirmation is-hidden js-signup-fail-message">
+                        <div class="signup-confirmation__success-headline-container">
+                            @fragments.inlineSvg("cross", "icon")
+                            <h3 class="signup-confirmation--heading">Sign up failed</h3>
+                        </div>
+                        <div class="newsletter-card__content">
+                            <p class="signup-confirmation--description">Please try again or contact <a href="mailto:customer.help@@theguardian.com" target="_blank">customer.help@@theguardian.com</a></p>
+                        </div>
+                    </div>
+
+                    <form action="@LinkTo("/email")" method="post" target="newsletterSignup" class="newsletter-card__signup" name="newsletter-signup-@emailListing.identityName">
+                        @if(EmailSignupRecaptcha.isSwitchedOn) {
+                            @fragments.email.signup.recaptchaContainer()
+                        }
+                        @helper.CSRF.formField
+                        <label aria-hidden="true">
+                            <input tabindex="-1" class="newsletter-card__text-input u-h" type="text" name="name" autocomplete="off"/>
+                        </label>
+                        <label>
+                            <span class="u-h">email address</span>
+                            <input class="newsletter-card__text-input js-newsletter-card__text-input" type="email" name="email" placeholder="Email address" required aria-label="Enter email address" title="Email address"/>
+                        </label>
+                        <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.identityName" aria-hidden="true"/>
+
+                        <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit" data-link-name="Subscribe to @emailListing.identityName" type="submit" value="@emailListing.listIdV1">
+                            <span>Sign up</span>
+                        </button>
+                    </form>
+
+                    <div class="newsletter-card__example js-newsletter-preview is-hidden">
+                    @if(emailListing.exampleUrl.isDefined) {
+                        <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
+                            <div class="newsletter-card__lozenge newsletter-card__lozenge--preview" data-link-name="Preview @emailListing.identityName">
+                                <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
+                            </div>
+                        </a>
+                    }
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
     </div>
 }
