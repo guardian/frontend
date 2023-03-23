@@ -61,13 +61,7 @@
         // darken on hover
         .u-faux-block-link--hover {
             @if $pillar == special-report-alt {
-                background-color: darken($color1, 2%);
-            } @else {
-                background-color: darken($color1, 5%);
-            }
-
-            @if $pillar == special-report-alt {
-                background-color: darken($color1, 2%);
+                background-color: darken($special-report-alt-pastel, 5%);
             } @else {
                 background-color: darken($color1, 5%);
             }
