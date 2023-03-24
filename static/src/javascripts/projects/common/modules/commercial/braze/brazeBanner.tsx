@@ -18,6 +18,11 @@ const buildCanShow = (
 			return true;
 		}
 
+		// Suppress all braze banners during this period
+		if (config.get('switches.brazeTaylorReport')) {
+			return false;
+		}
+
 		try {
 			const section = config.get('page.section');
 			const brazeArticleContext =
