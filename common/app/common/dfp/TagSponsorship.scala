@@ -13,6 +13,7 @@ object InlineMerchandisingTagSet {
         "keywords" -> tagSet.keywords,
         "series" -> tagSet.series,
         "contributors" -> tagSet.contributors,
+        "sections" -> tagSet.sections,
       )
     }
   }
@@ -23,6 +24,7 @@ case class InlineMerchandisingTagSet(
     keywords: Set[String] = Set.empty,
     series: Set[String] = Set.empty,
     contributors: Set[String] = Set.empty,
+    sections: Set[String] = Set.empty,
 ) {
 
   private def hasTagId(tags: Set[String], tagId: String): Boolean =
@@ -35,10 +37,11 @@ case class InlineMerchandisingTagSet(
       case "Keyword"     => hasTagId(keywords, tag.id)
       case "Series"      => hasTagId(series, tag.id)
       case "Contributor" => hasTagId(contributors, tag.id)
+      case "Section"     => hasTagId(sections, tag.id)
       case _             => false
     }
 
-  def nonEmpty: Boolean = keywords.nonEmpty || series.nonEmpty || contributors.nonEmpty
+  def nonEmpty: Boolean = keywords.nonEmpty || series.nonEmpty || contributors.nonEmpty || sections.nonEmpty
 }
 
 object InlineMerchandisingTargetedTagsReport {

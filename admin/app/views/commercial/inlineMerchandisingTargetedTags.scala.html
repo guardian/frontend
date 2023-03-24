@@ -19,6 +19,7 @@
                 <li>keyword: <em>k</em></li>
                 <li>series: <em>se</em></li>
                 <li>contributor: <em>co</em></li>
+                <li>section: <em>s</em></li>
             </ul>
         </li>
     </ol>
@@ -46,6 +47,15 @@
         <ol>
         @for(contributor <- report.targetedTags.contributors) {
             <li style="font-size : large"><a href="@SiteLink.contributorTagPage(contributor)">@contributor</a></li>
+        }
+        </ol>
+    }
+
+    <h2>Targeted Sections</h2>
+    @if(report.targetedTags.sections.isEmpty) {<p>None</p>} else {
+        <ol>
+        @for(section <- report.targetedTags.sections) {
+            <li style="font-size : large"><a href="@CapiLink.sectionPage(section)">@section</a></li>
         }
         </ol>
     }

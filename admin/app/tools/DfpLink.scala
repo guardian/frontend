@@ -37,4 +37,6 @@ object CapiLink {
   def keywordPage(keyword: String): String = tagPage("keyword", keyword)
 
   def seriesPage(series: String): String = tagPage("series", series)
+
+  def sectionPage(section: String): String = tagPage("section", section)
 }

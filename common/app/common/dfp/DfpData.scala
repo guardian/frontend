@@ -89,6 +89,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
   val isEditionTag = isPositive("edition")
+  val isSectionTag = isPositive("s")
 }
 
 object CustomTarget {
@@ -108,6 +109,7 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedSections = filterTags(tag => tag.isSectionTag)(_.isInlineMerchandisingSlot)
 
   val highMerchandisingTargets =
     filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
@@ -252,6 +254,8 @@ case class GuLineItem(
     targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] =
     targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+  val inlineMerchandisingTargetedSections: Seq[String] =
+    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSections).distinct
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
