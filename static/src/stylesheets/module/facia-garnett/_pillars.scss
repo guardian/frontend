@@ -347,6 +347,36 @@ $pillars: (
     }
 }
 
+section.fc-container--has-palette {
+    .fc-item--type-comment.fc-item--pillar-news.fc-item--has-cutout  {
+        &.fc-item--type-comment {
+            .fc-item__avatar {
+                background-color: transparent;
+            }
+
+            &:hover {
+                .fc-item__avatar {
+                    background-color: transparent;
+                }
+
+                .fc-item__timestamp,
+                .fc-trail__count--commentcount {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+section.fc-container--has-palette.fc-container--special-report-alt-palette {
+    .fc-item.fc-item--type-comment.fc-item--pillar-news {
+        &.fc-item--type-comment {
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($special-report-alt-pastel, 5%);
+            }
+        }
+    }
+}
 
 
 .fc-item--pillar-special-report,
