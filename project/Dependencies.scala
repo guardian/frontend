@@ -3,6 +3,9 @@ package com.gu
 import sbt._
 
 object Dependencies {
+  // Once we're able to upgrade identityLibVersion to >=4.10 we should
+  // remove the http4s-core dependency eviction below. (Unless we've
+  // started needing it for something else in the meantime.)
   val identityLibVersion = "3.255"
   val awsVersion = "1.12.205"
   val capiVersion = "19.2.1"
@@ -36,6 +39,9 @@ object Dependencies {
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityAuthPlay = "com.gu.identity" %% "identity-auth-play" % identityLibVersion
+  // We're evicting the version of http4s-code used in the Identity packages
+  // Once we can upgrade Identity packages to >=4.10 we should remove this
+  val http4sCore = "org.http4s" %% "http4s-core" % "0.22.15"
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
