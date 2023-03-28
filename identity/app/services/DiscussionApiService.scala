@@ -12,13 +12,13 @@ class DiscussionApiService(discussionClient: DiscussionClient)(implicit executio
 
     val discussionProfileResponseF: Future[Option[DiscussionProfileResponse]] =
       discussionClient.findDiscussionUser(userId)
-    val discussionStatsF: Future[Option[DiscussionProfileStats]] = discussionClient.findProfileStats(userId)
+    val profileHasAtLeastOneCommentF = discussionClient.profileHasAtLeastOneComment(userId)
 
     for {
       discussionProfileResponse <- discussionProfileResponseF
-      discussionStats <- discussionStatsF
-    } yield (discussionProfileResponse, discussionStats) match {
-      case (Some(user), Some(stats)) if stats.comments > 0 =>
+      profileHasAtLeastOneComment <- profileHasAtLeastOneCommentF
+    } yield (discussionProfileResponse, profileHasAtLeastOneComment) match {
+      case (Some(user), true) =>
         Some(user.userProfile)
       case _ =>
         None
