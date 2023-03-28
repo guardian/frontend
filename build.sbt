@@ -207,6 +207,14 @@ val rss = application("rss")
   .aggregate(common)
 
 val main = root()
+// This evicts the version of
+// "com.fasterxml.jackson.core:jackson-databind"
+// used by "com.typesafe.play:sbt-plugin"
+  .settings(
+    libraryDependencies ++= Seq(
+      jacksonDatabind,
+    ),
+  )
   .aggregate(
     common,
     facia,
