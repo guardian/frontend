@@ -51,9 +51,6 @@
     <meta name="apple-itunes-app" content="app-id=@Configuration.ios.ukAppId, app-argument=@page.metadata.webUrl, affiliate-data=ct=newsmartappbanner&pt=304191">
 }
 
-@* https://support.google.com/plus/answer/1713826 *@
-<link rel="publisher" href="https://plus.google.com/113000071431138202574" />
-
 @Page.getContent(page).map { content =>
     @content.tags.contributors.map { contributor =>
         <meta name="author" content="@contributor.name" />

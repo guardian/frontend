@@ -75,11 +75,11 @@ class QuizController(
         quiz.map(QuizAnswersPage(answers, s"${Configuration.site.host}/$path", _))
       }
 
-      maybePage.toLeft(NotFound)
+      maybePage.toRight(NotFound)
     }
     result recover convertApiExceptions map {
-      case Left(page)   => Ok(ContentHtmlPage.html(page))
-      case Right(other) => RenderOtherStatus(other)
+      case Right(page) => Ok(ContentHtmlPage.html(page))
+      case Left(other) => RenderOtherStatus(other)
     }
   }
 

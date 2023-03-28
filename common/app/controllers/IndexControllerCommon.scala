@@ -30,8 +30,8 @@ trait IndexControllerCommon
     Action.async { implicit request =>
       logGoogleBot(request)
       index(leftSide, rightSide, inferPage(request), request.isRss).map {
-        case Left(page)   => renderFaciaFront(page)
-        case Right(other) => other
+        case Right(page) => renderFaciaFront(page)
+        case Left(other) => other
       }
     }
 
@@ -58,8 +58,8 @@ trait IndexControllerCommon
   def renderTrails(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       index(Edition(request), path, inferPage(request), request.isRss) map {
-        case Left(model)     => renderTrailsFragment(model)
-        case Right(notFound) => notFound
+        case Right(model)   => renderTrailsFragment(model)
+        case Left(notFound) => notFound
       }
     }
 
@@ -79,7 +79,7 @@ trait IndexControllerCommon
         logGoogleBot(request)
         index(Edition(request), path, inferPage(request), request.isRss) map {
           // if no content is returned (as often happens with old/expired/migrated microsites) return 404 rather than an empty page
-          case Left(model) =>
+          case Right(model) =>
             if (model.contents.nonEmpty) renderFaciaFront(model)
             else
               Cached(60)(
@@ -93,7 +93,7 @@ trait IndexControllerCommon
                   ),
                 ),
               )
-          case Right(other) => RenderOtherStatus(other)
+          case Left(other) => RenderOtherStatus(other)
         }
     }
 

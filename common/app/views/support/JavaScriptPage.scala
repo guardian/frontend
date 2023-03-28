@@ -78,10 +78,7 @@ object JavaScriptPage {
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
     val commercialBundleUrl: Map[String, JsString] =
-      if (conf.switches.Switches.StandaloneCommercialBundle.isSwitchedOn)
-        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
-      else
-        Map("commercialBundleUrl" -> JsString(assetURL("javascripts/graun.commercial.dcr.js")))
+      Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),

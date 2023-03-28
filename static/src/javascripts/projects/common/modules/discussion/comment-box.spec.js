@@ -1,5 +1,5 @@
 import { CommentBox } from 'common/modules/discussion/comment-box';
-import { getUserFromApiWithRefreshedCookie as getUserFromApiWithRefreshedCookie_ } from 'common/modules/identity/api';
+import { getUserFromApi as getUserFromApi_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
 
 jest.mock('lib/config', () => ({
@@ -7,7 +7,7 @@ jest.mock('lib/config', () => ({
 }));
 jest.mock('lib/mediator');
 jest.mock('common/modules/discussion/user-avatars', () => ({
-    avatarify() {},
+    avatarify() { },
 }));
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn().mockReturnValue({
@@ -15,7 +15,7 @@ jest.mock('common/modules/identity/api', () => ({
         id: 1,
         accountCreatedDate: new Date(1392719401338),
     }),
-    getUserFromApiWithRefreshedCookie: jest.fn().mockReturnValue(
+    getUserFromApi: jest.fn().mockReturnValue(
         Promise.resolve({
             user: {
                 statusFields: {
@@ -31,7 +31,7 @@ jest.mock('common/modules/discussion/api', () => ({
     getUser: jest.fn(),
 }));
 
-const getUserFromApiWithRefreshedCookie = (getUserFromApiWithRefreshedCookie_);
+const getUserFromApi = (getUserFromApi_);
 const postComment = (postComment_);
 
 describe('Comment box', () => {
@@ -164,7 +164,7 @@ describe('Comment box', () => {
             if (commentBody && commentBody instanceof HTMLTextAreaElement) {
                 commentBody.value = validCommentText;
 
-                getUserFromApiWithRefreshedCookie.mockReturnValueOnce(
+                getUserFromApi.mockReturnValueOnce(
                     Promise.resolve({
                         user: {
                             statusFields: {

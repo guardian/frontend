@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import { breakpoints } from '@guardian/source-foundations';
 import { hasCrossedBreakpoint } from 'lib/detect-breakpoint';
 import { mediator } from '../../../../lib/mediator';

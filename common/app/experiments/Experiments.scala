@@ -34,7 +34,7 @@ object DCRFronts
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc1C,
+      participationGroup = Perc5A,
     )
 
 object OfferHttp3
@@ -71,7 +71,7 @@ object ServerSideLiveblogInlineAds
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
-      participationGroup = Perc5A,
+      participationGroup = Perc0A,
     )
 
 object PoorDeviceConnectivity

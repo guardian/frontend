@@ -3,7 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
-import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
+import implicits.{AmpFormat, AppsFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model._
@@ -89,7 +89,10 @@ class ArticleController(
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
-  private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
+  /**
+    * Returns a JSON representation of the payload that's sent to DCR when rendering the Article.
+    */
+  private def getDCRJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
     val edition = Edition(request)
@@ -111,7 +114,7 @@ class ArticleController(
     val pageType: PageType = PageType(article, request, context)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
-        Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
+        Future.successful(common.renderJson(getDCRJson(article, blocks), article).as("application/json"))
       case JsonFormat =>
         Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat =>
@@ -126,13 +129,19 @@ class ArticleController(
           article,
           blocks,
           pageType,
-          filterKeyEvents = false,
-          false,
-          newsletter = newsletter,
-          topicResult = None,
+          newsletter,
+          messageUs = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
+      case AppsFormat =>
+        remoteRenderer.getAppsArticle(
+          ws,
+          article,
+          blocks,
+          pageType,
+          newsletter,
+        )
     }
   }
 
@@ -144,21 +153,22 @@ class ArticleController(
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
-        case Left((model, blocks)) => render(model, blocks)
-        case Right(other)          => Future.successful(RenderOtherStatus(other))
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
       }
   }
 
   private def responseToModelOrResult(
       response: ItemResponse,
-  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
+  )(implicit request: RequestHeader): Either[Result, (ArticlePage, Blocks)] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     ModelOrResult(supportedContent, response) match {
-      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
+      case Right(article: Article) =>
+        Right((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
+      case Left(r) => Left(r)
+      case _       => Left(NotFound)
     }
   }
 

@@ -164,11 +164,6 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
-        new CopyPlugin({
-          patterns: [
-            { from: "node_modules/@guardian/commercial-bundle/dist", to: "commercial" },
-          ],
-        }),
     ],
     externals: {
         xhr2: {},

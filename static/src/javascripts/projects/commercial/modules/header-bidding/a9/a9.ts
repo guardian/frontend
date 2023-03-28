@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import { noop } from 'lib/noop';
 import type { Advert } from '../../dfp/Advert';
 import { dfpEnv } from '../../dfp/dfp-env';

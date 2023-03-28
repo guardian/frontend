@@ -2,6 +2,7 @@
 
 @import conf.switches.Switches.{FontSwitch}
 @import views.support.Commercial.isAdFree
+@import experiments.{ActiveExperiments, PoorDeviceConnectivity}
 @import conf.Static
 
 @if(FontSwitch.isSwitchedOn) {
@@ -60,7 +61,7 @@
 @styles.linkCss
 <!--<![endif]-->
 <style class="js-loggable">
-    @if(isAdFree(request)) {
+    @if(isAdFree(request) || ActiveExperiments.isParticipating(PoorDeviceConnectivity)) {
         @Html(common.Assets.css.adFree)
     }
 </style>

@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import { reportError } from '../../../../lib/report-error';
 
 interface PermutivePageConfig {
@@ -38,6 +44,8 @@ type PermutiveSchema = {
 	};
 };
 
+type PermutiveConfigValue = string | string[] | boolean | null | undefined;
+
 const isEmpty = (
 	value:
 		| boolean
@@ -64,7 +72,7 @@ const removeEmpty = <
 		if (typeof payload[key] === 'object') {
 			removeEmpty(payload[key]);
 		}
-		if (isEmpty(payload[key])) {
+		if (isEmpty(payload[key] as PermutiveConfigValue)) {
 			delete payload[key];
 		}
 	}

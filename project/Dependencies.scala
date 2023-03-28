@@ -3,7 +3,10 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.254"
+  // Once we're able to upgrade identityLibVersion to >=4.10 we should
+  // remove the http4s-core dependency eviction below. (Unless we've
+  // started needing it for something else in the meantime.)
+  val identityLibVersion = "3.255"
   val awsVersion = "1.12.205"
   val capiVersion = "19.2.1"
   val faciaVersion = "4.0.5"
@@ -36,6 +39,9 @@ object Dependencies {
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityAuthPlay = "com.gu.identity" %% "identity-auth-play" % identityLibVersion
+  // We're evicting the version of http4s-code used in the Identity packages
+  // Once we can upgrade Identity packages to >=4.10 we should remove this
+  val http4sCore = "org.http4s" %% "http4s-core" % "0.22.15"
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
@@ -117,7 +123,7 @@ object Dependencies {
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
   val jquery = "org.webjars" % "jquery" % "3.2.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.12.1"
-  val lodash = "org.webjars" % "lodash" % "4.17.15"
+  val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
   val react = "org.webjars" % "react" % "15.6.1"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "3.5.17"

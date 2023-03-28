@@ -18,6 +18,7 @@ case object HtmlFormat extends RequestFormat
 case object JsonFormat extends RequestFormat
 case object EmailFormat extends RequestFormat
 case object AmpFormat extends RequestFormat
+case object AppsFormat extends RequestFormat
 case class TerritoryHeader(territory: TargetedTerritory, headerString: String)
 
 object GUHeaders {
@@ -51,7 +52,11 @@ trait Requests {
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
     def getRequestFormat: RequestFormat =
-      if (isJson) JsonFormat else if (isEmail) EmailFormat else if (isAmp) AmpFormat else HtmlFormat
+      if (isJson) JsonFormat
+      else if (isEmail) EmailFormat
+      else if (isAmp) AmpFormat
+      else if (isApps) AppsFormat
+      else HtmlFormat
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
@@ -64,7 +69,11 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
+    lazy val isAmp: Boolean = r
+      .getQueryString("amp")
+      .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
+
+    lazy val isApps: Boolean = r.getQueryString("dcr").contains("apps")
 
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(
       EMAIL_SUFFIX,

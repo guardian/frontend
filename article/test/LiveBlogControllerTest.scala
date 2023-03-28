@@ -10,9 +10,20 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{LiveBlogPage, Topic, TopicResult, TopicType}
+import model.{
+  LiveBlogPage,
+  Topic,
+  TopicResult,
+  TopicType,
+  MessageUsData,
+  FieldType,
+  EmailField,
+  MessageUsConfigData,
+  NameField,
+  TextAreaField,
+}
 import topics.TopicService
-import services.NewsletterService
+import services.{NewsletterService, MessageUsService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class LiveBlogControllerTest
@@ -31,6 +42,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
   trait Setup {
     var fakeTopicService = mock[TopicService]
+    var fakeMessageUsService = mock[MessageUsService]
     var fakeDcr = new DCRFake()
     val topicResult = TopicResult(
       name = "Fifa",
@@ -38,6 +50,14 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       blocks = Seq("56d08042e4b0d38537b1f70b"),
       count = 1,
       percentage_blocks = 1.2f,
+    )
+    val messageUsResult = MessageUsData(
+      formId = "mock-form-id",
+      formFields = List(
+        NameField("nameField1", "name", "name", true, FieldType.Name),
+        EmailField("emailField1", "email", "email", true, FieldType.Email),
+        TextAreaField("textAreaField1", "textArea", "textArea", true, FieldType.TextArea),
+      ),
     )
 
     val fakeAvailableTopics = Vector(
@@ -65,6 +85,12 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       fakeAvailableTopics,
     )
 
+    when(
+      fakeMessageUsService.getBlogMessageUsData(path),
+    ) thenReturn Some(
+      messageUsResult,
+    )
+
     lazy val liveBlogController = new LiveBlogController(
       testContentApiClient,
       play.api.test.Helpers.stubControllerComponents(),
@@ -72,6 +98,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       fakeDcr,
       new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       fakeTopicService,
+      fakeMessageUsService,
     )
   }
 
@@ -285,6 +312,57 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
   it should "not filter when the filter parameter is not provided" in new Setup {
     liveBlogController.shouldFilter(None) should be(false)
+  }
+
+  it should "return the message us data, if available" in new Setup {
+    val fakeRequest = FakeRequest(
+      GET,
+      s"${path}.json?dcr=true",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      path,
+      page = None,
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(false),
+      topics = None,
+    )(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+    content should include(
+      "messageUs\":{\"formId\":\"mock-form-id\",\"formFields\":[{\"_type\":\"model.NameField\",\"id\":\"nameField1\",\"label\":\"name\",\"name\":\"name\",\"required\":true,\"type\":\"text\"},{\"_type\":\"model.EmailField\",\"id\":\"emailField1\",\"label\":\"email\",\"name\":\"email\",\"required\":true,\"type\":\"email\"},{\"_type\":\"model.TextAreaField\",\"id\":\"textAreaField1\",\"label\":\"textArea\",\"name\":\"textArea\",\"required\":true,\"type\":\"textarea\",\"minlength\":0,\"maxlength\":1000}]}",
+    )
+  }
+
+  it should "return no message us data, if not available" in new Setup {
+    when(
+      fakeMessageUsService.getBlogMessageUsData(path),
+    ) thenReturn None
+
+    val fakeRequest = FakeRequest(
+      GET,
+      s"${path}.json?dcr=true",
+    ).withHeaders("host" -> "localhost:9000")
+
+    val result = liveBlogController.renderJson(
+      path,
+      page = None,
+      lastUpdate = None,
+      rendered = None,
+      isLivePage = Some(true),
+      filterKeyEvents = Some(false),
+      topics = None,
+    )(fakeRequest)
+
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+    content should not include (
+      "messageUs\":{\"formId\":\"mock-form-id\",\"formFields\":[{\"_type\":\"model.NameField\",\"id\":\"nameField1\",\"label\":\"name\",\"name\":\"name\",\"required\":true,\"type\":\"text\"},{\"_type\":\"model.EmailField\",\"id\":\"emailField1\",\"label\":\"email\",\"name\":\"email\",\"required\":true,\"type\":\"email\"},{\"_type\":\"model.TextAreaField\",\"id\":\"textAreaField1\",\"label\":\"textArea\",\"name\":\"textArea\",\"required\":true,\"type\":\"textarea\",\"minlength\":0,\"maxlength\":1000}]}",
+    )
   }
 
   "getTopicResult" should "returns none given no automatic filter query parameter" in new Setup {

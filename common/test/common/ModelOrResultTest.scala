@@ -87,7 +87,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
     ModelOrResult(
       item = Some(TestModel),
       response = stubResponse,
-    ) should be(Left(TestModel))
+    ) should be(Right(TestModel))
   }
 
   it should "internal redirect to an article if it has shown up at the wrong server" in {
@@ -95,7 +95,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testArticle)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(200)
@@ -107,7 +107,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testVideo)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(200)
@@ -119,7 +119,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testGallery)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(200)
@@ -131,7 +131,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testAudio)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(200)
@@ -143,7 +143,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(content = Some(testContent)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(404)
@@ -154,7 +154,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(tag = Some(articleTag)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(200)
@@ -168,7 +168,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
       ModelOrResult(
         item = None,
         response = stubResponse.copy(section = Some(testSection)),
-      ).value
+      ).left.value
     }
 
     status(notFound) should be(200)

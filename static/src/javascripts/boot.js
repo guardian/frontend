@@ -151,28 +151,31 @@ const go = () => {
             }
         });
 
-        const fakeBootCommercial = { bootCommercial: () => { } };
-        const commercialBundle = () =>
-            config.get('switches.standaloneCommercialBundle') && !config.get('page.isHosted', false)
-                ? loadScript(config.get('page.commercialBundleUrl')).then(
-                    () => fakeBootCommercial,
-                )
-                : import(
-                    /* webpackChunkName: "commercial" */
-                    'bootstraps/commercial-legacy'
-                );
-
-
         // Start downloading these ASAP
 
+		const fetchCommercial = () => {
+			const noop = () =>
+				Promise.resolve({ bootCommercial: () => {} });
 
-        // eslint-disable-next-line no-nested-ternary
-        const fetchCommercial =
-            config.get('switches.commercial') &&
-            !config.get('page.isAdFree', false)
-                ? (markTime('commercial request'),
-                    commercialBundle())
-                : Promise.resolve(fakeBootCommercial);
+			if (
+				!config.get('switches.commercial') ||
+				config.get('page.isAdFree', false) ||
+				config.get('tests.poorDeviceConnectivityVariant') === 'variant'
+			) {
+				return noop();
+			}
+
+			markTime('commercial request');
+
+			if (!config.get('page.isHosted', false)) {
+				return loadScript(config.get('page.commercialBundleUrl')).then(noop);
+			}
+
+			return import(
+				/* webpackChunkName: "commercial" */
+				'bootstraps/commercial-hosted-legacy'
+			);
+		};
 
 
         const fetchEnhanced = window.guardian.isEnhanced
@@ -181,7 +184,7 @@ const go = () => {
             : Promise.resolve({ bootEnhanced: () => { } });
 
         Promise.all([
-            fetchCommercial.then(({ bootCommercial }) => {
+            fetchCommercial().then(({ bootCommercial }) => {
                 markTime('commercial boot');
                 try {
                     return bootCommercial();

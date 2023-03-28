@@ -1,3 +1,9 @@
+/**
+ * WARNING!
+ * Commercial client side code has moved to: https://github.com/guardian/commercial
+ * This file should be considered deprecated and only exists for legacy 'hosted' pages
+ */
+
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import { _ } from './adblock-ask';

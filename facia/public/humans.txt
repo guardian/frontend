@@ -1,6 +1,8 @@
-/* ---------------------------------------------------- */
-/* CURRENT                                              */
-/* ---------------------------------------------------- */
+
+Editor-in-Chief: C.P.Scott
+From: Bath, Somerset
+
+---
 
 Developer: Daniel Clifton
 From: Ipswich UK
@@ -183,13 +185,6 @@ Location: London, UK
 Developer: Georges Lebreton
 From: France
 Location: London, UK
-
-/* ---------------------------------------------------- */
-/* FORMER                                               */
-/* ---------------------------------------------------- */
-
-Editor-in-chief: C.P.Scott
-From: Bath, Somerset
 
 Developer Manager: Matt Chadburn
 Twitter: @commuterjoy

@@ -17,7 +17,7 @@ export const isTestSwitchedOn = (testId: string): boolean =>
 	!!window.guardian.config.switches[`ab${testId}`];
 
 export const runnableTestsToParticipations = (
-	runnableTests: readonly Runnable[],
+	runnableTests: ReadonlyArray<Runnable<ABTest>>,
 ): Participations =>
 	runnableTests.reduce(
 		(participations: Participations, { id: testId, variantToRun }) => ({
