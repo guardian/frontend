@@ -24,7 +24,7 @@ class DiscussionApiServiceTest extends AsyncFlatSpec with MockitoSugar {
     import fixtures._
 
     when(discussionClient.findDiscussionUser(userId)) thenReturn Future.successful(Some(discussionProfileResponse))
-    when(discussionClient.findProfileStats(userId)) thenReturn Future.successful(Some(profileStats))
+    when(discussionClient.profileHasAtLeastOneComment(userId)) thenReturn Future.successful(true)
 
     val discussionApiService = new DiscussionApiService(discussionClient)
     discussionApiService.findDiscussionUserFilterCommented(userId).map(_ shouldBe Some(discussionProfile))
@@ -35,7 +35,7 @@ class DiscussionApiServiceTest extends AsyncFlatSpec with MockitoSugar {
     import fixtures._
 
     when(discussionClient.findDiscussionUser(userId)) thenReturn Future.successful(Some(discussionProfileResponse))
-    when(discussionClient.findProfileStats(userId)) thenReturn Future.successful(Some(profileStats.copy(comments = 0)))
+    when(discussionClient.profileHasAtLeastOneComment(userId)) thenReturn Future.successful(false)
 
     val discussionApiService = new DiscussionApiService(discussionClient)
     discussionApiService.findDiscussionUserFilterCommented(userId).map(_ shouldBe None)
@@ -46,7 +46,7 @@ class DiscussionApiServiceTest extends AsyncFlatSpec with MockitoSugar {
     import fixtures._
 
     when(discussionClient.findDiscussionUser(userId)) thenReturn Future.successful(None)
-    when(discussionClient.findProfileStats(userId)) thenReturn Future.successful(None)
+    when(discussionClient.profileHasAtLeastOneComment(userId)) thenReturn Future.successful(false)
 
     val discussionApiService = new DiscussionApiService(discussionClient)
     discussionApiService.findDiscussionUserFilterCommented(userId).map(_ shouldBe None)
