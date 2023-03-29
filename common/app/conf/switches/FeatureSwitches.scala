@@ -309,6 +309,16 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
+  val DisableAmpTest = Switch(
+    SwitchGroup.Feature,
+    "disable-amp-test",
+    "If this switch is on, we will disable the amphtml link on articles for a cohort of readers",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val R2PagePressServiceSwitch = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",
