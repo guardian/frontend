@@ -39,7 +39,7 @@ object JsMinifier {
     //options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
     //options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)
 
-    options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT_2016)
+    options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT_2015)
     options.setLanguageOut(CompilerOptions.LanguageMode.ECMASCRIPT3)
 
     options
