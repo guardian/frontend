@@ -2243,14 +2243,14 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-11.0.0.tgz#2800fd98aefbea532799c5df158710980e9f7596"
   integrity sha512-xEaYvsSvfs9J5mxibS6FUD4AqqjVS89m/KSI/652uWf7MfT6qJvxIedFGg3vkompXhF7oNXMLQSL8eNiKUqW7g==
 
-"@guardian/commercial-bundle@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-1.10.0.tgz#fbc0bebce0feb01e0bc153d27df653b92d2e3e52"
-  integrity sha512-TDV0ef/h7fzpp+HHYLt++Hgiz9cUcCOaSMIZV3jXzoInSYmLlZ9Gjt7WJozxh/K8UagNZNYEY+FhoZSMlGRulw==
+"@guardian/commercial-bundle@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-2.0.0.tgz#526641382e4a0b2f812b5137dfe5076d2a6ca45e"
+  integrity sha512-I74WR32B9XiHfySdvIlbUdEXBP7KGaPLxfl5/HN19cltuta6Qn+4U7xP2yLso85/wpVOy3fPSaUDaMvmdokMBg==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
     "@guardian/commercial-core" "^5.4.4"
-    "@guardian/consent-management-platform" "11.0.0"
+    "@guardian/consent-management-platform" "^12.0.0"
     "@guardian/core-web-vitals" "^4.0.0"
     "@guardian/libs" "^14.0.0"
     "@guardian/source-foundations" "^10.0.1"
@@ -2277,11 +2277,6 @@
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.0.0.tgz#e49abb0ae5985431ecba41aba21c74afbbfed20b"
   integrity sha512-CYcfLRGEVrHVfSsxG8SaBO6AZz27MZmhCA29NX6Y85ODD92fNKp41SVegUkXdb/kSBwFrRXE2xcCeHcjQ9IopA==
-
-"@guardian/consent-management-platform@11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-11.0.0.tgz#240083bbe4e8c4c22410cfa4c867b608e7c0e92f"
-  integrity sha512-j97gI5NbhVLXy1s8465lyT/w/nU3K+HewkfHIQ/NLOvzBS2mmcgB6A6sRXsKCOYRt4W8eNoTX5xgAdemFgvLAw==
 
 "@guardian/consent-management-platform@^12.0.0":
   version "12.0.0"
