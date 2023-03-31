@@ -55,9 +55,9 @@
 		"web-vitals": "^2.1.0",
 		"wolfy87-eventemitter": "~5.2.4"
 	},
-  "resolutions": {
-    "unset-value": "^2.0.1"
-  },
+	"resolutions": {
+		"unset-value": "^2.0.1"
+	},
 	"devDependencies": {
 		"@babel/cli": "^7.11.6",
 		"@babel/core": "^7.11.6",
