@@ -17,7 +17,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - run: yarn install --frozen-lockfile
+            - uses: actions/setup-node@v3
 
             # this will update the version in package.json and yarn.lock if there's an update
             - run: yarn add @guardian/commercial-bundle@latest
@@ -37,6 +37,7 @@ jobs:
             # true if there's no existing PR, false if there is, this will be used to determine if we should create a PR
             result: ${{ steps.check.outputs.result }}
         steps:
+            - uses: actions/setup-node@v3
             - name: Check for existing pull request
               id: check
               uses: actions/github-script@v6
@@ -63,6 +64,8 @@ jobs:
         if: ${{ needs.check-exists.outputs.result == 'true' }}
         steps:
             - uses: actions/checkout@v3
+
+            - uses: actions/setup-node@v3
 
             - run: yarn add @guardian/commercial-bundle@latest
 
