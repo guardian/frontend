@@ -60,7 +60,7 @@ object HeaderTopBarSearchCapi
       name = "header-top-bar-search-capi",
       description = "Adds CAPI search to the top nav",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 4, 4),
+      sellByDate = LocalDate.of(2023, 6, 6),
       participationGroup = Perc1B,
     )
 
