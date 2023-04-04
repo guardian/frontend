@@ -594,7 +594,7 @@ object NavLinks {
   )
 
   val ukBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader_dropdown"),
+    jobs,
     jobsRecruiter,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     guardianLive,
@@ -613,13 +613,13 @@ object NavLinks {
     guardianLicensing,
   )
   val usBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
+    jobs,
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     guardianLicensing,
   )
   val intBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
+    jobs,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
