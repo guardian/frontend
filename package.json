@@ -52,7 +52,7 @@
 		"videojs-ima": "googleads/videojs-ima#0.3.0",
 		"videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
 		"videojs-playlist": "guardian/videojs-playlist#0.1.4",
-		"web-vitals": "^2.1.0",
+		"web-vitals": "^3.3.0",
 		"wolfy87-eventemitter": "~5.2.4"
 	},
 	"resolutions": {
