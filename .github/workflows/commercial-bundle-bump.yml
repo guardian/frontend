@@ -9,12 +9,15 @@ on:
 
 jobs:
     check-version:
+        name: Check for new version
         runs-on: ubuntu-latest
         outputs:
             # will be defined if there's an update
             VERSION: ${{ steps.version.outputs.VERSION }}
         steps:
             - uses: actions/checkout@v3
+
+            - run: yarn install --frozen-lockfile
 
             # this will update the version in package.json and yarn.lock if there's an update
             - run: yarn add @guardian/commercial-bundle@latest
@@ -26,6 +29,7 @@ jobs:
               continue-on-error: true
 
     check-exists:
+        name: Check for existing pull request
         runs-on: ubuntu-latest
         needs: check-version
         if: ${{ needs.check-version.outputs.VERSION }}
@@ -52,6 +56,7 @@ jobs:
                       return true;
 
     pr:
+        name: Create pull request
         runs-on: ubuntu-latest
         needs: check-exists
         # if there's no existing PR, create one
