@@ -23,7 +23,7 @@ jobs:
             - run: yarn add @guardian/commercial-bundle@latest
 
             - run: |
-                  ! git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
+                  ! git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_OUTPUT
               id: version
               # it's ok if this fails, it just means there's no update
               continue-on-error: true
@@ -69,7 +69,7 @@ jobs:
 
             - run: yarn add @guardian/commercial-bundle@latest
 
-            - run: echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
+            - run: echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_OUTPUT
               id: version
 
             - run: |
