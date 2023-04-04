@@ -17,7 +17,10 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - uses: actions/setup-node@v3
+            - uses: guardian/actions-setup-node@main
+
+            # Cache npm dependencies using https://github.com/bahmutov/npm-install
+            - uses: bahmutov/npm-install@v1
 
             # this will update the version in package.json and yarn.lock if there's an update
             - run: yarn add @guardian/commercial-bundle@latest
