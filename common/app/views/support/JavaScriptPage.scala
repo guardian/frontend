@@ -82,6 +82,8 @@ object JavaScriptPage {
         .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js")),
     )
 
+    val abScriptUrl = JsString(assetURL("javascripts/graun.ab.js"))
+
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -102,6 +104,7 @@ object JavaScriptPage {
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
       ("commercialBundleUrl", commercialBundleUrl),
+      ("abScriptUrl", abScriptUrl),
     )
   }.toMap
 }

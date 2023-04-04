@@ -46,6 +46,7 @@ module.exports = {
             'bootstraps',
             'youtube-embed.ts'
         ),
+        'ab': path.join(__dirname, 'static', 'src', 'javascripts', 'bootstraps', 'ab'),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),

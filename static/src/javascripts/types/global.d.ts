@@ -1,3 +1,5 @@
+import type { ABTest } from '@guardian/ab-core';
+
 type ServerSideABTest = `${string}${'Variant' | 'Control'}`;
 
 declare const twttr: {
@@ -112,6 +114,7 @@ interface Config {
 		};
 		timingEvents?: GoogleTimingEvent[];
 	};
+	clientSideExperiments?: Record<string, ABTest | undefined>;
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
