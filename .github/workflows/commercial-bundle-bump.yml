@@ -13,45 +13,52 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             # will be defined if there's an update
-            VERSION: ${{ steps.version.outputs.VERSION }}
+            LATEST_VERSION: ${{ steps.latest-version.outputs.result }}
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/github-script@v6
+              id: latest-version
+              with:
+                  result-encoding: string
+                  script: |
+                      return await fetch('https://registry.npmjs.org/@guardian/commercial-bundle/latest')
+                        .then(response => response.json())
+                        .then(data => {
+                          const version = data.version;
+                          console.log(`Latest version is ${version}`);
+                          return version;
+                        });
 
-            - uses: guardian/actions-setup-node@main
+            - run: yarn info @guardian/commercial-bundle version --silent
+              id: current-version
 
-            # this will update the version in package.json and yarn.lock if there's an update
-            - run: yarn add @guardian/commercial-bundle@latest
-
-            - run: |
-                  ! git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_OUTPUT
-              id: version
-              # it's ok if this fails, it just means there's no update
-              continue-on-error: true
+            - run: echo ${{ steps.latest-version.outputs.result }}
+              id: output-version
+              if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
 
     check-exists:
         name: Check for existing pull request
         runs-on: ubuntu-latest
         needs: check-version
-        if: ${{ needs.check-version.outputs.VERSION }}
+        if: ${{ needs.check-version.outputs.LATEST_VERSION }}
         outputs:
             # true if there's no existing PR, false if there is, this will be used to determine if we should create a PR
             result: ${{ steps.check.outputs.result }}
         steps:
-            - uses: actions/setup-node@v3
             - name: Check for existing pull request
               id: check
               uses: actions/github-script@v6
               with:
                   github-token: ${{secrets.GITHUB_TOKEN}}
+                  result-encoding: boolean
                   script: |
-                      const { data: pullRequests } = await github.pulls.list({
+                      const { data: pullRequests } = await github.rest.pulls.list({
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           state: 'open',
-                          head: 'commercial-bundle-bump-${{ needs.check-version.outputs.VERSION }}',
-                      })
+                          head: 'commercial-bundle-bump-v${{ needs.check-version.outputs.LATEST_VERSION }}',
+                      });
                       if (pullRequests.length > 0) {
-                          console.log('There is already a pull request open for this version')
+                          console.log('There is already a pull request open for this version');
                           return false;
                       }
                       return true;
@@ -59,26 +66,23 @@ jobs:
     pr:
         name: Create pull request
         runs-on: ubuntu-latest
-        needs: check-exists
+        needs: [check-exists, check-version]
         # if there's no existing PR, create one
         if: ${{ needs.check-exists.outputs.result == 'true' }}
         steps:
             - uses: actions/checkout@v3
 
-            - uses: actions/setup-node@v3
+            - uses: guardian/actions-setup-node@v1
 
-            - run: yarn add @guardian/commercial-bundle@latest
-
-            - run: echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_OUTPUT
-              id: version
+            - run: yarn add @guardian/commercial-bundle@${{ needs.check-version.outputs.LATEST_VERSION }}
 
             - run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git checkout -b commercial-bundle-bump-${{ steps.version.outputs.VERSION }}
+                  git checkout -b commercial-bundle-bump-${{ needs.check-version.outputs.LATEST_VERSION }}
                   git add package.json yarn.lock
-                  git commit -m "Bump @guardian/commercial-bundle to ${{ steps.version.outputs.VERSION }}"
-                  git push --set-upstream origin commercial-bundle-bump-${{ steps.version.outputs.VERSION }}
+                  git commit -m "Bump @guardian/commercial-bundle to ${{ needs.check-version.outputs.LATEST_VERSION }}"
+                  git push --set-upstream origin commercial-bundle-bump-${{ needs.check-version.outputs.LATEST_VERSION }}
 
             - uses: actions/github-script@v3
               with:
@@ -87,8 +91,8 @@ jobs:
                       github.pulls.create({
                           owner: context.repo.owner,
                           repo: context.repo.repo,
-                          title: 'Bump @guardian/commercial-bundle to ${{ steps.version.outputs.VERSION }}',
-                          head: 'commercial-bundle-bump-${{ steps.version.outputs.VERSION }}',
+                          title: 'Bump @guardian/commercial-bundle to ${{ needs.check-version.outputs.LATEST_VERSION }}',
+                          head: 'commercial-bundle-bump-v${{ needs.check-version.outputs.LATEST_VERSION }}',
                           base: 'main',
-                          body: 'Bump @guardian/commercial-bundle to ${{ steps.version.outputs.VERSION }}\n\nChangelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ steps.version.outputs.VERSION }}',
+                          body: 'Bump @guardian/commercial-bundle to ${{ needs.check-version.outputs.LATEST_VERSION }}\n\nChangelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check-version.outputs.LATEST_VERSION }}',
                       })
