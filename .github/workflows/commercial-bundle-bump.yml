@@ -2,12 +2,14 @@ name: Bump @guardian/commercial-bundle
 
 on:
     schedule:
+        # runs every 15 minutes
         - cron: '*/15 * * * *'
 
 jobs:
     check-version:
         runs-on: ubuntu-latest
         outputs:
+            # will be defined if there's an update
             VERSION: ${{ steps.version.outputs.VERSION }}
         steps:
             - uses: actions/checkout@v3
@@ -18,6 +20,7 @@ jobs:
             - run: |
                   git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
               id: version
+              # it's ok if this fails, it just means there's no update
               continue-on-error: true
 
     check-exists:
@@ -25,6 +28,7 @@ jobs:
         needs: check-version
         if: ${{ needs.check-version.outputs.VERSION }}
         outputs:
+            # true if there's no existing PR, false if there is, this will be used to determine if we should create a PR
             result: ${{ steps.check.outputs.result }}
         steps:
             - name: Check for existing pull request
@@ -48,6 +52,7 @@ jobs:
     pr:
         runs-on: ubuntu-latest
         needs: check-exists
+        # if there's no existing PR, create one
         if: ${{ needs.check-exists.outputs.result == 'true' }}
         steps:
             - uses: actions/checkout@v3
