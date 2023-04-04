@@ -1,19 +1,35 @@
 name: Bump @guardian/commercial-bundle
 
 on:
-    - workflow_dispatch
+    schedule:
+        - cron: '*/15 * * * *'
 
 jobs:
-    bump:
+    check-version:
         runs-on: ubuntu-latest
+        outputs:
+            VERSION: ${{ steps.version.outputs.VERSION }}
         steps:
             - uses: actions/checkout@v3
 
+            # this will update the version in package.json and yarn.lock if there's an update
             - run: yarn add @guardian/commercial-bundle@latest
 
+            - run: |
+                  git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
+              id: version
+              continue-on-error: true
+
+    check-exists:
+        runs-on: ubuntu-latest
+        needs: check-version
+        if: ${{ needs.check-version.outputs.VERSION }}
+        outputs:
+            result: ${{ steps.check.outputs.result }}
+        steps:
             - name: Check for existing pull request
               id: check
-              uses: actions/github-script@v3
+              uses: actions/github-script@v6
               with:
                   github-token: ${{secrets.GITHUB_TOKEN}}
                   script: |
@@ -21,12 +37,22 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           state: 'open',
-                          head: 'commercial-bundle-bump-${{ steps.version.outputs.VERSION }}',
+                          head: 'commercial-bundle-bump-${{ needs.check-version.outputs.VERSION }}',
                       })
                       if (pullRequests.length > 0) {
                           console.log('There is already a pull request open for this version')
-                          process.exit(1)
+                          return false;
                       }
+                      return true;
+
+    pr:
+        runs-on: ubuntu-latest
+        needs: check-exists
+        if: ${{ needs.check-exists.outputs.result == 'true' }}
+        steps:
+            - uses: actions/checkout@v3
+
+            - run: yarn add @guardian/commercial-bundle@latest
 
             - run: echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
               id: version
