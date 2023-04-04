@@ -19,14 +19,11 @@ jobs:
 
             - uses: guardian/actions-setup-node@main
 
-            # Cache npm dependencies using https://github.com/bahmutov/npm-install
-            - uses: bahmutov/npm-install@v1
-
             # this will update the version in package.json and yarn.lock if there's an update
             - run: yarn add @guardian/commercial-bundle@latest
 
             - run: |
-                  git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
+                  ! git diff --exit-code && echo VERSION=$(yarn info @guardian/commercial-bundle version --silent) >> $GITHUB_ENV
               id: version
               # it's ok if this fails, it just means there's no update
               continue-on-error: true
