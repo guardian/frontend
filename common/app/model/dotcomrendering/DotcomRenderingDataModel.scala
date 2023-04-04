@@ -292,7 +292,7 @@ object DotcomRenderingDataModel {
       )
     })
 
-    val bodyBlocks = blocksForLiveblogPage(page, blocks).map(ensureSummaryTitle)
+    val bodyBlocks = blocksForLiveblogPage(page, blocks, filterKeyEvents).map(ensureSummaryTitle)
 
     val allTimelineBlocks = blocks.body match {
       case Some(allBlocks) if allBlocks.nonEmpty =>
