@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
-      PoorDeviceConnectivity,
       FastlyNextGenWAF,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -73,17 +72,6 @@ object ServerSideLiveblogInlineAds
       sellByDate = LocalDate.of(2023, 6, 1),
       participationGroup = Perc0A,
     )
-
-object PoorDeviceConnectivity
-    extends Experiment(
-      name = "poor-device-connectivity",
-      description = "Reduce the load of the site for users experiencing poor device connectivity",
-      owners = Seq(Owner.withEmail("open.journalism@theguardian.com")),
-      sellByDate = LocalDate.of(2023, 4, 4),
-      participationGroup = Perc20A,
-    ) {
-  override val extraHeader = Some(ExperimentHeader("X-GU-Poor-Device-Connectivity", "true"))
-}
 
 object FastlyNextGenWAF
     extends Experiment(
