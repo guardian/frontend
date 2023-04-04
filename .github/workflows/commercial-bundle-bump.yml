@@ -5,6 +5,7 @@ on:
     #     # runs every 15 minutes
     #     - cron: '*/15 * * * *'
     workflow_dispatch:
+    push:
 
 jobs:
     check-version:
