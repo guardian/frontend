@@ -1,9 +1,10 @@
 name: Bump @guardian/commercial-bundle
 
 on:
-    schedule:
-        # runs every 15 minutes
-        - cron: '*/15 * * * *'
+    # schedule:
+    #     # runs every 15 minutes
+    #     - cron: '*/15 * * * *'
+    workflow_dispatch:
 
 jobs:
     check-version:
