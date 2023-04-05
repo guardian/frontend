@@ -13,6 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             # will be defined if there's an update
+            CURRENT_VERSION: ${{ steps.current-version.outputs.result }}
             LATEST_VERSION: ${{ steps.latest-version.outputs.result }}
             PR_EXISTS: ${{ steps.pr-exists.outputs.result }}
         steps:
@@ -82,12 +83,28 @@ jobs:
               with:
                   github-token: ${{secrets.GITHUB_TOKEN}}
                   script: |
-                      github.pulls.create({
+                      const {data: pr} = await github.pulls.create({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
                             title: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}',
                             head: 'bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
                             base: 'main',
-                            body: `Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) to ${{ needs.check.outputs.LATEST_VERSION }}
+                            body: `Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}.
                       Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})`,
                         })
+
+                        await Promise.all([
+                            github.issues.addLabels({
+                                owner: context.repo.owner,
+                                repo: context.repo.repo,
+                                issue_number: pr.number,
+                                labels: ['commercial', 'dependencies'],
+                            }),
+
+                            github.pulls.createReviewRequest({
+                                owner: context.repo.owner,
+                                repo: context.repo.repo,
+                                pull_number: pr.number,
+                                reviewers: ['guardian/commercial-dev'],
+                            })
+                        ]);
