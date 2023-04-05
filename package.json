@@ -26,7 +26,7 @@
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "^10.0.0",
 		"@guardian/source-react-components": "^12.0.0",
-		"@guardian/source-react-components-development-kitchen": "9.2.0",
+		"@guardian/source-react-components-development-kitchen": "^10.0.1",
 		"@guardian/support-dotcom-components": "1.0.7",
 		"bean": "~1.0.14",
 		"bonzo": "~2.0.0",
