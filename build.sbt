@@ -78,6 +78,10 @@ val common = library("common")
 val commonWithTests = withTests(common)
 
 val sanityTest = application("sanity-tests")
+  .settings(
+    // Evict vulnerable versions of jackson-databind
+    libraryDependencies += jacksonDatabind,
+  )
 
 val facia = application("facia")
   .dependsOn(commonWithTests)
@@ -207,6 +211,14 @@ val rss = application("rss")
   .aggregate(common)
 
 val main = root()
+// This evicts the version of
+// "com.fasterxml.jackson.core:jackson-databind"
+// used by "com.typesafe.play:sbt-plugin"
+  .settings(
+    libraryDependencies ++= Seq(
+      jacksonDatabind,
+    ),
+  )
   .aggregate(
     common,
     facia,

@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
     owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 4, 4)),
+    sellByDate = Some(LocalDate.of(2023, 6, 6)),
     exposeClientSide = true,
   )
 
@@ -61,7 +61,7 @@ trait ABTestSwitches {
     "Test the commercial impact of showing billboard adverts in merchandising slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 3, 30)),
+    sellByDate = Some(LocalDate.of(2023, 5, 30)),
     exposeClientSide = true,
   )
 
