@@ -8,10 +8,6 @@ const defaultClientSideTests: ABTest[] = [
 	integrateIma,
 ];
 
-const serverSideTests: ServerSideABTest[] = [
-	/* linter, please keep this array multi-line */
-];
-
 /**
  * Function to check whether metrics should be captured for the current page
  * @param tests - optional array of ABTest to check against.
@@ -24,10 +20,7 @@ const shouldCaptureMetrics = (tests = defaultClientSideTests): boolean => {
 	);
 
 	const userInServerSideTest =
-		window.guardian.config.tests !== undefined &&
-		Object.keys(window.guardian.config.tests).some((test) =>
-			String(serverSideTests).includes(test),
-		);
+		Object.keys(window.guardian.config.tests ?? {}).length > 0;
 
 	const forceSendMetrics = Boolean(getUrlVars().forceSendMetrics);
 

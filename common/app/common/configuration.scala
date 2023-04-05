@@ -180,6 +180,7 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
+    lazy val isDev = stage.equalsIgnoreCase("dev")
     lazy val isDevInfra = stage.equalsIgnoreCase("devinfra")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
     lazy val isNonDev = isProd || isCode || isDevInfra
@@ -543,6 +544,10 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val prebidServerUrl =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
+
+    lazy val overrideCommercialBundleUrl: Option[String] =
+      if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
+      else None
   }
 
   object journalism {

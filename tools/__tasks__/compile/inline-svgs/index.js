@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const mkdirp = require('mkdirp');
 const glob = require('glob');
-const { optimize, extendDefaultPlugins } = require('svgo')
+const { optimize } = require('svgo')
 const pify = require('pify');
 
 const readFile = pify(fs.readFile);
@@ -39,8 +39,8 @@ module.exports = {
                                         'removeXMLNS',
                                     ],
                                 })
+                                )
                             )
-                        )
                     )
                     .then(optimisedFileData => {
                         if (!optimisedFileData?.data) {

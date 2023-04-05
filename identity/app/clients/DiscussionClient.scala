@@ -19,6 +19,18 @@ object DiscussionProfileStats {
   implicit val format: OFormat[DiscussionProfileStats] = Json.format[DiscussionProfileStats]
 }
 
+case class Comment(id: Int)
+
+object Comment {
+  implicit val format: OFormat[Comment] = Json.format[Comment]
+}
+
+case class DiscussionCommentsResponse(status: String, comments: Seq[Comment])
+
+object DiscussionCommentsResponse {
+  implicit val format: OFormat[DiscussionCommentsResponse] = Json.format[DiscussionCommentsResponse]
+}
+
 case class DiscussionProfileResponse(status: String, userProfile: DiscussionProfile)
 
 object DiscussionProfileResponse {
@@ -81,5 +93,27 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
     discussionStatsF.recoverWith {
       case e => Future.failed(new DiscussionApiServiceException(s"findProfileStats failure to find $userId", e))
     }
+  }
+
+  /**
+    * Check if the user has at least one comment.
+    * This method simply requests a single comment, and checks if the response is non-empty.
+    * If it is, the user has at least one publicly visible comment, and their profile can be shown.
+    */
+  def profileHasAtLeastOneComment(userId: String): Future[Boolean] = {
+
+    val apiPath = s"/profile/$userId/comments?page=1&pageSize=1"
+
+    val hasCommentsF = for {
+      response <- GET(apiPath)
+      userCommentsResponse <- Future.fromTry(handleApiResponse(response, userId))
+      parsedCommentsResponse <- Future(userCommentsResponse.map(_.as[DiscussionCommentsResponse]))
+    } yield parsedCommentsResponse.exists(_.comments.nonEmpty)
+
+    hasCommentsF.recoverWith {
+      case e =>
+        Future.failed(new DiscussionApiServiceException(s"profileHasAtLeastOneComment failure to find $userId", e))
+    }
+
   }
 }

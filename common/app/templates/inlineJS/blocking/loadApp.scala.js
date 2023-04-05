@@ -31,7 +31,7 @@ function guardianPolyfilled() {
 (function (document, window) {
     var src;
     var script;
-    var pendingScripts = [];
+    var pendingScripts = new window.Array();
     var firstScript = document.scripts[0];
 
     @defining(if(PolyfillIO.isSwitchedOn) {
@@ -39,10 +39,10 @@ function guardianPolyfilled() {
     } else {
       Static("javascripts/vendor/polyfillio.fallback.js")
     }) { polyfillioUrl =>
-        var scripts = [
+        var scripts = new window.Array(
             '@polyfillioUrl',
             '@Static(s"javascripts/graun.$bootModule.js")'
-        ];
+        );
     }
 
     @if(PolyfillIOFallbackMin.isSwitchedOn) {
@@ -50,7 +50,7 @@ function guardianPolyfilled() {
     }
 
     function stateChange() {
-        var pendingScript;
+        var pendingScript = new window.Array();
         while (pendingScripts[0] && pendingScripts[0].readyState == 'loaded') {
             pendingScript = pendingScripts.shift();
             pendingScript.onreadystatechange = null;

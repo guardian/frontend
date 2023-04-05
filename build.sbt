@@ -4,6 +4,16 @@ import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
 import com.gu.ProjectSettings._
 
+/*
+We need to set a wide width here because otherwise the output from
+the `dependencyTree` command can get truncated, especially for nested projects.
+The output from `dependencyTree` is used by Snyk to monitor our dependencies.
+If the output is truncated, Snyk might report false positives.
+See
+https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-projects-have-dependencies-truncated
+ */
+ThisBuild / asciiGraphWidth := 999999999
+
 val common = library("common")
   .settings(
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
@@ -68,6 +78,10 @@ val common = library("common")
 val commonWithTests = withTests(common)
 
 val sanityTest = application("sanity-tests")
+  .settings(
+    // Evict vulnerable versions of jackson-databind
+    libraryDependencies += jacksonDatabind,
+  )
 
 val facia = application("facia")
   .dependsOn(commonWithTests)
@@ -145,6 +159,7 @@ val identity = application("identity")
     libraryDependencies ++= Seq(
       filters,
       identityAuthPlay,
+      http4sCore,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,
@@ -196,6 +211,14 @@ val rss = application("rss")
   .aggregate(common)
 
 val main = root()
+// This evicts the version of
+// "com.fasterxml.jackson.core:jackson-databind"
+// used by "com.typesafe.play:sbt-plugin"
+  .settings(
+    libraryDependencies ++= Seq(
+      jacksonDatabind,
+    ),
+  )
   .aggregate(
     common,
     facia,

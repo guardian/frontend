@@ -77,8 +77,10 @@ object JavaScriptPage {
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
-    val commercialBundleUrl: Map[String, JsString] =
-      Map("commercialBundleUrl" -> JsString(assetURL("javascripts/commercial/graun.standalone.commercial.js")))
+    val commercialBundleUrl = JsString(
+      Configuration.commercial.overrideCommercialBundleUrl
+        .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js")),
+    )
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
@@ -99,6 +101,7 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
-    ) ++ commercialBundleUrl
+      ("commercialBundleUrl", commercialBundleUrl),
+    )
   }.toMap
 }

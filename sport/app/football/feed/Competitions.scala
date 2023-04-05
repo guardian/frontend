@@ -210,6 +210,16 @@ object CompetitionsProvider {
       startDate = Some(LocalDate.of(2019, 11, 30)),
     ),
     Competition(
+      "751",
+      "/football/euro-2024",
+      "Euro 2024 qualifying",
+      "Euro 2024 qualifying",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2023, 3, 23)),
+    ),
+    Competition(
       "701",
       "/football/world-cup-2022-qualifiers",
       "World Cup 2022 qualifying",

@@ -119,6 +119,11 @@
         color: $special-report-alt-dark;
     }
 
+    &:hover,
+    .u-faux-block-link--hover {
+        background-color: darken($special-report-alt-pastel, 5%);
+    }
+
     .fc-sublink__link {
         color: $special-report-alt-dark;
     }

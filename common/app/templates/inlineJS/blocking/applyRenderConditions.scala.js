@@ -81,8 +81,8 @@
             return false;
         }
 
-        var now = new Date().getTime();
-        var lastContribution = new Date(value).getTime();
+        var now = new window.Date().getTime();
+        var lastContribution = new window.Date(value).getTime();
         var diffDays = Math.ceil((now - lastContribution) / (1000 * 3600 * 24));
 
         return diffDays <= 180;

@@ -63,7 +63,12 @@ data-test-id="facia-card"
                     </div>
                 }
 
-                case _ => {}
+                case _ => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                       <span class="u-h">Video</span>
+                    </div>
+                }
             }
         }
 

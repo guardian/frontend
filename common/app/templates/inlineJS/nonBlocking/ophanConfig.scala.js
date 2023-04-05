@@ -3,7 +3,7 @@
 (function (window, document) {
 
     function getCookieValue(name) {
-        var nameEq = name + "=",
+        var nameEq = new window.String(name + "="),
             cookies = document.cookie.split(';'),
             value = null;
         cookies.forEach(function (cookie) {

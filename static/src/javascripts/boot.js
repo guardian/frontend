@@ -159,8 +159,7 @@ const go = () => {
 
 			if (
 				!config.get('switches.commercial') ||
-				config.get('page.isAdFree', false) ||
-				config.get('tests.poorDeviceConnectivityVariant') === 'variant'
+				config.get('page.isAdFree', false)
 			) {
 				return noop();
 			}

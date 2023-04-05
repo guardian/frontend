@@ -42,10 +42,10 @@ abstract case class Experiment(
   private def matchesExtraHeader(implicit requestHeader: RequestHeader): Boolean =
     extraHeader.map(h => checkHeader(h.key, _ == h.value)).getOrElse(true)
 
-  def canRun(implicit request: RequestHeader): Boolean = isSwitchedOn && priorCondition
+  def canRun(implicit request: RequestHeader): Boolean = isSwitchedOn && priorCondition && matchesExtraHeader
 
   def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean =
-    canRun && matchesExtraHeader && inVariant
+    canRun && inVariant
 
   def isControl[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = canRun && inControl
   def value(implicit request: RequestHeader, canCheck: CanCheckExperiment): String = {
