@@ -44,7 +44,7 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           state: 'open',
-                          head: 'guardian:commercial-bundle-bump-v${{ steps.latest-version.outputs.result }}',
+                          head: 'github-actions[bot]:commercial-bundle-bump-v${{ steps.latest-version.outputs.result }}',
                       });
                       console.log(`Found ${pullRequests.length} pull requests`);
                       if (pullRequests.length > 0) {
@@ -84,7 +84,7 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           title: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}',
-                          head: 'guardian:commercial-bundle-bump-v${{ needs.check.outputs.LATEST_VERSION }}',
+                          head: 'github-actions[bot]:commercial-bundle-bump-v${{ needs.check.outputs.LATEST_VERSION }}',
                           base: 'main',
                           body: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}\n\nChangelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
                       })
