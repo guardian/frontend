@@ -154,7 +154,7 @@ object DotcomRenderingUtils {
     } else None
   }
 
-  def getLast60Blocks(blocks: APIBlocks): Option[List[APIBlock]] = {
+  def getLatest60Blocks(blocks: APIBlocks): Option[List[APIBlock]] = {
     blocks.requestedBodyBlocks.flatMap(_.get(CanonicalLiveBlog.firstPage).map(_.toList))
   }
 
@@ -163,13 +163,13 @@ object DotcomRenderingUtils {
       blocks: APIBlocks,
       filterKeyEvents: Boolean,
   ): Seq[APIBlock] = {
-    // When the key events filter is on, we'd need all of the key events rather than just the last 60 blocks
+    // When the key events filter is on, we'd need all of the key events rather than just the latest 60 blocks
     val allBlocks =
       getKeyEventsIfFiltered(filterKeyEvents, blocks)
-        .orElse(getLast60Blocks(blocks))
+        .orElse(getLatest60Blocks(blocks))
         .getOrElse(List.empty)
 
-    // For the newest page, the last 60 blocks are requested, but for other page,
+    // For the newest page, the latest 60 blocks are requested, but for other page,
     // all of the blocks have been requested and returned in the blocks.body bit
     // of the response so we use those
     val relevantBlocks = if (allBlocks.isEmpty) blocks.body.getOrElse(Nil) else allBlocks

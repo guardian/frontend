@@ -164,7 +164,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     val requested = getRequestedBlocks(
       keyEvents = Seq(1, 2, 4, 6, 7),
       summaries = Seq(3, 5, 8),
-      last60 = Seq(6, 7, 8, 9, 10),
+      latest60 = Seq(6, 7, 8, 9, 10),
     )
     when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
 
@@ -175,11 +175,11 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     result.map(_.id) should equal(Seq("8", "7", "6", "5", "4", "3"))
   }
 
-  it should "return blocks from the last 60 that are included in the page, keeping the order of last60, given keye events filter is off" in {
+  it should "return blocks from the latest 60 that are included in the page, keeping the order of latest60, given key events filter is off" in {
     val requested = getRequestedBlocks(
       keyEvents = Seq(1, 2, 4, 6, 7),
       summaries = Seq(3, 5, 8),
-      last60 = Seq(6, 7, 8, 9, 10),
+      latest60 = Seq(6, 7, 8, 9, 10),
     )
     when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
 
@@ -206,18 +206,18 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     )
   }
 
-  def getRequestedBlocks(keyEvents: Seq[Int], summaries: Seq[Int], last60: Seq[Int] = Seq.empty) = {
+  def getRequestedBlocks(keyEvents: Seq[Int], summaries: Seq[Int], latest60: Seq[Int] = Seq.empty) = {
     val offsetDate = jodaToJavaInstant(DateTime.now).atOffset(ZoneOffset.UTC)
     val keyEventBlocks =
       keyEvents.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
     val summarieBlocks =
       summaries.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
 
-    val last60Blocks =
-      last60.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
+    val latest60Blocks =
+      latest60.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
 
     val requested: Map[String, Seq[Block]] =
-      Map("body:key-events" -> keyEventBlocks, "body:summary" -> summarieBlocks, "body:latest:60" -> last60Blocks)
+      Map("body:key-events" -> keyEventBlocks, "body:summary" -> summarieBlocks, "body:latest:60" -> latest60Blocks)
 
     requested
   }
