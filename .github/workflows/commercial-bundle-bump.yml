@@ -44,7 +44,7 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           state: 'open',
-                          head: 'github-actions[bot]:commercial-bundle-bump-v${{ steps.latest-version.outputs.result }}',
+                          head: 'guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}',
                       });
                       console.log(`Found ${pullRequests.length} pull requests`);
                       if (pullRequests.length > 0) {
@@ -70,10 +70,10 @@ jobs:
               run: |
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git config --global user.name "github-actions[bot]"
-                  git checkout -b commercial-bundle-bump-${{ needs.check.outputs.LATEST_VERSION }}
+                  git checkout -b bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
                   git add package.json yarn.lock
                   git commit -m "Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}"
-                  git push --set-upstream origin commercial-bundle-bump-${{ needs.check.outputs.LATEST_VERSION }}
+                  git push --set-upstream origin bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
 
             - uses: actions/github-script@v3
               name: Create pull request
@@ -84,7 +84,9 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           title: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}',
-                          head: 'github-actions[bot]:commercial-bundle-bump-v${{ needs.check.outputs.LATEST_VERSION }}',
+                          head: 'bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
                           base: 'main',
-                          body: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}\n\nChangelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
+                          body: `Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}
+
+                          Changelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}`,
                       })
