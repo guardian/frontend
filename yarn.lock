@@ -2329,17 +2329,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^10.0.1":
+"@guardian/source-foundations@^10.0.0", "@guardian/source-foundations@^10.0.1":
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-10.0.1.tgz#fe9d5d1bee9dd1b0d3d579d21a99f6051aa47649"
   integrity sha512-q7FHvQO2JN463SHRjLNKeywW8KUfjoao6oiULoyHssI07saol2rE0W8BdPCeD9337FNztiOxMGOmXWSBUIdYJw==
-  dependencies:
-    mini-svg-data-uri "1.4.4"
-
-"@guardian/source-foundations@^9.0.0":
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-9.0.1.tgz#133704bdf14e870fc2168c5adc0a071f74ef6864"
-  integrity sha512-LK4ymc3U72dNzlfQ04ZKn5cY1omSVzvKhbInvTBbWi7hoTQK8U9mikbkYG1uTMLgS8YlO1JckjYT/JpmG3TwqQ==
   dependencies:
     mini-svg-data-uri "1.4.4"
 
@@ -11797,7 +11790,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.15.tgz#6df94d8afecf3f9e10a742fd8c362ddab464225f"
   integrity sha512-5chK29n6QcJc3m1lVrKQSQ+V7K1Gb8HeQY6FViQ5AxCAEGu3DaHffWNDkC9+miZgsLvbvU9rxbV1qinGHMHzqA==
 
-"prebid.js@github:guardian/prebid.js#2e3b96d":
+prebid.js@guardian/prebid.js#2e3b96d:
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
