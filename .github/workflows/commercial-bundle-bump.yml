@@ -55,8 +55,9 @@ jobs:
                           owner: context.repo.owner,
                           repo: context.repo.repo,
                           state: 'open',
-                          head: 'commercial-bundle-bump-v${{ needs.check-version.outputs.LATEST_VERSION }}',
+                          head: 'guardian:commercial-bundle-bump-v${{ needs.check-version.outputs.LATEST_VERSION }}',
                       });
+                      console.log(`Found ${pullRequests.length} pull requests`);
                       if (pullRequests.length > 0) {
                           console.log('There is already a pull request open for this version');
                           return 'false';
