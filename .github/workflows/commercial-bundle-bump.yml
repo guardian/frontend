@@ -1,9 +1,9 @@
 name: Bump @guardian/commercial-bundle
 
 on:
-    # schedule:
-    #     # runs every 15 minutes
-    #     - cron: '*/15 * * * *'
+    schedule:
+        # runs every 5 minutes
+        - cron: '*/5 * * * *'
     workflow_dispatch:
     push:
 
@@ -61,6 +61,8 @@ jobs:
         if: ${{ needs.check.outputs.PR_EXISTS == 'false' }}
         steps:
             - uses: actions/checkout@v3
+              with:
+                  ref: main
 
             - uses: guardian/actions-setup-node@main
 
@@ -81,12 +83,11 @@ jobs:
                   github-token: ${{secrets.GITHUB_TOKEN}}
                   script: |
                       github.pulls.create({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          title: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}',
-                          head: 'bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
-                          base: 'main',
-                          body: `Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}
-
-                          Changelog available at https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}`,
-                      })
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            title: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}',
+                            head: 'bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
+                            base: 'main',
+                            body: `Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) to ${{ needs.check.outputs.LATEST_VERSION }}
+                      Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})`,
+                        })
