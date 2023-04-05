@@ -41,6 +41,12 @@ object DropdownMenus {
       linkId = "email_prefs",
     ),
     DropdownMenuItem(
+      href = Some(s"${Configuration.id.mmaUrl}/data-privacy"),
+      linkName = Some("data privacy"),
+      label = "Data privacy",
+      linkId = "data_privacy",
+    ),
+    DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/account-settings"),
       linkName = Some("settings"),
       label = "Settings",
