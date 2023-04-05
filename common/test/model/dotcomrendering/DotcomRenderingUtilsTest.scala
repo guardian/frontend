@@ -1,19 +1,54 @@
 package model.dotcomrendering.pageElements
 
-import com.gu.contentapi.client.model.v1.{Block, BlockAttributes, Blocks}
+import com.gu.contentapi.client.model.v1.{Block, BlockAttributes, Blocks, CapiDateTime, Content => ApiContent}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.contentapi.client.utils.format.LiveBlogDesign
+import implicits.Dates.jodaToJavaInstant
 import model.dotcomrendering.DotcomRenderingUtils
-import model.{CanonicalLiveBlog, ContentFormat, ContentType, DotcomContentType, MetaData}
+import model.liveblog.{BlockAttributes => LiveblogBlockAttribute, _}
+import model.{
+  Article,
+  CanonicalLiveBlog,
+  Content,
+  ContentFormat,
+  ContentType,
+  DotcomContentType,
+  FirstPage,
+  LiveBlogCurrentPage,
+  LiveBlogPage,
+  MetaData,
+  RelatedContent,
+}
+import org.joda.time.DateTime
 import org.mockito.Mockito.when
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 
+import java.time.ZoneOffset
+
 class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSugar {
 
   val testContent = mock[ContentType]
   val testMetadata = mock[MetaData]
+  val testCapiBlocks = mock[Blocks]
+  val relatedContent = mock[RelatedContent]
   val formatWithArticleDesign = ContentFormat.defaultContentFormat
+
+  val testArticle = {
+    val item = ApiContent(
+      id = "foo/2012/jan/07/bar",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+      tags = List(),
+      elements = None,
+    )
+    Article.make(Content.make(item))
+  }
 
   "getModifiedContent" should "ensure a live design takes priority when the forceLive flag is set" in {
     when(testContent.metadata) thenReturn testMetadata
@@ -124,4 +159,102 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
 
     DotcomRenderingUtils.ensureSummaryTitle(testBlock1).title should be(Some("I have a title"))
   }
+
+  "blocksForLiveblogPage" should "return only the key events & summary blocks when keye events filter is on" in {
+    val requested = getRequestedBlocks(
+      keyEvents = Seq(1, 2, 4, 6, 7),
+      summaries = Seq(3, 5, 8),
+      last60 = Seq(6, 7, 8, 9, 10),
+    )
+    when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
+
+    val currentPage = getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8))
+
+    val result = DotcomRenderingUtils.blocksForLiveblogPage(currentPage, testCapiBlocks, true)
+
+    result.map(_.id) should equal(Seq("8", "7", "6", "5", "4", "3"))
+  }
+
+  it should "return blocks from the last 60 that are included in the page, keeping the order of last60, given keye events filter is off" in {
+    val requested = getRequestedBlocks(
+      keyEvents = Seq(1, 2, 4, 6, 7),
+      summaries = Seq(3, 5, 8),
+      last60 = Seq(6, 7, 8, 9, 10),
+    )
+    when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
+
+    val currentPage = getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8))
+
+    val result = DotcomRenderingUtils.blocksForLiveblogPage(currentPage, testCapiBlocks, false)
+
+    result.map(_.id) should equal(Seq("6", "7", "8"))
+  }
+
+  def getLiveblogPageWithBlockIds(pageBlokIds: Seq[Int]) = {
+    val liveblogBlocks = pageBlokIds.map(id => getBodyBlockWithId(id))
+    val liveblogCurrentPage = LiveBlogCurrentPage(
+      currentPage = FirstPage(liveblogBlocks, filterKeyEvents = true, topicResult = None),
+      pagination = None,
+      pinnedBlock = None,
+    )
+
+    LiveBlogPage(
+      article = testArticle,
+      currentPage = liveblogCurrentPage,
+      related = relatedContent,
+      filterKeyEvents = true,
+    )
+  }
+
+  def getRequestedBlocks(keyEvents: Seq[Int], summaries: Seq[Int], last60: Seq[Int] = Seq.empty) = {
+    val offsetDate = jodaToJavaInstant(DateTime.now).atOffset(ZoneOffset.UTC)
+    val keyEventBlocks =
+      keyEvents.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
+    val summarieBlocks =
+      summaries.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
+
+    val last60Blocks =
+      last60.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
+
+    val requested: Map[String, Seq[Block]] =
+      Map("body:key-events" -> keyEventBlocks, "body:summary" -> summarieBlocks, "body:latest:60" -> last60Blocks)
+
+    requested
+  }
+
+  def getApiBlockWithId(id: Int, publishDate: CapiDateTime) = {
+    Block(
+      id = id.toString,
+      bodyHtml = "",
+      bodyTextSummary = "",
+      title = None,
+      attributes = BlockAttributes(),
+      published = true,
+      createdDate = None,
+      firstPublishedDate = Some(publishDate),
+      publishedDate = None,
+      lastModifiedDate = None,
+      createdBy = None,
+      lastModifiedBy = None,
+      elements = Seq(),
+    )
+  }
+
+  def getBodyBlockWithId(
+      publicationOrder: Int,
+  ): BodyBlock =
+    BodyBlock(
+      s"$publicationOrder",
+      "",
+      "",
+      None,
+      LiveblogBlockAttribute(false, false, false, None),
+      false,
+      None,
+      firstPublishedDate = Some(new DateTime(publicationOrder)),
+      None,
+      None,
+      Nil,
+      Nil,
+    )
 }
