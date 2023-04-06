@@ -20,6 +20,7 @@
                 <li>series: <em>se</em></li>
                 <li>contributor: <em>co</em></li>
                 <li>section: <em>s</em></li>
+                <li>tone: <em>tn</em></li>
             </ul>
         </li>
     </ol>
@@ -60,4 +61,12 @@
         </ol>
     }
 
+    <h2>Targeted Tones</h2>
+    @if(report.targetedTags.tones.isEmpty) {<p>None</p>} else {
+        <ol>
+        @for(tone <- report.targetedTags.tones) {
+            <li style="font-size : large"><a href="@CapiLink.tonePage(tone)">@tone</a></li>
+        }
+        </ol>
+    }
 }

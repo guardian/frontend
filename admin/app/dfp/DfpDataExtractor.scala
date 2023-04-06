@@ -14,6 +14,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
         series = soFar.series ++ lineItem.inlineMerchandisingTargetedSeries,
         contributors = soFar.contributors ++ lineItem.inlineMerchandisingTargetedContributors,
         sections = soFar.sections ++ lineItem.inlineMerchandisingTargetedSections,
+        tones = soFar.tones ++ lineItem.inlineMerchandisingTargetedTones,
       )
     }
   }
