@@ -79,7 +79,7 @@ object Dependencies {
   val targetingClient = "com.gu" %% "targeting-client" % "1.1.4"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.1.7"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.1.8"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
