@@ -210,6 +210,10 @@ val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
 
+val search = application("search")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+
 val main = root()
 // This evicts the version of
 // "com.fasterxml.jackson.core:jackson-databind"
@@ -235,6 +239,7 @@ val main = root()
     archive,
     preview,
     rss,
+    search,
   )
   .settings(
     riffRaffUploadArtifactBucket := Some(

@@ -1,0 +1,2 @@
+GET /healthcheck    controllers.HealthCheck.healthCheck()
+GET /search         controllers.SearchController.search()
