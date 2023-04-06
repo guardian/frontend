@@ -13,7 +13,7 @@ trait DeploysController extends BaseController with GuLogging with Requests with
 
   def getDeploys(stage: Option[String], pageSize: Option[Int] = None): Action[AnyContent] =
     Action.async {
-      riffRaff.getRiffRaffDeploys(Some("dotcom:all"), stage, pageSize, Some("Completed")).map(ApiResults(_))
+      riffRaff.getRiffRaffDeploys(Some("dotcom:frontend"), stage, pageSize, Some("Completed")).map(ApiResults(_))
     }
 
   def deploy(stage: String, build: Int): Action[AnyContent] =

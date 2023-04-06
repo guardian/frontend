@@ -1,6 +1,6 @@
 # Deployment
 
-Deploy dotcom using the `dotcom:all` project in riff-raff. This will autodeploy in PROD- and it's usually what you want to do when using CODE.
+Deploy dotcom using the `dotcom:frontend` project in riff-raff. This will autodeploy in PROD- and it's usually what you want to do when using CODE.
 
 ## What to do when a deployment breaks
 
@@ -49,8 +49,8 @@ milliseconds (tried 41 times) - aborting Show exception details
 
 - A box (or several boxes) has failed to launch and pass it's healthcheck meaning the healthcheck URL is not passing.
 - Potentially you've released something that means the box can't be
-  started or added to the load balancers. 
-- Does the healthcheck look like it is working? Eg, find the server, `gu ec2 list` then curl it's heathcheck, `<host>:18080/management/healthcheck` 
+  started or added to the load balancers.
+- Does the healthcheck look like it is working? Eg, find the server, `gu ec2 list` then curl it's heathcheck, `<host>:18080/management/healthcheck`
 - Log on to the box and have a look in the boot-up logs for errors and warnings.
 - Ultimately, you'll probably need to check the size of the autoscale group and
   redeploy, but don't do this without understanding why it failed.

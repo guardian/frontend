@@ -1,0 +1,95 @@
+name: "Build"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  id-token: write
+  contents: read
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version-file: .nvmrc
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+
+      - run: make reinstall
+
+      - name: assets test
+        run: ./tools/task-runner/runner validate test
+
+      - name: assets compile
+        run: ./tools/task-runner/runner compile
+        env:
+          NODE_ENV: production
+
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: eu-west-1
+          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+
+      - name: Test, compile
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
+        env:
+          STAGE: DEVINFRA
+
+      - uses: guardian/actions-riff-raff@v2
+        with:
+          projectName: dotcom:frontend
+          configPath: riff-raff.yaml
+          contentDirectories: |
+            frontend-static:
+              - static/hash
+            admin:
+              - admin/target/universal/admin.zip
+            applications:
+              - applications/target/universal/applications.zip
+            archive:
+              - archive/target/universal/archive.zip
+            article:
+              - article/target/universal/article.zip
+            commercial:
+              - commercial/target/universal/commercial.zip
+            discussion:
+              - discussion/target/universal/discussion.zip
+            facia:
+              - facia/target/universal/facia.zip
+            facia-press:
+              - facia-press/target/universal/facia-press.zip
+            identity:
+              - identity/target/universal/identity.zip
+            onward:
+              - onward/target/universal/onward.zip
+            preview:
+              - preview/target/universal/preview.zip
+            rss:
+              - rss/target/universal/rss.zip
+            sport:
+              - sport/target/universal/sport.zip

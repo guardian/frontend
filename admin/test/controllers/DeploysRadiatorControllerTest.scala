@@ -61,7 +61,7 @@ import scala.concurrent.duration._
   "GET /deploys" should {
     val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys")
     "returns 200 with expected amount of results" in {
-      val projectName = "dotcom:all"
+      val projectName = "dotcom:frontend"
       val stage = "PROD"
       val pageSize = 10
       val response = call(controller.getDeploys(stage = Some(stage), pageSize = Some(pageSize)), getDeploysRequest)
