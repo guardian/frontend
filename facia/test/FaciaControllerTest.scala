@@ -181,12 +181,6 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
     header("Location", redirectToInternational).head should endWith("/uk/commentisfree")
   }
 
-  it should "list the alterative options for a path by section and edition" in {
-    faciaController.alternativeEndpoints("uk/lifeandstyle") should be(List("lifeandstyle", "uk"))
-    faciaController.alternativeEndpoints("uk") should be(List("uk"))
-    faciaController.alternativeEndpoints("uk/business/stock-markets") should be(List("business", "uk"))
-  }
-
   it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {
     val count = 2
     val request = FakeRequest("GET", s"/container/count/$count/offset/0/mf2.json")
