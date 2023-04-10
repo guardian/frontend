@@ -145,7 +145,7 @@
 		"rxjs": "^6.6.7",
 		"sass-graph": "^2.2.4",
 		"sass-lint": "~1.10.2",
-		"sass-mq": "~3.3.2",
+		"sass-mq": "~5.0.1",
 		"semver": "^5.4.1",
 		"split": "^1.0.0",
 		"stream-to-observable": "^0.2.0",
