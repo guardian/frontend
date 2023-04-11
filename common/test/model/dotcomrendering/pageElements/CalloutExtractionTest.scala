@@ -142,6 +142,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
       None,
       false,
       3730905,
+      "Share your experience",
       "Share your stories",
       "<p>If you have been affected</p>",
       "callout-coronavirus",
