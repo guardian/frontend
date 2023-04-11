@@ -51,17 +51,17 @@
                     </a>
                 </div>
 
-                @if(editionId != "au" || editionId == "uk") {
+
                 <div class="top-bar__commercial-items">
                     <span class="top-bar__item__seperator hide-until-desktop"></span>
                     <a class="top-bar__item hide-until-desktop"
                        data-link-name="nav2 : job-cta"
                        data-edition="@{editionId}"
-                       href="@getJobUrl(editionId)">
+                       href="@getJobUrl()">
                         Search jobs
                     </a>
                 </div>
-                }
+
 
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                 @fragments.nav.userAccountDropdown()

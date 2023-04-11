@@ -109,10 +109,6 @@ object UrlHelpers {
     Url.parse(url.toString).toString
   }
 
-  def getJobUrl(editionId: String): String =
-    if (editionId == "au") {
-      "https://jobs.theguardian.com/landingpage/2868291/jobs-australia-html"
-    } else {
-      s"https://jobs.theguardian.com"
-    }
+  def getJobUrl(): String = s"https://jobs.theguardian.com"
+
 }
