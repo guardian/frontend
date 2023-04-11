@@ -42,7 +42,6 @@ jobs:
                       const { data: pullRequests } = await github.rest.pulls.list({
                           owner: context.repo.owner,
                           repo: context.repo.repo,
-                          state: 'open',
                           head: 'guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}',
                       });
                       console.log(`Found ${pullRequests.length} pull requests`);
