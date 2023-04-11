@@ -156,7 +156,7 @@ object FooterLinks {
   val ukListThree = List(
     FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
     FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
-    FooterLink("Search jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_UK_GU_JOBS", "uk : footer : jobs"),
+    FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
   )
 
@@ -167,7 +167,7 @@ object FooterLinks {
       "us : footer : advertise with us",
     ),
     FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
-    FooterLink("Search jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_US_GU_JOBS", "us : footer : jobs"),
+    FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
   )
 
   val auListThree = List(
@@ -184,7 +184,7 @@ object FooterLinks {
     ),
     FooterLink(
       "Search UK jobs",
-      "https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_INT_GU_JOBS",
+      "https://jobs.theguardian.com",
       "international : footer : uk-jobs",
     ),
   )

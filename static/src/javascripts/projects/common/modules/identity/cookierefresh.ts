@@ -1,10 +1,8 @@
 import { storage } from '@guardian/libs';
 import {
-	getUserFromApiWithRefreshedCookie,
 	isUserLoggedIn,
 	refreshOktaSession,
 } from 'common/modules/identity/api';
-import { reportError } from 'lib/report-error';
 
 const days30InMillis: number = 1000 * 60 * 60 * 24 * 30;
 
@@ -36,22 +34,12 @@ const init: () => void = () => {
 		// or if the value has expired.
 		const lastRefresh: unknown | null = storage.local.get(lastRefreshKey);
 		if (shouldRefreshCookie(lastRefresh, currentTime)) {
-			getUserFromApiWithRefreshedCookie()
-				.then(() => {
-					// Set the value in localStorage to expire in 30 days.
-					const newExpiry = currentTime + days30InMillis;
-					storage.local.set(lastRefreshKey, currentTime, newExpiry);
-					refreshOktaSession(
-						encodeURIComponent(document.location.href),
-					);
-				})
-				.catch((error) =>
-					reportError(
-						`Error refreshing IDAPI cookies: ${String(error)}`,
-						{},
-						false,
-					),
-				);
+			// Set the value in localStorage to expire in 30 days.
+			const newExpiry = currentTime + days30InMillis;
+			storage.local.set(lastRefreshKey, currentTime, newExpiry);
+			// we only refresh the okta session, users with only an IDAPI session will
+			// eventually be logged out by the IDAPI cookie expiry
+			refreshOktaSession(encodeURIComponent(document.location.href));
 		}
 	}
 };

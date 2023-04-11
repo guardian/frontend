@@ -53,6 +53,25 @@ class DiscussionClientTest extends AsyncFlatSpec with MockitoSugar {
         |}""".stripMargin
       val expectedProfile = DiscussionProfileResponse("ok", DiscussionProfile(testUserId, "displayName"))
 
+      val discussionComments =
+        """
+          |{
+          |  "status": "ok",
+          |  "comments": [
+          |    {
+          |      "id": 98765432
+          |    }
+          |  ]
+          |}""".stripMargin
+      val expectedComments = DiscussionCommentsResponse("ok", Seq(Comment(98765432)))
+
+      val emptyDiscussionComments =
+        """
+          |{
+          |  "status": "ok",
+          |  "comments": []
+          |}""".stripMargin
+
       when(configMock.discussionApiUrl).thenReturn(dapiApiUrl)
       when(wsRequestMock.withRequestTimeout(any())).thenReturn(wsRequestMock)
       when(wsRequestMock.get()).thenReturn(Future.successful(wsResponseMock))
@@ -83,6 +102,34 @@ class DiscussionClientTest extends AsyncFlatSpec with MockitoSugar {
 
     dapiClient.findProfileStats(testUserId) map { response =>
       response shouldBe None
+    }
+  }
+
+  "profileHasAtLeastOneComment" should "return true if the user has at least one comment" in {
+    val fixtures = buildFixtures()
+    import fixtures._
+    val dapiClient = new DiscussionClient(wsClientMock, configMock)
+
+    when(wsResponseMock.status).thenReturn(200)
+    when(wsResponseMock.json).thenReturn(Json.parse(discussionComments))
+    when(wsClientMock.url("https://dapimock.com/profile/10000001/comments?page=1&pageSize=1")).thenReturn(wsRequestMock)
+
+    dapiClient.profileHasAtLeastOneComment(testUserId) map { response =>
+      response shouldBe true
+    }
+  }
+
+  "profileHasAtLeastOneComment" should "return false if the user has no comments" in {
+    val fixtures = buildFixtures()
+    import fixtures._
+    val dapiClient = new DiscussionClient(wsClientMock, configMock)
+
+    when(wsResponseMock.status).thenReturn(200)
+    when(wsResponseMock.json).thenReturn(Json.parse(emptyDiscussionComments))
+    when(wsClientMock.url("https://dapimock.com/profile/10000001/comments?page=1&pageSize=1")).thenReturn(wsRequestMock)
+
+    dapiClient.profileHasAtLeastOneComment(testUserId) map { response =>
+      response shouldBe false
     }
   }
 

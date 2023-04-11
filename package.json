@@ -17,16 +17,16 @@
 		"@guardian/ab-core": "^4.0.0",
 		"@guardian/atom-renderer": "1.2.2",
 		"@guardian/automat-modules": "^0.3.8",
-		"@guardian/braze-components": "^10.0.0",
-		"@guardian/commercial-bundle": "^1.6.0",
-		"@guardian/commercial-core": "^5.4.5",
-		"@guardian/consent-management-platform": "^11.0.0",
+		"@guardian/braze-components": "^12.1.0",
+		"@guardian/commercial-bundle": "2.1.2",
+		"@guardian/commercial-core": "^6.0.0",
+		"@guardian/consent-management-platform": "^12.0.0",
 		"@guardian/core-web-vitals": "^4.0.0",
 		"@guardian/libs": "^14.0.0",
 		"@guardian/shimport": "^1.0.2",
-		"@guardian/source-foundations": "^9.0.0",
-		"@guardian/source-react-components": "^11.2.0",
-		"@guardian/source-react-components-development-kitchen": "9.2.0",
+		"@guardian/source-foundations": "^10.0.0",
+		"@guardian/source-react-components": "^12.0.0",
+		"@guardian/source-react-components-development-kitchen": "^10.0.1",
 		"@guardian/support-dotcom-components": "1.0.7",
 		"bean": "~1.0.14",
 		"bonzo": "~2.0.0",
@@ -54,6 +54,9 @@
 		"videojs-playlist": "guardian/videojs-playlist#0.1.4",
 		"web-vitals": "^2.1.0",
 		"wolfy87-eventemitter": "~5.2.4"
+	},
+	"resolutions": {
+		"unset-value": "^2.0.1"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.11.6",

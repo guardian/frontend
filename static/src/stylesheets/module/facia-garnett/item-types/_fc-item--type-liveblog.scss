@@ -17,11 +17,19 @@
         }
 
         .fc-item__headline {
-            color: #ffffff;
+            @if $pillar == special-report-alt {
+                color: $color2;
+            } @else {
+                color: #ffffff;
+            }
         }
 
         .fc-item__standfirst {
-            color: #ffffff;
+            @if $pillar == special-report-alt {
+                color: $color2;
+            } @else {
+                color: #ffffff;
+            }
         }
 
         .fc-item__meta {
@@ -39,7 +47,11 @@
         }
 
         .fc-sublink__link {
-            color: #ffffff;
+            @if $pillar == special-report-alt {
+                color: $color2;
+            } @else {
+                color: #ffffff;
+            }
         }
 
         .fc-sublink__kicker {
@@ -48,9 +60,9 @@
 
         // darken on hover
         .u-faux-block-link--hover {
-            background-color: darken($color1, 5%);
-
-            .fc-item__kicker::before {
+            @if $pillar == special-report-alt {
+                background-color: darken($special-report-alt-pastel, 5%);
+            } @else {
                 background-color: darken($color1, 5%);
             }
         }
@@ -82,3 +94,4 @@
 @include overide-live-blog-colours(sport, $sport-dark, $sport-pastel);
 @include overide-live-blog-colours(arts, $culture-dark, $culture-pastel);
 @include overide-live-blog-colours(lifestyle, $lifestyle-dark, $lifestyle-pastel);
+@include overide-live-blog-colours(special-report-alt, $special-report-alt-faded, $special-report-alt-dark);

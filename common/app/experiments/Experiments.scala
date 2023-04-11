@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
-      PoorDeviceConnectivity,
       FastlyNextGenWAF,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -34,7 +33,7 @@ object DCRFronts
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc1C,
+      participationGroup = Perc5A,
     )
 
 object OfferHttp3
@@ -42,7 +41,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 3, 31),
+      sellByDate = LocalDate.of(2023, 4, 28),
       participationGroup = Perc0B,
     )
 
@@ -60,7 +59,7 @@ object HeaderTopBarSearchCapi
       name = "header-top-bar-search-capi",
       description = "Adds CAPI search to the top nav",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 4, 4),
+      sellByDate = LocalDate.of(2023, 6, 6),
       participationGroup = Perc1B,
     )
 
@@ -71,19 +70,8 @@ object ServerSideLiveblogInlineAds
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
-      participationGroup = Perc5A,
+      participationGroup = Perc0A,
     )
-
-object PoorDeviceConnectivity
-    extends Experiment(
-      name = "poor-device-connectivity",
-      description = "Reduce the load of the site for users experiencing poor device connectivity",
-      owners = Seq(Owner.withEmail("open.journalism@theguardian.com")),
-      sellByDate = LocalDate.of(2023, 4, 4),
-      participationGroup = Perc20A,
-    ) {
-  override val extraHeader = Some(ExperimentHeader("X-GU-Poor-Device-Connectivity", "true"))
-}
 
 object FastlyNextGenWAF
     extends Experiment(

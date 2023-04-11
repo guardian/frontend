@@ -12,7 +12,7 @@ import {
     getUserFromCookie,
     reset,
     updateUsername,
-    getUserFromApiWithRefreshedCookie,
+    getUserFromApi,
 } from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
@@ -327,11 +327,10 @@ class CommentBox extends Component {
             if (comment.body.length > this.options.maxLength) {
                 this.error(
                     'COMMENT_TOO_LONG',
-                    `<b>Comments must be shorter than ${
-                        this.options.maxLength
+                    `<b>Comments must be shorter than ${this.options.maxLength
                     } characters.</b>` +
-                        `Yours is currently ${comment.body.length -
-                            this.options.maxLength} character(s) too long.`
+                    `Yours is currently ${comment.body.length -
+                    this.options.maxLength} character(s) too long.`
                 );
             }
 
@@ -356,11 +355,11 @@ class CommentBox extends Component {
         };
 
         if (!this.getUserData().emailVerified) {
-            // Cookie could be stale so lets refresh and check from the api
+            // Cookie could be stale so lets check from the api
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                return getUserFromApiWithRefreshedCookie().then(response => {
+                return getUserFromApi().then(response => {
                     if (
                         response.user.statusFields.userEmailValidated === true
                     ) {
@@ -546,7 +545,7 @@ class CommentBox extends Component {
                 const parentCommentSpout = this.getElem('parent-comment-spout');
                 const spoutOffset = replyToAuthor
                     ? replyToAuthor.offsetLeft +
-                      replyToAuthor.getBoundingClientRect().width / 2
+                    replyToAuthor.getBoundingClientRect().width / 2
                     : false;
 
                 if (parentCommentSpout && spoutOffset) {

@@ -212,12 +212,12 @@ object CompetitionsProvider {
     Competition(
       "751",
       "/football/euro-2024",
-      "European Championship", // aka Euro 2024
-      "European Championship",
+      "Euro 2024 qualifying",
+      "Euro 2024 qualifying",
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
-      startDate = Some(LocalDate.of(2023, 3, 25)),
+      startDate = Some(LocalDate.of(2023, 3, 23)),
     ),
     Competition(
       "701",

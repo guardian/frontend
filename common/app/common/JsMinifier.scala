@@ -19,11 +19,10 @@ object JsMinifier {
     /* Checks */
     options.setCheckTypes(true)
     options.setCheckSuspiciousCode(true)
-    options.setReportMissingOverride(CheckLevel.WARNING)
-    options.setCheckProvides(CheckLevel.WARNING)
-    options.setCheckGlobalNamesLevel(CheckLevel.WARNING)
-    options.setBrokenClosureRequiresLevel(CheckLevel.WARNING)
-    options.setCheckGlobalThisLevel(CheckLevel.WARNING)
+    options.setStrictModeInput(true)
+    options.setWarningLevel(DiagnosticGroups.MISSING_OVERRIDE, CheckLevel.WARNING)
+    options.setWarningLevel(DiagnosticGroups.MISSING_PROVIDE, CheckLevel.WARNING)
+    options.setWarningLevel(DiagnosticGroups.GLOBAL_THIS, CheckLevel.WARNING)
 
     //Aggressive, you need all JS variable defined somewhere for it not to throw (Such as window or navigator)
     //options.setCheckSymbols(true)
@@ -33,18 +32,14 @@ object JsMinifier {
     options.setWarningLevel(DiagnosticGroups.DEPRECATED_ANNOTATIONS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.DEBUGGER_STATEMENT_PRESENT, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_REGEXP, CheckLevel.WARNING)
-    options.setWarningLevel(DiagnosticGroups.UNNECESSARY_CASTS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.INVALID_CASTS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_USELESS_CODE, CheckLevel.WARNING)
-
-    /* Disable some check */
-    options.setWarningLevel(DiagnosticGroups.ES3, CheckLevel.OFF)
 
     //Aggressive
     //options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
     //options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)
 
-    options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT6_STRICT)
+    options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT_2015)
     options.setLanguageOut(CompilerOptions.LanguageMode.ECMASCRIPT3)
 
     options
@@ -65,8 +60,8 @@ object JsMinifier {
     if (result.warnings.isEmpty && result.errors.isEmpty && result.success) {
       compiler.toSource
     } else {
-      val errors: List[String] = result.errors.map(_.toString).toList
-      val warnings: List[String] = result.warnings.map(_.toString).toList
+      val errors: List[String] = result.errors.toArray().map(_.toString).toList
+      val warnings: List[String] = result.warnings.toArray().map(_.toString).toList
       val errorString: String = s"${errors.mkString("\n")}\n${warnings.mkString("\n")}}"
       throw new RuntimeException(errorString)
     }

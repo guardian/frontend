@@ -14,8 +14,9 @@ try {
 
             // Short version of cookie.get(), inspired by Google Analytics' code
             var cookieData = (function(a) {
-                var d = [],
-                    e = document.cookie.split(";");
+                var d = new window.Array(),
+                    e = new window.Array();
+                e = document.cookie.split(";");
                 a = RegExp("^\\s*" + a + "=\\s*(.*?)\\s*$");
                 for (var b = 0; b < e.length; b++) {
                     var f = e[b].match(a);

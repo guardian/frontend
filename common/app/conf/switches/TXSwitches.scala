@@ -22,4 +22,14 @@ trait TXSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val brazeTaylorReport = Switch(
+    group = SwitchGroup.TX,
+    "braze-taylor-report",
+    "If this switch is on, then braze messages will only show on articles with the Taylor report tag",
+    owners = Owner.group(SwitchGroup.TX),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
