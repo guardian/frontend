@@ -112,7 +112,7 @@ interface Config {
 		};
 		timingEvents?: GoogleTimingEvent[];
 	};
-	clientSideExperiments?: Record<
+	clientSideABTests?: Record<
 		string,
 		// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- import this way so this file is treated as ambient declarations
 		import('@guardian/ab-core').ABTest | undefined
