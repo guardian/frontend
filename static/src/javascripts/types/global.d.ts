@@ -1,5 +1,3 @@
-import type { ABTest } from '@guardian/ab-core';
-
 type ServerSideABTest = `${string}${'Variant' | 'Control'}`;
 
 declare const twttr: {
@@ -114,7 +112,11 @@ interface Config {
 		};
 		timingEvents?: GoogleTimingEvent[];
 	};
-	clientSideExperiments?: Record<string, ABTest | undefined>;
+	clientSideExperiments?: Record<
+		string,
+		// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- import this way so this file is treated as ambient declarations
+		import('@guardian/ab-core').ABTest | undefined
+	>;
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
