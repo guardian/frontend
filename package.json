@@ -56,6 +56,7 @@
 		"wolfy87-eventemitter": "~5.2.4"
 	},
 	"resolutions": {
+		"sass-loader": "10.4.1",
 		"unset-value": "^2.0.1"
 	},
 	"devDependencies": {
@@ -145,6 +146,7 @@
 		"rxjs": "^6.6.7",
 		"sass-graph": "^2.2.4",
 		"sass-lint": "~1.10.2",
+		"sass-loader": "^10.4.1",
 		"sass-mq": "~5.0.1",
 		"semver": "^5.4.1",
 		"split": "^1.0.0",
