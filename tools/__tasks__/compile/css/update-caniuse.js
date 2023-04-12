@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Update caniuse DB',
-    task: 'npm update caniuse-db',
+    task: 'npx --yes browserslist@latest --update-db',
 };
