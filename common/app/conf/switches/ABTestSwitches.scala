@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 4, 13)),
+    sellByDate = Some(LocalDate.of(2023, 6, 13)),
     exposeClientSide = true,
   )
 
