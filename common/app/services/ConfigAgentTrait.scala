@@ -54,12 +54,12 @@ object ConfigAgent extends GuLogging {
     configAgent.alter(Option(config))
   }
 
-  def refreshAndReturn(implicit ec: ExecutionContext): Future[Option[ConfigJson]] =
+  def refreshAndReturn(implicit ec: ExecutionContext): Future[Unit] =
     getClient.config
-      .flatMap(config => configAgent.alter { _ => Option(config) })
+      .map(config => configAgent.send(Option(config)))
       .fallbackTo {
         log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
-        Future.successful(configAgent.get())
+        Future.successful(())
       }
 
   def getPathIds: List[String] = {
@@ -88,24 +88,8 @@ object ConfigAgent extends GuLogging {
     canonicalCollectionMap.get(frontId).flatten
   }
 
-  def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
-    val config = configAgent.get()
-    config
-      .flatMap(_.fronts.get(id).map(_.collections))
-      .map(
-        _.flatMap(collectionId =>
-          getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig)),
-        ),
-      )
-  }
-
   def getConfig(id: String): Option[CollectionConfig] =
     configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
-
-  def getAllCollectionIds: List[String] = {
-    val config = configAgent.get()
-    config.map(_.collections.keys.toList).getOrElse(Nil)
-  }
 
   def contentsAsJsonString: String = Json.prettyPrint(Json.toJson(configAgent.get()))
 
@@ -130,19 +114,23 @@ object ConfigAgent extends GuLogging {
     }
   }
 
-  def fetchFrontProperties(id: String): FrontProperties = {
+  def getFrontProperties(id: String): FrontProperties = {
     val frontOption: Option[FrontJson] = configAgent.get().flatMap(_.fronts.get(id))
 
-    FrontProperties(
-      onPageDescription = frontOption.flatMap(_.onPageDescription),
-      imageUrl = frontOption.flatMap(_.imageUrl),
-      imageWidth = frontOption.flatMap(_.imageWidth).map(_.toString),
-      imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
-      isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
-      editorialType = None, // value found in Content API
-      commercial = None, // value found in Content API
-      priority = frontOption.flatMap(_.priority),
-    )
+    frontOption
+      .map(frontJson =>
+        FrontProperties(
+          onPageDescription = frontJson.onPageDescription,
+          imageUrl = frontJson.imageUrl,
+          imageWidth = frontJson.imageWidth.map(_.toString),
+          imageHeight = frontJson.imageHeight.map(_.toString),
+          isImageDisplayed = frontJson.isImageDisplayed.getOrElse(false),
+          editorialType = None, // value found in Content API
+          commercial = None, // value found in Content API
+          priority = frontJson.priority,
+        ),
+      )
+      .getOrElse(FrontProperties.empty)
   }
 
   def isFrontHidden(id: String): Boolean =
@@ -159,16 +147,6 @@ object ConfigAgent extends GuLogging {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
   }
 
-  def editorsPicksForCollection(collectionId: String): Option[Seq[String]] =
-    configAgent
-      .get()
-      .map(
-        _.fronts
-          .filter { case (_, front) => front.collections.headOption == Option(collectionId) }
-          .keys
-          .toSeq,
-      )
-      .filter(_.nonEmpty)
 }
 
 class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
