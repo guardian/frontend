@@ -99,7 +99,7 @@ module.exports = {
             {
                 test: /\.[jt]sx?|mjs$/,
                 exclude: {
-                    and: [/node_modules/, path.resolve(__dirname, 'static/vendor')],
+                    or: [/node_modules/, path.resolve(__dirname, 'static/vendor')],
                     not: [
                         // Include all @guardian modules, except automat-modules
                         /@guardian\/(?!(automat-modules|automat-contributions|atom-renderer))/,
@@ -152,14 +152,12 @@ module.exports = {
         new webpack.ProvidePlugin({
             videojs: 'videojs',
         }),
-
         new CircularDependencyPlugin({
             // exclude detection of files based on a RegExp
             exclude: /node_modules/,
             // add errors to webpack instead of warnings
             failOnError: true,
         }),
-
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
