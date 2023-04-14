@@ -98,16 +98,15 @@ module.exports = {
         rules: [
             {
                 test: /\.[jt]sx?|mjs$/,
-                exclude: [
-                    {
-                        test: /node_modules/,
-                        exclude: [
-                            /@guardian\/(?!(automat-modules|automat-contributions|atom-renderer))/,
-                            /dynamic-import-polyfill/,
-                        ],
-                    },
-                    path.resolve(__dirname, 'static/vendor'),
-                ],
+                exclude: {
+                    and: [/node_modules/, path.resolve(__dirname, 'static/vendor')],
+                    not: [
+                        // Include all @guardian modules, except automat-modules
+                        /@guardian\/(?!(automat-modules|automat-contributions|atom-renderer))/,
+                        // Include the dynamic-import-polyfill
+                        /dynamic-import-polyfill/,
+                    ],
+                },
                 use: [
                     {
                         loader: 'babel-loader',
