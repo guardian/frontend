@@ -78,16 +78,11 @@ object JavaScriptPage {
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
-    // TODO don't hard-code the asset path
-    lazy val remoteBundleUrl: String = RemoteBundleAgent
-      .commercialBundleUrl()
-      .map(url => "https://assets-code.guim.co.uk/test_commercial_bundles/" + url)
-      .getOrElse("Not found :(")
-
-    val commercialBundleUrl = JsString(
-      Configuration.commercial.overrideCommercialBundleUrl
-        .getOrElse(remoteBundleUrl),
-    )
+    val commercialBundleUrl: Map[String, JsString] =
+      Configuration.commercial.overrideCommercialBundleUrl.orElse(RemoteBundleAgent.commercialBundleUrl()) match {
+        case Some(url) => Map("commercialBundleUrl" -> JsString(url))
+        case None      => Map()
+      }
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
@@ -108,7 +103,6 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
-      ("commercialBundleUrl", commercialBundleUrl),
-    )
+    ) ++ commercialBundleUrl
   }.toMap
 }

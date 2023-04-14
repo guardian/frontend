@@ -10,22 +10,22 @@ import scala.io.Codec.UTF8
 import play.api.libs.json._
 import scala.util.{Failure, Success, Try}
 import conf.{Configuration}
+import services.ParameterStore
 
 import scala.concurrent.{ExecutionContext, Future}
 
 object RemoteBundleAgent {
-  private val commmercialBundleEntrypoint = "graun.standalone.commercial.js"
+  // Retrieve the name of the static assets bucket from Parameter Store
+  private lazy val parameterStore = new ParameterStore(Configuration.aws.region)
 
-  // TODO
-  private val bucket = "TODO"
+  private val bucket = parameterStore.get("/account/services/dotcom-static.bucket")
 
+  // TODO can we compute this URL?
   private val assetMapKey = "CODE/frontend-static/test_commercial_bundles/assets.map"
 
-  private lazy val remoteBundleAgent = Box[Option[String]](None)
+  private val commmercialBundleEntrypoint = "commercial-standalone.js"
 
-  private def update[T](agent: Box[Option[T]])(freshData: => Option[T]): Unit = {
-    agent send freshData
-  }
+  private lazy val remoteBundleAgent = Box[Option[String]](None)
 
   def jsonToAssetMap(json: String): Option[Map[String, String]] =
     Json.parse(json).validate[Map[String, String]] match {
@@ -36,10 +36,10 @@ object RemoteBundleAgent {
   private def grabRemoteBundleUrlFromStore(): Option[String] = {
     val commercialBundleUrl: Option[String] =
       S3.get(assetMapKey, bucket)(UTF8)
-        .flatMap(
-          jsonToAssetMap,
-        )
+        .flatMap(jsonToAssetMap)
         .flatMap(assetMap => assetMap.get(commmercialBundleEntrypoint))
+        // TODO can we compute this URL?
+        .map(url => "https://assets-code.guim.co.uk/test_commercial_bundles/" + url)
 
     // TODO Remove this later
     println(s"Grabbing remote bundle URL from S3. Found: ${commercialBundleUrl.getOrElse("nothing")}")
@@ -48,7 +48,7 @@ object RemoteBundleAgent {
   }
 
   def refresh() = {
-    update(remoteBundleAgent)(grabRemoteBundleUrlFromStore())
+    remoteBundleAgent.send(grabRemoteBundleUrlFromStore())
   }
 
   def commercialBundleUrl(): Option[String] = remoteBundleAgent.get()
