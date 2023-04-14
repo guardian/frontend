@@ -165,6 +165,7 @@
 		"webpack-dev-server": "^4.13.2",
 		"webpack-merge": "^5.8.0",
 		"webpack-visualizer-plugin": "^0.1.11",
+		"webpack-visualizer-plugin2": "^1.0.0",
 		"webshot": "^0.18.0",
 		"yargs": "^11.0.0"
 	},

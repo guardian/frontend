@@ -11925,7 +11925,7 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-dom@^17.0.2:
+react-dom@^17.0.1, react-dom@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
@@ -11961,7 +11961,7 @@ react@^16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-react@^17.0.2:
+react@^17.0.1, react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
@@ -14535,6 +14535,17 @@ webpack-sources@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.3.tgz#2d4daab8451fd4b240cc27055ff6a0c2ccea0cde"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
+
+webpack-visualizer-plugin2@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-visualizer-plugin2/-/webpack-visualizer-plugin2-1.0.0.tgz#de21ca141f53aea32c697e58a778dff3ef57794f"
+  integrity sha512-2z6Rdh5H1ZVhmdORQw1k7KvE5jI4IGDuRZISLWayNJXyY5Zwzf1vpMwDOGqV+i2zOj3KRvPzf59YdrK4GGL6VA==
+  dependencies:
+    d3 "^3.5.6"
+    mkdirp "^0.5.1"
+    prop-types "^15.7.2"
+    react "^17.0.1"
+    react-dom "^17.0.1"
 
 webpack-visualizer-plugin@^0.1.11:
   version "0.1.11"
