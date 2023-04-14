@@ -316,23 +316,6 @@ trait FaciaController
       renderContainerView(id, preserveLayout)
     }
 
-  def renderMostRelevantContainerJson(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val canonicalId = ConfigAgent
-        .getCanonicalIdForFront(path)
-        .orElse(
-          alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten,
-        )
-
-      canonicalId
-        .map { collectionId =>
-          renderContainerView(collectionId)
-        }
-        .getOrElse(successful(NotFound))
-    }
-
-  def alternativeEndpoints(path: String): Seq[String] = path.split("/").toList.take(2).reverse
-
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit
       request: RequestHeader,
   ): Future[Result] = {
