@@ -14,6 +14,7 @@ import model.IpsosTags.getScriptTag
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
+import common.dfp.RemoteBundleAgent
 
 object JavaScriptPage {
 
@@ -77,9 +78,15 @@ object JavaScriptPage {
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
+    // TODO don't hard-code the asset path
+    lazy val remoteBundleUrl: String = RemoteBundleAgent
+      .commercialBundleUrl()
+      .map(url => "https://assets-code.guim.co.uk/test_commercial_bundles/" + url)
+      .getOrElse("Not found :(")
+
     val commercialBundleUrl = JsString(
       Configuration.commercial.overrideCommercialBundleUrl
-        .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js")),
+        .getOrElse(remoteBundleUrl),
     )
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(

@@ -1,9 +1,10 @@
 package dfp
 
 import app.LifecycleComponent
-import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomField, GuCustomTargeting}
+import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomField, GuCustomTargeting, RemoteBundleRetriever}
 import common._
 import play.api.inject.ApplicationLifecycle
+import scala.concurrent.duration._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -24,6 +25,7 @@ class DfpDataCacheLifecycle(
     dfpFacebookIaAdUnitCacheJob: DfpFacebookIaAdUnitCacheJob,
     dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
     akkaAsync: AkkaAsync,
+    remoteBundleRetriever: RemoteBundleRetriever,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
 
@@ -104,13 +106,27 @@ class DfpDataCacheLifecycle(
         Future.sequence(Seq(advertiserAgent.refresh(), orderAgent.refresh())).map(_ => ())
       }
     },
+    new Job[Unit] {
+      val name: String = "Remote-Bundle-Retriever"
+      val interval: Int = 10
+      def run(): Future[Unit] = remoteBundleRetriever.run()
+    },
   )
 
   override def start(): Unit = {
     jobs foreach { job =>
       jobScheduler.deschedule(job.name)
-      jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {
-        job.run().map(_ => ())
+
+      // TEMPORARY
+      // Speed things along a bit...
+      if (job.name == "Remote-Bundle-Retriever") {
+        jobScheduler.scheduleEvery(job.name, 10.seconds) {
+          job.run().map(_ => ())
+        }
+      } else {
+        jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {
+          job.run().map(_ => ())
+        }
       }
     }
 

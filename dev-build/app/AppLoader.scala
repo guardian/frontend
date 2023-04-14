@@ -19,6 +19,7 @@ import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import dfp.DfpDataCacheLifecycle
+import common.dfp.RemoteBundleRetriever
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
@@ -84,6 +85,7 @@ trait AppComponents
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   override lazy val mostViewedAgent = wire[MostViewedAgent]
+  override lazy val remoteBundleRetriever: RemoteBundleRetriever = wire[RemoteBundleRetriever]
 
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 

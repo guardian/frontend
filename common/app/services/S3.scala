@@ -25,7 +25,7 @@ trait S3 extends GuLogging {
       .build()
   }
 
-  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] =
+  private def withS3Result[T](key: String, bucket: String = bucket)(action: S3Object => T): Option[T] =
     client.flatMap { client =>
       try {
 
@@ -57,8 +57,8 @@ trait S3 extends GuLogging {
       }
     }
 
-  def get(key: String)(implicit codec: Codec): Option[String] =
-    withS3Result(key) { result =>
+  def get(key: String, bucket: String = bucket)(implicit codec: Codec): Option[String] =
+    withS3Result(key, bucket) { result =>
       Source.fromInputStream(result.getObjectContent).mkString
     }
 
