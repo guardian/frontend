@@ -23,6 +23,7 @@ jobs:
             - uses: actions/github-script@v6
               id: current-version
               with:
+                  result-encoding: string
                   script: |
                       const package = await fetch('https://raw.githubusercontent.com/guardian/frontend/main/package.json').then(res => res.json());
                       return package.dependencies['@guardian/commercial-bundle'].replace('^', '');
