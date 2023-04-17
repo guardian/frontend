@@ -6,6 +6,12 @@ import pa.MatchDayTeam
 import java.awt.Color
 import java.time.LocalDate
 
+/**
+  * @param tableDividers divides the league table into zones for promotion/relegation, or for qualification to another competition.
+  *                       Only add a table divider where the boundaries for progression are clear, e.g do not add
+  *                       a divider in Euro group stages as there are complicated rules which means some (but not all)
+  *                       teams finishing third could qualify
+  */
 case class Competition(
     id: String,
     url: String,

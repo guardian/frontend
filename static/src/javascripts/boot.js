@@ -158,8 +158,7 @@ const go = () => {
 				Promise.resolve({ bootCommercial: () => {} });
 
 			if (
-				!config.get('switches.commercial') ||
-				config.get('page.isAdFree', false)
+				!config.get('switches.commercial')
 			) {
 				return noop();
 			}

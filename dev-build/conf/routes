@@ -403,7 +403,6 @@ GET            /*path.emailjson                                                 
 GET            /*path.emailtxt                                                                                                   controllers.FaciaController.renderFrontJson(path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
-GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)
 GET            /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
 
 

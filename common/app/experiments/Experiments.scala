@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
-      FastlyNextGenWAF,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -33,7 +32,7 @@ object DCRFronts
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc5A,
+      participationGroup = Perc20A,
     )
 
 object OfferHttp3
@@ -71,14 +70,4 @@ object ServerSideLiveblogInlineAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
       participationGroup = Perc0A,
-    )
-
-object FastlyNextGenWAF
-    extends Experiment(
-      name = "fastly-next-gen-waf",
-      description =
-        "We're using a participation group that we don't want other people to use. The experiment is used as a placeholder because the actual switch is happening at the Fastly level. PR here: https://github.com/guardian/fastly-edge-cache/pull/966",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc10A,
     )
