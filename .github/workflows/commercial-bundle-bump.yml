@@ -2,8 +2,8 @@ name: Bump @guardian/commercial-bundle
 
 on:
     schedule:
-        # runs every 5 minutes between 8am and 6pm, Monday to Friday
-        - cron: '*/5 08-18 * * 1-5'
+        # runs every 15 minutes between 8am and 6pm, Monday to Friday
+        - cron: '*/15 08-18 * * 1-5'
     workflow_dispatch:
 
 jobs:
