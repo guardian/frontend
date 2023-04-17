@@ -23,7 +23,7 @@ object DCRJavascriptBundle
       description = "DCR Javascript bundle experiment",
       owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc20A,
+      participationGroup = Perc1A,
     )
 
 object DCRFronts
@@ -32,7 +32,7 @@ object DCRFronts
       description = "Use DCR for fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc5A,
+      participationGroup = Perc20A,
     )
 
 object OfferHttp3
