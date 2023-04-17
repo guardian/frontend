@@ -36,7 +36,9 @@ jobs:
               id: pr-exists
               if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
               run: |
-                  gh pr list --head "guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}" --json number --limit 1 | node -e "console.log(JSON.parse(require('fs').readFileSync(0, 'utf8')).length > 0)"
+                  gh pr list --head "bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}" --json number --limit 1 | node -e "console.log(JSON.parse(require('fs').readFileSync(0, 'utf8')).length > 0)"
+              env:
+                  GH_TOKEN: ${{ github.token }}
 
     pr:
         name: Create pull request
@@ -71,3 +73,5 @@ jobs:
                   --title "Bump @guardian/commercial-bundle from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}" \
                     --body "Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}.\
                     Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})"
+              env:
+                  GH_TOKEN: ${{ github.token }}
