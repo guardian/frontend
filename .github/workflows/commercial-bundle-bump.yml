@@ -16,7 +16,7 @@ jobs:
             LATEST_VERSION: ${{ steps.latest-version.outputs.result }}
             PR_EXISTS: ${{ steps.pr-exists.outputs.result }}
         steps:
-            - run: yarn info @guardian/commercial-bundle version --silent
+            - run: echo "result=$(yarn info @guardian/commercial-bundle version --silent)" >> $GITHUB_OUTPUT
               id: latest-version
 
               # use the github-script action to fetch the current version from the package.json file, this avoids checking out the repo
