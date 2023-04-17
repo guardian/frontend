@@ -15,18 +15,8 @@ jobs:
             LATEST_VERSION: ${{ steps.latest-version.outputs.result }}
             PR_EXISTS: ${{ steps.pr-exists.outputs.result }}
         steps:
-            - uses: actions/github-script@v6
-              id: latest-version
-              with:
-                  result-encoding: string
-                  script: |
-                      return await fetch('https://registry.npmjs.org/@guardian/commercial-bundle/latest')
-                        .then(response => response.json())
-                        .then(data => {
-                          const version = data.version;
-                          console.log(`Latest version is ${version}`);
-                          return version;
-                        });
+            - id: latest-version
+              run: npm info @guardian/commercial-bundle version
 
             - run: yarn info @guardian/commercial-bundle version --silent
               id: current-version
@@ -34,22 +24,8 @@ jobs:
             - name: Check for existing pull request
               id: pr-exists
               if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
-              uses: actions/github-script@v6
-              with:
-                  github-token: ${{secrets.GITHUB_TOKEN}}
-                  result-encoding: string
-                  script: |
-                      const { data: pullRequests } = await github.rest.pulls.list({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          head: 'guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}',
-                      });
-                      console.log(`Found ${pullRequests.length} pull requests`);
-                      if (pullRequests.length > 0) {
-                          console.log('There is already a pull request open for this version');
-                          return 'true';
-                      }
-                      return 'false';
+              run: |
+                  gh pr list --head "guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}" --json number --limit 1 | node -e "console.log(JSON.parse(require('fs').readFileSync(0, 'utf8')).length > 0)"
 
     pr:
         name: Create pull request
@@ -75,33 +51,12 @@ jobs:
                   git commit -m "Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}"
                   git push --set-upstream origin bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
 
-            - uses: actions/github-script@v3
-              name: Create pull request
-              with:
-                  github-token: ${{secrets.GITHUB_TOKEN}}
-                  script: |
-                      const {data: pr} = await github.pulls.create({
-                            owner: context.repo.owner,
-                            repo: context.repo.repo,
-                            title: 'Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}',
-                            head: 'bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}',
-                            base: 'main',
-                            body: `Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}.
-                      Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})`,
-                        })
-
-                        await Promise.all([
-                            github.issues.addLabels({
-                                owner: context.repo.owner,
-                                repo: context.repo.repo,
-                                issue_number: pr.number,
-                                labels: ['commercial', 'dependencies'],
-                            }),
-
-                            github.pulls.createReviewRequest({
-                                owner: context.repo.owner,
-                                repo: context.repo.repo,
-                                pull_number: pr.number,
-                                reviewers: ['guardian/commercial-dev'],
-                            })
-                        ]);
+            - name: Create pull request
+              run: |
+                  gh pr create --base main \
+                  --label commercial \
+                  --label dependencies \
+                  --reviewer guardian/commercial-dev \
+                  --title "Bump @guardian/commercial-bundle from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}" \
+                    --body "Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}.\
+                    Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})"
