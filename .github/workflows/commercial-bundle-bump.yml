@@ -19,8 +19,13 @@ jobs:
             - run: yarn info @guardian/commercial-bundle version --silent
               id: latest-version
 
-            - run: node -e "console.log(require('./package.json').dependencies['@guardian/commercial-bundle'].replace('^', ''))"
+              # use the github-script action to fetch the current version from the package.json file, this avoids checking out the repo
+            - uses: actions/github-script@v6
               id: current-version
+              with:
+                  script: |
+                      const package = await fetch('https://raw.githubusercontent.com/guardian/frontend/main/package.json').then(res => res.json());
+                      return package.dependencies['@guardian/commercial-bundle'].replace('^', '');
 
             - name: Check for existing pull request
               id: pr-exists
