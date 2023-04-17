@@ -16,8 +16,18 @@ jobs:
             LATEST_VERSION: ${{ steps.latest-version.outputs.result }}
             PR_EXISTS: ${{ steps.pr-exists.outputs.result }}
         steps:
-            - id: latest-version
-              run: npm info @guardian/commercial-bundle version
+            - uses: actions/github-script@v6
+              id: latest-version
+              with:
+                  result-encoding: string
+                  script: |
+                      return await fetch('https://registry.npmjs.org/@guardian/commercial-bundle/latest')
+                        .then(response => response.json())
+                        .then(data => {
+                          const version = data.version;
+                          console.log(`Latest version is ${version}`);
+                          return version;
+                        });
 
             - run: yarn info @guardian/commercial-bundle version --silent
               id: current-version
