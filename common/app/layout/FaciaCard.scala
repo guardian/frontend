@@ -70,6 +70,7 @@ object FaciaCard {
       faciaContent.card.group,
       branding = faciaContent.branding(defaultEdition),
       properties = Some(faciaContent.properties),
+      isAction = faciaContent.isActionCard,
     )
   }
 }
@@ -98,6 +99,7 @@ case class ContentCard(
     branding: Option[Branding],
     properties: Option[PressedProperties],
     fromShowMore: Boolean = false,
+    isAction: Boolean = false,
 ) extends FaciaCard {
 
   private lazy val storyContent: Option[PressedStory] = properties.flatMap(_.maybeContent)
