@@ -67,7 +67,7 @@ jobs:
                   gh pr create --base main \
                   --label commercial \
                   --label dependencies \
-                  --reviewer guardian/commercial-dev \
+                  --reviewer @guardian/commercial-dev \
                   --title "Bump @guardian/commercial-bundle from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}" \
                     --body "Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}.\
                     Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})"
