@@ -36,7 +36,7 @@ jobs:
               id: pr-exists
               if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
               run: |
-                  gh pr list --head "bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}" --json number --limit 1 | node -e "console.log(JSON.parse(require('fs').readFileSync(0, 'utf8')).length > 0)"
+                  gh pr list --head "bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}" --repo guardian/frontend --json number --limit 1 | node -e "console.log(JSON.parse(require('fs').readFileSync(0, 'utf8')).length > 0)"
               env:
                   GH_TOKEN: ${{ github.token }}
 
