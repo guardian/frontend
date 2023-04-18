@@ -30,10 +30,14 @@
             case Some(kicker) => {
                 @articleLink {
                     @if(isAction) {
-                        <span>Marjan</span>
+                      <div class="fc-item__action-kicker-wrapper @kicker.linkClasses.mkString(" ")">
+                          <span class="fc-item__action-kicker-label">@Html(kicker.kickerHtml)</span>
+                      </div>
+                        @headline()
+                    } else {
+                        <div class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</div>
+                        @headline()
                     }
-                    <div class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</div>
-                    @headline()
                 }
             }
             case _ => {
