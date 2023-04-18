@@ -102,19 +102,19 @@ $font-scale: (
     .fc-item__action-kicker-label {
         @include action-kicker-font-size($size);
         @if ($size <= 2) {
-            padding: 1px 5px 2px 5px;
+            padding: 1px 5px 2px;
         }
 
         @else if ($size == 3) {
-            padding: 1px 4px 2px 4px;
+            padding: 1px 4px 2px;
         }
 
         @else if ($size == 4) {
-            padding: 2px 5px 2px 5px;
+            padding: 2px 5px;
         }
 
         @else if ($size >= 5) {
-            padding: 2px 5px 3px 5px;
+            padding: 2px 5px 3px;
         }
     }
 
@@ -129,7 +129,7 @@ $font-scale: (
     }
 
     @else if ($size == 4) {
-        margin-top: 0.5px;
+        margin-top: .5px;
         margin-bottom: 2px;
     }
 
