@@ -29,7 +29,7 @@
         @header.kicker match {
             case Some(kicker) => {
                 @articleLink {
-                    @if(isAction) {
+                    @if(!isAction) {
                       <div class="fc-item__action-kicker-wrapper @kicker.linkClasses.mkString(" ")">
                           <span class="fc-item__action-kicker-label">@Html(kicker.kickerHtml)</span>
                       </div>

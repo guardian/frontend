@@ -148,6 +148,12 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
+    .fc-item__action-kicker-label {
+        background-color: map-get($palette, kicker);
+        color: #ffffff;
+        box-decoration-break: clone;
+    }
+
     &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
         .fc-item__content {
             background-color: map-get($palette, kicker);

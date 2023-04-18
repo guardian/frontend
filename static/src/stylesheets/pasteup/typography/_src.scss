@@ -36,6 +36,17 @@ $font-scale: (
         4: (font-size: 14, line-height: 22),
         5: (font-size: 16, line-height: 22),
         6: (font-size: 18, line-height: 18),
+    ),
+    actionKicker: (
+        1: (font-size: 14),
+        2: (font-size: 14),
+        3: (font-size: 15),
+        4: (font-size: 17),
+        5: (font-size: 20),
+        6: (font-size: 20),
+        8: (font-size: 20),
+        9: (font-size: 20),
+        10: (font-size: 20),
     )
 );
 
@@ -80,6 +91,52 @@ $font-scale: (
     @if $size-only == false {
         @include f-headline;
     }
+}
+
+@mixin action-kicker-font-size($size) {
+    font-size: get-font-size(actionKicker, $size);
+    line-height: 115%;
+}
+
+@mixin fs-action-kicker($size) {
+    .fc-item__action-kicker-label {
+        @include action-kicker-font-size($size);
+        @if ($size <= 2) {
+            padding: 1px 5px 2px 5px;
+        }
+
+        @else if ($size == 3) {
+            padding: 1px 4px 2px 4px;
+        }
+
+        @else if ($size == 4) {
+            padding: 2px 5px 2px 5px;
+        }
+
+        @else if ($size >= 5) {
+            padding: 2px 5px 3px 5px;
+        }
+    }
+
+    @if ($size <= 2) {
+        margin-bottom: 2px;
+        margin-top: 1px;
+    }
+
+    @else if ($size == 3) {
+        margin-top: -1px;
+        margin-bottom: 1px;
+    }
+
+    @else if ($size == 4) {
+        margin-top: 0.5px;
+        margin-bottom: 2px;
+    }
+
+    @else if ($size >= 5) {
+        margin-bottom: 2px;
+    }
+
 }
 
 @mixin f-bodyHeading {
