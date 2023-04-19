@@ -108,9 +108,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
-          Cached(cacheTime)(RevalidatableResult.Ok(Html(response.body)))
+          val cachedRequest = Cached(cacheTime)(RevalidatableResult.Ok(Html(response.body)))
             .withHeaders("X-GU-Dotcomponents" -> "true")
-            .withPreconnect(HttpPreconnections.defaultUrls)
+
+          response.header("Link") match {
+            // DCR Returns a Link header for apps requests, this is used for offline reading
+            case Some(linkValue) => cachedRequest.withHeaders("Link" -> linkValue)
+            // For any other requests, we return the default link header with preconnect urls
+            case _ => cachedRequest.withPreconnect(HttpPreconnections.defaultUrls)
+
+          }
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(InternalServerError("Remote renderer validation error (400)"))
