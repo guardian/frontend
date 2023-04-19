@@ -112,9 +112,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
             .withHeaders("X-GU-Dotcomponents" -> "true")
 
           response.header("Link") match {
-            // DCR Returns a Link header for apps requests, this is used for offline reading
-            case Some(linkValue) => cachedRequest.withHeaders("Link" -> linkValue)
-            // For any other requests, we return the default link header with preconnect urls
+            case Some(linkValue) =>
+              cachedRequest
+              // Send both the prefetch header for offline reading, and the usual preconnect URLs
+                .withHeaders("Link" -> linkValue)
+                .withPreconnect(HttpPreconnections.defaultUrls)
+            // For any other requests, we return just the default link header with preconnect urls
             case _ => cachedRequest.withPreconnect(HttpPreconnections.defaultUrls)
 
           }
