@@ -165,7 +165,7 @@
 		"webpack-merge": "^4.2.2",
 		"webpack-visualizer-plugin2": "^1.0.0",
 		"webshot": "^0.17.0",
-		"yargs": "^11.0.0"
+		"yargs": "^17.7.1"
 	},
 	"optionalDependencies": {
 		"fsevents": "^2.3.2",
