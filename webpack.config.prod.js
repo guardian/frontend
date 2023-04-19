@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const Visualizer = require('webpack-visualizer-plugin2');
 const BundleAnalyzerPlugin =
 	require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const TerserPlugin = require('terser-webpack-plugin');
@@ -30,9 +29,6 @@ module.exports = webpackMerge.smart(config, {
 			// delicate number: stops enhanced-no-commercial and enhanced
 			// being merged into one
 			minSizeReduce: 1.6,
-		}),
-		new Visualizer({
-			filename: './webpack-stats.html',
 		}),
 		new BundleAnalyzerPlugin({
 			reportFilename: './bundle-analyzer-report.html',
