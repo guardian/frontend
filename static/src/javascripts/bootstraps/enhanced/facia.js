@@ -118,8 +118,16 @@ const trackSlideshowDuration = (slideshow) => {
                 const timeTaken = slideshowTiming.end();
                 if (timeTaken) {
                     const timeTakenInSeconds = timeTaken/1000;
-                    console.log('*** timeTakenInSeconds', timeTakenInSeconds);
-                    ophan.record(componentEvent(slideshowId, 'VIEW', {value: timeTakenInSeconds.toString()}));
+                    ophan.record({
+                        componentEvent: {
+                            component: {
+                                componentType: 'SLIDESHOW',
+                                id: slideshowId,
+                            },
+                            action: 'VIEW',
+                            value: timeTakenInSeconds.toString(),
+                        }
+                    });
                 }
             }
         }, {
