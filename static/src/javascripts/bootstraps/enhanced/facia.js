@@ -17,6 +17,8 @@ import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
 import { addContributionsBanner } from 'journalism/modules/audio-series-add-contributions';
+import { measureTiming } from "commercial/modules/measure-timing";
+import ophan from 'ophan/ng';
 
 const showSnaps = () => {
     initSnaps();
@@ -95,6 +97,39 @@ const addContributionBannerToAudioSeries = () => {
     }
 };
 
+const initTracking = () => {
+	const slideshows = document.getElementsByClassName('fc-item__slideshow');
+	if (slideshows.length > 0) {
+        slideshows.forEach(trackSlideshowDuration)
+	}
+};
+
+const trackSlideshowDuration = (slideshow) => {
+    let hasBeenSeen = false;
+    const slideshowId = slideshow.id;
+    const slideshowTiming = measureTiming(`slideshow-duration-${slideshowId}`);
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                hasBeenSeen = true;
+                slideshowTiming.clear();
+                slideshowTiming.start();
+            } else if (hasBeenSeen) {
+                const timeTaken = slideshowTiming.end();
+                if (timeTaken) {
+                    const timeTakenInSeconds = timeTaken/1000;
+                    console.log('*** timeTakenInSeconds', timeTakenInSeconds);
+                    ophan.record(componentEvent(slideshowId, 'VIEW', {value: timeTakenInSeconds.toString()}));
+                }
+            }
+        }, {
+            threshold: 0.1,
+        });
+        observer.observe(slideshow);
+    }
+}
+
+
 const init = () => {
     catchErrorsWithContext([
         ['f-accessibility', shouldHideFlashingElements],
@@ -109,6 +144,7 @@ const init = () => {
         ['f-video-playlists', upgradeVideoPlaylists],
         ['f-audio-flagship-contributions', addContributionBannerToAudioSeries],
         ['f-region-selector', initRegionSelector],
+        ['f-tracking', initTracking],
         ['f-finished', finished],
     ]);
 };
