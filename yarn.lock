@@ -2266,11 +2266,6 @@
     web-vitals "^2.1.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/commercial-core@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.0.0.tgz#e49abb0ae5985431ecba41aba21c74afbbfed20b"
-  integrity sha512-CYcfLRGEVrHVfSsxG8SaBO6AZz27MZmhCA29NX6Y85ODD92fNKp41SVegUkXdb/kSBwFrRXE2xcCeHcjQ9IopA==
-
 "@guardian/commercial-core@^6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.2.0.tgz#00e7269a21c8ed6bc8af74c26a75faaa4777a6f1"
