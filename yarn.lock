@@ -2243,13 +2243,13 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-2.2.0.tgz#2b52ebf7e84e2aec8e952915c490bca4269dfafd"
-  integrity sha512-UaOuPR4IxYZq9t2ozi2LJF6FptUmCXYDfogwtKLBxOYCA41cpoc5Ls6i5WfMW3WMTqGDsRiDA64hXuySn2hT1g==
+"@guardian/commercial-bundle@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-2.3.0.tgz#bb5df60d45261328c37f6a425404e70cec207053"
+  integrity sha512-oKoLxMX7QB4PEsxHzGKka0nmv6LUMsTT1jFagFyvRMVo+dhggdkpcCUBY6aJ8cvazYuGZpuUYWmz+JeL3Piqxw==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
-    "@guardian/commercial-core" "^6.1.0"
+    "@guardian/commercial-core" "^6.2.0"
     "@guardian/consent-management-platform" "^12.0.0"
     "@guardian/core-web-vitals" "^4.0.0"
     "@guardian/libs" "^14.0.0"
@@ -2271,10 +2271,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.0.0.tgz#e49abb0ae5985431ecba41aba21c74afbbfed20b"
   integrity sha512-CYcfLRGEVrHVfSsxG8SaBO6AZz27MZmhCA29NX6Y85ODD92fNKp41SVegUkXdb/kSBwFrRXE2xcCeHcjQ9IopA==
 
-"@guardian/commercial-core@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.1.0.tgz#62112b56e9ff4cdc8abd045cec0dfb9600583fb9"
-  integrity sha512-gopAGdiPmMuRCWnRn8XTVY2UsOtHI6LnFnDqAJfnNejorHv2mVMzU26fK8lQ/89mUAewQDk0HO95eVb+J32EJA==
+"@guardian/commercial-core@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.2.0.tgz#00e7269a21c8ed6bc8af74c26a75faaa4777a6f1"
+  integrity sha512-mX8a7C3aTAmbMhRFGyzGnkWTbQ+ocmJyxvrnWWzg38FMJ6dPSV17IPInX6TfQRz9cxLk0n2O7kudBjzRVYXRew==
 
 "@guardian/consent-management-platform@^12.0.0":
   version "12.0.0"
