@@ -1129,6 +1129,11 @@
                 "url" : "/sport/formulaone",
                 "children" : [ ],
                 "classList" : [ ]
+            }, {
+                "title" : "Golf",
+                "url" : "/sport/golf",
+                "children" : [ ],
+                "classList" : [ ]
             } ],
             "classList" : [ ]
         },
