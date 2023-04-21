@@ -15,7 +15,7 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
 
     val stopWatch = new StopWatch
     val result = next(rh)
-    val requestLogger = RequestLogger().withRequestHeaders(rh).withStopWatch(stopWatch)
+    val requestLogger = RequestLogger(rh, response = None, Some(stopWatch))
     result onComplete {
       case Success(response) =>
         val additionalInfo =
