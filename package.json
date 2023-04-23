@@ -136,7 +136,7 @@
 		"pa11y": "^6.2.3",
 		"pify": "^5.0.0",
 		"postcss": "^8.3.10",
-		"postcss-loader": "^4.3.0",
+		"postcss-loader": "^7.2.4",
 		"postcss-pxtorem": "^6.0.0",
 		"prettier": "^2.2.1",
 		"prettysize": "^0.1.0",
