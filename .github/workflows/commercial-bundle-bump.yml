@@ -5,7 +5,6 @@ on:
         # runs every 15 minutes between 8am and 6pm, Monday to Friday
         - cron: '*/15 08-18 * * 1-5'
     workflow_dispatch:
-    push:
 
 jobs:
     check:
