@@ -162,7 +162,7 @@ object LatestSnap {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
-      format = None,
+      format = Some(ContentFormat.fromFapiContentFormat(content.format)),
     )
   }
 }
