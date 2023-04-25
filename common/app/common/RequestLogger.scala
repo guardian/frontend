@@ -1,5 +1,6 @@
 package common
 
+import com.madgag.scala.collection.decorators._
 import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
 import play.api.routing.Router
@@ -26,20 +27,18 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       "Accept-Encoding", // TODO remove if seen after 2021/09/03
     )
 
-    val allHeadersFields = request
-      .map {
-        _.headers.toMap.map {
-          case (headerName, headerValues) => (headerName, headerValues.mkString(","))
-        }
-      }
-      .getOrElse(Map.empty[String, String])
+    val allHeadersFields = request.map(_.headers.toMap.mapV(_.mkString(","))).getOrElse(Map.empty)
 
-    val allowListedHeaders = allHeadersFields.view.filterKeys(allowListedHeaderNames.contains).toMap
+    val allowListedHeaders = (for {
+      headerName <- allowListedHeaderNames
+      value <- allHeadersFields.get(headerName)
+    } yield headerName -> value).toMap
+
     val guardianSpecificHeaders = allHeadersFields.view.filterKeys(_.toUpperCase.startsWith("X-GU-")).toMap
 
     (allowListedHeaders ++ guardianSpecificHeaders).toList.map {
       case (headerName, headerValue) =>
-        LogFieldString(s"req.header.${headerName}", headerValue)
+        LogFieldString(s"req.header.$headerName", headerValue)
     }
   }
   private lazy val customFields: List[LogField] = {
@@ -57,8 +56,8 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       .map { r: Result =>
         List[LogField](
           "resp.status" -> r.header.status,
-          "resp.dotcomponents" -> r.header.headers.get("X-GU-Dotcomponents").isDefined,
-          "resp.Vary" -> r.header.headers.get("Vary").getOrElse(""), // TODO remove if seen after 2021/09/03
+          "resp.dotcomponents" -> r.header.headers.contains("X-GU-Dotcomponents"),
+          "resp.Vary" -> r.header.headers.getOrElse("Vary", ""), // TODO remove if seen after 2021/09/03
         )
       }
       .getOrElse(Nil)
