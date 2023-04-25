@@ -100,13 +100,16 @@ object Nav {
 
   implicit val writes = Json.writes[Nav]
 
-  private def recursiveEditionalise(links: Seq[NavLink], edition: Edition): Seq[NavLink] =
-    links.map(link =>
-      link.copy(
-        url = LinkTo.processUrl(link.url, edition).url,
-        children = recursiveEditionalise(link.children, edition),
-      ),
-    )
+  private def recursiveEditionalise(links: Seq[NavLink], edition: Edition, depth: Int = 0): Seq[NavLink] = {
+    if (depth > 5) links
+    else
+      links.map(link =>
+        link.copy(
+          url = LinkTo.processUrl(link.url, edition).url,
+          children = recursiveEditionalise(link.children, edition, depth + 1),
+        ),
+      )
+  }
 
   private def editionaliseSubNav(subNav: Subnav, edition: Edition): Subnav =
     subNav match {
