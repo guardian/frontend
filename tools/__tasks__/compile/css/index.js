@@ -4,7 +4,6 @@ module.exports = {
         require('./clean'),
         require('./mkdir'),
         require('../images'),
-        // require('./update-caniuse'),
         require('./sass'),
     ],
 };
