@@ -84,14 +84,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2023, 6, 5)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-ten-image-slideshows",
-    "Test the impact of including 10 images in a slidehow rather than 5",
-    owners = Seq(Owner.withEmail("journalism.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 5, 1)),
-    exposeClientSide = true,
-  )
 }

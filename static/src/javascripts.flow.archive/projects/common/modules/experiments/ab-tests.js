@@ -16,7 +16,6 @@ import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { newsletterEmbeds } from 'common/modules/experiments/tests/newsletter-embed-test';
 import { globalEoyHeaderTest } from 'common/modules/experiments/tests/global-eoy-header-test';
-import { tenImageSlideshows } from 'common/modules/experiments/tests/ten-image-slideshows';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -24,7 +23,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateMainControl,
     newsletterEmbeds,
     globalEoyHeaderTest,
-    tenImageSlideshows,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [];
