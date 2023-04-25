@@ -9,13 +9,8 @@ class RequestLoggerTest extends AnyFlatSpec with Matchers {
 
   private val baseRequest: FakeRequest[_] = FakeRequest("GET", "/some/path")
 
-  "RequestLogger with no request, response or stopwatch" should "have no fields" in {
-    val fields = RequestLoggerFields(request = None, response = None, stopWatch = None)
-    fields.toList should be(empty)
-  }
-
   "RequestLogger with stopwatch" should "have latency field" in {
-    val fields = RequestLoggerFields(request = None, response = None, stopWatch = Some(new StopWatch))
+    val fields = RequestLoggerFields(baseRequest, response = None, stopWatch = Some(new StopWatch))
     fields.toList.exists(_.name == "req.latency_millis") should be(true)
   }
 
@@ -28,7 +23,7 @@ class RequestLoggerTest extends AnyFlatSpec with Matchers {
       ("NotSupported", "value"),
     )
     val req = baseRequest.withHeaders(headers: _*)
-    val fields = RequestLoggerFields(request = Some(req), response = None, stopWatch = None)
+    val fields = RequestLoggerFields(request = req, response = None, stopWatch = None)
     val expectedFields: List[LogField] = List(
       "req.method" -> "GET",
       "req.url" -> "/some/path",
@@ -47,7 +42,7 @@ class RequestLoggerTest extends AnyFlatSpec with Matchers {
   "RequestLogger with request" should "tolerate case-insensitive HTTP headers names, outputting standard case regardless" in {
     def loggedFieldsFor(headers: (String, String)*) =
       RequestLoggerFields(
-        request = Some(baseRequest.withHeaders(headers: _*)),
+        request = baseRequest.withHeaders(headers: _*),
         response = None,
         stopWatch = None,
       ).toList
@@ -61,16 +56,14 @@ class RequestLoggerTest extends AnyFlatSpec with Matchers {
   }
 
   "RequestLogger with response" should "log expected fields" in {
-    val fields = RequestLoggerFields(request = None, response = Some(Ok), stopWatch = None)
-    val expectedFields: List[LogField] = List(
-      "resp.status" -> 200,
-    )
-    expectedFields.forall(fields.toList.contains) should be(true)
+    val fields = RequestLoggerFields(request = baseRequest, response = Some(Ok), stopWatch = None)
+
+    fields.toList should contain(LogFieldInt("resp.status", 200))
   }
 
   "RequestLogger with response" should "tolerate case-insensitive HTTP headers names" in {
     val fields =
-      RequestLoggerFields(request = None, response = Some(Ok.withHeaders("vary" -> "example")), stopWatch = None)
+      RequestLoggerFields(request = baseRequest, response = Some(Ok.withHeaders("vary" -> "example")), stopWatch = None)
     fields.toList should contain(LogFieldString("resp.Vary", "example"))
   }
 }
