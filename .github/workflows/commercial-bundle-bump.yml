@@ -42,7 +42,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: check
         # if there's no existing PR, and there's a new version available create a PR
-        if: ${{ needs.check.outputs.PR_EXISTS == false && needs.check.outputs.CURRENT_VERSION != needs.check.outputs.LATEST_VERSION }}
+        if: ${{ needs.check.outputs.PR_EXISTS == 'false' && needs.check.outputs.CURRENT_VERSION != needs.check.outputs.LATEST_VERSION }}
         steps:
             - uses: actions/checkout@v3
               with:
