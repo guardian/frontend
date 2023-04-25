@@ -121,3 +121,8 @@ validate-a11y: install # PRIVATE
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
+
+# Update caniuse db used by browserslist
+# https://github.com/browserslist/update-db
+update-caniusedb: install
+	@npx --yes update-browserslist-db@latest
