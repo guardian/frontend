@@ -101,6 +101,9 @@ object Nav {
   implicit val writes = Json.writes[Nav]
 
   private def recursiveEditionalise(links: Seq[NavLink], edition: Edition, depth: Int = 0): Seq[NavLink] = {
+    // This recursive function will exit naturally once the 'links' Seq is empty
+    // but this depth check prevents any kind of accidental circular structure from
+    // hanging the application / request.
     if (depth > 5) links
     else
       links.map(link =>
