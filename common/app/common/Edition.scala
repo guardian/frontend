@@ -25,7 +25,6 @@ abstract class Edition(
       "culture",
       "money",
       "sport",
-      "sustainable-business",
       "technology",
       "media",
       "environment",
