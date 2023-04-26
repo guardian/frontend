@@ -1312,10 +1312,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/ab-core/-/ab-core-4.0.0.tgz#50c1fc076437e594b367f6e8d9469a3d9b97a78e"
   integrity sha512-l6Ot/anisLKyoLZOp8koW7Ia5JFOtmZkB0sfgdWajv5+N0w0UScUVoImEdPlFstM1anSd3FvV8D3UgYkRzAang==
 
-"@guardian/atom-renderer@2.0.0-ravi.test.3":
-  version "2.0.0-ravi.test.3"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-2.0.0-ravi.test.3.tgz#212b0c871f31ebef2deb32000078a8880d69f295"
-  integrity sha512-ylrJgd/ToMAoato+RugyUClwJFhIcWKiYg3svq/MkRQa9Lc3YQqbaEM+tVz2L2sn3IHSd1QVQUCj9d/90ZpuLg==
+"@guardian/atom-renderer@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-2.0.0.tgz#cf51feb97421829c7e6b9106c8478e049bc97478"
+  integrity sha512-h6G6ZvN5K9jrwqbU+RB8usfWk6ls5TMAF2/87Ih8PWU0zSDGzhXiWVqNt79ng9uijpNkcN9sCNGiYwK/8Oe/QA==
   dependencies:
     "@babel/preset-env" "^7.21.4"
     "@babel/preset-flow" "^7.0.0"
