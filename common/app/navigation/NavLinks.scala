@@ -46,7 +46,6 @@ object NavLinks {
   val markets = NavLink("Markets", "/business/stock-markets")
   val eurozone = NavLink("Eurozone", "/business/eurozone")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
-  val sustainableBusiness = NavLink("Sustainable business", "/us/sustainable-business")
   val ourWideBrownLand = NavLink("Our wide brown land", "/environment/series/our-wide-brown-land")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
@@ -91,7 +90,7 @@ object NavLinks {
     children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness, retail),
   )
   val usBusiness =
-    ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness, retail))
+    ukBusiness.copy(children = List(economics, diversityEquality, smallBusiness, retail))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
 
   /* OPINION */
@@ -649,7 +648,6 @@ object NavLinks {
     "business/retail",
     "business/stock-markets",
     "business/eurozone",
-    "us/sustainable-business",
     "business/diversity-and-equality",
     "business/us-small-business",
     "environment/climate-change",
