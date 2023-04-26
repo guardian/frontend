@@ -74,9 +74,9 @@ $block-height: 58px; // Note: duplicated from _item.scss
 }
 
 .fc-container--story-package {
-    
+
     .fc-container__header {
-        z-index: 1;   
+        z-index: 1;
     }
 
     .fc-container__body {
@@ -140,10 +140,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
             text-decoration: none;
             border-bottom: #ffffff;
         }
-    }
-
-    .fc-item__title {
-        font-weight: 800;
     }
 
     .fc-item__standfirst-wrapper {
@@ -455,8 +451,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             .fc-sublink__title,
             &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
-                font-weight: 800;
-
                 &:before {
                     width: 100%;
                 }
