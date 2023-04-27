@@ -1,14 +1,14 @@
 package navigation
 
-import common.Edition
+import common.{Edition, LinkTo}
 import model.Page
 import navigation.ReaderRevenueSite.{
+  PrintCTA,
+  PrintCTAWeekly,
   Support,
   SupportContribute,
   SupportSubscribe,
   SupporterCTA,
-  PrintCTA,
-  PrintCTAWeekly,
 }
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
@@ -100,16 +100,43 @@ object Nav {
 
   implicit val writes = Json.writes[Nav]
 
+  private def recursiveEditionalise(links: Seq[NavLink], edition: Edition, depth: Int = 0): Seq[NavLink] = {
+    // This recursive function will exit naturally once the 'links' Seq is empty
+    // but this depth check prevents any kind of accidental circular structure from
+    // hanging the application / request.
+    if (depth > 5) links
+    else
+      links.map(link =>
+        link.copy(
+          url = LinkTo.processUrl(link.url, edition).url,
+          children = recursiveEditionalise(link.children, edition, depth + 1),
+        ),
+      )
+  }
+
+  private def editionaliseSubNav(subNav: Subnav, edition: Edition): Subnav =
+    subNav match {
+      case ParentSubnav(parent, links) =>
+        ParentSubnav(
+          parent.copy(
+            url = LinkTo.processUrl(parent.url, edition).url,
+            children = recursiveEditionalise(parent.children, edition),
+          ),
+          recursiveEditionalise(links, edition),
+        )
+      case FlatSubnav(links) => FlatSubnav(recursiveEditionalise(links, edition))
+    }
+
   def apply(page: Page, edition: Edition): Nav = {
     val navMenu = NavMenu(page, edition)
     Nav(
       currentUrl = navMenu.currentUrl,
-      pillars = navMenu.pillars,
-      otherLinks = navMenu.otherLinks,
+      pillars = recursiveEditionalise(navMenu.pillars, edition),
+      otherLinks = recursiveEditionalise(navMenu.otherLinks, edition),
       brandExtensions = navMenu.brandExtensions,
       currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
       currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
-      subNavSections = navMenu.subNavSections,
+      subNavSections = navMenu.subNavSections.map(editionaliseSubNav(_, edition)),
       readerRevenueLinks = ReaderRevenueLinks.all,
     )
   }
