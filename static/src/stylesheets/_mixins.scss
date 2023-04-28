@@ -317,7 +317,7 @@
     .fc-item__action-kicker-label {
         @include action-kicker-font-size($size);
         @if ($size <= 2) {
-            padding: 1px 5px 2px;
+            padding: 0 3px 1px;
         }
 
         @else if ($size == 3) {
@@ -325,7 +325,7 @@
         }
 
         @else if ($size == 4) {
-            padding: 2px 5px;
+            padding: 1px 4px 2px;
         }
 
         @else if ($size >= 5) {
@@ -334,8 +334,8 @@
     }
 
     @if ($size <= 2) {
-        margin-bottom: 2px;
-        margin-top: 1px;
+        margin-bottom: 0;
+        margin-top: 0;
     }
 
     @else if ($size == 3) {
@@ -344,11 +344,12 @@
     }
 
     @else if ($size == 4) {
-        margin-top: 0;
+        margin-top: -2px;
         margin-bottom: 2px;
     }
 
     @else if ($size >= 5) {
+        margin-top: -2px;
         margin-bottom: 2px;
     }
 }
