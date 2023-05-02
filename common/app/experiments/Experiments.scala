@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
+      FrontsBannerAds,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -70,4 +71,13 @@ object ServerSideLiveblogInlineAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
       participationGroup = Perc5A,
+    )
+
+object FrontsBannerAds
+    extends Experiment(
+      name = "fronts-banner-ads",
+      description = "Creates a new ad experience on fronts pages",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 9, 6),
+      participationGroup = Perc0A,
     )
