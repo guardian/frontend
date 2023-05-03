@@ -81,12 +81,3 @@ object FrontsBannerAds
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc0A,
     )
-
-object TenImageSlideshows
-    extends Experiment(
-      name = "ten-image-slideshows",
-      description = "Test the impact of including 10 images in a slidehow rather than 5",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 5, 15),
-      participationGroup = Perc50,
-    )
