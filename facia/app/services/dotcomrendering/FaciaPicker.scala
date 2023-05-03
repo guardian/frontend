@@ -121,6 +121,20 @@ object FrontChecks {
     !faciaPage.collections.exists(collection => containsUnsupportedSnapLink(collection))
   }
 
+  //  We should add these to the `SUPPORTED_COLLECTIONS` above when they are supported
+  //  This is predominantly for assess how much more coverage each of these containers would give us
+  def hasNoThrashers(faciaPage: PressedPage): Boolean = {
+    !faciaPage.collections.map(_.collectionType).contains("fixed/thrasher")
+  }
+
+  def hasNoDynamicPackage(faciaPage: PressedPage): Boolean = {
+    !faciaPage.collections.map(_.collectionType).contains("dynamic/package")
+  }
+
+  def hasNoFixedVideo(faciaPage: PressedPage): Boolean = {
+    !faciaPage.collections.map(_.collectionType).contains("fixed/video")
+  }
+
 }
 
 object FaciaPicker extends GuLogging {
@@ -135,6 +149,9 @@ object FaciaPicker extends GuLogging {
       ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
+      ("hasNoThrashers", FrontChecks.hasNoThrashers(faciaPage)),
+      ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
+      ("hasNoFixedVideo", FrontChecks.hasNoFixedVideo(faciaPage)),
     )
   }
 
