@@ -183,7 +183,7 @@ data-test-id="facia-card"
             case Some(InlineSlideshow(imageElements)) => {
                 @defining(imageElements.take(5)) { slides =>
                     <div class="fc-item__media-wrapper">
-                        <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@slides.size">
+                        <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@slides.size" id="@item.id">
                             @slides.headOption.map { imageElement =>
                                 @captionedImage(
                                     classes = Seq("responsive-img "),
