@@ -1349,14 +1349,14 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-2.4.1.tgz#c953768f6db1caad2c299fa1f1f8060a754e5560"
-  integrity sha512-P0nIF9MPF98Lhd6RJgERGdNrN8EPGZqxS6jEK+aRRbN1xmSs3ky60xj1+dUD0BcP90QYx6tacGoKfvg7lN1qvg==
+"@guardian/commercial-bundle@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-4.0.0.tgz#637d632cca1de8bd78201bcac789287a1f2a95c5"
+  integrity sha512-x4BjR6P0ACfoG8iEHSii54MV2rI8CrI0e5lFEY30lhfpyjXYKabGloAZtoWHRkH2qQTqInWHUZJIqeJUo1SqGA==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
-    "@guardian/commercial-core" "^6.3.0"
-    "@guardian/consent-management-platform" "^12.0.0"
+    "@guardian/commercial-core" "^7.0.0"
+    "@guardian/consent-management-platform" "^13.0.2"
     "@guardian/core-web-vitals" "^4.0.0"
     "@guardian/libs" "^14.0.0"
     "@guardian/source-foundations" "^10.0.1"
@@ -1365,7 +1365,7 @@
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^1.4.0"
-    prebid.js guardian/prebid.js#2e3b96d
+    prebid.js "github:guardian/prebid.js#2e3b96d"
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.4.1"
@@ -1377,15 +1377,20 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.1.0.tgz#62112b56e9ff4cdc8abd045cec0dfb9600583fb9"
   integrity sha512-gopAGdiPmMuRCWnRn8XTVY2UsOtHI6LnFnDqAJfnNejorHv2mVMzU26fK8lQ/89mUAewQDk0HO95eVb+J32EJA==
 
-"@guardian/commercial-core@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-6.3.0.tgz#9a56db885482adbe3ae1b184a046906d3157d371"
-  integrity sha512-+CxVVLD1BA/XYGF+TQsp0N+55TEIEGQstP1AUJ3RfdnN7pvTh4ZnypLGmLZ3l/WhRsnHIIa7Deu7tt2+4AeE2w==
+"@guardian/commercial-core@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.0.0.tgz#2bde098699e8d8121028bd03d10481e8664f8e06"
+  integrity sha512-ByfukhmfJ2sF5mCyVq5XSRyOdBp0w+MOTpOp361wjZ6a2KHSgSC8VQucgSQHtQ7v05O0jJ53XFkSrGc2TUworA==
 
 "@guardian/consent-management-platform@^12.0.0":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-12.0.0.tgz#ee24ef6ff1e0420c40c6b3c52edc36c1f8a2e5a0"
   integrity sha512-pS0w/Jy7fwI46/lbvmSodPn94IAD+lW80Xr8/2uVIr7i5eLNak28MMLHk4Vhe0SOQTGqqi0arPPLhu6cj7XNwQ==
+
+"@guardian/consent-management-platform@^13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.0.2.tgz#3625f10ca355e1f0296f17fbf8eee3fffd693b95"
+  integrity sha512-rhuDQeZW//WJue9Uhj5JgWc7juV18CgwpOJXcmzYUkYcvi1wcf+kW/BvqfJjNjyd/kpx5eNQ2pCZtj4HuTQBEA==
 
 "@guardian/core-web-vitals@^4.0.0":
   version "4.0.0"
@@ -10064,8 +10069,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#2e3b96d:
+"prebid.js@github:guardian/prebid.js#2e3b96d":
   version "7.26.0"
+  uid "2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
     "@babel/core" "^7.16.7"
