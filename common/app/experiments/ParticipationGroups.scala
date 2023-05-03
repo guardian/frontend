@@ -8,6 +8,7 @@ sealed abstract class ParticipationGroup(val headerName: String) extends EnumEnt
 
   val percentage = headerName match {
     case s"X-GU-Experiment-${percNo}perc-${_}" => percNo
+    case s"X-GU-Experiment-${percNo}perc"      => percNo
     case _                                     => "unknown"
   }
 }
