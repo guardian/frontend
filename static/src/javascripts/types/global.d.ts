@@ -112,11 +112,8 @@ interface Config {
 		};
 		timingEvents?: GoogleTimingEvent[];
 	};
-	clientSideABTests?: Record<
-		string,
-		// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- import this way so this file is treated as ambient declarations
-		import('@guardian/ab-core').ABTest | undefined
-	>;
+	// eslint-disable-next-line @typescript-eslint/consistent-type-imports -- import this way so this file is treated as ambient declarations
+	clientSideABTests?: import('../bootstraps/ab').ABTestMap;
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79

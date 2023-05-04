@@ -1,8 +1,27 @@
 import type { ABTest } from '@guardian/ab-core';
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
 
-const clientSideABTests = concurrentTests.reduce<
-	Record<string, ABTest | undefined>
->((abTests, test) => ({ ...abTests, [test.id]: test }), {});
+/**
+ * Take the set of currently running tests and attach them to the window
+ *
+ * DCR will load this script and then be able to pick up the test definitions
+ * from the window
+ *
+ */
+
+export type ABTestMap = Record<
+	string,
+	| ABTest
+	/**
+	 * Without having --noUncheckedIndexedAccess enabled it's safer for these to
+	 * be possibly defined
+	 */
+	| undefined
+>;
+
+const clientSideABTests = concurrentTests.reduce<ABTestMap>(
+	(abTests, test) => ({ ...abTests, [test.id]: test }),
+	{},
+);
 
 window.guardian.config.clientSideABTests = clientSideABTests;
