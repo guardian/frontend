@@ -1,8 +1,8 @@
 package services.dotcomrendering
 
 import common.facia.{FixtureBuilder, PressedCollectionBuilder}
-import com.gu.facia.client.models.{AUQueenslandTerritory}
-
+import com.gu.facia.client.models.AUQueenslandTerritory
+import model.pressed.LinkSnap
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -89,8 +89,7 @@ import org.scalatestplus.mockito.MockitoSugar
     tier should be(LocalRender)
   }
 
-  "Facia Picker hasNoRegionalAusTargetedContainers" should
-    "return false if there is a container with targetedTerritory set to an AU region" in {
+  "Facia Picker hasNoRegionalAusTargetedContainers" should "return false if there is a container with targetedTerritory set to an AU region" in {
     val unsupportedPressedCollection =
       List(
         PressedCollectionBuilder.mkPressedCollection(targetedTerritory = Some(AUQueenslandTerritory)),
@@ -98,5 +97,50 @@ import org.scalatestplus.mockito.MockitoSugar
 
     val faciaPage = FixtureBuilder.mkPressedPage(unsupportedPressedCollection)
     FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage) should be(false)
+  }
+
+  val linkSnap = FixtureBuilder.mkPressedLinkSnap(1).asInstanceOf[LinkSnap]
+  val supportedThrasher = PressedCollectionBuilder.mkPressedCollection(curated =
+    List(
+      linkSnap.copy(properties =
+        linkSnap.properties
+          .copy(embedType = Some("interactive"), embedUri = Some("supported-thrasher-embedUri")),
+      ),
+    ),
+  )
+
+  "Facia Picker hasNoUnsupportedSnapLinkCards" should "return false if a front contains at least one unsupported thrasher" in {
+    val unsupportedThrasher = PressedCollectionBuilder.mkPressedCollection(curated =
+      List(
+        linkSnap.copy(properties =
+          linkSnap.properties
+            .copy(embedType = Some("interactive"), embedUri = Some(FrontChecks.UNSUPPORTED_THRASHERS.take(1).head)),
+        ),
+      ),
+    )
+
+    val faciaPage = FixtureBuilder.mkPressedPage(
+      List(
+        PressedCollectionBuilder
+          .mkPressedCollection(collectionType = FrontChecks.SUPPORTED_COLLECTIONS.take(1).toList.head),
+        unsupportedThrasher,
+        supportedThrasher,
+      ),
+    )
+
+    FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage) should be(false)
+  }
+
+  it should "return true if all thrashers in a front are supported" in {
+    val faciaPage = FixtureBuilder.mkPressedPage(
+      List(
+        PressedCollectionBuilder
+          .mkPressedCollection(collectionType = FrontChecks.SUPPORTED_COLLECTIONS.take(1).toList.head),
+        supportedThrasher,
+        supportedThrasher,
+      ),
+    )
+
+    FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage) should be(true)
   }
 }

@@ -7,7 +7,7 @@ import model.ContentFormat
 
 object FixtureBuilder {
 
-  def mkContent(id: Int): PressedContent = FixtureBuilder.mkPressedContent(id)
+  def mkContent(id: Int): PressedContent = FixtureBuilder.mkPressedCuratedContent(id)
 
   def mkPressedCollection(
       id: String,
@@ -47,86 +47,99 @@ object FixtureBuilder {
     )
   }
 
-  def mkPressedContent(id: Int, kicker: Option[ItemKicker] = None): PressedContent = {
+  def mkProperties(id: Int): PressedProperties =
+    PressedProperties(
+      isBreaking = false,
+      showMainVideo = false,
+      showKickerTag = false,
+      showByline = false,
+      imageSlideshowReplace = false,
+      maybeContent = None,
+      maybeContentId = Some(id.toString),
+      isLiveBlog = false,
+      isCrossword = false,
+      byline = None,
+      image = None,
+      webTitle = s"webTitle $id",
+      linkText = None,
+      embedType = None,
+      embedCss = None,
+      embedUri = None,
+      maybeFrontPublicationDate = None,
+      href = None,
+      webUrl = None,
+      editionBrandings = None,
+      atomId = None,
+    )
 
-    def mkProperties(): PressedProperties =
-      PressedProperties(
-        isBreaking = false,
-        showMainVideo = false,
-        showKickerTag = false,
-        showByline = false,
-        imageSlideshowReplace = false,
-        maybeContent = None,
-        maybeContentId = Some(id.toString),
-        isLiveBlog = false,
-        isCrossword = false,
-        byline = None,
-        image = None,
-        webTitle = s"webTitle $id",
-        linkText = None,
-        embedType = None,
-        embedCss = None,
-        embedUri = None,
-        maybeFrontPublicationDate = None,
-        href = None,
-        webUrl = None,
-        editionBrandings = None,
-        atomId = None,
-      )
+  def mkHeader(id: Int, kicker: Option[ItemKicker] = None): PressedCardHeader =
+    PressedCardHeader(
+      isVideo = false,
+      isComment = false,
+      isGallery = false,
+      isAudio = false,
+      kicker,
+      seriesOrBlogKicker = None,
+      headline = "",
+      url = id.toString,
+      hasMainVideoElement = None,
+    )
 
-    def mkHeader(): PressedCardHeader =
-      PressedCardHeader(
-        isVideo = false,
-        isComment = false,
-        isGallery = false,
-        isAudio = false,
-        kicker,
-        seriesOrBlogKicker = None,
-        headline = "",
-        url = id.toString,
-        hasMainVideoElement = None,
-      )
+  def mkCard(id: Int): PressedCard =
+    PressedCard(
+      id.toString,
+      cardStyle = DefaultCardstyle,
+      webPublicationDateOption = None,
+      lastModifiedOption = None,
+      trailText = Some("trail text"),
+      mediaType = None,
+      starRating = None,
+      shortUrlPath = None,
+      shortUrl = "",
+      group = "0",
+      isLive = false,
+    )
 
-    def mkCard(): PressedCard =
-      PressedCard(
-        id.toString,
-        cardStyle = DefaultCardstyle,
-        webPublicationDateOption = None,
-        lastModifiedOption = None,
-        trailText = Some("trail text"),
-        mediaType = None,
-        starRating = None,
-        shortUrlPath = None,
-        shortUrl = "",
-        group = "0",
-        isLive = false,
-      )
+  def mkDiscussion(): PressedDiscussionSettings =
+    PressedDiscussionSettings(
+      isCommentable = false,
+      isClosedForComments = false,
+      discussionId = None,
+    )
 
-    def mkDiscussion(): PressedDiscussionSettings =
-      PressedDiscussionSettings(
-        isCommentable = false,
-        isClosedForComments = false,
-        discussionId = None,
-      )
+  def mkDisplay(): PressedDisplaySettings =
+    PressedDisplaySettings(
+      isBoosted = false,
+      showBoostedHeadline = false,
+      showQuotedHeadline = false,
+      imageHide = false,
+      showLivePlayable = false,
+    )
 
-    def mkDisplay(): PressedDisplaySettings =
-      PressedDisplaySettings(
-        isBoosted = false,
-        showBoostedHeadline = false,
-        showQuotedHeadline = false,
-        imageHide = false,
-        showLivePlayable = false,
-      )
+  def mkPressedCuratedContent(id: Int, kicker: Option[ItemKicker] = None): PressedContent = {
 
     CuratedContent(
-      properties = mkProperties(),
-      header = mkHeader(),
-      card = mkCard(),
+      properties = mkProperties(id),
+      header = mkHeader(id, kicker),
+      card = mkCard(id),
       discussion = mkDiscussion(),
       display = mkDisplay(),
       enriched = None,
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
+      format = Some(ContentFormat.defaultContentFormat),
+    )
+  }
+
+  def mkPressedLinkSnap(id: Int, kicker: Option[ItemKicker] = None): PressedContent = {
+
+    LinkSnap(
+      properties = mkProperties(id),
+      header = mkHeader(id, kicker),
+      card = mkCard(id),
+      discussion = mkDiscussion(),
+      display = mkDisplay(),
+      enriched = None,
       format = Some(ContentFormat.defaultContentFormat),
     )
   }
