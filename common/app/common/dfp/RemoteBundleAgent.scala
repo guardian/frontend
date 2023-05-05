@@ -50,7 +50,7 @@ object RemoteBundleAgent {
   }
 
   def refresh() = {
-    remoteBundleAgent.send(grabRemoteBundleUrlFromStore())
+    remoteBundleAgent send grabRemoteBundleUrlFromStore()
   }
 
   def commercialBundleUrl(): Option[String] = remoteBundleAgent.get()

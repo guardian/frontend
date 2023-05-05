@@ -106,28 +106,11 @@ class DfpDataCacheLifecycle(
         Future.sequence(Seq(advertiserAgent.refresh(), orderAgent.refresh())).map(_ => ())
       }
     },
-    new Job[Unit] {
-      val name: String = "Remote-Bundle-Retriever"
-      val interval: Int = 10
-      def run(): Future[Unit] = remoteBundleRetriever.run()
-    },
   )
 
   override def start(): Unit = {
     jobs foreach { job =>
       jobScheduler.deschedule(job.name)
-
-      // TEMPORARY
-      // Speed things along a bit...
-      if (job.name == "Remote-Bundle-Retriever") {
-        jobScheduler.scheduleEvery(job.name, 10.seconds) {
-          job.run().map(_ => ())
-        }
-      } else {
-        jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {
-          job.run().map(_ => ())
-        }
-      }
     }
 
     akkaAsync.after1s {

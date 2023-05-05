@@ -34,6 +34,8 @@ import services.{
   SkimLinksCacheLifeCycle,
 }
 import topics.TopicService
+import common.dfp.RemoteBundleRetriever
+import common.commercial.BundleLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -69,6 +71,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
   lazy val blockingOperations = wire[BlockingOperations]
 
+  lazy val remoteBundleRetriever: RemoteBundleRetriever = wire[RemoteBundleRetriever]
+
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
     wire[NewspaperBooksAndSectionsAutoRefresh],
@@ -84,6 +88,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[TopicLifecycle],
     wire[NewsletterSignupLifecycle],
     wire[MessageUsLifecycle],
+    wire[BundleLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

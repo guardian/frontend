@@ -79,7 +79,9 @@ object JavaScriptPage {
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
     val commercialBundleUrl: Map[String, JsString] =
-      Configuration.commercial.overrideCommercialBundleUrl.orElse(RemoteBundleAgent.commercialBundleUrl()) match {
+      Configuration.commercial.overrideCommercialBundleUrl
+        .orElse(RemoteBundleAgent.commercialBundleUrl())
+        .orElse(Some("oops")) match {
         case Some(url) => Map("commercialBundleUrl" -> JsString(url))
         case None      => Map()
       }

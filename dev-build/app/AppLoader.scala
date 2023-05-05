@@ -34,6 +34,7 @@ import rugby.controllers.RugbyControllers
 import services._
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
+import common.commercial.BundleLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -85,7 +86,6 @@ trait AppComponents
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   override lazy val mostViewedAgent = wire[MostViewedAgent]
-  override lazy val remoteBundleRetriever: RemoteBundleRetriever = wire[RemoteBundleRetriever]
 
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
@@ -93,6 +93,8 @@ trait AppComponents
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
 
   lazy val curatedContentAgent = wire[CuratedContentAgent]
+
+  override lazy val remoteBundleRetriever: RemoteBundleRetriever = wire[RemoteBundleRetriever]
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
@@ -121,6 +123,7 @@ trait AppComponents
       wire[TopicLifecycle],
       wire[MostViewedLifecycle],
       wire[MessageUsLifecycle],
+      wire[BundleLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

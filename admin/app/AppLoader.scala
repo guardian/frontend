@@ -27,6 +27,7 @@ import services.{ParameterStoreService, _}
 import router.Routes
 
 import scala.concurrent.ExecutionContext
+import common.commercial.BundleLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -91,6 +92,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     wire[DfpDataCacheLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[CommercialDfpReportingLifecycle],
+    wire[BundleLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
