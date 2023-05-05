@@ -16,11 +16,8 @@ object FrontChecks {
   // and https://github.com/guardian/dotcom-rendering/issues/4720
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
-      /*
-    "fixed/thrasher",
-      pending https://github.com/guardian/dotcom-rendering/issues/5134
-       */
-
+      // We partly support thrashers. They will be fully supported after this is completed: https://github.com/guardian/dotcom-rendering/issues/7319
+      "fixed/thrasher",
       /*
     "dynamic/package",
       pending https://github.com/guardian/dotcom-rendering/issues/5196 and
