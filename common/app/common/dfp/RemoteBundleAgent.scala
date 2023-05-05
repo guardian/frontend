@@ -38,11 +38,19 @@ object RemoteBundleAgent extends GuLogging {
   }
 
   private def grabRemoteBundleUrlFromStore(): Option[String] = {
-    log.info("Attempt to get bucket from parameter store")
+    log.info("REMOTE BUNDLE Attempt to get bucket from parameter store")
 
-    // Retrieve the name of the static assets bucket from Parameter Store
-    val parameterStore = new ParameterStore(Configuration.aws.region)
-    val bucket = parameterStore.get("/account/services/dotcom-static.bucket")
+    var bucket = ""
+
+    try {
+      // Retrieve the name of the static assets bucket from Parameter Store
+      val parameterStore = new ParameterStore(Configuration.aws.region)
+      bucket = parameterStore.get("/account/services/dotcom-static.bucket")
+    } catch {
+      case e: Throwable => log.error(s"REMOTE BUNDLE error from parameter store ${e.toString()}")
+    }
+
+    log.info("REMOTE BUNDLE Got bucket name")
 
     val assetMapString = S3.get(assetMapKey, bucket)(UTF8)
 
@@ -67,7 +75,7 @@ object RemoteBundleAgent extends GuLogging {
     commercialBundleUrl
   }
 
-  def refresh() = {
+  def refresh()(implicit executionContext: ExecutionContext) = {
     log.info("REMOTE BUNDLE refresh is called")
     update(remoteBundleAgent)(grabRemoteBundleUrlFromStore())
   }
