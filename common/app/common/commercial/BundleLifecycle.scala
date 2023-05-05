@@ -7,6 +7,7 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import common.dfp.RemoteBundleRetriever
+import common.GuLogging
 
 class BundleLifecycle(
     appLifeCycle: ApplicationLifecycle,
@@ -15,7 +16,8 @@ class BundleLifecycle(
     remoteBundleRetriever: RemoteBundleRetriever,
 )(implicit
     ec: ExecutionContext,
-) extends LifecycleComponent {
+) extends GuLogging
+    with LifecycleComponent {
 
   appLifeCycle.addStopHook { () =>
     Future {
@@ -24,7 +26,7 @@ class BundleLifecycle(
   }
 
   def refreshDfpAgent(): Unit = {
-    println("refreshing...")
+    log.info("REMOTE BUNDLE refreshing...")
     remoteBundleRetriever.run()
   }
 

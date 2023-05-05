@@ -11,7 +11,7 @@ import services.ParameterStore
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object RemoteBundleAgent {
+object RemoteBundleAgent extends GuLogging {
   private val commercialPath = "test_commercial_bundles"
 
   private val assetMapKey = s"CODE/frontend-static/${commercialPath}/assets.map"
@@ -36,15 +36,25 @@ object RemoteBundleAgent {
     val parameterStore = new ParameterStore(Configuration.aws.region)
     val bucket = parameterStore.get("/account/services/dotcom-static.bucket")
 
+    val assetMapString = S3.get(assetMapKey, bucket)(UTF8)
+
+    if (assetMapString.isDefined) {
+      log.info(s"REMOTE BUNDLE Got asset map from S3: ${assetMapString}")
+    } else {
+      log.info("REMOTE BUNDLE No asset map found")
+    }
+
     val commercialBundleUrl: Option[String] =
-      S3.get(assetMapKey, bucket)(UTF8)
+      assetMapString
         .flatMap(jsonToAssetMap)
         .flatMap(assetMap => assetMap.get(commmercialBundleEntrypoint))
         .map(fullUrl)
 
-    // TODO Remove this later
-    println(s"Grabbing remote bundle URL from S3. Found: ${commercialBundleUrl
-      .getOrElse("nothing")}\n ${assetMapKey} ${bucket} ${S3.get(assetMapKey, bucket)(UTF8)}")
+    if (commercialBundleUrl.isDefined) {
+      log.info(s"REMOTE BUNDLE got commercial bundle URL: ${commercialBundleUrl}")
+    } else {
+      log.info(s"REMOTE BUNDLE couldn't get commercial bundle url")
+    }
 
     commercialBundleUrl
   }
