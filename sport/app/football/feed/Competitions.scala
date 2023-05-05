@@ -188,7 +188,7 @@ object CompetitionsProvider {
       "Ligue 1",
       "European",
       showInTeamsList = true,
-      tableDividers = List(3, 4, 17),
+      tableDividers = List(3, 4, 16),
     ),
     Competition("961", "/football/womens-super-league", "Women's Super League", "Women's Super League", "English"),
     Competition(
