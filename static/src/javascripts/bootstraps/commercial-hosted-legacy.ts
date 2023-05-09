@@ -1,5 +1,5 @@
 /**
- * This file is deprecated. Only used for legacy “Hosted” pages
+ * Only used for Commercial legacy “Hosted” pages
  */
 
 import { reportError } from 'lib/report-error';
