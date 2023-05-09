@@ -4,8 +4,7 @@ import { concurrentTests } from 'common/modules/experiments/ab-tests';
 /**
  * Take the set of currently running tests and attach them to the window
  *
- * DCR will load this script and then be able to pick up the test definitions
- * from the window
+ * DCR will load this script to pick up the test definitions
  *
  */
 
