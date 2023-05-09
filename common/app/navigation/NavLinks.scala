@@ -64,7 +64,7 @@ object NavLinks {
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/obituaries")
   val greenLight = NavLink("Green light", "/environment/series/green-light")
-  val fightToVote = NavLink("Fight to vote", "/us-news/series/the-fight-to-vote")
+  val fightForDemocracy = NavLink("Fight for democracy", "/us-news/series/the-fight-for-democracy")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -305,7 +305,7 @@ object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}"),
-      fightToVote,
+      fightForDemocracy,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
