@@ -33,7 +33,7 @@
     }
 }
 
-.video-playlist__item .youtube-media-atom iframe,
+.video-playlist__item .youtube-media-atom:not(.vertical-iframe) iframe,
 .video-playlist__item .youtube-media-atom .vjs-big-play-button {
     @include mq($until: desktop) {
         top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
@@ -41,6 +41,15 @@
         height: auto;
     }
 }
+
+.vertical-iframe {
+    @include mq($until: desktop) {
+        top: 0;
+        bottom: 0;
+        height: 100%;
+    }
+}
+
 
 .video-playlist__item--active .youtube-media-atom {
     opacity: 1;
