@@ -148,7 +148,7 @@
  */
 
 .u-responsive-ratio {
-    @include fix-aspect-ratio(5, 3); // 1
+    @include fix-aspect-ratio(9, 16); // 1
 
     img,
     object,

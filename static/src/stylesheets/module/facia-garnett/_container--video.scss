@@ -92,6 +92,10 @@ $video-width-desktop: 700px;
     }
 }
 
+.vertical-video {
+    aspect-ratio: 9/16;
+    width: 100%;
+}
 .fc-container--video-no-fill-sides {
     background-color: transparent;
 }

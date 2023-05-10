@@ -19,7 +19,7 @@
     mediaWrapper: Option[MediaWrapper] = None,
     faciaHeaderProperties: Option[VideoFaciaProperties] = None,
     isPaidFor: Boolean = false,
-    pressedContent: Option[PressedContent] = None
+    pressedContent: Option[PressedContent] = None,
 )(implicit request: RequestHeader)
 
 @videoJsError() = @{
@@ -39,8 +39,9 @@
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
-                ("youtube-related-videos", true)
-            ))" data-channel-id="@channelId">
+                ("youtube-related-videos", true),
+                ("vertical-video", true)
+            )) " data-channel-id="@channelId">
         }
     }
 
