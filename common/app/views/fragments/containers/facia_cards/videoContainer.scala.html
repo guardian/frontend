@@ -42,8 +42,6 @@
            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first} fc-item--pillar-@item.maybePillar.nameOrDefault @if(item.isPaidFor) { video-playlist__item--paid-for }">
                 @item.properties.maybeContent.map { content =>
                     @defining(content.elements.mediaAtoms.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))) { youTubeAtom =>
-                        @println(Some(item))
-
                         @youTubeAtom.map { youTubeAtom =>
                             @youtube(media = youTubeAtom,
                                 displayCaption = false,
@@ -53,7 +51,7 @@
                                     showByline = item.properties.showByline, item.properties.byline)),
                                 isPaidFor = item.isPaidFor,
                                 pressedContent = Some(item),
-                                verticalVideo = item.header.isVerticalVideo
+                                verticalVideo = content.tags.isVerticalVideo
                             )
                         }
                     }

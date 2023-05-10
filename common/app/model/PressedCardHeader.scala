@@ -15,7 +15,6 @@ final case class PressedCardHeader(
     headline: String,
     url: String,
     hasMainVideoElement: Option[Boolean],
-    isVerticalVideo: Option[Boolean]
 )
 
 object PressedCardHeader {
@@ -34,15 +33,6 @@ object PressedCardHeader {
       hasMainVideoElement = Some(
         capiContent.flatMap(_.elements).exists(_.exists(e => e.`type` == ElementType.Video && e.relation == "main")),
       ),
-      isVerticalVideo = capiContent.flatMap(item => fapiutils.ItemKicker.seriesOrBlogKicker(item).map((item) => {
-
-        val tagKicker = ItemKicker.makeTagKicker(item)
-println(tagKicker)
-       val resp = tagKicker.id == "info/series/vertical-video"
-        println("resp", resp)
-        resp
-      }
-      ))
     )
   }
 }
