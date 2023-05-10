@@ -38,11 +38,12 @@
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
             @treats(containerDefinition, frontProperties)
         </li>
-
         @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo).zipWithIndex.map { case (item, index) =>
            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first} fc-item--pillar-@item.maybePillar.nameOrDefault @if(item.isPaidFor) { video-playlist__item--paid-for }">
                 @item.properties.maybeContent.map { content =>
                     @defining(content.elements.mediaAtoms.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))) { youTubeAtom =>
+                        @println(Some(item))
+
                         @youTubeAtom.map { youTubeAtom =>
                             @youtube(media = youTubeAtom,
                                 displayCaption = false,
@@ -51,7 +52,9 @@
                                 faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None),
                                     showByline = item.properties.showByline, item.properties.byline)),
                                 isPaidFor = item.isPaidFor,
-                                pressedContent = Some(item))
+                                pressedContent = Some(item),
+                                verticalVideo = item.header.isVerticalVideo
+                            )
                         }
                     }
 
@@ -67,7 +70,7 @@
                         )) { player =>
                         <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player video-playlist__item__player">
                             <div class="fc-item__video-container">
-                            @video(player, enhance = false, showEndSlate = false, showOverlay = true, showPoster = false)
+<!--                            @video(player, enhance = false, showEndSlate = false, showOverlay = true, showPoster = false)-->
                             </div>
                         </div>
                         <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">

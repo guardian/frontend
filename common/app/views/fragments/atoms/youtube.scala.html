@@ -20,7 +20,9 @@
     faciaHeaderProperties: Option[VideoFaciaProperties] = None,
     isPaidFor: Boolean = false,
     pressedContent: Option[PressedContent] = None,
+    verticalVideo: Boolean = false,
 )(implicit request: RequestHeader)
+
 
 @videoJsError() = @{
     <div class="vjs-error-display vjs-modal-dialog">
@@ -40,7 +42,7 @@
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
                 ("youtube-related-videos", true),
-                ("vertical-video", true)
+                ("vertical-video", verticalVideo)
             )) " data-channel-id="@channelId">
         }
     }

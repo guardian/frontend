@@ -148,7 +148,7 @@
  */
 
 .u-responsive-ratio {
-    @include fix-aspect-ratio(9, 16); // 1
+    @include fix-aspect-ratio(5, 3); // 1
 
     img,
     object,
@@ -162,6 +162,11 @@
         top: 0;
         left: 0;
     }
+}
+
+u-responsive-ratio vertical-video {
+    @include fix-aspect-ratio(9, 16); // 1
+
 }
 
 .u-responsive-aligner {
