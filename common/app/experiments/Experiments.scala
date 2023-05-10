@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
       FrontsBannerAds,
+      BorkWebVitals,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -80,4 +81,13 @@ object FrontsBannerAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc0A,
+    )
+
+object BorkWebVitals
+    extends Experiment(
+      name = "bork-web-vitals",
+      description = "Enables borking (synthetic delay) of web vitals",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 6, 1),
+      participationGroup = Perc1C,
     )
