@@ -25,7 +25,7 @@ $video-width-desktop: 700px;
     }
 
     .u-responsive-ratio {
-        padding-bottom: 56.3%;
+        padding-bottom: 177%;
     }
 
     .gu-media-wrapper .vjs-paused.vjs-has-started .vjs-control-bar {
@@ -38,6 +38,13 @@ $video-width-desktop: 700px;
         }
     }
 
+
+    .vertical-width {
+        width:260px;
+    }
+    .vertical-height {
+        height:463px;
+    }
     .media__container--hidden {
         display: block !important; // To override existing important
         position: absolute;
@@ -404,7 +411,7 @@ $video-width-desktop: 700px;
 }
 
 .video-overlay {
-    position: relative;
+    position: absolute;
     z-index: 2;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;
@@ -415,6 +422,7 @@ $video-width-desktop: 700px;
     min-height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
+    width:100%;
     @include mq(desktop, leftCol) {
         opacity: 0;
         transition: opacity .4s ease-out;
@@ -478,6 +486,8 @@ $video-width-desktop: 700px;
         margin: 0;
     }
 }
+
+
 
 .video-overlay__duration {
     @include fs-textSans(3);
