@@ -40,10 +40,10 @@ $video-width-desktop: 700px;
 
 
     .vertical-width {
-        width:260px;
+        width: 260px;
     }
     .vertical-height {
-        height:463px;
+        height: 463px;
     }
     .media__container--hidden {
         display: block !important; // To override existing important
@@ -422,7 +422,7 @@ $video-width-desktop: 700px;
     min-height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
-    width:100%;
+    width: 100%;
     @include mq(desktop, leftCol) {
         opacity: 0;
         transition: opacity .4s ease-out;
