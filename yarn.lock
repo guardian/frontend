@@ -1349,10 +1349,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-4.0.0.tgz#637d632cca1de8bd78201bcac789287a1f2a95c5"
-  integrity sha512-x4BjR6P0ACfoG8iEHSii54MV2rI8CrI0e5lFEY30lhfpyjXYKabGloAZtoWHRkH2qQTqInWHUZJIqeJUo1SqGA==
+"@guardian/commercial-bundle@4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-4.2.0.tgz#1ede10372cb89c8707167e938818529bd40e7bd2"
+  integrity sha512-yNSvGiW/QMDixkMUUiv2piOElCHj4961WzC3yRs/Bf++g/T5VS0U74J2j6IKJGu+90gckZ0IKgaUa82opHu2gg==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
     "@guardian/commercial-core" "^7.0.0"
@@ -10059,7 +10059,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#2e3b96d:
+"prebid.js@github:guardian/prebid.js#2e3b96d":
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
