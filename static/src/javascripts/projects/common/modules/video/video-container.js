@@ -318,7 +318,7 @@ export const videoContainerInit = (container) => {
     });
 
     $('.video-playlist__item:not(.video-playlist__item--first)').each($el => {
-        $('.youtube-media-atom__iframe', $el).hide();
+        // $('.youtube-media-atom__iframe', $el).hide();
         $('.video-overlay .fc-item__link', $el).attr('tabindex', '-1');
         $('.video-overlay .fc-item__link', $el).attr('aria-hidden', 'true');
     });
