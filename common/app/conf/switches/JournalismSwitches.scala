@@ -62,14 +62,4 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
-
-  val BorkWebVitals = Switch(
-    SwitchGroup.Journalism,
-    "bork-web-vitals",
-    "Enables borking (synthetic delay) of web vitals",
-    owners = Seq(Owner.withName("Open Journalism")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
 }
