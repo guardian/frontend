@@ -17,7 +17,7 @@ const checkboxShouldUpdate = (
 
 const updateDataLink = (labelEl, checked) =>
     fastdom.mutate(() => {
-        labelEl.dataset.linkName = labelEl.dataset.linkNameTemplate.replace(
+        labelEl.dataset.linkName = labelEl.dataset.linkNameTemplate?.replace(
             '[action]',
             checked ? 'untick' : 'tick'
         );

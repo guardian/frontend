@@ -233,7 +233,10 @@ object DotcomRenderingUtils {
       )
       .filter(PageElement.isSupported)
 
-    val withTagLinks = TextCleaner.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
+    val withTagLinks =
+      if (article.content.isPaidContent) elems
+      else TextCleaner.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
+
     addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 

@@ -53,6 +53,7 @@ const getWindowHeight = (doc = document) => {
 	if (doc.documentElement.clientHeight) {
 		return doc.documentElement.clientHeight;
 	}
+
 	return 0; // #? zero, or throw an error?
 };
 
@@ -92,12 +93,17 @@ const getSpaceFillerRules = (
 	};
 };
 
+// On mobile devices, the first inline slot is called "top-above-nav", despite it
+// not appearing at the top of the page above the nav.
 const getSlotName = (isMobile: boolean, slotCounter: number): string => {
-	if (isMobile && slotCounter === 0) {
-		return 'top-above-nav';
-	} else if (isMobile) {
-		return `inline${slotCounter}`;
+	if (isMobile) {
+		if (slotCounter === 0) {
+			return 'top-above-nav';
+		} else {
+			return `inline${slotCounter}`;
+		}
 	}
+
 	return `inline${slotCounter + 1}`;
 };
 

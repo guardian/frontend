@@ -46,7 +46,6 @@ object NavLinks {
   val markets = NavLink("Markets", "/business/stock-markets")
   val eurozone = NavLink("Eurozone", "/business/eurozone")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
-  val sustainableBusiness = NavLink("Sustainable business", "/us/sustainable-business")
   val ourWideBrownLand = NavLink("Our wide brown land", "/environment/series/our-wide-brown-land")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
@@ -65,7 +64,7 @@ object NavLinks {
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/obituaries")
   val greenLight = NavLink("Green light", "/environment/series/green-light")
-  val fightToVote = NavLink("Fight to vote", "/us-news/series/the-fight-to-vote")
+  val fightForDemocracy = NavLink("Fight for democracy", "/us-news/series/the-fight-for-democracy")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -91,7 +90,7 @@ object NavLinks {
     children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness, retail),
   )
   val usBusiness =
-    ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness, retail))
+    ukBusiness.copy(children = List(economics, diversityEquality, smallBusiness, retail))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
 
   /* OPINION */
@@ -306,7 +305,7 @@ object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}"),
-      fightToVote,
+      fightForDemocracy,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -649,7 +648,6 @@ object NavLinks {
     "business/retail",
     "business/stock-markets",
     "business/eurozone",
-    "us/sustainable-business",
     "business/diversity-and-equality",
     "business/us-small-business",
     "environment/climate-change",

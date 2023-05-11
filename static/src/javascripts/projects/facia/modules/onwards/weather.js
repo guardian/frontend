@@ -88,6 +88,7 @@ export const Weather = {
     fetchWeatherData(location) {
         const weatherApiBase = config.get('page.weatherapiurl');
         const edition = config.get('page.edition');
+        if (!location) return;
         return this.getWeatherData(
             `${weatherApiBase}/${
                 location.id
@@ -163,6 +164,7 @@ export const Weather = {
     },
 
     render(weatherData, city) {
+        if (!weatherData) return;
         this.attachToDOM(weatherData.html, city);
 
         if (!eventsBound) {
@@ -184,6 +186,7 @@ export const Weather = {
     },
 
     renderForecast(forecastData) {
+        if (!forecastData) return;
         const $forecastHolder = $('.js-weather-forecast');
         const tmpl = forecastData.html;
 

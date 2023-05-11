@@ -13,6 +13,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
+      FrontsBannerAds,
+      BorkWebVitals,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -40,7 +42,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 4, 28),
+      sellByDate = LocalDate.of(2023, 6, 5),
       participationGroup = Perc0B,
     )
 
@@ -69,5 +71,23 @@ object ServerSideLiveblogInlineAds
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 6, 1),
+      participationGroup = Perc0C,
+    )
+
+object FrontsBannerAds
+    extends Experiment(
+      name = "fronts-banner-ads",
+      description = "Creates a new ad experience on fronts pages",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc0A,
+    )
+
+object BorkWebVitals
+    extends Experiment(
+      name = "bork-web-vitals",
+      description = "Enables borking (synthetic delay) of web vitals",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 6, 1),
+      participationGroup = Perc1C,
     )

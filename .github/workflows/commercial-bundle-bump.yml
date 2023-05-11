@@ -1,4 +1,4 @@
-name: Bump @guardian/commercial-bundle
+name: Check for new @guardian/commercial-bundle version
 
 on:
     schedule:
@@ -32,10 +32,18 @@ jobs:
             - name: Check for existing pull request
               id: pr-exists
               if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
-              run: |
-                  gh pr list --head "bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}" --repo guardian/frontend --json number --limit 1 | node -e "console.log(JSON.parse(require('fs').readFileSync(0, 'utf8')).length > 0)"
-              env:
-                  GH_TOKEN: ${{ github.token }}
+              uses: actions/github-script@v6
+              with:
+                  result-encoding: string
+                  github-token: ${{ github.token }}
+                  script: |
+                      const prs = await github.rest.pulls.list({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        head: 'guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}',
+                      });
+                      console.log(prs.data.length > 0);
+                      return String(prs.data.length > 0);
 
     pr:
         name: Create pull request

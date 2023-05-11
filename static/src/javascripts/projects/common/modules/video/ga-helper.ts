@@ -11,7 +11,7 @@ const eventMetrics = {
 } as const;
 
 type EventType = keyof typeof eventMetrics;
-type Metric = typeof eventMetrics[EventType] | 'metric24' | 'metric25';
+type Metric = (typeof eventMetrics)[EventType] | 'metric24' | 'metric25';
 
 type EventMetrics = Partial<typeof eventMetrics>;
 

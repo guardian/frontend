@@ -570,4 +570,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val optOutAdvertising: Switch = Switch(
+    group = Commercial,
+    name = "opt-out-advertising",
+    description = "Enable Opt Out Advertising",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }

@@ -237,7 +237,7 @@ export const isInvalidTag = (include = []) => {
 
     return invalidTags
         .filter(el => !include.includes(el))
-        .some((tag) => config.get(`page.keywordIds`, "")
+        .some((tag) => String(config.get(`page.keywordIds`) ?? "")
             .split(',')
             .includes(tag));
 };

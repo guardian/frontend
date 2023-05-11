@@ -67,7 +67,7 @@ export const onSlotRender = (
 		 * from the GAM event when adjusting the slot size.
 		 * */
 		if (!advert.hasPrebidSize) {
-			advert.size = sizeEventToAdSize(event.size);
+			advert.size = sizeEventToAdSize(event.size ?? 'fluid');
 		}
 
 		if (event.creativeId) {

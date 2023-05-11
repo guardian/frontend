@@ -16,11 +16,8 @@ object FrontChecks {
   // and https://github.com/guardian/dotcom-rendering/issues/4720
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
-      /*
-    "fixed/thrasher",
-      pending https://github.com/guardian/dotcom-rendering/issues/5134
-       */
-
+      // We partly support thrashers. They will be fully supported after this is completed: https://github.com/guardian/dotcom-rendering/issues/7319
+      "fixed/thrasher",
       /*
     "dynamic/package",
       pending https://github.com/guardian/dotcom-rendering/issues/5196 and
@@ -50,6 +47,40 @@ object FrontChecks {
       "nav/list",
       "nav/media-list",
       "news/most-popular",
+    )
+
+  val UNSUPPORTED_THRASHERS: Set[String] =
+    Set(
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/12/wordiply/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/04/australian-election/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/07/full-story/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/10/saved-for-later/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/12/documentaries-signup-thrasher/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/12/100-best-footballers/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/01/football-weekly-thrasher/thrasher",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/11/20/football-interactive-atom/knockout-full",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/07/pegasus/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/07/lakeside/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/07/support-guardian-thrasher/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/02/pw-uk/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/11/comfort-eating-grace-dent-thrasher-no-logo/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/02/weekend-podcast-2022/default",
+      // We can support the following thrashers once we support full width: https://github.com/guardian/dotcom-rendering/issues/7678
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/default-fronts-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/david-olusoga-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/cassandra-gooptar-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/gary-younge-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/deneen-l-brown-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/the-enslaved-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/olivette-otele-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/interactives-front--globe",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/michael-taylor-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/lanre-bakare-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/hidden-figures-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/johny-pitts-photo-essay-front-default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/09/pandora-header/default",
+      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2023/04/cost-of-crown/default",
+      // End of list of full-width thrashers
     )
 
   def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
@@ -107,8 +138,8 @@ object FrontChecks {
       collection.curated.exists(card =>
         card match {
           case card: LinkSnap if card.properties.embedType.contains("link") => false
-          // We don't support interactive embeds yet
-          case card: LinkSnap if card.properties.embedType.contains("interactive") => true
+          case card: LinkSnap if card.properties.embedType.contains("interactive") =>
+            card.properties.embedUri.exists(UNSUPPORTED_THRASHERS.contains)
           // We don't support json.html embeds yet
           case card: LinkSnap if card.properties.embedType.contains("json.html") => true
           // Because embedType is typed as Option[String] it's hard to know whether we've
@@ -120,6 +151,14 @@ object FrontChecks {
       )
     }
     !faciaPage.collections.exists(collection => containsUnsupportedSnapLink(collection))
+  }
+
+  def hasNoDynamicPackage(faciaPage: PressedPage): Boolean = {
+    !faciaPage.collections.map(_.collectionType).contains("dynamic/package")
+  }
+
+  def hasNoFixedVideo(faciaPage: PressedPage): Boolean = {
+    !faciaPage.collections.map(_.collectionType).contains("fixed/video")
   }
 
 }
@@ -136,6 +175,8 @@ object FaciaPicker extends GuLogging {
       ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
+      ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
+      ("hasNoFixedVideo", FrontChecks.hasNoFixedVideo(faciaPage)),
     )
   }
 
