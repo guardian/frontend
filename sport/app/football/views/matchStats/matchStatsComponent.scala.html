@@ -8,7 +8,7 @@
 @import football.model.GuTeamCodes
 @(page: MatchPage)(implicit request: RequestHeader)
 
-@team(players: Seq[LineUpPlayer]) = {
+@team(players: Seq[LineUpPlayer], playerAndSubstituteList: Option[Map[String, LineUpPlayer]] = None) = {
     <ul class="match-stats__players u-unstyled">
         @players.map{ player =>
             <li class="match-stats__player">
@@ -21,6 +21,12 @@
                         case "substitution" => "(s " + event.eventTime + "')"
                         case _ =>  ""
                     }}
+                }
+                @playerAndSubstituteList.map { p =>
+                    @p.get(player.id).map { pp =>
+                        @fragments.inlineSvg("arrow-right", "icon")
+                        @pp.lastName
+                    }
                 }
             </li>
         }
@@ -107,7 +113,7 @@
                 <h4 class="match-stats__caption">@cleanTeamName(home.name)</h4>
                 @team(page.lineUp.homeTeam.players.filterNot {
                     _.substitute
-                })
+                }, page.homePlayerAndSubstitute)
                 <h4 class="match-stats__caption">Substitutes</h4>
                 @team(page.lineUp.homeTeam.players.filter {
                     _.substitute
@@ -117,7 +123,7 @@
                 <h4 class="match-stats__caption">@cleanTeamName(away.name)</h4>
                 @team(page.lineUp.awayTeam.players.filterNot {
                     _.substitute
-                })
+                }, page.awayPlayerAndSubstitute)
                 <h4 class="match-stats__caption">Substitutes</h4>
                 @team(page.lineUp.awayTeam.players.filter {
                     _.substitute

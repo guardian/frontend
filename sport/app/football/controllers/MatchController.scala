@@ -7,7 +7,7 @@ import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUp, LineUpPlayer, LineUpTeam, MatchDayTeam, MatchEvents}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
@@ -16,7 +16,13 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import scala.concurrent.Future
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
+case class MatchPage(
+    theMatch: FootballMatch,
+    lineUp: LineUp,
+    homePlayerAndSubstitute: Option[Map[String, LineUpPlayer]],
+    awayPlayerAndSubstitute: Option[Map[String, LineUpPlayer]],
+) extends StandalonePage
+    with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
@@ -62,6 +68,7 @@ case class PlayerAnswer(
     timeOnPitch: String,
     shirtNumber: String,
     events: Seq[EventAnswer],
+    substitutedBy: Option[PlayerAnswer],
 ) extends NsAnswer
 case class TeamAnswer(
     id: String,
@@ -83,11 +90,34 @@ case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswe
 object NsAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
 
-  def makePlayers(team: LineUpTeam): Seq[PlayerAnswer] = {
+  def makePlayers(team: LineUpTeam, playerAndSubstitute: Option[Map[String, LineUpPlayer]]): Seq[PlayerAnswer] = {
     team.players.map { player =>
       val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
         EventAnswer(event.eventTime, event.eventType)
       }
+
+      val subPlayer = for {
+        playerAndSubs <- playerAndSubstitute
+        substitutedPlayer <- playerAndSubs.get(player.id)
+      } yield {
+        val events =
+          substitutedPlayer.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
+            EventAnswer(event.eventTime, event.eventType)
+          }
+
+        PlayerAnswer(
+          substitutedPlayer.id,
+          substitutedPlayer.name,
+          substitutedPlayer.position,
+          substitutedPlayer.lastName,
+          substitutedPlayer.substitute,
+          substitutedPlayer.timeOnPitch,
+          substitutedPlayer.shirtNumber,
+          events,
+          None,
+        )
+      }
+
       PlayerAnswer(
         player.id,
         player.name,
@@ -97,12 +127,42 @@ object NsAnswer {
         player.timeOnPitch,
         player.shirtNumber,
         events,
+        subPlayer,
       )
     }
   }
 
-  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): TeamAnswer = {
-    val players = makePlayers(teamV2)
+  def getPlayerSubs(substitutedBy: Option[Map[String, String]], subs: Seq[LineUpPlayer], player: LineUpPlayer) = {
+    substitutedBy flatMap { s =>
+      for {
+        subbedById <- s.get(player.id)
+        player <- subs.find(_.id == subbedById)
+      } yield {
+        val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
+          EventAnswer(event.eventTime, event.eventType)
+        }
+        NxPlayer(
+          id = player.id,
+          name = player.name,
+          position = player.position,
+          lastName = player.lastName,
+          substitute = player.substitute,
+          timeOnPitch = player.timeOnPitch,
+          shirtNumber = player.shirtNumber,
+          events = events,
+        )
+      }
+    }
+  }
+
+  def makeTeamAnswer(
+      teamV1: MatchDayTeam,
+      teamV2: LineUpTeam,
+      teamPossession: Int,
+      teamColour: String,
+      playerAndSubstitute: Option[Map[String, LineUpPlayer]],
+  ): TeamAnswer = {
+    val players = makePlayers(teamV2, playerAndSubstitute)
     TeamAnswer(
       teamV1.id,
       teamV1.name,
@@ -119,12 +179,29 @@ object NsAnswer {
     )
   }
 
-  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp): MatchDataAnswer = {
+  def makeFromFootballMatch(
+      theMatch: FootballMatch,
+      lineUp: LineUp,
+      homePlayerAndSubstitute: Option[Map[String, LineUpPlayer]],
+      awayPlayerAndSubstitute: Option[Map[String, LineUpPlayer]],
+  ): MatchDataAnswer = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
     MatchDataAnswer(
       theMatch.id,
-      makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
-      makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      makeTeamAnswer(
+        theMatch.homeTeam,
+        lineUp.homeTeam,
+        lineUp.homeTeamPossession,
+        teamColours.home,
+        homePlayerAndSubstitute,
+      ),
+      makeTeamAnswer(
+        theMatch.awayTeam,
+        lineUp.awayTeam,
+        lineUp.awayTeamPossession,
+        teamColours.away,
+        awayPlayerAndSubstitute,
+      ),
     )
   }
 
@@ -162,15 +239,51 @@ class MatchController(
       case _ => render(None)
     }
 
+  private def getListOfSubstitutes(lineUp: LineUpTeam, maybeMatchEvents: Option[MatchEvents]) = {
+    maybeMatchEvents map { matchEvents =>
+      val substitutionEvents = matchEvents.events filter { event =>
+        event.eventType == "substitution" && event.teamID.contains(lineUp.id)
+      }
+      val substitutes: Seq[LineUpPlayer] = lineUp.players.filter(_.substitute)
+
+      val playerAndSubs: Seq[(String, LineUpPlayer)] = substitutionEvents flatMap { event =>
+        {
+          val subPlayer = substitutes.find(_.id == event.players.head.id)
+          subPlayer.map(s => event.players.last.id -> s)
+        }
+      }
+
+      playerAndSubs.toMap
+    }
+  }
+
   private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] =
     Action.async { implicit request =>
       val response = maybeMatch map { theMatch =>
-        val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
-        val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
+        val lineupFuture = competitionsService.getLineup(theMatch)
+        val matchEventsFuture = competitionsService.getMatchEvents(theMatch)
+        val page = for {
+          lineup <- lineupFuture
+          matchEvents <- matchEventsFuture
+        } yield {
+          val homePlayerAndSubstitute: Option[Map[String, LineUpPlayer]] =
+            getListOfSubstitutes(lineup.homeTeam, matchEvents)
+          val awayPlayerAndSubstitute: Option[Map[String, LineUpPlayer]] =
+            getListOfSubstitutes(lineup.awayTeam, matchEvents)
+
+          MatchPage(theMatch, lineup, homePlayerAndSubstitute, awayPlayerAndSubstitute)
+        }
         page map { page =>
           if (request.forceDCR) {
             Cached(30) {
-              JsonComponent.fromWritable(NsAnswer.makeFromFootballMatch(theMatch, page.lineUp))
+              JsonComponent.fromWritable(
+                NsAnswer.makeFromFootballMatch(
+                  theMatch,
+                  page.lineUp,
+                  page.homePlayerAndSubstitute,
+                  page.awayPlayerAndSubstitute,
+                ),
+              )
             }
           } else {
             val htmlResponse = () =>
