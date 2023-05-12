@@ -23,6 +23,29 @@ trait Lineups extends GuLogging {
       .recover(footballClient.logErrorsWithMessage(s"Failed getting line-up for match ${theMatch.id}"))
 }
 
+trait MatchEvents extends GuLogging {
+  def footballClient: FootballClient
+  def teamNameBuilder: TeamNameBuilder
+
+  def getMatchEvents(
+      theMatch: FootballMatch,
+  )(implicit executionContext: ExecutionContext): Future[Option[pa.MatchEvents]] = {
+    footballClient
+      .matchEvents(theMatch.id)
+      .map { matbeMatchEvents =>
+        matbeMatchEvents.map { m =>
+          val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
+          val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
+          MatchEvents(homeTeam, awayTeam, m.events, m.isResult)
+        }
+
+        matbeMatchEvents
+      }
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting match events for match ${theMatch.id}"))
+
+  }
+}
+
 trait LiveMatches extends GuLogging {
 
   def footballClient: FootballClient

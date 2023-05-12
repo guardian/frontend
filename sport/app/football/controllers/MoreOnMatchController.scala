@@ -10,7 +10,7 @@ import football.model.{FootballMatchTrail, GuTeamCodes}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUp, LineUpPlayer, LineUpTeam, MatchDayTeam, MatchEvents}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -60,6 +60,7 @@ case class NxPlayer(
     timeOnPitch: String,
     shirtNumber: String,
     events: Seq[EventAnswer],
+    substitutedBy: Option[NxPlayer] = None,
 ) extends NxAnswer
 case class NxTeam(
     id: String,
@@ -92,11 +93,17 @@ case class NxMatchData(
 
 object NxAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
-  def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
+  def makePlayers(team: LineUpTeam, matchEvents: Option[MatchEvents]): Seq[NxPlayer] = {
+    val playerAndSubstituteList: Option[Map[String, String]] = getListOfPlayerAndSubstitutes(team, matchEvents)
+    val allSubstitutes: Seq[LineUpPlayer] = team.players.filter(_.substitute)
+
     team.players.map { player =>
       val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
         EventAnswer(event.eventTime, event.eventType)
       }
+
+      val substitutedBy = getPlayerSubstitute(playerAndSubstituteList, allSubstitutes, player)
+
       NxPlayer(
         player.id,
         player.name,
@@ -106,11 +113,61 @@ object NxAnswer {
         player.timeOnPitch,
         player.shirtNumber,
         events,
+        substitutedBy,
       )
     }
   }
-  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): NxTeam = {
-    val players = makePlayers(teamV2)
+
+  def getListOfPlayerAndSubstitutes(lineUp: LineUpTeam, maybeMatchEvents: Option[MatchEvents]) = {
+    maybeMatchEvents map { matchEvents =>
+      val substitutionEvents = matchEvents.events filter { event =>
+        event.eventType == "substitution" && event.teamID.contains(lineUp.id)
+      }
+
+      val subs = substitutionEvents map { event =>
+        event.players.last.id -> event.players.head.id
+      }
+
+      subs.toMap
+    }
+  }
+
+  def getPlayerSubstitute(
+      optionalPlayerAndSubstituteList: Option[Map[String, String]],
+      allSubstitutes: Seq[LineUpPlayer],
+      player: LineUpPlayer,
+  ): Option[NxPlayer] = {
+    optionalPlayerAndSubstituteList flatMap { playerAndSubstituteList =>
+      for {
+        substituteId <- playerAndSubstituteList.get(player.id)
+        substitute <- allSubstitutes.find(_.id == substituteId)
+      } yield {
+        val events = substitute.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map {
+          event => EventAnswer(event.eventTime, event.eventType)
+        }
+
+        NxPlayer(
+          id = substitute.id,
+          name = substitute.name,
+          position = substitute.position,
+          lastName = substitute.lastName,
+          substitute = substitute.substitute,
+          timeOnPitch = substitute.timeOnPitch,
+          shirtNumber = substitute.shirtNumber,
+          events = events,
+        )
+      }
+    }
+  }
+
+  def makeTeamAnswer(
+      teamV1: MatchDayTeam,
+      teamV2: LineUpTeam,
+      matchEvents: Option[MatchEvents],
+      teamPossession: Int,
+      teamColour: String,
+  ): NxTeam = {
+    val players = makePlayers(teamV2, matchEvents)
     NxTeam(
       teamV1.id,
       cleanTeamNameNextGenApi(teamV1.name),
@@ -157,6 +214,7 @@ object NxAnswer {
       theMatch: FootballMatch,
       related: Seq[ContentType],
       lineUp: LineUp,
+      matchEvents: Option[MatchEvents],
       competition: Option[Competition],
       isResult: Boolean,
       isLive: Boolean,
@@ -165,8 +223,10 @@ object NxAnswer {
     NxMatchData(
       id = theMatch.id,
       isResult = isResult,
-      homeTeam = makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
-      awayTeam = makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      homeTeam =
+        makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, matchEvents, lineUp.homeTeamPossession, teamColours.home),
+      awayTeam =
+        makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, matchEvents, lineUp.awayTeamPossession, teamColours.away),
       competition = NxCompetition(competition.map(_.fullName)),
       isLive = isLive,
       venue = theMatch.venue.map(_.name).getOrElse(""),
@@ -265,6 +325,7 @@ class MoreOnMatchController(
           if (request.forceDCR) {
             for {
               lineup <- competitionsService.getLineup(theMatch)
+              matchEvents <- competitionsService.getMatchEvents(theMatch)
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
               Cached(if (theMatch.isLive) 10 else 300) {
@@ -274,6 +335,7 @@ class MoreOnMatchController(
                     theMatch,
                     filtered,
                     lineup,
+                    matchEvents,
                     competition,
                     theMatch.isResult,
                     theMatch.isLive,
