@@ -144,12 +144,16 @@ $video-width-desktop: 700px;
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
     }
-    @include mq($until: desktop) {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        transform: none !important;
-    }
+    //commenting this stops scroll on small screens.
+    // this is commented for now as we havent built a mechanism to stop vid on scroll
+    //@include mq($until: desktop) {
+    //    overflow-x: scroll;
+    //    overflow-y: hidden;
+    //    -webkit-overflow-scrolling: touch;
+    //    transform: none !important;
+    //}
+    //transition: transform .4s ease-out;
+
     @include mq(desktop) {
         padding-right: 0;
         transition: transform .4s ease-out;
@@ -165,7 +169,17 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control {
-    display: none;
+    //display: none;
+    // is there a way to make this number not a magic number?
+    width: 56px;
+    //2*36 + 12 * (2-1)
+    //width: gs-span(3);
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    cursor: pointer;
     @include mq(desktop) {
         // hard coding for testing - this needs fixing
         width: 572px;
@@ -275,7 +289,8 @@ $video-width-desktop: 700px;
     vertical-align: top;
     width: 70%;
     background-color: $brightness-7;
-    margin-left: $gs-gutter / 2;
+    // this is the margin on small phones that breaks the click to scroll
+    //margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;

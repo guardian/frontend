@@ -21,10 +21,11 @@
 }
 
 .video-playlist__item .youtube-media-atom {
-    @include mq(desktop) {
+    // commenting out include on desktop this is the opacity on non-focused images
+    //@include mq(desktop) {
         opacity: .3;
         transition: opacity .4s ease-out;
-    }
+    //}
 }
 
 .video-playlist__item .youtube-media-atom .vjs-big-play-button {
