@@ -153,7 +153,8 @@ const update = (state, container) => {
 
         if (activeEl != null) {
             activeEl.classList.remove('video-playlist__item--active');
-            $('.youtube-media-atom__iframe', activeEl).hide();
+            //commenting the line below stops the frames disappearing.
+            // $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
             $('.video-overlay .fc-item__link', activeEl).attr(
                 'aria-hidden',
@@ -318,7 +319,7 @@ export const videoContainerInit = (container) => {
     });
 
     $('.video-playlist__item:not(.video-playlist__item--first)').each($el => {
-        // $('.youtube-media-atom__iframe', $el).hide();
+        $('.youtube-media-atom__iframe', $el).hide();
         $('.video-overlay .fc-item__link', $el).attr('tabindex', '-1');
         $('.video-overlay .fc-item__link', $el).attr('aria-hidden', 'true');
     });
