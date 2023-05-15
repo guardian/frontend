@@ -167,7 +167,10 @@ $video-width-desktop: 700px;
 .video-playlist__control {
     display: none;
     @include mq(desktop) {
-        width: gs-span(2);
+        // hard coding for testing - this needs fixing
+        width: 572px;
+        //2*36 + 12 * (2-1)
+        //width: gs-span(3);
         position: absolute;
         display: block;
         top: 0;
@@ -215,14 +218,18 @@ $video-width-desktop: 700px;
 .video-playlist__control--next {
     right: 0;
     @include mq(leftCol) {
-        width: gs-span(3) + $gs-gutter * 2;
+        // hard coding for testing - this needs fixing
+        width:692px;
+        //width: gs-span(3) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
         }
     }
     @include mq(wide) {
-        width: gs-span(4) + $gs-gutter * 2;
+        // hard coding for testing - this needs fixing
+        width:772px;
+        //width: gs-span(4) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -274,7 +281,8 @@ $video-width-desktop: 700px;
         margin-left: $gs-gutter;
     }
     @include mq(desktop) {
-        width: $video-width-desktop;
+        // do we need to comment this out??
+        //width: $video-width-desktop;
         margin: 0;
     }
 
