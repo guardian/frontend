@@ -14,7 +14,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
       FrontsBannerAds,
-      BorkWebVitals,
+      BorkFCP,
+      BorkFID,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -83,11 +84,20 @@ object FrontsBannerAds
       participationGroup = Perc0A,
     )
 
-object BorkWebVitals
+object BorkFCP
     extends Experiment(
-      name = "bork-web-vitals",
-      description = "Enables borking (synthetic delay) of web vitals",
+      name = "bork-fcp",
+      description = "Synthetically degrades First Contentful Paint (FCP)",
       owners = Seq(Owner.withName("Open Journalism")),
       sellByDate = LocalDate.of(2023, 6, 1),
       participationGroup = Perc1C,
+    )
+
+object BorkFID
+    extends Experiment(
+      name = "bork-fid",
+      description = "Synthetically degrades First Input Delay (FID)",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 6, 1),
+      participationGroup = Perc1D,
     )
