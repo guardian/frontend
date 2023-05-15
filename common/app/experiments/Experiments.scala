@@ -108,6 +108,6 @@ object ActionCardRedesign
       name = "action-card-redesign",
       description = "Creates a new action card design on fronts pages",
       owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 6, 10),
+      sellByDate = LocalDate.of(2023, 6, 9),
       participationGroup = Perc20A,
     )
