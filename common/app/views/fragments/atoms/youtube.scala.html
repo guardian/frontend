@@ -19,7 +19,8 @@
     mediaWrapper: Option[MediaWrapper] = None,
     faciaHeaderProperties: Option[VideoFaciaProperties] = None,
     isPaidFor: Boolean = false,
-    pressedContent: Option[PressedContent] = None
+    pressedContent: Option[PressedContent] = None,
+    verticalVideo: Boolean = false,
 )(implicit request: RequestHeader)
 
 @videoJsError() = @{
@@ -40,7 +41,7 @@
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
                 ("youtube-related-videos", true),
-                    ("vertical-video", true)
+                ("vertical-video", verticalVideo)
             ))" data-channel-id="@channelId">
         }
     }
@@ -54,7 +55,7 @@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
-                <div class="video-overlay video-overlay-vertical">
+                <div class="@RenderClasses(Map("video-overlay" -> true, "video-overlay-vertical" -> verticalVideo))">
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
