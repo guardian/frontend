@@ -249,6 +249,7 @@ case class PaidCard(
     targetUrl: String,
     cardTypes: Option[ItemClasses] = None,
     branding: Option[Branding],
+    isAction: Boolean = false,
 ) extends FaciaCard
 
 object PaidCard {
@@ -286,6 +287,7 @@ object PaidCard {
       },
       cardTypes = cardTypes,
       branding = content.branding(defaultEdition),
+      isAction = content.isActionCard,
     )
   }
 }
