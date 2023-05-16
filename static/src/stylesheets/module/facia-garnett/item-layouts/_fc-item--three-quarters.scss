@@ -28,6 +28,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
             @include fs-headline(4, true);
             @include fs-headline-quote(4);
             @include headline-boost(5);
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(4);
+            }
         }
     }
 
@@ -63,6 +67,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
             @include headline-boost(6);
             padding-bottom: gs-height(3);
             margin-bottom: $gs-gutter * .25;
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(5);
+            }
 
             @include mq(desktop) {
                 padding-bottom: gs-height(4);

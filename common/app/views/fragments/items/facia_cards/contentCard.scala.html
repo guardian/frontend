@@ -214,7 +214,7 @@ data-test-id="facia-card"
                 ("fc-item__header", true),
                 ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
             ))">
-                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType), isAction = item.isAction)
 
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>

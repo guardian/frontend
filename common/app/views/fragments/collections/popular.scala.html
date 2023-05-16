@@ -41,7 +41,7 @@
                                 @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
                             </span>
                             <div class="headline-list__text">
-                                @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
+                                @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body", isAction = trail.isActionCard)
                                 @trail.properties.maybeContent.map { content =>
                                     @if(content.tags.tags.exists(_.id == "tone/news") || content.tags.tags.exists(_.id == "tone/comment")) {
                                         @fragments.contentAgeNotice(ContentOldAgeDescriber(content))

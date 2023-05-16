@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       FrontsBannerAds,
       BorkFCP,
       BorkFID,
+      ActionCardRedesign,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -100,4 +101,13 @@ object BorkFID
       owners = Seq(Owner.withName("Open Journalism")),
       sellByDate = LocalDate.of(2023, 6, 1),
       participationGroup = Perc1D,
+    )
+
+object ActionCardRedesign
+    extends Experiment(
+      name = "action-card-redesign",
+      description = "Creates a new action card design on fronts pages",
+      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      sellByDate = LocalDate.of(2023, 6, 9),
+      participationGroup = Perc20A,
     )

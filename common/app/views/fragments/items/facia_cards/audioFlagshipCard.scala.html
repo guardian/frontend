@@ -81,7 +81,7 @@ data-test-id="facia-card"
             <div class="fc-item__header">
 
 
-                @title(item.header.copy(kicker = getTagKicker()), index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+                @title(item.header.copy(kicker = getTagKicker()), index, containerIndex, snapType = item.snapStuff.map(_.snapType), isAction = item.isAction)
 
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>

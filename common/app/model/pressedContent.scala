@@ -34,6 +34,11 @@ sealed trait PressedContent {
       branding <- editionBranding.branding
     } yield branding
 
+  def isActionCard: Boolean =
+    properties.maybeContent.exists { c =>
+      c.tags.tags.exists(_.id == "tone/callout")
+    }
+
   // For DCR
   def ageWarning: Option[String] = {
     properties.maybeContent

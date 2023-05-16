@@ -75,6 +75,10 @@ Hence why a greater depth of selector specificity is needed.
         @include mq($until: tablet) {
             .fc-item__header {
                 @include fs-headline(3, true);
+
+                .fc-item__action-kicker-wrapper {
+                    @include fs-action-kicker(3);
+                }
             }
 
             .inline-garnett-quote__svg {
@@ -104,6 +108,10 @@ Hence why a greater depth of selector specificity is needed.
             .fc-item__header {
                 @include mq(tablet) {
                     @include fs-headline(2, true);
+
+                    .fc-item__action-kicker-wrapper {
+                        @include fs-action-kicker(2);
+                    }
                 }
             }
 
