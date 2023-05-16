@@ -591,7 +591,7 @@
     visibility: hidden;
 }
 
-.ad-slot[data-label-show='true']:not(.ad-slot--dark):not(.ad-slot--interscroller)::before {
+.ad-slot[data-label-show='true']:not(.ad-slot--dark):not(.ad-slot--interscroller):not(.ad-slot--merchandising):not(.ad-slot--merchandising-high)::before {
     @include font-size(12, 20);
     content: attr(ad-label-text);
     display: block;
@@ -631,6 +631,27 @@
     background-color: transparent;
     padding: 0 ($gs-baseline/3)*2;
     border: 0;
+    border-top: 1px solid $brightness-20;
+    color: $brightness-86;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.ad-slot--merchandising[data-label-show='true']::before, .ad-slot--merchandising-high[data-label-show='true']::before {
+    content: 'Advertisement';
+    display: block;
+    visibility: visible;
+    height: $mpu-ad-label-height;
+    background-color: transparent;
+    padding: 0 ($gs-baseline/3)*2;
+    border: 0;
+    max-width: 970px;
+    margin: auto;
     border-top: 1px solid $brightness-20;
     color: $brightness-86;
     text-align: left;
