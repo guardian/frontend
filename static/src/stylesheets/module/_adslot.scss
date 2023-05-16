@@ -643,24 +643,21 @@
 }
 
 .ad-slot--merchandising[data-label-show='true']::before, .ad-slot--merchandising-high[data-label-show='true']::before {
-    content: 'Advertisement';
+    @include font-size(12, 20);
+    content: attr(ad-label-text);
     display: block;
     visibility: visible;
+    position: relative;
     height: $mpu-ad-label-height;
-    background-color: transparent;
+    background-color: $brightness-97;
     padding: 0 ($gs-baseline/3)*2;
-    border: 0;
-    max-width: 970px;
-    margin: auto;
-    border-top: 1px solid $brightness-20;
-    color: $brightness-86;
+    border-top: 1px solid $brightness-86;
+    color: $brightness-46;
     text-align: left;
     box-sizing: border-box;
     font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    max-width: 970px;
+    margin: auto;
 }
 
 .ad-slot__adtest-cookie-clear-link {
