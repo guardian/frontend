@@ -1349,10 +1349,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@^5.0.1-beta.2":
-  version "5.0.1-beta.2"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.0.1-beta.2.tgz#e471c1aea82e0d458c2c9cf01d318f6dc7fc42ac"
-  integrity sha512-tsFn0oSNyPkVASxFTNZ+hQ91tMQzBmg+KHf746iDOb0LrSzEHyoLECx3Svf8csBclUv+Wh1bQm/c7gM8d3Excg==
+"@guardian/commercial-bundle@^5.0.1-beta.3":
+  version "5.0.1-beta.3"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.0.1-beta.3.tgz#b6e0833e8486413b863e5b29f18ee9243ef8de36"
+  integrity sha512-5Q+oLaicTCM3ETgqdSI6wopM8ahOOy4/5AMbNJAquspqYUMtBqm7QJDuZgTOVNJXnvPvCD24MDhU/0ZgLZIwgg==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
     "@guardian/commercial-core" "^7.0.0"
