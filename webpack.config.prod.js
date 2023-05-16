@@ -42,6 +42,7 @@ module.exports = webpackMerge.smart(config, {
 	optimization: {
 		minimizer: [
 			new TerserPlugin({
+				exclude: /graun.*commercial.js/,
 				parallel: true,
 				terserOptions: {
 					sourceMap: true,
