@@ -198,6 +198,9 @@ const onPlayerEnded = (atomId) => {
     const player = players[atomId];
 
     player.playing = false;
+
+    const videoFinished = new Event('videoFinished');
+    document.dispatchEvent(videoFinished);
     killProgressTracker(atomId);
 
     trackYoutubeEvent('end', player.atomId);

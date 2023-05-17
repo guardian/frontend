@@ -232,7 +232,7 @@ const update = (state, container) => {
 const getInitialState = (container) => ({
     position: 0,
     length: Number(container.getAttribute('data-number-of-videos')),
-    videoWidth: 260,
+    videoWidth: 300,
     container,
 });
 
@@ -268,6 +268,13 @@ const setupDispatches = (
                 type: 'PREV',
             });
         }
+    });
+
+    bean.on(document, 'videoFinished', () => {
+        console.log('videoFinished - autoscrolling to next')
+        dispatch({
+            type: 'NEXT',
+        });
     });
 };
 

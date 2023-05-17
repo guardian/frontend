@@ -40,10 +40,10 @@ $video-width-desktop: 700px;
 
 
     .vertical-width {
-        width: 260px;
+        width: 300px;
     }
     .vertical-height {
-        height: 463px;
+        height: 533px;
     }
     .media__container--hidden {
         display: block !important; // To override existing important
@@ -152,7 +152,7 @@ $video-width-desktop: 700px;
     //    -webkit-overflow-scrolling: touch;
     //    transform: none !important;
     //}
-    //transition: transform .4s ease-out;
+    transition: transform .4s ease-out;
 
     @include mq(desktop) {
         padding-right: 0;
@@ -169,29 +169,14 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control {
-    //display: none;
-    // is there a way to make this number not a magic number?
-    width: 56px;
-    //2*36 + 12 * (2-1)
-    //width: gs-span(3);
     position: absolute;
     display: block;
     top: 0;
     bottom: 0;
     z-index: 2;
     cursor: pointer;
-    @include mq(desktop) {
-        // hard coding for testing - this needs fixing
-        width: 572px;
-        //2*36 + 12 * (2-1)
-        //width: gs-span(3);
-        position: absolute;
-        display: block;
-        top: 0;
-        bottom: 0;
-        z-index: 2;
-        cursor: pointer;
 
+    @include mq(desktop) {
         &:hover .video-playlist__icon,
         &:focus .video-playlist__icon {
             background-color: $highlight-main;
@@ -205,15 +190,17 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--prev {
     left: 0;
+    width: calc((100% - 300px) / 2);
+
     @include mq(leftCol) {
-        width: gs-span(2) + $gs-gutter * 2;
+        width: gs-span(2) + $gs-gutter * 2 + 240;
 
         .has-page-skin & {
             width: gs-span(2);
         }
     }
     @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2;
+        width: gs-span(3) + $gs-gutter * 2 + 240;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -231,10 +218,10 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--next {
     right: 0;
+    width: calc((100% - 300px) / 2);
+
     @include mq(leftCol) {
-        // hard coding for testing - this needs fixing
-        width:692px;
-        //width: gs-span(3) + $gs-gutter * 2;
+        width: gs-span(3) + $gs-gutter * 2  + 160;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -242,8 +229,7 @@ $video-width-desktop: 700px;
     }
     @include mq(wide) {
         // hard coding for testing - this needs fixing
-        width:772px;
-        //width: gs-span(4) + $gs-gutter * 2;
+        width: gs-span(4) + $gs-gutter * 2 + 160;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -292,9 +278,11 @@ $video-width-desktop: 700px;
     // this is the margin on small phones that breaks the click to scroll
     //margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-    }
+    // this is the margin on tablet that breaks the click to scroll
+
+    //@include mq(mobileLandscape) {
+        //margin-left: $gs-gutter;
+    //}
     @include mq(desktop) {
         // do we need to comment this out??
         //width: $video-width-desktop;
@@ -308,22 +296,23 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__item--first {
-    @include mq(desktop, leftCol) {
-        margin-left: gs-span(2);
-
-        .has-page-skin & {
-            margin-left: 0;
-        }
-    }
-    @include mq(leftCol) {
-        margin-left: 0;
-
-        .has-page-skin & {
-            margin-left: 0;
-        }
-    }
-}
+// we get to kill this class for vertical
+//.video-playlist__item--first {
+    //@include mq(desktop, leftCol) {
+    //    margin-left: gs-span(2);
+    //
+    //    .has-page-skin & {
+    //        margin-left: 0;
+    //    }
+    //}
+    //@include mq(leftCol) {
+    //    margin-left: 0;
+    //
+    //    .has-page-skin & {
+    //        margin-left: 0;
+    //    }
+    //}
+//}
 
 .video-playlist__item--active {
     .vjs-big-play-button {
@@ -387,22 +376,41 @@ $video-width-desktop: 700px;
 }
 
 .video-title--leftcol {
-    display: none;
+    position: relative;
+    height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-bottom: 0;
+    white-space: normal;
+    width: calc(((100% - 300px) / 2) + 5px);
+    @include mq($from: mobileLandscape, $until: desktop) {
+        width: calc(((100% - 300px) / 2) + 10px);
+    }
+
+    @include mq(desktop) {
+        width: calc(((100% - 300px) / 2));
+    }
+
     @include mq(leftCol) {
         position: relative;
         height: $video-width-desktop / 16 * 9;
         display: inline-block;
-        width: gs-span(2) + $gs-gutter * 2;
+        // we add 240 to center vertical videos
+        width: gs-span(2) + $gs-gutter * 2 + 240;
         padding: ($gs-baseline / 2) $gs-gutter;
         box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
     }
     @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2;
+        // we add 240 to center vertical videos
+
+        width: gs-span(3) + $gs-gutter * 2 + 240;
 
         .has-page-skin & {
-            width: gs-span(2) + $gs-gutter * 2;
+            // we add 240 to center vertical videos
+
+            width: gs-span(2) + $gs-gutter * 2 + 240;
         }
     }
 
@@ -419,19 +427,19 @@ $video-width-desktop: 700px;
         display: none;
     }
 }
-
-.video-playlist__item--first {
-    @include mq(desktop) {
-        margin-left: gs-span(2);
-    }
-    @include mq(leftCol) {
-        margin-left: 0;
-
-        .has-page-skin & {
-            margin-left: gs-span(2);
-        }
-    }
-}
+//we get to kill this for vertical  - also it is duplicated for some reason??
+//.video-playlist__item--first {
+//    @include mq(desktop) {
+//        margin-left: gs-span(2);
+//    }
+//    @include mq(leftCol) {
+//        margin-left: 0;
+//
+//        .has-page-skin & {
+//            margin-left: gs-span(2);
+//        }
+//    }
+//}
 
 .video-overlay {
     position: absolute;
@@ -510,7 +518,71 @@ $video-width-desktop: 700px;
     }
 }
 
+.vertical-video-overlay {
+    position: absolute;
+    z-index: 2;
+    white-space: normal;
+    padding: 2.5rem $gs-gutter/4 $gs-baseline * 2;
+    box-sizing: border-box;
+    color: #ffffff;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 25.04%);
+    min-height: gs-height(3);
+    pointer-events: auto;
+    width: 100%;
+    bottom:0;
 
+    .video-playlist__item .vjs-playing ~ & {
+        @include mq(desktop) {
+            visibility: hidden;
+            opacity: 0;
+        }
+    }
+
+    .video-overlay__headline {
+        @include fs-headline(2);
+        font-weight: 400;
+        @include mq(mobileLandscape) {
+            @include fs-headline(3);
+            font-weight: 400;
+        }
+        @include mq(desktop) {
+            min-height: get-line-height(headline, 3) * 4;
+            overflow: hidden;
+        }
+
+        .fc-item__headline {
+            color: #ffffff;
+        }
+    }
+
+    .inline-icon svg {
+        position: relative;
+        height: .7em;
+        width: auto;
+    }
+
+    .fc-item__title--quoted .inline-quote {
+        fill: #ffffff;
+    }
+
+    .fc-item__link {
+        color: #ffffff;
+
+        &:visited {
+            color: $brightness-86;
+        }
+    }
+
+    .fc-item__byline,
+    .fc-item__kicker {
+        color: $highlight-main;
+    }
+
+    .fc-item__kicker {
+        padding: 0;
+        margin: 0;
+    }
+}
 
 .video-overlay__duration {
     @include fs-textSans(3);
@@ -520,15 +592,12 @@ $video-width-desktop: 700px;
 }
 
 .fc-item__video-container {
-    // Videos on mobile should just click through to the article
-    @include mq($from: tablet) {
-        .youtube-media-atom {
-            z-index: 1;
+    .youtube-media-atom {
+        z-index: 1;
 
-            &.no-player,
-            .is-not-modern & {
-                z-index: 0;
-            }
+        &.no-player,
+        .is-not-modern & {
+            z-index: 0;
         }
     }
 }
