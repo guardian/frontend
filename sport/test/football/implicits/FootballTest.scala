@@ -21,7 +21,7 @@ class FootballTest extends AnyFlatSpec with Matchers {
     result.get("3") should be("5")
   }
 
-  it should "not return the team substitutions" in {
+  it should "return an empty list given no substitution occured for the relevant team" in {
     val eventsList = List(
       getMatchEvent(eventType = "random", teamID = "homeTeamId", players = List("2", "4")),
     )
@@ -39,7 +39,7 @@ class FootballTest extends AnyFlatSpec with Matchers {
     result shouldBe None
   }
 
-  "RichLineUpTeam allSubstitutes" should "all substitutes players" in {
+  "RichLineUpTeam allSubstitutes" should "return all substitutes players" in {
     val home = makeLineUpTeam("homeTeamId", "team1", homePlayers)
 
     val result = home.allSubstitutes
@@ -49,7 +49,7 @@ class FootballTest extends AnyFlatSpec with Matchers {
     result(1).id should be("5")
   }
 
-  "Football getPlayerSubstitute" should "all substitutes players" in {
+  "Football getPlayerSubstitute" should "the substitute who replaced the given player" in {
     val playerAndSubstitute = Some(Map(("2", "5"), ("1", "4")))
     val substitutes = Seq(
       makeLineUpPlayer("4", "Alessandro", "Bastoni", true),
