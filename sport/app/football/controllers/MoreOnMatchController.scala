@@ -7,6 +7,7 @@ import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
 import football.model.{FootballMatchTrail, GuTeamCodes}
+import implicits.Football.RichLineUpTeam
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
@@ -94,27 +95,13 @@ case class NxMatchData(
 object NxAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
   def makePlayers(team: LineUpTeam, matchEvents: Option[MatchEvents]): Seq[NxPlayer] = {
-    val playerAndSubstituteList: Option[Map[String, String]] = getListOfPlayerAndSubstitutes(team, matchEvents)
-    val allSubstitutes: Seq[LineUpPlayer] = team.players.filter(_.substitute)
+    val playerAndSubstituteList: Option[Map[String, String]] = team.getListOfPlayerAndSubstitutes(matchEvents)
+    val allSubstitutes: Seq[LineUpPlayer] = team.allSubstitutes
 
     team.players.map { player =>
-      val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
-        EventAnswer(event.eventTime, event.eventType)
-      }
-
       val substitutedBy = getPlayerSubstitute(playerAndSubstituteList, allSubstitutes, player)
 
-      NxPlayer(
-        player.id,
-        player.name,
-        player.position,
-        player.lastName,
-        player.substitute,
-        player.timeOnPitch,
-        player.shirtNumber,
-        events,
-        substitutedBy,
-      )
+      getNxPlayer(player, substitutedBy)
     }
   }
 
@@ -194,46 +181,31 @@ object NxAnswer {
     )
   }
 
-  private def getListOfPlayerAndSubstitutes(lineUp: LineUpTeam, maybeMatchEvents: Option[MatchEvents]) = {
-    maybeMatchEvents map { matchEvents =>
-      val substitutionEvents = matchEvents.events filter { event =>
-        event.eventType == "substitution" && event.teamID.contains(lineUp.id)
-      }
-
-      val subs = substitutionEvents map { event =>
-        event.players.last.id -> event.players.head.id
-      }
-
-      subs.toMap
+  private def getNxPlayer(player: LineUpPlayer, substitutedBy: Option[NxPlayer]) = {
+    val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
+      EventAnswer(event.eventTime, event.eventType)
     }
+
+    NxPlayer(
+      player.id,
+      player.name,
+      player.position,
+      player.lastName,
+      player.substitute,
+      player.timeOnPitch,
+      player.shirtNumber,
+      events,
+      substitutedBy,
+    )
   }
 
   private def getPlayerSubstitute(
-      optionalPlayerAndSubstituteList: Option[Map[String, String]],
+      playerAndSubstituteList: Option[Map[String, String]],
       allSubstitutes: Seq[LineUpPlayer],
       player: LineUpPlayer,
   ): Option[NxPlayer] = {
-    optionalPlayerAndSubstituteList flatMap { playerAndSubstituteList =>
-      for {
-        substituteId <- playerAndSubstituteList.get(player.id)
-        substitute <- allSubstitutes.find(_.id == substituteId)
-      } yield {
-        val events = substitute.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map {
-          event => EventAnswer(event.eventTime, event.eventType)
-        }
-
-        NxPlayer(
-          id = substitute.id,
-          name = substitute.name,
-          position = substitute.position,
-          lastName = substitute.lastName,
-          substitute = substitute.substitute,
-          timeOnPitch = substitute.timeOnPitch,
-          shirtNumber = substitute.shirtNumber,
-          events = events,
-        )
-      }
-    }
+    val substitute = Football.getPlayerSubstitute(playerAndSubstituteList, allSubstitutes, player)
+    substitute.map(sub => getNxPlayer(sub, None))
   }
 
   implicit val EventAnswerWrites: Writes[NxEvent] = Json.writes[NxEvent]

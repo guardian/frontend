@@ -158,6 +158,24 @@ trait Football {
     )
   }
 
+  implicit class RichLineUpTeam(lineUp: LineUpTeam) {
+
+    lazy val allSubstitutes: Seq[LineUpPlayer] = lineUp.players.filter(_.substitute)
+    def getListOfPlayerAndSubstitutes(maybeMatchEvents: Option[MatchEvents]) = {
+      maybeMatchEvents map { matchEvents =>
+        val substitutionEvents = matchEvents.events filter { event =>
+          event.eventType == "substitution" && event.teamID.contains(lineUp.id)
+        }
+
+        val playerAndSubstituteList = substitutionEvents map { event =>
+          event.players.last.id -> event.players.head.id
+        }
+
+        playerAndSubstituteList.toMap
+      }
+    }
+  }
+
   // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
 
   val roundLinks = Map[String, Round => Option[String]]()
@@ -168,6 +186,21 @@ object Football extends Football {
 
   def hoursTillMatch(theMatch: FootballMatch): Long = {
     ChronoUnit.HOURS.between(ZonedDateTime.now(), theMatch.date)
+  }
+
+  def getPlayerSubstitute(
+      optionalPlayerAndSubstituteList: Option[Map[String, String]],
+      allSubstitutes: Seq[LineUpPlayer],
+      player: LineUpPlayer,
+  ): Option[LineUpPlayer] = {
+    optionalPlayerAndSubstituteList flatMap { playerAndSubstituteList =>
+      for {
+        substituteId <- playerAndSubstituteList.get(player.id)
+        substitute <- allSubstitutes.find(_.id == substituteId)
+      } yield {
+        substitute
+      }
+    }
   }
 
 }
