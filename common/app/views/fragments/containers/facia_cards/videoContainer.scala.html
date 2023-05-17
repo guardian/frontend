@@ -51,8 +51,9 @@
                                 faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None),
                                     showByline = item.properties.showByline, item.properties.byline)),
                                 isPaidFor = item.isPaidFor,
-                                pressedContent = Some(item)),
+                                pressedContent = Some(item),
                                 verticalVideo = content.tags.isVerticalVideo
+                            )
                         }
                     }
 
