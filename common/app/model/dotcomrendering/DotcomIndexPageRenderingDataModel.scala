@@ -21,6 +21,7 @@ case class DotcomIndexPageRenderingDataModel(
     date: DateTime,
     tzOverride: Option[DateTimeZone],
     previousAndNext: Option[PreviousAndNext],
+    forceDay: Boolean,
     nav: Nav,
     editionId: String,
     editionLongForm: String,
@@ -35,7 +36,6 @@ case class DotcomIndexPageRenderingDataModel(
 )
 
 object DotcomIndexPageRenderingDataModel {
-
   implicit val writes = new Writes[DotcomIndexPageRenderingDataModel] {
     def writes(model: DotcomIndexPageRenderingDataModel) = {
       Json.obj(
@@ -45,6 +45,7 @@ object DotcomIndexPageRenderingDataModel {
         "previousAndNext" -> model.previousAndNext.map(previousAndNext =>
           Json.obj("prev" -> previousAndNext.prev, "next" -> previousAndNext.next),
         ),
+        "forceDy" -> model.forceDay,
         "tags" -> model.tags,
         "nav" -> model.nav,
         "editionId" -> model.editionId,
@@ -102,6 +103,7 @@ object DotcomIndexPageRenderingDataModel {
       date = page.date,
       tzOverride = page.tzOverride,
       previousAndNext = page.previousAndNext,
+      forceDay = page.forcesDayView,
       nav = nav,
       editionId = edition.id,
       editionLongForm = edition.displayName,
