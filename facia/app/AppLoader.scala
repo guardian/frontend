@@ -24,6 +24,8 @@ import play.api.libs.ws.WSClient
 import services._
 import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
+import common.dfp.RemoteBundleRetriever
+import common.commercial.BundleLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -48,6 +50,8 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   lazy val mostViewedAgent = wire[MostViewedAgent]
 
+  lazy val remoteBundleRetriever: RemoteBundleRetriever = wire[RemoteBundleRetriever]
+
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
@@ -58,6 +62,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[MostViewedLifecycle],
+    wire[BundleLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
