@@ -860,9 +860,14 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
         slot <- adSlot
       } {
         container.after(slot)
-        slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
+        if (ActiveExperiments.isParticipating(FrontsBannerAds)) {
+          slot.wrap(
+            """<div class="fc-container fc-container--commercial fc-container--commercial--hide-desktop"></div>""",
+          )
+        } else {
+          slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
+        }
       }
-
     }
     document
   }
