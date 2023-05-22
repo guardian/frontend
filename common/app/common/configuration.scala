@@ -548,6 +548,8 @@ class GuardianConfiguration extends GuLogging {
     lazy val overrideCommercialBundleUrl: Option[String] =
       if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
       else None
+
+    lazy val testStaticBucket = configuration.getStringProperty("test-static-bucket")
   }
 
   object journalism {

@@ -40,15 +40,16 @@ object RemoteBundleAgent extends GuLogging {
   private def grabRemoteBundleUrlFromStore(): Option[String] = {
     log.info("REMOTE BUNDLE Attempt to get bucket from parameter store")
 
-    var bucket = ""
+    // var bucket = ""
+    // try {
+    //   // Retrieve the name of the static assets bucket from Parameter Store
+    //   val parameterStore = new ParameterStore(Configuration.aws.region)
+    //   bucket = parameterStore.get("/account/services/dotcom-static.bucket")
+    // } catch {
+    //   case e: Throwable => log.error(s"REMOTE BUNDLE error from parameter store ${e.toString()}")
+    // }
 
-    try {
-      // Retrieve the name of the static assets bucket from Parameter Store
-      val parameterStore = new ParameterStore(Configuration.aws.region)
-      bucket = parameterStore.get("/account/services/dotcom-static.bucket")
-    } catch {
-      case e: Throwable => log.error(s"REMOTE BUNDLE error from parameter store ${e.toString()}")
-    }
+    val bucket = Configuration.commercial.testStaticBucket.getOrElse("")
 
     log.info("REMOTE BUNDLE Got bucket name")
 
