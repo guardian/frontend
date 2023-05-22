@@ -63,6 +63,14 @@
 @import 'item-types/_fc-item--type-comment';
 @import 'item-types/_fc-item--type-immersive';
 
+
+// For the Fronts OKR test May 2023
+@include mq(desktop) {
+    .facia-page[data-link-name='Front | /uk'] .fc-slice__item--mpu-candidate.fc-slice__item--mpu-candidate--hide-desktop {
+        display: none;
+    }
+}
+
 .fc-slice__item {
     width: 100%;
     position: relative;
