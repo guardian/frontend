@@ -33,12 +33,6 @@
                 @articleLink {
                     <div class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</div>
                     @headline()
-                    @if(isAction && ActiveExperiments.isParticipating(ActionCardRedesign)) {
-                        <button class="fc-item__action-tell-us-btn">
-                            <span>Tell us</span>
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </button>
-                    }
                 }
             }
             case _ => {
@@ -46,6 +40,12 @@
                     @headline()
                 }
             }
+        }
+        @if(isAction && ActiveExperiments.isParticipating(ActionCardRedesign)) {
+            <button class="fc-item__action-tell-us-btn">
+                <span>Tell us</span>
+                @fragments.inlineSvg("arrow-right", "icon")
+            </button>
         }
     }
 }
