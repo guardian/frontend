@@ -43,6 +43,8 @@ deployments:
     template: frontend
   sport:
     template: frontend
+  search:
+    template: frontend
   frontend-static:
     type: aws-s3
     parameters:
