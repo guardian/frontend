@@ -76,6 +76,12 @@ jobs:
                   git commit -m "Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}"
                   git push --set-upstream origin bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
 
+            - name: Close any existing pull requests
+              run: |
+                  gh search prs --state open --base main --label commercial --label dependencies --json number "Bump @guardian/commercial-bundle" | jq -r '.[] | .number' | xargs -I {} gh pr close {}
+              env:
+                  GH_TOKEN: ${{ github.token }}
+
             - name: Create pull request
               run: |
                   gh pr create --base main \
