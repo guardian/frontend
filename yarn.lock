@@ -1372,10 +1372,10 @@
     web-vitals "^2.1.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/commercial-core@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.0.0.tgz#2bde098699e8d8121028bd03d10481e8664f8e06"
-  integrity sha512-ByfukhmfJ2sF5mCyVq5XSRyOdBp0w+MOTpOp361wjZ6a2KHSgSC8VQucgSQHtQ7v05O0jJ53XFkSrGc2TUworA==
+"@guardian/commercial-core@^7.0.0", "@guardian/commercial-core@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
+  integrity sha512-Ue1Km1W4w7J8ZYH+qqLgEPyk6j7TOz6Tn94yDPac30oDo3hauJDSH35wZRbwcJBc8hlKPCtqAEXSvtcx42pcig==
 
 "@guardian/consent-management-platform@^13.0.2":
   version "13.0.2"
