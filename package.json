@@ -20,7 +20,7 @@
 		"@guardian/braze-components": "^13.0.0",
 		"@guardian/commercial-bundle": "^5.2.0",
 		"@guardian/commercial-core": "^7.0.0",
-		"@guardian/consent-management-platform": "^13.0.2",
+		"@guardian/consent-management-platform": "guardian/consent-management-platform#23d70e7",
 		"@guardian/core-web-vitals": "^4.0.0",
 		"@guardian/libs": "^14.0.0",
 		"@guardian/shimport": "^1.0.2",

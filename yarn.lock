@@ -1382,6 +1382,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.0.2.tgz#3625f10ca355e1f0296f17fbf8eee3fffd693b95"
   integrity sha512-rhuDQeZW//WJue9Uhj5JgWc7juV18CgwpOJXcmzYUkYcvi1wcf+kW/BvqfJjNjyd/kpx5eNQ2pCZtj4HuTQBEA==
 
+"@guardian/consent-management-platform@guardian/consent-management-platform#23d70e7":
+  version "0.0.0-this-never-updates-in-source-code-refer-to-git-tags"
+  resolved "https://codeload.github.com/guardian/consent-management-platform/tar.gz/23d70e7b5ea9502b418786be748e0cb242e18611"
+
 "@guardian/core-web-vitals@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-4.0.0.tgz#e09bf40ee896ae92c0223fa57399b1b0b5f9bdb2"
