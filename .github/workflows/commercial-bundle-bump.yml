@@ -6,6 +6,10 @@ on:
         - cron: '*/15 08-18 * * 1-5'
     workflow_dispatch:
 
+permissions:
+    contents: write
+    pull-requests: write
+
 jobs:
     check:
         name: Check for new version and existing PR
@@ -71,6 +75,12 @@ jobs:
                   # there's a bug in yarn where it doesn't update the yarn.lock file correctly for prebid.js, so we need to do this fix
                   git commit -m "Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}"
                   git push --set-upstream origin bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
+
+            - name: Close any existing pull requests
+              run: |
+                  gh search prs --state open --base main --label commercial --label dependencies --json number "Bump @guardian/commercial-bundle" | jq -r '.[] | .number' | xargs -I {} gh pr close {}
+              env:
+                  GH_TOKEN: ${{ github.token }}
 
             - name: Create pull request
               run: |
