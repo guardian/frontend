@@ -17,7 +17,7 @@ import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
 import { addContributionsBanner } from 'journalism/modules/audio-series-add-contributions';
-import { measureTiming } from "commercial/modules/measure-timing";
+import { measureTiming } from "commercial/measure-timing";
 import ophan from 'ophan/ng';
 
 const showSnaps = () => {

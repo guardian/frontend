@@ -13,7 +13,7 @@ import { log } from '@guardian/libs';
 import ophan from 'ophan/ng';
 import config from '../../../../../lib/config';
 import { reportError } from '../../../../../lib/report-error';
-import { measureTiming } from '../../../../commercial/modules/measure-timing';
+import { measureTiming } from '../../../../commercial/measure-timing';
 import { checkBrazeDependencies } from './checkBrazeDependencies';
 import {
 	clearHasCurrentBrazeUser,

@@ -11,7 +11,7 @@ import bean from 'bean';
 import { scrollToElement } from 'lib/scroller';
 import { elementInView } from 'lib/element-inview';
 import ophan from 'ophan/ng';
-import { measureTiming } from "commercial/modules/measure-timing";
+import { measureTiming } from "commercial/measure-timing";
 
 const affixTimeline = () => {
 	const keywordIds = config.get('page.keywordIds', '');
