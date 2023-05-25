@@ -1365,7 +1365,7 @@
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^1.4.0"
-    prebid.js "github:guardian/prebid.js#2e3b96d"
+    prebid.js guardian/prebid.js#2e3b96d
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.4.1"
@@ -1376,6 +1376,28 @@
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
   integrity sha512-Ue1Km1W4w7J8ZYH+qqLgEPyk6j7TOz6Tn94yDPac30oDo3hauJDSH35wZRbwcJBc8hlKPCtqAEXSvtcx42pcig==
+
+"@guardian/commercial@7.1.1-beta.0":
+  version "7.1.1-beta.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-7.1.1-beta.0.tgz#3ddd59b72de7c115ec18634892239ab12937b805"
+  integrity sha512-Wili4u6rGy1ALVnT0lltXGclrOHjRB4UZOJDDxT4e/EMcGt6uRNKGqQkyUaSY0xs6J7t8C3z3cwI+2uz1qjxoA==
+  dependencies:
+    "@guardian/ab-core" "^4.0.0"
+    "@guardian/consent-management-platform" "^13.0.2"
+    "@guardian/core-web-vitals" "^4.0.0"
+    "@guardian/libs" "^14.0.0"
+    "@guardian/source-foundations" "^10.0.1"
+    "@guardian/support-dotcom-components" "^1.0.7"
+    "@octokit/core" "^4.0.5"
+    fastdom "^1.0.11"
+    lodash-es "^4.17.21"
+    ophan-tracker-js "^1.4.0"
+    prebid.js guardian/prebid.js#2e3b96d
+    process "^0.11.10"
+    raven-js "^3.27.2"
+    tslib "^2.4.1"
+    web-vitals "^2.1.2"
+    wolfy87-eventemitter "^5.2.9"
 
 "@guardian/consent-management-platform@^13.0.2":
   version "13.0.2"
@@ -10059,7 +10081,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#2e3b96d":
+prebid.js@guardian/prebid.js#2e3b96d:
   version "7.26.0"
   uid "2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
