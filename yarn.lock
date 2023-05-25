@@ -1349,29 +1349,6 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@^5.4.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.4.0.tgz#c3c699b5f4724e81cb16cb27e6645c19a8087632"
-  integrity sha512-HqrVJXaJ2HLEeaGVeUGVakdsyCBBXvcq1VLFWWMU9ue9PC05W+achv3vK1oy6T4IHEziu5KmndgCNJy2XIOjGw==
-  dependencies:
-    "@guardian/ab-core" "^4.0.0"
-    "@guardian/commercial-core" "^7.1.0"
-    "@guardian/consent-management-platform" "^13.0.2"
-    "@guardian/core-web-vitals" "^4.0.0"
-    "@guardian/libs" "^14.0.0"
-    "@guardian/source-foundations" "^10.0.1"
-    "@guardian/support-dotcom-components" "^1.0.7"
-    "@octokit/core" "^4.0.5"
-    fastdom "^1.0.11"
-    lodash-es "^4.17.21"
-    ophan-tracker-js "^1.4.0"
-    prebid.js guardian/prebid.js#2e3b96d
-    process "^0.11.10"
-    raven-js "^3.27.2"
-    tslib "^2.4.1"
-    web-vitals "^2.1.2"
-    wolfy87-eventemitter "^5.2.9"
-
 "@guardian/commercial-core@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
