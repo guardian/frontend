@@ -1349,13 +1349,13 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.2.0.tgz#8e14a548fea494da6f2f7ce3fc692bb4ec7055b0"
-  integrity sha512-Ndf9bgRDR7vj3vDPbi5M2Cnlb9Eh2n7+by/jboqZBOFTf3UBL+6cR5/9rKjcq4ChpErbYoBfAF9WgnFMGQ6xIA==
+"@guardian/commercial-bundle@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.3.0.tgz#167e16496fca1a7b4133eea33363a72f30d697f2"
+  integrity sha512-3fChRCc8Jy38k8wggON9iU5S/KG8fa1Q+fYjA8nF0YqNOXqCrDwsYv7qVGIpjN2jNPVxOuftrWdlAUNq/8oEvg==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
-    "@guardian/commercial-core" "^7.0.0"
+    "@guardian/commercial-core" "^7.1.0"
     "@guardian/consent-management-platform" "^13.0.2"
     "@guardian/core-web-vitals" "^4.0.0"
     "@guardian/libs" "^14.0.0"
@@ -1376,6 +1376,11 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.0.0.tgz#2bde098699e8d8121028bd03d10481e8664f8e06"
   integrity sha512-ByfukhmfJ2sF5mCyVq5XSRyOdBp0w+MOTpOp361wjZ6a2KHSgSC8VQucgSQHtQ7v05O0jJ53XFkSrGc2TUworA==
+
+"@guardian/commercial-core@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
+  integrity sha512-Ue1Km1W4w7J8ZYH+qqLgEPyk6j7TOz6Tn94yDPac30oDo3hauJDSH35wZRbwcJBc8hlKPCtqAEXSvtcx42pcig==
 
 "@guardian/consent-management-platform@^13.0.2":
   version "13.0.2"
