@@ -1349,11 +1349,6 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-core@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
-  integrity sha512-Ue1Km1W4w7J8ZYH+qqLgEPyk6j7TOz6Tn94yDPac30oDo3hauJDSH35wZRbwcJBc8hlKPCtqAEXSvtcx42pcig==
-
 "@guardian/commercial@7.1.1-beta.1":
   version "7.1.1-beta.1"
   resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-7.1.1-beta.1.tgz#b16d7f2c6fe122fc02ab8ca9c2276d3ae30997e5"
