@@ -27,11 +27,12 @@ trait ImageQuery extends ConciergeRepository {
       val mainBlock = response.content.flatMap(_.blocks).getOrElse(Blocks()).main
       mainContent
         .map {
-          case content: ImageContent => Right(
-            ImageContentPage(content, StoryPackages(content.metadata.id, response)),
-            mainBlock
-          )
-          case _                     => Left(NotFound)
+          case content: ImageContent =>
+            Right(
+              ImageContentPage(content, StoryPackages(content.metadata.id, response)),
+              mainBlock,
+            )
+          case _ => Left(NotFound)
         }
         .getOrElse(Left(NotFound))
     }

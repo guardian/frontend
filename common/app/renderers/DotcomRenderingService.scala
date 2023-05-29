@@ -8,8 +8,28 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{CacheTime, Cached, ImageContentPage, InteractivePage, LiveBlogPage, MessageUsData, NoCache, PageWithStoryPackage, PressedPage, RelatedContentItem, SimplePage, Topic, TopicResult}
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomFrontsRenderingDataModel, DotcomNewslettersPageRenderingDataModel, DotcomRenderingDataModel, OnwardCollectionResponse, PageType, Trail}
+import model.{
+  CacheTime,
+  Cached,
+  ImageContentPage,
+  InteractivePage,
+  LiveBlogPage,
+  MessageUsData,
+  NoCache,
+  PageWithStoryPackage,
+  PressedPage,
+  RelatedContentItem,
+  SimplePage,
+  Topic,
+  TopicResult,
+}
+import model.dotcomrendering.{
+  DotcomBlocksRenderingDataModel,
+  DotcomFrontsRenderingDataModel,
+  DotcomNewslettersPageRenderingDataModel,
+  DotcomRenderingDataModel,
+  PageType,
+}
 import services.NewsletterData
 import services.newsletters.model.NewsletterResponse
 import play.api.libs.ws.{WSClient, WSResponse}
