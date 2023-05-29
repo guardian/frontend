@@ -1,8 +1,8 @@
-package services.dotcomrendering
+package utils
 
 import common.GuLogging
 import common.LoggingField._
-import model.PageWithStoryPackage
+import model.{ContentPage, ContentType, PageWithStoryPackage}
 import model.liveblog.InteractiveBlockElement
 import play.api.mvc.RequestHeader
 
@@ -35,21 +35,22 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
   def fieldsFromResults(results: Map[String, String]): List[LogField] =
     results.map({ case (k, v) => LogFieldString(k, v) }).toList
 
-  def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] = {
+  def elementsLogFieldFromPage(content: ContentType): List[LogField] = {
+
     val bodyBlocks = for {
-      blocks <- page.article.blocks.toSeq
+      blocks <- content.fields.blocks.toSeq
       body <- blocks.body
       element <- body.elements
     } yield element.getClass.getSimpleName
 
     val mainBlocks = for {
-      blocks <- page.article.blocks.toSeq
+      blocks <- content.fields.blocks.toSeq
       main <- blocks.main.toSeq
       element <- main.elements
     } yield element.getClass.getSimpleName
 
     val bodyInteractiveBlockScripts = for {
-      blocks <- page.article.blocks.toSeq
+      blocks <- content.fields.blocks.toSeq
       body <- blocks.body
       element <- body.elements if element.isInstanceOf[InteractiveBlockElement]
       interactiveElement <- Try(element.asInstanceOf[InteractiveBlockElement]).toOption
@@ -67,7 +68,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
       ),
       LogFieldString(
         "page.tone",
-        page.article.tags.tones.headOption.map(_.name).getOrElse(""),
+        content.tags.tones.headOption.map(_.name).getOrElse(""),
       ),
       LogFieldString(
         "page.bodyInteractiveElementScripts",
@@ -76,7 +77,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
     )
   }
 
-  def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
+  def logRequest(msg: String, results: Map[String, String], page: ContentType)(implicit
       request: RequestHeader,
   ): Unit = {
     withRequestHeaders(request).results(msg, results, page)
@@ -86,7 +87,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
     copy(Some(rh))
   }
 
-  def results(message: String, results: Map[String, String], page: PageWithStoryPackage): Unit = {
+  def results(message: String, results: Map[String, String], page: ContentType): Unit = {
     logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromPage(page))
   }
 

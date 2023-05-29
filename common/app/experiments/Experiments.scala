@@ -40,6 +40,15 @@ object DCRFronts
       participationGroup = Perc50,
     )
 
+object DCRImageContent
+    extends Experiment(
+      name = "dcr-image-content",
+      description = "Use DCR for image content",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2024, 1, 1),
+      participationGroup = Perc50,
+    )
+
 object OfferHttp3
     extends Experiment(
       name = "offer-http3",

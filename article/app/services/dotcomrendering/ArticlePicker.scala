@@ -4,6 +4,7 @@ import com.madgag.scala.collection.decorators.MapDecorator
 import implicits.Requests._
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
+import utils.DotcomponentsLogger
 
 object ArticlePageChecks {
 
@@ -69,11 +70,11 @@ object ArticlePicker {
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
-      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page.article)
     } else if (tier == PressedArticle) {
-      DotcomponentsLogger.logger.logRequest(s"path executing from pressed content", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing from pressed content", features, page.article)
     } else {
-      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page.article)
     }
 
     tier
