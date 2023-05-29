@@ -1354,10 +1354,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
   integrity sha512-Ue1Km1W4w7J8ZYH+qqLgEPyk6j7TOz6Tn94yDPac30oDo3hauJDSH35wZRbwcJBc8hlKPCtqAEXSvtcx42pcig==
 
-"@guardian/commercial@7.1.1-beta.0":
-  version "7.1.1-beta.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-7.1.1-beta.0.tgz#3ddd59b72de7c115ec18634892239ab12937b805"
-  integrity sha512-Wili4u6rGy1ALVnT0lltXGclrOHjRB4UZOJDDxT4e/EMcGt6uRNKGqQkyUaSY0xs6J7t8C3z3cwI+2uz1qjxoA==
+"@guardian/commercial@7.1.1-beta.1":
+  version "7.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-7.1.1-beta.1.tgz#b16d7f2c6fe122fc02ab8ca9c2276d3ae30997e5"
+  integrity sha512-KzYBLeGCMSM9CUHMbtSrOVo8sKPE66yXJcWOnD2kHkO38IqitGj2gXzfmcpGwCAOMNwHHxPCqqmpHKuXJ6JyVg==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
     "@guardian/consent-management-platform" "^13.0.2"
