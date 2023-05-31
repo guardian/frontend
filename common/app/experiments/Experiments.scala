@@ -16,7 +16,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       FrontsBannerAds,
       BorkFCP,
       BorkFID,
-      DCRTagFronts,
       ActionCardRedesign,
       Okta,
     )
@@ -112,15 +111,6 @@ object BorkFID
       owners = Seq(Owner.withName("Open Journalism")),
       sellByDate = LocalDate.of(2023, 7, 4),
       participationGroup = Perc1D,
-    )
-
-object DCRTagFronts
-    extends Experiment(
-      name = "dcr-tag-fronts",
-      description = "Use DCR for tag fronts",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc0E,
     )
 
 object ActionCardRedesign
