@@ -17,12 +17,13 @@ import model.{
   ContentFormat,
   ContentPage,
   GUDateTimeFormatNew,
+  ImageContentPage,
   InteractivePage,
   LiveBlogPage,
+  MessageUsData,
   PageWithStoryPackage,
   Topic,
   TopicResult,
-  MessageUsData,
 }
 import navigation._
 import play.api.libs.json._
@@ -257,6 +258,31 @@ object DotcomRenderingDataModel {
     )
   }
 
+  def forImageContent(
+      imageContentPage: ImageContentPage,
+      request: RequestHeader,
+      pageType: PageType,
+      mainBlock: Option[APIBlock],
+  ) = {
+
+    val linkedData = LinkedData.forArticle(
+      article = imageContentPage.image,
+      baseURL = Configuration.dotcom.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page = imageContentPage,
+      request = request,
+      pageType = pageType,
+      linkedData = linkedData,
+      mainBlock = mainBlock,
+      bodyBlocks = Seq.empty,
+      hasStoryPackage = imageContentPage.related.hasStoryPackage,
+      storyPackage = getStoryPackage(imageContentPage.related.faciaItems, request),
+    )
+  }
+
   def keyEventsFallback(
       blocks: APIBlocks,
   ): Seq[APIBlock] = {
@@ -321,46 +347,46 @@ object DotcomRenderingDataModel {
     val mostRecentBlockId = getMostRecentBlockId(blocks)
 
     apply(
-      page,
-      request,
-      pagination,
-      linkedData,
-      blocks.main,
-      bodyBlocks,
-      pageType,
-      page.related.hasStoryPackage,
-      getStoryPackage(page.related.faciaItems, request), //todo
-      pinnedPost,
-      timelineBlocks,
-      filterKeyEvents,
-      mostRecentBlockId,
-      forceLive,
-      availableTopics,
-      newsletter,
-      topicResult,
-      messageUs,
+      page = page,
+      request = request,
+      pagination = pagination,
+      linkedData = linkedData,
+      mainBlock = blocks.main,
+      bodyBlocks = bodyBlocks,
+      pageType = pageType,
+      hasStoryPackage = page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(page.related.faciaItems, request), //todo
+      pinnedPost = pinnedPost,
+      keyEvents = timelineBlocks,
+      filterKeyEvents = filterKeyEvents,
+      mostRecentBlockId = mostRecentBlockId,
+      forceLive = forceLive,
+      availableTopics = availableTopics,
+      newsletter = newsletter,
+      topicResult = topicResult,
+      messageUs = messageUs,
     )
   }
 
   def apply(
       page: ContentPage,
       request: RequestHeader,
-      pagination: Option[Pagination],
+      pageType: PageType,
       linkedData: List[LinkedData],
-      mainBlock: Option[APIBlock],
       bodyBlocks: Seq[APIBlock],
-      pageType: PageType, // TODO remove as format is better
-      hasStoryPackage: Boolean,
-      storyPackage: Option[OnwardCollectionResponse],
-      pinnedPost: Option[APIBlock],
-      keyEvents: Seq[APIBlock],
+      mainBlock: Option[APIBlock] = None,
+      hasStoryPackage: Boolean = false,
+      storyPackage: Option[OnwardCollectionResponse] = None,
+      newsletter: Option[NewsletterData] = None,
+      keyEvents: Seq[APIBlock] = Seq.empty,
+      pagination: Option[Pagination] = None,
+      pinnedPost: Option[APIBlock] = None,
+      availableTopics: Option[Seq[Topic]] = None,
+      topicResult: Option[TopicResult] = None,
+      messageUs: Option[MessageUsData] = None,
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
-      availableTopics: Option[Seq[Topic]],
-      newsletter: Option[NewsletterData],
-      topicResult: Option[TopicResult],
-      messageUs: Option[MessageUsData],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)

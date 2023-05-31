@@ -17,9 +17,9 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
-import services.dotcomrendering.DotcomponentsLogger
 import services.{CAPILookup, NewsletterService, MessageUsService}
 import topics.TopicService
+import utils.DotcomponentsLogger
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -191,7 +191,7 @@ class LiveBlogController(
 
             if (remoteRendering) {
               DotcomponentsLogger.logger
-                .logRequest(s"liveblog executing in dotcomponents", properties, page)
+                .logRequest(s"liveblog executing in dotcomponents", properties, page.article)
               val pageType: PageType = PageType(blog, request, context)
               remoteRenderer.getArticle(
                 ws,
@@ -206,7 +206,7 @@ class LiveBlogController(
                 messageUs,
               )
             } else {
-              DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page)
+              DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page.article)
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>

@@ -1,10 +1,10 @@
 package pages
 
 import common.Edition
-import controllers.{ImageContentPage, MediaPage, QuizAnswersPage, TodayNewspaper}
+import controllers.{MediaPage, QuizAnswersPage, TodayNewspaper}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
-import model.{ApplicationContext, Audio, Page}
+import model.{ApplicationContext, Audio, ImageContentPage, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._

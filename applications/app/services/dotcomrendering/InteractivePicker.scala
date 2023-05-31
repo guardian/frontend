@@ -1,9 +1,8 @@
-package services
+package services.dotcomrendering
 
 import conf.switches.Switches.InteractivePickerFeature
-import play.api.mvc.RequestHeader
 import implicits.Requests._
-import services.dotcomrendering.PressedContent
+import play.api.mvc.RequestHeader
 
 sealed trait RenderingTier
 object DotcomRendering extends RenderingTier

@@ -8,31 +8,30 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{SimplePage}
+import model.{
+  CacheTime,
+  Cached,
+  ImageContentPage,
+  InteractivePage,
+  LiveBlogPage,
+  MessageUsData,
+  NoCache,
+  PageWithStoryPackage,
+  PressedPage,
+  RelatedContentItem,
+  SimplePage,
+  Topic,
+  TopicResult,
+}
 import model.dotcomrendering.{
   DotcomBlocksRenderingDataModel,
   DotcomFrontsRenderingDataModel,
   DotcomNewslettersPageRenderingDataModel,
   DotcomRenderingDataModel,
-  OnwardCollectionResponse,
   PageType,
 }
 import services.NewsletterData
 import services.newsletters.model.NewsletterResponse
-
-import model.{
-  CacheTime,
-  Cached,
-  InteractivePage,
-  LiveBlogPage,
-  NoCache,
-  PageWithStoryPackage,
-  PressedPage,
-  RelatedContentItem,
-  Topic,
-  TopicResult,
-  MessageUsData,
-}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -44,7 +43,6 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import model.dotcomrendering.Trail
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -318,6 +316,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
     val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
+  }
+
+  def getImageContent(
+      ws: WSClient,
+      imageContent: ImageContentPage,
+      pageType: PageType,
+      mainBlock: Option[Block],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
 }
 
