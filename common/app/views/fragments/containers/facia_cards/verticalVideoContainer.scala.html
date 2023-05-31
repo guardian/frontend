@@ -7,7 +7,6 @@
 @import model.content.MediaWrapper.VideoContainer
 @import model.VideoFaciaProperties
 @import layout.FaciaCardHeader
-@import views.support.GetClasses
 @import model.Pillar.RichPillar
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
@@ -19,28 +18,21 @@
         </h2>
     </header>
 </div>
-
 <div class="video-playlist video-playlist--start js-video-playlist fc-container--rolled-up-hide"
 data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
 data-component="video-playlist">
     <a
-    class="video-playlist__control video-playlist__control--prev js-video-playlist-prev"
-    data-link-name="video-container-prev"
-    role="button"
-    tabindex="-1"
-    aria-hidden="true"
-    aria-label="show previous video"
+    class="video-playlist__control video-playlist__control--prev"
     >
-    @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
     </a>
 
-    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner ">
+    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner vertical-height">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
         @treats(containerDefinition, frontProperties)
         </li>
 
         @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo).zipWithIndex.map { case (item, index) =>
-        <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first} fc-item--pillar-@item.maybePillar.nameOrDefault @if(item.isPaidFor) { video-playlist__item--paid-for }">
+        <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first} fc-item--pillar-@item.maybePillar.nameOrDefault @if(item.isPaidFor) { video-playlist__item--paid-for } vertical-width">
         @item.properties.maybeContent.map { content =>
             @defining(content.elements.mediaAtoms.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))) { youTubeAtom =>
                 @youTubeAtom.map { youTubeAtom =>
@@ -51,7 +43,9 @@ data-component="video-playlist">
                         faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None),
                             showByline = item.properties.showByline, item.properties.byline)),
                         isPaidFor = item.isPaidFor,
-                        pressedContent = Some(item))
+                        pressedContent = Some(item),
+                        verticalVideo = content.tags.isVerticalVideo
+                    )
                 }
             }
 
@@ -91,12 +85,31 @@ data-component="video-playlist">
     </ul>
 
     <a
-    class="video-playlist__control video-playlist__control--next js-video-playlist-next"
-    data-link-name="video-container-next"
-    role="button"
-    tabindex="0"
-    aria-label="show next video"
+    class="video-playlist__control video-playlist__control--next"
     >
-    @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
     </a>
+    <div class="vertical-video-playlist__control">
+        <a
+        class="js-video-playlist-prev"
+        data-link-name="video-container-prev"
+        role="button"
+        tabindex="-1"
+        aria-hidden="true"
+        aria-label="show previous video"
+        >
+        @fragments.inlineSvg("chevron-left", "icon", Seq("vertical-video-playlist__icon", "disabled"))
+        </a>
+        <span style="color: white">
+            <span id="vertical-carousel-count">1</span>
+            of @(containerDefinition.collectionEssentials.items.zipWithIndex.length)</span>
+        <a
+        class="js-video-playlist-next"
+        data-link-name="video-container-next"
+        role="button"
+        tabindex="0"
+        aria-label="show next video"
+        >
+        @fragments.inlineSvg("chevron-right", "icon", Seq("vertical-video-playlist__icon"))
+        </a>
+    </div>
 </div>
