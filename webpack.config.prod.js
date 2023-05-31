@@ -20,7 +20,7 @@ module.exports = webpackMerge.smart(config, {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: 'node_modules/@guardian/commercial-bundle/dist',
+					from: 'node_modules/@guardian/commercial/dist/bundle',
 					to: 'commercial',
 				},
 			],

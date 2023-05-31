@@ -4,7 +4,7 @@
  * This file should be considered deprecated and only exists for legacy 'hosted' pages
  */
 
-import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
+import { initHostedYoutube } from './youtube';
 
 export const initHostedVideo = async (): Promise<void> => {
 	const playerContainers = document.querySelectorAll<HTMLElement>(

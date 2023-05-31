@@ -25,7 +25,7 @@ rendering contexts.
 [`webpack.config.commercial.js`]: /webpack.config.commercial.js
 
 The next step is for this bundle to move entirely out of frontend and into
-[@guardian/commercial-core](https://github.com/guardian/commercial-core).
+[@guardian/commercial](https://github.com/guardian/commercial).
 
 The team responsible for the commercial logic is @guardian/commercial-dev.
 

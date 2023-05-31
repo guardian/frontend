@@ -1349,13 +1349,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@^5.4.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.4.0.tgz#c3c699b5f4724e81cb16cb27e6645c19a8087632"
-  integrity sha512-HqrVJXaJ2HLEeaGVeUGVakdsyCBBXvcq1VLFWWMU9ue9PC05W+achv3vK1oy6T4IHEziu5KmndgCNJy2XIOjGw==
+"@guardian/commercial@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-8.0.0.tgz#e6d5e16d1cd2534ee2c15bfc1da45445f2b7f2aa"
+  integrity sha512-VcOf3WCnT5Gxj1UWHTobRH6J08dasPzeYbiY1+xsSFhHVBA4D/0kcKJ/p4ZBwnBFCrlzlf/6/tVZLybmQ/CHLQ==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
-    "@guardian/commercial-core" "^7.1.0"
     "@guardian/consent-management-platform" "^13.0.2"
     "@guardian/core-web-vitals" "^4.0.0"
     "@guardian/libs" "^14.0.0"
@@ -1365,17 +1364,12 @@
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^1.4.0"
-    prebid.js "github:guardian/prebid.js#2e3b96d"
+    prebid.js guardian/prebid.js#2e3b96d
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.4.1"
     web-vitals "^2.1.2"
     wolfy87-eventemitter "^5.2.9"
-
-"@guardian/commercial-core@^7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.1.0.tgz#ebe05454873707a6b5eef238e10751379059c276"
-  integrity sha512-Ue1Km1W4w7J8ZYH+qqLgEPyk6j7TOz6Tn94yDPac30oDo3hauJDSH35wZRbwcJBc8hlKPCtqAEXSvtcx42pcig==
 
 "@guardian/consent-management-platform@^13.0.2":
   version "13.0.2"
@@ -10059,9 +10053,8 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#2e3b96d":
+prebid.js@guardian/prebid.js#2e3b96d:
   version "7.26.0"
-  uid "2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
     "@babel/core" "^7.16.7"

@@ -7,7 +7,7 @@
 import {
 	initCommercialMetrics,
 	bypassCommercialMetricsSampling as switchOffSampling,
-} from '@guardian/commercial-core';
+} from '@guardian/commercial';
 import { log } from '@guardian/libs';
 import { shouldCaptureMetrics } from '../common/modules/analytics/shouldCaptureMetrics';
 
