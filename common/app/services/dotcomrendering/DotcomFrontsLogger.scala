@@ -8,7 +8,7 @@ import services.IndexPage
 
 import scala.util.Random
 
-case class DotcomLogger() extends GuLogging {
+case class DotcomFrontsLogger() extends GuLogging {
   private def logFieldFromRequest()(implicit request: RequestHeader): List[LogField] = {
     List[LogField](
       "req.method" -> request.method,
@@ -62,6 +62,6 @@ case class DotcomLogger() extends GuLogging {
 
 }
 
-object DotcomLogger {
-  val logger: DotcomLogger = DotcomLogger()
+object DotcomFrontsLogger {
+  val logger: DotcomFrontsLogger = DotcomFrontsLogger()
 }

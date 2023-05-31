@@ -54,6 +54,6 @@ object TagFrontPicker extends GuLogging {
         "tier" -> tierReadable,
       ) ++ checksToString
 
-    DotcomLogger.logger.logRequest(s"tag front executing in $tierReadable", properties, tagFront)
+    DotcomFrontsLogger.logger.logRequest(s"tag front executing in $tierReadable", properties, tagFront)
   }
 }

@@ -227,6 +227,6 @@ object FaciaPicker extends GuLogging {
         "tier" -> tierReadable,
       ) ++ checksToString
 
-    DotcomLogger.logger.logRequest(s"front executing in $tierReadable", properties, faciaPage)
+    DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable", properties, faciaPage)
   }
 }
