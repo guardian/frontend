@@ -21,7 +21,7 @@ class AllIndexController(
     contentApiClient: ContentApiClient,
     sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
-    val ws: WSClient
+    val ws: WSClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext

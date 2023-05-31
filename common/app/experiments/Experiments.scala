@@ -16,7 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       FrontsBannerAds,
       BorkFCP,
       BorkFID,
-      DCRTagFronts
+      DCRTagFronts,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -104,10 +104,10 @@ object BorkFID
     )
 
 object DCRTagFronts
-  extends Experiment(
-    name = "dcr-tag-fronts",
-    description = "Use DCR for tag fronts",
-    owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-    sellByDate = LocalDate.of(2023, 6, 2),
-    participationGroup = Perc0E,
-  )
+    extends Experiment(
+      name = "dcr-tag-fronts",
+      description = "Use DCR for tag fronts",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc0E,
+    )

@@ -45,13 +45,19 @@ case class DotcomLogger() extends GuLogging {
   def logRequest(msg: String, properties: Map[String, String], faciaPage: PressedPage)(implicit
       request: RequestHeader,
   ): Unit = {
-    logInfoWithCustomFields(msg, logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromFront(faciaPage))
+    logInfoWithCustomFields(
+      msg,
+      logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromFront(faciaPage),
+    )
   }
 
   def logRequest(msg: String, properties: Map[String, String], indexPage: IndexPage)(implicit
-                                                                                     request: RequestHeader,
+      request: RequestHeader,
   ): Unit = {
-    logInfoWithCustomFields(msg, logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromTagFront(indexPage) )
+    logInfoWithCustomFields(
+      msg,
+      logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromTagFront(indexPage),
+    )
   }
 
 }

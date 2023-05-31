@@ -18,7 +18,7 @@ class IndexController(
     val contentApiClient: ContentApiClient,
     val sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
-    val ws: WSClient
+    val ws: WSClient,
 )(implicit val context: ApplicationContext)
     extends IndexControllerCommon {
 

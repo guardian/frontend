@@ -29,7 +29,7 @@ import play.api.test.Helpers._
     testContentApiClient,
     sectionsLookUp,
     play.api.test.Helpers.stubControllerComponents(),
-    mock[WSClient]
+    mock[WSClient],
   )
 
   it should "Include organisation metadata" in {

@@ -30,7 +30,7 @@ import play.api.libs.ws.WSClient
     testContentApiClient,
     sectionsLookUp,
     play.api.test.Helpers.stubControllerComponents(),
-    mock[WSClient]
+    mock[WSClient],
   )
 
   "Index Controller" should "200 when content type is front" in {

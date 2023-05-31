@@ -24,12 +24,12 @@ object TagFrontPicker extends GuLogging {
   }
 
   private def decideTier(
-                  isRss: Boolean,
-                  forceDCROff: Boolean,
-                  forceDCR: Boolean,
-                  participatingInTest: Boolean,
-                  dcrCouldRender: Boolean,
-                ): RenderType = {
+      isRss: Boolean,
+      forceDCROff: Boolean,
+      forceDCR: Boolean,
+      participatingInTest: Boolean,
+      dcrCouldRender: Boolean,
+  ): RenderType = {
     if (isRss) LocalRender
     else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
@@ -38,12 +38,12 @@ object TagFrontPicker extends GuLogging {
   }
 
   private def logTier(
-                       tagFront: IndexPage,
-                       participatingInTest: Boolean,
-                       dcrCouldRender: Boolean,
-                       checks: Map[String, Boolean],
-                       tier: RenderType,
-                     )(implicit request: RequestHeader): Unit = {
+      tagFront: IndexPage,
+      participatingInTest: Boolean,
+      dcrCouldRender: Boolean,
+      checks: Map[String, Boolean],
+      tier: RenderType,
+  )(implicit request: RequestHeader): Unit = {
     val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web"
     val checksToString = checks.map {
       case (key, value) =>

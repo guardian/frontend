@@ -82,23 +82,23 @@ trait IndexControllerCommon
           case Right(model) =>
             if (model.contents.nonEmpty) renderFaciaFront(model)
             else
-              Future { Cached(60)(
-                WithoutRevalidationResult(
-                  Gone(
-                    views.html.gone(
-                      gonePage,
-                      "Sorry - there is no content here",
-                      "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
+              Future {
+                Cached(60)(
+                  WithoutRevalidationResult(
+                    Gone(
+                      views.html.gone(
+                        gonePage,
+                        "Sorry - there is no content here",
+                        "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
+                      ),
                     ),
                   ),
-                ),
-              ) }
+                )
+              }
           case Left(other) => Future { RenderOtherStatus(other) }
         }).flatten
     }
   }
-
-
 
   override def canRender(item: ItemResponse): Boolean = item.section.orElse(item.tag).isDefined
 }
