@@ -6,6 +6,8 @@ import org.joda.time.DateTimeZone
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import play.api.libs.ws.WSClient
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
 
 @DoNotDiscover class AllIndexControllerTest
@@ -16,7 +18,8 @@ import play.api.test.Helpers._
     with WithMaterializer
     with WithTestWsClient
     with WithTestContentApiClient
-    with WithTestApplicationContext {
+    with WithTestApplicationContext
+    with MockitoSugar {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -58,7 +61,12 @@ import play.api.test.Helpers._
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
   lazy val allIndexController =
-    new AllIndexController(testContentApiClient, sectionsLookUp, play.api.test.Helpers.stubControllerComponents())
+    new AllIndexController(
+      testContentApiClient,
+      sectionsLookUp,
+      play.api.test.Helpers.stubControllerComponents(),
+      mock[WSClient],
+    )
 
   it should "redirect dated tag pages to the equivalent /all page" in {
     val result = allIndexController.on("football/series/thefiver/2014/jan/23")(TestRequest())

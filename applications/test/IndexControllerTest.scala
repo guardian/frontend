@@ -7,6 +7,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.ws.WSClient
 
 @DoNotDiscover class IndexControllerTest
@@ -17,7 +18,8 @@ import play.api.libs.ws.WSClient
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with MockitoSugar {
 
   val section = "books"
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
