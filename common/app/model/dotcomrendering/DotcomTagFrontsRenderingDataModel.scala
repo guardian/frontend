@@ -15,7 +15,7 @@ import services.IndexPage
 import views.support.{CamelCase, JavaScriptPage, PreviousAndNext}
 import model.PressedCollectionFormat.pressedContentFormat
 
-case class DotcomIndexPageRenderingDataModel(
+case class DotcomTagFrontsRenderingDataModel(
     contents: Seq[PressedContent],
     tags: Tags,
     date: DateTime,
@@ -35,9 +35,9 @@ case class DotcomIndexPageRenderingDataModel(
     isAdFreeUser: Boolean,
 )
 
-object DotcomIndexPageRenderingDataModel {
-  implicit val writes = new Writes[DotcomIndexPageRenderingDataModel] {
-    def writes(model: DotcomIndexPageRenderingDataModel) = {
+object DotcomTagFrontsRenderingDataModel {
+  implicit val writes = new Writes[DotcomTagFrontsRenderingDataModel] {
+    def writes(model: DotcomTagFrontsRenderingDataModel) = {
       Json.obj(
         "contents" -> model.contents,
         "date" -> model.date.toString(),
@@ -45,7 +45,7 @@ object DotcomIndexPageRenderingDataModel {
         "previousAndNext" -> model.previousAndNext.map(previousAndNext =>
           Json.obj("prev" -> previousAndNext.prev, "next" -> previousAndNext.next),
         ),
-        "forceDy" -> model.forceDay,
+        "forceDay" -> model.forceDay,
         "tags" -> model.tags,
         "nav" -> model.nav,
         "editionId" -> model.editionId,
@@ -66,7 +66,7 @@ object DotcomIndexPageRenderingDataModel {
       page: IndexPage,
       request: RequestHeader,
       pageType: PageType,
-  ): DotcomIndexPageRenderingDataModel = {
+  ): DotcomTagFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -97,7 +97,7 @@ object DotcomIndexPageRenderingDataModel {
       }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-    DotcomIndexPageRenderingDataModel(
+    DotcomTagFrontsRenderingDataModel(
       contents = page.contents.map(_.faciaItem),
       tags = page.tags,
       date = page.date,
@@ -116,5 +116,10 @@ object DotcomIndexPageRenderingDataModel {
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
     )
+  }
+
+  def toJson(model: DotcomTagFrontsRenderingDataModel): String = {
+    val jsValue = Json.toJson(model)
+    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
 }

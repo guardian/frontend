@@ -4,37 +4,60 @@ import common._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{DotcomIndexPageRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomTagFrontsRenderingDataModel, PageType}
 import pages.IndexHtmlPage
+import play.api.libs.ws.WSClient
 import play.api.mvc.{ControllerComponents, RequestHeader, Result}
+import renderers.DotcomRenderingService
 import services.IndexPage
+import services.dotcomrendering.{LocalRender, RemoteRender, TagFrontPicker}
+
+import scala.concurrent.Future
 
 class IndexController(
     val contentApiClient: ContentApiClient,
     val sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
+    val ws: WSClient
 )(implicit val context: ApplicationContext)
     extends IndexControllerCommon {
-  protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = {
-    Cached(model.page) {
-      if (request.isRss) {
-        val body = TrailsToRss(model.page.metadata, model.trails)
-        RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-      } else if (request.isJson) {
-        if (request.forceDCR) {
-          JsonComponent.fromWritable(
-            DotcomIndexPageRenderingDataModel(
-              page = model,
-              request = request,
-              pageType = PageType(model, request, context),
-            ),
-          )
-        } else {
-          JsonComponent(views.html.fragments.indexBody(model))
+
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+
+  protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Future[Result] = {
+    TagFrontPicker.getTier(model) match {
+      case RemoteRender =>
+        if (request.isJson) {
+          Future {
+            Cached(model.page) {
+              JsonComponent.fromWritable(
+                DotcomTagFrontsRenderingDataModel(
+                  page = model,
+                  request = request,
+                  pageType = PageType(model, request, context),
+                ),
+              )
+            }
+          }
+        } else
+          remoteRenderer.getTagFront(
+            ws = ws,
+            page = model,
+            pageType = PageType(model, request, context),
+          )(request)
+      case LocalRender =>
+        Future {
+          Cached(model.page) {
+            if (request.isRss) {
+              val body = TrailsToRss(model.page.metadata, model.trails)
+              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
+            } else if (request.isJson) {
+              JsonComponent(views.html.fragments.indexBody(model))
+            } else {
+              RevalidatableResult.Ok(IndexHtmlPage.html(model))
+            }
+          }
         }
-      } else {
-        RevalidatableResult.Ok(IndexHtmlPage.html(model))
-      }
     }
   }
 }

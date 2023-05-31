@@ -8,6 +8,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.libs.json._
+import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 
 @DoNotDiscover class IndexMetaDataTest
@@ -28,6 +29,7 @@ import play.api.test.Helpers._
     testContentApiClient,
     sectionsLookUp,
     play.api.test.Helpers.stubControllerComponents(),
+    mock[WSClient]
   )
 
   it should "Include organisation metadata" in {

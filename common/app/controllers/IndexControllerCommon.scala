@@ -31,8 +31,8 @@ trait IndexControllerCommon
       logGoogleBot(request)
       index(leftSide, rightSide, inferPage(request), request.isRss).map {
         case Right(page) => renderFaciaFront(page)
-        case Left(other) => other
-      }
+        case Left(other) => Future { other }
+      }.flatten
     }
 
   private def logGoogleBot(request: RequestHeader) = {
@@ -63,7 +63,7 @@ trait IndexControllerCommon
       }
     }
 
-  protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result
+  protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Future[Result]
 
   private def renderTrailsFragment(model: IndexPage)(implicit request: RequestHeader) = {
     val response = () =>
@@ -71,18 +71,18 @@ trait IndexControllerCommon
     renderFormat(response, response, model.page)
   }
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     path match {
       //if this is a section tag e.g. football/football
       case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
       case _ =>
         logGoogleBot(request)
-        index(Edition(request), path, inferPage(request), request.isRss) map {
+        (index(Edition(request), path, inferPage(request), request.isRss) map {
           // if no content is returned (as often happens with old/expired/migrated microsites) return 404 rather than an empty page
           case Right(model) =>
             if (model.contents.nonEmpty) renderFaciaFront(model)
             else
-              Cached(60)(
+              Future { Cached(60)(
                 WithoutRevalidationResult(
                   Gone(
                     views.html.gone(
@@ -92,10 +92,13 @@ trait IndexControllerCommon
                     ),
                   ),
                 ),
-              )
-          case Left(other) => RenderOtherStatus(other)
-        }
+              ) }
+          case Left(other) => Future { RenderOtherStatus(other) }
+        }).flatten
     }
+  }
+
+
 
   override def canRender(item: ItemResponse): Boolean = item.section.orElse(item.tag).isDefined
 }

@@ -8,31 +8,11 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{SimplePage}
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomNewslettersPageRenderingDataModel,
-  DotcomRenderingDataModel,
-  OnwardCollectionResponse,
-  PageType,
-}
-import services.NewsletterData
+import model.SimplePage
+import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomFrontsRenderingDataModel, DotcomNewslettersPageRenderingDataModel, DotcomRenderingDataModel, DotcomTagFrontsRenderingDataModel, PageType, Trail}
+import services.{IndexPage, NewsletterData}
 import services.newsletters.model.NewsletterResponse
-
-import model.{
-  CacheTime,
-  Cached,
-  InteractivePage,
-  LiveBlogPage,
-  NoCache,
-  PageWithStoryPackage,
-  PressedPage,
-  RelatedContentItem,
-  Topic,
-  TopicResult,
-  MessageUsData,
-}
+import model.{CacheTime, Cached, InteractivePage, LiveBlogPage, MessageUsData, NoCache, PageWithStoryPackage, PressedPage, RelatedContentItem, Topic, TopicResult}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -44,7 +24,6 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import model.dotcomrendering.Trail
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -279,6 +258,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+  }
+
+  def getTagFront(
+      ws: WSClient,
+      page: IndexPage,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomTagFrontsRenderingDataModel(
+      page,
+      request,
+      pageType,
+    )
+
+    val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/TagFront", CacheTime.Facia)
   }
 
   def getInteractive(

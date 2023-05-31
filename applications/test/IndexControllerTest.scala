@@ -7,6 +7,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import play.api.libs.ws.WSClient
 
 @DoNotDiscover class IndexControllerTest
     extends AnyFlatSpec
@@ -29,6 +30,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     testContentApiClient,
     sectionsLookUp,
     play.api.test.Helpers.stubControllerComponents(),
+    mock[WSClient]
   )
 
   "Index Controller" should "200 when content type is front" in {
