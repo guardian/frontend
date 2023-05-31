@@ -101,6 +101,9 @@
         >
         @fragments.inlineSvg("chevron-left", "icon", Seq("vertical-video-playlist__icon", "disabled"))
         </a>
+        <span style="color: white">
+            <span id="vertical-carousel-count">1</span>
+             of @(containerDefinition.collectionEssentials.items.zipWithIndex.length)</span>
         <a
         class="js-video-playlist-next"
         data-link-name="video-container-next"

@@ -26,13 +26,17 @@ const getPositionState = (position, length) => ({
     atEnd: position >= length,
 });
 
+const updateCarouselCounter = (position) => {
+    document.getElementById("vertical-carousel-count").innerHTML = position + 1;
+
+}
 const reducers = {
     NEXT: function next(previousState) {
         const position =
             previousState.position >= previousState.length
                 ? previousState.position
                 : previousState.position + 1;
-
+        updateCarouselCounter(position);
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position - 1}`)
         );
@@ -46,6 +50,7 @@ const reducers = {
     PREV: function prev(previousState) {
         const position =
             previousState.position <= 0 ? 0 : previousState.position - 1;
+        updateCarouselCounter(position);
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position + 1}`)
         );
