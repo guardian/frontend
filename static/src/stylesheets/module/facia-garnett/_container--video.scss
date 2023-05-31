@@ -144,14 +144,15 @@ $video-width-desktop: 700px;
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
     }
-    //commenting this stops scroll on small screens.
-    // this is commented for now as we havent built a mechanism to stop vid on scroll
-    //@include mq($until: desktop) {
-    //    overflow-x: scroll;
-    //    overflow-y: hidden;
-    //    -webkit-overflow-scrolling: touch;
-    //    transform: none !important;
-    //}
+
+    @include mq($until: desktop) {
+        &:not(.vertical-height) {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            transform: none !important;
+        }
+    }
     transition: transform .4s ease-out;
 
     @include mq(desktop) {
@@ -208,7 +209,6 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control--prev {
-    background-color: rgba(0, 255, 255, .4);
     left: 0;
     width: calc((100% - 300px) / 2);
 
@@ -237,7 +237,6 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control--next {
-    background-color: rgba(123, 1, 1, .4);
     right: 0;
     width: calc((100% - 300px) / 2);
 
