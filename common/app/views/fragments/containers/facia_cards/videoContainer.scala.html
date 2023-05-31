@@ -24,14 +24,8 @@
      data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
      data-component="video-playlist">
     <a
-        class="video-playlist__control video-playlist__control--prev js-video-playlist-prev"
-        data-link-name="video-container-prev"
-        role="button"
-        tabindex="-1"
-        aria-hidden="true"
-        aria-label="show previous video"
+        class="video-playlist__control video-playlist__control--prev"
     >
-        @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
     </a>
 
     <ul class="u-unstyled video-playlist__inner js-video-playlist-inner vertical-height">
@@ -93,12 +87,28 @@
     </ul>
 
     <a
-        class="video-playlist__control video-playlist__control--next js-video-playlist-next"
+        class="video-playlist__control video-playlist__control--next"
+    >
+    </a>
+    <div class="vertical-video-playlist__control">
+        <a
+        class="js-video-playlist-prev"
+        data-link-name="video-container-prev"
+        role="button"
+        tabindex="-1"
+        aria-hidden="true"
+        aria-label="show previous video"
+        >
+        @fragments.inlineSvg("chevron-left", "icon", Seq("vertical-video-playlist__icon", "disabled"))
+        </a>
+        <a
+        class="js-video-playlist-next"
         data-link-name="video-container-next"
         role="button"
         tabindex="0"
         aria-label="show next video"
-    >
-        @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
-    </a>
+        >
+        @fragments.inlineSvg("chevron-right", "icon", Seq("vertical-video-playlist__icon"))
+        </a>
+    </div>
 </div>

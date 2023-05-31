@@ -168,6 +168,25 @@ $video-width-desktop: 700px;
     }
 }
 
+.vertical-video-playlist__control {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+
+    @include mq(desktop) {
+        &:hover .vertical-video-playlist__icon,
+        &:focus .vertical-video-playlist__icon {
+            background-color: $highlight-main;
+
+            svg {
+                fill: $brightness-7;
+            }
+        }
+    }
+}
+
 .video-playlist__control {
     position: absolute;
     display: block;
@@ -189,6 +208,7 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control--prev {
+    background-color: rgba(0, 255, 255, .4);
     left: 0;
     width: calc((100% - 300px) / 2);
 
@@ -217,6 +237,7 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control--next {
+    background-color: rgba(123, 1, 1, .4);
     right: 0;
     width: calc((100% - 300px) / 2);
 
@@ -263,6 +284,34 @@ $video-width-desktop: 700px;
     }
 }
 
+.vertical-video-playlist__icon {
+    display: inherit;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    border-radius: 50%;
+    border: 1px solid #052962;
+    background-color: #ffffff;
+    text-align: center;
+
+    svg {
+        fill: #052962;
+        width: 9px;
+        height: 30px;
+    }
+}
+
+.vertical-video-playlist__icon.disabled {
+    border: 1px solid #ffffff;
+    background-color: #101010;
+
+    svg {
+        fill: #ffffff;
+    }
+}
+
 .youtube-media-atom__play-button {
     background-color: $brightness-7;
     border-radius: 50%;
@@ -281,7 +330,7 @@ $video-width-desktop: 700px;
     // this is the margin on tablet that breaks the click to scroll
 
     //@include mq(mobileLandscape) {
-        //margin-left: $gs-gutter;
+    //margin-left: $gs-gutter;
     //}
     @include mq(desktop) {
         // do we need to comment this out??
@@ -298,20 +347,20 @@ $video-width-desktop: 700px;
 
 // we get to kill this class for vertical
 //.video-playlist__item--first {
-    //@include mq(desktop, leftCol) {
-    //    margin-left: gs-span(2);
-    //
-    //    .has-page-skin & {
-    //        margin-left: 0;
-    //    }
-    //}
-    //@include mq(leftCol) {
-    //    margin-left: 0;
-    //
-    //    .has-page-skin & {
-    //        margin-left: 0;
-    //    }
-    //}
+//@include mq(desktop, leftCol) {
+//margin-left: gs-span(2);
+//
+//    .has-page-skin & {
+//        margin-left: 0;
+//    }
+//}
+//@include mq(leftCol) {
+//    margin-left: 0;
+//
+//    .has-page-skin & {
+//        margin-left: 0;
+//    }
+//}
 //}
 
 .video-playlist__item--active {
@@ -525,17 +574,17 @@ $video-width-desktop: 700px;
     padding: 2.5rem $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
     color: #ffffff;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 25.04%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25.04%);
     min-height: gs-height(3);
     pointer-events: auto;
     width: 100%;
-    bottom:0;
+    bottom: 0;
 
     .video-playlist__item .vjs-playing ~ & {
-        @include mq(desktop) {
-            visibility: hidden;
-            opacity: 0;
-        }
+        //@include mq(desktop) {
+        visibility: hidden;
+        opacity: 0;
+        //}
     }
 
     .video-overlay__headline {
