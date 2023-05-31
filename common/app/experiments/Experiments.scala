@@ -46,7 +46,7 @@ object DCRImageContent
       description = "Use DCR for image content",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2024, 1, 1),
-      participationGroup = Perc50,
+      participationGroup = Perc0E,
     )
 
 object OfferHttp3
