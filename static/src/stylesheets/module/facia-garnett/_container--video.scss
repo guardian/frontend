@@ -172,7 +172,7 @@ $video-width-desktop: 700px;
     height: 70px;
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 16px;
     align-items: center;
 
     @include mq(desktop) {
