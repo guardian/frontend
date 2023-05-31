@@ -120,6 +120,8 @@ object DCRTagFronts
       description = "Use DCR for tag fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
+      participationGroup = Perc0E,
+    )
 
 object ActionCardRedesign
     extends Experiment(
