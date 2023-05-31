@@ -281,7 +281,6 @@ object NavLinks {
   val auNewsPillar = ukNewsPillar.copy(
     children = List(
       australiaNews,
-      coronavirus,
       world,
       auPolitics,
       auEnvironment,
@@ -292,6 +291,7 @@ object NavLinks {
       auBusiness,
       science,
       tech,
+      podcasts,
     ),
   )
   val usNewsPillar = ukNewsPillar.copy(children =
