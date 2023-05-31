@@ -1349,13 +1349,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial-bundle@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-bundle/-/commercial-bundle-5.0.0.tgz#94da5021ddda4f282423872f90c1637ede74225f"
-  integrity sha512-cODN1V4ScZcBfyMUiRWfgyNrXAs+LwEY6OqITiCDTseOmKcUkp1i48+u1k/e00okhODNvnONnrJlr622vGsbCA==
+"@guardian/commercial@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-8.0.0.tgz#e6d5e16d1cd2534ee2c15bfc1da45445f2b7f2aa"
+  integrity sha512-VcOf3WCnT5Gxj1UWHTobRH6J08dasPzeYbiY1+xsSFhHVBA4D/0kcKJ/p4ZBwnBFCrlzlf/6/tVZLybmQ/CHLQ==
   dependencies:
     "@guardian/ab-core" "^4.0.0"
-    "@guardian/commercial-core" "^7.0.0"
     "@guardian/consent-management-platform" "^13.0.2"
     "@guardian/core-web-vitals" "^4.0.0"
     "@guardian/libs" "^14.0.0"
@@ -1371,11 +1370,6 @@
     tslib "^2.4.1"
     web-vitals "^2.1.2"
     wolfy87-eventemitter "^5.2.9"
-
-"@guardian/commercial-core@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-7.0.0.tgz#2bde098699e8d8121028bd03d10481e8664f8e06"
-  integrity sha512-ByfukhmfJ2sF5mCyVq5XSRyOdBp0w+MOTpOp361wjZ6a2KHSgSC8VQucgSQHtQ7v05O0jJ53XFkSrGc2TUworA==
 
 "@guardian/consent-management-platform@^13.0.2":
   version "13.0.2"

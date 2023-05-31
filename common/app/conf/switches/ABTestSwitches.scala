@@ -61,7 +61,7 @@ trait ABTestSwitches {
     "Test the commercial impact of showing billboard adverts in merchandising slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 5, 30)),
+    sellByDate = Some(LocalDate.of(2023, 6, 30)),
     exposeClientSide = true,
   )
 
@@ -82,6 +82,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 6, 5)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-limit-inline-merch",
+    "Test the impact of limiting the eligibility of inline merchandising ad slots",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 9, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-remove-business-liveblog-epics",
+    "Test the commercial impact of removing contribution epics on business liveblogs",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 7, 10)),
     exposeClientSide = true,
   )
 }

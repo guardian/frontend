@@ -1,7 +1,7 @@
 import type {
 	AdsConfigCCPAorAus,
 	AdsConfigTCFV2,
-} from '@guardian/commercial-core/dist/cjs/types';
+} from '@guardian/commercial/dist/cjs/core/types';
 import type {
 	Callback,
 	ConsentState,
@@ -12,8 +12,8 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 	getPageTargeting: jest.fn(() => ({ key: 'value' })),
 }));
 
-jest.mock('@guardian/commercial-core', () => ({
-	...jest.requireActual('@guardian/commercial-core'),
+jest.mock('@guardian/commercial', () => ({
+	...jest.requireActual('@guardian/commercial'),
 	getPermutivePFPSegments: jest.fn(() => [42]),
 }));
 

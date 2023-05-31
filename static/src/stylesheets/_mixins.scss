@@ -311,3 +311,46 @@
         margin-left: gs-span(3) + $gs-gutter;
     }
 }
+
+// action kicker appears on actionable cards (for now cards for tone/callout tags)
+@mixin fs-action-kicker($size) {
+    .fc-item__action-kicker-label {
+        @include action-kicker-font-size($size);
+        @if ($size <= 2) {
+            padding: 0 3px 1px;
+        }
+
+        @else if ($size == 3) {
+            padding: 1px 4px 2px;
+        }
+
+        @else if ($size == 4) {
+            padding: 1px 4px 2px;
+        }
+
+        @else if ($size >= 5) {
+            padding: 2px 5px 3px;
+        }
+    }
+
+    @if ($size <= 2) {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    @else if ($size == 3) {
+        margin-top: -1px;
+        margin-bottom: 1px;
+    }
+
+    @else if ($size == 4) {
+        margin-top: -2px;
+        margin-bottom: 2px;
+    }
+
+    @else if ($size >= 5) {
+        margin-top: -2px;
+        margin-bottom: 2px;
+    }
+}
+

@@ -22,6 +22,7 @@ import play.api.mvc.RequestHeader
 import services.SkimLinksCache
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.Commercial.isAdFree
+import experiments.{ActiveExperiments, FrontsBannerAds}
 
 import scala.jdk.CollectionConverters._
 import scala.collection.mutable
@@ -817,6 +818,9 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
     val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate").asScala.toList
 
     for (slice <- slices) {
+      if (ActiveExperiments.isParticipating(FrontsBannerAds)) {
+        slice.addClass("fc-slice__item--mpu-candidate--hide-desktop")
+      }
       slice.append(s"${sliceSlot(slices.indexOf(slice) + 1)}")
     }
 
@@ -856,9 +860,14 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
         slot <- adSlot
       } {
         container.after(slot)
-        slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
+        if (ActiveExperiments.isParticipating(FrontsBannerAds)) {
+          slot.wrap(
+            """<div class="fc-container fc-container--commercial fc-container--commercial--hide-desktop"></div>""",
+          )
+        } else {
+          slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
+        }
       }
-
     }
     document
   }

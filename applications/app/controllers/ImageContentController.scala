@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery}
-import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Block, ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -13,17 +13,17 @@ import services.ImageQuery
 import views.support.RenderOtherStatus
 import play.api.libs.json._
 import conf.Configuration.contentApi
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{ImageContentPicker, RemoteRender}
 
 import scala.concurrent.Future
-
-case class ImageContentPage(image: ImageContent, related: RelatedContent) extends ContentPage {
-  override lazy val item: ImageContent = image
-}
 
 class ImageContentController(
     val contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     wsClient: WSClient,
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -42,10 +42,41 @@ class ImageContentController(
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
-    image(Edition(request), path).map {
-      case Right(content) => renderImageContent(content)
-      case Left(result)   => RenderOtherStatus(result)
+    image(Edition(request), path).flatMap {
+      case Right((content, mainBlock)) =>
+        val tier = ImageContentPicker.getTier(content)
+
+        tier match {
+          case RemoteRender => remoteRender(content, mainBlock)
+          case _            => Future.successful(renderImageContent(content))
+        }
+      case Left(result) => Future.successful(RenderOtherStatus(result))
     }
+
+  private def getDCRJson(content: ImageContentPage, pageType: PageType, mainBlock: Option[Block])(implicit
+      request: RequestHeader,
+  ): String = {
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forImageContent(content, request, pageType, mainBlock))
+  }
+
+  private def remoteRender(content: ImageContentPage, mainBlock: Option[Block])(implicit
+      request: RequestHeader,
+  ): Future[Result] = {
+    val pageType = PageType(content, request, context)
+
+    if (request.isJson) {
+      Future.successful(
+        common.renderJson(getDCRJson(content, pageType, mainBlock), content).as("application/json"),
+      )
+    } else {
+      remoteRenderer.getImageContent(
+        wsClient,
+        content,
+        pageType,
+        mainBlock,
+      )
+    }
+  }
 
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)

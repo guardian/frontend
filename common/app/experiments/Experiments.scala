@@ -17,6 +17,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       BorkFCP,
       BorkFID,
       DCRTagFronts,
+      ActionCardRedesign,
+      Okta,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -37,6 +39,15 @@ object DCRFronts
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
       participationGroup = Perc50,
+    )
+
+object DCRImageContent
+    extends Experiment(
+      name = "dcr-image-content",
+      description = "Use DCR for image content",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2024, 1, 1),
+      participationGroup = Perc0E,
     )
 
 object OfferHttp3
@@ -90,7 +101,7 @@ object BorkFCP
       name = "bork-fcp",
       description = "Synthetically degrades First Contentful Paint (FCP)",
       owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 6, 1),
+      sellByDate = LocalDate.of(2023, 7, 4),
       participationGroup = Perc1C,
     )
 
@@ -99,7 +110,7 @@ object BorkFID
       name = "bork-fid",
       description = "Synthetically degrades First Input Delay (FID)",
       owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 6, 1),
+      sellByDate = LocalDate.of(2023, 7, 4),
       participationGroup = Perc1D,
     )
 
@@ -109,5 +120,21 @@ object DCRTagFronts
       description = "Use DCR for tag fronts",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 6, 2),
+
+object ActionCardRedesign
+    extends Experiment(
+      name = "action-card-redesign",
+      description = "Creates a new action card design on fronts pages",
+      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      sellByDate = LocalDate.of(2023, 6, 9),
+      participationGroup = Perc20A,
+    )
+
+object Okta
+    extends Experiment(
+      name = "okta",
+      description = "Use Okta for authentication",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 7, 24),
       participationGroup = Perc0E,
     )

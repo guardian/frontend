@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
-import model.{Article, ImageMedia, Interactive, LiveBlogPage, Tags}
+import model.{Article, ContentType, ImageMedia, Interactive, LiveBlogPage, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
@@ -79,7 +79,7 @@ object LinkedData {
   }
 
   def forArticle(
-      article: Article,
+      article: ContentType,
       baseURL: String,
       fallbackLogo: String,
   ): List[LinkedData] = {
@@ -144,7 +144,7 @@ object LinkedData {
   }
 
   private[this] def getImagesForArticle(
-      article: Article,
+      article: ContentType,
       fallbackLogo: String,
   ): List[String] = getImages(article.trail.trailPicture, article.content.openGraphImage, fallbackLogo)
 

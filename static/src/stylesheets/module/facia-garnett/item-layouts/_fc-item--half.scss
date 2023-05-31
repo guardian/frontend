@@ -31,10 +31,18 @@ x x x x x x x x x x x x x x x x x x
         @include fs-headline-quote(4);
         @include headline-boost(5);
 
+        .fc-item__action-kicker-wrapper {
+            @include fs-action-kicker(4);
+        }
+
         @include mq(tablet, desktop) {
             @include fs-headline(3, true);
             @include fs-headline-quote(3);
             @include headline-boost(4);
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(3);
+            }
         }
     }
 
@@ -74,7 +82,7 @@ x x x x x x x x x x x x x x x x x x
         &[class*='fc-item--has-sublinks']:not(.fc-item--has-sublinks-1) {
             .fc-item__header {
                 padding-bottom: gs-height(2) + $gs-baseline * 2;
-    
+
                 @include mq(desktop) {
                     padding-bottom: gs-height(4.6);
                 }
@@ -83,8 +91,8 @@ x x x x x x x x x x x x x x x x x x
             &:not(.fc-item--type-comment) {
                 .fc-sublink {
                     margin-top: 0;
-        
-                    .fc-sublink__title {                
+
+                    .fc-sublink__title {
                         &:before {
                             width: auto;
                             left: 0 - $fc-item-gutter;

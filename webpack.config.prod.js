@@ -20,7 +20,7 @@ module.exports = webpackMerge.smart(config, {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: 'node_modules/@guardian/commercial-bundle/dist',
+					from: 'node_modules/@guardian/commercial/dist/bundle',
 					to: 'commercial',
 				},
 			],
@@ -42,6 +42,7 @@ module.exports = webpackMerge.smart(config, {
 	optimization: {
 		minimizer: [
 			new TerserPlugin({
+				exclude: /graun.*commercial.js/,
 				parallel: true,
 				terserOptions: {
 					sourceMap: true,

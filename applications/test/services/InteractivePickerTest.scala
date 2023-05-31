@@ -4,6 +4,7 @@ import org.scalatest.DoNotDiscover
 import test.TestRequest
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import services.dotcomrendering.{DotcomRendering, FrontendLegacy, InteractivePicker, PressedInteractive}
 
 @DoNotDiscover class InteractivePickerTest extends AnyFlatSpec with Matchers {
   val path = "/lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"

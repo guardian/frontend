@@ -9,20 +9,10 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.SimplePage
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomNewslettersPageRenderingDataModel,
-  DotcomRenderingDataModel,
-  DotcomTagFrontsRenderingDataModel,
-  PageType,
-  Trail,
-}
-import services.{IndexPage, NewsletterData}
-import services.newsletters.model.NewsletterResponse
 import model.{
   CacheTime,
   Cached,
+  ImageContentPage,
   InteractivePage,
   LiveBlogPage,
   MessageUsData,
@@ -33,6 +23,16 @@ import model.{
   Topic,
   TopicResult,
 }
+import model.dotcomrendering.{
+  DotcomBlocksRenderingDataModel,
+  DotcomFrontsRenderingDataModel,
+  DotcomNewslettersPageRenderingDataModel,
+  DotcomRenderingDataModel,
+  DotcomTagFrontsRenderingDataModel,
+  PageType,
+}
+import services.{IndexPage, NewsletterData}
+import services.newsletters.model.NewsletterResponse
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -332,6 +332,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
     val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
+  }
+
+  def getImageContent(
+      ws: WSClient,
+      imageContent: ImageContentPage,
+      pageType: PageType,
+      mainBlock: Option[Block],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
 }
 

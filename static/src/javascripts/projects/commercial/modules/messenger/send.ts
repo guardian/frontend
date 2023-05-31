@@ -4,7 +4,7 @@
  * This file should be considered deprecated and only exists for legacy 'hosted' pages
  */
 
-import { postMessage } from '@guardian/commercial-core';
+import { postMessage } from '@guardian/commercial';
 
 const send = (type: string, payload: unknown): string => {
 	const msg = {

@@ -174,6 +174,10 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-headline(3);
     @include fs-headline-quote(3);
 
+    .fc-item__action-kicker-wrapper {
+        @include fs-action-kicker(3);
+    }
+
     font-weight: 500;
     padding-bottom: .5em;
 
@@ -216,6 +220,35 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     position: relative;
     font-weight: 700;
+}
+
+.fc-item__action-tell-us-btn {
+    @include fs-textSans(3);
+    font-size: 15px;
+    margin: 8px 0px;
+    display: flex;
+    color: $brightness-7;
+    box-sizing: border-box;
+    align-items: center;
+    background: transparent;
+    transition: .3s ease-in-out;
+    height: 24px;
+    min-height: 24px;
+    padding: 0 7px 1px 11px;
+    border-radius: 24px;
+    line-height: 1.35;
+    font-weight: 700;
+    border: 1px solid #000000;
+    svg {
+        color: #000000;
+        margin-right: -4px;
+        flex: 0 0 auto;
+        display: block;
+        fill: currentColor;
+        position: relative;
+        width: 27px;
+        height: auto;
+    }
 }
 
 .fc-item__byline {

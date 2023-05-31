@@ -31,9 +31,17 @@ x x x x x x x x x x x x x x x x x x
         @include fs-headline(4, true);
         @include headline-boost(5);
 
+        .fc-item__action-kicker-wrapper {
+            @include fs-action-kicker(4);
+        }
+
         @include mq(tablet, desktop) {
             @include fs-headline(3, true);
             @include headline-boost(4);
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(3);
+            }
         }
     }
 

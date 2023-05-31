@@ -15,6 +15,7 @@ import pages.InteractiveHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
+import services.dotcomrendering.{DotcomRendering, InteractivePicker, PressedInteractive}
 import services.{CAPILookup, USElection2020AmpPages, _}
 
 import scala.concurrent.Future
