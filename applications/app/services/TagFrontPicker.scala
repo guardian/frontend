@@ -12,7 +12,14 @@ object TagFrontPicker extends GuLogging {
     lazy val participatingInTest = false // There's no room for a 0% test at the moment - so we're just going with false
     lazy val dcrCouldRender = false
 
-    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+    val tier = decideTier(
+      request.isRss,
+      request.isJson,
+      request.forceDCROff,
+      request.forceDCR,
+      participatingInTest,
+      dcrCouldRender,
+    )
 
     logTier(tagFront, participatingInTest, dcrCouldRender, Map(), tier)
 
@@ -21,13 +28,18 @@ object TagFrontPicker extends GuLogging {
 
   private def decideTier(
       isRss: Boolean,
+      isJson: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
       participatingInTest: Boolean,
       dcrCouldRender: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
-    else if (forceDCROff) LocalRender
+    else if (isJson) {
+      // JSON requests always require forceDCR
+      if (forceDCR) RemoteRender
+      else LocalRender
+    } else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
     else if (dcrCouldRender && participatingInTest) RemoteRender
     else LocalRender
