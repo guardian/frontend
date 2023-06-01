@@ -17,7 +17,7 @@ module.exports = webpackMerge.smart(config, {
             patterns: [
               {
                   from: "node_modules/@guardian/commercial/dist/bundle",
-                  to: "commercial/[name].[ext]"
+                  to: "commercial"
               },
             ],
         }),
