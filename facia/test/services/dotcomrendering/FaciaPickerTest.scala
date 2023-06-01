@@ -49,32 +49,32 @@ import org.scalatestplus.mockito.MockitoSugar
     val isRSS = false
     val forceDCROff = false
     val forceDCR = true
-    val participatingInTest = false
+    val dcrSwitchEnabled = false
     val dcrCouldRender = false
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, dcrSwitchEnabled, dcrCouldRender)
     tier should be(RemoteRender)
   }
 
-  it should "return LocalRender if no flag is provided, participatingInTest is false and dcrCouldRender is true" in {
+  it should "return LocalRender if no flag is provided, dcrSwitchEnabled is false and dcrCouldRender is true" in {
     val isRSS = false
     val forceDCROff = false
     val forceDCR = false
-    val participatingInTest = false
+    val dcrSwitchEnabled = false
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, dcrSwitchEnabled, dcrCouldRender)
     tier should be(LocalRender)
   }
 
-  it should "return RemoteRender if no flag is provided and participatingInTest and dcrCouldRender are true" in {
+  it should "return RemoteRender if no flag is provided and dcrSwitchEnabled and dcrCouldRender are true" in {
     val isRSS = false
     val forceDCROff = false
     val forceDCR = false
-    val participatingInTest = true
+    val dcrSwitchEnabled = true
     val dcrCouldRender = true
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, dcrSwitchEnabled, dcrCouldRender)
     tier should be(RemoteRender)
   }
 

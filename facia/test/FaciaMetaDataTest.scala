@@ -5,6 +5,7 @@ import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
 import conf.Configuration
+import conf.switches.Switches.DCRFronts
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
 import org.scalatest.flatspec.AnyFlatSpec
@@ -32,6 +33,7 @@ import test._
     with WithTestContentApiClient {
 
   override def beforeAll(): Unit = {
+    DCRFronts.switchOff()
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts =
