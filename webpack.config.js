@@ -158,6 +158,16 @@ module.exports = {
             // add errors to webpack instead of warnings
             failOnError: true,
         }),
+        // Copy the commercial bundle dist to Frontend's static output location:
+		// static/target/javascripts/commercial
+		new CopyPlugin({
+			patterns: [
+				{
+					from: 'node_modules/@guardian/commercial/dist/bundle',
+					to: 'commercial',
+				},
+			],
+		}),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
