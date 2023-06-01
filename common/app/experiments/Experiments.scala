@@ -63,7 +63,7 @@ object EuropeNetworkFront
       name = "europe-network-front",
       description = "Test new europe network front",
       owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 5, 31),
+      sellByDate = LocalDate.of(2023, 8, 31),
       participationGroup = Perc0D,
     )
 
@@ -72,7 +72,7 @@ object HeaderTopBarSearchCapi
       name = "header-top-bar-search-capi",
       description = "Adds CAPI search to the top nav",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 6),
+      sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc1B,
     )
 
@@ -118,7 +118,7 @@ object ActionCardRedesign
       name = "action-card-redesign",
       description = "Creates a new action card design on fronts pages",
       owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 6, 9),
+      sellByDate = LocalDate.of(2023, 9, 8),
       participationGroup = Perc20A,
     )
 
