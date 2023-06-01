@@ -171,21 +171,43 @@ $video-width-desktop: 700px;
 
 .vertical-video-playlist__control {
     height: 70px;
+    width: 300px;
     display: flex;
-    justify-content: center;
     gap: 16px;
+    justify-content: center;
     align-items: center;
+    margin-left: 20px;
 
-    @include mq(desktop) {
-        &:hover .vertical-video-playlist__icon,
-        &:focus .vertical-video-playlist__icon {
-            background-color: $highlight-main;
-
-            svg {
-                fill: $brightness-7;
-            }
-        }
+    @include mq($from: mobileMedium, $until: phablet) {
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        z-index: 10;
+        width: calc(100% - 310px);
     }
+
+    @include mq(leftCol)  {
+        margin-left: 180px;
+    }
+
+    @include mq(wide)  {
+        margin-left: 260px;
+    }
+
+    //@include mq(desktop) {
+    //    &:hover .vertical-video-playlist__icon,
+    //    &:focus .vertical-video-playlist__icon {
+    //        background-color: $highlight-main;
+    //
+    //        svg {
+    //            fill: $brightness-7;
+    //        }
+    //    }
+    //}
 }
 
 .video-playlist__control {
@@ -195,7 +217,7 @@ $video-width-desktop: 700px;
     bottom: 0;
     z-index: 2;
     cursor: pointer;
-
+    height: 533px;
     @include mq(desktop) {
         &:hover .video-playlist__icon,
         &:focus .video-playlist__icon {
@@ -213,14 +235,14 @@ $video-width-desktop: 700px;
     width: calc((100% - 300px) / 2);
 
     @include mq(leftCol) {
-        width: gs-span(2) + $gs-gutter * 2 + 240;
+        width: gs-span(2) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
         }
     }
     @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2 + 240;
+        width: gs-span(3) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -241,7 +263,7 @@ $video-width-desktop: 700px;
     width: calc((100% - 300px) / 2);
 
     @include mq(leftCol) {
-        width: gs-span(3) + $gs-gutter * 2  + 160;
+        width: gs-span(8) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -249,7 +271,7 @@ $video-width-desktop: 700px;
     }
     @include mq(wide) {
         // hard coding for testing - this needs fixing
-        width: gs-span(4) + $gs-gutter * 2 + 160;
+        width: gs-span(9) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -430,35 +452,27 @@ $video-width-desktop: 700px;
     box-sizing: border-box;
     margin-bottom: 0;
     white-space: normal;
-    width: calc(((100% - 300px) / 2) + 5px);
-    @include mq($from: mobileLandscape, $until: desktop) {
-        width: calc(((100% - 300px) / 2) + 10px);
-    }
+    width: 20px;
 
     @include mq(desktop) {
-        width: calc(((100% - 300px) / 2));
+        width: 250px
     }
 
     @include mq(leftCol) {
         position: relative;
         height: $video-width-desktop / 16 * 9;
         display: inline-block;
-        // we add 240 to center vertical videos
-        width: gs-span(2) + $gs-gutter * 2 + 240;
+        width: gs-span(2) + $gs-gutter * 2;
         padding: ($gs-baseline / 2) $gs-gutter;
         box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
     }
     @include mq(wide) {
-        // we add 240 to center vertical videos
-
-        width: gs-span(3) + $gs-gutter * 2 + 240;
+        width: gs-span(3) + $gs-gutter * 2;
 
         .has-page-skin & {
-            // we add 240 to center vertical videos
-
-            width: gs-span(2) + $gs-gutter * 2 + 240;
+            width: gs-span(2) + $gs-gutter * 2;
         }
     }
 
