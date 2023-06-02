@@ -1,7 +1,6 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments, DCRImageContent}
 import model.Cors.RichRequestHeader
 import model.ImageContentPage
 import play.api.mvc.RequestHeader
