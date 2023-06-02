@@ -48,8 +48,10 @@ object Edition {
 
   lazy val defaultEdition: Edition = editions.Uk
   def editionsByRequest(implicit request: RequestHeader): List[Edition] = {
-    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
-    if (!participatingInTest) all else allWithBetaEditions
+    // We don't have a 0% test slot available, for the time being europe edition is disabled
+    val participatingInEuropeTest =
+      /* ActiveExperiments.isParticipating(EuropeNetworkFront) */ false
+    if (!participatingInEuropeTest) all else allWithBetaEditions
   }
   def editionsSupportingSection(sectionId: String): Seq[Edition] =
     allWithBetaEditions.filter(_.isEditionalised(sectionId))

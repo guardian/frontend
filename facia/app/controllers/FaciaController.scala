@@ -175,10 +175,14 @@ trait FaciaController
 
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
-    if (path == "europe" && !participatingInTest) {
+    // We don't have a 0% test slot available, for the time being europe edition is disabled
+    val participatingInEuropeTest =
+      /* ActiveExperiments.isParticipating(EuropeNetworkFront) */ false
+
+    if (path == "europe" && !participatingInEuropeTest) {
       return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
     }
+
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
       case Some(faciaPage: PressedPage) =>
         val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)

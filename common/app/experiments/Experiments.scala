@@ -8,7 +8,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       OfferHttp3,
-      EuropeNetworkFront,
+//      EuropeNetworkFront,
       DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       ServerSideLiveblogInlineAds,
@@ -48,14 +48,16 @@ object OfferHttp3
       participationGroup = Perc0B,
     )
 
-object EuropeNetworkFront
-    extends Experiment(
-      name = "europe-network-front",
-      description = "Test new europe network front",
-      owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 8, 31),
-      participationGroup = Perc0D,
-    )
+// We know the Europe edition won't be launched for some time
+// so we've removed it in order to save 0% groups for other tests.
+//object EuropeNetworkFront
+//    extends Experiment(
+//      name = "europe-network-front",
+//      description = "Test new europe network front",
+//      owners = Seq(Owner.withGithub("rowannekabalan")),
+//      sellByDate = LocalDate.of(2023, 8, 31),
+//      participationGroup = Perc0D,
+//    )
 
 object HeaderTopBarSearchCapi
     extends Experiment(
