@@ -72,7 +72,7 @@ object ServerSideLiveblogInlineAds
       description =
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 6, 1),
+      sellByDate = LocalDate.of(2023, 9, 1),
       participationGroup = Perc0C,
     )
 
