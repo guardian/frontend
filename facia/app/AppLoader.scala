@@ -1,4 +1,4 @@
-import agents.MostViewedAgent
+import agents.{DeeplyReadAgent, MostViewedAgent}
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
@@ -47,6 +47,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   lazy val mostViewedAgent = wire[MostViewedAgent]
+  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
