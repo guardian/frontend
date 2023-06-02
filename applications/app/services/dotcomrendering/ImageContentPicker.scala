@@ -27,7 +27,8 @@ object ImageContentPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    val participatingInTest = ActiveExperiments.isParticipating(DCRImageContent)
+    // Setting to false while still implementing this content type in DCR
+    val participatingInTest = false //ActiveExperiments.isParticipating(DCRImageContent)
     val dcrCanRender = dcrCouldRender(imageContentPage)
 
     val tier = {
