@@ -8,14 +8,29 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{CacheTime, Cached, GalleryPage, ImageContentPage, InteractivePage, LiveBlogPage, MessageUsData, NoCache, PageWithStoryPackage, PressedPage, RelatedContentItem, SimplePage, Topic, TopicResult}
-import model.dotcomrendering.{DotcomBlocksRenderingDataModel, DotcomFrontsRenderingDataModel, DotcomNewslettersPageRenderingDataModel, DotcomRenderingDataModel, PageType}
-import services.NewsletterData
-import services.newsletters.model.NewsletterResponse
+import model.dotcomrendering._
+import model.{
+  CacheTime,
+  Cached,
+  GalleryPage,
+  ImageContentPage,
+  InteractivePage,
+  LiveBlogPage,
+  MessageUsData,
+  NoCache,
+  PageWithStoryPackage,
+  PressedPage,
+  RelatedContentItem,
+  SimplePage,
+  Topic,
+  TopicResult,
+}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.NewsletterData
+import services.newsletters.model.NewsletterResponse
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -310,11 +325,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   }
 
   def getGallery(
-                       ws: WSClient,
-                       gallery: GalleryPage,
-                       pageType: PageType,
-                       blocks: Blocks,
-                     )(implicit request: RequestHeader): Future[Result] = {
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
