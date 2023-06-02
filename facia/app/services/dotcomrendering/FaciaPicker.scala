@@ -49,6 +49,20 @@ object FrontChecks {
       "news/most-popular",
     )
 
+  /*
+   * This list contains JSON.HTML thrashers that DCR Supports. These thrashers should not actually be rendered by DCR
+   * but instead have an alternate way of being rendered on DCR.
+   *
+   * Right now this is limited to just treats as we now configure treats in DCR instead of relying on a thrasher.
+   *
+   * In theory once 100% of the page views for these fronts are rendered by DCR then the thrashers can be deleted.
+   */
+  val SUPPORTED_JSON_HTML_THRASHERS: Set[String] =
+    Set(
+      "https://interactive.guim.co.uk/thrashers/qatar-beyond-the-football/source.json",
+      "https://interactive.guim.co.uk/thrashers/newsletters-2020-election-nugget/source.json",
+    )
+
   val UNSUPPORTED_THRASHERS: Set[String] =
     Set(
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/12/wordiply/default",
@@ -140,8 +154,8 @@ object FrontChecks {
           case card: LinkSnap if card.properties.embedType.contains("link") => false
           case card: LinkSnap if card.properties.embedType.contains("interactive") =>
             card.properties.embedUri.exists(UNSUPPORTED_THRASHERS.contains)
-          // We don't support json.html embeds yet
-          case card: LinkSnap if card.properties.embedType.contains("json.html") => true
+          case card: LinkSnap if card.properties.embedType.contains("json.html") =>
+            card.properties.embedUri.exists(uri => !SUPPORTED_JSON_HTML_THRASHERS.contains(uri))
           // Because embedType is typed as Option[String] it's hard to know whether we've
           // identified all possible embedTypes. If it's an unidentified embedType then
           // assume we can't render it.
