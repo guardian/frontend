@@ -22,6 +22,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
+import conf.switches.Switches
 import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
@@ -202,7 +203,9 @@ trait FaciaController
     }
 
     val networkFrontEdition = Edition.allWithBetaEditions.find(_.networkFrontId == path)
-    val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
+    val deeplyRead = if (Switches.DeeplyReadSwitch.isSwitchedOn) {
+      networkFrontEdition.map(deeplyReadAgent.getTrails)
+    } else None
 
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
