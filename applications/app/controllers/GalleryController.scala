@@ -86,7 +86,8 @@ class GalleryController(
       .getResponse(
         contentApiClient
           .item(path, edition)
-          .showFields("all"),
+          .showFields("all")
+          .showBlocks("all"),
       )
       .map { response =>
         val gallery = response.content.map(Content(_))
