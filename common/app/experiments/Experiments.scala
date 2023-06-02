@@ -7,7 +7,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      DCRFronts,
       OfferHttp3,
       EuropeNetworkFront,
       DCRJavascriptBundle,
@@ -29,15 +28,6 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2024, 4, 1),
       participationGroup = Perc1A,
-    )
-
-object DCRFronts
-    extends Experiment(
-      name = "dcr-fronts",
-      description = "Use DCR for fronts",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc50,
     )
 
 object DCRImageContent

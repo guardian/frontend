@@ -1,11 +1,11 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments, DCRFronts}
+import conf.switches.Switches.DCRFronts
 import implicits.Requests._
 import model.PressedPage
 import model.facia.PressedCollection
-import model.pressed.{LatestSnap, LinkSnap}
+import model.pressed.{LinkSnap}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -181,13 +181,13 @@ object FaciaPicker extends GuLogging {
   }
 
   def getTier(faciaPage: PressedPage)(implicit request: RequestHeader): RenderType = {
-    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
     lazy val checks = dcrChecks(faciaPage)
+    lazy val dcrSwitchEnabled = DCRFronts.isSwitchedOn
     lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue)
 
-    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, dcrSwitchEnabled, dcrCouldRender)
 
-    logTier(faciaPage, participatingInTest, dcrCouldRender, checks, tier)
+    logTier(faciaPage, dcrCouldRender, checks, tier)
 
     tier
   }
@@ -196,19 +196,18 @@ object FaciaPicker extends GuLogging {
       isRss: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
-      participatingInTest: Boolean,
+      dcrSwitchEnabled: Boolean,
       dcrCouldRender: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
     else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
-    else if (dcrCouldRender && participatingInTest) RemoteRender
+    else if (dcrCouldRender && dcrSwitchEnabled) RemoteRender
     else LocalRender
   }
 
   private def logTier(
       faciaPage: PressedPage,
-      participatingInTest: Boolean,
       dcrCouldRender: Boolean,
       checks: Map[String, Boolean],
       tier: RenderType,
@@ -220,8 +219,7 @@ object FaciaPicker extends GuLogging {
     }
     val properties =
       Map(
-        "participatingInTest" -> participatingInTest.toString,
-        "testPercentage" -> DCRFronts.participationGroup.percentage,
+        "dcrFrontsSwitchOn" -> DCRFronts.isSwitchedOn.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
         "tier" -> tierReadable,
