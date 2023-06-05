@@ -92,7 +92,6 @@ object FrontChecks {
       "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/lanre-bakare-front-default",
       "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/hidden-figures-front-default",
       "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/johny-pitts-photo-essay-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/09/pandora-header/default",
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2023/04/cost-of-crown/default",
       // End of list of full-width thrashers
     )
