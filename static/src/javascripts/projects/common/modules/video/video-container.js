@@ -150,7 +150,7 @@ const fetchLazyImage = (container, i) => {
 
 const update = (state, container) => {
     const translateWidth = -state.videoWidth * state.position;
-
+    const isVerticalVideo = container.getAttribute('data-layout') === "vertical-video";
     return fastdom.mutate(() => {
         const activeEl = container.querySelector(
             '.video-playlist__item--active'
@@ -158,8 +158,7 @@ const update = (state, container) => {
 
         if (activeEl != null) {
             activeEl.classList.remove('video-playlist__item--active');
-            //commenting the line below stops the frames disappearing.
-            // $('.youtube-media-atom__iframe', activeEl).hide();
+            !isVerticalVideo && $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
             $('.video-overlay .fc-item__link', activeEl).attr(
                 'aria-hidden',
