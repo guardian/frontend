@@ -25,6 +25,10 @@ $video-width-desktop: 700px;
     }
 
     .u-responsive-ratio {
+        padding-bottom: 56.3%;
+    }
+
+    .u-responsive-ratio.vertical-video {
         padding-bottom: 177%;
     }
 
