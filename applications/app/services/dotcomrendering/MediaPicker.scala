@@ -1,10 +1,8 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import controllers.MediaPage
-import experiments.{ActiveExperiments, DCRImageContent}
 import model.Cors.RichRequestHeader
-import model.{ImageContentPage, MediaPage}
+import model.MediaPage
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
 
