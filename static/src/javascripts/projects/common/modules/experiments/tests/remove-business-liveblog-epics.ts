@@ -8,11 +8,11 @@ export const removeBusinessLiveblogEpics: ABTest = {
 	author: '@commercial-dev',
 	description:
 		'Test the commercial impact of removing contribution epics on business liveblogs',
-	audience: 0 / 100,
-	audienceOffset: 0 / 100,
-	audienceCriteria: 'Opt in',
+	audience: 20 / 100,
+	audienceOffset: 20 / 100,
+	audienceCriteria: 'Business liveblogs',
 	successMeasure: 'Ad revenue increases on business liveblogs',
-	canRun: () => true,
+	canRun: () => !!(window.guardian.config.page.contentType === 'LiveBlog'),
 	variants: [
 		{ id: 'control', test: () => noop },
 		{ id: 'variant', test: () => noop },
