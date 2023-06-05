@@ -237,7 +237,7 @@ const update = (state, container) => {
 const getInitialState = (container) => ({
     position: 0,
     length: Number(container.getAttribute('data-number-of-videos')),
-    videoWidth: 300,
+    videoWidth: container.getAttribute('data-layout') === "vertical-video" ? 300 : 700,
     container,
 });
 
