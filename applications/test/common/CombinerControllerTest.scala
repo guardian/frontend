@@ -6,6 +6,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.ws.WSClient
+import org.scalatestplus.mockito.MockitoSugar
 import test.{
   ConfiguredTestSuite,
   TestRequest,
@@ -23,11 +25,17 @@ import test.{
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with MockitoSugar {
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
   lazy val indexController =
-    new IndexController(testContentApiClient, sectionsLookUp, play.api.test.Helpers.stubControllerComponents())
+    new IndexController(
+      testContentApiClient,
+      sectionsLookUp,
+      play.api.test.Helpers.stubControllerComponents(),
+      mock[WSClient],
+    )
 
   "Combiner" should "404 when there is no content for 2 tags" in {
     val result = indexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest())

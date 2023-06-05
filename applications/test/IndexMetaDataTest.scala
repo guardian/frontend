@@ -7,7 +7,9 @@ import org.jsoup.Jsoup
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json._
+import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 
 @DoNotDiscover class IndexMetaDataTest
@@ -18,7 +20,8 @@ import play.api.test.Helpers._
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with MockitoSugar {
 
   val articleUrl = "money/pensions"
   val crosswordsUrl = "crosswords"
@@ -28,6 +31,7 @@ import play.api.test.Helpers._
     testContentApiClient,
     sectionsLookUp,
     play.api.test.Helpers.stubControllerComponents(),
+    mock[WSClient],
   )
 
   it should "Include organisation metadata" in {

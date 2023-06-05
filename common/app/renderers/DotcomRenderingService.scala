@@ -8,6 +8,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.SimplePage
 import model.{
   CacheTime,
   Cached,
@@ -19,7 +20,6 @@ import model.{
   PageWithStoryPackage,
   PressedPage,
   RelatedContentItem,
-  SimplePage,
   Topic,
   TopicResult,
 }
@@ -28,9 +28,10 @@ import model.dotcomrendering.{
   DotcomFrontsRenderingDataModel,
   DotcomNewslettersPageRenderingDataModel,
   DotcomRenderingDataModel,
+  DotcomTagFrontsRenderingDataModel,
   PageType,
 }
-import services.NewsletterData
+import services.{IndexPage, NewsletterData}
 import services.newsletters.model.NewsletterResponse
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -277,6 +278,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+  }
+
+  def getTagFront(
+      ws: WSClient,
+      page: IndexPage,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomTagFrontsRenderingDataModel(
+      page,
+      request,
+      pageType,
+    )
+
+    val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/TagFront", CacheTime.Facia)
   }
 
   def getInteractive(
