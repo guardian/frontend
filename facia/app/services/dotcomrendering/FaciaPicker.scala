@@ -1,11 +1,11 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments, DCRFronts}
+import conf.switches.Switches.DCRFronts
 import implicits.Requests._
 import model.PressedPage
 import model.facia.PressedCollection
-import model.pressed.{LatestSnap, LinkSnap}
+import model.pressed.{LinkSnap}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -49,6 +49,20 @@ object FrontChecks {
       "news/most-popular",
     )
 
+  /*
+   * This list contains JSON.HTML thrashers that DCR Supports. These thrashers should not actually be rendered by DCR
+   * but instead have an alternate way of being rendered on DCR.
+   *
+   * Right now this is limited to just treats as we now configure treats in DCR instead of relying on a thrasher.
+   *
+   * In theory once 100% of the page views for these fronts are rendered by DCR then the thrashers can be deleted.
+   */
+  val SUPPORTED_JSON_HTML_THRASHERS: Set[String] =
+    Set(
+      "https://interactive.guim.co.uk/thrashers/qatar-beyond-the-football/source.json",
+      "https://interactive.guim.co.uk/thrashers/newsletters-2020-election-nugget/source.json",
+    )
+
   val UNSUPPORTED_THRASHERS: Set[String] =
     Set(
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/12/wordiply/default",
@@ -78,7 +92,6 @@ object FrontChecks {
       "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/lanre-bakare-front-default",
       "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/hidden-figures-front-default",
       "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/johny-pitts-photo-essay-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/09/pandora-header/default",
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2023/04/cost-of-crown/default",
       // End of list of full-width thrashers
     )
@@ -140,8 +153,8 @@ object FrontChecks {
           case card: LinkSnap if card.properties.embedType.contains("link") => false
           case card: LinkSnap if card.properties.embedType.contains("interactive") =>
             card.properties.embedUri.exists(UNSUPPORTED_THRASHERS.contains)
-          // We don't support json.html embeds yet
-          case card: LinkSnap if card.properties.embedType.contains("json.html") => true
+          case card: LinkSnap if card.properties.embedType.contains("json.html") =>
+            card.properties.embedUri.exists(uri => !SUPPORTED_JSON_HTML_THRASHERS.contains(uri))
           // Because embedType is typed as Option[String] it's hard to know whether we've
           // identified all possible embedTypes. If it's an unidentified embedType then
           // assume we can't render it.
@@ -181,13 +194,13 @@ object FaciaPicker extends GuLogging {
   }
 
   def getTier(faciaPage: PressedPage)(implicit request: RequestHeader): RenderType = {
-    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRFronts)
     lazy val checks = dcrChecks(faciaPage)
+    lazy val dcrSwitchEnabled = DCRFronts.isSwitchedOn
     lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue)
 
-    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, participatingInTest, dcrCouldRender)
+    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, dcrSwitchEnabled, dcrCouldRender)
 
-    logTier(faciaPage, participatingInTest, dcrCouldRender, checks, tier)
+    logTier(faciaPage, dcrCouldRender, checks, tier)
 
     tier
   }
@@ -196,19 +209,18 @@ object FaciaPicker extends GuLogging {
       isRss: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
-      participatingInTest: Boolean,
+      dcrSwitchEnabled: Boolean,
       dcrCouldRender: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
     else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
-    else if (dcrCouldRender && participatingInTest) RemoteRender
+    else if (dcrCouldRender && dcrSwitchEnabled) RemoteRender
     else LocalRender
   }
 
   private def logTier(
       faciaPage: PressedPage,
-      participatingInTest: Boolean,
       dcrCouldRender: Boolean,
       checks: Map[String, Boolean],
       tier: RenderType,
@@ -220,8 +232,7 @@ object FaciaPicker extends GuLogging {
     }
     val properties =
       Map(
-        "participatingInTest" -> participatingInTest.toString,
-        "testPercentage" -> DCRFronts.participationGroup.percentage,
+        "dcrFrontsSwitchOn" -> DCRFronts.isSwitchedOn.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
         "tier" -> tierReadable,

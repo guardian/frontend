@@ -7,7 +7,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      DCRFronts,
       OfferHttp3,
       EuropeNetworkFront,
       DCRJavascriptBundle,
@@ -31,15 +30,6 @@ object DCRJavascriptBundle
       participationGroup = Perc1A,
     )
 
-object DCRFronts
-    extends Experiment(
-      name = "dcr-fronts",
-      description = "Use DCR for fronts",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc50,
-    )
-
 object DCRImageContent
     extends Experiment(
       name = "dcr-image-content",
@@ -54,7 +44,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 6, 5),
+      sellByDate = LocalDate.of(2023, 7, 3),
       participationGroup = Perc0B,
     )
 
@@ -82,7 +72,7 @@ object ServerSideLiveblogInlineAds
       description =
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 6, 1),
+      sellByDate = LocalDate.of(2023, 9, 1),
       participationGroup = Perc0C,
     )
 
