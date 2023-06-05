@@ -10,21 +10,7 @@ import conf.Configuration
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
-import model.{
-  ArticleDateTimes,
-  Badges,
-  CanonicalLiveBlog,
-  ContentFormat,
-  ContentPage,
-  GUDateTimeFormatNew,
-  ImageContentPage,
-  InteractivePage,
-  LiveBlogPage,
-  MessageUsData,
-  PageWithStoryPackage,
-  Topic,
-  TopicResult,
-}
+import model.{ArticleDateTimes, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, GUDateTimeFormatNew, ImageContentPage, InteractivePage, LiveBlogPage, MediaPage, MessageUsData, PageWithStoryPackage, Topic, TopicResult}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -255,6 +241,31 @@ object DotcomRenderingDataModel {
       newsletter = newsletter,
       topicResult = None,
       messageUs = None,
+    )
+  }
+
+  def forMedia(
+                       mediaPage: MediaPage,
+                       request: RequestHeader,
+                       pageType: PageType,
+                       mainBlock: Option[APIBlock],
+                     ) = {
+
+    val linkedData = LinkedData.forArticle(
+      article = mediaPage.media,
+      baseURL = Configuration.dotcom.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page = mediaPage,
+      request = request,
+      pageType = pageType,
+      linkedData = linkedData,
+      mainBlock = mainBlock,
+      bodyBlocks = Seq.empty,
+      hasStoryPackage = mediaPage.related.hasStoryPackage,
+      storyPackage = getStoryPackage(mediaPage.related.faciaItems, request),
     )
   }
 

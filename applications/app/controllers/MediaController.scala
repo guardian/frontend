@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Block, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
@@ -9,22 +9,27 @@ import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import JsonComponent.withRefreshStatus
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import pages.ContentHtmlPage
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{MediaPicker, RemoteRender}
 
 import scala.concurrent.Future
 
-case class MediaPage(media: ContentType, related: RelatedContent) extends ContentPage {
-  override lazy val item = media
-}
-
-class MediaController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit
-    context: ApplicationContext,
-) extends BaseController
+class MediaController(
+    contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    wsClient: WSClient,
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+)(implicit context: ApplicationContext)
+    extends BaseController
     with RendersItemResponse
     with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderJson(path: String): Action[AnyContent] = render(path)
+
   def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
   def renderInfoJson(path: String): Action[AnyContent] =
@@ -36,6 +41,18 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
         Cached(60)(JsonComponent.fromWritable(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
       }
     }
+
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
+    lookup(path) flatMap {
+      case Right(model) =>
+        MediaPicker.getTier(model) match {
+          case RemoteRender => remoteRender(model, ???)
+          case _            => Future.successful(renderMedia(model))
+        }
+      case Left(other) => Future.successful(RenderOtherStatus(other))
+    }
+
+  override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
@@ -58,6 +75,8 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
     result recover convertApiExceptions
   }
 
+  private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
+
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => ContentHtmlPage.html(model)
     // The jsonResponse allows for a json version of each page to be accessed by users eg: https://www.theguardian.com/world/2018/jun/13/kim-jong-un-north-korea-summit-trump-visit-kcna.json
@@ -68,14 +87,30 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
-    lookup(path) map {
-      case Right(model) => renderMedia(model)
-      case Left(other)  => RenderOtherStatus(other)
-    }
+  private def getDCRJson(content: MediaPage, pageType: PageType, mainBlock: Option[Block])(implicit
+      request: RequestHeader,
+  ): String = {
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, mainBlock))
+  }
 
-  private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
-  override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
+  private def remoteRender(content: MediaPage, mainBlock: Option[Block])(implicit
+      request: RequestHeader,
+  ): Future[Result] = {
+    val pageType = PageType(content, request, context)
+
+    if (request.isJson) {
+      Future.successful(
+        common.renderJson(getDCRJson(content, pageType, mainBlock), content).as("application/json"),
+      )
+    } else {
+      remoteRenderer.getMedia(
+        wsClient,
+        content,
+        pageType,
+        mainBlock,
+      )
+    }
+  }
 }
 
 case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)

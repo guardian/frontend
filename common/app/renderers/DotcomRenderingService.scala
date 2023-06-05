@@ -14,6 +14,7 @@ import model.{
   ImageContentPage,
   InteractivePage,
   LiveBlogPage,
+  MediaPage,
   MessageUsData,
   NoCache,
   PageWithStoryPackage,
@@ -325,6 +326,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mainBlock: Option[Block],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getMedia(
+      ws: WSClient,
+      mediaPage: MediaPage,
+      pageType: PageType,
+      mainBlock: Option[Block],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, mainBlock)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
