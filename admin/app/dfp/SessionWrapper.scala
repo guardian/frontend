@@ -13,6 +13,7 @@ import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead, logA
 import scala.jdk.CollectionConverters._
 
 import scala.util.control.NonFatal
+import common.DfpApiMetrics.DfpSessionErrors
 
 private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
 
@@ -225,6 +226,7 @@ object SessionWrapper extends GuLogging {
       } catch {
         case NonFatal(e) =>
           log.error(s"Building DFP session failed.", e)
+          DfpSessionErrors.increment();
           None
       }
 

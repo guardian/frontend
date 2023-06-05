@@ -138,6 +138,13 @@ object ContentApiMetrics {
 
 }
 
+object DfpApiMetrics {
+  val DfpSessionErrors = CountMetric(
+    "dfp-session-errors",
+    "Number of times the app failed to build a DFP session",
+  )
+}
+
 object FaciaPressMetrics {
   val FrontPressCronSuccess = CountMetric(
     "front-press-cron-success",
@@ -240,7 +247,7 @@ class CloudWatchMetricsLifecycle(
 
   override def start(): Unit = {
     jobs.deschedule("ApplicationSystemMetricsJob")
-    //run every minute, 36 seconds after the minute
+    // Run every minute, 36 seconds after the minute
     jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?") {
       report()
     }
