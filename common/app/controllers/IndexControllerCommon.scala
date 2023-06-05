@@ -82,7 +82,7 @@ trait IndexControllerCommon
           case Right(model) =>
             if (model.contents.nonEmpty) renderFaciaFront(model)
             else
-              Future {
+              successful(
                 Cached(60)(
                   WithoutRevalidationResult(
                     Gone(
@@ -93,9 +93,9 @@ trait IndexControllerCommon
                       ),
                     ),
                   ),
-                )
-              }
-          case Left(other) => Future { RenderOtherStatus(other) }
+                ),
+              )
+          case Left(other) => successful(RenderOtherStatus(other))
         }).flatten
     }
   }

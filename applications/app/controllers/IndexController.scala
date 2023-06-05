@@ -13,6 +13,7 @@ import services.IndexPage
 import services.dotcomrendering.{LocalRender, RemoteRender, TagFrontPicker}
 
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
 
 class IndexController(
     val contentApiClient: ContentApiClient,
@@ -28,7 +29,7 @@ class IndexController(
     TagFrontPicker.getTier(model) match {
       case RemoteRender =>
         if (request.isJson) {
-          Future {
+          successful(
             Cached(model.page) {
               JsonComponent.fromWritable(
                 DotcomTagFrontsRenderingDataModel(
@@ -37,8 +38,8 @@ class IndexController(
                   pageType = PageType(model, request, context),
                 ),
               )
-            }
-          }
+            },
+          )
         } else
           remoteRenderer.getTagFront(
             ws = ws,
@@ -46,7 +47,7 @@ class IndexController(
             pageType = PageType(model, request, context),
           )(request)
       case LocalRender =>
-        Future {
+        successful(
           Cached(model.page) {
             if (request.isRss) {
               val body = TrailsToRss(model.page.metadata, model.trails)
@@ -56,8 +57,8 @@ class IndexController(
             } else {
               RevalidatableResult.Ok(IndexHtmlPage.html(model))
             }
-          }
-        }
+          },
+        )
     }
   }
 }
