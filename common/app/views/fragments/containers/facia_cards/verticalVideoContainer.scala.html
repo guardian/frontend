@@ -28,13 +28,13 @@ data-layout="vertical-video"
     >
     </a>
 
-    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner vertical-height">
+    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner vertical-video-height">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
         @treats(containerDefinition, frontProperties)
         </li>
 
         @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo).zipWithIndex.map { case (item, index) =>
-        <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first} fc-item--pillar-@item.maybePillar.nameOrDefault @if(item.isPaidFor) { video-playlist__item--paid-for } vertical-width">
+        <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first} fc-item--pillar-@item.maybePillar.nameOrDefault @if(item.isPaidFor) { video-playlist__item--paid-for } vertical-video-width">
         @item.properties.maybeContent.map { content =>
             @defining(content.elements.mediaAtoms.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))) { youTubeAtom =>
                 @youTubeAtom.map { youTubeAtom =>
