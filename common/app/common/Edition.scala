@@ -6,7 +6,6 @@ import java.util.Locale
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import experiments.{ActiveExperiments, EuropeNetworkFront}
 
 import java.time.ZoneId
 
