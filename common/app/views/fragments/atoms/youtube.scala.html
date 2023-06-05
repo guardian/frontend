@@ -54,29 +54,7 @@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
-              @if(verticalVideo == true){
-                <div class="vertical-video-overlay">
-                    <div class="video-overlay__headline">
-
-                    @for(f <- faciaHeaderProperties) {
-                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor)
-                        @if(f.showByline) {
-                            <div class="fc-item__byline">@f.byline</div>
-                        }
-
-                    </div>
-                    @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
-                        <span class="video-overlay__duration">
-                        @media.formattedDuration
-                        </span>
-                    }
-
-                </div>
-                <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a><div class="pinned-block__overlay" />            <div class="pinned-block__overlay" />
-
-              }
-                } else {
-                <div class="@RenderClasses(Map("video-overlay" -> true, "vertical" -> verticalVideo))">
+                <div class="@if(verticalVideo) {vertical-video-overlay} else {video-overlay}">
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
@@ -93,7 +71,6 @@
                     }
                 </div>
                 <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
-            }
                 }
             }
         }
