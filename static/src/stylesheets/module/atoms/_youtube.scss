@@ -36,11 +36,11 @@
 
 .video-playlist__item:not(.vertical-width)  .youtube-media-atom iframe,
 .video-playlist__item:not(.vertical-width)  .youtube-media-atom .vjs-big-play-button {
-        @include mq($until: desktop) {
-            top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
-            bottom: 0;
-            height: auto;
-        }
+    @include mq($until: desktop) {
+        top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
+        bottom: 0;
+        height: auto;
+    }
 }
 
 .video-playlist__item--active .youtube-media-atom {

@@ -257,8 +257,7 @@ const update = (state: State, container: Element): Promise<number> => {
 const getInitialState = (container: Element): State => ({
     position: 0,
     length: Number(container.getAttribute('data-number-of-videos')),
-    // hard coding for now but this needs to be worked out dependent on the aspect ratio
-    videoWidth: 280,
+    videoWidth: 700,
     container,
 });
 
