@@ -62,7 +62,7 @@ object TagFrontPicker extends GuLogging {
         "participatingInTest" -> participatingInTest.toString,
 //        "testPercentage" -> DCRTagFronts.participationGroup.percentage,
         "dcrCouldRender" -> dcrCouldRender.toString,
-        "isFront" -> "true",
+        "isTagFront" -> "true",
         "tier" -> tierReadable,
       ) ++ checksToString
 
