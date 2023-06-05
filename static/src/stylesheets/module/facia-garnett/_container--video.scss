@@ -43,10 +43,10 @@ $video-width-desktop: 700px;
     }
 
 
-    .vertical-width {
+    .vertical-video-width {
         width: 300px;
     }
-    .vertical-height {
+    .vertical-video-height {
         height: 533px;
     }
     .media__container--hidden {
@@ -150,7 +150,7 @@ $video-width-desktop: 700px;
     }
 
     @include mq($until: desktop) {
-        &:not(.vertical-height) {
+        &:not(.vertical-video-height) {
             overflow-x: scroll;
             overflow-y: hidden;
             -webkit-overflow-scrolling: touch;
