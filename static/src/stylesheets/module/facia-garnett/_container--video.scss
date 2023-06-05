@@ -234,7 +234,7 @@ $video-width-desktop: 700px;
     left: 0;
     width: 10px;
 
-    @include mq($from:mobileLandscape) {
+    @include mq($from: mobileLandscape) {
         width: 20px;
     }
     @include mq(leftCol) {
@@ -269,7 +269,7 @@ $video-width-desktop: 700px;
         width: calc(100% - 320px);
     }
     @include mq($from: mobileLandscape, $until: phablet) {
-        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.6) 25.04%);
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 25%);
 }
 
     @include mq(leftCol) {
@@ -465,7 +465,7 @@ $video-width-desktop: 700px;
     width: 10px;
 
     @include mq($from: mobileLandscape) {
-    width: 20px;
+        width: 20px;
     }
 
     @include mq(leftCol) {

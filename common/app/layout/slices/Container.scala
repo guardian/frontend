@@ -43,9 +43,6 @@ object Container extends GuLogging {
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
 
-  def getCollectionType(collectionConfig: CollectionConfig) =
-    collectionConfig.collectionType
-
   def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
     resolve(collectionConfig.collectionType) match {
       case Dynamic(dynamicContainer) =>
