@@ -232,8 +232,11 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--prev {
     left: 0;
-    width: calc((100% - 300px) / 2);
+    width: 10px;
 
+    @include mq($from:mobileLandscape) {
+        width: 20px;
+    }
     @include mq(leftCol) {
         width: gs-span(2) + $gs-gutter * 2;
 
@@ -260,7 +263,14 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--next {
     right: 0;
-    width: calc((100% - 300px) / 2);
+    width: calc(100% - 310px);
+
+    @include mq($from: mobileLandscape) {
+        width: calc(100% - 320px);
+    }
+    @include mq($from: mobileLandscape $until phablet) {
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.6) 25.04%);
+}
 
     @include mq(leftCol) {
         width: gs-span(8) + $gs-gutter * 2;
@@ -452,10 +462,10 @@ $video-width-desktop: 700px;
     box-sizing: border-box;
     margin-bottom: 0;
     white-space: normal;
-    width: 20px;
+    width: 10px;
 
-    @include mq(desktop) {
-        width: 250px
+    @include mq($from: mobileLandscape) {
+    width: 20px;
     }
 
     @include mq(leftCol) {
