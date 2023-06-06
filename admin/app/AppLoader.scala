@@ -96,6 +96,11 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   lazy val appIdentity = ApplicationIdentity("admin")
 
+  override lazy val appMetrics = ApplicationMetrics(
+    DfpApiMetrics.DfpSessionErrors,
+    DfpApiMetrics.DfpApiErrors,
+  )
+
   def actorSystem: ActorSystem
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
