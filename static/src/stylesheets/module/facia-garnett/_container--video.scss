@@ -211,19 +211,20 @@ $video-width-desktop: 700px;
     display: none;
     @include mq(desktop) {
         width: gs-span(2);
-    }
-    position: absolute;
-    display: block;
-    top: 0;
-    bottom: 0;
-    z-index: 2;
-    cursor: pointer;
-    &:hover .video-playlist__icon,
-    &:focus .video-playlist__icon {
-        background-color: $highlight-main;
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
+        cursor: pointer;
 
-        svg {
-            fill: $brightness-7;
+        &:hover .video-playlist__icon,
+        &:focus .video-playlist__icon {
+            background-color: $highlight-main;
+
+            svg {
+                fill: $brightness-7;
+            }
         }
     }
 }
@@ -250,11 +251,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--prev {
     left: 0;
-    width: 10px;
-
-    @include mq($from: mobileLandscape) {
-        width: 20px;
-    }
     @include mq(leftCol) {
         width: gs-span(2) + $gs-gutter * 2;
 
@@ -281,25 +277,15 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--next {
     right: 0;
-    width: calc(100% - 310px);
-
-    @include mq($from: mobileLandscape) {
-        width: calc(100% - 320px);
-    }
-    @include mq($from: mobileLandscape, $until: phablet) {
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 25%);
-}
-
     @include mq(leftCol) {
-        width: gs-span(8) + $gs-gutter * 2;
+        width: gs-span(3) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
         }
     }
     @include mq(wide) {
-        // hard coding for testing - this needs fixing
-        width: gs-span(9) + $gs-gutter * 2;
+        width: gs-span(4) + $gs-gutter * 2;
 
         .has-page-skin & {
             width: gs-span(2);
@@ -312,6 +298,32 @@ $video-width-desktop: 700px;
         svg {
             margin-right: -2px;
         }
+    }
+}
+
+.video-playlist__control--prev.vertical-video {
+    width: 10px;
+
+    @include mq($from: mobileLandscape) {
+        width: 20px;
+    }
+}
+
+.video-playlist__control--next.vertical-video {
+    width: calc(100% - 310px);
+
+    @include mq($from: mobileLandscape) {
+        width: calc(100% - 320px);
+    }
+    @include mq($from: mobileLandscape, $until: phablet) {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 25%);
+}
+
+    @include mq(leftCol) {
+        width: gs-span(8) + $gs-gutter * 2;
+    }
+    @include mq(wide) {
+        width: gs-span(9) + $gs-gutter * 2;
     }
 }
 
