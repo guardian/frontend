@@ -208,6 +208,27 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__control {
+    display: none;
+    @include mq(desktop) {
+        width: gs-span(2);
+    }
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    cursor: pointer;
+    &:hover .video-playlist__icon,
+    &:focus .video-playlist__icon {
+        background-color: $highlight-main;
+
+        svg {
+            fill: $brightness-7;
+        }
+    }
+}
+
+.video-playlist__overlay {
     position: absolute;
     display: block;
     top: 0;
