@@ -404,26 +404,21 @@ $video-width-desktop: 700px;
 }
 
 .video-overlay {
-    position: relative;
+    position: absolute;
     z-index: 2;
     white-space: normal;
-    padding: 0 $gs-gutter/4 $gs-baseline * 2;
+    padding: 2.5rem $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
-    border-top: 1px solid $highlight-main;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, .9);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25%);
     min-height: gs-height(3);
-    margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
+    width: 100%;
+    bottom: 0;
+
     @include mq(desktop, leftCol) {
         opacity: 0;
         transition: opacity .4s ease-out;
-    }
-    @include mq(desktop) {
-        position: absolute;
-        top: $gs-baseline;
-        left: $gs-gutter;
-        width: gs-span(3);
     }
 
     .video-playlist__item .vjs-playing ~ & {
