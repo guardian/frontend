@@ -157,7 +157,10 @@ $video-width-desktop: 700px;
             transform: none !important;
         }
     }
-    transition: transform .4s ease-out;
+
+    &:is(.vertical-video-height) {
+        transition: transform .4s ease-out;
+    }
 
     @include mq(desktop) {
         padding-right: 0;
