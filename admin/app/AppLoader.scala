@@ -98,6 +98,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   override lazy val appMetrics = ApplicationMetrics(
     DfpApiMetrics.DfpSessionErrors,
+    DfpApiMetrics.DfpApiErrors,
   )
 
   def actorSystem: ActorSystem

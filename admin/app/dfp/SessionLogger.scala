@@ -5,6 +5,7 @@ import com.google.api.ads.admanager.axis.v202208._
 import common.GuLogging
 
 import scala.util.control.NonFatal
+import common.DfpApiMetrics
 
 private[dfp] object SessionLogger extends GuLogging {
 
@@ -82,10 +83,12 @@ private[dfp] object SessionLogger extends GuLogging {
       Some(result)
     } catch {
       case e: ApiException =>
-        logApiException(e, msgPrefix)
+        logApiException(e, msgPrefix);
+        DfpApiMetrics.DfpApiErrors.increment();
         None
       case NonFatal(e) =>
-        log.error(s"$msgPrefix failed", e)
+        log.error(s"$msgPrefix failed", e);
+        DfpApiMetrics.DfpApiErrors.increment();
         None
     }
   }
