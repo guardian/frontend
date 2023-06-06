@@ -385,17 +385,14 @@ $video-width-desktop: 700px;
     vertical-align: top;
     width: 70%;
     background-color: $brightness-7;
-    // this is the margin on small phones that breaks the click to scroll
-    //margin-left: $gs-gutter / 2;
+    margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
-    // this is the margin on tablet that breaks the click to scroll
 
-    //@include mq(mobileLandscape) {
-    //margin-left: $gs-gutter;
-    //}
+    @include mq(mobileLandscape) {
+    margin-left: $gs-gutter;
+    }
     @include mq(desktop) {
-        // do we need to comment this out??
-        //width: $video-width-desktop;
+        width: $video-width-desktop;
         margin: 0;
     }
 
@@ -406,7 +403,10 @@ $video-width-desktop: 700px;
     }
 }
 
-// we get to kill this class for vertical
+.video-playlist__item.vertical-video-width {
+    margin-left: 0;
+}
+
 //.video-playlist__item--first {
 //@include mq(desktop, leftCol) {
 //margin-left: gs-span(2);
