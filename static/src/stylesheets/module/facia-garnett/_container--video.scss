@@ -205,16 +205,6 @@ $video-width-desktop: 700px;
         margin-left: 260px;
     }
 
-    //@include mq(desktop) {
-    //    &:hover .vertical-video-playlist__icon,
-    //    &:focus .vertical-video-playlist__icon {
-    //        background-color: $highlight-main;
-    //
-    //        svg {
-    //            fill: $brightness-7;
-    //        }
-    //    }
-    //}
 }
 
 .video-playlist__control {
