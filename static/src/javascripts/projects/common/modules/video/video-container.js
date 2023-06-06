@@ -60,7 +60,7 @@ const reducers = {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
                 isBreakpoint({
-                    max: 'desktop',
+                    max: 'mobile',
                 })
             ) {
                 const youTubeIframes = Array.from(

@@ -52,25 +52,31 @@
             *@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
+            @*
+              Below is only rendered on video cards within the video container
+            *@
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
+                @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
+                    <span class="video-overlay__duration">
+                    @media.formattedDuration
+                    </span>
+                }
                 <div class="video-overlay">
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
-                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor)
+                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor, isLink = false)
                         @if(f.showByline) {
                             <div class="fc-item__byline">@f.byline</div>
                         }
+                    }
 
                     </div>
-                        @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
-                            <span class="video-overlay__duration">
-                                @media.formattedDuration
-                            </span>
-                        }
-                    </div>
-                    <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
-                }
+
+                </div>
+                    @for(f <- faciaHeaderProperties) {
+                        <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
+                    }
             }
         }
         @defining(posterImageOverride orElse media.posterImage) { bestPosterImage =>
