@@ -20,12 +20,21 @@
     transition: opacity 1s linear, visibility 1s;
 }
 
-.video-playlist__item .youtube-media-atom {
-    // commenting out include on desktop this is the opacity on non-focused images
-    //@include mq(desktop) {
+@mixin playlist-item-opacity {
     opacity: .3;
     transition: opacity .4s ease-out;
-    //}
+}
+
+.video-playlist__item .youtube-media-atom {
+    @include playlist-item-opacity;
+}
+
+.video-playlist__item:not(.vertical-video-width) .youtube-media-atom {
+    opacity: 1;
+    transition: none;
+    @include mq(desktop) {
+        @include playlist-item-opacity;
+    }
 }
 
 .video-playlist__item .youtube-media-atom .vjs-big-play-button {
