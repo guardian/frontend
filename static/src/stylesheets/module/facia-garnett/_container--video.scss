@@ -140,6 +140,18 @@ $video-width-desktop: 700px;
     pointer-events: none;
 }
 
+.video-playlist--end .vertical-video-playlist__icon--next,
+.video-playlist--start .vertical-video-playlist__icon--prev {
+    pointer-events: none;
+    cursor: default;
+    border: 1px solid #ffffff;
+    background-color: #101010;
+
+    svg {
+        fill: #ffffff;
+    }
+}
+
 .video-playlist__inner {
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
@@ -364,15 +376,6 @@ $video-width-desktop: 700px;
     }
 }
 
-.vertical-video-playlist__icon.disabled {
-    border: 1px solid #ffffff;
-    background-color: #101010;
-
-    svg {
-        fill: #ffffff;
-    }
-}
-
 .youtube-media-atom__play-button {
     background-color: $brightness-7;
     border-radius: 50%;
@@ -389,7 +392,7 @@ $video-width-desktop: 700px;
     margin-bottom: $gs-baseline;
 
     @include mq(mobileLandscape) {
-    margin-left: $gs-gutter;
+        margin-left: $gs-gutter;
     }
     @include mq(desktop) {
         width: $video-width-desktop;

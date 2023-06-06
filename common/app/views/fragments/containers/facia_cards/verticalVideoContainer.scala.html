@@ -99,7 +99,7 @@ data-layout="vertical-video"
         aria-hidden="true"
         aria-label="show previous video"
         >
-        @fragments.inlineSvg("chevron-left", "icon", Seq("vertical-video-playlist__icon", "disabled"))
+        @fragments.inlineSvg("chevron-left", "icon", Seq("vertical-video-playlist__icon", "vertical-video-playlist__icon--prev"))
         </a>
         <span style="color: white">
             <span id="vertical-carousel-count">1</span>
@@ -111,7 +111,7 @@ data-layout="vertical-video"
         tabindex="0"
         aria-label="show next video"
         >
-        @fragments.inlineSvg("chevron-right", "icon", Seq("vertical-video-playlist__icon"))
+        @fragments.inlineSvg("chevron-right", "icon", Seq("vertical-video-playlist__icon", "vertical-video-playlist__icon--next"))
         </a>
     </div>
 </div>
