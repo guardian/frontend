@@ -30,6 +30,7 @@ import model.dotcomrendering.{
   DotcomRenderingDataModel,
   DotcomTagFrontsRenderingDataModel,
   PageType,
+  Trail,
 }
 import services.{IndexPage, NewsletterData}
 import services.newsletters.model.NewsletterResponse
@@ -266,6 +267,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostViewed: Seq[RelatedContentItem],
       mostCommented: Option[Content],
       mostShared: Option[Content],
+      deeplyRead: Option[Seq[Trail]],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomFrontsRenderingDataModel(
       page,
@@ -274,6 +276,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostViewed,
       mostCommented,
       mostShared,
+      deeplyRead,
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)

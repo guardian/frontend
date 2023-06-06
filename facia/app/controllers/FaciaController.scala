@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
-import agents.MostViewedAgent
+import agents.{DeeplyReadAgent, MostViewedAgent}
 import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
@@ -22,6 +22,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
+import conf.switches.Switches
 import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
@@ -43,6 +44,7 @@ trait FaciaController
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
   val mostViewedAgent: MostViewedAgent
+  val deeplyReadAgent: DeeplyReadAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
@@ -200,6 +202,11 @@ trait FaciaController
       case None => Future.successful(None)
     }
 
+    val networkFrontEdition = Edition.allWithBetaEditions.find(_.networkFrontId == path)
+    val deeplyRead = if (Switches.DeeplyReadSwitch.isSwitchedOn) {
+      networkFrontEdition.map(deeplyReadAgent.getTrails)
+    } else None
+
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
@@ -219,6 +226,7 @@ trait FaciaController
             mostViewed = mostViewedAgent.mostViewed(Edition(request)),
             mostCommented = mostViewedAgent.mostCommented,
             mostShared = mostViewedAgent.mostShared,
+            deeplyRead = deeplyRead,
           )(request),
           targetedTerritories,
         )
@@ -242,6 +250,7 @@ trait FaciaController
                     mostViewed = mostViewedAgent.mostViewed(Edition(request)),
                     mostCommented = mostViewedAgent.mostCommented,
                     mostShared = mostViewedAgent.mostShared,
+                    deeplyRead = deeplyRead,
                   ),
                 )
               } else JsonFront(faciaPage)
@@ -496,5 +505,6 @@ class FaciaControllerImpl(
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
+    val deeplyReadAgent: DeeplyReadAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController
