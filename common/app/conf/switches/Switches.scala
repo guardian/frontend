@@ -187,4 +187,13 @@ object Switches
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }
     sortedSwitches.toList.sortBy(_._1.name)
   }
+
+  def updateStates(switchStates: Map[String, String]): Unit = {
+    Switches.all foreach { switch =>
+      switchStates.get(switch.name) foreach {
+        case "on" => switch.switchOn()
+        case _    => switch.switchOff()
+      }
+    }
+  }
 }
