@@ -362,11 +362,17 @@ const onPlayerReady = (
     };
 
     const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
+    console.log("iFrameBehaviourConfig: ");
+    console.log(iFrameBehaviourConfig);
     const iFrameBehaviour = getIFrameBehaviour(iFrameBehaviourConfig);
+    console.log("iFrameBehaviour: ");
+    console.log(iFrameBehaviour);
     if (iFrameBehaviour.mutedOnStart) {
+        console.log("muted on start");
         youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
+        console.log("playing the video");
         youtubePlayer.playVideo();
     }
 
@@ -376,10 +382,12 @@ const onPlayerReady = (
         if (
             !!config.get('page.section') &&
             isBreakpoint({
-                min: 'desktop',
+                min: 'mobile',
             })
         ) {
             const endSlate = getEndSlate(overlay);
+            console.log("endSlate: ");
+            console.log(endSlate);
 
             if (endSlate) {
                 players[uniqueAtomId].endSlate = endSlate;
