@@ -444,6 +444,8 @@ const initYoutubePlayerForElem = (el) => {
             return;
         }
 
+        iframe.style.display = 'block'
+
         /**
          * Note:
          * This element id must be unique!

@@ -91,7 +91,6 @@ const reducers = {
                 });
             }
         };
-        makeYouTubeNonPlayableAtSmallBreakpoint(previousState);
 
         fastdom.measure(() => {
             // Lazy load images on scroll for mobile
