@@ -479,11 +479,26 @@ $video-width-desktop: 700px;
 }
 
 .video-overlay__duration {
-    @include fs-textSans(3);
+    @include fs-textSans(2);
     position: absolute;
     right: 4px;
-    color: $brightness-86;
     z-index: 2;
+
+    border: 2px solid #000000;
+    border-radius: 500px;
+    background-color: #000000;
+    width: 57px;
+    height: 28px;
+    margin-top: 6px;
+    margin-right: 6px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+
+    span {
+        padding-top: 4px;
+    }
 }
 
 .fc-item__video-container {
