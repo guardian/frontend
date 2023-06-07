@@ -79,20 +79,6 @@ object FrontChecks {
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/02/pw-uk/default",
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/11/comfort-eating-grace-dent-thrasher-no-logo/default",
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/02/weekend-podcast-2022/default",
-      // We can support the Cotton Capital thrashers once this is completed: https://github.com/guardian/dotcom-rendering/issues/7748
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/default-fronts-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/david-olusoga-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/cassandra-gooptar-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/gary-younge-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/deneen-l-brown-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/the-enslaved-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/olivette-otele-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/interactives-front--globe",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/michael-taylor-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/lanre-bakare-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/hidden-figures-front-default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/10/tr/johny-pitts-photo-essay-front-default",
-      // End of list of Cotton Capital thrashers
     )
 
   def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
