@@ -410,22 +410,22 @@ $video-width-desktop: 700px;
     margin-left: 0;
 }
 
-//.video-playlist__item--first {
-//@include mq(desktop, leftCol) {
-//margin-left: gs-span(2);
-//
-//    .has-page-skin & {
-//        margin-left: 0;
-//    }
-//}
-//@include mq(leftCol) {
-//    margin-left: 0;
-//
-//    .has-page-skin & {
-//        margin-left: 0;
-//    }
-//}
-//}
+.video-playlist__item--first {
+@include mq(desktop, leftCol) {
+margin-left: gs-span(2);
+
+    .has-page-skin & {
+        margin-left: 0;
+    }
+}
+@include mq(leftCol) {
+    margin-left: 0;
+
+    .has-page-skin & {
+        margin-left: 0;
+    }
+}
+}
 
 .video-playlist__item--active {
     .vjs-big-play-button {
@@ -489,6 +489,39 @@ $video-width-desktop: 700px;
 }
 
 .video-title--leftcol {
+    display:none;
+    @include mq(leftCol) {
+        position: relative;
+        height: $video-width-desktop / 16 * 9;
+        display: inline-block;
+        width: gs-span(2) + $gs-gutter * 2;
+        padding: ($gs-baseline / 2) $gs-gutter;
+        box-sizing: border-box;
+        margin-bottom: 0;
+        white-space: normal;
+    }
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter * 2;
+
+        .has-page-skin & {
+            width: gs-span(2) + $gs-gutter * 2;
+        }
+    }
+
+    .inline-guardian-video-logo svg {
+        margin-top: 4px;
+        max-width: 100%;
+
+        &:hover .inline-guardian-video-logo__title {
+            fill: #ffffff;
+        }
+    }
+
+    .has-page-skin & {
+        display: none;
+    }
+}
+.vertical-video-title--leftcol {
     position: relative;
     height: 100%;
     display: inline-block;
@@ -532,19 +565,19 @@ $video-width-desktop: 700px;
         display: none;
     }
 }
-//we get to kill this for vertical  - also it is duplicated for some reason??
-//.video-playlist__item--first {
-//    @include mq(desktop) {
-//        margin-left: gs-span(2);
-//    }
-//    @include mq(leftCol) {
-//        margin-left: 0;
-//
-//        .has-page-skin & {
-//            margin-left: gs-span(2);
-//        }
-//    }
-//}
+
+.video-playlist__item--first {
+    @include mq(desktop) {
+        margin-left: gs-span(2);
+    }
+    @include mq(leftCol) {
+        margin-left: 0;
+
+        .has-page-skin & {
+            margin-left: gs-span(2);
+        }
+    }
+}
 
 .video-overlay {
     position: absolute;
