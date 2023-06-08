@@ -199,7 +199,7 @@ $video-width-desktop: 700px;
 
     @include mq($from: mobileMedium, $until: phablet) {
         position: absolute;
-        bottom: 70px;
+        bottom: 80px;
         right: 0;
         display: flex;
         flex-direction: column-reverse;
@@ -670,11 +670,15 @@ $video-width-desktop: 700px;
     }
 }
 
+.vertical-playlist__padding {
+    padding-bottom: 18px;
+}
+
 .vertical-video-overlay {
     position: absolute;
     z-index: 2;
     white-space: normal;
-    padding: 2.5rem $gs-gutter/4 $gs-baseline * 2;
+    padding: 2.5rem $gs-gutter/4 0 8px;
     box-sizing: border-box;
     color: #ffffff;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25.04%);
