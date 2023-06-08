@@ -411,20 +411,20 @@ $video-width-desktop: 700px;
 }
 
 .video-playlist__item--first {
-@include mq(desktop, leftCol) {
-margin-left: gs-span(2);
+    @include mq(desktop, leftCol) {
+        margin-left: gs-span(2);
 
     .has-page-skin & {
         margin-left: 0;
     }
 }
-@include mq(leftCol) {
-    margin-left: 0;
-
-    .has-page-skin & {
+    @include mq(leftCol) {
         margin-left: 0;
+
+        .has-page-skin & {
+            margin-left: 0;
+        }
     }
-}
 }
 
 .video-playlist__item--active {
@@ -670,10 +670,8 @@ margin-left: gs-span(2);
     bottom: 0;
 
     .video-playlist__item .vjs-playing ~ & {
-        //@include mq(desktop) {
         visibility: hidden;
         opacity: 0;
-        //}
     }
 
     .video-overlay__headline {

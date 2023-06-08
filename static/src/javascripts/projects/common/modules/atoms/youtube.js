@@ -291,7 +291,6 @@ const getIFrameBehaviour = (
         autoplay:
             ((isVideoArticle && isInternalReferrer && isMainVideo) ||
                 isFront) &&
-            !isAutoplayBlockingPlatform &&
             flashingElementsAllowed,
         mutedOnStart: false,
     };
