@@ -1,7 +1,6 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments, DCRImageContent}
 import model.Cors.RichRequestHeader
 import model.ImageContentPage
 import play.api.mvc.RequestHeader
@@ -27,7 +26,8 @@ object ImageContentPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    val participatingInTest = ActiveExperiments.isParticipating(DCRImageContent)
+    // Setting to false while still implementing this content type in DCR
+    val participatingInTest = false //ActiveExperiments.isParticipating(DCRImageContent)
     val dcrCanRender = dcrCouldRender(imageContentPage)
 
     val tier = {
