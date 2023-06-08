@@ -1,8 +1,8 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v202108.StatementBuilder
-import com.google.api.ads.admanager.axis.utils.v202108.StatementBuilder.SUGGESTED_PAGE_LIMIT
-import com.google.api.ads.admanager.axis.v202108._
+import com.google.api.ads.admanager.axis.utils.v202208.StatementBuilder
+import com.google.api.ads.admanager.axis.utils.v202208.StatementBuilder.SUGGESTED_PAGE_LIMIT
+import com.google.api.ads.admanager.axis.v202208._
 
 import scala.annotation.tailrec
 
