@@ -291,7 +291,7 @@ object NavLinks {
       auBusiness,
       science,
       tech,
-      podcasts,
+      podcastsAU,
     ),
   )
   val usNewsPillar = ukNewsPillar.copy(children =
