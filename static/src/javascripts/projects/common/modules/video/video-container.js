@@ -27,8 +27,8 @@ const getPositionState = (position, length) => ({
 });
 
 const updateCarouselCounter = (position) => {
-    document.getElementById("vertical-carousel-count").innerHTML = position + 1;
-
+    const verticalCarousel = document.getElementById("vertical-carousel-count")
+    if (verticalCarousel != null) verticalCarousel.innerHTML = position + 1;
 }
 const reducers = {
     NEXT: function next(previousState) {

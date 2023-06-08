@@ -414,10 +414,10 @@ $video-width-desktop: 700px;
     @include mq(desktop, leftCol) {
         margin-left: gs-span(2);
 
-    .has-page-skin & {
-        margin-left: 0;
+        .has-page-skin & {
+            margin-left: 0;
+        }
     }
-}
     @include mq(leftCol) {
         margin-left: 0;
 
@@ -489,7 +489,7 @@ $video-width-desktop: 700px;
 }
 
 .video-title--leftcol {
-    display:none;
+    display: none;
     @include mq(leftCol) {
         position: relative;
         height: $video-width-desktop / 16 * 9;
