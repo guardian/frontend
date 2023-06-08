@@ -196,7 +196,7 @@ object FaciaPicker extends GuLogging {
     tier
   }
 
-  def decideTier( 
+  def decideTier(
       isRss: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
