@@ -117,14 +117,6 @@ object FrontChecks {
     !faciaPage.metadata.hasPageSkin(request)
   }
 
-  def hasNoSlideshows(faciaPage: PressedPage): Boolean = {
-    // We don't support image slideshows
-    // See: https://github.com/guardian/dotcom-rendering/issues/4612
-    !faciaPage.collections.exists(collection =>
-      collection.curated.exists(card => card.properties.imageSlideshowReplace),
-    )
-  }
-
   def hasNoPaidCards(faciaPage: PressedPage): Boolean = {
     // We don't support paid content
     // See: https://github.com/guardian/dotcom-rendering/issues/5945
@@ -184,7 +176,6 @@ object FaciaPicker extends GuLogging {
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
-      ("hasNoSlideshows", FrontChecks.hasNoSlideshows(faciaPage)),
       ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
@@ -205,7 +196,7 @@ object FaciaPicker extends GuLogging {
     tier
   }
 
-  def decideTier(
+  def decideTier( 
       isRss: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
