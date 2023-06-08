@@ -95,7 +95,6 @@ class ArticleController(
   private def getDCRJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
-    val edition = Edition(request)
 
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel
