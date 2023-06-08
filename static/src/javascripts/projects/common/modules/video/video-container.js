@@ -163,7 +163,7 @@ const update = (state, container) => {
 
         if (activeEl != null) {
             activeEl.classList.remove('video-playlist__item--active');
-            !isVerticalVideo && $('.youtube-media-atom__iframe', activeEl).hide();
+            !verticalVideo && $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
             $('.video-overlay .fc-item__link', activeEl).attr(
                 'aria-hidden',
