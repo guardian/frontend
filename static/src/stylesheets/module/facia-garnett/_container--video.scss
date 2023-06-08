@@ -204,9 +204,9 @@ $video-width-desktop: 700px;
         display: flex;
         flex-direction: column-reverse;
         justify-content: flex-end;
-        align-items: center;
+        align-items: flex-start;
         z-index: 10;
-        width: calc(100% - 310px);
+        width: calc(100% - 328px);
     }
 
     @include mq(leftCol)  {
