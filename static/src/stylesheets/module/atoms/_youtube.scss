@@ -26,13 +26,13 @@
 }
 
 .video-playlist__item .youtube-media-atom {
-    @include playlist-item-opacity;
+    @include mq($from: desktop) {
+        @include playlist-item-opacity;
+    }
 }
 
-.video-playlist__item:not(.vertical-video-width) .youtube-media-atom {
-    opacity: 1;
-    transition: none;
-    @include mq(desktop) {
+.video-playlist__item:is(.vertical-video-width) .youtube-media-atom {
+    @include mq($from: mobile) {
         @include playlist-item-opacity;
     }
 }
@@ -53,6 +53,10 @@
 }
 
 .video-playlist__item--active .youtube-media-atom {
+    opacity: 1;
+}
+
+.video-playlist__item--active:is(.vertical-video-width) .youtube-media-atom {
     opacity: 1;
 }
 
