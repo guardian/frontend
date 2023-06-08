@@ -341,7 +341,7 @@ $video-width-desktop: 700px;
     @include mq($from: mobileLandscape) {
         width: calc(100% - 320px);
     }
-    @include mq($from: mobileMedium, $until: tablet) {
+    @include mq($from: mobileMedium, $until: phablet) {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 25%);
 }
 
