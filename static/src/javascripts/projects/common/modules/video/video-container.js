@@ -278,13 +278,6 @@ const setupDispatches = (
             });
         }
     });
-
-    bean.on(document, 'videoFinished', () => {
-        console.log('videoFinished - autoscrolling to next')
-        dispatch({
-            type: 'NEXT',
-        });
-    });
 };
 
 const reducer = (previousState, action) =>

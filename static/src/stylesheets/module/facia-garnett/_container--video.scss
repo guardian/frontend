@@ -197,7 +197,7 @@ $video-width-desktop: 700px;
     align-items: center;
     margin-left: 20px;
 
-    @include mq($from: mobileMedium, $until: phablet) {
+    @include mq($from: 375px, $until: phablet) {
         position: absolute;
         bottom: 80px;
         right: 0;
@@ -206,8 +206,15 @@ $video-width-desktop: 700px;
         justify-content: flex-end;
         align-items: flex-start;
         z-index: 10;
-        width: calc(100% - 328px);
+        width: calc(100% - 320px);
     }
+
+    @include mq($from: mobileLandscape, $until: phablet) {
+        width: calc(100% - 330px);
+    }
+
+
+
 
     @include mq(leftCol)  {
         margin-left: 180px;
@@ -379,14 +386,24 @@ $video-width-desktop: 700px;
     height: 30px;
     margin: auto;
     border-radius: 50%;
-    border: 1px solid #052962;
-    background-color: #ffffff;
+    border: 1px solid $brightness-100;
+    background-color: $brightness-100;
     text-align: center;
 
     svg {
-        fill: #052962;
+        fill: $brightness-7;
         width: 9px;
         height: 30px;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: $brightness-60;
+        border-color: $brightness-60;
+
+        svg {
+            fill: $brightness-7;
+        }
     }
 }
 
@@ -682,7 +699,6 @@ $video-width-desktop: 700px;
     box-sizing: border-box;
     color: #ffffff;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25.04%);
-    min-height: gs-height(3);
     pointer-events: auto;
     width: 100%;
     bottom: 0;
@@ -700,7 +716,6 @@ $video-width-desktop: 700px;
             font-weight: 400;
         }
         @include mq(desktop) {
-            min-height: get-line-height(headline, 3) * 4;
             overflow: hidden;
         }
 
@@ -756,8 +771,8 @@ $video-width-desktop: 700px;
     background-color: #000000;
     width: 57px;
     height: 28px;
-    margin-top: 6px;
-    margin-right: 6px;
+    margin-top: 8px;
+    margin-right: 8px;
     font-weight: 700;
     color: #ffffff;
     display: flex;
