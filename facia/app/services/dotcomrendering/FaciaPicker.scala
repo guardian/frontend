@@ -117,11 +117,11 @@ object FrontChecks {
     !faciaPage.metadata.hasPageSkin(request)
   }
 
-  def isPaidFront(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
+  def isNotPaidFront(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
     // We don't support paid fronts
     // See: https://github.com/guardian/dotcom-rendering/issues/5945
 
-    faciaPage.isPaid(Edition(request));
+    !faciaPage.isPaid(Edition(request));
   }
 
   def hasNoRegionalAusTargetedContainers(faciaPage: PressedPage): Boolean = {
@@ -175,7 +175,7 @@ object FaciaPicker extends GuLogging {
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
-      ("isPaidFront", FrontChecks.isPaidFront(faciaPage)),
+      ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
       ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
