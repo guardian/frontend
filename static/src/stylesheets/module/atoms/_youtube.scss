@@ -129,6 +129,10 @@
     @include hide;
 }
 
+.video-playlist__item .youtube-media-atom__iframe.youtube__video-started ~ .video-overlay {
+    @include hide;
+}
+
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .youtube-media-atom__overlay {
     @include fade-out;
     transition-delay: 500ms;
