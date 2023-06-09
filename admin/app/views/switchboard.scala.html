@@ -6,7 +6,23 @@
     <link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
     <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
         <div class="container__main">
-            @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
+            @if(flash.get("error").isDefined) {
+                <section class="bg-danger" style="padding: 1em 1rem 4rem 1rem;">
+                    <h2 class="text-danger">Error</h2>
+                    <p>@flash.get("error").get</p>
+                </section>
+            }
+            @if(flash.get("success").isDefined) {
+                <section class="bg-success" style="padding: 1rem 1rem 4rem 1rem;">
+                    <h2 class="text-success">Success</h2>
+                    <p>You have successfully changed the following switches:</p>
+                    <ul>
+                    @for(switch <- flash.get("success").get.split("; ")){
+                        <li class="sub-heading">@switch</li>
+                    }
+                    </ul>
+                </section>
+            }
             <p>
                 <blockquote>
                     <em>"Death by switches."</em>

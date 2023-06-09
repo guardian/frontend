@@ -29,8 +29,8 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import services.NewsletterData
 import services.newsletters.model.NewsletterResponse
+import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -260,6 +260,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostViewed: Seq[RelatedContentItem],
       mostCommented: Option[Content],
       mostShared: Option[Content],
+      deeplyRead: Option[Seq[Trail]],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomFrontsRenderingDataModel(
       page,
@@ -268,10 +269,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostViewed,
       mostCommented,
       mostShared,
+      deeplyRead,
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+  }
+
+  def getTagFront(
+      ws: WSClient,
+      page: IndexPage,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomTagFrontsRenderingDataModel(
+      page,
+      request,
+      pageType,
+    )
+
+    val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/TagFront", CacheTime.Facia)
   }
 
   def getInteractive(

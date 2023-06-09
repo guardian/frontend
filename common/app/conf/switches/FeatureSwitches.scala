@@ -532,4 +532,14 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
+  val DeeplyReadSwitch = Switch(
+    SwitchGroup.Feature,
+    "deeply-read-switch",
+    "When ON, shows the new most popular component containing mode viewed and deeply read articles",
+    owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }

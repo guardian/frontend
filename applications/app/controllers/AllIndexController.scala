@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.ContentApiError
 import common.Edition.defaultEdition
-import common.{Edition, ImplicitControllerExecutionContext, GuLogging}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -10,6 +10,7 @@ import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import pages.AllIndexHtmlPage
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.{ConfigAgent, IndexPage, IndexPageItem}
 import views.support.PreviousAndNext
@@ -20,6 +21,7 @@ class AllIndexController(
     contentApiClient: ContentApiClient,
     sectionsLookUp: SectionsLookUp,
     val controllerComponents: ControllerComponents,
+    val ws: WSClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
@@ -27,7 +29,7 @@ class AllIndexController(
     with Dates
     with GuLogging {
 
-  private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
+  private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents, ws)
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
