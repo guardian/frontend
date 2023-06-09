@@ -362,17 +362,15 @@ const onPlayerReady = (
     };
 
     const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
-    console.log("iFrameBehaviourConfig: ");
-    console.log(iFrameBehaviourConfig);
     const iFrameBehaviour = getIFrameBehaviour(iFrameBehaviourConfig);
-    console.log("iFrameBehaviour: ");
-    console.log(iFrameBehaviour);
     if (iFrameBehaviour.mutedOnStart) {
-        console.log("muted on start");
         youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
-        console.log("playing the video");
+        // On IOS autoplay doesn't work unless video is muted
+        if (isIOS()) {
+            youtubePlayer.mute();
+        }
         youtubePlayer.playVideo();
     }
 
@@ -386,8 +384,6 @@ const onPlayerReady = (
             })
         ) {
             const endSlate = getEndSlate(overlay);
-            console.log("endSlate: ");
-            console.log(endSlate);
 
             if (endSlate) {
                 players[uniqueAtomId].endSlate = endSlate;
