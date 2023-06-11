@@ -21,7 +21,7 @@ import scala.util.matching.Regex
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val videoUrlWithDodgyOctpusUrl = "football/video/2015/feb/10/manchester-united-louis-van-gaal-long-ball-video"
-  lazy val mediaController = new MediaController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val mediaController = new MediaController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
 
   "Media Controller" should "200 when content type is video" in {
     val result = mediaController.render(videoUrl)(TestRequest(videoUrl))

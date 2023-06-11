@@ -1,11 +1,11 @@
-@(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
-
 @import common.LinkTo
 @import conf.switches.Switches.SurveySwitch
-@import model.{Video, VideoPlayer, MediaPage}
-@import views.support.Commercial.{isPaidContent, isAdFree}
+@import model.{MediaPage, Video, VideoPlayer}
+@import views.support.Commercial.{isAdFree, isPaidContent}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640, Video1280}
+@import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640}
+
+@(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @defining(page.media, "video") { case (media, mediaType) =>
     @defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>

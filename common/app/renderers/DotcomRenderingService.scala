@@ -8,6 +8,7 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.dotcomrendering._
 import model.{
   CacheTime,
   Cached,
@@ -24,19 +25,12 @@ import model.{
   Topic,
   TopicResult,
 }
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomNewslettersPageRenderingDataModel,
-  DotcomRenderingDataModel,
-  PageType,
-}
-import services.NewsletterData
-import services.newsletters.model.NewsletterResponse
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.NewsletterData
+import services.newsletters.model.NewsletterResponse
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -334,9 +328,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       mediaPage: MediaPage,
       pageType: PageType,
-      mainBlock: Option[Block],
+      blocks: Blocks,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, mainBlock)
+    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }

@@ -1,19 +1,19 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Block, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import common.JsonComponent.withRefreshStatus
 import common._
-import contentapi.ContentApiClient
 import conf.switches.Switches
+import contentapi.ContentApiClient
 import model._
-import play.api.libs.json.{Format, JsObject, Json}
-import play.api.mvc._
-import views.support.RenderOtherStatus
-import JsonComponent.withRefreshStatus
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import pages.ContentHtmlPage
+import play.api.libs.json.{Format, JsObject, Json}
 import play.api.libs.ws.WSClient
+import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{MediaPicker, RemoteRender}
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
@@ -35,7 +35,7 @@ class MediaController(
   def renderInfoJson(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(path) map {
-        case Right(model) => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
+        case Right((model, _)) => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
         case Left(other)  => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
       } map { mediaInfo =>
         Cached(60)(JsonComponent.fromWritable(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
@@ -44,9 +44,9 @@ class MediaController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     lookup(path) flatMap {
-      case Right(model) =>
+      case Right((model, blocks)) =>
         MediaPicker.getTier(model) match {
-          case RemoteRender => remoteRender(model, ???)
+          case RemoteRender => remoteRender(model, blocks)
           case _            => Future.successful(renderMedia(model))
         }
       case Left(other) => Future.successful(RenderOtherStatus(other))
@@ -54,7 +54,7 @@ class MediaController(
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Result, (MediaPage, Blocks)]] = {
     val edition = Edition(request)
 
     log.info(s"Fetching media: $path for edition $edition")
@@ -62,14 +62,20 @@ class MediaController(
       contentApiClient
         .item(path, edition)
         .showFields("all")
-        .showAtoms("media"),
+        .showAtoms("media")
+        .showBlocks("all"),
     )
 
     val result = response map { response =>
       val mediaOption: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-      val model = mediaOption map { media => MediaPage(media, StoryPackages(media.metadata.id, response)) }
+      val modelWithBlocks = mediaOption map { media =>
+        val model = MediaPage(media, StoryPackages(media.metadata.id, response))
+        val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-      ModelOrResult(model, response)
+        (model, blocks)
+      }
+
+      ModelOrResult(modelWithBlocks, response)
     }
 
     result recover convertApiExceptions
@@ -87,27 +93,27 @@ class MediaController(
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
-  private def getDCRJson(content: MediaPage, pageType: PageType, mainBlock: Option[Block])(implicit
+  private def getDCRJson(content: MediaPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): String = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, mainBlock))
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, blocks))
   }
 
-  private def remoteRender(content: MediaPage, mainBlock: Option[Block])(implicit
+  private def remoteRender(content: MediaPage, blocks: Blocks)(implicit
       request: RequestHeader,
   ): Future[Result] = {
     val pageType = PageType(content, request, context)
 
     if (request.isJson) {
       Future.successful(
-        common.renderJson(getDCRJson(content, pageType, mainBlock), content).as("application/json"),
+        common.renderJson(getDCRJson(content, pageType, blocks), content).as("application/json"),
       )
     } else {
       remoteRenderer.getMedia(
         wsClient,
         content,
         pageType,
-        mainBlock,
+        blocks,
       )
     }
   }
