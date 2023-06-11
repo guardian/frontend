@@ -24,7 +24,6 @@ import model.{
   SimplePage,
   Topic,
   TopicResult,
-
 }
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
