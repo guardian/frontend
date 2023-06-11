@@ -25,14 +25,9 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
 
       Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
         val configuration = switchesWithLastModified.map(_._1)
-        val nextStateLookup = Properties(configuration getOrElse "")
+        val switchStates = Properties(configuration getOrElse "")
 
-        Switches.all foreach { switch =>
-          nextStateLookup.get(switch.name) foreach {
-            case "on" => switch.switchOn()
-            case _    => switch.switchOff()
-          }
-        }
+        Switches.updateStates(switchStates)
 
         val lastModified = switchesWithLastModified.map(_._2).map(_.getMillis).getOrElse(System.currentTimeMillis)
         NoCache(Ok(views.html.switchboard(lastModified)))
@@ -44,9 +39,14 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
       val form = request.body.asFormUrlEncoded
 
       val localLastModified = form.get("lastModified").head.toLong
-      val remoteLastModified = Store.getSwitchesLastModified
+      val switchesWithLastModified = Store.getSwitchesWithLastModified
 
-      if (remoteLastModified.exists(_.getMillis > localLastModified)) {
+      // Ensure the current state of the switches are up-to-date
+      val configuration = switchesWithLastModified.map(_._1)
+      val switchStates = Properties(configuration getOrElse "")
+      Switches.updateStates(switchStates)
+
+      if (switchesWithLastModified.exists(_._2.getMillis > localLastModified)) {
         Future {
           NoCache(
             Redirect(routes.SwitchboardController.renderSwitchboard())
@@ -85,7 +85,9 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
         log.info(s"Switch change by $requester: $change")
       }
 
-      Redirect(routes.SwitchboardController.renderSwitchboard())
+      Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
+        "success" -> changes.mkString("; "),
+      )
     } catch {
       case e: Throwable =>
         log.error("exception saving switches", e)

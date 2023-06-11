@@ -30,21 +30,22 @@ object DCRJavascriptBundle
       participationGroup = Perc1A,
     )
 
-object DCRImageContent
-    extends Experiment(
-      name = "dcr-image-content",
-      description = "Use DCR for image content",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2024, 1, 1),
-      participationGroup = Perc0E,
-    )
+// Removing while we are still implementing this content type in DCR
+//object DCRImageContent
+//    extends Experiment(
+//      name = "dcr-image-content",
+//      description = "Use DCR for image content",
+//      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+//      sellByDate = LocalDate.of(2024, 1, 1),
+//      participationGroup = Perc0E,
+//    )
 
 object OfferHttp3
     extends Experiment(
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 6, 5),
+      sellByDate = LocalDate.of(2023, 7, 3),
       participationGroup = Perc0B,
     )
 

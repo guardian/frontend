@@ -1,6 +1,6 @@
 package metadata
 
-import agents.MostViewedAgent
+import agents.{DeeplyReadAgent, MostViewedAgent}
 import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
@@ -50,6 +50,7 @@ import test._
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+    new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
   )
   val frontPath = "music"
 

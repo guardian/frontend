@@ -4,17 +4,24 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import com.gu.contentapi.client.model.v1.Content
 import experiments.ActiveExperiments
-import layout.ContentCard
-import model.{PressedPage, RelatedContentItem}
+import model.{MetaData, Tags}
+import model.pressed.PressedContent
 import navigation.{FooterLinks, Nav}
-import play.api.libs.json.{JsObject, JsValue, Json}
+import org.joda.time.{DateTime, DateTimeZone}
+import play.api.libs.json.{JsObject, JsValue, Json, Writes, __}
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
+import services.IndexPage
+import views.support.{CamelCase, JavaScriptPage, PreviousAndNext}
+import model.PressedCollectionFormat.pressedContentFormat
 
-case class DotcomFrontsRenderingDataModel(
-    pressedPage: PressedPage,
+case class DotcomTagFrontsRenderingDataModel(
+    contents: Seq[PressedContent],
+    tags: Tags,
+    date: DateTime,
+    tzOverride: Option[DateTimeZone],
+    previousAndNext: Option[PreviousAndNext],
+    forceDay: Boolean,
     nav: Nav,
     editionId: String,
     editionLongForm: String,
@@ -26,25 +33,40 @@ case class DotcomFrontsRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageFooter: PageFooter,
     isAdFreeUser: Boolean,
-    isNetworkFront: Boolean,
-    mostViewed: Seq[Trail],
-    mostCommented: Option[Trail],
-    mostShared: Option[Trail],
-    deeplyRead: Option[Seq[Trail]],
 )
 
-object DotcomFrontsRenderingDataModel {
-  implicit val writes = Json.writes[DotcomFrontsRenderingDataModel]
+object DotcomTagFrontsRenderingDataModel {
+  implicit val writes = new Writes[DotcomTagFrontsRenderingDataModel] {
+    def writes(model: DotcomTagFrontsRenderingDataModel) = {
+      Json.obj(
+        "contents" -> model.contents,
+        "date" -> model.date.toString(),
+        "tzOverride" -> model.tzOverride.map(_.toString),
+        "previousAndNext" -> model.previousAndNext.map(previousAndNext =>
+          Json.obj("prev" -> previousAndNext.prev, "next" -> previousAndNext.next),
+        ),
+        "forceDay" -> model.forceDay,
+        "tags" -> model.tags,
+        "nav" -> model.nav,
+        "editionId" -> model.editionId,
+        "editionLongForm" -> model.editionLongForm,
+        "guardianBaseURL" -> model.guardianBaseURL,
+        "pageId" -> model.pageId,
+        "webTitle" -> model.webTitle,
+        "webURL" -> model.webURL,
+        "config" -> model.config,
+        "commercialProperties" -> model.commercialProperties,
+        "pageFooter" -> model.pageFooter,
+        "isAdFreeUser" -> model.isAdFreeUser,
+      )
+    }
+  }
 
   def apply(
-      page: PressedPage,
+      page: IndexPage,
       request: RequestHeader,
       pageType: PageType,
-      mostViewed: Seq[RelatedContentItem],
-      mostCommented: Option[Content],
-      mostShared: Option[Content],
-      deeplyRead: Option[Seq[Trail]],
-  ): DotcomFrontsRenderingDataModel = {
+  ): DotcomTagFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -70,11 +92,18 @@ object DotcomFrontsRenderingDataModel {
     }
 
     val commercialProperties = page.metadata.commercial
-      .map { _.perEdition.mapKeys(_.id) }
+      .map {
+        _.perEdition.mapKeys(_.id)
+      }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-    DotcomFrontsRenderingDataModel(
-      pressedPage = page,
+    DotcomTagFrontsRenderingDataModel(
+      contents = page.contents.map(_.faciaItem),
+      tags = page.tags,
+      date = page.date,
+      tzOverride = page.tzOverride,
+      previousAndNext = page.previousAndNext,
+      forceDay = page.forcesDayView,
       nav = nav,
       editionId = edition.id,
       editionLongForm = edition.displayName,
@@ -86,15 +115,10 @@ object DotcomFrontsRenderingDataModel {
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
-      isNetworkFront = page.isNetworkFront,
-      mostViewed = mostViewed.map(content => Trail.pressedContentToTrail(content.faciaContent)(request)),
-      mostCommented = mostCommented.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
-      mostShared = mostShared.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
-      deeplyRead = deeplyRead,
     )
   }
 
-  def toJson(model: DotcomFrontsRenderingDataModel): String = {
+  def toJson(model: DotcomTagFrontsRenderingDataModel): String = {
     val jsValue = Json.toJson(model)
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
