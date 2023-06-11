@@ -29,8 +29,8 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import services.NewsletterData
 import services.newsletters.model.NewsletterResponse
+import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
