@@ -36,7 +36,7 @@ class MediaController(
     Action.async { implicit request =>
       lookup(path) map {
         case Right((model, _)) => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
-        case Left(other)  => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
+        case Left(other)       => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
       } map { mediaInfo =>
         Cached(60)(JsonComponent.fromWritable(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
       }
