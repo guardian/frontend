@@ -870,10 +870,6 @@ final case class Tags(tags: List[Tag]) {
     tags.find(tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries))
   }
 
-  lazy val isVerticalVideo: Boolean = {
-    tags.exists(t => t.id == "media/series/vertical-video")
-  }
-
   def javascriptConfig: Map[String, JsValue] =
     Map(
       (
