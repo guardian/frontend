@@ -138,7 +138,7 @@
 .youtube-media-atom__iframe.youtube__video-ended ~ .youtube-media-atom__overlay {
     @include hide;
 }
-
+.youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .vertical-video-overlay__duration,
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .vertical-video-overlay,
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .video-overlay {
     @include hide;
