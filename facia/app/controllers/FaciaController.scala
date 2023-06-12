@@ -155,6 +155,11 @@ trait FaciaController
       Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
     }
 
+  // Returns a 'lite' version of the 'lite' version of a PressedPage.
+  // i.e. it fetches the 'lite' version of the PressedPage from S3 and then returns
+  // a subset of the properties found in S3.
+  // It's used by a number of services, including the 'pressreader' edition feed,
+  // see https://github.com/guardian/pressreader
   def renderFrontJsonLite(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       frontJsonFapi.get(path, liteRequestType).map { resp =>
