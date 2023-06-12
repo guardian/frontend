@@ -367,6 +367,10 @@ const onPlayerReady = (
         youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
+        // On IOS autoplay doesn't work unless video is muted
+        if (isIOS()) {
+            youtubePlayer.mute();
+        }
         youtubePlayer.playVideo();
     }
 
@@ -376,7 +380,7 @@ const onPlayerReady = (
         if (
             !!config.get('page.section') &&
             isBreakpoint({
-                min: 'desktop',
+                min: 'mobile',
             })
         ) {
             const endSlate = getEndSlate(overlay);
@@ -443,6 +447,8 @@ const initYoutubePlayerForElem = (el) => {
         if (!iframe) {
             return;
         }
+
+        iframe.style.display = 'block'
 
         /**
          * Note:

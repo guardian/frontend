@@ -70,8 +70,8 @@ const reducers = {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
                 isBreakpoint({
-                    max: 'desktop',
-                }) && !isVerticalVideo(state.container)
+                    max: 'mobile',
+                })
             ) {
                 const youTubeIframes = Array.from(
                     state.container.querySelectorAll(
@@ -101,7 +101,6 @@ const reducers = {
                 });
             }
         };
-        makeYouTubeNonPlayableAtSmallBreakpoint(previousState);
 
         fastdom.measure(() => {
             // Lazy load images on scroll for mobile
