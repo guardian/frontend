@@ -56,9 +56,9 @@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @*
-              Below is only rendered on video cards within the video container
+              Below is only rendered on video cards within the video container, or on the vertical video page
             *@
-            @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
+            @if(mediaWrapper.contains(MediaWrapper.VideoContainer) || verticalVideo){
                 @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
                     <span class="video-overlay__duration">
                         <span>@media.formattedDuration</span>
@@ -122,7 +122,7 @@
                             Play Video @fragments.inlineSvg("play", "icon")
                         </button>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
-                            @if(duration != "0:00") {
+                            @if(duration != "0:00" && !verticalVideo) {
                                 <div class="youtube-media-atom__bottom-bar">
                                     <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
                                 </div>
