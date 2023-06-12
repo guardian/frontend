@@ -15,7 +15,8 @@
                 Map(
                     "content--has-body" -> media.fields.body.nonEmpty,
                     "content--paid-content paid-content" -> isPaidContent,
-                    "content--pillar-special-report" -> (toneClass(media) == "tone-special-report")
+                    "content--pillar-special-report" -> (toneClass(media) == "tone-special-report"),
+                    "vertical-video" -> page.media.tags.isVerticalVideo
                 ),
                 "content", "content--media", s"content--pillar-${media.metadata.pillar.nameOrDefault}", s"content--media--$mediaType", "tonal", "tonal--tone-media", s"tonal--${toneClass(media)}"
             )"
@@ -76,7 +77,7 @@
                                             }
 
                                             @video.mediaAtom.map { mediaAtom =>
-                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, mediaWrapper = None, posterImageOverride = None)
+                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, mediaWrapper = None, posterImageOverride = None, isVerticalVideo= isVerticalVideo)
                                             }
 
                                             @video.elements.mainVideo.map { videoElement =>
@@ -98,19 +99,35 @@
                                 }
                                 </div>
 
-                                <div class="content__main-column__body" data-component="body">
+                                @if(!isVerticalVideo) {
+                                    <div class="content__main-column__body" data-component="body">
+                                        @media match {
+                                            case v: Video => {
+                                                <div class="tonal__standfirst">
+                                                @fragments.standfirst(v)
+                                                </div>
+                                            }
+                                            case _ => {}
+                                        }
+
+                                        @fragments.contentMeta(media, page)
+                                        @fragments.submeta(media)
+                                    </div>
+                                }
+                                @if(isVerticalVideo) {
                                     @media match {
                                         case v: Video => {
-                                            <div class="tonal__standfirst">
-                                            @fragments.standfirst(v)
+                                                <div class="content__main-column__body" data-component="body">
+                                                <div class="tonal__standfirst">
+                                                @fragments.standfirst(v)
+                                                </div>
                                             </div>
+                                            }
+                                            case _ => {}
                                         }
-                                        case _ => {}
-                                    }
-
-                                    @fragments.contentMeta(media, page)
-                                    @fragments.submeta(media)
-                                </div>
+                                            @fragments.contentMeta(media, page)
+                                            @fragments.submeta(media)
+                                        }
                             </div>
                         </div>
                         @media match {
