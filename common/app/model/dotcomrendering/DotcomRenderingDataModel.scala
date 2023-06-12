@@ -17,6 +17,7 @@ import model.{
   ContentFormat,
   ContentPage,
   GUDateTimeFormatNew,
+  GalleryPage,
   ImageContentPage,
   InteractivePage,
   LiveBlogPage,
@@ -280,6 +281,31 @@ object DotcomRenderingDataModel {
       bodyBlocks = Seq.empty,
       hasStoryPackage = imageContentPage.related.hasStoryPackage,
       storyPackage = getStoryPackage(imageContentPage.related.faciaItems, request),
+    )
+  }
+
+  def forGallery(
+      galleryPage: GalleryPage,
+      request: RequestHeader,
+      pageType: PageType,
+      blocks: APIBlocks,
+  ) = {
+
+    val linkedData = LinkedData.forArticle(
+      article = galleryPage.gallery,
+      baseURL = Configuration.dotcom.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page = galleryPage,
+      request = request,
+      pageType = pageType,
+      linkedData = linkedData,
+      mainBlock = blocks.main,
+      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
+      hasStoryPackage = galleryPage.related.hasStoryPackage,
+      storyPackage = getStoryPackage(galleryPage.related.faciaItems, request),
     )
   }
 

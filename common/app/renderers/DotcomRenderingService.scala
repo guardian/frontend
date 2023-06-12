@@ -8,10 +8,11 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.SimplePage
+import model.dotcomrendering._
 import model.{
   CacheTime,
   Cached,
+  GalleryPage,
   ImageContentPage,
   InteractivePage,
   LiveBlogPage,
@@ -20,24 +21,16 @@ import model.{
   PageWithStoryPackage,
   PressedPage,
   RelatedContentItem,
+  SimplePage,
   Topic,
   TopicResult,
 }
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomNewslettersPageRenderingDataModel,
-  DotcomRenderingDataModel,
-  DotcomTagFrontsRenderingDataModel,
-  PageType,
-  Trail,
-}
-import services.{IndexPage, NewsletterData}
-import services.newsletters.model.NewsletterResponse
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.newsletters.model.NewsletterResponse
+import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -344,6 +337,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mainBlock: Option[Block],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getGallery(
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
