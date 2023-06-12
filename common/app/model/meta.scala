@@ -843,6 +843,10 @@ final case class Tags(tags: List[Tag]) {
     _.id == Tags.Interactive
   }
 
+  lazy val isVerticalVideo: Boolean = {
+    tags.exists(t => t.id == "media/series/vertical-video")
+  }
+
   lazy val hasLargeContributorImage: Boolean =
     tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
 
