@@ -10,7 +10,7 @@ const isIOS = _isIOS;
 const accessibilityIsOn = _isOn;
 
 jest.mock('lib/detect', () => {
-    
+
     const original = jest.requireActual('lib/detect');
     return {
         ...original,
@@ -20,7 +20,7 @@ jest.mock('lib/detect', () => {
 });
 
 jest.mock('common/modules/accessibility/main', () => {
-    
+
     const original = jest.requireActual('common/modules/accessibility/main');
     return {
         ...original,
@@ -80,7 +80,6 @@ describe('youtube', () => {
         it('autoplays muted US paid content videos on Android', () => {
             isAndroid.mockReturnValue(true);
             const iFrameBehaviourConfig = {
-                isAutoplayBlockingPlatform: true,
                 isInternalReferrer: true,
                 isMainVideo: true,
                 flashingElementsAllowed: true,
@@ -98,7 +97,6 @@ describe('youtube', () => {
         it("doesn't mute US paid content videos on desktop", () => {
             isAndroid.mockReturnValue(false);
             const iFrameBehaviourConfig = {
-                isAutoplayBlockingPlatform: false,
                 isInternalReferrer: true,
                 isMainVideo: true,
                 flashingElementsAllowed: true,
@@ -116,7 +114,6 @@ describe('youtube', () => {
         it("doesn't mute autoplaying videos on desktop fronts", () => {
             isAndroid.mockReturnValue(false);
             const iFrameBehaviourConfig = {
-                isAutoplayBlockingPlatform: false,
                 isInternalReferrer: false,
                 isMainVideo: false,
                 flashingElementsAllowed: true,
@@ -134,7 +131,6 @@ describe('youtube', () => {
         it("doesn't autoplay videos when flashing elements are disallowed", () => {
             isAndroid.mockReturnValue(false);
             const iFrameBehaviourConfig = {
-                isAutoplayBlockingPlatform: false,
                 isInternalReferrer: false,
                 isMainVideo: false,
                 flashingElementsAllowed: false,
@@ -176,29 +172,15 @@ describe('youtube', () => {
             )));
         });
 
-        it('is Autoplay blocking platform if isAndroid', () => {
-            isAndroid.mockReturnValue(true);
-            isIOS.mockReturnValue(false);
-            const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
-            expect(iFrameBehaviourConfig.isAutoplayBlockingPlatform).toBe(true);
-        });
-
-        it('is Autoplay blocking platform if isIOS', () => {
-            isAndroid.mockReturnValue(false);
-            isIOS.mockReturnValue(true);
-            const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
-            expect(iFrameBehaviourConfig.isAutoplayBlockingPlatform).toBe(true);
-        });
-
         it('correctly identifies Internal Referrer', () => {
-            
+
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.theguardian.com'
             );
             expect(getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
                 true
             );
-            
+
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.garbage-site.com'
             );

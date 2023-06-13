@@ -221,7 +221,6 @@ const STATES = {
 const getIFrameBehaviourConfig = (
     iframe
 ) => {
-    const isAutoplayBlockingPlatform = isIOS() || isAndroid();
 
     const isInternalReferrer = (() => {
         if (config.get('page.isDev')) {
@@ -247,7 +246,6 @@ const getIFrameBehaviourConfig = (
     const isPaidContent = config.get('page.isPaidContent');
 
     return {
-        isAutoplayBlockingPlatform,
         isInternalReferrer,
         isMainVideo,
         flashingElementsAllowed,
@@ -262,7 +260,6 @@ const getIFrameBehaviour = (
     iframeConfig
 ) => {
     const {
-        isAutoplayBlockingPlatform,
         isInternalReferrer,
         isMainVideo,
         flashingElementsAllowed,
@@ -288,7 +285,6 @@ const getIFrameBehaviour = (
         autoplay:
             ((isVideoArticle && isInternalReferrer && isMainVideo) ||
                 isFront) &&
-            !isAutoplayBlockingPlatform &&
             flashingElementsAllowed,
         mutedOnStart: false,
     };
