@@ -43,7 +43,7 @@ const reducers = {
                 : previousState.position + 1;
         updateCarouselCounter(position);
         updateYouTubeVideo(
-            document.querySelector(`.js-video-playlist-item-${position - 1}`)
+            previousState.container.querySelector(`.js-video-playlist-item-${position - 1}`)
         );
         return Object.assign(
             {},
@@ -57,7 +57,7 @@ const reducers = {
             previousState.position <= 0 ? 0 : previousState.position - 1;
         updateCarouselCounter(position);
         updateYouTubeVideo(
-            document.querySelector(`.js-video-playlist-item-${position + 1}`)
+            previousState.container.querySelector(`.js-video-playlist-item-${position + 1}`)
         );
         return Object.assign(
             {},
