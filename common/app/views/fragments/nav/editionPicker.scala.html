@@ -5,7 +5,7 @@
 
 <li class="menu-item js-navigation-item">
     <button class="menu-item__title js-navigation-toggle"
-            data-link-name="nav2 : edition picker"
+            data-link-name="nav3 : edition picker"
             aria-haspopup="true"
             aria-expanded="true">
         <i class="menu-item__toggle"></i>
@@ -16,7 +16,7 @@
         @Edition.editionsByRequest.map { edition =>
              @if(edition != Edition(request)) {
                  <li class="menu-item">
-                     <a data-link-name="nav2 : edition-picker: @edition.id"
+                     <a data-link-name="nav3 : topbar : edition-picker: @edition.id"
                      href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
                      class="menu-item__title">
                          <span class="u-h">switch to the </span>
