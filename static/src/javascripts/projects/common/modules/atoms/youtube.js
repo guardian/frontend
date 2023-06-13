@@ -367,6 +367,10 @@ const onPlayerReady = (
         youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
+        // On IOS autoplay doesn't work unless video is muted
+        if (isIOS()) {
+            youtubePlayer.mute();
+        }
         youtubePlayer.playVideo();
     }
 
