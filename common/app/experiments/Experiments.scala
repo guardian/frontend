@@ -22,15 +22,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object FrontsBannerAds
-    extends Experiment(
-      name = "fronts-banner-ads",
-      description = "Creates a new ad experience on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 9, 6),
-      participationGroup = Perc0A,
-    )
-
 object DCRNetworkFronts
     extends Experiment(
       name = "dcr-network-fronts",
@@ -121,6 +112,15 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 7, 3),
       participationGroup = Perc1E,
+    )
+
+object FrontsBannerAds
+    extends Experiment(
+      name = "fronts-banner-ads",
+      description = "Creates a new ad experience on fronts pages",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 9, 6),
+      participationGroup = Perc5A,
     )
 
 object ActionCardRedesign
