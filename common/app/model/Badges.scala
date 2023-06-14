@@ -57,7 +57,6 @@ object Badges {
   val cricketWorldCup = Badge("sport/cricket-world-cup-2019", Static("images/badges/cricket-world-cup.svg"))
   val womensWorldCup = Badge("football/womens-world-cup-2019", Static("images/badges/womens-world-cup.svg"))
   val greenBlood = Badge("environment/series/green-blood", Static("images/badges/green-blood.svg"))
-  val usElections2020 = Badge("us-news/us-elections-2020", Static("images/badges/us-elections-2020.svg"))
   val ausElection =
     Badge("australia-news/australian-election-2019", Static("images/badges/australian-election-2019.svg"))
   val midterm = Badge("us-news/us-midterm-elections-2018", Static("images/badges/midterm.svg"))
@@ -130,7 +129,6 @@ object Badges {
     cricketWorldCup,
     womensWorldCup,
     greenBlood,
-    usElections2020,
     ausElection,
     midterm,
     theNewPopulism,
