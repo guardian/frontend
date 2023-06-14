@@ -5,7 +5,7 @@ import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
 
-trait FapiFrontJsonLite {
+trait FapiFrontJsonMinimal {
   def get(pressedPage: PressedPage): JsObject = {
     Json.obj("webTitle" -> pressedPage.seoData.webTitle, "collections" -> getCollections(pressedPage))
   }
@@ -58,4 +58,4 @@ trait FapiFrontJsonLite {
     }
 }
 
-object FapiFrontJsonLite extends FapiFrontJsonLite
+object FapiFrontJsonMinimal extends FapiFrontJsonMinimal

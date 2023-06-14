@@ -37,7 +37,7 @@
                     <span class="header-top-nav__item--separator hide-until-desktop"></span>
                     @defining(if (editionId == "uk") getReaderRevenueUrl(PrintCTA,
                     Header) else getReaderRevenueUrl(PrintCTAWeekly, Header)) { href =>
-                    <a class="top-bar__item hide-until-desktop yellow" data-link-name="nav3 : print-cta"
+                    <a class="top-bar__item hide-until-desktop yellow" data-link-name="nav3 : topbar : printsubs"
                         data-edition="@{editionId}" href="@href">
                         @fragments.inlineSvg("newspaper", "icon", List("top-bar__item__icon"))
                         Print subscriptions
@@ -56,15 +56,16 @@
                     </a>
 
                     <input type="checkbox" id="my-account-toggle" aria-controls="my-account-dropdown"
-                        class="dropdown-menu-fallback js-enhance-checkbox" data-link-name="nav3 : topbar: my account"
+                        class="dropdown-menu-fallback js-enhance-checkbox" data-link-name="nav3 : topbar : my account"
                         tabindex="-1" />
 
                     <label
                         class="top-bar__item popup__toggle js-navigation-account-actions js-user-account-trigger is-hidden"
-                        for="my-account-toggle" data-link-name="nav3 : topbar: my account" tabindex="0">
+                        for="my-account-toggle" data-link-name="nav3 : topbar : my account" tabindex="0">
                         @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
                         My account
-                        <span class="top-bar__user-account-notification-badge js-user-account-notification-badge is-hidden"></span>
+                        <span
+                            class="top-bar__user-account-notification-badge js-user-account-notification-badge is-hidden"></span>
                     </label>
                     <div class="my-account__overlay"></div>
 
@@ -154,7 +155,7 @@
             if(editionId == "uk") {
             fragments.inlineSvg("guardian-best-newspaper-logo", "logo")
             } else if(editionId == "au") {
-                fragments.inlineSvg("guardian-australia-decade-logo", "logo")
+            fragments.inlineSvg("guardian-australia-decade-logo", "logo")
             } else {
             fragments.inlineSvg("the-guardian-logo", "logo")
             }

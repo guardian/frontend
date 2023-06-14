@@ -42,7 +42,7 @@
             @if(FlagshipFrontContainer.displayFlagshipContainer()) {
                 <section id="@componentName"
                     class="@GetClasses.forContainerDefinition(containerDefinition)"
-                    data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                    data-link-name="container-@{containerDefinition.index} | @componentName"
                     data-id="@containerDefinition.dataId"
                     data-component="@componentName"
                     aria-expanded="true">
@@ -57,7 +57,7 @@
         case _ => {
             <section id="@componentName"
                  class="@GetClasses.forContainerDefinition(containerDefinition) @GetClasses.forFrontId(frontId)"
-                 data-link-name="container-@{containerDefinition.index + 1} | @componentName"
+                 data-link-name="container-@{containerDefinition.index} | @componentName"
                  data-id="@containerDefinition.dataId"
                  data-component="@componentName"
                  aria-expanded="true">

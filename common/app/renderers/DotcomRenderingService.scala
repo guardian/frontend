@@ -12,6 +12,7 @@ import model.dotcomrendering._
 import model.{
   CacheTime,
   Cached,
+  GalleryPage,
   ImageContentPage,
   InteractivePage,
   LiveBlogPage,
@@ -341,6 +342,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
 
+
   def getMedia(
       ws: WSClient,
       mediaPage: MediaPage,
@@ -348,6 +350,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       blocks: Blocks,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
+    
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getGallery(
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
