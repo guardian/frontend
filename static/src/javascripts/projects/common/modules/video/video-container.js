@@ -20,6 +20,17 @@ const updateYouTubeVideo = (currentItem) => {
     }
 };
 
+// const updateYoutubeVideos = () => {
+//     const atoms = document.querySelectorAll('.youtube-media-atom')
+//     if (atoms && atoms.length > 0) {
+//         console.log(atoms)
+//         atoms.forEach(atom => {
+//             const id = atom.getAttributes('data-unique-atom-id');
+//             if (id)  return onVideoContainerNavigation(id);
+//         })
+//     }
+// }
+
 const getPositionState = (position, length) => ({
     position,
     atStart: position === 0,
@@ -42,9 +53,13 @@ const reducers = {
                 ? previousState.position
                 : previousState.position + 1;
         updateCarouselCounter(position);
+        let start = performance.now();
         updateYouTubeVideo(
             previousState.container.querySelector(`.js-video-playlist-item-${position - 1}`)
         );
+        // updateYoutubeVideos()
+        let timeTaken = performance.now() - start;
+        console.log("Total time taken : " + timeTaken + " milliseconds");
         return Object.assign(
             {},
             previousState,
