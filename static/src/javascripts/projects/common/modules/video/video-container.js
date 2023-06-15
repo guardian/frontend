@@ -20,17 +20,6 @@ const updateYouTubeVideo = (currentItem) => {
     }
 };
 
-// const updateYoutubeVideos = () => {
-//     const atoms = document.querySelectorAll('.youtube-media-atom')
-//     if (atoms && atoms.length > 0) {
-//         console.log(atoms)
-//         atoms.forEach(atom => {
-//             const id = atom.getAttributes('data-unique-atom-id');
-//             if (id)  return onVideoContainerNavigation(id);
-//         })
-//     }
-// }
-
 const getPositionState = (position, length) => ({
     position,
     atStart: position === 0,
