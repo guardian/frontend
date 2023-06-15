@@ -14,7 +14,7 @@ import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
-import play.api.data.validation.Constraints.emailAddress
+import play.api.data.validation.Constraints.{emailAddress, nonEmpty}
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
@@ -33,6 +33,27 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
     email: String,
     listName: Option[String],
+    referrer: Option[String],
+    ref: Option[String],
+    refViewId: Option[String],
+    campaignCode: Option[String],
+    googleRecaptchaResponse: Option[String],
+    name: String,
+) {
+
+  // `name` is a hidden (via css) form input
+  // if it was set to something this form was likely filled by a bot
+  // https://stackoverflow.com/a/34623588/2823715
+  def isLikelyBotSubmission: Boolean =
+    name match {
+      case "" | "undefined" | "null" => false
+      case _                         => true
+    }
+}
+
+case class EmailFormManyNewsletters(
+    email: String,
+    listNames: Seq[String],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -79,6 +100,40 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     }
   }
 
+  def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
+    if (form.isLikelyBotSubmission) {
+      Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
+    } else {
+      val idAccessClientToken = Configuration.id.apiClientToken
+      val listOfIds = form.listNames
+      val consentMailerPayload = JsObject(
+        Json.obj(
+          "email" -> form.email, "set-lists" -> listOfIds
+        ).fields
+      )
+
+      val headers = clientIp(request)
+        .map(ip => List("X-Forwarded-For" -> ip))
+        .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
+
+      val queryStringParameters = form.ref.map("ref" -> _).toList ++
+        form.refViewId.map("refViewId" -> _).toList ++
+        listOfIds.map("listName" -> _).toList
+
+      //FIXME: this should go via the identity api client / app
+      // NOTE - always using the '/consent-signup' (no confirmation email)
+      // should we be splitting the list into newsletters that require confirmation
+      // and those that don't, then sending two separate requests?
+      // Currently, no editorial newsletters require confirmation emails, but the
+      // feature is still supported.
+      wsClient
+        .url(s"${Configuration.id.apiRoot}/consent-signup")
+        .withQueryStringParameters(queryStringParameters: _*)
+        .addHttpHeaders(headers: _*)
+        .post(consentMailerPayload)
+    }
+  }
+
   private def serviceUrl(form: EmailForm, emailEmbedAgent: NewsletterSignupAgent): String = {
     val identityNewsletter = emailEmbedAgent.getNewsletterByName(form.listName.get)
     val newsletterRequireConfirmation = identityNewsletter.map(_.get.emailConfirmation).getOrElse(true)
@@ -114,6 +169,19 @@ class EmailSignupController(
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
+  )
+
+  val emailFormManyNewsletters: Form[EmailFormManyNewsletters] = Form(
+    mapping(
+      "email" -> nonEmptyText.verifying(emailAddress),
+      "listNames" -> seq(of[String]),
+      "referrer" -> optional[String](of[String]),
+      "ref" -> optional[String](of[String]),
+      "refViewId" -> optional[String](of[String]),
+      "campaignCode" -> optional[String](of[String]),
+      "g-recaptcha-response" -> optional[String](of[String]),
+      "name" -> text,
+    )(EmailFormManyNewsletters.apply)(EmailFormManyNewsletters.unapply),
   )
 
   def renderFooterForm(listName: String): Action[AnyContent] =
@@ -337,7 +405,7 @@ class EmailSignupController(
             )
 
             (for {
-              _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
               result <- submitFormFooter(form)
             } yield {
               result
@@ -395,12 +463,12 @@ class EmailSignupController(
     }
   }
 
-  private def validateCaptcha(form: EmailForm, shouldValidateCaptcha: Boolean)(implicit
+  private def validateCaptcha(googleRecaptchaResponse: Option[String], shouldValidateCaptcha: Boolean)(implicit
       request: Request[AnyContent],
   ) = {
     if (shouldValidateCaptcha) {
       for {
-        token <- form.googleRecaptchaResponse match {
+        token <- googleRecaptchaResponse match {
           case Some(token) => Future.successful(token)
           case None =>
             RecaptchaMissingTokenError.increment()
@@ -453,7 +521,7 @@ class EmailSignupController(
             )
 
             (for {
-              _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
               result <- submitForm(form)
             } yield {
               result
@@ -481,6 +549,69 @@ class EmailSignupController(
       }) recover {
       case _: IllegalAccessException =>
         respond(Subscribed, form.listName)
+      case e: Exception =>
+        log.error(s"Error posting to Identity API: ${e.getMessage}")
+        APINetworkError.increment()
+        respond(OtherError)
+    }
+  }
+
+  // TO DO - deduplicate with submit method
+  def submitMany(): Action[AnyContent] =
+    Action.async { implicit request =>
+      AllEmailSubmission.increment()
+
+      emailFormManyNewsletters
+        .bindFromRequest()
+        .fold(
+          formWithErrors => {
+            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            EmailFormError.increment()
+            Future.successful(respond(InvalidEmail))
+          },
+          form => {
+            log.info(
+              s"Post request received to /email/many/ - " +
+                s"email: ${form.email}, " +
+                s"ref: ${form.ref}, " +
+                s"refViewId: ${form.refViewId}, " +
+                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
+                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+            )
+
+            (for {
+              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              result <- submitFormManyNewsletters(form)
+            } yield {
+              result
+            }) recover {
+              case _ =>
+                respond(OtherError)
+            }
+          },
+        )
+    }
+
+    // TO DO - allow with Subscribed response with the list of newsletter ids
+    // TO DO - deduplicate with code copied from submitForm method
+    private def submitFormManyNewsletters(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]) = {
+    emailFormService
+      .submitWithMany(form)
+      .map(_.status match {
+        case 200 | 201 =>
+          EmailSubmission.increment()
+          respond(Subscribed)
+
+        case status =>
+          log.error(s"Error posting to Identity API: HTTP $status")
+          APIHTTPError.increment()
+          respond(OtherError)
+
+      }) recover {
+      case _: IllegalAccessException =>
+        respond(Subscribed)
       case e: Exception =>
         log.error(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
