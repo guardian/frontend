@@ -287,11 +287,11 @@ $pillars: (
     }
 
     .vjs-big-play-button .vjs-control-text {
-        background-color: map-get($palette, kicker);
+        background-color: rgba(18, 18, 18, 0.6);
     }
 
     .youtube-media-atom__play-button {
-        background-color: map-get($palette, kicker);
+        background-color: rgba(18, 18, 18, 0.6);
     }
 
     &.fc-item--type-comment:not(.fc-item--pillar-special-report):not(.fc-item--pillar-special-report-alt) {
