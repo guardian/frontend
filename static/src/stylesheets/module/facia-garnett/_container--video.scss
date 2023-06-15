@@ -277,7 +277,7 @@ $video-width-desktop: 700px;
         }
     }
 
-    @include mq($until: mobileLandscape ) {
+    @include mq($until: mobileLandscape) {
         width: 80%;
     }
 }
