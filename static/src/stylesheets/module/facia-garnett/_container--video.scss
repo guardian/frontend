@@ -276,6 +276,10 @@ $video-width-desktop: 700px;
             z-index: 3;
         }
     }
+
+    @include mq($until: mobileLandscape ) {
+        width: 80%;
+    }
 }
 
 .video-playlist__item--first {
@@ -426,6 +430,15 @@ $video-width-desktop: 700px;
         width: gs-span(3);
     }
 
+    @include mq($until: mobileLandscape)   {
+        position: absolute;
+        padding: 2.5rem $gs-gutter/4 $gs-baseline * 2;
+        min-height: gs-height(2);
+        padding-top: 0;
+        padding-bottom: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25%);
+    }
+
     .video-playlist__item .vjs-playing ~ & {
         @include mq(desktop) {
             visibility: hidden;
@@ -484,6 +497,10 @@ $video-width-desktop: 700px;
     position: absolute;
     bottom: 2px;
     color: $brightness-86;
+
+    @include mq($until: mobileLandscape)   {
+        right: 0;
+    }
 }
 
 .fc-item__video-container {

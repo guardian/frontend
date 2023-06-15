@@ -36,9 +36,7 @@
 .video-playlist__item .youtube-media-atom iframe,
 .video-playlist__item .youtube-media-atom .vjs-big-play-button {
     @include mq($until: desktop) {
-        top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
         bottom: 0;
-        height: auto;
     }
 }
 
