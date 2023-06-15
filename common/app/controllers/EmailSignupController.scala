@@ -107,9 +107,12 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
       val idAccessClientToken = Configuration.id.apiClientToken
       val listOfIds = form.listNames
       val consentMailerPayload = JsObject(
-        Json.obj(
-          "email" -> form.email, "set-lists" -> listOfIds
-        ).fields
+        Json
+          .obj(
+            "email" -> form.email,
+            "set-lists" -> listOfIds,
+          )
+          .fields,
       )
 
       val headers = clientIp(request)
@@ -595,9 +598,9 @@ class EmailSignupController(
         )
     }
 
-    // TO DO - allow with Subscribed response with the list of newsletter ids
-    // TO DO - deduplicate with code copied from submitForm method
-    private def submitFormManyNewsletters(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]) = {
+  // TO DO - allow with Subscribed response with the list of newsletter ids
+  // TO DO - deduplicate with code copied from submitForm method
+  private def submitFormManyNewsletters(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]) = {
     emailFormService
       .submitWithMany(form)
       .map(_.status match {
