@@ -6,7 +6,8 @@
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
-@import conf.switches.Switches.MostViewedFronts
+@import conf.switches.Switches.{MostViewedFronts, VerticalVideo => VerticalVideoSwitch}
+
 @import conf.audio.FlagshipFrontContainer
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
@@ -88,9 +89,11 @@
                     }
 
                     case VerticalVideo => {
-                        <div class="gs-container">
+                        @if(VerticalVideoSwitch.isSwitchedOn) {
+                            <div class="gs-container">
                             @verticalVideoContainer(containerDefinition, frontProperties)
-                        </div>
+                            </div>
+                        }
                     }
                     case NavMediaList => {
                         <div class="fc-container__inner">
