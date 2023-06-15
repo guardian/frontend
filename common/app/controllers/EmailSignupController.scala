@@ -573,6 +573,7 @@ class EmailSignupController(
             log.info(
               s"Post request received to /email/many/ - " +
                 s"email: ${form.email}, " +
+                s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
                 s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
