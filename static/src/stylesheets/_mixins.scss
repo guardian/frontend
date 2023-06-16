@@ -276,8 +276,9 @@
     border-radius: 50%;
     position: absolute;
     top: 50%;
-    bottom: 50%;
-    transform: translate(-50%, -50%);
+    left: 50%;
+    margin-top: -($buttonSize / 2); /* Half the height of the circle */
+    margin-left: -($buttonSize / 2);
     transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
     user-select: none;
     width: $buttonSize;
