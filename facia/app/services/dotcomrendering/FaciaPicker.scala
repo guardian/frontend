@@ -1,11 +1,11 @@
 package services.dotcomrendering
 
-import common.GuLogging
+import common.{Edition, GuLogging}
 import conf.switches.Switches.DCRFronts
 import implicits.Requests._
 import model.PressedPage
 import model.facia.PressedCollection
-import model.pressed.{LinkSnap}
+import model.pressed.LinkSnap
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -116,12 +116,11 @@ object FrontChecks {
     !faciaPage.metadata.hasPageSkin(request)
   }
 
-  def hasNoPaidCards(faciaPage: PressedPage): Boolean = {
-    // We don't support paid content
+  def isNotPaidFront(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
+    // We don't support paid fronts
     // See: https://github.com/guardian/dotcom-rendering/issues/5945
-    // See: https://github.com/guardian/dotcom-rendering/issues/5150
 
-    !faciaPage.collections.exists(_.curated.exists(card => card.isPaidFor))
+    !faciaPage.isPaid(Edition(request));
   }
 
   def hasNoRegionalAusTargetedContainers(faciaPage: PressedPage): Boolean = {
@@ -175,7 +174,7 @@ object FaciaPicker extends GuLogging {
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
-      ("hasNoPaidCards", FrontChecks.hasNoPaidCards(faciaPage)),
+      ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
       ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
