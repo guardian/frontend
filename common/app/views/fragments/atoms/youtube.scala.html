@@ -53,6 +53,11 @@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
 
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
+                @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
+                    <span class="video-overlay__duration">
+                    @media.formattedDuration
+                    </span>
+                }
                 <div class="video-overlay">
                     <div class="video-overlay__headline">
 
@@ -63,13 +68,10 @@
                         }
 
                     </div>
-                        @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
-                            <span class="video-overlay__duration">
-                                @media.formattedDuration
-                            </span>
-                        }
-                    </div>
+                </div>
+                @for(f <- faciaHeaderProperties) {
                     <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
+                 }
                 }
             }
         }
@@ -97,8 +99,8 @@
                         </div>
                     } else {
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
-                            @if(duration != "0:00") {
-                                <div class="youtube-media-atom__bottom-bar__duration"><span>@duration</span></div>
+                            @if(duration != "0:00") {<div class="youtube-media-atom__bottom-bar__duration"><span>@duration</span></div>
+
                             }
                         }
                         @if(isPaidFor) {

@@ -184,25 +184,6 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
     transition: none;
 }
 
-.youtube-media-atom__bottom-bar {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    z-index: 1;
-
-    &:after {
-        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        z-index: -1;
-        content: '';
-        opacity: .7;
-    }
-}
 
 .youtube-media-atom__bottom-bar__duration {
     @include font($f-sans-serif-text, bold, 13, 16);
