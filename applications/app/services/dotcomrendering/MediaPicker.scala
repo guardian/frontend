@@ -26,7 +26,7 @@ object MediaPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    // defaulting to false until we are ready to release and create a 50% test
+    // defaulting to false until we are ready to release and create a 0% test
     val participatingInTest = false // ActiveExperiments.isParticipating(DCRMedia)
     val dcrCanRender = dcrCouldRender(mediaPage)
 
