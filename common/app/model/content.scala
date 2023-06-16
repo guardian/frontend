@@ -698,7 +698,7 @@ object Video {
       "videoDuration" -> elements.videos
         .find(_.properties.isMain)
         .map { v => JsNumber(v.videos.duration) }
-        .getOrElse(JsNull),
+        .getOrElse(JsNumber(0)),
     ) ++ AtomProperties(content.atoms)
 
     val optionalOpengraphProperties =
