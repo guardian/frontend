@@ -112,6 +112,11 @@
                             </div>
                         </div>
                     } else {
+                        @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
+                            @if(duration != "0:00") {
+                                <div class="youtube-media-atom__bottom-bar__duration"><span>@duration</span></div>
+                            }
+                        }
                         @if(isPaidFor) {
                             <div class="youtube-media-atom__paid-for-overlay"></div>
                             @pressedContent.map{ pc =>
