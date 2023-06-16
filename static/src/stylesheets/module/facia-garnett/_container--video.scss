@@ -362,8 +362,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__icon {
     position: absolute;
-    top: 0;
-    bottom: 0;
     width: 30px;
     height: 30px;
     margin: auto;
@@ -408,7 +406,7 @@ $video-width-desktop: 700px;
 }
 
 .youtube-media-atom__play-button {
-    background-color: $brightness-7;
+    background-color: rgba(18,18,18,0.6);
     border-radius: 50%;
     color: transparent;
 }
