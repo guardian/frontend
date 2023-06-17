@@ -3,12 +3,6 @@
 .fc-item--type-media {
     background-color: $brightness-20;
 
-    .fc-item__video-duration {
-        //ensures the alingment of the timestamp
-        display: inline-block;
-        transform: translateY(-8px);
-    }
-
     .fc-item__content {
         justify-content: space-between;
     }
@@ -96,12 +90,6 @@
 }
 
 .fc-item--type-media.fc-item--pillar-special-report-alt {
-
-    .fc-item__video-duration {
-        //ensures the alingment of the timestamp
-        display: inline-block;
-        transform: translateY(-8px);
-    }
 
     .fc-item__content {
         justify-content: space-between;
