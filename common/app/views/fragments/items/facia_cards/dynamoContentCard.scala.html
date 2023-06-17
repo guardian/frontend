@@ -40,31 +40,29 @@ data-test-id="facia-card"
 
 </div>
 
-@mediaMeta(item: layout.ContentCard) = {
-    <div class="fc-item__meta-wrapper">
-        @if(item.contentType.name.toLowerCase == "video") {
-            @item.displayElement match {
-                case Some(InlineVideo(videoElement, _, _)) => {
-                    <div class="fc-item__media-meta">
-                        @inlineSvg("video-icon", "icon")
-                        @if(videoElement.videos.formattedDuration != "0:00") {
-                            <span class="fc-item__video-duration">@videoElement.videos.formattedDuration</span>
-                        }
-                    </div>
-                }
+@mediaDuration(item: layout.ContentCard) = {
+@if(item.contentType.name.toLowerCase == "video") {
+    @item.displayElement match {
+        case Some(InlineVideo(videoElement, _, _)) => {
+            @if(videoElement.videos.formattedDuration != "0:00") {
+                <span class="video-overlay__duration"><span>@videoElement.videos.formattedDuration</span></span>
+            }
 
-                case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
-                    <div class="fc-item__media-meta">
-                        @inlineSvg("video-icon", "icon")
-                        @if(youTubeAtom.formattedDuration.getOrElse("0:00") != "0:00") {
-                            <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
-                        }
-                    </div>
-                }
-
-                case _ => {}
+        }
+        case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
+            @if(youTubeAtom.formattedDuration.getOrElse("0:00") != "0:00") {
+                <span class="video-overlay__duration"><span>@youTubeAtom.formattedDuration</span></span>
             }
         }
+
+        case _ => {}
+    }
+}
+}
+
+
+@mediaMeta(item: layout.ContentCard) = {
+    <div class="fc-item__meta-wrapper">
 
         @if(item.contentType.name.toLowerCase == "audio") {
             <div class="fc-item__media-meta">
@@ -121,6 +119,7 @@ data-test-id="facia-card"
                 )) { player =>
                     <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
                         <div class="fc-item__video-container">
+                            @mediaDuration(item)
                             @video(player, false, item.cardTypes.showVideoEndSlate, showPoster = false)
                         </div>
                     </div>
@@ -149,7 +148,8 @@ data-test-id="facia-card"
             case Some(media@InlineYouTubeMediaAtom(_,_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__video-container">
-                    @youtube(
+                        @mediaDuration(item)
+                        @youtube(
                         media = media.youTubeAtom,
                         displayCaption = false,
                         displayDuration = false,
@@ -162,6 +162,7 @@ data-test-id="facia-card"
 
             case Some(InlineVideo(_, _, Some(fallbackImage))) => {
                 <div class="fc-item__media-wrapper">
+                    @mediaDuration(item)
                     @itemImage(
                         fallbackImage.imageMedia,
                         inlineImage = containerIndex == 0 && index < 4,
