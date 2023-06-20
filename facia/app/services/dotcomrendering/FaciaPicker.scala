@@ -18,13 +18,10 @@ object FrontChecks {
     Set(
       // We partly support thrashers. They will be fully supported after this is completed: https://github.com/guardian/dotcom-rendering/issues/7319
       "fixed/thrasher",
-      /*
-    "dynamic/package",
-      pending https://github.com/guardian/dotcom-rendering/issues/5196 and
-       */
+      "dynamic/package",
 
       /*
-    "fixed/video"
+      "fixed/video"
       pending https://github.com/guardian/dotcom-rendering/issues/5149
        */
 
