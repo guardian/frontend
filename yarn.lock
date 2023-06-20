@@ -1584,15 +1584,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@^13.0.2":
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.0.2.tgz#3625f10ca355e1f0296f17fbf8eee3fffd693b95"
-  integrity sha512-rhuDQeZW//WJue9Uhj5JgWc7juV18CgwpOJXcmzYUkYcvi1wcf+kW/BvqfJjNjyd/kpx5eNQ2pCZtj4HuTQBEA==
-
-"@guardian/consent-management-platform@^13.2.0":
-  version "13.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.2.0.tgz#089dcd6b3b7883e281d8764ac7557d1a3a627ae5"
-  integrity sha512-1ggVotJaJad2k7w1QAKffnxSRigEiU1ztWNxu0SncNvnsF90BJ8wMCTECsyp/xMhJFIm1DSVJyIucBzzc7VYRg==
+"@guardian/consent-management-platform@^13.2.0", "@guardian/consent-management-platform@^13.4.0":
+  version "13.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.4.0.tgz#29025f9fc762d9cef71814ab76aec20f536069f1"
+  integrity sha512-Dy4DArhAC9Ec9GwnHuQSzStFZoGmW1vQzW/XUkbgTgnIpUq/oO7/pnF8knhv9WvBu4vJsaausmDBWFWuCf2+8g==
 
 "@guardian/core-web-vitals@^4.0.0":
   version "4.0.0"
