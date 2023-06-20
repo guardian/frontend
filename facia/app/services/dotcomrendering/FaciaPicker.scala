@@ -19,7 +19,6 @@ object FrontChecks {
       // We partly support thrashers. They will be fully supported after this is completed: https://github.com/guardian/dotcom-rendering/issues/7319
       "fixed/thrasher",
       "dynamic/package",
-
       /*
       "fixed/video"
       pending https://github.com/guardian/dotcom-rendering/issues/5149
