@@ -75,7 +75,7 @@ object JsonComponent extends Results with implicits.Requests {
 
   // Note we are not setting Vary headers here as they get set in CorsVaryHeadersFilter
   // otherwise they get overwritten by the Gzip Filter
-  private def resultFor(request: RequestHeader, json: String): RevalidatableResult = {
+  def resultFor(request: RequestHeader, json: String): RevalidatableResult = {
     RevalidatableResult(Cors(Ok(json).as(JSON))(request), json)
   }
 }
