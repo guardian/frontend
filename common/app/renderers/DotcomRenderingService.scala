@@ -92,6 +92,41 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     })
   }
 
+  private[this] def getWithoutHandler(
+      ws: WSClient,
+      endpoint: String,
+      timeout: Duration = Configuration.rendering.timeout,
+  )(implicit request: RequestHeader): Future[WSResponse] = {
+
+    val start = currentTimeMillis()
+
+    val resp = ws
+      .url(endpoint)
+      .withRequestTimeout(timeout)
+      .get()
+
+    resp.foreach(_ => {
+      DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis() - start)
+      DCRMetrics.DCRRequestCountMetric.increment()
+    })
+
+    resp.recoverWith({
+      case _: ConnectException if Configuration.environment.stage == "DEV" =>
+        val msg = s"""Connection refused to ${endpoint}.
+                     |
+                     |You are trying to access a Dotcom Rendering page via Frontend but it
+                     |doesn't look like DCR is running locally on the expected port (3030).
+                     |
+                     |Note, for most use cases, we recommend developing directly on DCR.
+                     |
+                     |To get started with dotcom-rendering, see:
+                     |
+                     |    https://github.com/guardian/dotcom-rendering""".stripMargin
+        Future.failed(DCRLocalConnectException(msg))
+      case t: TimeoutException => Future.failed(DCRTimeoutException(t.getMessage))
+    })
+  }
+
   private[this] def post(
       ws: WSClient,
       payload: String,
@@ -200,6 +235,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       topicResult,
       messageUs,
     )
+
+  def getProut(
+      ws: WSClient,
+  )(implicit request: RequestHeader): Future[String] = {
+
+    getWithoutHandler(ws, Configuration.rendering.baseURL + "/_prout")
+      .flatMap(response => {
+        if (response.status == 200)
+          Future.successful(response.body)
+        else
+          Future.failed(
+            DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
+          )
+      })
+  }
 
   private def baseArticleRequest(
       path: String,
