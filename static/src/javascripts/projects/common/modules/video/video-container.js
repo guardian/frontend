@@ -57,41 +57,6 @@ const reducers = {
     },
 
     INIT: function init(previousState) {
-        const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
-            if (
-                isBreakpoint({
-                    max: 'mobile',
-                })
-            ) {
-                const youTubeIframes = Array.from(
-                    state.container.querySelectorAll(
-                        '.youtube-media-atom iframe'
-                    )
-                );
-                youTubeIframes.forEach(el => {
-                    el.remove();
-                });
-                const overlayLinks = Array.from(
-                    state.container.querySelectorAll(
-                        '.video-container-overlay-link'
-                    )
-                );
-                overlayLinks.forEach(el => {
-                    el.classList.add('u-faux-block-link__overlay');
-                    // make visible to screen readers / keyboard users
-                    el.removeAttribute('tabindex');
-                    el.removeAttribute('aria-hidden');
-                });
-
-                const atomWrapper = Array.from(
-                    state.container.querySelectorAll('.youtube-media-atom')
-                );
-                atomWrapper.forEach(el => {
-                    el.classList.add('no-player');
-                });
-            }
-        };
-
         fastdom.measure(() => {
             // Lazy load images on scroll for mobile
             $('.js-video-playlist-image', previousState.container).each(el => {

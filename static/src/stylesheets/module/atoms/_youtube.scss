@@ -33,14 +33,6 @@
     }
 }
 
-.video-playlist__item .youtube-media-atom iframe,
-.video-playlist__item .youtube-media-atom .vjs-big-play-button {
-    @include mq($until: mobile) {
-        bottom: 0;
-        height: auto;
-    }
-}
-
 .video-playlist__item--active .youtube-media-atom {
     opacity: 1;
 }
