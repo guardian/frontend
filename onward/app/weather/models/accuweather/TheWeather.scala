@@ -20,5 +20,3 @@ case class TheWeather(
     weather: WeatherResponse,
     forecast: Seq[ForecastResponse],
 )
-
-
