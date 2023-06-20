@@ -8,6 +8,7 @@ module.exports = webpackMerge.smart(config, {
     output: {
         filename: `graun.[name].js`,
         chunkFilename: `graun.[name].js`,
+        clean: true,
     },
     plugins: [
         // Copy the commercial bundle dist to Frontend's static output location:
@@ -16,8 +17,8 @@ module.exports = webpackMerge.smart(config, {
         new CopyPlugin({
             patterns: [
               {
-                  from: "node_modules/@guardian/commercial/dist/bundle",
-                  to: "commercial/[name].[ext]"
+                  from: "node_modules/@guardian/commercial/dist/bundle/dev",
+                  to: "commercial"
               },
             ],
         }),

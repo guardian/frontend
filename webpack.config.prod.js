@@ -12,6 +12,7 @@ module.exports = webpackMerge.smart(config, {
 	output: {
 		filename: `[chunkhash]/graun.[name].js`,
 		chunkFilename: `[chunkhash]/graun.[name].js`,
+        clean: true,
 	},
 	devtool: 'source-map',
 	plugins: [
@@ -20,7 +21,7 @@ module.exports = webpackMerge.smart(config, {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: 'node_modules/@guardian/commercial/dist/bundle',
+					from: 'node_modules/@guardian/commercial/dist/bundle/prod',
 					to: 'commercial',
 				},
 			],
