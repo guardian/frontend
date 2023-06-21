@@ -65,20 +65,8 @@ object FrontChecks {
 
   val UNSUPPORTED_THRASHERS: Set[String] =
     Set(
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/12/wordiply/default",
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/04/australian-election/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/07/full-story/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/10/saved-for-later/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/12/documentaries-signup-thrasher/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/12/100-best-footballers/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/01/football-weekly-thrasher/thrasher",
       "https://content.guardianapis.com/atom/interactive/interactives/2022/11/20/football-interactive-atom/knockout-full",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2021/07/pegasus/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/07/lakeside/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/07/support-guardian-thrasher/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/02/pw-uk/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/11/comfort-eating-grace-dent-thrasher-no-logo/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/02/weekend-podcast-2022/default",
     )
 
   def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
