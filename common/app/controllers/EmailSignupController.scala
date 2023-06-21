@@ -39,17 +39,7 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: String,
-) {
-
-  // `name` is a hidden (via css) form input
-  // if it was set to something this form was likely filled by a bot
-  // https://stackoverflow.com/a/34623588/2823715
-  def isLikelyBotSubmission: Boolean =
-    name match {
-      case "" | "undefined" | "null" => false
-      case _                         => true
-    }
-}
+) {}
 
 case class EmailFormManyNewsletters(
     email: String,
@@ -60,81 +50,64 @@ case class EmailFormManyNewsletters(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: String,
-) {
-
-  // `name` is a hidden (via css) form input
-  // if it was set to something this form was likely filled by a bot
-  // https://stackoverflow.com/a/34623588/2823715
-  def isLikelyBotSubmission: Boolean =
-    name match {
-      case "" | "undefined" | "null" => false
-      case _                         => true
-    }
-}
+) {}
 
 class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgent)
     extends LazyLogging
     with RemoteAddress {
 
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    if (form.isLikelyBotSubmission) {
-      Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
-    } else {
-      val idAccessClientToken = Configuration.id.apiClientToken
-      val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
-      val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
-      val headers = clientIp(request)
-        .map(ip => List("X-Forwarded-For" -> ip))
-        .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
+    val idAccessClientToken = Configuration.id.apiClientToken
+    val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
+    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+    val headers = clientIp(request)
+      .map(ip => List("X-Forwarded-For" -> ip))
+      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
-      val queryStringParameters = form.ref.map("ref" -> _).toList ++
-        form.refViewId.map("refViewId" -> _).toList ++
-        form.listName.map("listName" -> _).toList
+    val queryStringParameters = form.ref.map("ref" -> _).toList ++
+      form.refViewId.map("refViewId" -> _).toList ++
+      form.listName.map("listName" -> _).toList
 
-      //FIXME: this should go via the identity api client / app
-      wsClient
-        .url(consentMailerUrl)
-        .withQueryStringParameters(queryStringParameters: _*)
-        .addHttpHeaders(headers: _*)
-        .post(consentMailerPayload)
-    }
+    //FIXME: this should go via the identity api client / app
+    wsClient
+      .url(consentMailerUrl)
+      .withQueryStringParameters(queryStringParameters: _*)
+      .addHttpHeaders(headers: _*)
+      .post(consentMailerPayload)
   }
 
   def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    if (form.isLikelyBotSubmission) {
-      Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
-    } else {
-      val idAccessClientToken = Configuration.id.apiClientToken
-      val listOfIds = form.listNames
-      val consentMailerPayload = JsObject(
-        Json
-          .obj(
-            "email" -> form.email,
-            "set-lists" -> listOfIds,
-          )
-          .fields,
-      )
+    val idAccessClientToken = Configuration.id.apiClientToken
+    val listOfIds = form.listNames
+    val consentMailerPayload = JsObject(
+      Json
+        .obj(
+          "email" -> form.email,
+          "set-lists" -> listOfIds,
+        )
+        .fields,
+    )
 
-      val headers = clientIp(request)
-        .map(ip => List("X-Forwarded-For" -> ip))
-        .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
+    val headers = clientIp(request)
+      .map(ip => List("X-Forwarded-For" -> ip))
+      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
-      val queryStringParameters = form.ref.map("ref" -> _).toList ++
-        form.refViewId.map("refViewId" -> _).toList ++
-        listOfIds.map("listName" -> _).toList
+    val queryStringParameters = form.ref.map("ref" -> _).toList ++
+      form.refViewId.map("refViewId" -> _).toList ++
+      listOfIds.map("listName" -> _).toList
 
-      //FIXME: this should go via the identity api client / app
-      // NOTE - always using the '/consent-signup' (no confirmation email)
-      // should we be splitting the list into newsletters that require confirmation
-      // and those that don't, then sending two separate requests?
-      // Currently, no editorial newsletters require confirmation emails, but the
-      // feature is still supported.
-      wsClient
-        .url(s"${Configuration.id.apiRoot}/consent-signup")
-        .withQueryStringParameters(queryStringParameters: _*)
-        .addHttpHeaders(headers: _*)
-        .post(consentMailerPayload)
-    }
+    //FIXME: this should go via the identity api client / app
+    // NOTE - always using the '/consent-signup' (no confirmation email)
+    // should we be splitting the list into newsletters that require confirmation
+    // and those that don't, then sending two separate requests?
+    // Currently, no editorial newsletters require confirmation emails, but the
+    // feature is still supported.
+    wsClient
+      .url(s"${Configuration.id.apiRoot}/consent-signup")
+      .withQueryStringParameters(queryStringParameters: _*)
+      .addHttpHeaders(headers: _*)
+      .post(consentMailerPayload)
+
   }
 
   private def serviceUrl(form: EmailForm, emailEmbedAgent: NewsletterSignupAgent): String = {
