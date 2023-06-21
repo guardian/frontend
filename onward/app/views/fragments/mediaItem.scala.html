@@ -10,6 +10,14 @@
             @content.trail.trailPicture.map{ imageMedia =>
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio">
+                        @content match {
+                          case v: Video => {
+                              <button class="youtube-media-atom__play-button vjs-control-text" style="border: none;">
+                                  Play Video @fragments.inlineSvg("play", "icon")
+                              </button>
+                          }
+                          case _ => { }
+                        }
                         <img class="responsive-img" src="@Item140.bestSrcFor(imageMedia)" alt="" />
                     </div>
                 </div>
@@ -21,7 +29,6 @@
                         @a.metadata.webTitle
                     }
                     case v: Video => {
-                        @fragments.inlineSvg("video-icon", "icon", List("yellow"))
                         @v.videoLinkText
                     }
                     case _ => { }

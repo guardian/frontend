@@ -228,20 +228,6 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.fc-item__title,
-.rich-link__title,
-.fc-sublink__link {
-    .inline-video-icon {
-        fill: $highlight-main;
-
-        > svg {
-            height: .75em;
-            width: 1.1em;
-            margin-right: .3em;
-        }
-    }
-}
-
 .fc-item--gallery .fc-item__title,
 .rich-link--gallery .rich-link__title,
 .fc-sublink--gallery .fc-sublink__link {
