@@ -48,17 +48,20 @@ OPTIONS    /email                                                               
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
-#Weather - OLD
+# Weather - EVEN OLDER
 GET            /weather/city/:id.json                                                                                            weather.controllers.WeatherController.forCity(id)
 GET            /weather/city.json                                                                                                weather.controllers.LocationsController.whatIsMyCity()
 GET            /weather/locations                                                                                                weather.controllers.LocationsController.findCity(query: String)
 GET            /weather/forecast/:id.json                                                                                        weather.controllers.WeatherController.forecastForCityId(id)
 
-#Weather
+# Weather - OLD
 GET            /weatherapi/city/:id.json                                                                                         weather.controllers.WeatherController.forCity(id)
 GET            /weatherapi/city.json                                                                                             weather.controllers.LocationsController.whatIsMyCity()
 GET            /weatherapi/locations                                                                                             weather.controllers.LocationsController.findCity(query: String)
 GET            /weatherapi/forecast/:id.json                                                                                     weather.controllers.WeatherController.forecastForCityId(id)
+
+#Weather - DCR
+GET            /weather                                                                                                          weather.controllers.WeatherController.theWeather()
 
 # Analytics
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
