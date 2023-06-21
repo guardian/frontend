@@ -147,9 +147,6 @@
         min-height: $gs-row-height * 9;
     }
 }
-.content--media--video .inline-video-icon {
-    margin-right: .1em;
-}
 
 .items--audio .fc-item__title:before {
     @include icon(volume-high--tone-media, false);
