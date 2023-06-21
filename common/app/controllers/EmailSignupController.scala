@@ -398,10 +398,8 @@ class EmailSignupController(
           form => {
             log.info(
               s"Post request received to /email/ - " +
-                s"email: ${form.email}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
-                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
                 s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
                 s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
                 s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -514,10 +512,8 @@ class EmailSignupController(
           form => {
             log.info(
               s"Post request received to /email/ - " +
-                s"email: ${form.email}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
-                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
                 s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
                 s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
                 s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
@@ -575,11 +571,9 @@ class EmailSignupController(
           form => {
             log.info(
               s"Post request received to /email/many/ - " +
-                s"email: ${form.email}, " +
                 s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
-                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
                 s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
                 s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
                 s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
