@@ -57,12 +57,8 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     with RemoteAddress {
 
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
-    val headers = clientIp(request)
-      .map(ip => List("X-Forwarded-For" -> ip))
-      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
     val queryStringParameters = form.ref.map("ref" -> _).toList ++
       form.refViewId.map("refViewId" -> _).toList ++
@@ -72,29 +68,23 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     wsClient
       .url(consentMailerUrl)
       .withQueryStringParameters(queryStringParameters: _*)
-      .addHttpHeaders(headers: _*)
+      .addHttpHeaders(getHeaders(request): _*)
       .post(consentMailerPayload)
   }
 
   def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    val idAccessClientToken = Configuration.id.apiClientToken
-    val listOfIds = form.listNames
     val consentMailerPayload = JsObject(
       Json
         .obj(
           "email" -> form.email,
-          "set-lists" -> listOfIds,
+          "set-lists" -> form.listNames,
         )
         .fields,
     )
 
-    val headers = clientIp(request)
-      .map(ip => List("X-Forwarded-For" -> ip))
-      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
-
     val queryStringParameters = form.ref.map("ref" -> _).toList ++
       form.refViewId.map("refViewId" -> _).toList ++
-      listOfIds.map("listName" -> _).toList
+      form.listNames.map("listName" -> _).toList
 
     //FIXME: this should go via the identity api client / app
     // NOTE - always using the '/consent-signup' (no confirmation email)
@@ -105,9 +95,8 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     wsClient
       .url(s"${Configuration.id.apiRoot}/consent-signup")
       .withQueryStringParameters(queryStringParameters: _*)
-      .addHttpHeaders(headers: _*)
+      .addHttpHeaders(getHeaders(request): _*)
       .post(consentMailerPayload)
-
   }
 
   private def serviceUrl(form: EmailForm, emailEmbedAgent: NewsletterSignupAgent): String = {
@@ -119,6 +108,14 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     } else {
       s"${Configuration.id.apiRoot}/consent-email"
     }
+  }
+
+  private def getHeaders(request: Request[AnyContent]): List[(String, String)] = {
+    val idAccessClientToken = Configuration.id.apiClientToken
+
+    clientIp(request)
+      .map(ip => List("X-Forwarded-For" -> ip))
+      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
   }
 }
 
@@ -494,7 +491,7 @@ class EmailSignupController(
 
             (for {
               _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- submitForm(form)
+              result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
             } yield {
               result
             }) recover {
@@ -505,30 +502,6 @@ class EmailSignupController(
         )
     }
 
-  private def submitForm(form: EmailForm)(implicit request: Request[AnyContent]) = {
-    emailFormService
-      .submit(form)
-      .map(_.status match {
-        case 200 | 201 =>
-          EmailSubmission.increment()
-          respond(Subscribed, form.listName)
-
-        case status =>
-          log.error(s"Error posting to Identity API: HTTP $status")
-          APIHTTPError.increment()
-          respond(OtherError)
-
-      }) recover {
-      case _: IllegalAccessException =>
-        respond(Subscribed, form.listName)
-      case e: Exception =>
-        log.error(s"Error posting to Identity API: ${e.getMessage}")
-        APINetworkError.increment()
-        respond(OtherError)
-    }
-  }
-
-  // TO DO - deduplicate with submit method
   def submitMany(): Action[AnyContent] =
     Action.async { implicit request =>
       AllEmailSubmission.increment()
@@ -554,7 +527,7 @@ class EmailSignupController(
 
             (for {
               _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- submitFormManyNewsletters(form)
+              result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
             } yield {
               result
             }) recover {
@@ -565,22 +538,20 @@ class EmailSignupController(
         )
     }
 
-  // TO DO - allow with Subscribed response with the list of newsletter ids
-  // TO DO - deduplicate with code copied from submitForm method
-  private def submitFormManyNewsletters(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]) = {
-    emailFormService
-      .submitWithMany(form)
-      .map(_.status match {
-        case 200 | 201 =>
-          EmailSubmission.increment()
-          respond(Subscribed)
+  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String])(implicit
+      request: Request[AnyContent],
+  ) = {
+    wsResponse.map(_.status match {
+      case 200 | 201 =>
+        EmailSubmission.increment()
+        respond(Subscribed, listName)
 
-        case status =>
-          log.error(s"Error posting to Identity API: HTTP $status")
-          APIHTTPError.increment()
-          respond(OtherError)
+      case status =>
+        log.error(s"Error posting to Identity API: HTTP $status")
+        APIHTTPError.increment()
+        respond(OtherError)
 
-      }) recover {
+    }) recover {
       case _: IllegalAccessException =>
         respond(Subscribed)
       case e: Exception =>
