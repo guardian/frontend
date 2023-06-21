@@ -123,19 +123,6 @@ object FrontChecks {
     !faciaPage.isPaid(Edition(request));
   }
 
-  def hasNoRegionalAusTargetedContainers(faciaPage: PressedPage): Boolean = {
-    // We don't support the Aus region selector component
-    // https://github.com/guardian/dotcom-rendering/issues/6234
-    !faciaPage.collections.exists(collection =>
-      collection.targetedTerritory.exists(_.id match {
-        case "AU-VIC" => true
-        case "AU-QLD" => true
-        case "AU-NSW" => true
-        case _        => false
-      }),
-    )
-  }
-
   def hasNoUnsupportedSnapLinkCards(faciaPage: PressedPage): Boolean = {
     def containsUnsupportedSnapLink(collection: PressedCollection) = {
       collection.curated.exists(card =>
@@ -175,7 +162,6 @@ object FaciaPicker extends GuLogging {
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
-      ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
       ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
       ("hasNoFixedVideo", FrontChecks.hasNoFixedVideo(faciaPage)),
