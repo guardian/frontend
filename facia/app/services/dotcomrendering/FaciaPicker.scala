@@ -173,7 +173,6 @@ object FaciaPicker extends GuLogging {
       ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
       ("hasNoRegionalAusTargetedContainers", FrontChecks.hasNoRegionalAusTargetedContainers(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
-      ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
       ("hasNoFixedVideo", FrontChecks.hasNoFixedVideo(faciaPage)),
     )
   }
