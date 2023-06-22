@@ -233,6 +233,8 @@ $video-width-desktop: 700px;
 
 .video-playlist__icon {
     position: absolute;
+    top: 0;
+    bottom: 0;
     width: 30px;
     height: 30px;
     margin: auto;

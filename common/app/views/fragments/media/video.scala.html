@@ -32,6 +32,9 @@
                 }
             </video>
             @if(showOverlay){
+            <span class="video-overlay__duration">
+                @player.video.videos.formattedDuration
+            </span>
             <div class="video-overlay">
                 @seriesTag.map { series =>
                     <div class="video-overlay__series-label">
@@ -50,9 +53,6 @@
                         <h1 class="video-overlay__title">@player.title</h1>
                     }
                 </div>
-                <span class="video-overlay__duration">
-                    @player.video.videos.formattedDuration
-                </span>
             </div>
             }
         </div>
