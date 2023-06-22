@@ -283,27 +283,27 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
     .fc-item--full-media-50-tablet &,
     .fc-item--three-quarters-tablet &,
     .fc-item--half-tablet & {
-        @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+        @include video-icon-size($play-x-large-button-size, $play-x-large-button-icon);
     }
 
     .fc-item--third-tablet & {
-        @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+        @include video-icon-size($play-x-large-button-size, $play-x-large-button-icon);
 
         @include mq($from: mobileLandscape, $until: tablet) {
-            @include video-icon-size($garnett-medium-button-size, $garnett-medium-button-icon);
+            @include video-icon-size($play-x-large-button-size, $play-x-large-button-icon);
         }
     }
 
     .fc-item--standard-tablet &,
     .fc-item--list-media-tablet & {
         @include mq($from: tablet) {
-            @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
+            @include video-icon-size($play-small-button-size, $play-small-button-icon);
         }
     }
 
     .fc-item--list-media-mobile & {
         @include mq($until: tablet) {
-            @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
+            @include video-icon-size($play-small-button-size, $play-small-button-icon);
         }
     }
 }
