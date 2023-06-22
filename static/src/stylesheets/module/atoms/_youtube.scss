@@ -189,10 +189,10 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
     @include font($f-sans-serif-text, bold, 13, 16);
     -webkit-font-smoothing: subpixel-antialiased;
     color: $brightness-100;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, .7);
     padding: 6px 12px;
-    position:absolute;
-    top:8px;
+    position: absolute;
+    top: 8px;
     right: 8px;
     border-radius: 18px;
 }
