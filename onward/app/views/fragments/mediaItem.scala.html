@@ -12,7 +12,7 @@
                     <div class="fc-item__image-container u-responsive-ratio">
                         @content match {
                           case v: Video => {
-                              <button class="youtube-media-atom__play-button vjs-control-text" style="border: none;">
+                              <button class="play-button youtube-media-atom__play-button" style="border: none;">
                                   Play Video @fragments.inlineSvg("play", "icon")
                               </button>
                           }
