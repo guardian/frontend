@@ -1,10 +1,5 @@
 $video-width-desktop: 700px;
 
-.play-button {
-    z-index: 1;
-    background-color: rgba(18, 18, 18, .6);
-    @include video-icon-size($play-small-button-size, $play-small-button-icon);
-}
 .fc-container--video {
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
@@ -511,4 +506,10 @@ $video-width-desktop: 700px;
             }
         }
     }
+}
+
+.play-button {
+    z-index: 1;
+    background-color: rgba(18, 18, 18, .6);
+    @include video-icon-size($play-small-button-size, $play-small-button-icon);
 }
