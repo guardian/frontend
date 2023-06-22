@@ -33,15 +33,6 @@
     }
 }
 
-.video-playlist__item .youtube-media-atom iframe,
-.video-playlist__item .youtube-media-atom .vjs-big-play-button {
-    @include mq($until: desktop) {
-        top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
-        bottom: 0;
-        height: auto;
-    }
-}
-
 .video-playlist__item--active .youtube-media-atom {
     opacity: 1;
 }
@@ -130,6 +121,14 @@
     @include hide;
 }
 
+.video-playlist__item .youtube-media-atom__iframe.youtube__video-started ~ .video-overlay {
+    @include hide;
+}
+
+.video-playlist__item .youtube-media-atom__iframe.youtube__video-started ~ .video-overlay__duration {
+    @include hide;
+}
+
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .youtube-media-atom__overlay {
     @include fade-out;
     transition-delay: 500ms;
@@ -182,6 +181,13 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
 
 .no-player .youtube-media-atom__play-button.vjs-control-text {
     transition: none;
+}
+
+.youtube-media-atom__play-button.vjs-control-text.centered-button {
+    bottom: 44%;
+    left: 40%;
+    background-color: rgba(18, 18, 18, .6);
+    z-index: 3;
 }
 
 

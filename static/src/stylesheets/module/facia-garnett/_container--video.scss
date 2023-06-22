@@ -257,7 +257,7 @@ $video-width-desktop: 700px;
     position: relative;
     display: inline-block;
     vertical-align: top;
-    width: 70%;
+    width: 90%;
     background-color: $brightness-7;
     margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
@@ -400,26 +400,22 @@ $video-width-desktop: 700px;
 }
 
 .video-overlay {
-    position: relative;
+    position: absolute;
     z-index: 2;
     white-space: normal;
-    padding: 0 $gs-gutter/4 $gs-baseline * 2;
+    padding: 2.5rem $gs-gutter/4 $gs-baseline * 2;
+    padding-top: 0;
+    padding-bottom: 0;
     box-sizing: border-box;
-    border-top: 1px solid $highlight-main;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, .9);
-    min-height: gs-height(3);
-    margin-bottom: -(get-line-height(textSans, 3) + 4px);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25%);
     pointer-events: auto;
+    width: 100%;
+    bottom: 0;
+
     @include mq(desktop, leftCol) {
         opacity: 0;
         transition: opacity .4s ease-out;
-    }
-    @include mq(desktop) {
-        position: absolute;
-        top: $gs-baseline;
-        left: $gs-gutter;
-        width: gs-span(3);
     }
 
     .video-playlist__item .vjs-playing ~ & {
@@ -432,6 +428,7 @@ $video-width-desktop: 700px;
     .video-overlay__headline {
         @include fs-headline(2);
         font-weight: 400;
+        padding-bottom: 0;
         @include mq(mobileLandscape) {
             @include fs-headline(3);
             font-weight: 400;
