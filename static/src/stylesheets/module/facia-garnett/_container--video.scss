@@ -406,7 +406,7 @@ $video-width-desktop: 700px;
 }
 
 .youtube-media-atom__play-button {
-    background-color: rgba(18,18,18,0.6);
+    background-color: rgba(18, 18, 18, .6);
     border-radius: 50%;
     color: transparent;
 }
@@ -469,7 +469,7 @@ $video-width-desktop: 700px;
 }
 
 .fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for .fc-item__kicker,
-.fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for .video-overlay__duration {
+.fc-item--pillar-news.video-playlist__item.video-playlist__item--paid-for {
     color: $labs-main;
 }
 
@@ -752,10 +752,16 @@ $video-width-desktop: 700px;
 }
 
 .video-overlay__duration {
-    @include fs-textSans(3);
+    @include font($f-sans-serif-text, bold, 13, 16);
     position: absolute;
-    bottom: 2px;
-    color: $brightness-86;
+    top: 8px;
+    right: 8px;
+    padding: 6px 12px;
+    border-radius: 18px;
+    background-color: rgba(0, 0, 0, .7);
+    color: $brightness-100;
+    z-index: 999999;
+
 }
 
 .vertical-video-overlay__duration {
