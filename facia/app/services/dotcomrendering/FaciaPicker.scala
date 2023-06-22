@@ -18,13 +18,9 @@ object FrontChecks {
     Set(
       // We partly support thrashers. They will be fully supported after this is completed: https://github.com/guardian/dotcom-rendering/issues/7319
       "fixed/thrasher",
+      "dynamic/package",
       /*
-    "dynamic/package",
-      pending https://github.com/guardian/dotcom-rendering/issues/5196 and
-       */
-
-      /*
-    "fixed/video"
+      "fixed/video"
       pending https://github.com/guardian/dotcom-rendering/issues/5149
        */
 
@@ -149,7 +145,6 @@ object FaciaPicker extends GuLogging {
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
-      ("hasNoDynamicPackage", FrontChecks.hasNoDynamicPackage(faciaPage)),
       ("hasNoFixedVideo", FrontChecks.hasNoFixedVideo(faciaPage)),
     )
   }
