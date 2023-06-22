@@ -764,6 +764,12 @@ $video-width-desktop: 700px;
     background-color: rgba(0, 0, 0, .7);
     color: $brightness-100;
     z-index: 2;
+    // this hides the duration for small cards until tablet breakpoint.
+    .fc-item--list-media-mobile & {
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
 
 }
 
