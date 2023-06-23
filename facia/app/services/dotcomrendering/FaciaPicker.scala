@@ -62,7 +62,6 @@ object FrontChecks {
   val UNSUPPORTED_THRASHERS: Set[String] =
     Set(
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/04/australian-election/default",
-      "https://content.guardianapis.com/atom/interactive/interactives/2022/11/20/football-interactive-atom/knockout-full",
     )
 
   def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
