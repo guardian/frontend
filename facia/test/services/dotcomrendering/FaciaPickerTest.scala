@@ -38,10 +38,20 @@ import org.scalatestplus.mockito.MockitoSugar
     val isRSS = false
     val forceDCROff = true
     val forceDCR = false
-    val participatingInTest = true
+    val dcrSwitchEnabled = true
     val dcrCouldRender = true
+    val isNetworkFront = false
+    val isInNetworkFrontTest = false
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
     tier should be(LocalRender)
   }
 
@@ -51,8 +61,18 @@ import org.scalatestplus.mockito.MockitoSugar
     val forceDCR = true
     val dcrSwitchEnabled = false
     val dcrCouldRender = false
+    val isNetworkFront = false
+    val isInNetworkFrontTest = false
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, dcrSwitchEnabled, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
     tier should be(RemoteRender)
   }
 
@@ -62,8 +82,18 @@ import org.scalatestplus.mockito.MockitoSugar
     val forceDCR = false
     val dcrSwitchEnabled = false
     val dcrCouldRender = true
+    val isNetworkFront = false
+    val isInNetworkFrontTest = false
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, dcrSwitchEnabled, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
     tier should be(LocalRender)
   }
 
@@ -73,8 +103,18 @@ import org.scalatestplus.mockito.MockitoSugar
     val forceDCR = false
     val dcrSwitchEnabled = true
     val dcrCouldRender = true
+    val isNetworkFront = false
+    val isInNetworkFrontTest = false
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, dcrSwitchEnabled, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
     tier should be(RemoteRender)
   }
 
@@ -82,11 +122,63 @@ import org.scalatestplus.mockito.MockitoSugar
     val isRSS = true
     val forceDCROff = false
     val forceDCR = false
-    val participatingInTest = true
+    val dcrSwitchEnabled = true
     val dcrCouldRender = true
+    val isNetworkFront = false
+    val isInNetworkFrontTest = false
 
-    val tier = FaciaPicker.decideTier(isRSS, forceDCROff, forceDCR, participatingInTest, dcrCouldRender)
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
     tier should be(LocalRender)
+  }
+
+  it should "return LocalRender if a Network front is not in the test" in {
+    val isRSS = false
+    val forceDCROff = false
+    val forceDCR = false
+    val dcrSwitchEnabled = true
+    val dcrCouldRender = true
+    val isNetworkFront = true
+    val isInNetworkFrontTest = false
+
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
+    tier should be(LocalRender)
+  }
+
+  it should "return RemoteRender if a Network front is in the test" in {
+    val isRSS = false
+    val forceDCROff = false
+    val forceDCR = false
+    val dcrSwitchEnabled = true
+    val dcrCouldRender = true
+    val isNetworkFront = true
+    val isInNetworkFrontTest = true
+
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
+    tier should be(RemoteRender)
   }
 
   val linkSnap = FixtureBuilder.mkPressedLinkSnap(1).asInstanceOf[LinkSnap]
