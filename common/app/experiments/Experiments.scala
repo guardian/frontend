@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeNetworkFront,
       OfferHttp3,
       Okta,
-      DCRJavascriptBundle,
       HeaderTopBarSearchCapi,
       BorkFCP,
       BorkFID,
@@ -68,15 +67,6 @@ object Okta
 //      sellByDate = LocalDate.of(2024, 1, 1),
 //      participationGroup = Perc0E,
 //    )
-
-object DCRJavascriptBundle
-    extends Experiment(
-      name = "dcr-javascript-bundle",
-      description = "DCR Javascript bundle experiment",
-      owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc1A,
-    )
 
 object HeaderTopBarSearchCapi
     extends Experiment(
