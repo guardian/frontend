@@ -24,7 +24,8 @@ object PressedStory {
     val tags = Tags.make(apiContent)
     val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
-    val atoms = Atoms.make(apiContent)
+    val mainMediaId = apiContent.blocks.flatMap(_.main).map(_.id)
+    val mainMediaAtom = Atoms.make(apiContent).flatMap(_.media.find(atom => mainMediaId.contains(atom.id))).toSeq
     val sectionId: Option[SectionId] = metadata.section.map(s => SectionId(s.value))
 
     new PressedStory(
@@ -51,7 +52,7 @@ object PressedStory {
       ),
       PressedElements(
         elements.mainVideo,
-        atoms.fold(Seq.empty[MediaAtom])(_.media),
+        mainMediaAtom,
       ),
       tags,
     )
