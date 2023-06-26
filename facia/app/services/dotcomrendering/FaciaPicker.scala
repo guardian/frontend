@@ -31,12 +31,6 @@ object FrontChecks {
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/04/australian-election/default",
     )
 
-  def isNotAdFree()(implicit request: RequestHeader): Boolean = {
-    // We don't support the signed in experience
-    // See: https://github.com/guardian/dotcom-rendering/issues/5926
-    !Commercial.isAdFree(request)
-  }
-
   def hasNoUnsupportedSnapLinkCards(faciaPage: PressedPage): Boolean = {
     def containsUnsupportedSnapLink(collection: PressedCollection) = {
       collection.curated.exists(card =>
@@ -63,7 +57,6 @@ object FaciaPicker extends GuLogging {
 
   def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
-      ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
     )
   }
