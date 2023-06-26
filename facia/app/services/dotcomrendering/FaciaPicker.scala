@@ -9,8 +9,12 @@ import model.pressed.LinkSnap
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 import experiments.{ActiveExperiments, DCRNetworkFronts}
+import layout.slices.EmailLayouts
 
 object FrontChecks {
+
+  def hasNoEmailCollections(faciaPage: PressedPage) =
+    !faciaPage.collections.exists(collection => EmailLayouts.all.contains(collection.collectionType))
 
   /*
    * This list contains JSON.HTML thrashers that DCR allows. These thrashers should not actually be rendered by DCR
@@ -58,6 +62,7 @@ object FaciaPicker extends GuLogging {
   def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
+      ("hasNoEmailCollections", FrontChecks.hasNoEmailCollections(faciaPage)),
     )
   }
 
