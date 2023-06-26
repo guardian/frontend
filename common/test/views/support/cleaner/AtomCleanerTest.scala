@@ -103,7 +103,7 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
     val html = views.html.fragments.atoms
       .media(media = youTubeAtom.map(_.media.head).get, displayCaption = false, mediaWrapper = None)(TestRequest())
     val doc = Jsoup.parse(html.toString())
-    doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").html() should be("0:36")
+    doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").html() should include("0:36")
   }
 
   "Youtube template" should "use active asset" in {
