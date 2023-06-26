@@ -37,12 +37,6 @@ object FrontChecks {
     !Commercial.isAdFree(request)
   }
 
-  def hasNoPageSkin(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
-    // We don't support page skin ads
-    // See: https://github.com/guardian/dotcom-rendering/issues/5490
-    !faciaPage.metadata.hasPageSkin(request)
-  }
-
   def hasNoUnsupportedSnapLinkCards(faciaPage: PressedPage): Boolean = {
     def containsUnsupportedSnapLink(collection: PressedCollection) = {
       collection.curated.exists(card =>
@@ -70,7 +64,6 @@ object FaciaPicker extends GuLogging {
   def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isNotAdFree", FrontChecks.isNotAdFree()),
-      ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
     )
   }
