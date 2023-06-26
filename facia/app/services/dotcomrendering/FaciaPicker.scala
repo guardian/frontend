@@ -96,10 +96,13 @@ object FaciaPicker extends GuLogging {
     if (isRss) LocalRender
     else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
-    else if (isNetworkFront)
-      if (dcrCouldRender && isInNetworkFrontTest) RemoteRender else LocalRender
-    else if (dcrCouldRender && dcrSwitchEnabled) RemoteRender
-    else LocalRender
+    else if (dcrCouldRender && dcrSwitchEnabled) {
+      isNetworkFront match {
+        case false                        => RemoteRender
+        case true if isInNetworkFrontTest => RemoteRender
+        case _                            => LocalRender
+      }
+    } else LocalRender
   }
 
   private def logTier(

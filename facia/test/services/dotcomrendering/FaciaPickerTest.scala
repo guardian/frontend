@@ -157,6 +157,27 @@ import org.scalatestplus.mockito.MockitoSugar
     tier should be(RemoteRender)
   }
 
+  it should "return LocalRender for a Network front is the switch is off even if in test" in {
+    val isRSS = false
+    val forceDCROff = false
+    val forceDCR = false
+    val dcrSwitchEnabled = false
+    val dcrCouldRender = true
+    val isNetworkFront = true
+    val isInNetworkFrontTest = true
+
+    val tier = FaciaPicker.decideTier(
+      isRSS,
+      forceDCROff,
+      forceDCR,
+      dcrSwitchEnabled,
+      dcrCouldRender,
+      isNetworkFront,
+      isInNetworkFrontTest,
+    )
+    tier should be(LocalRender)
+  }
+
   val linkSnap = FixtureBuilder.mkPressedLinkSnap(1).asInstanceOf[LinkSnap]
   val supportedThrasher = PressedCollectionBuilder.mkPressedCollection(curated =
     List(
