@@ -1561,14 +1561,14 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
   integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
 
-"@guardian/commercial@10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.0.0.tgz#5969ed132d31c0fb14f5dd8b2399083372499a16"
-  integrity sha512-ymKxtAuKmYJDKIbHPMpSHmjM1xATn9cq/t6g3G5GPPg4/f71g2H31elIfalPo9pes9dhgpXTyH+TzryF551F1w==
+"@guardian/commercial@10.1.0":
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.1.0.tgz#1a1fd256bbf6fc6bd9d1271816a119f27ecf879e"
+  integrity sha512-natr/bIH+8Jc0dqC3NrjP7OCgE9hm4XSJQ7ThyJqgcPxHmh6uWGOQTiOAgM30yYvQuETQo+rCRf4NNklHtiFcA==
   dependencies:
     "@changesets/cli" "^2.26.1"
     "@guardian/ab-core" "^5.0.0"
-    "@guardian/consent-management-platform" "^13.2.0"
+    "@guardian/consent-management-platform" "^13.5.0"
     "@guardian/core-web-vitals" "^5.0.0"
     "@guardian/libs" "^15.0.0"
     "@guardian/source-foundations" "^12.0.0"
@@ -1584,15 +1584,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@^13.0.2":
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.0.2.tgz#3625f10ca355e1f0296f17fbf8eee3fffd693b95"
-  integrity sha512-rhuDQeZW//WJue9Uhj5JgWc7juV18CgwpOJXcmzYUkYcvi1wcf+kW/BvqfJjNjyd/kpx5eNQ2pCZtj4HuTQBEA==
-
-"@guardian/consent-management-platform@^13.2.0":
-  version "13.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.2.0.tgz#089dcd6b3b7883e281d8764ac7557d1a3a627ae5"
-  integrity sha512-1ggVotJaJad2k7w1QAKffnxSRigEiU1ztWNxu0SncNvnsF90BJ8wMCTECsyp/xMhJFIm1DSVJyIucBzzc7VYRg==
+"@guardian/consent-management-platform@^13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.5.0.tgz#61a97c823f6b18f62a6517a3374f6e7bdfca121d"
+  integrity sha512-9iz04lyonWAbUeZ7B+fNp0KbgAervsWDO3A4CE/3e+d876AQj0I3TwU7W4jpWxI4tthcA6UVk7Y6faaS8l+lFw==
 
 "@guardian/core-web-vitals@^4.0.0":
   version "4.0.0"
@@ -10516,7 +10511,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#2e3b96d:
+"prebid.js@github:guardian/prebid.js#2e3b96d":
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
