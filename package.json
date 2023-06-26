@@ -18,7 +18,7 @@
 		"@guardian/atom-renderer": "^2.0.0",
 		"@guardian/automat-modules": "^0.3.8",
 		"@guardian/braze-components": "^13.0.0",
-		"@guardian/commercial": "0.0.0-beta-20230622094226",
+		"@guardian/commercial": "10.1.0",
 		"@guardian/consent-management-platform": "^13.5.0",
 		"@guardian/core-web-vitals": "^4.0.0",
 		"@guardian/libs": "^14.0.0",
