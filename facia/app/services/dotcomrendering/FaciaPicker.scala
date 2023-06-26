@@ -12,36 +12,6 @@ import experiments.{ActiveExperiments, DCRNetworkFronts}
 
 object FrontChecks {
 
-  // To check which collections are supported by DCR and update this set please check:
-  // https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/web/lib/DecideContainer.tsx
-  // and https://github.com/guardian/dotcom-rendering/issues/4720
-  val SUPPORTED_COLLECTIONS: Set[String] =
-    Set(
-      // We partly support thrashers. They will be fully supported after this is completed: https://github.com/guardian/dotcom-rendering/issues/7319
-      "fixed/thrasher",
-      "dynamic/package",
-      "fixed/video",
-      "dynamic/slow-mpu",
-      "fixed/small/slow-V-mpu",
-      "fixed/medium/slow-XII-mpu",
-      "dynamic/slow",
-      "dynamic/fast",
-      "fixed/small/slow-I",
-      "fixed/small/slow-III",
-      "fixed/small/slow-IV",
-      "fixed/small/slow-V-third",
-      "fixed/small/slow-V-half",
-      "fixed/small/fast-VIII",
-      "fixed/medium/slow-VI",
-      "fixed/medium/slow-VII",
-      "fixed/medium/fast-XII",
-      "fixed/medium/fast-XI",
-      "fixed/large/slow-XIV",
-      "nav/list",
-      "nav/media-list",
-      "news/most-popular",
-    )
-
   /*
    * This list contains JSON.HTML thrashers that DCR Supports. These thrashers should not actually be rendered by DCR
    * but instead have an alternate way of being rendered on DCR.
@@ -60,10 +30,6 @@ object FrontChecks {
     Set(
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/04/australian-election/default",
     )
-
-  def allCollectionsAreSupported(faciaPage: PressedPage): Boolean = {
-    faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
-  }
 
   /** See: https://github.com/guardian/dotcom-rendering/issues/6378 */
   def hasNoWeatherWidget(faciaPage: PressedPage): Boolean = {
@@ -119,7 +85,6 @@ object FaciaPicker extends GuLogging {
 
   def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
-      ("allCollectionsAreSupported", FrontChecks.allCollectionsAreSupported(faciaPage)),
       ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
