@@ -11,7 +11,7 @@
 @import model.Pillar.RichPillar
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="fc-slice fc-slice--most-popular" data-link-name="most popular Test" data-test-id="popular-in">
+    <div id="popular-trails" class="fc-slice fc-slice--most-popular" data-link-name="most popular" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs tabs--mostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--without-mpu}">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
