@@ -42,7 +42,6 @@ const reducers = {
                 ? previousState.position
                 : previousState.position + 1;
         updateCarouselCounter(position);
-        let start = performance.now();
         updateYouTubeVideo(
             previousState.container.querySelector(`.js-video-playlist-item-${position - 1}`)
         );

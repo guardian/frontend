@@ -89,7 +89,7 @@
                     }
 
                     case VerticalVideo => {
-                        @if(VerticalVideoSwitch.isSwitchedOn) {
+                        @if(VerticalVideoSwitch.isSwitchedOn && frontId.exists(_.matches("au"))) {
                             <div class="gs-container">
                             @verticalVideoContainer(containerDefinition, frontProperties)
                             </div>
