@@ -43,13 +43,6 @@ object FrontChecks {
     !faciaPage.metadata.hasPageSkin(request)
   }
 
-  def isNotPaidFront(faciaPage: PressedPage)(implicit request: RequestHeader): Boolean = {
-    // We don't support paid fronts
-    // See: https://github.com/guardian/dotcom-rendering/issues/5945
-
-    !faciaPage.isPaid(Edition(request));
-  }
-
   def hasNoUnsupportedSnapLinkCards(faciaPage: PressedPage): Boolean = {
     def containsUnsupportedSnapLink(collection: PressedCollection) = {
       collection.curated.exists(card =>
@@ -78,7 +71,6 @@ object FaciaPicker extends GuLogging {
     Map(
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
-      ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
     )
   }
