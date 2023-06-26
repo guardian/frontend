@@ -43,15 +43,6 @@
     }
 }
 
-.video-playlist__item:not(.vertical-video-width)  .youtube-media-atom iframe,
-.video-playlist__item:not(.vertical-video-width)  .youtube-media-atom .vjs-big-play-button {
-    @include mq($until: desktop) {
-        top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
-        bottom: 0;
-        height: auto;
-    }
-}
-
 .video-playlist__item--active .youtube-media-atom {
     opacity: 1;
 }
@@ -142,6 +133,14 @@
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .vertical-video-overlay__duration,
 .youtube-media-atom__iframe.youtube__video-started ~ .vertical-video-overlay,
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .video-overlay {
+    @include hide;
+}
+
+.video-playlist__item .youtube-media-atom__iframe.youtube__video-started ~ .video-overlay {
+    @include hide;
+}
+
+.video-playlist__item .youtube-media-atom__iframe.youtube__video-started ~ .video-overlay__duration {
     @include hide;
 }
 
