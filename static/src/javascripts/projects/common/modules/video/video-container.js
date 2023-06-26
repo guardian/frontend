@@ -46,9 +46,6 @@ const reducers = {
         updateYouTubeVideo(
             previousState.container.querySelector(`.js-video-playlist-item-${position - 1}`)
         );
-        // updateYoutubeVideos()
-        let timeTaken = performance.now() - start;
-        console.log("Total time taken : " + timeTaken + " milliseconds");
         return Object.assign(
             {},
             previousState,
