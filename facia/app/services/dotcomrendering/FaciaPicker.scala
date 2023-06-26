@@ -70,10 +70,6 @@ object FrontChecks {
     !faciaPage.collections.exists(collection => containsUnsupportedSnapLink(collection))
   }
 
-  def hasNoDynamicPackage(faciaPage: PressedPage): Boolean = {
-    !faciaPage.collections.map(_.collectionType).contains("dynamic/package")
-  }
-
 }
 
 object FaciaPicker extends GuLogging {
