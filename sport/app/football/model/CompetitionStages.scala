@@ -160,24 +160,47 @@ object KnockoutSpider {
       // ----
       ZonedDateTime.of(2022, 12, 18, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 64
     ),
-    // women world cup 2019
+    // women world cup 2023
     "870" -> List(
-      ZonedDateTime.of(2019, 6, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 23, 16, 30, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 24, 18, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 25, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 25, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 22, 16, 30, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 24, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
-      ZonedDateTime.of(2019, 6, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2019, 6, 28, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2019, 6, 29, 14, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2019, 6, 29, 17, 30, 0, 0, ZoneId.of("Europe/London")), // Quarter Final
-      ZonedDateTime.of(2019, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final
-      ZonedDateTime.of(2019, 7, 3, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final
-      ZonedDateTime.of(2019, 7, 6, 16, 0, 0, 0, ZoneId.of("Europe/London")), // 3rd/4th Play-Offs
-      ZonedDateTime.of(2019, 7, 7, 16, 0, 0, 0, ZoneId.of("Europe/London")), // Final
+      // Group A winner vs Group C runner-up
+      ZonedDateTime.of(2023, 8, 5, 6, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+      // Group E winner vs Group G runner-up
+      ZonedDateTime.of(2023, 8, 6, 3, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+
+      // Group C winner vs Group A runner-up
+      ZonedDateTime.of(2023, 8, 5, 9, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+      // Group G winner vs Group E runner-up
+      ZonedDateTime.of(2023, 8, 6, 10, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+
+      // Group B winner vs Group D runner-up
+      ZonedDateTime.of(2023, 8, 7, 11, 30, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+      // Group F winner vs Group H runner-up
+      ZonedDateTime.of(2023, 8, 8, 12, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+
+      // Group D winner vs Group B runner-up
+      ZonedDateTime.of(2023, 8, 7, 8, 30, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+      // Group H winner vs Group F runner-up
+      ZonedDateTime.of(2023, 8, 8, 9, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16
+
+      // QF1: Group A winner/Group C runner-up vs Group E winner/Group G runner-up
+      ZonedDateTime.of(2023, 8, 11, 2, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
+      // QF2: Group C winner/Group A runner-up vs Group G winner/Group E runner-up
+      ZonedDateTime.of(2023, 8, 11, 8, 30, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
+
+      // QF4: Group D winner/Group B runner-up vs Group H winner/Group F runner-up
+      ZonedDateTime.of(2023, 8, 12, 11, 30, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
+      // QF3: Group B winner/Group D runner-up vs Group F winner/Group H runner-up
+      ZonedDateTime.of(2023, 8, 12, 8, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
+
+      // SF1: Winner of Quarter Final 1 vs Winner of Quarter Final 2 (8am)
+      ZonedDateTime.of(2023, 8, 15, 9, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals
+      // SF2: Winner of Quarter Final 3 vs Winner of Quarter Final 4 (11am)
+      ZonedDateTime.of(2023, 8, 16, 11, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals
+
+      // Loser of Semi-final 1 vs Loser of Semi-final 2 (9am)
+      ZonedDateTime.of(2023, 8, 19, 9, 0, 0, 0, ZoneId.of("Europe/London")), // Third place
+      // Winner of Semi-final 1 vs Winner of Semi-final 2 (11am)
+      ZonedDateTime.of(2023, 8, 20, 11, 0, 0, 0, ZoneId.of("Europe/London")), // Finals
     ),
     // Euro 2020
     "750" -> List(
