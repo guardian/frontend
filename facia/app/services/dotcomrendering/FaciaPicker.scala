@@ -8,6 +8,7 @@ import model.facia.PressedCollection
 import model.pressed.LinkSnap
 import play.api.mvc.RequestHeader
 import views.support.Commercial
+import experiments.{ActiveExperiments, DCRNetworkFronts}
 
 object FrontChecks {
 
@@ -68,8 +69,8 @@ object FrontChecks {
     faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
   }
 
+  /** See: https://github.com/guardian/dotcom-rendering/issues/6378 */
   def hasNoWeatherWidget(faciaPage: PressedPage): Boolean = {
-    // See: https://github.com/guardian/dotcom-rendering/issues/4602
     !faciaPage.isNetworkFront
   }
 
@@ -140,8 +141,19 @@ object FaciaPicker extends GuLogging {
     lazy val checks = dcrChecks(faciaPage)
     lazy val dcrSwitchEnabled = DCRFronts.isSwitchedOn
     lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue)
+    lazy val isNetworkFront = faciaPage.isNetworkFront
+    lazy val isInNetworkFrontTest = ActiveExperiments.isParticipating(DCRNetworkFronts)
 
-    val tier = decideTier(request.isRss, request.forceDCROff, request.forceDCR, dcrSwitchEnabled, dcrCouldRender)
+    val tier =
+      decideTier(
+        request.isRss,
+        request.forceDCROff,
+        request.forceDCR,
+        dcrSwitchEnabled,
+        dcrCouldRender,
+        isNetworkFront,
+        isInNetworkFrontTest,
+      )
 
     logTier(faciaPage, dcrCouldRender, checks, tier)
 
@@ -154,10 +166,14 @@ object FaciaPicker extends GuLogging {
       forceDCR: Boolean,
       dcrSwitchEnabled: Boolean,
       dcrCouldRender: Boolean,
+      isNetworkFront: Boolean,
+      isInNetworkFrontTest: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
     else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
+    else if (isNetworkFront)
+      if (dcrCouldRender && isInNetworkFrontTest) RemoteRender else LocalRender
     else if (dcrCouldRender && dcrSwitchEnabled) RemoteRender
     else LocalRender
   }
