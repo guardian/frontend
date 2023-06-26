@@ -31,11 +31,6 @@ object FrontChecks {
       "https://content.guardianapis.com/atom/interactive/interactives/thrashers/2022/04/australian-election/default",
     )
 
-  /** See: https://github.com/guardian/dotcom-rendering/issues/6378 */
-  def hasNoWeatherWidget(faciaPage: PressedPage): Boolean = {
-    !faciaPage.isNetworkFront
-  }
-
   def isNotAdFree()(implicit request: RequestHeader): Boolean = {
     // We don't support the signed in experience
     // See: https://github.com/guardian/dotcom-rendering/issues/5926
@@ -85,7 +80,6 @@ object FaciaPicker extends GuLogging {
 
   def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
-      ("hasNoWeatherWidget", FrontChecks.hasNoWeatherWidget(faciaPage)),
       ("isNotAdFree", FrontChecks.isNotAdFree()),
       ("hasNoPageSkin", FrontChecks.hasNoPageSkin(faciaPage)),
       ("isNotPaidFront", FrontChecks.isNotPaidFront(faciaPage)),
