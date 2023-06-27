@@ -7,8 +7,12 @@ import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import helpers.FaciaTestData
+import test.FaciaControllerTest
+import model.facia.PressedCollection
+import layout.slices.EmailLayouts
 
-@DoNotDiscover class FaciaPickerTest extends AnyFlatSpec with Matchers with MockitoSugar {
+@DoNotDiscover class FaciaPickerTest extends AnyFlatSpec with FaciaTestData with Matchers with MockitoSugar {
 
   "Facia Picker decideTier" should "return LocalRender if dcr=false" in {
     val isRSS = false
@@ -217,5 +221,65 @@ import org.scalatestplus.mockito.MockitoSugar
     )
 
     FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage) should be(true)
+  }
+
+  it should "Should render supported collections" in {
+    val faciaPage = FixtureBuilder.mkPressedPage(
+      List(
+        PressedCollectionBuilder.mkPressedCollection("dynamic/fast"),
+        PressedCollectionBuilder.mkPressedCollection("dynamic/package"),
+        PressedCollectionBuilder.mkPressedCollection("dynamic/slow"),
+        PressedCollectionBuilder.mkPressedCollection("dynamic/slow-mpu"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/large/slow-XIV"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/medium/fast-XI"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/medium/fast-XII"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/medium/slow-VI"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/medium/slow-VII"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/medium/slow-XII-mpu"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/fast-VIII"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-I"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-III"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-IV"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-V-half"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-V-mpu"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-V-third"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/thrasher"),
+        PressedCollectionBuilder.mkPressedCollection("fixed/video"),
+        PressedCollectionBuilder.mkPressedCollection("nav/list"),
+        PressedCollectionBuilder.mkPressedCollection("nav/media-list"),
+        PressedCollectionBuilder.mkPressedCollection("news/most-popular"),
+      ),
+    )
+
+    FrontChecks.hasOnlySupportedCollections(faciaPage) should be(true)
+  }
+
+  it should "Should not render Email layouts" in {
+    val supported = EmailLayouts.all.keySet.exists(collectionType => {
+      val faciaPage = FixtureBuilder.mkPressedPage(
+        List(PressedCollectionBuilder.mkPressedCollection(collectionType)),
+      )
+      FrontChecks.hasOnlySupportedCollections(faciaPage)
+    })
+
+    supported should be(false)
+  }
+
+  it should "Should not render Showcase" in {
+    val faciaPage = FixtureBuilder.mkPressedPage(
+      List(PressedCollectionBuilder.mkPressedCollection("fixed/showcase")),
+    )
+
+    FrontChecks.hasOnlySupportedCollections(faciaPage) should be(false)
+  }
+
+  it should "Should not render the Australian front" in {
+    FrontChecks.isNotAustralianFront(auFaciaPage) should be(false)
+  }
+
+  it should "Should render the UK, US and International fronts" in {
+    FrontChecks.isNotAustralianFront(ukFaciaPage) should be(true)
+    FrontChecks.isNotAustralianFront(usFaciaPage) should be(true)
+    FrontChecks.isNotAustralianFront(internationalFaciaPageWithTargetedTerritories) should be(true)
   }
 }
