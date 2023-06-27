@@ -20,20 +20,10 @@
     transition: opacity 1s linear, visibility 1s;
 }
 
-@mixin playlist-item-opacity {
-    opacity: .3;
-    transition: opacity .4s ease-out;
-}
-
 .video-playlist__item .youtube-media-atom {
-    @include mq($from: desktop) {
-        @include playlist-item-opacity;
-    }
-}
-
-.video-playlist__item:is(.vertical-video-width) .youtube-media-atom {
-    @include mq($from: mobile) {
-        @include playlist-item-opacity;
+    @include mq(desktop) {
+        opacity: .3;
+        transition: opacity .4s ease-out;
     }
 }
 
@@ -43,8 +33,8 @@
     }
 }
 
-.video-playlist__item:not(.vertical-video-width)  .youtube-media-atom iframe,
-.video-playlist__item:not(.vertical-video-width)  .youtube-media-atom .vjs-big-play-button {
+.video-playlist__item .youtube-media-atom iframe,
+.video-playlist__item .youtube-media-atom .vjs-big-play-button {
     @include mq($until: desktop) {
         top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
         bottom: 0;
@@ -53,10 +43,6 @@
 }
 
 .video-playlist__item--active .youtube-media-atom {
-    opacity: 1;
-}
-
-.video-playlist__item--active:is(.vertical-video-width) .youtube-media-atom {
     opacity: 1;
 }
 
@@ -139,8 +125,7 @@
 .youtube-media-atom__iframe.youtube__video-ended ~ .youtube-media-atom__overlay {
     @include hide;
 }
-.youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .vertical-video-overlay__duration,
-.youtube-media-atom__iframe.youtube__video-started ~ .vertical-video-overlay,
+
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .video-overlay {
     @include hide;
 }
@@ -195,14 +180,6 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
     opacity: 1;
 }
 
-.youtube-media-atom__play-button.vjs-control-text.vertical {
-    height: 60px;
-    width: 60px;
-    border-radius: 160px;
-    bottom: 44%;
-    left: 40%;
-    background-color: rgba(18, 18, 18, .6);
-}
 .no-player .youtube-media-atom__play-button.vjs-control-text {
     transition: none;
 }

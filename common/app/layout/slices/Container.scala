@@ -17,7 +17,6 @@ case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
 case object Video extends Container
-case object VerticalVideo extends Container
 
 object Container extends GuLogging {
 
@@ -29,7 +28,6 @@ object Container extends GuLogging {
       ("dynamic/package", Dynamic(DynamicPackage)),
       ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false, adFree = adFree))),
       ("fixed/video", Video),
-      ("fixed/video/vertical", VerticalVideo),
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),

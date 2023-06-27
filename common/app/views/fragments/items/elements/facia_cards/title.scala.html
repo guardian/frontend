@@ -1,4 +1,4 @@
-@(header: layout.FaciaCardHeader, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", snapType: Option[layout.SnapType] = None, isPaidFor: Boolean = false, isAction: Boolean = false, isLink: Boolean = true)(implicit request: RequestHeader)
+@(header: layout.FaciaCardHeader, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", snapType: Option[layout.SnapType] = None, isPaidFor: Boolean = false, isAction: Boolean = false)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
@@ -17,11 +17,8 @@
 
 
 @articleLink(html: Html) = {
-@if(isLink) {
     <a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>
-} else {
-    <span href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</span>
-}}
+}
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @if(isPaidFor) {

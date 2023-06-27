@@ -28,10 +28,6 @@ $video-width-desktop: 700px;
         padding-bottom: 56.3%;
     }
 
-    .u-responsive-ratio.vertical-video {
-        padding-bottom: 177%;
-    }
-
     .gu-media-wrapper .vjs-paused.vjs-has-started .vjs-control-bar {
         bottom: -$gs-baseline * 5;
     }
@@ -42,13 +38,6 @@ $video-width-desktop: 700px;
         }
     }
 
-
-    .vertical-video-width {
-        width: 300px;
-    }
-    .vertical-video-height {
-        height: 533px;
-    }
     .media__container--hidden {
         display: block !important; // To override existing important
         position: absolute;
@@ -140,18 +129,6 @@ $video-width-desktop: 700px;
     pointer-events: none;
 }
 
-.video-playlist--end .vertical-video-playlist__icon--next,
-.video-playlist--start .vertical-video-playlist__icon--prev {
-    pointer-events: none;
-    cursor: default;
-    border: 1px solid #ffffff;
-    background-color: #101010;
-
-    svg {
-        fill: #ffffff;
-    }
-}
-
 .video-playlist__inner {
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
@@ -160,20 +137,12 @@ $video-width-desktop: 700px;
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
     }
-
     @include mq($until: desktop) {
-        &:not(.vertical-video-height) {
-            overflow-x: scroll;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            transform: none !important;
-        }
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        transform: none !important;
     }
-
-    &:is(.vertical-video-height) {
-        transition: transform .4s ease-out;
-    }
-
     @include mq(desktop) {
         padding-right: 0;
         transition: transform .4s ease-out;
@@ -188,44 +157,6 @@ $video-width-desktop: 700px;
     }
 }
 
-.vertical-video-playlist__control {
-    height: 70px;
-    width: 300px;
-    display: flex;
-    gap: 16px;
-    justify-content: flex-start;
-    align-items: center;
-    margin-left: 20px;
-
-    @include mq($from: 375px, $until: phablet) {
-        position: absolute;
-        bottom: 80px;
-        right: 0;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: flex-end;
-        align-items: flex-start;
-        z-index: 10;
-        width: calc(100% - 320px);
-    }
-
-    @include mq($from: mobileLandscape, $until: phablet) {
-        width: calc(100% - 330px);
-    }
-
-
-
-
-    @include mq(leftCol)  {
-        margin-left: 180px;
-    }
-
-    @include mq(wide)  {
-        margin-left: 260px;
-    }
-
-}
-
 .video-playlist__control {
     display: none;
     @include mq(desktop) {
@@ -237,26 +168,6 @@ $video-width-desktop: 700px;
         z-index: 2;
         cursor: pointer;
 
-        &:hover .video-playlist__icon,
-        &:focus .video-playlist__icon {
-            background-color: $highlight-main;
-
-            svg {
-                fill: $brightness-7;
-            }
-        }
-    }
-}
-
-.video-playlist__overlay {
-    position: absolute;
-    display: block;
-    top: 0;
-    bottom: 0;
-    z-index: 2;
-    cursor: pointer;
-    height: 533px;
-    @include mq(desktop) {
         &:hover .video-playlist__icon,
         &:focus .video-playlist__icon {
             background-color: $highlight-main;
@@ -320,46 +231,6 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist__control--prev.vertical-video {
-    width: 10px;
-
-    @include mq($from: mobileLandscape) {
-        width: 20px;
-    }
-    @include mq(leftCol) {
-        width: gs-span(2) + $gs-gutter * 2;
-
-        .has-page-skin & {
-            width: gs-span(2);
-        }
-    }
-    @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2;
-
-        .has-page-skin & {
-            width: gs-span(2);
-        }
-    }
-}
-
-.video-playlist__control--next.vertical-video {
-    width: calc(100% - 310px);
-
-    @include mq($from: mobileLandscape) {
-        width: calc(100% - 320px);
-    }
-    @include mq($from: mobileMedium, $until: phablet) {
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .6) 25%);
-}
-
-    @include mq(leftCol) {
-        width: gs-span(8) + $gs-gutter * 2;
-    }
-    @include mq(wide) {
-        width: gs-span(9) + $gs-gutter * 2;
-    }
-}
-
 .video-playlist__icon {
     position: absolute;
     top: 0;
@@ -378,35 +249,6 @@ $video-width-desktop: 700px;
     }
 }
 
-.vertical-video-playlist__icon {
-    display: inherit;
-    top: 0;
-    bottom: 0;
-    width: 30px;
-    height: 30px;
-    margin: auto;
-    border-radius: 50%;
-    border: 1px solid $brightness-100;
-    background-color: $brightness-100;
-    text-align: center;
-
-    svg {
-        fill: $brightness-7;
-        width: 9px;
-        height: 30px;
-    }
-
-    &:hover,
-    &:focus {
-        background-color: $brightness-60;
-        border-color: $brightness-60;
-
-        svg {
-            fill: $brightness-7;
-        }
-    }
-}
-
 .youtube-media-atom__play-button {
     background-color: $brightness-7;
     border-radius: 50%;
@@ -421,7 +263,6 @@ $video-width-desktop: 700px;
     background-color: $brightness-7;
     margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
-
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
     }
@@ -435,10 +276,6 @@ $video-width-desktop: 700px;
             z-index: 3;
         }
     }
-}
-.video-playlist__item.vertical-video-width,
-.video-playlist__item.vertical-video {
-    margin-left: 0;
 }
 
 .video-playlist__item--first {
@@ -552,50 +389,6 @@ $video-width-desktop: 700px;
         display: none;
     }
 }
-.vertical-video-title--leftcol {
-    position: relative;
-    height: 100%;
-    display: inline-block;
-    box-sizing: border-box;
-    margin-bottom: 0;
-    white-space: normal;
-    width: 10px;
-
-    @include mq($from: mobileLandscape) {
-        width: 20px;
-    }
-
-    @include mq(leftCol) {
-        position: relative;
-        height: $video-width-desktop / 16 * 9;
-        display: inline-block;
-        width: gs-span(2) + $gs-gutter * 2;
-        padding: ($gs-baseline / 2) $gs-gutter;
-        box-sizing: border-box;
-        margin-bottom: 0;
-        white-space: normal;
-    }
-    @include mq(wide) {
-        width: gs-span(3) + $gs-gutter * 2;
-
-        .has-page-skin & {
-            width: gs-span(2) + $gs-gutter * 2;
-        }
-    }
-
-    .inline-guardian-video-logo svg {
-        margin-top: 4px;
-        max-width: 100%;
-
-        &:hover .inline-guardian-video-logo__title {
-            fill: #ffffff;
-        }
-    }
-
-    .has-page-skin & {
-        display: none;
-    }
-}
 
 .video-playlist__item--first {
     @include mq(desktop) {
@@ -611,7 +404,7 @@ $video-width-desktop: 700px;
 }
 
 .video-overlay {
-    position: absolute;
+    position: relative;
     z-index: 2;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;
@@ -622,7 +415,6 @@ $video-width-desktop: 700px;
     min-height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
-    width: 100%;
     @include mq(desktop, leftCol) {
         opacity: 0;
         transition: opacity .4s ease-out;
@@ -687,72 +479,6 @@ $video-width-desktop: 700px;
     }
 }
 
-.vertical-playlist__padding {
-    padding-bottom: 18px;
-}
-
-.vertical-video-overlay {
-    position: absolute;
-    z-index: 2;
-    white-space: normal;
-    padding: 8px;
-    box-sizing: border-box;
-    color: #ffffff;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25.04%);
-    pointer-events: auto;
-    width: 100%;
-    bottom: 0;
-
-    .video-playlist__item .vjs-playing ~ & {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    .video-overlay__headline {
-        @include fs-headline(2);
-        font-weight: 400;
-        @include mq(mobileLandscape) {
-            @include fs-headline(3);
-            font-weight: 400;
-        }
-        @include mq(desktop) {
-            overflow: hidden;
-        }
-
-        .fc-item__headline {
-            color: #ffffff;
-        }
-    }
-
-    .inline-icon svg {
-        position: relative;
-        height: .7em;
-        width: auto;
-    }
-
-    .fc-item__title--quoted .inline-quote {
-        fill: #ffffff;
-    }
-
-    .fc-item__link {
-        color: #ffffff;
-
-        &:visited {
-            color: $brightness-86;
-        }
-    }
-
-    .fc-item__byline,
-    .fc-item__kicker {
-        color: $highlight-main;
-    }
-
-    .fc-item__kicker {
-        padding: 0;
-        margin: 0;
-    }
-}
-
 .video-overlay__duration {
     @include fs-textSans(3);
     position: absolute;
@@ -760,36 +486,16 @@ $video-width-desktop: 700px;
     color: $brightness-86;
 }
 
-.vertical-video-overlay__duration {
-    @include fs-textSans(2);
-    position: absolute;
-    right: 4px;
-    z-index: 2;
-
-    border: 2px solid #000000;
-    border-radius: 500px;
-    background-color: #000000;
-    width: 57px;
-    height: 28px;
-    margin-top: 8px;
-    margin-right: 8px;
-    font-weight: 700;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-
-    span {
-        padding-top: 4px;
-    }
-}
-
 .fc-item__video-container {
-    .youtube-media-atom {
-        z-index: 1;
+    // Videos on mobile should just click through to the article
+    @include mq($from: tablet) {
+        .youtube-media-atom {
+            z-index: 1;
 
-        &.no-player,
-        .is-not-modern & {
-            z-index: 0;
+            &.no-player,
+            .is-not-modern & {
+                z-index: 0;
+            }
         }
     }
 }
