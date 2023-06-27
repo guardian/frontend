@@ -95,13 +95,4 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  Switch(
-    ABTests,
-    "ab-remove-business-liveblog-epics",
-    "Test the commercial impact of removing contribution epics on business liveblogs",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 7, 10)),
-    exposeClientSide = true,
-  )
 }

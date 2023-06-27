@@ -19,10 +19,7 @@ object ArticlePageChecks {
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
 
-  def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
-
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.item.tags.isPaidContent
-
 }
 
 object ArticlePicker {
@@ -32,7 +29,6 @@ object ArticlePicker {
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
-      ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
     )
   }
 
@@ -43,7 +39,6 @@ object ArticlePicker {
         "isSupportedType",
         "isNotAGallery",
         "isNotLiveBlog",
-        "isNotAMP",
       ),
     )
 

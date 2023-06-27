@@ -50,7 +50,10 @@ trait FaciaController
   implicit val context: ApplicationContext
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
+    val redirectPath = if (request.isJson) s"$path.json" else path
+    successful(
+      InternalRedirect.internalRedirect("applications", redirectPath, request.rawQueryStringOption.map("?" + _)),
+    )
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {

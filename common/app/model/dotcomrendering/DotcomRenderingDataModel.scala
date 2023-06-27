@@ -21,6 +21,7 @@ import model.{
   ImageContentPage,
   InteractivePage,
   LiveBlogPage,
+  MediaPage,
   MessageUsData,
   PageWithStoryPackage,
   Topic,
@@ -256,6 +257,31 @@ object DotcomRenderingDataModel {
       newsletter = newsletter,
       topicResult = None,
       messageUs = None,
+    )
+  }
+
+  def forMedia(
+      mediaPage: MediaPage,
+      request: RequestHeader,
+      pageType: PageType,
+      blocks: APIBlocks,
+  ) = {
+
+    val linkedData = LinkedData.forArticle(
+      article = mediaPage.media,
+      baseURL = Configuration.dotcom.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page = mediaPage,
+      request = request,
+      pageType = pageType,
+      linkedData = linkedData,
+      mainBlock = blocks.main,
+      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
+      hasStoryPackage = mediaPage.related.hasStoryPackage,
+      storyPackage = getStoryPackage(mediaPage.related.faciaItems, request),
     )
   }
 
