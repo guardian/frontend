@@ -542,4 +542,14 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
+  val VerticalVideo = Switch(
+    SwitchGroup.Feature,
+    "vertical-video",
+    "When ON, shows the vertical video container",
+    owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
 }

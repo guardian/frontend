@@ -19,7 +19,8 @@
     mediaWrapper: Option[MediaWrapper] = None,
     faciaHeaderProperties: Option[VideoFaciaProperties] = None,
     isPaidFor: Boolean = false,
-    pressedContent: Option[PressedContent] = None
+    pressedContent: Option[PressedContent] = None,
+    verticalVideo: Boolean = false,
 )(implicit request: RequestHeader)
 
 @videoJsError() = @{
@@ -39,7 +40,8 @@
                 ("u-responsive-ratio--hd", sixteenByNine),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
-                ("youtube-related-videos", true)
+                ("youtube-related-videos", true),
+                ("vertical-video", verticalVideo)
             ))" data-channel-id="@channelId">
         }
     }
@@ -51,25 +53,39 @@
                 This is most likely to occur in a liveblog where the video can be in a main media position and in a block.
             *@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
-
+            @*
+            Below is only rendered on video cards within the video container
+            *@
             @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
-                <div class="video-overlay">
+              @if(verticalVideo) {
+                  @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
+                      <span class="vertical-video-overlay__duration">
+                          <span>@media.formattedDuration</span>
+                      </span>
+                  }
+              }
+
+                <div class="@if(verticalVideo) {vertical-video-overlay} else {video-overlay}">
                     <div class="video-overlay__headline">
 
                     @for(f <- faciaHeaderProperties) {
-                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor)
+                        @title(f.header, 0, 0, "u-faux-block-link__cta", None, isPaidFor, isLink = if (verticalVideo) {false} else {
+                    true
+                })
                         @if(f.showByline) {
                             <div class="fc-item__byline">@f.byline</div>
                         }
 
                     </div>
+                    @if(!verticalVideo) {
                         @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
                             <span class="video-overlay__duration">
-                                @media.formattedDuration
+                            @media.formattedDuration
                             </span>
                         }
-                    </div>
-                    <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
+                    }
+                </div>
+                <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
                 }
             }
         }
@@ -109,7 +125,7 @@
                                 }
                             }
                         }
-                        <button class="youtube-media-atom__play-button vjs-control-text" style="border: none;">
+                        <button class="youtube-media-atom__play-button vjs-control-text @if(verticalVideo){vertical}" style="border: none;">
                             Play Video @fragments.inlineSvg("play", "icon")
                         </button>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
