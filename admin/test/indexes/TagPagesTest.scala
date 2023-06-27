@@ -22,7 +22,7 @@ class TagPagesTest extends AnyFlatSpec with Matchers {
       "",
     )
 
-  "alphaIndexKeyFrom alternatives" should "return the downcased first character of an ASCII string" in {
+  "alphaIndexKey" should "return the downcased first character of an ASCII string" in {
     val words = Seq(
       "monads" -> "m",
       "are" -> "a",
@@ -33,7 +33,7 @@ class TagPagesTest extends AnyFlatSpec with Matchers {
     )
 
     for ((word, char) <- words) {
-      alphaIndexKeyFrom(Seq(word)) shouldEqual char
+      alphaIndexKey(word) shouldEqual char
     }
   }
 
@@ -49,7 +49,7 @@ class TagPagesTest extends AnyFlatSpec with Matchers {
     )
 
     for ((unicode, ascii) <- words) {
-      alphaIndexKeyFrom(Seq(unicode)) shouldEqual ascii
+      alphaIndexKey(unicode) shouldEqual ascii
     }
   }
 
@@ -62,28 +62,24 @@ class TagPagesTest extends AnyFlatSpec with Matchers {
     )
 
     for (fixture <- fixtures) {
-      alphaIndexKeyFrom(Seq(fixture)) shouldEqual "1-9"
+      alphaIndexKey(fixture) shouldEqual "1-9"
     }
   }
 
-  it should "pick the first index key that has a suitable character" in {
-    alphaIndexKeyFrom(Seq("", "£££", "  !Be Cool!", "yes")) shouldEqual "b"
-  }
-
-  "alphaIndexKeyFromContributorFields" should "not crash if a tag has no last name or first name" in {
-    alphaIndexKeyFromContributorFields(
+  "alphaIndexKeyForContributor" should "not crash if a tag has no last name or first name" in {
+    alphaIndexKeyForContributor(
       tagFixture("Good web title").copy(firstName = None, lastName = None),
     ) shouldEqual "g"
   }
 
   it should "prefer last name if available" in {
-    alphaIndexKeyFromContributorFields(
+    alphaIndexKeyForContributor(
       tagFixture("Who dis?").copy(firstName = Some("Roberto"), lastName = Some("Tyley")),
     ) shouldEqual "t"
   }
 
   it should "use first name if last name unavailable" in {
-    alphaIndexKeyFromContributorFields(
+    alphaIndexKeyForContributor(
       tagFixture("Queen Bey").copy(firstName = Some("Beyoncé"), lastName = None),
     ) shouldEqual "b"
   }

@@ -8,7 +8,7 @@ import model.{TagDefinition, TagIndex}
 import scala.concurrent.ExecutionContext
 import scala.util.Try
 
-object TagPages {
+object TagPages extends GuLogging {
 
   /** To be curated by Peter Martin */
   val validSections = Map(
@@ -81,9 +81,6 @@ object TagPages {
     ("theguardian", "The Guardian"),
     ("theobserver", "The Observer"),
   )
-}
-
-class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
 
   def alphaIndexKey(s: String): String = {
     val badCharacters = """[^a-z0-9]+""".r
@@ -95,6 +92,12 @@ class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
     }
 
     maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
+  }
+
+  def alphaIndexKeyForContributor(tag: Tag): String = {
+    val indexString =
+      tag.lastName.getOrElse("").trim.concat(tag.firstName.getOrElse("").trim).concat(tag.webTitle)
+    alphaIndexKey(indexString)
   }
 
   def tagHeadKey(id: String): Option[String] = {
