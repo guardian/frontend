@@ -685,68 +685,6 @@ $video-width-desktop: 700px;
     padding-bottom: 18px;
 }
 
-.vertical-video-overlay {
-    position: absolute;
-    z-index: 2;
-    white-space: normal;
-    padding: 8px;
-    box-sizing: border-box;
-    color: #ffffff;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 25.04%);
-    pointer-events: auto;
-    width: 100%;
-    bottom: 0;
-
-    .video-playlist__item .vjs-playing ~ & {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    .video-overlay__headline {
-        @include fs-headline(2);
-        font-weight: 400;
-        @include mq(mobileLandscape) {
-            @include fs-headline(3);
-            font-weight: 400;
-        }
-        @include mq(desktop) {
-            overflow: hidden;
-        }
-
-        .fc-item__headline {
-            color: #ffffff;
-        }
-    }
-
-    .inline-icon svg {
-        position: relative;
-        height: .7em;
-        width: auto;
-    }
-
-    .fc-item__title--quoted .inline-quote {
-        fill: #ffffff;
-    }
-
-    .fc-item__link {
-        color: #ffffff;
-
-        &:visited {
-            color: $brightness-86;
-        }
-    }
-
-    .fc-item__byline,
-    .fc-item__kicker {
-        color: $highlight-main;
-    }
-
-    .fc-item__kicker {
-        padding: 0;
-        margin: 0;
-    }
-}
-
 .video-overlay__duration {
     @include font($f-sans-serif-text, bold, 13, 16);
     position: absolute;
@@ -764,29 +702,6 @@ $video-width-desktop: 700px;
         }
     }
 
-}
-
-.vertical-video-overlay__duration {
-    @include fs-textSans(2);
-    position: absolute;
-    right: 4px;
-    z-index: 2;
-
-    border: 2px solid #000000;
-    border-radius: 500px;
-    background-color: #000000;
-    width: 57px;
-    height: 28px;
-    margin-top: 8px;
-    margin-right: 8px;
-    font-weight: 700;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-
-    span {
-        padding-top: 4px;
-    }
 }
 
 .fc-item__video-container {
