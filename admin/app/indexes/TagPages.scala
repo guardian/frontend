@@ -82,29 +82,22 @@ object TagPages extends GuLogging {
     ("theobserver", "The Observer"),
   )
 
-  def alphaIndexKey(s: String): String = {
-    val badCharacters = """[^a-z0-9]+""".r
+  private val acceptedIndexCharacters: Set[Char] = ('a' to 'z').toSet ++ ('0' to '9')
+  private val numericIndexKey = "1-9"
 
-    val maybeFirstChar = Try(badCharacters.replaceAllIn(asAscii(s).toLowerCase, "").charAt(0)).toOption
+  def alphaIndexCharacter(text: String): Option[Char] = asAscii(text).toLowerCase.find(acceptedIndexCharacters)
+  def alphaIndexKey(text: String): String =
+    alphaIndexCharacter(text)
+      .map { leadChar =>
+        if (leadChar.isDigit) numericIndexKey else leadChar.toString
+      }
+      .getOrElse {
+        log.error(s"Tag without alpha index, being shoved into '$numericIndexKey': $text")
+        numericIndexKey
+      }
 
-    if (maybeFirstChar.isEmpty) {
-      log.error(s"Tag without alpha index, being shoved into 1-9: $s")
-    }
-
-    maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
-  }
-
-  def alphaIndexKeyForContributor(tag: Tag): String = {
-
-    /**
-      * The alphaIndexKey function looks at the first alphanumeric character in the string passed to it.
-      * Concatenating these three strings therefore allows us to use firstName and webTitle as fallbacks
-      * if lastName is None or "".
-      * */
-    val indexString =
-      tag.lastName.getOrElse("").trim.concat(tag.firstName.getOrElse("").trim).concat(tag.webTitle)
-    alphaIndexKey(indexString)
-  }
+  def alphaIndexKeyForContributor(tag: Tag): String =
+    alphaIndexKey((tag.lastName ++ tag.firstName).mkString + tag.webTitle)
 
   def tagHeadKey(id: String): Option[String] = {
     id.split("/").headOption
