@@ -16,6 +16,9 @@ object FrontChecks {
   def hasNoEmailCollections(faciaPage: PressedPage) =
     !faciaPage.collections.exists(collection => EmailLayouts.all.contains(collection.collectionType))
 
+  def hasNoShowcaseCollections(faciaPage: PressedPage) =
+    !faciaPage.collections.exists(collection => collection.collectionType == "fixed/showcase")
+
   /*
    * This list contains JSON.HTML thrashers that DCR allows. These thrashers should not actually be rendered by DCR
    * but instead have an alternate way of being rendered on DCR.
@@ -63,6 +66,7 @@ object FaciaPicker extends GuLogging {
     Map(
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
       ("hasNoEmailCollections", FrontChecks.hasNoEmailCollections(faciaPage)),
+      ("hasNoShowcaseCollections", FrontChecks.hasNoShowcaseCollections(faciaPage)),
     )
   }
 
