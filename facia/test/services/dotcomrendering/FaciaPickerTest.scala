@@ -7,10 +7,12 @@ import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import helpers.FaciaTestData
+import test.FaciaControllerTest
 import model.facia.PressedCollection
 import layout.slices.EmailLayouts
 
-@DoNotDiscover class FaciaPickerTest extends AnyFlatSpec with Matchers with MockitoSugar {
+@DoNotDiscover class FaciaPickerTest extends AnyFlatSpec with FaciaTestData with Matchers with MockitoSugar {
 
   "Facia Picker decideTier" should "return LocalRender if dcr=false" in {
     val isRSS = false
@@ -269,5 +271,15 @@ import layout.slices.EmailLayouts
     )
 
     FrontChecks.hasOnlySupportedCollections(faciaPage) should be(false)
+  }
+
+  it should "Should not render the Australian front" in {
+    FrontChecks.isNotAustralianFront(auFaciaPage) should be(false)
+  }
+
+  it should "Should render the UK, US and International fronts" in {
+    FrontChecks.isNotAustralianFront(ukFaciaPage) should be(true)
+    FrontChecks.isNotAustralianFront(usFaciaPage) should be(true)
+    FrontChecks.isNotAustralianFront(internationalFaciaPageWithTargetedTerritories) should be(true)
   }
 }

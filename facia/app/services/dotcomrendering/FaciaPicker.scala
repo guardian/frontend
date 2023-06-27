@@ -48,6 +48,9 @@ object FrontChecks {
   def hasOnlySupportedCollections(faciaPage: PressedPage) =
     faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
 
+  /** Required until we fully support the Labs container & finish the vertical video test */
+  def isNotAustralianFront(faciaPage: PressedPage) = faciaPage.id != "au"
+
   /*
    * This list contains JSON.HTML thrashers that DCR allows. These thrashers should not actually be rendered by DCR
    * but instead have an alternate way of being rendered on DCR.
@@ -95,6 +98,7 @@ object FaciaPicker extends GuLogging {
     Map(
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
       ("hasOnlySupportedCollections", FrontChecks.hasOnlySupportedCollections(faciaPage)),
+      ("isNotAustralianFront", FrontChecks.isNotAustralianFront(faciaPage)),
     )
   }
 
