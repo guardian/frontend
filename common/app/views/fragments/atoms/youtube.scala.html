@@ -20,7 +20,7 @@
     faciaHeaderProperties: Option[VideoFaciaProperties] = None,
     isPaidFor: Boolean = false,
     pressedContent: Option[PressedContent] = None,
-    verticalVideo: Boolean = false,
+    verticalVideo: Boolean = false
 )(implicit request: RequestHeader)
 
 @videoJsError() = @{
@@ -57,13 +57,14 @@
             @*
             Below is only rendered on video cards within the video container and on the vertical video page
             *@
-            @if(mediaWrapper.contains(MediaWrapper.VideoContainer || verticalVideo)){
+            @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
               @if(verticalVideo) {
                   @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
                       <span class="vertical-video-overlay__duration">
                           <span>@media.formattedDuration</span>
                       </span>
                   }
+                }
               }
 
                 <div class="@if(verticalVideo) {vertical-video-overlay} else {video-overlay}">
@@ -89,7 +90,7 @@
                 <a href="@f.header.url.get(request)" class="video-container-overlay-link" tabindex="-1" aria-hidden="true"></a>
                 }
             }
-        }
+
         @defining(posterImageOverride orElse media.posterImage) { bestPosterImage =>
             @if(bestPosterImage.isEmpty && expired) {
                 <div class="youtube-media-atom__overlay">
