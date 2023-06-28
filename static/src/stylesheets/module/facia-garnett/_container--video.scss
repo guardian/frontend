@@ -643,7 +643,7 @@ $video-width-desktop: 700px;
             font-weight: 400;
         }
         @include mq(desktop) {
-            min-height: get-line-height(headline, 3) * 4;
+            min-height: 48px;
             overflow: hidden;
         }
 
