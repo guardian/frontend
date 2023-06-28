@@ -37,7 +37,8 @@
         @defining(media.channelId.getOrElse("")){ channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
                 ("u-responsive-ratio", !isPaidFor),
-                ("u-responsive-ratio--hd", sixteenByNine),
+                ("u-responsive-ratio--hd", !verticalVideo),
+                ("u-responsive-ratio--vertical", verticalVideo),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
                 ("youtube-related-videos", true),
@@ -54,9 +55,9 @@
             *@
             <div id="youtube-@asset.id-@java.util.UUID.randomUUID.toString" data-asset-id="@asset.id" class="youtube-media-atom__iframe"></div>
             @*
-            Below is only rendered on video cards within the video container
+            Below is only rendered on video cards within the video container and on the vertical video page
             *@
-            @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
+            @if(mediaWrapper.contains(MediaWrapper.VideoContainer || verticalVideo)){
               @if(verticalVideo) {
                   @if(media.formattedDuration.getOrElse("0:00") != "0:00") {
                       <span class="vertical-video-overlay__duration">
