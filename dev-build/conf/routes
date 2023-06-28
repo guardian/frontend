@@ -43,7 +43,6 @@ GET        /email/$result<invalid|error>                                        
 ## Submission endpoints
 POST       /email/footer                                                        controllers.EmailSignupController.submitFooter()
 POST       /email                                                               controllers.EmailSignupController.submit()
-POST       /email/many                                                          controllers.EmailSignupController.submitMany()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Business data
