@@ -1556,10 +1556,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.0.0.tgz#af0839b56ebd4fb1180cbc45efe2ddd66a968bcb"
-  integrity sha512-M8fi4YuAxLRgifE0gI6HDC9Sq3q8+mypSbUF6jRZMT0fzngV9NSjdaLhkR7sYkc1aKB9Cdi3IqpfBiFO1qee5w==
+"@guardian/braze-components@^13.3.0":
+  version "13.3.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-13.3.0.tgz#a3233d8a4f4e43fe32a5a98fbbc81703a8b6bfec"
+  integrity sha512-rmQG/sUGxTGlZw4qKciyhyS3CNgblzVisa6+aM8ZijG0lm7pWD/+w3KmPHPF/XZN3VS5iCGvPCTxiU+okc+MzQ==
 
 "@guardian/commercial@10.2.0":
   version "10.2.0"
@@ -10511,8 +10511,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js":
+prebid.js@guardian/prebid.js:
   version "7.26.0"
+  uid "2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
     "@babel/core" "^7.16.7"
