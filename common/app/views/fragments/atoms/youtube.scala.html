@@ -37,7 +37,8 @@
         @defining(media.channelId.getOrElse("")){ channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
                 ("u-responsive-ratio", !isPaidFor),
-                ("u-responsive-ratio--hd", sixteenByNine),
+                ("u-responsive-ratio--hd", !verticalVideo),
+                ("u-responsive-ratio--vertical", verticalVideo),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),
                 ("youtube-related-videos", true),
@@ -129,7 +130,7 @@
                             Play Video @fragments.inlineSvg("play", "icon")
                         </button>
                         @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
-                            @if(duration != "0:00") {
+                            @if(duration != "0:00" && !verticalVideo) {
                                 <div class="youtube-media-atom__bottom-bar">
                                     <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
                                 </div>

@@ -6,7 +6,8 @@
     media: model.content.MediaAtom,
     displayCaption: Boolean,
     mediaWrapper: Option[MediaWrapper],
-    posterImageOverride: Option[ImageMedia] = None
+    posterImageOverride: Option[ImageMedia] = None,
+    isVerticalVideo: Boolean = false
 )(implicit request: RequestHeader)
 
 @{
@@ -19,7 +20,8 @@
                 displayCaption,
                 displayDuration = true,
                 mediaWrapper = mediaWrapper,
-                posterImageOverride = posterImageOverride
+                posterImageOverride = posterImageOverride,
+                verticalVideo = isVerticalVideo
             )
         case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, false)
         case _ =>
