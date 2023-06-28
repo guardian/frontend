@@ -1623,10 +1623,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
   integrity sha512-OdWReBHRWhdbErVmS15hihVzlkdU8DkKrjDsUIN0P8QZiF4twuzcU3qsPwto2UfibAwPkWqKkNwH1k8b6xNclA==
 
-"@guardian/libs@^14.0.0":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-14.0.0.tgz#07022b652430a1c5d6b16f8aa105ae3d73da4e7c"
-  integrity sha512-rB4h4FlD3EcoCY66f3xjO7alnXiimPOynL9znvX/xP2nAVpG4UyedJnIpupw4KPqJuB0lZMih6EeXq0a1XnI3w==
+"@guardian/libs@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-14.1.0.tgz#feac9cc5636639e45ab2a6e2fd4a3f29f7af9a70"
+  integrity sha512-V/6ROWh0s8A6tJVFBMP9h9sb4L2SN98zSp84aLhBac4Ir1XJjG3kljAyB4uV1+341Amd+44QJGhB/D7roVsSfQ==
 
 "@guardian/libs@^15.0.0":
   version "15.0.0"
@@ -10511,8 +10511,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js":
+prebid.js@guardian/prebid.js:
   version "7.26.0"
+  uid "2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
   dependencies:
     "@babel/core" "^7.16.7"
