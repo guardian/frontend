@@ -74,7 +74,6 @@ object LiveBlogCurrentPage {
 
       val pinnedBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
       val pinnedBlock = pinnedBlocks.flatMap(_.headOption)
-      val blocksToDisplay = removeFirstBlockIfPinned(firstPageBlocks, pinnedBlock)
       val pinnedBlockRenamed = pinnedBlock.map(renamePinnedBlock)
 
       val pagination = {
@@ -91,7 +90,7 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents, topicResult), pagination, pinnedBlockRenamed)
+      LiveBlogCurrentPage(FirstPage(firstPageBlocks, filterKeyEvents, topicResult), pagination, pinnedBlockRenamed)
     }
   }
 
