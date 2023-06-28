@@ -288,7 +288,7 @@ youtube-media-atom:not(.youtube-related-videos) .youtube-media-atom__iframe.yout
 .vjs-big-play-button .vjs-control-text,
 .youtube-media-atom__play-button.vjs-control-text {
     // Sets a base play button/icon size for all video players
-    @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
+    @include video-icon-size($play-x-large-button-size, $play-x-large-button-icon);
 
     // Sets specific play button/icon size for fronts depending on layout
     .fc-item--full-media-75-tablet &,
