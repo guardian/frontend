@@ -38,7 +38,6 @@ case class EmailForm(
     refViewId: Option[String],
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
-    name: String,
 ) {}
 
 case class EmailFormManyNewsletters(
@@ -49,7 +48,6 @@ case class EmailFormManyNewsletters(
     refViewId: Option[String],
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
-    name: String,
 ) {}
 
 class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgent)
@@ -140,7 +138,6 @@ class EmailSignupController(
       "refViewId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
-      "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
@@ -153,7 +150,6 @@ class EmailSignupController(
       "refViewId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
-      "name" -> text,
     )(EmailFormManyNewsletters.apply)(EmailFormManyNewsletters.unapply),
   )
 
