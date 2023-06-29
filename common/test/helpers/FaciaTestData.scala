@@ -144,8 +144,8 @@ trait FaciaTestData extends ModelHelper {
   )
 
   val auFaciaPage: PressedPage = PressedPage(
-    id = "us",
-    SeoData.fromPath("us"),
+    id = "au",
+    SeoData.fromPath("au"),
     FrontProperties.empty,
     collections = List(
       PressedCollection(

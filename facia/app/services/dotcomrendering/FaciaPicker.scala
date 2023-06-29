@@ -13,8 +13,43 @@ import layout.slices.EmailLayouts
 
 object FrontChecks {
 
-  def hasNoEmailCollections(faciaPage: PressedPage) =
-    !faciaPage.collections.exists(collection => EmailLayouts.all.contains(collection.collectionType))
+  /**
+    * This is the list that DCR will accept, otherwise the validation fails, resulting in an error.
+    *
+    * **It must be kept in sync manually.**
+    *
+    * @see https://github.com/guardian/dotcom-rendering/blob/07b8f29decc1/dotcom-rendering/src/types/front.ts#L61-L83 */
+  val SUPPORTED_COLLECTIONS: Set[String] =
+    Set(
+      "dynamic/fast",
+      "dynamic/package",
+      "dynamic/slow",
+      "dynamic/slow-mpu",
+      "fixed/large/slow-XIV",
+      "fixed/medium/fast-XI",
+      "fixed/medium/fast-XII",
+      "fixed/medium/slow-VI",
+      "fixed/medium/slow-VII",
+      "fixed/medium/slow-XII-mpu",
+      "fixed/small/fast-VIII",
+      "fixed/small/slow-I",
+      "fixed/small/slow-III",
+      "fixed/small/slow-IV",
+      "fixed/small/slow-V-half",
+      "fixed/small/slow-V-mpu",
+      "fixed/small/slow-V-third",
+      "fixed/thrasher",
+      "fixed/video",
+      "nav/list",
+      "nav/media-list",
+      "news/most-popular",
+    )
+
+  def hasOnlySupportedCollections(faciaPage: PressedPage) =
+    faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
+
+  /** Required until we fully support the Labs container & finish the vertical video test */
+  def isNotAustralianFront(faciaPage: PressedPage) = faciaPage.id != "au"
 
   /*
    * This list contains JSON.HTML thrashers that DCR allows. These thrashers should not actually be rendered by DCR
@@ -62,7 +97,8 @@ object FaciaPicker extends GuLogging {
   def dcrChecks(faciaPage: PressedPage)(implicit request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("hasNoUnsupportedSnapLinkCards", FrontChecks.hasNoUnsupportedSnapLinkCards(faciaPage)),
-      ("hasNoEmailCollections", FrontChecks.hasNoEmailCollections(faciaPage)),
+      ("hasOnlySupportedCollections", FrontChecks.hasOnlySupportedCollections(faciaPage)),
+      ("isNotAustralianFront", FrontChecks.isNotAustralianFront(faciaPage)),
     )
   }
 

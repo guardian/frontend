@@ -26,15 +26,24 @@ const getPositionState = (position, length) => ({
     atEnd: position >= length,
 });
 
+const updateCarouselCounter = (position) => {
+    const verticalCarousel = document.getElementById("vertical-carousel-count")
+    if (verticalCarousel != null) verticalCarousel.innerHTML = position + 1;
+}
+
+const isVerticalVideo = (container) => {
+  return container.getAttribute('data-layout') === "vertical-video";
+}
+
 const reducers = {
     NEXT: function next(previousState) {
         const position =
             previousState.position >= previousState.length
                 ? previousState.position
                 : previousState.position + 1;
-
+        updateCarouselCounter(position);
         updateYouTubeVideo(
-            document.querySelector(`.js-video-playlist-item-${position - 1}`)
+            previousState.container.querySelector(`.js-video-playlist-item-${position - 1}`)
         );
         return Object.assign(
             {},
@@ -46,8 +55,9 @@ const reducers = {
     PREV: function prev(previousState) {
         const position =
             previousState.position <= 0 ? 0 : previousState.position - 1;
+        updateCarouselCounter(position);
         updateYouTubeVideo(
-            document.querySelector(`.js-video-playlist-item-${position + 1}`)
+            previousState.container.querySelector(`.js-video-playlist-item-${position + 1}`)
         );
         return Object.assign(
             {},
@@ -61,7 +71,7 @@ const reducers = {
             if (
                 isBreakpoint({
                     max: 'desktop',
-                })
+                }) && !isVerticalVideo(state.container)
             ) {
                 const youTubeIframes = Array.from(
                     state.container.querySelectorAll(
@@ -145,7 +155,7 @@ const fetchLazyImage = (container, i) => {
 
 const update = (state, container) => {
     const translateWidth = -state.videoWidth * state.position;
-
+    const verticalVideo = isVerticalVideo(container);
     return fastdom.mutate(() => {
         const activeEl = container.querySelector(
             '.video-playlist__item--active'
@@ -153,7 +163,7 @@ const update = (state, container) => {
 
         if (activeEl != null) {
             activeEl.classList.remove('video-playlist__item--active');
-            $('.youtube-media-atom__iframe', activeEl).hide();
+            !verticalVideo && $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
             $('.video-overlay .fc-item__link', activeEl).attr(
                 'aria-hidden',
@@ -231,7 +241,7 @@ const update = (state, container) => {
 const getInitialState = (container) => ({
     position: 0,
     length: Number(container.getAttribute('data-number-of-videos')),
-    videoWidth: 700,
+    videoWidth: isVerticalVideo(container) ? 300 : 700,
     container,
 });
 

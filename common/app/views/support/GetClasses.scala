@@ -105,7 +105,7 @@ object GetClasses {
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
       containerDefinition.displayName.isDefined,
       containerDefinition.displayName.contains("headlines"),
-      containerDefinition.container.toString == "Video",
+      containerDefinition.container.toString == "Video" || containerDefinition.container.toString == "VerticalVideo",
       containerDefinition.commercialOptions,
       containerDefinition.hasDesktopShowMore,
       Some(containerDefinition.container),

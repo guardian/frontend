@@ -235,6 +235,10 @@ const getIFrameBehaviourConfig = (
         (iframe && !!iframe.closest('figure[data-component="main video"]')) ||
         false;
 
+    const isVerticalVideo =
+        (iframe && !!iframe.closest('div[data-layout="vertical-video"]')) ||
+        false;
+
     const flashingElementsAllowed = accessibilityIsOn('flashing-elements');
 
     const isVideoArticle =
@@ -255,6 +259,7 @@ const getIFrameBehaviourConfig = (
         isFront,
         isUSContent,
         isPaidContent,
+        isVerticalVideo
     };
 };
 
@@ -270,6 +275,7 @@ const getIFrameBehaviour = (
         isFront,
         isUSContent,
         isPaidContent,
+        isVerticalVideo
     } = iframeConfig;
 
     const isUsPaidContentVideo =
@@ -284,11 +290,14 @@ const getIFrameBehaviour = (
             mutedOnStart: isAndroid(),
         };
     }
+    const isAutoplayingAllowedOnPlatform = (isVerticalVideo || !isAutoplayBlockingPlatform);
+
     return {
         autoplay:
             ((isVideoArticle && isInternalReferrer && isMainVideo) ||
                 isFront) &&
-            !isAutoplayBlockingPlatform &&
+            isAutoplayingAllowedOnPlatform
+            &&
             flashingElementsAllowed,
         mutedOnStart: false,
     };
@@ -368,6 +377,10 @@ const onPlayerReady = (
         youtubePlayer.mute();
     }
     if (iFrameBehaviour.autoplay) {
+        // On IOS autoplay doesn't work unless video is muted
+        if (isIOS()) {
+            youtubePlayer.mute();
+        }
         youtubePlayer.playVideo();
     }
 
