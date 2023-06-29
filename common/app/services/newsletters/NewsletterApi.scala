@@ -21,7 +21,7 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
     with implicits.WSRequests {
 
   def getNewsletters(): Future[Either[String, List[NewsletterResponse]]] = {
-    getBody("newsletters").map { json =>
+    getBody("api/legacy/newsletters/cheese").map { json =>
       json.validate[List[NewsletterResponse]] match {
         case succ: JsSuccess[List[NewsletterResponse]] =>
           Right(succ.get)
