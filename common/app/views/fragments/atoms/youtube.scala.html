@@ -37,7 +37,7 @@
         @defining(media.channelId.getOrElse("")){ channelId: String =>
             <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
                 ("u-responsive-ratio", !isPaidFor),
-                ("u-responsive-ratio--hd", !verticalVideo),
+                ("u-responsive-ratio--hd", sixteenByNine && !verticalVideo),
                 ("u-responsive-ratio--vertical", verticalVideo),
                 ("youtube-media-atom", true),
                 ("no-player", !playable || expired ),

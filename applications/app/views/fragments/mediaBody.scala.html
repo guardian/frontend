@@ -112,8 +112,7 @@
                                         @fragments.contentMeta(media, page)
                                         @fragments.submeta(media)
                                     </div>
-                                }
-                                @if(page.media.tags.isVerticalVideo) {
+                                } else {
                                     @media match {
                                         case v: Video => {
                                                 <div class="content__main-column__body" data-component="body">
@@ -126,7 +125,7 @@
                                         }
                                             @fragments.contentMeta(media, page)
                                             @fragments.submeta(media)
-                                        }
+                                }
                             </div>
                         </div>
                         @media match {
