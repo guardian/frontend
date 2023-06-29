@@ -20,6 +20,16 @@ object ActiveExperiments extends ExperimentsDefinition {
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
+
+object Lightbox
+    extends Experiment(
+      name = "lightbox",
+      description = "Testing the impact lightbox might have on our CWVs",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 9, 29),
+      participationGroup = Perc0A,
+    )
+
 object ServerSideLiveblogInlineAds
     extends Experiment(
       name = "server-side-liveblog-inline-ads",
