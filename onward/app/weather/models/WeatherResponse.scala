@@ -29,7 +29,7 @@ object WeatherResponse {
       weatherText = forecastResponse.IconPhrase,
       weatherIcon = forecastResponse.WeatherIcon,
       weatherLink = None,
-      temperature = Temperatures.fromFahrenheit(forecastResponse.Temperature.Value)
+      temperature = Temperatures.fromFahrenheit(forecastResponse.Temperature.Value),
     )
 }
 
