@@ -7,8 +7,7 @@ import model.Cached
 import play.api.libs.json.Json.{stringify, toJson}
 import play.api.mvc._
 import weather.WeatherApi
-import weather.models.CityId
-import weather.models.accuweather.{LocationResponse, TheWeather}
+import weather.models.{CityId, CityResponse, Weather, WeatherResponse}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -24,12 +23,16 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
 
       for {
         location <- whatIsMyCity(country, city, region)
-        weather <- weatherApi.getWeatherForCityId(CityId(location.Key))
-        forecasts <- weatherApi.getForecastForCityId(CityId(location.Key))
+        currentWeather <- weatherApi.getWeatherForCityId(CityId(location.id))
+        forecasts <- weatherApi.getForecastForCityId(CityId(location.id))
       } yield {
-        val theWeather = TheWeather(location, weather, forecasts)
-        val theWeatherJson = stringify(toJson(theWeather))
-        Cached(10.minutes)(resultFor(request, theWeatherJson))
+        val weather = Weather(
+          location = location,
+          weather = WeatherResponse.fromAccuweather(currentWeather),
+          forecast = forecasts.map(WeatherResponse.fromAccuweather),
+        )
+        val weatherJson = stringify(toJson(weather))
+        Cached(10.minutes)(resultFor(request, weatherJson))
       }
     }
 
@@ -69,7 +72,7 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
 
   private def whatIsMyCity(maybeCountry: Option[String], maybeCity: Option[String], maybeRegion: Option[String])(
       implicit request: Request[AnyContent],
-  ): Future[LocationResponse] = {
+  ): Future[CityResponse] = {
     (maybeCountry, maybeCity) match {
       case (Some(countryCode), Some(city)) if countryCode.nonEmpty && city.nonEmpty =>
         weatherApi.searchForCity(countryCode, city) flatMap { locations =>
@@ -81,7 +84,7 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
               case _                                      => 1
             })
             .headOption match {
-            case Some(location) => Future.successful(location)
+            case Some(location) => Future.successful(CityResponse.fromLocationResponse(location))
             case None =>
               Future.failed(
                 CityNotfoundException(
@@ -94,7 +97,7 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
         }
       case (_, _) =>
         val edition = Edition(request)
-        LocationResponse.fromEdition(edition) match {
+        CityResponse.fromEdition(edition) match {
           case Some(defaultLocation) => Future.successful(defaultLocation)
           case None =>
             Future.failed(

@@ -9,17 +9,6 @@ import play.api.libs.json.{Json, Writes}
 
 object WeatherResponse {
   implicit val jsonReads = Json.reads[WeatherResponse]
-
-  implicit val writes = new Writes[WeatherResponse] {
-    def writes(model: WeatherResponse) = {
-      Json.obj(
-        "weatherText" -> model.WeatherText,
-        "weatherIcon" -> model.WeatherIcon,
-        "link" -> model.Link,
-        "temperature" -> model.Temperature,
-      )
-    }
-  }
 }
 
 case class WeatherResponse(
