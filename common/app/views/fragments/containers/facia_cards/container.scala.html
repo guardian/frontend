@@ -7,6 +7,8 @@
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
 @import conf.switches.Switches.{MostViewedFronts, VerticalVideo => VerticalVideoSwitch}
+@import experiments.VerticalVideoContainer
+@import experiments.ActiveExperiments
 
 @import conf.audio.FlagshipFrontContainer
 @(containerDefinition: layout.FaciaContainer,
@@ -89,7 +91,7 @@
                     }
 
                     case VerticalVideo => {
-                        @if(VerticalVideoSwitch.isSwitchedOn && frontId.exists(_.matches("au"))) {
+                        @if((ActiveExperiments.isParticipating(VerticalVideoContainer) || VerticalVideoSwitch.isSwitchedOn) && frontId.exists(_.matches("au"))) {
                             <div class="gs-container">
                             @verticalVideoContainer(containerDefinition, frontProperties)
                             </div>
