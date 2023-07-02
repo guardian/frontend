@@ -18,6 +18,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       BorkFID,
       ActionCardRedesign,
       VerticalVideoContainer,
+      Lightbox,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
