@@ -4,21 +4,24 @@ import conf.switches.Owner
 import experiments.ParticipationGroups._
 import java.time.LocalDate
 
+/*
+ * This list of active experiments is sorted by participation group, rather than sell-by date.
+ */
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      FrontsBannerAds,
-      DCRNetworkFronts,
+      VerticalVideoContainer,
+      Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
-      OfferHttp3,
       Okta,
+      DCRNetworkFronts,
       HeaderTopBarSearchCapi,
       BorkFCP,
       BorkFID,
+      OfferHttp3,
+      FrontsBannerAds,
       ActionCardRedesign,
-      VerticalVideoContainer,
-      Lightbox,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
