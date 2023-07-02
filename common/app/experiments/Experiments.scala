@@ -23,6 +23,15 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
+object VerticalVideoContainer
+    extends Experiment(
+      name = "vertical-video-container",
+      description = "When ON, Vertical Video Container is displayed",
+      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      sellByDate = LocalDate.of(2023, 7, 31),
+      participationGroup = Perc0A,
+    )
+
 object Lightbox
     extends Experiment(
       name = "lightbox",
@@ -131,13 +140,4 @@ object ActionCardRedesign
       owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
       sellByDate = LocalDate.of(2023, 9, 8),
       participationGroup = Perc20A,
-    )
-
-object VerticalVideoContainer
-    extends Experiment(
-      name = "vertical-video-container",
-      description = "When ON, Vertical Video Container is displayed",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 7, 31),
-      participationGroup = Perc0A,
     )
