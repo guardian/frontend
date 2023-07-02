@@ -29,7 +29,7 @@ object Lightbox
       description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 29),
-      participationGroup = Perc0A,
+      participationGroup = Perc0B,
     )
 
 object ServerSideLiveblogInlineAds
