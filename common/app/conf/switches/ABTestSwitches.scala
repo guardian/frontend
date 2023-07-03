@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Test serving GEM assets in ad slots on page",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 6, 30)),
+    sellByDate = Some(LocalDate.of(2023, 7, 7)),
     exposeClientSide = true,
   )
 
