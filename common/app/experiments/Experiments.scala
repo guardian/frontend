@@ -5,7 +5,7 @@ import experiments.ParticipationGroups._
 import java.time.LocalDate
 
 /*
- * This list of active experiments is sorted by participation group.
+ * This list of active experiments is sorted by participation group. 
  */
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
