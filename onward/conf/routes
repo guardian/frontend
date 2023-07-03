@@ -21,7 +21,7 @@ GET        /weatherapi/locations                      weather.controllers.Locati
 GET        /weatherapi/forecast/:id.json              weather.controllers.WeatherController.forecastForCityId(id)
 
 # Weather - DCR
-GET        /weather                                   weather.controllers.WeatherController.theWeather()
+GET        /weather.json                              weather.controllers.WeatherController.theWeather()
 
 # Most Read
 GET        /most-read-facebook.json                   controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
