@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
 import common.GuLogging
-import conf.switches.Switches.JobsFeedParseSwitch
 import commercial.model.merchandise.Job
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -25,20 +24,12 @@ object JobsFeed extends GuLogging {
   def parsedJobs(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
       executionContext: ExecutionContext,
   ): Future[ParsedFeed[Job]] = {
-    JobsFeedParseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
-      if (switchedOn) {
-        val start = currentTimeMillis
-        feedContent map { body =>
-          val parsed = parse(XML.loadString(body.dropWhile(_ != '<')))
-          Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
-        } getOrElse {
-          Future.failed(MissingFeedException(feedMetaData.name))
-        }
-      } else {
-        Future.failed(SwitchOffException(JobsFeedParseSwitch.name))
-      }
-    } recoverWith {
-      case NonFatal(e) => Future.failed(e)
+    val start = currentTimeMillis
+    feedContent map { body =>
+      val parsed = parse(XML.loadString(body.dropWhile(_ != '<')))
+      Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
+    } getOrElse {
+      Future.failed(MissingFeedException(feedMetaData.name))
     }
   }
 }
