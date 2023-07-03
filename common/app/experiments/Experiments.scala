@@ -17,9 +17,20 @@ object ActiveExperiments extends ExperimentsDefinition {
       BorkFCP,
       BorkFID,
       ActionCardRedesign,
+      VerticalVideoContainer,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
+
+object Lightbox
+    extends Experiment(
+      name = "lightbox",
+      description = "Testing the impact lightbox might have on our CWVs",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 9, 29),
+      participationGroup = Perc0A,
+    )
+
 object ServerSideLiveblogInlineAds
     extends Experiment(
       name = "server-side-liveblog-inline-ads",
@@ -119,4 +130,13 @@ object ActionCardRedesign
       owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
       sellByDate = LocalDate.of(2023, 9, 8),
       participationGroup = Perc20A,
+    )
+
+object VerticalVideoContainer
+    extends Experiment(
+      name = "vertical-video-container",
+      description = "When ON, Vertical Video Container is displayed",
+      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      sellByDate = LocalDate.of(2023, 7, 31),
+      participationGroup = Perc0A,
     )
