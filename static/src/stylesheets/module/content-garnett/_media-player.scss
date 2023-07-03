@@ -14,6 +14,22 @@ $ima-controls-height: 70px;
     text-align: center; // prevents poster from loading to left then centering
 }
 
+.vertical-video .player {
+    @include mq($from: phablet) {
+        width: 40%;
+        display: inline-block;
+    }
+}
+.vertical-video .content__main-column__body {
+    @include mq($from: phablet) {
+        width: 60%;
+        float: right;
+        display: inline-block;
+        padding-left: 8px;
+        box-sizing: border-box;
+    }
+}
+
 .gu-media-wrapper {
     background: #000000;
     -webkit-transform: translateZ(0); // fixes iOS hover bug

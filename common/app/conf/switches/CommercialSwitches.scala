@@ -541,16 +541,6 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
-  val fetchNonRefreshableLineItems: Switch = Switch(
-    group = Commercial,
-    name = "fetch-non-refreshable-line-items",
-    description = "Lazily fetch non-refreshable line item ids from an endpoint",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val ampContentABTesting: Switch = Switch(
     group = Commercial,
     name = "amp-content-ab-testing",

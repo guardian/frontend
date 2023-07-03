@@ -9,7 +9,7 @@ GET        /_healthcheck                              controllers.HealthCheck.he
 
 # Onward public endpoints
 
-#Weather
+# Weather
 GET        /weather/city/:id.json                     weather.controllers.WeatherController.forCity(id)
 GET        /weather/city.json                         weather.controllers.LocationsController.whatIsMyCity()
 GET        /weather/locations                         weather.controllers.LocationsController.findCity(query: String)
@@ -20,6 +20,10 @@ GET        /weatherapi/city.json                      weather.controllers.Locati
 GET        /weatherapi/locations                      weather.controllers.LocationsController.findCity(query: String)
 GET        /weatherapi/forecast/:id.json              weather.controllers.WeatherController.forecastForCityId(id)
 
+# Weather - DCR
+GET        /weather                                   weather.controllers.WeatherController.theWeather()
+
+# Most Read
 GET        /most-read-facebook.json                   controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
 GET        /most-read-twitter.json                    controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")

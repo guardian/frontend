@@ -8,7 +8,7 @@ import model.{TagDefinition, TagIndex}
 import scala.concurrent.ExecutionContext
 import scala.util.Try
 
-object TagPages {
+object TagPages extends GuLogging {
 
   /** To be curated by Peter Martin */
   val validSections = Map(
@@ -81,21 +81,23 @@ object TagPages {
     ("theguardian", "The Guardian"),
     ("theobserver", "The Observer"),
   )
-}
 
-class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
+  private val acceptedIndexCharacters: Set[Char] = ('a' to 'z').toSet ++ ('0' to '9')
+  private val numericIndexKey = "1-9"
 
-  def alphaIndexKey(s: String): String = {
-    val badCharacters = """[^a-z0-9]+""".r
+  def alphaIndexCharacter(text: String): Option[Char] = asAscii(text).toLowerCase.find(acceptedIndexCharacters)
+  def alphaIndexKey(text: String): String =
+    alphaIndexCharacter(text)
+      .map { leadChar =>
+        if (leadChar.isDigit) numericIndexKey else leadChar.toString
+      }
+      .getOrElse {
+        log.error(s"Tag without alpha index, being shoved into '$numericIndexKey': $text")
+        numericIndexKey
+      }
 
-    val maybeFirstChar = Try(badCharacters.replaceAllIn(asAscii(s).toLowerCase, "").charAt(0)).toOption
-
-    if (maybeFirstChar.isEmpty) {
-      log.error(s"Tag without alpha index, being shoved into 1-9: $s")
-    }
-
-    maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
-  }
+  def alphaIndexKeyForContributor(tag: Tag): String =
+    alphaIndexKey((tag.lastName ++ tag.firstName).mkString + tag.webTitle)
 
   def tagHeadKey(id: String): Option[String] = {
     id.split("/").headOption
