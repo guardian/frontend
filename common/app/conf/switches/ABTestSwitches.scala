@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 7, 3)),
+    sellByDate = Some(LocalDate.of(2023, 10, 2)),
     exposeClientSide = true,
   )
 
