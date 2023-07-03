@@ -7,10 +7,20 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
 import test.WithTestExecutionContext
+import TagPages._
 
-@DoNotDiscover class TagPagesTest extends AnyFlatSpec with Matchers with WithTestExecutionContext with ScalaFutures {
+class TagPagesTest extends AnyFlatSpec with Matchers {
 
-  val tagPages = new TagPages
+  def tagFixture(webTitle: String): ApiTag =
+    ApiTag(
+      "id/id",
+      TagType.Type,
+      None,
+      None,
+      webTitle,
+      "",
+      "",
+    )
 
   "alphaIndexKey" should "return the downcased first character of an ASCII string" in {
     val words = Seq(
@@ -23,7 +33,7 @@ import test.WithTestExecutionContext
     )
 
     for ((word, char) <- words) {
-      tagPages.alphaIndexKey(word) shouldEqual char
+      alphaIndexKey(word) shouldEqual char
     }
   }
 
@@ -39,34 +49,42 @@ import test.WithTestExecutionContext
     )
 
     for ((unicode, ascii) <- words) {
-      tagPages.alphaIndexKey(unicode) shouldEqual ascii
+      alphaIndexKey(unicode) shouldEqual ascii
     }
   }
 
-  it should "index by 0-9 if the first character is a digit" in {
+  it should "index as 'numeric' if the first character is a digit" in {
     val fixtures = Seq(
       "100 Years of Solitude",
       "1984",
       "20,000 Leagues Under the Sea",
+      "0 hero: a very special number",
     )
 
     for (fixture <- fixtures) {
-      tagPages.alphaIndexKey(fixture) shouldEqual "1-9"
+      alphaIndexKey(fixture) shouldEqual "1-9"
     }
   }
 
-  "byWebTitle" should "convert an enumerator of tags into a Future of alpha-ordered TagPages" in {
-    def tagFixture(webTitle: String): ApiTag =
-      ApiTag(
-        "id/id",
-        TagType.Type,
-        None,
-        None,
-        webTitle,
-        "",
-        "",
-      )
+  "alphaIndexKeyForContributor" should "not crash if a tag has no last name or first name" in {
+    alphaIndexKeyForContributor(
+      tagFixture("Good web title").copy(firstName = None, lastName = None),
+    ) shouldEqual "g"
+  }
 
+  it should "prefer last name if available" in {
+    alphaIndexKeyForContributor(
+      tagFixture("Who dis?").copy(firstName = Some("Roberto"), lastName = Some("Tyley")),
+    ) shouldEqual "t"
+  }
+
+  it should "use first name if last name unavailable" in {
+    alphaIndexKeyForContributor(
+      tagFixture("Queen Bey").copy(firstName = Some("Beyoncé"), lastName = None),
+    ) shouldEqual "b"
+  }
+
+  "byWebTitle" should "convert a collection of tags into map of TagPages keyed by alpha-index-key" in {
     val activateTag = tagFixture("Activate")
     val archivedSpeakersTag = tagFixture("Archived speakers")
     val blogTag = tagFixture("Blog")
@@ -75,9 +93,7 @@ import test.WithTestExecutionContext
 
     val tags = Set(activateTag, archivedSpeakersTag, blogTag, advertisingTag, otherDigitalSolutionsTag)
 
-    tagPages.toPages(
-      tagPages.byWebTitle(tags),
-    )(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
+    toPages(TagPages.byWebTitle(tags))(_.toUpperCase, TagPages.asciiLowerWebTitle) shouldEqual Seq(
       TagIndex(
         "a",
         "A",

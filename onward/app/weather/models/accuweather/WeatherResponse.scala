@@ -2,7 +2,8 @@ package weather.models.accuweather
 
 import common.Edition
 import common.editions.Us
-import play.api.libs.json.Json
+import model.dotcomrendering.{DotcomRenderingDataModel, ElementsEnhancer}
+import play.api.libs.json.{Json, Writes}
 
 /** Not all the fields AccuWeather supplies, just the ones we care about */
 

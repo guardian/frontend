@@ -174,6 +174,15 @@
     padding-bottom: aspect-ratio-height(16, 9);
 }
 
+.u-responsive-ratio--vertical {
+    @include mq($from: phablet) {
+        padding-bottom: aspect-ratio-height(9, 16);
+    }
+    @include mq($until: phablet) {
+        padding-bottom: aspect-ratio-height(9, 16, 85%);
+    }
+}
+
 .u-responsive-ratio--letterbox {
     padding-bottom: aspect-ratio-height(5, 2);
 }

@@ -41,8 +41,8 @@ case class ForecastResponse(
 ) {
   def temperatureForEdition(edition: Edition): String = {
     edition match {
-      case Us => s"${temperature.imperial.round}°F"
-      case _  => s"${temperature.metric.round}°C"
+      case Us => s"${temperature.imperial}°F"
+      case _  => s"${temperature.metric}°C"
     }
   }
 

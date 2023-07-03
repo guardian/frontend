@@ -14,7 +14,7 @@ import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
-import play.api.data.validation.Constraints.{emailAddress, nonEmpty}
+import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
@@ -39,64 +39,44 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: String,
-) {}
+) {
 
-case class EmailFormManyNewsletters(
-    email: String,
-    listNames: Seq[String],
-    referrer: Option[String],
-    ref: Option[String],
-    refViewId: Option[String],
-    campaignCode: Option[String],
-    googleRecaptchaResponse: Option[String],
-    name: String,
-) {}
+  // `name` is a hidden (via css) form input
+  // if it was set to something this form was likely filled by a bot
+  // https://stackoverflow.com/a/34623588/2823715
+  def isLikelyBotSubmission: Boolean =
+    name match {
+      case "" | "undefined" | "null" => false
+      case _                         => true
+    }
+}
 
 class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgent)
     extends LazyLogging
     with RemoteAddress {
 
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
-    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+    if (form.isLikelyBotSubmission) {
+      Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
+    } else {
+      val idAccessClientToken = Configuration.id.apiClientToken
+      val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
+      val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+      val headers = clientIp(request)
+        .map(ip => List("X-Forwarded-For" -> ip))
+        .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
 
-    val queryStringParameters = form.ref.map("ref" -> _).toList ++
-      form.refViewId.map("refViewId" -> _).toList ++
-      form.listName.map("listName" -> _).toList
+      val queryStringParameters = form.ref.map("ref" -> _).toList ++
+        form.refViewId.map("refViewId" -> _).toList ++
+        form.listName.map("listName" -> _).toList
 
-    //FIXME: this should go via the identity api client / app
-    wsClient
-      .url(consentMailerUrl)
-      .withQueryStringParameters(queryStringParameters: _*)
-      .addHttpHeaders(getHeaders(request): _*)
-      .post(consentMailerPayload)
-  }
-
-  def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
-    val consentMailerPayload = JsObject(
-      Json
-        .obj(
-          "email" -> form.email,
-          "set-lists" -> form.listNames,
-        )
-        .fields,
-    )
-
-    val queryStringParameters = form.ref.map("ref" -> _).toList ++
-      form.refViewId.map("refViewId" -> _).toList ++
-      form.listNames.map("listName" -> _).toList
-
-    //FIXME: this should go via the identity api client / app
-    // NOTE - always using the '/consent-signup' (no confirmation email)
-    // should we be splitting the list into newsletters that require confirmation
-    // and those that don't, then sending two separate requests?
-    // Currently, no editorial newsletters require confirmation emails, but the
-    // feature is still supported.
-    wsClient
-      .url(s"${Configuration.id.apiRoot}/consent-signup")
-      .withQueryStringParameters(queryStringParameters: _*)
-      .addHttpHeaders(getHeaders(request): _*)
-      .post(consentMailerPayload)
+      //FIXME: this should go via the identity api client / app
+      wsClient
+        .url(consentMailerUrl)
+        .withQueryStringParameters(queryStringParameters: _*)
+        .addHttpHeaders(headers: _*)
+        .post(consentMailerPayload)
+    }
   }
 
   private def serviceUrl(form: EmailForm, emailEmbedAgent: NewsletterSignupAgent): String = {
@@ -108,14 +88,6 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     } else {
       s"${Configuration.id.apiRoot}/consent-email"
     }
-  }
-
-  private def getHeaders(request: Request[AnyContent]): List[(String, String)] = {
-    val idAccessClientToken = Configuration.id.apiClientToken
-
-    clientIp(request)
-      .map(ip => List("X-Forwarded-For" -> ip))
-      .getOrElse(List.empty) :+ "X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken"
   }
 }
 
@@ -142,19 +114,6 @@ class EmailSignupController(
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> text,
     )(EmailForm.apply)(EmailForm.unapply),
-  )
-
-  val emailFormManyNewsletters: Form[EmailFormManyNewsletters] = Form(
-    mapping(
-      "email" -> nonEmptyText.verifying(emailAddress),
-      "listNames" -> seq(of[String]),
-      "referrer" -> optional[String](of[String]),
-      "ref" -> optional[String](of[String]),
-      "refViewId" -> optional[String](of[String]),
-      "campaignCode" -> optional[String](of[String]),
-      "g-recaptcha-response" -> optional[String](of[String]),
-      "name" -> text,
-    )(EmailFormManyNewsletters.apply)(EmailFormManyNewsletters.unapply),
   )
 
   def renderFooterForm(listName: String): Action[AnyContent] =
@@ -368,15 +327,17 @@ class EmailSignupController(
           form => {
             log.info(
               s"Post request received to /email/ - " +
+                s"email: ${form.email}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
+                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
                 s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
                 s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
                 s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
             )
 
             (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
               result <- submitFormFooter(form)
             } yield {
               result
@@ -434,12 +395,12 @@ class EmailSignupController(
     }
   }
 
-  private def validateCaptcha(googleRecaptchaResponse: Option[String], shouldValidateCaptcha: Boolean)(implicit
+  private def validateCaptcha(form: EmailForm, shouldValidateCaptcha: Boolean)(implicit
       request: Request[AnyContent],
   ) = {
     if (shouldValidateCaptcha) {
       for {
-        token <- googleRecaptchaResponse match {
+        token <- form.googleRecaptchaResponse match {
           case Some(token) => Future.successful(token)
           case None =>
             RecaptchaMissingTokenError.increment()
@@ -482,16 +443,18 @@ class EmailSignupController(
           form => {
             log.info(
               s"Post request received to /email/ - " +
+                s"email: ${form.email}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
+                s"g-recaptcha-response: ${form.googleRecaptchaResponse}, " +
                 s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
                 s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
                 s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
             )
 
             (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
+              _ <- validateCaptcha(form, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              result <- submitForm(form)
             } yield {
               result
             }) recover {
@@ -502,58 +465,22 @@ class EmailSignupController(
         )
     }
 
-  def submitMany(): Action[AnyContent] =
-    Action.async { implicit request =>
-      AllEmailSubmission.increment()
+  private def submitForm(form: EmailForm)(implicit request: Request[AnyContent]) = {
+    emailFormService
+      .submit(form)
+      .map(_.status match {
+        case 200 | 201 =>
+          EmailSubmission.increment()
+          respond(Subscribed, form.listName)
 
-      emailFormManyNewsletters
-        .bindFromRequest()
-        .fold(
-          formWithErrors => {
-            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-            EmailFormError.increment()
-            Future.successful(respond(InvalidEmail))
-          },
-          form => {
-            log.info(
-              s"Post request received to /email/many/ - " +
-                s"listNames.size: ${form.listNames.size.toString()}, " +
-                s"ref: ${form.ref}, " +
-                s"refViewId: ${form.refViewId}, " +
-                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-            )
+        case status =>
+          log.error(s"Error posting to Identity API: HTTP $status")
+          APIHTTPError.increment()
+          respond(OtherError)
 
-            (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
-            } yield {
-              result
-            }) recover {
-              case _ =>
-                respond(OtherError)
-            }
-          },
-        )
-    }
-
-  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String])(implicit
-      request: Request[AnyContent],
-  ) = {
-    wsResponse.map(_.status match {
-      case 200 | 201 =>
-        EmailSubmission.increment()
-        respond(Subscribed, listName)
-
-      case status =>
-        log.error(s"Error posting to Identity API: HTTP $status")
-        APIHTTPError.increment()
-        respond(OtherError)
-
-    }) recover {
+      }) recover {
       case _: IllegalAccessException =>
-        respond(Subscribed)
+        respond(Subscribed, form.listName)
       case e: Exception =>
         log.error(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
