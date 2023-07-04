@@ -74,7 +74,7 @@ object DCRNetworkFronts
       name = "dcr-network-fronts",
       description = "Network fronts rendered by DCR",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 7, 3),
+      sellByDate = LocalDate.of(2023, 7, 7),
       participationGroup = Perc1A,
     )
 
