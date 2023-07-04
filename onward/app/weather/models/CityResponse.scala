@@ -2,11 +2,21 @@ package weather.models
 
 import common.Edition
 import common.editions.{Au, Uk, Us}
+import play.api.libs.json.{Json, Writes}
 import weather.models.accuweather.LocationResponse
-import play.api.libs.json.Json
 
 object CityResponse {
-  implicit val jsonWrites = Json.writes[CityResponse]
+  implicit val jsonReads = Json.reads[CityResponse]
+
+  implicit val writes = new Writes[CityResponse] {
+    def writes(model: CityResponse) = {
+      Json.obj(
+        "id" -> model.id,
+        "city" -> model.city,
+        "country" -> model.country,
+      )
+    }
+  }
 
   def fromLocationResponses(locations: List[LocationResponse]): Seq[CityResponse] = {
     def cityAndCountry(location: LocationResponse): (String, String) =
