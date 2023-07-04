@@ -92,7 +92,7 @@ object BorkFCP
       name = "bork-fcp",
       description = "Synthetically degrades First Contentful Paint (FCP)",
       owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 7, 4),
+      sellByDate = LocalDate.of(2023, 8, 1),
       participationGroup = Perc1C,
     )
 
@@ -101,7 +101,7 @@ object BorkFID
       name = "bork-fid",
       description = "Synthetically degrades First Input Delay (FID)",
       owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 7, 4),
+      sellByDate = LocalDate.of(2023, 8, 1),
       participationGroup = Perc1D,
     )
 
