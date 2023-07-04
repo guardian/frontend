@@ -12,6 +12,7 @@ object WeatherResponse {
         "icon" -> model.weatherIcon,
         "link" -> model.weatherLink,
         "temperature" -> model.temperature,
+        "dateTime" -> model.dateTime,
       )
     }
   }
@@ -22,6 +23,7 @@ object WeatherResponse {
       weatherIcon = weatherResponse.WeatherIcon,
       weatherLink = Some(weatherResponse.Link),
       temperature = Temperatures.fromCelsius(weatherResponse.Temperature("Metric").Value),
+      dateTime = None,
     )
 
   def fromAccuweather(forecastResponse: accuweather.ForecastResponse): WeatherResponse =
@@ -30,6 +32,7 @@ object WeatherResponse {
       weatherIcon = forecastResponse.WeatherIcon,
       weatherLink = None,
       temperature = Temperatures.fromFahrenheit(forecastResponse.Temperature.Value),
+      dateTime = Some(forecastResponse.DateTime),
     )
 }
 
@@ -38,4 +41,5 @@ case class WeatherResponse(
     weatherIcon: Int,
     weatherLink: Option[String],
     temperature: Temperatures,
+    dateTime: Option[String],
 )
