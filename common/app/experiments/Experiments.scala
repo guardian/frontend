@@ -4,22 +4,35 @@ import conf.switches.Owner
 import experiments.ParticipationGroups._
 import java.time.LocalDate
 
+/*
+ * This list of active experiments is sorted by participation group.
+ */
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      FrontsBannerAds,
-      DCRNetworkFronts,
+      VerticalVideoContainer,
+      Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
-      OfferHttp3,
       Okta,
       HeaderTopBarSearchCapi,
       BorkFCP,
       BorkFID,
-      VerticalVideoContainer,
+      OfferHttp3,
+      FrontsBannerAds,
+      DCRNetworkFronts,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
+
+object VerticalVideoContainer
+    extends Experiment(
+      name = "vertical-video-container",
+      description = "When ON, Vertical Video Container is displayed",
+      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      sellByDate = LocalDate.of(2023, 7, 31),
+      participationGroup = Perc0A,
+    )
 
 object Lightbox
     extends Experiment(
@@ -27,7 +40,7 @@ object Lightbox
       description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 29),
-      participationGroup = Perc0A,
+      participationGroup = Perc0B,
     )
 
 object ServerSideLiveblogInlineAds
@@ -67,15 +80,6 @@ object Okta
 //      sellByDate = LocalDate.of(2024, 1, 1),
 //      participationGroup = Perc0E,
 //    )
-
-object DCRNetworkFronts
-    extends Experiment(
-      name = "dcr-network-fronts",
-      description = "Network fronts rendered by DCR",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 8, 7),
-      participationGroup = Perc20A,
-    )
 
 object HeaderTopBarSearchCapi
     extends Experiment(
@@ -122,11 +126,11 @@ object FrontsBannerAds
       participationGroup = Perc5A,
     )
 
-object VerticalVideoContainer
+object DCRNetworkFronts
     extends Experiment(
-      name = "vertical-video-container",
-      description = "When ON, Vertical Video Container is displayed",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 7, 31),
-      participationGroup = Perc0A,
+      name = "dcr-network-fronts",
+      description = "Network fronts rendered by DCR",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 8, 7),
+      participationGroup = Perc20A,
     )
