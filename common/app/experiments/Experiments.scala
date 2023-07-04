@@ -16,7 +16,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       BorkFCP,
       BorkFID,
-      ActionCardRedesign,
       VerticalVideoContainer,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -74,8 +73,8 @@ object DCRNetworkFronts
       name = "dcr-network-fronts",
       description = "Network fronts rendered by DCR",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 7, 3),
-      participationGroup = Perc1A,
+      sellByDate = LocalDate.of(2023, 8, 7),
+      participationGroup = Perc20A,
     )
 
 object HeaderTopBarSearchCapi
@@ -110,7 +109,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 7, 3),
+      sellByDate = LocalDate.of(2023, 7, 31),
       participationGroup = Perc1E,
     )
 
@@ -121,15 +120,6 @@ object FrontsBannerAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc5A,
-    )
-
-object ActionCardRedesign
-    extends Experiment(
-      name = "action-card-redesign",
-      description = "Creates a new action card design on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 9, 8),
-      participationGroup = Perc20A,
     )
 
 object VerticalVideoContainer
