@@ -16,7 +16,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       BorkFCP,
       BorkFID,
-      ActionCardRedesign,
       VerticalVideoContainer,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -121,15 +120,6 @@ object FrontsBannerAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc5A,
-    )
-
-object ActionCardRedesign
-    extends Experiment(
-      name = "action-card-redesign",
-      description = "Creates a new action card design on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 9, 8),
-      participationGroup = Perc20A,
     )
 
 object VerticalVideoContainer
