@@ -61,7 +61,7 @@ trait ABTestSwitches {
     "Test the commercial impact of showing billboard adverts in merchandising slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 6, 30)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Test serving GEM assets in ad slots on page",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 6, 30)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 7, 3)),
+    sellByDate = Some(LocalDate.of(2023, 10, 2)),
     exposeClientSide = true,
   )
 
