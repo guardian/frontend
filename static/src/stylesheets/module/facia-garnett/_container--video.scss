@@ -248,6 +248,11 @@ $video-width-desktop: 700px;
     }
 }
 
+.vertical-video__counter {
+    color: $brightness-100;
+    user-select: none;
+}
+
 .video-playlist__overlay {
     position: absolute;
     display: block;
