@@ -101,9 +101,10 @@ data-layout="vertical-video"
         >
         @fragments.inlineSvg("chevron-left", "icon", Seq("vertical-video-playlist__icon", "vertical-video-playlist__icon--prev"))
         </a>
-        <span style="color: white">
+        <span class="vertical-video__counter">
             <span id="vertical-carousel-count">1</span>
-            of @(containerDefinition.collectionEssentials.items.zipWithIndex.length)</span>
+            of @(containerDefinition.collectionEssentials.items.zipWithIndex.length)
+        </span>
         <a
         class="js-video-playlist-next"
         data-link-name="vertical-video-container-next"
