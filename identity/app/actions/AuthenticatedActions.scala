@@ -13,6 +13,7 @@ object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
 }
 
+// TODO: Okta
 class AuthenticatedActions(
     authService: AuthenticationService,
     identityApiClient: IdApiClient,

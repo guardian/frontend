@@ -13,6 +13,7 @@ define([], function () {
                 iframe.contentWindow.postMessage(JSON.stringify(message), '*');
             }
 
+            // TODO: Okta
             function _isSignedIn() {
                 return document.cookie.match('GU_U=');
             }

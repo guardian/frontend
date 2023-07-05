@@ -443,6 +443,7 @@ a {
                 };
 
                 if (userFromCookieCache === null) {
+                    // TODO: Okta
                     var cookieData = readCookie('GU_U'),
                     userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
                     if (userData) {

@@ -132,6 +132,7 @@ class AuthenticatedActionsTest
       }
     }
 
+    // TODO: Okta
     "not redirect and return 200 when a user is authenticated via a GU_U cookie" in new TestFixture {
       val originalUrl = "https://profile.thegulocal.com/consents"
       val request = Request(FakeRequest("GET", originalUrl), AnyContent())
@@ -150,6 +151,7 @@ class AuthenticatedActionsTest
       }
     }
 
+    // TODO: Okta
     "redirect to reauth when a user is authenticated via a GU_U cookie but not recently" in new TestFixture {
       val originalUrl = "https://profile.thegulocal.com/consents"
       val request = Request(FakeRequest("GET", originalUrl), AnyContent())

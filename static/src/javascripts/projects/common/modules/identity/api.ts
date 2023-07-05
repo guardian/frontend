@@ -89,6 +89,7 @@ export type IdentityUserIdentifiers = {
 
 let userFromCookieCache: IdentityUserFromCache = null;
 
+// TODO: Okta
 const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
@@ -168,6 +169,7 @@ export const buildNewsletterUpdatePayload = (
 	return newsletter;
 };
 
+// TODO: Okta
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
 export const getUserFromApi = mergeCalls(

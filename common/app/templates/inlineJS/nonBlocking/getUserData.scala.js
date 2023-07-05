@@ -13,6 +13,7 @@ try {
             }
 
             // Short version of cookie.get(), inspired by Google Analytics' code
+            // TODO: Okta
             var cookieData = (function(a) {
                 var d = new window.Array(),
                     e = new window.Array();

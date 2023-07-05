@@ -122,6 +122,8 @@ class CommentsController(
 
   }
 
+  // TODO: Okta
+  // Forward Authenticated header and X-Gu-Is-Oauth if in the Okta experiment
   def reportAbuseSubmission(commentId: Int): Action[AnyContent] =
     csrfCheck {
       Action.async { implicit request =>

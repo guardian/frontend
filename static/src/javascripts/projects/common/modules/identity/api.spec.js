@@ -69,6 +69,7 @@ describe('Identity API', () => {
         expect(decodedString).toBe(string);
     });
 
+    // TODO: Okta
     it('gets user from the idapi', done => {
         const expectedUser = {};
         const apiCallback = user => {

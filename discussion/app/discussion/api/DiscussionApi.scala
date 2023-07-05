@@ -222,11 +222,14 @@ trait DiscussionApiLike extends Http with GuLogging {
     )
   }
 
+  // Not sure why we don't use DAPI's report abuse endpoint here?
   def postAbuseReport(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie])(implicit
       executionContext: ExecutionContext,
   ): Future[WSResponse] = {
     val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
+    // TODO: Okta
+    // Forward Authenticated header and X-Gu-Is-Oauth if in the Okta experiment
     if (cookie.isDefined) { headers :+ ("Cookie" -> s"SC_GU_U=${cookie.get}") }
     failIfDisabled().flatMap(_ =>
       wsClient.url(url).withHttpHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)),

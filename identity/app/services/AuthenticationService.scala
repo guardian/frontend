@@ -29,6 +29,7 @@ class AuthenticationService(
         .userHasAuthenticatedWithinDurationFromSCGULACookie(Hours.hours(1).toStandardDuration, identityId, cookie.value)
     }
 
+  // TODO: Okta
   /** User has SC_GU_U and GU_U cookies */
   def fullyAuthenticatedUser[A](request: RequestHeader): Option[AuthenticatedUser] = {
     identityAuthService

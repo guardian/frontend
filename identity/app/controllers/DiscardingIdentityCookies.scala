@@ -11,6 +11,7 @@ object DiscardingIdentityCookies {
   def discardingCookieForRootDomain(name: String): DiscardingCookie =
     DiscardingCookie(name, secure = true, domain = Some(Configuration.id.domain))
 
+  // TODO: Okta
   def apply(result: Result): Result =
     result
       .discardingCookies(

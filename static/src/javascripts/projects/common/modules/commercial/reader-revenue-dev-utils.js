@@ -53,6 +53,7 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
 		fakeOneOffContributor();
 	}
 
+    // TODO: Okta
 	if (isUserLoggedIn() && !asExistingSupporter) {
 		if (window.location.origin.includes('localhost')) {
 			// Assume they don't have identity running locally
