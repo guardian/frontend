@@ -1,14 +1,13 @@
 package services.dotcomrendering
 
 import common.{Edition, GuLogging}
-import conf.switches.Switches.DCRFronts
+import conf.switches.Switches.{DCRFronts, DCRNetworkFronts}
 import implicits.Requests._
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.LinkSnap
 import play.api.mvc.RequestHeader
 import views.support.Commercial
-import experiments.{ActiveExperiments, DCRNetworkFronts}
 import layout.slices.EmailLayouts
 
 object FrontChecks {
@@ -107,7 +106,7 @@ object FaciaPicker extends GuLogging {
     lazy val dcrSwitchEnabled = DCRFronts.isSwitchedOn
     lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue)
     lazy val isNetworkFront = faciaPage.isNetworkFront
-    lazy val isInNetworkFrontTest = ActiveExperiments.isParticipating(DCRNetworkFronts)
+    lazy val dcrNetworkFrontsSwitchEnabled = DCRNetworkFronts.isSwitchedOn
 
     val tier =
       decideTier(
@@ -117,7 +116,7 @@ object FaciaPicker extends GuLogging {
         dcrSwitchEnabled,
         dcrCouldRender,
         isNetworkFront,
-        isInNetworkFrontTest,
+        dcrNetworkFrontsSwitchEnabled,
       )
 
     logTier(faciaPage, dcrCouldRender, checks, tier)
@@ -132,16 +131,16 @@ object FaciaPicker extends GuLogging {
       dcrSwitchEnabled: Boolean,
       dcrCouldRender: Boolean,
       isNetworkFront: Boolean,
-      isInNetworkFrontTest: Boolean,
+      dcrNetworkFrontsSwitchEnabled: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
     else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
     else if (dcrCouldRender && dcrSwitchEnabled) {
       isNetworkFront match {
-        case false                        => RemoteRender
-        case true if isInNetworkFrontTest => RemoteRender
-        case _                            => LocalRender
+        case false                                 => RemoteRender
+        case true if dcrNetworkFrontsSwitchEnabled => RemoteRender
+        case _                                     => LocalRender
       }
     } else LocalRender
   }
@@ -160,6 +159,7 @@ object FaciaPicker extends GuLogging {
     val properties =
       Map(
         "dcrFrontsSwitchOn" -> DCRFronts.isSwitchedOn.toString,
+        "dcrNetworksFrontsSwitchOn" -> DCRNetworkFronts.isSwitchedOn.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
         "tier" -> tierReadable,
