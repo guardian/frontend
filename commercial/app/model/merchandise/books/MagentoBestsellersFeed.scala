@@ -45,22 +45,14 @@ object MagentoBestsellersFeed extends GuLogging {
 
     val feedName = feedMetaData.name
 
-    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
-      if (switchedOn) {
-        val start = currentTimeMillis
-        feedContent map { body =>
-          val parsed = parse(XML.loadString(body)).map { book =>
-            book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:")))
-          }
-          Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
-        } getOrElse {
-          Future.failed(MissingFeedException(feedName))
-        }
-      } else {
-        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
+    val start = currentTimeMillis
+    feedContent map { body =>
+      val parsed = parse(XML.loadString(body)).map { book =>
+        book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:")))
       }
-    } recoverWith {
-      case NonFatal(e) => Future.failed(e)
+      Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
+    } getOrElse {
+      Future.failed(MissingFeedException(feedName))
     }
   }
 }
