@@ -21,7 +21,7 @@ import layout.slices.EmailLayouts
     val dcrSwitchEnabled = true
     val dcrCouldRender = true
     val isNetworkFront = false
-    val isInNetworkFrontTest = false
+    val dcrNetworkFrontsSwitchEnabled = false
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -30,7 +30,7 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(LocalRender)
   }
@@ -42,7 +42,7 @@ import layout.slices.EmailLayouts
     val dcrSwitchEnabled = false
     val dcrCouldRender = false
     val isNetworkFront = false
-    val isInNetworkFrontTest = false
+    val dcrNetworkFrontsSwitchEnabled = false
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -51,7 +51,7 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(RemoteRender)
   }
@@ -63,7 +63,7 @@ import layout.slices.EmailLayouts
     val dcrSwitchEnabled = false
     val dcrCouldRender = true
     val isNetworkFront = false
-    val isInNetworkFrontTest = false
+    val dcrNetworkFrontsSwitchEnabled = false
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -72,7 +72,7 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(LocalRender)
   }
@@ -84,7 +84,7 @@ import layout.slices.EmailLayouts
     val dcrSwitchEnabled = true
     val dcrCouldRender = true
     val isNetworkFront = false
-    val isInNetworkFrontTest = false
+    val dcrNetworkFrontsSwitchEnabled = false
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -93,7 +93,7 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(RemoteRender)
   }
@@ -105,7 +105,7 @@ import layout.slices.EmailLayouts
     val dcrSwitchEnabled = true
     val dcrCouldRender = true
     val isNetworkFront = false
-    val isInNetworkFrontTest = false
+    val dcrNetworkFrontsSwitchEnabled = false
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -114,7 +114,7 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(LocalRender)
   }
@@ -126,7 +126,7 @@ import layout.slices.EmailLayouts
     val dcrSwitchEnabled = true
     val dcrCouldRender = true
     val isNetworkFront = true
-    val isInNetworkFrontTest = false
+    val dcrNetworkFrontsSwitchEnabled = false
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -135,19 +135,19 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(LocalRender)
   }
 
-  it should "return RemoteRender if a Network front is in the test" in {
+  it should "return RemoteRender if a Network front and dcr network fronts switch is on" in {
     val isRSS = false
     val forceDCROff = false
     val forceDCR = false
     val dcrSwitchEnabled = true
     val dcrCouldRender = true
     val isNetworkFront = true
-    val isInNetworkFrontTest = true
+    val dcrNetworkFrontsSwitchEnabled = true
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -156,19 +156,19 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(RemoteRender)
   }
 
-  it should "return LocalRender for a Network front is the switch is off even if in test" in {
+  it should "return LocalRender for a Network front if the dcr fronts switch is off even if in dcr network fronts switch is on" in {
     val isRSS = false
     val forceDCROff = false
     val forceDCR = false
     val dcrSwitchEnabled = false
     val dcrCouldRender = true
     val isNetworkFront = true
-    val isInNetworkFrontTest = true
+    val dcrNetworkFrontsSwitchEnabled = true
 
     val tier = FaciaPicker.decideTier(
       isRSS,
@@ -177,7 +177,7 @@ import layout.slices.EmailLayouts
       dcrSwitchEnabled,
       dcrCouldRender,
       isNetworkFront,
-      isInNetworkFrontTest,
+      dcrNetworkFrontsSwitchEnabled,
     )
     tier should be(LocalRender)
   }
