@@ -20,7 +20,7 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
     extends GuLogging
     with implicits.WSRequests {
 
-  def getNewsletters: Future[Either[String, List[NewsletterResponse]]] = {
+  def getNewsletters(): Future[Either[String, List[NewsletterResponse]]] = {
     getBody("api/legacy/newsletters").map { json =>
       json.validate[List[NewsletterResponse]] match {
         case succ: JsSuccess[List[NewsletterResponse]] =>
