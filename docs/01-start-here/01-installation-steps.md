@@ -116,7 +116,7 @@ You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9
 is present.
 
 Frontend uses a `.nvmrc` file which specifies a given version of node as a requirement. If you use
-[nvm](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can run `nvm use` to swich to the version specified by `.nvmrc`. If that version number is not available locally, you might have to install the missing version with `nvm install <version number>`. (As a result of upgrades to the new M1 machines you may be using `asdf` or `fnm`).
+[nvm](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can run `nvm use` to swich to the version specified by `.nvmrc`. If that version number is not available locally, you might have to install the missing version with `nvm install <version number>`. You may also be using `asdf` or `fnm`).
 
 Alternatively you could use your system Node, for instance using the following:
 
