@@ -49,11 +49,7 @@ trait FeedFetcher {
 class SingleFeedFetcher(val wsClient: WSClient)(val feedMetaData: FeedMetaData) extends FeedFetcher {
 
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    feedMetaData.fetchSwitch.isGuaranteedSwitchedOn flatMap { reallyOn =>
-      if (reallyOn) {
-        fetch(feedMetaData)
-      } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
-    }
+    fetch(feedMetaData)
   }
 }
 
@@ -84,19 +80,13 @@ class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMe
   }
 
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
+    fetchPage(0) flatMap { initialFetch =>
+      val pageCount = Json.parse(initialFetch.feed.content).as[EbResponse].pagination.pageCount
+      val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
 
-    feedMetaData.fetchSwitch.isGuaranteedSwitchedOn flatMap { reallyOn =>
-      if (reallyOn) {
-
-        fetchPage(0) flatMap { initialFetch =>
-          val pageCount = Json.parse(initialFetch.feed.content).as[EbResponse].pagination.pageCount
-          val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
-
-          subsequentFetches map { fetches =>
-            combineFetchResponses(initialFetch +: fetches)
-          }
-        }
-      } else Future.failed(SwitchOffException(feedMetaData.fetchSwitch.name))
+      subsequentFetches map { fetches =>
+        combineFetchResponses(initialFetch +: fetches)
+      }
     }
   }
 }

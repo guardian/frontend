@@ -21,21 +21,13 @@ object TravelOffersApi extends GuLogging {
   def parseOffers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
       executionContext: ExecutionContext,
   ): Future[ParsedFeed[TravelOffer]] = {
-    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
-      if (switchedOn) {
-        val start = System.currentTimeMillis
-        feedContent map { body =>
-          val elems = XML.loadString(body)
-          val parsed = parse(elems)
-          Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
-        } getOrElse {
-          Future.failed(MissingFeedException(feedMetaData.name))
-        }
-      } else {
-        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
-      }
-    } recoverWith {
-      case NonFatal(e) => Future.failed(e)
+    val start = System.currentTimeMillis
+    feedContent map { body =>
+      val elems = XML.loadString(body)
+      val parsed = parse(elems)
+      Future(ParsedFeed(parsed, Duration(currentTimeMillis - start, MILLISECONDS)))
+    } getOrElse {
+      Future.failed(MissingFeedException(feedMetaData.name))
     }
   }
 }

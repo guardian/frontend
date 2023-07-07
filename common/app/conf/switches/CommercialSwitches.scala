@@ -136,66 +136,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val TravelFeedFetchSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-travel-feed-fetch",
-    "If this switch is on, cached travel offers feed will be updated from external source.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val TravelFeedParseSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-travel-feed-parse",
-    "If this switch is on, commercial components will be fed by travel offers feed.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val JobsFeedFetchSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-jobs-feed-fetch",
-    "If this switch is on, jobs feed will be periodically updated from external source.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val JobsFeedParseSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-jobs-feed-parse",
-    "If this switch is on, commercial components will be fed by jobs feed.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val EventsFeedSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-events",
-    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val GuBookshopFeedsSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-bookshop",
-    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val BookLookupSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "book-lookup",

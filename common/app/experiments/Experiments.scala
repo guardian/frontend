@@ -4,23 +4,34 @@ import conf.switches.Owner
 import experiments.ParticipationGroups._
 import java.time.LocalDate
 
+/*
+ * This list of active experiments is sorted by participation group.
+ */
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      FrontsBannerAds,
-      DCRNetworkFronts,
+      VerticalVideoContainer,
+      Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
-      OfferHttp3,
       Okta,
       HeaderTopBarSearchCapi,
       BorkFCP,
       BorkFID,
-      ActionCardRedesign,
-      VerticalVideoContainer,
+      OfferHttp3,
+      FrontsBannerAds,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
+
+object VerticalVideoContainer
+    extends Experiment(
+      name = "vertical-video-container",
+      description = "When ON, Vertical Video Container is displayed",
+      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      sellByDate = LocalDate.of(2023, 7, 31),
+      participationGroup = Perc0A,
+    )
 
 object Lightbox
     extends Experiment(
@@ -28,7 +39,7 @@ object Lightbox
       description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 29),
-      participationGroup = Perc0A,
+      participationGroup = Perc0B,
     )
 
 object ServerSideLiveblogInlineAds
@@ -69,15 +80,6 @@ object Okta
 //      participationGroup = Perc0E,
 //    )
 
-object DCRNetworkFronts
-    extends Experiment(
-      name = "dcr-network-fronts",
-      description = "Network fronts rendered by DCR",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 7, 7),
-      participationGroup = Perc1A,
-    )
-
 object HeaderTopBarSearchCapi
     extends Experiment(
       name = "header-top-bar-search-capi",
@@ -92,7 +94,7 @@ object BorkFCP
       name = "bork-fcp",
       description = "Synthetically degrades First Contentful Paint (FCP)",
       owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 7, 4),
+      sellByDate = LocalDate.of(2023, 8, 1),
       participationGroup = Perc1C,
     )
 
@@ -101,7 +103,7 @@ object BorkFID
       name = "bork-fid",
       description = "Synthetically degrades First Input Delay (FID)",
       owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 7, 4),
+      sellByDate = LocalDate.of(2023, 8, 1),
       participationGroup = Perc1D,
     )
 
@@ -121,22 +123,4 @@ object FrontsBannerAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc5A,
-    )
-
-object ActionCardRedesign
-    extends Experiment(
-      name = "action-card-redesign",
-      description = "Creates a new action card design on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 9, 8),
-      participationGroup = Perc20A,
-    )
-
-object VerticalVideoContainer
-    extends Experiment(
-      name = "vertical-video-container",
-      description = "When ON, Vertical Video Container is displayed",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 7, 31),
-      participationGroup = Perc0A,
     )
