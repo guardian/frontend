@@ -31,6 +31,7 @@ case class DotcomFrontsRenderingDataModel(
     mostCommented: Option[Trail],
     mostShared: Option[Trail],
     deeplyRead: Option[Seq[Trail]],
+    contributionsServiceUrl: String,
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -91,6 +92,7 @@ object DotcomFrontsRenderingDataModel {
       mostCommented = mostCommented.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
       mostShared = mostShared.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
       deeplyRead = deeplyRead,
+      contributionsServiceUrl = Configuration.contributionsService.url,
     )
   }
 
