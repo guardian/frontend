@@ -7,8 +7,4 @@
     outOfPage: Boolean = false
 )(implicit request: RequestHeader)
 
-@import conf.switches.Switches.CommercialSwitch
-
-@if(CommercialSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(name, adTypes, sizeMapping, showLabel, refresh, outOfPage){ }
-}
+@fragments.commercial.adSlot(name, adTypes, sizeMapping, showLabel, refresh, outOfPage){ }
