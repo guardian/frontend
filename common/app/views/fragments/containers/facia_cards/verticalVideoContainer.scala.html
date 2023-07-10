@@ -18,7 +18,7 @@
         </h2>
     </header>
 </div>
-<div class="video-playlist video-playlist--start js-video-playlist fc-container--rolled-up-hide vertical-playlist__padding"
+<div class="video-playlist video-playlist--start js-video-playlist fc-container--rolled-up-hide"
 data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
 data-component="vertical-video-playlist"
 data-layout="vertical-video"
@@ -28,7 +28,7 @@ data-layout="vertical-video"
     >
     </a>
 
-    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner vertical-video-height">
+    <ul class="u-unstyled video-playlist__inner js-video-playlist-inner vertical-video-height vertical-playlist__margin">
         <li class="video-playlist__item video-title vertical-video-title--leftcol fc-container__header__title vertical-video">
         @treats(containerDefinition, frontProperties)
         </li>
@@ -115,4 +115,11 @@ data-layout="vertical-video"
         @fragments.inlineSvg("chevron-right", "icon", Seq("vertical-video-playlist__icon", "vertical-video-playlist__icon--next"))
         </a>
     </div>
+    <div class="vertical-video__ext-link">
+        We're experimenting with vertical video.&nbsp;
+        <a href="https://guardiannewsandmedia.formstack.com/forms/vertical_video"
+        target="_blank"
+        rel="noopener noreferrer">Tell us what you think</a>
+    </div>
+
 </div>
