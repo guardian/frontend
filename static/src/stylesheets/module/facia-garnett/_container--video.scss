@@ -189,14 +189,13 @@ $video-width-desktop: 700px;
 }
 
 .vertical-video-playlist__control {
-    height: 70px;
     width: 300px;
     display: flex;
     gap: 16px;
     justify-content: flex-start;
     align-items: center;
     margin-left: 20px;
-
+    padding-bottom: 24px;
     @include mq($from: 375px, $until: phablet) {
         position: absolute;
         bottom: 80px;
@@ -207,14 +206,12 @@ $video-width-desktop: 700px;
         align-items: flex-start;
         z-index: 10;
         width: calc(100% - 320px);
+        padding-bottom: 0;
     }
 
     @include mq($from: mobileLandscape, $until: phablet) {
         width: calc(100% - 330px);
     }
-
-
-
 
     @include mq(leftCol)  {
         margin-left: 180px;
@@ -692,8 +689,12 @@ $video-width-desktop: 700px;
     }
 }
 
-.vertical-playlist__padding {
-    padding-bottom: 18px;
+.vertical-playlist__margin {
+    margin-bottom: 20px;
+    @include mq($from: phablet) {
+        margin-bottom: 24px
+    }
+
 }
 
 .vertical-video-overlay {
@@ -792,3 +793,30 @@ $video-width-desktop: 700px;
         }
     }
 }
+
+.vertical-video__ext-link {
+    @include fs-textSans(2);
+    color: $brightness-100;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 16px;
+
+    @include mq($until: phablet) {
+        width: 80%
+    }
+
+    @include mq(leftCol)  {
+        margin-left: 180px;
+    }
+
+    @include mq(wide)  {
+        margin-left: 260px;
+    }
+
+    a {
+        text-decoration: underline;
+        color: $brightness-100;
+    }
+
+}
+
