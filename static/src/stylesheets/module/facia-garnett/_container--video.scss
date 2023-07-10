@@ -805,7 +805,7 @@ $video-width-desktop: 700px;
         width: 80%
     }
 
-        @include mq(leftCol)  {
+    @include mq(leftCol)  {
         margin-left: 180px;
     }
 

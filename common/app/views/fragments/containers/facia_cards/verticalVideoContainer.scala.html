@@ -8,6 +8,7 @@
 @import model.VideoFaciaProperties
 @import layout.FaciaCardHeader
 @import model.Pillar.RichPillar
+@import conf.switches.Switches.{VerticalVideoSurvey}
 
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
@@ -115,11 +116,12 @@ data-layout="vertical-video"
         @fragments.inlineSvg("chevron-right", "icon", Seq("vertical-video-playlist__icon", "vertical-video-playlist__icon--next"))
         </a>
     </div>
-    <div class="vertical-video__ext-link">
-        We're experimenting with vertical video.&nbsp;
-        <a href="https://guardiannewsandmedia.formstack.com/forms/vertical_video"
-        target="_blank"
-        rel="noopener noreferrer">Tell us what you think</a>
-    </div>
-
+    @if(VerticalVideoSurvey.isSwitchedOn) {
+        <div class="vertical-video__ext-link">
+            We're experimenting with vertical video.&nbsp;
+            <a href="https://guardiannewsandmedia.formstack.com/forms/vertical_video"
+            target="_blank"
+            rel="noopener noreferrer">Tell us what you think</a>
+        </div>
+    }
 </div>
