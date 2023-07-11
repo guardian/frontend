@@ -92,11 +92,13 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
 }
 
 object VideoMedia {
-  def make(capiElement: ApiElement): VideoMedia =
+  def make(capiElement: ApiElement): VideoMedia = {
     VideoMedia(
       videoAssets = capiElement.assets.filter(_.`type` == AssetType.Video).map(VideoAsset.make).sortBy(-_.width).toList,
     )
+  }
 }
+
 final case class VideoMedia(videoAssets: List[VideoAsset]) {
   private implicit val ordering = EncodingOrdering
 
