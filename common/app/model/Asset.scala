@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.Asset
 import play.api.libs.json.{Json, Writes}
 import views.support.{ImgSrc, Naked, Orientation}
 
+// TODO: Check that adding category here isn't going to break, as its only present for the VideoAsset and not the Image or Audio
 object Helpers {
   def assetFieldsToMap(asset: Asset): Map[String, String] =
     Map(
@@ -28,6 +29,7 @@ object Helpers {
       "scriptName" -> asset.typeData.flatMap(_.scriptName),
       "html" -> asset.typeData.flatMap(_.html),
       "embedType" -> asset.typeData.flatMap(_.embedType),
+      "category" -> asset.typeData.flatMap(_.category).map(_.toString),
     ).collect { case (k, Some(v)) => (k, v) }
 }
 
@@ -124,6 +126,7 @@ case class VideoAsset(fields: Map[String, String], url: Option[String], mimeType
   val source: Option[String] = fields.get("source")
   val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
   val caption: Option[String] = fields.get("caption")
+  val category: Option[String] = fields.get("category")
 }
 
 object AudioAsset {
