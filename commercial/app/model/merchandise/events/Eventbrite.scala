@@ -106,22 +106,14 @@ object Eventbrite extends GuLogging {
       executionContext: ExecutionContext,
   ): Future[ParsedFeed[Event]] = {
 
-    feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
-      if (switchedOn) {
-        val start = currentTimeMillis
-        feedContent map { body =>
-          val responses = Json.parse(body).as[Seq[Response]]
-          val events = responses flatMap { _.events }
+    val start = currentTimeMillis
+    feedContent map { body =>
+      val responses = Json.parse(body).as[Seq[Response]]
+      val events = responses flatMap { _.events }
 
-          Future(ParsedFeed(events, Duration(currentTimeMillis - start, MILLISECONDS)))
-        } getOrElse {
-          Future.failed(MissingFeedException(feedMetaData.name))
-        }
-      } else {
-        Future.failed(SwitchOffException(feedMetaData.parseSwitch.name))
-      }
-    } recoverWith {
-      case NonFatal(e) => Future.failed(e)
+      Future(ParsedFeed(events, Duration(currentTimeMillis - start, MILLISECONDS)))
+    } getOrElse {
+      Future.failed(MissingFeedException(feedMetaData.name))
     }
   }
 

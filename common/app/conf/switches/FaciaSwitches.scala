@@ -74,4 +74,14 @@ trait FaciaSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val DCRNetworkFronts = Switch(
+    SwitchGroup.Facia,
+    name = "dcr-network-fronts",
+    description = "Network fronts rendered by DCR",
+    owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }

@@ -20,7 +20,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       BorkFID,
       OfferHttp3,
       FrontsBannerAds,
-      DCRNetworkFronts,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -124,13 +123,4 @@ object FrontsBannerAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc5A,
-    )
-
-object DCRNetworkFronts
-    extends Experiment(
-      name = "dcr-network-fronts",
-      description = "Network fronts rendered by DCR",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 8, 14),
-      participationGroup = Perc50,
     )

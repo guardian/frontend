@@ -26,7 +26,6 @@ const trackingEvents = {
 
 const inputs = {
 	email: 'email',
-	dummy: 'name',
 };
 
 let lastEventDataSent = undefined;
@@ -175,9 +174,6 @@ const modifyLinkNamesForSignedInUser = (el) =>
 const submitForm = (form, buttonEl) => {
 	buttonEl.setAttribute('disabled', 'true');
 
-	const dummyEmail = encodeURIComponent(
-		$(`input[name="${inputs.dummy}"]`, form).val(),
-	); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
 	const email = encodeURIComponent(
 		$(`input[name="${inputs.email}"]`, form).val(),
 	);
@@ -198,7 +194,6 @@ const submitForm = (form, buttonEl) => {
 	formQueryString += `&listName=${listName}`;
 	formQueryString += `&ref=${ref}`;
 	formQueryString += `&refViewId=${refViewId}`;
-	formQueryString += `&${inputs.dummy}=${dummyEmail}`;
 	if (window.guardian.config.switches.emailSignupRecaptcha) {
 		formQueryString += `&g-recaptcha-response=${googleRecaptchaResponse}`;
 	}
