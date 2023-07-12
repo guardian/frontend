@@ -6,10 +6,21 @@ import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 
 trait CommercialSwitches {
 
+  // TODO(@chrislomaxjones) Remove this switch once we update the client to use the new `ShouldLoadGoogleTagSwitch`
   val CommercialSwitch = Switch(
     Commercial,
     "commercial",
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val ShouldLoadGoogleTagSwitch = Switch(
+    Commercial,
+    "should-load-googletag",
+    "If this switch is OFF, the commercial bundle won't load the googletag script. This is intended for use as a failsafe, and will disable all forms of advertising that are managed via Google Ad Manager, including Prebid and A9.",
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,

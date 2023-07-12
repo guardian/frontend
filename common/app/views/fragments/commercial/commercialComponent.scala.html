@@ -1,13 +1,9 @@
 @()(implicit request: RequestHeader)
 
-@import conf.switches.Switches.CommercialSwitch
-
-@if(CommercialSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(
-        "merchandising",
-        Seq("commercial-component"),
-        Map(),
-        showLabel=false,
-        refresh=false
-    ){ }
-}
+@fragments.commercial.adSlot(
+    "merchandising",
+    Seq("commercial-component"),
+    Map(),
+    showLabel=false,
+    refresh=false
+){ }
