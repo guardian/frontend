@@ -10,7 +10,7 @@ import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
-import services.newsletters.model.NewsletterResponse
+import services.newsletters.model.{NewsletterResponseV2, NewsletterResponse}
 import staticpages.StaticPages
 import implicits.Requests.RichRequestHeader
 
@@ -55,8 +55,8 @@ class SignupPageController(
       request: RequestHeader,
   ): Result = {
 
-    val newsletters: Either[String, List[NewsletterResponse]] =
-      newsletterSignupAgent.getNewsletters()
+    val newsletters: Either[String, List[NewsletterResponseV2]] =
+      newsletterSignupAgent.getV2Newsletters()
 
     newsletters match {
       case Right(newsletters) =>
@@ -90,8 +90,8 @@ class SignupPageController(
   private def renderDCRNewslettersJson()(implicit
       request: RequestHeader,
   ): Result = {
-    val newsletters: Either[String, List[NewsletterResponse]] =
-      newsletterSignupAgent.getNewsletters()
+    val newsletters: Either[String, List[NewsletterResponseV2]] =
+      newsletterSignupAgent.getV2Newsletters()
 
     newsletters match {
       case Right(newsletters) => {

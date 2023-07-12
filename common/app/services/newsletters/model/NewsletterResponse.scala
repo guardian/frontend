@@ -33,3 +33,34 @@ object NewsletterResponse {
   implicit val newsletterResponseReads = Json.reads[NewsletterResponse]
   implicit val newsletterResponseWrites = Json.writes[NewsletterResponse]
 }
+
+case class NewsletterResponseV2(
+    identityName: String,
+    listId: Int,
+    name: String,
+    theme: String,
+    group: String,
+    status: String,
+    restricted: Boolean,
+    signUpEmbedDescription: String,
+    frequency: String,
+    mailSuccessDescription: Option[String],
+    regionFocus: Option[String],
+    illustrationCard: Option[String],
+)
+
+object NewsletterResponseV2 {
+  implicit val newsletterResponseV2Reads = Json.reads[NewsletterResponseV2]
+  implicit val newsletterResponseV2Writes = Json.writes[NewsletterResponseV2]
+}
+
+case class NewslettersGetResponseV2Body(
+    ok: Boolean,
+    total: Int,
+    data: List[NewsletterResponseV2],
+)
+
+object NewslettersGetResponseV2Body {
+  implicit val newslettersGetResponseV2BodyReads = Json.reads[NewslettersGetResponseV2Body]
+  implicit val newslettersGetResponseV2BodyWrites = Json.writes[NewslettersGetResponseV2Body]
+}
