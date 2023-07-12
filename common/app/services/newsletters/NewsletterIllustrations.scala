@@ -1,6 +1,6 @@
 package services.newsletters
 
-object newsletterIllustrations {
+object NewsletterIllustrations {
 
   private val data: Map[String, String] = Map.apply(
     "morning-briefing" ->
