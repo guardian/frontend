@@ -13,6 +13,7 @@ import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import services.newsletters.model.NewsletterResponse
+import services.newsletters.NewsletterIllustrations
 import services.NewsletterData
 
 case class DotcomNewslettersPageRenderingDataModel(
@@ -112,6 +113,7 @@ object DotcomNewslettersPageRenderingDataModel {
       response.group,
       response.emailEmbed.successDescription,
       response.regionFocus,
+      NewsletterIllustrations.get(response.identityName),
     )
   }
 }
