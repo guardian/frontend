@@ -21,6 +21,7 @@
 		"@guardian/commercial": "10.4.0",
 		"@guardian/consent-management-platform": "^13.5.0",
 		"@guardian/core-web-vitals": "^4.0.0",
+		"@guardian/identity-auth": "^0.2.0",
 		"@guardian/libs": "^14.0.0",
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "^10.0.0",
