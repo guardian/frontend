@@ -1,7 +1,7 @@
 package views.fragments.atoms
 
 import model.content.MediaAssetPlatform.Youtube
-import model.content.{MediaAsset, MediaAtom}
+import model.content.{Category, MediaAsset, MediaAtom}
 import org.scalatestplus.play.MixedPlaySpec
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,6 +28,7 @@ class YoutubeSpec extends MixedPlaySpec {
         expired = None,
         activeVersion = None,
         channelId = None,
+        category = Category.News,
       )
       val displayCaption = false
       val view = views.html.fragments.atoms

@@ -45,6 +45,7 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
           expired = None,
           activeVersion = None,
           channelId = None,
+          category = Category.News,
         ),
       ),
       interactives = Nil,
