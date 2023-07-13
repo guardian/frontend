@@ -1,9 +1,11 @@
+import type { AccessToken, IDToken } from '@guardian/identity-auth';
 import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
 import { createAuthenticationComponentEventParams } from './auth-component-event-params';
+import type { CustomIdTokenClaims } from './okta';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
 
@@ -168,7 +170,59 @@ export const buildNewsletterUpdatePayload = (
 	return newsletter;
 };
 
+type SignedOutWithCookies = { kind: 'SignedOutWithCookies' };
+export type SignedInWithCookies = { kind: 'SignedInWithCookies' };
+type SignedOutWithOkta = { kind: 'SignedOutWithOkta' };
+export type SignedInWithOkta = {
+	kind: 'SignedInWithOkta';
+	accessToken: AccessToken<never>;
+	idToken: IDToken<CustomIdTokenClaims>;
+};
+
+export type AuthStatus =
+	| SignedOutWithCookies
+	| SignedInWithCookies
+	| SignedOutWithOkta
+	| SignedInWithOkta;
+
+const isInOktaExperiment = () => true;
+
+const getAuthStatus = async (): Promise<AuthStatus> => {
+	if (isInOktaExperiment()) {
+		const { isSignedInWithOktaAuthState } = await import('./okta');
+		const authState = await isSignedInWithOktaAuthState();
+		if (authState.isAuthenticated) {
+			return {
+				kind: 'SignedInWithOkta',
+				accessToken: authState.accessToken,
+				idToken: authState.idToken,
+			};
+		} else {
+			return {
+				kind: 'SignedOutWithOkta',
+			};
+		}
+	} else {
+		if (isUserLoggedIn()) {
+			return {
+				kind: 'SignedInWithCookies',
+			};
+		} else {
+			return {
+				kind: 'SignedOutWithCookies',
+			};
+		}
+	}
+};
+
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
+export const isUserLoggedInRefactor = (): Promise<boolean> => {
+	// check if in experiment
+	if (isInOktaExperiment()) {
+		return Promise.resolve(false);
+	}
+	return Promise.resolve(isUserLoggedIn());
+};
 
 export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
