@@ -93,6 +93,7 @@ object JavaScriptPage {
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
       ("commercialBundleUrl", commercialBundleUrl),
+      ("stage", JsString(Configuration.environment.stage)),
     )
   }.toMap
 }
