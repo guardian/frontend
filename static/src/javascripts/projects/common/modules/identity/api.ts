@@ -224,11 +224,18 @@ const getAuthStatus = async (): Promise<AuthStatus> => {
 
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 export const isUserLoggedInRefactor = (): Promise<boolean> => {
-	// check if in experiment
-	if (isInOktaExperiment()) {
-		return Promise.resolve(false);
-	}
-	return Promise.resolve(isUserLoggedIn());
+	return new Promise((resolve, _) => {
+		void getAuthStatus().then((authStatus) => {
+			if (
+				authStatus.kind === 'SignedInWithCookies' ||
+				authStatus.kind === 'SignedInWithOkta'
+			) {
+				resolve(true);
+			} else {
+				resolve(false);
+			}
+		});
+	});
 };
 
 export const getUserFromApi = mergeCalls(
