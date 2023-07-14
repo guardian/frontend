@@ -8,9 +8,7 @@ export type CustomIdTokenClaims = CustomClaims & {
 };
 
 const getStage = () => {
-	if (!window.guardian.config.page.isDev) {
-		return window.guardian.config.page.stage;
-	} else return 'DEV';
+	return window.guardian.config.page.stage;
 };
 
 const getIssuer = (stage: Stage) =>
