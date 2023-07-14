@@ -1113,6 +1113,13 @@
                     "url": "/football",
                     "children": [
                         {
+                            "title": "Women's World Cup 2023",
+                            "url": "/football/womens-world-cup-2023",
+                            "longTitle": "football/womens-world-cup-2023",
+                            "children": [],
+                            "classList": []
+                        },
+                        {
                             "title": "Live scores",
                             "url": "/football/live",
                             "longTitle": "football/live",
@@ -1819,6 +1826,13 @@
                     "title": "Football",
                     "url": "/football",
                     "children": [
+                        {
+                            "title": "Women's World Cup 2023",
+                            "url": "/football/womens-world-cup-2023",
+                            "longTitle": "football/womens-world-cup-2023",
+                            "children": [],
+                            "classList": []
+                        },
                         {
                             "title": "Live scores",
                             "url": "/football/live",
