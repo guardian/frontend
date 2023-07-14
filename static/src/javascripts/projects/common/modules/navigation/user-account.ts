@@ -1,7 +1,6 @@
 import type { OphanComponent, OphanComponentType } from '@guardian/libs';
 import {
 	getUserFromCookie,
-	isUserLoggedIn,
 	isUserLoggedInRefactor,
 } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
