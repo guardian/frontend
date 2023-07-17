@@ -2,7 +2,7 @@ package weather.controllers
 
 import common.JsonComponent.resultFor
 import common.Seqs.RichSeq
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.Cached
 import play.api.libs.json.Json.{stringify, toJson}
 import play.api.mvc._
@@ -14,7 +14,8 @@ import scala.concurrent.duration._
 
 class WeatherController(weatherApi: WeatherApi, val controllerComponents: ControllerComponents)
     extends BaseController
-    with ImplicitControllerExecutionContext {
+    with ImplicitControllerExecutionContext
+    with GuLogging {
   val MaximumForecastDays = 10
 
   def theWeather(): Action[AnyContent] =
@@ -86,6 +87,11 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
             .headOption match {
             case Some(location) => Future.successful(CityResponse.fromLocationResponse(location))
             case None =>
+              log.warn(
+                s"Could not match country [$maybeCountry], " +
+                  s"city [$maybeCity] and region [$maybeRegion]" +
+                  s"to a valid location.",
+              )
               getWeatherFromEdition(request)
           }
         }
@@ -101,7 +107,7 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
       case None =>
         Future.failed(
           CityNotfoundException(
-            s"Could not work out a default location for edition [${edition}].",
+            s"Could not work out a default location for edition [$edition].",
           ),
         )
     }
