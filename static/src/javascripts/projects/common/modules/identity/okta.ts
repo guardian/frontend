@@ -31,8 +31,7 @@ const getRedirectUri = (stage: Stage) => {
 	}
 };
 
-let identityAuth: IdentityAuth<never, CustomIdTokenClaims> | undefined =
-	undefined;
+let identityAuth: IdentityAuth<never, CustomIdTokenClaims> | undefined;
 
 function getIdentityAuth() {
 	if (identityAuth === undefined) {
