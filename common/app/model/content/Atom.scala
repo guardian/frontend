@@ -166,7 +166,7 @@ final case class MediaAtom(
     expired: Option[Boolean],
     activeVersion: Option[Long],
     channelId: Option[String],
-    category: Category,
+    category: VideoCategory,
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] =
@@ -224,7 +224,7 @@ object MediaAtom extends common.GuLogging {
       expired = expired,
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
-      category = Category.withName(mediaAtom.category.name),
+      category = VideoCategory.withName(mediaAtom.category.name),
     )
   }
 
@@ -256,18 +256,18 @@ object MediaAtom extends common.GuLogging {
   }
 }
 
-sealed trait Category extends EnumEntry
-object Category extends Enum[Category] with PlayJsonEnum[Category] {
+sealed trait VideoCategory extends EnumEntry
+object VideoCategory extends Enum[VideoCategory] with PlayJsonEnum[VideoCategory] {
 
   val values = findValues
 
-  case object Documentary extends Category
-  case object Explainer extends Category
-  case object Feature extends Category
-  case object News extends Category
-  case object Hosted extends Category
-  case object Paid extends Category
-  case object Livestream extends Category
+  case object Documentary extends VideoCategory
+  case object Explainer extends VideoCategory
+  case object Feature extends VideoCategory
+  case object News extends VideoCategory
+  case object Hosted extends VideoCategory
+  case object Paid extends VideoCategory
+  case object Livestream extends VideoCategory
 }
 
 object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[MediaAssetPlatform] {

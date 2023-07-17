@@ -3,7 +3,7 @@ package model
 import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
-import model.content.{Category, MediaAtom}
+import model.content.{MediaAtom, VideoCategory}
 import org.joda.time.DateTime
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfter
@@ -332,9 +332,15 @@ class ContentTest
     val contentNoByline = content("video", Nil).content
     val contentWithByline = content("video", Nil, byline).content
 
-    val mediaAtomWithSource = Some(MediaAtom("", "", Nil, "", None, atomSource, None, None, None, None, Category.News))
-    val mediaAtomWithNoSource = Some(MediaAtom("", "", Nil, "", None, None, None, None, None, None, Category.News))
-    val mediaAtomWithEmptySource = Some(MediaAtom("", "", Nil, "", None, emptySource, None, None, None, None, Category.News))
+    val mediaAtomWithSource = Some(
+      MediaAtom("", "", Nil, "", None, atomSource, None, None, None, None, VideoCategory.News),
+    )
+    val mediaAtomWithNoSource = Some(
+      MediaAtom("", "", Nil, "", None, None, None, None, None, None, VideoCategory.News),
+    )
+    val mediaAtomWithEmptySource = Some(
+      MediaAtom("", "", Nil, "", None, emptySource, None, None, None, None, VideoCategory.News),
+    )
 
     Video(contentNoByline, None, None).bylineWithSource should be(None)
     Video(contentNoByline, videoSource, None).bylineWithSource should be(videoSource.map(s => s"Source: $s"))
