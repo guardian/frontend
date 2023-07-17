@@ -17,8 +17,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       Okta,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
-      BorkFCP,
-      BorkFID,
       OfferHttp3,
       FrontsBannerAds,
     )
@@ -97,24 +95,6 @@ object AdaptiveSite
       owners = Seq(Owner.withName("Open Journalism")),
       sellByDate = LocalDate.of(2023, 8, 1),
       participationGroup = Perc1A,
-    )
-
-object BorkFCP
-    extends Experiment(
-      name = "bork-fcp",
-      description = "Synthetically degrades First Contentful Paint (FCP)",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1C,
-    )
-
-object BorkFID
-    extends Experiment(
-      name = "bork-fid",
-      description = "Synthetically degrades First Input Delay (FID)",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1D,
     )
 
 object OfferHttp3
