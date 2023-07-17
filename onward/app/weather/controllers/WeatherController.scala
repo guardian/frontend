@@ -86,29 +86,26 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
             .headOption match {
             case Some(location) => Future.successful(CityResponse.fromLocationResponse(location))
             case None =>
-              Future.failed(
-                CityNotfoundException(
-                  s"Could not match country [${maybeCountry}], " +
-                    s"city [${maybeCity}] and region [${maybeRegion}]" +
-                    s"to a valid location.",
-                ),
-              )
+              getWeatherFromEdition(request)
           }
         }
       case (_, _) =>
-        val edition = Edition(request)
-        CityResponse.fromEdition(edition) match {
-          case Some(defaultLocation) => Future.successful(defaultLocation)
-          case None =>
-            Future.failed(
-              CityNotfoundException(
-                s"Could not work out a default location for edition [${edition}].",
-              ),
-            )
-        }
+        getWeatherFromEdition(request)
     }
   }
 
+  private def getWeatherFromEdition(request: Request[AnyContent]) = {
+    val edition = Edition(request)
+    CityResponse.fromEdition(edition) match {
+      case Some(defaultLocation) => Future.successful(defaultLocation)
+      case None =>
+        Future.failed(
+          CityNotfoundException(
+            s"Could not work out a default location for edition [${edition}].",
+          ),
+        )
+    }
+  }
 }
 
 case class CityNotfoundException(message: String) extends Exception(message)
