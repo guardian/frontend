@@ -28,7 +28,7 @@ object Helpers {
       "scriptName" -> asset.typeData.flatMap(_.scriptName),
       "html" -> asset.typeData.flatMap(_.html),
       "embedType" -> asset.typeData.flatMap(_.embedType),
-      "category" -> asset.typeData.flatMap(_.category).map(_.toString),
+      "category" -> asset.typeData.flatMap(_.category),
     ).collect { case (k, Some(v)) => (k, v) }
 }
 

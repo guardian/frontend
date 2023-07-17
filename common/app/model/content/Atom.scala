@@ -166,7 +166,7 @@ final case class MediaAtom(
     expired: Option[Boolean],
     activeVersion: Option[Long],
     channelId: Option[String],
-    category: VideoCategory,
+    category: Option[VideoCategory],
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] =
@@ -224,7 +224,7 @@ object MediaAtom extends common.GuLogging {
       expired = expired,
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
-      category = VideoCategory.withName(mediaAtom.category.name),
+      category = Some(VideoCategory.withName(mediaAtom.category.name)),
     )
   }
 
