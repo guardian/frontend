@@ -185,17 +185,14 @@ export type AuthStatus =
 	| SignedOutWithOkta
 	| SignedInWithOkta;
 
-const isInOktaExperiment = () => {
-	// We want to be in the experiment if in the development environment
-	// or if we have opted in to the Okta server side experiment
-	return (
-		window.guardian.config.page.stage === 'DEV' ||
-		window.guardian.config.tests?.oktaVariant === 'variant'
-	);
-};
+// We want to be in the experiment if in the development environment
+// or if we have opted in to the Okta server side experiment
+const isInOktaExperiment =
+	window.guardian.config.page.stage === 'DEV' ||
+	window.guardian.config.tests?.oktaVariant === 'variant';
 
 const getAuthStatus = async (): Promise<AuthStatus> => {
-	if (isInOktaExperiment()) {
+	if (isInOktaExperiment) {
 		const { isSignedInWithOktaAuthState } = await import('./okta');
 		const authState = await isSignedInWithOktaAuthState();
 		if (authState.isAuthenticated) {
