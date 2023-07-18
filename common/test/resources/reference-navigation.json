@@ -220,13 +220,6 @@
 					"classList": []
 				},
 				{
-					"title": "Coronavirus",
-					"url": "/world/coronavirus-outbreak",
-					"longTitle": "Coronavirus",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Business",
 					"url": "/business",
 					"children": [
@@ -2697,13 +2690,6 @@
 							"classList": []
 						}
 					],
-					"classList": []
-				},
-				{
-					"title": "Coronavirus",
-					"url": "/world/coronavirus-outbreak",
-					"longTitle": "Coronavirus",
-					"children": [],
 					"classList": []
 				},
 				{
