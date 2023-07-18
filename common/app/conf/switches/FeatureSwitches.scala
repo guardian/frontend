@@ -138,16 +138,6 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val IdentityFormstackSwitch = Switch(
-    SwitchGroup.Feature,
-    "id-formstack",
-    "If this switch is on, formstack forms will be available",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val IdentityAvatarUploadSwitch = Switch(
     SwitchGroup.Feature,
     "id-avatar-upload",

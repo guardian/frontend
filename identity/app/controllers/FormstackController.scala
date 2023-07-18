@@ -26,10 +26,6 @@ class FormstackController(
 
   def complete: Action[AnyContent] =
     Action { implicit request =>
-      if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
-        Ok(views.html.formstack.formstackComplete(page))
-      } else {
-        NotFound(views.html.errors._404())
-      }
+      Ok(views.html.formstack.formstackComplete(page))
     }
 }

@@ -26,21 +26,8 @@ class FormstackControllerTest
     controllerComponents,
   )
 
-  "when switched off" - {
-    Switches.IdentityFormstackSwitch.switchOff()
-
-    "the formstack page will not be displayed" in Fake {
-      val result = controller.formstackForm("test-reference")(TestRequest())
-      status(result) should equal(NOT_FOUND)
-    }
-  }
-
-  "when switched on" - {
-    Switches.IdentityFormstackSwitch.switchOn()
-
-    "the formstack page will not be displayed" in Fake {
-      val result = controller.formstackForm("test-reference")(TestRequest())
-      status(result) should equal(NOT_FOUND)
-    }
+  "the formstack page will not be displayed" in Fake {
+    val result = controller.formstackForm("test-reference")(TestRequest())
+    status(result) should equal(NOT_FOUND)
   }
 }
