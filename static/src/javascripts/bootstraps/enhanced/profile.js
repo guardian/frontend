@@ -14,28 +14,28 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { enhanceAdPrefs } from 'common/modules/identity/ad-prefs';
 
 const initAccountProfile = () => {
-	// eslint-disable-next-line no-new
-	new AccountProfile();
+    // eslint-disable-next-line no-new
+    new AccountProfile();
 };
 
 const initProfile = () => {
-	const modules = [
-		['forgotten-email', forgottenEmail],
-		['password-toggle', passwordToggle],
-		['init-validation-email', initValidationEmail],
-		['init-user-avatars', initUserAvatars],
-		['init-user-edit-link', initUserEditLink],
-		['init-tabs', initTabs],
-		['init-account-profile', initAccountProfile],
-		['setup-loading-animation', setupLoadingAnimation],
-		['init-public-profile', initPublicProfile],
-		['enhance-consents', enhanceConsents],
-		['enhance-ad-prefs', enhanceAdPrefs],
-		['enhance-form-ajax', enhanceFormAjax],
-		['enhance-consent-journey', enhanceConsentJourney],
-		['init-header', initHeader],
-	];
-	catchErrorsWithContext(modules);
+    const modules = [
+        ['forgotten-email', forgottenEmail],
+        ['password-toggle', passwordToggle],
+        ['init-validation-email', initValidationEmail],
+        ['init-user-avatars', initUserAvatars],
+        ['init-user-edit-link', initUserEditLink],
+        ['init-tabs', initTabs],
+        ['init-account-profile', initAccountProfile],
+        ['setup-loading-animation', setupLoadingAnimation],
+        ['init-public-profile', initPublicProfile],
+        ['enhance-consents', enhanceConsents],
+        ['enhance-ad-prefs', enhanceAdPrefs],
+        ['enhance-form-ajax', enhanceFormAjax],
+        ['enhance-consent-journey', enhanceConsentJourney],
+        ['init-header', initHeader],
+    ];
+    catchErrorsWithContext(modules);
 };
 
 export { initProfile };
