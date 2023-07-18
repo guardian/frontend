@@ -707,11 +707,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
   }
 
-  object formstack {
-    val url = configuration.getMandatoryStringProperty("formstack.url")
-    val identityOauthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
-  }
-
   object standalone {
     lazy val oauthCredentials: Option[OAuthCredentials] = for {
       oauthClientId <- configuration.getStringProperty("standalone.oauth.clientid")
