@@ -1,6 +1,5 @@
 package controllers
 
-import actions.AuthenticatedActions
 import play.api.mvc._
 import model.{ApplicationContext, IdentityPage}
 import common.ImplicitControllerExecutionContext
@@ -15,7 +14,6 @@ class FormstackController(
     returnUrlVerifier: ReturnUrlVerifier,
     idRequestParser: IdRequestParser,
     idUrlBuilder: IdentityUrlBuilder,
-    authenticatedActions: AuthenticatedActions,
     formStackApi: FormstackApi,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
