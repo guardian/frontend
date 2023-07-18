@@ -19,7 +19,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       BorkFCP,
       BorkFID,
       OfferHttp3,
-      FrontsBannerAds,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -114,13 +113,4 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 7, 31),
       participationGroup = Perc1E,
-    )
-
-object FrontsBannerAds
-    extends Experiment(
-      name = "fronts-banner-ads",
-      description = "Creates a new ad experience on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 9, 6),
-      participationGroup = Perc5A,
     )

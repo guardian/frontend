@@ -159,20 +159,6 @@
 }
 
 /**
- * Fronts-banner ads
- */
-.fronts-banner-container {
-    display: flex;
-    justify-content: center;
-    background-color: $brightness-97;
-    margin-bottom: 24px;
-
-    @include mq($until: desktop) {
-        display: none;
-    }
-}
-
-/**
  * Inline ads
  */
 .ad-slot--inline,
