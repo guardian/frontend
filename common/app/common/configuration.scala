@@ -50,7 +50,7 @@ object Environment extends GuLogging {
   * Main configuration
   *
   * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
-  * file under a `devOverrides` key. E.g:
+  * or `~/.gu/frontend.conf` file under a `devOverrides` key. E.g:
   *
   *   devOverrides {
   *     switches.key=DEV/config/switches-yournamehere.properties

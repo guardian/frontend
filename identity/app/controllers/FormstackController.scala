@@ -26,9 +26,9 @@ class FormstackController(
   val page = IdentityPage("/form", "Form")
 
   def formstackFormEmbed(formReference: String): Action[AnyContent] =
-    formstackForm(formReference, true)
+    formstackForm(formReference)
 
-  def formstackForm(formReference: String, composer: Boolean): Action[AnyContent] =
+  def formstackForm(formReference: String): Action[AnyContent] =
     Action { implicit request =>
       NotFound(views.html.formstack.formstackFormNotFound(page))
     }
