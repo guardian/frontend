@@ -1,6 +1,5 @@
 package controllers
 
-import actions.AuthenticatedActions
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
 import conf.switches.Switches
@@ -33,36 +32,13 @@ class FormstackControllerTest
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val formstackApi = mock[FormstackApi]
 
-  val cookieDecoder = mock[FrontendIdentityCookieDecoder]
-  val idRequest = mock[IdentityRequest]
-  val trackingData = mock[TrackingData]
-  val authService = mock[AuthenticationService]
-  val api = mock[IdApiClient]
-  val newsletterService = spy(new NewsletterService(api))
-
   val userId = "123"
   val user = User("test@example.com", userId)
-  val authenticatedActions = new AuthenticatedActions(
-    authService,
-    mock[IdApiClient],
-    mock[IdentityUrlBuilder],
-    controllerComponents,
-    newsletterService,
-    requestParser,
-  )
-
-  when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(
-    AuthenticatedUser(user, ScGuU("abc")),
-  )
-
-  when(requestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
-  when(idRequest.trackingData) thenReturn trackingData
 
   val controller = new FormstackController(
     returnUrlVerifier,
     requestParser,
     idUrlBuilder,
-    authenticatedActions,
     formstackApi,
     controllerComponents,
   )
@@ -71,7 +47,7 @@ class FormstackControllerTest
     Switches.IdentityFormstackSwitch.switchOff()
 
     "the formstack page will not be displayed" in Fake {
-      val result = controller.formstackForm("test-reference", false)(TestRequest())
+      val result = controller.formstackForm("test-reference")(TestRequest())
       status(result) should equal(NOT_FOUND)
     }
   }
@@ -79,26 +55,9 @@ class FormstackControllerTest
   "when switched on" - {
     Switches.IdentityFormstackSwitch.switchOn()
 
-    "if the form is valid" - {
-      when(
-        formstackApi.checkForm(MockitoMatchers.any[FormstackForm])(MockitoMatchers.any[ExecutionContext]),
-      ) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
-
-      "the formstack page is displayed" in Fake {
-        val result = controller.formstackForm("test-reference", false)(TestRequest())
-        status(result) should equal(OK)
-      }
-    }
-
-    "when the form is not valid" - {
-      when(
-        formstackApi.checkForm(MockitoMatchers.any[FormstackForm])(MockitoMatchers.any[ExecutionContext]),
-      ) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
-
-      "the formstack page should not be shown and passes status code from errors" in Fake {
-        val result = controller.formstackForm("test-reference", false)(TestRequest())
-        status(result) should equal(404)
-      }
+    "the formstack page will not be displayed" in Fake {
+      val result = controller.formstackForm("test-reference")(TestRequest())
+      status(result) should equal(NOT_FOUND)
     }
   }
 }
