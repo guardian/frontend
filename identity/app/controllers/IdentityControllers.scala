@@ -4,7 +4,6 @@ import actions.AuthenticatedActions
 import com.softwaremill.macwire._
 import controllers.editprofile.EditProfileController
 import form.FormComponents
-import formstack.FormStackComponents
 import idapiclient.IdApiComponents
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
@@ -12,7 +11,7 @@ import play.api.mvc.ControllerComponents
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.IdentityServices
 
-trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
+trait IdentityControllers extends IdApiComponents with IdentityServices with FormComponents {
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
