@@ -1,11 +1,7 @@
 package controllers
 
-import com.gu.identity.model.User
-import conf.FrontendIdentityCookieDecoder
 import conf.switches.Switches
-import formstack.{FormstackApi, FormstackForm}
 import idapiclient.responses.Error
-import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import org.scalatest.freespec.PathAnyFreeSpec
@@ -15,8 +11,7 @@ import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import services._
 import test.{Fake, TestRequest, WithTestApplicationContext, WithTestExecutionContext}
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext}
 
 class FormstackControllerTest
     extends PathAnyFreeSpec
@@ -27,19 +22,7 @@ class FormstackControllerTest
 
   private val controllerComponents = play.api.test.Helpers.stubControllerComponents()
 
-  val returnUrlVerifier = mock[ReturnUrlVerifier]
-  val requestParser = mock[IdRequestParser]
-  val idUrlBuilder = mock[IdentityUrlBuilder]
-  val formstackApi = mock[FormstackApi]
-
-  val userId = "123"
-  val user = User("test@example.com", userId)
-
   val controller = new FormstackController(
-    returnUrlVerifier,
-    requestParser,
-    idUrlBuilder,
-    formstackApi,
     controllerComponents,
   )
 

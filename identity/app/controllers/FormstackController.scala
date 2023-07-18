@@ -1,20 +1,13 @@
 package controllers
 
-import play.api.mvc._
-import model.{ApplicationContext, IdentityPage}
 import common.ImplicitControllerExecutionContext
-import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
+import conf.switches.Switches
+import model.ApplicationContext
+import model.IdentityPage
+import play.api.mvc._
 import utils.SafeLogging
 
-import scala.concurrent.Future
-import formstack.{FormstackApi, FormstackForm}
-import conf.switches.Switches
-
 class FormstackController(
-    returnUrlVerifier: ReturnUrlVerifier,
-    idRequestParser: IdRequestParser,
-    idUrlBuilder: IdentityUrlBuilder,
-    formStackApi: FormstackApi,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
