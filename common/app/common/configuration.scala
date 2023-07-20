@@ -490,7 +490,6 @@ class GuardianConfiguration extends GuLogging {
       configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
 
-    lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
     lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
 
     // root dir relative to S3 bucket
