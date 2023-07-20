@@ -27,5 +27,5 @@ export const liveblogRightColumnAds: ABTest = {
 			test: noop,
 		},
 	],
-	canRun: () => true,
+	canRun: () => window.guardian.config.page.contentType === 'LiveBlog',
 };
