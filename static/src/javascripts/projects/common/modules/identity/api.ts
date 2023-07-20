@@ -315,8 +315,7 @@ export const redirectTo = (url: string): void => {
 // This needs to get out of here
 type AuthenticationComponentId =
 	| 'email_sign_in_banner'
-	| 'subscription_sign_in_banner'
-	| 'signin_from_formstack';
+	| 'subscription_sign_in_banner';
 
 export const getUserOrSignIn = (
 	componentId: AuthenticationComponentId,

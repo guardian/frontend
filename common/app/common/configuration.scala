@@ -50,7 +50,7 @@ object Environment extends GuLogging {
   * Main configuration
   *
   * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
-  * file under a `devOverrides` key. E.g:
+  * or `~/.gu/frontend.conf` file under a `devOverrides` key. E.g:
   *
   *   devOverrides {
   *     switches.key=DEV/config/switches-yournamehere.properties
@@ -705,11 +705,6 @@ class GuardianConfiguration extends GuLogging {
   object riffraff {
     lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
     lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
-  }
-
-  object formstack {
-    val url = configuration.getMandatoryStringProperty("formstack.url")
-    val identityOauthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
   }
 
   object standalone {
