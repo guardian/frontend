@@ -16,6 +16,18 @@ class FutureSemaphore(maxOperations: Int) {
       Future.failed(new FutureSemaphore.TooManyOperationsInProgress())
     }
   }
+
+  def execute[A](task: => A)(implicit ec: ExecutionContext): A = {
+    if (semaphore.tryAcquire()) {
+      try {
+        task
+      } finally {
+        semaphore.release()
+      }
+    } else {
+      throw new FutureSemaphore.TooManyOperationsInProgress()
+    }
+  }
 }
 
 object FutureSemaphore {

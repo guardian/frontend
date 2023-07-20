@@ -5,10 +5,10 @@ import concurrent.{BlockingOperations, FutureSemaphore}
 import conf.Configuration
 import metrics.DurationMetric
 import model.{PressedPage, PressedPageType}
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import services.S3
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future, blocking}
 
 trait FrontJsonFapi extends GuLogging {
   lazy val stage: String = Configuration.facia.stage.toUpperCase
@@ -28,26 +28,25 @@ trait FrontJsonFapi extends GuLogging {
       pressedPageFromS3(getAddressForPath(path, pageType.suffix))
     }
 
-  private def parsePressedPage(
-      jsonStringOpt: Option[String],
-  )(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
-    futureSemaphore.execute {
-      blockingOperations.executeBlocking {
-        jsonStringOpt.map { jsonString =>
-          DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
-            // This operation is run in the thread pool since it is very CPU intensive
-            Json.parse(jsonString).as[PressedPage]
-          }
-        }
+  private def deserialisePressedPage(
+      jsValueOpt: Option[JsValue],
+  )(implicit ec: ExecutionContext): Future[Option[PressedPage]] =
+//    futureSemaphore.execute {
+//      blockingOperations.executeBlocking {
+    Future.successful(jsValueOpt.map { jsValue =>
+      DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
+        // This operation is run in the thread pool since it is very CPU intensive
+        jsValue.as[PressedPage]
       }
-    }
+    })
+//      }
+//    }
 
-  private def loadPressedPageFromS3(path: String) =
-    blockingOperations.executeBlocking {
-      DurationMetric.withMetrics(FaciaPressMetrics.FrontDownloadLatency) {
-        S3.getGzipped(path)
-      }
+  private def loadPressedPageFromS3(path: String)(implicit ec: ExecutionContext): Future[Option[JsValue]] = {
+    DurationMetric.withMetricsF(FaciaPressMetrics.FrontDownloadLatency) {
+      S3.getGzippedV2(path)
     }
+  }
 
   private def pressedPageFromS3(
       path: String,
@@ -55,7 +54,7 @@ trait FrontJsonFapi extends GuLogging {
     errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
       for {
         s3FrontData <- loadPressedPageFromS3(path)
-        pressedPage <- parsePressedPage(s3FrontData)
+        pressedPage <- deserialisePressedPage(s3FrontData)
       } yield pressedPage
     }
 

@@ -1,18 +1,24 @@
 package services
 
-import java.io._
-import java.util.zip.{GZIPInputStream, GZIPOutputStream}
-
-import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
+import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.util.StringInputStream
 import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
+import play.api.libs.json.{JsValue, Json}
+import software.amazon.awssdk.core.async.AsyncResponseTransformer
+import utils.AWSv2
+import software.amazon.awssdk.{services => awssdkV2}
 
+import java.io._
+import java.util.zip.{GZIPInputStream, GZIPOutputStream}
+import scala.compat.java8.FutureConverters.CompletionStageOps
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.{Codec, Source}
+import scala.util.{Failure, Success, Using}
 
 trait S3 extends GuLogging {
 
@@ -47,15 +53,42 @@ trait S3 extends GuLogging {
           log.warn("not found at %s - %s" format (bucket, key))
           None
         case e: AmazonS3Exception =>
-          val errorMsg = s"Unable to fetch S3 object (key: $key)"
-          val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
-          log.error(errorMsg, e)
-          println(errorMsg + " \n" + hintMsg)
+          logS3Exception(key, e)
           None
         case e: Exception =>
           throw e
       }
     }
+
+  private def logS3Exception[T](key: String, e: Throwable): Unit = {
+    val errorMsg = s"Unable to fetch S3 object (key: $bucket $key)"
+    val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
+    log.error(errorMsg, e)
+    println(errorMsg + " \n" + hintMsg)
+  }
+
+  private def withS3ResultV2[T](
+      key: String,
+  )(action: InputStream => T)(implicit ec: ExecutionContext): Future[Option[T]] = {
+    val request: awssdkV2.s3.model.GetObjectRequest =
+      awssdkV2.s3.model.GetObjectRequest.builder().key(key).bucket(bucket).build()
+
+    AWSv2.S3Async
+      .getObject(
+        request,
+        AsyncResponseTransformer.toBlockingInputStream[awssdkV2.s3.model.GetObjectResponse],
+      )
+      .toScala
+      .map { responseBytes =>
+        action(new GZIPInputStream(responseBytes))
+      }
+      .transform {
+        case Success(t) => Success(Some(t))
+        case Failure(e) =>
+          logS3Exception(key, e)
+          Success(None)
+      }
+  }
 
   def get(key: String)(implicit codec: Codec): Option[String] =
     withS3Result(key) { result =>
@@ -95,6 +128,12 @@ trait S3 extends GuLogging {
     withS3Result(key) { result =>
       Source.fromInputStream(new GZIPInputStream(result.getObjectContent)).mkString
     }
+
+  def getGzippedV2(key: String)(implicit codec: Codec, ec: ExecutionContext): Future[Option[JsValue]] = {
+    withS3ResultV2(key) { inputStream =>
+      Using(inputStream)(Json.parse).get
+    }
+  }
 
   private def putGzipped(
       key: String,

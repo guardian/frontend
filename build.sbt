@@ -69,6 +69,7 @@ val common = library("common")
       identityModel,
       capiAws,
       okhttp,
+      "software.amazon.awssdk" % "s3" % "2.20.96",
     ) ++ jackson,
   )
   .settings(

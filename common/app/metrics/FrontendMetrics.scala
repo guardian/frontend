@@ -1,12 +1,12 @@
 package metrics
 
 import java.util.concurrent.atomic.AtomicLong
-
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.{Box, StopWatch}
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
 sealed trait DataPoint {
@@ -139,6 +139,15 @@ object DurationMetric {
     val stopWatch: StopWatch = new StopWatch
     val result = block
     metric.recordDuration(stopWatch.elapsed.toDouble)
+    result
+  }
+
+  def withMetricsF[A](metric: DurationMetric)(block: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
+    val stopWatch: StopWatch = new StopWatch
+    val result = block
+    result.onComplete { _ =>
+      metric.recordDuration(stopWatch.elapsed.toDouble)
+    }
     result
   }
 }
