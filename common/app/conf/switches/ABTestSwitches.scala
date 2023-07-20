@@ -95,4 +95,13 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-liveblog-right-column-ads",
+    "Test the commercial impact of different strategies for displaying ads in the right column on liveblog pages.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 9, 20)),
+    exposeClientSide = true,
+  )
 }
