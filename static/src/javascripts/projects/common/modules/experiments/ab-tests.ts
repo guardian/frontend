@@ -1,5 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
-import { billboardsInMerch } from './tests/billboards-in-merch';
+import { billboardsInMerchHigh } from './tests/billboards-in-merch-high';
 import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { elementsManager } from './tests/elements-manager';
@@ -20,7 +20,7 @@ export const concurrentTests: readonly ABTest[] = [
 	deeplyReadArticleFooterTest,
 	consentlessAds,
 	integrateIma,
-	billboardsInMerch,
+	billboardsInMerchHigh,
 	elementsManager,
 	liveblogRightColumnAds,
 ];
