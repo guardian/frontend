@@ -286,6 +286,14 @@ object GuVideoBlockElement {
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
 }
 
+case class CartoonBlockElement(
+    //todo rest of model
+    displayCredit: Option[Boolean],
+) extends PageElement
+object CartoonBlockElement {
+  implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
+}
+
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 object ImageSource {
   implicit val ImageSourceWrites: Writes[ImageSource] = Json.writes[ImageSource]
@@ -809,6 +817,7 @@ object PageElement {
       case _: YoutubeBlockElement         => true
       case _: WitnessBlockElement         => true
       case _: VineBlockElement            => true
+      case _: CartoonBlockElement         => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
 
@@ -891,6 +900,8 @@ object PageElement {
             element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_)),
           ),
         )
+
+      case Cartoon => cartoonToPageElement(element).toList
 
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
@@ -1813,4 +1824,7 @@ object PageElement {
    */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
+  private def cartoonToPageElement(element: ApiBlockElement): Option[CartoonBlockElement] = {
+    element.cartoonTypeData.map(cartoonData => ???)
+  }
 }
