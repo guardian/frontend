@@ -1,5 +1,6 @@
 package services.dotcomrendering
 
+import com.gu.contentapi.client.model.v1.{Block, ElementType}
 import common.GuLogging
 import model.Cors.RichRequestHeader
 import model.ImageContentPage
@@ -8,32 +9,21 @@ import utils.DotcomponentsLogger
 
 object ImageContentPicker extends GuLogging {
 
-  /**
-    *
-    * Add to this function any logic for including/excluding
-    * an image article from being rendered with DCR
-    *
-    * Currently defaulting to false until we implement image articles in DCR
-    *
-    * */
-  private def dcrCouldRender(imageContentPage: ImageContentPage): Boolean = {
-    false
-  }
-
   def getTier(
       imageContentPage: ImageContentPage,
+      mainBlock: Option[Block],
   )(implicit
       request: RequestHeader,
   ): RenderType = {
-
-    // Setting to false while still implementing this content type in DCR
-    val participatingInTest = false //ActiveExperiments.isParticipating(DCRImageContent)
-    val dcrCanRender = dcrCouldRender(imageContentPage)
+    val dcrCanRender =
+      mainBlock.exists(block => block.elements.forall(element => element.`type` == ElementType.Cartoon))
+    // Currently defaulting to false until we implement image articles in DCR
+    val dcrShouldRender = false
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && participatingInTest) RemoteRender
+      else if (dcrCanRender && dcrShouldRender) RemoteRender
       else LocalRender
     }
 
