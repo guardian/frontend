@@ -19,6 +19,7 @@ object GuTeamCodes {
       case "Costa Rica"      => "CRC"
       case "Japan"           => "JPN"
       case "Morocco"         => "MAR"
+      case "Nigeria"         => "NGA"
       case "Netherlands"     => "NED"
       case "North Macedonia" => "MKD"
       case "New Zealand"     => "NZL"
