@@ -3,6 +3,8 @@ package model.dotcomrendering.pageElements
 import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{
+  CartoonImage,
+  CartoonVariant,
   ElementType,
   EmbedTracking,
   SponsorshipType,
@@ -285,12 +287,18 @@ case class GuVideoBlockElement(
 object GuVideoBlockElement {
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
 }
-
 case class CartoonBlockElement(
-    //todo rest of model
+    cartoonVariants: Option[List[CartoonVariant]],
+    role: Option[String],
+    credit: Option[String],
+    caption: Option[String],
+    alt: Option[String],
+    source: Option[String],
     displayCredit: Option[Boolean],
 ) extends PageElement
 object CartoonBlockElement {
+  implicit val CartoonImageWrites: Writes[CartoonImage] = Json.writes[CartoonImage]
+  implicit val CartoonVariantWrites: Writes[CartoonVariant] = Json.writes[CartoonVariant]
   implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
 }
 
@@ -1824,7 +1832,17 @@ object PageElement {
    */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
-  private def cartoonToPageElement(element: ApiBlockElement): Option[CartoonBlockElement] = {
-    element.cartoonTypeData.map(cartoonData => ???)
+  private[pageElements] def cartoonToPageElement(element: ApiBlockElement): Option[CartoonBlockElement] = {
+    element.cartoonTypeData.map(cartoonData =>
+      CartoonBlockElement(
+        cartoonVariants = cartoonData.cartoonVariants.map(_.toList),
+        role = cartoonData.role,
+        credit = cartoonData.credit,
+        caption = cartoonData.caption,
+        alt = cartoonData.alt,
+        source = cartoonData.source,
+        displayCredit = cartoonData.displayCredit,
+      ),
+    )
   }
 }
