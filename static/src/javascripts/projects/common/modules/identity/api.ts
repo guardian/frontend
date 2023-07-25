@@ -244,8 +244,7 @@ export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
  * - `SignedInWithOkta`, set the `Authorization` header with a Bearer
  *   Access Token
  */
-// @ts-expect-error -- we know this is unused for now
-const getOptionsHeadersWithOkta = (
+export const getOptionsHeadersWithOkta = (
 	authStatus: SignedInWithCookies | SignedInWithOkta,
 ): RequestInit => {
 	if (authStatus.kind === 'SignedInWithCookies') {
