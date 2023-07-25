@@ -3,7 +3,7 @@
 @import views.support.RenderClasses
 @import views.{NudgePercent, PercentMaker}
 @import pa.LineUpPlayer
-@import model.CompetitionDisplayHelpers.{cleanTeamName, cleanTeamCode}
+@import model.CompetitionDisplayHelpers.{cleanTeamName}
 
 @import football.model.GuTeamCodes
 @(page: MatchPage)(implicit request: RequestHeader)
@@ -48,8 +48,8 @@
                        data-chart-show-values="true">
                     <thead hidden>
                         <tr>
-                            <th>@cleanTeamCode(GuTeamCodes.codeFor(away))</th>
-                            <th>@cleanTeamCode(GuTeamCodes.codeFor(home))</th>
+                            <th>(GuTeamCodes.codeFor(away))</th>
+                            <th>(GuTeamCodes.codeFor(home))</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -181,10 +181,4 @@ object CompetitionDisplayHelpers {
       .replace("Czech Republic", "Czech Rep.")
       .replace("Holland", "Netherlands")
   }
-
-  def cleanTeamCode(teamCode: String): String = {
-    teamCode
-      .replace("JAP", "JPN")
-      .replace("HOL", "NED")
-  }
 }
