@@ -235,6 +235,31 @@ export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
 	});
 };
 
+/**
+ * Decide request options based on an {@link AuthStatus}. Requests to authenticated APIs require different options depending on whether
+ * you are in the Okta experiment or not.
+ * @param authStatus
+ * @returns where `authStatus` is:
+ * - `SignedInWithCookies`, set the `credentials` option to `"include"`
+ * - `SignedInWithOkta`, set the `Authorization` header with a Bearer
+ *   Access Token
+ */
+export const getOptionsHeadersWithOkta = (
+	authStatus: SignedInWithCookies | SignedInWithOkta,
+): RequestInit => {
+	if (authStatus.kind === 'SignedInWithCookies') {
+		return {
+			credentials: 'include',
+		};
+	}
+
+	return {
+		headers: {
+			Authorization: `Bearer: ${authStatus.accessToken.accessToken}`,
+		},
+	};
+};
+
 export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
 		if (isUserLoggedIn()) {
