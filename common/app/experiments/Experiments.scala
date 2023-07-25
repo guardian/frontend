@@ -64,7 +64,7 @@ object Okta
       name = "okta",
       description = "Use Okta for authentication",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 7, 24),
+      sellByDate = LocalDate.of(2023, 8, 4),
       participationGroup = Perc0E,
     )
 
