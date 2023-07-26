@@ -17,9 +17,7 @@
         @if(!(Commercial.isAdFree(request) && isPaidContent)) {
             @fragments.onwardPlaceholder(isPaidContent)
         }
-    } {
-        <div class="js-repositioned-comments content__repositioned-comments"></div>
-    } {
+    } { } {
         @fragments.mostPopularPlaceholder(content.metadata.sectionId)
     } {
         @* The high-relevant commercial component will be inserted on the client-side
