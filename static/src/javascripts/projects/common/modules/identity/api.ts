@@ -4,7 +4,6 @@ import { mergeCalls } from 'common/modules/async-call-merger';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
-import { createAuthenticationComponentEventParams } from './auth-component-event-params';
 import type { CustomIdTokenClaims } from './okta';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
@@ -335,34 +334,6 @@ export const refreshOktaSession = (returnUrl: string): void => {
 
 export const redirectTo = (url: string): void => {
 	window.location.assign(url);
-};
-
-// This needs to get out of here
-type AuthenticationComponentId =
-	| 'email_sign_in_banner'
-	| 'subscription_sign_in_banner';
-
-export const getUserOrSignIn = (
-	componentId: AuthenticationComponentId,
-	paramUrl: string | null,
-): IdentityUserFromCache | void => {
-	let returnUrl = paramUrl;
-
-	if (isUserLoggedIn()) {
-		return getUserFromCookie();
-	}
-
-	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- not sure what it would do
-	returnUrl = encodeURIComponent(returnUrl || document.location.href);
-	const url = [
-		getUrl() || '',
-		'/signin?returnUrl=',
-		returnUrl,
-		'&',
-		createAuthenticationComponentEventParams(componentId),
-	].join('');
-
-	redirectTo(url);
 };
 
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {
