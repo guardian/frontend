@@ -1,5 +1,4 @@
 import _root_.commercial.targeting.TargetingLifecycle
-import agents.CuratedContentAgent
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
@@ -63,11 +62,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
-
-  lazy val curatedContentAgent = wire[CuratedContentAgent]
-
-  lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
-  lazy val blockingOperations = wire[BlockingOperations]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
