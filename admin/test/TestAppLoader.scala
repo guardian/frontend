@@ -1,13 +1,11 @@
 import app.FrontendComponents
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import test.WithTestContentApiClient
 
-trait TestComponents extends WithTestContentApiClient {
+trait TestComponents {
   self: AppComponents =>
-  override lazy val contentApiClient = testContentApiClient
 
-  // Do not run lifecycle components in tests
+  // Don't run lifecycle components in tests
   override lazy val lifecycleComponents = List()
 }
 

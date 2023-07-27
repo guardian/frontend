@@ -1,9 +1,10 @@
+import type { AccessToken, IDToken } from '@guardian/identity-auth';
 import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
-import { createAuthenticationComponentEventParams } from './auth-component-event-params';
+import type { CustomIdTokenClaims } from './okta';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
 
@@ -168,7 +169,95 @@ export const buildNewsletterUpdatePayload = (
 	return newsletter;
 };
 
+type SignedOutWithCookies = { kind: 'SignedOutWithCookies' };
+export type SignedInWithCookies = { kind: 'SignedInWithCookies' };
+type SignedOutWithOkta = { kind: 'SignedOutWithOkta' };
+export type SignedInWithOkta = {
+	kind: 'SignedInWithOkta';
+	accessToken: AccessToken<never>;
+	idToken: IDToken<CustomIdTokenClaims>;
+};
+
+export type AuthStatus =
+	| SignedOutWithCookies
+	| SignedInWithCookies
+	| SignedOutWithOkta
+	| SignedInWithOkta;
+
+// We want to be in the experiment if in the development environment
+// or if we have opted in to the Okta server side experiment
+const isInOktaExperiment =
+	window.guardian.config.page.stage === 'DEV' ||
+	window.guardian.config.tests?.oktaVariant === 'variant';
+
+const getAuthStatus = async (): Promise<AuthStatus> => {
+	if (isInOktaExperiment) {
+		const { isSignedInWithOktaAuthState } = await import('./okta');
+		const authState = await isSignedInWithOktaAuthState();
+		if (authState.isAuthenticated) {
+			return {
+				kind: 'SignedInWithOkta',
+				accessToken: authState.accessToken,
+				idToken: authState.idToken,
+			};
+		} else {
+			return {
+				kind: 'SignedOutWithOkta',
+			};
+		}
+	} else {
+		if (isUserLoggedIn()) {
+			return {
+				kind: 'SignedInWithCookies',
+			};
+		} else {
+			return {
+				kind: 'SignedOutWithCookies',
+			};
+		}
+	}
+};
+
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
+export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
+	return new Promise((resolve) => {
+		void getAuthStatus().then((authStatus) => {
+			if (
+				authStatus.kind === 'SignedInWithCookies' ||
+				authStatus.kind === 'SignedInWithOkta'
+			) {
+				resolve(true);
+			} else {
+				resolve(false);
+			}
+		});
+	});
+};
+
+/**
+ * Decide request options based on an {@link AuthStatus}. Requests to authenticated APIs require different options depending on whether
+ * you are in the Okta experiment or not.
+ * @param authStatus
+ * @returns where `authStatus` is:
+ * - `SignedInWithCookies`, set the `credentials` option to `"include"`
+ * - `SignedInWithOkta`, set the `Authorization` header with a Bearer
+ *   Access Token
+ */
+export const getOptionsHeadersWithOkta = (
+	authStatus: SignedInWithCookies | SignedInWithOkta,
+): RequestInit => {
+	if (authStatus.kind === 'SignedInWithCookies') {
+		return {
+			credentials: 'include',
+		};
+	}
+
+	return {
+		headers: {
+			Authorization: `Bearer: ${authStatus.accessToken.accessToken}`,
+		},
+	};
+};
 
 export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
@@ -245,35 +334,6 @@ export const refreshOktaSession = (returnUrl: string): void => {
 
 export const redirectTo = (url: string): void => {
 	window.location.assign(url);
-};
-
-// This needs to get out of here
-type AuthenticationComponentId =
-	| 'email_sign_in_banner'
-	| 'subscription_sign_in_banner'
-	| 'signin_from_formstack';
-
-export const getUserOrSignIn = (
-	componentId: AuthenticationComponentId,
-	paramUrl: string | null,
-): IdentityUserFromCache | void => {
-	let returnUrl = paramUrl;
-
-	if (isUserLoggedIn()) {
-		return getUserFromCookie();
-	}
-
-	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- not sure what it would do
-	returnUrl = encodeURIComponent(returnUrl || document.location.href);
-	const url = [
-		getUrl() || '',
-		'/signin?returnUrl=',
-		returnUrl,
-		'&',
-		createAuthenticationComponentEventParams(componentId),
-	].join('');
-
-	redirectTo(url);
 };
 
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {

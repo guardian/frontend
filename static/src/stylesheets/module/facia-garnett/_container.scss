@@ -28,13 +28,6 @@ $header-image-size-desktop: 100px;
     padding-bottom: 0;
 }
 
-// For the Fronts OKR test May 2023
-@include mq(desktop) {
-    .facia-page[data-link-name='Front | /uk'] .fc-container--commercial--hide-desktop {
-        display: none;
-    }
-}
-
 .fc-container__inner,
 .facia-container__inner {
     padding-top: $gs-baseline / 4;

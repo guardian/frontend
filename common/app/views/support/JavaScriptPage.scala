@@ -76,6 +76,8 @@ object JavaScriptPage {
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
+      // TODO: decide whether the value for `isDev` should be
+      // `environment.isDev` instead
       ("isDev", JsBoolean(!environment.isProd)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
@@ -93,6 +95,7 @@ object JavaScriptPage {
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
       ("commercialBundleUrl", commercialBundleUrl),
+      ("stage", JsString(Configuration.environment.stage)),
     )
   }.toMap
 }

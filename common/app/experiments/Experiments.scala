@@ -16,10 +16,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeNetworkFront,
       Okta,
       HeaderTopBarSearchCapi,
-      BorkFCP,
-      BorkFID,
+      AdaptiveSite,
       OfferHttp3,
-      FrontsBannerAds,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -66,7 +64,7 @@ object Okta
       name = "okta",
       description = "Use Okta for authentication",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 7, 24),
+      sellByDate = LocalDate.of(2023, 8, 4),
       participationGroup = Perc0E,
     )
 
@@ -89,22 +87,13 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
-object BorkFCP
+object AdaptiveSite
     extends Experiment(
-      name = "bork-fcp",
-      description = "Synthetically degrades First Contentful Paint (FCP)",
+      name = "adaptive-site",
+      description = "Enables serving an adaptive version of the site that responds to page performance",
       owners = Seq(Owner.withName("Open Journalism")),
       sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1C,
-    )
-
-object BorkFID
-    extends Experiment(
-      name = "bork-fid",
-      description = "Synthetically degrades First Input Delay (FID)",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1D,
+      participationGroup = Perc1A,
     )
 
 object OfferHttp3
@@ -114,13 +103,4 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 7, 31),
       participationGroup = Perc1E,
-    )
-
-object FrontsBannerAds
-    extends Experiment(
-      name = "fronts-banner-ads",
-      description = "Creates a new ad experience on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 9, 6),
-      participationGroup = Perc5A,
     )
