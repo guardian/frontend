@@ -231,28 +231,32 @@ export const getOptionsHeadersWithOkta = (
 	};
 };
 
-export const getUserFromApi = mergeCalls(
-	(mergingCallback: (u: IdentityUser | null) => void) => {
-		if (isUserLoggedIn()) {
+export const getUserFromApi = (): Promise<IdentityUser | null> =>
+	getAuthStatus().then((authStatus) => {
+		if (
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+		) {
+			const authOptions = getOptionsHeadersWithOkta(authStatus);
 			const url = `${idApiRoot}/user/me`;
-			void (
+
+			return (
 				fetchJson(url, {
 					mode: 'cors',
-					credentials: 'include',
+					...authOptions,
 				}) as Promise<IdentityResponse>
 			) // assert unknown -> IdentityResponse
-				.then((data: IdentityResponse) => {
+				.then((data) => {
 					if (data.status === 'ok') {
-						mergingCallback(data.user);
+						return data.user;
 					} else {
-						mergingCallback(null);
+						return null;
 					}
 				});
-		} else {
-			mergingCallback(null);
 		}
-	},
-);
+
+		return null;
+	});
 
 /**
  * Fetch the logged in user's Braze UUID from IDAPI
@@ -312,7 +316,6 @@ export const getBrazeUuid = (): Promise<string | null> =>
 	});
 
 export const reset = (): void => {
-	getUserFromApi.reset();
 	userFromCookieCache = null;
 };
 

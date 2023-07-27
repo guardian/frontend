@@ -308,7 +308,7 @@ const showSecondStageSignup = (buttonEl) => {
 const enhanceNewsletters = () => {
 	if (getUserFromCookie() !== null) {
 		// email address is not stored in the cookie, gotta go to the Api
-		getUserFromApi((userFromId) => {
+		getUserFromApi().then((userFromId) => {
 			if (userFromId && userFromId.primaryEmailAddress) {
 				updatePageForLoggedIn(userFromId.primaryEmailAddress);
 				$.forEachElement(
