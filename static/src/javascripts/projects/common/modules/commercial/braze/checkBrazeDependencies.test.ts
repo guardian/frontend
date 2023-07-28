@@ -1,7 +1,7 @@
 import { checkBrazeDependencies } from './checkBrazeDependencies';
 
 let mockBrazeUuid: string | null;
-jest.mock('./getBrazeUuid', () => ({
+jest.mock('../../../../common/modules/identity/api', () => ({
 	getBrazeUuid: () => {
 		return Promise.resolve(mockBrazeUuid);
 	},

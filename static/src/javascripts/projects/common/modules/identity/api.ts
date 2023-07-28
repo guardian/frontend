@@ -81,13 +81,6 @@ type IdentityResponse = {
 	errors?: UserNameError[];
 };
 
-export type IdentityUserIdentifiers = {
-	id: string;
-	brazeUuid: string;
-	puzzleId: string;
-	googleTagId: string;
-};
-
 let userFromCookieCache: IdentityUserFromCache = null;
 
 const cookieName = 'GU_U';
@@ -282,44 +275,65 @@ export const getUserFromApi = mergeCalls(
 	},
 );
 
-const fetchUserIdentifiers = () => {
-	const url = `${idApiRoot}/user/me/identifiers`;
-	return fetch(url, {
+/**
+ * Fetch the logged in user's Braze UUID from IDAPI
+ * @returns one of:
+ * - string - the user's Braze UUID
+ * - null - if the request failed
+ */
+const fetchBrazeUuidFromApi = (): Promise<string | null> =>
+	fetch(`${idApiRoot}/user/me/identifiers`, {
 		mode: 'cors',
 		credentials: 'include',
 	})
 		.then((resp) => {
 			if (resp.status === 200) {
-				return resp.json();
+				/* Ideally we would validate this response but this code will be
+					deleted after the migration to Okta is complete
+					Example response:
+					{
+						"id": "string",
+						"brazeUuid": "string",
+						"puzzleId": "string",
+						"googleTagId": "string"
+					}
+				*/
+				return resp.json() as Promise<{ brazeUuid: string }>;
 			} else {
-				console.log(
-					'failed to get Identity user identifiers',
-					resp.status,
-				);
-				return null;
+				throw resp.status;
 			}
 		})
+		.then((json) => json.brazeUuid)
 		.catch((e) => {
 			console.log('failed to get Identity user identifiers', e);
 			return null;
 		});
-};
 
-export const getUserIdentifiersFromApi = mergeCalls(
-	(mergingCallback: (u: IdentityUserIdentifiers | null) => void) => {
-		if (isUserLoggedIn()) {
-			void fetchUserIdentifiers().then((result) =>
-				mergingCallback(result),
-			);
-		} else {
-			mergingCallback(null);
+/**
+ * Get the user's Braze UUID
+ *
+ * If enrolled in the Okta experiment, return the value from the ID token
+ * `braze_uuid` claim
+ * Otherwise, fetch the Braze UUID from IDAPI
+ * @returns one of:
+ * - string, if the user is enrolled in the Okta experiment or the fetch to
+ *   IDAPI was successful
+ * - null, if the user is signed out or the fetch to IDAPI failed
+ */
+export const getBrazeUuid = (): Promise<string | null> =>
+	getAuthStatus().then((authStatus) => {
+		switch (authStatus.kind) {
+			case 'SignedInWithCookies':
+				return fetchBrazeUuidFromApi();
+			case 'SignedInWithOkta':
+				return authStatus.idToken.claims.braze_uuid;
+			default:
+				return null;
 		}
-	},
-);
+	});
 
 export const reset = (): void => {
 	getUserFromApi.reset();
-	getUserIdentifiersFromApi.reset();
 	userFromCookieCache = null;
 };
 
