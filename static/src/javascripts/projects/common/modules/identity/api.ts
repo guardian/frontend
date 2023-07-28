@@ -222,7 +222,6 @@ const fetchUserFromApi = (): Promise<IdentityUser | null> =>
  * Get the user's data
  *
  * If enrolled in the Okta experiment, return the data from the ID token
- * TODO
  * Otherwise, fetch the user data from IDAPI
  * @returns one of:
  * - IdentityUser, if the user is enrolled in the Okta experiment or the fetch to
