@@ -15,13 +15,13 @@ import {
     getAllConsents,
     getAllNewsletters,
     getSubscribedNewsletters,
-    getUserFromApiOrOkta,
+    getUserFromApi,
 } from 'common/modules/identity/api';
 import { UserConsentWithState, EmailConsentWithState } from './types';
 
 const fetchSubscribedConsents = (): Promise<string[]> =>
     new Promise(accept => {
-        getUserFromApiOrOkta(user => {
+        getUserFromApi(user => {
             if (user && user.consents) {
                 accept(
                     user.consents

@@ -34,7 +34,7 @@ import {
     handle as upvoteHandle,
     closeTooltip as upvoteCloseTooltip,
 } from 'common/modules/discussion/upvote';
-import { getUserFromCookie, getUserFromApiOrOkta } from 'common/modules/identity/api';
+import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 class Loader extends Component {
@@ -52,10 +52,10 @@ class Loader extends Component {
 
     getUser(): void {
         if (getUserFromCookie()) {
-            getUserFromApiOrOkta().then(resp => {
+            getUser().then(resp => {
                 this.user = resp.userProfile;
 
-                getUserFromApiOrOkta(user => {
+                getUserFromApi(user => {
                     if (user && user.publicFields.username) {
                         this.username = user.publicFields.username;
                     }

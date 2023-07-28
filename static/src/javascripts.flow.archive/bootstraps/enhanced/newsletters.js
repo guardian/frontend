@@ -16,7 +16,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
-import { getUserFromCookie, getUserFromApiOrOkta } from 'common/modules/identity/api';
+import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 
 const classes = {
     wrapper: 'js-newsletter-meta',
@@ -149,7 +149,7 @@ const showSecondStageSignup = (buttonEl: HTMLButtonElement): void => {
 const enhanceNewsletters = (): void => {
     if (getUserFromCookie() !== null) {
         // email address is not stored in the cookie, gotta go to the Api
-        getUserFromApiOrOkta().then(userFromId => {
+        getUserFromApi(userFromId => {
             if (userFromId && userFromId.primaryEmailAddress) {
                 updatePageForLoggedIn(userFromId.primaryEmailAddress);
                 $.forEachElement(`.${classes.signupButton}`, modifyFormForSignedIn);
