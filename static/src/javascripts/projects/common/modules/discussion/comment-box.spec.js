@@ -15,7 +15,7 @@ jest.mock('common/modules/identity/api', () => ({
         id: 1,
         accountCreatedDate: new Date(1392719401338),
     }),
-    getUserFromApi: jest.fn().mockReturnValue(
+    getUserFromApiOrOkta: jest.fn().mockReturnValue(
         Promise.resolve({
             user: {
                 statusFields: {

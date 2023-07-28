@@ -23,7 +23,7 @@ class CommentBox extends Component {
     static async refreshUsernameHtml() {
         reset();
 
-        const discussionUserResponse = await getUserFromApiOrOkta();
+        const discussionUserResponse = await getUser();
 
         if (!discussionUserResponse || !discussionUserResponse.userProfile) {
             return;

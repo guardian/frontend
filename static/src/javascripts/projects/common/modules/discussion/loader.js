@@ -38,7 +38,7 @@ class Loader extends Component {
 
     getUser() {
         if (getUserFromCookie()) {
-            getUserFromApiOrOkta().then(resp => {
+            getUser().then(resp => {
                 this.user = resp.userProfile;
                 this.username = this.user?.displayName;
                 this.emit('user:loaded');
