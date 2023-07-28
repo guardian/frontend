@@ -381,23 +381,40 @@ export const sendValidationEmail = (): unknown => {
 	return request;
 };
 
-export const updateUsername = (username: string): unknown => {
-	const endpoint = `${idApiRoot}/user/me`;
-	const data = {
-		publicFields: {
-			username,
-			displayName: username,
-		},
-	};
-	const request = fetch(endpoint, {
-		mode: 'cors',
-		method: 'POST',
-		body: JSON.stringify(data),
-		credentials: 'include',
-	});
+/**
+ * Update the user's username on IDAPI if the user is signed in
+ * @param username the user's new username
+ * @returns {null | Promise<Response>} a Promise resolving to either
+ * - a {@link Response} from the API request
+ * - `null`, if the user is signed out
+ */
+export const updateUsername = (username: string): Promise<Response | null> =>
+	getAuthStatus().then((authStatus) => {
+		if (
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+		) {
+			const data = {
+				publicFields: {
+					username,
+					displayName: username,
+				},
+			};
+			const requestOptions = getOptionsHeadersWithOkta(authStatus);
 
-	return request;
-};
+			return fetch(`${idApiRoot}/user/me/username`, {
+				mode: 'cors',
+				method: 'POST',
+				body: JSON.stringify(data),
+				credentials: requestOptions.credentials,
+				headers: {
+					...requestOptions.headers,
+					'Content-Type': 'application/json',
+				},
+			});
+		}
+		return null;
+	});
 
 export const setConsent = (consents: SettableConsent): Promise<void> =>
 	fetch(`${idApiRoot}/users/me/consents`, {
