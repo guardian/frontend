@@ -5,8 +5,7 @@ import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.regions.Region.EU_WEST_1
-import software.amazon.awssdk.services.s3.S3AsyncClient
-import software.amazon.awssdk.services.s3.S3AsyncClientBuilder
+import software.amazon.awssdk.services.s3.{S3AsyncClient, S3AsyncClientBuilder}
 
 object AWSv2 {
   val region: Region = EU_WEST_1

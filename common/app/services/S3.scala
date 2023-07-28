@@ -4,21 +4,16 @@ import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicR
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.util.StringInputStream
+import com.gu.etagcaching.aws.s3.ObjectId
 import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
-import play.api.libs.json.{JsValue, Json}
-import software.amazon.awssdk.core.async.AsyncResponseTransformer
-import utils.AWSv2
-import software.amazon.awssdk.{services => awssdkV2}
+import services.S3.logS3ExceptionWithDevHint
 
 import java.io._
-import java.util.zip.{GZIPInputStream, GZIPOutputStream}
-import scala.compat.java8.FutureConverters.CompletionStageOps
-import scala.concurrent.{ExecutionContext, Future}
+import java.util.zip.GZIPOutputStream
 import scala.io.{Codec, Source}
-import scala.util.{Failure, Success, Using}
 
 trait S3 extends GuLogging {
 
@@ -33,8 +28,8 @@ trait S3 extends GuLogging {
 
   private def withS3Result[T](key: String)(action: S3Object => T): Option[T] =
     client.flatMap { client =>
+      val objectId = ObjectId(bucket, key)
       try {
-
         val request = new GetObjectRequest(bucket, key)
         val result = client.getObject(request)
         log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
@@ -50,45 +45,15 @@ trait S3 extends GuLogging {
         }
       } catch {
         case e: AmazonS3Exception if e.getStatusCode == 404 =>
-          log.warn("not found at %s - %s" format (bucket, key))
+          log.warn(s"not found at ${objectId.s3Uri}")
           None
         case e: AmazonS3Exception =>
-          logS3Exception(key, e)
+          logS3ExceptionWithDevHint(objectId, e)
           None
         case e: Exception =>
           throw e
       }
     }
-
-  private def logS3Exception[T](key: String, e: Throwable): Unit = {
-    val errorMsg = s"Unable to fetch S3 object (key: $bucket $key)"
-    val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
-    log.error(errorMsg, e)
-    println(errorMsg + " \n" + hintMsg)
-  }
-
-  private def withS3ResultV2[T](
-      key: String,
-  )(action: InputStream => T)(implicit ec: ExecutionContext): Future[Option[T]] = {
-    val request: awssdkV2.s3.model.GetObjectRequest =
-      awssdkV2.s3.model.GetObjectRequest.builder().key(key).bucket(bucket).build()
-
-    AWSv2.S3Async
-      .getObject(
-        request,
-        AsyncResponseTransformer.toBlockingInputStream[awssdkV2.s3.model.GetObjectResponse],
-      )
-      .toScala
-      .map { responseBytes =>
-        action(new GZIPInputStream(responseBytes))
-      }
-      .transform {
-        case Success(t) => Success(Some(t))
-        case Failure(e) =>
-          logS3Exception(key, e)
-          Success(None)
-      }
-  }
 
   def get(key: String)(implicit codec: Codec): Option[String] =
     withS3Result(key) { result =>
@@ -122,17 +87,6 @@ trait S3 extends GuLogging {
 
   def putPrivateGzipped(key: String, value: String, contentType: String): Unit = {
     putGzipped(key, value, contentType, Private)
-  }
-
-  def getGzipped(key: String)(implicit codec: Codec): Option[String] =
-    withS3Result(key) { result =>
-      Source.fromInputStream(new GZIPInputStream(result.getObjectContent)).mkString
-    }
-
-  def getGzippedV2(key: String)(implicit codec: Codec, ec: ExecutionContext): Future[Option[JsValue]] = {
-    withS3ResultV2(key) { inputStream =>
-      Using(inputStream)(Json.parse).get
-    }
   }
 
   private def putGzipped(
@@ -187,7 +141,14 @@ trait S3 extends GuLogging {
   }
 }
 
-object S3 extends S3
+object S3 extends S3 {
+  def logS3ExceptionWithDevHint(s3ObjectId: ObjectId, e: Exception): Unit = {
+    val errorMsg = s"Unable to fetch S3 object (${s3ObjectId.s3Uri})"
+    val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
+    log.error(errorMsg, e)
+    println(errorMsg + " \n" + hintMsg)
+  }
+}
 
 object S3FrontsApi extends S3 {
 

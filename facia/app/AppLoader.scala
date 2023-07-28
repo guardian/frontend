@@ -25,12 +25,15 @@ import services._
 import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
 
+import scala.concurrent.ExecutionContext
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait FapiServices {
+  implicit val executionContext: ExecutionContext
   def wsClient: WSClient
   def actorSystem: ActorSystem
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
@@ -68,6 +71,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   override lazy val appMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontDecodingLatency,
     FaciaPressMetrics.FrontDownloadLatency,
+    FaciaPressMetrics.FrontNotModifiedDownloadLatency,
     DCRMetrics.DCRLatencyMetric,
     DCRMetrics.DCRRequestCountMetric,
   )
