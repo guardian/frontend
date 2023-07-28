@@ -14,7 +14,7 @@
 /* global jsdom */
 
 import {
-    getUserFromApi,
+    getUserFromApiOrOkta,
     init,
     decodeBase64,
     getUserFromCookie,
@@ -108,7 +108,7 @@ describe('Identity API', () => {
         );
 
         init();
-        getUserFromApi(apiCallback);
+        getUserFromApiOrOkta(apiCallback);
     });
 
     it('should not call api if the cookie does not exist', done => {
@@ -120,7 +120,7 @@ describe('Identity API', () => {
             done();
         };
 
-        getUserFromApi(apiCallback);
+        getUserFromApiOrOkta(apiCallback);
     });
 
     it('should redirect to sign in when user is not signed in', () => {

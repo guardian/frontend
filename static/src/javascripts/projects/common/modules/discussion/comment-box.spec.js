@@ -1,5 +1,5 @@
 import { CommentBox } from 'common/modules/discussion/comment-box';
-import { getUserFromApi as getUserFromApi_ } from 'common/modules/identity/api';
+import { getUserFromApiOrOkta as getUserFromApi_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
 
 jest.mock('lib/config', () => ({

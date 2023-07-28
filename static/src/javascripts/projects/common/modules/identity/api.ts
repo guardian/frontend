@@ -1,6 +1,5 @@
 import type { AccessToken, IDToken } from '@guardian/identity-auth';
 import { getCookie, storage } from '@guardian/libs';
-import { mergeCalls } from 'common/modules/async-call-merger';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
@@ -231,31 +230,45 @@ export const getOptionsHeadersWithOkta = (
 	};
 };
 
-export const getUserFromApi = (): Promise<IdentityUser | null> =>
+/**
+ * Fetch the user data from IDAPI
+ * @returns one of:
+ * - IdentityUser - the user's data
+ * - null - if the request failed
+ */
+const fetchUserFromApi = (): Promise<IdentityUser | null> =>
+	(
+		fetchJson(`${idApiRoot}/user/me`, {
+			mode: 'cors',
+			credentials: 'include',
+		}) as Promise<IdentityResponse>
+	) // assert unknown -> IdentityResponse
+		.then((data) => (data.status === 'ok' ? data.user : null));
+
+/**
+ * Get the user's data
+ *
+ * If enrolled in the Okta experiment, return the data from the ID token
+ * TODO
+ * Otherwise, fetch the user data from IDAPI
+ * @returns one of:
+ * - IdentityUser, if the user is enrolled in the Okta experiment or the fetch to
+ *   IDAPI was successful
+ * - null, if the user is signed out or the fetch to IDAPI failed
+ */
+export const getUserFromApiOrOkta = async (): Promise<IdentityUser | null> =>
 	getAuthStatus().then((authStatus) => {
-		if (
-			authStatus.kind === 'SignedInWithCookies' ||
-			authStatus.kind === 'SignedInWithOkta'
-		) {
-			const authOptions = getOptionsHeadersWithOkta(authStatus);
-			const url = `${idApiRoot}/user/me`;
-
-			return (
-				fetchJson(url, {
-					mode: 'cors',
-					...authOptions,
-				}) as Promise<IdentityResponse>
-			) // assert unknown -> IdentityResponse
-				.then((data) => {
-					if (data.status === 'ok') {
-						return data.user;
-					} else {
-						return null;
-					}
-				});
+		switch (authStatus.kind) {
+			case 'SignedInWithCookies': {
+				return fetchUserFromApi();
+			}
+			case 'SignedInWithOkta': {
+				// TODO: return user data from authStatus.idToken
+				return null;
+			}
+			default:
+				return null;
 		}
-
-		return null;
 	});
 
 /**

@@ -12,7 +12,7 @@ import {
     getUserFromCookie,
     reset,
     updateUsername,
-    getUserFromApi,
+    getUserFromApiOrOkta,
 } from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
@@ -23,7 +23,7 @@ class CommentBox extends Component {
     static async refreshUsernameHtml() {
         reset();
 
-        const discussionUserResponse = await getUser();
+        const discussionUserResponse = await getUserFromApiOrOkta();
 
         if (!discussionUserResponse || !discussionUserResponse.userProfile) {
             return;
@@ -347,7 +347,7 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                return getUserFromApi().then(response => {
+                return getUserFromApiOrOkta().then(response => {
                     if (
                         response.user.statusFields.userEmailValidated === true
                     ) {

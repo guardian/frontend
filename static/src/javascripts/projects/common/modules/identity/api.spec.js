@@ -1,6 +1,6 @@
 /* global jsdom */
 import {
-    getUserFromApi,
+    getUserFromApiOrOkta,
     init,
     decodeBase64,
     getUserFromCookie,
@@ -89,7 +89,7 @@ describe('Identity API', () => {
             })
         );
 
-        getUserFromApi().then(apiCallback);
+        getUserFromApiOrOkta().then(apiCallback);
     });
 
     it('should not call api if the cookie does not exist', done => {
@@ -101,7 +101,7 @@ describe('Identity API', () => {
             done();
         };
 
-        getUserFromApi().then(apiCallback);
+        getUserFromApiOrOkta().then(apiCallback);
     });
 
     it('should attempt to autosigin an user who is not currently signed in and has not previously signed out', () => {
