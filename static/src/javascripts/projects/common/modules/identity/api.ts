@@ -1,4 +1,8 @@
-import type { AccessToken, IDToken } from '@guardian/identity-auth';
+import type {
+	AccessToken,
+	AccessTokenClaims,
+	IDToken,
+} from '@guardian/identity-auth';
 import { getCookie, storage } from '@guardian/libs';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
@@ -96,7 +100,7 @@ export type SignedInWithCookies = { kind: 'SignedInWithCookies' };
 type SignedOutWithOkta = { kind: 'SignedOutWithOkta' };
 export type SignedInWithOkta = {
 	kind: 'SignedInWithOkta';
-	accessToken: AccessToken<never>;
+	accessToken: AccessToken<AccessTokenClaims>;
 	idToken: IDToken<CustomIdTokenClaims>;
 };
 
@@ -232,8 +236,13 @@ export const getUserFromApiOrOkta = async (): Promise<IdentityUser | null> =>
 				return fetchUserFromApi();
 			}
 			case 'SignedInWithOkta': {
-				// TODO: return user data from authStatus.idToken
-				return null;
+				return {
+					primaryEmailAddress: authStatus.idToken.claims.email,
+					statusFields: {
+						userEmailValidated:
+							authStatus.accessToken.claims.email_validated,
+					},
+				};
 			}
 			default:
 				return null;
