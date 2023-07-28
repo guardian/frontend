@@ -12,42 +12,11 @@ type UserNameError = {
 	context: string;
 };
 
-type UserConsents = {
-	id: string;
-	actor: string;
-	version: number;
-	consented: boolean;
-	timestamp: string;
-	privacyPolicyVersion: number;
-};
-
-type UserGroups = {
-	path: string;
-	packageCode: string;
-};
-
 export type IdentityUser = {
-	dates: { accountCreatedDate: string };
-	consents: UserConsents[];
-	userGroups: UserGroups[];
-	publicFields: {
-		username: string;
-		displayName: string;
-	};
+	primaryEmailAddress: string;
 	statusFields: {
 		userEmailValidated: boolean;
 	};
-	privateFields: {
-		brazeUuid: string;
-		googleTagId: string;
-		puzzleUuid: string;
-		legacyPackages: string;
-		legacyProducts: string;
-	};
-	primaryEmailAddress: string;
-	id: number;
-	hasPassword: boolean;
-	adData: Record<string, unknown>;
 };
 
 type IdentityUserFromCache = {
