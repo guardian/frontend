@@ -413,14 +413,20 @@ export const updateUsername = (username: string): unknown => {
 };
 
 export const setConsent = (consents: SettableConsent): Promise<void> =>
-	fetch(`${idApiRoot}/users/me/consents`, {
-		method: 'PATCH',
-		credentials: 'include',
-		mode: 'cors',
-		body: JSON.stringify(consents),
-	}).then((resp) => {
-		if (resp.ok) return Promise.resolve();
-		return Promise.reject();
+	getAuthStatus().then((authStatus) => {
+		if (
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+		) {
+			const authOptions = getOptionsHeadersWithOkta(authStatus);
+
+			return fetch(`${idApiRoot}/users/me/consents`, {
+				method: 'PATCH',
+				...authOptions,
+				mode: 'cors',
+				body: JSON.stringify(consents),
+			}).then((resp) => (resp.ok ? Promise.resolve() : Promise.reject()));
+		}
 	});
 
 export { getUserCookie as getCookie };
