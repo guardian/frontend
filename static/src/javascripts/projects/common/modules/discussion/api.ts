@@ -58,11 +58,11 @@ const defaultInitParams: RequestInit = {
 	},
 };
 
-export const send = (
+export const send = <T = CommentResponse>(
 	endpoint: string,
 	method: 'GET' | 'POST',
 	data?: Comment | AbuseReport,
-): Promise<CommentResponse> =>
+): Promise<T> =>
 	Promise.resolve(config.get('switches.enableDiscussionSwitch'))
 		.then((isDiscussionEnabled) =>
 			isDiscussionEnabled
@@ -112,14 +112,14 @@ export const send = (
 						...requestAuthOptions.headers,
 						'Content-Type': 'application/x-www-form-urlencoded',
 					},
-				}).then((resp) => resp.json() as Promise<CommentResponse>);
+				}).then((resp) => resp.json() as Promise<T>);
 			}
 
 			return fetch(url, {
 				...defaultInitParams,
 				...requestAuthOptions,
 				method,
-			}).then((resp) => resp.json() as Promise<CommentResponse>);
+			}).then((resp) => resp.json() as Promise<T>);
 		});
 
 export const postComment = (
@@ -151,5 +151,6 @@ export const reportComment = (
 ): Promise<CommentResponse> =>
 	send(`/comment/${id}/reportAbuse`, 'POST', report);
 
-export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
+/** @type {(id: Id = 'me'): Promise<UserResponse>} */
+export const getUser = (id: Id = 'me'): Promise<UserResponse> =>
 	send(`/profile/${id}?strict_sanctions_check=false`, 'GET');
