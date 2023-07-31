@@ -23,6 +23,24 @@ type CommentResponse = {
 	errorCode?: string;
 };
 
+type UserResponse = {
+	status: 'ok' | 'error';
+	userProfile: {
+		userId: string;
+		displayName: string;
+		webUrl: string;
+		apiUrl: string;
+		avatar: string;
+		secureAvatarUrl: string;
+		isStaff: boolean;
+		privateFields: {
+			canPostComment: boolean;
+			isPremoderated: boolean;
+			hasCommented: boolean;
+		};
+	};
+};
+
 type AbuseReport = {
 	categoryId: number;
 	reason?: string;
