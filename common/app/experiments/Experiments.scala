@@ -77,6 +77,14 @@ object Okta
 //      sellByDate = LocalDate.of(2024, 1, 1),
 //      participationGroup = Perc0E,
 //    )
+object AdaptiveSite
+    extends Experiment(
+      name = "adaptive-site",
+      description = "Enables serving an adaptive version of the site that responds to page performance",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 12, 5),
+      participationGroup = Perc1A,
+    )
 
 object HeaderTopBarSearchCapi
     extends Experiment(
@@ -85,15 +93,6 @@ object HeaderTopBarSearchCapi
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc1B,
-    )
-
-object AdaptiveSite
-    extends Experiment(
-      name = "adaptive-site",
-      description = "Enables serving an adaptive version of the site that responds to page performance",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1A,
     )
 
 object OfferHttp3
