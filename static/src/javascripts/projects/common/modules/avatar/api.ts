@@ -1,4 +1,8 @@
 import config from 'lib/config';
+import {
+	getAuthStatus,
+	getOptionsHeadersWithOkta,
+} from '../../modules/identity/api';
 
 const apiUrl = `${config.get<string>(
 	'page.avatarApiUrl',
@@ -9,12 +13,20 @@ const staticUrl = `${config.get<string>(
 	'/AVATAR_IMAGES_URL_NOT_FOUND',
 )}/user`;
 
-const request = (
+const request = async (
 	method: string,
 	path: string,
 	data?: FormData,
 ): Promise<Response> => {
 	const url = apiUrl + path;
+
+	const authStatus = await getAuthStatus();
+
+	const optionsHeaders =
+		authStatus.kind === 'SignedInWithCookies' ||
+		authStatus.kind === 'SignedInWithOkta'
+			? getOptionsHeadersWithOkta(authStatus)
+			: {};
 
 	if (method === 'POST') {
 		if (!data) throw new Error('POST error: No data provided.');
@@ -23,14 +35,14 @@ const request = (
 			method,
 			body: data,
 			mode: 'cors',
-			credentials: 'include',
+			...optionsHeaders,
 		}).then((resp) => resp.json() as Promise<Response>);
 	}
 
 	return fetch(url, {
 		method,
 		mode: 'cors',
-		credentials: 'include',
+		...optionsHeaders,
 	});
 };
 
