@@ -4,7 +4,6 @@ import { init as initValidationEmail } from 'common/modules/identity/validation-
 import { AccountProfile } from 'common/modules/identity/account-profile';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
 import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
-import { enhanceConsents } from 'common/modules/identity/consents';
 import { enhanceConsentJourney } from 'common/modules/identity/consent-journey';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initHeader } from 'common/modules/identity/header';
@@ -29,7 +28,6 @@ const initProfile = () => {
         ['init-account-profile', initAccountProfile],
         ['setup-loading-animation', setupLoadingAnimation],
         ['init-public-profile', initPublicProfile],
-        ['enhance-consents', enhanceConsents],
         ['enhance-ad-prefs', enhanceAdPrefs],
         ['enhance-form-ajax', enhanceFormAjax],
         ['enhance-consent-journey', enhanceConsentJourney],
