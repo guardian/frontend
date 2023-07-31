@@ -13,9 +13,6 @@ html {
 body {
     background-color: #ffffff;
 }
-.is-modern .has-membership-access-requirement {
-    visibility: hidden !important;
-}
 
 ::selection {
     background: $highlight-main;

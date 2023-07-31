@@ -58,46 +58,6 @@ const showHiringMessage = () => {
     }
 };
 
-const handleMembershipAccess = () => {
-    const { membershipUrl, membershipAccess, contentId } = config.get('page');
-
-    const redirect = () => {
-        window.location.assign(
-            `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`
-        );
-    };
-
-    const updateDOM = (resp) => {
-        const requireClass = 'has-membership-access-requirement';
-        const requiresPaidTier = membershipAccess.includes('paid-members-only');
-        // Check the users access matches the content
-        const canViewContent = requiresPaidTier
-            ? !!resp.tier && resp.isPaidTier
-            : !!resp.tier;
-
-        if (canViewContent) {
-            const { body } = document;
-
-            if (body) {
-                fastdom.mutate(() => body.classList.remove(requireClass));
-            }
-        } else {
-            redirect();
-        }
-    };
-
-    if (isUserLoggedIn()) {
-        fetchJson(`${membershipUrl}/user/me`, {
-            mode: 'cors',
-            credentials: 'include',
-        })
-            .then(updateDOM)
-            .catch(redirect);
-    } else {
-        redirect();
-    }
-};
-
 const addScrollHandler = () => {
     let scrollRunning = false;
 
@@ -208,17 +168,6 @@ const bootStandard = () => {
     }
 
     ophan.setEventEmitter(mediator);
-
-    /*  Membership access
-        Items with either of the following fields require Membership access
-        - membershipAccess=members-only
-        - membershipAccess=paid-members-only
-        Authenticating requires CORS and withCredentials. If we don't cut the
-        mustard then pass through.
-    */
-    if (config.get('page.requiresMembershipAccess')) {
-        handleMembershipAccess();
-    }
 
     if(window.guardian.config.switches.headerTopNav
         && document.querySelector('.header-top-nav')

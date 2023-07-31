@@ -47,7 +47,6 @@ object HtmlPageHelpers {
         .isAdFree(request)
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(request) && showAds),
-      ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
       ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
     )
   }
