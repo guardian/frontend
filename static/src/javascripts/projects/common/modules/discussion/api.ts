@@ -151,6 +151,6 @@ export const reportComment = (
 ): Promise<CommentResponse> =>
 	send(`/comment/${id}/reportAbuse`, 'POST', report);
 
-/** @type {(id: Id = 'me'): Promise<UserResponse>} */
-export const getUser = (id: Id = 'me'): Promise<UserResponse> =>
-	send(`/profile/${id}?strict_sanctions_check=false`, 'GET');
+/** @type {(): Promise<UserResponse>} */
+export const getUser = (): Promise<UserResponse> =>
+	send(`/profile/me?strict_sanctions_check=false`, 'GET');
