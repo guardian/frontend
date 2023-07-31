@@ -232,9 +232,13 @@ export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
  * you are in the Okta experiment or not.
  * @param authStatus
  * @returns where `authStatus` is:
- * - `SignedInWithCookies`, set the `credentials` option to `"include"`
- * - `SignedInWithOkta`, set the `Authorization` header with a Bearer
- *   Access Token
+ *
+ * `SignedInWithCookies`:
+ * - set the `credentials` option to `"include"`
+ *
+ * `SignedInWithOkta`:
+ * - set the `Authorization` header with a Bearer Access Token
+ * - set the `X-GU-IS-OAUTH` header to `true`
  */
 export const getOptionsHeadersWithOkta = (
 	authStatus: SignedInWithCookies | SignedInWithOkta,
@@ -247,7 +251,8 @@ export const getOptionsHeadersWithOkta = (
 
 	return {
 		headers: {
-			Authorization: `Bearer: ${authStatus.accessToken.accessToken}`,
+			Authorization: `Bearer ${authStatus.accessToken.accessToken}`,
+			'X-GU-IS-OAUTH': 'true',
 		},
 	};
 };
