@@ -2,6 +2,10 @@ import type { BrazeMessagesInterface } from '@guardian/braze-components';
 import React from 'react';
 import config from '../../../../../lib/config';
 import { reportError } from '../../../../../lib/report-error';
+import {
+	getAuthStatus,
+	getOptionsHeadersWithOkta,
+} from '../../../modules/identity/api';
 import { submitComponentEvent, submitViewEvent } from '../acquisitions-ophan';
 import type { BrazeMessageInterface } from './brazeMessageInterface';
 import { getMessageFromUrlFragment } from './getMessageFromUrlFragment';
@@ -51,6 +55,7 @@ const renderBanner = (
 		import(
 			/* webpackChunkName: "guardian-braze-components-banner" */ '@guardian/braze-components/banner'
 		),
+		getAuthStatus(),
 	])
 		.then((props) => {
 			const [
@@ -58,6 +63,7 @@ const renderBanner = (
 				{ CacheProvider },
 				{ default: createCache },
 				brazeModule,
+				authStatus,
 			] = props;
 			const container = document.createElement('div');
 			container.classList.add('site-message--banner');
@@ -67,6 +73,12 @@ const renderBanner = (
 			const Component = brazeModule.BrazeBannerComponent;
 			const idApiUrl: string = config.get('page.idApiUrl') ?? '';
 			const newsletterUrl = `${idApiUrl}/users/me/newsletters`;
+
+			const optionsHeaders =
+				authStatus.kind === 'SignedInWithCookies' ||
+				authStatus.kind === 'SignedInWithOkta'
+					? getOptionsHeadersWithOkta(authStatus)
+					: {};
 
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- IE does not support shadow DOM, so instead we just render
 			if (!container.attachShadow) {
@@ -85,7 +97,7 @@ const renderBanner = (
 									id: newsletterId,
 									subscribed: true,
 								}),
-								credentials: 'include',
+								...optionsHeaders,
 							});
 						}}
 					/>,
@@ -123,7 +135,7 @@ const renderBanner = (
 										id: newsletterId,
 										subscribed: true,
 									}),
-									credentials: 'include',
+									...optionsHeaders,
 								});
 							}}
 						/>
