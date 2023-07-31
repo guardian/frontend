@@ -57,7 +57,6 @@ const deterministicUrl = (userId: number): string => `${staticUrl}/${userId}`;
 
 // eslint-disable-next-line import/no-default-export -- that’s how it was set up
 export default {
-	request,
 	getActive,
 	deterministicUrl,
 };
