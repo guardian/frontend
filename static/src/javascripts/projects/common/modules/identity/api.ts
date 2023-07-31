@@ -7,17 +7,6 @@ import { getUrlVars } from '../../../../lib/url';
 import type { CustomIdTokenClaims } from './okta';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
-
-type SettableConsent = {
-	id: string;
-	consented: boolean;
-};
-
-type Newsletter = {
-	id: string;
-	subscribed?: boolean;
-};
-
 type UserNameError = {
 	message: string;
 	description: string;
