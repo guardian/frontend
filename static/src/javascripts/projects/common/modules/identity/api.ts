@@ -360,22 +360,33 @@ export const sendValidationEmail = (): unknown => {
 	return request;
 };
 
-export const updateUsername = (username: string): unknown => {
-	const endpoint = `${idApiRoot}/user/me`;
-	const data = {
-		publicFields: {
-			username,
-			displayName: username,
-		},
-	};
-	const request = fetch(endpoint, {
-		mode: 'cors',
-		method: 'POST',
-		body: JSON.stringify(data),
-		credentials: 'include',
-	});
-
-	return request;
-};
+/**
+ * Update the logged in user's username on IDAPI
+ * @param username the new username
+ * @returns {Promise<Response>} a Promise resolving to a {@link Response}
+ */
+export const updateUsername = (username: string): Promise<Response> =>
+	getAuthStatus()
+		.then((authStatus) =>
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+				? authStatus
+				: Promise.reject('The user is not signed in'),
+		)
+		.then((signedInAuthStatus) => {
+			const endpoint = `${idApiRoot}/user/me/username`;
+			const data = {
+				publicFields: {
+					username,
+					displayName: username,
+				},
+			};
+			return fetch(endpoint, {
+				mode: 'cors',
+				method: 'POST',
+				body: JSON.stringify(data),
+				...getOptionsHeadersWithOkta(signedInAuthStatus),
+			});
+		});
 
 export { getUserCookie as getCookie };
