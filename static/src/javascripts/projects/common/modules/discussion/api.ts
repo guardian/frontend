@@ -1,4 +1,5 @@
 import config from 'lib/config';
+import { getAuthStatus, getOptionsHeadersWithOkta } from '../identity/api';
 
 /**
  * This information is partly inspired by the API in discussion-rendering
@@ -30,7 +31,6 @@ type AbuseReport = {
 
 const defaultInitParams: RequestInit = {
 	mode: 'cors',
-	credentials: 'include',
 	headers: {
 		'D2-X-UID': config.get<string>('page.discussionD2Uid', 'NONE_FOUND'),
 		'GU-Client': config.get<string>(
@@ -42,50 +42,67 @@ const defaultInitParams: RequestInit = {
 
 export const send = (
 	endpoint: string,
-	method: string,
+	method: 'GET' | 'POST',
 	data?: Comment | AbuseReport,
-): Promise<CommentResponse> => {
-	if (config.get('switches.enableDiscussionSwitch')) {
-		const apiUrl = config.get<string>(
-			'page.discussionApiUrl',
-			'/DISCUSSION_API_URL_NOT_FOUND',
-		);
-		const url = apiUrl + endpoint;
+): Promise<CommentResponse> =>
+	Promise.resolve(config.get('switches.enableDiscussionSwitch'))
+		.then((isDiscussionEnabled) =>
+			isDiscussionEnabled
+				? Promise.resolve()
+				: Promise.reject('switches.enableDiscussionSwitch is off'),
+		)
+		.then(() => getAuthStatus())
+		.then((authStatus) =>
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+				? authStatus
+				: Promise.reject('User is signed out'),
+		)
+		.then((signedInAuthStatus) => {
+			const apiUrl = config.get<string>(
+				'page.discussionApiUrl',
+				'/DISCUSSION_API_URL_NOT_FOUND',
+			);
+			const url = apiUrl + endpoint;
 
-		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
-		if (method === 'POST') {
-			const body = new URLSearchParams();
+			const requestAuthOptions =
+				getOptionsHeadersWithOkta(signedInAuthStatus);
 
-			if (data) {
-				if ('body' in data) {
-					body.append('body', data.body);
+			// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
+			if (method === 'POST') {
+				const body = new URLSearchParams();
+
+				if (data) {
+					if ('body' in data) {
+						body.append('body', data.body);
+					}
+					if ('categoryId' in data) {
+						body.append('categoryId', data.categoryId.toString());
+						data.email &&
+							body.append('email', data.email.toString());
+						data.reason && body.append('reason', data.reason);
+					}
 				}
-				if ('categoryId' in data) {
-					body.append('categoryId', data.categoryId.toString());
-					data.email && body.append('email', data.email.toString());
-					data.reason && body.append('reason', data.reason);
-				}
+
+				return fetch(url, {
+					...defaultInitParams,
+					method,
+					body: body.toString(),
+					credentials: requestAuthOptions.credentials,
+					headers: {
+						...defaultInitParams.headers,
+						...requestAuthOptions.headers,
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+				}).then((resp) => resp.json() as Promise<CommentResponse>);
 			}
 
 			return fetch(url, {
 				...defaultInitParams,
+				...requestAuthOptions,
 				method,
-				body: body.toString(),
-				headers: {
-					...defaultInitParams.headers,
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
 			}).then((resp) => resp.json() as Promise<CommentResponse>);
-		}
-
-		return fetch(url, {
-			...defaultInitParams,
-			method,
-		}).then((resp) => resp.json() as Promise<CommentResponse>);
-	}
-
-	throw new Error('Discussion features have been disabled');
-};
+		});
 
 export const postComment = (
 	discussionId: Id,
