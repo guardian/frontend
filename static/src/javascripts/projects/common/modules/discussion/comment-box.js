@@ -188,29 +188,17 @@ class CommentBox extends Component {
         this.setState('preview-visible');
     }
 
-    fail(xhr) {
-        let response;
-
-        // if our API is down, it returns HTML
-        // this is not so good for JSON.parse
-        try {
-            response = JSON.parse(xhr.responseText);
-        } catch (e) {
-            response = {};
-        }
-
+    fail(errResp) {
         this.setFormState();
 
-        if (xhr.status === 0) {
-            this.error('API_CORS_BLOCKED');
-        } else if (response.errorCode === 'EMAIL_NOT_VALIDATED') {
+        if (errResp.errorCode === 'EMAIL_NOT_VALIDATED') {
             this.invalidEmailError();
-        } else if (response.errorCode === 'IP_ADDRESS_BLOCKED') {
+        } else if (errResp.errorCode === 'IP_ADDRESS_BLOCKED') {
             this.error('IP_THROTTLED');
-        } else if (this.errorMessages[response.errorCode]) {
-            this.error(response.errorCode);
+        } else if (this.errorMessages[errResp.errorCode]) {
+            this.error(errResp.errorCode);
         } else {
-            this.error('API_ERROR', this.errorMessages.API_ERROR + xhr.status); // templating would be ideal here
+            this.error('API_ERROR', `${this.errorMessages.API_ERROR} ${errResp.statusCode}`); // templating would be ideal here
         }
     }
 
@@ -274,8 +262,9 @@ class CommentBox extends Component {
             this.setFormState(true);
 
             return postComment(this.getDiscussionId(), comment)
-                .then((resp) => this.postCommentSuccess(comment, resp))
-                .catch((err) => this.fail(err));
+                .then((resp) => resp.status === 'ok' ? resp : Promise.reject(resp))
+                .then((okResp) => this.postCommentSuccess(comment, okResp))
+                .catch((errResp) => this.fail(errResp));
         };
 
         const updateUsernameSuccess = (resp) => {
@@ -598,8 +587,9 @@ class CommentBox extends Component {
 
         if (this.errors.length === 0) {
             previewComment(comment)
+                .then(resp => resp.status === 'ok' ? resp : Promise.reject(resp))
                 .then((resp) => callback(comment, resp))
-                .catch((err) => this.fail(err));
+                .catch((errResp) => this.fail(errResp));
         }
     }
 
