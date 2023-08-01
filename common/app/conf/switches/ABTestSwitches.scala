@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 4, 13)),
+    sellByDate = Some(LocalDate.of(2023, 9, 13)),
     exposeClientSide = true,
   )
 
@@ -51,17 +51,17 @@ trait ABTestSwitches {
     "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
     owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 6, 6)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-billboards-in-merch",
-    "Test the commercial impact of showing billboard adverts in merchandising slots",
+    "ab-billboards-in-merch-high",
+    "Test the commercial impact of showing billboard adverts in merchandising-high slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 5, 30)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
@@ -71,17 +71,7 @@ trait ABTestSwitches {
     "Test serving GEM assets in ad slots on page",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 6, 30)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-eager-prebid",
-    "Test running prebid earlier in the page lifecycle",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 5, 1)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
@@ -91,7 +81,27 @@ trait ABTestSwitches {
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 5, 1)),
+    sellByDate = Some(LocalDate.of(2023, 10, 2)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-limit-inline-merch",
+    "Test the impact of limiting the eligibility of inline merchandising ad slots",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 9, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-liveblog-right-column-ads",
+    "Test the commercial impact of different strategies for displaying ads in the right column on liveblog pages.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 9, 20)),
     exposeClientSide = true,
   )
 }

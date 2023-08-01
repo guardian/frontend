@@ -30,6 +30,8 @@ case class DotcomFrontsRenderingDataModel(
     mostViewed: Seq[Trail],
     mostCommented: Option[Trail],
     mostShared: Option[Trail],
+    deeplyRead: Option[Seq[Trail]],
+    contributionsServiceUrl: String,
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -42,6 +44,7 @@ object DotcomFrontsRenderingDataModel {
       mostViewed: Seq[RelatedContentItem],
       mostCommented: Option[Content],
       mostShared: Option[Content],
+      deeplyRead: Option[Seq[Trail]],
   ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
@@ -88,6 +91,8 @@ object DotcomFrontsRenderingDataModel {
       mostViewed = mostViewed.map(content => Trail.pressedContentToTrail(content.faciaContent)(request)),
       mostCommented = mostCommented.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
       mostShared = mostShared.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
+      deeplyRead = deeplyRead,
+      contributionsServiceUrl = Configuration.contributionsService.url,
     )
   }
 

@@ -46,7 +46,7 @@ const months = {
 	12: '12',
 } as const;
 type LocalDate =
-	`${number}-${typeof months[keyof typeof months]}-${typeof dates[keyof typeof dates]}`;
+	`${number}-${(typeof months)[keyof typeof months]}-${(typeof dates)[keyof typeof dates]}`;
 
 const getLocalDate = (year: number, month: number, date: number): LocalDate => {
 	return `${year}-${months[month as keyof typeof months]}-${

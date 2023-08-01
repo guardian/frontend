@@ -43,22 +43,26 @@ GET        /email/$result<invalid|error>                                        
 ## Submission endpoints
 POST       /email/footer                                                        controllers.EmailSignupController.submitFooter()
 POST       /email                                                               controllers.EmailSignupController.submit()
+POST       /email/many                                                          controllers.EmailSignupController.submitMany()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
-#Weather - OLD
+# Weather - EVEN OLDER
 GET            /weather/city/:id.json                                                                                            weather.controllers.WeatherController.forCity(id)
 GET            /weather/city.json                                                                                                weather.controllers.LocationsController.whatIsMyCity()
 GET            /weather/locations                                                                                                weather.controllers.LocationsController.findCity(query: String)
 GET            /weather/forecast/:id.json                                                                                        weather.controllers.WeatherController.forecastForCityId(id)
 
-#Weather
+# Weather - OLD
 GET            /weatherapi/city/:id.json                                                                                         weather.controllers.WeatherController.forCity(id)
 GET            /weatherapi/city.json                                                                                             weather.controllers.LocationsController.whatIsMyCity()
 GET            /weatherapi/locations                                                                                             weather.controllers.LocationsController.findCity(query: String)
 GET            /weatherapi/forecast/:id.json                                                                                     weather.controllers.WeatherController.forecastForCityId(id)
+
+#Weather - DCR
+GET            /weather                                                                                                          weather.controllers.WeatherController.theWeather()
 
 # Analytics
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
@@ -397,13 +401,12 @@ GET            /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|wo
 GET            /rss                                                                                                              controllers.FaciaController.renderRootFrontRss()
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /$path<email/.*>                                                                                                  controllers.FaciaController.renderFrontPress(path)
-GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
+GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonMinimal(path)
 GET            /*path/headline.txt                                                                                               controllers.FaciaController.renderFrontHeadline(path)
 GET            /*path.emailjson                                                                                                  controllers.FaciaController.renderFrontJson(path)
 GET            /*path.emailtxt                                                                                                   controllers.FaciaController.renderFrontJson(path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
-GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)
 GET            /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
 
 

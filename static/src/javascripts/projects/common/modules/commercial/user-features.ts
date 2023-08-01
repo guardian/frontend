@@ -14,7 +14,7 @@ import { dateDiffDays } from '../../../../lib/time-utils';
 import { getLocalDate } from '../../../../types/dates';
 import type { LocalDate } from '../../../../types/dates';
 import type { UserFeaturesResponse } from '../../../../types/membership';
-import { isUserLoggedIn } from '../identity/api';
+import { isUserLoggedIn, isUserLoggedInOktaRefactor } from '../identity/api';
 import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 
 // Persistence keys
@@ -298,9 +298,15 @@ const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
 	return daysSinceLastContribution > askPauseDays;
 };
 
+// TODO: Remove as part of Okta migration
 const isRecurringContributor = (): boolean =>
 	// If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
 	(isUserLoggedIn() &&
+		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
+	supportSiteRecurringCookiePresent();
+
+const isRecurringContributorOkta = async (): Promise<boolean> =>
+	((await isUserLoggedInOktaRefactor()) &&
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
 	supportSiteRecurringCookiePresent();
 
@@ -318,10 +324,16 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
     which this function is dependent on.
 */
 
+// TODO: Remove as part of Okta migration
 const shouldHideSupportMessaging = (): boolean =>
 	shouldNotBeShownSupportMessaging() ||
 	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
 	isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
+
+const shouldHideSupportMessagingOkta = async (): Promise<boolean> =>
+	shouldNotBeShownSupportMessaging() ||
+	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
+	(await isRecurringContributorOkta()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
 const readerRevenueRelevantCookies = [
 	PAYING_MEMBER_COOKIE,
@@ -396,6 +408,7 @@ export {
 	isRecurringContributor,
 	isDigitalSubscriber,
 	shouldHideSupportMessaging,
+	shouldHideSupportMessagingOkta,
 	refresh,
 	deleteOldData,
 	getLastOneOffContributionTimestamp,

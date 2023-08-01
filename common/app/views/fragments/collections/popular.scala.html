@@ -10,7 +10,7 @@
 @import model.Pillar.RichPillar
 
 @defining(popular.size > 1){ isTabbed =>
-    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test" data-test-id="popular-in">
+    <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular" data-test-id="popular-in">
         @if(isTabbed) {
             <div class="tabs tabs--mostpop u-cf @if(isAdFree(containerDefinition) && isFront){tabs--mostpop--without-mpu}">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
@@ -41,7 +41,7 @@
                                 @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
                             </span>
                             <div class="headline-list__text">
-                                @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body")
+                                @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body", isAction = trail.isActionCard)
                                 @trail.properties.maybeContent.map { content =>
                                     @if(content.tags.tags.exists(_.id == "tone/news") || content.tags.tags.exists(_.id == "tone/comment")) {
                                         @fragments.contentAgeNotice(ContentOldAgeDescriber(content))

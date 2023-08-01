@@ -26,7 +26,7 @@ import { isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
-import { getLotameData } from '@guardian/commercial-core';
+import { getLotameData } from '@guardian/commercial';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,

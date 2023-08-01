@@ -11,6 +11,4 @@ updates:
       interval: 'daily'
     allow:
       - dependency-name: "@guardian/*"
-    reviewers:
-      - "@guardian/guardian-frontend-team"
     open-pull-requests-limit: 10

@@ -220,7 +220,7 @@ object CalloutExtraction {
 
   private def campaignJsObjectToCalloutBlockElementV2(
       campaign: JsObject,
-      isNonCollapsible: Option[Boolean],
+      callout: CalloutElementFields,
       calloutsUrl: Option[String],
   ): Option[CalloutBlockElementV2] = {
     for {
@@ -228,8 +228,9 @@ object CalloutExtraction {
       activeFrom <- (campaign \ "activeFrom").asOpt[Long]
       displayOnSensitive <- (campaign \ "displayOnSensitive").asOpt[Boolean]
       formId <- (campaign \ "fields" \ "formId").asOpt[Int]
-      title <- (campaign \ "fields" \ "callout").asOpt[String]
-      description <- (campaign \ "fields" \ "description").asOpt[String]
+      prompt <- callout.overridePrompt.orElse(Some("Share your experience"))
+      title <- callout.overrideTitle.orElse((campaign \ "fields" \ "callout").asOpt[String])
+      description <- callout.overrideDescription.orElse((campaign \ "fields" \ "description").asOpt[String])
       tagName <- (campaign \ "fields" \ "tagName").asOpt[String]
       formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
     } yield {
@@ -246,11 +247,12 @@ object CalloutExtraction {
         (campaign \ "activeUntil").asOpt[Long],
         displayOnSensitive,
         formId,
+        prompt,
         title,
         description,
         tagName,
         formFields2,
-        isNonCollapsible.getOrElse(false),
+        callout.isNonCollapsible.getOrElse(false),
         contacts,
       )
     }
@@ -402,7 +404,7 @@ object CalloutExtraction {
     for {
       cpgs <- campaigns
       campaign <- extractCampaignByCampaignId(callout.campaignId, cpgs)
-      element <- campaignJsObjectToCalloutBlockElementV2(campaign, callout.isNonCollapsible, calloutsUrl)
+      element <- campaignJsObjectToCalloutBlockElementV2(campaign, callout, calloutsUrl)
     } yield {
       element
     }

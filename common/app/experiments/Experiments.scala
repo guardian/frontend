@@ -4,63 +4,30 @@ import conf.switches.Owner
 import experiments.ParticipationGroups._
 import java.time.LocalDate
 
+/*
+ * This list of active experiments is sorted by participation group.
+ */
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      DCRFronts,
-      OfferHttp3,
-      EuropeNetworkFront,
-      DCRJavascriptBundle,
-      HeaderTopBarSearchCapi,
+      Lightbox,
       ServerSideLiveblogInlineAds,
-      FastlyNextGenWAF,
+      EuropeNetworkFront,
+      Okta,
+      HeaderTopBarSearchCapi,
+      AdaptiveSite,
+      OfferHttp3,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object DCRJavascriptBundle
+object Lightbox
     extends Experiment(
-      name = "dcr-javascript-bundle",
-      description = "DCR Javascript bundle experiment",
-      owners = Seq(Owner.withGithub("guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc1A,
-    )
-
-object DCRFronts
-    extends Experiment(
-      name = "dcr-fronts",
-      description = "Use DCR for fronts",
+      name = "lightbox",
+      description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc5A,
-    )
-
-object OfferHttp3
-    extends Experiment(
-      name = "offer-http3",
-      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
-      owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 4, 28),
+      sellByDate = LocalDate.of(2023, 9, 29),
       participationGroup = Perc0B,
-    )
-
-object EuropeNetworkFront
-    extends Experiment(
-      name = "europe-network-front",
-      description = "Test new europe network front",
-      owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 5, 31),
-      participationGroup = Perc0D,
-    )
-
-object HeaderTopBarSearchCapi
-    extends Experiment(
-      name = "header-top-bar-search-capi",
-      description = "Adds CAPI search to the top nav",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 6),
-      participationGroup = Perc1B,
     )
 
 object ServerSideLiveblogInlineAds
@@ -69,16 +36,60 @@ object ServerSideLiveblogInlineAds
       description =
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 6, 1),
-      participationGroup = Perc0A,
+      sellByDate = LocalDate.of(2023, 9, 1),
+      participationGroup = Perc0C,
     )
 
-object FastlyNextGenWAF
+object EuropeNetworkFront
     extends Experiment(
-      name = "fastly-next-gen-waf",
-      description =
-        "We're using a participation group that we don't want other people to use. The experiment is used as a placeholder because the actual switch is happening at the Fastly level. PR here: https://github.com/guardian/fastly-edge-cache/pull/966",
+      name = "europe-network-front",
+      description = "Test new europe network front",
+      owners = Seq(Owner.withGithub("rowannekabalan")),
+      sellByDate = LocalDate.of(2023, 8, 31),
+      participationGroup = Perc0D,
+    )
+
+object Okta
+    extends Experiment(
+      name = "okta",
+      description = "Use Okta for authentication",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 6, 2),
-      participationGroup = Perc10A,
+      sellByDate = LocalDate.of(2023, 8, 31),
+      participationGroup = Perc0E,
+    )
+
+// Removing while we are still implementing this content type in DCR
+//object DCRImageContent
+//    extends Experiment(
+//      name = "dcr-image-content",
+//      description = "Use DCR for image content",
+//      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+//      sellByDate = LocalDate.of(2024, 1, 1),
+//      participationGroup = Perc0E,
+//    )
+object AdaptiveSite
+    extends Experiment(
+      name = "adaptive-site",
+      description = "Enables serving an adaptive version of the site that responds to page performance",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 12, 5),
+      participationGroup = Perc1A,
+    )
+
+object HeaderTopBarSearchCapi
+    extends Experiment(
+      name = "header-top-bar-search-capi",
+      description = "Adds CAPI search to the top nav",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 9, 6),
+      participationGroup = Perc1B,
+    )
+
+object OfferHttp3
+    extends Experiment(
+      name = "offer-http3",
+      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
+      owners = Seq(Owner.withGithub("paulmr")),
+      sellByDate = LocalDate.of(2023, 8, 31),
+      participationGroup = Perc1E,
     )

@@ -352,7 +352,7 @@ case class MetaData(
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
 
-  private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
+  private lazy val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
   def hasPageSkin(request: RequestHeader): Boolean =
     DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
@@ -841,6 +841,10 @@ final case class Tags(tags: List[Tag]) {
   }
   lazy val isInteractive: Boolean = tags.exists {
     _.id == Tags.Interactive
+  }
+
+  lazy val isVerticalVideo: Boolean = {
+    tags.exists(t => t.id == "tone/vertical-video")
   }
 
   lazy val hasLargeContributorImage: Boolean =

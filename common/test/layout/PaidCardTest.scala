@@ -1,6 +1,6 @@
 package layout
 
-import common.facia.FixtureBuilder.mkPressedContent
+import common.facia.FixtureBuilder.mkPressedCuratedContent
 import model.pressed.{FreeHtmlKicker, ItemKicker, KickerProperties}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.OptionValues
@@ -15,7 +15,7 @@ class PaidCardTest extends AnyFlatSpec with Matchers with OptionValues {
     )
 
   "fromPressedContent" should "populate kicker" in {
-    val pressedContent = mkPressedContent(1, kicker = Some(mkKicker()))
+    val pressedContent = mkPressedCuratedContent(1, kicker = Some(mkKicker()))
     val card = PaidCard.fromPressedContent(pressedContent)
     card.kicker.value shouldBe "kicker!!!"
   }

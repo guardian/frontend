@@ -6,7 +6,6 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.fetchNonRefreshableLineItems
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
@@ -44,14 +43,6 @@ object JavaScriptPage {
       JsArray(ids map (id => JsNumber(id)))
     }
 
-    // Only attach the non-refreshable line items to the commercial config
-    // if the `fetchNonRefreshableLineItems` switch is off
-    val nonRefreshableConfig = if (fetchNonRefreshableLineItems.isSwitchedOff) {
-      Map("nonRefreshableLineItemIds" -> nonRefreshableLineItemIds)
-    } else {
-      Map()
-    }
-
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(request)),
@@ -63,7 +54,7 @@ object JavaScriptPage {
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "isSensitive" -> JsBoolean(page.metadata.sensitive),
-    ) ++ sponsorshipType ++ nonRefreshableConfig
+    ) ++ sponsorshipType
 
     val journalismMetaData = Map(
       "calloutsUrl" -> JsString(Configuration.journalism.calloutsUrl),
@@ -85,6 +76,8 @@ object JavaScriptPage {
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
+      // TODO: decide whether the value for `isDev` should be
+      // `environment.isDev` instead
       ("isDev", JsBoolean(!environment.isProd)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
@@ -102,6 +95,7 @@ object JavaScriptPage {
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
       ("commercialBundleUrl", commercialBundleUrl),
+      ("stage", JsString(Configuration.environment.stage)),
     )
   }.toMap
 }

@@ -9,7 +9,7 @@ Quantities are in metric system, because science.
 - 100 g sugar
 - a pinch of salt
 - 3 eggs
-- ½ L of milk (a pint, for you bloody Brits)
+- 500ml of milk (a pint, for you bloody Brits)
 
 ## Steps
 

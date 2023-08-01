@@ -1,10 +1,11 @@
 package metadata
 
-import agents.MostViewedAgent
+import agents.{DeeplyReadAgent, MostViewedAgent}
 import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
 import conf.Configuration
+import conf.switches.Switches.DCRFronts
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
 import org.scalatest.flatspec.AnyFlatSpec
@@ -32,6 +33,8 @@ import test._
     with WithTestContentApiClient {
 
   override def beforeAll(): Unit = {
+    // These tests are designed to work with Frontend fronts not DCR fronts
+    DCRFronts.switchOff()
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts =
@@ -47,6 +50,7 @@ import test._
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+    new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
   )
   val frontPath = "music"
 

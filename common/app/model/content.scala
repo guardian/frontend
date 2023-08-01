@@ -94,7 +94,10 @@ final case class Content(
         AmpLiveBlogSwitch.isSwitchedOn
       } else if (tags.isArticle) {
         val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
-        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz
+        // Some Labs pages have quiz atoms but are not tagged as quizzes
+        val hasQuizAtoms: Boolean = atoms.exists(a => a.quizzes.nonEmpty)
+
+        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz && !hasQuizAtoms
       } else {
         false
       }
@@ -695,7 +698,7 @@ object Video {
       "videoDuration" -> elements.videos
         .find(_.properties.isMain)
         .map { v => JsNumber(v.videos.duration) }
-        .getOrElse(JsNull),
+        .getOrElse(JsNumber(0)),
     ) ++ AtomProperties(content.atoms)
 
     val optionalOpengraphProperties =

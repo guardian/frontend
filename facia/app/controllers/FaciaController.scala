@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
-import agents.MostViewedAgent
+import agents.{DeeplyReadAgent, MostViewedAgent}
 import common.JsonComponent.Ok
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
@@ -22,6 +22,7 @@ import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
 import conf.Configuration
+import conf.switches.Switches
 import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
@@ -43,12 +44,16 @@ trait FaciaController
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
   val mostViewedAgent: MostViewedAgent
+  val deeplyReadAgent: DeeplyReadAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   implicit val context: ApplicationContext
 
   def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
+    val redirectPath = if (request.isJson) s"$path.json" else path
+    successful(
+      InternalRedirect.internalRedirect("applications", redirectPath, request.rawQueryStringOption.map("?" + _)),
+    )
   }
 
   def rssRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
@@ -153,11 +158,17 @@ trait FaciaController
       Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
     }
 
-  def renderFrontJsonLite(path: String): Action[AnyContent] =
+  // Returns a stripped-down 'minimal' version of the 'lite' version of a PressedPage.
+  // The minimal version of a Front contains only the `webTitle` and `collections`
+  // from that Front. Some content items are filtered out (e.g. LinkSnaps) and some fields
+  // are renamed.
+  // It's used by a number of services, including the 'pressreader' edition feed,
+  // see https://github.com/guardian/pressreader
+  def renderFrontJsonMinimal(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       frontJsonFapi.get(path, liteRequestType).map { resp =>
         Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
-          case Some(pressedPage) => FapiFrontJsonLite.get(pressedPage)
+          case Some(pressedPage) => FapiFrontJsonMinimal.get(pressedPage)
           case None              => JsObject(Nil)
         }))
       }
@@ -200,6 +211,11 @@ trait FaciaController
       case None => Future.successful(None)
     }
 
+    val networkFrontEdition = Edition.allWithBetaEditions.find(_.networkFrontId == path)
+    val deeplyRead = if (Switches.DeeplyReadSwitch.isSwitchedOn) {
+      networkFrontEdition.map(deeplyReadAgent.getTrails)
+    } else None
+
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
@@ -219,6 +235,7 @@ trait FaciaController
             mostViewed = mostViewedAgent.mostViewed(Edition(request)),
             mostCommented = mostViewedAgent.mostCommented,
             mostShared = mostViewedAgent.mostShared,
+            deeplyRead = deeplyRead,
           )(request),
           targetedTerritories,
         )
@@ -242,6 +259,7 @@ trait FaciaController
                     mostViewed = mostViewedAgent.mostViewed(Edition(request)),
                     mostCommented = mostViewedAgent.mostCommented,
                     mostShared = mostViewedAgent.mostShared,
+                    deeplyRead = deeplyRead,
                   ),
                 )
               } else JsonFront(faciaPage)
@@ -315,23 +333,6 @@ trait FaciaController
     Action.async { implicit request =>
       renderContainerView(id, preserveLayout)
     }
-
-  def renderMostRelevantContainerJson(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val canonicalId = ConfigAgent
-        .getCanonicalIdForFront(path)
-        .orElse(
-          alternativeEndpoints(path).map(ConfigAgent.getCanonicalIdForFront).headOption.flatten,
-        )
-
-      canonicalId
-        .map { collectionId =>
-          renderContainerView(collectionId)
-        }
-        .getOrElse(successful(NotFound))
-    }
-
-  def alternativeEndpoints(path: String): Seq[String] = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit
       request: RequestHeader,
@@ -513,5 +514,6 @@ class FaciaControllerImpl(
     val controllerComponents: ControllerComponents,
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
+    val deeplyReadAgent: DeeplyReadAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController

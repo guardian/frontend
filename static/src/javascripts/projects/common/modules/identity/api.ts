@@ -1,22 +1,12 @@
+import type { AccessToken, IDToken } from '@guardian/identity-auth';
 import { getCookie, storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
-import { createAuthenticationComponentEventParams } from './auth-component-event-params';
+import type { CustomIdTokenClaims } from './okta';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
-
-type SettableConsent = {
-	id: string;
-	consented: boolean;
-};
-
-type Newsletter = {
-	id: string;
-	subscribed?: boolean;
-};
-
 type UserNameError = {
 	message: string;
 	description: string;
@@ -80,13 +70,6 @@ type IdentityResponse = {
 	errors?: UserNameError[];
 };
 
-export type IdentityUserIdentifiers = {
-	id: string;
-	brazeUuid: string;
-	puzzleId: string;
-	googleTagId: string;
-};
-
 let userFromCookieCache: IdentityUserFromCache = null;
 
 const cookieName = 'GU_U';
@@ -140,35 +123,100 @@ export const getUserFromCookie = (): IdentityUserFromCache => {
 	return userFromCookieCache;
 };
 
-export const updateNewsletter = (newsletter: Newsletter): Promise<void> => {
-	const url = `${idApiRoot}/users/me/newsletters`;
-	return fetch(url, {
-		method: 'PATCH',
-		credentials: 'include',
-		mode: 'cors',
-		body: JSON.stringify(newsletter),
-	}).then(() => Promise.resolve());
+type SignedOutWithCookies = { kind: 'SignedOutWithCookies' };
+export type SignedInWithCookies = { kind: 'SignedInWithCookies' };
+type SignedOutWithOkta = { kind: 'SignedOutWithOkta' };
+export type SignedInWithOkta = {
+	kind: 'SignedInWithOkta';
+	accessToken: AccessToken<never>;
+	idToken: IDToken<CustomIdTokenClaims>;
 };
 
-export const buildNewsletterUpdatePayload = (
-	action = 'none',
-	newsletterId: string,
-): Newsletter => {
-	const newsletter: Newsletter = { id: newsletterId };
-	switch (action) {
-		case 'add':
-			newsletter.subscribed = true;
-			break;
-		case 'remove':
-			newsletter.subscribed = false;
-			break;
-		default:
-			throw new Error(`Undefined newsletter action type (${action})`);
+export type AuthStatus =
+	| SignedOutWithCookies
+	| SignedInWithCookies
+	| SignedOutWithOkta
+	| SignedInWithOkta;
+
+// We want to be in the experiment if in the development environment
+// or if we have opted in to the Okta server side experiment
+const isInOktaExperiment =
+	window.guardian.config.page.stage === 'DEV' ||
+	window.guardian.config.tests?.oktaVariant === 'variant';
+
+export const getAuthStatus = async (): Promise<AuthStatus> => {
+	if (isInOktaExperiment) {
+		const { isSignedInWithOktaAuthState } = await import('./okta');
+		const authState = await isSignedInWithOktaAuthState();
+		if (authState.isAuthenticated) {
+			return {
+				kind: 'SignedInWithOkta',
+				accessToken: authState.accessToken,
+				idToken: authState.idToken,
+			};
+		} else {
+			return {
+				kind: 'SignedOutWithOkta',
+			};
+		}
+	} else {
+		if (isUserLoggedIn()) {
+			return {
+				kind: 'SignedInWithCookies',
+			};
+		} else {
+			return {
+				kind: 'SignedOutWithCookies',
+			};
+		}
 	}
-	return newsletter;
 };
 
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
+export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
+	return new Promise((resolve) => {
+		void getAuthStatus().then((authStatus) => {
+			if (
+				authStatus.kind === 'SignedInWithCookies' ||
+				authStatus.kind === 'SignedInWithOkta'
+			) {
+				resolve(true);
+			} else {
+				resolve(false);
+			}
+		});
+	});
+};
+
+/**
+ * Decide request options based on an {@link AuthStatus}. Requests to authenticated APIs require different options depending on whether
+ * you are in the Okta experiment or not.
+ * @param authStatus
+ * @returns where `authStatus` is:
+ *
+ * `SignedInWithCookies`:
+ * - set the `credentials` option to `"include"`
+ *
+ * `SignedInWithOkta`:
+ * - set the `Authorization` header with a Bearer Access Token
+ * - set the `X-GU-IS-OAUTH` header to `true`
+ */
+export const getOptionsHeadersWithOkta = (
+	authStatus: SignedInWithCookies | SignedInWithOkta,
+): RequestInit => {
+	if (authStatus.kind === 'SignedInWithCookies') {
+		return {
+			credentials: 'include',
+		};
+	}
+
+	return {
+		headers: {
+			Authorization: `Bearer ${authStatus.accessToken.accessToken}`,
+			'X-GU-IS-OAUTH': 'true',
+		},
+	};
+};
 
 export const getUserFromApi = mergeCalls(
 	(mergingCallback: (u: IdentityUser | null) => void) => {
@@ -193,44 +241,65 @@ export const getUserFromApi = mergeCalls(
 	},
 );
 
-const fetchUserIdentifiers = () => {
-	const url = `${idApiRoot}/user/me/identifiers`;
-	return fetch(url, {
+/**
+ * Fetch the logged in user's Braze UUID from IDAPI
+ * @returns one of:
+ * - string - the user's Braze UUID
+ * - null - if the request failed
+ */
+const fetchBrazeUuidFromApi = (): Promise<string | null> =>
+	fetch(`${idApiRoot}/user/me/identifiers`, {
 		mode: 'cors',
 		credentials: 'include',
 	})
 		.then((resp) => {
 			if (resp.status === 200) {
-				return resp.json();
+				/* Ideally we would validate this response but this code will be
+					deleted after the migration to Okta is complete
+					Example response:
+					{
+						"id": "string",
+						"brazeUuid": "string",
+						"puzzleId": "string",
+						"googleTagId": "string"
+					}
+				*/
+				return resp.json() as Promise<{ brazeUuid: string }>;
 			} else {
-				console.log(
-					'failed to get Identity user identifiers',
-					resp.status,
-				);
-				return null;
+				throw resp.status;
 			}
 		})
+		.then((json) => json.brazeUuid)
 		.catch((e) => {
 			console.log('failed to get Identity user identifiers', e);
 			return null;
 		});
-};
 
-export const getUserIdentifiersFromApi = mergeCalls(
-	(mergingCallback: (u: IdentityUserIdentifiers | null) => void) => {
-		if (isUserLoggedIn()) {
-			void fetchUserIdentifiers().then((result) =>
-				mergingCallback(result),
-			);
-		} else {
-			mergingCallback(null);
+/**
+ * Get the user's Braze UUID
+ *
+ * If enrolled in the Okta experiment, return the value from the ID token
+ * `braze_uuid` claim
+ * Otherwise, fetch the Braze UUID from IDAPI
+ * @returns one of:
+ * - string, if the user is enrolled in the Okta experiment or the fetch to
+ *   IDAPI was successful
+ * - null, if the user is signed out or the fetch to IDAPI failed
+ */
+export const getBrazeUuid = (): Promise<string | null> =>
+	getAuthStatus().then((authStatus) => {
+		switch (authStatus.kind) {
+			case 'SignedInWithCookies':
+				return fetchBrazeUuidFromApi();
+			case 'SignedInWithOkta':
+				return authStatus.idToken.claims.braze_uuid;
+			default:
+				return null;
 		}
-	},
-);
+	});
 
 export const reset = (): void => {
 	getUserFromApi.reset();
-	getUserIdentifiersFromApi.reset();
 	userFromCookieCache = null;
 };
 
@@ -245,35 +314,6 @@ export const refreshOktaSession = (returnUrl: string): void => {
 
 export const redirectTo = (url: string): void => {
 	window.location.assign(url);
-};
-
-// This needs to get out of here
-type AuthenticationComponentId =
-	| 'email_sign_in_banner'
-	| 'subscription_sign_in_banner'
-	| 'signin_from_formstack';
-
-export const getUserOrSignIn = (
-	componentId: AuthenticationComponentId,
-	paramUrl: string | null,
-): IdentityUserFromCache | void => {
-	let returnUrl = paramUrl;
-
-	if (isUserLoggedIn()) {
-		return getUserFromCookie();
-	}
-
-	// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- not sure what it would do
-	returnUrl = encodeURIComponent(returnUrl || document.location.href);
-	const url = [
-		getUrl() || '',
-		'/signin?returnUrl=',
-		returnUrl,
-		'&',
-		createAuthenticationComponentEventParams(componentId),
-	].join('');
-
-	redirectTo(url);
 };
 
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {
@@ -337,16 +377,5 @@ export const updateUsername = (username: string): unknown => {
 
 	return request;
 };
-
-export const setConsent = (consents: SettableConsent): Promise<void> =>
-	fetch(`${idApiRoot}/users/me/consents`, {
-		method: 'PATCH',
-		credentials: 'include',
-		mode: 'cors',
-		body: JSON.stringify(consents),
-	}).then((resp) => {
-		if (resp.ok) return Promise.resolve();
-		return Promise.reject();
-	});
 
 export { getUserCookie as getCookie };

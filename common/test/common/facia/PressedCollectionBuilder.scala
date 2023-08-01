@@ -1,13 +1,13 @@
 package common.facia
 
-import FixtureBuilder.mkPressedContent
+import FixtureBuilder.mkPressedCuratedContent
 import com.gu.facia.client.models.TargetedTerritory
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
 
 object PressedCollectionBuilder {
-  private val defaultCurated = List(mkPressedContent(1), mkPressedContent(2), mkPressedContent(3))
-  private val defaultBackfill = List(mkPressedContent(4), mkPressedContent(5))
+  private val defaultCurated = List(mkPressedCuratedContent(1), mkPressedCuratedContent(2), mkPressedCuratedContent(3))
+  private val defaultBackfill = List(mkPressedCuratedContent(4), mkPressedCuratedContent(5))
 
   def mkPressedCollection(
       collectionType: String = "collectionType",

@@ -120,6 +120,7 @@ interface LightboxImages {
 	images: Array<{ src: string }>;
 }
 
+type Stage = 'DEV' | 'CODE' | 'PROD';
 interface PageConfig extends CommercialPageConfig {
 	ajaxUrl?: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	assetsPath: string;
@@ -151,7 +152,6 @@ interface PageConfig extends CommercialPageConfig {
 	keywordIds: string;
 	keywords: string;
 	lightboxImages?: LightboxImages;
-	nonRefreshableLineItemIds?: number[];
 	pageId: string;
 	publication: string;
 	revisionNumber: string; // https://github.com/guardian/frontend/blob/1b6f41c3/common/app/model/meta.scala#L388
@@ -171,6 +171,7 @@ interface PageConfig extends CommercialPageConfig {
 	videoDuration: number;
 	webPublicationDate: number;
 	userAttributesApiUrl?: string;
+	stage: Stage;
 }
 
 interface Ophan {

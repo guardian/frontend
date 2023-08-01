@@ -19,7 +19,6 @@ object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = Some("US politics"))
-  val coronavirus = NavLink("Coronavirus", "/world/coronavirus-outbreak", longTitle = Some("Coronavirus"))
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -46,7 +45,6 @@ object NavLinks {
   val markets = NavLink("Markets", "/business/stock-markets")
   val eurozone = NavLink("Eurozone", "/business/eurozone")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
-  val sustainableBusiness = NavLink("Sustainable business", "/us/sustainable-business")
   val ourWideBrownLand = NavLink("Our wide brown land", "/environment/series/our-wide-brown-land")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
@@ -65,7 +63,7 @@ object NavLinks {
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/obituaries")
   val greenLight = NavLink("Green light", "/environment/series/green-light")
-  val fightToVote = NavLink("Fight to vote", "/us-news/series/the-fight-to-vote")
+  val fightForDemocracy = NavLink("Fight for democracy", "/us-news/series/the-fight-for-democracy")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -91,7 +89,7 @@ object NavLinks {
     children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness, retail),
   )
   val usBusiness =
-    ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness, retail))
+    ukBusiness.copy(children = List(economics, diversityEquality, smallBusiness, retail))
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
 
   /* OPINION */
@@ -108,6 +106,7 @@ object NavLinks {
     "Football",
     "/football",
     children = List(
+      NavLink("Women's World Cup", "/football/womens-world-cup-2023", Some("football/womens-world-cup-2023")),
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
@@ -267,7 +266,6 @@ object NavLinks {
       climateCrisis,
       newsletters,
       football,
-      coronavirus,
       ukBusiness,
       ukEnvironment,
       politics,
@@ -282,7 +280,6 @@ object NavLinks {
   val auNewsPillar = ukNewsPillar.copy(
     children = List(
       australiaNews,
-      coronavirus,
       world,
       auPolitics,
       auEnvironment,
@@ -293,6 +290,7 @@ object NavLinks {
       auBusiness,
       science,
       tech,
+      podcastsAU,
     ),
   )
   val usNewsPillar = ukNewsPillar.copy(children =
@@ -306,14 +304,13 @@ object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}"),
-      fightToVote,
+      fightForDemocracy,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
       ukNews,
-      coronavirus,
       climateCrisis,
       ukEnvironment,
       science,
@@ -410,6 +407,7 @@ object NavLinks {
       NBA,
       NHL,
       formulaOne,
+      golf,
     ),
   )
   val intSportPillar = ukSportPillar.copy(
@@ -594,7 +592,7 @@ object NavLinks {
   )
 
   val ukBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader_dropdown"),
+    jobs,
     jobsRecruiter,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     guardianLive,
@@ -613,13 +611,13 @@ object NavLinks {
     guardianLicensing,
   )
   val usBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
+    jobs,
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     guardianLicensing,
   )
   val intBrandExtensions = List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
+    jobs,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianPuzzlesApp,
@@ -648,7 +646,6 @@ object NavLinks {
     "business/retail",
     "business/stock-markets",
     "business/eurozone",
-    "us/sustainable-business",
     "business/diversity-and-equality",
     "business/us-small-business",
     "environment/climate-change",

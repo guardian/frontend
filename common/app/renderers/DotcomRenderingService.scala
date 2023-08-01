@@ -8,35 +8,30 @@ import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{SimplePage}
-import model.dotcomrendering.{
-  DotcomBlocksRenderingDataModel,
-  DotcomFrontsRenderingDataModel,
-  DotcomNewslettersPageRenderingDataModel,
-  DotcomRenderingDataModel,
-  OnwardCollectionResponse,
-  PageType,
-}
-import services.NewsletterData
-import services.newsletters.model.NewsletterResponse
-
+import model.dotcomrendering._
 import model.{
   CacheTime,
   Cached,
+  GalleryPage,
+  ImageContentPage,
   InteractivePage,
   LiveBlogPage,
+  MediaPage,
+  MessageUsData,
   NoCache,
   PageWithStoryPackage,
   PressedPage,
   RelatedContentItem,
+  SimplePage,
   Topic,
   TopicResult,
-  MessageUsData,
 }
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.newsletters.model.NewsletterResponse
+import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -44,7 +39,6 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import model.dotcomrendering.Trail
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -108,9 +102,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
-          Cached(cacheTime)(RevalidatableResult.Ok(Html(response.body)))
+          val cachedRequest = Cached(cacheTime)(RevalidatableResult.Ok(Html(response.body)))
             .withHeaders("X-GU-Dotcomponents" -> "true")
-            .withPreconnect(HttpPreconnections.defaultUrls)
+
+          response.header("Link") match {
+            case Some(linkValue) =>
+              cachedRequest
+              // Send both the prefetch header for offline reading, and the usual preconnect URLs
+                .withHeaders("Link" -> linkValue)
+                .withPreconnect(HttpPreconnections.defaultUrls)
+            // For any other requests, we return just the default link header with preconnect urls
+            case _ => cachedRequest.withPreconnect(HttpPreconnections.defaultUrls)
+
+          }
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(InternalServerError("Remote renderer validation error (400)"))
@@ -257,6 +261,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostViewed: Seq[RelatedContentItem],
       mostCommented: Option[Content],
       mostShared: Option[Content],
+      deeplyRead: Option[Seq[Trail]],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomFrontsRenderingDataModel(
       page,
@@ -265,10 +270,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostViewed,
       mostCommented,
       mostShared,
+      deeplyRead,
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+  }
+
+  def getTagFront(
+      ws: WSClient,
+      page: IndexPage,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomTagFrontsRenderingDataModel(
+      page,
+      request,
+      pageType,
+    )
+
+    val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/TagFront", CacheTime.Facia)
   }
 
   def getInteractive(
@@ -308,6 +329,41 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
     val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
+  }
+
+  def getImageContent(
+      ws: WSClient,
+      imageContent: ImageContentPage,
+      pageType: PageType,
+      mainBlock: Option[Block],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getMedia(
+      ws: WSClient,
+      mediaPage: MediaPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
+
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getGallery(
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
 }
 

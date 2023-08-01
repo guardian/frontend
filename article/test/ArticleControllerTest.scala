@@ -1,6 +1,5 @@
 package test
 
-import agents.{CuratedContentAgent}
 import controllers.ArticleController
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.flatspec.AnyFlatSpec
@@ -21,8 +20,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient
-    with WithTestFrontJsonFapi {
+    with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"

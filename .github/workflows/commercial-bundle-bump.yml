@@ -1,0 +1,94 @@
+name: Check for new @guardian/commercial-bundle version
+
+on:
+    schedule:
+        # runs every 15 minutes between 8am and 6pm, Monday to Friday
+        - cron: '*/15 08-18 * * 1-5'
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    check:
+        name: Check for new version and existing PR
+        runs-on: ubuntu-latest
+        outputs:
+            CURRENT_VERSION: ${{ steps.current-version.outputs.result }}
+            LATEST_VERSION: ${{ steps.latest-version.outputs.result }}
+            PR_EXISTS: ${{ steps.pr-exists.outputs.result }}
+        steps:
+            - run: echo "result=$(yarn info @guardian/commercial-bundle version --silent)" >> $GITHUB_OUTPUT
+              id: latest-version
+
+              # use the github-script action to fetch the current version from the package.json file, this avoids checking out the repo
+            - uses: actions/github-script@v6
+              id: current-version
+              with:
+                  result-encoding: string
+                  script: |
+                      const package = await fetch('https://raw.githubusercontent.com/guardian/frontend/main/package.json').then(res => res.json());
+                      const version = package.dependencies['@guardian/commercial-bundle'].replace('^', '');
+                      console.log(version);
+                      return version;
+
+            - name: Check for existing pull request
+              id: pr-exists
+              if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
+              uses: actions/github-script@v6
+              with:
+                  result-encoding: string
+                  github-token: ${{ github.token }}
+                  script: |
+                      const prs = await github.rest.pulls.list({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        head: 'guardian:bump/commercial-bundle-v${{ steps.latest-version.outputs.result }}',
+                      });
+                      console.log(prs.data.length > 0);
+                      return String(prs.data.length > 0);
+
+    pr:
+        name: Create pull request
+        runs-on: ubuntu-latest
+        needs: check
+        # if there's no existing PR, and there's a new version available create a PR
+        if: ${{ needs.check.outputs.PR_EXISTS == 'false' && needs.check.outputs.CURRENT_VERSION != needs.check.outputs.LATEST_VERSION }}
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - uses: guardian/actions-setup-node@main
+
+            - run: yarn add @guardian/commercial-bundle@${{ needs.check.outputs.LATEST_VERSION }}
+
+            - run: sed -ri 's/"(prebid\.js@)(github:)(guardian\/prebid\.js#\w{7})"/\1\3/g' yarn.lock
+
+            - name: Create branch and commit
+              run: |
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --global user.name "github-actions[bot]"
+                  git checkout -b bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
+                  git add package.json yarn.lock
+                  # there's a bug in yarn where it doesn't update the yarn.lock file correctly for prebid.js, so we need to do this fix
+                  git commit -m "Bump @guardian/commercial-bundle to ${{ needs.check.outputs.LATEST_VERSION }}"
+                  git push --set-upstream origin bump/commercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }}
+
+            - name: Close any existing pull requests
+              run: |
+                  gh search prs --state open --base main --label commercial --label dependencies --json number "Bump @guardian/commercial-bundle" | jq -r '.[] | .number' | xargs -I {} gh pr close {}
+              env:
+                  GH_TOKEN: ${{ github.token }}
+
+            - name: Create pull request
+              run: |
+                  gh pr create --base main \
+                  --label commercial \
+                  --label dependencies \
+                  --title "Bump @guardian/commercial-bundle from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}" \
+                    --body "Bumps [@guardian/commercial-bundle](https://github.com/guardian/commercial-core) from ${{ needs.check.outputs.CURRENT_VERSION }} to ${{ needs.check.outputs.LATEST_VERSION }}.\
+                    Changelog available [here](https://github.com/guardian/commercial/releases/tag/%40guardian%2Fcommercial-bundle-v${{ needs.check.outputs.LATEST_VERSION }})"
+              env:
+                  GH_TOKEN: ${{ github.token }}

@@ -146,6 +146,17 @@ object CompetitionsProvider {
       finalMatchSVG = Some("womens_euros_2022_badge"),
     ),
     Competition(
+      "870",
+      "/football/womens-world-cup",
+      "Women's World Cup 2023",
+      "Women's World Cup 2023",
+      "Internationals",
+      showInTeamsList = true,
+      tableDividers = List(2),
+      startDate = Some(LocalDate.of(2023, 7, 20)),
+      finalMatchSVG = Some("womens_world_cup_2023_badge"),
+    ),
+    Competition(
       "100",
       "/football/premierleague",
       "Premier League",
@@ -188,7 +199,7 @@ object CompetitionsProvider {
       "Ligue 1",
       "European",
       showInTeamsList = true,
-      tableDividers = List(3, 4, 17),
+      tableDividers = List(3, 4, 16),
     ),
     Competition("961", "/football/womens-super-league", "Women's Super League", "Women's Super League", "English"),
     Competition(
@@ -216,7 +227,6 @@ object CompetitionsProvider {
       "Euro 2024 qualifying",
       "Internationals",
       showInTeamsList = true,
-      tableDividers = List(2),
       startDate = Some(LocalDate.of(2023, 3, 23)),
     ),
     Competition(

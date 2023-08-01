@@ -133,7 +133,7 @@ GET        /rss                                                                 
 GET        /$path<.+>/show-more/*id.json                                                       controllers.FaciaDraftController.renderShowMore(path, id)
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.FaciaDraftController.renderFront(path)
 GET        /$path<(\w\w)(/[\w\d-]+)?>/rss                                                      controllers.FaciaDraftController.renderFrontRss(path)
-GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonLite(path)
+GET        /$path<.+>/lite.json                                                                controllers.FaciaDraftController.renderFrontJsonMinimal(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                       controllers.FaciaDraftController.renderFrontJson(path)
 
 GET        /container/*id.json                                                                 controllers.FaciaDraftController.renderContainerJson(id)

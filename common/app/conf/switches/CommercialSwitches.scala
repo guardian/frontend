@@ -6,10 +6,10 @@ import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 
 trait CommercialSwitches {
 
-  val CommercialSwitch = Switch(
+  val ShouldLoadGoogleTagSwitch = Switch(
     Commercial,
-    "commercial",
-    "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
+    "should-load-googletag",
+    "If this switch is OFF, the commercial bundle won't load the googletag script. This is intended for use as a failsafe, and will disable all forms of advertising that are managed via Google Ad Manager, including Prebid and A9.",
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
@@ -136,66 +136,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val TravelFeedFetchSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-travel-feed-fetch",
-    "If this switch is on, cached travel offers feed will be updated from external source.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val TravelFeedParseSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-travel-feed-parse",
-    "If this switch is on, commercial components will be fed by travel offers feed.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val JobsFeedFetchSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-jobs-feed-fetch",
-    "If this switch is on, jobs feed will be periodically updated from external source.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val JobsFeedParseSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-jobs-feed-parse",
-    "If this switch is on, commercial components will be fed by jobs feed.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val EventsFeedSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-events",
-    "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
-  val GuBookshopFeedsSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-bookshop",
-    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val BookLookupSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "book-lookup",
@@ -266,16 +206,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
-  )
-
-  val MerchandisingHighSection: Switch = Switch(
-    group = Commercial,
-    name = "merchandising-high-section",
-    description = "Move merchandising high section one section lower. This switch is only applied in the UK.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
   )
 
   val commercialMetrics: Switch = Switch(
@@ -521,26 +451,6 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
-  val mobileStickyLeaderboard: Switch = Switch(
-    group = Commercial,
-    name = "mobile-sticky-leaderboard",
-    description = "Include Mobile Sticky leaderboard banner",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val mobileStickyPrebid: Switch = Switch(
-    group = CommercialPrebid,
-    name = "mobile-sticky-prebid",
-    description = "Include Mobile Sticky leaderboard banner in Prebid",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val sentinelLogger: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
@@ -551,20 +461,20 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
-  val fetchNonRefreshableLineItems: Switch = Switch(
-    group = Commercial,
-    name = "fetch-non-refreshable-line-items",
-    description = "Lazily fetch non-refreshable line item ids from an endpoint",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val ampContentABTesting: Switch = Switch(
     group = Commercial,
     name = "amp-content-ab-testing",
     description = "Enable content based testing on AMP",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val optOutAdvertising: Switch = Switch(
+    group = Commercial,
+    name = "opt-out-advertising",
+    description = "Enable Opt Out Advertising",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

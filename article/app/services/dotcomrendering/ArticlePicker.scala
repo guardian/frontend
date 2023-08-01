@@ -4,6 +4,7 @@ import com.madgag.scala.collection.decorators.MapDecorator
 import implicits.Requests._
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
+import utils.DotcomponentsLogger
 
 object ArticlePageChecks {
 
@@ -18,10 +19,7 @@ object ArticlePageChecks {
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
 
-  def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
-
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.item.tags.isPaidContent
-
 }
 
 object ArticlePicker {
@@ -31,7 +29,6 @@ object ArticlePicker {
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
-      ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
     )
   }
 
@@ -42,7 +39,6 @@ object ArticlePicker {
         "isSupportedType",
         "isNotAGallery",
         "isNotLiveBlog",
-        "isNotAMP",
       ),
     )
 
@@ -69,11 +65,11 @@ object ArticlePicker {
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
-      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page.article)
     } else if (tier == PressedArticle) {
-      DotcomponentsLogger.logger.logRequest(s"path executing from pressed content", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing from pressed content", features, page.article)
     } else {
-      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page)
+      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page.article)
     }
 
     tier

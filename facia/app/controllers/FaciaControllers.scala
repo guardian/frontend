@@ -1,6 +1,6 @@
 package controllers
 
-import agents.MostViewedAgent
+import agents.{MostViewedAgent, DeeplyReadAgent}
 import com.softwaremill.macwire._
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
@@ -12,6 +12,7 @@ trait FaciaControllers {
   def controllerComponents: ControllerComponents
   def wsClient: WSClient
   def mostViewedAgent: MostViewedAgent
+  def deeplyReadAgent: DeeplyReadAgent
   implicit def appContext: ApplicationContext
   lazy val faciaController = wire[FaciaControllerImpl]
 }

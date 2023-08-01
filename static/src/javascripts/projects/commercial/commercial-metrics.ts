@@ -1,13 +1,7 @@
-/**
- * WARNING!
- * Commercial client side code has moved to: https://github.com/guardian/commercial
- * This file should be considered deprecated and only exists for legacy 'hosted' pages
- */
-
 import {
 	initCommercialMetrics,
 	bypassCommercialMetricsSampling as switchOffSampling,
-} from '@guardian/commercial-core';
+} from '@guardian/commercial';
 import { log } from '@guardian/libs';
 import { shouldCaptureMetrics } from '../common/modules/analytics/shouldCaptureMetrics';
 

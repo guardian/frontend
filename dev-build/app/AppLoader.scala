@@ -2,7 +2,7 @@ import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
-import agents.{CuratedContentAgent, MostViewedAgent}
+import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
@@ -89,8 +89,6 @@ trait AppComponents
 
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
-
-  lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]

@@ -6,6 +6,9 @@ import test.WithTestContentApiClient
 trait TestComponents extends WithTestContentApiClient {
   self: AppComponents =>
   override lazy val contentApiClient = testContentApiClient
+
+  // Do not run lifecycle components in tests
+  override lazy val lifecycleComponents = List()
 }
 
 class TestAppLoader extends AppLoader {

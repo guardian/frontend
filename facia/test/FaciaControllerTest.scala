@@ -1,6 +1,6 @@
 package test
 
-import agents.MostViewedAgent
+import agents.{DeeplyReadAgent, MostViewedAgent}
 import akka.actor.ActorSystem
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
@@ -46,6 +46,7 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+    new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
   )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
@@ -179,12 +180,6 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
       .withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToInternational = faciaController.renderFront("commentisfree")(international)
     header("Location", redirectToInternational).head should endWith("/uk/commentisfree")
-  }
-
-  it should "list the alterative options for a path by section and edition" in {
-    faciaController.alternativeEndpoints("uk/lifeandstyle") should be(List("lifeandstyle", "uk"))
-    faciaController.alternativeEndpoints("uk") should be(List("uk"))
-    faciaController.alternativeEndpoints("uk/business/stock-markets") should be(List("business", "uk"))
   }
 
   it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {

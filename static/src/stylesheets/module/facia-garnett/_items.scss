@@ -133,6 +133,10 @@
                 @include fs-headline(2, true);
                 @include fs-headline-quote(2);
                 @include headline-boost(3);
+
+                .fc-item__action-kicker-wrapper {
+                    @include fs-action-kicker(2);
+                }
             }
         }
 
@@ -268,10 +272,18 @@
                 @include fs-headline-quote(4);
                 @include headline-boost(5);
 
+                .fc-item__action-kicker-wrapper {
+                    @include fs-action-kicker(4);
+                }
+
                 @include mq(desktop) {
                     @include fs-headline(6, true);
                     @include fs-headline-quote(6);
                     @include headline-boost(6);
+
+                    .fc-item__action-kicker-wrapper {
+                        @include fs-action-kicker(6);
+                    }
                 }
 
                 padding-right: gs-height(4.5);
@@ -318,10 +330,17 @@
                 @include fs-headline(3, true);
                 @include fs-headline-quote(3);
 
+                .fc-item__action-kicker-wrapper {
+                    @include fs-action-kicker(3);
+                }
+
                 @include mq(desktop) {
                     @include fs-headline(5, true);
                     @include fs-headline-quote(5);
                     @include headline-boost(6);
+                    .fc-item__action-kicker-wrapper {
+                        @include fs-action-kicker(5);
+                    }
                 }
             }
 
@@ -363,6 +382,10 @@
         .fc-item__header {
             @include fs-headline(5, true);
             @include fs-headline-quote(5);
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(5);
+            }
         }
     }
 }
@@ -379,6 +402,10 @@
         .fc-item__header {
             @include fs-headline(3, true);
             @include fs-headline-quote(3);
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(3);
+            }
         }
 
         &[class*='fc-item--has-sublinks'] {
@@ -392,6 +419,10 @@
         .fc-item__header {
             @include fs-headline(6, true);
             @include fs-headline-quote(6);
+
+            .fc-item__action-kicker-wrapper {
+                @include fs-action-kicker(6);
+            }
         }
 
         .fc-item__header,

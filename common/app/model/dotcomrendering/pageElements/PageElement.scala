@@ -151,6 +151,7 @@ case class CalloutBlockElementV2(
     activeUntil: Option[Long],
     displayOnSensitive: Boolean,
     formId: Int,
+    prompt: String,
     title: String,
     description: String,
     tagName: String,

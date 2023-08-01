@@ -1,6 +1,5 @@
 package test
 
-import agents.{CuratedContentAgent}
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
 import org.mockito.Mockito._
@@ -22,8 +21,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     with WithMaterializer
     with WithTestWsClient
     with WithTestApplicationContext
-    with WithTestContentApiClient
-    with WithTestFrontJsonFapi {
+    with WithTestContentApiClient {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302

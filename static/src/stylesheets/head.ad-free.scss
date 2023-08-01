@@ -1,9 +1,0 @@
-// this is slightly kludgy way of clearing up the space left by ad slots in
-// ad-free. it used to be done in the commercial JS, but that's not loaded in
-// ad-free now. ideally we'd not render the slots in the first place, but the
-// ad-free path is slightly labyrinthine, and soon DCR will handle fronts
-// anyway.
-
-.ad-slot, .top-banner-ad-container {
-    display: none !important;
-}

@@ -29,11 +29,20 @@ if (process.env.NODE_ENV !== 'production') {
 // kick off the app
 const go = () => {
     domready(async () => {
-        // 1. boot standard, always
+
+        /**
+         * Boot Standard
+         *
+         */
+
         markTime('standard boot');
         bootStandard();
 
-        // Start CMP
+        /**
+         * CMP
+         *
+         */
+
         // CCPA and TCFv2
         const browserId = getCookie('bwid') || undefined;
         const pageViewId = config.get('ophan.pageViewId');
@@ -127,10 +136,13 @@ const go = () => {
 
         cmp.init({ pubData, country: await getLocale() });
 
+        /**
+         * Handle Ad blockers
+         *
+         */
+
         detectAdBlockers()
 
-        // 2. once standard is done, next is commercial
-        // Handle ad blockers
         window.guardian.adBlockers.onDetect.push((adblockInUse) => {
             if (!adblockInUse) return;
 
@@ -151,18 +163,13 @@ const go = () => {
             }
         });
 
-        // Start downloading these ASAP
+        /**
+         * Commercial boot promise
+         *
+         */
 
 		const fetchCommercial = () => {
-			const noop = () =>
-				Promise.resolve({ bootCommercial: () => {} });
-
-			if (
-				!config.get('switches.commercial') ||
-				config.get('page.isAdFree', false)
-			) {
-				return noop();
-			}
+			const noop = () => Promise.resolve({ bootCommercial: () => {} });
 
 			markTime('commercial request');
 
@@ -176,11 +183,20 @@ const go = () => {
 			);
 		};
 
+        /**
+         * Enhanced boot promise
+         *
+         */
 
         const fetchEnhanced = window.guardian.isEnhanced
             ? (markTime('enhanced request'),
                 import(/* webpackChunkName: "enhanced" */ 'bootstraps/enhanced/main'))
             : Promise.resolve({ bootEnhanced: () => { } });
+
+        /**
+         * Boot commercial and enhanced
+         *
+         */
 
         Promise.all([
             fetchCommercial().then(({ bootCommercial }) => {

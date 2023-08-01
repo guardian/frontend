@@ -1,13 +1,9 @@
 @(isPaidContent: Boolean, hasPageSkin: Boolean = false)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.CommercialSwitch
-
-@if(CommercialSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(
-        "merchandising-high",
-        Seq("commercial-component-high"),
-        Map(),
-        showLabel=false,
-        refresh=false
-    ){ }
-}
+@fragments.commercial.adSlot(
+    "merchandising-high",
+    Seq("commercial-component-high"),
+    Map(),
+    showLabel=false,
+    refresh=false
+){ }

@@ -836,14 +836,10 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
     val minContainers = if (isPaidContent) 1 else 2
 
     if (containers.length >= minContainers) {
-
-      val merchHighCanBeMoved = MerchandisingHighSection.isSwitchedOn && edition.id.equals(Uk.id)
-
-      val containerIndex = (containers.length >= 4, isNetworkFront, merchHighCanBeMoved) match {
-        case (false, _, _)       => 0
-        case (true, false, _)    => 2
-        case (true, true, false) => 3
-        case (true, true, true)  => 4
+      val containerIndex = (containers.length >= 4, isNetworkFront) match {
+        case (false, _)    => 0
+        case (true, false) => 2
+        case (true, true)  => 3
       }
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
@@ -858,7 +854,6 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
         container.after(slot)
         slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
       }
-
     }
     document
   }

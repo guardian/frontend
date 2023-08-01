@@ -19,7 +19,7 @@
         }
         <div class="fc-item__content">
             <div class="fc-item__header">
-                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType), isAction = item.isAction)
             </div>
 
             @item.trailText.filter(const(item.showStandfirst)).map { text =>

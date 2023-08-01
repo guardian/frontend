@@ -5,19 +5,30 @@ import pa._
 object GuTeamCodes {
   def codeFor(team: FootballTeam): String = {
 
-    // Date: June 2021
+    // Date: June 2021, Updated July 2023 to include more incorrect codes
     // Author: Pascal
 
     // Introducing this function to patches pa.TeamCodes.codeFor in order to replace the currently PA incorrect
-    // short code for North Macedonia. PA's current library says "MAC", but the correct value is "MKD".
+    // short codes below.
     // This is a temporary fix. The, better, long term fix is to upgrade the PA library (and check that the new library
-    // come with the correct value for North Macedonia), at which point this object should be removed.
+    // comes with the correct values), at which point this object should be removed.
 
-    val code = TeamCodes.codeFor(team)
-    if (code == "MAC") {
-      "MKD"
-    } else {
-      code
+    // We need to match on name, as South Africa and South Korea both default to "SOU"
+    team.name match {
+      case "China PR"        => "CHN"
+      case "Costa Rica"      => "CRC"
+      case "Japan"           => "JPN"
+      case "Morocco"         => "MAR"
+      case "Nigeria"         => "NGA"
+      case "Netherlands"     => "NED"
+      case "North Macedonia" => "MKD"
+      case "New Zealand"     => "NZL"
+      case "Rep of Ireland"  => "IRL"
+      case "South Africa"    => "RSA"
+      case "South Korea"     => "KOR"
+      case "Spain"           => "ESP"
+      case "Switzerland"     => "SUI"
+      case _                 => TeamCodes.codeFor(team)
     }
   }
 }

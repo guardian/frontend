@@ -55,9 +55,7 @@
                 @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
                 @if(!isPaid) {
-                    <div class="fc-container fc-container--commercial">
-                    @fragments.commercial.commercialComponent()
-                    </div>
+                    <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
                 }
             </div>
         </div>
