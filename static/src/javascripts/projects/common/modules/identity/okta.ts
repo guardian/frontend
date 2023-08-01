@@ -49,6 +49,7 @@ function getIdentityAuth() {
 				'guardian.discussion-api.update.secure', // allows the access token to be used to make requests to the discussion api to post comments, upvote etc
 				'guardian.identity-api.newsletters.read.self', // allows the access token to be used to make requests to the identity api to read the user's newsletter subscriptions
 				'guardian.identity-api.newsletters.update.self', // allows the access token to be used to make requests to the identity api to update the user's newsletter subscriptions
+				'guardian.identity-api.user.username.create.self.secure', // allows the access token to set the user's username
 				'guardian.members-data-api.read.self', // allows the access token to be used to make requests to the members data api to read the user's membership status
 				'id_token.profile.theguardian', // populates the id token with application specific profile information
 			],
