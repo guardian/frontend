@@ -210,7 +210,7 @@ val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
 
-val search = application("search")
+val experiment = application("experiment")
   .dependsOn(commonWithTests)
   .aggregate(common)
 
@@ -239,7 +239,7 @@ val main = root()
     archive,
     preview,
     rss,
-    search,
+    experiment,
   )
   .settings(
     riffRaffUploadArtifactBucket := Some(

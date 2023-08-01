@@ -365,6 +365,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/Article", CacheTime.Facia)
   }
+
+  def getExperiment(
+      ws: WSClient,
+      experimentId: String,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, "", Configuration.rendering.baseURL + "/Experiment", CacheTime.Facia)
+  }
 }
 
 object DotcomRenderingService {

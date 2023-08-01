@@ -1,12 +1,12 @@
 <configuration>
 
-    <contextName>frontend-onward</contextName>
+    <contextName>frontend-experiment</contextName>
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/frontend-onward.log</file>
+        <file>logs/frontend-experiments.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/frontend-onward.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <fileNamePattern>logs/frontend-experiment.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
             <maxHistory>7</maxHistory><totalSizeCap>512MB</totalSizeCap><maxFileSize>256MB</maxFileSize>
         </rollingPolicy>
 
@@ -20,3 +20,4 @@
     </root>
 
 </configuration>
+

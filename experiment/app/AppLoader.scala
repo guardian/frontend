@@ -5,7 +5,7 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.{HealthCheck, SearchController}
+import controllers.{ExperimentController, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
@@ -14,6 +14,7 @@ import play.api.{BuiltInComponentsFromContext, Environment}
 import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
 import router.Routes
 
 import scala.concurrent.ExecutionContext
@@ -23,25 +24,27 @@ class AppLoader extends FrontendApplicationLoader {
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait SearchControllers {
+trait ExperimentControllers {
   def contentApiClient: ContentApiClient
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
-  lazy val searchController = wire[SearchController]
+  lazy val remoteRenderer = wire[DotcomRenderingService]
+  lazy val experimentController = wire[ExperimentController]
 }
 
-trait SearchServices {
+trait ExperimentServices {
   def wsClient: WSClient
   def environment: Environment
   def actorSystem: ActorSystem
   implicit def appContext: ApplicationContext
   implicit val executionContext: ExecutionContext
+
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
 }
 
-trait AppComponents extends FrontendComponents with SearchControllers with SearchServices {
+trait AppComponents extends FrontendComponents with ExperimentControllers with ExperimentServices {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
@@ -53,7 +56,7 @@ trait AppComponents extends FrontendComponents with SearchControllers with Searc
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("search")
+  lazy val appIdentity = ApplicationIdentity("experiment")
 
   val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
@@ -61,7 +64,7 @@ trait AppComponents extends FrontendComponents with SearchControllers with Searc
     ContentApiMetrics.ContentApiRequestsMetric,
   )
 
-  val frontendBuildInfo: FrontendBuildInfo = frontend.search.BuildInfo
+  val frontendBuildInfo: FrontendBuildInfo = frontend.experiment.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
