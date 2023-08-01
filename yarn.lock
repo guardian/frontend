@@ -1561,10 +1561,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-14.1.1.tgz#12672e3992ad3eab3bade848861ca01631a0edf5"
   integrity sha512-wHuJwdOC2hsTBie+zWJYFyasP4fOJXOPcKXpN2Cp+GlljPah3YtS2Fbgn8pcxxt8d5JKO9ra7sHKvX8FNxkAyg==
 
-"@guardian/commercial@10.9.1":
-  version "10.9.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.9.1.tgz#b17121c117c085ccb3b5070145c10e6a4c87b4ee"
-  integrity sha512-OWKwttSigy181pAeuNhppSosVa7BMysGtSLVxNItNCC194MEBwxtK7IwzcFsP7Gk6t3w0gtO1V8uj8y0gIRklg==
+"@guardian/commercial@10.10.0":
+  version "10.10.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.10.0.tgz#d610162aab654bee0b38d7f2d9d6e088a5e2eb53"
+  integrity sha512-QnSRLI9vuOOREZtFC5PP8y7YQXF5FjJIGbcf/DNIAbJTRxejeA2Mr4nj5SzYL6zryvUtRjeGXhilCTk5cMFSkA==
   dependencies:
     "@changesets/cli" "^2.26.1"
     "@guardian/ab-core" "^5.0.0"
