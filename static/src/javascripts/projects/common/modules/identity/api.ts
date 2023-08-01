@@ -7,17 +7,6 @@ import { getUrlVars } from '../../../../lib/url';
 import type { CustomIdTokenClaims } from './okta';
 
 // Types info coming from https://github.com/guardian/discussion-rendering/blob/fc14c26db73bfec8a04ff7a503ed9f90f1a1a8ad/src/types.ts
-
-type SettableConsent = {
-	id: string;
-	consented: boolean;
-};
-
-type Newsletter = {
-	id: string;
-	subscribed?: boolean;
-};
-
 type UserNameError = {
 	message: string;
 	description: string;
@@ -132,34 +121,6 @@ export const getUserFromCookie = (): IdentityUserFromCache => {
 	}
 
 	return userFromCookieCache;
-};
-
-export const updateNewsletter = (newsletter: Newsletter): Promise<void> => {
-	const url = `${idApiRoot}/users/me/newsletters`;
-	return fetch(url, {
-		method: 'PATCH',
-		credentials: 'include',
-		mode: 'cors',
-		body: JSON.stringify(newsletter),
-	}).then(() => Promise.resolve());
-};
-
-export const buildNewsletterUpdatePayload = (
-	action = 'none',
-	newsletterId: string,
-): Newsletter => {
-	const newsletter: Newsletter = { id: newsletterId };
-	switch (action) {
-		case 'add':
-			newsletter.subscribed = true;
-			break;
-		case 'remove':
-			newsletter.subscribed = false;
-			break;
-		default:
-			throw new Error(`Undefined newsletter action type (${action})`);
-	}
-	return newsletter;
 };
 
 type SignedOutWithCookies = { kind: 'SignedOutWithCookies' };
@@ -416,16 +377,5 @@ export const updateUsername = (username: string): unknown => {
 
 	return request;
 };
-
-export const setConsent = (consents: SettableConsent): Promise<void> =>
-	fetch(`${idApiRoot}/users/me/consents`, {
-		method: 'PATCH',
-		credentials: 'include',
-		mode: 'cors',
-		body: JSON.stringify(consents),
-	}).then((resp) => {
-		if (resp.ok) return Promise.resolve();
-		return Promise.reject();
-	});
 
 export { getUserCookie as getCookie };
