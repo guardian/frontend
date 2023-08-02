@@ -313,13 +313,6 @@ const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
 	return daysSinceLastContribution > askPauseDays;
 };
 
-// TODO: Remove as part of Okta migration
-const isRecurringContributor = (): boolean =>
-	// If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
-	(isUserLoggedIn() &&
-		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
-	supportSiteRecurringCookiePresent();
-
 const isRecurringContributorOkta = async (): Promise<boolean> =>
 	((await isUserLoggedInOktaRefactor()) &&
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
@@ -415,7 +408,6 @@ export {
 	isPayingMember,
 	isRecentOneOffContributor,
 	isRecurringContributorOkta,
-	isRecurringContributor,
 	isDigitalSubscriber,
 	shouldHideSupportMessaging,
 	refresh,
