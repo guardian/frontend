@@ -101,7 +101,7 @@ describe('Commercial features', () => {
 		getCurrentBreakpoint.mockReturnValue('desktop');
 		isPayingMember.mockReturnValue(false);
 		isRecentOneOffContributor.mockReturnValue(false);
-		shouldHideSupportMessaging.mockReturnValue(false);
+		shouldHideSupportMessaging.mockResolvedValue(false);
 		isAdFreeUser.mockReturnValue(false);
 		isUserLoggedIn.mockReturnValue(true);
 

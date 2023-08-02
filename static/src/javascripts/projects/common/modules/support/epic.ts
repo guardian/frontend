@@ -74,7 +74,7 @@ const buildEpicPayload = async (): Promise<EpicPayload> => {
 		isMinuteArticle: config.hasTone('Minute'),
 		isPaidContent: isPaidContent,
 		tags: buildKeywordTags().concat([buildSeriesTag()]),
-		showSupportMessaging: !shouldHideSupportMessaging(),
+		showSupportMessaging: !(await shouldHideSupportMessaging()),
 		isRecurringContributor: isRecurringContributor(),
 		lastOneOffContributionDate:
 			getLastOneOffContributionTimestamp() ?? undefined,

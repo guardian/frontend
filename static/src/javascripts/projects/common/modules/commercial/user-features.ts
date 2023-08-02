@@ -339,13 +339,7 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
     which this function is dependent on.
 */
 
-// TODO: Remove as part of Okta migration
-const shouldHideSupportMessaging = (): boolean =>
-	shouldNotBeShownSupportMessaging() ||
-	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
-	isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
-
-const shouldHideSupportMessagingOkta = async (): Promise<boolean> =>
+const shouldHideSupportMessaging = async (): Promise<boolean> =>
 	shouldNotBeShownSupportMessaging() ||
 	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
 	(await isRecurringContributorOkta()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
@@ -423,7 +417,6 @@ export {
 	isRecurringContributor,
 	isDigitalSubscriber,
 	shouldHideSupportMessaging,
-	shouldHideSupportMessagingOkta,
 	refresh,
 	deleteOldData,
 	getLastOneOffContributionTimestamp,

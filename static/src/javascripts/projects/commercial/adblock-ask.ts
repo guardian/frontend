@@ -31,8 +31,8 @@ const askHtml = `
 </div>
 `;
 
-const canShow = (): boolean =>
-	!shouldHideSupportMessaging() &&
+const canShow = async (): Promise<boolean> =>
+	!(await shouldHideSupportMessaging()) &&
 	!pageShouldHideReaderRevenue() &&
 	!window.guardian.config.page.hasShowcaseMainElement;
 
@@ -41,8 +41,8 @@ const canShow = (): boolean =>
  * Shows a message with a discounted subscription to users who have ad blockers enabled
  * @returns Promise
  */
-export const initAdblockAsk = (): Promise<void> => {
-	if (!canShow()) return Promise.resolve();
+export const initAdblockAsk = async (): Promise<void> => {
+	if (!(await canShow())) return Promise.resolve();
 
 	return fastdom
 		.measure(() => document.querySelector('.js-aside-slot-container'))
