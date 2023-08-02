@@ -12,13 +12,13 @@ import { commercialFeatures } from './commercial-features';
 import type { CommercialFeaturesConstructor } from './commercial-features';
 import {
 	isAdFreeUser as isAdFreeUser_,
-	isPayingMemberOkta as isPayingMemberOkta_,
+	isPayingMember as isPayingMember_,
 	isRecentOneOffContributor as isRecentOneOffContributor_,
 	shouldHideSupportMessaging as shouldHideSupportMessaging_,
 } from './user-features';
 
-const isPayingMemberOkta = isPayingMemberOkta_ as jest.MockedFunction<
-	typeof isPayingMemberOkta_
+const isPayingMember = isPayingMember_ as jest.MockedFunction<
+	typeof isPayingMember_
 >;
 const isRecentOneOffContributor =
 	isRecentOneOffContributor_ as jest.MockedFunction<
@@ -40,7 +40,7 @@ const CommercialFeatures =
 	commercialFeatures.constructor as CommercialFeaturesConstructor;
 
 jest.mock('./user-features', () => ({
-	isPayingMemberOkta: jest.fn(),
+	isPayingMember: jest.fn(),
 	isRecentOneOffContributor: jest.fn(),
 	shouldHideSupportMessaging: jest.fn(),
 	isAdFreeUser: jest.fn(),
@@ -99,7 +99,7 @@ describe('Commercial features', () => {
 		userPrefs.removeSwitch('adverts');
 
 		getCurrentBreakpoint.mockReturnValue('desktop');
-		isPayingMemberOkta.mockResolvedValue(false);
+		isPayingMember.mockResolvedValue(false);
 		isRecentOneOffContributor.mockReturnValue(false);
 		shouldHideSupportMessaging.mockResolvedValue(false);
 		isAdFreeUser.mockReturnValue(false);

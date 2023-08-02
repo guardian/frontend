@@ -16,7 +16,7 @@ import {
 	getPurchaseInfo,
 	isAdFreeUser,
 	isDigitalSubscriber,
-	isPayingMemberOkta,
+	isPayingMember,
 	isPostAskPauseOneOffContributor,
 	isRecentOneOffContributor,
 	isRecurringContributor,
@@ -272,7 +272,7 @@ describe('The isPayingMember getter', () => {
 		jest.resetAllMocks();
 		isUserLoggedIn.mockReturnValue(false);
 		isUserLoggedInOktaRefactor.mockResolvedValue(false);
-		expect(await isPayingMemberOkta()).toBe(false);
+		expect(await isPayingMember()).toBe(false);
 	});
 
 	describe('When the user is logged in', () => {
@@ -284,18 +284,18 @@ describe('The isPayingMember getter', () => {
 
 		it('Is true when the user has a `true` paying member cookie', async () => {
 			addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
-			expect(await isPayingMemberOkta()).toBe(true);
+			expect(await isPayingMember()).toBe(true);
 		});
 
 		it('Is false when the user has a `false` paying member cookie', async () => {
 			addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'false');
-			expect(await isPayingMemberOkta()).toBe(false);
+			expect(await isPayingMember()).toBe(false);
 		});
 
 		it('Is true when the user has no paying member cookie', async () => {
 			// If we don't know, we err on the side of caution, rather than annoy paying users
 			removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-			expect(await isPayingMemberOkta()).toBe(true);
+			expect(await isPayingMember()).toBe(true);
 		});
 	});
 });

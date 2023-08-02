@@ -1,5 +1,5 @@
 import {
-    isPayingMemberOkta,
+    isPayingMember,
     accountDataUpdateWarning,
     getLastOneOffContributionTimestamp,
     getLastRecurringContributionDate,
@@ -167,7 +167,7 @@ export const initMembership = () => {
         });
     }
 
-    isPayingMemberOkta().then(isPayingMember => {
+    isPayingMember().then(isPayingMember => {
         if (isPayingMember) {
             fastdom
                 .measure(() => document.getElementsByClassName('js-become-member'))
