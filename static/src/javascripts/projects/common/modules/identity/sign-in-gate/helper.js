@@ -6,7 +6,7 @@ import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
-import { isUserLoggedIn } from 'common/modules/identity/api';
+import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
 import { cmp } from '@guardian/consent-management-platform';
 import { submitClickEventTracking } from './component-event-tracking';
 
@@ -41,9 +41,6 @@ const retrieveDismissedCount = (
         return 0;
     }
 };
-
-// wrapper over isLoggedIn
-export const isLoggedIn = isUserLoggedIn;
 
 // wrapper over isInABTestSynchronous
 export const isInTest = test => isInABTestSynchronous(test);
@@ -143,13 +140,15 @@ export const setGatePageTargeting = (
     isGateDismissed,
     canShowCheck
 ) => {
-    if (isUserLoggedIn()) {
-        setGoogleTargeting('signed in');
-    } else if (isGateDismissed) {
-        setGoogleTargeting('dismissed');
-    } else {
-        setGoogleTargeting(canShowCheck);
-    }
+    isUserLoggedInOktaRefactor().then(isLoggedIn => {
+        if (isLoggedIn) {
+            setGoogleTargeting('signed in');
+        } else if (isGateDismissed) {
+            setGoogleTargeting('dismissed');
+        } else {
+            setGoogleTargeting(canShowCheck);
+        }
+    })
 };
 
 // use the dailyArticleCount from the local storage to see how many articles the user has viewed in a day
