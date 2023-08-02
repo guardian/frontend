@@ -17,7 +17,7 @@ import { setupRemoteEpicInLiveblog } from 'common/modules/commercial/contributio
 import {
 	getLastOneOffContributionTimestamp,
 	isRecurringContributor,
-	shouldHideSupportMessaging,
+	shouldHideSupportMessagingOkta,
 } from 'common/modules/commercial/user-features';
 import { getArticleCounts } from 'common/modules/support/articleCount';
 import {
@@ -74,7 +74,7 @@ const buildEpicPayload = async (): Promise<EpicPayload> => {
 		isMinuteArticle: config.hasTone('Minute'),
 		isPaidContent: isPaidContent,
 		tags: buildKeywordTags().concat([buildSeriesTag()]),
-		showSupportMessaging: !shouldHideSupportMessaging(),
+		showSupportMessaging: !(await shouldHideSupportMessagingOkta()),
 		isRecurringContributor: isRecurringContributor(),
 		lastOneOffContributionDate:
 			getLastOneOffContributionTimestamp() ?? undefined,
