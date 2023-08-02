@@ -262,9 +262,8 @@ class CommentBox extends Component {
             this.setFormState(true);
 
             return postComment(this.getDiscussionId(), comment)
-                .then((resp) => resp.status === 'ok' ? resp : Promise.reject(resp))
-                .then((okResp) => this.postCommentSuccess(comment, okResp))
-                .catch((errResp) => this.fail(errResp));
+                .then((resp) => resp.status === 'ok' ? this.postCommentSuccess(comment, resp) : this.fail(resp))
+                .catch((err) => console.error(`Post Comment to DAPI failed`, err));
         };
 
         const updateUsernameSuccess = (resp) => {
@@ -587,9 +586,8 @@ class CommentBox extends Component {
 
         if (this.errors.length === 0) {
             previewComment(comment)
-                .then(resp => resp.status === 'ok' ? resp : Promise.reject(resp))
-                .then((resp) => callback(comment, resp))
-                .catch((errResp) => this.fail(errResp));
+                .then(resp => resp.status === 'ok' ? callback(comment, resp) : this.fail(resp))
+                .catch((err) => console.error("Preview comment failed", err));
         }
     }
 
