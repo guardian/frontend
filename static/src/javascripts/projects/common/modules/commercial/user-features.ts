@@ -407,6 +407,7 @@ export {
 	isAdFreeUser,
 	isPayingMember,
 	isRecentOneOffContributor,
+	isRecurringContributorOkta,
 	isRecurringContributor,
 	isDigitalSubscriber,
 	shouldHideSupportMessaging,
