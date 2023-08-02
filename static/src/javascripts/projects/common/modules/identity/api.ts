@@ -144,6 +144,26 @@ const isInOktaExperiment =
 	window.guardian.config.page.stage === 'DEV' ||
 	window.guardian.config.tests?.oktaVariant === 'variant';
 
+/**
+ * Runs `inOkta` if the user is enrolled in the Okta experiment, otherwise runs `notInOkta`
+ * @param inOkta runs if the user is enrolled in the Okta experiment
+ * @param notInOkta runs if the user is **not** enrolled in the Okta experiment
+ */
+export const eitherInOktaExperimentOrElse = async <A, B>(
+	inOkta: (authStatus: SignedInWithOkta | SignedOutWithOkta) => A,
+	notInOkta: () => B,
+): Promise<void> => {
+	const authStatus = await getAuthStatus();
+	switch (authStatus.kind) {
+		case 'SignedInWithOkta':
+		case 'SignedOutWithOkta':
+			inOkta(authStatus);
+			break;
+		default:
+			notInOkta();
+	}
+};
+
 export const getAuthStatus = async (): Promise<AuthStatus> => {
 	if (isInOktaExperiment) {
 		const { isSignedInWithOktaAuthState } = await import('./okta');
@@ -173,20 +193,13 @@ export const getAuthStatus = async (): Promise<AuthStatus> => {
 };
 
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
-export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
-	return new Promise((resolve) => {
-		void getAuthStatus().then((authStatus) => {
-			if (
-				authStatus.kind === 'SignedInWithCookies' ||
-				authStatus.kind === 'SignedInWithOkta'
-			) {
-				resolve(true);
-			} else {
-				resolve(false);
-			}
-		});
-	});
-};
+export const isUserLoggedInOktaRefactor = (): Promise<boolean> =>
+	getAuthStatus().then((authStatus) =>
+		authStatus.kind === 'SignedInWithCookies' ||
+		authStatus.kind === 'SignedInWithOkta'
+			? true
+			: false,
+	);
 
 /**
  * Decide request options based on an {@link AuthStatus}. Requests to authenticated APIs require different options depending on whether
