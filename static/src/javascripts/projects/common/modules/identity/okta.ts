@@ -1,5 +1,6 @@
 import type { CustomClaims, IdentityAuthState } from '@guardian/identity-auth';
 import { IdentityAuth } from '@guardian/identity-auth';
+import config from 'lib/config';
 
 // the `id_token.profile.theguardian` scope is used to get custom claims
 export type CustomIdTokenClaims = CustomClaims & {
@@ -53,6 +54,8 @@ function getIdentityAuth() {
 				'guardian.members-data-api.read.self', // allows the access token to be used to make requests to the members data api to read the user's membership status
 				'id_token.profile.theguardian', // populates the id token with application specific profile information
 			],
+			idCookieSessionRefresh:
+				config.get('switches.idCookieRefresh') ?? false,
 		});
 	}
 	return identityAuth;
