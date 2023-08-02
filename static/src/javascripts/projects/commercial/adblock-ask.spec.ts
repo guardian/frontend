@@ -5,7 +5,7 @@
  */
 
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
+import { shouldHideSupportMessagingOkta } from 'common/modules/commercial/user-features';
 import { _ } from './adblock-ask';
 
 const { params, canShow } = _;
@@ -22,23 +22,27 @@ describe('adblock-ask', () => {
 		);
 	});
 
-	it('should show if possible', () => {
+	it('should show if possible', async () => {
 		window.guardian.config.page.hasShowcaseMainElement = false;
 		(pageShouldHideReaderRevenue as jest.Mock).mockReturnValue(false);
-		(shouldHideSupportMessaging as jest.Mock).mockReturnValue(false);
+		(shouldHideSupportMessagingOkta as jest.Mock).mockReturnValue(
+			Promise.resolve(false),
+		);
 
-		expect(canShow()).toBe(true);
+		expect(await canShow()).toBe(true);
 	});
 
 	it.each([
 		['page.hasShowcaseMainElement', true, false, false],
 		['pageShouldHideReaderRevenue', false, true, false],
 		['shouldHideSupportMessaging', false, false, true],
-	])('should not show if is %s is true', (_, a, b, c) => {
+	])('should not show if is %s is true', async (_, a, b, c) => {
 		window.guardian.config.page.hasShowcaseMainElement = a;
 		(pageShouldHideReaderRevenue as jest.Mock).mockReturnValue(b);
-		(shouldHideSupportMessaging as jest.Mock).mockReturnValue(c);
+		(shouldHideSupportMessagingOkta as jest.Mock).mockReturnValue(
+			Promise.resolve(c),
+		);
 
-		expect(canShow()).toBe(false);
+		expect(await canShow()).toBe(false);
 	});
 });

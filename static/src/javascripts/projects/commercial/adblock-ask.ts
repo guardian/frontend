@@ -7,7 +7,7 @@
 import fastdom from '../../lib/fastdom-promise';
 import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contributions-utilities';
 import { supportSubscribeDigitalURL } from '../common/modules/commercial/support-utilities';
-import { shouldHideSupportMessaging } from '../common/modules/commercial/user-features';
+import { shouldHideSupportMessagingOkta } from '../common/modules/commercial/user-features';
 
 const params = new URLSearchParams();
 params.set(
@@ -31,18 +31,22 @@ const askHtml = `
 </div>
 `;
 
-const canShow = (): boolean =>
-	!shouldHideSupportMessaging() &&
-	!pageShouldHideReaderRevenue() &&
-	!window.guardian.config.page.hasShowcaseMainElement;
+const canShow = async (): Promise<boolean> => {
+	const shouldHideSupportMessaging = await shouldHideSupportMessagingOkta();
+	return (
+		!shouldHideSupportMessaging &&
+		!pageShouldHideReaderRevenue() &&
+		!window.guardian.config.page.hasShowcaseMainElement
+	);
+};
 
 /**
  * Initialise adblock ask a.k.a Shady Pie
  * Shows a message with a discounted subscription to users who have ad blockers enabled
  * @returns Promise
  */
-export const initAdblockAsk = (): Promise<void> => {
-	if (!canShow()) return Promise.resolve();
+export const initAdblockAsk = async (): Promise<void> => {
+	if (!(await canShow())) return Promise.resolve();
 
 	return fastdom
 		.measure(() => document.querySelector('.js-aside-slot-container'))
