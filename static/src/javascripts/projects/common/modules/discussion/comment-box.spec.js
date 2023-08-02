@@ -15,15 +15,11 @@ jest.mock('common/modules/identity/api', () => ({
         id: 1,
         accountCreatedDate: new Date(1392719401338),
     }),
-    getUserFromApiOrOkta: jest.fn().mockReturnValue(
-        Promise.resolve({
-            user: {
-                statusFields: {
-                    userEmailValidated: true,
-                },
-            },
-        })
-    ),
+    getUserFromApiOrOkta: jest.fn().mockResolvedValue({
+            statusFields: {
+                userEmailValidated: true,
+        },
+    }),
     reset: jest.fn(),
 }));
 jest.mock('common/modules/discussion/api', () => ({
@@ -164,14 +160,12 @@ describe('Comment box', () => {
             if (commentBody && commentBody instanceof HTMLTextAreaElement) {
                 commentBody.value = validCommentText;
 
-                getUserFromApi.mockReturnValueOnce(
-                    Promise.resolve({
-                        user: {
+                getUserFromApi.mockResolvedValueOnce(
+                    {
                             statusFields: {
                                 userEmailValidated: false,
-                            },
                         },
-                    })
+                    },
                 );
 
                 return commentBox.postComment().then(() => {

@@ -347,14 +347,12 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                return getUserFromApiOrOkta().then(response => {
-                    if (
-                        response.user.statusFields.userEmailValidated === true
-                    ) {
+                return getUserFromApiOrOkta().then(user => {
+                    if (user.statusFields.userEmailValidated) {
                         return validEmailCommentSubmission();
                     }
                     this.invalidEmailError();
-                });
+                })
             }
             return validEmailCommentSubmission();
         }
