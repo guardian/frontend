@@ -16,7 +16,7 @@ import { submitComponentEvent } from 'common/modules/commercial/acquisitions-oph
 import { setupRemoteEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
 	getLastOneOffContributionTimestamp,
-	isRecurringContributor,
+	isRecurringContributorOkta,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
 import { getArticleCounts } from 'common/modules/support/articleCount';
@@ -75,7 +75,7 @@ const buildEpicPayload = async (): Promise<EpicPayload> => {
 		isPaidContent: isPaidContent,
 		tags: buildKeywordTags().concat([buildSeriesTag()]),
 		showSupportMessaging: !(await shouldHideSupportMessaging()),
-		isRecurringContributor: isRecurringContributor(),
+		isRecurringContributor: await isRecurringContributorOkta(),
 		lastOneOffContributionDate:
 			getLastOneOffContributionTimestamp() ?? undefined,
 		mvtId: getMvtValue() ?? 0,
