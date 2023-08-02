@@ -1,5 +1,5 @@
 import {
-    isPayingMember,
+    isPayingMemberOkta,
     accountDataUpdateWarning,
     getLastOneOffContributionTimestamp,
     getLastRecurringContributionDate,
@@ -167,23 +167,25 @@ export const initMembership = () => {
         });
     }
 
-    if (isPayingMember()) {
-        fastdom
-            .measure(() => document.getElementsByClassName('js-become-member'))
-            .then(becomeMemberLinks => {
-                if (becomeMemberLinks.length) {
-                    becomeMemberLinks[0].setAttribute('hidden', 'hidden');
-                }
-            });
+    isPayingMemberOkta().then(isPayingMember => {
+        if (isPayingMember) {
+            fastdom
+                .measure(() => document.getElementsByClassName('js-become-member'))
+                .then(becomeMemberLinks => {
+                    if (becomeMemberLinks.length) {
+                        becomeMemberLinks[0].setAttribute('hidden', 'hidden');
+                    }
+                });
 
-        fastdom
-            .measure(() => document.getElementsByClassName('js-subscribe'))
-            .then(subscriberLinks => {
-                if (subscriberLinks.length) {
-                    subscriberLinks[0].classList.remove(
-                        'brand-bar__item--split--last'
-                    );
-                }
-            });
-    }
+            fastdom
+                .measure(() => document.getElementsByClassName('js-subscribe'))
+                .then(subscriberLinks => {
+                    if (subscriberLinks.length) {
+                        subscriberLinks[0].classList.remove(
+                            'brand-bar__item--split--last'
+                        );
+                    }
+                });
+        }
+    });
 };
