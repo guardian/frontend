@@ -5,6 +5,7 @@ import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer'
 import { elementsManager } from './tests/elements-manager';
 import { integrateIma } from './tests/integrate-ima';
 import { liveblogRightColumnAds } from './tests/liveblog-right-column-ads';
+import { publicGoodTest } from './tests/public-good';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateCopyTestJan2023 } from './tests/sign-in-gate-copy-test-variant';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -23,4 +24,5 @@ export const concurrentTests: readonly ABTest[] = [
 	billboardsInMerchHigh,
 	elementsManager,
 	liveblogRightColumnAds,
+	publicGoodTest,
 ];
