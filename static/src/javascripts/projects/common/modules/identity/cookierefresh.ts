@@ -1,3 +1,6 @@
+/**
+ * Once the Okta migration is complete and in front of 100% of users, we can delete this module.
+ */
 import { storage } from '@guardian/libs';
 import {
 	isUserLoggedIn,
