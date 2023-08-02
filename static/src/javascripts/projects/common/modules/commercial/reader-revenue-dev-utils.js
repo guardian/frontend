@@ -10,7 +10,7 @@ import {
 	initMvtCookie,
 } from '../analytics/mvt-cookie';
 import { clearParticipations } from '../experiments/ab-local-storage';
-import { isUserLoggedIn } from '../identity/api';
+import {getAuthStatus, isUserLoggedInOktaRefactor} from '../identity/api';
 import userPrefs from '../user-prefs';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
 import {
@@ -53,21 +53,39 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
 		fakeOneOffContributor();
 	}
 
-	if (isUserLoggedIn() && !asExistingSupporter) {
-		if (window.location.origin.includes('localhost')) {
-			// Assume they don't have identity running locally
-			// So try and remove the identity cookie manually
-			removeCookie('GU_U');
-		} else {
-			const profileUrl = window.location.origin.replace(
-				/(www\.|m\.)/,
-				'profile.',
-			);
-			window.location.assign(`${profileUrl}/signout`);
-		}
-	} else {
-		window.location.reload();
-	}
+
+    isUserLoggedInOktaRefactor().then(isLoggedIn => {
+        if(isLoggedIn && !asExistingSupporter) {
+            getAuthStatus().then(authStatus => {
+
+                // If logged in and in localhost authStatus will always be SignedInWithOkta
+                // because when we are in DEV we are always `InOktaExperiment`:
+                // https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/identity/api.ts#L115-L117
+                if (window.location.origin.includes('localhost') && authStatus.kind === "SignedInWithOkta") {
+                    localStorage.removeItem("gu.access_token");
+                    localStorage.removeItem("gu.id_token");
+                    removeCookie('GU_U');
+                } else {
+                    const profileUrl = window.location.origin.replace(
+                        /(www\.|m\.)/,
+                        'profile.',
+                    );
+                    window.location.assign(`${profileUrl}/signout`);
+                }
+            })
+
+        } else {
+
+            // If in localhost and SignedInWithCookie it will reach this point
+            // because in DEV we are always `InOktaExperiment`
+            // so adding this as a fallback. This will be also triggered when in localhost
+            // and SignedOutWithCookies or SignedOutWithOkta
+            if (window.location.origin.includes('localhost'))
+                removeCookie('GU_U');
+
+            window.location.reload();
+        }
+    })
 };
 
 const showMeTheEpic = (asExistingSupporter = false) => {
