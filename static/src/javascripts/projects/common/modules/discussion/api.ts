@@ -41,6 +41,8 @@ type UserResponse = {
 	};
 };
 
+type Response = UserResponse | CommentResponse;
+
 type AbuseReport = {
 	categoryId: number;
 	reason?: string;
@@ -58,7 +60,7 @@ const defaultInitParams: RequestInit = {
 	},
 };
 
-export const send = <T = CommentResponse>(
+export const send = <T extends Response = CommentResponse>(
 	endpoint: string,
 	method: 'GET' | 'POST',
 	data?: Comment | AbuseReport,
