@@ -189,11 +189,7 @@ describe('Comment box', () => {
                 commentBody.value = validCommentText;
 
                 postComment.mockReturnValueOnce(
-                    // eslint-disable-next-line prefer-promise-reject-errors
-                    Promise.reject({
-                        responseText: apiPostValidCommentButDiscussionClosed,
-                        status: 409,
-                    })
+                    Promise.resolve(JSON.parse(apiPostValidCommentButDiscussionClosed))
                 );
 
                 return commentBox.postComment().then(() => {
@@ -211,11 +207,7 @@ describe('Comment box', () => {
                 commentBody.value = validCommentText;
 
                 postComment.mockReturnValueOnce(
-                    // eslint-disable-next-line prefer-promise-reject-errors
-                    Promise.reject({
-                        responseText: apiPostValidCommentButReadOnlyMode,
-                        status: 503,
-                    })
+                    Promise.resolve(JSON.parse(apiPostValidCommentButReadOnlyMode))
                 );
 
                 return commentBox.postComment().then(() => {
@@ -251,11 +243,7 @@ describe('Comment box', () => {
                 commentBody.value = validCommentText;
 
                 postComment.mockReturnValueOnce(
-                    // eslint-disable-next-line prefer-promise-reject-errors
-                    Promise.reject({
-                        responseText: apiPostValidCommentButIdentityUsernameMissing,
-                        status: 400,
-                    })
+                    Promise.resolve(JSON.parse(apiPostValidCommentButIdentityUsernameMissing))
                 );
 
                 return commentBox.postComment().then(() => {
