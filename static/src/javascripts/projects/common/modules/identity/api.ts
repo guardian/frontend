@@ -193,20 +193,13 @@ export const getAuthStatus = async (): Promise<AuthStatus> => {
 };
 
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
-export const isUserLoggedInOktaRefactor = (): Promise<boolean> => {
-	return new Promise((resolve) => {
-		void getAuthStatus().then((authStatus) => {
-			if (
-				authStatus.kind === 'SignedInWithCookies' ||
-				authStatus.kind === 'SignedInWithOkta'
-			) {
-				resolve(true);
-			} else {
-				resolve(false);
-			}
-		});
-	});
-};
+export const isUserLoggedInOktaRefactor = (): Promise<boolean> =>
+	getAuthStatus().then((authStatus) =>
+		authStatus.kind === 'SignedInWithCookies' ||
+		authStatus.kind === 'SignedInWithOkta'
+			? true
+			: false,
+	);
 
 /**
  * Decide request options based on an {@link AuthStatus}. Requests to authenticated APIs require different options depending on whether
