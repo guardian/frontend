@@ -7,7 +7,7 @@
 import fastdom from '../../lib/fastdom-promise';
 import { pageShouldHideReaderRevenue } from '../common/modules/commercial/contributions-utilities';
 import { supportSubscribeDigitalURL } from '../common/modules/commercial/support-utilities';
-import { shouldHideSupportMessagingOkta } from '../common/modules/commercial/user-features';
+import { shouldHideSupportMessaging } from '../common/modules/commercial/user-features';
 
 const params = new URLSearchParams();
 params.set(
@@ -31,14 +31,10 @@ const askHtml = `
 </div>
 `;
 
-const canShow = async (): Promise<boolean> => {
-	const shouldHideSupportMessaging = await shouldHideSupportMessagingOkta();
-	return (
-		!shouldHideSupportMessaging &&
-		!pageShouldHideReaderRevenue() &&
-		!window.guardian.config.page.hasShowcaseMainElement
-	);
-};
+const canShow = async (): Promise<boolean> =>
+	!(await shouldHideSupportMessaging()) &&
+	!pageShouldHideReaderRevenue() &&
+	!window.guardian.config.page.hasShowcaseMainElement;
 
 /**
  * Initialise adblock ask a.k.a Shady Pie

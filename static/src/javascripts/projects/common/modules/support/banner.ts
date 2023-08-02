@@ -17,7 +17,7 @@ import { getVisitCount } from 'common/modules/commercial/contributions-utilities
 import {
 	getLastOneOffContributionDate,
 	getPurchaseInfo,
-	shouldHideSupportMessagingOkta,
+	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
 import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
 import {
@@ -141,7 +141,7 @@ const buildBannerPayload = async (
 		alreadyVisitedCount: getVisitCount(),
 		shouldHideReaderRevenue: shouldHideReaderRevenue,
 		isPaidContent: isPaidContent,
-		showSupportMessaging: !(await shouldHideSupportMessagingOkta()),
+		showSupportMessaging: !(await shouldHideSupportMessaging()),
 		engagementBannerLastClosedAt:
 			(userPrefs.get('engagementBannerLastClosedAt') as string) ||
 			undefined,
