@@ -7,7 +7,7 @@ import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { addProximityLoader } from 'lib/proximity-loader';
 import { Loader as DiscussionLoader } from 'common/modules/discussion/loader';
-import { isUserLoggedIn } from 'common/modules/identity/api';
+import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
 import { OnwardContent } from 'common/modules/onward/onward-content';
 import { MostPopular } from 'common/modules/onward/popular';
 import { related } from 'common/modules/onward/related';
@@ -159,19 +159,21 @@ const initDiscussion = () => {
 };
 
 const repositionComments = () => {
-    if (!isUserLoggedIn()) {
-        fastdom
-            .measure(() => $('.js-comments'))
-            .then($comments =>
-                fastdom.mutate(() => {
-                    $comments.appendTo(qwery('.js-repositioned-comments'));
-                    if (window.location.hash === '#comments') {
-                        const top = $comments.offset().top;
-                        $(document.body).scrollTop(top);
-                    }
-                })
-            );
-    }
+    isUserLoggedInOktaRefactor().then(isLoggedIn => {
+        if (isLoggedIn) {
+            fastdom
+                .measure(() => $('.js-comments'))
+                .then($comments =>
+                    fastdom.mutate(() => {
+                        $comments.appendTo(qwery('.js-repositioned-comments'));
+                        if (window.location.hash === '#comments') {
+                            const top = $comments.offset().top;
+                            $(document.body).scrollTop(top);
+                        }
+                    })
+                );
+        }
+    })
 };
 
 const initTrails = () => {
