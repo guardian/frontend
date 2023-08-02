@@ -75,7 +75,7 @@ const buildEpicPayload = async (): Promise<EpicPayload> => {
 		isPaidContent: isPaidContent,
 		tags: buildKeywordTags().concat([buildSeriesTag()]),
 		showSupportMessaging: !(await shouldHideSupportMessaging()),
-		isRecurringContributor: isRecurringContributor(),
+		isRecurringContributor: await isRecurringContributor(),
 		lastOneOffContributionDate:
 			getLastOneOffContributionTimestamp() ?? undefined,
 		mvtId: getMvtValue() ?? 0,

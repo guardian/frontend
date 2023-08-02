@@ -313,14 +313,7 @@ const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
 	return daysSinceLastContribution > askPauseDays;
 };
 
-// TODO: Remove as part of Okta migration
-const isRecurringContributor = (): boolean =>
-	// If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
-	(isUserLoggedIn() &&
-		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
-	supportSiteRecurringCookiePresent();
-
-const isRecurringContributorOkta = async (): Promise<boolean> =>
+const isRecurringContributor = async (): Promise<boolean> =>
 	((await isUserLoggedInOktaRefactor()) &&
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
 	supportSiteRecurringCookiePresent();
@@ -342,7 +335,7 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
 const shouldHideSupportMessaging = async (): Promise<boolean> =>
 	shouldNotBeShownSupportMessaging() ||
 	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
-	(await isRecurringContributorOkta()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
+	(await isRecurringContributor()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
 const readerRevenueRelevantCookies = [
 	PAYING_MEMBER_COOKIE,
