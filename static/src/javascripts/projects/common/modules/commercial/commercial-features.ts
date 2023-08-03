@@ -6,7 +6,6 @@
 
 import { log } from '@guardian/libs';
 import { getCurrentBreakpoint } from 'lib/detect-breakpoint';
-import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { isAdFreeUser } from './user-features';
 
@@ -50,7 +49,6 @@ class CommercialFeatures {
 	carrotTrafficDriver: boolean;
 	highMerch: boolean;
 	thirdPartyTags: boolean;
-	relatedWidgetEnabled: boolean;
 	commentAdverts: boolean;
 	liveblogAdverts: boolean;
 	adFree: boolean;
@@ -170,16 +168,6 @@ class CommercialFeatures {
 			!isIdentityPage &&
 			!this.isSecureContact &&
 			!!window.guardian.config.switches.redplanetForAus;
-
-		this.relatedWidgetEnabled =
-			this.dfpAdvertising &&
-			!this.adFree &&
-			!noadsUrl &&
-			!sensitiveContent &&
-			isArticle &&
-			!window.guardian.config.page.isPreview &&
-			!!window.guardian.config.page.showRelatedContent &&
-			!(isUserLoggedIn() && window.guardian.config.page.commentable);
 
 		this.commentAdverts =
 			this.dfpAdvertising &&
