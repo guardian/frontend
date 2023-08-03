@@ -1,6 +1,9 @@
-import type { AccessToken, IDToken } from '@guardian/identity-auth';
+import type {
+	AccessToken,
+	AccessTokenClaims,
+	IDToken,
+} from '@guardian/identity-auth';
 import { getCookie, storage } from '@guardian/libs';
-import { mergeCalls } from 'common/modules/async-call-merger';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { mediator } from '../../../../lib/mediator';
 import { getUrlVars } from '../../../../lib/url';
@@ -13,42 +16,11 @@ type UserNameError = {
 	context: string;
 };
 
-type UserConsents = {
-	id: string;
-	actor: string;
-	version: number;
-	consented: boolean;
-	timestamp: string;
-	privacyPolicyVersion: number;
-};
-
-type UserGroups = {
-	path: string;
-	packageCode: string;
-};
-
 export type IdentityUser = {
-	dates: { accountCreatedDate: string };
-	consents: UserConsents[];
-	userGroups: UserGroups[];
-	publicFields: {
-		username: string;
-		displayName: string;
-	};
+	primaryEmailAddress: string;
 	statusFields: {
 		userEmailValidated: boolean;
 	};
-	privateFields: {
-		brazeUuid: string;
-		googleTagId: string;
-		puzzleUuid: string;
-		legacyPackages: string;
-		legacyProducts: string;
-	};
-	primaryEmailAddress: string;
-	id: number;
-	hasPassword: boolean;
-	adData: Record<string, unknown>;
 };
 
 type IdentityUserFromCache = {
@@ -128,7 +100,7 @@ export type SignedInWithCookies = { kind: 'SignedInWithCookies' };
 type SignedOutWithOkta = { kind: 'SignedOutWithOkta' };
 export type SignedInWithOkta = {
 	kind: 'SignedInWithOkta';
-	accessToken: AccessToken<never>;
+	accessToken: AccessToken<AccessTokenClaims>;
 	idToken: IDToken<CustomIdTokenClaims>;
 };
 
@@ -231,28 +203,50 @@ export const getOptionsHeadersWithOkta = (
 	};
 };
 
-export const getUserFromApi = mergeCalls(
-	(mergingCallback: (u: IdentityUser | null) => void) => {
-		if (isUserLoggedIn()) {
-			const url = `${idApiRoot}/user/me`;
-			void (
-				fetchJson(url, {
-					mode: 'cors',
-					credentials: 'include',
-				}) as Promise<IdentityResponse>
-			) // assert unknown -> IdentityResponse
-				.then((data: IdentityResponse) => {
-					if (data.status === 'ok') {
-						mergingCallback(data.user);
-					} else {
-						mergingCallback(null);
-					}
-				});
-		} else {
-			mergingCallback(null);
+/**
+ * Fetch the user data from IDAPI
+ * @returns one of:
+ * - IdentityUser - the user's data
+ * - null - if the request failed
+ */
+const fetchUserFromApi = (): Promise<IdentityUser | null> =>
+	(
+		fetchJson(`${idApiRoot}/user/me`, {
+			mode: 'cors',
+			credentials: 'include',
+		}) as Promise<IdentityResponse>
+	) // assert unknown -> IdentityResponse
+		.then((data) => (data.status === 'ok' ? data.user : null));
+
+/**
+ * Get the user's data
+ *
+ * If enrolled in the Okta experiment, return the data from the ID token
+ * Otherwise, fetch the user data from IDAPI
+ * @returns one of:
+ * - IdentityUser, if the user is enrolled in the Okta experiment or the fetch to
+ *   IDAPI was successful
+ * - null, if the user is signed out or the fetch to IDAPI failed
+ */
+export const getUserFromApiOrOkta = async (): Promise<IdentityUser | null> =>
+	getAuthStatus().then((authStatus) => {
+		switch (authStatus.kind) {
+			case 'SignedInWithCookies': {
+				return fetchUserFromApi();
+			}
+			case 'SignedInWithOkta': {
+				return {
+					primaryEmailAddress: authStatus.idToken.claims.email,
+					statusFields: {
+						userEmailValidated:
+							authStatus.accessToken.claims.email_validated,
+					},
+				};
+			}
+			default:
+				return null;
 		}
-	},
-);
+	});
 
 /**
  * Fetch the logged in user's Braze UUID from IDAPI
@@ -312,7 +306,6 @@ export const getBrazeUuid = (): Promise<string | null> =>
 	});
 
 export const reset = (): void => {
-	getUserFromApi.reset();
 	userFromCookieCache = null;
 };
 

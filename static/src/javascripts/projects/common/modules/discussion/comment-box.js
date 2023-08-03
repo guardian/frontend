@@ -12,7 +12,7 @@ import {
     getUserFromCookie,
     reset,
     updateUsername,
-    getUserFromApi,
+    getUserFromApiOrOkta,
 } from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
@@ -347,14 +347,12 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                return getUserFromApi().then(response => {
-                    if (
-                        response.user.statusFields.userEmailValidated === true
-                    ) {
+                return getUserFromApiOrOkta().then(user => {
+                    if (user.statusFields.userEmailValidated) {
                         return validEmailCommentSubmission();
                     }
                     this.invalidEmailError();
-                });
+                })
             }
             return validEmailCommentSubmission();
         }

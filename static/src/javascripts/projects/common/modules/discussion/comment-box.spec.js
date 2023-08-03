@@ -1,5 +1,5 @@
 import { CommentBox } from 'common/modules/discussion/comment-box';
-import { getUserFromApi as getUserFromApi_ } from 'common/modules/identity/api';
+import { getUserFromApiOrOkta as getUserFromApi_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
 
 jest.mock('lib/config', () => ({
@@ -15,15 +15,11 @@ jest.mock('common/modules/identity/api', () => ({
         id: 1,
         accountCreatedDate: new Date(1392719401338),
     }),
-    getUserFromApi: jest.fn().mockReturnValue(
-        Promise.resolve({
-            user: {
-                statusFields: {
-                    userEmailValidated: true,
-                },
-            },
-        })
-    ),
+    getUserFromApiOrOkta: jest.fn().mockResolvedValue({
+            statusFields: {
+                userEmailValidated: true,
+        },
+    }),
     reset: jest.fn(),
 }));
 jest.mock('common/modules/discussion/api', () => ({
@@ -164,14 +160,12 @@ describe('Comment box', () => {
             if (commentBody && commentBody instanceof HTMLTextAreaElement) {
                 commentBody.value = validCommentText;
 
-                getUserFromApi.mockReturnValueOnce(
-                    Promise.resolve({
-                        user: {
+                getUserFromApi.mockResolvedValueOnce(
+                    {
                             statusFields: {
                                 userEmailValidated: false,
-                            },
                         },
-                    })
+                    },
                 );
 
                 return commentBox.postComment().then(() => {
