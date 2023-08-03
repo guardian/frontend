@@ -31,7 +31,6 @@ type IdentityUserFromCache = {
 	statusFields: {
 		userEmailValidated: boolean;
 	};
-	primaryEmailAddress: string;
 	id: number;
 	rawResponse: string;
 } | null;
@@ -79,7 +78,6 @@ export const getUserFromCookie = (): IdentityUserFromCache => {
 			const displayName = decodeURIComponent(userData[2]);
 			userFromCookieCache = {
 				id: parseInt(userData[0], 10),
-				primaryEmailAddress: userData[1], // not sure where this is stored now - not in the cookie any more
 				publicFields: {
 					displayName,
 				},
