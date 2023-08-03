@@ -17,13 +17,11 @@ object ImageContentPicker extends GuLogging {
   ): RenderType = {
     val dcrCanRender =
       mainBlock.exists(block => block.elements.forall(element => element.`type` == ElementType.Cartoon))
-    // Currently defaulting to false until we implement image articles in DCR
-    val dcrShouldRender = false
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && dcrShouldRender) RemoteRender
+      else if (dcrCanRender) RemoteRender
       else LocalRender
     }
 

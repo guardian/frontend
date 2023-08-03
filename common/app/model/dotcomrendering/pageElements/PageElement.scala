@@ -1,10 +1,10 @@
 package model.dotcomrendering.pageElements
 
-import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
+import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
+  CartoonElementFields,
   CartoonImage,
-  CartoonVariant,
   ElementType,
   EmbedTracking,
   SponsorshipType,
@@ -12,7 +12,6 @@ import com.gu.contentapi.client.model.v1.{
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
 }
-import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import common.{Chronos, Edition}
 import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
@@ -25,6 +24,7 @@ import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
+import java.net.URLEncoder
 import scala.jdk.CollectionConverters._
 import scala.util.Try
 
@@ -198,6 +198,23 @@ case class ContentAtomBlockElement(atomId: String) extends PageElement
 object ContentAtomBlockElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
 }
+case class DcrCartoonVariant(
+    viewportSize: String,
+    images: List[ImageAsset],
+)
+case class CartoonBlockElement(
+    variants: Option[List[DcrCartoonVariant]],
+    role: Role,
+    credit: Option[String],
+    caption: Option[String],
+    alt: Option[String],
+    source: Option[String],
+    displayCredit: Option[Boolean],
+) extends PageElement
+object CartoonBlockElement {
+  implicit val CartoonVariantWrites: Writes[DcrCartoonVariant] = Json.writes[DcrCartoonVariant]
+  implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
+}
 
 case class DisclaimerBlockElement(html: String) extends PageElement
 object DisclaimerBlockElement {
@@ -286,20 +303,6 @@ case class GuVideoBlockElement(
 ) extends PageElement
 object GuVideoBlockElement {
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
-}
-case class CartoonBlockElement(
-    cartoonVariants: Option[List[CartoonVariant]],
-    role: Option[String],
-    credit: Option[String],
-    caption: Option[String],
-    alt: Option[String],
-    source: Option[String],
-    displayCredit: Option[Boolean],
-) extends PageElement
-object CartoonBlockElement {
-  implicit val CartoonImageWrites: Writes[CartoonImage] = Json.writes[CartoonImage]
-  implicit val CartoonVariantWrites: Writes[CartoonVariant] = Json.writes[CartoonVariant]
-  implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
 }
 
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
@@ -1833,10 +1836,29 @@ object PageElement {
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
   private[pageElements] def cartoonToPageElement(element: ApiBlockElement): Option[CartoonBlockElement] = {
+    def getImageAssets(images: List[CartoonImage]): List[ImageAsset] = {
+      images.zipWithIndex.map {
+        case (a, i) => ImageAsset.make(a, i)
+      }
+    }
+
+    def getVariants(cartoonData: CartoonElementFields): Option[List[DcrCartoonVariant]] = {
+      cartoonData.variants.map(maybeVariant =>
+        maybeVariant
+          .map(variant =>
+            DcrCartoonVariant(
+              viewportSize = variant.viewportSize,
+              images = getImageAssets(variant.images.toList),
+            ),
+          )
+          .toList,
+      )
+    }
+
     element.cartoonTypeData.map(cartoonData =>
       CartoonBlockElement(
-        cartoonVariants = cartoonData.cartoonVariants.map(_.toList),
-        role = cartoonData.role,
+        variants = getVariants(cartoonData),
+        role = Role(cartoonData.role, Inline),
         credit = cartoonData.credit,
         caption = cartoonData.caption,
         alt = cartoonData.alt,

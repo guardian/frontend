@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1._
 import model.dotcomrendering.pageElements.PageElement.{cartoonToPageElement, containsThirdPartyTracking}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import model.ImageAsset
 
 class PageElementTest extends AnyFlatSpec with Matchers {
   "PageElement" should "classify capi tracking value correctly" in {
@@ -19,15 +20,21 @@ class PageElementTest extends AnyFlatSpec with Matchers {
     val variants = scala.collection.Seq(
       CartoonVariant(
         viewportSize = "large",
-        images = scala.collection.Seq(CartoonImage(mimeType = "image/jpeg", file = "https://link-to-my-image")),
+        images = scala.collection.Seq(
+          CartoonImage(
+            mimeType = "image/jpeg",
+            file = "https://link-to-my-image",
+            width = Some(500),
+            height = Some(300),
+          ),
+        ),
       ),
     )
     val contentApiElement = BlockElement(
       `type` = ElementType.Cartoon,
       cartoonTypeData = Some(
         CartoonElementFields(
-          cartoonVariants = Some(variants),
-          role = Some("role"),
+          variants = Some(variants),
           credit = Some("credit"),
           caption = Some("caption"),
           alt = Some("alt"),
@@ -38,8 +45,25 @@ class PageElementTest extends AnyFlatSpec with Matchers {
     )
     val dcrElement: CartoonBlockElement = cartoonToPageElement(contentApiElement).get
 
-    dcrElement.cartoonVariants should be(Some(variants.toList))
-    dcrElement.role should be(Some("role"))
+    dcrElement.variants should be(
+      Some(
+        List(
+          DcrCartoonVariant(
+            "large",
+            List(
+              ImageAsset(
+                0,
+                Map("height" -> "300", "width" -> "500"),
+                "image",
+                Some("image/jpeg"),
+                Some("https://link-to-my-image"),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+    dcrElement.role should be(Inline)
     dcrElement.credit should be(Some("credit"))
     dcrElement.caption should be(Some("caption"))
     dcrElement.alt should be(Some("alt"))
