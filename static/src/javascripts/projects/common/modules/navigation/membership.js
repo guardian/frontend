@@ -9,7 +9,7 @@ import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
 import arrowRight from 'svgs/icon/arrow-right.svg';
-import { isUserLoggedIn } from 'common/modules/identity/api';
+import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
 
@@ -115,17 +115,18 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 };
 
 const canShow = () => {
-    const bannerCanBeLoadedAgainAfter = userPrefs.get(
-        bannerCanBeLoadedAgainAfterKey
-    );
-    return Promise.resolve(
-        updateLink !== null &&
-            isUserLoggedIn() &&
-            !(
-                bannerCanBeLoadedAgainAfter &&
-                new Date(bannerCanBeLoadedAgainAfter) > new Date()
-            )
-    );
+	const bannerCanBeLoadedAgainAfter = userPrefs.get(
+		bannerCanBeLoadedAgainAfterKey,
+	);
+	return isUserLoggedInOktaRefactor().then(
+		(isLoggedIn) =>
+			isLoggedIn &&
+			updateLink !== null &&
+			!(
+				bannerCanBeLoadedAgainAfter &&
+				new Date(bannerCanBeLoadedAgainAfter) > new Date()
+			),
+	);
 };
 
 const show = () => {
