@@ -11,9 +11,16 @@ jest.mock('common/modules/discussion/user-avatars', () => ({
 }));
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn().mockReturnValue({
-        displayName: 'testy',
+        publicFields: {
+            displayName: 'testy',
+        },
         id: 1,
-        accountCreatedDate: new Date(1392719401338),
+        dates: {
+            accountCreatedDate: new Date(1392719401338),
+        },
+        statusFields: {
+            userEmailValidated: false
+        }
     }),
     getUserFromApiOrOkta: jest.fn().mockResolvedValue({
             statusFields: {

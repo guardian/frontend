@@ -342,9 +342,9 @@ class CommentBox extends Component {
             return Promise.resolve();
         };
 
-        if (!this.getUserData().emailVerified) {
+        if (!this.getUserData().statusFields.userEmailValidated) {
             // Cookie could be stale so lets check from the api
-            const createdDate = new Date(this.getUserData().accountCreatedDate);
+            const createdDate = new Date(this.getUserData().dates.accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
                 return getUserFromApiOrOkta().then(user => {
@@ -462,7 +462,7 @@ class CommentBox extends Component {
             const onboardingUsername = this.getElem('onboarding-username');
 
             if (onboardingAuthor) {
-                onboardingAuthor.innerHTML = this.getUserData().displayName;
+                onboardingAuthor.innerHTML = this.getUserData().publicFields.displayName;
             }
 
             this.setState('onboarding-visible');
