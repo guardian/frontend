@@ -190,6 +190,8 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
 ];
 ```
 
+To collect metrics for a client-side test, add your test here: `static/src/javascripts/projects/common/modules/analytics/shouldCaptureMetrics.ts`.
+
 ### Forcing yourself into a test
 Add #ab-<TestName>=<VariantName> to the end of your URL (in dev or prod) to force yourself into a test.
 e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton. **Note that this will only work if the `canRun` of your test and variant is true on that pageview.**

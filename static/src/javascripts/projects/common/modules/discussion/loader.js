@@ -20,7 +20,7 @@ import {
     handle as upvoteHandle,
     closeTooltip as upvoteCloseTooltip,
 } from 'common/modules/discussion/upvote';
-import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
+import { getUserFromCookie } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 class Loader extends Component {

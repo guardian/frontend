@@ -28,7 +28,7 @@ jest.mock('@guardian/libs', () => ({
 }));
 
 jest.mock('common/modules/identity/api', () => ({
-    isUserLoggedIn: jest.fn(() => false),
+    isUserLoggedInOktaRefactor: jest.fn().mockResolvedValue(false),
 }));
 
 jest.mock('lib/config', () => ({
@@ -57,7 +57,7 @@ const fakeIsInABTestSynchronous = require('common/modules/experiments/ab')
 const fakeLocal = require('@guardian/libs').storage.local;
 
 const fakeIsUserLoggedIn = require('common/modules/identity/api')
-    .isUserLoggedIn;
+    .isUserLoggedInOktaRefactor;
 
 const fakeConfig = require('lib/config');
 
@@ -128,7 +128,7 @@ describe('Sign in gate test', () => {
         });
 
         it('should return false if the user is logged in', () => {
-            fakeIsUserLoggedIn.mockReturnValueOnce(true);
+            fakeIsUserLoggedIn.mockResolvedValueOnce(true);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });

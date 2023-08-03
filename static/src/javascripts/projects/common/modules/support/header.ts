@@ -7,7 +7,7 @@ import { submitComponentEvent } from 'common/modules/commercial/acquisitions-oph
 import {
 	getLastOneOffContributionDate,
 	getPurchaseInfo,
-	shouldHideSupportMessagingOkta,
+	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
 import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
 import {
@@ -25,7 +25,7 @@ const buildHeaderLinksPayload = async (): Promise<HeaderPayload> => {
 	return {
 		tracking,
 		targeting: {
-			showSupportMessaging: !(await shouldHideSupportMessagingOkta()),
+			showSupportMessaging: !(await shouldHideSupportMessaging()),
 			countryCode,
 			modulesVersion: ModulesVersion,
 			mvtId: getMvtValue() ?? 0,

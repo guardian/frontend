@@ -53,6 +53,7 @@ import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-ba
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 import { bufferedNotificationListener } from 'common/modules/bufferedNotificationListener';
+import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -163,9 +164,14 @@ const showHistoryInMegaNav = () => {
 };
 
 const idCookieRefresh = () => {
-    if (config.get('switches.idCookieRefresh')) {
-        initCookieRefresh();
-    }
+    /** We only want to call `initCookieRefresh` if the user is not in the Okta experiment
+     * and the switch is on.
+     */
+    eitherInOktaExperimentOrElse(() => undefined, () => {
+        if (config.get('switches.idCookieRefresh')) {
+            initCookieRefresh();
+        }
+    })
 };
 
 const windowEventListeners = () => {
