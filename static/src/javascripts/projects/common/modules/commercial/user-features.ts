@@ -196,7 +196,6 @@ const refresh = async (): Promise<void> => {
 	} else if ((await userHasDataAfterSignout()) && !forcedAdFreeMode) {
 		deleteOldData();
 	}
-	return Promise.resolve();
 };
 
 const supportSiteRecurringCookiePresent = () =>
