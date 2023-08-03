@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Asset, CartoonImage}
+import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage}
 import play.api.libs.json.{Json, Writes}
 import views.support.{ImgSrc, Naked, Orientation}
 
@@ -48,7 +48,7 @@ object ImageAsset {
         "height" -> cartoonImage.height.map(_.toString),
         "width" -> cartoonImage.width.map(_.toString),
       ).collect { case (k, Some(v)) => (k, v) },
-      mediaType = "image", // TODO: derive this from mimetype?
+      mediaType = AssetType.Cartoon.name,
       mimeType = Some(cartoonImage.mimeType),
       url = Some(cartoonImage.file),
     )

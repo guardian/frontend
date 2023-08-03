@@ -3,8 +3,6 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
-  CartoonElementFields,
-  CartoonImage,
   ElementType,
   EmbedTracking,
   SponsorshipType,
@@ -166,6 +164,24 @@ object CalloutBlockElementV2 {
   implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
 }
 
+case class DcrCartoonVariant(
+    viewportSize: String,
+    images: List[ImageAsset],
+)
+case class CartoonBlockElement(
+    variants: Option[List[DcrCartoonVariant]],
+    role: Role,
+    credit: Option[String],
+    caption: Option[String],
+    alt: Option[String],
+    source: Option[String],
+    displayCredit: Option[Boolean],
+) extends PageElement
+object CartoonBlockElement {
+  implicit val CartoonVariantWrites: Writes[DcrCartoonVariant] = Json.writes[DcrCartoonVariant]
+  implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
+}
+
 // The extension of the ChartAtomBlockElement, is experimental. Three fields have been added,
 // html: String, css: Option[String], js: Option[String], but it looks like, the html string we get from CAPI,
 // contains all the css and js required to display the atom.
@@ -197,23 +213,6 @@ object CommentBlockElement {
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 object ContentAtomBlockElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
-}
-case class DcrCartoonVariant(
-    viewportSize: String,
-    images: List[ImageAsset],
-)
-case class CartoonBlockElement(
-    variants: Option[List[DcrCartoonVariant]],
-    role: Role,
-    credit: Option[String],
-    caption: Option[String],
-    alt: Option[String],
-    source: Option[String],
-    displayCredit: Option[Boolean],
-) extends PageElement
-object CartoonBlockElement {
-  implicit val CartoonVariantWrites: Writes[DcrCartoonVariant] = Json.writes[DcrCartoonVariant]
-  implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
 }
 
 case class DisclaimerBlockElement(html: String) extends PageElement
@@ -793,6 +792,7 @@ object PageElement {
       case _: BlockquoteBlockElement      => true
       case _: CalloutBlockElement         => true
       case _: CalloutBlockElementV2       => true
+      case _: CartoonBlockElement         => true
       case _: ChartAtomBlockElement       => true
       case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
@@ -828,7 +828,6 @@ object PageElement {
       case _: YoutubeBlockElement         => true
       case _: WitnessBlockElement         => true
       case _: VineBlockElement            => true
-      case _: CartoonBlockElement         => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
 
@@ -912,7 +911,7 @@ object PageElement {
           ),
         )
 
-      case Cartoon => cartoonToPageElement(element).toList
+      case Cartoon => element.cartoonTypeData.map(CartoonExtraction.extractCartoon).toList
 
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
@@ -1834,37 +1833,4 @@ object PageElement {
        relying on the framework to provide it (for safety)
    */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
-
-  private[pageElements] def cartoonToPageElement(element: ApiBlockElement): Option[CartoonBlockElement] = {
-    def getImageAssets(images: List[CartoonImage]): List[ImageAsset] = {
-      images.zipWithIndex.map {
-        case (a, i) => ImageAsset.make(a, i)
-      }
-    }
-
-    def getVariants(cartoonData: CartoonElementFields): Option[List[DcrCartoonVariant]] = {
-      cartoonData.variants.map(maybeVariant =>
-        maybeVariant
-          .map(variant =>
-            DcrCartoonVariant(
-              viewportSize = variant.viewportSize,
-              images = getImageAssets(variant.images.toList),
-            ),
-          )
-          .toList,
-      )
-    }
-
-    element.cartoonTypeData.map(cartoonData =>
-      CartoonBlockElement(
-        variants = getVariants(cartoonData),
-        role = Role(cartoonData.role, Inline),
-        credit = cartoonData.credit,
-        caption = cartoonData.caption,
-        alt = cartoonData.alt,
-        source = cartoonData.source,
-        displayCredit = cartoonData.displayCredit,
-      ),
-    )
-  }
 }
