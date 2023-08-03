@@ -208,9 +208,10 @@ const supportSiteRecurringCookiePresent = () =>
  * Does our _existing_ data say the user is a paying member?
  * This data may be stale; we do not wait for userFeatures.refresh()
  */
-const isPayingMember = (): boolean =>
+const isPayingMember = async (): Promise<boolean> =>
 	// If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
-	isUserLoggedIn() && getCookie({ name: PAYING_MEMBER_COOKIE }) !== 'false';
+	(await isUserLoggedInOktaRefactor()) &&
+	getCookie({ name: PAYING_MEMBER_COOKIE }) !== 'false';
 
 // Expects milliseconds since epoch
 const getSupportFrontendOneOffContributionTimestamp = (): number | null => {

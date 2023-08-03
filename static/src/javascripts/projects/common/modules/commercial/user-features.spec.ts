@@ -268,33 +268,34 @@ describe('The isAdFreeUser getter', () => {
 });
 
 describe('The isPayingMember getter', () => {
-	it('Is false when the user is logged out', () => {
+	it('Is false when the user is logged out', async () => {
 		jest.resetAllMocks();
 		isUserLoggedIn.mockReturnValue(false);
-		isUserLoggedInOktaRefactor.mockReturnValue(Promise.resolve(false));
-		expect(isPayingMember()).toBe(false);
+		isUserLoggedInOktaRefactor.mockResolvedValue(false);
+		expect(await isPayingMember()).toBe(false);
 	});
 
 	describe('When the user is logged in', () => {
 		beforeEach(() => {
 			jest.resetAllMocks();
 			isUserLoggedIn.mockReturnValue(true);
+			isUserLoggedInOktaRefactor.mockResolvedValue(true);
 		});
 
-		it('Is true when the user has a `true` paying member cookie', () => {
+		it('Is true when the user has a `true` paying member cookie', async () => {
 			addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
-			expect(isPayingMember()).toBe(true);
+			expect(await isPayingMember()).toBe(true);
 		});
 
-		it('Is false when the user has a `false` paying member cookie', () => {
+		it('Is false when the user has a `false` paying member cookie', async () => {
 			addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'false');
-			expect(isPayingMember()).toBe(false);
+			expect(await isPayingMember()).toBe(false);
 		});
 
-		it('Is true when the user has no paying member cookie', () => {
+		it('Is true when the user has no paying member cookie', async () => {
 			// If we don't know, we err on the side of caution, rather than annoy paying users
 			removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-			expect(isPayingMember()).toBe(true);
+			expect(await isPayingMember()).toBe(true);
 		});
 	});
 });
