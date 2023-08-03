@@ -6,7 +6,6 @@
 
 import { getCurrentBreakpoint as getCurrentBreakpoint_ } from 'lib/detect-breakpoint';
 import config from '../../../../lib/config';
-import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { commercialFeatures } from './commercial-features';
 import type { CommercialFeaturesConstructor } from './commercial-features';
@@ -32,9 +31,6 @@ const isAdFreeUser = isAdFreeUser_ as jest.MockedFunction<typeof isAdFreeUser_>;
 const getCurrentBreakpoint = getCurrentBreakpoint_ as jest.MockedFunction<
 	typeof getCurrentBreakpoint_
 >;
-const isUserLoggedIn = isUserLoggedIn_ as jest.MockedFunction<
-	typeof isUserLoggedIn_
->;
 
 const CommercialFeatures =
 	commercialFeatures.constructor as CommercialFeaturesConstructor;
@@ -48,10 +44,6 @@ jest.mock('./user-features', () => ({
 
 jest.mock('lib/detect-breakpoint', () => ({
 	getCurrentBreakpoint: jest.fn(),
-}));
-
-jest.mock('../identity/api', () => ({
-	isUserLoggedIn: jest.fn(),
 }));
 
 const originalUserAgent = navigator.userAgent;
@@ -103,7 +95,6 @@ describe('Commercial features', () => {
 		isRecentOneOffContributor.mockReturnValue(false);
 		shouldHideSupportMessaging.mockResolvedValue(false);
 		isAdFreeUser.mockReturnValue(false);
-		isUserLoggedIn.mockReturnValue(true);
 
 		expect.hasAssertions();
 	});
@@ -355,7 +346,6 @@ describe('Commercial features', () => {
 	describe('Comment adverts', () => {
 		beforeEach(() => {
 			window.guardian.config.page.commentable = true;
-			isUserLoggedIn.mockReturnValue(true);
 		});
 
 		it('Displays when page has comments', () => {
@@ -364,7 +354,6 @@ describe('Commercial features', () => {
 		});
 
 		it('Will also display when the user is not logged in', () => {
-			isUserLoggedIn.mockReturnValue(false);
 			const features = new CommercialFeatures();
 			expect(features.commentAdverts).toBe(true);
 		});
@@ -418,7 +407,6 @@ describe('Commercial features', () => {
 		});
 
 		it('Does not appear when user signed out', () => {
-			isUserLoggedIn.mockReturnValue(false);
 			const features = new CommercialFeatures();
 			expect(features.commentAdverts).toBe(false);
 		});

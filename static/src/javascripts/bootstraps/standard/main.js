@@ -20,7 +20,6 @@ import { storage } from '@guardian/libs';
 import { fetchJson } from 'lib/fetch-json';
 import { mediator } from 'lib/mediator';
 import { addEventListener } from 'lib/events';
-import { isUserLoggedIn } from 'common/modules/identity/api';
 import { addCookie } from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
