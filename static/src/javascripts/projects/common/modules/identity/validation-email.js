@@ -21,7 +21,7 @@ const init = () => {
 
                         // TODO: This can probably be deprecated.
                         // See https://github.com/guardian/frontend/issues/26349
-                        isUserLoggedInOktaRefactor.then(isLoggedIn => {
+                        isUserLoggedInOktaRefactor().then(isLoggedIn => {
                             if (!isLoggedIn) return;
                             sendValidationEmail().then(
                                 resp => {
