@@ -17,7 +17,6 @@ import type { UserFeaturesResponse } from '../../../../types/membership';
 import {
 	getAuthStatus,
 	getOptionsHeadersWithOkta,
-	isUserLoggedIn,
 	isUserLoggedInOktaRefactor,
 } from '../../modules/identity/api';
 import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
