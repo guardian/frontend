@@ -185,16 +185,16 @@ const userNeedsNewFeatureData = (): boolean =>
 	(adFreeDataIsPresent() && adFreeDataIsOld()) ||
 	(isDigitalSubscriber() && !adFreeDataIsPresent());
 
-const userHasDataAfterSignout = (): boolean =>
-	!isUserLoggedIn() && userHasData();
+const userHasDataAfterSignout = async (): Promise<boolean> =>
+	!(await isUserLoggedInOktaRefactor()) && userHasData();
 
 /**
  * Updates the user's data in a lazy fashion
  */
-const refresh = (): Promise<void> => {
-	if (isUserLoggedIn() && userNeedsNewFeatureData()) {
+const refresh = async (): Promise<void> => {
+	if ((await isUserLoggedInOktaRefactor()) && userNeedsNewFeatureData()) {
 		return requestNewData();
-	} else if (userHasDataAfterSignout() && !forcedAdFreeMode) {
+	} else if ((await userHasDataAfterSignout()) && !forcedAdFreeMode) {
 		deleteOldData();
 	}
 	return Promise.resolve();

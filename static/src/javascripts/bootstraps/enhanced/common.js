@@ -14,6 +14,7 @@ import {
     refresh as refreshUserFeatures,
     extendContribsCookieExpiry,
 } from 'common/modules/commercial/user-features';
+import { reportError } from 'lib/report-error';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
@@ -361,7 +362,6 @@ const init = () => {
         ['c-public-api', initPublicApi],
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
-        ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-message-slots', initialiseMessageSlots],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
@@ -369,6 +369,10 @@ const init = () => {
         ['c-load-google-analytics', loadGoogleAnalytics],
         ['c-google-analytics', initGoogleAnalytics],
     ]);
+
+    return refreshUserFeatures().catch((err) => {
+        reportError(err, { module: 'c-user-features' })
+    })
 };
 
 export { init };
