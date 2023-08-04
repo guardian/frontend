@@ -27,7 +27,7 @@ object DeeplyRead
     extends Experiment(
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 10, 31),
       participationGroup = Perc50,
     )
