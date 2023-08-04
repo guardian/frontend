@@ -213,7 +213,6 @@ trait FaciaController
 
     val networkFrontEdition = Edition.allWithBetaEditions.find(_.networkFrontId == path)
     val participatingInDeeplyReadTest = ActiveExperiments.isParticipating(DeeplyRead)
-    log.info(s"deeply read test is: ${participatingInDeeplyReadTest}")
     val deeplyRead = if (participatingInDeeplyReadTest) {
       networkFrontEdition.map(deeplyReadAgent.getTrails)
     } else None
