@@ -1,7 +1,7 @@
 import fastdom from 'lib/fastdom-promise';
 import { mediator } from 'lib/mediator';
 import {
-    isUserLoggedIn,
+    isUserLoggedInOktaRefactor,
     sendValidationEmail,
 } from 'common/modules/identity/api';
 
@@ -19,7 +19,10 @@ const init = () => {
                     (event) => {
                         event.preventDefault();
 
-                        if (isUserLoggedIn()) {
+                        // TODO: This can probably be deprecated.
+                        // See https://github.com/guardian/frontend/issues/26349
+                        isUserLoggedInOktaRefactor().then(isLoggedIn => {
+                            if (!isLoggedIn) return;
                             sendValidationEmail().then(
                                 resp => {
                                     if (resp.status === 'error') {
@@ -66,8 +69,8 @@ const init = () => {
                                             'An error occured, please click here to try again.';
                                     });
                                 }
-                            );
-                        }
+                            )
+                        })
                     }
                 );
             }
