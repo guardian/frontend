@@ -11,6 +11,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      FrontsBannerAdsDcr,
       Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
@@ -23,13 +24,13 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object DeeplyRead
+object FrontsBannerAdsDcr
     extends Experiment(
-      name = "deeply-read",
-      description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc50,
+      name = "fronts-banner-ads-dcr",
+      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 9, 1),
+      participationGroup = Perc0A,
     )
 
 object Lightbox
@@ -78,6 +79,7 @@ object Okta
 //      sellByDate = LocalDate.of(2024, 1, 1),
 //      participationGroup = Perc0E,
 //    )
+
 object AdaptiveSite
     extends Experiment(
       name = "adaptive-site",
@@ -103,4 +105,13 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 8, 31),
       participationGroup = Perc1E,
+    )
+
+object DeeplyRead
+    extends Experiment(
+      name = "deeply-read",
+      description = "When ON, deeply read footer section is displayed",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc50,
     )
