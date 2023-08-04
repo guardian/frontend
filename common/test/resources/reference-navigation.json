@@ -1117,7 +1117,7 @@
 				},
 				{
 					"title": "Soccer",
-					"url": "/football",
+					"url": "/us/soccer",
 					"children": [
 						{
 							"title": "Women's World Cup",
@@ -1283,7 +1283,7 @@
 			"children": [
 				{
 					"title": "Soccer",
-					"url": "/football",
+					"url": "/us/soccer",
 					"children": [
 						{
 							"title": "Women's World Cup",
