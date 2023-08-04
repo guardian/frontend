@@ -2,6 +2,7 @@ package experiments
 
 import conf.switches.Owner
 import experiments.ParticipationGroups._
+
 import java.time.LocalDate
 
 /*
@@ -17,9 +18,19 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
+      DeeplyRead,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
+
+object DeeplyRead
+    extends Experiment(
+      name = "deeply-read",
+      description = "When ON, deeply read footer section is displayed",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc50,
+    )
 
 object Lightbox
     extends Experiment(
