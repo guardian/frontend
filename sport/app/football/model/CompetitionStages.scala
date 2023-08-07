@@ -187,10 +187,10 @@ object KnockoutSpider {
       // QF2: Group C winner/Group A runner-up vs Group G winner/Group E runner-up
       ZonedDateTime.of(2023, 8, 11, 8, 30, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
 
-      // QF4: Group D winner/Group B runner-up vs Group H winner/Group F runner-up
-      ZonedDateTime.of(2023, 8, 12, 11, 30, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
-      // QF3: Group B winner/Group D runner-up vs Group F winner/Group H runner-up
+      // QF3: Group D winner/Group B runner-up vs Group H winner/Group F runner-up
       ZonedDateTime.of(2023, 8, 12, 8, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
+      // QF4: Group B winner/Group D runner-up vs Group F winner/Group H runner-up
+      ZonedDateTime.of(2023, 8, 12, 11, 30, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals
 
       // SF1: Winner of Quarter Final 1 vs Winner of Quarter Final 2 (8am)
       ZonedDateTime.of(2023, 8, 15, 9, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals
