@@ -96,17 +96,6 @@ trait DiscussionApiLike extends Http with GuLogging {
     }
   }
 
-  def myProfile(headers: Headers)(implicit executionContext: ExecutionContext): Future[Profile] = {
-    def onError(r: WSResponse) =
-      s"Discussion API: Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = endpointUrl("/profile/me")
-    val authHeader = AuthHeaders.filterHeaders(headers).toSeq
-
-    getJsonOrError(apiUrl, onError, authHeader: _*) map { json =>
-      Profile(json)
-    }
-  }
-
   def profileComments(userId: String, page: String, orderBy: String = "newest", picks: Boolean = false)(implicit
       executionContext: ExecutionContext,
   ): Future[ProfileComments] = {
@@ -213,26 +202,6 @@ trait DiscussionApiLike extends Http with GuLogging {
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
 
-  def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
-    Map(
-      "categoryId" -> Seq(abuseReport.categoryId.toString),
-      "commentId" -> Seq(abuseReport.commentId.toString),
-      "reason" -> abuseReport.reason.toSeq,
-      "email" -> abuseReport.email.toSeq,
-    )
-  }
-
-  def postAbuseReport(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie])(implicit
-      executionContext: ExecutionContext,
-  ): Future[WSResponse] = {
-    val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
-    val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
-    if (cookie.isDefined) { headers :+ ("Cookie" -> s"SC_GU_U=${cookie.get}") }
-    failIfDisabled().flatMap(_ =>
-      wsClient.url(url).withHttpHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)),
-    )
-  }
-
   private def failIfDisabled()(implicit executionContext: ExecutionContext): Future[Unit] = {
     if (EnableDiscussionSwitch.isSwitchedOn)
       Future.successful(())
@@ -245,15 +214,6 @@ class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
   override protected val apiRoot = Configuration.discussion.apiRoot
 
   override protected lazy val clientHeaderValue: String = Configuration.discussion.apiClientHeader
-}
-
-object AuthHeaders {
-  val guIdToken = "GU-IdentityToken"
-  val cookie = "Cookie"
-  val all = Set(guIdToken, cookie)
-
-  def filterHeaders(headers: Headers): Map[String, String] =
-    headers.toSimpleMap.view.filterKeys(all.contains).toMap
 }
 
 case class DiscussionParams(
