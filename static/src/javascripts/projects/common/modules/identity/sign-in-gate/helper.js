@@ -6,7 +6,7 @@ import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
-import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { cmp } from '@guardian/consent-management-platform';
 import { submitClickEventTracking } from './component-event-tracking';
 
@@ -140,7 +140,7 @@ export const setGatePageTargeting = (
     isGateDismissed,
     canShowCheck
 ) => {
-    isUserLoggedInOktaRefactor().then(isLoggedIn => {
+    isUserLoggedIn().then(isLoggedIn => {
         if (isLoggedIn) {
             setGoogleTargeting('signed in');
         } else if (isGateDismissed) {

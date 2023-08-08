@@ -1,4 +1,4 @@
-import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
@@ -21,7 +21,7 @@ const canShow = async (name = '') => {
         variant,
         componentName,
     });
-    const isLoggedIn = await isUserLoggedInOktaRefactor();
+    const isLoggedIn = await isUserLoggedIn();
     const canShowCheck =
         !isGateDismissed &&
         isNPageOrHigherPageView(3) &&

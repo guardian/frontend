@@ -17,7 +17,7 @@ import type { UserFeaturesResponse } from '../../../../types/membership';
 import {
 	getAuthStatus,
 	getOptionsHeadersWithOkta,
-	isUserLoggedInOktaRefactor,
+	isUserLoggedIn,
 } from '../../modules/identity/api';
 import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 
@@ -185,13 +185,13 @@ const userNeedsNewFeatureData = (): boolean =>
 	(isDigitalSubscriber() && !adFreeDataIsPresent());
 
 const userHasDataAfterSignout = async (): Promise<boolean> =>
-	!(await isUserLoggedInOktaRefactor()) && userHasData();
+	!(await isUserLoggedIn()) && userHasData();
 
 /**
  * Updates the user's data in a lazy fashion
  */
 const refresh = async (): Promise<void> => {
-	if ((await isUserLoggedInOktaRefactor()) && userNeedsNewFeatureData()) {
+	if ((await isUserLoggedIn()) && userNeedsNewFeatureData()) {
 		return requestNewData();
 	} else if ((await userHasDataAfterSignout()) && !forcedAdFreeMode) {
 		deleteOldData();
@@ -208,7 +208,7 @@ const supportSiteRecurringCookiePresent = () =>
  */
 const isPayingMember = async (): Promise<boolean> =>
 	// If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
-	(await isUserLoggedInOktaRefactor()) &&
+	(await isUserLoggedIn()) &&
 	getCookie({ name: PAYING_MEMBER_COOKIE }) !== 'false';
 
 // Expects milliseconds since epoch
@@ -313,7 +313,7 @@ const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
 };
 
 const isRecurringContributor = async (): Promise<boolean> =>
-	((await isUserLoggedInOktaRefactor()) &&
+	((await isUserLoggedIn()) &&
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
 	supportSiteRecurringCookiePresent();
 

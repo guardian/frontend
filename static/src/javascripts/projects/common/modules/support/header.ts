@@ -9,7 +9,7 @@ import {
 	getPurchaseInfo,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
-import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
 	dynamicImport,
 	ModulesVersion,
@@ -32,7 +32,7 @@ const buildHeaderLinksPayload = async (): Promise<HeaderPayload> => {
 			lastOneOffContributionDate:
 				getLastOneOffContributionDate() ?? undefined,
 			purchaseInfo: getPurchaseInfo(),
-			isSignedIn: await isUserLoggedInOktaRefactor(),
+			isSignedIn: await isUserLoggedIn(),
 		},
 	};
 };

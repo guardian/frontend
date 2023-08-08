@@ -9,7 +9,7 @@ import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
 import arrowRight from 'svgs/icon/arrow-right.svg';
-import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
 
@@ -118,7 +118,7 @@ const canShow = () => {
 	const bannerCanBeLoadedAgainAfter = userPrefs.get(
 		bannerCanBeLoadedAgainAfterKey,
 	);
-	return isUserLoggedInOktaRefactor().then(
+	return isUserLoggedIn().then(
 		(isLoggedIn) =>
 			isLoggedIn &&
 			updateLink !== null &&
