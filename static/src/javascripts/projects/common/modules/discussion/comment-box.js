@@ -15,7 +15,6 @@ import {
     getUserFromApiOrOkta,
 } from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
-import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
 
 
@@ -67,6 +66,8 @@ class CommentBox extends Component {
             replyTo: null,
             priorToVerificationDate: new Date(1392719401337), // Tue Feb 18 2014 10:30:01 GMT
         };
+        this.setOptions(options);
+
         this.errorMessages = {
             EMPTY_COMMENT_BODY: 'Please write a comment.',
             COMMENT_TOO_LONG:
@@ -100,25 +101,13 @@ class CommentBox extends Component {
             EMAIL_VERIFIED: `<span class="d-comment-box__error-meta">Sent. Please check your
                 email to verify your email address. Once verified post your
                 comment.</span>`,
-            EMAIL_VERIFIED_FAIL: `We are having technical difficulties. Please try again later or
-                <a href="/send/email" class="js-id-send-validation-email">
-                <strong>resend the verification</strong></a>.`,
-            EMAIL_NOT_VALIDATED: `Please confirm your email address to comment.<br />
-                If you can't find the email, we can
-                <a href="_#" class="js-id-send-validation-email">
-                <strong>resend the verification email</strong></a> to your email
-                address.`,
+            EMAIL_VERIFIED_FAIL: `We are having technical difficulties. Please try again later.`,
+            EMAIL_NOT_VALIDATED: `Please confirm your email address to comment by
+            <a href="${window.guardian.config.page.idUrl}/reset?returnUrl=${encodeURIComponent(
+                `${config.get('page.host')}/${config.get('page.pageId')}`
+            )}>
+            <strong>resetting your password</strong></a>.`,
         };
-
-        this.setOptions(options);
-
-        mediator.on('module:identity:validation-email:success', () =>
-            this.verificationEmailSuccess()
-        );
-
-        mediator.on('module:identity:validation-email:fail', () =>
-            this.verificationEmailFail()
-        );
     }
 
     onboardingPreviewSuccess(comment, resp) {
@@ -362,7 +351,6 @@ class CommentBox extends Component {
     invalidEmailError() {
         this.removeState('onboarding-visible');
         this.error('EMAIL_NOT_VALIDATED');
-        initValidationEmail();
     }
 
     submitPostComment(e) {

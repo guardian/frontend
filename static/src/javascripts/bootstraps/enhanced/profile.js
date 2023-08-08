@@ -1,6 +1,5 @@
 import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
-import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
 import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
 import { enhanceConsentJourney } from 'common/modules/identity/consent-journey';
@@ -15,7 +14,6 @@ const initProfile = () => {
     const modules = [
         ['forgotten-email', forgottenEmail],
         ['password-toggle', passwordToggle],
-        ['init-validation-email', initValidationEmail],
         ['init-user-avatars', initUserAvatars],
         ['init-user-edit-link', initUserEditLink],
         ['init-tabs', initTabs],

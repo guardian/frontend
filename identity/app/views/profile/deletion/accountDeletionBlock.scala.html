@@ -67,12 +67,12 @@
     } else {
         <div class="identity-section">
             <p class="identity-section__text">
-                Before you can delete your account you need to validate your email address.
+                Before you can delete your account you need to validate your email address by resetting your password.
                 Once you have validated, please reload this page and you will be able to delete
                 your account.
             </p>
-            <a class="u-underline js-id-send-validation-email" data-link-name="Resend verification email">
-                Send validation email
+            <a class="u-underline" href="@idUrlBuilder.buildUrl("/reset", idRequest)" data-link-name="Reset password">
+                Reset your password
             </a>
         </div>
 
