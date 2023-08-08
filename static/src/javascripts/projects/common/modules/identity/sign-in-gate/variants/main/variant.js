@@ -1,7 +1,7 @@
+import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
 import { componentName } from '../../component';
 import {
     isNPageOrHigherPageView,
-    isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
     isInvalidTag,
@@ -17,17 +17,19 @@ import { designShow } from '../design/main-variant';
 const variant = 'main-variant-4';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow = (name = '') => {
+/** @type {(name: string) => Promise<boolean>} */
+const canShow = async (name = '') => {
     const isGateDismissed = hasUserDismissedGateMoreThanCount(
         variant,
         name,
         componentName,
         5
     );
+    const isLoggedIn = await isUserLoggedInOktaRefactor();
     const canShowCheck =
         !isGateDismissed &&
         isNPageOrHigherPageView(3) &&
-        !isLoggedIn() &&
+        !isLoggedIn &&
         !isInvalidArticleType() &&
         !isInvalidSection() &&
         !isInvalidTag() &&

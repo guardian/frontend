@@ -1561,10 +1561,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-14.1.1.tgz#12672e3992ad3eab3bade848861ca01631a0edf5"
   integrity sha512-wHuJwdOC2hsTBie+zWJYFyasP4fOJXOPcKXpN2Cp+GlljPah3YtS2Fbgn8pcxxt8d5JKO9ra7sHKvX8FNxkAyg==
 
-"@guardian/commercial@^10.8.0":
-  version "10.8.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.8.0.tgz#2033142e874dffba725319e5d23ce3dd0a044c66"
-  integrity sha512-tHrzUyKBBoFS0JUha4kiv5aPD5Q3ej0pjVFiseu6NtPGijaK5JmAnlF4UitbRUP46dlOnoDA3RVAVZ02hcBTbw==
+"@guardian/commercial@10.14.0":
+  version "10.14.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.14.0.tgz#98f8540d09b86f03606c8eaf70d8e7bdb7c7231b"
+  integrity sha512-9fZhNXw/WsEMG7xVCst8VjJ1xQ25Ony9BAZLQDPGv5tOjZSglDGNOqalFCuU4chiU8/cKPgXoBYa37LPWpFVpQ==
   dependencies:
     "@changesets/cli" "^2.26.1"
     "@guardian/ab-core" "^5.0.0"
@@ -1623,10 +1623,10 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/identity-auth@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-0.2.0.tgz#aaad1667095c5ba4bc7610e1a119ec007c249307"
-  integrity sha512-4bKanidGEH+VKaYQNNcS2y8ubmxfzMicr+wiIDsdosxicn3mLA1Hw0kHiaZm1vroo3JKp4442qVba3Z8Ot5vPA==
+"@guardian/identity-auth@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-0.4.0.tgz#11fc3b9daec7b4186cf0822b18d6379dbdac8ce5"
+  integrity sha512-+lXmoMhrACvibKYBIwKQ15zyWGiGKC+mOg8831R8ilwF3vwXuXnzCLy1EpLTlSfDf72IOAuGyX4gDOqdQP8R/w==
 
 "@guardian/libs@^10.0.0":
   version "10.1.1"

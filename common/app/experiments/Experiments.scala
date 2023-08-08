@@ -2,6 +2,7 @@ package experiments
 
 import conf.switches.Owner
 import experiments.ParticipationGroups._
+
 import java.time.LocalDate
 
 /*
@@ -10,7 +11,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      VerticalVideoContainer,
+      FrontsBannerAdsDcr,
       Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
@@ -18,16 +19,17 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
+      DeeplyRead,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object VerticalVideoContainer
+object FrontsBannerAdsDcr
     extends Experiment(
-      name = "vertical-video-container",
-      description = "When ON, Vertical Video Container is displayed",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 7, 31),
+      name = "fronts-banner-ads-dcr",
+      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 9, 1),
       participationGroup = Perc0A,
     )
 
@@ -64,7 +66,7 @@ object Okta
       name = "okta",
       description = "Use Okta for authentication",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 8, 4),
+      sellByDate = LocalDate.of(2023, 8, 31),
       participationGroup = Perc0E,
     )
 
@@ -78,6 +80,15 @@ object Okta
 //      participationGroup = Perc0E,
 //    )
 
+object AdaptiveSite
+    extends Experiment(
+      name = "adaptive-site",
+      description = "Enables serving an adaptive version of the site that responds to page performance",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 12, 5),
+      participationGroup = Perc1A,
+    )
+
 object HeaderTopBarSearchCapi
     extends Experiment(
       name = "header-top-bar-search-capi",
@@ -87,20 +98,20 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
-object AdaptiveSite
-    extends Experiment(
-      name = "adaptive-site",
-      description = "Enables serving an adaptive version of the site that responds to page performance",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1A,
-    )
-
 object OfferHttp3
     extends Experiment(
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 7, 31),
+      sellByDate = LocalDate.of(2023, 8, 31),
       participationGroup = Perc1E,
+    )
+
+object DeeplyRead
+    extends Experiment(
+      name = "deeply-read",
+      description = "When ON, deeply read footer section is displayed",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc50,
     )

@@ -1,4 +1,5 @@
 import config from 'lib/config';
+import { getAuthStatus, getOptionsHeadersWithOkta } from '../identity/api';
 
 /**
  * This information is partly inspired by the API in discussion-rendering
@@ -22,6 +23,26 @@ type CommentResponse = {
 	errorCode?: string;
 };
 
+type UserResponse = {
+	status: 'ok' | 'error';
+	userProfile: {
+		userId: string;
+		displayName: string;
+		webUrl: string;
+		apiUrl: string;
+		avatar: string;
+		secureAvatarUrl: string;
+		isStaff: boolean;
+		privateFields: {
+			canPostComment: boolean;
+			isPremoderated: boolean;
+			hasCommented: boolean;
+		};
+	};
+};
+
+type Response = UserResponse | CommentResponse;
+
 type AbuseReport = {
 	categoryId: number;
 	reason?: string;
@@ -30,7 +51,6 @@ type AbuseReport = {
 
 const defaultInitParams: RequestInit = {
 	mode: 'cors',
-	credentials: 'include',
 	headers: {
 		'D2-X-UID': config.get<string>('page.discussionD2Uid', 'NONE_FOUND'),
 		'GU-Client': config.get<string>(
@@ -40,52 +60,69 @@ const defaultInitParams: RequestInit = {
 	},
 };
 
-export const send = (
+export const send = <T extends Response = CommentResponse>(
 	endpoint: string,
-	method: string,
+	method: 'GET' | 'POST',
 	data?: Comment | AbuseReport,
-): Promise<CommentResponse> => {
-	if (config.get('switches.enableDiscussionSwitch')) {
-		const apiUrl = config.get<string>(
-			'page.discussionApiUrl',
-			'/DISCUSSION_API_URL_NOT_FOUND',
-		);
-		const url = apiUrl + endpoint;
+): Promise<T> =>
+	Promise.resolve(config.get('switches.enableDiscussionSwitch'))
+		.then((isDiscussionEnabled) =>
+			isDiscussionEnabled
+				? Promise.resolve()
+				: Promise.reject('switches.enableDiscussionSwitch is off'),
+		)
+		.then(() => getAuthStatus())
+		.then((authStatus) =>
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+				? authStatus
+				: Promise.reject('User is signed out'),
+		)
+		.then((signedInAuthStatus) => {
+			const apiUrl = config.get<string>(
+				'page.discussionApiUrl',
+				'/DISCUSSION_API_URL_NOT_FOUND',
+			);
+			const url = apiUrl + endpoint;
 
-		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
-		if (method === 'POST') {
-			const body = new URLSearchParams();
+			const requestAuthOptions =
+				getOptionsHeadersWithOkta(signedInAuthStatus);
 
-			if (data) {
-				if ('body' in data) {
-					body.append('body', data.body);
+			// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
+			if (method === 'POST') {
+				const body = new URLSearchParams();
+
+				if (data) {
+					if ('body' in data) {
+						body.append('body', data.body);
+					}
+					if ('categoryId' in data) {
+						body.append('categoryId', data.categoryId.toString());
+						data.email &&
+							body.append('email', data.email.toString());
+						data.reason && body.append('reason', data.reason);
+					}
 				}
-				if ('categoryId' in data) {
-					body.append('categoryId', data.categoryId.toString());
-					data.email && body.append('email', data.email.toString());
-					data.reason && body.append('reason', data.reason);
-				}
+
+				return fetch(url, {
+					...defaultInitParams,
+					method,
+					body: body.toString(),
+					credentials: requestAuthOptions.credentials,
+					headers: {
+						...defaultInitParams.headers,
+						...requestAuthOptions.headers,
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+				}).then((resp) => resp.json() as Promise<T>);
 			}
 
 			return fetch(url, {
 				...defaultInitParams,
+				...requestAuthOptions,
 				method,
-				body: body.toString(),
-				headers: {
-					...defaultInitParams.headers,
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-			}).then((resp) => resp.json() as Promise<CommentResponse>);
-		}
-
-		return fetch(url, {
-			...defaultInitParams,
-			method,
-		}).then((resp) => resp.json() as Promise<CommentResponse>);
-	}
-
-	throw new Error('Discussion features have been disabled');
-};
+			}).then((resp) => resp.json() as Promise<T>);
+		});
 
 export const postComment = (
 	discussionId: Id,
@@ -116,5 +153,6 @@ export const reportComment = (
 ): Promise<CommentResponse> =>
 	send(`/comment/${id}/reportAbuse`, 'POST', report);
 
-export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
-	send(`/profile/${id}?strict_sanctions_check=false`, 'GET');
+/** @type {(): Promise<UserResponse>} */
+export const getUser = (): Promise<UserResponse> =>
+	send(`/profile/me?strict_sanctions_check=false`, 'GET');

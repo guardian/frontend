@@ -14,6 +14,7 @@ import {
     refresh as refreshUserFeatures,
     extendContribsCookieExpiry,
 } from 'common/modules/commercial/user-features';
+import { reportError } from 'lib/report-error';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
@@ -53,6 +54,7 @@ import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-ba
 import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 import { bufferedNotificationListener } from 'common/modules/bufferedNotificationListener';
+import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -163,9 +165,14 @@ const showHistoryInMegaNav = () => {
 };
 
 const idCookieRefresh = () => {
-    if (config.get('switches.idCookieRefresh')) {
-        initCookieRefresh();
-    }
+    /** We only want to call `initCookieRefresh` if the user is not in the Okta experiment
+     * and the switch is on.
+     */
+    eitherInOktaExperimentOrElse(() => undefined, () => {
+        if (config.get('switches.idCookieRefresh')) {
+            initCookieRefresh();
+        }
+    })
 };
 
 const windowEventListeners = () => {
@@ -355,7 +362,6 @@ const init = () => {
         ['c-public-api', initPublicApi],
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
-        ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-message-slots', initialiseMessageSlots],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
@@ -363,6 +369,10 @@ const init = () => {
         ['c-load-google-analytics', loadGoogleAnalytics],
         ['c-google-analytics', initGoogleAnalytics],
     ]);
+
+    return refreshUserFeatures().catch((err) => {
+        reportError(err, { module: 'c-user-features' })
+    })
 };
 
 export { init };

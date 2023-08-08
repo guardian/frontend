@@ -1,6 +1,5 @@
 package controllers
 
-import agents.CuratedContentAgent
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient
 import model.{ApplicationContext, TopicsApiResponse}
@@ -9,7 +8,7 @@ import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
 import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, S3Client, MessageUsService}
 import services.newsletters.NewsletterSignupAgent
-import topics.{TopicService}
+import topics.TopicService
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient
@@ -20,7 +19,6 @@ trait ArticleControllers {
   def topicService: TopicService
   def messageUsService: MessageUsService
   def newsletterSignupAgent: NewsletterSignupAgent
-  def curatedContentAgent: CuratedContentAgent
 
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
