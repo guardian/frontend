@@ -60,7 +60,27 @@ const defaultInitParams: RequestInit = {
 	},
 };
 
-export const send = <T extends Response = CommentResponse>(
+/**
+ * Make an authenticated request to `endpoint`
+ * @returns a Promise, which:
+ * - rejects if the user is signed out or another failure occurs
+ * - resolves to the JSON response
+ */
+const sendAuthenticated = <T extends Response = CommentResponse>(
+	endpoint: string,
+	method: 'GET' | 'POST',
+	data?: Comment | AbuseReport,
+): Promise<T> =>
+	getAuthStatus()
+		.then((authStatus) =>
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+				? authStatus
+				: Promise.reject('User is signed out'),
+		)
+		.then(() => send<T>(endpoint, method, data));
+
+const send = <T extends Response = CommentResponse>(
 	endpoint: string,
 	method: 'GET' | 'POST',
 	data?: Comment | AbuseReport,
@@ -71,22 +91,19 @@ export const send = <T extends Response = CommentResponse>(
 				? Promise.resolve()
 				: Promise.reject('switches.enableDiscussionSwitch is off'),
 		)
-		.then(() => getAuthStatus())
-		.then((authStatus) =>
-			authStatus.kind === 'SignedInWithCookies' ||
-			authStatus.kind === 'SignedInWithOkta'
-				? authStatus
-				: Promise.reject('User is signed out'),
-		)
-		.then((signedInAuthStatus) => {
+		.then(async () => {
 			const apiUrl = config.get<string>(
 				'page.discussionApiUrl',
 				'/DISCUSSION_API_URL_NOT_FOUND',
 			);
 			const url = apiUrl + endpoint;
 
+			const authStatus = await getAuthStatus();
 			const requestAuthOptions =
-				getOptionsHeadersWithOkta(signedInAuthStatus);
+				authStatus.kind === 'SignedInWithCookies' ||
+				authStatus.kind === 'SignedInWithOkta'
+					? getOptionsHeadersWithOkta(authStatus)
+					: {};
 
 			// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
 			if (method === 'POST') {
@@ -132,20 +149,20 @@ export const postComment = (
 		comment.replyTo ? `/${comment.replyTo.commentId}/reply` : ''
 	}`;
 
-	return send(endpoint, 'POST', comment);
+	return sendAuthenticated(endpoint, 'POST', comment);
 };
 
 export const previewComment = (comment: Comment): Promise<CommentResponse> =>
-	send('/comment/preview', 'POST', comment);
+	sendAuthenticated('/comment/preview', 'POST', comment);
 
 export const recommendComment = (id: Id): Promise<CommentResponse> =>
-	send(`/comment/${id}/recommend`, 'POST');
+	sendAuthenticated(`/comment/${id}/recommend`, 'POST');
 
 export const pickComment = (id: Id): Promise<CommentResponse> =>
-	send(`/comment/${id}/highlight`, 'POST');
+	sendAuthenticated(`/comment/${id}/highlight`, 'POST');
 
 export const unPickComment = (id: Id): Promise<CommentResponse> =>
-	send(`/comment/${id}/unhighlight`, 'POST');
+	sendAuthenticated(`/comment/${id}/unhighlight`, 'POST');
 
 /** @type {(id: Id, report: AbuseReport): Promise<CommentResponse>} */
 export const reportComment = (
@@ -156,4 +173,4 @@ export const reportComment = (
 
 /** @type {(): Promise<UserResponse>} */
 export const getUser = (): Promise<UserResponse> =>
-	send(`/profile/me?strict_sanctions_check=false`, 'GET');
+	sendAuthenticated(`/profile/me?strict_sanctions_check=false`, 'GET');
