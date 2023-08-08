@@ -100,10 +100,6 @@ import scala.language.postfixOps
 
   }
 
-  "Should do GET request on correct URL for my profile" in {
-    waitFor(urlValidator("/profile/me?api-key=dotcom").myProfile(Headers()))
-  }
-
   "Should do GET request on correct URL for profile comments" in {
     val userId = "10000001"
     val orderBy = "newest"

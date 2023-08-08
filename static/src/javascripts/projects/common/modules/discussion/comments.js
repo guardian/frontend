@@ -478,7 +478,7 @@ class Comments extends Component {
         const submitHandler = (form) => {
             form.removeAttribute('hidden');
 
-            bean.one(form, 'submit', (submitEvent) => {
+            bean.on(form, 'submit', (submitEvent) => {
                 submitEvent.preventDefault();
                 const category = (form.querySelector(
                     '[name="category"]'
@@ -512,14 +512,13 @@ class Comments extends Component {
                     const email = (form.querySelector(
                         '[name="email"]'
                     ));
-
                     reportComment(commentId, {
-                        emailAddress: email.value,
+                        email: email.value,
                         categoryId: category.value,
                         reason: comment.value,
                     })
                         .then(() => reportCommentSuccess(form))
-                        .catch(() => reportCommentFailure());
+                        .catch((e) => reportCommentFailure());
                 }
             });
         };

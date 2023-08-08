@@ -25,20 +25,6 @@ class CommentsController(
     extends DiscussionController
     with ImplicitControllerExecutionContext {
 
-  val userForm = Form(
-    Forms.mapping(
-      "categoryId" -> Forms.number.verifying(ReportAbuseFormValidation.validCategoryConstraint),
-      "commentId" -> Forms.number,
-      "reason" -> optional(
-        Forms.text
-          .verifying("Reason must be 250 characters or fewer", input => Constraints.maxLength(250)(input) == Valid),
-      ),
-      "email" -> optional(
-        Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress()(input) == Valid),
-      ),
-    )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply _),
-  )
-
   // Used for jump to comment, comment hash location.
   def commentContextJson(id: Int): Action[AnyContent] =
     Action.async { implicit request =>
@@ -76,95 +62,6 @@ class CommentsController(
   def topCommentsJson(key: DiscussionKey): Action[AnyContent] = Action.async { implicit request => getTopComments(key) }
   def topCommentsJsonOptions(key: DiscussionKey): Action[AnyContent] =
     Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
-
-  val reportAbusePage = SimplePage(
-    MetaData.make(
-      "/reportAbuse",
-      Some(SectionId.fromId("Discussion")),
-      "Report Abuse",
-    ),
-  )
-  def reportAbuseForm(commentId: Int): Action[AnyContent] =
-    csrfAddToken {
-      Action { implicit request =>
-        NoCache {
-          Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm))
-        }
-      }
-    }
-
-  val reportAbuseThankYouPage = SimplePage(
-    MetaData.make(
-      "/reportAbuseThankYou",
-      Some(SectionId.fromId("Discussion")),
-      "Report Abuse Thank You",
-    ),
-  )
-
-  def reportAbuseThankYou(commentId: Int): Action[AnyContent] =
-    Action.async { implicit request =>
-      discussionApi.commentFor(commentId).map { comment =>
-        Cached(CacheTime.DiscussionDefault) {
-          RevalidatableResult
-            .Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
-        }
-      } recover toResult
-    }
-
-  object ReportAbuseFormValidation {
-    val validCategory = (_: Int) match {
-      case 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 => Valid
-      case _                                 => Invalid("Please choose a category")
-    }
-
-    val validCategoryConstraint = Constraint("valid categoryId")(validCategory)
-    val genericErrorMessage = "Something went wrong, please try again later."
-
-  }
-
-  def reportAbuseSubmission(commentId: Int): Action[AnyContent] =
-    csrfCheck {
-      Action.async { implicit request =>
-        val scGuU = request.cookies.get("SC_GU_U")
-        userForm
-          .bindFromRequest()
-          .fold(
-            formWithErrors =>
-              Future.successful(
-                BadRequest(views.html.discussionComments.reportComment(commentId, reportAbusePage, formWithErrors)),
-              ),
-            userData => {
-              discussionApi
-                .postAbuseReport(userData, scGuU)
-                .map {
-                  case success if success.status == 200 =>
-                    NoCache(Redirect(routes.CommentsController.reportAbuseThankYou(commentId)))
-                  case error =>
-                    InternalServerError(
-                      views.html.discussionComments.reportComment(
-                        commentId,
-                        reportAbusePage,
-                        userForm.fill(userData),
-                        errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage),
-                      ),
-                    )
-                }
-                .recover({
-                  case NonFatal(e) =>
-                    InternalServerError(
-                      views.html.discussionComments.reportComment(
-                        commentId,
-                        reportAbusePage,
-                        userForm.fill(userData),
-                        errorMessage = Some(ReportAbuseFormValidation.genericErrorMessage),
-                      ),
-                    )
-                })
-
-            },
-          )
-      }
-    }
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit
       request: RequestHeader,
