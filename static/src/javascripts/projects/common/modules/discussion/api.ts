@@ -45,7 +45,7 @@ type Response = UserResponse | CommentResponse;
 
 type AbuseReport = {
 	categoryId: number;
-	reason?: string;
+	reason: string;
 	email?: string;
 };
 
@@ -147,6 +147,7 @@ export const pickComment = (id: Id): Promise<CommentResponse> =>
 export const unPickComment = (id: Id): Promise<CommentResponse> =>
 	send(`/comment/${id}/unhighlight`, 'POST');
 
+/** @type {(id: Id, report: AbuseReport): Promise<CommentResponse>} */
 export const reportComment = (
 	id: Id,
 	report: AbuseReport,
