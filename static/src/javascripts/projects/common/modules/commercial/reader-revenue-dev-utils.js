@@ -10,7 +10,7 @@ import {
 	initMvtCookie,
 } from '../analytics/mvt-cookie';
 import { clearParticipations } from '../experiments/ab-local-storage';
-import { isUserLoggedIn } from '../identity/api';
+import { isUserLoggedInOktaRefactor } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
 import {
@@ -53,21 +53,24 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
 		fakeOneOffContributor();
 	}
 
-	if (isUserLoggedIn() && !asExistingSupporter) {
-		if (window.location.origin.includes('localhost')) {
-			// Assume they don't have identity running locally
-			// So try and remove the identity cookie manually
-			removeCookie('GU_U');
-		} else {
-			const profileUrl = window.location.origin.replace(
-				/(www\.|m\.)/,
-				'profile.',
-			);
-			window.location.assign(`${profileUrl}/signout`);
-		}
-	} else {
-		window.location.reload();
-	}
+
+    isUserLoggedInOktaRefactor().then(isLoggedIn => {
+        if(isLoggedIn && !asExistingSupporter) {
+            if (window.location.origin.includes('localhost')) {
+                localStorage.removeItem("gu.access_token");
+                localStorage.removeItem("gu.id_token");
+                removeCookie('GU_U');
+            } else {
+                const profileUrl = window.location.origin.replace(
+                    /(www\.|m\.)/,
+                    'profile.',
+                );
+                window.location.assign(`${profileUrl}/signout`);
+            }
+        } else {
+            window.location.reload();
+        }
+    })
 };
 
 const showMeTheEpic = (asExistingSupporter = false) => {
