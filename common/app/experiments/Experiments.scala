@@ -17,6 +17,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeNetworkFront,
       Okta,
       HeaderTopBarSearchCapi,
+      LazyLoadImages,
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
@@ -100,6 +101,15 @@ object HeaderTopBarSearchCapi
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 6),
       participationGroup = Perc1B,
+    )
+
+object LazyLoadImages
+    extends Experiment(
+      name = "lazy-load-images",
+      description = "Lazy-load images on DCR",
+      owners = Seq(Owner.withGithub("@mxdvl")),
+      sellByDate = LocalDate.of(2023, 8, 22),
+      participationGroup = Perc1C,
     )
 
 object OfferHttp3
