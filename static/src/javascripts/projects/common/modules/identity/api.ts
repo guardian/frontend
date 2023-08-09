@@ -394,3 +394,8 @@ export const updateUsername = (username: string): Promise<Response> =>
 		});
 
 export { getUserCookie as getCookie };
+
+window.guardian.isSignedInAuthState = async () => {
+	const { isSignedInWithOktaAuthState } = await import('./okta');
+	return isSignedInWithOktaAuthState();
+};

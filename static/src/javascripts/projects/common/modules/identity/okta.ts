@@ -13,6 +13,11 @@ export type CustomIdTokenClaims = CustomClaims & {
 	braze_uuid: string;
 };
 
+export type AuthState = IdentityAuthState<
+	AccessTokenClaims,
+	CustomIdTokenClaims
+>;
+
 const getStage = () => {
 	return window.guardian.config.page.stage;
 };
@@ -70,9 +75,7 @@ function getIdentityAuth() {
 	return identityAuth;
 }
 
-export async function isSignedInWithOktaAuthState(): Promise<
-	IdentityAuthState<AccessTokenClaims, CustomIdTokenClaims>
-> {
+export async function isSignedInWithOktaAuthState(): Promise<AuthState> {
 	return getIdentityAuth()
 		.isSignedInWithAuthState()
 		.catch((e) => {
