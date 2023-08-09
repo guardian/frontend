@@ -11,6 +11,8 @@ import { reportError } from 'lib/report-error';
 export type CustomIdTokenClaims = CustomClaims & {
 	email: string;
 	braze_uuid: string;
+	// Used by Commercial
+	google_tag_id: string;
 };
 
 export type AuthState = IdentityAuthState<
