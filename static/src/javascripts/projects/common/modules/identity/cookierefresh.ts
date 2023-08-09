@@ -3,7 +3,7 @@
  */
 import { storage } from '@guardian/libs';
 import {
-	isUserLoggedInOktaRefactor,
+	isUserLoggedIn,
 	refreshOktaSession,
 } from 'common/modules/identity/api';
 
@@ -28,7 +28,7 @@ const shouldRefreshCookie: (
 
 const init: () => Promise<void> = async () => {
 	const lastRefreshKey = 'identity.lastRefresh';
-	if (storage.local.isAvailable() && (await isUserLoggedInOktaRefactor())) {
+	if (storage.local.isAvailable() && (await isUserLoggedIn())) {
 		const currentTime: number = new Date().getTime();
 		// The storage API could return any type handled by JSON.parse, so
 		// we will assume the type is 'unknown' and attempt to parse the value into

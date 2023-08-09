@@ -19,7 +19,7 @@ import {
 	getPurchaseInfo,
 	shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
-import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
 	getArticleCounts,
 	getArticleCountToday,
@@ -205,7 +205,7 @@ export const fetchPuzzlesData =
 
 export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
 	const purchaseInfo = getPurchaseInfo();
-	const isSignedIn = await isUserLoggedInOktaRefactor();
+	const isSignedIn = await isUserLoggedIn();
 	const payload = await buildBannerPayload(purchaseInfo, isSignedIn);
 
 	if (

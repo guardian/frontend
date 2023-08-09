@@ -5,11 +5,11 @@
  * HUNT YOU DOWN.
  */
 import { reportError } from 'lib/report-error';
-import { isUserLoggedInOktaRefactor } from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // Used to show elements that need signin. Use .sign-in-required
 const setCssClass = async () => {
-    if (!(await isUserLoggedInOktaRefactor()) || !document.documentElement) {
+    if (!(await isUserLoggedIn()) || !document.documentElement) {
         return;
     }
     const classList = document.documentElement.classList;

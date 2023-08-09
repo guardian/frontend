@@ -1,7 +1,7 @@
 import fastdom from 'lib/fastdom-promise';
 import { mediator } from 'lib/mediator';
 import {
-    isUserLoggedInOktaRefactor,
+    isUserLoggedIn,
     sendValidationEmail,
 } from 'common/modules/identity/api';
 
@@ -21,7 +21,7 @@ const init = () => {
 
                         // TODO: This can probably be deprecated.
                         // See https://github.com/guardian/frontend/issues/26349
-                        isUserLoggedInOktaRefactor().then(isLoggedIn => {
+                        isUserLoggedIn().then(isLoggedIn => {
                             if (!isLoggedIn) return;
                             sendValidationEmail().then(
                                 resp => {

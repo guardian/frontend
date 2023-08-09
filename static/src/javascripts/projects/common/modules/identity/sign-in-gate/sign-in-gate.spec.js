@@ -28,7 +28,7 @@ jest.mock('@guardian/libs', () => ({
 }));
 
 jest.mock('common/modules/identity/api', () => ({
-    isUserLoggedInOktaRefactor: jest.fn().mockResolvedValue(false),
+    isUserLoggedIn: jest.fn().mockResolvedValue(false),
 }));
 
 jest.mock('lib/config', () => ({
@@ -57,7 +57,7 @@ const fakeIsInABTestSynchronous = require('common/modules/experiments/ab')
 const fakeLocal = require('@guardian/libs').storage.local;
 
 const fakeIsUserLoggedIn = require('common/modules/identity/api')
-    .isUserLoggedInOktaRefactor;
+    .isUserLoggedIn;
 
 const fakeConfig = require('lib/config');
 

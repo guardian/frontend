@@ -10,7 +10,7 @@ import {
 	initMvtCookie,
 } from '../analytics/mvt-cookie';
 import { clearParticipations } from '../experiments/ab-local-storage';
-import { isUserLoggedInOktaRefactor } from '../identity/api';
+import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
 import {
@@ -54,7 +54,7 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
 	}
 
 
-    isUserLoggedInOktaRefactor().then(isLoggedIn => {
+    isUserLoggedIn().then(isLoggedIn => {
         if(isLoggedIn && !asExistingSupporter) {
             if (window.location.origin.includes('localhost')) {
                 localStorage.removeItem("gu.access_token");

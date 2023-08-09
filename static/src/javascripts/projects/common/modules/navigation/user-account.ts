@@ -1,8 +1,5 @@
 import type { OphanComponent, OphanComponentType } from '@guardian/libs';
-import {
-	getUserFromCookie,
-	isUserLoggedInOktaRefactor,
-} from 'common/modules/identity/api';
+import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 import fastdom from 'lib/fastdom-promise';
 import { bufferedNotificationListener } from '../bufferedNotificationListener';
 import {
@@ -201,7 +198,7 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 };
 
 const showMyAccountIfNecessary = (): void => {
-	void isUserLoggedInOktaRefactor().then((isLoggedIn) => {
+	void isUserLoggedIn().then((isLoggedIn) => {
 		if (!isLoggedIn) return;
 		void fastdom
 			.measure(() => ({

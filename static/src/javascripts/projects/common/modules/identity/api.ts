@@ -150,7 +150,8 @@ export const getAuthStatus = async (): Promise<AuthStatus> => {
 			};
 		}
 	} else {
-		if (isUserLoggedIn()) {
+		const isUserLoggedInWithCookie = getUserFromCookie() !== null;
+		if (isUserLoggedInWithCookie) {
 			return {
 				kind: 'SignedInWithCookies',
 			};
@@ -162,8 +163,7 @@ export const getAuthStatus = async (): Promise<AuthStatus> => {
 	}
 };
 
-export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
-export const isUserLoggedInOktaRefactor = (): Promise<boolean> =>
+export const isUserLoggedIn = (): Promise<boolean> =>
 	getAuthStatus().then((authStatus) =>
 		authStatus.kind === 'SignedInWithCookies' ||
 		authStatus.kind === 'SignedInWithOkta'
