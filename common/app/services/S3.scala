@@ -1,17 +1,18 @@
 package services
 
-import java.io._
-import java.util.zip.{GZIPInputStream, GZIPOutputStream}
-
-import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
+import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.util.StringInputStream
+import com.gu.etagcaching.aws.s3.ObjectId
 import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
+import services.S3.logS3ExceptionWithDevHint
 
+import java.io._
+import java.util.zip.GZIPOutputStream
 import scala.io.{Codec, Source}
 
 trait S3 extends GuLogging {
@@ -27,8 +28,8 @@ trait S3 extends GuLogging {
 
   private def withS3Result[T](key: String)(action: S3Object => T): Option[T] =
     client.flatMap { client =>
+      val objectId = ObjectId(bucket, key)
       try {
-
         val request = new GetObjectRequest(bucket, key)
         val result = client.getObject(request)
         log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
@@ -44,13 +45,10 @@ trait S3 extends GuLogging {
         }
       } catch {
         case e: AmazonS3Exception if e.getStatusCode == 404 =>
-          log.warn("not found at %s - %s" format (bucket, key))
+          log.warn(s"not found at ${objectId.s3Uri}")
           None
         case e: AmazonS3Exception =>
-          val errorMsg = s"Unable to fetch S3 object (key: $key)"
-          val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
-          log.error(errorMsg, e)
-          println(errorMsg + " \n" + hintMsg)
+          logS3ExceptionWithDevHint(objectId, e)
           None
         case e: Exception =>
           throw e
@@ -90,11 +88,6 @@ trait S3 extends GuLogging {
   def putPrivateGzipped(key: String, value: String, contentType: String): Unit = {
     putGzipped(key, value, contentType, Private)
   }
-
-  def getGzipped(key: String)(implicit codec: Codec): Option[String] =
-    withS3Result(key) { result =>
-      Source.fromInputStream(new GZIPInputStream(result.getObjectContent)).mkString
-    }
 
   private def putGzipped(
       key: String,
@@ -148,7 +141,14 @@ trait S3 extends GuLogging {
   }
 }
 
-object S3 extends S3
+object S3 extends S3 {
+  def logS3ExceptionWithDevHint(s3ObjectId: ObjectId, e: Exception): Unit = {
+    val errorMsg = s"Unable to fetch S3 object (${s3ObjectId.s3Uri})"
+    val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
+    log.error(errorMsg, e)
+    println(errorMsg + " \n" + hintMsg)
+  }
+}
 
 object S3FrontsApi extends S3 {
 

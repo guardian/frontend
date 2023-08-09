@@ -1,70 +1,67 @@
 package services.fronts
 
-import common.{FaciaPressMetrics, GuLogging}
-import concurrent.{BlockingOperations, FutureSemaphore}
+import com.gu.etagcaching.ETagCache
+import com.gu.etagcaching.FreshnessPolicy.AlwaysWaitForRefreshedValue
+import com.gu.etagcaching.aws.s3.ObjectId
+import com.gu.etagcaching.aws.sdkv2.s3.S3ObjectFetching
+import com.gu.etagcaching.aws.sdkv2.s3.response.Transformer.Bytes
+import common.FaciaPressMetrics.{FrontDecodingLatency, FrontDownloadLatency, FrontNotModifiedDownloadLatency}
+import common.GuLogging
 import conf.Configuration
-import metrics.DurationMetric
+import metrics.DurationMetric.withMetrics
 import model.{PressedPage, PressedPageType}
 import play.api.libs.json.Json
-import services.S3
+import services.S3.logS3ExceptionWithDevHint
+import services._
+import software.amazon.awssdk.services.s3.model.S3Exception
+import utils.AWSv2.S3Async
 
+import java.util.zip.GZIPInputStream
+import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Using
 
 trait FrontJsonFapi extends GuLogging {
+  implicit val executionContext: ExecutionContext
   lazy val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
-  val parallelJsonPresses = 32
-  val futureSemaphore = new FutureSemaphore(parallelJsonPresses)
 
-  def blockingOperations: BlockingOperations
+  private def s3ObjectIdFor(path: String, prefix: String): ObjectId =
+    ObjectId(
+      S3.bucket,
+      s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json",
+    )
 
-  private def getAddressForPath(path: String, prefix: String): String =
-    s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
-
-  def get(path: String, pageType: PressedPageType)(implicit
-      executionContext: ExecutionContext,
-  ): Future[Option[PressedPage]] =
-    errorLoggingF(s"FrontJsonFapi.get $path") {
-      pressedPageFromS3(getAddressForPath(path, pageType.suffix))
-    }
-
-  private def parsePressedPage(
-      jsonStringOpt: Option[String],
-  )(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
-    futureSemaphore.execute {
-      blockingOperations.executeBlocking {
-        jsonStringOpt.map { jsonString =>
-          DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
-            // This operation is run in the thread pool since it is very CPU intensive
-            Json.parse(jsonString).as[PressedPage]
-          }
+  private val pressedPageCache: ETagCache[ObjectId, PressedPage] = new ETagCache(
+    S3ObjectFetching(S3Async, Bytes)
+      .timing(
+        successWith = FrontDownloadLatency.recordDuration,
+        notModifiedWith = FrontNotModifiedDownloadLatency.recordDuration,
+      )
+      .thenParsing { bytes =>
+        withMetrics(FrontDecodingLatency) {
+          Using(new GZIPInputStream(bytes.asInputStream()))(Json.parse(_).as[PressedPage]).get
         }
+      },
+    AlwaysWaitForRefreshedValue,
+    _.maximumSize(180).expireAfterAccess(1.hour),
+  )
+
+  def get(path: String, pageType: PressedPageType): Future[Option[PressedPage]] =
+    errorLoggingF(s"FrontJsonFapi.get $path") {
+      val objectId = s3ObjectIdFor(path, pageType.suffix)
+      pressedPageCache.get(objectId).map(Some(_)).recover {
+        case s3Exception: S3Exception =>
+          logS3ExceptionWithDevHint(objectId, s3Exception)
+          None
       }
     }
-
-  private def loadPressedPageFromS3(path: String) =
-    blockingOperations.executeBlocking {
-      DurationMetric.withMetrics(FaciaPressMetrics.FrontDownloadLatency) {
-        S3.getGzipped(path)
-      }
-    }
-
-  private def pressedPageFromS3(
-      path: String,
-  )(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
-    errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
-      for {
-        s3FrontData <- loadPressedPageFromS3(path)
-        pressedPage <- parsePressedPage(s3FrontData)
-      } yield pressedPage
-    }
-
 }
 
-class FrontJsonFapiLive(val blockingOperations: BlockingOperations) extends FrontJsonFapi {
+class FrontJsonFapiLive(implicit val executionContext: ExecutionContext) extends FrontJsonFapi {
   override val bucketLocation: String = s"$stage/frontsapi/pressed/live"
 }
 
-class FrontJsonFapiDraft(val blockingOperations: BlockingOperations) extends FrontJsonFapi {
+class FrontJsonFapiDraft(implicit val executionContext: ExecutionContext) extends FrontJsonFapi {
   override val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
