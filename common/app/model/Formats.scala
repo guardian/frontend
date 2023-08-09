@@ -111,7 +111,7 @@ object PressedContentFormat {
 
     def reads(json: JsValue): JsResult[PressedContent] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("LinkSnap"), _)       => {
+        case JsSuccess(JsString("LinkSnap"), _) => {
           // we know a Link Snap will never have Format but this is a required field in DCR so we add a default here.
           val snapLinkJsonWithFormat = json.as[JsObject] + ("format" -> Json.toJson(ContentFormat.defaultContentFormat))
           JsSuccess(snapLinkJsonWithFormat.as[LinkSnap](linkSnapFormat))
