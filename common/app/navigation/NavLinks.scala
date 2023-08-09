@@ -115,7 +115,19 @@ object NavLinks {
       NavLink("Clubs", "/football/teams", Some("football/teams")),
     ),
   )
-  val soccer = NavLink("Soccer", "/us/soccer")
+  val soccer = NavLink(
+    "Soccer",
+    "/us/soccer",
+    children = List(
+      NavLink("Women's World Cup", "/football/womens-world-cup-2023", Some("football/womens-world-cup-2023")),
+      NavLink("Live scores", "/football/live", Some("football/live")),
+      NavLink("Tables", "/football/tables", Some("football/tables")),
+      NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
+      NavLink("Results", "/football/results", Some("football/results")),
+      NavLink("Competitions", "/football/competitions", Some("football/competitions")),
+      NavLink("Clubs", "/football/teams", Some("football/teams")),
+    ),
+  )
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
