@@ -109,15 +109,20 @@ object PressedContentFormat {
   // This format is implicit because CuratedContent is recursively defined, so it needs a format object in scope.
   implicit object format extends Format[PressedContent] {
 
-    def reads(json: JsValue): JsResult[PressedContent] =
+    def reads(json: JsValue): JsResult[PressedContent] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("LinkSnap"), _)       => JsSuccess(json.as[LinkSnap](linkSnapFormat))
+        case JsSuccess(JsString("LinkSnap"), _)       => {
+          // we know a Link Snap will never have Format but this is a required field in DCR so we add a default here.
+          val snapLinkJsonWithFormat = json.as[JsObject] + ("format" -> Json.toJson(ContentFormat.defaultContentFormat))
+          JsSuccess(snapLinkJsonWithFormat.as[LinkSnap](linkSnapFormat))
+        }
         case JsSuccess(JsString("LatestSnap"), _)     => JsSuccess(json.as[LatestSnap](latestSnapFormat))
         case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](curatedContentFormat))
         case JsSuccess(JsString("SupportingCuratedContent"), _) =>
           JsSuccess(json.as[SupportingCuratedContent](supportingCuratedContentFormat))
         case _ => JsError("Could not convert PressedContent")
       }
+    }
 
     def writes(faciaContent: PressedContent): JsValue =
       faciaContent match {
