@@ -21,7 +21,7 @@ sealed trait PressedContent {
 
   lazy val participatesInDeduplication: Boolean = properties.embedType.isEmpty
 
-  def format: Option[ContentFormat] // Define as option as not needed by LinkSnap
+  def format: ContentFormat
 
   def withoutTrailText: PressedContent
 
@@ -66,7 +66,7 @@ final case class CuratedContent(
     override val card: PressedCard,
     override val discussion: PressedDiscussionSettings,
     override val display: PressedDisplaySettings,
-    override val format: Option[ContentFormat],
+    override val format: ContentFormat,
     enriched: Option[
       EnrichedContent,
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
@@ -85,7 +85,7 @@ object CuratedContent {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
-      format = Some(ContentFormat.fromFapiContentFormat(content.format)),
+      format = ContentFormat.fromFapiContentFormat(content.format),
       supportingContent = content.supportingContent.map(PressedContent.make),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
@@ -99,7 +99,7 @@ final case class SupportingCuratedContent(
     override val card: PressedCard,
     override val discussion: PressedDiscussionSettings,
     override val display: PressedDisplaySettings,
-    override val format: Option[ContentFormat],
+    override val format: ContentFormat,
     cardStyle: CardStyle,
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -113,7 +113,7 @@ object SupportingCuratedContent {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
-      format = Some(ContentFormat.fromFapiContentFormat(content.format)),
+      format = ContentFormat.fromFapiContentFormat(content.format),
       cardStyle = CardStyle.make(content.cardStyle),
     )
   }
@@ -125,7 +125,7 @@ final case class LinkSnap(
     override val card: PressedCard,
     override val discussion: PressedDiscussionSettings,
     override val display: PressedDisplaySettings,
-    override val format: Option[ContentFormat],
+    override val format: ContentFormat,
     enriched: Option[
       EnrichedContent,
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
@@ -142,7 +142,7 @@ object LinkSnap {
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
       enriched = Some(EnrichedContent.empty),
-      format = None,
+      format = ContentFormat.defaultContentFormat,
     )
   }
 }
@@ -153,7 +153,7 @@ final case class LatestSnap(
     override val card: PressedCard,
     override val discussion: PressedDiscussionSettings,
     override val display: PressedDisplaySettings,
-    override val format: Option[ContentFormat],
+    override val format: ContentFormat,
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -167,7 +167,7 @@ object LatestSnap {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
-      format = Some(ContentFormat.fromFapiContentFormat(content.format)),
+      format = ContentFormat.fromFapiContentFormat(content.format),
     )
   }
 }
