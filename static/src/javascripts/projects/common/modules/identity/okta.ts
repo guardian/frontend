@@ -5,6 +5,7 @@ import type {
 } from '@guardian/identity-auth';
 import { IdentityAuth } from '@guardian/identity-auth';
 import config from 'lib/config';
+import { reportError } from 'lib/report-error';
 
 // the `id_token.profile.theguardian` scope is used to get custom claims
 export type CustomIdTokenClaims = CustomClaims & {
@@ -72,5 +73,14 @@ function getIdentityAuth() {
 export async function isSignedInWithOktaAuthState(): Promise<
 	IdentityAuthState<AccessTokenClaims, CustomIdTokenClaims>
 > {
-	return getIdentityAuth().isSignedInWithAuthState();
+	return getIdentityAuth()
+		.isSignedInWithAuthState()
+		.catch((e) => {
+			reportError(e, { feature: 'okta' }, true);
+			return {
+				isAuthenticated: false,
+				idToken: undefined,
+				accessToken: undefined,
+			};
+		});
 }
