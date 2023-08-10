@@ -100,7 +100,7 @@ object Okta
        - https://github.com/guardian/dotcom-rendering/pull/8508
        - https://github.com/guardian/frontend/pull/26461
       needs to be reverted */
-      participationGroup = Perc1C,
+      participationGroup = Perc2A,
     )
 
 object LazyLoadImages
