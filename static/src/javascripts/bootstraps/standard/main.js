@@ -183,6 +183,11 @@ const bootStandard = () => {
         fixSecondaryColumn();
     }
 
+    window.guardian.isSignedInAuthStateResolve(async () => {
+        const { isSignedInWithOktaAuthState } = await import('common/modules/identity/okta');
+        return isSignedInWithOktaAuthState();
+    });
+
     initAtoms();
 
     initEmbedResize();

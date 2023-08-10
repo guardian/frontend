@@ -11,14 +11,7 @@ import { reportError } from 'lib/report-error';
 export type CustomIdTokenClaims = CustomClaims & {
 	email: string;
 	braze_uuid: string;
-	// Used by Commercial
-	google_tag_id: string;
 };
-
-export type AuthState = IdentityAuthState<
-	AccessTokenClaims,
-	CustomIdTokenClaims
->;
 
 const getStage = () => {
 	return window.guardian.config.page.stage;
@@ -77,7 +70,9 @@ function getIdentityAuth() {
 	return identityAuth;
 }
 
-export async function isSignedInWithOktaAuthState(): Promise<AuthState> {
+export async function isSignedInWithOktaAuthState(): Promise<
+	IdentityAuthState<AccessTokenClaims, CustomIdTokenClaims>
+> {
 	return getIdentityAuth()
 		.isSignedInWithAuthState()
 		.catch((e) => {

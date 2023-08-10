@@ -36,6 +36,8 @@ window.guardian = {
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 
+window.guardian.isSignedInAuthState = new Promise(r => window.guardian.isSignedInAuthStateResolve = r);
+
 window.guardian.config.ophan = {
     // This is duplicated from
     // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
