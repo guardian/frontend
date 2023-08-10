@@ -3,12 +3,10 @@ package controllers
 import common.{GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
-import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
-import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponse
 import staticpages.StaticPages
@@ -17,7 +15,6 @@ import implicits.Requests.RichRequestHeader
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
 import model.dotcomrendering.DotcomNewslettersPageRenderingDataModel
-import model.SimplePage
 import model.CacheTime
 
 class SignupPageController(
