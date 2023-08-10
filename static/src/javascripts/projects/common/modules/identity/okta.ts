@@ -37,37 +37,37 @@ const getRedirectUri = (stage: Stage) => {
 	}
 };
 
-let identityAuth:
-	| IdentityAuth<AccessTokenClaims, CustomIdTokenClaims>
-	| undefined;
-
 function getIdentityAuth() {
-	if (identityAuth === undefined) {
+	if (window.guardian.identityAuth === undefined) {
 		const stage = getStage();
 
-		identityAuth = new IdentityAuth<AccessTokenClaims, CustomIdTokenClaims>(
-			{
-				issuer: getIssuer(stage),
-				clientId: getClientId(stage),
-				redirectUri: getRedirectUri(stage),
-				scopes: [
-					'openid', // required for open id connect, returns an id token
-					'profile', // populates the id token with basic profile information
-					'email', // populates the id token with the user's email address
-					'guardian.discussion-api.private-profile.read.self', // allows the access token to be used to make requests to the discussion api to read the user's profile
-					'guardian.discussion-api.update.secure', // allows the access token to be used to make requests to the discussion api to post comments, upvote etc
-					'guardian.identity-api.newsletters.read.self', // allows the access token to be used to make requests to the identity api to read the user's newsletter subscriptions
-					'guardian.identity-api.newsletters.update.self', // allows the access token to be used to make requests to the identity api to update the user's newsletter subscriptions
-					'guardian.identity-api.user.username.create.self.secure', // allows the access token to set the user's username
-					'guardian.members-data-api.read.self', // allows the access token to be used to make requests to the members data api to read the user's membership status
-					'id_token.profile.theguardian', // populates the id token with application specific profile information
-				],
-				idCookieSessionRefresh:
-					config.get('switches.idCookieRefresh') ?? false,
-			},
-		);
+		window.guardian.identityAuth = new IdentityAuth<
+			AccessTokenClaims,
+			CustomIdTokenClaims
+		>({
+			issuer: getIssuer(stage),
+			clientId: getClientId(stage),
+			redirectUri: getRedirectUri(stage),
+			scopes: [
+				'openid', // required for open id connect, returns an id token
+				'profile', // populates the id token with basic profile information
+				'email', // populates the id token with the user's email address
+				'guardian.discussion-api.private-profile.read.self', // allows the access token to be used to make requests to the discussion api to read the user's profile
+				'guardian.discussion-api.update.secure', // allows the access token to be used to make requests to the discussion api to post comments, upvote etc
+				'guardian.identity-api.newsletters.read.self', // allows the access token to be used to make requests to the identity api to read the user's newsletter subscriptions
+				'guardian.identity-api.newsletters.update.self', // allows the access token to be used to make requests to the identity api to update the user's newsletter subscriptions
+				'guardian.identity-api.user.username.create.self.secure', // allows the access token to set the user's username
+				'guardian.members-data-api.read.self', // allows the access token to be used to make requests to the members data api to read the user's membership status
+				'id_token.profile.theguardian', // populates the id token with application specific profile information
+			],
+			idCookieSessionRefresh:
+				config.get('switches.idCookieRefresh') ?? false,
+		});
 	}
-	return identityAuth;
+	return window.guardian.identityAuth as IdentityAuth<
+		AccessTokenClaims,
+		CustomIdTokenClaims
+	>;
 }
 
 export async function isSignedInWithOktaAuthState(): Promise<

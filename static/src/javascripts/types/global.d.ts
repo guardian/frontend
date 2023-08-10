@@ -444,6 +444,7 @@ interface Window {
 			dfpEnv?: DfpEnv;
 		};
 		notificationEventHistory?: HeaderNotification[][];
+		identityAuth?: unknown;
 	};
 	ootag: {
 		queue: Array<() => void>;
