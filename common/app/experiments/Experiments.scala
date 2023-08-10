@@ -62,19 +62,6 @@ object EuropeNetworkFront
       participationGroup = Perc0D,
     )
 
-object Okta
-    extends Experiment(
-      name = "okta",
-      description = "Use Okta for authentication",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 8, 31),
-      /* Do not increase without considering if
-       - https://github.com/guardian/dotcom-rendering/pull/8508
-       - https://github.com/guardian/frontend/pull/26461
-      needs to be reverted */
-      participationGroup = Perc1C,
-    )
-
 // Removing while we are still implementing this content type in DCR
 //object DCRImageContent
 //    extends Experiment(
@@ -103,13 +90,26 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
+object Okta
+    extends Experiment(
+      name = "okta",
+      description = "Use Okta for authentication",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 8, 31),
+      /* Do not increase without considering if
+       - https://github.com/guardian/dotcom-rendering/pull/8508
+       - https://github.com/guardian/frontend/pull/26461
+      needs to be reverted */
+      participationGroup = Perc1C,
+    )
+
 object LazyLoadImages
     extends Experiment(
       name = "lazy-load-images",
       description = "Lazy-load images on DCR",
       owners = Seq(Owner.withGithub("@mxdvl")),
       sellByDate = LocalDate.of(2023, 8, 22),
-      participationGroup = Perc1C,
+      participationGroup = Perc1D,
     )
 
 object OfferHttp3
