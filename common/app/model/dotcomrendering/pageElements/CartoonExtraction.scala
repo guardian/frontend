@@ -13,6 +13,8 @@ object CartoonExtraction {
       alt = cartoonElementFields.alt,
       source = cartoonElementFields.source,
       displayCredit = cartoonElementFields.displayCredit,
+      photographer = cartoonElementFields.photographer,
+      imageType = cartoonElementFields.imageType
     )
   }
 
