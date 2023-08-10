@@ -177,7 +177,7 @@ case class CartoonBlockElement(
     source: Option[String],
     displayCredit: Option[Boolean],
     photographer: Option[String],
-    imageType: Option[String]
+    imageType: Option[String],
 ) extends PageElement
 object CartoonBlockElement {
   implicit val CartoonVariantWrites: Writes[DcrCartoonVariant] = Json.writes[DcrCartoonVariant]

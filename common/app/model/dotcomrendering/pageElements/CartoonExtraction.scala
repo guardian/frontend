@@ -14,7 +14,7 @@ object CartoonExtraction {
       source = cartoonElementFields.source,
       displayCredit = cartoonElementFields.displayCredit,
       photographer = cartoonElementFields.photographer,
-      imageType = cartoonElementFields.imageType
+      imageType = cartoonElementFields.imageType,
     )
   }
 
