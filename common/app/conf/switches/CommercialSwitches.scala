@@ -451,6 +451,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidKargo: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-kargo",
+    description = "Include the Kargo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val sentinelLogger: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
