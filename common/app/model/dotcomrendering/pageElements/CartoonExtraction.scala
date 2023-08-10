@@ -19,8 +19,8 @@ object CartoonExtraction {
   }
 
   private def getCartoonVariants(cartoonData: CartoonElementFields): Option[List[DcrCartoonVariant]] = {
-    cartoonData.variants.map(maybeVariant =>
-      maybeVariant
+    cartoonData.variants.map(variants =>
+      variants
         .map(variant =>
           DcrCartoonVariant(
             viewportSize = variant.viewportSize,
