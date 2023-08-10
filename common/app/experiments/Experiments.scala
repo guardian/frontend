@@ -71,7 +71,7 @@ object Okta
        - https://github.com/guardian/dotcom-rendering/pull/8508
        - https://github.com/guardian/frontend/pull/26461
       needs to be reverted */
-      participationGroup = Perc0E,
+      participationGroup = Perc1C,
     )
 
 // Removing while we are still implementing this content type in DCR
