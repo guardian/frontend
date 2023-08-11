@@ -1561,33 +1561,28 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-14.1.1.tgz#12672e3992ad3eab3bade848861ca01631a0edf5"
   integrity sha512-wHuJwdOC2hsTBie+zWJYFyasP4fOJXOPcKXpN2Cp+GlljPah3YtS2Fbgn8pcxxt8d5JKO9ra7sHKvX8FNxkAyg==
 
-"@guardian/commercial@10.14.0":
-  version "10.14.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.14.0.tgz#98f8540d09b86f03606c8eaf70d8e7bdb7c7231b"
-  integrity sha512-9fZhNXw/WsEMG7xVCst8VjJ1xQ25Ony9BAZLQDPGv5tOjZSglDGNOqalFCuU4chiU8/cKPgXoBYa37LPWpFVpQ==
+"@guardian/commercial@0.0.0-beta-20230811135015":
+  version "0.0.0-beta-20230811135015"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20230811135015.tgz#b9f262e77dd52a9fbf5a23b3b56d3abaae1fe145"
+  integrity sha512-oJgMJKvx2tNwYnEN+3zmsN5qPwlR8dIw74AkxcpDhOHHfWek21aeGjxcaxXbnVs1VA2O8lSGkTmZKXUZamDaQw==
   dependencies:
     "@changesets/cli" "^2.26.1"
     "@guardian/ab-core" "^5.0.0"
-    "@guardian/consent-management-platform" "^13.5.0"
+    "@guardian/consent-management-platform" "^13.6.1"
     "@guardian/core-web-vitals" "^5.0.0"
-    "@guardian/libs" "^15.0.0"
+    "@guardian/libs" "15.6.3"
     "@guardian/source-foundations" "^12.0.0"
     "@guardian/support-dotcom-components" "^1.0.7"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^1.4.0"
-    prebid.js guardian/prebid.js
+    prebid.js guardian/prebid.js#upgrade-v7.54.4
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.5.3"
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
-
-"@guardian/consent-management-platform@^13.5.0":
-  version "13.5.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.5.0.tgz#61a97c823f6b18f62a6517a3374f6e7bdfca121d"
-  integrity sha512-9iz04lyonWAbUeZ7B+fNp0KbgAervsWDO3A4CE/3e+d876AQj0I3TwU7W4jpWxI4tthcA6UVk7Y6faaS8l+lFw==
 
 "@guardian/consent-management-platform@^13.6.1":
   version "13.6.1"
@@ -1628,20 +1623,15 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-0.4.0.tgz#11fc3b9daec7b4186cf0822b18d6379dbdac8ce5"
   integrity sha512-+lXmoMhrACvibKYBIwKQ15zyWGiGKC+mOg8831R8ilwF3vwXuXnzCLy1EpLTlSfDf72IOAuGyX4gDOqdQP8R/w==
 
-"@guardian/libs@^10.0.0":
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
-  integrity sha512-OdWReBHRWhdbErVmS15hihVzlkdU8DkKrjDsUIN0P8QZiF4twuzcU3qsPwto2UfibAwPkWqKkNwH1k8b6xNclA==
+"@guardian/libs@15.6.3", "@guardian/libs@^15.6.3":
+  version "15.6.3"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-15.6.3.tgz#3c748640bfe706ef8ecbd44c101567bf2b769f4a"
+  integrity sha512-WRHnZGXMn7TD2p/gXWdK+u2ZnS+CAvQ1pdBEjT3x61Ab1YhxOYEIkF5gT+l2kACuJZ7a8pWwuO6CA89JcfZfrw==
 
 "@guardian/libs@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-14.0.0.tgz#07022b652430a1c5d6b16f8aa105ae3d73da4e7c"
   integrity sha512-rB4h4FlD3EcoCY66f3xjO7alnXiimPOynL9znvX/xP2nAVpG4UyedJnIpupw4KPqJuB0lZMih6EeXq0a1XnI3w==
-
-"@guardian/libs@^15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-15.0.0.tgz#c3fbb1d7fdafaefe156232b7088f43e2ff4cd18b"
-  integrity sha512-UnNxcJHYDfpElrxc7sbfwSJ82erH3mjdKsALAgevggsbhOSAkE9yoCn+XMBPN7iQ14bEHZPYyOMt0y1hNCItyg==
 
 "@guardian/prettier@^3.0.0":
   version "3.0.0"
@@ -8806,11 +8796,17 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-live-connect-js@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-2.4.0.tgz#c98b1c1fa94f81e0b67202a456de2bd915e41e6c"
-  integrity sha512-MSBLKfnXoxH+pqwji/Mf8yZu3VZMq4tnNfwMw7NTWN5a+TBM6f0RWgwui1YMA3nHmMhX/nzxxsso0SkyKcF0fA==
+live-connect-common@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/live-connect-common/-/live-connect-common-1.0.0.tgz#9cb558cd665c0418271770854538243420cd1354"
+  integrity sha512-LBZsvykcGeVRYI1eqqXrrNZsoBdL2a8cpyrYPIiGAF/CpixbyRbvqGslaFw511lH294QB16J3fYYg21aYuaM2Q==
+
+live-connect-js@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-5.0.1.tgz#152372cf757e8af8eb4829f32979669b26cd9052"
+  integrity sha512-X/fFbKGG8MahpqIuxndApAc9udj1g5NIxL95zKPzvqoipPYoeqvh7SCDly1hPvbqsfFj/DIbOfdWbttXzCSryw==
   dependencies:
+    live-connect-common "^1.0.0"
     tiny-hashes "1.0.1"
 
 load-json-file@^4.0.0:
@@ -10521,15 +10517,15 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js:
-  version "7.26.0"
-  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/2e3b96dc57dfe14ed8c418674ee7a0a150ece7cb"
+"prebid.js@github:guardian/prebid.js#upgrade-v7.54.4":
+  version "7.54.4"
+  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/e730b022df4ae7e7392569b953322bd95bbfc12f"
   dependencies:
     "@babel/core" "^7.16.7"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
-    "@guardian/libs" "^10.0.0"
+    "@guardian/libs" "^15.6.3"
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
@@ -10539,7 +10535,7 @@ prebid.js@guardian/prebid.js:
     express "^4.15.4"
     fun-hooks "^0.9.9"
     just-clone "^1.0.2"
-    live-connect-js "2.4.0"
+    live-connect-js "^5.0.0"
   optionalDependencies:
     fsevents "^2.3.2"
 
