@@ -79,7 +79,8 @@ object NavMenu {
 
   def apply(page: Page, edition: Edition): NavMenu = {
     val root = navRoot(edition)
-    val currentUrl = if (getSectionOrPageUrl(page, edition) == "/soccer") "/us/soccer" else getSectionOrPageUrl(page, edition)
+    val currentUrl =
+      if (getSectionOrPageUrl(page, edition) == "/soccer") "/us/soccer" else getSectionOrPageUrl(page, edition)
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
     val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
     val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
@@ -259,7 +260,8 @@ object NavMenu {
           if (currentNavHasChildren) {
             currentNavLink.map(_.children).getOrElse(Nil)
           } else {
-            currentParent.map(_.children)
+            currentParent
+              .map(_.children)
               .getOrElse(Nil)
           }
 
