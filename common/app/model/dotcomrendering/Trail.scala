@@ -158,7 +158,7 @@ object Trail {
       isLiveBlog = content.properties.isLiveBlog,
       pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
       designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
-      format = content.format.getOrElse(ContentFormat.defaultContentFormat),
+      format = content.format,
       webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
       headline = content.header.headline,
       mediaType = content.card.mediaType.map(_.toString()),
