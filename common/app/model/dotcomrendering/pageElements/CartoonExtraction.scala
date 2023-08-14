@@ -35,4 +35,13 @@ object CartoonExtraction {
       case (a, i) => ImageAsset.make(a, i)
     }
   }
+
+  def cartoonIsValid(cartoonBlockElement: CartoonBlockElement): Boolean = {
+    cartoonBlockElement.variants.exists(variant =>
+      variant.viewportSize == "large" &&
+        variant.images.nonEmpty &&
+        variant.images.head.fields.contains("height") &&
+        variant.images.head.fields.contains("width"),
+    )
+  }
 }

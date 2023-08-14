@@ -15,6 +15,7 @@ import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
+import model.dotcomrendering.pageElements.CartoonExtraction._
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -910,7 +911,7 @@ object PageElement {
           ),
         )
 
-      case Cartoon => element.cartoonTypeData.map(CartoonExtraction.extractCartoon).toList
+      case Cartoon => element.cartoonTypeData.map(extractCartoon).filter(cartoonIsValid).toList
 
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")

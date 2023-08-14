@@ -4,31 +4,44 @@ import com.gu.contentapi.client.model.v1.{CartoonElementFields, CartoonImage, Ca
 import model.ImageAsset
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import model.dotcomrendering.pageElements.CartoonExtraction._
 
 class CartoonExtractionTest extends AnyFlatSpec with Matchers {
-  "CartoonExtraction" should "transform a cartoon element from Content API" in {
-    val cartoonElementFields = CartoonElementFields(
-      variants = Some(
-        scala.collection.Seq(
-          CartoonVariant(
-            viewportSize = "large",
-            images = scala.collection.Seq(
-              CartoonImage(
-                mimeType = "image/jpeg",
-                file = "https://link-to-my-image",
-                width = Some(500),
-                height = Some(300),
-              ),
-            ),
-          ),
-        ),
+  val validCartoonVariant = CartoonVariant(
+    viewportSize = "large",
+    images = scala.collection.Seq(
+      CartoonImage(
+        mimeType = "image/jpeg",
+        file = "https://link-to-my-image",
+        width = Some(500),
+        height = Some(300),
       ),
-      credit = Some("credit"),
-      caption = Some("caption"),
-      alt = Some("alt"),
-      displayCredit = Some(true),
+    ),
+  )
+
+  val invalidCartoonVariant = CartoonVariant(
+    viewportSize = "large",
+    images = scala.collection.Seq(
+      CartoonImage(
+        mimeType = "image/jpeg",
+        file = "https://link-to-my-image",
+      ),
+    ),
+  )
+
+  def cartoonElementFields(variant: CartoonVariant) =
+    Some(
+      CartoonElementFields(
+        variants = Some(scala.collection.Seq(variant)),
+        credit = Some("credit"),
+        caption = Some("caption"),
+        alt = Some("alt"),
+        displayCredit = Some(true),
+      ),
     )
-    val dcrElement: CartoonBlockElement = CartoonExtraction.extractCartoon(cartoonElementFields)
+
+  "CartoonExtraction" should "transform a cartoon element from Content API" in {
+    val dcrElement: CartoonBlockElement = cartoonElementFields(validCartoonVariant).map(extractCartoon).get
 
     dcrElement.variants should be(
       List(
@@ -53,4 +66,11 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
     dcrElement.displayCredit should be(Some(true))
   }
 
+  it should "filter out invalid cartoon elements" in {
+    val dcrElement: Option[CartoonBlockElement] = cartoonElementFields(invalidCartoonVariant)
+      .map(extractCartoon)
+      .filter(cartoonIsValid)
+
+    dcrElement should be(None)
+  }
 }
