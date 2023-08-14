@@ -31,18 +31,16 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
     val dcrElement: CartoonBlockElement = CartoonExtraction.extractCartoon(cartoonElementFields)
 
     dcrElement.variants should be(
-      Some(
-        List(
-          DcrCartoonVariant(
-            "large",
-            List(
-              ImageAsset(
-                0,
-                Map("height" -> "300", "width" -> "500"),
-                "Cartoon",
-                Some("image/jpeg"),
-                Some("https://link-to-my-image"),
-              ),
+      List(
+        DcrCartoonVariant(
+          "large",
+          List(
+            ImageAsset(
+              0,
+              Map("height" -> "300", "width" -> "500"),
+              "Cartoon",
+              Some("image/jpeg"),
+              Some("https://link-to-my-image"),
             ),
           ),
         ),

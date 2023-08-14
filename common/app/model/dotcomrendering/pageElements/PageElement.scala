@@ -169,7 +169,7 @@ case class DcrCartoonVariant(
     images: List[ImageAsset],
 )
 case class CartoonBlockElement(
-    variants: Option[List[DcrCartoonVariant]],
+    variants: List[DcrCartoonVariant],
     role: Role,
     credit: Option[String],
     caption: Option[String],

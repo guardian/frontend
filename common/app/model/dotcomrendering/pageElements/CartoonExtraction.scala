@@ -15,17 +15,19 @@ object CartoonExtraction {
     )
   }
 
-  private def getCartoonVariants(cartoonData: CartoonElementFields): Option[List[DcrCartoonVariant]] = {
-    cartoonData.variants.map(variants =>
-      variants
-        .map(variant =>
-          DcrCartoonVariant(
-            viewportSize = variant.viewportSize,
-            images = getImageAssets(variant.images.toList),
-          ),
-        )
-        .toList,
-    )
+  private def getCartoonVariants(cartoonData: CartoonElementFields): List[DcrCartoonVariant] = {
+    cartoonData.variants
+      .map(variants =>
+        variants
+          .map(variant =>
+            DcrCartoonVariant(
+              viewportSize = variant.viewportSize,
+              images = getImageAssets(variant.images.toList),
+            ),
+          )
+          .toList,
+      )
+      .getOrElse(List.empty)
   }
 
   private def getImageAssets(images: List[CartoonImage]): List[ImageAsset] = {
