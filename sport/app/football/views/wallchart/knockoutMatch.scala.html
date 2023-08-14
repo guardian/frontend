@@ -28,8 +28,8 @@
             }
             @if(fm.isFixture){
                 <div class="football-match__date">
-                    <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm ").withZone(Edition(request).timezoneId))</span>
-                    @fm.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate.format(DateTimeFormatter.ofPattern("E dd MMMM"))
+                    <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm  z").withZone(Edition(request).timezoneId))</span>
+                    @fm.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate.format(DateTimeFormatter.ofPattern("E dd MMMM "))
                 </div>
             }
 

@@ -7,7 +7,7 @@ import com.sun.syndication.feed.module.mediarss.MediaEntryModule
 import com.sun.syndication.feed.synd.SyndPerson
 import implicits.Dates.jodaToJavaInstant
 import model.pressed._
-import model.{ImageAsset, ImageMedia}
+import model.{ContentFormat, ImageAsset, ImageMedia}
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -1416,11 +1416,10 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       card = card,
       discussion = discussionSettings,
       display = displaySettings,
-      format = None,
+      format = ContentFormat.defaultContentFormat,
       enriched = None,
       supportingContent = supportingContent.toList,
       cardStyle = CardStyle.make(Editorial),
     )
   }
-
 }
