@@ -26,7 +26,6 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
       credit = Some("credit"),
       caption = Some("caption"),
       alt = Some("alt"),
-      source = Some("source"),
       displayCredit = Some(true),
     )
     val dcrElement: CartoonBlockElement = CartoonExtraction.extractCartoon(cartoonElementFields)
@@ -53,7 +52,6 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
     dcrElement.credit should be(Some("credit"))
     dcrElement.caption should be(Some("caption"))
     dcrElement.alt should be(Some("alt"))
-    dcrElement.source should be(Some("source"))
     dcrElement.displayCredit should be(Some(true))
   }
 
