@@ -6,7 +6,7 @@ export const liveblogRightColumnAds: ABTest = {
 	author: '@commercial-dev',
 	start: '2023-08-01',
 	expiry: '2023-09-20',
-	audience: 15 / 100,
+	audience: 0 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'Desktop users with wide (1300px+) screens only',
 	successMeasure:
