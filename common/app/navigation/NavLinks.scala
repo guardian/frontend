@@ -115,7 +115,7 @@ object NavLinks {
       NavLink("Clubs", "/football/teams", Some("football/teams")),
     ),
   )
-  val soccer = NavLink("Soccer", "/us/soccer")
+  val soccer = football.copy(title = "Soccer", url = "/soccer")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
