@@ -298,7 +298,6 @@ object NavLinks {
       usNews,
       world,
       usEnvironment,
-      soccer,
       usPolitics,
       usBusiness,
       tech,
