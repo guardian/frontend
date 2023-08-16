@@ -10,7 +10,7 @@ class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerCompon
       policy = HealthCheckPolicy.All,
       preconditionMaybe = Some(HealthCheckPrecondition(ConfigAgent.isLoaded _, "Facia config has not been loaded yet")),
     )(
-      NeverExpiresSingleHealthCheck("/uk/business"),
+      NeverExpiresSingleHealthCheck("/uk/technology"),
     )(
       wsClient,
     )
