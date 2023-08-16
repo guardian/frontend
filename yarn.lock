@@ -1561,15 +1561,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-14.1.1.tgz#12672e3992ad3eab3bade848861ca01631a0edf5"
   integrity sha512-wHuJwdOC2hsTBie+zWJYFyasP4fOJXOPcKXpN2Cp+GlljPah3YtS2Fbgn8pcxxt8d5JKO9ra7sHKvX8FNxkAyg==
 
-"@guardian/commercial@10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.18.0.tgz#c81c6e76a4e01891358bd66645966f10c1a6e28c"
-  integrity sha512-GNwXVfoVoL/xywkKUcK6liOVrXTlNsYnWAUzho1SWRfkYJG+K0VsJH+UyneVu3AEDWgRP60GMo+cYJDgxz8KwA==
+"@guardian/commercial@^0.0.0-beta-20230815151316":
+  version "0.0.0-beta-20230815151316"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20230815151316.tgz#711840f8a4cd6ee2bde623ccbb8b3f7164c92059"
+  integrity sha512-W2dD7oCKmQjsAcNlpqn3BLa+yxNMrT69O/h5SZ1qSwu6cBPwSc9hMMuKoFuOynUZnUjBx3Z2WsKNKBZp1qW6Kw==
   dependencies:
     "@changesets/cli" "^2.26.1"
     "@guardian/ab-core" "^5.0.0"
     "@guardian/consent-management-platform" "^13.6.1"
     "@guardian/core-web-vitals" "^5.0.0"
+    "@guardian/identity-auth" "^0.4.0"
+    "@guardian/identity-auth-frontend" "^0.1.0"
     "@guardian/libs" "15.6.4"
     "@guardian/source-foundations" "^12.0.0"
     "@guardian/support-dotcom-components" "^1.0.7"
@@ -1577,7 +1579,7 @@
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^1.4.0"
-    prebid.js guardian/prebid.js#1d6bbdc
+    prebid.js guardian/prebid.js
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.5.3"
@@ -1618,7 +1620,12 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/identity-auth@0.4.0":
+"@guardian/identity-auth-frontend@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth-frontend/-/identity-auth-frontend-0.1.0.tgz#09f20a88dc0e6f8c94e69918317492101002c3db"
+  integrity sha512-AvApzRbhKIFIMsZZ/bRHyxtHCmDAxLaF6GEE4CovXb+ZeZwIFHsVFZvOv2MvmyawoVxCNUspccL5U0Rx+5rsjw==
+
+"@guardian/identity-auth@0.4.0", "@guardian/identity-auth@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-0.4.0.tgz#11fc3b9daec7b4186cf0822b18d6379dbdac8ce5"
   integrity sha512-+lXmoMhrACvibKYBIwKQ15zyWGiGKC+mOg8831R8ilwF3vwXuXnzCLy1EpLTlSfDf72IOAuGyX4gDOqdQP8R/w==
@@ -10516,7 +10523,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#1d6bbdc:
+"prebid.js@github:guardian/prebid.js":
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/1d6bbdc64411fbe719489eb06bce72b66ac6a4f3"
   dependencies:
