@@ -32,9 +32,11 @@ object NewsletterIllustrations {
     "minute-us" ->
       "https://media.guim.co.uk/dc41d329183de03943d483df5e68f91a0f263a4e/0_0_5000_3000/500.jpg",
     "best-of-opinion" ->
-      "https://media.guim.co.uk/4ef30ca444a6980ad09f9c651b620000ede91d68/2943_7_2997_1798/500.png",
+      "https://uploads.guim.co.uk/2023/08/10/Opinion_UK_-_1_-_5-3.jpg",
     "best-of-opinion-us" ->
-      "https://media.guim.co.uk/4ef30ca444a6980ad09f9c651b620000ede91d68/3623_5_3289_1976/500.png",
+      "https://uploads.guim.co.uk/2023/08/10/Opinion_US_1_-_america_-_5-3.jpg",
+    "best-of-opinion-au" ->
+      "https://uploads.guim.co.uk/2023/08/10/Opinion_-_1_-_australia_-_5-3.jpg",
     "this-is-europe" ->
       "https://media.guim.co.uk/0f029b430f0ce52d3e675b66dcfd7e9b86bf2b9b/0_1_1250_750/500.jpg",
     "patriarchy" ->
@@ -72,7 +74,7 @@ object NewsletterIllustrations {
     "whats-on" ->
       "https://media.guim.co.uk/f1a5b65778882bd256d16f33149101435a21754e/0_0_1520_912/500.jpg",
     "word-of-mouth" ->
-      "https://media.guim.co.uk/763740b8e350cea9a3e28e262f29894d3e9da140/0_0_4200_2521/500.jpg",
+      "https://uploads.guim.co.uk/2023/08/10/Word_of_Mouth.png",
     "fashion-statement" ->
       "https://media.guim.co.uk/12c671d139fa632a086b16c6f14d5b89e3112b42/0_0_760_456/500.jpg",
     "house-to-home" ->
@@ -99,6 +101,8 @@ object NewsletterIllustrations {
       "https://media.guim.co.uk/adb3492ff7dd7779fb26b493870aec13c2a702e7/0_0_5000_3000/500.jpg",
     "cotton-capital" ->
       "https://media.guim.co.uk/c44095c1ce6f2c420a9bbdb5c3dafb5323e1189f/0_0_2560_1536/1000.jpg",
+    "soccer-with-jonathan-wilson" ->
+      "https://uploads.guim.co.uk/2023/08/03/Soccer-v7_5-3.png",
   )
 
   def get(identityName: String): Option[String] = {
