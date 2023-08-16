@@ -8,20 +8,24 @@ import {
 	isUserLoggedIn as isUserLoggedIn_,
 } from '../identity/api';
 import {
+	_,
 	accountDataUpdateWarning,
-	getDaysSinceLastOneOffContribution,
 	getLastOneOffContributionTimestamp,
 	getLastRecurringContributionDate,
 	getPurchaseInfo,
 	isAdFreeUser,
-	isDigitalSubscriber,
 	isPayingMember,
-	isPostAskPauseOneOffContributor,
-	isRecentOneOffContributor,
 	isRecurringContributor,
 	refresh,
-	shouldNotBeShownSupportMessaging,
 } from './user-features';
+
+const {
+	getDaysSinceLastOneOffContribution,
+	isDigitalSubscriber,
+	isPostAskPauseOneOffContributor,
+	isRecentOneOffContributor,
+	shouldNotBeShownSupportMessaging,
+} = _;
 
 jest.mock('../../../../lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({

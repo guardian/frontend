@@ -46,11 +46,6 @@ const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
 	daysToLive: 90,
 };
 
-const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
-	name: 'gu_contributions_reminder_signed_up',
-	daysToLive: 90,
-};
-
 // TODO: isn’t this duplicated from commercial features?
 // https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
 const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
@@ -373,15 +368,6 @@ const extendContribsCookieExpiry = (): void => {
 	}
 };
 
-const canShowContributionsReminderFeature = (): boolean => {
-	const signedUpForReminder = !!getCookie({
-		name: CONTRIBUTIONS_REMINDER_SIGNED_UP.name,
-	});
-	const { switches } = window.guardian.config;
-
-	return Boolean(switches.showContributionReminder) && !signedUpForReminder;
-};
-
 type PurchaseInfo = HeaderPayload['targeting']['purchaseInfo'];
 const getPurchaseInfo = (): PurchaseInfo => {
 	const purchaseInfoRaw = getCookie({ name: 'GU_CO_COMPLETE' });
@@ -401,28 +387,28 @@ const getPurchaseInfo = (): PurchaseInfo => {
 	return purchaseInfo;
 };
 
+const _ = {
+	isRecentOneOffContributor,
+	isDigitalSubscriber,
+	getDaysSinceLastOneOffContribution,
+	isPostAskPauseOneOffContributor,
+	shouldNotBeShownSupportMessaging,
+};
+
 export {
+	_,
 	accountDataUpdateWarning,
 	isAdFreeUser,
 	isPayingMember,
-	isRecentOneOffContributor,
 	isRecurringContributor,
-	isDigitalSubscriber,
 	shouldHideSupportMessaging,
 	refresh,
-	deleteOldData,
 	getLastOneOffContributionTimestamp,
 	getLastOneOffContributionDate,
 	getLastRecurringContributionDate,
-	getDaysSinceLastOneOffContribution,
 	getPurchaseInfo,
-	isPostAskPauseOneOffContributor,
 	readerRevenueRelevantCookies,
 	fakeOneOffContributor,
-	shouldNotBeShownSupportMessaging,
 	extendContribsCookieExpiry,
 	ARTICLES_VIEWED_OPT_OUT_COOKIE,
-	CONTRIBUTIONS_REMINDER_SIGNED_UP,
-	canShowContributionsReminderFeature,
-	AdFreeCookieReasons,
 };
