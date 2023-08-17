@@ -1,13 +1,5 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
 import type { HeaderPayload } from '@guardian/support-dotcom-components/dist/dotcom/src/types';
-import {
-	AdFreeCookieReasons,
-	adFreeDataIsOld,
-	adFreeDataIsPresent,
-	getAdFreeCookie,
-	maybeUnsetAdFreeCookie,
-	setAdFreeCookie,
-} from 'lib/manage-ad-free-cookie';
 import { noop } from 'lib/noop';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
@@ -24,7 +16,6 @@ import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
-const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 const HIDE_SUPPORT_MESSAGING_COOKIE = 'gu_hide_support_messaging';
 
@@ -46,14 +37,32 @@ const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
 	daysToLive: 90,
 };
 
+const AD_FREE_USER_COOKIE = 'GU_AF1';
+
 // TODO: isn’t this duplicated from commercial features?
 // https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
 const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
 
+const getAdFreeCookie = (): string | null =>
+	getCookie({ name: AD_FREE_USER_COOKIE });
+
+const adFreeDataIsPresent = (): boolean => {
+	const cookieVal = getAdFreeCookie();
+	if (!cookieVal) return false;
+	return !Number.isNaN(parseInt(cookieVal, 10));
+};
+
+const adFreeDataIsOld = (): boolean => {
+	const { switches } = window.guardian.config;
+	return (
+		Boolean(switches.adFreeStrictExpiryEnforcement) &&
+		cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)
+	);
+};
+
 const userHasData = () => {
 	const cookie =
 		getAdFreeCookie() ??
-		getCookie({ name: ACTION_REQUIRED_FOR_COOKIE }) ??
 		getCookie({ name: USER_FEATURES_EXPIRY_COOKIE }) ??
 		getCookie({ name: PAYING_MEMBER_COOKIE }) ??
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) ??
@@ -62,9 +71,6 @@ const userHasData = () => {
 		getCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
 	return !!cookie;
 };
-
-const accountDataUpdateWarning = (): string | null =>
-	getCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 
 /**
  * TODO: check that this validation is accurate
@@ -114,29 +120,12 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 			value: JsonResponse.oneOffContributionDate,
 		});
 	}
-
-	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
-	if (JsonResponse.alertAvailableFor) {
-		setCookie({
-			name: ACTION_REQUIRED_FOR_COOKIE,
-			value: JsonResponse.alertAvailableFor,
-		});
-	}
-
-	if (JsonResponse.contentAccess.digitalPack) {
-		setAdFreeCookie(AdFreeCookieReasons.Subscriber, 2);
-	} else if (adFreeDataIsPresent() && !forcedAdFreeMode) {
-		maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
-	}
 };
 
 const deleteOldData = (): void => {
-	// We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
-	maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
-	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 	removeCookie({ name: DIGITAL_SUBSCRIBER_COOKIE });
 	removeCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
 	removeCookie({ name: ONE_OFF_CONTRIBUTION_DATE_COOKIE });
@@ -174,10 +163,7 @@ const requestNewData = () => {
 const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
 
-const userNeedsNewFeatureData = (): boolean =>
-	featuresDataIsOld() ||
-	(adFreeDataIsPresent() && adFreeDataIsOld()) ||
-	(isDigitalSubscriber() && !adFreeDataIsPresent());
+const userNeedsNewFeatureData = (): boolean => featuresDataIsOld();
 
 const userHasDataAfterSignout = async (): Promise<boolean> =>
 	!(await isUserLoggedIn()) && userHasData();
@@ -397,7 +383,6 @@ const _ = {
 
 export {
 	_,
-	accountDataUpdateWarning,
 	isAdFreeUser,
 	isPayingMember,
 	isRecurringContributor,
