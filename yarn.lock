@@ -1618,10 +1618,10 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/identity-auth@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-0.5.0.tgz#5bfd869ea23959cffdcb25820a7e85e8b28b8a5f"
-  integrity sha512-0nfVZp9X8cNSoWOj7sS7DmyCKCEOhnZiUzMZ2FpgjED/Kawd4bC8FhuLN65Cvd0ryW2N4zD3azVBKUK8OBogLg==
+"@guardian/identity-auth@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.0.0.tgz#ea8896a45d2aef9828e590cccdd858b5f46785d1"
+  integrity sha512-JUkPai2Qnuq1quQ2rtvwWhLTtISqJBNe8XpxqbIr4jGaNWn5EL3kI1scAwq5PyNEg9135E7YXWTnjLNkm3ivoA==
 
 "@guardian/libs@15.6.4":
   version "15.6.4"
