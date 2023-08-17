@@ -16,6 +16,7 @@ import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
+const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 const HIDE_SUPPORT_MESSAGING_COOKIE = 'gu_hide_support_messaging';
 
@@ -73,6 +74,7 @@ const setAdFreeCookie = (daysToLive = 1): void => {
 const userHasData = () => {
 	const cookie =
 		getAdFreeCookie() ??
+		getCookie({ name: ACTION_REQUIRED_FOR_COOKIE }) ??
 		getCookie({ name: USER_FEATURES_EXPIRY_COOKIE }) ??
 		getCookie({ name: PAYING_MEMBER_COOKIE }) ??
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) ??
@@ -81,6 +83,9 @@ const userHasData = () => {
 		getCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
 	return !!cookie;
 };
+
+const accountDataUpdateWarning = (): string | null =>
+	getCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 
 /**
  * TODO: check that this validation is accurate
@@ -130,6 +135,13 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 			value: JsonResponse.oneOffContributionDate,
 		});
 	}
+	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
+	if (JsonResponse.alertAvailableFor) {
+		setCookie({
+			name: ACTION_REQUIRED_FOR_COOKIE,
+			value: JsonResponse.alertAvailableFor,
+		});
+	}
 
 	if (JsonResponse.contentAccess.digitalPack) {
 		setAdFreeCookie(2);
@@ -143,6 +155,7 @@ const deleteOldData = (): void => {
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
+	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 	removeCookie({ name: DIGITAL_SUBSCRIBER_COOKIE });
 	removeCookie({ name: HIDE_SUPPORT_MESSAGING_COOKIE });
 	removeCookie({ name: ONE_OFF_CONTRIBUTION_DATE_COOKIE });
@@ -403,9 +416,11 @@ const _ = {
 
 export {
 	_,
+	accountDataUpdateWarning,
 	isAdFreeUser,
 	isPayingMember,
 	isRecurringContributor,
+	setAdFreeCookie,
 	shouldHideSupportMessaging,
 	refresh,
 	getLastOneOffContributionTimestamp,
