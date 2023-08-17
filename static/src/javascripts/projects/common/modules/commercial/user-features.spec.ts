@@ -9,7 +9,6 @@ import {
 } from '../identity/api';
 import {
 	_,
-	accountDataUpdateWarning,
 	getLastOneOffContributionTimestamp,
 	getLastRecurringContributionDate,
 	getPurchaseInfo,
@@ -221,31 +220,6 @@ describe('Refreshing the features data', () => {
 					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
 				}),
 			).toBeNull();
-		});
-	});
-});
-
-describe('The account data update warning getter', () => {
-	it('Is not set when the user is logged out', () => {
-		jest.resetAllMocks();
-		isUserLoggedIn.mockResolvedValue(false);
-		expect(accountDataUpdateWarning()).toBe(null);
-	});
-
-	describe('When the user is logged in', () => {
-		beforeEach(() => {
-			jest.resetAllMocks();
-			isUserLoggedIn.mockResolvedValue(true);
-		});
-
-		it('Is the same when the user has an account data update link cookie', () => {
-			addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'the-same');
-			expect(accountDataUpdateWarning()).toBe('the-same');
-		});
-
-		it('Is null when the user does not have an account data update link cookie', () => {
-			removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
-			expect(accountDataUpdateWarning()).toBe(null);
 		});
 	});
 });

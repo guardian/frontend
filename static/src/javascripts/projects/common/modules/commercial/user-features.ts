@@ -60,6 +60,16 @@ const adFreeDataIsOld = (): boolean => {
 	);
 };
 
+const setAdFreeCookie = (daysToLive = 1): void => {
+	const expires = new Date();
+	expires.setMonth(expires.getMonth() + 6);
+	setCookie({
+		name: AD_FREE_USER_COOKIE,
+		value: expires.getTime().toString(),
+		daysToLive,
+	});
+};
+
 const userHasData = () => {
 	const cookie =
 		getAdFreeCookie() ??
@@ -120,9 +130,16 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 			value: JsonResponse.oneOffContributionDate,
 		});
 	}
+
+	if (JsonResponse.contentAccess.digitalPack) {
+		setAdFreeCookie(2);
+	} else if (adFreeDataIsPresent() && !forcedAdFreeMode) {
+		removeCookie({ name: AD_FREE_USER_COOKIE });
+	}
 };
 
 const deleteOldData = (): void => {
+	removeCookie({ name: AD_FREE_USER_COOKIE });
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
@@ -163,7 +180,10 @@ const requestNewData = () => {
 const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
 
-const userNeedsNewFeatureData = (): boolean => featuresDataIsOld();
+const userNeedsNewFeatureData = (): boolean =>
+	featuresDataIsOld() ||
+	(adFreeDataIsPresent() && adFreeDataIsOld()) ||
+	(isDigitalSubscriber() && !adFreeDataIsPresent());
 
 const userHasDataAfterSignout = async (): Promise<boolean> =>
 	!(await isUserLoggedIn()) && userHasData();
