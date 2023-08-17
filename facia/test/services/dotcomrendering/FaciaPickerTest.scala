@@ -273,13 +273,4 @@ import layout.slices.EmailLayouts
     FrontChecks.hasOnlySupportedCollections(faciaPage) should be(false)
   }
 
-  it should "Should not render the Australian front" in {
-    FrontChecks.isNotAustralianFront(auFaciaPage) should be(false)
-  }
-
-  it should "Should render the UK, US and International fronts" in {
-    FrontChecks.isNotAustralianFront(ukFaciaPage) should be(true)
-    FrontChecks.isNotAustralianFront(usFaciaPage) should be(true)
-    FrontChecks.isNotAustralianFront(internationalFaciaPageWithTargetedTerritories) should be(true)
-  }
 }

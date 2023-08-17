@@ -12,8 +12,7 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
-import services.newsletters.model.NewsletterResponseV2
-import services.newsletters.newsletterIllustrations
+import services.newsletters.model.{NewsletterResponse,NewsletterResponseV2}
 import services.NewsletterData
 
 case class DotcomNewslettersPageRenderingDataModel(

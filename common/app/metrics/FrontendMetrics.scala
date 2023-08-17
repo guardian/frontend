@@ -1,11 +1,12 @@
 package metrics
 
-import java.util.concurrent.atomic.AtomicLong
-
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.{Box, StopWatch}
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
+
+import java.util.concurrent.TimeUnit.MILLISECONDS
+import java.util.concurrent.atomic.AtomicLong
 import scala.concurrent.Future
 import scala.util.Try
 
@@ -130,6 +131,8 @@ final case class DurationMetric(override val name: String, override val metricUn
   def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
   def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
+  def recordDuration(duration: java.time.Duration): Unit =
+    recordDuration(duration.toNanos.toDouble / MILLISECONDS.toNanos(1))
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }

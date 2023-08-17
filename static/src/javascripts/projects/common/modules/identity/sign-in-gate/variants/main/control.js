@@ -1,8 +1,8 @@
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
-    isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
     isIOS9,
@@ -14,16 +14,18 @@ import {
 const variant = 'main-control-4';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow = (name = '') => {
+/** @type {(name: string) => Promise<boolean>} */
+const canShow = async (name = '') => {
     const isGateDismissed = hasUserDismissedGate({
         name,
         variant,
         componentName,
     });
+    const isLoggedIn = await isUserLoggedIn();
     const canShowCheck =
         !isGateDismissed &&
         isNPageOrHigherPageView(3) &&
-        !isLoggedIn() &&
+        !isLoggedIn &&
         !isInvalidArticleType() &&
         !isInvalidSection() &&
         !isInvalidTag() &&

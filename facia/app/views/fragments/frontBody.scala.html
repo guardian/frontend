@@ -3,7 +3,6 @@
 @import views.support.RenderClasses
 @import views.support.Commercial.container.isFirstNonThrasherContainer
 @import implicits.Requests._
-@import experiments.{ActiveExperiments, FrontsBannerAds}
 
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -56,11 +55,7 @@
                 @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
                 @if(!isPaid) {
-                    @if(ActiveExperiments.isParticipating(FrontsBannerAds)) {
-                        <div class="fc-container fc-container--commercial js-container--commercial fc-container--commercial--hide-desktop">@fragments.commercial.commercialComponent()</div>
-                    } else {
-                        <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
-                    }
+                    <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
                 }
             </div>
         </div>

@@ -198,48 +198,49 @@ const addNotifications = (notifications: HeaderNotification[]): void => {
 };
 
 const showMyAccountIfNecessary = (): void => {
-	if (!isUserLoggedIn()) {
-		return;
-	}
+	void isUserLoggedIn().then((isLoggedIn) => {
+		if (!isLoggedIn) return;
+		void fastdom
+			.measure(() => ({
+				signIns: Array.from(
+					document.querySelectorAll('.js-navigation-sign-in'),
+				),
+				accountActionsLists: Array.from(
+					document.querySelectorAll('.js-navigation-account-actions'),
+				),
+				commentItems: Array.from(
+					document.querySelectorAll('.js-show-comment-activity'),
+				),
+			}))
+			.then((els) => {
+				const { signIns, accountActionsLists, commentItems } = els;
+				return fastdom
+					.mutate(() => {
+						signIns.forEach((signIn) => {
+							signIn.remove();
+						});
+						accountActionsLists.forEach((accountActions) => {
+							accountActions.classList.remove('is-hidden');
+						});
 
-	void fastdom
-		.measure(() => ({
-			signIns: Array.from(
-				document.querySelectorAll('.js-navigation-sign-in'),
-			),
-			accountActionsLists: Array.from(
-				document.querySelectorAll('.js-navigation-account-actions'),
-			),
-			commentItems: Array.from(
-				document.querySelectorAll('.js-show-comment-activity'),
-			),
-		}))
-		.then((els) => {
-			const { signIns, accountActionsLists, commentItems } = els;
-			return fastdom
-				.mutate(() => {
-					signIns.forEach((signIn) => {
-						signIn.remove();
-					});
-					accountActionsLists.forEach((accountActions) => {
-						accountActions.classList.remove('is-hidden');
-					});
+						Array.from(
+							document.querySelectorAll(
+								'.js-user-account-trigger',
+							),
+						).forEach((accountTrigger) => {
+							accountTrigger.classList.remove('is-hidden');
+						});
+					})
+					.then(() => {
+						updateCommentLink(commentItems);
 
-					Array.from(
-						document.querySelectorAll('.js-user-account-trigger'),
-					).forEach((accountTrigger) => {
-						accountTrigger.classList.remove('is-hidden');
+						bufferedNotificationListener.on((event) => {
+							const notifications = event.detail;
+							addNotifications(notifications);
+						});
 					});
-				})
-				.then(() => {
-					updateCommentLink(commentItems);
-
-					bufferedNotificationListener.on((event) => {
-						const notifications = event.detail;
-						addNotifications(notifications);
-					});
-				});
-		});
+			});
+	});
 };
 
 export { showMyAccountIfNecessary };

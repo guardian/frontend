@@ -51,14 +51,14 @@ trait ABTestSwitches {
     "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
     owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 7, 14)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-billboards-in-merch",
-    "Test the commercial impact of showing billboard adverts in merchandising slots",
+    "ab-billboards-in-merch-high",
+    "Test the commercial impact of showing billboard adverts in merchandising-high slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 11, 30)),
@@ -95,4 +95,33 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-liveblog-right-column-ads",
+    "Test the commercial impact of different strategies for displaying ads in the right column on liveblog pages.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 9, 20)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-public-good-test",
+    "Test public good at the end of article pages.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 8, 30)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-prebid-kargo",
+    "Test Kargo as a prebid bidder for US traffic.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 9, 29)),
+    exposeClientSide = true,
+  )
 }

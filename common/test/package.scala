@@ -170,12 +170,9 @@ trait WithTestCSRF {
 
 trait WithTestFrontJsonFapi {
   // need a front api that stores S3 locally so it can run without deps in the unit tests
-  class TestFrontJsonFapi(override val blockingOperations: BlockingOperations)
-      extends FrontJsonFapiLive(blockingOperations) {
+  class TestFrontJsonFapi extends FrontJsonFapiLive()(ExecutionContext.global) {
 
-    override def get(path: String, pageType: PressedPageType)(implicit
-        executionContext: ExecutionContext,
-    ): Future[Option[PressedPage]] = {
+    override def get(path: String, pageType: PressedPageType): Future[Option[PressedPage]] = {
       recorder.load(path, Map()) {
         super.get(path, pageType)
       }
@@ -197,7 +194,5 @@ trait WithTestFrontJsonFapi {
     }
   }
 
-  lazy val actorSystem = ActorSystem()
-  lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new TestFrontJsonFapi(blockingOperations)
+  lazy val fapi = new TestFrontJsonFapi()
 }

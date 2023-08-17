@@ -6,10 +6,10 @@ import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 
 trait CommercialSwitches {
 
-  val CommercialSwitch = Switch(
+  val ShouldLoadGoogleTagSwitch = Switch(
     Commercial,
-    "commercial",
-    "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
+    "should-load-googletag",
+    "If this switch is OFF, the commercial bundle won't load the googletag script. This is intended for use as a failsafe, and will disable all forms of advertising that are managed via Google Ad Manager, including Prebid and A9.",
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
@@ -445,6 +445,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-smart",
     description = "Include the Smart AdServer adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidKargo: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-kargo",
+    description = "Include the Kargo adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

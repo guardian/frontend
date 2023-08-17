@@ -42,9 +42,6 @@ const retrieveDismissedCount = (
     }
 };
 
-// wrapper over isLoggedIn
-export const isLoggedIn = isUserLoggedIn;
-
 // wrapper over isInABTestSynchronous
 export const isInTest = test => isInABTestSynchronous(test);
 
@@ -143,13 +140,15 @@ export const setGatePageTargeting = (
     isGateDismissed,
     canShowCheck
 ) => {
-    if (isUserLoggedIn()) {
-        setGoogleTargeting('signed in');
-    } else if (isGateDismissed) {
-        setGoogleTargeting('dismissed');
-    } else {
-        setGoogleTargeting(canShowCheck);
-    }
+    isUserLoggedIn().then(isLoggedIn => {
+        if (isLoggedIn) {
+            setGoogleTargeting('signed in');
+        } else if (isGateDismissed) {
+            setGoogleTargeting('dismissed');
+        } else {
+            setGoogleTargeting(canShowCheck);
+        }
+    })
 };
 
 // use the dailyArticleCount from the local storage to see how many articles the user has viewed in a day

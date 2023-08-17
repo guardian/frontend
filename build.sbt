@@ -29,6 +29,7 @@ val common = library("common")
       awsSts,
       awsSqs,
       awsSsm,
+      eTagCachingS3,
       contentApiClient,
       enumeratumPlayJson,
       filters,
@@ -70,8 +71,6 @@ val common = library("common")
       capiAws,
       okhttp,
     ) ++ jackson,
-  )
-  .settings(
     TestAssets / mappings ~= filterAssets,
   )
 

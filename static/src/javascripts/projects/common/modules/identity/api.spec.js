@@ -1,11 +1,10 @@
 /* global jsdom */
 import {
-    getUserFromApi,
+    getUserFromApiOrOkta,
     init,
     decodeBase64,
     getUserFromCookie,
     reset,
-    getUserOrSignIn,
     shouldAutoSigninInUser,
 } from 'common/modules/identity/api';
 import { fetchJson as fetchJson_ } from 'lib/fetch-json';
@@ -90,7 +89,7 @@ describe('Identity API', () => {
             })
         );
 
-        getUserFromApi(apiCallback);
+        getUserFromApiOrOkta().then(apiCallback);
     });
 
     it('should not call api if the cookie does not exist', done => {
@@ -102,48 +101,7 @@ describe('Identity API', () => {
             done();
         };
 
-        getUserFromApi(apiCallback);
-    });
-
-    it('should redirect to sign in when user is not signed in', () => {
-        const origHref = window.location.href;
-
-        const returnUrl = 'https://theguardian.com/uk';
-        window.location.assign(returnUrl);
-
-        removeCookie({ name: 'GU_U' });
-        getUserOrSignIn('email_sign_in_banner');
-
-        expect(window.location.href).toBe(
-            `${window.guardian.config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
-                returnUrl
-            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
-        );
-
-        window.location.assign(origHref);
-    });
-
-    it('should not redirect to sign in when user is already signed in', () => {
-        const user = getUserOrSignIn('email_sign_in_banner');
-        const displayName = user && user.publicFields && user.publicFields.displayName;
-
-        expect(displayName).toBe('Amélie Jôse');
-    });
-
-    it('should redirect with return URL when given', () => {
-        const origHref = window.location.href;
-        const returnUrl = 'http://www.theguardian.com/foo';
-
-        removeCookie({ name: 'GU_U' });
-        getUserOrSignIn('email_sign_in_banner', returnUrl);
-
-        expect(window.location.href).toBe(
-            `${window.guardian.config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
-                returnUrl
-            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
-        );
-
-        window.location.assign(origHref);
+        getUserFromApiOrOkta().then(apiCallback);
     });
 
     it('should attempt to autosigin an user who is not currently signed in and has not previously signed out', () => {

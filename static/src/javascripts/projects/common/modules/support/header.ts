@@ -20,25 +20,25 @@ import config from 'lib/config';
 import { getCountryCode } from 'lib/geolocation';
 import { reportError } from 'lib/report-error';
 
-const buildHeaderLinksPayload = (): HeaderPayload => {
+const buildHeaderLinksPayload = async (): Promise<HeaderPayload> => {
 	const countryCode = getCountryCode();
 	return {
 		tracking,
 		targeting: {
-			showSupportMessaging: !shouldHideSupportMessaging(),
+			showSupportMessaging: !(await shouldHideSupportMessaging()),
 			countryCode,
 			modulesVersion: ModulesVersion,
 			mvtId: getMvtValue() ?? 0,
 			lastOneOffContributionDate:
 				getLastOneOffContributionDate() ?? undefined,
 			purchaseInfo: getPurchaseInfo(),
-			isSignedIn: isUserLoggedIn(),
+			isSignedIn: await isUserLoggedIn(),
 		},
 	};
 };
 
 export const fetchAndRenderHeaderLinks = async (): Promise<void> => {
-	const requestData = buildHeaderLinksPayload();
+	const requestData = await buildHeaderLinksPayload();
 	const isEnabled = config.get<boolean>('switches.remoteHeader', false);
 	const { contentType } = window.guardian.config.page;
 

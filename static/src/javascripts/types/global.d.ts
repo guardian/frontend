@@ -112,6 +112,7 @@ interface Config {
 		};
 		timingEvents?: GoogleTimingEvent[];
 	};
+	stage: Stage;
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
@@ -120,6 +121,7 @@ interface LightboxImages {
 	images: Array<{ src: string }>;
 }
 
+type Stage = 'DEV' | 'CODE' | 'PROD';
 interface PageConfig extends CommercialPageConfig {
 	ajaxUrl?: string; // https://github.com/guardian/frontend/blob/33db7bbd/common/app/views/support/JavaScriptPage.scala#L72
 	assetsPath: string;

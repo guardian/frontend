@@ -159,19 +159,21 @@ const initDiscussion = () => {
 };
 
 const repositionComments = () => {
-    if (!isUserLoggedIn()) {
-        fastdom
-            .measure(() => $('.js-comments'))
-            .then($comments =>
-                fastdom.mutate(() => {
-                    $comments.appendTo(qwery('.js-repositioned-comments'));
-                    if (window.location.hash === '#comments') {
-                        const top = $comments.offset().top;
-                        $(document.body).scrollTop(top);
-                    }
-                })
-            );
-    }
+    isUserLoggedIn().then(isLoggedIn => {
+        if (isLoggedIn) {
+            fastdom
+                .measure(() => $('.js-comments'))
+                .then($comments =>
+                    fastdom.mutate(() => {
+                        $comments.appendTo(qwery('.js-repositioned-comments'));
+                        if (window.location.hash === '#comments') {
+                            const top = $comments.offset().top;
+                            $(document.body).scrollTop(top);
+                        }
+                    })
+                );
+        }
+    })
 };
 
 const initTrails = () => {

@@ -45,4 +45,13 @@ trait NewslettersSwitches {
     exposeClientSide = false,
   )
 
+  val UseDcrNewslettersPage = Switch(
+    SwitchGroup.Newsletters,
+    "use-dcr-newsletters-page",
+    "Use the dcr rendered version of the email newsletters page by default",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }

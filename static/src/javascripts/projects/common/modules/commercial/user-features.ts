@@ -14,7 +14,11 @@ import { dateDiffDays } from '../../../../lib/time-utils';
 import { getLocalDate } from '../../../../types/dates';
 import type { LocalDate } from '../../../../types/dates';
 import type { UserFeaturesResponse } from '../../../../types/membership';
-import { isUserLoggedIn } from '../identity/api';
+import {
+	getAuthStatus,
+	getOptionsHeadersWithOkta,
+	isUserLoggedIn,
+} from '../../modules/identity/api';
 import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 
 // Persistence keys
@@ -143,24 +147,34 @@ const deleteOldData = (): void => {
 	removeCookie({ name: ONE_OFF_CONTRIBUTION_DATE_COOKIE });
 };
 
-const requestNewData = () =>
-	fetchJson(
-		`${
-			window.guardian.config.page.userAttributesApiUrl ??
-			'/USER_ATTRIBUTE_API_NOT_FOUND'
-		}/me`,
-		{
-			mode: 'cors',
-			credentials: 'include',
-		},
-	)
-		.then((response) => {
-			if (!validateResponse(response))
-				throw new Error('invalid response');
-			return response;
-		})
-		.then(persistResponse)
-		.catch(noop);
+const requestNewData = () => {
+	return getAuthStatus()
+		.then((authStatus) =>
+			authStatus.kind === 'SignedInWithCookies' ||
+			authStatus.kind === 'SignedInWithOkta'
+				? authStatus
+				: Promise.reject('The user is not signed in'),
+		)
+		.then((signedInAuthStatus) => {
+			return fetchJson(
+				`${
+					window.guardian.config.page.userAttributesApiUrl ??
+					'/USER_ATTRIBUTE_API_NOT_FOUND'
+				}/me`,
+				{
+					mode: 'cors',
+					...getOptionsHeadersWithOkta(signedInAuthStatus),
+				},
+			)
+				.then((response) => {
+					if (!validateResponse(response))
+						throw new Error('invalid response');
+					return response;
+				})
+				.then(persistResponse)
+				.catch(noop);
+		});
+};
 
 const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
@@ -170,19 +184,18 @@ const userNeedsNewFeatureData = (): boolean =>
 	(adFreeDataIsPresent() && adFreeDataIsOld()) ||
 	(isDigitalSubscriber() && !adFreeDataIsPresent());
 
-const userHasDataAfterSignout = (): boolean =>
-	!isUserLoggedIn() && userHasData();
+const userHasDataAfterSignout = async (): Promise<boolean> =>
+	!(await isUserLoggedIn()) && userHasData();
 
 /**
  * Updates the user's data in a lazy fashion
  */
-const refresh = (): Promise<void> => {
-	if (isUserLoggedIn() && userNeedsNewFeatureData()) {
+const refresh = async (): Promise<void> => {
+	if ((await isUserLoggedIn()) && userNeedsNewFeatureData()) {
 		return requestNewData();
-	} else if (userHasDataAfterSignout() && !forcedAdFreeMode) {
+	} else if ((await userHasDataAfterSignout()) && !forcedAdFreeMode) {
 		deleteOldData();
 	}
-	return Promise.resolve();
 };
 
 const supportSiteRecurringCookiePresent = () =>
@@ -193,9 +206,10 @@ const supportSiteRecurringCookiePresent = () =>
  * Does our _existing_ data say the user is a paying member?
  * This data may be stale; we do not wait for userFeatures.refresh()
  */
-const isPayingMember = (): boolean =>
+const isPayingMember = async (): Promise<boolean> =>
 	// If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
-	isUserLoggedIn() && getCookie({ name: PAYING_MEMBER_COOKIE }) !== 'false';
+	(await isUserLoggedIn()) &&
+	getCookie({ name: PAYING_MEMBER_COOKIE }) !== 'false';
 
 // Expects milliseconds since epoch
 const getSupportFrontendOneOffContributionTimestamp = (): number | null => {
@@ -298,9 +312,8 @@ const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
 	return daysSinceLastContribution > askPauseDays;
 };
 
-const isRecurringContributor = (): boolean =>
-	// If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
-	(isUserLoggedIn() &&
+const isRecurringContributor = async (): Promise<boolean> =>
+	((await isUserLoggedIn()) &&
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
 	supportSiteRecurringCookiePresent();
 
@@ -318,10 +331,10 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
     which this function is dependent on.
 */
 
-const shouldHideSupportMessaging = (): boolean =>
+const shouldHideSupportMessaging = async (): Promise<boolean> =>
 	shouldNotBeShownSupportMessaging() ||
 	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
-	isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
+	(await isRecurringContributor()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
 const readerRevenueRelevantCookies = [
 	PAYING_MEMBER_COOKIE,

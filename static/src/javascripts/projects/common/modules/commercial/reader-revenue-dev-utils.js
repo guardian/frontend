@@ -53,21 +53,24 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
 		fakeOneOffContributor();
 	}
 
-	if (isUserLoggedIn() && !asExistingSupporter) {
-		if (window.location.origin.includes('localhost')) {
-			// Assume they don't have identity running locally
-			// So try and remove the identity cookie manually
-			removeCookie('GU_U');
-		} else {
-			const profileUrl = window.location.origin.replace(
-				/(www\.|m\.)/,
-				'profile.',
-			);
-			window.location.assign(`${profileUrl}/signout`);
-		}
-	} else {
-		window.location.reload();
-	}
+
+    isUserLoggedIn().then(isLoggedIn => {
+        if(isLoggedIn && !asExistingSupporter) {
+            if (window.location.origin.includes('localhost')) {
+                localStorage.removeItem("gu.access_token");
+                localStorage.removeItem("gu.id_token");
+                removeCookie('GU_U');
+            } else {
+                const profileUrl = window.location.origin.replace(
+                    /(www\.|m\.)/,
+                    'profile.',
+                );
+                window.location.assign(`${profileUrl}/signout`);
+            }
+        } else {
+            window.location.reload();
+        }
+    })
 };
 
 const showMeTheEpic = (asExistingSupporter = false) => {

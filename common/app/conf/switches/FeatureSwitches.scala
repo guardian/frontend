@@ -138,16 +138,6 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val IdentityFormstackSwitch = Switch(
-    SwitchGroup.Feature,
-    "id-formstack",
-    "If this switch is on, formstack forms will be available",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val IdentityAvatarUploadSwitch = Switch(
     SwitchGroup.Feature,
     "id-avatar-upload",
@@ -527,16 +517,6 @@ trait FeatureSwitches {
     "personalise-sign-in-gate-after-checkout",
     "When ON, the sign in gate shows a personalised message to subscribers and supporters",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val DeeplyReadSwitch = Switch(
-    SwitchGroup.Feature,
-    "deeply-read-switch",
-    "When ON, shows the new most popular component containing mode viewed and deeply read articles",
-    owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,

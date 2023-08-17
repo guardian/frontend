@@ -2,6 +2,7 @@ package experiments
 
 import conf.switches.Owner
 import experiments.ParticipationGroups._
+
 import java.time.LocalDate
 
 /*
@@ -10,26 +11,26 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      VerticalVideoContainer,
+      FrontsBannerAdsDcr,
       Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
       Okta,
       HeaderTopBarSearchCapi,
-      BorkFCP,
-      BorkFID,
+      LazyLoadImages,
+      AdaptiveSite,
       OfferHttp3,
-      FrontsBannerAds,
+      DeeplyRead,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
-object VerticalVideoContainer
+object FrontsBannerAdsDcr
     extends Experiment(
-      name = "vertical-video-container",
-      description = "When ON, Vertical Video Container is displayed",
-      owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-      sellByDate = LocalDate.of(2023, 7, 31),
+      name = "fronts-banner-ads-dcr",
+      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 9, 1),
       participationGroup = Perc0A,
     )
 
@@ -61,15 +62,6 @@ object EuropeNetworkFront
       participationGroup = Perc0D,
     )
 
-object Okta
-    extends Experiment(
-      name = "okta",
-      description = "Use Okta for authentication",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 7, 24),
-      participationGroup = Perc0E,
-    )
-
 // Removing while we are still implementing this content type in DCR
 //object DCRImageContent
 //    extends Experiment(
@@ -80,6 +72,15 @@ object Okta
 //      participationGroup = Perc0E,
 //    )
 
+object AdaptiveSite
+    extends Experiment(
+      name = "adaptive-site",
+      description = "Enables serving an adaptive version of the site that responds to page performance",
+      owners = Seq(Owner.withName("Open Journalism")),
+      sellByDate = LocalDate.of(2023, 12, 5),
+      participationGroup = Perc1A,
+    )
+
 object HeaderTopBarSearchCapi
     extends Experiment(
       name = "header-top-bar-search-capi",
@@ -89,21 +90,25 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
-object BorkFCP
+object Okta
     extends Experiment(
-      name = "bork-fcp",
-      description = "Synthetically degrades First Contentful Paint (FCP)",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
-      participationGroup = Perc1C,
+      name = "okta",
+      description = "Use Okta for authentication",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 8, 31),
+      /* Do not increase without considering if
+       - https://github.com/guardian/dotcom-rendering/pull/8508
+       - https://github.com/guardian/frontend/pull/26461
+      needs to be reverted */
+      participationGroup = Perc2A,
     )
 
-object BorkFID
+object LazyLoadImages
     extends Experiment(
-      name = "bork-fid",
-      description = "Synthetically degrades First Input Delay (FID)",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 8, 1),
+      name = "lazy-load-images",
+      description = "Lazy-load images on DCR",
+      owners = Seq(Owner.withGithub("@mxdvl")),
+      sellByDate = LocalDate.of(2023, 8, 22),
       participationGroup = Perc1D,
     )
 
@@ -112,15 +117,15 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 7, 31),
+      sellByDate = LocalDate.of(2023, 8, 31),
       participationGroup = Perc1E,
     )
 
-object FrontsBannerAds
+object DeeplyRead
     extends Experiment(
-      name = "fronts-banner-ads",
-      description = "Creates a new ad experience on fronts pages",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 9, 6),
-      participationGroup = Perc5A,
+      name = "deeply-read",
+      description = "When ON, deeply read footer section is displayed",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc50,
     )

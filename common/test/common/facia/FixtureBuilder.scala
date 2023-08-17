@@ -127,7 +127,7 @@ object FixtureBuilder {
       enriched = None,
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
-      format = Some(ContentFormat.defaultContentFormat),
+      format = ContentFormat.defaultContentFormat,
     )
   }
 
@@ -140,7 +140,7 @@ object FixtureBuilder {
       discussion = mkDiscussion(),
       display = mkDisplay(),
       enriched = None,
-      format = Some(ContentFormat.defaultContentFormat),
+      format = ContentFormat.defaultContentFormat,
     )
   }
 }

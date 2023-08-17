@@ -1,4 +1,4 @@
-import agents.{CuratedContentAgent, MostViewedAgent}
+import agents.MostViewedAgent
 import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
@@ -120,8 +120,6 @@ trait AppComponents
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
-
-  lazy val curatedContentAgent = wire[CuratedContentAgent]
 
   lazy val router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("preview")

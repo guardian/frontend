@@ -4,12 +4,12 @@
  * Explicitly NOT stuff that only runs on the identity pages. Put that in profile.js or I will hunt you down. I WILL
  * HUNT YOU DOWN.
  */
-import { catchErrorsWithContext } from 'lib/robust';
+import { reportError } from 'lib/report-error';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // Used to show elements that need signin. Use .sign-in-required
-const setCssClass = () => {
-    if (!isUserLoggedIn() || !document.documentElement) {
+const setCssClass = async () => {
+    if (!(await isUserLoggedIn()) || !document.documentElement) {
         return;
     }
     const classList = document.documentElement.classList;
@@ -19,5 +19,7 @@ const setCssClass = () => {
 };
 
 export const init = () => {
-    catchErrorsWithContext([['i-css-class', setCssClass]]);
+    return setCssClass().catch((err) => {
+        reportError(err, { module: 'i-css-class' })
+    })
 };

@@ -5,9 +5,7 @@
 
 )(implicit request: RequestHeader)
 
-@import conf.switches.Switches.CommercialSwitch
-
-@if(CommercialSwitch.isSwitchedOn && shouldShowAds) {
+@if(shouldShowAds) {
   <div class="aside-slot-container js-aside-slot-container" aria-hidden="true">
   @fragments.commercial.adSlot(
       "right",

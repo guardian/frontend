@@ -19,7 +19,6 @@ object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = Some("US politics"))
-  val coronavirus = NavLink("Coronavirus", "/world/coronavirus-outbreak", longTitle = Some("Coronavirus"))
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -107,6 +106,7 @@ object NavLinks {
     "Football",
     "/football",
     children = List(
+      NavLink("Women's World Cup", "/football/womens-world-cup-2023", Some("football/womens-world-cup-2023")),
       NavLink("Live scores", "/football/live", Some("football/live")),
       NavLink("Tables", "/football/tables", Some("football/tables")),
       NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
@@ -115,7 +115,7 @@ object NavLinks {
       NavLink("Clubs", "/football/teams", Some("football/teams")),
     ),
   )
-  val soccer = football.copy(title = "Soccer")
+  val soccer = football.copy(title = "Soccer", url = "/soccer")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -266,7 +266,6 @@ object NavLinks {
       climateCrisis,
       newsletters,
       football,
-      coronavirus,
       ukBusiness,
       ukEnvironment,
       politics,
@@ -299,7 +298,6 @@ object NavLinks {
       usNews,
       world,
       usEnvironment,
-      soccer,
       usPolitics,
       usBusiness,
       tech,
@@ -312,7 +310,6 @@ object NavLinks {
     children = List(
       world,
       ukNews,
-      coronavirus,
       climateCrisis,
       ukEnvironment,
       science,

@@ -1,6 +1,7 @@
 package controllers
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
+import conf.switches.Switches.{UseDcrNewslettersPage}
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
 import pages.NewsletterHtmlPage
@@ -79,7 +80,7 @@ class SignupPageController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        if (request.forceDCR) {
+        if (request.forceDCR || UseDcrNewslettersPage.isSwitchedOn) {
           remoteRenderNewslettersPage()
         } else {
           localRenderNewslettersPage()
@@ -118,7 +119,7 @@ class SignupPageController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        if (request.forceDCR) {
+        if (request.forceDCR || UseDcrNewslettersPage.isSwitchedOn) {
           renderDCRNewslettersJson()
         } else {
           renderNewslettersJson()

@@ -27,7 +27,7 @@ import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
-import experiments.{ActiveExperiments, EuropeNetworkFront}
+import experiments.{ActiveExperiments, DeeplyRead, EuropeNetworkFront}
 import play.api.http.ContentTypes.JSON
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
@@ -212,7 +212,8 @@ trait FaciaController
     }
 
     val networkFrontEdition = Edition.allWithBetaEditions.find(_.networkFrontId == path)
-    val deeplyRead = if (Switches.DeeplyReadSwitch.isSwitchedOn) {
+    val participatingInDeeplyReadTest = ActiveExperiments.isParticipating(DeeplyRead)
+    val deeplyRead = if (participatingInDeeplyReadTest) {
       networkFrontEdition.map(deeplyReadAgent.getTrails)
     } else None
 

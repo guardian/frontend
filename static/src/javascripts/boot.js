@@ -171,10 +171,6 @@ const go = () => {
 		const fetchCommercial = () => {
 			const noop = () => Promise.resolve({ bootCommercial: () => {} });
 
-			if (!config.get('switches.commercial')) {
-				return noop();
-			}
-
 			markTime('commercial request');
 
 			if (!config.get('page.isHosted', false)) {

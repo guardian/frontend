@@ -141,7 +141,7 @@ const buildBannerPayload = async (
 		alreadyVisitedCount: getVisitCount(),
 		shouldHideReaderRevenue: shouldHideReaderRevenue,
 		isPaidContent: isPaidContent,
-		showSupportMessaging: !shouldHideSupportMessaging(),
+		showSupportMessaging: !(await shouldHideSupportMessaging()),
 		engagementBannerLastClosedAt:
 			(userPrefs.get('engagementBannerLastClosedAt') as string) ||
 			undefined,
@@ -205,7 +205,7 @@ export const fetchPuzzlesData =
 
 export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
 	const purchaseInfo = getPurchaseInfo();
-	const isSignedIn = isUserLoggedIn();
+	const isSignedIn = await isUserLoggedIn();
 	const payload = await buildBannerPayload(purchaseInfo, isSignedIn);
 
 	if (

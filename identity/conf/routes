@@ -20,7 +20,7 @@ GET         /user/:vanityUrl/:activityType          controllers.PublicProfileCon
 # Formstack
 ########################################################################################################################
 GET         /form/complete                          controllers.FormstackController.complete
-GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
+GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String)
 GET         /form/embed/:formReference              controllers.FormstackController.formstackFormEmbed(formReference: String)
 
 ########################################################################################################################

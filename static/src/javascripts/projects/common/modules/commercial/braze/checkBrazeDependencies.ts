@@ -1,5 +1,5 @@
 import config from '../../../../../lib/config';
-import { getBrazeUuid } from './getBrazeUuid';
+import { getBrazeUuid } from '../../../../common/modules/identity/api';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 type SuccessResult = {

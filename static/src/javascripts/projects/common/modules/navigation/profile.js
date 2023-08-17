@@ -68,7 +68,7 @@ class Profile {
             // the username in the header
             if (!$container.hasClass('is-signed-in')) {
                 fastdom.mutate(() => {
-                    $content.text(user.displayName);
+                    $content.text(user.publicFields.displayName);
                     $container.addClass('is-signed-in');
                     $register.hide();
                 });
