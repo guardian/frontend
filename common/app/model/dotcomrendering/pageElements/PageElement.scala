@@ -911,7 +911,7 @@ object PageElement {
           ),
         )
 
-      case Cartoon => element.cartoonTypeData.map(extractCartoon).filter(cartoonIsValid).toList
+      case Cartoon => element.cartoonTypeData.flatMap(extractCartoon).toList
 
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")

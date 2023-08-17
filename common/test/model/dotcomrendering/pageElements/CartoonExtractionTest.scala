@@ -41,7 +41,7 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
     )
 
   "CartoonExtraction" should "transform a cartoon element from Content API" in {
-    val dcrElement: CartoonBlockElement = cartoonElementFields(validCartoonVariant).map(extractCartoon).get
+    val dcrElement: CartoonBlockElement = cartoonElementFields(validCartoonVariant).flatMap(extractCartoon).get
 
     dcrElement.variants should be(
       List(
@@ -67,10 +67,7 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
   }
 
   it should "filter out invalid cartoon elements" in {
-    val dcrElement: Option[CartoonBlockElement] = cartoonElementFields(invalidCartoonVariant)
-      .map(extractCartoon)
-      .filter(cartoonIsValid)
-
+    val dcrElement: Option[CartoonBlockElement] = cartoonElementFields(invalidCartoonVariant).flatMap(extractCartoon)
     dcrElement should be(None)
   }
 }

@@ -4,15 +4,18 @@ import com.gu.contentapi.client.model.v1.{CartoonElementFields, CartoonImage}
 import model.ImageAsset
 
 object CartoonExtraction {
-  def extractCartoon(cartoonElementFields: CartoonElementFields): CartoonBlockElement = {
-    CartoonBlockElement(
-      variants = getCartoonVariants(cartoonElementFields),
-      role = Role(cartoonElementFields.role, Inline),
-      credit = cartoonElementFields.credit,
-      caption = cartoonElementFields.caption,
-      alt = cartoonElementFields.alt,
-      displayCredit = cartoonElementFields.displayCredit,
-    )
+  def extractCartoon(cartoonElementFields: CartoonElementFields): Option[CartoonBlockElement] = {
+    val variants = getCartoonVariants(cartoonElementFields)
+    Option.when(cartoonIsValid(variants)) {
+      CartoonBlockElement(
+        variants = getCartoonVariants(cartoonElementFields),
+        role = Role(cartoonElementFields.role, Inline),
+        credit = cartoonElementFields.credit,
+        caption = cartoonElementFields.caption,
+        alt = cartoonElementFields.alt,
+        displayCredit = cartoonElementFields.displayCredit,
+      )
+    }
   }
 
   private def getCartoonVariants(cartoonData: CartoonElementFields): List[DcrCartoonVariant] = {
@@ -36,8 +39,8 @@ object CartoonExtraction {
     }
   }
 
-  def cartoonIsValid(cartoonBlockElement: CartoonBlockElement): Boolean = {
-    cartoonBlockElement.variants.exists(variant =>
+  private def cartoonIsValid(variants: List[DcrCartoonVariant]): Boolean = {
+    variants.exists(variant =>
       variant.viewportSize == "large" &&
         variant.images.nonEmpty &&
         variant.images.head.fields.contains("height") &&
