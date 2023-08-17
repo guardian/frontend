@@ -11,7 +11,7 @@ import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
-import services.newsletters.model.{NewsletterResponseV2, NewsletterResponse}
+import services.newsletters.model.NewsletterResponseV2
 import staticpages.StaticPages
 import implicits.Requests.RichRequestHeader
 
