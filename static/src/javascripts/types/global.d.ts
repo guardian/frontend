@@ -112,6 +112,7 @@ interface Config {
 		};
 		timingEvents?: GoogleTimingEvent[];
 	};
+	stage: Stage;
 }
 
 type Edition = string; // https://github.com/guardian/frontend/blob/b952f6b9/common/app/views/support/JavaScriptPage.scala#L79
@@ -171,7 +172,6 @@ interface PageConfig extends CommercialPageConfig {
 	videoDuration: number;
 	webPublicationDate: number;
 	userAttributesApiUrl?: string;
-	stage: Stage;
 }
 
 interface Ophan {
