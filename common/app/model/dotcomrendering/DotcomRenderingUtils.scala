@@ -273,7 +273,6 @@ object DotcomRenderingUtils {
       defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
       alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
       tagPaths = content.content.tags.tags.map(_.id),
-      firstPublishedDate = content.content.fields.firstPublicationDate,
     )
   }
 
