@@ -38,15 +38,21 @@ case class NewsletterResponseV2(
     identityName: String,
     listId: Int,
     name: String,
-    theme: String,
+    theme: String, // ["news", "opinion", "culture", "sport", "lifestyle", "features"]
     group: String,
-    status: String,
+    status: String, // 'paused', 'cancelled', 'live', 'pending'
     restricted: Boolean,
     signUpEmbedDescription: String,
+    signUpDescription: String,
     frequency: String,
     mailSuccessDescription: Option[String],
-    regionFocus: Option[String],
+    regionFocus: Option[String], // edition Id
     illustrationCard: Option[String],
+    illustrationCircle: Option[String],
+    seriesTag: Option[String],
+    signupPage: Option[String],
+    exampleUrl: Option[String],
+    category: String, // "article-based", "article-based-legacy", "fronts-based", "manual-send", "other"]
 )
 
 object NewsletterResponseV2 {

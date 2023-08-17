@@ -106,7 +106,7 @@ object DotcomNewslettersPageRenderingDataModel {
       response.identityName,
       response.name,
       response.theme,
-      response.signUpEmbedDescription,
+      response.signUpDescription,
       response.frequency,
       response.listId,
       response.group,
