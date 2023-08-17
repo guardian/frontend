@@ -59,6 +59,7 @@
             "cmp": { "fullVendorDataUrl": "/commercial/cmp/vendorlist.json",
                      "shortVendorDataUrl": "/commercial/cmp/shortvendorlist.json"
             }
-        }
+        },
+        "stage": "@Configuration.environment.stage"
     }
 }
