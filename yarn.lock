@@ -1618,10 +1618,15 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/identity-auth@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-0.4.0.tgz#11fc3b9daec7b4186cf0822b18d6379dbdac8ce5"
-  integrity sha512-+lXmoMhrACvibKYBIwKQ15zyWGiGKC+mOg8831R8ilwF3vwXuXnzCLy1EpLTlSfDf72IOAuGyX4gDOqdQP8R/w==
+"@guardian/identity-auth-frontend@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth-frontend/-/identity-auth-frontend-1.0.0.tgz#22720eeeaf1382a65161abe67839903982c1d65c"
+  integrity sha512-lmuz8kIG5PeRjyjq1S9CMlfczOLxUdT+3UD8jYk3VZkGgLjN+3IX0e3GK7mMo/SnIojxLOD8x3tiVRCPjfiUdQ==
+
+"@guardian/identity-auth@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.0.0.tgz#ea8896a45d2aef9828e590cccdd858b5f46785d1"
+  integrity sha512-JUkPai2Qnuq1quQ2rtvwWhLTtISqJBNe8XpxqbIr4jGaNWn5EL3kI1scAwq5PyNEg9135E7YXWTnjLNkm3ivoA==
 
 "@guardian/libs@15.6.4":
   version "15.6.4"
