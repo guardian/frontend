@@ -20,7 +20,7 @@
 		"@guardian/braze-components": "^14.1.1",
 		"@guardian/commercial": "11.0.0",
 		"@guardian/consent-management-platform": "^13.6.1",
-		"@guardian/core-web-vitals": "^4.0.0",
+		"@guardian/core-web-vitals": "^5.0.0",
 		"@guardian/identity-auth": "1.0.0",
 		"@guardian/identity-auth-frontend": "1.0.0",
 		"@guardian/libs": "^14.0.0",
