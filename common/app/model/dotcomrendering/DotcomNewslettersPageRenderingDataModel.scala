@@ -12,8 +12,7 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
-import services.newsletters.model.NewsletterResponse
-import services.newsletters.NewsletterIllustrations
+import services.newsletters.model.NewsletterResponseV2
 import services.NewsletterData
 
 case class DotcomNewslettersPageRenderingDataModel(
@@ -41,7 +40,7 @@ object DotcomNewslettersPageRenderingDataModel {
 
   def apply(
       page: SimplePage,
-      newsletters: List[NewsletterResponse],
+      newsletters: List[NewsletterResponseV2],
       request: RequestHeader,
   ): DotcomNewslettersPageRenderingDataModel = {
     val edition = Edition.edition(request)
@@ -73,7 +72,7 @@ object DotcomNewslettersPageRenderingDataModel {
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
     val newsletterData = newsletters
-      .filter((newsletter) => newsletter.cancelled == false && newsletter.paused == false)
+      .filter((newsletter) => newsletter.status.equalsIgnoreCase(("live")))
       .map((newsletter) => convertNewsletterResponseToData(newsletter))
 
     DotcomNewslettersPageRenderingDataModel(
@@ -102,18 +101,18 @@ object DotcomNewslettersPageRenderingDataModel {
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }
 
-  private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
+  private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
     NewsletterData(
       response.identityName,
       response.name,
       response.theme,
-      response.description,
+      response.signUpDescription,
       response.frequency,
       response.listId,
       response.group,
-      response.emailEmbed.successDescription,
+      response.mailSuccessDescription.getOrElse("You are subscribed"),
       response.regionFocus,
-      NewsletterIllustrations.get(response.identityName),
+      response.illustrationCard,
     )
   }
 }
