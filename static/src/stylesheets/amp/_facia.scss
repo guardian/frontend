@@ -1,9 +1,5 @@
 .fc-container__inner {
     border-top: 1px solid $brightness-86;
-}
-
-.fc-container__inner,
-.fc-container__outbrain {
     padding-top: $gs-baseline / 4;
     overflow: hidden;
     position: relative;

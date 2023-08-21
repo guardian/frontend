@@ -16,36 +16,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val CarrotTrafficDriverSwitch = Switch(
-    Commercial,
-    "carrot-traffic-driver",
-    "Enables the requesting and rendering of the carrot traffic driving component.",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val IasTargetingSwitch = Switch(
-    Commercial,
-    "ias-ad-targeting",
-    "Enables the IAS slot-targeting optimisation.",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val OutbrainNewIdsSwitch = Switch(
-    Commercial,
-    "commercial-outbrain-newids",
-    "Enable the Outbrain new IDs (Late Jan 2019)",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val SurveySwitch = Switch(
     Commercial,
     "surveys",
@@ -144,16 +114,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
-  )
-
-  val AdblockAsk = Switch(
-    Commercial,
-    "ab-adblock-ask",
-    "Places a contributions ask underneath the right-hand ad slot on articles.",
-    owners = group(Membership),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
   )
 
   val AffiliateLinks: Switch = Switch(

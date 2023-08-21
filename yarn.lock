@@ -1519,11 +1519,6 @@
   resolved "https://registry.yarnpkg.com/@guardian/ab-core/-/ab-core-4.0.0.tgz#50c1fc076437e594b367f6e8d9469a3d9b97a78e"
   integrity sha512-l6Ot/anisLKyoLZOp8koW7Ia5JFOtmZkB0sfgdWajv5+N0w0UScUVoImEdPlFstM1anSd3FvV8D3UgYkRzAang==
 
-"@guardian/ab-core@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/ab-core/-/ab-core-5.0.0.tgz#cce32ff4cdfb6b24c013723bf352dcd61135d34d"
-  integrity sha512-Td5gtK2sARl+fXj1Qe6RuFqf/zxuZjW1q2Jck09zXPIfMgU+sJoTi549zbNeC1cldCBhPWy/qPQ0r+8klfF7jg==
-
 "@guardian/atom-renderer@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-2.0.0.tgz#cf51feb97421829c7e6b9106c8478e049bc97478"
@@ -1561,18 +1556,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-14.1.1.tgz#12672e3992ad3eab3bade848861ca01631a0edf5"
   integrity sha512-wHuJwdOC2hsTBie+zWJYFyasP4fOJXOPcKXpN2Cp+GlljPah3YtS2Fbgn8pcxxt8d5JKO9ra7sHKvX8FNxkAyg==
 
-"@guardian/commercial@10.18.0":
-  version "10.18.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-10.18.0.tgz#c81c6e76a4e01891358bd66645966f10c1a6e28c"
-  integrity sha512-GNwXVfoVoL/xywkKUcK6liOVrXTlNsYnWAUzho1SWRfkYJG+K0VsJH+UyneVu3AEDWgRP60GMo+cYJDgxz8KwA==
+"@guardian/commercial@0.0.0-beta-20230821092427":
+  version "0.0.0-beta-20230821092427"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20230821092427.tgz#192dd8f66f706f468ac3b978ab72cd6ed3de6a35"
+  integrity sha512-WjHRcz5AeTTWiBfjktvMYOky2O6pJCLn7/asEC+jjK6r64Vlc7wG90qpmUFsBoh5yu5mnO70jGtOtfFBkGeCWg==
   dependencies:
     "@changesets/cli" "^2.26.1"
-    "@guardian/ab-core" "^5.0.0"
-    "@guardian/consent-management-platform" "^13.6.1"
-    "@guardian/core-web-vitals" "^5.0.0"
-    "@guardian/libs" "15.6.4"
-    "@guardian/source-foundations" "^12.0.0"
-    "@guardian/support-dotcom-components" "^1.0.7"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
@@ -1593,11 +1582,6 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-4.0.0.tgz#e09bf40ee896ae92c0223fa57399b1b0b5f9bdb2"
   integrity sha512-LDXnDhsNApO9v8LrXPK1AHMZYoa457tYjqjHnXNSxleHHoyeS3ehB4qohdDMpWv76F8DLUVMXBTZ/8EbQce3sA==
-
-"@guardian/core-web-vitals@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/core-web-vitals/-/core-web-vitals-5.0.0.tgz#ab74da6001427f3414a84d15f57bac1a888a140a"
-  integrity sha512-Mq3v8Y/YJGs7p/8NWmYHFKdVqRThjDJSfpoo1zSb6DgpQ1Ko8RjvOa2Q9P9ABWfKJCaDp0kcGK3dk0AjDSi/Qw==
 
 "@guardian/eslint-config-typescript@^0.7.0":
   version "0.7.0"
@@ -1628,11 +1612,6 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.0.0.tgz#ea8896a45d2aef9828e590cccdd858b5f46785d1"
   integrity sha512-JUkPai2Qnuq1quQ2rtvwWhLTtISqJBNe8XpxqbIr4jGaNWn5EL3kI1scAwq5PyNEg9135E7YXWTnjLNkm3ivoA==
 
-"@guardian/libs@15.6.4":
-  version "15.6.4"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-15.6.4.tgz#13787065e5c58b884944c5c71d6e324c7f2e566a"
-  integrity sha512-oN+xN7FBuVKLCbbjvAMdWjgWqOtvR38acnqwAKsjUDkFsBzRWU/pueDSEGTCTTVSFcRdCKOsWnop+Vwh59P47g==
-
 "@guardian/libs@^10.0.0":
   version "10.1.1"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-10.1.1.tgz#7048c365a68dda068f707d46c78979f430221963"
@@ -1662,13 +1641,6 @@
   dependencies:
     mini-svg-data-uri "1.4.4"
 
-"@guardian/source-foundations@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-12.0.0.tgz#3f75d5dd26dae0d3fe13fd93aabe1e837cf0ddbb"
-  integrity sha512-sq+htAsvPlaZBjfSZ8ISZZdAnFQwuZ7xeCrI/C369HA+MDl3pQ1dFWz3YmqCP/vkXS8Wr3qVlxXNqWGwKKrYrw==
-  dependencies:
-    mini-svg-data-uri "1.4.4"
-
 "@guardian/source-react-components-development-kitchen@^10.0.1":
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-10.0.1.tgz#507ae5cc14c84f74661dec5de4e7641ec06c6a50"
@@ -1684,7 +1656,7 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.13.0.tgz#4a40ac6e2bd62b8bf8ef634e9084fcc8c640d8c7"
   integrity sha512-tibmZHHu7TjN3DSphUhlGSLCAJvLqr8XLDpgdlWB8YO1ohwYacOPpVdIGSi0N7E0XxjUOfB757XWXgs3yNd0LQ==
 
-"@guardian/support-dotcom-components@1.0.7", "@guardian/support-dotcom-components@^1.0.7":
+"@guardian/support-dotcom-components@1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.7.tgz#b3aadcca5f6ee35b2c541121144be237d72bd3e0"
   integrity sha512-MhaO+rC+ujXMcaMd1TL5D0t0eEuHWGh3OrFkM8BhPwhMkjela/dCOPeVPvGJDJ0a37o4PeMszqy+dSuiR4BvvQ==
@@ -10521,7 +10493,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#1d6bbdc:
+"prebid.js@github:guardian/prebid.js#1d6bbdc":
   version "7.26.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/1d6bbdc64411fbe719489eb06bce72b66ac6a4f3"
   dependencies:
