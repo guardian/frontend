@@ -1,7 +1,7 @@
 package model.dotcomrendering.pageElements
 
-import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
+import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   ElementType,
   EmbedTracking,
@@ -10,12 +10,12 @@ import com.gu.contentapi.client.model.v1.{
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
 }
-import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import common.{Chronos, Edition}
 import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
+import model.dotcomrendering.pageElements.CartoonExtraction._
 import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
@@ -23,6 +23,7 @@ import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
+import java.net.URLEncoder
 import scala.jdk.CollectionConverters._
 import scala.util.Try
 
@@ -162,6 +163,23 @@ case class CalloutBlockElementV2(
 
 object CalloutBlockElementV2 {
   implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
+}
+
+case class DcrCartoonVariant(
+    viewportSize: String,
+    images: List[ImageAsset],
+)
+case class CartoonBlockElement(
+    variants: List[DcrCartoonVariant],
+    role: Role,
+    credit: Option[String],
+    caption: Option[String],
+    alt: Option[String],
+    displayCredit: Option[Boolean],
+) extends PageElement
+object CartoonBlockElement {
+  implicit val CartoonVariantWrites: Writes[DcrCartoonVariant] = Json.writes[DcrCartoonVariant]
+  implicit val CartoonBlockElementWrites: Writes[CartoonBlockElement] = Json.writes[CartoonBlockElement]
 }
 
 // The extension of the ChartAtomBlockElement, is experimental. Three fields have been added,
@@ -774,6 +792,7 @@ object PageElement {
       case _: BlockquoteBlockElement      => true
       case _: CalloutBlockElement         => true
       case _: CalloutBlockElementV2       => true
+      case _: CartoonBlockElement         => true
       case _: ChartAtomBlockElement       => true
       case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
@@ -891,6 +910,8 @@ object PageElement {
             element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_)),
           ),
         )
+
+      case Cartoon => element.cartoonTypeData.flatMap(extractCartoon).toList
 
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
@@ -1812,5 +1833,4 @@ object PageElement {
        relying on the framework to provide it (for safety)
    */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
-
 }
