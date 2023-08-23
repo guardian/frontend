@@ -23,18 +23,6 @@ object StaticPages {
       ),
     )
 
-  def simpleEmailSignupPage(id: String, webTitle: String): SimplePage =
-    SimplePage(
-      MetaData.make(
-        id = id,
-        section = Option(SectionId(value = "email-signup-page")),
-        webTitle = webTitle,
-        contentType = Some(DotcomContentType.Signup),
-        iosType = None,
-        shouldGoogleIndex = false,
-      ),
-    )
-
   def simpleNewslettersPage(
       id: String,
       groupedNewsletterResponses: List[(String, List[NewsletterResponse])],

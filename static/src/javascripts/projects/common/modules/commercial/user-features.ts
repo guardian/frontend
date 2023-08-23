@@ -1,13 +1,5 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
 import type { HeaderPayload } from '@guardian/support-dotcom-components/dist/dotcom/src/types';
-import {
-	AdFreeCookieReasons,
-	adFreeDataIsOld,
-	adFreeDataIsPresent,
-	getAdFreeCookie,
-	maybeUnsetAdFreeCookie,
-	setAdFreeCookie,
-} from 'lib/manage-ad-free-cookie';
 import { noop } from 'lib/noop';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
@@ -46,14 +38,38 @@ const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
 	daysToLive: 90,
 };
 
-const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
-	name: 'gu_contributions_reminder_signed_up',
-	daysToLive: 90,
-};
+const AD_FREE_USER_COOKIE = 'GU_AF1';
 
 // TODO: isn’t this duplicated from commercial features?
 // https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
 const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
+
+const getAdFreeCookie = (): string | null =>
+	getCookie({ name: AD_FREE_USER_COOKIE });
+
+const adFreeDataIsPresent = (): boolean => {
+	const cookieVal = getAdFreeCookie();
+	if (!cookieVal) return false;
+	return !Number.isNaN(parseInt(cookieVal, 10));
+};
+
+const adFreeDataIsOld = (): boolean => {
+	const { switches } = window.guardian.config;
+	return (
+		Boolean(switches.adFreeStrictExpiryEnforcement) &&
+		cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)
+	);
+};
+
+const setAdFreeCookie = (daysToLive = 1): void => {
+	const expires = new Date();
+	expires.setMonth(expires.getMonth() + 6);
+	setCookie({
+		name: AD_FREE_USER_COOKIE,
+		value: expires.getTime().toString(),
+		daysToLive,
+	});
+};
 
 const userHasData = () => {
 	const cookie =
@@ -119,7 +135,6 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 			value: JsonResponse.oneOffContributionDate,
 		});
 	}
-
 	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
 	if (JsonResponse.alertAvailableFor) {
 		setCookie({
@@ -129,15 +144,14 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 	}
 
 	if (JsonResponse.contentAccess.digitalPack) {
-		setAdFreeCookie(AdFreeCookieReasons.Subscriber, 2);
+		setAdFreeCookie(2);
 	} else if (adFreeDataIsPresent() && !forcedAdFreeMode) {
-		maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
+		removeCookie({ name: AD_FREE_USER_COOKIE });
 	}
 };
 
 const deleteOldData = (): void => {
-	// We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
-	maybeUnsetAdFreeCookie(AdFreeCookieReasons.Subscriber);
+	removeCookie({ name: AD_FREE_USER_COOKIE });
 	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
@@ -373,15 +387,6 @@ const extendContribsCookieExpiry = (): void => {
 	}
 };
 
-const canShowContributionsReminderFeature = (): boolean => {
-	const signedUpForReminder = !!getCookie({
-		name: CONTRIBUTIONS_REMINDER_SIGNED_UP.name,
-	});
-	const { switches } = window.guardian.config;
-
-	return Boolean(switches.showContributionReminder) && !signedUpForReminder;
-};
-
 type PurchaseInfo = HeaderPayload['targeting']['purchaseInfo'];
 const getPurchaseInfo = (): PurchaseInfo => {
 	const purchaseInfoRaw = getCookie({ name: 'GU_CO_COMPLETE' });
@@ -401,28 +406,29 @@ const getPurchaseInfo = (): PurchaseInfo => {
 	return purchaseInfo;
 };
 
+const _ = {
+	isRecentOneOffContributor,
+	isDigitalSubscriber,
+	getDaysSinceLastOneOffContribution,
+	isPostAskPauseOneOffContributor,
+	shouldNotBeShownSupportMessaging,
+};
+
 export {
+	_,
 	accountDataUpdateWarning,
 	isAdFreeUser,
 	isPayingMember,
-	isRecentOneOffContributor,
 	isRecurringContributor,
-	isDigitalSubscriber,
+	setAdFreeCookie,
 	shouldHideSupportMessaging,
 	refresh,
-	deleteOldData,
 	getLastOneOffContributionTimestamp,
 	getLastOneOffContributionDate,
 	getLastRecurringContributionDate,
-	getDaysSinceLastOneOffContribution,
 	getPurchaseInfo,
-	isPostAskPauseOneOffContributor,
 	readerRevenueRelevantCookies,
 	fakeOneOffContributor,
-	shouldNotBeShownSupportMessaging,
 	extendContribsCookieExpiry,
 	ARTICLES_VIEWED_OPT_OUT_COOKIE,
-	CONTRIBUTIONS_REMINDER_SIGNED_UP,
-	canShowContributionsReminderFeature,
-	AdFreeCookieReasons,
 };

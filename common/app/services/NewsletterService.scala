@@ -1,6 +1,6 @@
 package services
 import services.newsletters.NewsletterSignupAgent
-import services.newsletters.model.NewsletterResponse
+import services.newsletters.model.NewsletterResponseV2
 import common._
 import model.{ArticlePage, PageWithStoryPackage, LiveBlogPage, Tag}
 
@@ -38,11 +38,11 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     tag.properties.id.stripPrefix(EMBED_TAG_PREFIX)
   }
 
-  private def getNewsletterResponseFromTags(tags: List[Tag]): Option[NewsletterResponse] = {
+  private def getNewsletterResponseFromTags(tags: List[Tag]): Option[NewsletterResponseV2] = {
     for {
       tag <- findNewsletterTag(tags)
       newsletterName = getNewsletterName(tag)
-      newsletterEither = newsletterSignupAgent.getNewsletterByName(newsletterName)
+      newsletterEither = newsletterSignupAgent.getV2NewsletterByName(newsletterName)
       newsletter <- newsletterEither match {
         case Left(_)      => None
         case Right(value) => value
@@ -52,8 +52,8 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     }
   }
 
-  private def getNewsletterResponseFromSignUpPage(articleId: String): Option[NewsletterResponse] = {
-    newsletterSignupAgent.getNewsletters() match {
+  private def getNewsletterResponseFromSignUpPage(articleId: String): Option[NewsletterResponseV2] = {
+    newsletterSignupAgent.getV2Newsletters() match {
       case Left(_) => None
       case Right(list) =>
         list
@@ -69,23 +69,23 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     }
   }
 
-  private def convertNewsletterResponseToData(response: NewsletterResponse): NewsletterData = {
+  private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
     NewsletterData(
       response.identityName,
       response.name,
       response.theme,
-      response.description,
+      response.signUpEmbedDescription,
       response.frequency,
       response.listId,
       response.group,
-      response.emailEmbed.successDescription,
+      response.mailSuccessDescription.getOrElse("You are subscribed"),
       response.regionFocus,
       illustrationCard = Option.empty[String],
     )
   }
 
-  private def shouldInclude(response: NewsletterResponse): Boolean = {
-    !response.paused && !response.restricted
+  private def shouldInclude(response: NewsletterResponseV2): Boolean = {
+    !response.restricted && response.status == "live"
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {

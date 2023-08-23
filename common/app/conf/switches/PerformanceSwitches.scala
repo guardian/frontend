@@ -186,4 +186,14 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val Scheduler = Switch(
+    SwitchGroup.Performance,
+    "scheduler",
+    "Schedule JavaScript tasks using a centralised scheduler in dotcom-rendering",
+    owners = Seq(Owner.withGithub("@guardian/open-journalism")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }

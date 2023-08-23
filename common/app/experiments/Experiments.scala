@@ -17,7 +17,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeNetworkFront,
       Okta,
       HeaderTopBarSearchCapi,
-      LazyLoadImages,
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
@@ -101,15 +100,6 @@ object Okta
        - https://github.com/guardian/frontend/pull/26461
       needs to be reverted */
       participationGroup = Perc2A,
-    )
-
-object LazyLoadImages
-    extends Experiment(
-      name = "lazy-load-images",
-      description = "Lazy-load images on DCR",
-      owners = Seq(Owner.withGithub("@mxdvl")),
-      sellByDate = LocalDate.of(2023, 8, 22),
-      participationGroup = Perc1D,
     )
 
 object OfferHttp3
