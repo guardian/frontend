@@ -57,8 +57,6 @@ jobs:
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
-        env:
-          STAGE: DEVINFRA
 
       - uses: guardian/actions-riff-raff@v2
         with:
