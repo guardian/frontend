@@ -48,6 +48,7 @@ jobs:
           role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
 
       - name: Test, compile
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
         run: |
           java \
           -Xmx6144M \

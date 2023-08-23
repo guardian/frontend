@@ -26,6 +26,11 @@ module.exports = {
                     description: 'JS tests',
                     task: () => exec('jest', null, {
                         env: {
+                            /**
+                             * We test some things like relative dates and formatting
+                             * that rely on a specific timezone. We set this here so
+                             * that it's not determined by the machine's timezone.
+                             */
                             TZ: 'Europe/London'
                         }
                     }),
