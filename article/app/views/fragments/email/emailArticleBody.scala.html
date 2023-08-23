@@ -127,11 +127,16 @@
 
 @defining(page.article) { article =>
     @row(Seq("no-pad")) {
+        @brazePlaceholder(s"Above Banner")
+    }
+    @row(Seq("no-pad")) {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
             @imgForArticle(page.banner, page.email.map(_.name))
         </a>
     }
-
+    @row(Seq("no-pad")) {
+        @brazePlaceholder(s"header")
+    }
     @page.fallbackSeriesText.map { seriesName =>
         @row(Seq("padded")) {
             <h3 class="text--brand">@seriesName</h3>
