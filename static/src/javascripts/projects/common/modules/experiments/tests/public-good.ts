@@ -3,9 +3,9 @@ import type { ABTest } from '@guardian/ab-core';
 export const publicGoodTest: ABTest = {
 	id: 'PublicGoodTest',
 	author: '@commercial-dev',
-	start: '2023-08-01',
-	expiry: '2023-08-30',
-	audience: 0 / 100,
+	start: '2023-08-22',
+	expiry: '2023-09-15',
+	audience: 10 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'USA only',
 	successMeasure: 'No significant impact to UX',
