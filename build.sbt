@@ -242,7 +242,7 @@ val main = root()
     riffRaffUploadManifestBucket := Some(
       System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity"),
     ),
-    riffRaffManifestProjectName := System.getenv().getOrDefault("RIFF_RAFF_PROJECT_NAME", "dotcom:all"),
+    riffRaffManifestProjectName := "dotcom:all",
     riffRaffArtifactResources := Seq(
       (admin / Universal / packageBin).value -> s"${(admin / name).value}/${(admin / Universal / packageBin).value.getName}",
       (applications / Universal / packageBin).value -> s"${(applications / name).value}/${(applications / Universal / packageBin).value.getName}",
