@@ -283,7 +283,7 @@ object NavLinks {
       world,
       auPolitics,
       auEnvironment,
-      football,
+      climateCrisis,
       indigenousAustralia,
       auImmigration,
       media,
