@@ -207,9 +207,11 @@
 }
 
 
-@fullRow(Seq()) {
+@brazePlaceholder(s"Above Banner")
+@fullRow(Seq("no-top-pad")) {
     @imgForFront(page.banner, page.email.map(_.name))
 }
+@brazePlaceholder(s"header")
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
     @brazePlaceholder(s"Above Collection ${collectionIndex + 1}")

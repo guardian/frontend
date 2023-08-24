@@ -13,6 +13,11 @@
     padding: 0;
 }
 
+// td
+.no-top-pad {
+    padding-top: 0;
+}
+
 // table
 .body {
     background: $body-color;
