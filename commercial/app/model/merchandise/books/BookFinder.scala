@@ -7,7 +7,6 @@ import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader
 import commercial.model.merchandise.Book
 import common.{Box, GuLogging}
 import conf.Configuration
-import conf.switches.Switches.BookLookupSwitch
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
@@ -71,7 +70,7 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends GuLog
       urlPrefix = s"https://$domain/$path",
     )
   }
-
+// ToDo NOTE: at this point not sure where in the program this is used
   private implicit val bookLookupExecutionContext: ExecutionContext =
     actorSystem.dispatchers.lookup("akka.actor.book-lookup")
 
@@ -102,7 +101,6 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends GuLog
         val request = FeedRequest(
           feedName = "Book Lookup",
           url = s"${props.urlPrefix}/$isbn",
-          switch = BookLookupSwitch,
           responseEncoding = "utf-8",
           timeout = 4.seconds,
         )
