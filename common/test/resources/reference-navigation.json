@@ -1558,6 +1558,11 @@
                 "url" : "/australia-podcasts",
                 "children" : [ ],
                 "classList" : [ ]
+            }, {
+                "title" : "Newsletters",
+                "url" : "/email-newsletters",
+                "children" : [ ],
+                "classList" : [ ]
             } ],
             "classList" : [ ]
         },
