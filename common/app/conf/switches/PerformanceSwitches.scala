@@ -192,7 +192,7 @@ trait PerformanceSwitches {
     "scheduler",
     "Schedule JavaScript tasks using a centralised scheduler in dotcom-rendering",
     owners = Seq(Owner.withGithub("@guardian/open-journalism")),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
   )
