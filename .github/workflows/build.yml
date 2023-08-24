@@ -61,7 +61,7 @@ jobs:
 
       - uses: guardian/actions-riff-raff@v2
         with:
-          projectName: dotcom:frontend
+          projectName: dotcom:frontend-all
           configPath: riff-raff.yaml
           contentDirectories: |
             frontend-static:

@@ -1,6 +1,6 @@
 # Deployment
 
-Deploy dotcom using the `dotcom:frontend` project in riff-raff. This will autodeploy in PROD- and it's usually what you want to do when using CODE.
+Deploy dotcom using the `dotcom:frontend-all` project in riff-raff. This will autodeploy in PROD- and it's usually what you want to do when using CODE.
 
 ## What to do when a deployment breaks
 
