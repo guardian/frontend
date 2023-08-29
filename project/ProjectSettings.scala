@@ -82,6 +82,7 @@ object ProjectSettings {
     Test / javaOptions += "-XX:+UseConcMarkSweepGC",
     Test / javaOptions += "-XX:ReservedCodeCacheSize=128m",
     Test / baseDirectory := file("."),
+    Test / envVars := Map("STAGE" -> "DEVINFRA"),
     // Set testResultLogger back to the default, fixes an issue with `sbt-teamcity-logger`
     //   See: https://github.com/JetBrains/sbt-tc-logger/issues/9
     Test / test / testResultLogger := TestResultLogger.Default,
@@ -133,18 +134,19 @@ object ProjectSettings {
       .settings(buildInfoSettings(s"frontend.${applicationName.replaceAll("-", "")}"))
   }
 
-  def buildInfoSettings(buildInfoPackageName: String): Seq[Def.Setting[_]] = Seq(
-    buildInfoPackage := buildInfoPackageName,
-    buildInfoOptions += BuildInfoOption.Traits("app.FrontendBuildInfo"),
-    buildInfoKeys := {
-      lazy val buildInfo = BuildInfo(baseDirectory.value)
-      Seq[BuildInfoKey](
-        "buildNumber" -> buildInfo.buildIdentifier,
-        "gitCommitId" -> buildInfo.revision,
-        "buildTime" -> System.currentTimeMillis
-      )
-    }
-  )
+  def buildInfoSettings(buildInfoPackageName: String): Seq[Def.Setting[_]] =
+    Seq(
+      buildInfoPackage := buildInfoPackageName,
+      buildInfoOptions += BuildInfoOption.Traits("app.FrontendBuildInfo"),
+      buildInfoKeys := {
+        lazy val buildInfo = BuildInfo(baseDirectory.value)
+        Seq[BuildInfoKey](
+          "buildNumber" -> buildInfo.buildIdentifier,
+          "gitCommitId" -> buildInfo.revision,
+          "buildTime" -> System.currentTimeMillis,
+        )
+      },
+    )
 
   def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
