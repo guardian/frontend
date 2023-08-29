@@ -226,12 +226,12 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
   it should "render email fronts" in {
     val emailRequest = FakeRequest("GET", "/email/uk/daily")
-    val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
-    status(emailJsonResponse) shouldBe 200
-    assertThrows[JsonParseException](contentAsJson(emailJsonResponse))
-    contentAsString(emailJsonResponse)
-    contentAsString(emailJsonResponse) should include("<!DOCTYPE html")
-    val responseHeaders = headers(emailJsonResponse)
+    val emailHtmlResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
+    status(emailHtmlResponse) shouldBe 200
+    assertThrows[JsonParseException](contentAsJson(emailHtmlResponse))
+    contentAsString(emailHtmlResponse)
+    contentAsString(emailHtmlResponse) should include("<!DOCTYPE html")
+    val responseHeaders = headers(emailHtmlResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
   }
 
