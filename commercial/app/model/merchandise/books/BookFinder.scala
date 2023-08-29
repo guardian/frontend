@@ -7,7 +7,6 @@ import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader
 import commercial.model.merchandise.Book
 import common.{Box, GuLogging}
 import conf.Configuration
-import conf.switches.Switches.BookLookupSwitch
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
@@ -102,7 +101,6 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends GuLog
         val request = FeedRequest(
           feedName = "Book Lookup",
           url = s"${props.urlPrefix}/$isbn",
-          switch = BookLookupSwitch,
           responseEncoding = "utf-8",
           timeout = 4.seconds,
         )

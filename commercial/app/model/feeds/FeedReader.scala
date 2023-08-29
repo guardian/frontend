@@ -69,18 +69,7 @@ class FeedReader(wsClient: WSClient) extends GuLogging {
       contents
     }
 
-    val initializedSwitch: Future[Switch] = request.switch.onInitialized
-
-    initializedSwitch.onComplete {
-      case Success(switch) =>
-        log.info(s"Successfully initialized ${switch.name} (isSwitchedOn: ${switch.isSwitchedOn})")
-      case Failure(throwable) => log.info(s"Failed to initialize switch.", throwable)
-    }
-
-    initializedSwitch flatMap { switch =>
-      if (switch.isSwitchedOn) readUrl()
-      else Future.failed(FeedSwitchOffException(request.feedName))
-    }
+    readUrl()
   }
 
   def readSeq[T](request: FeedRequest)(parse: String => Seq[T])(implicit ec: ExecutionContext): Future[Seq[T]] = {
@@ -115,7 +104,6 @@ class FeedReader(wsClient: WSClient) extends GuLogging {
 
 case class FeedRequest(
     feedName: String,
-    switch: conf.switches.Switch,
     url: String,
     parameters: Map[String, String] = Map.empty,
     responseEncoding: String,
