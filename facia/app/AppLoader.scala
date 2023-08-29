@@ -11,8 +11,8 @@ import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import feed.MostViewedLifecycle
-import http.{CommonFilters, PreloadFilters}
+import feed.{DeeplyReadLifecycle, MostViewedLifecycle}
+import http.CommonFilters
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -62,6 +62,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[MostViewedLifecycle],
+    wire[DeeplyReadLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
@@ -77,7 +78,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   )
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.facia.BuildInfo
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters ++ wire[PreloadFilters].filters
+  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 
   def actorSystem: ActorSystem

@@ -29,6 +29,7 @@ import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import experiments.{ActiveExperiments, DeeplyRead, EuropeNetworkFront}
 import play.api.http.ContentTypes.JSON
+import http.HttpPreconnections
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 
@@ -184,6 +185,25 @@ trait FaciaController
       result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
     } else result
 
+  private def resultWithVaryHeader(result: CacheableResult, targetedTerritories: Boolean)(implicit
+      request: RequestHeader,
+  ) =
+    withVaryHeader(successful(Cached(CacheTime.Facia)(result)), targetedTerritories)
+
+  private def resultWithVaryAndPreloadHeader(result: CacheableResult, targetedTerritories: Boolean)(implicit
+      request: RequestHeader,
+  ) =
+    withVaryHeader(
+      successful(
+        Cached(CacheTime.Facia)(result)
+          .withPreload(
+            Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
+          )(context, request)
+          .withPreconnect(HttpPreconnections.defaultUrls),
+      ),
+      targetedTerritories,
+    )
+
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
@@ -240,41 +260,38 @@ trait FaciaController
           )(request),
           targetedTerritories,
         )
-      case Some((faciaPage: PressedPage, targetedTerritories)) =>
-        val result = successful(
-          Cached(CacheTime.Facia)(
-            if (request.isRss) {
-              val body = TrailsToRss.fromPressedPage(faciaPage)
-              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            } else if (request.isJson) {
-              if (request.forceDCR) {
-                log.info(
-                  s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
-                    .getOrElse("X-GU-GeoLocation", "country:row")}",
-                )
-                JsonComponent.fromWritable(
-                  DotcomFrontsRenderingDataModel(
-                    page = faciaPage,
-                    request = request,
-                    pageType = PageType(faciaPage, request, context),
-                    mostViewed = mostViewedAgent.mostViewed(Edition(request)),
-                    mostCommented = mostViewedAgent.mostCommented,
-                    mostShared = mostViewedAgent.mostShared,
-                    deeplyRead = deeplyRead,
-                  ),
-                )
-              } else JsonFront(faciaPage)
-            } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
-              renderEmail(faciaPage)
-            } else if (TrailsToShowcase.isShowcaseFront(faciaPage)) {
-              renderShowcaseFront(faciaPage)
-            } else {
-              RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
-            },
-          ),
-        )
+      case Some((faciaPage: PressedPage, targetedTerritories)) if request.isRss =>
+        val body = TrailsToRss.fromPressedPage(faciaPage)
 
-        withVaryHeader(result, targetedTerritories)
+        withVaryHeader(
+          successful(Cached(CacheTime.Facia)(RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body))),
+          targetedTerritories,
+        )
+      case Some((faciaPage: PressedPage, targetedTerritories)) if request.isJson =>
+        val result = if (request.forceDCR) {
+          log.info(
+            s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
+              .getOrElse("X-GU-GeoLocation", "country:row")}",
+          )
+          JsonComponent.fromWritable(
+            DotcomFrontsRenderingDataModel(
+              page = faciaPage,
+              request = request,
+              pageType = PageType(faciaPage, request, context),
+              mostViewed = mostViewedAgent.mostViewed(Edition(request)),
+              mostCommented = mostViewedAgent.mostCommented,
+              mostShared = mostViewedAgent.mostShared,
+              deeplyRead = deeplyRead,
+            ),
+          )
+        } else JsonFront(faciaPage)
+        resultWithVaryHeader(result, targetedTerritories)
+      case Some((faciaPage: PressedPage, targetedTerritories)) if request.isEmail || ConfigAgent.isEmailFront(path) =>
+        resultWithVaryHeader(renderEmail(faciaPage), targetedTerritories)
+      case Some((faciaPage: PressedPage, targetedTerritories)) if TrailsToShowcase.isShowcaseFront(faciaPage) =>
+        resultWithVaryHeader(renderShowcaseFront(faciaPage), targetedTerritories)
+      case Some((faciaPage: PressedPage, targetedTerritories)) =>
+        resultWithVaryAndPreloadHeader(RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage)), targetedTerritories)
       case None => {
         successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       }
