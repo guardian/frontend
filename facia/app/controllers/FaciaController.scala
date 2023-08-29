@@ -185,6 +185,25 @@ trait FaciaController
       result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
     } else result
 
+  private def resultWithVaryHeader(result: CacheableResult, targetedTerritories: Boolean)(implicit
+      request: RequestHeader,
+  ) =
+    withVaryHeader(successful(Cached(CacheTime.Facia)(result)), targetedTerritories)
+
+  private def resultWithVaryAndPreloadHeader(result: CacheableResult, targetedTerritories: Boolean)(implicit
+      request: RequestHeader,
+  ) =
+    withVaryHeader(
+      successful(
+        Cached(CacheTime.Facia)(result)
+          .withPreload(
+            Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
+          )(context, request)
+          .withPreconnect(HttpPreconnections.defaultUrls),
+      ),
+      targetedTerritories,
+    )
+
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
@@ -266,22 +285,13 @@ trait FaciaController
             ),
           )
         } else JsonFront(faciaPage)
-        withVaryHeader(successful(Cached(CacheTime.Facia)(result)), targetedTerritories)
+        resultWithVaryHeader(result, targetedTerritories)
       case Some((faciaPage: PressedPage, targetedTerritories)) if request.isEmail || ConfigAgent.isEmailFront(path) =>
-        withVaryHeader(successful(Cached(CacheTime.Facia)(renderEmail(faciaPage))), targetedTerritories)
+        resultWithVaryHeader(renderEmail(faciaPage), targetedTerritories)
       case Some((faciaPage: PressedPage, targetedTerritories)) if TrailsToShowcase.isShowcaseFront(faciaPage) =>
-        withVaryHeader(successful(Cached(CacheTime.Facia)(renderShowcaseFront(faciaPage))), targetedTerritories)
+        resultWithVaryHeader(renderShowcaseFront(faciaPage), targetedTerritories)
       case Some((faciaPage: PressedPage, targetedTerritories)) =>
-        withVaryHeader(
-          successful(
-            Cached(CacheTime.Facia)(RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage)))
-              .withPreload(
-                Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
-              )(context, request)
-              .withPreconnect(HttpPreconnections.defaultUrls),
-          ),
-          targetedTerritories,
-        )
+        resultWithVaryAndPreloadHeader(RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage)), targetedTerritories)
       case None => {
         successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       }
