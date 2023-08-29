@@ -11,7 +11,7 @@ import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import feed.MostViewedLifecycle
+import feed.{DeeplyReadLifecycle, MostViewedLifecycle}
 import http.{CommonFilters, PreloadFilters}
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
@@ -62,6 +62,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[MostViewedLifecycle],
+    wire[DeeplyReadLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
