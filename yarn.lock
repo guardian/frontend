@@ -1607,10 +1607,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth-frontend/-/identity-auth-frontend-1.0.0.tgz#22720eeeaf1382a65161abe67839903982c1d65c"
   integrity sha512-lmuz8kIG5PeRjyjq1S9CMlfczOLxUdT+3UD8jYk3VZkGgLjN+3IX0e3GK7mMo/SnIojxLOD8x3tiVRCPjfiUdQ==
 
-"@guardian/identity-auth@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.0.0.tgz#ea8896a45d2aef9828e590cccdd858b5f46785d1"
-  integrity sha512-JUkPai2Qnuq1quQ2rtvwWhLTtISqJBNe8XpxqbIr4jGaNWn5EL3kI1scAwq5PyNEg9135E7YXWTnjLNkm3ivoA==
+"@guardian/identity-auth@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.1.0.tgz#c40ae651db80f9941efa2f13edcfab2b7ecb6621"
+  integrity sha512-sL5qgjZsZ+ur+fFe+PCohTx1xryx0X4FX6f3q3yyyuzVAcQ1LY1n+Ovap0QlDSyueCfDi35rW9Pc9wlvS1Cvzg==
 
 "@guardian/libs@^15.6.4":
   version "15.6.4"

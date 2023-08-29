@@ -21,7 +21,7 @@
 		"@guardian/commercial": "11.4.0",
 		"@guardian/consent-management-platform": "^13.6.1",
 		"@guardian/core-web-vitals": "^5.0.0",
-		"@guardian/identity-auth": "1.0.0",
+		"@guardian/identity-auth": "1.1.0",
 		"@guardian/identity-auth-frontend": "1.0.0",
 		"@guardian/libs": "^15.6.4",
 		"@guardian/shimport": "^1.0.2",
