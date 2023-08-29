@@ -23,7 +23,7 @@
 		"@guardian/core-web-vitals": "^5.0.0",
 		"@guardian/identity-auth": "1.1.0",
 		"@guardian/identity-auth-frontend": "1.0.0",
-		"@guardian/libs": "^15.6.4",
+		"@guardian/libs": "^15.7.0",
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "^13.0.0",
 		"@guardian/source-react-components": "^12.0.0",
