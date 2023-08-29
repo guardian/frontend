@@ -95,10 +95,7 @@ object Okta
       description = "Use Okta for authentication",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 7),
-      /* Do not increase without considering if
-       - https://github.com/guardian/dotcom-rendering/pull/8508
-      needs to be reverted */
-      participationGroup = Perc5A,
+      participationGroup = Perc10A,
     )
 
 object OfferHttp3
