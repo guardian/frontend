@@ -97,7 +97,6 @@ object Okta
       sellByDate = LocalDate.of(2023, 8, 31),
       /* Do not increase without considering if
        - https://github.com/guardian/dotcom-rendering/pull/8508
-       - https://github.com/guardian/frontend/pull/26461
       needs to be reverted */
       participationGroup = Perc5A,
     )
