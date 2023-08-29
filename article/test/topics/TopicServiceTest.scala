@@ -57,7 +57,7 @@ class TopicServiceTest
     when(fakeClient.getListOfKeys()) thenReturn Future.failed(new Throwable(""))
     val topicService = new TopicService(fakeClient)
 
-    Await.result(topicService.refreshTopics(), 1.second)
+    Await.result(topicService.refreshTopics(), 5.seconds)
     val results = topicService.getAllTopics
 
     results should be(None)

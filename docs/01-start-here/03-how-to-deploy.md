@@ -17,7 +17,7 @@ _The Guardian frontend uses Continuous Deployment, any code pushed to the `main`
 
 ## Blocking deployment
 
-In order to prevent anybody to deploy you can block deployment. To do so, add a [restriction in Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions) (Private) for `dotcom:all` and the stage you want to lock (PROD or .* for all stages).
+In order to prevent anybody to deploy you can block deployment. To do so, add a [restriction in Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions) (Private) for `dotcom:frontend-all` and the stage you want to lock (PROD or .* for all stages).
 
 Delete the restriction to unblock deploys.
 

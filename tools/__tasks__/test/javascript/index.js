@@ -7,8 +7,8 @@ const rxjs = require('rxjs');
 // rxjs6 operators are now packaged separately
 const rxjsOperators = require('rxjs/operators');
 
-const exec = (cmd, args) => {
-    const cp = execa(cmd, args);
+const exec = (cmd, args, opts) => {
+    const cp = execa(cmd, args, opts);
 
     return rxjs.merge(
         streamToObservable(cp.stdout.pipe(split()), { await: cp }),
@@ -24,7 +24,16 @@ module.exports = {
             task: [
                 {
                     description: 'JS tests',
-                    task: () => exec('jest'),
+                    task: () => exec('jest', null, {
+                        env: {
+                            /**
+                             * We test some things like relative dates and formatting
+                             * that rely on a specific timezone. We set this here so
+                             * that it's not determined by the machine's timezone.
+                             */
+                            TZ: 'Europe/London'
+                        }
+                    }),
                 },
             ],
             concurrent: true,
