@@ -106,16 +106,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val BookLookupSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "book-lookup",
-    "If this switch is on, book data will be looked up using a third-party service.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   val AffiliateLinks: Switch = Switch(
     group = Commercial,
     name = "affiliate-links",
