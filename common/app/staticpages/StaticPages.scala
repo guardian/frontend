@@ -1,7 +1,6 @@
 package staticpages
 
 import model.{DotcomContentType, MetaData, SectionId, SimplePage, StandalonePage}
-import services.newsletters.model.NewsletterResponse
 
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage =
