@@ -296,19 +296,6 @@ const bootEnhanced = () => {
                 );
             }
 
-            if (config.get('page.section') === 'newsletter-signup-page') {
-                require.ensure(
-                    [],
-                    require => {
-                        bootstrapContext(
-                            'newsletters',
-                            require('bootstraps/enhanced/newsletters').init
-                        );
-                    },
-                    'newsletters'
-                );
-            }
-
             if (config.get('page.pageId') === 'help/accessibility-help') {
                 require.ensure(
                     [],
