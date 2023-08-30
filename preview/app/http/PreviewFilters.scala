@@ -25,7 +25,7 @@ class PreviewFilters(
   )
 
   val filters =
-    previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters
+    previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: new EuropEditionFilter :: Filters
       .common(
         frontend.preview.BuildInfo,
       )
