@@ -54,5 +54,4 @@ object HtmlPageHelpers {
   def FaciaCSSFile(implicit request: RequestHeader): String = "facia.garnett"
   def ContentCSSFile(implicit request: RequestHeader): String = "content.garnett"
   def RichLinksCSSFile(implicit request: RequestHeader): String = "rich-links.garnett"
-  def SignUpCSSFile(implicit request: RequestHeader): String = "signup"
 }

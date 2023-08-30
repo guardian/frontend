@@ -3,13 +3,6 @@ package staticpages
 import model.{DotcomContentType, MetaData, SectionId, SimplePage, StandalonePage}
 import services.newsletters.model.NewsletterResponse
 
-case class NewsletterRoundupPage(
-    metadata: MetaData,
-    groupedNewsletterResponses: List[(String, List[NewsletterResponse])],
-) extends StandalonePage {
-  val groupedNewslettersResponses = groupedNewsletterResponses
-}
-
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage =
     SimplePage(
