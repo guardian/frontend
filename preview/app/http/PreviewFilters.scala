@@ -24,9 +24,16 @@ class PreviewFilters(
     httpConfiguration,
   )
 
-  val filters = previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters.common(
-    frontend.preview.BuildInfo,
-  )
+  val filters =
+    previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters
+      .common(
+        frontend.preview.BuildInfo,
+      )
+}
+
+class EuropEditionFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] =
+    nextFilter(request).map(_.withHeaders("X-GU-Experiment-0perc-D" -> "variant"))
 }
 
 // OBVIOUSLY this is only for the preview server
