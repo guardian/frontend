@@ -9,7 +9,6 @@ import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, New
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
 
-
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends GuLogging
     with implicits.WSRequests {
