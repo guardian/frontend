@@ -1,7 +1,6 @@
 package controllers
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import conf.switches.Switches.{UseDcrNewslettersPage}
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
 import pages.NewsletterHtmlPage
@@ -34,24 +33,6 @@ class SignupPageController(
   val defaultCacheDuration: Duration = 15.minutes
   val remoteRenderer = DotcomRenderingService()
 
-  private def localRenderNewslettersPage()(implicit
-      request: RequestHeader,
-  ): Result = {
-    val groupedNewsletters: Either[String, GroupedNewslettersResponse] =
-      newsletterSignupAgent.getGroupedNewsletters()
-    groupedNewsletters match {
-      case Right(groupedNewsletters) =>
-        Cached(defaultCacheDuration)(
-          RevalidatableResult.Ok(
-            NewsletterHtmlPage.html(StaticPages.simpleNewslettersPage(request.path, groupedNewsletters)),
-          ),
-        )
-      case Left(e) =>
-        log.error(s"API call to get newsletters failed: $e")
-        NoCache(InternalServerError)
-    }
-  }
-
   private def remoteRenderNewslettersPage()(implicit
       request: RequestHeader,
   ): Result = {
@@ -80,11 +61,7 @@ class SignupPageController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        if (request.forceDCR || UseDcrNewslettersPage.isSwitchedOn) {
-          remoteRenderNewslettersPage()
-        } else {
-          localRenderNewslettersPage()
-        }
+        remoteRenderNewslettersPage()
       }
     }
 
@@ -108,22 +85,12 @@ class SignupPageController(
     }
   }
 
-  private def renderNewslettersJson()(implicit
-      request: RequestHeader,
-  ): Result = {
-    Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
-  }
-
   def renderNewslettersJson()(implicit
       executionContext: ExecutionContext = this.executionContext,
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        if (request.forceDCR || UseDcrNewslettersPage.isSwitchedOn) {
-          renderDCRNewslettersJson()
-        } else {
-          renderNewslettersJson()
-        }
+        renderDCRNewslettersJson()
       }
     }
 }
