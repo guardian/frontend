@@ -7,7 +7,6 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
-import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponseV2
 import staticpages.StaticPages

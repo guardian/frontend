@@ -9,12 +9,6 @@ import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, New
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
 
-object GroupedNewslettersResponse {
-  type GroupedNewslettersResponse = List[(String, List[NewsletterResponse])]
-}
-object GroupedNewsletterResponse {
-  type GroupedNewsletterResponse = (String, List[NewsletterResponse])
-}
 
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends GuLogging

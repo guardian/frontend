@@ -1,7 +1,6 @@
 package services.newsletters
 
 import common.{Box, GuLogging}
-import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -10,8 +9,6 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   // Newsletters
   private val newslettersAgent = Box[Either[String, List[NewsletterResponse]]](Right(Nil))
-  // Grouped Newsletters (grouped by group)
-  private val groupedNewslettersAgent = Box[Either[String, GroupedNewslettersResponse]](Right(List.empty))
   // Newsletters version 2
   private val newslettersV2Agent = Box[Either[String, List[NewsletterResponseV2]]](Right(Nil))
 
@@ -49,8 +46,6 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
     }
   }
 
-  def getGroupedNewsletters(): Either[String, GroupedNewslettersResponse] = groupedNewslettersAgent.get()
-
   def getNewsletters(): Either[String, List[NewsletterResponse]] = newslettersAgent.get()
 
   def getV2Newsletters(): Either[String, List[NewsletterResponseV2]] = newslettersV2Agent.get()
@@ -64,18 +59,17 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   }
 
   private def refreshNewsletters()(implicit ec: ExecutionContext): Future[Unit] = {
-    log.info("Refreshing newsletters and Grouped Newsletters for newsletter signup embeds, and v2 newsletters.")
+    log.info("Refreshing newsletters and v2 newsletters.")
 
     newsletterApi.getNewsletters() map {
       case Right(allNewsletters) =>
         val supportedNewsletters = allNewsletters.filterNot(_.cancelled)
 
         newslettersAgent.alter(Right(supportedNewsletters))
-        groupedNewslettersAgent.alter(Right(buildGroupedNewsletters(supportedNewsletters)))
 
-        log.info("Successfully refreshed Newsletters and Grouped Newsletters embed cache.")
+        log.info("Successfully refreshed Newsletters cache.")
       case Left(err) =>
-        log.error(s"Failed to refresh Newsletters and Grouped Newsletters embed cache: $err")
+        log.error(s"Failed to refresh Newsletters cache: $err")
     }
 
     newsletterApi.getV2Newsletters() map {
@@ -86,15 +80,4 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
         log.error(s"Failed to refresh v2  Newsletters cache: $err")
     }
   }
-
-  private def buildGroupedNewsletters(newsletters: List[NewsletterResponse]): GroupedNewslettersResponse = {
-    val displayedNewsletters = newsletters.filter(n => !n.paused && !n.restricted)
-    val groupedNewsletters = displayedNewsletters.groupBy(n => n.group)
-
-    displayedNewsletters
-      .map(_.group)
-      .distinct
-      .map { group => (group, groupedNewsletters.getOrElse(group, Nil)) }
-  }
-
 }
