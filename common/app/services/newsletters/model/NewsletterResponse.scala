@@ -53,6 +53,7 @@ case class NewsletterResponseV2(
     signupPage: Option[String],
     exampleUrl: Option[String],
     category: String, // "article-based", "article-based-legacy", "fronts-based", "manual-send", "other"]
+    emailConfirmation: Boolean,
 )
 
 object NewsletterResponseV2 {
