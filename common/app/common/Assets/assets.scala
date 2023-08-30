@@ -107,7 +107,6 @@ object css {
       case "email-signup"  => "head.email-signup"
       case "commercial"    => "head.commercial"
       case "survey"        => "head.survey"
-      case "signup"        => "head.signup"
       case _               => s"head.$ContentCSSFile"
     }
 
