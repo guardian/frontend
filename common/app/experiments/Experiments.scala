@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
+      SectionFrontsBannerAds,
       Okta,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
@@ -59,6 +60,15 @@ object EuropeNetworkFront
       owners = Seq(Owner.withGithub("rowannekabalan")),
       sellByDate = LocalDate.of(2023, 8, 31),
       participationGroup = Perc0D,
+    )
+
+object SectionFrontsBannerAds
+    extends Experiment(
+      name = "section-fronts-banner-ads",
+      description = "Creates a new ad experience on section fronts, replacing MPUs with banner ads",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc0E,
     )
 
 // Removing while we are still implementing this content type in DCR
