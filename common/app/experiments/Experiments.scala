@@ -16,7 +16,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
       SectionFrontsBannerAds,
-      Okta,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
@@ -106,15 +105,6 @@ object FrontsBannerAdsDcr
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 11, 1),
       participationGroup = Perc5A,
-    )
-
-object Okta
-    extends Experiment(
-      name = "okta",
-      description = "Use Okta for authentication",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 9, 7),
-      participationGroup = Perc20A,
     )
 
 object DeeplyRead
