@@ -2,8 +2,6 @@
 @import services.newsletters.model.NewsletterResponseV2
 @(page: model.Page, emailNewsletter: NewsletterResponseV2, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}
-
 @emailEmbed(page) {
     @fragments.email.signup.result.emailSuccess(
         emailNewsletter.emailConfirmation,
