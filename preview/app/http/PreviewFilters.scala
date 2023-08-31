@@ -3,10 +3,11 @@ package http
 import akka.stream.Materializer
 import GoogleAuthFilters.AuthFilterWithExemptions
 import controllers.HealthCheck
+import experiments.EuropeNetworkFront
 import googleAuth.FilterExemptions
 import model.ApplicationContext
 import play.api.http.{HttpConfiguration, HttpFilters}
-import play.api.mvc.{Filter, RequestHeader, Result}
+import play.api.mvc.{Filter, Headers, RequestHeader, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -25,15 +26,17 @@ class PreviewFilters(
   )
 
   val filters =
-    previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: new EuropEditionFilter :: Filters
+    previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: new EuropeEditionFilter :: Filters
       .common(
         frontend.preview.BuildInfo,
       )
 }
 
-class EuropEditionFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
-  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] =
-    nextFilter(request).map(_.withHeaders("X-GU-Experiment-0perc-D" -> "variant"))
+class EuropeEditionFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    val headers = request.headers.headers :+ EuropeNetworkFront.participationGroup.headerName -> "variant"
+    nextFilter(request.withHeaders(Headers(headers: _*)))
+  }
 }
 
 // OBVIOUSLY this is only for the preview server
