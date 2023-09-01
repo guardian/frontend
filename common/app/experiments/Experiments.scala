@@ -89,6 +89,15 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
+object FrontRemoteRenderer
+    extends Experiment(
+      name = "front-remote-renderer",
+      description = "Renders front from fronts DCR stack",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 10, 1),
+      participationGroup = Perc1C,
+    )
+
 object Okta
     extends Experiment(
       name = "okta",

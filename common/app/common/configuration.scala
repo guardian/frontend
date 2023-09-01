@@ -594,6 +594,7 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object facia {
+    lazy val renderingBaseUrl = configuration.getMandatoryStringProperty("render-front.loadBalancerDnsName")
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
     lazy val collectionCap: Int = 20
   }

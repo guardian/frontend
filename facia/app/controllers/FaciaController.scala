@@ -27,7 +27,7 @@ import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
-import experiments.{ActiveExperiments, DeeplyRead, EuropeNetworkFront}
+import experiments.{ActiveExperiments, DeeplyRead, EuropeNetworkFront, FrontRemoteRenderer}
 import play.api.http.ContentTypes.JSON
 import http.HttpPreconnections
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
@@ -46,7 +46,9 @@ trait FaciaController
   val ws: WSClient
   val mostViewedAgent: MostViewedAgent
   val deeplyReadAgent: DeeplyReadAgent
-  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+  val remoteRenderer: DotcomRenderingService = new DotcomRenderingService()
+  val frontRemoteRenderer: DotcomRenderingService =
+    new DotcomRenderingService(overrideBaseUrl = Some(Configuration.facia.renderingBaseUrl))
 
   implicit val context: ApplicationContext
 
@@ -249,15 +251,27 @@ trait FaciaController
             .getOrElse("X-GU-GeoLocation", "country:row")}",
         )
         withVaryHeader(
-          remoteRenderer.getFront(
-            ws = ws,
-            page = faciaPage,
-            pageType = pageType,
-            mostViewed = mostViewedAgent.mostViewed(Edition(request)),
-            mostCommented = mostViewedAgent.mostCommented,
-            mostShared = mostViewedAgent.mostShared,
-            deeplyRead = deeplyRead,
-          )(request),
+          if (ActiveExperiments.isParticipating(FrontRemoteRenderer)) {
+            frontRemoteRenderer.getFront(
+              ws = ws,
+              page = faciaPage,
+              pageType = pageType,
+              mostViewed = mostViewedAgent.mostViewed(Edition(request)),
+              mostCommented = mostViewedAgent.mostCommented,
+              mostShared = mostViewedAgent.mostShared,
+              deeplyRead = deeplyRead,
+            )(request)
+          } else {
+            remoteRenderer.getFront(
+              ws = ws,
+              page = faciaPage,
+              pageType = pageType,
+              mostViewed = mostViewedAgent.mostViewed(Edition(request)),
+              mostCommented = mostViewedAgent.mostCommented,
+              mostShared = mostViewedAgent.mostShared,
+              deeplyRead = deeplyRead,
+            )(request)
+          },
           targetedTerritories,
         )
       case Some((faciaPage: PressedPage, targetedTerritories)) if request.isRss =>
