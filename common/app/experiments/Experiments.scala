@@ -30,7 +30,7 @@ object FrontsBannerAdsDcr
       name = "fronts-banner-ads-dcr",
       description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 9, 1),
+      sellByDate = LocalDate.of(2023, 11, 1),
       participationGroup = Perc0A,
     )
 
@@ -49,7 +49,7 @@ object ServerSideLiveblogInlineAds
       description =
         "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 9, 1),
+      sellByDate = LocalDate.of(2023, 11, 1),
       participationGroup = Perc0C,
     )
 
@@ -58,7 +58,7 @@ object EuropeNetworkFront
       name = "europe-network-front",
       description = "Test new europe network front",
       owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 8, 31),
+      sellByDate = LocalDate.of(2023, 9, 15),
       participationGroup = Perc0D,
     )
 
@@ -99,6 +99,15 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
+object OfferHttp3
+    extends Experiment(
+      name = "offer-http3",
+      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
+      owners = Seq(Owner.withGithub("paulmr")),
+      sellByDate = LocalDate.of(2023, 9, 15),
+      participationGroup = Perc1E,
+    )
+
 object Okta
     extends Experiment(
       name = "okta",
@@ -106,15 +115,6 @@ object Okta
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 7),
       participationGroup = Perc20A,
-    )
-
-object OfferHttp3
-    extends Experiment(
-      name = "offer-http3",
-      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
-      owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 8, 31),
-      participationGroup = Perc1E,
     )
 
 object DeeplyRead
