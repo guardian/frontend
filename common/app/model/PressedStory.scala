@@ -5,6 +5,8 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import common.TrailsToRss
 import model.content.{Atoms, MediaAtom}
 import model.{Commercial, Elements, Fields, MetaData, Pillar, SectionId, Tags, Trail}
+import org.jsoup.Jsoup
+import scala.jdk.CollectionConverters._
 
 final case class PressedStory(
     trail: PressedTrail,
@@ -26,6 +28,15 @@ object PressedStory {
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val atoms = Atoms.make(apiContent)
     val sectionId: Option[SectionId] = metadata.section.map(s => SectionId(s.value))
+    val mediaAtoms = atoms.fold(Seq.empty[MediaAtom])(_.media)
+    val mainMediaAtom: Option[MediaAtom] =
+      for {
+        document <- Some(Jsoup.parse(fields.main))
+        atomContainer <- Option(document.getElementsByClass("element-atom").first())
+        bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
+        atomId <- Some(bodyElement.attr("data-atom-id"))
+        mainMediaAtom <- mediaAtoms.find(ma => (ma.id == atomId && !ma.expired.getOrElse(false)))
+      } yield mainMediaAtom
 
     new PressedStory(
       PressedTrail(
@@ -51,7 +62,8 @@ object PressedStory {
       ),
       PressedElements(
         elements.mainVideo,
-        atoms.fold(Seq.empty[MediaAtom])(_.media),
+        mainMediaAtom,
+        mediaAtoms,
       ),
       tags,
     )
