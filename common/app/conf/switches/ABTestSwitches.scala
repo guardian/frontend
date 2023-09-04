@@ -91,7 +91,7 @@ trait ABTestSwitches {
     "Test the impact of limiting the eligibility of inline merchandising ad slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 9, 1)),
+    sellByDate = Some(LocalDate.of(2023, 9, 20)),
     exposeClientSide = true,
   )
 
