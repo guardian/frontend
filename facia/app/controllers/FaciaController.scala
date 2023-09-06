@@ -27,7 +27,7 @@ import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
-import experiments.{ActiveExperiments, DeeplyRead, EuropeNetworkFront}
+import experiments.{ActiveExperiments, EuropeNetworkFront}
 import play.api.http.ContentTypes.JSON
 import http.HttpPreconnections
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
@@ -232,10 +232,6 @@ trait FaciaController
     }
 
     val networkFrontEdition = Edition.allWithBetaEditions.find(_.networkFrontId == path)
-    val participatingInDeeplyReadTest = ActiveExperiments.isParticipating(DeeplyRead)
-    val deeplyRead = if (participatingInDeeplyReadTest) {
-      networkFrontEdition.map(deeplyReadAgent.getTrails)
-    } else None
 
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>

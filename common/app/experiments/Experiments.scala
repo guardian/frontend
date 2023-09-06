@@ -19,7 +19,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
-      DeeplyRead,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -105,13 +104,4 @@ object FrontsBannerAdsDcr
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 11, 1),
       participationGroup = Perc5A,
-    )
-
-object DeeplyRead
-    extends Experiment(
-      name = "deeply-read",
-      description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc50,
     )
