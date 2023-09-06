@@ -1,7 +1,7 @@
 package common
 
 import scala.concurrent.duration.FiniteDuration
-import akka.actor.{ActorSystem, Cancellable}
+import org.apache.pekko.actor.{ActorSystem, Cancellable}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}

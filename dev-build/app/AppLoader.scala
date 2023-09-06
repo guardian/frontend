@@ -1,7 +1,7 @@
 import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle

@@ -1,6 +1,6 @@
 package commercial.model.merchandise.books
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import akka.util.Timeout
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}

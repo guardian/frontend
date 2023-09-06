@@ -1,5 +1,5 @@
 import _root_.commercial.targeting.TargetingLifecycle
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common.Assets.DiscussionExternalAssetsLifecycle

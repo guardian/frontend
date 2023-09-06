@@ -1,6 +1,6 @@
 package weather
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import org.scalatest.concurrent.ScalaFutures
 import play.api.libs.json.{JsString, JsValue}
 import org.mockito.Mockito._

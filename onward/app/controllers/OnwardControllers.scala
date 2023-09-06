@@ -1,6 +1,6 @@
 package controllers
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import com.softwaremill.macwire._
 import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData

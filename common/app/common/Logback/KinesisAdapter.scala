@@ -1,9 +1,9 @@
 package common.Logback
 
 import java.util.concurrent.ThreadPoolExecutor
-import akka.actor.ActorSystem
-import akka.dispatch.MessageDispatcher
-import akka.pattern.CircuitBreaker
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.dispatch.MessageDispatcher
+import org.apache.pekko.pattern.CircuitBreaker
 import ch.qos.logback.classic.spi.ILoggingEvent
 import com.amazonaws.ClientConfiguration
 import com.amazonaws.auth.AWSCredentialsProvider

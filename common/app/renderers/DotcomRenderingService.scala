@@ -1,6 +1,6 @@
 package renderers
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry

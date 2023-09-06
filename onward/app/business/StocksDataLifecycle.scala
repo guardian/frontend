@@ -1,6 +1,6 @@
 package business
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import app.LifecycleComponent
 import play.api.inject.ApplicationLifecycle
 

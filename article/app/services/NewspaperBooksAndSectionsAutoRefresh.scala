@@ -1,6 +1,6 @@
 package services
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import app.LifecycleComponent
 import common.AutoRefresh
 import model.{TagDefinition, TagIndexListings}

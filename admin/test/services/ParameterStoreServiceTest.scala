@@ -1,6 +1,6 @@
 package services
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import concurrent.BlockingOperations
 import org.scalatest.concurrent.ScalaFutures
 import org.mockito.Mockito._

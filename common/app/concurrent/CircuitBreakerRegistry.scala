@@ -1,7 +1,7 @@
 package concurrent
 
-import akka.actor.ActorSystem
-import akka.pattern.CircuitBreaker
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.pattern.CircuitBreaker
 import common.GuLogging
 
 import scala.concurrent.ExecutionContext.Implicits.global

@@ -1,7 +1,7 @@
 package test
 
 import agents.{DeeplyReadAgent, MostViewedAgent}
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}

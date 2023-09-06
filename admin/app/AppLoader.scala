@@ -8,7 +8,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}

@@ -15,7 +15,7 @@ import play.api.mvc.EssentialFilter
 import services.ConfigAgentLifecycle
 import router.Routes
 import _root_.commercial.targeting.TargetingLifecycle
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =

@@ -1,7 +1,7 @@
 package concurrent
 
-import akka.actor.ActorSystem
-import akka.dispatch.MessageDispatcher
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.dispatch.MessageDispatcher
 
 import scala.concurrent.Future
 

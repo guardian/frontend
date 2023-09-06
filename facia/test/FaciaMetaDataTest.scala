@@ -1,7 +1,7 @@
 package metadata
 
 import agents.{DeeplyReadAgent, MostViewedAgent}
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
 import conf.Configuration

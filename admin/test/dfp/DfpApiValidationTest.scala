@@ -4,7 +4,7 @@ import concurrent.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting, Sponsorship}
 import com.google.api.ads.admanager.axis.v202308._
 import org.joda.time.DateTime
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

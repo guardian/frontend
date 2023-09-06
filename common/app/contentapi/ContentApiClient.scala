@@ -2,7 +2,7 @@ package contentapi
 
 import java.util.concurrent.TimeUnit
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import com.github.nscala_time.time.Implicits._
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}

@@ -70,6 +70,7 @@ val common = library("common")
       identityModel,
       capiAws,
       okhttp,
+      pekkoActor,
     ) ++ jackson,
     TestAssets / mappings ~= filterAssets,
   )

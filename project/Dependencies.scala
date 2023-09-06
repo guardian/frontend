@@ -6,6 +6,9 @@ object Dependencies {
   // Once we're able to upgrade identityLibVersion to >=4.10 we should
   // remove the http4s-core dependency eviction below. (Unless we've
   // started needing it for something else in the meantime.)
+  val pekkoVersion = "1.0.1"
+  val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
+  val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
   val identityLibVersion = "3.255"
   val awsVersion = "1.12.205"
   val capiVersion = "19.4.0"

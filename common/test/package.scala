@@ -1,6 +1,6 @@
 package test
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 
 import java.io.File
 import java.net.URL

@@ -1,5 +1,5 @@
 import agents.MostViewedAgent
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
