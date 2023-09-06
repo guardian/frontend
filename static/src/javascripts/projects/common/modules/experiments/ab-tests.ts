@@ -8,7 +8,7 @@ import { liveblogRightColumnAds } from './tests/liveblog-right-column-ads';
 import { prebidKargo } from './tests/prebid-kargo';
 import { publicGoodTest } from './tests/public-good';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
-import { signInGateCopyTestJan2023 } from './tests/sign-in-gate-copy-test-variant';
+import { signInGateCopyTestRepeatSept2023} from './tests/sign-in-gate-copy-test-variant';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 
@@ -17,7 +17,7 @@ import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 export const concurrentTests: readonly ABTest[] = [
 	signInGateMainVariant,
 	signInGateMainControl,
-	signInGateCopyTestJan2023,
+	signInGateCopyTestRepeatSept2023,
 	remoteRRHeaderLinksTest,
 	deeplyReadArticleFooterTest,
 	consentlessAds,

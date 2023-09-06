@@ -1,7 +1,7 @@
-export const signInGateCopyTestJan2023 = {
-	id: 'SignInGateCopyTestJan2023',
+export const signInGateCopyTestRepeatSept2023 = {
+	id: 'SignInGateCopyTestRepeatSept2023',
 	start: '2023-08-30',
-	expiry: '2023-09-14',
+	expiry: '2023-10-01',
 	author: 'Lindsey Dew',
 	description: 'Test varying the copy in the call to action for sign in gate',
 	audience: 1.0,
