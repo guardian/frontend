@@ -4,7 +4,7 @@ import scala.concurrent.duration._
 import play.api.{Environment => PlayEnv, Mode}
 
 import scala.concurrent.ExecutionContext
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 
 class AkkaAsync(env: PlayEnv, actorSystem: ActorSystem) {
   implicit val ec: ExecutionContext = actorSystem.dispatcher

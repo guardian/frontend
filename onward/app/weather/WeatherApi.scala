@@ -3,7 +3,7 @@ package weather
 import java.net.{URI, URLEncoder}
 import java.util.concurrent.TimeoutException
 
-import akka.actor.{ActorSystem, Scheduler}
+import org.apache.pekko.actor.{ActorSystem, Scheduler}
 import common.{GuLogging, ResourcesHelper}
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
