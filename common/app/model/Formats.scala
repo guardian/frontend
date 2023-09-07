@@ -2,11 +2,14 @@ package model
 
 import com.gu.contentapi.client.utils.DesignType
 import common.Pagination
+import json.ObjectDeduplication.deduplicate
 import model.content._
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
 import play.api.libs.json.JodaReads._
+
+import scala.concurrent.duration.DurationInt
 
 object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
@@ -216,7 +219,13 @@ object PressedContentFormat {
   implicit val podcastFormat = Json.format[Podcast]
   implicit val referenceFormat = Json.format[Reference]
   implicit val tagPropertiesFormat = Json.format[TagProperties]
-  implicit val tagFormat = Json.format[Tag]
+  implicit val tagFormat: Format[Tag] =
+    deduplicate(
+      Json.format[Tag],
+      _.id,
+      _.maximumSize(20000) // average Tag retains ~8KB in memory, so 20000 cached Tags retain only 160MB
+        .expireAfterAccess(1.hour),
+    )
   implicit val tagsFormat = Json.format[Tags]
   implicit val elementPropertiesFormat = Json.format[ElementProperties]
   implicit val imageAssetFormat = Json.format[ImageAsset]

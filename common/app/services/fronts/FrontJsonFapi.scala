@@ -44,7 +44,7 @@ trait FrontJsonFapi extends GuLogging {
         }
       },
     AlwaysWaitForRefreshedValue,
-    _.maximumSize(180).expireAfterAccess(1.hour),
+    _.maximumSize(2000).expireAfterAccess(1.hour),
   )
 
   def get(path: String, pageType: PressedPageType): Future[Option[PressedPage]] =

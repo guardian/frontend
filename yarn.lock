@@ -1556,10 +1556,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-14.1.1.tgz#12672e3992ad3eab3bade848861ca01631a0edf5"
   integrity sha512-wHuJwdOC2hsTBie+zWJYFyasP4fOJXOPcKXpN2Cp+GlljPah3YtS2Fbgn8pcxxt8d5JKO9ra7sHKvX8FNxkAyg==
 
-"@guardian/commercial@^11.6.0":
-  version "11.6.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.6.0.tgz#66723e4b47d9748b5feeb390664a88bc1b613fe8"
-  integrity sha512-szlGIPsH42l9qvLDiyWI6/35l2bF3ZbBYkJFU41sJlUQckaRIj92IU7SeiRoh0hxghI+Q66oduuFiJEBMcFOZA==
+"@guardian/commercial@11.8.1":
+  version "11.8.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.8.1.tgz#ba4f85bcfe2ba9660910e475bb1b78bde6801765"
+  integrity sha512-Bpzxg5G8I+ox2NsgqDSm0JygiOLgBndWLF+a+dTKM8kmiKIZtRTbLcqK5lVPSprHc5HaInWyC7/f/ebJbYQlnA==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"

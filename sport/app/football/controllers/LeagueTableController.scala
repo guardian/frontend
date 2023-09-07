@@ -27,7 +27,6 @@ class LeagueTableController(
 
   // Competitions must be added to this list to show up at /football/tables
   val tableOrder: Seq[String] = Seq(
-    "Women's World Cup 2023",
     "World Cup 2022",
     "Premier League",
     "Bundesliga",
@@ -36,6 +35,7 @@ class LeagueTableController(
     "Ligue 1",
     "Women's Super League",
     "Champions League",
+    "Euro 2024 qualifying",
     "Women's Champions League",
     "Europa League",
     "Carabao Cup",
@@ -56,7 +56,6 @@ class LeagueTableController(
     "Women's Euro 2022",
     "World Cup 2022 qualifying",
     "Nations League",
-    "Euro 2024 qualifying",
   )
 
   def sortedCompetitions: Seq[Competition] =

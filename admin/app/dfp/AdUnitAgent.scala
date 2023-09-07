@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v202208.StatementBuilder
+import com.google.api.ads.admanager.axis.utils.v202308.StatementBuilder
 import common.dfp.GuAdUnit
 import conf.Configuration
 import ApiHelper.toSeq
