@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       Lightbox,
       ServerSideLiveblogInlineAds,
       EuropeNetworkFront,
+      OphanEsm,
       SectionFrontsBannerAds,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
@@ -87,6 +88,15 @@ object HeaderTopBarSearchCapi
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 10, 10),
       participationGroup = Perc1B,
+    )
+
+object OphanEsm
+    extends Experiment(
+      name = "ophan-esm",
+      description = "Use ophan-tracker-js@2, which uses native ES Modules",
+      owners = Seq(Owner.withGithub("@guardian/ophan")),
+      sellByDate = LocalDate.of(2023, 10, 3),
+      participationGroup = Perc2A,
     )
 
 object OfferHttp3
