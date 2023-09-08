@@ -1,5 +1,5 @@
-import org.apache.pekko.actor.ActorSystem
-import akka.stream.Materializer
+
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
@@ -16,6 +16,7 @@ import football.controllers.{FootballControllers, HealthCheck}
 import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.CricketStatsJob
 import model.ApplicationIdentity
+import org.apache.pekko.stream.{Materializer => PekkoMaterializer}
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
@@ -39,8 +40,10 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait SportServices {
   def wsClient: WSClient
-  def actorSystem: ActorSystem
-  def materializer: Materializer
+  def pekkoActorSystem: PekkoActorSystem
+
+  def pekkoMaterializer: PekkoMaterializer = PekkoMaterializer.matFromSystem(pekkoActorSystem)
+
   implicit val executionContext: ExecutionContext
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
@@ -87,5 +90,5 @@ trait AppComponents
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }

@@ -1,6 +1,6 @@
 package controllers
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.softwaremill.macwire._
 import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData
@@ -30,7 +30,7 @@ trait OnwardControllers {
   def mostViewedVideoAgent: MostViewedVideoAgent
   def mostViewedGalleryAgent: MostViewedGalleryAgent
   def mostViewedAudioAgent: MostViewedAudioAgent
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
   def controllerComponents: ControllerComponents
   def remoteRenderer: DotcomRenderingService
   def popularInTagService: PopularInTagService

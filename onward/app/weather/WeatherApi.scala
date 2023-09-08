@@ -2,7 +2,6 @@ package weather
 
 import java.net.{URI, URLEncoder}
 import java.util.concurrent.TimeoutException
-
 import org.apache.pekko.actor.{ActorSystem, Scheduler}
 import common.{GuLogging, ResourcesHelper}
 import conf.Configuration
@@ -16,10 +15,11 @@ import model.ApplicationContext
 import scala.concurrent.duration._
 import play.api.{MarkerContext, Mode}
 import net.logstash.logback.marker.Markers.append
+import org.apache.pekko.pattern.after
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-import akka.pattern.after
+
 
 class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit
     ec: ExecutionContext,

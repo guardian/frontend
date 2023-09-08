@@ -1,5 +1,5 @@
 import agents.MostViewedAgent
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
@@ -68,7 +68,7 @@ trait PreviewLifecycleComponents
       wire[MessageUsLifecycle],
     )
 
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }
 
 trait PreviewControllerComponents

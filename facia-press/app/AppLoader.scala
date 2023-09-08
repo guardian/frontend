@@ -15,7 +15,7 @@ import play.api.mvc.EssentialFilter
 import services.ConfigAgentLifecycle
 import router.Routes
 import _root_.commercial.targeting.TargetingLifecycle
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -64,5 +64,5 @@ trait AppComponents extends FrontendComponents {
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = Nil
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }

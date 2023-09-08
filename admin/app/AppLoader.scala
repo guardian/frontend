@@ -8,7 +8,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}
@@ -36,7 +36,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait AdminServices extends I18nComponents {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
@@ -101,7 +101,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     DfpApiMetrics.DfpApiErrors,
   )
 
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters ++ wire[AdminFilters].filters

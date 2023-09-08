@@ -1,4 +1,4 @@
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import dev.DevAssetsController
 import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
@@ -49,5 +49,5 @@ trait AppComponents extends FrontendComponents with DiscussionControllers with D
   val frontendBuildInfo: FrontendBuildInfo = frontend.discussion.BuildInfo
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }
