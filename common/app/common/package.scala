@@ -1,7 +1,6 @@
 package common
 
 import java.util.concurrent.TimeoutException
-import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
 import conf.switches.Switch
@@ -17,6 +16,7 @@ import play.twirl.api.Html
 import model.ApplicationContext
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
+import org.apache.pekko.pattern.CircuitBreakerOpenException
 import renderers.{DCRLocalConnectException, DCRTimeoutException}
 
 object `package`

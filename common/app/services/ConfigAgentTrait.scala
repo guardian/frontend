@@ -1,6 +1,5 @@
 package services
 
-import akka.util.Timeout
 import app.LifecycleComponent
 import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
@@ -11,6 +10,7 @@ import conf.Configuration
 import fronts.FrontsApi
 import model.pressed.CollectionConfig
 import model.{ApplicationContext, FrontProperties, SeoDataJson}
+import org.apache.pekko.util.Timeout
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
 

@@ -1,11 +1,12 @@
 package controllers.front
 
-import akka.util.Timeout
+import org.apache.pekko.util.Timeout
 import common.facia.FixtureBuilder
 import model.Cached.RevalidatableResult
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers
+import play.api.test.Helpers.defaultAwaitTimeout
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
