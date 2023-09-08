@@ -1,6 +1,5 @@
 package cricket.feed
 
-
 import org.apache.pekko.NotUsed
 import org.apache.pekko.pattern.{ask, pipe}
 import org.apache.pekko.stream.{CompletionStrategy, Materializer, OverflowStrategy, ThrottleMode}
@@ -43,7 +42,8 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
 }
 
 class CricketThrottler(pekkoActorSystem: PekkoActorSystem, materializer: Materializer) {
-  private val cricketThrottlerActor: ActorRef = pekkoActorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
+  private val cricketThrottlerActor: ActorRef =
+    pekkoActorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
 
   def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
     // we have a long timeout to allow for the large number of requests to be made when the app starts up, at 1s/request

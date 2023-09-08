@@ -20,7 +20,6 @@ import org.apache.pekko.pattern.after
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-
 class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit
     ec: ExecutionContext,
 ) extends ResourcesHelper

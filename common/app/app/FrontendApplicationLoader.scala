@@ -37,7 +37,6 @@ trait FrontendComponents
 
   lazy val prefix = "/"
 
-
 // implicit lazy val as = actorSystem
 
   implicit val pekkoActorSystem: PekkoActorSystem = PekkoActorSystem.create()
