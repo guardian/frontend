@@ -17,7 +17,7 @@ import services.{CollectionConfigWithId, ConfigAgent}
 import layout.slices._
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
-import conf.switches.Switches.InlineEmailStyles
+import conf.switches.Switches.{EuropeNetworkFrontSwitch, InlineEmailStyles}
 import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import utils.TargetedCollections
@@ -206,7 +206,8 @@ trait FaciaController
 
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
+    val participatingInTest =
+      ActiveExperiments.isParticipating(EuropeNetworkFront) || EuropeNetworkFrontSwitch.isSwitchedOn
     if (path == "europe" && !participatingInTest) {
       return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
     }
