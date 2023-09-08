@@ -1,5 +1,6 @@
 package common
 
+import conf.switches.Switches.EuropeNetworkFrontSwitch
 import navigation.EditionNavLinks
 
 import java.util.Locale
@@ -48,7 +49,8 @@ object Edition {
 
   lazy val defaultEdition: Edition = editions.Uk
   def editionsByRequest(implicit request: RequestHeader): List[Edition] = {
-    val participatingInTest = ActiveExperiments.isParticipating(EuropeNetworkFront)
+    val participatingInTest =
+      ActiveExperiments.isParticipating(EuropeNetworkFront) || EuropeNetworkFrontSwitch.isSwitchedOn
     if (!participatingInTest) all else allWithBetaEditions
   }
   def editionsSupportingSection(sectionId: String): Seq[Edition] =
