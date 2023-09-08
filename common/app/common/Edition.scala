@@ -90,7 +90,7 @@ object Edition {
       .orElse(editionFromCookie)
       // Fastly does not have switch information so we will always try and set the edition to Europe
       // if a user is in CoE and then fallback to INT edition in Frontend if that user is not part of the experiment.
-      .map(edition => if (edition.equals("EUR") && !participatingInTest) "INT" else edition)
+      .map(edition => if (edition == "EUR" && !participatingInTest) "INT" else edition)
       .getOrElse(defaultEdition.id)
   }
 
