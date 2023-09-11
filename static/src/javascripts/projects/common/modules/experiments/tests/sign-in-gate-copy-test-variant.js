@@ -8,7 +8,7 @@ export const signInGateCopyTestRepeatSept2023 = {
 	audienceOffset: 0.0,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria: '3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-	dataLinkNames: 'SignInGateCopyTest',
+	dataLinkNames: 'SignInGateCopyTestRepeatSept2023',
 	idealOutcome:
 		'One variants performs at least 2% better than the control and/OR 10% better than the other variant. Neither variant performs 5% worse than the control',
 	showForSensitive: false,
