@@ -2,7 +2,7 @@ package cricket.feed
 
 import org.apache.pekko.NotUsed
 import org.apache.pekko.pattern.{ask, pipe}
-import org.apache.pekko.stream.{CompletionStrategy, Materializer, OverflowStrategy, ThrottleMode}
+import org.apache.pekko.stream.{CompletionStrategy, Materializer => PekkoMaterializer, OverflowStrategy, ThrottleMode}
 
 import java.util.concurrent.TimeUnit
 import org.apache.pekko.actor.{Actor, ActorRef, Props, ActorSystem => PekkoActorSystem}
@@ -16,7 +16,7 @@ import scala.reflect.ClassTag
 
 case class CricketThrottledTask[+T](task: () => Future[T])
 
-class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor {
+class CricketThrottlerActor()(implicit pekkoMaterializer: PekkoMaterializer) extends Actor {
   import context.dispatcher
 
   private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
@@ -41,9 +41,9 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
   }
 }
 
-class CricketThrottler(pekkoActorSystem: PekkoActorSystem, materializer: Materializer) {
+class CricketThrottler(pekkoActorSystem: PekkoActorSystem, pekkoMaterializer: PekkoMaterializer) {
   private val cricketThrottlerActor: ActorRef =
-    pekkoActorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
+    pekkoActorSystem.actorOf(Props(new CricketThrottlerActor()(pekkoMaterializer)))
 
   def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
     // we have a long timeout to allow for the large number of requests to be made when the app starts up, at 1s/request

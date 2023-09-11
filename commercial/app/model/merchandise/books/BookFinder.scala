@@ -1,12 +1,12 @@
 package commercial.model.merchandise.books
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
+import org.apache.pekko.pattern.CircuitBreaker
+import org.apache.pekko.util.Timeout
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import commercial.model.merchandise.Book
 import common.{Box, GuLogging}
 import conf.Configuration
-import org.apache.pekko.pattern.CircuitBreaker
-import org.apache.pekko.util.Timeout
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
