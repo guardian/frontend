@@ -123,5 +123,5 @@ object DeeplyRead
       description = "When ON, deeply read footer section is displayed",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc50,
+      participationGroup = Perc0A,
     )
