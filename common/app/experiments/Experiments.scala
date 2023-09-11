@@ -49,7 +49,7 @@ object EuropeNetworkFront
       name = "europe-network-front",
       description = "Test new europe network front",
       owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 9, 15),
+      sellByDate = LocalDate.of(2023, 9, 29),
       participationGroup = Perc0D,
     )
 
