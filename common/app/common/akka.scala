@@ -4,10 +4,10 @@ import scala.concurrent.duration._
 import play.api.{Environment => PlayEnv, Mode}
 
 import scala.concurrent.ExecutionContext
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 
-class AkkaAsync(env: PlayEnv, actorSystem: ActorSystem) {
-  implicit val ec: ExecutionContext = actorSystem.dispatcher
+class AkkaAsync(env: PlayEnv, pekkoActorSystem: PekkoActorSystem) {
+  implicit val ec: ExecutionContext = pekkoActorSystem.dispatcher
 
   // "apply" isn't expressive and doesn't explain what it does.
   // If you were considering using that function, use after1s instead as it doesn't leave any ambiguity.
@@ -20,6 +20,6 @@ class AkkaAsync(env: PlayEnv, actorSystem: ActorSystem) {
   // want to check in
   def after(delay: FiniteDuration)(body: => Unit): Unit =
     if (env.mode != Mode.Test) {
-      actorSystem.scheduler.scheduleOnce(delay)(body)
+      pekkoActorSystem.scheduler.scheduleOnce(delay)(body)
     }
 }

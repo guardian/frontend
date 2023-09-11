@@ -1,6 +1,6 @@
 package business
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.LifecycleComponent
 import play.api.inject.ApplicationLifecycle
 
@@ -8,7 +8,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class StocksDataLifecycle(appLifecycle: ApplicationLifecycle, stocksData: StocksData)(implicit
     ec: ExecutionContext,
-    actorSystem: ActorSystem,
+    pekkoActorSystem: PekkoActorSystem,
 ) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () =>

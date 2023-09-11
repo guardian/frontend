@@ -1,7 +1,7 @@
 package common
 
 import scala.concurrent.duration.FiniteDuration
-import org.apache.pekko.actor.{ActorSystem, Cancellable}
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem, Cancellable}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -35,9 +35,9 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
     }
   }
 
-  final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
+  final def start()(implicit pekkoActorSystem: PekkoActorSystem, executionContext: ExecutionContext): Unit = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
-    val cancellable = actorSystem.scheduler.scheduleWithFixedDelay(initialDelay, interval) { new Task() }
+    val cancellable = pekkoActorSystem.scheduler.scheduleWithFixedDelay(initialDelay, interval) { new Task() }
     subscription = Some(cancellable)
   }
 

@@ -1,7 +1,7 @@
 package common.Logback
 
 import java.util.concurrent.ThreadPoolExecutor
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import org.apache.pekko.dispatch.MessageDispatcher
 import org.apache.pekko.pattern.CircuitBreaker
 import ch.qos.logback.classic.spi.ILoggingEvent
@@ -16,8 +16,8 @@ import scala.concurrent.Future
 import scala.annotation.nowarn
 
 // LogbackOperationsPool must be wired as a singleton
-class LogbackOperationsPool(val actorSystem: ActorSystem) {
-  val logbackOperations: MessageDispatcher = actorSystem.dispatchers.lookup("akka.logback-operations")
+class LogbackOperationsPool(val pekkoActorSystem: PekkoActorSystem) {
+  val logbackOperations: MessageDispatcher = pekkoActorSystem.dispatchers.lookup("akka.logback-operations")
 }
 
 // The KinesisAppender[ILoggingEvent] blocks logging operations on putMessage. This overrides the KinesisAppender api, executing putMessage in an
@@ -25,7 +25,7 @@ class LogbackOperationsPool(val actorSystem: ActorSystem) {
 class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) extends KinesisAppender[ILoggingEvent] {
 
   private val breaker = new CircuitBreaker(
-    logbackOperations.actorSystem.scheduler,
+    logbackOperations.pekkoActorSystem.scheduler,
     maxFailures = 1,
     callTimeout = 1.seconds,
     resetTimeout = 10.seconds,

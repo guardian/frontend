@@ -1,6 +1,6 @@
 package feed
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.LifecycleComponent
 import common.AutoRefresh
 import play.api.inject.ApplicationLifecycle
@@ -24,7 +24,7 @@ class MostPopularSocialAutoRefresh(ophanApi: OphanApi) extends AutoRefresh[MostR
 class MostPopularFacebookAutoRefreshLifecycle(
     appLifeCycle: ApplicationLifecycle,
     mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh,
-)(implicit ec: ExecutionContext, actorSystem: ActorSystem)
+)(implicit ec: ExecutionContext, pekkoActorSystem: PekkoActorSystem)
     extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () =>
