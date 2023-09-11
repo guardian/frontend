@@ -82,9 +82,15 @@ object Edition {
     // in production no cookies make it this far
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value)
 
+    val participatingInTest =
+      ActiveExperiments.isParticipating(EuropeNetworkFront)(request) || EuropeNetworkFrontSwitch.isSwitchedOn
+
     editionFromParameter
       .orElse(editionFromHeader)
       .orElse(editionFromCookie)
+      // Fastly does not have switch information so we will always try and set the edition to Europe
+      // if a user is in CoE and then fallback to INT edition in Frontend if that user is not part of the experiment.
+      .map(edition => if (edition == "EUR" && !participatingInTest) "INT" else edition)
       .getOrElse(defaultEdition.id)
   }
 
