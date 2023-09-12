@@ -13,4 +13,14 @@ trait IdentitySwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val Okta = Switch(
+    group = SwitchGroup.Identity,
+    name = "okta",
+    description = "Use Okta for authentication",
+    owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }

@@ -77,21 +77,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-copy-test-jan-2023",
+    "ab-sign-in-gate-copy-test-repeat-sept-2023",
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 10, 2)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-limit-inline-merch",
-    "Test the impact of limiting the eligibility of inline merchandising ad slots",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 9, 1)),
     exposeClientSide = true,
   )
 

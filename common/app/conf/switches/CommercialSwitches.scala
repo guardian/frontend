@@ -19,7 +19,7 @@ trait CommercialSwitches {
   val SurveySwitch = Switch(
     Commercial,
     "surveys",
-    "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts",
+    "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts. Switch OFF if there are no surveys active in GAM",
     owners = Seq(Owner.withName("unknown")),
     safeState = Off,
     sellByDate = never,
@@ -104,16 +104,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
-  )
-
-  val BookLookupSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "book-lookup",
-    "If this switch is on, book data will be looked up using a third-party service.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
   )
 
   val AffiliateLinks: Switch = Switch(
