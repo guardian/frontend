@@ -19,7 +19,7 @@ trait CommercialSwitches {
   val SurveySwitch = Switch(
     Commercial,
     "surveys",
-    "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts",
+    "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts. Switch OFF if there are no surveys active in GAM",
     owners = Seq(Owner.withName("unknown")),
     safeState = Off,
     sellByDate = never,
