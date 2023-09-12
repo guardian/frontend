@@ -77,7 +77,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-copy-test-jan-2023",
+    "ab-sign-in-gate-copy-test-repeat-sept-2023",
     "Test the impact of changing the copy in the sign in gate",
     owners = Seq(Owner.withEmail("personalisation@guardian.co.uk")),
     safeState = Off,
