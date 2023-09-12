@@ -1,9 +1,24 @@
-@import services.newsletters.model.EmailEmbed
-@(emailEmbedData: EmailEmbed)
+@(
+    emailConfirmation: Boolean,
+    successDescription: Option[String],
+    name: String,
+    frequency: String
+)
+
+@headlineText = @{
+    if (emailConfirmation == true) "Check your email inbox and confirm your subscription" else "Subscription confirmed"
+}
+
+@descriptionText = @{
+    Html(successDescription.getOrElse(s"We'll send you ${name} ${frequency.trim.toLowerCase}"))
+}
+
 <div class="email-sub email-sub--article">
     <div class="email-sub__message">
         @fragments.inlineSvg("mail", "icon")
-    <h2 class="email-sub__message__headline">@Html(emailEmbedData.successHeadline)</h2>
-    <p class="email-sub__message__description">@Html(emailEmbedData.successDescription)</p>
+    <h2 class="email-sub__message__headline">
+        @headlineText
+    </h2>
+    <p class="email-sub__message__description">@descriptionText</p>
     </div>
 </div>

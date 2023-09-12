@@ -100,7 +100,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
   }
 
   private def serviceUrl(form: EmailForm, emailEmbedAgent: NewsletterSignupAgent): String = {
-    val identityNewsletter = emailEmbedAgent.getNewsletterByName(form.listName.get)
+    val identityNewsletter = emailEmbedAgent.getV2NewsletterByName(form.listName.get)
     val newsletterRequireConfirmation = identityNewsletter.map(_.get.emailConfirmation).getOrElse(true)
 
     if (NewslettersRemoveConfirmationStep.isSwitchedOn && !newsletterRequireConfirmation) {
@@ -160,7 +160,7 @@ class EmailSignupController(
   def renderFooterForm(listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
+        val identityNewsletter = emailEmbedAgent.getV2NewsletterByName(listName)
         identityNewsletter match {
           case Right(Some(newsletter)) =>
             if (EmailSignupRecaptcha.isSwitchedOn && newsletter.signupPage.isDefined) {
@@ -184,7 +184,7 @@ class EmailSignupController(
   def renderThrasherForm(listId: Int): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = emailEmbedAgent.getNewsletterById(listId)
+        val identityNewsletter = emailEmbedAgent.getV2NewsletterById(listId)
 
         identityNewsletter match {
           case Right(Some(newsletter)) =>
@@ -209,7 +209,7 @@ class EmailSignupController(
   def renderThrasherFormFromName(listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
+        val identityNewsletter = emailEmbedAgent.getV2NewsletterByName(listName)
 
         identityNewsletter match {
           case Right(Some(newsletter)) =>
@@ -237,7 +237,7 @@ class EmailSignupController(
   def renderForm(emailType: String, listId: Int, iframeParentComponent: Option[String] = None): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = emailEmbedAgent.getNewsletterById(listId)
+        val identityNewsletter = emailEmbedAgent.getV2NewsletterById(listId)
 
         identityNewsletter match {
           case Right(Some(newsletter)) =>
@@ -283,7 +283,7 @@ class EmailSignupController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
+        val identityNewsletter = emailEmbedAgent.getV2NewsletterByName(listName)
         identityNewsletter match {
           case Right(Some(newsletter)) =>
             Cached(1.hour)(
@@ -321,7 +321,7 @@ class EmailSignupController(
 
   def subscriptionSuccessResult(listName: String): Action[AnyContent] =
     Action { implicit request =>
-      val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
+      val identityNewsletter = emailEmbedAgent.getV2NewsletterByName(listName)
       identityNewsletter match {
         case Right(Some(newsletter)) =>
           Cached(1.hour)(
