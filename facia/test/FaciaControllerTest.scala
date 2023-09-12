@@ -1,29 +1,26 @@
 package test
 
 import agents.{DeeplyReadAgent, MostViewedAgent}
-import org.apache.pekko.actor.ActorSystem
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
-import implicits.FakeRequests
-import concurrent.BlockingOperations
-import play.api.libs.json.JsArray
-import play.api.test._
-import play.api.test.Helpers._
-import services.{ConfigAgent, OphanApi}
-import org.scalatest._
 import controllers.FaciaControllerImpl
 import helpers.FaciaTestData
+import implicits.FakeRequests
+import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
-import org.mockito.Matchers.any
-import org.mockito.Matchers.anyString
+import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.libs.json.JsArray
+import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
+import play.api.test.Helpers._
+import play.api.test._
+import services.{ConfigAgent, OphanApi}
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 @DoNotDiscover class FaciaControllerTest
     extends AnyFlatSpec

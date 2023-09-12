@@ -1,6 +1,6 @@
 package concurrent
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import org.apache.pekko.pattern.CircuitBreaker
 import common.GuLogging
 
@@ -11,7 +11,7 @@ object CircuitBreakerRegistry extends GuLogging {
 
   def withConfig(
       name: String,
-      system: ActorSystem,
+      system: PekkoActorSystem,
       maxFailures: Int,
       callTimeout: FiniteDuration,
       resetTimeout: FiniteDuration,

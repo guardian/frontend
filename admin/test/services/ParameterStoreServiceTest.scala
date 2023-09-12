@@ -1,6 +1,6 @@
 package services
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import concurrent.BlockingOperations
 import org.scalatest.concurrent.ScalaFutures
 import org.mockito.Mockito._
@@ -11,8 +11,8 @@ import org.scalatestplus.mockito.MockitoSugar
 class ParameterStoreServiceTest extends AnyFlatSpec with ScalaFutures with Matchers with MockitoSugar {
 
   "findParameterBySubstring" should "retrieve a parameter from the parameter store by substring" in {
-    val actorSystem = ActorSystem()
-    val blockingOperations = new BlockingOperations(actorSystem)
+    val pekkoActorSystem = PekkoActorSystem()
+    val blockingOperations = new BlockingOperations(pekkoActorSystem)
 
     val parameterStore = mock[ParameterStore]
     when(parameterStore.getPath("/frontend", isRecursiveSearch = true)) thenReturn Map(

@@ -1,9 +1,7 @@
 package metadata
 
 import agents.{DeeplyReadAgent, MostViewedAgent}
-import org.apache.pekko.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
-import concurrent.BlockingOperations
 import conf.Configuration
 import conf.switches.Switches.DCRFronts
 import controllers.FaciaControllerImpl
@@ -15,10 +13,10 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json._
 import play.api.test.Helpers._
 import services.{ConfigAgent, OphanApi}
-
-import scala.concurrent.duration._
-import scala.concurrent.Await
 import test._
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 @DoNotDiscover class FaciaMetaDataTest
     extends AnyFlatSpec

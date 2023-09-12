@@ -1,6 +1,6 @@
 package weather
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import org.scalatest.concurrent.ScalaFutures
 import play.api.libs.json.{JsString, JsValue}
 import org.mockito.Mockito._
@@ -14,7 +14,7 @@ import scala.concurrent.Future
 import scala.language.postfixOps
 
 class WeatherApiTest extends AnyFlatSpec with ScalaFutures with Matchers with MockitoSugar {
-  val actorSystem = ActorSystem()
+  val actorSystem = PekkoActorSystem()
 
   "retryWeatherRequest" should "return for a successful future" in {
     val jsValue = JsString("Test")

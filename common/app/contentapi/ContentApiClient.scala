@@ -2,7 +2,7 @@ package contentapi
 
 import java.util.concurrent.TimeUnit
 
-import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.github.nscala_time.time.Implicits._
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
@@ -136,7 +136,7 @@ final case class CircuitBreakingContentApiClient(
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "content-api-client",
-    system = ActorSystem("content-api-client-circuit-breaker"),
+    system = PekkoActorSystem("content-api-client-circuit-breaker"),
     maxFailures = contentApi.circuitBreakerErrorThreshold,
     callTimeout = contentApi.timeout + Duration
       .create(400, MILLISECONDS), // +400 to differentiate between circuit breaker and capi timeouts
