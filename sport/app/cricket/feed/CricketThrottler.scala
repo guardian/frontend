@@ -1,13 +1,14 @@
 package cricket.feed
 
+import org.apache.pekko.NotUsed
+import org.apache.pekko.pattern.{ask, pipe}
+import org.apache.pekko.stream.{CompletionStrategy, Materializer => PekkoMaterializer, OverflowStrategy, ThrottleMode}
+
 import java.util.concurrent.TimeUnit
-import akka.NotUsed
-import akka.actor.Status.{Failure, Success}
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import akka.pattern.{ask, pipe}
-import akka.stream.scaladsl.{Sink, Source}
-import akka.stream.{CompletionStrategy, Materializer, OverflowStrategy, ThrottleMode}
-import akka.util.Timeout
+import org.apache.pekko.actor.{Actor, ActorRef, Props, ActorSystem => PekkoActorSystem}
+import org.apache.pekko.actor.Status.{Failure, Success}
+import org.apache.pekko.stream.scaladsl.{Sink, Source}
+import org.apache.pekko.util.Timeout
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -15,7 +16,7 @@ import scala.reflect.ClassTag
 
 case class CricketThrottledTask[+T](task: () => Future[T])
 
-class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor {
+class CricketThrottlerActor()(implicit pekkoMaterializer: PekkoMaterializer) extends Actor {
   import context.dispatcher
 
   private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
@@ -40,8 +41,9 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
   }
 }
 
-class CricketThrottler(actorSystem: ActorSystem, materializer: Materializer) {
-  private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
+class CricketThrottler(pekkoActorSystem: PekkoActorSystem, pekkoMaterializer: PekkoMaterializer) {
+  private val cricketThrottlerActor: ActorRef =
+    pekkoActorSystem.actorOf(Props(new CricketThrottlerActor()(pekkoMaterializer)))
 
   def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
     // we have a long timeout to allow for the large number of requests to be made when the app starts up, at 1s/request

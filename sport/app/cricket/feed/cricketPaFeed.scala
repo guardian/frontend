@@ -1,10 +1,10 @@
 package conf.cricketPa
 
-import akka.actor.ActorSystem
-import akka.stream.Materializer
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import common.Chronos
 import common.GuLogging
 import cricket.feed.CricketThrottler
+import org.apache.pekko.stream.Materializer
 
 import java.time.{LocalDate, ZoneId}
 import play.api.libs.ws.WSClient
@@ -18,12 +18,12 @@ object PaFeed {
   val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", ZoneId.of("UTC"))
 }
 
-class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
+class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materializer: Materializer) extends GuLogging {
 
   private val paEndpoint = "https://cricket-api.guardianapis.com/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept", "application/xml")
-  private implicit val throttler = new CricketThrottler(actorSystem, materializer)
+  private implicit val throttler = new CricketThrottler(pekkoActorSystem, materializer)
 
   private def getMatchPaResponse(apiMethod: String)(implicit executionContext: ExecutionContext): Future[String] = {
     credentials

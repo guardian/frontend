@@ -1,6 +1,6 @@
 package services
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.LifecycleComponent
 import common.AutoRefresh
 import model.{TagDefinition, TagIndexListings}
@@ -12,7 +12,7 @@ import scala.language.postfixOps
 class NewspaperBooksAndSectionsAutoRefresh(
     newspaperBookSectionTagAgent: NewspaperBookSectionTagAgent,
     newspaperBookTagAgent: NewspaperBookTagAgent,
-)(implicit actorSystem: ActorSystem, executionContext: ExecutionContext)
+)(implicit pekkoActorSystem: PekkoActorSystem, executionContext: ExecutionContext)
     extends LifecycleComponent {
   override def start(): Unit = {
     newspaperBookTagAgent.start()

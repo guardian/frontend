@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import http.IdentityHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -45,7 +45,7 @@ trait AppLifecycleComponents {
     wire[NewsletterSignupLifecycle],
   )
 
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }
 
 trait AppComponents

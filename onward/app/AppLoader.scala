@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
@@ -35,7 +35,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
   implicit def appContext: ApplicationContext
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
@@ -88,5 +88,5 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
 
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }

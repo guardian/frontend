@@ -1,8 +1,8 @@
 package commercial.model.merchandise.books
 
-import akka.actor.ActorSystem
-import akka.pattern.CircuitBreaker
-import akka.util.Timeout
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
+import org.apache.pekko.pattern.CircuitBreaker
+import org.apache.pekko.util.Timeout
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import commercial.model.merchandise.Book
 import common.{Box, GuLogging}
@@ -15,10 +15,10 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends GuLogging {
+class BookFinder(pekkoActorSystem: PekkoActorSystem, magentoService: MagentoService) extends GuLogging {
 
   private implicit val bookActorExecutionContext: ExecutionContext =
-    actorSystem.dispatchers.lookup("akka.actor.book-lookup")
+    pekkoActorSystem.dispatchers.lookup("akka.actor.book-lookup")
   private implicit val bookActorTimeout: Timeout = 0.2.seconds
   private implicit val magentoServiceImplicit = magentoService
 
@@ -48,7 +48,7 @@ object BookAgent extends GuLogging {
   }
 }
 
-class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends GuLogging {
+class MagentoService(pekkoActorSystem: PekkoActorSystem, wsClient: WSClient) extends GuLogging {
 
   private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
 
@@ -72,10 +72,10 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends GuLog
   }
 
   private implicit val bookLookupExecutionContext: ExecutionContext =
-    actorSystem.dispatchers.lookup("akka.actor.book-lookup")
+    pekkoActorSystem.dispatchers.lookup("akka.actor.book-lookup")
 
   private final val circuitBreaker = new CircuitBreaker(
-    scheduler = actorSystem.scheduler,
+    scheduler = pekkoActorSystem.scheduler,
     maxFailures = 5,
     callTimeout = 3.seconds,
     resetTimeout = 5.minutes,

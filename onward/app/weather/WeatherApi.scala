@@ -2,8 +2,7 @@ package weather
 
 import java.net.{URI, URLEncoder}
 import java.util.concurrent.TimeoutException
-
-import akka.actor.{ActorSystem, Scheduler}
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem, Scheduler}
 import common.{GuLogging, ResourcesHelper}
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
@@ -16,12 +15,12 @@ import model.ApplicationContext
 import scala.concurrent.duration._
 import play.api.{MarkerContext, Mode}
 import net.logstash.logback.marker.Markers.append
+import org.apache.pekko.pattern.after
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-import akka.pattern.after
 
-class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit
+class WeatherApi(wsClient: WSClient, context: ApplicationContext, pekkoActorSystem: PekkoActorSystem)(implicit
     ec: ExecutionContext,
 ) extends ResourcesHelper
     with GuLogging {
@@ -67,7 +66,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     val weatherApiResponse: Future[JsValue] = WeatherApi.retryWeatherRequest(
       () => getJsonRequest(url),
       requestRetryDelay,
-      actorSystem.scheduler,
+      pekkoActorSystem.scheduler,
       requestRetryMax,
     )
     weatherApiResponse.failed.foreach {

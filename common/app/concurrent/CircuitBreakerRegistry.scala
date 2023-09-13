@@ -1,7 +1,7 @@
 package concurrent
 
-import akka.actor.ActorSystem
-import akka.pattern.CircuitBreaker
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
+import org.apache.pekko.pattern.CircuitBreaker
 import common.GuLogging
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -11,7 +11,7 @@ object CircuitBreakerRegistry extends GuLogging {
 
   def withConfig(
       name: String,
-      system: ActorSystem,
+      system: PekkoActorSystem,
       maxFailures: Int,
       callTimeout: FiniteDuration,
       resetTimeout: FiniteDuration,

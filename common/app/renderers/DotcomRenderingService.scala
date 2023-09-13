@@ -1,6 +1,6 @@
 package renderers
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
@@ -49,7 +49,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",
-    system = ActorSystem("dotcom-rendering-client-circuit-breaker"),
+    system = PekkoActorSystem("dotcom-rendering-client-circuit-breaker"),
     maxFailures = Configuration.rendering.circuitBreakerMaxFailures,
     callTimeout = Configuration.rendering.timeout.plus(200.millis),
     resetTimeout = Configuration.rendering.timeout * 4,

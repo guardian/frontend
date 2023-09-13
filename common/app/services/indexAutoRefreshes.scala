@@ -1,6 +1,6 @@
 package services
 
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.LifecycleComponent
 import common.AutoRefresh
 import model.TagIndexListings
@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, blocking}
 import scala.language.postfixOps
 
-class IndexListingsLifecycle(implicit actorSystem: ActorSystem, executionContext: ExecutionContext)
+class IndexListingsLifecycle(implicit pekkoActorSystem: PekkoActorSystem, executionContext: ExecutionContext)
     extends LifecycleComponent {
   override def start(): Unit = {
     KeywordSectionIndexAutoRefresh.start()

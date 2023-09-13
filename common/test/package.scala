@@ -1,14 +1,9 @@
 package test
 
-import akka.actor.ActorSystem
-
-import java.io.File
-import java.net.URL
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient}
 import common.Lazy
-import concurrent.BlockingOperations
 import contentapi._
 import model.{ApplicationContext, ApplicationIdentity, PressedPage, PressedPageType}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -26,6 +21,8 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.{ContentApiHttpRecorder, HttpRecorder}
 import services.fronts.FrontJsonFapiLive
 
+import java.io.File
+import java.net.URL
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 import scala.util.{Failure, Success, Try}

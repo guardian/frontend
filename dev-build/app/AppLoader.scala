@@ -1,7 +1,7 @@
 import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
@@ -90,7 +90,7 @@ trait AppComponents
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
 
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
 

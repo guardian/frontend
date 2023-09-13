@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import common._
@@ -61,5 +61,5 @@ trait AppComponents extends FrontendComponents {
   val frontendBuildInfo: FrontendBuildInfo = frontend.rss.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
-  def actorSystem: ActorSystem
+  def pekkoActorSystem: PekkoActorSystem
 }

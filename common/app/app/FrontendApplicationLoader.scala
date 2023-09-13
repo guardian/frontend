@@ -10,6 +10,7 @@ import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
 import controllers.AssetsComponents
 import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator, OptionalDevContext}
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
@@ -36,10 +37,13 @@ trait FrontendComponents
 
   lazy val prefix = "/"
 
-  implicit lazy val as = actorSystem
+  implicit val pekkoActorSystem: PekkoActorSystem = PekkoActorSystem.create()
+  applicationLifecycle.addStopHook(() => {
+    pekkoActorSystem.terminate()
+  })
 
   lazy val jobScheduler = new JobScheduler(appContext)
-  lazy val akkaAsync = new AkkaAsync(environment, actorSystem)
+  lazy val akkaAsync = new AkkaAsync(environment, pekkoActorSystem)
   lazy val appMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration
   lazy val mode = environment.mode
