@@ -242,6 +242,7 @@ object CompetitionsProvider {
       "Europa League",
       "Europa League",
       "European",
+      showInTeamsList = true,
       tableDividers = List(2),
     ),
     Competition("301", "/football/carabao-cup", "Carabao Cup", "Carabao Cup", "English"),
