@@ -1,12 +1,12 @@
 package commercial.targeting
 
 import app.LifecycleComponent
-import common.{JobScheduler, AkkaAsync}
+import common.{JobScheduler, PekkoAsync}
 import play.api.inject.ApplicationLifecycle
 import scala.concurrent.duration._
 import scala.concurrent.{Future, ExecutionContext}
 
-class TargetingLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
+class TargetingLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, pekkoAsync: PekkoAsync)(implicit
     executionContext: ExecutionContext,
 ) extends LifecycleComponent {
 
@@ -22,7 +22,7 @@ class TargetingLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler,
       CampaignAgent.refresh()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       CampaignAgent.refresh()
     }
   }

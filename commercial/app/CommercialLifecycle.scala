@@ -6,7 +6,7 @@ import commercial.model.merchandise.jobs.Industries
 import app.LifecycleComponent
 import commercial.model.feeds._
 import common.LoggingField._
-import common.{AkkaAsync, JobScheduler, GuLogging}
+import common.{PekkoAsync, JobScheduler, GuLogging}
 import metrics.MetricUploader
 import play.api.inject.ApplicationLifecycle
 
@@ -20,7 +20,7 @@ object CommercialMetrics {
 class CommercialLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     feedsFetcher: FeedsFetcher,
     feedsParser: FeedsParser,
     industries: Industries,
@@ -143,7 +143,7 @@ class CommercialLifecycle(
       case (job, i) => job.start(delayedStartSchedule(delayedStart = i * refreshJobDelay, refreshStep = jobRefreshStep))
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
 
       industries.refresh().failed.foreach {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")

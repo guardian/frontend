@@ -7,7 +7,7 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.duration._
 import scala.concurrent.{Future, ExecutionContext}
 
-class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
+class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, pekkoAsync: PekkoAsync)(implicit
     ec: ExecutionContext,
 ) extends LifecycleComponent
     with GuLogging {
@@ -20,7 +20,7 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
 
   override def start(): Unit = {
 
-    Switches.all.foreach(_.failInitializationAfter(2.minutes)(akkaAsync))
+    Switches.all.foreach(_.failInitializationAfter(2.minutes)(pekkoAsync))
 
     jobs.deschedule("SwitchBoardRefreshJob")
     //run every minute, 47 seconds after the minute
@@ -28,7 +28,7 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
       refresh()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       refresh()
     }
   }

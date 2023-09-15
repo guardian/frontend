@@ -4,7 +4,7 @@ import agents.MostViewedAgent
 
 import java.util.concurrent.Executors
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class MostViewedLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     mostViewedAgent: MostViewedAgent,
 ) extends LifecycleComponent {
 
@@ -36,7 +36,7 @@ class MostViewedLifecycle(
       mostViewedAgent.refresh()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       mostViewedAgent.refresh()
     }
   }

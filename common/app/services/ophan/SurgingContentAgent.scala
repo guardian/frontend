@@ -47,7 +47,7 @@ object SurgeUtils {
 class SurgingContentAgentLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     ophanApi: OphanApi,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
@@ -66,7 +66,7 @@ class SurgingContentAgentLifecycle(
       SurgingContentAgent.update(ophanApi, ec)
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       SurgingContentAgent.update(ophanApi, ec)
     }
   }

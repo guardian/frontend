@@ -2,7 +2,7 @@ package services
 
 import com.amazonaws.services.sns.{AmazonSNSAsync, AmazonSNSAsyncClient}
 import com.amazonaws.services.sns.model.PublishRequest
-import common.{AkkaAsync, GuLogging}
+import common.{PekkoAsync, GuLogging}
 import conf.Configuration
 import awswrappers.sns._
 
@@ -22,28 +22,28 @@ trait Notification extends GuLogging {
   }
 
   def send(
-      akkaAsync: AkkaAsync,
+      pekkoAsync: PekkoAsync,
   )(subject: String, message: String)(implicit executionContext: ExecutionContext): Unit = {
     val request = new PublishRequest()
       .withTopicArn(topic)
       .withSubject(subject)
       .withMessage(message)
 
-    sendAsync(akkaAsync)(request)
+    sendAsync(pekkoAsync)(request)
   }
 
-  def sendWithoutSubject(akkaAsync: AkkaAsync)(message: String)(implicit executionContext: ExecutionContext): Unit = {
+  def sendWithoutSubject(pekkoAsync: PekkoAsync)(message: String)(implicit executionContext: ExecutionContext): Unit = {
     val request = new PublishRequest()
       .withTopicArn(topic)
       .withMessage(message)
 
-    sendAsync(akkaAsync)(request)
+    sendAsync(pekkoAsync)(request)
   }
 
   private def sendAsync(
-      akkaSync: AkkaAsync,
+      pekkoAsync: PekkoAsync,
   )(request: PublishRequest)(implicit executionContext: ExecutionContext): Unit =
-    akkaSync.after1s {
+    pekkoAsync.after1s {
       sns match {
         case Some(client) =>
           log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
@@ -64,7 +64,7 @@ object SwitchNotification extends Notification {
   lazy val topic: String = Configuration.aws.notificationSns
 
   def onSwitchChanges(
-      akkaAsync: AkkaAsync,
+      pekkoAsync: PekkoAsync,
   )(requester: String, stage: String, changes: Seq[String])(implicit executionContext: ExecutionContext): Unit = {
     val subject = s"${stage.toUpperCase}: Switch changes by $requester"
     val message =
@@ -75,7 +75,7 @@ object SwitchNotification extends Notification {
           |
         """.stripMargin
 
-    send(akkaAsync)(subject, message)
+    send(pekkoAsync)(subject, message)
   }
 }
 
