@@ -1,6 +1,6 @@
 package controllers.admin
 
-import common.{AkkaAsync, GuLogging, ImplicitControllerExecutionContext}
+import common.{PekkoAsync, GuLogging, ImplicitControllerExecutionContext}
 import conf.switches.Switches.ContentPresser
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
@@ -11,7 +11,7 @@ import scala.concurrent.Future
 
 class InteractiveLibrarianController(
     wsClient: WSClient,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController

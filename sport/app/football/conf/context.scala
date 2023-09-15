@@ -15,7 +15,7 @@ import java.time.Clock
 class FootballLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     competitionsService: CompetitionsService,
     contentApiClient: ContentApiClient,
 )(implicit ec: ExecutionContext)
@@ -79,7 +79,7 @@ class FootballLifecycle(
     descheduleJobs()
     scheduleJobs()
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.foreach { _ =>
         competitionsService.competitionIds.foreach(id => competitionsService.refreshCompetitionAgent(id, defaultClock))

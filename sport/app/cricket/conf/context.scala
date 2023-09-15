@@ -1,7 +1,7 @@
 package cricket.conf
 
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import jobs.CricketStatsJob
 
 import java.time.LocalDate
@@ -13,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class CricketLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     cricketStatsJob: CricketStatsJob,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
@@ -43,7 +43,7 @@ class CricketLifecycle(
     scheduleJobs()
 
     // ensure that we populate the cricket stats cache immediately
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10)
     }
   }

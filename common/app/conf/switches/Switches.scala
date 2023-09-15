@@ -51,8 +51,8 @@ trait Initializable[T] extends GuLogging {
 
   def initialize(t: T): Unit = initialized.trySuccess(t)
   def onInitialized: Future[T] = initialized.future
-  def failInitializationAfter(initializationTimeout: FiniteDuration)(akkaAsync: AkkaAsync): Unit = {
-    akkaAsync.after(initializationTimeout) {
+  def failInitializationAfter(initializationTimeout: FiniteDuration)(pekkoAsync: PekkoAsync): Unit = {
+    pekkoAsync.after(initializationTimeout) {
       initialized.tryFailure {
         new TimeoutException(s"Initialization timed out after $initializationTimeout")
       }

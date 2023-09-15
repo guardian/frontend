@@ -7,7 +7,7 @@ import com.google.api.ads.admanager.axis.v202308.Column.{AD_SERVER_IMPRESSIONS, 
 import com.google.api.ads.admanager.axis.v202308.DateRangeType.CUSTOM_DATE
 import com.google.api.ads.admanager.axis.v202308.Dimension.{CUSTOM_CRITERIA, DATE}
 import com.google.api.ads.admanager.axis.v202308._
-import common.{AkkaAsync, Box, JobScheduler, GuLogging}
+import common.{PekkoAsync, Box, JobScheduler, GuLogging}
 import dfp.DfpApi
 import play.api.inject.ApplicationLifecycle
 
@@ -86,7 +86,7 @@ object CommercialDfpReporting extends GuLogging {
 class CommercialDfpReportingLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     dfpApi: DfpApi,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent

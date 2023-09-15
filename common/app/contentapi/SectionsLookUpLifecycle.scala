@@ -9,7 +9,7 @@ import scala.concurrent.{Future, ExecutionContext}
 class SectionsLookUpLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     sectionsLookUp: SectionsLookUp,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent
@@ -35,7 +35,7 @@ class SectionsLookUpLifecycle(
     descheduleJobs()
     scheduleJobs()
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       sectionsLookUp.refresh()
     }
   }

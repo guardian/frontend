@@ -139,7 +139,7 @@ object ConfigAgent extends GuLogging {
 
 }
 
-class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
+class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, pekkoAsync: PekkoAsync)(implicit
     ec: ExecutionContext,
 ) extends LifecycleComponent {
 
@@ -155,7 +155,7 @@ class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
       ConfigAgent.refresh
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       ConfigAgent.refresh
     }
   }

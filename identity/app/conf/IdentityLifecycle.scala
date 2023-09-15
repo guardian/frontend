@@ -1,7 +1,7 @@
 package conf
 
 import app.LifecycleComponent
-import common.{JobScheduler, AkkaAsync}
+import common.{JobScheduler, PekkoAsync}
 import jobs.TorExitNodeList
 import model.PhoneNumbers
 import play.api.inject.ApplicationLifecycle
@@ -10,7 +10,7 @@ import scala.concurrent.{Future, ExecutionContext}
 
 class IdentityLifecycle(
     appLifecycle: ApplicationLifecycle,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     jobs: JobScheduler,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
@@ -35,7 +35,7 @@ class IdentityLifecycle(
     descheduleJobs()
     scheduleJobs()
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       TorExitNodeList.run()
       PhoneNumbers
     }

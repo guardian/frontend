@@ -6,7 +6,7 @@ import play.api.{Environment => PlayEnv, Mode}
 import scala.concurrent.ExecutionContext
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 
-class AkkaAsync(env: PlayEnv, pekkoActorSystem: PekkoActorSystem) {
+class PekkoAsync(env: PlayEnv, pekkoActorSystem: PekkoActorSystem) {
   implicit val ec: ExecutionContext = pekkoActorSystem.dispatcher
 
   // "apply" isn't expressive and doesn't explain what it does.
