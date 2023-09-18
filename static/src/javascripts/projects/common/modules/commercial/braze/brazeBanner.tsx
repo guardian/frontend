@@ -131,6 +131,7 @@ const renderBanner = (
 							}}
 							submitComponentEvent={submitComponentEvent}
 							brazeMessageProps={extras}
+							fetchEmail={fetchEmail}
 							subscribeToNewsletter={async (
 								newsletterId: string,
 							) => {
