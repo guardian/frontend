@@ -104,7 +104,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 9, 15),
+      sellByDate = LocalDate.of(2023, 9, 29),
       participationGroup = Perc1E,
     )
 
