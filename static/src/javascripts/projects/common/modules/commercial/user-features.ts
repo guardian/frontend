@@ -186,9 +186,7 @@ const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
 
 const userNeedsNewFeatureData = (): boolean =>
-	featuresDataIsOld() ||
-	(adFreeDataIsPresent() && cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)) ||
-	(isDigitalSubscriber() && !adFreeDataIsPresent());
+	featuresDataIsOld() || (isDigitalSubscriber() && !adFreeDataIsPresent());
 
 const userHasDataAfterSignout = async (): Promise<boolean> =>
 	!(await isUserLoggedIn()) && userHasData();
@@ -360,8 +358,7 @@ const fakeOneOffContributor = (): void => {
 	});
 };
 
-const isAdFreeUser = (): boolean =>
-	isDigitalSubscriber() || (adFreeDataIsPresent() && !cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE));
+const isAdFreeUser = (): boolean => isDigitalSubscriber();
 
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {

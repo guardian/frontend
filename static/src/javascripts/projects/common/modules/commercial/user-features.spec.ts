@@ -63,10 +63,35 @@ const PERSISTENCE_KEYS = {
 		'gu.contributions.recurring.contrib-timestamp.Annual',
 };
 
+const setAllFeaturesData = (opts: { isExpired: boolean }) => {
+	const currentTime = new Date().getTime();
+	const msInOneDay = 24 * 60 * 60 * 1000;
+	const expiryDate = opts.isExpired
+		? new Date(currentTime - msInOneDay)
+		: new Date(currentTime + msInOneDay);
+	const adFreeExpiryDate = opts.isExpired
+		? new Date(currentTime - msInOneDay * 2)
+		: new Date(currentTime + msInOneDay * 2);
+	addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
+	addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
+	addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
+	addCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE, 'true');
+	addCookie(
+		PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
+		adFreeExpiryDate.getTime().toString(),
+	);
+	addCookie(
+		PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+		expiryDate.getTime().toString(),
+	);
+	addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'test');
+};
+
 const deleteAllFeaturesData = () => {
 	removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
+	removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE);
@@ -92,6 +117,48 @@ describe('Refreshing the features data', () => {
 			await refresh();
 			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
 		});
+
+		it('Performs an update if the user has expired data', async () => {
+			setAllFeaturesData({ isExpired: true });
+			await refresh();
+			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
+		});
+
+		it('Does not delete the data just because it has expired', async () => {
+			setAllFeaturesData({ isExpired: true });
+			await refresh();
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE }),
+			).toBe('true');
+			expect(
+				getCookie({
+					name: PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE,
+				}),
+			).toBe('true');
+			expect(
+				getCookie({
+					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+				}),
+			).toEqual(expect.stringMatching(/\d{13}/));
+			expect(
+				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
+			).toEqual(expect.stringMatching(/\d{13}/));
+		});
+
+		it('Does not perform update if user has fresh feature data', async () => {
+			setAllFeaturesData({ isExpired: false });
+			await refresh();
+			expect(fetchJsonSpy).not.toHaveBeenCalled();
+		});
+
+		it('Performs an update if membership-frontend wipes just the paying-member cookie', async () => {
+			// Set everything except paying-member cookie
+			setAllFeaturesData({ isExpired: true });
+			removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+
+			await refresh();
+			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
+		});
 	});
 
 	describe('If user signed out', () => {
@@ -109,6 +176,7 @@ describe('Refreshing the features data', () => {
 		});
 
 		it('Deletes leftover feature data', async () => {
+			setAllFeaturesData({ isExpired: false });
 			await refresh();
 			expect(
 				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
@@ -123,6 +191,11 @@ describe('Refreshing the features data', () => {
 			).toBeNull();
 			expect(
 				getCookie({ name: PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE }),
+			).toBeNull();
+			expect(
+				getCookie({
+					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+				}),
 			).toBeNull();
 		});
 	});
@@ -347,9 +420,6 @@ describe('Storing new feature data', () => {
 				adFree: true,
 			}),
 		);
-		addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
-		addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
-		addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
 		return refresh().then(() => {
 			expect(
 				getCookie({ name: PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE }),
@@ -365,8 +435,40 @@ describe('Storing new feature data', () => {
 			expect(
 				getCookie({ name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE }),
 			).toBeTruthy();
+			expect(
+				Number.isNaN(
+					parseInt(
+						// @ts-expect-error -- we’re testing it
+						getCookie({
+							name: PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
+						}),
+						10,
+					),
+				),
+			).toBe(false);
 		});
 	});
+
+	it('Puts an expiry date in an accompanying cookie', () =>
+		refresh().then(() => {
+			const expiryDate = getCookie({
+				name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+			});
+			expect(expiryDate).toBeTruthy();
+			// @ts-expect-error -- we’re testing it
+			expect(Number.isNaN(parseInt(expiryDate, 10))).toBe(false);
+		}));
+
+	it('The expiry date is in the future', () =>
+		refresh().then(() => {
+			const expiryDateString = getCookie({
+				name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+			});
+			// @ts-expect-error -- we’re testing it
+			const expiryDateEpoch = parseInt(expiryDateString, 10);
+			const currentTimeEpoch = new Date().getTime();
+			expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
+		}));
 });
 
 const setSupportFrontendOneOffContributionCookie = (value: string) =>
