@@ -361,7 +361,7 @@ const fakeOneOffContributor = (): void => {
 };
 
 const isAdFreeUser = (): boolean =>
-	isDigitalSubscriber() || adFreeDataIsPresent();
+	isDigitalSubscriber() || (adFreeDataIsPresent() && !cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE));
 
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {
