@@ -26,16 +26,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val AdFreeStrictExpiryEnforcement = Switch(
-    Commercial,
-    "ad-free-strict-expiry-enforcement",
-    "When ON, the ad-free cookie is valid for max. 48 hours. OFF doesn't enforce expiry check.",
-    owners = Seq(Owner.withGithub("JustinPinner")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val ImrWorldwideSwitch = Switch(
     Commercial,
     "imr-worldwide",

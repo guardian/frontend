@@ -12,6 +12,7 @@ const timeInDaysFromNow = (daysFromNow: number): string => {
 	return tmpDate.getTime().toString();
 };
 
+console.log('Test in FRONTEND- ');
 const cookieIsExpiredOrMissing = (cookieName: string): boolean => {
 	const expiryDateFromCookie = getCookie({ name: cookieName });
 	if (!expiryDateFromCookie) return true;
