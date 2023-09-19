@@ -187,7 +187,7 @@ const featuresDataIsOld = () =>
 
 const userNeedsNewFeatureData = (): boolean =>
 	featuresDataIsOld() ||
-	adFreeDataIsPresent() ||
+	(adFreeDataIsPresent() && cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)) ||
 	(isDigitalSubscriber() && !adFreeDataIsPresent());
 
 const userHasDataAfterSignout = async (): Promise<boolean> =>
