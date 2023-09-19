@@ -168,10 +168,11 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val publicGood: Switch = Switch(
+  val articleEndSlot: Switch = Switch(
     group = Commercial,
-    name = "public-good",
-    description = "Enable Public Good functionality",
+    name = "article-end-slot",
+    description =
+      "Enable the article end slot, this appears when the contributions epic does not. Currently only Public Good is served in this slot in the US.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
