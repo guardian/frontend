@@ -167,6 +167,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val publicGood: Switch = Switch(
+    group = Commercial,
+    name = "public-good",
+    description = "Enable Public Good functionality",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
