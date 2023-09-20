@@ -74,7 +74,7 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
-  
+
   Switch(
     ABTests,
     "ab-prebid-kargo",

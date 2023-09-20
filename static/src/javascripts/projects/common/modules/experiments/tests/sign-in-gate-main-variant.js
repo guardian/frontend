@@ -13,7 +13,7 @@ export const signInGateMainVariant = {
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-	ophanComponentId: 'main_variant_4',
+	ophanComponentId: 'main_variant_5',
 	dataLinkNames: 'SignInGateMain',
 	idealOutcome:
 		'Increase the number of users signed in whilst running at a reasonable scale',
@@ -21,7 +21,7 @@ export const signInGateMainVariant = {
 	canRun: () => true,
 	variants: [
 		{
-			id: 'main-variant-4',
+			id: 'main-variant-5',
 			test: () => {},
 		},
 	],
