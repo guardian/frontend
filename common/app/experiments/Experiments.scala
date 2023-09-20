@@ -14,7 +14,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       FrontsBannerAdsDcr,
       Lightbox,
       ServerSideLiveblogInlineAds,
-      EuropeNetworkFront,
       OphanEsm,
       SectionFrontsBannerAds,
       HeaderTopBarSearchCapi,
@@ -41,15 +40,6 @@ object Lightbox
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 9, 29),
       participationGroup = Perc0B,
-    )
-
-object EuropeNetworkFront
-    extends Experiment(
-      name = "europe-network-front",
-      description = "Test new europe network front",
-      owners = Seq(Owner.withGithub("rowannekabalan")),
-      sellByDate = LocalDate.of(2023, 9, 29),
-      participationGroup = Perc0D,
     )
 
 object FrontsBannerAdsDcr
