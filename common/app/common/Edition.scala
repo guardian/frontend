@@ -86,7 +86,9 @@ object Edition {
       // Fastly does not have switch information so we will always try and set the edition to Europe
       // if a user is in CoE and then fallback to INT edition in Frontend if that user is not part of the experiment.
       .map(edition =>
-        if (edition.equalsIgnoreCase(editions.Europe.id) && !EuropeNetworkFrontSwitch.isSwitchedOn) editions.International.id else edition,
+        if (edition.equalsIgnoreCase(editions.Europe.id) && !EuropeNetworkFrontSwitch.isSwitchedOn)
+          editions.International.id
+        else edition,
       )
       .getOrElse(defaultEdition.id)
   }
