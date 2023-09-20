@@ -25,6 +25,15 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
 
+object DeeplyRead
+    extends Experiment(
+      name = "deeply-read",
+      description = "When ON, deeply read footer section is displayed",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc0A,
+    )
+
 object Lightbox
     extends Experiment(
       name = "lightbox",
@@ -53,13 +62,13 @@ object EuropeNetworkFront
       participationGroup = Perc0D,
     )
 
-object SectionFrontsBannerAds
+object FrontsBannerAdsDcr
     extends Experiment(
-      name = "section-fronts-banner-ads",
-      description = "Creates a new ad experience on section fronts, replacing MPUs with banner ads",
+      name = "fronts-banner-ads-dcr",
+      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc20A,
+      sellByDate = LocalDate.of(2023, 11, 1),
+      participationGroup = Perc0E,
     )
 
 // Removing while we are still implementing this content type in DCR
@@ -90,15 +99,6 @@ object HeaderTopBarSearchCapi
       participationGroup = Perc1B,
     )
 
-object OphanEsm
-    extends Experiment(
-      name = "ophan-esm",
-      description = "Use ophan-tracker-js@2, which uses native ES Modules",
-      owners = Seq(Owner.withGithub("@guardian/ophan")),
-      sellByDate = LocalDate.of(2023, 10, 3),
-      participationGroup = Perc50,
-    )
-
 object OfferHttp3
     extends Experiment(
       name = "offer-http3",
@@ -108,20 +108,20 @@ object OfferHttp3
       participationGroup = Perc1E,
     )
 
-object FrontsBannerAdsDcr
+object SectionFrontsBannerAds
     extends Experiment(
-      name = "fronts-banner-ads-dcr",
-      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
+      name = "section-fronts-banner-ads",
+      description = "Creates a new ad experience on section fronts, replacing MPUs with banner ads",
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc5A,
+      sellByDate = LocalDate.of(2023, 10, 31),
+      participationGroup = Perc20A,
     )
 
-object DeeplyRead
+object OphanEsm
     extends Experiment(
-      name = "deeply-read",
-      description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc0A,
+      name = "ophan-esm",
+      description = "Use ophan-tracker-js@2, which uses native ES Modules",
+      owners = Seq(Owner.withGithub("@guardian/ophan")),
+      sellByDate = LocalDate.of(2023, 10, 3),
+      participationGroup = Perc50,
     )
