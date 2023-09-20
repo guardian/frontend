@@ -358,7 +358,8 @@ const fakeOneOffContributor = (): void => {
 	});
 };
 
-const isAdFreeUser = (): boolean => isDigitalSubscriber();
+const isAdFreeUser = (): boolean =>
+	isDigitalSubscriber() || adFreeDataIsPresent();
 
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {
