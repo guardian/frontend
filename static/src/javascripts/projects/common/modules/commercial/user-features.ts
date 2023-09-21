@@ -42,6 +42,7 @@ const AD_FREE_USER_COOKIE = 'GU_AF1';
 
 // TODO: isn’t this duplicated from commercial features?
 // https://github.com/guardian/frontend/blob/2a222cfb77748aa1140e19adca10bfc688fe6cad/static/src/javascripts/projects/common/modules/commercial/commercial-features.ts
+
 const forcedAdFreeMode = !!/[#&]noadsaf(&.*)?$/.exec(window.location.hash);
 
 const getAdFreeCookie = (): string | null =>
@@ -51,14 +52,6 @@ const adFreeDataIsPresent = (): boolean => {
 	const cookieVal = getAdFreeCookie();
 	if (!cookieVal) return false;
 	return !Number.isNaN(parseInt(cookieVal, 10));
-};
-
-const adFreeDataIsOld = (): boolean => {
-	const { switches } = window.guardian.config;
-	return (
-		Boolean(switches.adFreeStrictExpiryEnforcement) &&
-		cookieIsExpiredOrMissing(AD_FREE_USER_COOKIE)
-	);
 };
 
 const setAdFreeCookie = (daysToLive = 1): void => {
@@ -142,7 +135,6 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 			value: JsonResponse.alertAvailableFor,
 		});
 	}
-
 	if (JsonResponse.contentAccess.digitalPack) {
 		setAdFreeCookie(2);
 	} else if (adFreeDataIsPresent() && !forcedAdFreeMode) {
@@ -194,9 +186,7 @@ const featuresDataIsOld = () =>
 	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
 
 const userNeedsNewFeatureData = (): boolean =>
-	featuresDataIsOld() ||
-	(adFreeDataIsPresent() && adFreeDataIsOld()) ||
-	(isDigitalSubscriber() && !adFreeDataIsPresent());
+	featuresDataIsOld() || (isDigitalSubscriber() && !adFreeDataIsPresent());
 
 const userHasDataAfterSignout = async (): Promise<boolean> =>
 	!(await isUserLoggedIn()) && userHasData();
@@ -369,7 +359,7 @@ const fakeOneOffContributor = (): void => {
 };
 
 const isAdFreeUser = (): boolean =>
-	isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
+	isDigitalSubscriber() || adFreeDataIsPresent();
 
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {

@@ -87,16 +87,6 @@ const setAllFeaturesData = (opts: { isExpired: boolean }) => {
 	addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'test');
 };
 
-const setExpiredAdFreeData = () => {
-	const currentTime = new Date().getTime();
-	const msInOneDay = 24 * 60 * 60 * 1000;
-	const expiryDate = new Date(currentTime - msInOneDay * 2);
-	addCookie(
-		PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
-		expiryDate.getTime().toString(),
-	);
-};
-
 const deleteAllFeaturesData = () => {
 	removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
@@ -108,7 +98,6 @@ const deleteAllFeaturesData = () => {
 };
 
 beforeAll(() => {
-	window.guardian.config.switches.adFreeStrictExpiryEnforcement = true;
 	window.guardian.config.page.userAttributesApiUrl = '';
 });
 
@@ -166,19 +155,6 @@ describe('Refreshing the features data', () => {
 			// Set everything except paying-member cookie
 			setAllFeaturesData({ isExpired: true });
 			removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-
-			await refresh();
-			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
-		});
-
-		it('Performs an update if the ad-free state is stale and strict expiry enforcement is enabled', async () => {
-			// This is a slightly synthetic setup - the ad-free cookie is rewritten with every
-			// refresh that happens as a result of expired features data, but we want to check
-			// that a refresh could be triggered based on ad-free state alone if the strict
-			// expiry enforcement switch is ON.
-			// Set everything except the ad-free cookie
-			setAllFeaturesData({ isExpired: false });
-			setExpiredAdFreeData();
 
 			await refresh();
 			expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
