@@ -80,6 +80,9 @@ const renderBanner = (
 					? getOptionsHeadersWithOkta(authStatus)
 					: {};
 
+			const fetchEmail = (): Promise<string | null> =>
+				Promise.resolve(null);
+
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- IE does not support shadow DOM, so instead we just render
 			if (!container.attachShadow) {
 				render(
@@ -90,6 +93,7 @@ const renderBanner = (
 						}}
 						submitComponentEvent={submitComponentEvent}
 						brazeMessageProps={extras}
+						fetchEmail={fetchEmail}
 						subscribeToNewsletter={async (newsletterId: string) => {
 							await fetch(newsletterUrl, {
 								method: 'PATCH',
@@ -126,6 +130,7 @@ const renderBanner = (
 							}}
 							submitComponentEvent={submitComponentEvent}
 							brazeMessageProps={extras}
+							fetchEmail={fetchEmail}
 							subscribeToNewsletter={async (
 								newsletterId: string,
 							) => {
