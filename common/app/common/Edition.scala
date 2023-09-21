@@ -47,7 +47,6 @@ object Edition {
   implicit def edition(implicit request: RequestHeader): Edition = this(request)
 
   lazy val defaultEdition: Edition = editions.Uk
-
   def editionsSupportingSection(sectionId: String): Seq[Edition] =
     allEditions.filter(_.isEditionalised(sectionId))
 
