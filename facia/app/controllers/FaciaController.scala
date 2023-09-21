@@ -27,7 +27,7 @@ import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
-import experiments.{ActiveExperiments, DeeplyRead, EuropeNetworkFront}
+import experiments.{ActiveExperiments, DeeplyRead}
 import play.api.http.ContentTypes.JSON
 import http.HttpPreconnections
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
@@ -206,9 +206,7 @@ trait FaciaController
 
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    val participatingInTest =
-      ActiveExperiments.isParticipating(EuropeNetworkFront) || EuropeNetworkFrontSwitch.isSwitchedOn
-    if (path == "europe" && !participatingInTest) {
+    if (path == "europe" && !EuropeNetworkFrontSwitch.isSwitchedOn) {
       return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
     }
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
