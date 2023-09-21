@@ -96,16 +96,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val SimpleReachSwitch = Switch(
-    Commercial,
-    "simple-reach",
-    "Enable Simple Reach tracking and reporting.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val AffiliateLinks: Switch = Switch(
     group = Commercial,
     name = "affiliate-links",
