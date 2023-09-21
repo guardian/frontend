@@ -44,7 +44,7 @@ object EditionBranding {
 
   implicit val editionBrandingFormat = Json.format[EditionBranding]
 
-  val editions = Edition.allWithBetaEditions.toSet
+  val editions = Edition.allEditions.toSet
 
   def fromContent(item: Content): Set[EditionBranding] =
     editions map { edition =>

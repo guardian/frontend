@@ -542,13 +542,4 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val EuropeNetworkFrontSwitch = Switch(
-    SwitchGroup.Feature,
-    "europe-network-front-switch",
-    "Test new europe network front",
-    owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
 }

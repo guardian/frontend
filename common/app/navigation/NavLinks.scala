@@ -742,7 +742,7 @@ object NavigationData {
   implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
 
   val nav: JsValue = toJson(
-    (Edition.all
+    (Edition.allEditions
       .map(e => e.networkFrontId -> toJson(e.navigationLinks)) :+ "tagPages" -> toJson(NavLinks.tagPages)).toMap,
   )
 }
