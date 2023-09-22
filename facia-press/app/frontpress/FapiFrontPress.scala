@@ -101,6 +101,7 @@ object EmailFrontPath {
       case "email/uk/daily" => Some(EmailFrontPath(path, "uk"))
       case "email/us/daily" => Some(EmailFrontPath(path, "us"))
       case "email/au/daily" => Some(EmailFrontPath(path, "au"))
+      case "email/europe/daily" => Some(EmailFrontPath(path, "europe"))
       case _                => None
     }
 }
