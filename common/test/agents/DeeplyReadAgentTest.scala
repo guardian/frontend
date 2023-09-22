@@ -32,7 +32,7 @@ import test.{
       contentApiClient = contentApiClient,
       ophanApi = ophanApi,
     )
-    Edition.all.map(edition => {
+    Edition.allEditions.map(edition => {
       agent.getTrails(edition) shouldBe Seq.empty
     })
   }

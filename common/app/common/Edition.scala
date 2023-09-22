@@ -1,6 +1,5 @@
 package common
 
-import conf.switches.Switches.EuropeNetworkFrontSwitch
 import navigation.EditionNavLinks
 
 import java.util.Locale
@@ -48,24 +47,20 @@ object Edition {
   implicit def edition(implicit request: RequestHeader): Edition = this(request)
 
   lazy val defaultEdition: Edition = editions.Uk
-  def editionsByRequest(implicit request: RequestHeader): List[Edition] = {
-    if (!EuropeNetworkFrontSwitch.isSwitchedOn) all else allWithBetaEditions
-  }
   def editionsSupportingSection(sectionId: String): Seq[Edition] =
-    allWithBetaEditions.filter(_.isEditionalised(sectionId))
+    allEditions.filter(_.isEditionalised(sectionId))
 
-  lazy val all = List(
+  lazy val allEditions = List(
     editions.Uk,
     editions.Us,
     editions.Au,
     editions.International,
+    editions.Europe,
   )
-
-  lazy val allWithBetaEditions = all ++ List(editions.Europe)
 
   lazy val localeByEdition: Map[Edition, Locale] =
     (for {
-      edition <- allWithBetaEditions
+      edition <- allEditions
       locale <- edition.locale
     } yield edition -> locale).toMap
 
@@ -83,30 +78,23 @@ object Edition {
     editionFromParameter
       .orElse(editionFromHeader)
       .orElse(editionFromCookie)
-      // Fastly does not have switch information so we will always try and set the edition to Europe
-      // if a user is in CoE and then fallback to INT edition in Frontend if that user is not part of the experiment.
-      .map(edition =>
-        if (edition.equalsIgnoreCase(editions.Europe.id) && !EuropeNetworkFrontSwitch.isSwitchedOn)
-          editions.International.id
-        else edition,
-      )
       .getOrElse(defaultEdition.id)
   }
 
   def apply(request: RequestHeader): Edition = {
     val cookieValue = editionFromRequest(request)
-    editionsByRequest(request).find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
+    allEditions.find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
   }
 
   def others(implicit request: RequestHeader): Seq[Edition] = {
     val currentEdition = Edition(request)
-    editionsByRequest(request).filterNot(_ == currentEdition)
+    allEditions.filterNot(_ == currentEdition)
   }
 
-  def othersWithBetaEditions(edition: Edition): Seq[Edition] = allWithBetaEditions.filterNot(_ == edition)
+  def othersWithBetaEditions(edition: Edition): Seq[Edition] = allEditions.filterNot(_ == edition)
 
-  def byId(id: String): Option[Edition] = allWithBetaEditions.find(_.id.equalsIgnoreCase(id))
-  def byNetworkFrontId(id: String): Option[Edition] = allWithBetaEditions.find(_.networkFrontId == id)
+  def byId(id: String): Option[Edition] = allEditions.find(_.id.equalsIgnoreCase(id))
+  def byNetworkFrontId(id: String): Option[Edition] = allEditions.find(_.networkFrontId == id)
 
   implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
     def writes(edition: Edition): JsValue = Json.obj("id" -> edition.id)
@@ -116,7 +104,7 @@ object Edition {
     (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
   }
 
-  lazy val editionRegex = allWithBetaEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
+  lazy val editionRegex = allEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
   private lazy val EditionalisedFront = s"""^/($editionRegex)$$""".r
 
   private lazy val EditionalisedId = s"^/($editionRegex)/([\\w\\d-]+)$$".r

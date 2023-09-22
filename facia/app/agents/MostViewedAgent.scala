@@ -104,7 +104,7 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
 
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Future[(Option[Content], Option[Content])] = {
-    MostViewed.refreshAll(Edition.allWithBetaEditions)(refresh)
+    MostViewed.refreshAll(Edition.allEditions)(refresh)
     refreshGlobal()
   }
 }

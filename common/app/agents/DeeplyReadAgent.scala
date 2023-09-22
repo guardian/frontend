@@ -32,7 +32,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       using a Box structure.
      */
     Future
-      .sequence(Edition.all.map { edition =>
+      .sequence(Edition.allEditions.map { edition =>
         ophanApi.getDeeplyRead(edition).flatMap {
           ophanDeeplyReadItems =>
             log.info(s"ophanItems updated with: ${ophanDeeplyReadItems.size} new items")
@@ -66,7 +66,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         }
       })
       .map(trailsList => {
-        val map = Edition.all.zip(trailsList).toMap
+        val map = Edition.allEditions.zip(trailsList).toMap
         deeplyReadItems.alter(map)
       })
   }

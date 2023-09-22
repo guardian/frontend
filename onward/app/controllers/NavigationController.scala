@@ -77,7 +77,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
               "topLevelSections" -> menu.pillars.map(section => topLevelNavItems(section)),
               "readerRevenueLinks" -> UrlHelpers.readerRevenueLinks.map(section => navSectionLink(section)),
               "secondarySections" -> navSecondarySections,
-              "editions" -> Edition.all,
+              "editions" -> Edition.allEditions,
             ),
           ),
         )
