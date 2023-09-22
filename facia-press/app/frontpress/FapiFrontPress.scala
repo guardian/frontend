@@ -98,11 +98,11 @@ case class EmailFrontPath(path: String, edition: String)
 object EmailFrontPath {
   def fromPath(path: String): Option[EmailFrontPath] =
     path match {
-      case "email/uk/daily" => Some(EmailFrontPath(path, "uk"))
-      case "email/us/daily" => Some(EmailFrontPath(path, "us"))
-      case "email/au/daily" => Some(EmailFrontPath(path, "au"))
+      case "email/uk/daily"     => Some(EmailFrontPath(path, "uk"))
+      case "email/us/daily"     => Some(EmailFrontPath(path, "us"))
+      case "email/au/daily"     => Some(EmailFrontPath(path, "au"))
       case "email/europe/daily" => Some(EmailFrontPath(path, "europe"))
-      case _                => None
+      case _                    => None
     }
 }
 
