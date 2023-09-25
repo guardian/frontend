@@ -75,6 +75,7 @@ object Dependencies {
   val pekkoVersion = "1.0.1"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
+  val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
 
   val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   // logback2  to prevent "error: reference to logback is ambiguous;"
