@@ -362,6 +362,24 @@ object CompetitionsProvider {
       "European",
     ),
     Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
+    Competition(
+      "995",
+      "/football/women-s-nations-league",
+      "Women's Nations League",
+      "Women's Nations League",
+      "European",
+      showInTeamsList = true,
+      tableDividers = List(2),
+    ),
+    Competition(
+      "516",
+      "/football/europa-conference-league",
+      "Europa Conference League",
+      "Europa Conference League",
+      "European",
+      showInTeamsList = true,
+      tableDividers = List(2),
+    ),
   )
 }
 
