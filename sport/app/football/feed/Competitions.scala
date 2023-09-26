@@ -361,6 +361,7 @@ object CompetitionsProvider {
       "Women's Champions League",
       "European",
     ),
+    Competition("333", "/football/womens-fa-cup", "Women's FA Cup", "Women's FA Cup", "English"),
     Competition(
       "995",
       "/football/women-s-nations-league",
