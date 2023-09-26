@@ -1,6 +1,6 @@
 package services
 
-import common.editions.{Au, Uk, Us, International}
+import common.editions.{Au, Europe, International, Uk, Us}
 
 import java.net.URLEncoder
 import java.time.LocalDate
@@ -39,6 +39,7 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
       case Uk            => "gb"
       case Us            => "us"
       case International => "international"
+      case Europe        => "international"
     }
 
   // getBody is the general function that queries Ophan
