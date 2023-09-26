@@ -475,7 +475,7 @@ case object MovingTheGoalposts extends ArticleEmailMetadata {
 }
 
 case object HeadlinesEur extends FrontEmailMetadata {
-  val name = "Europe Daily"
+  val name = "Headlines Europe"
   override val banner = Some("headlines-eur.png")
 }
 
