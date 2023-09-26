@@ -21,6 +21,7 @@ object PA {
     ("400", "Community Shield"),
     ("500", "Champions League"),
     ("510", "Europa League"),
+    ("516", "Europa Conference League"),
     ("620", "Ligue 1"),
     ("625", "Bundesliga"),
     ("635", "Serie A"),
@@ -29,6 +30,7 @@ object PA {
     ("721", "International friendlies"),
     ("870", "Women's World Cup"),
     ("961", "Women's Super League"),
+    ("995", "Women's Nations League"),
   )
   def competitionName(season: Season): String = competitionNames.getOrElse(season.id, season.name)
 
@@ -36,6 +38,7 @@ object PA {
     "100",
     "500",
     "510",
+    "516",
     "300",
     "301",
     "101",
@@ -57,6 +60,7 @@ object PA {
     "635",
     "870",
     "961",
+    "995",
   )
 
   def filterCompetitions(competitions: List[Season]): List[Season] = {
