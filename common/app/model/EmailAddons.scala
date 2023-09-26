@@ -474,7 +474,7 @@ case object MovingTheGoalposts extends ArticleEmailMetadata {
     c.item.tags.series.exists(_.id == "football/series/moving-the-goalposts")
 }
 
-case object HeadlinesEur extends FrontEmailMetadata {
+case object HeadlinesEurope extends FrontEmailMetadata {
   val name = "Headlines Europe"
   override val banner = Some("headlines-eur.png")
 }
@@ -568,7 +568,7 @@ object EmailAddons {
     DesignReview,
     Documentaries,
     AustraliasModernOutback,
-    HeadlinesEur,
+    HeadlinesEurope,
   )
 
   implicit class EmailContentType(p: Page) {
