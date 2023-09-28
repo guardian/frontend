@@ -1,7 +1,7 @@
 package http
 
 import javax.inject.Inject
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import app.FrontendBuildInfo
 import conf.switches.Switches
 import implicits.Responses._
@@ -14,6 +14,9 @@ import model.Cached.PanicReuseExistingResult
 import org.apache.commons.codec.digest.DigestUtils
 
 import scala.concurrent.{ExecutionContext, Future}
+
+@Singleton
+class CustomGzipFilter @Inject() (config: GzipFilterConfig)(implicit mat: Materializer) extends GzipFilter(config)(mat)
 
 class GzipperConfig() extends GzipFilterConfig {
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {

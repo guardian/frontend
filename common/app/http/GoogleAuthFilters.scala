@@ -1,6 +1,6 @@
 package http
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import com.gu.googleauth.{FilterExemption, UserIdentity}
 import googleAuth.AuthCookie
 import model.ApplicationContext
