@@ -32,7 +32,7 @@ object Dependencies {
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20230228"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
-  val commonsIo = "commons-io" % "commons-io" % "2.5"
+  val commonsIo = "commons-io" % "commons-io" % "2.7"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.2.0"
