@@ -56,9 +56,6 @@ GET        /embed/atom/:atomType/:id/nojs/scroll-y                              
 POST       /story-questions/answers/signup                                      controllers.AtomPageController.signup()
 OPTIONS    /story-questions/answers/signup                                      controllers.AtomPageController.options()
 
-# Share counts
-GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
-
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 

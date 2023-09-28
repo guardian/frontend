@@ -6,7 +6,6 @@ import jobs.SiteMapJob
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.FacebookGraphApi
 
 trait ApplicationsControllers {
 
@@ -14,7 +13,6 @@ trait ApplicationsControllers {
   def siteMapJob: SiteMapJob
   def sectionsLookUp: SectionsLookUp
   def wsClient: WSClient
-  def facebookGraphApi: FacebookGraphApi
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
 
@@ -38,7 +36,6 @@ trait ApplicationsControllers {
   lazy val shortUrlsController = wire[ShortUrlsController]
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
-  lazy val shareCountController = wire[ShareCountController]
   lazy val youtubeController = wire[YoutubeController]
   lazy val nx1ConfigController = wire[Nx1ConfigController]
 

@@ -40,8 +40,6 @@ trait ApplicationsServices {
   lazy val siteMapJob = wire[SiteMapJob]
   lazy val sectionsLookUp = wire[SectionsLookUp]
   lazy val ophanApi = wire[OphanApi]
-  lazy val facebookGraphApiClient = wire[FacebookGraphApiClient]
-  lazy val facebookGraphApi = wire[FacebookGraphApi]
   lazy val newsletterApi = wire[NewsletterApi]
   lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
 }
