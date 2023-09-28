@@ -1,6 +1,5 @@
 package dev
 
-
 import common.Assets.AssetNotFoundException
 import common.ImplicitControllerExecutionContext
 
