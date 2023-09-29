@@ -3,14 +3,14 @@ package feed
 import agents.DeeplyReadAgent
 import java.util.concurrent.Executors
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
 
 class OnwardJourneyLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     mostReadAgent: MostReadAgent,
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
@@ -56,7 +56,7 @@ class OnwardJourneyLifecycle(
       dayMostPopularAgent.refresh()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       mostPopularAgent.refresh()
       deeplyReadAgent.refresh()
       geoMostPopularAgent.refresh()

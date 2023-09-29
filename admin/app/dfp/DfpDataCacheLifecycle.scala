@@ -23,7 +23,7 @@ class DfpDataCacheLifecycle(
     dfpMobileAppAdUnitCacheJob: DfpMobileAppAdUnitCacheJob,
     dfpFacebookIaAdUnitCacheJob: DfpFacebookIaAdUnitCacheJob,
     dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
 
@@ -75,17 +75,17 @@ class DfpDataCacheLifecycle(
     new Job[Unit] {
       val name: String = "DFP-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = dfpAdUnitCacheJob.run(akkaAsync)
+      def run(): Future[Unit] = dfpAdUnitCacheJob.run(pekkoAsync)
     },
     new Job[Unit] {
       val name: String = "DFP-Mobile-Apps-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = dfpMobileAppAdUnitCacheJob.run(akkaAsync)
+      def run(): Future[Unit] = dfpMobileAppAdUnitCacheJob.run(pekkoAsync)
     },
     new Job[Unit] {
       val name: String = "DFP-Facebook-IA-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = dfpFacebookIaAdUnitCacheJob.run(akkaAsync)
+      def run(): Future[Unit] = dfpFacebookIaAdUnitCacheJob.run(pekkoAsync)
     },
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
@@ -114,7 +114,7 @@ class DfpDataCacheLifecycle(
       }
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       dfpDataCacheJob.refreshAllDfpData()
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()

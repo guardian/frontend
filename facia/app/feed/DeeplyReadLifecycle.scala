@@ -2,7 +2,7 @@ package feed
 
 import agents.DeeplyReadAgent
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 
 import java.util.concurrent.Executors
@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class DeeplyReadLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
@@ -35,7 +35,7 @@ class DeeplyReadLifecycle(
       deeplyReadAgent.refresh()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       deeplyReadAgent.refresh()
     }
   }

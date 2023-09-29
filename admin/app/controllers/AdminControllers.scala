@@ -1,6 +1,6 @@
 package controllers
 import com.softwaremill.macwire._
-import common.AkkaAsync
+import common.PekkoAsync
 import controllers.admin._
 import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
@@ -12,7 +12,7 @@ import play.api.mvc.ControllerComponents
 import services.{OphanApi, ParameterStoreService, RedirectService}
 
 trait AdminControllers {
-  def akkaAsync: AkkaAsync
+  def pekkoAsync: PekkoAsync
   def wsClient: WSClient
   def ophanApi: OphanApi
   implicit def appContext: ApplicationContext

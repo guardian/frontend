@@ -18,7 +18,7 @@ import scala.util.{Failure, Success}
 class BookFinder(pekkoActorSystem: PekkoActorSystem, magentoService: MagentoService) extends GuLogging {
 
   private implicit val bookActorExecutionContext: ExecutionContext =
-    pekkoActorSystem.dispatchers.lookup("akka.actor.book-lookup")
+    pekkoActorSystem.dispatchers.lookup("pekko.actor.book-lookup")
   private implicit val bookActorTimeout: Timeout = 0.2.seconds
   private implicit val magentoServiceImplicit = magentoService
 
@@ -72,7 +72,7 @@ class MagentoService(pekkoActorSystem: PekkoActorSystem, wsClient: WSClient) ext
   }
 
   private implicit val bookLookupExecutionContext: ExecutionContext =
-    pekkoActorSystem.dispatchers.lookup("akka.actor.book-lookup")
+    pekkoActorSystem.dispatchers.lookup("pekko.actor.book-lookup")
 
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = pekkoActorSystem.scheduler,

@@ -43,7 +43,7 @@ trait FrontendComponents
   })
 
   lazy val jobScheduler = new JobScheduler(appContext)
-  lazy val akkaAsync = new AkkaAsync(environment, pekkoActorSystem)
+  lazy val pekkoAsync = new PekkoAsync(environment, pekkoActorSystem)
   lazy val appMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration
   lazy val mode = environment.mode

@@ -1,6 +1,6 @@
 package dfp
 
-import common.{AkkaAsync, GuLogging}
+import common.{PekkoAsync, GuLogging}
 import conf.Configuration
 import tools.Store
 
@@ -8,9 +8,9 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String, dfpApi: DfpApi) extends GuLogging {
 
-  def run(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext): Future[Unit] =
+  def run(pekkoAsync: PekkoAsync)(implicit executionContext: ExecutionContext): Future[Unit] =
     Future {
-      akkaAsync {
+      pekkoAsync {
         val adUnits = dfpApi.readActiveAdUnits(rootAdUnit.toString)
         if (adUnits.nonEmpty) {
           val rows = adUnits.map(adUnit => s"${adUnit.id},${adUnit.path.mkString(",")}")
