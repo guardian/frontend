@@ -308,11 +308,6 @@ POST        /commercial/adops/ads-txt                                           
 GET         /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
-# dev-build only
-GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
-GET            /commercial/magento/resource                                                                                      controllers.commercial.magento.ApiSandbox.getResource(t: String)
-GET            /commercial/magento/books                                                                                         controllers.commercial.magento.ApiSandbox.getBooks(t: String)
-
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
