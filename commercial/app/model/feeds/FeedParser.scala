@@ -4,7 +4,7 @@ import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import conf.Configuration
-import commercial.model.merchandise.{Book, Job, LiveEvent, Masterclass, TravelOffer}
+import commercial.model.merchandise.{Job, LiveEvent, Masterclass, TravelOffer}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration

@@ -21,20 +21,6 @@ import scala.xml.Node
 
 sealed trait Merchandise
 
-case class Book(
-    title: String,
-    author: Option[String],
-    isbn: String,
-    price: Option[Double] = None,
-    offerPrice: Option[Double] = None,
-    description: Option[String] = None,
-    jacketUrl: Option[String],
-    buyUrl: Option[String] = None,
-    position: Option[Int] = None,
-    category: Option[String] = None,
-    keywordIdSuffixes: Seq[String] = Nil,
-) extends Merchandise
-
 case class Masterclass(
     id: String,
     name: String,
@@ -160,7 +146,6 @@ object Merchandise {
   val merchandiseWrites: Writes[Merchandise] = new Writes[Merchandise] {
     def writes(m: Merchandise) =
       m match {
-        case b: Book        => Json.toJson(b)
         case j: Job         => Json.toJson(j)
         case m: Masterclass => Json.toJson(m)
         case m: Member      => Json.toJson(m)
@@ -173,39 +158,6 @@ object Merchandise {
         case l: LiveEvent   => Json.toJson(l)
       }
   }
-}
-
-object Book {
-
-  private val authorReads = ((JsPath \ "author_firstname").readNullable[String] and
-    (JsPath \ "author_lastname").readNullable[String]).tupled.map {
-    case (optFirstName, optLastName) =>
-      for {
-        firstName <- optFirstName
-        lastName <- optLastName
-      } yield s"$firstName $lastName"
-  }
-
-  private def stringOrDoubleAsDouble(value: String): Reads[Option[Double]] = {
-    val path = JsPath \ value
-    path.readNullable[Double] orElse path.readNullable[String].map(_.map(_.toDouble))
-  }
-
-  implicit val bookReads: Reads[Book] = (
-    (JsPath \ "name").read[String] and
-      authorReads and
-      (JsPath \ "isbn").read[String] and
-      stringOrDoubleAsDouble("regular_price_with_tax") and
-      stringOrDoubleAsDouble("final_price_with_tax") and
-      (JsPath \ "description").readNullable[String] and
-      (JsPath \ "images")(0).readNullable[String] and
-      (JsPath \ "product_url").readNullable[String] and
-      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
-      ((JsPath \ "categories")(0) \ "name").readNullable[String] and
-      (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
-  )(Book.apply _)
-
-  implicit val bookWrites: Writes[Book] = Json.writes[Book]
 }
 
 object Masterclass {
