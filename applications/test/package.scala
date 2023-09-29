@@ -2,7 +2,7 @@ package test
 
 import java.util.{List => JList}
 import org.scalatest.Suites
-import services.{FacebookGraphApiTest, IndexPageTest, InteractivePickerTest, NewspaperControllerTest}
+import services.{IndexPageTest, InteractivePickerTest, NewspaperControllerTest}
 
 import scala.jdk.CollectionConverters._
 
@@ -40,7 +40,6 @@ class ApplicationsTestSuite
       new CrosswordDataTest,
       new NewspaperControllerTest,
       new IndexPageTest,
-      new FacebookGraphApiTest,
       new InteractivePickerTest,
     )
     with SingleServerSuite {}

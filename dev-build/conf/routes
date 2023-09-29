@@ -339,7 +339,6 @@ GET            /opt/reset                                                       
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
-GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
