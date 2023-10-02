@@ -3,7 +3,6 @@ package commercial.model.feeds
 import java.lang.System.currentTimeMillis
 
 import conf.Configuration
-import commercial.model.merchandise.events.Eventbrite.{Response => EbResponse}
 import play.api.libs.json.{JsArray, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 
@@ -53,44 +52,6 @@ class SingleFeedFetcher(val wsClient: WSClient)(val feedMetaData: FeedMetaData) 
   }
 }
 
-class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMetaData: EventsFeedMetaData)
-    extends FeedFetcher {
-
-  def fetchPage(index: Int)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    fetch(feedMetaData.copy(additionalParameters = Map("page" -> index.toString)))
-  }
-
-  def combineFetchResponses(responses: Seq[FetchResponse]): FetchResponse = {
-
-    val duration = responses.foldLeft(0 milliseconds)((result, current: FetchResponse) =>
-      result + Duration(current.duration.toMillis, MILLISECONDS),
-    )
-
-    val contents = responses.foldLeft(JsArray())((result: JsArray, current: FetchResponse) =>
-      result :+ Json.parse(current.feed.content),
-    )
-
-    FetchResponse(
-      Feed(
-        contents.toString(),
-        responses.head.feed.contentType,
-      ),
-      duration,
-    )
-  }
-
-  def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
-    fetchPage(0) flatMap { initialFetch =>
-      val pageCount = Json.parse(initialFetch.feed.content).as[EbResponse].pagination.pageCount
-      val subsequentFetches = Future.traverse(2 to pageCount)(fetchPage)
-
-      subsequentFetches map { fetches =>
-        combineFetchResponses(initialFetch +: fetches)
-      }
-    }
-  }
-}
-
 class FeedsFetcher(wsClient: WSClient) {
 
   private val jobs: Option[FeedFetcher] = {
@@ -105,22 +66,12 @@ class FeedsFetcher(wsClient: WSClient) {
     }
   }
 
-  private val masterclasses: Option[FeedFetcher] =
-    Configuration.commercial.masterclassesToken map (token =>
-      new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("masterclasses", token)),
-    )
-
-  private val liveEvents: Option[FeedFetcher] =
-    Configuration.commercial.liveEventsToken map (token =>
-      new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("live-events", token)),
-    )
-
   private val travelOffers: Option[FeedFetcher] =
     Configuration.commercial.travelFeedUrl map { url =>
       new SingleFeedFetcher(wsClient)(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
+  val all: Seq[FeedFetcher] = Seq(bestsellers, travelOffers, jobs).flatten
 
 }
 

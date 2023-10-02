@@ -3,7 +3,6 @@ package commercial.controllers
 import com.softwaremill.macwire._
 import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
-import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import contentapi.ContentApiClient
@@ -13,10 +12,8 @@ import play.api.mvc.ControllerComponents
 trait CommercialControllers {
   def contentApiClient: ContentApiClient
   def bestsellersAgent: BestsellersAgent
-  def liveEventAgent: LiveEventAgent
   def bookFinder: BookFinder
   def capiAgent: CapiAgent
-  def masterclassAgent: MasterclassAgent
   def travelOffersAgent: TravelOffersAgent
   def jobsAgent: JobsAgent
   def controllerComponents: ControllerComponents
@@ -26,7 +23,6 @@ trait CommercialControllers {
   lazy val creativeTestPage = wire[CreativeTestPage]
   lazy val hostedContentController = wire[HostedContentController]
   lazy val jobsController = wire[JobsController]
-  lazy val liveEventsController = wire[LiveEventsController]
   lazy val multi = wire[Multi]
   lazy val travelOffersController = wire[TravelOffersController]
   lazy val trafficDriverController = wire[TrafficDriverController]
