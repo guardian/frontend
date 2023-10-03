@@ -127,6 +127,11 @@ object PressedContent {
     "/music/2017/dec/05/the-best-albums-of-2017",
     "/tv-and-radio/tvandradioblog/2017/dec/21/the-best-tv-episodes-of-2017-from-the-deuce-to-line-of-duty",
     "/us-news/2017/dec/24/trump-voters-see-his-flaws-but-stand-by-president-who-shakes-things-up",
+    "/world/ng-interactive/2017/nov/03/worlds-biggest-grave-robbery-asias-disappearing-ww2-shipwrecks",
+    "/us-news/ng-interactive/2017/jul/25/us-healthcare-system-vs-other-countries",
+    "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
+    "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
+    "/world/ng-interactive/2017/mar/01/who-are-europes-newcomers",
     // 2018
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/world/ng-interactive/2018/mar/05/italian-elections-2018-full-results-renzi-berlusconi",
@@ -151,6 +156,13 @@ object PressedContent {
     "/australia-news/2018/nov/21/will-the-crime-focused-liberal-unseat-labor-in-cranbourne",
     "/books/ng-interactive/2018/dec/01/guardian-review-best-books-of-2018",
     "/environment/ng-interactive/2018/dec/21/deadly-weather-the-human-cost-of-2018s-climate-disasters-visual-guide",
+    "/us-news/ng-interactive/2018/aug/07/mendocino-fire-california-biggest-state-history-mapped-explained",
+    "/news/ng-interactive/2018/apr/05/women-are-paid-less-than-men-heres-how-to-fix-it",
+    "/news/ng-interactive/2018/apr/04/gender-pay-gap-when-does-your-company-stop-paying-women-in-2018",
+    "/cities/ng-interactive/2018/feb/03/day-zero-how-cape-town-running-out-water",
+    "/environment/ng-interactive/2018/jan/01/london-air-pollution-live-data-where-will-be-first-to-break-legal-limits-in-2018",
+    "/society/ng-interactive/2018/jan/11/how-the-nhs-winter-beds-crisis-is-hitting-patient-care",
+    "/environment/ng-interactive/2018/oct/03/the-new-normal-how-climate-change-is-making-droughts-worse",
     // 2019
     "/travel/ng-interactive/2019/jan/05/where-to-go-on-holiday-in-2019-the-hotlist",
     "/politics/ng-interactive/2019/feb/15/how-brexit-revealed-four-new-political-factions",
@@ -183,6 +195,7 @@ object PressedContent {
     "/politics/ng-interactive/2019/dec/13/boris-johnson-achieves-landslide-victory-visual-guide",
     "/politics/ng-interactive/2019/dec/14/johnson-ascendant-your-general-election-recap",
     "/info/ng-interactive/2019/dec/19/working-report",
+    "/cities/ng-interactive/2019/jan/30/high-street-crisis-town-centres-lose-8-of-shops-in-five-years",
     // 2020
     "/artanddesign/ng-interactive/2020/jan/12/mole-man-and-me-sue-webster-artist-home-david-adjaye",
     "/artanddesign/ng-interactive/2020/jan/12/art-into-nature-nature-into-art-cesar-manrique-the-architect-of-lanzarote",
@@ -227,6 +240,7 @@ object PressedContent {
     "/world/ng-interactive/2020/dec/16/covid-chaos-a-timeline-of-the-uks-handling-of-the-coronavirus-crisis",
     "/info/ng-interactive/2020/dec/21/the-guardian-in-2020",
     "/us-news/ng-interactive/2020/dec/22/why-were-counting-every-us-healthcare-worker-who-dies-from-coronavirus",
+    "/fashion/ng-interactive/2020/feb/15/ive-always-been-a-rebel-vivienne-westwood-and-andreas-kronthaler-on-squaring-environmental-activism-with-selling-fashion",
     // 2021
     "/world/ng-interactive/2021/jan/08/which-countries-have-reported-new-uk-covid-variant",
     "/world/ng-interactive/2021/jan/25/how-the-arab-spring-unfolded-a-visualisation",
@@ -249,23 +263,7 @@ object PressedContent {
     "/global-development/ng-interactive/2021/jul/28/countdown-to-demolition-the-story-of-al-jalaa-tower-gaza-israel-palestine",
     "/news/datablog/ng-interactive/2021/aug/17/which-parts-australia-have-highest-vaccination-rates-by-state-nsw-sydney-victoria-melbourne-lga-suburb-check-your-area-vaccine-number-coverage-percentage-percent-population-look-up-interactive-map",
     "/news/datablog/ng-interactive/2021/aug/31/which-parts-australia-have-highest-vaccination-rate-by-state-nsw-sydney-victoria-melbourne-lga-suburb-check-your-area-vaccine-rates-number-coverage-percentage-percent-population-look-up-interactive-map",
-    // 2022
-    "/cities/ng-interactive/2019/jan/30/high-street-crisis-town-centres-lose-8-of-shops-in-five-years",
-    "/us-news/ng-interactive/2018/aug/07/mendocino-fire-california-biggest-state-history-mapped-explained",
-    "/news/ng-interactive/2018/apr/05/women-are-paid-less-than-men-heres-how-to-fix-it",
-    "/news/ng-interactive/2018/apr/04/gender-pay-gap-when-does-your-company-stop-paying-women-in-2018",
-    "/cities/ng-interactive/2018/feb/03/day-zero-how-cape-town-running-out-water",
-    "/environment/ng-interactive/2018/jan/01/london-air-pollution-live-data-where-will-be-first-to-break-legal-limits-in-2018",
-    "/society/ng-interactive/2018/jan/11/how-the-nhs-winter-beds-crisis-is-hitting-patient-care",
-    "/world/ng-interactive/2017/nov/03/worlds-biggest-grave-robbery-asias-disappearing-ww2-shipwrecks",
     "/environment/ng-interactive/2021/nov/04/fossil-fuel-assets-worthless-2036-net-zero-transition",
-    "/us-news/ng-interactive/2017/jul/25/us-healthcare-system-vs-other-countries",
-    "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
-    "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
-    "/fashion/ng-interactive/2020/feb/15/ive-always-been-a-rebel-vivienne-westwood-and-andreas-kronthaler-on-squaring-environmental-activism-with-selling-fashion",
-    "/world/ng-interactive/2017/mar/01/who-are-europes-newcomers",
-    // 2023
-    "/environment/ng-interactive/2018/oct/03/the-new-normal-how-climate-change-is-making-droughts-worse",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
