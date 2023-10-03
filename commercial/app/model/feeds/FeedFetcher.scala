@@ -60,18 +60,12 @@ class FeedsFetcher(wsClient: WSClient) {
     }
   }
 
-  private val bestsellers: Option[FeedFetcher] = {
-    Configuration.commercial.magento.domain map { domain =>
-      new SingleFeedFetcher(wsClient)(BestsellersFeedMetaData(domain))
-    }
-  }
-
   private val travelOffers: Option[FeedFetcher] =
     Configuration.commercial.travelFeedUrl map { url =>
       new SingleFeedFetcher(wsClient)(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = Seq(bestsellers, travelOffers, jobs).flatten
+  val all: Seq[FeedFetcher] = Seq(travelOffers, jobs).flatten
 
 }
 

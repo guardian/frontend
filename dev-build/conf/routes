@@ -259,8 +259,6 @@ GET            /admin/football/api/squad/:teamId                                
 # Commercial
 GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
-GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
-GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
 GET            /commercial/api/capi-single.json                                                                                  commercial.controllers.ContentApiOffersController.nativeJson
 GET            /commercial/api/capi-multiple.json                                                                                commercial.controllers.ContentApiOffersController.nativeJsonMulti
 GET            /commercial/api/traffic-driver.json                                                                               commercial.controllers.TrafficDriverController.renderJson()
@@ -309,11 +307,6 @@ GET         /commercial/adops/ads-txt                                           
 POST        /commercial/adops/ads-txt                                                                                            controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
 GET         /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
-
-# dev-build only
-GET            /commercial/magento/token                                                                                         controllers.commercial.magento.AccessTokenGenerator.generate
-GET            /commercial/magento/resource                                                                                      controllers.commercial.magento.ApiSandbox.getResource(t: String)
-GET            /commercial/magento/books                                                                                         controllers.commercial.magento.ApiSandbox.getBooks(t: String)
 
 # AMP
 GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()

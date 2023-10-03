@@ -5,7 +5,6 @@ import commercial.CommercialLifecycle
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import commercial.model.feeds.{FeedsFetcher, FeedsParser}
-import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, MagentoService}
 import commercial.model.merchandise.jobs.{Industries, JobsAgent}
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
@@ -37,12 +36,9 @@ trait CommercialServices {
   def pekkoActorSystem: PekkoActorSystem
   implicit val executionContext: ExecutionContext
 
-  lazy val magentoService = wire[MagentoService]
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
 
-  lazy val bookFinder = wire[BookFinder]
-  lazy val bestsellersAgent = wire[BestsellersAgent]
   lazy val travelOffersAgent = wire[TravelOffersAgent]
   lazy val jobsAgent = wire[JobsAgent]
   lazy val capiAgent = wire[CapiAgent]
