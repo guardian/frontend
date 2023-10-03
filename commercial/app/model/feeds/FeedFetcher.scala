@@ -99,12 +99,6 @@ class FeedsFetcher(wsClient: WSClient) {
     }
   }
 
-  private val bestsellers: Option[FeedFetcher] = {
-    Configuration.commercial.magento.domain map { domain =>
-      new SingleFeedFetcher(wsClient)(BestsellersFeedMetaData(domain))
-    }
-  }
-
   private val masterclasses: Option[FeedFetcher] =
     Configuration.commercial.masterclassesToken map (token =>
       new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("masterclasses", token)),
@@ -120,7 +114,7 @@ class FeedsFetcher(wsClient: WSClient) {
       new SingleFeedFetcher(wsClient)(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
+  val all: Seq[FeedFetcher] = Seq(masterclasses, travelOffers, jobs, liveEvents).flatten
 
 }
 

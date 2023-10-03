@@ -521,16 +521,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrl = configuration.getStringProperty("jobs.api.url")
 
-    object magento {
-      lazy val domain = configuration.getStringProperty("magento.domain")
-      lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
-      lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
-      lazy val accessToken = configuration.getStringProperty("magento.access.token.key")
-      lazy val accessTokenSecret = configuration.getStringProperty("magento.access.token.secret")
-      lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
-      lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
-    }
-
     lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
     lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeamAu")
     lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeamUs")

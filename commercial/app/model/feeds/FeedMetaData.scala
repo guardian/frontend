@@ -21,14 +21,6 @@ case class JobsFeedMetaData(override val url: String) extends FeedMetaData {
   override val responseEncoding = utf8
 }
 
-case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
-
-  val name = "bestsellers"
-  val url = s"https://$domain/bertrams/feed/independentsTop20"
-
-  override val responseEncoding = utf8
-}
-
 case class EventsFeedMetaData(
     feedName: String,
     accessToken: String,

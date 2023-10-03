@@ -1,11 +1,10 @@
 package commercial.model.feeds
 
-import commercial.model.merchandise.books.BestsellersAgent
 import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import conf.Configuration
-import commercial.model.merchandise.{Book, Job, LiveEvent, Masterclass, TravelOffer}
+import commercial.model.merchandise.{Job, LiveEvent, Masterclass, TravelOffer}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
@@ -17,7 +16,6 @@ sealed trait FeedParser[+T] {
 }
 
 class FeedsParser(
-    bestsellersAgent: BestsellersAgent,
     liveEventAgent: LiveEventAgent,
     masterclassAgent: MasterclassAgent,
     travelOffersAgent: TravelOffersAgent,
@@ -31,17 +29,6 @@ class FeedsParser(
         val feedMetaData = JobsFeedMetaData(url)
 
         def parse(feedContent: => Option[String]) = jobsAgent.refresh(feedMetaData, feedContent)
-      }
-    }
-  }
-
-  private val bestsellers: Option[FeedParser[Book]] = {
-    Configuration.commercial.magento.domain map { domain =>
-      new FeedParser[Book] {
-
-        val feedMetaData = BestsellersFeedMetaData(domain)
-
-        def parse(feedContent: => Option[String]) = bestsellersAgent.refresh(feedMetaData, feedContent)
       }
     }
   }
@@ -79,7 +66,7 @@ class FeedsParser(
     }
   }
 
-  val all = Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
+  val all = Seq(jobs, masterclasses, liveEvents, travelOffers).flatten
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
