@@ -264,6 +264,8 @@ object PressedContent {
     "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
     "/fashion/ng-interactive/2020/feb/15/ive-always-been-a-rebel-vivienne-westwood-and-andreas-kronthaler-on-squaring-environmental-activism-with-selling-fashion",
     "/world/ng-interactive/2017/mar/01/who-are-europes-newcomers",
+    // 2023
+    "/environment/ng-interactive/2018/oct/03/the-new-normal-how-climate-change-is-making-droughts-worse",
   )
 
   def isPressed(path: String): Boolean = content.contains(path)
