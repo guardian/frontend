@@ -72,6 +72,7 @@ val common = library("common")
       okhttp,
       pekkoActor,
       pekkoStream,
+      pekkoSlf4j,
     ) ++ jackson,
     TestAssets / mappings ~= filterAssets,
   )

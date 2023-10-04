@@ -7,7 +7,6 @@ import { elementsManager } from './tests/elements-manager';
 import { integrateIma } from './tests/integrate-ima';
 import { prebidKargo } from './tests/prebid-kargo';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
-import { signInGateCopyTestRepeatSept2023 } from './tests/sign-in-gate-copy-test-variant';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 
@@ -16,7 +15,6 @@ import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 export const concurrentTests: readonly ABTest[] = [
 	signInGateMainVariant,
 	signInGateMainControl,
-	signInGateCopyTestRepeatSept2023,
 	remoteRRHeaderLinksTest,
 	deeplyReadArticleFooterTest,
 	consentlessAds,

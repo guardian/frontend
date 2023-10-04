@@ -144,6 +144,7 @@ object Filters {
 
 }
 
+//Note: still using akka (instead of pekko) materializer from Play as both filters extend Play's Filter, so the types need to match
 class CommonFilters(frontendBuildInfo: FrontendBuildInfo)(implicit
     mat: Materializer,
     applicationContext: ApplicationContext,
@@ -163,6 +164,5 @@ class PreloadFilters(implicit
 class CommonGzipFilter @Inject() (implicit
     mat: Materializer,
 ) extends HttpFilters {
-
   val filters = Seq(new Gzipper)
 }

@@ -14,7 +14,6 @@ import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
 import controllers._
-import controllers.commercial.magento.{AccessTokenGenerator, ApiSandbox}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController
@@ -55,8 +54,6 @@ trait Controllers
 
   def newsletterSignupAgent: NewsletterSignupAgent
 
-  lazy val accessTokenGenerator = wire[AccessTokenGenerator]
-  lazy val apiSandbox = wire[ApiSandbox]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]

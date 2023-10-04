@@ -1,6 +1,6 @@
 package services
 
-import common.{AkkaAsync, GuLogging}
+import common.{PekkoAsync, GuLogging}
 import implicits.R2PressNotification.pressMessageFormatter
 import model.R2PressMessage
 import play.api.libs.json.Json
@@ -9,9 +9,9 @@ import scala.concurrent.ExecutionContext
 
 object R2PagePressNotifier extends GuLogging {
 
-  def enqueue(akkaAsync: AkkaAsync)(message: R2PressMessage)(implicit executionContext: ExecutionContext): String = {
+  def enqueue(pekkoAsync: PekkoAsync)(message: R2PressMessage)(implicit executionContext: ExecutionContext): String = {
     try {
-      R2PressNotification.sendWithoutSubject(akkaAsync)(Json.toJson[R2PressMessage](message).toString())
+      R2PressNotification.sendWithoutSubject(pekkoAsync)(Json.toJson[R2PressMessage](message).toString())
       val msg = s"Queued for pressing: ${message.url}."
       log.info(msg)
       msg

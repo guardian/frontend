@@ -1,7 +1,7 @@
 package rugby.conf
 
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import rugby.feed.CapiFeed
 import rugby.jobs.RugbyStatsJob
@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 class RugbyLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     rugbyStatsJob: RugbyStatsJob,
     capiFeed: CapiFeed,
 )(implicit ec: ExecutionContext)
@@ -34,12 +34,12 @@ class RugbyLifecycle(
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       rugbyStatsJob.fetchFixturesAndResults()
     }
 
     //delay to allow previous jobs to complete
-    akkaAsync.after(initializationTimeout) {
+    pekkoAsync.after(initializationTimeout) {
       val refreshedNavContent = capiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)
     }

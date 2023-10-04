@@ -1,7 +1,7 @@
 package jobs
 
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import topics.TopicService
 
@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class TopicLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     topicService: TopicService,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
@@ -26,7 +26,7 @@ class TopicLifecycle(
     scheduleJobs()
 
     // refresh top mentions when app starts
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       topicService.refreshTopics()
     }
   }

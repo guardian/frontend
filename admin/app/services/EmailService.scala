@@ -5,7 +5,7 @@ import java.util.concurrent.TimeoutException
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.simpleemail._
 import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
-import common.{AkkaAsync, GuLogging}
+import common.{PekkoAsync, GuLogging}
 import conf.Configuration.aws.mandatoryCredentials
 
 import scala.jdk.CollectionConverters._
@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
-class EmailService(akkaAsync: AkkaAsync) extends GuLogging {
+class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
 
   private lazy val client: AmazonSimpleEmailServiceAsync = AmazonSimpleEmailServiceAsyncClient
     .asyncBuilder()
@@ -22,7 +22,7 @@ class EmailService(akkaAsync: AkkaAsync) extends GuLogging {
     .withRegion(conf.Configuration.aws.region)
     .build()
 
-  val sendAsync = client.sendAsyncEmail(akkaAsync) _
+  val sendAsync = client.sendAsyncEmail(pekkoAsync) _
 
   def shutdown(): Unit = client.shutdown()
 
@@ -75,10 +75,10 @@ class EmailService(akkaAsync: AkkaAsync) extends GuLogging {
 
   private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsync) {
 
-    def sendAsyncEmail(akkaAsync: AkkaAsync)(request: SendEmailRequest): Future[SendEmailResult] = {
+    def sendAsyncEmail(pekkoAsync: PekkoAsync)(request: SendEmailRequest): Future[SendEmailResult] = {
       val promise = Promise[SendEmailResult]()
 
-      akkaAsync.after(1.minute) {
+      pekkoAsync.after(1.minute) {
         promise.tryFailure(new TimeoutException(s"Timed out"))
       }
 

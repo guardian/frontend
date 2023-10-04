@@ -3,12 +3,11 @@ package commercial.model.merchandise
 import commercial.model.OptString
 import commercial.model.capi.{CapiImages, ImageInfo}
 import model.ImageElement
-import events.Eventbrite._
-import events.LiveEventMembershipInfo
 import jobs.Industries
 import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import play.api.libs.json.JodaWrites._
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import play.api.libs.functional.syntax._
@@ -20,54 +19,6 @@ import scala.util.control.NonFatal
 import scala.xml.Node
 
 sealed trait Merchandise
-
-case class Book(
-    title: String,
-    author: Option[String],
-    isbn: String,
-    price: Option[Double] = None,
-    offerPrice: Option[Double] = None,
-    description: Option[String] = None,
-    jacketUrl: Option[String],
-    buyUrl: Option[String] = None,
-    position: Option[Int] = None,
-    category: Option[String] = None,
-    keywordIdSuffixes: Seq[String] = Nil,
-) extends Merchandise
-
-case class Masterclass(
-    id: String,
-    name: String,
-    startDate: DateTime,
-    url: String,
-    description: String,
-    status: String,
-    venue: Venue,
-    tickets: Seq[Ticket],
-    capacity: Int,
-    guardianUrl: String,
-    keywordIdSuffixes: Seq[String],
-    mainPicture: Option[ImageElement],
-) extends Merchandise
-    with TicketHandler
-    with EventHandler {
-
-  lazy val readableDate: String = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
-}
-
-case class LiveEvent(
-    eventId: String,
-    name: String,
-    date: DateTime,
-    eventUrl: String,
-    description: String,
-    status: String,
-    venue: Venue,
-    tickets: Seq[Ticket],
-    image: ImageInfo,
-) extends Merchandise
-    with TicketHandler
-    with EventHandler
 
 case class TravelOffer(
     id: String,
@@ -160,105 +111,15 @@ object Merchandise {
   val merchandiseWrites: Writes[Merchandise] = new Writes[Merchandise] {
     def writes(m: Merchandise) =
       m match {
-        case b: Book        => Json.toJson(b)
-        case j: Job         => Json.toJson(j)
-        case m: Masterclass => Json.toJson(m)
-        case m: Member      => Json.toJson(m)
+        case j: Job    => Json.toJson(j)
+        case m: Member => Json.toJson(m)
         case p: MemberPair =>
           Json.obj(
             "member1" -> Json.toJson(p.member1),
             "member2" -> Json.toJson(p.member2),
           )
         case t: TravelOffer => Json.toJson(t)
-        case l: LiveEvent   => Json.toJson(l)
       }
-  }
-}
-
-object Book {
-
-  private val authorReads = ((JsPath \ "author_firstname").readNullable[String] and
-    (JsPath \ "author_lastname").readNullable[String]).tupled.map {
-    case (optFirstName, optLastName) =>
-      for {
-        firstName <- optFirstName
-        lastName <- optLastName
-      } yield s"$firstName $lastName"
-  }
-
-  private def stringOrDoubleAsDouble(value: String): Reads[Option[Double]] = {
-    val path = JsPath \ value
-    path.readNullable[Double] orElse path.readNullable[String].map(_.map(_.toDouble))
-  }
-
-  implicit val bookReads: Reads[Book] = (
-    (JsPath \ "name").read[String] and
-      authorReads and
-      (JsPath \ "isbn").read[String] and
-      stringOrDoubleAsDouble("regular_price_with_tax") and
-      stringOrDoubleAsDouble("final_price_with_tax") and
-      (JsPath \ "description").readNullable[String] and
-      (JsPath \ "images")(0).readNullable[String] and
-      (JsPath \ "product_url").readNullable[String] and
-      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
-      ((JsPath \ "categories")(0) \ "name").readNullable[String] and
-      (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
-  )(Book.apply _)
-
-  implicit val bookWrites: Writes[Book] = Json.writes[Book]
-}
-
-object Masterclass {
-
-  def fromEvent(event: Event): Option[Masterclass] = {
-
-    def extractGuardianUrl: Option[String] = {
-      val guardianUrlLinkText: String = "Full course and returns information on the Masterclasses website"
-
-      val doc: Document = Jsoup.parse(event.description)
-
-      val elements: Array[Element] = doc
-        .select(s"a[href^=http://www.theguardian.com/]:contains($guardianUrlLinkText)")
-        .toArray(Array.empty[Element])
-
-      elements.headOption match {
-        case Some(e) => Some(e.attr("href"))
-        case _       => None
-      }
-    }
-
-    extractGuardianUrl map { extractedUrl =>
-      new Masterclass(
-        id = event.id,
-        name = event.name,
-        startDate = event.startDate,
-        url = event.url,
-        description = event.description,
-        status = event.status,
-        venue = event.venue,
-        tickets = event.tickets,
-        capacity = event.capacity,
-        guardianUrl = extractedUrl,
-        keywordIdSuffixes = Nil,
-        mainPicture = None,
-      )
-    }
-  }
-
-  implicit val masterclassWrites: Writes[Masterclass] = new Writes[Masterclass] {
-
-    def writes(m: Masterclass) =
-      Json.obj(
-        "id" -> m.id,
-        "name" -> m.name,
-        "startDate" -> m.readableDate,
-        "url" -> m.guardianUrl,
-        "venue" -> m.venue,
-        "ticketPrice" -> m.tickets.headOption.map(_.price),
-        "capacity" -> m.capacity,
-        "pictureUrl" -> m.mainPicture.map(picture => Item300.bestSrcFor(picture.images)),
-        "ratioTicketsLeft" -> m.ratioTicketsLeft,
-      )
   }
 }
 
@@ -357,22 +218,4 @@ object Job {
         "shortSalaryDescription" -> j.shortSalaryDescription,
       )
   }
-}
-
-object LiveEvent {
-
-  def fromEvent(event: Event, eventMembershipInformation: LiveEventMembershipInfo): LiveEvent =
-    new LiveEvent(
-      eventId = event.id,
-      name = event.name,
-      date = event.startDate,
-      eventUrl = eventMembershipInformation.url,
-      description = event.description,
-      status = event.status,
-      venue = event.venue,
-      tickets = event.tickets,
-      image = CapiImages.buildImageDataFromUrl(eventMembershipInformation.mainImageUrl),
-    )
-
-  implicit val liveEventWrites: Writes[LiveEvent] = Json.writes[LiveEvent]
 }

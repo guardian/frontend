@@ -1,7 +1,7 @@
 package jobs
 
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{PekkoAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import services.MessageUsService
 
@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class MessageUsLifecycle(
     appLifeCycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     messageUsService: MessageUsService,
 )(implicit
     ec: ExecutionContext,
@@ -28,7 +28,7 @@ class MessageUsLifecycle(
     scheduleJobs()
 
     // refresh message us data when app starts
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       messageUsService.refreshMessageUsData()
     }
   }

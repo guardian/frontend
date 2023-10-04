@@ -7,8 +7,9 @@ import services.{NewsSiteMap, VideoSiteMap}
 
 import scala.concurrent.ExecutionContext
 
-class SiteMapLifecycle(jobs: JobScheduler, akkaAsync: AkkaAsync, siteMapJob: SiteMapJob)(implicit ec: ExecutionContext)
-    extends LifecycleComponent {
+class SiteMapLifecycle(jobs: JobScheduler, pekkoAsync: PekkoAsync, siteMapJob: SiteMapJob)(implicit
+    ec: ExecutionContext,
+) extends LifecycleComponent {
 
   override def start(): Unit = {
     jobs.deschedule("SiteMap")
@@ -16,7 +17,7 @@ class SiteMapLifecycle(jobs: JobScheduler, akkaAsync: AkkaAsync, siteMapJob: Sit
       siteMapJob.update()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       siteMapJob.update()
     }
   }

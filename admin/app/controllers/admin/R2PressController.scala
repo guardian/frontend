@@ -1,6 +1,6 @@
 package controllers.admin
 
-import common.{AkkaAsync, GuLogging, ImplicitControllerExecutionContext}
+import common.{PekkoAsync, GuLogging, ImplicitControllerExecutionContext}
 import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier, RedirectService}
@@ -10,7 +10,7 @@ import java.net.URL
 import scala.util.Try
 
 class R2PressController(
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -90,7 +90,7 @@ class R2PressController(
 
   private def normaliseAndEnqueueTakedown(url: String): String = {
     getVariations(url) match {
-      case Some(urls) => urls.map(u => R2PressedPageTakedownNotifier.enqueue(akkaAsync)(u)).mkString("\n")
+      case Some(urls) => urls.map(u => R2PressedPageTakedownNotifier.enqueue(pekkoAsync)(u)).mkString("\n")
       case None       => s"$url not recognised as a valid url."
     }
   }
@@ -98,7 +98,7 @@ class R2PressController(
   def normaliseAndEnqueuePress(message: R2PressMessage): String = {
     val tryUrl = RedirectService.normaliseURL(message.url)
     tryUrl match {
-      case Some(url) => R2PagePressNotifier.enqueue(akkaAsync)(message.copy(url = url))
+      case Some(url) => R2PagePressNotifier.enqueue(pekkoAsync)(message.copy(url = url))
       case None      => s"${message.url} not recognised as a valid url."
     }
   }
