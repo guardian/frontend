@@ -13,9 +13,6 @@ GET         /commercial/travel/api/offers.json                              comm
 # Job merchandising components
 GET         /commercial/jobs/api/jobs.json                                  commercial.controllers.JobsController.getJobs
 
-# Live events merchandising components
-GET         /commercial/api/liveevent.json                                  commercial.controllers.LiveEventsController.getLiveEvent
-
 # Multiple offer merchandising components
 GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti()
 

@@ -516,9 +516,6 @@ class GuardianConfiguration extends GuLogging {
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
 
-    lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
-    lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
-    lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrl = configuration.getStringProperty("jobs.api.url")
 
     lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")

@@ -5,7 +5,6 @@ import commercial.CommercialLifecycle
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import commercial.model.feeds.{FeedsFetcher, FeedsParser}
-import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.{Industries, JobsAgent}
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
@@ -40,8 +39,6 @@ trait CommercialServices {
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
 
-  lazy val liveEventAgent = wire[LiveEventAgent]
-  lazy val masterclassAgent = wire[MasterclassAgent]
   lazy val travelOffersAgent = wire[TravelOffersAgent]
   lazy val jobsAgent = wire[JobsAgent]
   lazy val capiAgent = wire[CapiAgent]
