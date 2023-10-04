@@ -112,6 +112,6 @@ object OphanEsm
       name = "ophan-esm",
       description = "Use ophan-tracker-js@2, which uses native ES Modules",
       owners = Seq(Owner.withGithub("@guardian/ophan")),
-      sellByDate = LocalDate.of(2023, 10, 3),
+      sellByDate = LocalDate.of(2023, 10, 31),
       participationGroup = Perc50,
     )
