@@ -168,6 +168,7 @@ object CompetitionDisplayHelpers {
     teamName
       .replace("Ladies", "")
       .replace("Holland", "The Netherlands")
+      .replace("Union Saint Gilloise", "Union Saint-Gilloise")
   }
 
   def cleanTeamNameNextGenApi(teamName: String): String = {
