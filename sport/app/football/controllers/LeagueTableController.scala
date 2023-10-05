@@ -37,6 +37,7 @@ class LeagueTableController(
     "Champions League",
     "Euro 2024 qualifying",
     "Women's Champions League",
+    "Women's Nations League",
     "Europa League",
     "Carabao Cup",
     "International friendlies",
