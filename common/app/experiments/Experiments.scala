@@ -42,6 +42,16 @@ object Lightbox
       participationGroup = Perc0B,
     )
 
+object ServerSideLiveblogInlineAds
+    extends Experiment(
+      name = "server-side-liveblog-inline-ads",
+      description =
+        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 11, 1),
+      participationGroup = Perc0C,
+    )
+
 object FrontsBannerAdsDcr
     extends Experiment(
       name = "fronts-banner-ads-dcr",
@@ -86,16 +96,6 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 10, 30),
       participationGroup = Perc1E,
-    )
-
-object ServerSideLiveblogInlineAds
-    extends Experiment(
-      name = "server-side-liveblog-inline-ads",
-      description =
-        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc5A,
     )
 
 object SectionFrontsBannerAds
