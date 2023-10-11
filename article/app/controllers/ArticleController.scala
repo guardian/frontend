@@ -134,7 +134,6 @@ class ArticleController(
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
       case AppsFormat =>
-        log.info("[ArticleRendering] path executing in dotcom rendering for apps (DCAR)")
         remoteRenderer.getAppsArticle(
           ws,
           article,
