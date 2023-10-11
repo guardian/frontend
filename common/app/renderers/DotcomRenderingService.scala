@@ -320,6 +320,22 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
   }
 
+  def getAppsInteractive(
+                      ws: WSClient,
+                      page: InteractivePage,
+                      blocks: Blocks,
+                      pageType: PageType,
+                    )(implicit request: RequestHeader): Future[Result] = {
+
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+
+    // Nb. interactives have a longer timeout because some of them are very
+    // large unfortunately. E.g.
+    // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
+    post(ws, json, Configuration.rendering.baseURL + "/AppsInteractive", page.metadata.cacheTime, 4.seconds)
+  }
+
   def getEmailNewsletters(
       ws: WSClient,
       newsletters: List[NewsletterResponseV2],
