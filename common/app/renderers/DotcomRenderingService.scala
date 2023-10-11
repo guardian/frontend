@@ -321,11 +321,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   }
 
   def getAppsInteractive(
-                      ws: WSClient,
-                      page: InteractivePage,
-                      blocks: Blocks,
-                      pageType: PageType,
-                    )(implicit request: RequestHeader): Future[Result] = {
+      ws: WSClient,
+      page: InteractivePage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
