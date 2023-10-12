@@ -158,6 +158,16 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val frontsBannerAds: Switch = Switch(
+    group = Commercial,
+    name = "fronts-banner-ads",
+    description = "Enable banner ads to display instead of MPUs and merch-high on fronts pages.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
