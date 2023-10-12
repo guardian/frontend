@@ -196,6 +196,7 @@ object PressedContent {
     "/politics/ng-interactive/2019/dec/14/johnson-ascendant-your-general-election-recap",
     "/info/ng-interactive/2019/dec/19/working-report",
     "/cities/ng-interactive/2019/jan/30/high-street-crisis-town-centres-lose-8-of-shops-in-five-years",
+    "/world/ng-interactive/2019/mar/29/a-year-of-bloodshed-at-gaza-border-protests",
     // 2020
     "/artanddesign/ng-interactive/2020/jan/12/mole-man-and-me-sue-webster-artist-home-david-adjaye",
     "/artanddesign/ng-interactive/2020/jan/12/art-into-nature-nature-into-art-cesar-manrique-the-architect-of-lanzarote",
