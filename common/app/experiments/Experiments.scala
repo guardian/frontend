@@ -15,7 +15,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       Lightbox,
       ServerSideLiveblogInlineAds,
       OphanEsm,
-      SectionFrontsBannerAds,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
@@ -96,15 +95,6 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 10, 30),
       participationGroup = Perc1E,
-    )
-
-object SectionFrontsBannerAds
-    extends Experiment(
-      name = "section-fronts-banner-ads",
-      description = "Creates a new ad experience on section fronts, replacing MPUs with banner ads",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc20A,
     )
 
 object OphanEsm
