@@ -17,7 +17,7 @@ import implicits.Requests.RichRequestHeader
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
-import model.dotcomrendering.DotcomNewslettersPageRenderingDataModel
+import model.dotcomrendering.{DotcomNewslettersPageRenderingDataModel, DotcomNewsletterDetailPageRenderingDataModel}
 import model.SimplePage
 import model.CacheTime
 import play.api.mvc.Results
@@ -143,13 +143,12 @@ class SignupPageController(
       request: RequestHeader,
   ): Result = {
 
-    Cached(defaultCacheDuration)(
-      RevalidatableResult.Ok(
-        s"{\"name\": \"${newsletter.name}\"}",
-      ),
-    )
+    val page = StaticPages.dcrSimpleNewsletterDetailPage(request.path, newsletter)
+    val dataModel =
+      DotcomNewsletterDetailPageRenderingDataModel.apply(page, newsletter, request)
+    val dataJson = DotcomNewsletterDetailPageRenderingDataModel.toJson(dataModel)
+    common.renderJson(dataJson, page).as("application/json")
   }
-
 
   def renderNewsletterDetailPage(identityName: String)(implicit
       executionContext: ExecutionContext = this.executionContext,
@@ -166,6 +165,7 @@ class SignupPageController(
               case None =>
                 Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
               case Some(newsletter) =>
+                // TO DO - newsletter must be live ?
                 newsletterDetailPageResult(newsletter)
             }
         }
@@ -187,6 +187,7 @@ class SignupPageController(
               case None =>
                 Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
               case Some(newsletter) =>
+                // TO DO - newsletter must be live ?
                 newsletterDetailJsonResult(newsletter)
             }
         }

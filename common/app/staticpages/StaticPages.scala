@@ -2,6 +2,7 @@ package staticpages
 
 import model.{DotcomContentType, MetaData, SectionId, SimplePage, StandalonePage}
 import services.newsletters.model.NewsletterResponse
+import services.newsletters.model.NewsletterResponseV2
 
 case class NewsletterRoundupPage(
     metadata: MetaData,
@@ -52,6 +53,24 @@ object StaticPages {
         webTitle = "Guardian newsletters: Sign up for our free newsletters",
         description = Some(
           "Scroll less and understand more about the subjects you care about with the Guardian's brilliant email newsletters, free to your inbox.",
+        ),
+        contentType = Some(DotcomContentType.Signup),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
+  def dcrSimpleNewsletterDetailPage(
+      id: String,
+      newsletter: NewsletterResponseV2,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "newsletter-signup-page")),
+        webTitle = s"Guardian newsletters: ${newsletter.name}",
+        description = Some(
+          newsletter.signUpDescription,
         ),
         contentType = Some(DotcomContentType.Signup),
         iosType = None,
