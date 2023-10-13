@@ -20,6 +20,7 @@ import scala.concurrent.duration._
 import model.dotcomrendering.DotcomNewslettersPageRenderingDataModel
 import model.SimplePage
 import model.CacheTime
+import play.api.mvc.Results
 
 class SignupPageController(
     wsClient: WSClient,
@@ -124,6 +125,39 @@ class SignupPageController(
         } else {
           renderNewslettersJson()
         }
+      }
+    }
+
+  private def newsletterPageResult(newsletter: NewsletterResponseV2)(implicit
+      request: RequestHeader,
+  ): Result = {
+
+    Cached(defaultCacheDuration)(
+      RevalidatableResult.Ok(
+        newsletter.name,
+      ),
+    )
+  }
+
+  def renderSingleNewsletter(identityName: String)(implicit
+      executionContext: ExecutionContext = this.executionContext,
+  ): Action[AnyContent] =
+    csrfAddToken {
+      Action { implicit request =>
+        newsletterSignupAgent.getV2NewsletterByName(identityName) match {
+          case Left(message) =>
+            Cached(CacheTime.NotFound)(
+              RevalidatableResult.apply(Results.InternalServerError(message), message),
+            )
+          case Right(optionalNewsletter) =>
+            optionalNewsletter match {
+              case None =>
+                Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
+              case Some(newsletter) =>
+                newsletterPageResult(newsletter)
+            }
+        }
+
       }
     }
 }
