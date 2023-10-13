@@ -339,11 +339,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val token = configuration.getStringProperty("github.token")
   }
 
-  object teamcity {
-    lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
-    lazy val internalHost = configuration.getMandatoryStringProperty("teamcity.internalhost")
-  }
-
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
