@@ -128,7 +128,7 @@ class SignupPageController(
       }
     }
 
-  private def newsletterPageResult(newsletter: NewsletterResponseV2)(implicit
+  private def newsletterDetailPageResult(newsletter: NewsletterResponseV2)(implicit
       request: RequestHeader,
   ): Result = {
 
@@ -139,7 +139,19 @@ class SignupPageController(
     )
   }
 
-  def renderSingleNewsletter(identityName: String)(implicit
+  private def newsletterDetailJsonResult(newsletter: NewsletterResponseV2)(implicit
+      request: RequestHeader,
+  ): Result = {
+
+    Cached(defaultCacheDuration)(
+      RevalidatableResult.Ok(
+        s"{\"name\": \"${newsletter.name}\"}",
+      ),
+    )
+  }
+
+
+  def renderNewsletterDetailPage(identityName: String)(implicit
       executionContext: ExecutionContext = this.executionContext,
   ): Action[AnyContent] =
     csrfAddToken {
@@ -154,7 +166,28 @@ class SignupPageController(
               case None =>
                 Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
               case Some(newsletter) =>
-                newsletterPageResult(newsletter)
+                newsletterDetailPageResult(newsletter)
+            }
+        }
+      }
+    }
+
+  def renderNewsletterDetailJson(identityName: String)(implicit
+      executionContext: ExecutionContext = this.executionContext,
+  ): Action[AnyContent] =
+    csrfAddToken {
+      Action { implicit request =>
+        newsletterSignupAgent.getV2NewsletterByName(identityName) match {
+          case Left(message) =>
+            Cached(CacheTime.NotFound)(
+              RevalidatableResult.apply(Results.InternalServerError(message), message),
+            )
+          case Right(optionalNewsletter) =>
+            optionalNewsletter match {
+              case None =>
+                Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
+              case Some(newsletter) =>
+                newsletterDetailJsonResult(newsletter)
             }
         }
 
