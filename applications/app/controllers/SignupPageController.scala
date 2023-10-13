@@ -132,10 +132,13 @@ class SignupPageController(
       request: RequestHeader,
   ): Result = {
 
-    Cached(defaultCacheDuration)(
-      RevalidatableResult.Ok(
-        newsletter.name,
+    Await.result(
+      remoteRenderer.getEmailNewsletterDetail(
+        ws = wsClient,
+        newsletter = newsletter,
+        page = StaticPages.dcrSimpleNewsletterDetailPage(request.path, newsletter),
       ),
+      3.seconds,
     )
   }
 
