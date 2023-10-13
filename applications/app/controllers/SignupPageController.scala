@@ -153,24 +153,42 @@ class SignupPageController(
     common.renderJson(dataJson, page).as("application/json")
   }
 
+  // TO DO - define a class Left instead of using Strings
+  private def getNewsletterIfLive(identityName: String)(implicit
+      executionContext: ExecutionContext = this.executionContext,
+  ): Either[String, NewsletterResponseV2] = {
+    newsletterSignupAgent.getV2NewsletterByName(identityName) match {
+      case Left(message) => Left(message)
+      case Right(optionalNewsletter) =>
+        optionalNewsletter match {
+          case None             => Left("not found")
+          case Some(newsletter) =>
+            if (newsletter.restricted || newsletter.status != "live") {
+              Left("denied")
+            } else {
+              Right(newsletter)
+            }
+        }
+    }
+  }
+
   def renderNewsletterDetailPage(identityName: String)(implicit
       executionContext: ExecutionContext = this.executionContext,
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        newsletterSignupAgent.getV2NewsletterByName(identityName) match {
-          case Left(message) =>
-            Cached(CacheTime.NotFound)(
-              RevalidatableResult.apply(Results.InternalServerError(message), message),
-            )
-          case Right(optionalNewsletter) =>
-            optionalNewsletter match {
-              case None =>
-                Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
-              case Some(newsletter) =>
-                // TO DO - newsletter must be live ?
-                newsletterDetailPageResult(newsletter)
+        getNewsletterIfLive(identityName) match {
+          case Left(message) => {
+            // TO DO - render proper user-facing error pages here
+            if (message == "not found") {
+              Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
+            } else {
+              Cached(CacheTime.NotFound)(
+                RevalidatableResult.apply(Results.InternalServerError(message), message),
+              )
             }
+          }
+          case Right(newsletter) => newsletterDetailPageResult(newsletter)
         }
       }
     }
@@ -180,21 +198,18 @@ class SignupPageController(
   ): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        newsletterSignupAgent.getV2NewsletterByName(identityName) match {
-          case Left(message) =>
-            Cached(CacheTime.NotFound)(
-              RevalidatableResult.apply(Results.InternalServerError(message), message),
-            )
-          case Right(optionalNewsletter) =>
-            optionalNewsletter match {
-              case None =>
-                Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
-              case Some(newsletter) =>
-                // TO DO - newsletter must be live ?
-                newsletterDetailJsonResult(newsletter)
+        getNewsletterIfLive(identityName) match {
+          case Left(message) => {
+            if (message == "not found") {
+              Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
+            } else {
+              Cached(CacheTime.NotFound)(
+                RevalidatableResult.apply(Results.InternalServerError(message), message),
+              )
             }
+          }
+          case Right(newsletter) => newsletterDetailJsonResult(newsletter)
         }
-
       }
     }
 }
