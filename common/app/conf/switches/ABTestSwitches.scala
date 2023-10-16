@@ -27,6 +27,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-times-of-day",
+    "Show sign in gate a different frequency depending on the time of day",
+    owners = Seq(Owner.withGithub("personalisation")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 12, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-deeply-read-article-footer",
     "Test whether adding deeply read articles have negative impact on recirculation",
     owners = Seq(Owner.withName("dotcom.platform")),
