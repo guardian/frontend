@@ -1560,6 +1560,7 @@
   version "11.16.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.16.0.tgz#1b6851039fce1a3bb2b67bcadb554b452dd32b47"
   integrity sha512-Dgt528hqX4HRT033J9wqX0+ZMwiNWvu8Sg6QkZfTjU6b3rd7gArwcwdW+G+d3QN6L39JTJgDqtO0I0zvNtOKvA==
+
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
@@ -8361,11 +8362,6 @@ jest-snapshot@^26.6.2:
     natural-compare "^1.4.0"
     pretty-format "^26.6.2"
     semver "^7.3.2"
-
-jest-teamcity-reporter@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/jest-teamcity-reporter/-/jest-teamcity-reporter-0.6.2.tgz#a71e350cc994186d3c6fbb6c3d7895e547026365"
-  integrity sha512-og4J9jhkMOcBTtZFZywTs5yXled2ziM46G+No6lTlZThwlx6FQ0lzCMDdKR6zZeRFBgJOU2EzdCDb21n/JaP3A==
 
 jest-util@^26.1.0, jest-util@^26.6.2:
   version "26.6.2"

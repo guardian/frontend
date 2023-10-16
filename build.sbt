@@ -1,4 +1,3 @@
-import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
@@ -237,32 +236,6 @@ val main = root()
     archive,
     preview,
     rss,
-  )
-  .settings(
-    riffRaffUploadArtifactBucket := Some(
-      System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity"),
-    ),
-    riffRaffUploadManifestBucket := Some(
-      System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity"),
-    ),
-    riffRaffManifestProjectName := "dotcom:all",
-    riffRaffArtifactResources := Seq(
-      (admin / Universal / packageBin).value -> s"${(admin / name).value}/${(admin / Universal / packageBin).value.getName}",
-      (applications / Universal / packageBin).value -> s"${(applications / name).value}/${(applications / Universal / packageBin).value.getName}",
-      (archive / Universal / packageBin).value -> s"${(archive / name).value}/${(archive / Universal / packageBin).value.getName}",
-      (article / Universal / packageBin).value -> s"${(article / name).value}/${(article / Universal / packageBin).value.getName}",
-      (commercial / Universal / packageBin).value -> s"${(commercial / name).value}/${(commercial / Universal / packageBin).value.getName}",
-      (diagnostics / Universal / packageBin).value -> s"${(diagnostics / name).value}/${(diagnostics / Universal / packageBin).value.getName}",
-      (discussion / Universal / packageBin).value -> s"${(discussion / name).value}/${(discussion / Universal / packageBin).value.getName}",
-      (identity / Universal / packageBin).value -> s"${(identity / name).value}/${(identity / Universal / packageBin).value.getName}",
-      (facia / Universal / packageBin).value -> s"${(facia / name).value}/${(facia / Universal / packageBin).value.getName}",
-      (faciaPress / Universal / packageBin).value -> s"${(faciaPress / name).value}/${(faciaPress / Universal / packageBin).value.getName}",
-      (onward / Universal / packageBin).value -> s"${(onward / name).value}/${(onward / Universal / packageBin).value.getName}",
-      (preview / Universal / packageBin).value -> s"${(preview / name).value}/${(preview / Universal / packageBin).value.getName}",
-      (rss / Universal / packageBin).value -> s"${(rss / name).value}/${(rss / Universal / packageBin).value.getName}",
-      (sport / Universal / packageBin).value -> s"${(sport / name).value}/${(sport / Universal / packageBin).value.getName}",
-      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml",
-    ),
   )
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {
