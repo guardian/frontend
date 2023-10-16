@@ -56,7 +56,7 @@ jobs:
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
 
-      - uses: guardian/actions-riff-raff@v2
+      - uses: guardian/actions-riff-raff@7af491105eb014a02e7d90b767a7b32afda0ef7c
         with:
           projectName: dotcom:frontend-all
           configPath: riff-raff.yaml
