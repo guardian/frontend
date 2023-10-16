@@ -1556,16 +1556,16 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-15.0.1.tgz#2c936c43e654f5ae28db254329eae1b4b5861641"
   integrity sha512-XNqYE9X/4aM5vZqiZInedvEZ9niPfdqwL7SjzNF0wnVbR+YObOC6QC68M521gTPcyca6r190qtnayv4GNO0peg==
 
-"@guardian/commercial@^11.14.0":
-  version "11.14.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.14.0.tgz#ca868972ccae4e5590dc22148b89713489a62e52"
-  integrity sha512-TjhLWpaUPCoeng+6m7RavvT/aAQmnMCnYAzKJDHHa5JJpR/V2OcAyV1Tb4ysCmdrgxmSuqaPPhgw9VdKkFINiA==
+"@guardian/commercial@^11.16.0":
+  version "11.16.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.16.0.tgz#1b6851039fce1a3bb2b67bcadb554b452dd32b47"
+  integrity sha512-Dgt528hqX4HRT033J9wqX0+ZMwiNWvu8Sg6QkZfTjU6b3rd7gArwcwdW+G+d3QN6L39JTJgDqtO0I0zvNtOKvA==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
-    ophan-tracker-js "^1.4.0"
+    ophan-tracker-js "^2.0.1"
     prebid.js guardian/prebid.js#356f371
     process "^0.11.10"
     raven-js "^3.27.2"
@@ -9937,10 +9937,15 @@ openurl@1.1.1:
   resolved "https://registry.yarnpkg.com/openurl/-/openurl-1.1.1.tgz#3875b4b0ef7a52c156f0db41d4609dbb0f94b387"
   integrity sha512-d/gTkTb1i1GKz5k3XE3XFV/PxQ1k45zDqGP2OA7YhgsaLoqm6qRvARAZOFer1fcXritWlGBRCu/UgeS4HAnXAA==
 
-ophan-tracker-js@1.4.0, ophan-tracker-js@^1.4.0:
+ophan-tracker-js@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.4.0.tgz#6c0e8f56157f2bd1473beaa6b79b54b99f5a7b1d"
   integrity sha512-X5JoLOYxvfvNRI0Vo8xBT0UgJdiU9snPYOGgQUTk5ZnPYgX3xGW/yt7xdePeg9yM0eCuP5SeYQTLfF4bp0GFuw==
+
+ophan-tracker-js@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-2.0.1.tgz#568c9a8c127f511d4dc19e9d3421cc88e04ea910"
+  integrity sha512-HXH0rjZlLeV9ri4V9Q0t0AaD5Q3ue4o+YMCuBsov6cWLPWcWBiARHtSRlpY6fJD+/iUIEiSPsrlfPIJUz7inYA==
 
 opn@5.3.0:
   version "5.3.0"
