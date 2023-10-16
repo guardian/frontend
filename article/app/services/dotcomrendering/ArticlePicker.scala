@@ -5,6 +5,7 @@ import implicits.Requests._
 import model.{ArticlePage, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
+import implicits.AppsFormat
 
 object ArticlePageChecks {
 
@@ -65,11 +66,30 @@ object ArticlePicker {
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
-      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", features, page.article)
+      if (request.getRequestFormat == AppsFormat)
+        DotcomponentsLogger.logger.logRequest(
+          s"[ArticleRendering] path executing in dotcom rendering for apps (DCAR)",
+          features,
+          page.article,
+        )
+      else
+        DotcomponentsLogger.logger.logRequest(
+          s"[ArticleRendering] path executing in dotcomponents",
+          features,
+          page.article,
+        )
     } else if (tier == PressedArticle) {
-      DotcomponentsLogger.logger.logRequest(s"path executing from pressed content", features, page.article)
+      DotcomponentsLogger.logger.logRequest(
+        s"[ArticleRendering] path executing from pressed content",
+        features,
+        page.article,
+      )
     } else {
-      DotcomponentsLogger.logger.logRequest(s"path executing in web", features, page.article)
+      DotcomponentsLogger.logger.logRequest(
+        s"[ArticleRendering] path executing in web (frontend)",
+        features,
+        page.article,
+      )
     }
 
     tier
