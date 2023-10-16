@@ -8362,11 +8362,6 @@ jest-snapshot@^26.6.2:
     pretty-format "^26.6.2"
     semver "^7.3.2"
 
-jest-teamcity-reporter@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/jest-teamcity-reporter/-/jest-teamcity-reporter-0.6.2.tgz#a71e350cc994186d3c6fbb6c3d7895e547026365"
-  integrity sha512-og4J9jhkMOcBTtZFZywTs5yXled2ziM46G+No6lTlZThwlx6FQ0lzCMDdKR6zZeRFBgJOU2EzdCDb21n/JaP3A==
-
 jest-util@^26.1.0, jest-util@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-26.6.2.tgz#907535dbe4d5a6cb4c47ac9b926f6af29576cbc1"
