@@ -15,7 +15,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       Lightbox,
       ServerSideLiveblogInlineAds,
       OphanEsm,
-      SectionFrontsBannerAds,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
@@ -40,6 +39,16 @@ object Lightbox
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 10, 30),
       participationGroup = Perc0B,
+    )
+
+object ServerSideLiveblogInlineAds
+    extends Experiment(
+      name = "server-side-liveblog-inline-ads",
+      description =
+        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
+      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
+      sellByDate = LocalDate.of(2023, 11, 1),
+      participationGroup = Perc0C,
     )
 
 object FrontsBannerAdsDcr
@@ -75,7 +84,7 @@ object HeaderTopBarSearchCapi
       name = "header-top-bar-search-capi",
       description = "Adds CAPI search to the top nav",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 10),
+      sellByDate = LocalDate.of(2023, 11, 10),
       participationGroup = Perc1B,
     )
 
@@ -86,25 +95,6 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 10, 30),
       participationGroup = Perc1E,
-    )
-
-object ServerSideLiveblogInlineAds
-    extends Experiment(
-      name = "server-side-liveblog-inline-ads",
-      description =
-        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc5A,
-    )
-
-object SectionFrontsBannerAds
-    extends Experiment(
-      name = "section-fronts-banner-ads",
-      description = "Creates a new ad experience on section fronts, replacing MPUs with banner ads",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc20A,
     )
 
 object OphanEsm
