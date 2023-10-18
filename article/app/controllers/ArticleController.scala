@@ -54,8 +54,9 @@ class ArticleController(
   }
 
   def renderAppsArticle(path: String, edition: String): Action[AnyContent] = {
+    val appEdition = Edition.byId(edition).getOrElse(Edition.defaultEdition)
     Action.async { implicit request =>
-      mapAppModel(path, ArticleBlocks, edition) { (article, blocks) =>
+      mapAppModel(path, ArticleBlocks, appEdition) { (article, blocks) =>
         render(path, article, blocks)
       }
     }
@@ -165,7 +166,7 @@ class ArticleController(
       }
   }
 
-  private def mapAppModel(path: String, range: BlockRange, appEdition: String)(
+  private def mapAppModel(path: String, range: BlockRange, appEdition: Edition)(
       render: (ArticlePage, Blocks) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup

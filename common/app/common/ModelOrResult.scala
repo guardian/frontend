@@ -26,13 +26,11 @@ private object ItemOrRedirect extends ItemResponses with GuLogging {
   ): Either[Result, T] =
     maybeSection match {
       case Some(section) => redirectSection(item, request, section)
-//      case None          => redirectArticle(item, response, request)
-      case None => Right(item)
+      case None          => redirectArticle(item, response, request)
     }
 
   private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[Result, T] = {
     canonicalPath(response) match {
-//      case Some(canonicalPath) if canonicalPath != request.pathWithoutModifiers && !request.isModified =>
       case Some(canonicalPath)
           if canonicalPath != request.pathWithAppsAndEdition && canonicalPath != request.pathWithoutModifiers && !request.isModified =>
         Left(Found(canonicalPath + paramString(request)))
