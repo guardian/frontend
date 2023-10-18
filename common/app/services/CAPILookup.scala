@@ -12,7 +12,29 @@ class CAPILookup(contentApiClient: ContentApiClient) {
 
   def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
+    val capiItem = contentApiClient
+      .item(path, edition)
+      .showTags("all")
+      .showFields("all")
+      .showReferences("all")
+      .showAtoms("all")
 
+    val capiItemWithBlocks = range
+      .map { blockRange =>
+        val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("all")
+        capiItem.showBlocks(blocksParam)
+      }
+      .getOrElse(capiItem)
+
+    contentApiClient.getResponse(capiItemWithBlocks)
+
+  }
+
+  def lookupForApps(path: String, range: Option[BlockRange], appEdition: String)(implicit
+      request: RequestHeader,
+  ): Future[ItemResponse] = {
+    val edition = Edition.byId(appEdition).getOrElse(Edition.defaultEdition)
+    println(edition)
     val capiItem = contentApiClient
       .item(path, edition)
       .showTags("all")

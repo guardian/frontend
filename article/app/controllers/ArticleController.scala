@@ -53,6 +53,14 @@ class ArticleController(
     }
   }
 
+  def renderAppsArticle(path: String, edition: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      mapAppModel(path, ArticleBlocks, edition) { (article, blocks) =>
+        render(path, article, blocks)
+      }
+    }
+  }
+
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) { (article, blocks) =>
@@ -149,6 +157,19 @@ class ArticleController(
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
+      .map(responseToModelOrResult)
+      .recover(convertApiExceptions)
+      .flatMap {
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
+      }
+  }
+
+  private def mapAppModel(path: String, range: BlockRange, appEdition: String)(
+      render: (ArticlePage, Blocks) => Future[Result],
+  )(implicit request: RequestHeader): Future[Result] = {
+    capiLookup
+      .lookupForApps(path, Some(range), appEdition)
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {

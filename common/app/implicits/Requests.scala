@@ -1,14 +1,14 @@
 package implicits
 
 import com.gu.facia.client.models.{
+  AUNewSouthWalesTerritory,
+  AUQueenslandTerritory,
+  AUVictoriaTerritory,
   EU27Territory,
   NZTerritory,
   TargetedTerritory,
   USEastCoastTerritory,
   USWestCoastTerritory,
-  AUVictoriaTerritory,
-  AUQueenslandTerritory,
-  AUNewSouthWalesTerritory,
 }
 import conf.Configuration
 import play.api.mvc.RequestHeader
@@ -87,6 +87,9 @@ trait Requests {
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
       else r.path.stripSuffix("/all")
+
+    lazy val pathWithAppsAndEdition: String =
+      r.path.stripPrefix("/apps/uk")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
