@@ -10,6 +10,7 @@ import com.gu.facia.client.models.{
   USEastCoastTerritory,
   USWestCoastTerritory,
 }
+import common.Edition.allEditions
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -88,8 +89,10 @@ trait Requests {
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
       else r.path.stripSuffix("/all")
 
-    lazy val pathWithAppsAndEdition: String =
-      r.path.stripPrefix("/apps/uk")
+    lazy val pathWithAppsAndEdition: String = {
+      val matchedEdition = allEditions.find(edition => r.path.startsWith(s"/apps/${edition.id.toLowerCase()}"))
+      matchedEdition.map(edition => r.path.stripPrefix(s"/apps/${edition.id.toLowerCase()}")).getOrElse(r.path)
+    }
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 

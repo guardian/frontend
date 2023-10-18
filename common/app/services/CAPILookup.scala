@@ -30,11 +30,8 @@ class CAPILookup(contentApiClient: ContentApiClient) {
 
   }
 
-  def lookupForApps(path: String, range: Option[BlockRange], appEdition: String)(implicit
-      request: RequestHeader,
-  ): Future[ItemResponse] = {
-    val edition = Edition.byId(appEdition).getOrElse(Edition.defaultEdition)
-    println(edition)
+  def lookupForApps(path: String, range: Option[BlockRange], appEdition: Edition): Future[ItemResponse] = {
+    val edition = appEdition
     val capiItem = contentApiClient
       .item(path, edition)
       .showTags("all")
