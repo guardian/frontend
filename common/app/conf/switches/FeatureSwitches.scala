@@ -522,24 +522,14 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val VerticalVideo = Switch(
+  val DarkModeInApps = Switch(
     SwitchGroup.Feature,
-    "vertical-video",
-    "When ON, shows the vertical video container",
-    owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
+    "dark-mode-apps",
+    "If this switch is on, we will allow dark mode in apps articles",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
+    // This is a random date in the future but this switch should be removed far before then
+    sellByDate = Some(LocalDate.of(2024, 6, 5)),
+    exposeClientSide = false,
   )
-
-  val VerticalVideoSurvey = Switch(
-    SwitchGroup.Feature,
-    "vertical-video-survey",
-    "When ON, shows the vertical video survey link",
-    owners = Seq(Owner.withGithub("@guardian/editorial-experience")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
 }

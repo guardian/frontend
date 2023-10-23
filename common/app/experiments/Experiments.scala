@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      FrontsBannerAdsDcr,
       Lightbox,
       ServerSideLiveblogInlineAds,
       OphanEsm,
@@ -49,15 +48,6 @@ object ServerSideLiveblogInlineAds
       owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
       sellByDate = LocalDate.of(2023, 11, 1),
       participationGroup = Perc0C,
-    )
-
-object FrontsBannerAdsDcr
-    extends Experiment(
-      name = "fronts-banner-ads-dcr",
-      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc0E,
     )
 
 // Removing while we are still implementing this content type in DCR
