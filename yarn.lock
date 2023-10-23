@@ -1560,7 +1560,6 @@
   version "11.16.0"
   resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.16.0.tgz#1b6851039fce1a3bb2b67bcadb554b452dd32b47"
   integrity sha512-Dgt528hqX4HRT033J9wqX0+ZMwiNWvu8Sg6QkZfTjU6b3rd7gArwcwdW+G+d3QN6L39JTJgDqtO0I0zvNtOKvA==
-
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
@@ -10495,7 +10494,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#356f371":
+prebid.js@guardian/prebid.js#356f371:
   version "7.54.5"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/356f3714fda0459b6740e90ff265055fe6d4f813"
   dependencies:
