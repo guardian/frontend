@@ -3992,10 +3992,10 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap-sass@3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz#6596c7ab40f6637393323ab0bc80d064fc630498"
-  integrity sha512-KrNF/ogcy9LX/gK4XbcAWT2y9fNuT2kao9WKPzOlq7reZVdRrMfFnUI+YrO/3IosgtAsqM0Elh94OQVO59Gp4g==
+bootstrap-sass@3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.4.3.tgz#742cc8f4286303ae9fe8e4c95237321eae73766c"
+  integrity sha512-vPgFnGMp1jWZZupOND65WS6mkR8rxhJxndT/AcMbqcq1hHMdkcH4sMPhznLzzoHOHkSCrd6J9F8pWBriPCKP2Q==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -10969,7 +10969,7 @@ prebid.js@guardian/prebid.js#ddf4251:
   version "7.54.5"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/ddf4251b19c95878af00f640211c0c31ac3e7ac2"
   dependencies:
-    "@babel/core" "^7.23.2"
+    "@babel/core" "^7.16.7"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
