@@ -41,7 +41,7 @@
 		"fence": "guardian/fence#0.2.11",
 		"lodash-es": "^4.17.21",
 		"object-fit-videos": "^1.0.3",
-		"ophan-tracker-js": "1.4.0",
+		"ophan-tracker-js": "2.0.2",
 		"preact": "^10.5.13",
 		"qwery": "3.4.2",
 		"rangefix": "^0.2.5",
