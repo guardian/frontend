@@ -31,7 +31,7 @@
 		"@guardian/support-dotcom-components": "1.0.7",
 		"bean": "~1.0.14",
 		"bonzo": "~2.0.0",
-		"bootstrap-sass": "3.4.3",
+		"bootstrap-sass": "3.4.1",
 		"classnames": "~2.2.0",
 		"curl": "cujojs/curl#0.8.9",
 		"dialog-polyfill": "^0.5.6",
