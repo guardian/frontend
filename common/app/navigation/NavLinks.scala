@@ -97,7 +97,7 @@ object NavLinks {
   val columnists = NavLink("Columnists", "/index/contributors")
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
   val theGuardianView = NavLink("The Guardian view", "/profile/editorial")
-  val cartoons = NavLink("Cartoons", "/cartoons/archive")
+  val cartoons = NavLink("Cartoons", "/tone/cartoons")
   val opinionVideos = NavLink("Opinion videos", "/type/video+tone/comment")
   val letters = NavLink("Letters", "/tone/letters")
 
