@@ -27,7 +27,7 @@ object DeeplyRead
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 31),
+      sellByDate = LocalDate.of(2023, 11, 30),
       participationGroup = Perc0A,
     )
 
@@ -36,7 +36,7 @@ object Lightbox
       name = "lightbox",
       description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 30),
+      sellByDate = LocalDate.of(2023, 11, 30),
       participationGroup = Perc0B,
     )
 
@@ -83,7 +83,7 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 10, 30),
+      sellByDate = LocalDate.of(2023, 11, 30),
       participationGroup = Perc1E,
     )
 
@@ -92,6 +92,6 @@ object OphanEsm
       name = "ophan-esm",
       description = "Use ophan-tracker-js@2, which uses native ES Modules",
       owners = Seq(Owner.withGithub("@guardian/ophan")),
-      sellByDate = LocalDate.of(2023, 10, 31),
+      sellByDate = LocalDate.of(2023, 11, 30),
       participationGroup = Perc50,
     )

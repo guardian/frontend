@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Test Kargo as a prebid bidder for US traffic.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 10, 30)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 
@@ -91,7 +91,7 @@ trait ABTestSwitches {
     "'Test the impact of running prebid earlier in the page load process.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 10, 31)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 }
