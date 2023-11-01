@@ -84,14 +84,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-eager-prebid-2",
-    "'Test the impact of running prebid earlier in the page load process.",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 11, 30)),
-    exposeClientSide = true,
-  )
 }
