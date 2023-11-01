@@ -1981,10 +1981,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-13.0.0.tgz#3e8f4e67dcd5fe706001fd04df582f69210b132f"
-  integrity sha512-1+z20ySfwm0K2GiQXh2JlWIjOKBwHxISRdAgAKivOdT1QUCh5VdU+2xCVE07juMI4lBBfIzXe/qZXAI7II6tQQ==
+"@guardian/source-foundations@^13.1.0":
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-13.1.0.tgz#5958c118c1ed3d4596d0d6f71c4d32ccf0a19c0f"
+  integrity sha512-ajhHeqXRLFw7AzFi7AooP/EMbcFvYpcvOkj7Mpaqlr4Pl+eUkOHxlj3fnQ77UQoUoycyzY3YSG5mZEBRzObmrg==
   dependencies:
     mini-svg-data-uri "1.4.4"
 
