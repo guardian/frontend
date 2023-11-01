@@ -301,7 +301,6 @@ object NavLinks {
       usNews,
       world,
       usEnvironment,
-      ukraine,
       usPolitics,
       soccer,
       usBusiness,

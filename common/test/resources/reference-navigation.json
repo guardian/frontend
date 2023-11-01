@@ -915,11 +915,6 @@
           } ],
           "classList" : [ ]
         }, {
-          "title" : "Ukraine",
-          "url" : "/world/ukraine",
-          "children" : [ ],
-          "classList" : [ ]
-        }, {
           "title" : "US Politics",
           "url" : "/us-news/us-politics",
           "longTitle" : "US politics",
