@@ -135,11 +135,6 @@
           "children" : [ ],
           "classList" : [ ]
         }, {
-          "title" : "Newsletters",
-          "url" : "/email-newsletters",
-          "children" : [ ],
-          "classList" : [ ]
-        }, {
           "title" : "Football",
           "url" : "/football",
           "children" : [ {
@@ -179,6 +174,11 @@
             "children" : [ ],
             "classList" : [ ]
           } ],
+          "classList" : [ ]
+        }, {
+          "title" : "Newsletters",
+          "url" : "/email-newsletters",
+          "children" : [ ],
           "classList" : [ ]
         }, {
           "title" : "Business",
