@@ -16,6 +16,8 @@ GET        /humans.txt                                                          
 GET        /.well-known/security.txt                                                controllers.Assets.at(path="/public", file="security.txt")
 GET        /.well-known/security.txt.asc                                            controllers.Assets.at(path="/public", file="security.txt.asc")
 
+GET        /.well-known/apple-developer-merchantid-domain-association               controllers.Assets.at(path="/public", file="apple-developer-merchantid-domain-association.txt")
+
 GET        /.well-known/amphtml/apikey.pub                                          controllers.FaciaController.ampRsaPublicKey()
 
 # AMP
