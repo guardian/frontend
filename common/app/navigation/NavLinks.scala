@@ -663,7 +663,7 @@ object NavLinks {
     "money/savings",
     "money/debt",
     "money/work-and-careers",
-    "cartoons/archive",
+    "tone/cartoons",
     "type/cartoon",
     "profile/editorial",
     "au/index/contributors",
