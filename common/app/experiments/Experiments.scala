@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       Lightbox,
-      ServerSideLiveblogInlineAds,
       OphanEsm,
       HeaderTopBarSearchCapi,
       AdaptiveSite,
@@ -38,16 +37,6 @@ object Lightbox
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
       sellByDate = LocalDate.of(2023, 11, 30),
       participationGroup = Perc0B,
-    )
-
-object ServerSideLiveblogInlineAds
-    extends Experiment(
-      name = "server-side-liveblog-inline-ads",
-      description =
-        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc0C,
     )
 
 // Removing while we are still implementing this content type in DCR
