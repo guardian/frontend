@@ -67,6 +67,13 @@ trait FaciaController
     )
   }
 
+  //ApplePay MerchantId
+  def appleDeveloperMerchantId(): Action[AnyContent] =
+    if (Configuration.environment.isProd)
+      assets.at(path = "/public", file = "apple-developer-merchantid-domain-association-prod.txt")
+    else
+      assets.at(path = "/public", file = "apple-developer-merchantid-domain-association-code.txt")
+
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
   def renderFrontPressSpecial(path: String): Action[AnyContent] =
     Action.async { implicit request => renderFrontPressResult(path) }
