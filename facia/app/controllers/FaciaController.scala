@@ -47,6 +47,7 @@ trait FaciaController
   val mostViewedAgent: MostViewedAgent
   val deeplyReadAgent: DeeplyReadAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+  val assets: Assets
 
   implicit val context: ApplicationContext
 
@@ -536,5 +537,6 @@ class FaciaControllerImpl(
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
+    val assets: Assets,
 )(implicit val context: ApplicationContext)
     extends FaciaController

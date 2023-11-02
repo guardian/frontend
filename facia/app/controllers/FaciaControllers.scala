@@ -13,6 +13,7 @@ trait FaciaControllers {
   def wsClient: WSClient
   def mostViewedAgent: MostViewedAgent
   def deeplyReadAgent: DeeplyReadAgent
+  def assets: Assets
   implicit def appContext: ApplicationContext
   lazy val faciaController = wire[FaciaControllerImpl]
 }
