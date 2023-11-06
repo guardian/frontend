@@ -60,7 +60,7 @@
 		"unset-value": "^2.0.1"
 	},
 	"devDependencies": {
-    "@aws-sdk/client-cloudwatch": "^3.441.0",
+		"@aws-sdk/client-cloudwatch": "3.441.0",
 		"@babel/cli": "^7.11.6",
 		"@babel/core": "^7.11.6",
 		"@babel/plugin-proposal-class-properties": "^7.10.4",

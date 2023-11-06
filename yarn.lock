@@ -65,7 +65,7 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-sdk/client-cloudwatch@^3.441.0":
+"@aws-sdk/client-cloudwatch@3.441.0":
   version "3.441.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-cloudwatch/-/client-cloudwatch-3.441.0.tgz#1466ec3d85d49a6f7c904f7323e38d1586b39b33"
   integrity sha512-aDk05Nn0o33AFUgfDR+VNFdJfqW+ZJ2mHFBBDR3iwHg3pT5woJYvR91n2+hPx13+P6Mlz2D++xlblgc5iEsDuA==
