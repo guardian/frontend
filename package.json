@@ -60,6 +60,7 @@
 		"unset-value": "^2.0.1"
 	},
 	"devDependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.441.0",
 		"@babel/cli": "^7.11.6",
 		"@babel/core": "^7.11.6",
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -84,7 +85,6 @@
 		"amphtml-validator": "^1.0.21",
 		"any-observable": "^0.2.0",
 		"autoprefixer": "^10.3.7",
-		"aws-sdk": "^2.411.0",
 		"babel-core": "^7.0.0-bridge.0",
 		"babel-eslint": "^10.1.0",
 		"babel-jest": "^26.3.0",
