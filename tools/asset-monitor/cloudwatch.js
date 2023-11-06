@@ -1,6 +1,10 @@
 const fs = require('fs');
 const AWS = require('aws-sdk');
 
+const {
+    CloudWatch
+} = require("@aws-sdk/client-cloudwatch");
+
 let cloudwatch;
 
 module.exports.getProperty = (property, file) =>
@@ -19,6 +23,9 @@ module.exports.configure = filename =>
                 );
             }
 
+            // JS SDK v3 does not support global configuration.
+            // Codemod has attempted to pass values to each service client in this file.
+            // You may need to update clients outside of this file, if they use global config.
             AWS.config.update({
                 region: 'eu-west-1',
                 accessKeyId: module.exports.getProperty('aws.access.key', data),
@@ -29,7 +36,18 @@ module.exports.configure = filename =>
             });
 
             try {
-                cloudwatch = new AWS.CloudWatch();
+                cloudwatch = new CloudWatch({
+                    credentials: {
+                        accessKeyId: module.exports.getProperty('aws.access.key', data),
+
+                        secretAccessKey: module.exports.getProperty(
+                            'aws.access.secret.key',
+                            data
+                        )
+                    },
+
+                    region: 'eu-west-1'
+                });
                 return resolve({});
             } catch (e) {
                 return reject(e);
