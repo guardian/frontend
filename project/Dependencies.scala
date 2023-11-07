@@ -93,37 +93,6 @@ object Dependencies {
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "4.10.0"
 
-  /*
-    Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
-    may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
-    dependencies have been upgraded), then do remember to check for regressions.
-
-    The versions are currently set as they are because of:
-    https://github.com/orgs/playframework/discussions/11222
-   */
-  val jacksonVersion = "2.13.2"
-  val jacksonDatabindVersion = "2.13.2.2"
-  val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
-  val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
-  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
-  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
-  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
-  val jacksonParameterName = "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion
-  val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
-  val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
-
-  val jackson =
-    Seq(
-      jacksonCore,
-      jacksonAnnotations,
-      jacksonDataTypeJdk8,
-      jacksonDataType,
-      jacksonDataFormat,
-      jacksonParameterName,
-      jackModule,
-      jacksonDatabind,
-    )
-
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
   val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.100.Final"
