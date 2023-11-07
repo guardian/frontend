@@ -7,9 +7,7 @@ libraryDependencies ++= Seq(
   "org.joda" % "joda-convert" % "1.7",
 )
 
-resolvers ++= Resolver.sonatypeOssRepos("releases") ++ Seq(
-  Classpaths.typesafeReleases,
-)
+resolvers ++= Resolver.sonatypeOssRepos("releases")
 
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.0")
 
