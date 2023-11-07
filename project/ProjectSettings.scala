@@ -5,7 +5,7 @@ import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt._
 import sbt.Keys._
 import com.gu.Dependencies._
-import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
+import play.sbt.{PlayPekkoHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
 import sbtbuildinfo.{BuildInfoKey, BuildInfoOption, BuildInfoPlugin}
@@ -98,7 +98,7 @@ object ProjectSettings {
   def root(): Project =
     Project("root", base = file("."))
       .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayAkkaHttpServer)
+      .disablePlugins(PlayPekkoHttpServer)
       .settings(frontendCompilationSettings)
       .settings(frontendRootSettings)
 
@@ -130,7 +130,7 @@ object ProjectSettings {
   def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
       .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayAkkaHttpServer)
+      .disablePlugins(PlayPekkoHttpServer)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
