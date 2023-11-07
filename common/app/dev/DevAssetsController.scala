@@ -1,6 +1,6 @@
 package dev
 
-import akka.stream.scaladsl.StreamConverters
+import org.apache.pekko.stream.scaladsl.StreamConverters
 import common.Assets.AssetNotFoundException
 import common.ImplicitControllerExecutionContext
 import java.io.File

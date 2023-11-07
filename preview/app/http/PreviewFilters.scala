@@ -1,6 +1,6 @@
 package http
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import GoogleAuthFilters.AuthFilterWithExemptions
 import controllers.HealthCheck
 import googleAuth.FilterExemptions

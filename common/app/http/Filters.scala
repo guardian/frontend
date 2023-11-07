@@ -1,7 +1,7 @@
 package http
 
 import javax.inject.Inject
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import app.FrontendBuildInfo
 import conf.switches.Switches
 import implicits.Responses._
@@ -144,7 +144,6 @@ object Filters {
 
 }
 
-//Note: still using akka (instead of pekko) materializer from Play as both filters extend Play's Filter, so the types need to match
 class CommonFilters(frontendBuildInfo: FrontendBuildInfo)(implicit
     mat: Materializer,
     applicationContext: ApplicationContext,
