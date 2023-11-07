@@ -13,7 +13,7 @@ object Dependencies {
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
-  val playJsonVersion = "2.9.4"
+  val playJsonVersion = "3.0.1"
   val playJsonExtensionsVersion = "0.42.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
@@ -62,9 +62,9 @@ object Dependencies {
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
-  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-3-4" % "3.3.0.0-SNAP3" % Test
-  val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test
+  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.17.0" % Test
+  val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.17.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"
@@ -85,9 +85,9 @@ object Dependencies {
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.8"
-  val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
+  val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
-  val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
+  val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
