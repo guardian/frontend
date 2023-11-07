@@ -1,6 +1,6 @@
 package http
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 
 import play.api.mvc._
 import utils.SafeLogging

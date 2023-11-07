@@ -1,6 +1,6 @@
 package http
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import common.Preload
 import model.ApplicationContext
 import play.api.mvc._

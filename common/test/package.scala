@@ -1,6 +1,6 @@
 package test
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient}
 import common.Lazy
