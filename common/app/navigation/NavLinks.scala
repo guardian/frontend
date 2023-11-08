@@ -171,7 +171,7 @@ object NavLinks {
   val ukTravel = NavLink("Travel", "/travel", children = List(travelUk, travelEurope, travelUs))
   val usTravel = ukTravel.copy(children = List(travelUs, travelEurope, travelUk))
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
-  val usWellness = NavLink("Wellness", "/us/wellness")
+  val wellness = NavLink("Wellness", "/wellness")
 
   val todaysPaper = NavLink(
     "Today's paper",
@@ -308,7 +308,7 @@ object NavLinks {
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}"),
-      usWellness,
+      wellness,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -517,7 +517,7 @@ object NavLinks {
   )
   val usLifestylePillar = ukLifestylePillar.copy(
     children = List(
-      usWellness,
+      wellness,
       fashion,
       food,
       recipes,
