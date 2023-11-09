@@ -1925,10 +1925,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@13.7.1":
-  version "13.7.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.7.1.tgz#ba38f32de023775e615e79cfa97a3425f144eb89"
-  integrity sha512-BtUNkuCqd++A0Wkk9CA4kI95yVZJk1YMjPdppEnmq3cG/ros4ElXN4cNG7pWifeTR5cUtJflAiRRO4L5ewASpQ==
+"@guardian/consent-management-platform@13.7.2":
+  version "13.7.2"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.7.2.tgz#0841306affcf003f4532474ae92a34454d120457"
+  integrity sha512-DGjTrADOEO5+INGH+azwrX8c/t+f40U+RcGEaj/eTYJmA++ljNbRlBM21ioAKjZxIJ1OCIoqFwNbYPoqXykBCA==
 
 "@guardian/core-web-vitals@^5.0.0":
   version "5.1.0"
