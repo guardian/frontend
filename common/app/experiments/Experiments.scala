@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       Lightbox,
       OphanEsm,
-      HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
@@ -56,15 +55,6 @@ object AdaptiveSite
       owners = Seq(Owner.withName("Open Journalism")),
       sellByDate = LocalDate.of(2023, 12, 5),
       participationGroup = Perc1A,
-    )
-
-object HeaderTopBarSearchCapi
-    extends Experiment(
-      name = "header-top-bar-search-capi",
-      description = "Adds CAPI search to the top nav",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 10),
-      participationGroup = Perc1B,
     )
 
 object OfferHttp3
