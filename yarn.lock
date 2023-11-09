@@ -1908,17 +1908,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-15.0.1.tgz#2c936c43e654f5ae28db254329eae1b4b5861641"
   integrity sha512-XNqYE9X/4aM5vZqiZInedvEZ9niPfdqwL7SjzNF0wnVbR+YObOC6QC68M521gTPcyca6r190qtnayv4GNO0peg==
 
-"@guardian/commercial@11.19.0":
-  version "11.19.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.19.0.tgz#dcb51eab371d2230bc5e0afde8d145a9af259dee"
-  integrity sha512-LbuX2dZM98QrUijaTPeI9wYARTD7o4xTCoX4EBeNnoJ4k5APOCl0OkxuBHlD06RCmNZ0ERMCQx7bse3rDFwaZQ==
+"@guardian/commercial@11.19.1":
+  version "11.19.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.19.1.tgz#390b24b3a0975c1501b1e329bcf64f1684f3240d"
+  integrity sha512-dJ1RVxaSKOxFL+CZ5fPWc728E+tfG8MDuFP0IW+HtFeYWq/aF3MCXlNr7dswyn9LP7qSEOkuv43YJJADNv3/KA==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^2.0.1"
-    prebid.js guardian/prebid.js#0b4cccd
+    prebid.js guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.5.3"
@@ -10965,7 +10965,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#0b4cccd:
+prebid.js@guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5:
   version "7.54.5"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5"
   dependencies:
