@@ -57,8 +57,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-billboards-in-merch-high",
-    "Test the commercial impact of showing billboard adverts in merchandising-high slots",
+    "ab-ads-in-merch",
+    "Test the commercial impact of showing adverts in merchandising-high and merchandising slots",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2023, 11, 30)),
