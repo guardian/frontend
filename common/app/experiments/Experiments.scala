@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       Lightbox,
-      OphanEsm,
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
@@ -64,13 +63,4 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2023, 11, 30),
       participationGroup = Perc1E,
-    )
-
-object OphanEsm
-    extends Experiment(
-      name = "ophan-esm",
-      description = "Use ophan-tracker-js@2, which uses native ES Modules",
-      owners = Seq(Owner.withGithub("@guardian/ophan")),
-      sellByDate = LocalDate.of(2023, 11, 30),
-      participationGroup = Perc50,
     )
