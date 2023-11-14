@@ -532,4 +532,14 @@ trait FeatureSwitches {
     sellByDate = Some(LocalDate.of(2024, 6, 5)),
     exposeClientSide = false,
   )
+
+  val UserFeaturesDcr = Switch(
+    SwitchGroup.Feature,
+    "user-features-dcr",
+    "If this switch is on, we will load user-features from dcr",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 1, 15)),
+    exposeClientSide = true,
+  )
 }
