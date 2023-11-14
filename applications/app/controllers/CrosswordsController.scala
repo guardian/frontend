@@ -107,7 +107,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
   def printableCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, content) =>
-        Cached(3.days)(
+        Cached(60)(
           RevalidatableResult.Ok(
             PrintableCrosswordHtmlPage.html(
               CrosswordPageWithSvg(
