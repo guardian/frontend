@@ -58,7 +58,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       context: ApplicationContext,
   ): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(60)(
+      Cached(60.seconds)(
         RevalidatableResult.Ok(
           CrosswordHtmlPage.html(
             CrosswordPageWithSvg(
@@ -87,7 +87,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, content) =>
-        Cached(60)(
+        Cached(60.seconds)(
           RevalidatableResult.Ok(
             CrosswordHtmlPage.html(
               AccessibleCrosswordPage(
@@ -107,7 +107,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
   def printableCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, content) =>
-        Cached(60)(
+        Cached(60.seconds)(
           RevalidatableResult.Ok(
             PrintableCrosswordHtmlPage.html(
               CrosswordPageWithSvg(
@@ -127,7 +127,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
 
         val globalStylesheet = Static(s"stylesheets/$ContentCSSFile.css")
 
-        Cached(60) {
+        Cached(60.seconds) {
           val body = s"""$xml"""
           RevalidatableResult(
             Cors {
