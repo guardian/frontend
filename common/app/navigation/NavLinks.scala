@@ -224,7 +224,7 @@ object NavLinks {
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val apps =
-    NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
+    NavLink("The Guardian app", "https://app.adjust.com/16xt6hai")
   val auWeekend = NavLink(
     "Australia Weekend",
     "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend?INTCMP=header_au_weekend",
