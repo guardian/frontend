@@ -4,8 +4,6 @@ import com.gu.versioninfo.VersionInfo
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt._
 import sbt.Keys._
-import com.gu.riffraff.artifact.{BuildInfo, RiffRaffArtifact}
-import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import com.gu.Dependencies._
 import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
@@ -89,35 +87,17 @@ object ProjectSettings {
   )
 
   val testAll = taskKey[Unit]("test all aggregate projects")
-  val upload = taskKey[Unit]("upload riff-raff artifact from root project")
-  val testThenUpload =
-    taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
 
   def frontendRootSettings: Seq[Def.Setting[Task[Unit]]] =
     List(
       testAll := (Test / test)
         .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
         .value,
-      upload := (LocalRootProject / riffRaffUpload).value,
-      testThenUpload := Def
-        .taskDyn({
-          testAll.result.value match {
-            case Inc(inc) =>
-              Def.task[Unit] {
-                println("Tests failed, no riff raff upload will be performed.")
-                throw inc
-              }
-            case Value(_) =>
-              println("Tests passed, uploading artifact to riff raff.")
-              upload.toTask
-          }
-        })
-        .value,
     )
 
   def root(): Project =
     Project("root", base = file("."))
-      .enablePlugins(PlayScala, RiffRaffArtifact, PlayNettyServer)
+      .enablePlugins(PlayScala, PlayNettyServer)
       .disablePlugins(PlayAkkaHttpServer)
       .settings(frontendCompilationSettings)
       .settings(frontendRootSettings)
@@ -139,10 +119,9 @@ object ProjectSettings {
       buildInfoPackage := buildInfoPackageName,
       buildInfoOptions += BuildInfoOption.Traits("app.FrontendBuildInfo"),
       buildInfoKeys := {
-        lazy val buildInfo = BuildInfo(baseDirectory.value)
         Seq[BuildInfoKey](
-          "buildNumber" -> buildInfo.buildIdentifier,
-          "gitCommitId" -> buildInfo.revision,
+          "buildNumber" -> sys.env.get("GITHUB_RUN_NUMBER").getOrElse("unknown"),
+          "gitCommitId" -> sys.env.get("GITHUB_SHA").getOrElse("unknown"),
           "buildTime" -> System.currentTimeMillis,
         )
       },

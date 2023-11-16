@@ -1,7 +1,7 @@
 import type { ABTest } from '@guardian/ab-core';
 
-export const billboardsInMerchHigh: ABTest = {
-	id: 'BillboardsInMerchHigh',
+export const adsInMerch: ABTest = {
+	id: 'AdsInMerch',
 	author: '@commercial-dev',
 	start: '2022-12-07',
 	expiry: '2023-11-30',
@@ -10,9 +10,9 @@ export const billboardsInMerchHigh: ABTest = {
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'Opt in only',
 	successMeasure:
-		'Test the commercial impact of showing billboard adverts in merchandising-high slots',
+		'Test the commercial impact of showing adverts in merchandising-high and merchandising slots',
 	description:
-		'Show billboard adverts in merchandising-high slots to browsers in the variant',
+		'Show adverts in merchandising-high and merchandising slots to browsers in the variant',
 	variants: [
 		{
 			id: 'control',

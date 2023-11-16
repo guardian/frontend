@@ -5,7 +5,7 @@ import common._
 import conf.Configuration.interactive.cdnPath
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import implicits.{AmpFormat, HtmlFormat, JsonFormat}
+import implicits.{AmpFormat, AppsFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{InteractivePage, _}
 import model.content.InteractiveAtom
@@ -112,6 +112,11 @@ class InteractiveController(
     remoteRenderer.getAMPInteractive(wsClient, page, blocks, pageType)
   }
 
+  def renderApps(page: InteractivePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
+    val pageType = PageType.apply(page, request, context)
+    remoteRenderer.getAppsInteractive(wsClient, page, blocks, pageType)
+  }
+
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
@@ -120,8 +125,8 @@ class InteractiveController(
       model match {
         case Right((page, blocks)) => {
           val tier = InteractivePicker.getRenderingTier(path)
-
           (requestFormat, tier) match {
+            case (AppsFormat, DotcomRendering)    => renderApps(page, blocks)
             case (AmpFormat, DotcomRendering)     => renderAmp(page, blocks)
             case (JsonFormat, DotcomRendering)    => renderJson(page, blocks)
             case (HtmlFormat, PressedInteractive) => servePressedPage(path)

@@ -44,6 +44,7 @@ object NavLinks {
   val retail = NavLink("Retail", "/business/retail")
   val markets = NavLink("Markets", "/business/stock-markets")
   val eurozone = NavLink("Eurozone", "/business/eurozone")
+  val ukraine = NavLink("Ukraine", "/world/ukraine")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
   val ourWideBrownLand = NavLink("Our wide brown land", "/environment/series/our-wide-brown-land")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
@@ -96,7 +97,7 @@ object NavLinks {
   val columnists = NavLink("Columnists", "/index/contributors")
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
   val theGuardianView = NavLink("The Guardian view", "/profile/editorial")
-  val cartoons = NavLink("Cartoons", "/cartoons/archive")
+  val cartoons = NavLink("Cartoons", "/tone/cartoons")
   val opinionVideos = NavLink("Opinion videos", "/type/video+tone/comment")
   val letters = NavLink("Letters", "/tone/letters")
 
@@ -170,6 +171,7 @@ object NavLinks {
   val ukTravel = NavLink("Travel", "/travel", children = List(travelUk, travelEurope, travelUs))
   val usTravel = ukTravel.copy(children = List(travelUs, travelEurope, travelUk))
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
+  val wellness = NavLink("Wellness", "/wellness")
 
   val todaysPaper = NavLink(
     "Today's paper",
@@ -222,7 +224,7 @@ object NavLinks {
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val apps =
-    NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
+    NavLink("The Guardian app", "https://app.adjust.com/16xt6hai")
   val auWeekend = NavLink(
     "Australia Weekend",
     "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend?INTCMP=header_au_weekend",
@@ -263,8 +265,9 @@ object NavLinks {
       ukNews,
       world,
       climateCrisis,
-      newsletters,
+      ukraine,
       football,
+      newsletters,
       ukBusiness,
       ukEnvironment,
       politics,
@@ -299,12 +302,13 @@ object NavLinks {
       world,
       usEnvironment,
       usPolitics,
+      ukraine,
       soccer,
       usBusiness,
       tech,
       science,
       newsletters.copy(url = s"${newsletters.url}"),
-      fightForDemocracy,
+      wellness,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -312,6 +316,7 @@ object NavLinks {
       world,
       ukNews,
       climateCrisis,
+      ukraine,
       ukEnvironment,
       science,
       globalDevelopment,
@@ -512,6 +517,7 @@ object NavLinks {
   )
   val usLifestylePillar = ukLifestylePillar.copy(
     children = List(
+      wellness,
       fashion,
       food,
       recipes,
@@ -658,7 +664,7 @@ object NavLinks {
     "money/savings",
     "money/debt",
     "money/work-and-careers",
-    "cartoons/archive",
+    "tone/cartoons",
     "type/cartoon",
     "profile/editorial",
     "au/index/contributors",
