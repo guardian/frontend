@@ -1,5 +1,6 @@
 package conf.switches
 
+import java.time.LocalDate
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
@@ -429,6 +430,16 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val adsInMerch: Switch = Switch(
+    group = Commercial,
+    name = "ads-in-merch",
+    description = "Enable showing adverts in merchandising-high and merchandising slots",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 12, 4)),
     exposeClientSide = true,
   )
 }
