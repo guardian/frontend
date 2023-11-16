@@ -2350,10 +2350,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-15.0.1.tgz#2c936c43e654f5ae28db254329eae1b4b5861641"
   integrity sha512-XNqYE9X/4aM5vZqiZInedvEZ9niPfdqwL7SjzNF0wnVbR+YObOC6QC68M521gTPcyca6r190qtnayv4GNO0peg==
 
-"@guardian/commercial@0.0.0-beta-20231116144023":
-  version "0.0.0-beta-20231116144023"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20231116144023.tgz#33cb60e1f16bc7d41f6c91054e2b292045b000a4"
-  integrity sha512-hbb4Qquq+i4YWm8d1CY4+2dhzr7AHjRQPctdlIA7o/KKcV7JEBC5HFseyD57Dkh3I/yPss9J1IF/6OTBEFnOAg==
+"@guardian/commercial@0.0.0-beta-20231116163752":
+  version "0.0.0-beta-20231116163752"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20231116163752.tgz#ceacad8ed727d70d09540d77d4fa8cd3ae88fe8a"
+  integrity sha512-DcyYuvz2g+tKUp4JCNCZUAYXgv2Xk9uaJC8VpRDSpMTTR1T15Lngb15jC2C+mz4y4u+JfdDR3Z2uylyZiVQzJg==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
@@ -11734,7 +11734,7 @@ preact@^10.5.13:
   version "7.54.5"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5"
   dependencies:
-    "@babel/core" "^7.23.2"
+    "@babel/core" "^7.16.7"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
@@ -11742,7 +11742,7 @@ preact@^10.5.13:
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
-    crypto-js "^4.2.0"
+    crypto-js "^3.3.0"
     dlv "1.1.3"
     dset "3.1.2"
     express "^4.15.4"
