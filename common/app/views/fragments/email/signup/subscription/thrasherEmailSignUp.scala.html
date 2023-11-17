@@ -1,6 +1,7 @@
-@import services.newsletters.model.NewsletterResponseV2
+@import services.newsletters.model.EmailEmbed
 @(
     listName:String,
+    emailEmbedData: EmailEmbed,
     emailConfirmation: Boolean)(implicit request: RequestHeader)
 
 @import common.LinkTo
