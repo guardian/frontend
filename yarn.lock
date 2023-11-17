@@ -11734,7 +11734,7 @@ prebid.js@guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5:
   version "7.54.5"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5"
   dependencies:
-    "@babel/core" "^7.16.7"
+    "@babel/core" "^7.23.2"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
@@ -11742,7 +11742,7 @@ prebid.js@guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5:
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
-    crypto-js "^3.3.0"
+    crypto-js "^4.2.0"
     dlv "1.1.3"
     dset "3.1.2"
     express "^4.15.4"
