@@ -75,9 +75,6 @@ trait Requests {
       .getQueryString("amp")
       .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
 
-<<<<<<< HEAD
-    lazy val isApps: Boolean = r.getQueryString("dcr").contains("apps")
-=======
     lazy val isApps: Boolean = r.path.startsWith("/apps/")
     lazy val appsEdition: Option[String] =
       if (isApps) {
@@ -85,7 +82,6 @@ trait Requests {
       } else {
         None
       }
->>>>>>> 777b72d8ff (Get edition from request)
 
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(
       EMAIL_SUFFIX,
