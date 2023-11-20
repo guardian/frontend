@@ -30,24 +30,4 @@ class CAPILookup(contentApiClient: ContentApiClient) {
 
   }
 
-  def lookupForApps(path: String, range: Option[BlockRange], appEdition: Edition): Future[ItemResponse] = {
-    val edition = appEdition
-    val capiItem = contentApiClient
-      .item(path, edition)
-      .showTags("all")
-      .showFields("all")
-      .showReferences("all")
-      .showAtoms("all")
-
-    val capiItemWithBlocks = range
-      .map { blockRange =>
-        val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("all")
-        capiItem.showBlocks(blocksParam)
-      }
-      .getOrElse(capiItem)
-
-    contentApiClient.getResponse(capiItemWithBlocks)
-
-  }
-
 }

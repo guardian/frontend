@@ -54,9 +54,8 @@ class ArticleController(
   }
 
   def renderAppsArticle(path: String, edition: String): Action[AnyContent] = {
-    val appEdition = Edition.byId(edition).getOrElse(Edition.defaultEdition)
     Action.async { implicit request =>
-      mapAppModel(path, ArticleBlocks, appEdition) { (article, blocks) =>
+      mapModel(path, ArticleBlocks) { (article, blocks) =>
         render(path, article, blocks)
       }
     }
@@ -158,19 +157,6 @@ class ArticleController(
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
-      .map(responseToModelOrResult)
-      .recover(convertApiExceptions)
-      .flatMap {
-        case Right((model, blocks)) => render(model, blocks)
-        case Left(other)            => Future.successful(RenderOtherStatus(other))
-      }
-  }
-
-  private def mapAppModel(path: String, range: BlockRange, appEdition: Edition)(
-      render: (ArticlePage, Blocks) => Future[Result],
-  )(implicit request: RequestHeader): Future[Result] = {
-    capiLookup
-      .lookupForApps(path, Some(range), appEdition)
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
