@@ -75,7 +75,10 @@ object Edition {
     // in production no cookies make it this far
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value)
 
+    val editionFromAppsRequest = request.appsEdition
+
     editionFromParameter
+      .orElse(editionFromAppsRequest)
       .orElse(editionFromHeader)
       .orElse(editionFromCookie)
       .getOrElse(defaultEdition.id)
