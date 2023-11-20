@@ -78,6 +78,11 @@ trait Requests {
     lazy val isApps: Boolean = r.path.startsWith("/apps/")
     lazy val appsEdition: Option[String] =
       if (isApps) {
+        // Apps paths look like this: /apps/:edition/path/to/content
+        // We can pick out the edition by:
+        // - stripping "/apps/"
+        // - splitting the remaining path on "/" to a sequence
+        // - taking the first element of the sequence
         Some(r.path.stripPrefix("/apps/").split("/").head)
       } else {
         None
