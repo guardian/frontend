@@ -21,6 +21,7 @@ class FaciaDraftController(
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
+    val assets: Assets,
 )(implicit val context: ApplicationContext)
     extends FaciaController
     with RendersItemResponse {

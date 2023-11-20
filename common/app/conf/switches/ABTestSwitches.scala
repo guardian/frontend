@@ -57,16 +57,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-billboards-in-merch-high",
-    "Test the commercial impact of showing billboard adverts in merchandising-high slots",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 11, 30)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-elements-manager",
     "Test serving GEM assets in ad slots on page",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
@@ -81,17 +71,7 @@ trait ABTestSwitches {
     "Test Kargo as a prebid bidder for US traffic.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 10, 30)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-eager-prebid-2",
-    "'Test the impact of running prebid earlier in the page load process.",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 10, 31)),
+    sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
 }
