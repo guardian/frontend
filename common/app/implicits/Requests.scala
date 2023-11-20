@@ -95,16 +95,11 @@ trait Requests {
     lazy val isHeadlineText: Boolean =
       r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 
-    lazy val isModified = isJson || isRss || isEmail || isHeadlineText
+    lazy val isModified = isJson || isRss || isEmail || isHeadlineText || isApps
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
       else r.path.stripSuffix("/all")
-
-    lazy val pathWithAppsAndEdition: String = {
-      val matchedEdition = allEditions.find(edition => r.path.startsWith(s"/apps/${edition.id.toLowerCase()}"))
-      matchedEdition.map(edition => r.path.stripPrefix(s"/apps/${edition.id.toLowerCase()}")).getOrElse(r.path)
-    }
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 

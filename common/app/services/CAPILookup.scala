@@ -12,6 +12,7 @@ class CAPILookup(contentApiClient: ContentApiClient) {
 
   def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
+
     val capiItem = contentApiClient
       .item(path, edition)
       .showTags("all")
