@@ -75,18 +75,16 @@ trait Requests {
       .getQueryString("amp")
       .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
 
-    lazy val isApps: Boolean = r.path.startsWith("/apps/") || r.getQueryString("dcr").contains("apps")
+    // Apps paths look like this: /path/to/content/apps/:edition
+    lazy val appsPathPattern = ".*/apps(?:/(uk|us|au|eur|int))?$".r
+
+    lazy val isApps: Boolean =
+      appsPathPattern.matches(r.path) || r.getQueryString("dcr").contains("apps")
+
     lazy val appsEdition: Option[Edition] =
-      if (isApps) {
-        // Apps paths look like this: /apps/:edition/path/to/content
-        // We can pick out the edition by:
-        // - stripping "/apps/"
-        // - splitting the remaining path on "/" to a sequence
-        // - taking the first element of the sequence
-        val editionString = r.path.stripPrefix("/apps/").split("/").head
-        Edition.byId(editionString.toLowerCase)
-      } else {
-        None
+      r.path match {
+        case appsPathPattern(editionId) => Edition.byId(editionId)
+        case _                          => None
       }
 
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(
