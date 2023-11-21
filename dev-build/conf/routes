@@ -439,7 +439,9 @@ GET     /$path<[^/]+/([^/]+/)?live/.*>                                          
 
 # articles, finished liveblogs
 
-GET     /apps/$edition<(uk|us|eu|au|eur|int)>/*path                      controllers.ArticleController.renderAppsArticle(path, edition: String)
+GET     /apps/$edition<(uk|us|eu|au|eur|int)>/*path                                                                             controllers.ArticleController.renderAppsArticle(path, edition: String)
+GET     /apps/*path                                                                                                             controllers.ArticleController.renderAppsArticleNoEdition(path)
+
 GET     /*path.json                                                                                                              controllers.ArticleController.renderJson(path)
 GET     /*path/email                                                                                                             controllers.ArticleController.renderEmail(path)
 GET     /*path/email/headline.txt                                                                                                controllers.ArticleController.renderHeadline(path)
