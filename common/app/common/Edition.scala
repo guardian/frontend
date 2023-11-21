@@ -76,7 +76,7 @@ object Edition {
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value)
 
     // we can get the edition from the request path if it's an apps article
-    val editionFromAppsRequest = request.appsEdition
+    val editionFromAppsRequest = request.appsEdition.map(_.id)
 
     editionFromParameter
       .orElse(editionFromAppsRequest)
