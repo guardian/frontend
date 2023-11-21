@@ -75,7 +75,7 @@ trait Requests {
       .getQueryString("amp")
       .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
 
-    lazy val isApps: Boolean = r.path.startsWith("/apps/")
+    lazy val isApps: Boolean = r.path.startsWith("/apps/") || r.getQueryString("dcr").contains("apps")
     lazy val appsEdition: Option[Edition] =
       if (isApps) {
         // Apps paths look like this: /apps/:edition/path/to/content
