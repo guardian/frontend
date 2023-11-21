@@ -10,7 +10,6 @@ import com.gu.facia.client.models.{
   USEastCoastTerritory,
   USWestCoastTerritory,
 }
-import common.Edition.allEditions
 import conf.Configuration
 import play.api.mvc.RequestHeader
 import common.Edition
