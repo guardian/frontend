@@ -76,14 +76,15 @@ trait Requests {
       .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
 
     lazy val isApps: Boolean = r.path.startsWith("/apps/")
-    lazy val appsEdition: Option[String] =
+    lazy val appsEdition: Option[Edition] =
       if (isApps) {
         // Apps paths look like this: /apps/:edition/path/to/content
         // We can pick out the edition by:
         // - stripping "/apps/"
         // - splitting the remaining path on "/" to a sequence
         // - taking the first element of the sequence
-        Some(r.path.stripPrefix("/apps/").split("/").head)
+        val editionString = r.path.stripPrefix("/apps/").split("/").head
+        Edition.byId(editionString.toLowerCase)
       } else {
         None
       }
