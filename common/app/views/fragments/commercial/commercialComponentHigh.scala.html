@@ -1,9 +1,12 @@
 @(isPaidContent: Boolean, hasPageSkin: Boolean = false)(implicit request: RequestHeader)
 
-@fragments.commercial.adSlot(
-    "merchandising-high",
-    Seq("commercial-component-high"),
-    Map(),
-    showLabel=true,
-    refresh=false
-){ }
+<div class="merchandising-high-wrapper">
+    @fragments.commercial.adSlot(
+        "merchandising-high",
+        Seq("commercial-component-high"),
+        Map(),
+        showLabel=true,
+        refresh=false,
+        useFlexContainer = true,
+    ){ }
+</div>
