@@ -41,5 +41,6 @@ GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(pa
 GET     /$publication<(theguardian|theobserver)>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/$tail<.+>                 controllers.PublicationController.publishedOn(publication, year, month, day, tail)
 
 GET     /apps/$edition<(uk|us|eu|au|eur|int)>/*path                      controllers.ArticleController.renderAppsArticle(path, edition: String)
+GET     /apps/*path                      controllers.ArticleController.renderAppsArticleNoEdition(path)
 
 GET     /*path                      controllers.ArticleController.renderArticle(path)

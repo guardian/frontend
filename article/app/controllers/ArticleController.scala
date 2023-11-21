@@ -55,7 +55,9 @@ class ArticleController(
 
   // We don't need the edition here because we only use it from the Request
   // Play needs it in this method signature, though.
-  def renderAppsArticle(path: String, _edition: String): Action[AnyContent] = {
+  def renderAppsArticle(path: String, _edition: String): Action[AnyContent] = renderAppsArticleNoEdition(path)
+
+  def renderAppsArticleNoEdition(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) { (article, blocks) =>
         render(path, article, blocks)
