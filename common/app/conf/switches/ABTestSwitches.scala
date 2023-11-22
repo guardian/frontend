@@ -74,4 +74,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2023, 11, 30)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-mpu-when-no-epic",
+    "Test MPU when there is no epic at the end of Article on the page.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 1, 31)),
+    exposeClientSide = true,
+  )
 }

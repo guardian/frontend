@@ -3,6 +3,7 @@ import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { elementsManager } from './tests/elements-manager';
 import { integrateIma } from './tests/integrate-ima';
+import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
 import { prebidKargo } from './tests/prebid-kargo';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -19,4 +20,5 @@ export const concurrentTests: readonly ABTest[] = [
 	integrateIma,
 	elementsManager,
 	prebidKargo,
+	mpuWhenNoEpic,
 ];
