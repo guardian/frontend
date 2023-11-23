@@ -25,7 +25,7 @@
 		"@guardian/identity-auth-frontend": "1.0.0",
 		"@guardian/libs": "^15.6.4",
 		"@guardian/shimport": "^1.0.2",
-		"@guardian/source-foundations": "^13.0.0",
+		"@guardian/source-foundations": "^13.2.0",
 		"@guardian/source-react-components": "^12.0.0",
 		"@guardian/source-react-components-development-kitchen": "^10.0.1",
 		"@guardian/support-dotcom-components": "1.0.8",
