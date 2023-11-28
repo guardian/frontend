@@ -16,7 +16,7 @@ import services.newsletters.model.NewsletterResponseV2
 import services.NewsletterData
 
 case class DotcomNewsletterDetailPageRenderingDataModel(
-    newsletter: NewsletterData,
+    newsletter: NewsletterResponseV2,
     backfillRecommendedNewsletters: List[NewsletterData],
     id: String,
     editionId: String,
@@ -76,7 +76,7 @@ object DotcomNewsletterDetailPageRenderingDataModel {
     val backfillRecommendationData = backfillRecommendedNewsletters.map(_.toNewsletterData)
 
     DotcomNewsletterDetailPageRenderingDataModel(
-      newsletter = newsletter.toNewsletterData,
+      newsletter = newsletter,
       backfillRecommendedNewsletters = backfillRecommendationData,
       id = page.metadata.id,
       editionId = edition.id,

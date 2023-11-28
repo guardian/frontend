@@ -43,6 +43,7 @@ case class NewsletterResponseV2(
     group: String,
     status: String, // 'paused', 'cancelled', 'live', 'pending'
     restricted: Boolean,
+    signUpHeadline: Option[String],
     signUpEmbedDescription: String,
     signUpDescription: String,
     frequency: String,
