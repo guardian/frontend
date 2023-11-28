@@ -396,7 +396,8 @@ GET            /*path.emailjson                                                 
 GET            /*path.emailtxt                                                                                                   controllers.FaciaController.renderFrontJson(path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
-GET            /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
+GET            /*path/show-more/*id.json                                                                                         controllers.FaciaController.renderShowMore(path, id)
+GET            /prout-dcr                                                                                                        controllers.ProutCheck.getDCRProut()
 
 
 

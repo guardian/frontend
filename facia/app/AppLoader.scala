@@ -26,6 +26,7 @@ import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
 
 import scala.concurrent.ExecutionContext
+import controllers.ProutCheck
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -46,6 +47,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val healthCheck = wire[HealthCheck]
+  lazy val proutCheck = wire[ProutCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]

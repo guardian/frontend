@@ -58,6 +58,8 @@ trait Controllers
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]
+
+  lazy val proutCheck = wire[ProutCheck]
 }
 
 trait AppComponents

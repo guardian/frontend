@@ -109,9 +109,7 @@ GET         /metrics/webpack-bundle-visualization                               
 GET         /metrics/webpack-bundle-analyzer                                                        controllers.admin.MetricsController.renderBundleAnalyzer()
 
 # Used by Prout to know which builds/commits have been deployed in PROD
-GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 POST        /deploy                                                                                 controllers.admin.DeploysController.deploy(stage: String, build: Int)
-GET         /prout-dcr                                                                                controllers.admin.DeploysController.getDCRProut()
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()

@@ -8,6 +8,7 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                            controllers.HealthCheck.healthCheck()
 GET        /_fronts_cdn_healthcheck                                                 controllers.HealthCheck.healthCheck()
+GET        /prout-dcr                                                               controllers.ProutCheck.getDCRProut()
 
 GET        /_agentcontents                                                          controllers.FaciaController.renderAgentContents
 
