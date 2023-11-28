@@ -17,6 +17,7 @@ import services.NewsletterData
 
 case class DotcomNewsletterDetailPageRenderingDataModel(
     newsletter: NewsletterData,
+    backfillRecommendedNewsletters: List[NewsletterData],
     id: String,
     editionId: String,
     editionLongForm: String,
@@ -41,6 +42,7 @@ object DotcomNewsletterDetailPageRenderingDataModel {
   def apply(
       page: SimplePage,
       newsletter: NewsletterResponseV2,
+      backfillRecommendedNewsletters: List[NewsletterResponseV2],
       request: RequestHeader,
   ): DotcomNewsletterDetailPageRenderingDataModel = {
     val edition = Edition.edition(request)
@@ -73,8 +75,11 @@ object DotcomNewsletterDetailPageRenderingDataModel {
 
     val newsletterData = convertNewsletterResponseToData(newsletter)
 
+    val backfillRecommendationData = backfillRecommendedNewsletters.map(convertNewsletterResponseToData)
+
     DotcomNewsletterDetailPageRenderingDataModel(
       newsletter = newsletterData,
+      backfillRecommendedNewsletters = backfillRecommendationData,
       id = page.metadata.id,
       editionId = edition.id,
       editionLongForm = edition.displayName,

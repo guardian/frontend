@@ -132,10 +132,13 @@ class SignupPageController(
       request: RequestHeader,
   ): Result = {
 
+    val backfillRecommendedNewsletters = newsletterSignupAgent.getBackfillRecommendationsFor(newsletter)
+
     Await.result(
       remoteRenderer.getEmailNewsletterDetail(
         ws = wsClient,
         newsletter = newsletter,
+        backfillRecommendedNewsletters = backfillRecommendedNewsletters,
         page = StaticPages.dcrSimpleNewsletterDetailPage(request.path, newsletter),
       ),
       3.seconds,
@@ -146,9 +149,11 @@ class SignupPageController(
       request: RequestHeader,
   ): Result = {
 
+    val backfillRecommendedNewsletters = newsletterSignupAgent.getBackfillRecommendationsFor(newsletter)
+
     val page = StaticPages.dcrSimpleNewsletterDetailPage(request.path, newsletter)
     val dataModel =
-      DotcomNewsletterDetailPageRenderingDataModel.apply(page, newsletter, request)
+      DotcomNewsletterDetailPageRenderingDataModel.apply(page, newsletter, backfillRecommendedNewsletters, request)
     val dataJson = DotcomNewsletterDetailPageRenderingDataModel.toJson(dataModel)
     common.renderJson(dataJson, page).as("application/json")
   }

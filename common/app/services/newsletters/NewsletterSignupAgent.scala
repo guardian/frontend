@@ -63,6 +63,24 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
     }
   }
 
+  // TO DO - better recommendations logic. sort by relevance
+  def getBackfillRecommendationsFor(newsletter:NewsletterResponseV2):List[NewsletterResponseV2] = {
+    getV2Newsletters() match {
+      case Left(error) => List.empty
+      case Right(newsleters) => newsleters
+        .filter(otherNewsleter =>
+          otherNewsleter.status.equalsIgnoreCase("live") &&
+          (
+            otherNewsleter.theme.equalsIgnoreCase(newsletter.theme) ||
+            // using different fallback as we don't want to recommend based on neither newsletter haveing a region specified
+            otherNewsleter.regionFocus.getOrElse("none").equalsIgnoreCase(newsletter.regionFocus.getOrElse("any"))
+          ) &&
+          !otherNewsleter.identityName.equalsIgnoreCase(newsletter.identityName)
+        )
+        .slice(0,10)
+    }
+  }
+
   private def refreshNewsletters()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info("Refreshing newsletters and Grouped Newsletters for newsletter signup embeds, and v2 newsletters.")
 
