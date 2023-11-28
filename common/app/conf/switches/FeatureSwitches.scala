@@ -542,4 +542,14 @@ trait FeatureSwitches {
     sellByDate = Some(LocalDate.of(2024, 1, 15)),
     exposeClientSide = true,
   )
+
+  val TurnOffAmp = Switch(
+    SwitchGroup.Feature,
+    "turn-off-amp",
+    "If this switch is on, the AMP domain will be turned off and we will stop serving AMP articles",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 6, 15)),
+    exposeClientSide = false,
+  )
 }

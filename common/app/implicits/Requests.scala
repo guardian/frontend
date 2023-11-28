@@ -1,16 +1,17 @@
 package implicits
 
 import com.gu.facia.client.models.{
+  AUNewSouthWalesTerritory,
+  AUQueenslandTerritory,
+  AUVictoriaTerritory,
   EU27Territory,
   NZTerritory,
   TargetedTerritory,
   USEastCoastTerritory,
   USWestCoastTerritory,
-  AUVictoriaTerritory,
-  AUQueenslandTerritory,
-  AUNewSouthWalesTerritory,
 }
 import conf.Configuration
+import conf.switches.Switches.TurnOffAmp
 import play.api.mvc.RequestHeader
 
 sealed trait RequestFormat
@@ -69,9 +70,10 @@ trait Requests {
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
-    lazy val isAmp: Boolean = r
-      .getQueryString("amp")
-      .isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host) || r.getQueryString("dcr").contains("amp")
+    lazy val isAmp: Boolean = !TurnOffAmp.isSwitchedOn &&
+      (r.getQueryString("amp").isDefined ||
+        (r.host.nonEmpty && r.host == Configuration.amp.host) ||
+        r.getQueryString("dcr").contains("amp"))
 
     lazy val isApps: Boolean = r.getQueryString("dcr").contains("apps")
 
