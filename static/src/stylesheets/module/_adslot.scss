@@ -97,11 +97,8 @@
     }
 }
 
-.ad-slot-container {
-    width: 100%;
-}
-
-.ad-slot-container[top-above-nav-ad-rendered='true'] {
+.ad-slot-container[top-above-nav-ad-rendered='true'],
+.ad-slot-container--centre-slot {
     width: fit-content;
     margin: 0 auto;
 }
@@ -109,6 +106,17 @@
 .ad-slot-container .ad-slot--mobile {
     margin-left: auto;
     margin-right: auto;
+}
+
+.merchandising-wrapper,
+.merchandising-high-wrapper {
+    position: relative;
+    margin: auto;
+    @each $breakpoint, $container-width in $breakpoints {
+        @include mq($breakpoint) {
+            max-width: $container-width + ($gs-gutter * 2);
+        }
+    }
 }
 
 .ad-slot--crossword-banner,
@@ -591,7 +599,7 @@
     visibility: hidden;
 }
 
-.ad-slot[data-label-show='true']:not(.ad-slot--dark):not(.ad-slot--interscroller):not(.ad-slot--merchandising):not(.ad-slot--merchandising-high)::before {
+.ad-slot[data-label-show='true']:not(.ad-slot--dark):not(.ad-slot--interscroller)::before {
     @include font-size(12, 20);
     content: attr(ad-label-text);
     display: block;
@@ -640,24 +648,6 @@
     top: 0px;
     left: 0px;
     right: 0px;
-}
-
-.ad-slot--merchandising[data-label-show='true']::before, .ad-slot--merchandising-high[data-label-show='true']::before {
-    @include font-size(12, 20);
-    content: attr(ad-label-text);
-    display: block;
-    visibility: visible;
-    position: relative;
-    height: $mpu-ad-label-height;
-    background-color: $brightness-97;
-    padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $brightness-86;
-    color: $brightness-46;
-    text-align: left;
-    box-sizing: border-box;
-    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    max-width: 970px;
-    margin: auto;
 }
 
 .ad-slot__adtest-cookie-clear-link {

@@ -182,4 +182,10 @@ object CompetitionDisplayHelpers {
       .replace("Czech Republic", "Czech Rep.")
       .replace("Holland", "Netherlands")
   }
+
+  // We do not currently support scores above 10 so we default to a max
+  // number of goals to display if scores are above 10
+  def cleanScore(score: Int): Int = {
+    if (score > 10) 10 else score
+  }
 }

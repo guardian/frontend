@@ -1,9 +1,12 @@
 @()(implicit request: RequestHeader)
 
-@fragments.commercial.adSlot(
-    "merchandising",
-    Seq("commercial-component"),
-    Map(),
-    showLabel=false,
-    refresh=false
-){ }
+<div class="merchandising-wrapper">
+    @fragments.commercial.adSlot(
+        "merchandising",
+        Seq("commercial-component"),
+        Map(),
+        showLabel=true,
+        refresh=false,
+        useFlexContainer=true,
+    ){ }
+</div>
