@@ -60,6 +60,31 @@ object StaticPages {
       ),
     )
 
+
+  private def getSectionForNewsletter ( newsletter: NewsletterResponseV2): SectionId = {
+
+    val fallback = SectionId(value = "global")
+    // TO DO - could use regionFocus to look up an Edition object - maybe the sectionId can be derived using that?
+    newsletter.theme match {
+      case "news" =>  newsletter.regionFocus match {
+        case None => fallback
+        case Some(edition) => edition match {
+          case "UK" => SectionId(value = "uk")
+          case "AU" => SectionId(value = "australia-news")
+          case "US" => SectionId(value = "us-news")
+          case "EUR" => SectionId(value = "world/europe-news")
+          case _ => fallback
+        }
+      }
+      case "sport" => SectionId(value = "sport")
+      case "opinion" => SectionId(value = "commentisfree")
+      case "lifestyle" => SectionId(value = "lifeandstyle")
+      case "features" => fallback
+      case "culture" => SectionId(value = "culture")
+      case _ => fallback
+    }
+  }
+
   def dcrSimpleNewsletterDetailPage(
       id: String,
       newsletter: NewsletterResponseV2,
@@ -67,7 +92,7 @@ object StaticPages {
     SimplePage(
       MetaData.make(
         id = id,
-        section = Option(SectionId(value = "newsletter-signup-page")),
+        section = Some(getSectionForNewsletter(newsletter)),
         webTitle = s"Guardian newsletters: ${newsletter.name}",
         description = Some(
           newsletter.signUpDescription,
