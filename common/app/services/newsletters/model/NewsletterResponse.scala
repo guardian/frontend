@@ -1,6 +1,7 @@
 package services.newsletters.model
 
 import play.api.libs.json.Json
+import services.NewsletterData
 
 case class NewsletterResponse(
     identityName: String,
@@ -54,7 +55,22 @@ case class NewsletterResponseV2(
     exampleUrl: Option[String],
     category: String, // "article-based", "article-based-legacy", "fronts-based", "manual-send", "other"]
     emailConfirmation: Boolean,
-)
+) {
+  def toNewsletterData: NewsletterData = {
+    NewsletterData(
+      identityName,
+      name,
+      theme,
+      signUpDescription,
+      frequency,
+      listId,
+      group,
+      mailSuccessDescription.getOrElse("You are subscribed"),
+      regionFocus,
+      illustrationCard,
+    )
+  }
+}
 
 object NewsletterResponseV2 {
   implicit val newsletterResponseV2Reads = Json.reads[NewsletterResponseV2]

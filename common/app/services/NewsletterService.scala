@@ -69,21 +69,6 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     }
   }
 
-  private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
-    NewsletterData(
-      response.identityName,
-      response.name,
-      response.theme,
-      response.signUpEmbedDescription,
-      response.frequency,
-      response.listId,
-      response.group,
-      response.mailSuccessDescription.getOrElse("You are subscribed"),
-      response.regionFocus,
-      illustrationCard = Option.empty[String],
-    )
-  }
-
   private def shouldInclude(response: NewsletterResponseV2): Boolean = {
     !response.restricted && response.status == "live"
   }
@@ -100,7 +85,10 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
         if (isSignUpPage(articlePage)) getNewsletterResponseFromSignUpPage(articlePage.article.metadata.id) else None
     }
 
-    maybeNewsletter.map(convertNewsletterResponseToData)
+    maybeNewsletter match {
+      case None            => None
+      case Some(newsleter) => Some(newsleter.toNewsletterData)
+    }
   }
 
   def getNewsletterForLiveBlog(blogPage: LiveBlogPage): Option[NewsletterData] = {
@@ -110,6 +98,9 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
       if (shouldInclude(newsletter)) Some(newsletter) else None
     }
 
-    maybeNewsletter.map(convertNewsletterResponseToData)
+    maybeNewsletter match {
+      case None            => None
+      case Some(newsleter) => Some(newsleter.toNewsletterData)
+    }
   }
 }

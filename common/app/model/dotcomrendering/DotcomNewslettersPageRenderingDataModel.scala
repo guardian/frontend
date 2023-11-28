@@ -73,7 +73,7 @@ object DotcomNewslettersPageRenderingDataModel {
 
     val newsletterData = newsletters
       .filter((newsletter) => newsletter.status.equalsIgnoreCase(("live")))
-      .map((newsletter) => convertNewsletterResponseToData(newsletter))
+      .map(_.toNewsletterData)
 
     DotcomNewslettersPageRenderingDataModel(
       newsletters = newsletterData,
@@ -99,20 +99,5 @@ object DotcomNewslettersPageRenderingDataModel {
   def toJson(model: DotcomNewslettersPageRenderingDataModel): String = {
     val jsValue = Json.toJson(model)
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
-  }
-
-  private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
-    NewsletterData(
-      response.identityName,
-      response.name,
-      response.theme,
-      response.signUpDescription,
-      response.frequency,
-      response.listId,
-      response.group,
-      response.mailSuccessDescription.getOrElse("You are subscribed"),
-      response.regionFocus,
-      response.illustrationCard,
-    )
   }
 }

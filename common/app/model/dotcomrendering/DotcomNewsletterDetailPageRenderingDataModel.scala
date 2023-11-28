@@ -73,12 +73,10 @@ object DotcomNewsletterDetailPageRenderingDataModel {
       .map { _.perEdition.mapKeys(_.id) }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-    val newsletterData = convertNewsletterResponseToData(newsletter)
-
-    val backfillRecommendationData = backfillRecommendedNewsletters.map(convertNewsletterResponseToData)
+    val backfillRecommendationData = backfillRecommendedNewsletters.map(_.toNewsletterData)
 
     DotcomNewsletterDetailPageRenderingDataModel(
-      newsletter = newsletterData,
+      newsletter = newsletter.toNewsletterData,
       backfillRecommendedNewsletters = backfillRecommendationData,
       id = page.metadata.id,
       editionId = edition.id,
@@ -102,22 +100,5 @@ object DotcomNewsletterDetailPageRenderingDataModel {
   def toJson(model: DotcomNewsletterDetailPageRenderingDataModel): String = {
     val jsValue = Json.toJson(model)
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
-  }
-
-  // TO DO - define a new class that includes more fields - if needed on the frontend
-  // eg signUpPageDescription, signUpPageHeadline
-  private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
-    NewsletterData(
-      response.identityName,
-      response.name,
-      response.theme,
-      response.signUpDescription,
-      response.frequency,
-      response.listId,
-      response.group,
-      response.mailSuccessDescription.getOrElse("You are subscribed"),
-      response.regionFocus,
-      response.illustrationCard,
-    )
   }
 }
