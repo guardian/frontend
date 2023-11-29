@@ -18,7 +18,6 @@ class AdminFilters(httpConfiguration: HttpConfiguration)(implicit
   val filterExemptions = FilterExemptions(
     "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
     "/deploy", //not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
-    "/prout-dcr", //not authenticated so it can be accessed by Prout to determine which builds have been deployed in DCR
   )
   val adminAuthFilter = new AuthFilterWithExemptions(filterExemptions.loginExemption, filterExemptions.exemptions)(
     mat,

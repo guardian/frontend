@@ -9,8 +9,8 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
+# Prout (checking the commit hash that is running in the production environment)
 GET     /prout-dcr                  controllers.ProutCheck.getDCRProut()
-
 
 # liveblogs, minutes.
 # NOTE: if updating the .json endpoint below, you must also update the fastly cache purger path used

@@ -8,7 +8,6 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                            controllers.HealthCheck.healthCheck()
 GET        /_fronts_cdn_healthcheck                                                 controllers.HealthCheck.healthCheck()
-GET        /prout-dcr                                                               controllers.ProutCheck.getDCRProut()
 
 GET        /_agentcontents                                                          controllers.FaciaController.renderAgentContents
 
@@ -18,6 +17,9 @@ GET        /.well-known/security.txt                                            
 GET        /.well-known/security.txt.asc                                            controllers.Assets.at(path="/public", file="security.txt.asc")
 
 GET        /.well-known/amphtml/apikey.pub                                          controllers.FaciaController.ampRsaPublicKey()
+
+# Prout (checking the commit hash that is running in the production environment)
+GET        /prout-dcr                                                               controllers.ProutCheck.getDCRProut()
 
 # AMP
 GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "")

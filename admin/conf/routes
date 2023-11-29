@@ -112,7 +112,6 @@ GET         /metrics/webpack-bundle-analyzer                                    
 GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 POST        /deploy                                                                                 controllers.admin.DeploysController.deploy(stage: String, build: Int)
 
-
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()
 POST        /redirect-post                                                                          controllers.admin.RedirectController.redirectPost()
