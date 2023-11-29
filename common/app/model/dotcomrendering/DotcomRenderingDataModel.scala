@@ -32,6 +32,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import services.NewsletterData
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
+import views.html.fragments.affiliateLinksDisclaimer
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
@@ -40,6 +41,7 @@ case class DotcomRenderingDataModel(
     version: Int,
     headline: String,
     standfirst: String,
+    affiliateLinksDisclaimer: Option[String],
     webTitle: String,
     mainMediaElements: List[PageElement],
     main: String,
@@ -121,6 +123,7 @@ object DotcomRenderingDataModel {
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
+        "affiliateLinksDisclaimer" -> model.affiliateLinksDisclaimer,
         "webTitle" -> model.webTitle,
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
@@ -545,6 +548,13 @@ object DotcomRenderingDataModel {
 
     val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
+    def getAffiliateLinksDisclaimer(shouldAddAffiliateLinks: Boolean) = {
+      if (shouldAddAffiliateLinks) {
+        Some(affiliateLinksDisclaimer("article").body)
+      } else {
+        None
+      }
+    }
     DotcomRenderingDataModel(
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
@@ -598,6 +608,7 @@ object DotcomRenderingDataModel {
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),
       slotMachineFlags = request.slotMachineFlags,
       standfirst = TextCleaner.sanitiseLinks(edition)(content.fields.standfirst.getOrElse("")),
+      affiliateLinksDisclaimer = getAffiliateLinksDisclaimer(shouldAddAffiliateLinks),
       starRating = content.content.starRating,
       subMetaKeywordLinks = content.content.submetaLinks.keywords.map(SubMetaLink.apply),
       subMetaSectionLinks =
