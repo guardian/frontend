@@ -24,8 +24,8 @@ object DeeplyRead
     extends Experiment(
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 31),
       participationGroup = Perc0A,
     )
 
@@ -33,8 +33,8 @@ object Lightbox
     extends Experiment(
       name = "lightbox",
       description = "Testing the impact lightbox might have on our CWVs",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 31),
       participationGroup = Perc0B,
     )
 
