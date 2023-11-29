@@ -33,7 +33,7 @@ object Lightbox
     extends Experiment(
       name = "lightbox",
       description = "Testing the impact lightbox might have on our CWVs",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 01, 31),
       participationGroup = Perc0B,
     )
