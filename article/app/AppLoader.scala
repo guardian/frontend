@@ -10,7 +10,7 @@ import concurrent.BlockingOperations
 import conf.{CachedHealthCheckLifeCycle, Configuration}
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.{ArticleControllers, HealthCheck}
+import controllers.{ArticleControllers, HealthCheck, ProutCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.{MessageUsLifecycle, StoreNavigationLifecycleComponent, TopicLifecycle}
@@ -62,6 +62,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val proutCheck = wire[ProutCheck]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

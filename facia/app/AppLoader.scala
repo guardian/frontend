@@ -9,7 +9,7 @@ import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.{FaciaControllers, HealthCheck}
+import controllers.{FaciaControllers, HealthCheck, ProutCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{DeeplyReadLifecycle, MostViewedLifecycle}
 import http.CommonFilters
@@ -26,7 +26,6 @@ import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
 
 import scala.concurrent.ExecutionContext
-import controllers.ProutCheck
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
