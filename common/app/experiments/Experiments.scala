@@ -25,7 +25,7 @@ object DeeplyRead
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      sellByDate = LocalDate.of(2024, 01, 31),
       participationGroup = Perc0A,
     )
 
@@ -34,7 +34,7 @@ object Lightbox
       name = "lightbox",
       description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      sellByDate = LocalDate.of(2024, 01, 31),
       participationGroup = Perc0B,
     )
 
