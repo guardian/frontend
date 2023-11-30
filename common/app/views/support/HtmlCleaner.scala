@@ -938,7 +938,8 @@ object AffiliateLinksCleaner {
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
   def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
-    document.body().append(affiliateLinksDisclaimer(contentType).toString())
+    val standfirstElement = document.getElementByClass("tonal__standfirst")
+    standfirstElement.after(affiliateLinksDisclaimer(contentType).toString())
     document
   }
 
