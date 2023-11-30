@@ -60,28 +60,29 @@ object StaticPages {
       ),
     )
 
-
-  private def getSectionForNewsletter ( newsletter: NewsletterResponseV2): SectionId = {
+  private def getSectionForNewsletter(newsletter: NewsletterResponseV2): SectionId = {
 
     val fallback = SectionId(value = "global")
     // TO DO - could use regionFocus to look up an Edition object - maybe the sectionId can be derived using that?
     newsletter.theme match {
-      case "news" =>  newsletter.regionFocus match {
-        case None => fallback
-        case Some(edition) => edition match {
-          case "UK" => SectionId(value = "uk")
-          case "AU" => SectionId(value = "australia-news")
-          case "US" => SectionId(value = "us-news")
-          case "EUR" => SectionId(value = "world/europe-news")
-          case _ => fallback
+      case "news" =>
+        newsletter.regionFocus match {
+          case None => fallback
+          case Some(edition) =>
+            edition match {
+              case "UK"  => SectionId(value = "uk")
+              case "AU"  => SectionId(value = "australia-news")
+              case "US"  => SectionId(value = "us-news")
+              case "EUR" => SectionId(value = "world/europe-news")
+              case _     => fallback
+            }
         }
-      }
-      case "sport" => SectionId(value = "sport")
-      case "opinion" => SectionId(value = "commentisfree")
+      case "sport"     => SectionId(value = "sport")
+      case "opinion"   => SectionId(value = "commentisfree")
       case "lifestyle" => SectionId(value = "lifeandstyle")
-      case "features" => fallback
-      case "culture" => SectionId(value = "culture")
-      case _ => fallback
+      case "features"  => fallback
+      case "culture"   => SectionId(value = "culture")
+      case _           => fallback
     }
   }
 

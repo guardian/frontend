@@ -64,21 +64,24 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   }
 
   // TO DO - better recommendations logic. sort by relevance,
-  def getBackfillRecommendationsFor(newsletter:NewsletterResponseV2):List[NewsletterResponseV2] = {
+  def getBackfillRecommendationsFor(newsletter: NewsletterResponseV2): List[NewsletterResponseV2] = {
     getV2Newsletters() match {
       case Left(error) => List.empty
-      case Right(newsleters) => newsleters
-        .filter(otherNewsleter =>
-          otherNewsleter.status.equalsIgnoreCase("live") &&
-          !otherNewsleter.restricted &&
-          !otherNewsleter.identityName.equalsIgnoreCase(newsletter.identityName) &&
-          (
-            otherNewsleter.theme.equalsIgnoreCase(newsletter.theme) ||
-            // using different fallback as we don't want to recommend based on neither newsletter haveing a region specified
-            otherNewsleter.regionFocus.getOrElse("_none").equalsIgnoreCase(newsletter.regionFocus.getOrElse("__none"))
+      case Right(newsleters) =>
+        newsleters
+          .filter(otherNewsleter =>
+            otherNewsleter.status.equalsIgnoreCase("live") &&
+              !otherNewsleter.restricted &&
+              !otherNewsleter.identityName.equalsIgnoreCase(newsletter.identityName) &&
+              (
+                otherNewsleter.theme.equalsIgnoreCase(newsletter.theme) ||
+                  // using different fallback as we don't want to recommend based on neither newsletter haveing a region specified
+                  otherNewsleter.regionFocus
+                    .getOrElse("_none")
+                    .equalsIgnoreCase(newsletter.regionFocus.getOrElse("__none"))
+              ),
           )
-        )
-        .slice(0,10)
+          .slice(0, 10)
     }
   }
 

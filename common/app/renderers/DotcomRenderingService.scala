@@ -354,7 +354,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       page: SimplePage,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomNewsletterDetailPageRenderingDataModel.apply(page, newsletter, backfillRecommendedNewsletters, request)
+    val dataModel =
+      DotcomNewsletterDetailPageRenderingDataModel.apply(page, newsletter, backfillRecommendedNewsletters, request)
     val json = DotcomNewsletterDetailPageRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletterDetail", CacheTime.Facia)
   }

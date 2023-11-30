@@ -166,7 +166,7 @@ class SignupPageController(
       case Left(message) => Left(message)
       case Right(optionalNewsletter) =>
         optionalNewsletter match {
-          case None             => Left("not found")
+          case None => Left("not found")
           case Some(newsletter) =>
             if (newsletter.restricted || newsletter.status != "live") {
               Left("denied")
