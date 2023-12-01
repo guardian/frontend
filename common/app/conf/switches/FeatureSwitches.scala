@@ -530,7 +530,7 @@ trait FeatureSwitches {
     safeState = Off,
     // This is a random date in the future but this switch should be removed far before then
     sellByDate = Some(LocalDate.of(2024, 6, 5)),
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   val UserFeaturesDcr = Switch(
