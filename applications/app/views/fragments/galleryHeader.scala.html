@@ -13,7 +13,7 @@
             @fragments.contentMeta(gallery.item, gallery)
 
             @if(gallery.item.fields.standfirst.isDefined) {
-                <div class="tonal__standfirst">
+                <div class="tonal__standfirst" id="gallery__standfirst">
                     @fragments.standfirst(gallery.item)
                 </div>
             }
