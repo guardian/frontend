@@ -524,7 +524,7 @@ trait FeatureSwitches {
 
   val DarkModeInApps = Switch(
     SwitchGroup.Feature,
-    "dark-mode-apps",
+    "dark-mode-in-apps",
     "If this switch is on, we will allow dark mode in apps articles",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
