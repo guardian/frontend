@@ -13,10 +13,12 @@
             @fragments.contentMeta(gallery.item, gallery)
 
             @if(gallery.item.fields.standfirst.isDefined) {
-                <div class="tonal__standfirst" id="gallery__standfirst">
+                <div class="tonal__standfirst">
                     @fragments.standfirst(gallery.item)
                 </div>
             }
+
+            <div id="gallery__disclaimer" style="display: none"></div>
 
             <div class="content__meta-container gallery__meta-container">
                 @if(!gallery.item.content.hasTonalHeaderByline) {
