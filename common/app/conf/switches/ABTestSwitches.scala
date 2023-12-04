@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Show sign in gate a different frequency depending on the time of day",
     owners = Seq(Owner.withGithub("personalisation")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 11, 23)),
+    sellByDate = Some(LocalDate.of(2023, 12, 23)),
     exposeClientSide = true,
   )
 
