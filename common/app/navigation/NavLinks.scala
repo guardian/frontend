@@ -229,31 +229,19 @@ object NavLinks {
     "Australia Weekend",
     "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend?INTCMP=header_au_weekend",
   )
-  val ukMasterClasses = NavLink("Masterclasses", "/guardian-masterclasses")
   val printShop = NavLink("Guardian Print Shop", "/artanddesign/series/gnm-print-sales")
   val auEvents = NavLink("Events", "/guardian-live-australia")
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
-  val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
+  val guardianLive =
+    NavLink("Live events", "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
   val guardianLicensing = NavLink("Guardian Licensing", s"https://licensing.theguardian.com/")
   val jobsRecruiter = NavLink(
     "Hire with Guardian Jobs",
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
   )
-  val guardianMasterClasses = NavLink(
-    "Guardian Masterclasses",
-    "/guardian-masterclasses",
-    children = List(
-      NavLink("Journalism", "/guardian-masterclasses/journalism"),
-      NavLink("Digital", "/guardian-masterclasses/digital"),
-      NavLink("Business", "/guardian-masterclasses/business"),
-      NavLink("Creative writing", "/guardian-masterclasses/writing-and-publishing"),
-      NavLink("Wellbeing & Culture", "/guardian-masterclasses/culture"),
-      NavLink("Bespoke training", "/guardian-masterclasses/corporate-training"),
-      NavLink("Calendar", "/guardian-masterclasses/calendar"),
-    ),
-  )
+  val aboutUs = NavLink("About Us", "/about")
 
   // News Pillar
   val ukNewsPillar = NavLink(
@@ -602,7 +590,7 @@ object NavLinks {
     jobsRecruiter,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     guardianLive,
-    ukMasterClasses,
+    aboutUs,
     digitalNewspaperArchive,
     printShop,
     ukPatrons,
@@ -615,12 +603,14 @@ object NavLinks {
     guardianPuzzlesApp,
     auWeekend,
     guardianLicensing,
+    aboutUs,
   )
   val usBrandExtensions = List(
     jobs,
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     guardianLicensing,
+    aboutUs,
   )
   val intBrandExtensions = List(
     jobs,
@@ -628,6 +618,7 @@ object NavLinks {
     digitalNewspaperArchive,
     guardianPuzzlesApp,
     guardianLicensing,
+    aboutUs,
   )
 
   // Tertiary Navigation
