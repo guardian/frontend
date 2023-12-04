@@ -51,8 +51,8 @@ object AdaptiveSite
     extends Experiment(
       name = "adaptive-site",
       description = "Enables serving an adaptive version of the site that responds to page performance",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 12, 5),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 9),
       participationGroup = Perc1A,
     )
 
