@@ -5,6 +5,7 @@
 @import views.support.RenderClasses
 @import conf.Configuration
 @import model.CompetitionDisplayHelpers.cleanTeamName
+@import model.CompetitionDisplayHelpers.cleanScore
 @import football.model.GuTeamCodes
 
 @(theMatch: FootballMatch, competition: Option[Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
@@ -39,7 +40,7 @@
             </div>
 
             @if(theMatch.isLive || theMatch.isResult){
-                @homeTeam.score.map{score => @fragments.inlineSvg("number-" + score, "numbers", List("team__score")) }
+                @homeTeam.score.map{score => @fragments.inlineSvg("number-" + cleanScore(score), "numbers", List("team__score"))}
             }
         </div>
 
@@ -58,7 +59,7 @@
             </div>
 
             @if(theMatch.isLive || theMatch.isResult){
-                @awayTeam.score.map{score => @fragments.inlineSvg("number-" + score, "numbers", List("team__score")) }
+                @awayTeam.score.map{score => @fragments.inlineSvg("number-" + cleanScore(score), "numbers", List("team__score")) }
             }
         </div>
     </div>

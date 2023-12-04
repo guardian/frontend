@@ -432,14 +432,4 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
-
-  val adsInMerch: Switch = Switch(
-    group = Commercial,
-    name = "ads-in-merch",
-    description = "Enable showing adverts in merchandising-high and merchandising slots",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2023, 12, 4)),
-    exposeClientSide = true,
-  )
 }

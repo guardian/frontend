@@ -517,7 +517,7 @@
     json5 "^2.2.2"
     semver "^6.3.0"
 
-"@babel/core@^7.16.7":
+"@babel/core@^7.23.2":
   version "7.23.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.23.5.tgz#6e23f2acbcb77ad283c5ed141f824fd9f70101c7"
   integrity sha512-Cwc2XjUrG4ilcfOw4wBAK+enbdgwAcAJCfGUItPBKR7Mjw4aEfAFYrLxeRp4jWgtNIKn3n2AlBOfwwafl+42/g==
@@ -5774,7 +5774,7 @@ cryptiles@2.x.x:
   dependencies:
     boom "2.x.x"
 
-crypto-js@4.2.0, crypto-js@^3.3.0:
+crypto-js@4.2.0, crypto-js@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
   integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
@@ -11787,11 +11787,11 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5":
+prebid.js@guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5:
   version "7.54.5"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5"
   dependencies:
-    "@babel/core" "^7.16.7"
+    "@babel/core" "^7.23.2"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
@@ -11799,7 +11799,7 @@ preact@^10.5.13:
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
-    crypto-js "^3.3.0"
+    crypto-js "^4.2.0"
     dlv "1.1.3"
     dset "3.1.2"
     express "^4.15.4"

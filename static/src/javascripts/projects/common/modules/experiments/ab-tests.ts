@@ -1,7 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { consentlessAds } from './tests/consentlessAds';
 import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
-import { elementsManager } from './tests/elements-manager';
 import { integrateIma } from './tests/integrate-ima';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
 import { prebidKargo } from './tests/prebid-kargo';
@@ -18,7 +17,6 @@ export const concurrentTests: readonly ABTest[] = [
 	deeplyReadArticleFooterTest,
 	consentlessAds,
 	integrateIma,
-	elementsManager,
 	prebidKargo,
 	mpuWhenNoEpic,
 ];

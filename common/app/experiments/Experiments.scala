@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       Lightbox,
-      OphanEsm,
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
@@ -24,8 +23,8 @@ object DeeplyRead
     extends Experiment(
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 31),
       participationGroup = Perc0A,
     )
 
@@ -33,8 +32,8 @@ object Lightbox
     extends Experiment(
       name = "lightbox",
       description = "Testing the impact lightbox might have on our CWVs",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 31),
       participationGroup = Perc0B,
     )
 
@@ -62,15 +61,6 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 11, 30),
+      sellByDate = LocalDate.of(2024, 1, 3),
       participationGroup = Perc1E,
-    )
-
-object OphanEsm
-    extends Experiment(
-      name = "ophan-esm",
-      description = "Use ophan-tracker-js@2, which uses native ES Modules",
-      owners = Seq(Owner.withGithub("@guardian/ophan")),
-      sellByDate = LocalDate.of(2023, 11, 30),
-      participationGroup = Perc50,
     )
