@@ -29,6 +29,7 @@ val common = library("common")
       awsSqs,
       awsSsm,
       eTagCachingS3,
+      nettyCodecHttp2,
       contentApiClient,
       enumeratumPlayJson,
       filters,
@@ -77,12 +78,6 @@ val common = library("common")
   )
 
 val commonWithTests = withTests(common)
-
-val sanityTest = application("sanity-tests")
-  .settings(
-    // Evict vulnerable versions of jackson-databind
-    libraryDependencies += jacksonDatabind,
-  )
 
 val facia = application("facia")
   .dependsOn(commonWithTests)

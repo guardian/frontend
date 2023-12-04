@@ -4,7 +4,7 @@ import agents.{DeeplyReadAgent, MostViewedAgent}
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
-import controllers.FaciaControllerImpl
+import controllers.{Assets, FaciaControllerImpl}
 import helpers.FaciaTestData
 import implicits.FakeRequests
 import org.mockito.Matchers.{any, anyString}
@@ -34,7 +34,8 @@ import scala.concurrent.{Await, Future}
     with WithTestApplicationContext
     with MockitoSugar
     with WithTestFrontJsonFapi
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with WithAssets {
 
   lazy val wsClient = mockWsResponse()
 
@@ -44,6 +45,7 @@ import scala.concurrent.{Await, Future}
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
+    assets = assets,
   )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"

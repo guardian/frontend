@@ -1,5 +1,5 @@
 const fs = require('fs');
-const AWS = require('aws-sdk');
+const { CloudWatch } = require('@aws-sdk/client-cloudwatch');
 
 let cloudwatch;
 
@@ -19,17 +19,17 @@ module.exports.configure = filename =>
                 );
             }
 
-            AWS.config.update({
-                region: 'eu-west-1',
-                accessKeyId: module.exports.getProperty('aws.access.key', data),
-                secretAccessKey: module.exports.getProperty(
-                    'aws.access.secret.key',
-                    data
-                ),
-            });
-
             try {
-                cloudwatch = new AWS.CloudWatch();
+                cloudwatch = new CloudWatch({
+                    region: 'eu-west-1',
+                    credentials: {
+                        accessKeyId: module.exports.getProperty('aws.access.key', data),
+                        secretAccessKey: module.exports.getProperty(
+                            'aws.access.secret.key',
+                            data
+                        ),
+                    },
+                });
                 return resolve({});
             } catch (e) {
                 return reject(e);
