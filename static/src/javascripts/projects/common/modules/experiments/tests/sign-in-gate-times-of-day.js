@@ -2,8 +2,8 @@
 
 export const signInGateTimesOfDay = {
     id: 'SignInGateTimesOfDay',
-    start: '2023-10-23',
-    expiry: '2023-11-23',
+    start: '2023-12-11',
+    expiry: '2023-12-15',
     author: 'Lindsey Dew',
     description:
         'Show sign in gate more frequently to users in the morning',
