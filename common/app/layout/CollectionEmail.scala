@@ -72,4 +72,6 @@ object CollectionEmail {
     CollectionEmail(pressedPage.id, EmailContentContainer.fromPressedCollections(pressedPage.collections))
 }
 
-case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer])
+case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
+  def collections: List[EmailContainer]
+}
