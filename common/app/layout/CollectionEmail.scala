@@ -4,7 +4,6 @@ import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
 import com.gu.commercial.branding.ContainerBranding
-import commercial.campaigns.EmailAdvertisements._
 import common.Edition
 
 import PartialFunction.condOpt
@@ -73,14 +72,4 @@ object CollectionEmail {
     CollectionEmail(pressedPage.id, EmailContentContainer.fromPressedCollections(pressedPage.collections))
 }
 
-case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
-  def collections: List[EmailContainer] = {
-    val (start, end) = contentCollections.splitAt(3)
-    List(
-      start,
-      mpu.get(id).toList,
-      end,
-      safeRtb.get(id).toList,
-    ).flatten
-  }
-}
+case class CollectionEmail(contentCollections: List[EmailContentContainer])
