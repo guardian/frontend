@@ -10,9 +10,6 @@ import PartialFunction.condOpt
 
 sealed trait EmailContainer
 
-case class LiveIntentMarquee(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
-case class LiveIntentMPU(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
-case class LiveIntentSafeRTB(newsletterId: String, ids: List[String]) extends EmailContainer
 case class EmailContentContainer(
     displayName: String,
     href: Option[String],
