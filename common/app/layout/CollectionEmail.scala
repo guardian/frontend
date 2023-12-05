@@ -73,5 +73,7 @@ object CollectionEmail {
 }
 
 case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
-  def collections: List[EmailContainer]
+  def collections: List[EmailContainer] = {
+    List(contentCollections).flatten
+  }
 }
