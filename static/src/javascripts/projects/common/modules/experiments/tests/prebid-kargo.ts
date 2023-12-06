@@ -3,9 +3,9 @@ import type { ABTest } from '@guardian/ab-core';
 export const prebidKargo: ABTest = {
 	id: 'PrebidKargo',
 	author: '@commercial-dev',
-	start: '2023-08-10',
-	expiry: '2023-09-29',
-	audience: 0 / 100,
+	start: '2023-12-05',
+	expiry: '2024-02-29',
+	audience: 2 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'USA only',
 	successMeasure: '',
