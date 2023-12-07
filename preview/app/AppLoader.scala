@@ -5,7 +5,6 @@ import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
-import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics}
 import conf.switches.SwitchboardLifecycle
@@ -47,11 +46,9 @@ trait PreviewLifecycleComponents
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val ophanApi = wire[OphanApi]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   def standaloneLifecycleComponents: List[LifecycleComponent] =
     List(
-      wire[LogstashLifecycle],
       wire[CommercialLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
