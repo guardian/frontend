@@ -34,7 +34,6 @@ trait Controllers extends IdentityControllers {
 trait AppLifecycleComponents {
   self: FrontendComponents with Controllers =>
 
-
   override lazy val lifecycleComponents = List(
     wire[IdentityLifecycle],
     wire[CloudWatchMetricsLifecycle],
