@@ -4,16 +4,12 @@ import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
 import com.gu.commercial.branding.ContainerBranding
-import commercial.campaigns.EmailAdvertisements._
 import common.Edition
 
 import PartialFunction.condOpt
 
 sealed trait EmailContainer
 
-case class LiveIntentMarquee(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
-case class LiveIntentMPU(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
-case class LiveIntentSafeRTB(newsletterId: String, ids: List[String]) extends EmailContainer
 case class EmailContentContainer(
     displayName: String,
     href: Option[String],
@@ -75,12 +71,6 @@ object CollectionEmail {
 
 case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
   def collections: List[EmailContainer] = {
-    val (start, end) = contentCollections.splitAt(3)
-    List(
-      start,
-      mpu.get(id).toList,
-      end,
-      safeRtb.get(id).toList,
-    ).flatten
+    List(contentCollections).flatten
   }
 }
