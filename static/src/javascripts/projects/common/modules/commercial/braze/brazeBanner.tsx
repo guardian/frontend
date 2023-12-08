@@ -84,13 +84,17 @@ const renderBanner = (
 			const fetchEmail = (): Promise<string | null> => {
 				return new Promise ((resolve) => {
 					getUserFromApiOrOkta()
-						.then(res => {
-							if (res?.primaryEmailAddress && res?.statusFields?.userEmailValidated) {
+						.then((res) => {
+							if (
+								res &&
+								res.primaryEmailAddress &&
+								res.statusFields?.userEmailValidated
+							) {
 								resolve(res.primaryEmailAddress);
 							}
 							resolve(null);
 						})
-						.catch(err => resolve(null));
+						.catch(() => resolve(null));
 				});
 			};
 
