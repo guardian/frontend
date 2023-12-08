@@ -1,5 +1,5 @@
 @(contentType: String) @articleDisclaimer() = {
-    <p><em><sup>
+    <p><sup>
         The Guardian’s product and service reviews are independent and are
         in no way influenced by any advertiser or commercial initiative. We
         will earn a commission from the retailer if you buy something
@@ -10,9 +10,9 @@
             class="u-underline"
             >Learn more</a
         >.
-    </sup></em></p>
+    </sup></p>
 } @galleryDisclaimer() = {
-    <br><em>
+    <br>
         The Guardian’s product and service reviews are independent and are in no
         way influenced by any advertiser or commercial initiative. We will earn a
         commission from the retailer if you buy something through an affiliate link.
@@ -20,7 +20,6 @@
 		    href="https://www.theguardian.com/info/2017/nov/01/reader-information-on-affiliate-links"
 		    >Learn more</a
 	    >.
-    </em>
 } @{contentType match {
     case "gallery" => galleryDisclaimer()
     case "article" => articleDisclaimer()
