@@ -64,3 +64,12 @@ object OfferHttp3
       sellByDate = LocalDate.of(2024, 1, 3),
       participationGroup = Perc1E,
     )
+
+object DisableAffiliateLinks
+    extends Experiment(
+      name = "disable-affiliate-links",
+      description = "Disable affiliate links for 5% of users so that we can measure differences in engagement",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 30),
+      participationGroup = Perc5A,
+    )

@@ -961,9 +961,13 @@ object AffiliateLinksCleaner {
       defaultOffTags: Set[String],
       alwaysOffTags: Set[String],
       tagPaths: List[String],
+      isInDisableAffiliateLinksTest: Boolean,
   ): Boolean = {
     // Never include affiliate links if it is tagged with an always off tag
-    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags)) {
+
+    if (
+      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && !isInDisableAffiliateLinksTest
+    ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {
