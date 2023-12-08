@@ -82,13 +82,12 @@ const renderBanner = (
 					: {};
 
 			const fetchEmail = (): Promise<string | null> => {
-				return new Promise ((resolve) => {
+				return new Promise((resolve) => {
 					getUserFromApiOrOkta()
 						.then((res) => {
 							if (
-								res &&
-								res.primaryEmailAddress &&
-								res.statusFields?.userEmailValidated
+								res?.primaryEmailAddress &&
+								res.statusFields.userEmailValidated
 							) {
 								resolve(res.primaryEmailAddress);
 							}
