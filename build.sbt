@@ -64,14 +64,13 @@ val common = library("common")
       playJson,
       playJsonJoda,
       jodaForms,
-      jacksonDataFormat,
       atomRenderer,
       identityModel,
       capiAws,
       pekkoActor,
       pekkoStream,
       pekkoSlf4j,
-    ) ++ jackson,
+    ),
     TestAssets / mappings ~= filterAssets,
   )
 
@@ -203,14 +202,6 @@ val rss = application("rss")
 
 
 val main = root()
-// This evicts the version of
-// "com.fasterxml.jackson.core:jackson-databind"
-// used by "com.typesafe.play:sbt-plugin"
-  .settings(
-    libraryDependencies ++= Seq(
-      jacksonDatabind,
-    ),
-  )
   .aggregate(
     common,
     facia,
