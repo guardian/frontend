@@ -303,7 +303,7 @@ If you want to set up your AB test with scala instead of javascript, almost all 
 
 *Disadvantages:*
 - Can only do AB tests, not multivariant ABC test
-- Only one test can use a given bucket at a time eg. if someone is running a 50:50 test, you can't run a 50:50 until they finish (current setup)
+- Only one test can use a given bucket at a time eg. if someone is running a 50:50 test, you can't run a 50:50 until they finish (current setup), furthermore the 50% AB test bucket overlaps with the other test buckets, so you shouldn't run a 50:50 test at the same time as any of the other tests sizes
 - Slightly harder to set up, preview and read test results
 
 ## Configure the test
