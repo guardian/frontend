@@ -882,6 +882,7 @@ case class AffiliateLinksCleaner(
     contentType: String,
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
+    isInDisableAffiliateLinksTest: Boolean,
 ) extends HtmlCleaner
     with GuLogging {
 
