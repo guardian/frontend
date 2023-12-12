@@ -72,5 +72,5 @@ object DisableAffiliateLinks
       description = "Disable affiliate links for 5% of users so that we can measure differences in engagement",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 1, 30),
-      participationGroup = Perc5A,
+      participationGroup = Perc2A,
     )
