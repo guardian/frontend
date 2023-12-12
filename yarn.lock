@@ -11787,7 +11787,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#ee7f43c7c85a5245bbe51920cfed18818866ea7b":
+prebid.js@guardian/prebid.js#ee7f43c7c85a5245bbe51920cfed18818866ea7b:
   version "8.24.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/ee7f43c7c85a5245bbe51920cfed18818866ea7b"
   dependencies:
