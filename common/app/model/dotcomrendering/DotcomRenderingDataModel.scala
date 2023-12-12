@@ -7,7 +7,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
-import experiments.{ActiveExperiments, DisableAffiliateLinks}
+import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
@@ -461,8 +461,7 @@ object DotcomRenderingDataModel {
       blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
     }
 
-    val isInDisableAffiliateLinksTest = ActiveExperiments.isParticipating(DisableAffiliateLinks)
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, isInDisableAffiliateLinksTest)
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
     val shouldAddDisclaimer = hasAffiliateLinks(bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
