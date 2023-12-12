@@ -159,13 +159,6 @@ const bootStandard = () => {
         setAdFreeCookie(1);
     }
 
-    // set local storage: gu.alreadyVisited
-    if (window.guardian.isEnhanced) {
-        const key = 'gu.alreadyVisited';
-        const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
-        storage.local.setRaw(key, alreadyVisited + 1);
-    }
-
     ophan.setEventEmitter(mediator);
 
     if(window.guardian.config.switches.headerTopNav
