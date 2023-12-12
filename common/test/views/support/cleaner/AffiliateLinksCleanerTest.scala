@@ -26,6 +26,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
+      isInDisableAffiliateLinksTest = false,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -35,6 +36,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
+      isInDisableAffiliateLinksTest = false,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -44,6 +46,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
+      isInDisableAffiliateLinksTest = false,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -53,6 +56,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
+      isInDisableAffiliateLinksTest = false,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -62,6 +66,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       Set.empty,
       List("bereavement"),
+      isInDisableAffiliateLinksTest = false,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -71,6 +76,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       Set.empty,
       List("tech"),
+      isInDisableAffiliateLinksTest = false,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -80,6 +86,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       Set.empty,
       List("tech"),
+      isInDisableAffiliateLinksTest = false,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -89,6 +96,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set("bereavement"),
       List("bereavement"),
+      isInDisableAffiliateLinksTest = false,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -98,6 +106,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set("bereavement"),
       List("tech"),
+      isInDisableAffiliateLinksTest = false,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -107,6 +116,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set("bereavement"),
       List("tech"),
+      isInDisableAffiliateLinksTest = true,
     ) should be(false)
   }
 }
