@@ -29,8 +29,8 @@ class FrontHeadlineTest extends AnyFunSuite with Matchers {
 
     val RevalidatableResult(result, _) = FrontHeadline.renderEmailHeadline(pressedPage)
     val resultFuture = Future.successful(result)
-    val headline = Helpers.contentAsString(resultFuture)
-    val status = Helpers.status(resultFuture)
+    val headline = Helpers.contentAsString(resultFuture)(timeout)
+    val status = Helpers.status(resultFuture)(timeout)
 
     headline shouldBe "webTitle 1"
     status shouldBe 200
