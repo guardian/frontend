@@ -3,7 +3,6 @@ import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common.Assets.DiscussionExternalAssetsLifecycle
-import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common._
 import common.dfp.DfpAgentLifecycle
 import concurrent.BlockingOperations
@@ -59,12 +58,10 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[NewspaperBooksAndSectionsAutoRefresh],
     wire[DfpAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],

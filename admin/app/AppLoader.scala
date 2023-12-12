@@ -1,6 +1,5 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import dfp._
 import common.dfp._
 import common._
@@ -78,9 +77,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
-    wire[LogstashLifecycle],
     wire[AdminLifecycle],
     wire[ConfigAgentLifecycle],
     wire[SwitchboardLifecycle],

@@ -55,8 +55,9 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback2, // logback2: to prevent "error: reference to logback is ambiguous;"
-      kinesisLogbackAppender,
+      logback2,
+      logbackCore,
+      logbackClassic,// logback2: to prevent "error: reference to logback is ambiguous;"
       targetingClient,
       scanamo,
       scalaUri,
