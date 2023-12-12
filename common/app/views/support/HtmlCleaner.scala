@@ -916,11 +916,9 @@ object AffiliateLinksCleaner {
       contentType: String,
       skimlinksId: String,
   ): Document = {
-
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
-
-    // respect appendDisclaimer, or if it's not set then always add the disclaimer if affilate links have been added
+    // respect appendDisclaimer (for Galleries), or if it's not set then always add the disclaimer if affilate links have been added
     val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
     if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
