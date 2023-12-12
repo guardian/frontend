@@ -85,7 +85,7 @@ object BodyProcessor {
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         contentType = "article",
         tags = article.content.tags.tags.map(_.id),
-        isInDisableAffiliateLinksTest = ActiveExperiments.isParticipating(DisableAffiliateLinks)
+        isInDisableAffiliateLinksTest = ActiveExperiments.isParticipating(DisableAffiliateLinks),
       ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))

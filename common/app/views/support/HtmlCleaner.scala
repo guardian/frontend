@@ -967,9 +967,7 @@ object AffiliateLinksCleaner {
   ): Boolean = {
     // Never include affiliate links if it is tagged with an always off tag
 
-    if (
-      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && !isInDisableAffiliateLinksTest
-    ) {
+    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && !isInDisableAffiliateLinksTest) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {

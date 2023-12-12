@@ -15,7 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
-      DisableAffiliateLinks
+      DisableAffiliateLinks,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
