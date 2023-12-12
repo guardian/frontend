@@ -88,7 +88,7 @@ object Dependencies {
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client" % "1.1.4"
+  val targetingClient = "com.gu" %% "targeting-client" % "1.1.4" // TODO: Needs to be upgraded so it pulls in play-json with groupid org.playframework
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.2"
