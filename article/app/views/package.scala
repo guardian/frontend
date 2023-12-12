@@ -1,7 +1,6 @@
 package views
 
 import common.Edition
-import experiments.{ActiveExperiments, DisableAffiliateLinks}
 import layout.ContentWidths
 import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.content.MediaWrapper
@@ -85,7 +84,6 @@ object BodyProcessor {
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         contentType = "article",
         tags = article.content.tags.tags.map(_.id),
-        isInDisableAffiliateLinksTest = ActiveExperiments.isParticipating(DisableAffiliateLinks)
       ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))

@@ -1,7 +1,6 @@
 package views
 
 import common.Edition
-import experiments.{ActiveExperiments, DisableAffiliateLinks}
 import model.{ApplicationContext, GalleryPage, Interactive}
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
@@ -48,7 +47,6 @@ object GalleryCaptionCleaners {
         "gallery",
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
-        isInDisableAffiliateLinksTest = ActiveExperiments.isParticipating(DisableAffiliateLinks)
       ),
     )
 
