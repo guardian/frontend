@@ -71,6 +71,10 @@ val common = library("common")
       pekkoSlf4j,
     ),
     TestAssets / mappings ~= filterAssets,
+//    excludeDependencies ++= Seq(
+//      // As of Play 3.0, groupId has changed to org.playframework; exclude transitive dependencies to the old artifacts
+//      ExclusionRule(organization = "com.typesafe.play")
+//    ),
   )
 
 val commonWithTests = withTests(common)
