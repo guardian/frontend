@@ -55,6 +55,8 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
+      logbackEncoder,
+      logbackClassic,
       logbackCore,
       targetingClient,
       scanamo,
