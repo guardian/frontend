@@ -1,6 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
 import { consentlessAds } from './tests/consentlessAds';
-import { deeplyReadArticleFooterTest } from './tests/deeply-read-article-footer';
 import { integrateIma } from './tests/integrate-ima';
 import { prebidKargo } from './tests/prebid-kargo';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
@@ -15,7 +14,6 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMainControl,
 	signInGateTimesOfDay,
 	remoteRRHeaderLinksTest,
-	deeplyReadArticleFooterTest,
 	consentlessAds,
 	integrateIma,
 	prebidKargo,

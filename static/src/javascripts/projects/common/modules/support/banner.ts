@@ -13,7 +13,6 @@ import type React from 'react';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
-import { getVisitCount } from 'common/modules/commercial/contributions-utilities';
 import {
 	getLastOneOffContributionDate,
 	getPurchaseInfo,
@@ -138,7 +137,6 @@ const buildBannerPayload = async (
 	const browserId = window.guardian.config.ophan.browserId;
 
 	const targeting: BannerTargeting = {
-		alreadyVisitedCount: getVisitCount(),
 		shouldHideReaderRevenue: shouldHideReaderRevenue,
 		isPaidContent: isPaidContent,
 		showSupportMessaging: !(await shouldHideSupportMessaging()),

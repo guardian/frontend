@@ -188,7 +188,7 @@ object DotcomRenderingUtils {
         elem.`type` match {
           case Text =>
             val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+            stringContainsAffiliateableLinks(textString)
           case _ => false
         },
       )
@@ -199,6 +199,10 @@ object DotcomRenderingUtils {
         elems
       }
     } else elems
+  }
+
+  def stringContainsAffiliateableLinks(textString: String): Boolean = {
+    AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
   }
 
   def blockElementsToPageElements(
