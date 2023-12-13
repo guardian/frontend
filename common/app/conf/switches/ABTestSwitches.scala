@@ -27,6 +27,26 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-times-of-day",
+    "Show sign in gate a different frequency depending on the time of day",
+    owners = Seq(Owner.withGithub("personalisation")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 1, 9)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-deeply-read-article-footer",
+    "Test whether adding deeply read articles have negative impact on recirculation",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2023, 12, 13)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-consentless-ads",
     "Use consentless ad stack rather than consented / standalone",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
