@@ -268,7 +268,7 @@ object DotcomRenderingUtils {
     }
   }
 
-  def shouldAddAffiliateLinks(content: ContentType, isInDisableAffiliateLinksTest: Boolean): Boolean = {
+  def shouldAddAffiliateLinks(content: ContentType)(implicit request: RequestHeader): Boolean = {
     AffiliateLinksCleaner.shouldAddAffiliateLinks(
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       section = content.metadata.sectionId,
@@ -277,7 +277,6 @@ object DotcomRenderingUtils {
       defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
       alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
       tagPaths = content.content.tags.tags.map(_.id),
-      isInDisableAffiliateLinksTest = isInDisableAffiliateLinksTest,
     )
   }
 

@@ -9,6 +9,7 @@ import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
 import conf.switches.Switches._
+import experiments.{ActiveExperiments, DisableAffiliateLinks}
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
@@ -882,8 +883,8 @@ case class AffiliateLinksCleaner(
     contentType: String,
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
-    isInDisableAffiliateLinksTest: Boolean,
-) extends HtmlCleaner
+)(implicit request: RequestHeader)
+    extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
@@ -896,8 +897,7 @@ case class AffiliateLinksCleaner(
         defaultOffTags,
         alwaysOffTags,
         tags,
-        isInDisableAffiliateLinksTest,
-      )
+      )(request)
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
@@ -963,11 +963,10 @@ object AffiliateLinksCleaner {
       defaultOffTags: Set[String],
       alwaysOffTags: Set[String],
       tagPaths: List[String],
-      isInDisableAffiliateLinksTest: Boolean,
-  ): Boolean = {
+  )(implicit request: RequestHeader): Boolean = {
     // Never include affiliate links if it is tagged with an always off tag
 
-    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && !isInDisableAffiliateLinksTest) {
+    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && !ActiveExperiments.isParticipating(DisableAffiliateLinks)) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {

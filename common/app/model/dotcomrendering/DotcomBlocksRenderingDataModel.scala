@@ -68,7 +68,7 @@ object DotcomBlocksRenderingDataModel {
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
     val isInDisableAffiliateLinksTest = ActiveExperiments.isParticipating(DisableAffiliateLinks)(request)
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, isInDisableAffiliateLinksTest)
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)(request)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
     val edition = Edition(request)

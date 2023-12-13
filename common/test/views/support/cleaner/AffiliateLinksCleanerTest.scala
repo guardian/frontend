@@ -1,8 +1,10 @@
 package views.support.cleaner
 import conf.Configuration
+import conf.switches.Switches.ServerSideExperiments
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.test.FakeRequest
 import views.support.AffiliateLinksCleaner._
 
 class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
@@ -16,6 +18,8 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
   }
 
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
+    val fakeTestControlRequest = FakeRequest().withHeaders("X-GU-Experiment-2perc-A" -> "control")
+
     val supportedSections = Set("film", "books", "fashion")
 
     shouldAddAffiliateLinks(
@@ -26,8 +30,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
-      isInDisableAffiliateLinksTest = false,
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "film",
@@ -36,8 +39,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
-      isInDisableAffiliateLinksTest = false,
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "film",
@@ -46,8 +48,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
-      isInDisableAffiliateLinksTest = false,
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "news",
@@ -56,8 +57,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set.empty,
       List.empty,
-      isInDisableAffiliateLinksTest = false,
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "news",
@@ -66,8 +66,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       Set.empty,
       List("bereavement"),
-      isInDisableAffiliateLinksTest = false,
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "news",
@@ -76,8 +75,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       Set.empty,
       List("tech"),
-      isInDisableAffiliateLinksTest = false,
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "fashion",
@@ -86,8 +84,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       Set.empty,
       List("tech"),
-      isInDisableAffiliateLinksTest = false,
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "fashion",
@@ -96,8 +93,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set("bereavement"),
       List("bereavement"),
-      isInDisableAffiliateLinksTest = false,
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "fashion",
@@ -106,17 +102,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       Set("bereavement"),
       List("tech"),
-      isInDisableAffiliateLinksTest = false,
-    ) should be(true)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      "fashion",
-      Some(true),
-      supportedSections,
-      Set.empty,
-      Set("bereavement"),
-      List("tech"),
-      isInDisableAffiliateLinksTest = true,
-    ) should be(false)
+    )(fakeTestControlRequest) should be(true)
   }
 }
