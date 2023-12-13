@@ -23,6 +23,10 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
+    <logger name="play" level="INFO" />
+    <logger name="application" level="DEBUG" />
+    <logger name="request" level="INFO" />
+
     <root level="INFO">
         <appender-ref ref="ASYNCSTDOUT"/>
         <appender-ref ref="FILE" />
