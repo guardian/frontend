@@ -85,12 +85,6 @@ const clearBannerHistory = () => {
 const showMeTheBanner = (asExistingSupporter = false) => {
 	clearBannerHistory();
 
-	// The banner only displays after a certain number of pageviews. So let's get there quick!
-	storage.local.setRaw(
-		'gu.alreadyVisited',
-		minArticlesBeforeShowingBanner + 1,
-	);
-
 	clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
