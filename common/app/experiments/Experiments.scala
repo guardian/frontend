@@ -69,7 +69,7 @@ object OfferHttp3
 object DisableAffiliateLinks
     extends Experiment(
       name = "disable-affiliate-links",
-      description = "Disable affiliate links for 5% of users so that we can measure differences in engagement",
+      description = "Disable affiliate links for 2% of users so that we can measure differences in engagement",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 1, 30),
       participationGroup = Perc2A,
