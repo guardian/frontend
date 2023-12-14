@@ -897,7 +897,7 @@ case class AffiliateLinksCleaner(
         defaultOffTags,
         alwaysOffTags,
         tags,
-      )(request)
+      )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
