@@ -84,6 +84,7 @@ object BodyProcessor {
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         contentType = "article",
         tags = article.content.tags.tags.map(_.id),
+        publishedDate = article.content.fields.firstPublicationDate,
       ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))

@@ -9,7 +9,6 @@ import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
 import conf.switches.Switches._
-import experiments.{ActiveExperiments, DisableAffiliateLinks}
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
@@ -883,8 +882,8 @@ case class AffiliateLinksCleaner(
     contentType: String,
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
-)(implicit request: RequestHeader)
-    extends HtmlCleaner
+    publishedDate: Option[DateTime],
+) extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
@@ -897,6 +896,7 @@ case class AffiliateLinksCleaner(
         defaultOffTags,
         alwaysOffTags,
         tags,
+        publishedDate,
       )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
@@ -940,9 +940,7 @@ object AffiliateLinksCleaner {
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
   def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
-    if (contentType == "gallery") {
-      document.body().prepend(affiliateLinksDisclaimer(contentType).toString())
-    }
+    document.body().append(affiliateLinksDisclaimer(contentType).toString())
     document
   }
 
@@ -963,10 +961,15 @@ object AffiliateLinksCleaner {
       defaultOffTags: Set[String],
       alwaysOffTags: Set[String],
       tagPaths: List[String],
-  )(implicit request: RequestHeader): Boolean = {
-    // Never include affiliate links if it is tagged with an always off tag
+      firstPublishedDate: Option[DateTime],
+  ): Boolean = {
+    val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
-    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && !ActiveExperiments.isParticipating(DisableAffiliateLinks)) {
+    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
+    // date. The cut off date is temporary while we are working on improving the compliance of affiliate links
+    if (
+      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(_.isBefore(publishedCutOffDate))
+    ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {
