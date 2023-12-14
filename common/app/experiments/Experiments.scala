@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
+      DisableAffiliateLinks,
     )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -63,4 +64,13 @@ object OfferHttp3
       owners = Seq(Owner.withGithub("paulmr")),
       sellByDate = LocalDate.of(2024, 1, 3),
       participationGroup = Perc1E,
+    )
+
+object DisableAffiliateLinks
+    extends Experiment(
+      name = "disable-affiliate-links",
+      description = "Disable affiliate links for 2% of users so that we can measure differences in engagement",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 30),
+      participationGroup = Perc2A,
     )
