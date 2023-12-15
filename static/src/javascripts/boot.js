@@ -69,7 +69,7 @@ const go = () => {
             }
 
             // ------------------------------------------------------
-            // Sending Consent Data to Ophan
+            // Sending Consent Data to Ophan through ComponentEvent
 
             /*
 
@@ -131,6 +131,58 @@ const go = () => {
             });
 
             // ------------------------------------------------------
+
+            // ------------------------------------------------------
+            // Sending Consent Data to Ophan as its own record
+
+            /*
+
+                Date: Dec 2023
+                Author: Anna Voelker
+
+                We reproduce here the same code that we had developed for DCR.
+            */
+
+                if (!consentState) return;
+
+                const consentData = () => {
+                    if (consentState.tcfv2) {
+                        const consentUUID = getCookie('consentUUID') || '';
+                        const consent = consentState.tcfv2?.tcString;
+                        const consentJurisdiction = "TCF";
+                        return [
+                            consentJurisdiction,
+                            consentUUID,
+                            consent
+                        ];
+                    }
+                    if (consentState.ccpa) {
+                        const consentUUID = getCookie('ccpaUUID') || '';
+                        const consent = consentState.ccpa?.doNotSell ? 'false' : 'true';
+                        const consentJurisdiction = "CCPA";
+                        return [
+                            consentJurisdiction,
+                            consentUUID,
+                            consent
+                        ];
+                    }
+                    if (consentState.aus) {
+                        const consentUUID = getCookie('ccpaUUID') || '';
+                        const consent = consentState.aus.personalisedAdvertising? 'true': 'false';
+                        const consentJurisdiction = "AUS";
+                        return [
+                            consentJurisdiction,
+                            consentUUID,
+                            consent
+                        ];
+                    }
+                    return [];
+                };
+
+
+                ophan.record({consentData});
+
+                // ------------------------------------------------------
 
         });
 
