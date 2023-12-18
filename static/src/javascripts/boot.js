@@ -140,7 +140,8 @@ const go = () => {
                 Date: Dec 2023
                 Author: Anna Voelker
 
-                We reproduce here the same code that we had developed for DCR.
+                We reproduce here the same code that we had developed for DCR:
+                https://github.com/guardian/dotcom-rendering/pull/9546
             */
 
                 if (!consentState) return;
@@ -150,33 +151,33 @@ const go = () => {
                         const consentUUID = getCookie('consentUUID') || '';
                         const consent = consentState.tcfv2?.tcString;
                         const consentJurisdiction = "TCF";
-                        return [
+                        return {
                             consentJurisdiction,
                             consentUUID,
                             consent
-                        ];
+                        };
                     }
                     if (consentState.ccpa) {
                         const consentUUID = getCookie('ccpaUUID') || '';
                         const consent = consentState.ccpa?.doNotSell ? 'false' : 'true';
                         const consentJurisdiction = "CCPA";
-                        return [
+                        return {
                             consentJurisdiction,
                             consentUUID,
                             consent
-                        ];
+                        };
                     }
                     if (consentState.aus) {
                         const consentUUID = getCookie('ccpaUUID') || '';
                         const consent = consentState.aus.personalisedAdvertising? 'true': 'false';
                         const consentJurisdiction = "AUS";
-                        return [
+                        return {
                             consentJurisdiction,
                             consentUUID,
                             consent
-                        ];
+                        };
                     }
-                    return [];
+                    return {};
                 };
 
 
