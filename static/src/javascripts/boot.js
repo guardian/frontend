@@ -146,42 +146,42 @@ const go = () => {
 
                 if (!consentState) return;
 
-                const consentData = () => {
+                const consentDetails = () => {
                     if (consentState.tcfv2) {
-                        const consentUUID = getCookie('consentUUID') || '';
-                        const consent = consentState.tcfv2?.tcString;
-                        const consentJurisdiction = "TCF";
                         return {
-                            consentJurisdiction,
-                            consentUUID,
-                            consent
+                            consentJurisdiction: 'TCF',
+                            consentUUID: getCookie({ name: 'consentUUID' }) ?? '',
+                            consent: consentState.tcfv2.tcString,
                         };
                     }
                     if (consentState.ccpa) {
-                        const consentUUID = getCookie('ccpaUUID') || '';
-                        const consent = consentState.ccpa?.doNotSell ? 'false' : 'true';
-                        const consentJurisdiction = "CCPA";
                         return {
-                            consentJurisdiction,
-                            consentUUID,
-                            consent
+                            consentJurisdiction: 'CCPA',
+                            consentUUID: getCookie({ name: 'ccpaUUID' }) ?? '',
+                            consent: consentState.ccpa.doNotSell ? 'false' : 'true',
                         };
                     }
                     if (consentState.aus) {
-                        const consentUUID = getCookie('ccpaUUID') || '';
-                        const consent = consentState.aus.personalisedAdvertising? 'true': 'false';
-                        const consentJurisdiction = "AUS";
                         return {
-                            consentJurisdiction,
-                            consentUUID,
-                            consent
+                            consentJurisdiction: 'AUS',
+                            consentUUID: getCookie({ name: 'ccpaUUID' }) ?? '',
+                            /*consent =
+                                    getCookie({ name: 'consentStatus' }) ?? '';
+                                    */
+                            consent: consentState.aus.personalisedAdvertising
+                                ? 'true'
+                                : 'false',
                         };
                     }
-                    return {};
+                    return {
+                        consentJurisdiction: 'OTHER',
+                        consentUUID: '',
+                        consent: '',
+                    };
                 };
 
-
-                ophan.record({consentData});
+                // Register changes in consent state with Ophan
+                ophan.record(consentDetails());
 
                 // ------------------------------------------------------
 
