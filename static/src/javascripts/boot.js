@@ -165,9 +165,6 @@ const go = () => {
                         return {
                             consentJurisdiction: 'AUS',
                             consentUUID: getCookie({ name: 'ccpaUUID' }) ?? '',
-                            /*consent =
-                                    getCookie({ name: 'consentStatus' }) ?? '';
-                                    */
                             consent: consentState.aus.personalisedAdvertising
                                 ? 'true'
                                 : 'false',
