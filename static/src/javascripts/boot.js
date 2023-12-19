@@ -69,7 +69,7 @@ const go = () => {
             }
 
             // ------------------------------------------------------
-            // Sending Consent Data to Ophan
+            // Sending Consent Data to Ophan through ComponentEvent
 
             /*
 
@@ -131,6 +131,56 @@ const go = () => {
             });
 
             // ------------------------------------------------------
+
+            // ------------------------------------------------------
+            // Sending Consent Data to Ophan as its own record
+
+            /*
+
+                Date: Dec 2023
+                Author: Anna Voelker
+
+                We reproduce here the same code that we had developed for DCR:
+                https://github.com/guardian/dotcom-rendering/pull/9546
+            */
+
+                if (!consentState) return;
+
+                const consentDetails = () => {
+                    if (consentState.tcfv2) {
+                        return {
+                            consentJurisdiction: 'TCF',
+                            consentUUID: getCookie({ name: 'consentUUID' }) ?? '',
+                            consent: consentState.tcfv2.tcString,
+                        };
+                    }
+                    if (consentState.ccpa) {
+                        return {
+                            consentJurisdiction: 'CCPA',
+                            consentUUID: getCookie({ name: 'ccpaUUID' }) ?? '',
+                            consent: consentState.ccpa.doNotSell ? 'false' : 'true',
+                        };
+                    }
+                    if (consentState.aus) {
+                        return {
+                            consentJurisdiction: 'AUS',
+                            consentUUID: getCookie({ name: 'ccpaUUID' }) ?? '',
+                            consent: consentState.aus.personalisedAdvertising
+                                ? 'true'
+                                : 'false',
+                        };
+                    }
+                    return {
+                        consentJurisdiction: 'OTHER',
+                        consentUUID: '',
+                        consent: '',
+                    };
+                };
+
+                // Register changes in consent state with Ophan
+                ophan.record(consentDetails());
+
+                // ------------------------------------------------------
 
         });
 

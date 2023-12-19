@@ -2402,10 +2402,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^15.0.1":
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-15.0.1.tgz#2c936c43e654f5ae28db254329eae1b4b5861641"
-  integrity sha512-XNqYE9X/4aM5vZqiZInedvEZ9niPfdqwL7SjzNF0wnVbR+YObOC6QC68M521gTPcyca6r190qtnayv4GNO0peg==
+"@guardian/braze-components@^16.2.0":
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.2.0.tgz#f65f93a38f3bd621cb43f5f11beba3c002c13a21"
+  integrity sha512-+wRKpo0LChL0PUqgRkqg/LrDpnz5ufIML1VokPwjZtyHpDMacB3393L3pBmKH46SNyBddmkRG98opfv1hdjqVA==
 
 "@guardian/commercial@11.29.0":
   version "11.29.0"
@@ -2458,10 +2458,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth-frontend/-/identity-auth-frontend-1.0.0.tgz#22720eeeaf1382a65161abe67839903982c1d65c"
   integrity sha512-lmuz8kIG5PeRjyjq1S9CMlfczOLxUdT+3UD8jYk3VZkGgLjN+3IX0e3GK7mMo/SnIojxLOD8x3tiVRCPjfiUdQ==
 
-"@guardian/identity-auth@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.1.0.tgz#c40ae651db80f9941efa2f13edcfab2b7ecb6621"
-  integrity sha512-sL5qgjZsZ+ur+fFe+PCohTx1xryx0X4FX6f3q3yyyuzVAcQ1LY1n+Ovap0QlDSyueCfDi35rW9Pc9wlvS1Cvzg==
+"@guardian/identity-auth@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.1.1.tgz#2e468e8fd2391d7efd25b5c25110f736d2a5a8da"
+  integrity sha512-3tAlnMUx6p+GXRd05P1lSGEBYq8OnZT7J8iYIjmPfe3YUgGbZQlZJGJhaaS0UqKFpDtkf8LVmlUegboNbLO2Uw==
 
 "@guardian/libs@^15.6.4":
   version "15.6.4"
@@ -2502,10 +2502,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-3.13.0.tgz#4a40ac6e2bd62b8bf8ef634e9084fcc8c640d8c7"
   integrity sha512-tibmZHHu7TjN3DSphUhlGSLCAJvLqr8XLDpgdlWB8YO1ohwYacOPpVdIGSi0N7E0XxjUOfB757XWXgs3yNd0LQ==
 
-"@guardian/support-dotcom-components@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.0.8.tgz#1f1b3e11483e3f17a472ec1ad375100f96bed0ea"
-  integrity sha512-5Llcfv2DLfqGyjylJXtlyShhZJqImFHvMQBNKR0JxKZeGPX/rz8FZlyLKSmGuzaK0ommRUtvHgeumdxzzK9jfA==
+"@guardian/support-dotcom-components@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/support-dotcom-components/-/support-dotcom-components-1.1.0.tgz#c5236dc6427cbfac1c05a43c14e0fad455d71110"
+  integrity sha512-jdxhB2cNTP9nIFciFudlV4w3i5YnIIFrrjIi1Pbpmv4Y6O8vGR0k7KfyZfUiY9GVilcMPMMTv08En9I26Mz1vQ==
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
@@ -10054,17 +10054,17 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-live-connect-common@^v3.0.3:
+live-connect-common@^v3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/live-connect-common/-/live-connect-common-3.0.3.tgz#720ca29a22d59c8b26a0dac894bb4863b1b69627"
   integrity sha512-ZPycT04ROBUvPiksnLTunrKC3ROhBSeO99fQ+4qMIkgKwP2CvS44L7fK+0WFV4nAi+65KbzSng7JWcSlckfw8w==
 
 live-connect-js@^6.3.0:
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-6.3.3.tgz#df919e48a97716881b65e52f2f71cfa4012e920f"
-  integrity sha512-njpWQgoJuXhxm+XBJQvT672wR20/qROPUfUKwIXPwEtGXznJYlrUDPJDChEknBiKIo7P4jOeirAMwcZWPCN4ow==
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-6.3.0.tgz#032d6015969293774430872d4d22ca8bae8ff2c9"
+  integrity sha512-1SnXQZq9gxHIb0scXPX1Da1rQ0oY2sloMGgeRreTAwhCtdQEuip/IYwgOh3/ZeZ6yT6iG9FLb7+AjORC4pO46g==
   dependencies:
-    live-connect-common "^v3.0.3"
+    live-connect-common "^v3.0.2"
     tiny-hashes "1.0.1"
 
 load-json-file@^4.0.0:
@@ -11787,7 +11787,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#ee7f43c7c85a5245bbe51920cfed18818866ea7b":
+prebid.js@guardian/prebid.js#ee7f43c7c85a5245bbe51920cfed18818866ea7b:
   version "8.24.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/ee7f43c7c85a5245bbe51920cfed18818866ea7b"
   dependencies:
