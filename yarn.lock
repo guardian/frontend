@@ -2407,17 +2407,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-15.0.1.tgz#2c936c43e654f5ae28db254329eae1b4b5861641"
   integrity sha512-XNqYE9X/4aM5vZqiZInedvEZ9niPfdqwL7SjzNF0wnVbR+YObOC6QC68M521gTPcyca6r190qtnayv4GNO0peg==
 
-"@guardian/commercial@0.0.0-beta-20231205112833":
-  version "0.0.0-beta-20231205112833"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20231205112833.tgz#f7c21756c4f7c3847837164a37387fb2ee57a238"
-  integrity sha512-XOZDppUsk2IGEIRSzD+dh8+O2SXjrqHgeTAGckmNm6lLrkfAfAQDqZ0aDaeJEOJCjqlicwb9Alk9bmHTO4h6yA==
+"@guardian/commercial@11.29.0":
+  version "11.29.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.29.0.tgz#b9ac62af7eebc4f8017b723d448c4485e7db25b5"
+  integrity sha512-lDvYRGuvLd9QqB+jvoLfx7H2fvj4/weug0Is3ViIrKnRsYYskl9O26MBVCzgw4lGKpm7j/I+O8klWJccuySTnw==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^2.0.1"
-    prebid.js guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5
+    prebid.js guardian/prebid.js#ee7f43c7c85a5245bbe51920cfed18818866ea7b
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.5.3"
@@ -10054,17 +10054,17 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-live-connect-common@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/live-connect-common/-/live-connect-common-1.0.0.tgz#9cb558cd665c0418271770854538243420cd1354"
-  integrity sha512-LBZsvykcGeVRYI1eqqXrrNZsoBdL2a8cpyrYPIiGAF/CpixbyRbvqGslaFw511lH294QB16J3fYYg21aYuaM2Q==
+live-connect-common@^v3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/live-connect-common/-/live-connect-common-3.0.3.tgz#720ca29a22d59c8b26a0dac894bb4863b1b69627"
+  integrity sha512-ZPycT04ROBUvPiksnLTunrKC3ROhBSeO99fQ+4qMIkgKwP2CvS44L7fK+0WFV4nAi+65KbzSng7JWcSlckfw8w==
 
-live-connect-js@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-5.0.1.tgz#152372cf757e8af8eb4829f32979669b26cd9052"
-  integrity sha512-X/fFbKGG8MahpqIuxndApAc9udj1g5NIxL95zKPzvqoipPYoeqvh7SCDly1hPvbqsfFj/DIbOfdWbttXzCSryw==
+live-connect-js@^6.3.0:
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-6.3.3.tgz#df919e48a97716881b65e52f2f71cfa4012e920f"
+  integrity sha512-njpWQgoJuXhxm+XBJQvT672wR20/qROPUfUKwIXPwEtGXznJYlrUDPJDChEknBiKIo7P4jOeirAMwcZWPCN4ow==
   dependencies:
-    live-connect-common "^1.0.0"
+    live-connect-common "^v3.0.3"
     tiny-hashes "1.0.1"
 
 load-json-file@^4.0.0:
@@ -11787,9 +11787,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5":
-  version "7.54.5"
-  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/0b4cccd55ab4e170b36bb944e9bdd2807a9da1c5"
+"prebid.js@github:guardian/prebid.js#ee7f43c7c85a5245bbe51920cfed18818866ea7b":
+  version "8.24.0"
+  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/ee7f43c7c85a5245bbe51920cfed18818866ea7b"
   dependencies:
     "@babel/core" "^7.23.2"
     "@babel/plugin-transform-runtime" "^7.18.9"
@@ -11805,7 +11805,7 @@ preact@^10.5.13:
     express "^4.15.4"
     fun-hooks "^0.9.9"
     just-clone "^1.0.2"
-    live-connect-js "^5.0.0"
+    live-connect-js "^6.3.0"
   optionalDependencies:
     fsevents "^2.3.2"
 

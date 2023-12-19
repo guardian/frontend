@@ -5,8 +5,8 @@ export const mpuWhenNoEpic: ABTest = {
 	author: '@commercial-dev',
 	start: '2023-11-22',
 	expiry: '2024-01-31',
-	audience: 0 / 100,
-	audienceOffset: 0 / 100,
+	audience: 10 / 100,
+	audienceOffset: 5 / 100,
 	audienceCriteria: '',
 	successMeasure: '',
 	description:
