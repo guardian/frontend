@@ -27,6 +27,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-device",
+    "Show sign in gate at a different frequency according to device",
+    owners = Seq(Owner.withGithub("personalisation")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 2, 28)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-consentless-ads",
     "Use consentless ad stack rather than consented / standalone",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
