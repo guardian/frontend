@@ -85,19 +85,6 @@ class ImageContentController(
           mainBlock,
         )
     }
-
-    if (request.isJson) {
-      Future.successful(
-        common.renderJson(getDCRJson(content, pageType, mainBlock), content).as("application/json"),
-      )
-    } else {
-      remoteRenderer.getImageContent(
-        wsClient,
-        content,
-        pageType,
-        mainBlock,
-      )
-    }
   }
 
   private def isSupported(c: ApiContent) = c.isImageContent
