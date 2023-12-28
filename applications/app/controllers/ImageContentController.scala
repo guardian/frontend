@@ -1,21 +1,22 @@
 package controllers
 
-import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery}
 import com.gu.contentapi.client.model.v1.{Block, ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery}
 import common._
+import conf.Configuration.contentApi
 import conf.switches.Switches
 import contentapi.ContentApiClient
+import implicits.{AppsFormat, JsonFormat}
 import model._
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import pages.ContentHtmlPage
+import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import services.ImageQuery
-import views.support.RenderOtherStatus
-import play.api.libs.json._
-import conf.Configuration.contentApi
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import renderers.DotcomRenderingService
+import services.ImageQuery
 import services.dotcomrendering.{ImageContentPicker, RemoteRender}
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
@@ -64,17 +65,25 @@ class ImageContentController(
   ): Future[Result] = {
     val pageType = PageType(content, request, context)
 
-    if (request.isJson) {
-      Future.successful(
-        common.renderJson(getDCRJson(content, pageType, mainBlock), content).as("application/json"),
-      )
-    } else {
-      remoteRenderer.getImageContent(
-        wsClient,
-        content,
-        pageType,
-        mainBlock,
-      )
+    request.getRequestFormat match {
+      case JsonFormat =>
+        Future.successful(
+          common.renderJson(getDCRJson(content, pageType, mainBlock), content).as("application/json"),
+        )
+      case AppsFormat =>
+        remoteRenderer.getAppsImageContent(
+          wsClient,
+          content,
+          pageType,
+          mainBlock,
+        )
+      case _ =>
+        remoteRenderer.getImageContent(
+          wsClient,
+          content,
+          pageType,
+          mainBlock,
+        )
     }
   }
 
