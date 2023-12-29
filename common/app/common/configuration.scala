@@ -3,12 +3,11 @@ package common
 import java.io.{File, FileInputStream}
 import java.nio.charset.Charset
 import java.util.Map.Entry
-
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.typesafe.config.{ConfigException, ConfigFactory}
-import common.Environment.{app, awsRegion, stage}
+import common.Environment.{app, awsRegion, stack, stage}
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
@@ -93,9 +92,11 @@ object GuardianConfiguration extends GuLogging {
       val frontendConfig = configFromParameterStore("/frontend")
       val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
       val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
+      val frontendStageStackAppConfig = configFromParameterStore(s"/${stage.toUpperCase}/${stack}/${app.toLowerCase}")
 
       userPrivate
         .withFallback(runtimeOnly)
+        .withFallback(frontendStageStackAppConfig)
         .withFallback(frontendAppConfig)
         .withFallback(frontendStageConfig)
         .withFallback(frontendConfig)
