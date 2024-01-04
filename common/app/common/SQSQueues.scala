@@ -1,11 +1,10 @@
 package common
 
 import java.util.concurrent.{Future => JavaFuture}
-
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.sqs.AmazonSQSAsync
 import com.amazonaws.services.sqs.model.{Message => AWSMessage, _}
-import play.api.libs.json.{Json, Reads, Writes}
+import play.api.libs.json.{JsObject, Json, Reads, Writes}
 
 import scala.jdk.CollectionConverters._
 import scala.collection.mutable
@@ -122,9 +121,12 @@ case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
   def receive(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Seq[Message[A]]] = {
     receiveMessages(request) map { messages =>
       messages.toSeq map { message =>
+        val body = Json.parse(message.getBody).as[JsObject]
+        val actualBody = body.value.get("Message").map(_.toString()).map(Json.parse).getOrElse(body)
+
         Message(
           MessageId(message.getMessageId),
-          Json.fromJson[A](Json.parse(message.getBody)) getOrElse {
+          Json.fromJson[A](actualBody) getOrElse {
             throw new RuntimeException(
               s"Couldn't parse JSON for message with ID ${message.getMessageId}: '${message.getBody}'",
             )
