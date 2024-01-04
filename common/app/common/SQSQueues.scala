@@ -113,7 +113,9 @@ case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
 
 /** Utility class for SQS queues that use JSON to serialize their messages */
 case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executionContext: ExecutionContext)
-    extends MessageQueue[A](client, queueUrl)(executionContext) {
+    extends MessageQueue[A](client, queueUrl)(executionContext)
+    with GuLogging
+    {
 
   def send(a: A)(implicit writes: Writes[A]): Future[SendMessageResult] =
     sendMessage(new SendMessageRequest().withQueueUrl(queueUrl).withMessageBody(Json.stringify(Json.toJson(a))))
@@ -122,7 +124,10 @@ case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
     receiveMessages(request) map { messages =>
       messages.toSeq map { message =>
         val body = Json.parse(message.getBody).as[JsObject]
-        val actualBody = body.value.get("Message").map(_.toString()).map(Json.parse).getOrElse(body)
+        val actualBody = body.value.get("Message").map(_.toString().replaceAll("\\\\", "")).map(Json.parse).getOrElse(body)
+
+        log.info(s"Body: ${body.toString()}")
+        log.info(s"Actual Body: ${actualBody.toString()}")
 
         Message(
           MessageId(message.getMessageId),
