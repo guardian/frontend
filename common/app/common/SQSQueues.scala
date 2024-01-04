@@ -125,9 +125,9 @@ case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
         val body = Json.parse(message.getBody).as[JsObject]
         val actualBody =
           body.value.get("Message").map(_.toString().replaceAll("\\\\", "")).map(Json.parse).getOrElse(body)
-
-        log.info(s"Body: ${body.toString()}")
-        log.info(s"Actual Body: ${actualBody.toString()}")
+        val messageId = body.value.get("MessageId").map(_.toString()).getOrElse("no message id")
+        log.info(s"Body: ${messageId} ${body.toString()}")
+        log.info(s"Actual Body: ${messageId} ${actualBody.toString()}")
 
         Message(
           MessageId(message.getMessageId),
