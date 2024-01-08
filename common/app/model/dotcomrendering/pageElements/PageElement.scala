@@ -187,8 +187,14 @@ object CartoonBlockElement {
 // contains all the css and js required to display the atom.
 // Note tha The CAPI answer also gives structured data, so maybe one day we could try and use that instead of
 // precompiled html.
-case class ChartAtomBlockElement(id: String, url: String, html: String, css: Option[String], js: Option[String])
-    extends PageElement
+case class ChartAtomBlockElement(
+    id: String,
+    url: String,
+    html: String,
+    css: Option[String],
+    js: Option[String],
+    title: String,
+) extends PageElement
 object ChartAtomBlockElement {
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
 }
@@ -328,6 +334,7 @@ case class InteractiveAtomBlockElement(
     js: Option[String],
     placeholderUrl: Option[String],
     role: Option[String],
+    title: String,
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
@@ -1115,6 +1122,7 @@ object PageElement {
                 html = chart.html, // This is atom.defaultHtml
                 css = None, // hardcoded to None during experimental period
                 js = None, // hardcoded to None during experimental period
+                title = chart.title,
               ),
             )
           }
@@ -1158,6 +1166,7 @@ object PageElement {
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
                 role = elementRole,
+                title = interactive.title,
               ),
             )
           }

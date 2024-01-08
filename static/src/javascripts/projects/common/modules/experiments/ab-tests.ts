@@ -2,6 +2,7 @@ import type { ABTest } from '@guardian/ab-core';
 import { signInGateDevice } from 'common/modules/experiments/tests/sign-in-gate-device';
 import { consentlessAds } from './tests/consentlessAds';
 import { integrateIma } from './tests/integrate-ima';
+import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
 import { prebidKargo } from './tests/prebid-kargo';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -17,4 +18,5 @@ export const concurrentTests: readonly ABTest[] = [
 	consentlessAds,
 	integrateIma,
 	prebidKargo,
+	mpuWhenNoEpic,
 ];

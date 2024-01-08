@@ -2407,10 +2407,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.2.0.tgz#f65f93a38f3bd621cb43f5f11beba3c002c13a21"
   integrity sha512-+wRKpo0LChL0PUqgRkqg/LrDpnz5ufIML1VokPwjZtyHpDMacB3393L3pBmKH46SNyBddmkRG98opfv1hdjqVA==
 
-"@guardian/commercial@11.28.1":
-  version "11.28.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.28.1.tgz#912eaad29e180a5e6671ece74d9d3aa4d000d497"
-  integrity sha512-dCJeBk5CwmLcCNkT3TlQWOB4n1QMOM1Ug8KzjO2OPBiKZ/g/qAiaJbp+ywAHlPDlZMp+7TREmG9D9/QKy12M9w==
+"@guardian/commercial@11.31.0":
+  version "11.31.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-11.31.0.tgz#586e30e33545ea3efda0ff2275b4401e1dd4e117"
+  integrity sha512-MhhzuOfdYc9m7Shruq8lRROH9TwkFlHksT5YnqqaxKwWncriGiVp2OCpD/4Kygjsy3TtFW5YJP6tfoxwoTVHuA==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
@@ -2480,10 +2480,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-13.0.0.tgz#3e8f4e67dcd5fe706001fd04df582f69210b132f"
-  integrity sha512-1+z20ySfwm0K2GiQXh2JlWIjOKBwHxISRdAgAKivOdT1QUCh5VdU+2xCVE07juMI4lBBfIzXe/qZXAI7II6tQQ==
+"@guardian/source-foundations@^13.2.1":
+  version "13.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-13.2.1.tgz#4600c1934361078d6eb834def5573b05f820953d"
+  integrity sha512-co7Vm0gEmKgiyuiki6b7gMkM8bpEJfyGdJSHYELBRDSbA1yAO2K/qs0n7cEg1M/fqzSP00xDPeDZ+bofeXb1rA==
   dependencies:
     mini-svg-data-uri "1.4.4"
 

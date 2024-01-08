@@ -70,6 +70,7 @@ class CrosswordSearchPage extends StandalonePage {
   }
 
   val setters: Seq[String] = Seq(
+    "Algol",
     "Anto",
     "Arachne",
     "Araucaria",
@@ -105,6 +106,7 @@ class CrosswordSearchPage extends StandalonePage {
     "Imogen",
     "Jack",
     "Janus",
+    "Kite",
     "Kookaburra",
     "Logodaedalus",
     "Maskarade",
@@ -114,7 +116,9 @@ class CrosswordSearchPage extends StandalonePage {
     "Nutmeg",
     "Omnibus",
     "Orlando",
+    "Otterden",
     "Pan",
+    "Pangakupu",
     "Pasquale",
     "Paul",
     "Philistine",
@@ -134,5 +138,6 @@ class CrosswordSearchPage extends StandalonePage {
     "Troll",
     "Vlad",
     "Vulcan",
+    "Yank",
   )
 }
