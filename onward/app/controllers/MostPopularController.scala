@@ -36,7 +36,7 @@ class MostPopularController(
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
-  val page = SimplePage(
+  val page: SimplePage = SimplePage(
     MetaData.make(
       "most-read",
       Some(SectionId.fromId("most-read")),

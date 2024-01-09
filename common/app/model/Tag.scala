@@ -172,7 +172,7 @@ case class TagProperties(
     paidContentType: Option[String],
     commercial: Option[CommercialProperties],
 ) {
-  val footballBadgeUrl = references
+  val footballBadgeUrl: Option[String] = references
     .find(_.`type` == "pa-football-team")
     .map(_.id.split("/").drop(1).mkString("/"))
     .map(teamId => s"${Configuration.staticSport.path}/football/crests/120/$teamId.png")
@@ -195,11 +195,11 @@ case class Tag(
   val isSeries: Boolean = isOfType("Series")
   val isBlog: Boolean = isOfType("Blog")
   val isSectionTag: Boolean = SectionTagLookUp.sectionId(metadata.id).contains(metadata.sectionId)
-  val showSeriesInMeta = metadata.id != "childrens-books-site/childrens-books-site"
-  val isKeyword = isOfType("Keyword") || isOfPaidType("Topic")
-  val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
-  val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
-  val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
+  val showSeriesInMeta: Boolean = metadata.id != "childrens-books-site/childrens-books-site"
+  val isKeyword: Boolean = isOfType("Keyword") || isOfPaidType("Topic")
+  val isFootballTeam: Boolean = properties.references.exists(_.`type` == "pa-football-team")
+  val isFootballCompetition: Boolean = properties.references.exists(_.`type` == "pa-football-competition")
+  val contributorImagePath: Option[String] = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   implicit val tagWrites: Writes[Tag] = Json.writes[Tag]
 }

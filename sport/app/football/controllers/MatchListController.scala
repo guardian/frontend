@@ -13,10 +13,12 @@ import play.api.mvc.{BaseController, RequestHeader}
 import play.twirl.api.Html
 
 import java.time.format.DateTimeFormatter
+import play.api.mvc.Result
 
 trait MatchListController extends BaseController with Requests {
   def competitionsService: Competitions
-  protected val datePattern = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId)
+  protected val datePattern: DateTimeFormatter =
+    DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId)
   protected def createDate(year: String, month: String, day: String): LocalDate = {
     LocalDate.parse(s"$year${month.capitalize}$day", datePattern)
   }
@@ -25,7 +27,7 @@ trait MatchListController extends BaseController with Requests {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
-  )(implicit request: RequestHeader, context: ApplicationContext) = {
+  )(implicit request: RequestHeader, context: ApplicationContext): Result = {
     Cached(10) {
       if (request.isJson)
         JsonComponent(
@@ -42,7 +44,7 @@ trait MatchListController extends BaseController with Requests {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
-  )(implicit request: RequestHeader, context: ApplicationContext) = {
+  )(implicit request: RequestHeader, context: ApplicationContext): Result = {
     Cached(10) {
       if (request.isJson)
         JsonComponent(

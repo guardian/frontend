@@ -3,7 +3,7 @@ package conf.audio
 import conf.switches.Switches.FlagshipFrontContainerSwitch
 
 object FlagshipFrontContainer extends FlagshipContainer {
-  override val containerIds = Seq(
+  override val containerIds: Seq[String] = Seq(
     "75ef80cd-2f3d-40d6-abf6-2021f88ece8e", //PROD - OLD
     "c57a70c8-a00a-4a15-93a2-035b9221622b", //CODE - OLD
     // New as of 17/11/2022

@@ -15,7 +15,7 @@ class AdminFilters(httpConfiguration: HttpConfiguration)(implicit
     executionContext: ExecutionContext,
 ) extends HttpFilters {
 
-  val filterExemptions = FilterExemptions(
+  val filterExemptions: FilterExemptions = FilterExemptions(
     "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
     "/deploy", //not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
   )

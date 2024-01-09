@@ -21,7 +21,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
     with WithMaterializer
     with WithTestWsClient {
 
-  lazy val mockRedirects = new RedirectService {
+  lazy val mockRedirects: RedirectService = new RedirectService {
     override def lookupRedirectDestination(source: String) = {
       if (source == "/lifeandstyle/restaurants") {
         Future.successful(Some(PermanentRedirect(source, "https://www.theguardian.com/food/cookityourselflazy")))

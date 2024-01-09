@@ -10,9 +10,9 @@ import play.api.{Logger => PlayLogger}
 
 class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
 
-  lazy val log = PlayLogger(getClass)
+  lazy val log: PlayLogger = PlayLogger(getClass)
 
-  lazy val loggingContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
+  lazy val loggingContext: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
 
   case class KinesisAppenderConfig(
       stream: String,

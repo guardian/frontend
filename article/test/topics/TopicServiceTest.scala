@@ -21,8 +21,8 @@ class TopicServiceTest
     with WithTestExecutionContext
     with MockitoSugar {
 
-  val fakeClient = mock[S3Client[TopicsApiResponse]]
-  val topicResult =
+  val fakeClient: S3Client[TopicsApiResponse] = mock[S3Client[TopicsApiResponse]]
+  val topicResult: TopicResult =
     TopicResult(
       name = "name1",
       `type` = TopicType.Org,
@@ -31,7 +31,7 @@ class TopicServiceTest
       percentage_blocks = 1.2f,
     )
 
-  val topicResults = Seq(
+  val topicResults: Seq[TopicResult] = Seq(
     TopicResult(
       name = "name1",
       `type` = TopicType.Org,
@@ -47,10 +47,10 @@ class TopicServiceTest
       percentage_blocks = 1.2f,
     ),
   )
-  val successResponse =
+  val successResponse: TopicsApiResponse =
     TopicsApiResponse(entity_types = Seq(TopicType.Org), results = Seq(topicResult), model = "model")
 
-  val successMultiResponse =
+  val successMultiResponse: TopicsApiResponse =
     TopicsApiResponse(entity_types = Seq(TopicType.Org), results = topicResults, model = "model")
 
   "refreshTopics" should "return successful future given getListOfKeys s3 call fails" in {

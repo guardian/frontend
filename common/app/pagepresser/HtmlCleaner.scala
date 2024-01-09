@@ -6,11 +6,12 @@ import org.jsoup.nodes.{Element, Document}
 import conf.Configuration
 
 import scala.jdk.CollectionConverters._
+import scala.util.matching.Regex
 
 abstract class HtmlCleaner extends GuLogging {
   lazy val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
-  lazy val staticRegEx = """//static.guim.co.uk/static/(?<cacheBustId>\w+)/(?<paths>.+)(?<extension>\.\w+)$""".r
-  lazy val nonDigitRegEx = """\D+""".r
+  lazy val staticRegEx: Regex = """//static.guim.co.uk/static/(?<cacheBustId>\w+)/(?<paths>.+)(?<extension>\.\w+)$""".r
+  lazy val nonDigitRegEx: Regex = """\D+""".r
 
   def canClean(document: Document): Boolean
   def clean(document: Document, convertToHttps: Boolean): Document

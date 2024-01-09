@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 import scala.util.{Failure, Success}
 
 class RetryTest extends AnyFlatSpec with Matchers {
-  val onFail = (_: Throwable, _: Int) => ()
+  val onFail: (Throwable, Int) => Unit = (_: Throwable, _: Int) => ()
 
   it should "execute code once even if n is 0" in {
     Retry(0)("hello")(onFail) should be(Success("hello"))

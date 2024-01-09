@@ -9,6 +9,7 @@ import conf.Configuration
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
+import scala.util.matching.Regex
 
 object RedirectService {
   sealed trait Destination {
@@ -20,8 +21,8 @@ object RedirectService {
   // library. Changes made here should be reflected there - function is currently called 'normalise'
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
 
-  val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
-  val ShortUrl = """^(/p/[\w\d]+).*$""".r
+  val R1ArtifactUrl: Regex = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+  val ShortUrl: Regex = """^(/p/[\w\d]+).*$""".r
 
   def normalisePath(path: String): String =
     path match {
@@ -40,7 +41,7 @@ object RedirectService {
     }
   }
 
-  implicit val destinationFormat = DynamoFormat.xmap[Destination, Map[String, String]] {
+  implicit val destinationFormat: DynamoFormat[Destination] = DynamoFormat.xmap[Destination, Map[String, String]] {
     // map -> destination (i.e. reads)
     case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
     case m if m.contains("archive")     => Right(ArchiveRedirect(m("source"), m("archive")))

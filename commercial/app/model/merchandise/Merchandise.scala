@@ -17,6 +17,7 @@ import views.support.Item300
 import scala.util.Try
 import scala.util.control.NonFatal
 import scala.xml.Node
+import scala.util.matching.Regex
 
 sealed trait Merchandise
 
@@ -75,7 +76,7 @@ case class Job(
     keywordIdSuffixes: Seq[String] = Nil,
 ) extends Merchandise {
 
-  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
+  val shortSalaryDescription: String = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
   def listingUrl: String = s"https://jobs.theguardian.com/job/$id"
 
@@ -161,7 +162,7 @@ object TravelOffer {
 }
 
 object Member {
-  val IdPattern = """.*/([\da-f]+)/.*""".r
+  val IdPattern: Regex = """.*/([\da-f]+)/.*""".r
 
   implicit val genderReads: Reads[Gender] = JsPath.read[String].map(Gender.fromName)
   implicit val genderWrites: Writes[Gender] = Writes[Gender](gender => JsString(gender.name))

@@ -10,9 +10,10 @@ import conf.Configuration
 import conf.switches.Switches.FaciaPressStatusNotifications
 import play.api.Logger
 import play.api.libs.json.Json
+import play.api.libs.json.OFormat
 
 object StatusNotificationMessage {
-  implicit val jsonFormat = Json.format[StatusNotificationMessage]
+  implicit val jsonFormat: OFormat[StatusNotificationMessage] = Json.format[StatusNotificationMessage]
 }
 case class StatusNotificationMessage(
     status: String,
@@ -22,7 +23,7 @@ case class StatusNotificationMessage(
 )
 
 object StatusNotification {
-  lazy val log = Logger(getClass)
+  lazy val log: Logger = Logger(getClass)
   lazy val partitionKey: String = "facia-tool-updates"
 
   object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] {

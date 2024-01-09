@@ -7,7 +7,7 @@ case class OnwardCollectionResponse(
     trails: Seq[Trail],
 )
 object OnwardCollectionResponse {
-  implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
+  implicit val collectionWrites: OWrites[OnwardCollectionResponse] = Json.writes[OnwardCollectionResponse]
 }
 
 case class OnwardCollectionResponseDCR(
@@ -16,7 +16,8 @@ case class OnwardCollectionResponseDCR(
     mostShared: Option[Trail],
 )
 object OnwardCollectionResponseDCR {
-  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseDCR]
+  implicit val onwardCollectionResponseForDRCWrites: OWrites[OnwardCollectionResponseDCR] =
+    Json.writes[OnwardCollectionResponseDCR]
 }
 
 case class MostPopularGeoResponse(
@@ -25,10 +26,11 @@ case class MostPopularGeoResponse(
     trails: Seq[Trail],
 )
 object MostPopularGeoResponse {
-  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
+  implicit val popularGeoWrites: OWrites[MostPopularGeoResponse] = Json.writes[MostPopularGeoResponse]
 }
 
 case class MostPopularCollectionResponse(heading: String, section: String, trails: Seq[Trail])
 object MostPopularCollectionResponse {
-  implicit val MostPopularCollectionResponseWrites = Json.writes[MostPopularCollectionResponse]
+  implicit val MostPopularCollectionResponseWrites: OWrites[MostPopularCollectionResponse] =
+    Json.writes[MostPopularCollectionResponse]
 }

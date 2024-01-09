@@ -22,7 +22,7 @@ class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
     .withRegion(conf.Configuration.aws.region)
     .build()
 
-  val sendAsync = client.sendAsyncEmail(pekkoAsync) _
+  val sendAsync: SendEmailRequest => Future[SendEmailResult] = client.sendAsyncEmail(pekkoAsync) _
 
   def shutdown(): Unit = client.shutdown()
 

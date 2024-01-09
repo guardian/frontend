@@ -144,7 +144,7 @@ object Commercial {
       classes mkString " "
     }
 
-    val slotCssClasses = Seq("top-banner-ad", "top-banner-ad-desktop")
+    val slotCssClasses: Seq[String] = Seq("top-banner-ad", "top-banner-ad-desktop")
   }
 
   object container {

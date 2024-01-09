@@ -7,6 +7,7 @@ import play.api.inject.ApplicationLifecycle
 
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContextExecutorService
 
 class DeeplyReadLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -15,7 +16,8 @@ class DeeplyReadLifecycle(
     deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
-  implicit val executionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val executionContext: ExecutionContextExecutorService =
+    ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {

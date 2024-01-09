@@ -5,6 +5,7 @@ import model.{ApplicationContext, Page}
 import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.RequestHeader
 import views.support.JavaScriptPage.getMap
+import play.api.libs.json.OWrites
 
 case class PageType(
     hasShowcaseMainElement: Boolean,
@@ -17,7 +18,7 @@ case class PageType(
 )
 
 object PageType {
-  implicit val writes = Json.writes[PageType]
+  implicit val writes: OWrites[PageType] = Json.writes[PageType]
 
   def apply(page: Page, request: RequestHeader, context: ApplicationContext): PageType = {
     PageType(

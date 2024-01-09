@@ -4,13 +4,14 @@ import org.joda.time.format.ISODateTimeFormat
 import org.joda.time.DateTime
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+import org.joda.time.format.DateTimeFormatter
 
 class DateRangeTest extends AnyFunSuite with Matchers {
-  val dateTimeFormatter = ISODateTimeFormat.dateTime()
-  val from = DateTime.now()
-  val to = DateTime.now()
-  val fromDateString = dateTimeFormatter.print(from)
-  val toDateString = dateTimeFormatter.print(to)
+  val dateTimeFormatter: DateTimeFormatter = ISODateTimeFormat.dateTime()
+  val from: DateTime = DateTime.now()
+  val to: DateTime = DateTime.now()
+  val fromDateString: String = dateTimeFormatter.print(from)
+  val toDateString: String = dateTimeFormatter.print(to)
   val field = "field"
 
   test("should apply fieldname from date and to date") {

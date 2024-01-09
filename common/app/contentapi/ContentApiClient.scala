@@ -22,10 +22,12 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
+import org.joda.time.Period
+import scala.concurrent.duration.FiniteDuration
 
 object QueryDefaults {
   // NOTE - do NOT add body to this list
-  val trailFieldsList = List[String](
+  val trailFieldsList: List[String] = List[String](
     "byline",
     "headline",
     "trail-text",
@@ -40,31 +42,31 @@ object QueryDefaults {
     "productionOffice",
   )
 
-  val mainField = List[String]("main")
+  val mainField: List[String] = List[String]("main")
 
-  val trailFields = trailFieldsList.mkString(",")
+  val trailFields: String = trailFieldsList.mkString(",")
 
   //main field is needed for Main Media Atom data required by InlineYouTubeDisplayElement
   val trailFieldsWithMain: String = (trailFieldsList ::: mainField).mkString(",")
 
-  val references = List(
+  val references: String = List(
     "pa-football-competition",
     "pa-football-team",
     "witness-assignment",
     "esa-cricket-match",
   ).mkString(",")
 
-  val leadContentMaxAge = 1.day
+  val leadContentMaxAge: Period = 1.day
 
   object FaciaDefaults {
     val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
     val editorsPicks = "show-editors-picks=true"
-    val showInlineFields = s"show-fields=$trailFields"
+    val showInlineFields: String = s"show-fields=$trailFields"
     val showFields =
       "trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode,internalPageCode"
-    val showFieldsWithBody = showFields + ",body"
+    val showFieldsWithBody: String = showFields + ",body"
 
-    val all = Seq(tag, editorsPicks, showInlineFields, showFields)
+    val all: Seq[String] = Seq(tag, editorsPicks, showInlineFields, showFields)
 
     def generateContentApiQuery(id: String): String =
       "%s?&%s"
@@ -129,8 +131,8 @@ final case class CircuitBreakingContentApiClient(
 )(implicit executionContext: ExecutionContext)
     extends MonitoredContentApiClientLogic
     with RetryableContentApiClient {
-  override implicit val executor = ScheduledExecutor()
-  val retryDuration = Duration(250L, TimeUnit.MILLISECONDS)
+  override implicit val executor: ScheduledExecutor = ScheduledExecutor()
+  val retryDuration: FiniteDuration = Duration(250L, TimeUnit.MILLISECONDS)
   val retryAttempts = 3
   override val backoffStrategy: Retryable = BackoffStrategy.constantStrategy(retryDuration, retryAttempts)
 
@@ -157,7 +159,7 @@ final case class CircuitBreakingContentApiClient(
 class ContentApiClient(httpClient: HttpClient)(implicit executionContext: ExecutionContext) extends ApiQueryDefaults {
 
   // Public val for test.
-  val thriftClient = CircuitBreakingContentApiClient(
+  val thriftClient: CircuitBreakingContentApiClient = CircuitBreakingContentApiClient(
     httpClient = httpClient,
     targetUrl = contentApi.contentApiHost,
     apiKey = contentApi.key.getOrElse(""),
@@ -188,7 +190,7 @@ class ContentApiClient(httpClient: HttpClient)(implicit executionContext: Execut
 // The Preview server uses the standard ContentApiClient object, configured with preview settings.
 class PreviewContentApi(httpClient: HttpClient)(implicit executionContext: ExecutionContext)
     extends ContentApiClient(httpClient) {
-  override val thriftClient = CircuitBreakingContentApiClient(
+  override val thriftClient: CircuitBreakingContentApiClient = CircuitBreakingContentApiClient(
     httpClient = httpClient,
     targetUrl = Configuration.contentApi.previewHost.getOrElse(Configuration.contentApi.contentApiHost),
     apiKey = contentApi.key.getOrElse(""),

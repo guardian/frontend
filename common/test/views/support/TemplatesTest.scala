@@ -299,7 +299,7 @@ class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     ApiElement("gu-image-5", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 700, "gu-image-5"))),
   )
 
-  val testContent1 = {
+  val testContent1: Article = {
     val content = Content.make(
       ApiContent(
         id = "foo/2012/jan/07/bar",
@@ -316,7 +316,7 @@ class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     Article.make(content)
   }
 
-  val testContent2 = {
+  val testContent2: Article = {
     val content = Content.make(
       ApiContent(
         id = "foo/2012/jan/07/bar",

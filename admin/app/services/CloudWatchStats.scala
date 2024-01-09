@@ -11,7 +11,7 @@ import awswrappers.cloudwatch._
 import scala.concurrent.{ExecutionContext, Future}
 
 object CloudWatchStats extends GuLogging {
-  val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  val stage: Dimension = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch: AmazonCloudWatchAsync = {
     AmazonCloudWatchAsyncClient

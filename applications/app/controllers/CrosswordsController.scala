@@ -145,7 +145,7 @@ class CrosswordSearchController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends CrosswordController {
-  val searchForm = Form(
+  val searchForm: Form[CrosswordSearch] = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
       "month" -> number,
@@ -154,7 +154,7 @@ class CrosswordSearchController(
     )(CrosswordSearch.apply)(CrosswordSearch.unapply),
   )
 
-  val lookupForm = Form(
+  val lookupForm: Form[CrosswordLookup] = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
       "id" -> number,
@@ -234,7 +234,7 @@ class CrosswordSearchController(
 
   case class CrosswordSearch(crosswordType: String, month: Int, year: Int, setter: Option[String]) {
     val fromDate = new LocalDate(year, month, 1)
-    val toDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
+    val toDate: LocalDate = fromDate.dayOfMonth.withMaximumValue.minusDays(1)
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)

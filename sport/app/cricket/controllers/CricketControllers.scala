@@ -9,5 +9,5 @@ trait CricketControllers {
   def cricketStatsJob: CricketStatsJob
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
-  lazy val cricketMatchController = wire[CricketMatchController]
+  lazy val cricketMatchController: CricketMatchController = wire[CricketMatchController]
 }

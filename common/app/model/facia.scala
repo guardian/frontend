@@ -4,6 +4,7 @@ import com.gu.commercial.branding.Branding
 import common.commercial.{CommercialProperties, EditionBranding}
 import common.{Edition, GuLogging}
 import play.api.libs.json.Json
+import play.api.libs.json.OFormat
 
 case class SeoDataJson(
     id: String,
@@ -16,9 +17,9 @@ case class SeoDataJson(
 case class SeoData(id: String, navSection: String, webTitle: String, title: Option[String], description: Option[String])
 
 object SeoData extends GuLogging {
-  implicit val seoFormatter = Json.format[SeoData]
+  implicit val seoFormatter: OFormat[SeoData] = Json.format[SeoData]
 
-  val editions = Edition.allEditions.map(_.id.toLowerCase)
+  val editions: List[String] = Edition.allEditions.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData =
     (path.split('/').toList: @unchecked) match { // split() never gives the empty list
@@ -60,9 +61,9 @@ case class FrontProperties(
 }
 
 object FrontProperties {
-  implicit val jsonFormat = Json.format[FrontProperties]
+  implicit val jsonFormat: OFormat[FrontProperties] = Json.format[FrontProperties]
 
-  val empty = FrontProperties(
+  val empty: FrontProperties = FrontProperties(
     onPageDescription = None,
     imageUrl = None,
     imageWidth = None,

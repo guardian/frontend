@@ -13,7 +13,7 @@ case class Interval(start: ZonedDateTime, end: ZonedDateTime) {
 }
 
 object DateHelpers {
-  val defaultFootballZoneId = ZoneId.of("Europe/London")
+  val defaultFootballZoneId: ZoneId = ZoneId.of("Europe/London")
 
   def startOfDay(zdt: ZonedDateTime): ZonedDateTime = {
     zdt.truncatedTo(ChronoUnit.DAYS)

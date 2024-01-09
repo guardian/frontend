@@ -56,7 +56,7 @@ trait ResultWithPreconnectPreload {
 }
 
 object HttpPreconnections {
-  val defaultUrls = Seq(
+  val defaultUrls: Seq[String] = Seq(
     "https://assets.guim.co.uk/",
     "https://i.guim.co.uk",
     "https://j.ophan.co.uk",

@@ -6,7 +6,7 @@ import ExternalLinks.external
 import org.scalatest.flatspec.AnyFlatSpec
 
 class ExternalLinksTest extends AnyFlatSpec with Matchers with Inspectors {
-  val testPaths = Seq(
+  val testPaths: Seq[String] = Seq(
     "/sport/cycling",
     "/cities/2014/nov/24/equal-streets-happier-healthier-mumbai",
     "/commentisfree/all",

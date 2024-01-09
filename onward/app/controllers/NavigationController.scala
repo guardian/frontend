@@ -7,11 +7,12 @@ import model.{Cached, Cors}
 import navigation.{NavLink, SimpleMenu, UrlHelpers}
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import play.api.libs.json.OWrites
 
 case class ApiError(message: String, statusCode: Int)
 
 object ApiError {
-  implicit val writes = Json.writes[ApiError]
+  implicit val writes: OWrites[ApiError] = Json.writes[ApiError]
 }
 
 class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {

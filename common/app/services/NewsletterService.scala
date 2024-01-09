@@ -8,6 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.json.Json
 import com.gu.contentapi.client.utils.format.NewsletterSignupDesign
 import com.gu.contentapi.client.model.v1.TagType
+import play.api.libs.json.{OWrites, Reads}
 
 case class NewsletterData(
     identityName: String,
@@ -23,8 +24,8 @@ case class NewsletterData(
 )
 
 object NewsletterData {
-  implicit val newsletterDataReads = Json.reads[NewsletterData]
-  implicit val newsletterDataWrites = Json.writes[NewsletterData]
+  implicit val newsletterDataReads: Reads[NewsletterData] = Json.reads[NewsletterData]
+  implicit val newsletterDataWrites: OWrites[NewsletterData] = Json.writes[NewsletterData]
 }
 
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {

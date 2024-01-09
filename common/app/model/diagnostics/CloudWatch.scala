@@ -12,7 +12,7 @@ import scala.jdk.CollectionConverters._
 
 trait CloudWatch extends GuLogging {
 
-  lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
+  lazy val stageDimension: Dimension = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch: Option[AmazonCloudWatchAsync] = Configuration.aws.credentials.map { credentials =>
     AmazonCloudWatchAsyncClient

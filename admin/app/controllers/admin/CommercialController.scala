@@ -14,7 +14,7 @@ import scala.concurrent.duration._
 import scala.util.Try
 
 case class CommercialPage() extends StandalonePage {
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = "commercial-templates",
     section = Some(SectionId.fromId("admin")),
     webTitle = "Commercial Templates",

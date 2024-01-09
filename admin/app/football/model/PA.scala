@@ -6,7 +6,7 @@ import java.time.ZoneId
 
 object PA {
 
-  val competitionNames = Map[String, String](
+  val competitionNames: Map[String, String] = Map[String, String](
     ("100", "Premier League"),
     ("101", "Championship"),
     ("102", "League One"),
@@ -32,7 +32,7 @@ object PA {
   )
   def competitionName(season: Season): String = competitionNames.getOrElse(season.id, season.name)
 
-  val approvedCompetitions = List(
+  val approvedCompetitions: List[String] = List(
     "100",
     "500",
     "510",
@@ -70,7 +70,7 @@ object PA {
 
   object teams {
 
-    val all = List(
+    val all: List[Team] = List(
       Team("38298", "AC Ajaccio"),
       Team("26368", "AC Milan"),
       Team("51830", "AFC Hornchurch"),

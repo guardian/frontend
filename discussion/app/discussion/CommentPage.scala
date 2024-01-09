@@ -16,12 +16,12 @@ trait CommentPage extends StandalonePage {
   lazy val contentUrl = discussion.webUrl
   lazy val isClosedForRecommendation = discussion.isClosedForRecommendation
   lazy val switches = discussionComments.switches
-  lazy val isLargeDiscussion = commentCount > 1000
+  lazy val isLargeDiscussion: Boolean = commentCount > 1000
 }
 
 case class ThreadedCommentPage(val discussionComments: DiscussionComments) extends StandalonePage with CommentPage {
 
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = id,
     section = Some(SectionId.fromId("Global")),
     webTitle = discussionComments.discussion.title,
@@ -32,7 +32,7 @@ case class ThreadedCommentPage(val discussionComments: DiscussionComments) exten
 
 case class UnthreadedCommentPage(val discussionComments: DiscussionComments) extends StandalonePage with CommentPage {
 
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = id,
     section = Some(SectionId.fromId("Discussion")),
     webTitle = discussionComments.discussion.title,

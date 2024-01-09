@@ -14,7 +14,7 @@ import scala.concurrent.Future
 import scala.language.postfixOps
 
 class WeatherApiTest extends AnyFlatSpec with ScalaFutures with Matchers with MockitoSugar {
-  val actorSystem = PekkoActorSystem()
+  val actorSystem: PekkoActorSystem = PekkoActorSystem()
 
   "retryWeatherRequest" should "return for a successful future" in {
     val jsValue = JsString("Test")

@@ -10,11 +10,11 @@ object AdminConfiguration {
   import GuardianConfiguration._
 
   object pa {
-    lazy val footballApiKey = configuration
+    lazy val footballApiKey: String = configuration
       .getStringProperty("pa.api.key")
       .getOrElse(throw new RuntimeException("unable to load pa football api key"))
 
-    lazy val cricketApiKey = configuration
+    lazy val cricketApiKey: String = configuration
       .getStringProperty("pa.cricket.api.key")
       .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
 
@@ -23,26 +23,26 @@ object AdminConfiguration {
     lazy val apiExplorer = "http://developer.press.net/io-docs"
   }
 
-  lazy val topStoriesKey = configuration
+  lazy val topStoriesKey: String = configuration
     .getStringProperty("top-stories.config")
     .getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
 
   object fastly {
-    lazy val key =
+    lazy val key: String =
       configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
-    lazy val serviceId = configuration
+    lazy val serviceId: String = configuration
       .getStringProperty("fastly.serviceId")
       .getOrElse(throw new RuntimeException("Fastly service id not configured"))
-    lazy val ajaxServiceId = configuration
+    lazy val ajaxServiceId: String = configuration
       .getStringProperty("fastly.ajax.serviceId")
       .getOrElse(throw new RuntimeException("Fastly ajax service id not configured"))
   }
 
   object dfpApi {
-    lazy val clientId = configuration.getStringProperty("api.dfp.clientId")
-    lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
-    lazy val refreshToken = configuration.getStringProperty("api.dfp.refreshToken")
-    lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
+    lazy val clientId: Option[String] = configuration.getStringProperty("api.dfp.clientId")
+    lazy val clientSecret: Option[String] = configuration.getStringProperty("api.dfp.clientSecret")
+    lazy val refreshToken: Option[String] = configuration.getStringProperty("api.dfp.refreshToken")
+    lazy val appName: Option[String] = configuration.getStringProperty("api.dfp.applicationName")
   }
 
   lazy val oauthCredentials: Option[OAuthCredentialsWithMultipleCallbacks] =
@@ -82,10 +82,10 @@ object AdminConfiguration {
 
   object db {
     object default {
-      lazy val driver = configuration.getStringProperty("default.driver")
-      lazy val url = configuration.getStringProperty("default.url")
-      lazy val user = configuration.getStringProperty("default.user")
-      lazy val password = configuration.getStringProperty("default.password")
+      lazy val driver: Option[String] = configuration.getStringProperty("default.driver")
+      lazy val url: Option[String] = configuration.getStringProperty("default.url")
+      lazy val user: Option[String] = configuration.getStringProperty("default.user")
+      lazy val password: Option[String] = configuration.getStringProperty("default.password")
     }
   }
 }

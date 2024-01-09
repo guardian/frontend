@@ -41,7 +41,7 @@ class DfpDataCacheLifecycle(
     def run(): Future[T]
   }
 
-  val jobs = Set(
+  val jobs: Set[Job[_]] = Set(
     new Job[DataCache[String, GuAdUnit]] {
       val name = "DFP-AdUnits-Update"
       val interval = 30

@@ -7,7 +7,7 @@ import org.scalatest.matchers.should.Matchers
 import model.dotcomrendering.pageElements.CartoonExtraction._
 
 class CartoonExtractionTest extends AnyFlatSpec with Matchers {
-  val validCartoonVariant = CartoonVariant(
+  val validCartoonVariant: CartoonVariant = CartoonVariant(
     viewportSize = "large",
     images = scala.collection.Seq(
       CartoonImage(
@@ -19,7 +19,7 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
     ),
   )
 
-  val invalidCartoonVariant = CartoonVariant(
+  val invalidCartoonVariant: CartoonVariant = CartoonVariant(
     viewportSize = "large",
     images = scala.collection.Seq(
       CartoonImage(
@@ -29,7 +29,7 @@ class CartoonExtractionTest extends AnyFlatSpec with Matchers {
     ),
   )
 
-  def cartoonElementFields(variant: CartoonVariant) =
+  def cartoonElementFields(variant: CartoonVariant): Some[CartoonElementFields] =
     Some(
       CartoonElementFields(
         variants = Some(scala.collection.Seq(variant)),

@@ -17,6 +17,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{ArchiveMetrics, RedirectService}
 import router.Routes
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -26,14 +27,14 @@ class AppLoader extends FrontendApplicationLoader {
 trait AppComponents extends FrontendComponents {
 
   def wsClient: WSClient
-  lazy val redirects = wire[RedirectService]
+  lazy val redirects: RedirectService = wire[RedirectService]
 
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val archiveController = wire[ArchiveController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val archiveController: ArchiveController = wire[ArchiveController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[ArchiveMetrics],
@@ -43,7 +44,7 @@ trait AppComponents extends FrontendComponents {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("archive")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("archive")
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.archive.BuildInfo
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]

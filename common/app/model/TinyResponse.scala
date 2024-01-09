@@ -4,7 +4,7 @@ import play.api.mvc.{RequestHeader, Result, Results}
 import org.apache.commons.codec.binary.Base64
 
 object TinyResponse extends Results {
-  lazy val gif = {
+  lazy val gif: Result = {
     val data = "R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="
     NoCache(Ok(Base64.decodeBase64(data.getBytes("utf-8"))).as("image/gif"))
   }

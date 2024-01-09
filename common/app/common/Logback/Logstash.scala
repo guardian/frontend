@@ -29,7 +29,7 @@ class LogstashLifecycle(playConfig: PlayConfiguration, logbackOperationsPool: Lo
 
 class Logstash(logbackOperationsPool: LogbackOperationsPool) {
 
-  lazy val log = PlayLogger(getClass)
+  lazy val log: PlayLogger = PlayLogger(getClass)
 
   def customFields(playConfig: PlayConfiguration): Map[String, String] =
     Map(

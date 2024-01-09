@@ -23,12 +23,13 @@ import java.time.ZoneOffset
 import java.util.UUID
 import scala.util.Try
 import scala.xml._
+import play.api.mvc.AnyContentAsEmpty
 
 class TrailsToRssTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  val request = FakeRequest()
+  val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
-  lazy val content = Seq(
+  lazy val content: Seq[Content] = Seq(
     testContent(
       "a",
       "https://www.theguardian.com/a",

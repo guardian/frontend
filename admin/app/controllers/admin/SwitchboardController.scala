@@ -10,6 +10,7 @@ import services.SwitchNotification
 import tools.Store
 
 import scala.concurrent.Future
+import scala.util.matching.Regex
 
 class SwitchboardController(pekkoAsync: PekkoAsync, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
@@ -17,7 +18,7 @@ class SwitchboardController(pekkoAsync: PekkoAsync, val controllerComponents: Co
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
+  val SwitchPattern: Regex = """([a-z\d-]+)=(on|off)""".r
 
   def renderSwitchboard(): Action[AnyContent] =
     Action.async { implicit request =>

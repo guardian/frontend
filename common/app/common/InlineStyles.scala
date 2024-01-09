@@ -14,7 +14,7 @@ import scala.collection.immutable.ListMap
 import scala.util.{Failure, Success}
 
 case class CSSRule(selector: String, styles: ListMap[String, String]) {
-  val canInline = !selector.contains(":")
+  val canInline: Boolean = !selector.contains(":")
 
   // https://www.w3.org/TR/css3-selectors/#specificity
   val specifity: Int = {

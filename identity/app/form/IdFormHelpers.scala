@@ -5,9 +5,9 @@ import views.html.fragments.form.fieldConstructors.{frontendFieldConstructor, mu
 import play.api.data.Field
 
 object IdFormHelpers {
-  implicit val fields = FieldConstructor(frontendFieldConstructor.f)
+  implicit val fields: FieldConstructor = FieldConstructor(frontendFieldConstructor.f)
 
-  val nonInputFields = FieldConstructor(multiInputFieldConstructor.f)
+  val nonInputFields: FieldConstructor = FieldConstructor(multiInputFieldConstructor.f)
 
   def Password(field: Field, args: (Symbol, Any)*): Input = {
     val updatedArgs =
@@ -73,15 +73,15 @@ object IdFormHelpers {
 }
 
 class Input(val inputType: String, val field: Field, initialArgs: (Symbol, Any)*) {
-  val cls = "text-input " + getArgOrElse(Symbol("class"), "", initialArgs)
-  val autocomplete = getArgOrElse(Symbol("autocomplete"), "on", initialArgs)
-  val autocapitalize = getArgOrElse(Symbol("autocapitalize"), "on", initialArgs)
-  val autocorrect = getArgOrElse(Symbol("autocorrect"), "on", initialArgs)
-  val spellcheck = getArgOrElse(Symbol("spellcheck"), "false", initialArgs)
-  val autofocus = getArgOrElse(Symbol("autofocus"), false, initialArgs)
-  val required = field.constraints.exists(constraint => constraint._1 == "constraint.required")
+  val cls: String = "text-input " + getArgOrElse(Symbol("class"), "", initialArgs)
+  val autocomplete: String = getArgOrElse(Symbol("autocomplete"), "on", initialArgs)
+  val autocapitalize: String = getArgOrElse(Symbol("autocapitalize"), "on", initialArgs)
+  val autocorrect: String = getArgOrElse(Symbol("autocorrect"), "on", initialArgs)
+  val spellcheck: String = getArgOrElse(Symbol("spellcheck"), "false", initialArgs)
+  val autofocus: Boolean = getArgOrElse(Symbol("autofocus"), false, initialArgs)
+  val required: Boolean = field.constraints.exists(constraint => constraint._1 == "constraint.required")
 
-  val args = initialArgs.filter(_._1 != Symbol("type")) ++ Seq(Symbol("_showConstraints") -> false)
+  val args: Seq[(Symbol, Any)] = initialArgs.filter(_._1 != Symbol("type")) ++ Seq(Symbol("_showConstraints") -> false)
 
   private def getArgOrElse[T](property: Symbol, default: T, args: Seq[(Symbol, Any)]): T =
     args.toMap.get(property).map(_.asInstanceOf[T]).getOrElse(default)

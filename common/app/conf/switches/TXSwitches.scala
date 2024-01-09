@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 
 trait TXSwitches {
-  val brazeSwitch = Switch(
+  val brazeSwitch: Switch = Switch(
     group = SwitchGroup.TX,
     "braze-switch",
     "If this switch is off, the Braze SDK will not be loaded.",
@@ -13,7 +13,7 @@ trait TXSwitches {
     exposeClientSide = true,
   )
 
-  val contentCardsSwitch = Switch(
+  val contentCardsSwitch: Switch = Switch(
     group = SwitchGroup.TX,
     "braze-content-cards",
     "Enables Braze content cards (which power header notifications)",
@@ -23,7 +23,7 @@ trait TXSwitches {
     exposeClientSide = true,
   )
 
-  val brazeTaylorReport = Switch(
+  val brazeTaylorReport: Switch = Switch(
     group = SwitchGroup.TX,
     "braze-taylor-report",
     "If this switch is on, then braze messages will only show on articles with the Taylor report tag",

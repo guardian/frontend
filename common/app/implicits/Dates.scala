@@ -60,7 +60,7 @@ trait Dates {
   private lazy val DateTimeWithMillis = """.*\d\d:\d\d\.(\d+)[Z|\+].*""".r
 
   implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
-    lazy val parseISODateTime = s match {
+    lazy val parseISODateTime: DateTime = s match {
       case DateTimeWithMillis(_) =>
         ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
       case _ => ISODateTimeFormat.dateTimeNoMillis.withZone(Edition.defaultEdition.timezone).parseDateTime(s)

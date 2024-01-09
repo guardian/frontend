@@ -19,9 +19,9 @@ object `package` {
     }
     lazy val isInteractive: Boolean = content.tags exists { _.id == "type/interactive" }
     lazy val isLiveBlog: Boolean = content.tags.exists(t => Tags.liveMappings.contains(t.id))
-    lazy val isComment = content.tags.exists(t => Tags.commentMappings.contains(t.id))
-    lazy val isFeature = content.tags.exists(t => Tags.featureMappings.contains(t.id))
-    lazy val isReview = content.tags.exists(t => Tags.reviewMappings.contains(t.id))
+    lazy val isComment: Boolean = content.tags.exists(t => Tags.commentMappings.contains(t.id))
+    lazy val isFeature: Boolean = content.tags.exists(t => Tags.featureMappings.contains(t.id))
+    lazy val isReview: Boolean = content.tags.exists(t => Tags.reviewMappings.contains(t.id))
   }
 
   implicit class Any2In[A](a: A) {

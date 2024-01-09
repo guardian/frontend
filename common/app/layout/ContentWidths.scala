@@ -8,7 +8,7 @@ object ContentWidths {
       val className: Option[String],
   )
 
-  val unused = WidthsByBreakpoint(None, None, None, None, None, None, None)
+  val unused: WidthsByBreakpoint = WidthsByBreakpoint(None, None, None, None, None, None, None)
 
   object Inline extends ContentHinting(None)
   object Supporting extends ContentHinting(Some("element--supporting"))
@@ -37,13 +37,13 @@ object ContentWidths {
   }
 
   object BodyMedia extends ImageRoleWidthsByBreakpointMapping {
-    override val inline = WidthsByBreakpoint(
+    override val inline: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(445.px),
       mobileLandscape = Some(605.px),
       phablet = Some(620.px),
     ) // tablet, desktop, leftCol and wide are also 620px
 
-    override val supporting = WidthsByBreakpoint(
+    override val supporting: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(445.px),
       mobileLandscape = Some(605.px),
       phablet = Some(620.px), // tablet is also 620px
@@ -51,7 +51,7 @@ object ContentWidths {
       wide = Some(380.px),
     )
 
-    override val showcase = WidthsByBreakpoint(
+    override val showcase: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(445.px),
       mobileLandscape = Some(605.px),
       phablet = Some(620.px), // tablet and desktop are also 620px
@@ -59,12 +59,12 @@ object ContentWidths {
       wide = Some(860.px),
     )
 
-    override val thumbnail = WidthsByBreakpoint(
+    override val thumbnail: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(120.px), // mobileLandscape and tablet are also 120px
       tablet = Some(140.px),
     ) // desktop, leftCol and wide are also 140px
 
-    override val immersive = WidthsByBreakpoint(
+    override val immersive: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(480.px),
       mobileLandscape = Some(660.px),
       phablet = Some(740.px),
@@ -78,7 +78,7 @@ object ContentWidths {
   }
 
   object MainMedia extends ImageRoleWidthsByBreakpointMapping {
-    override val inline = WidthsByBreakpoint(
+    override val inline: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(620.px),
@@ -86,7 +86,7 @@ object ContentWidths {
       desktop = Some(620.px),
     ) // leftCol and wide are also 620px
 
-    override val showcase = WidthsByBreakpoint(
+    override val showcase: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(660.px),
@@ -100,7 +100,7 @@ object ContentWidths {
       * main image is showcase on a feature article, e.g.
       * http://www.theguardian.com/politics/2015/may/02/nicola-sturgeon-im-the-boss-now
       */
-    val featureShowcase = WidthsByBreakpoint(
+    val featureShowcase: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(725.px),
@@ -114,7 +114,7 @@ object ContentWidths {
       * Used when the main image is an immersive image
       * like on galleries and immersive articles
       */
-    override val immersive = WidthsByBreakpoint(
+    override val immersive: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(480.px),
       mobileLandscape = Some(660.px),
       phablet = Some(740.px),
@@ -134,7 +134,7 @@ object ContentWidths {
     override val thumbnail = BodyMedia.thumbnail
     override val halfwidth = BodyMedia.inline
 
-    override val immersive = WidthsByBreakpoint(
+    override val immersive: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(725.px),
@@ -144,7 +144,7 @@ object ContentWidths {
       wide = Some(1300.px),
     )
 
-    override val showcase = WidthsByBreakpoint(
+    override val showcase: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(445.px),
       mobileLandscape = Some(605.px),
       phablet = Some(620.px), // tablet is also 620px
@@ -155,7 +155,7 @@ object ContentWidths {
   }
 
   object MinuteMedia extends ImageRoleWidthsByBreakpointMapping {
-    override val inline = WidthsByBreakpoint(
+    override val inline: WidthsByBreakpoint = WidthsByBreakpoint(
       // Inline images, on mobile, in minute articles have a large width
       // to retain a high resolution when cropping using `object-fit: cover;`
       mobile = Some(1000.px),
@@ -165,11 +165,11 @@ object ContentWidths {
       wide = Some(540.px),
     )
 
-    override val thumbnail = WidthsByBreakpoint(mobile = Some(95.vw))
+    override val thumbnail: WidthsByBreakpoint = WidthsByBreakpoint(mobile = Some(95.vw))
   }
 
   object LiveBlogMedia extends ImageRoleWidthsByBreakpointMapping {
-    override val inline = WidthsByBreakpoint(
+    override val inline: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(620.px),
@@ -183,7 +183,7 @@ object ContentWidths {
 
   object ImageContentMedia {
     // ImageContentMedia does not support hinting/weighting, so does not extend ContentRelation.
-    val inline = WidthsByBreakpoint(
+    val inline: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(685.px),
@@ -193,7 +193,7 @@ object ContentWidths {
   }
 
   object GalleryMedia {
-    val inline = WidthsByBreakpoint(
+    val inline: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(480.px),
       mobileLandscape = Some(660.px),
       phablet = Some(700.px),
@@ -203,7 +203,7 @@ object ContentWidths {
       wide = Some(1010.px),
     )
 
-    val lightbox = WidthsByBreakpoint(
+    val lightbox: WidthsByBreakpoint = WidthsByBreakpoint(
       mobile = Some(465.px),
       mobileLandscape = Some(645.px),
       phablet = Some(725.px),

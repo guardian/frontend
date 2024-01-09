@@ -26,7 +26,7 @@ class DevParametersHttpRequestHandler(
     this means that the server side **CANNOT** rely on them. They may be used by Javascript, or simply in the
     development environment
    */
-  val insignificantParams = Seq(
+  val insignificantParams: Seq[String] = Seq(
     "view",
     "_edition", //allows us to spoof edition in tests
     "c", // used for counts in the Diagnostics server
@@ -55,7 +55,7 @@ class DevParametersHttpRequestHandler(
     "topics", // used for filtering the liveblog blocks
   )
 
-  val commercialParams = Seq(
+  val commercialParams: Seq[String] = Seq(
     "ad-unit", // allows overriding of the ad unit
     "adtest", // used to set ad-test cookie from admin domain
     "pbtest", // used to test Prebid adapters in isolation
@@ -80,8 +80,9 @@ class DevParametersHttpRequestHandler(
     "multiSticky", // enable multiple sticky ads in the right column, for the purpose of qualitative testing
   )
 
-  val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
-  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
+  val playBugs: Seq[String] = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
+  val allowedParams: Seq[String] =
+    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
 
   override def routeRequest(request: RequestHeader): Option[Handler] = {
 

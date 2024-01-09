@@ -18,7 +18,7 @@ case class Match(
 ) {
   def hasTeam(teamId: String): Boolean = homeTeam.id == teamId || awayTeam.id == teamId
 
-  lazy val hasGroupTable = event.hasGroupTable(stage)
+  lazy val hasGroupTable: Boolean = event.hasGroupTable(stage)
 
   lazy val teamTags: List[String] = model.RugbyContent.teamNameIds.collect {
     case (tag, team) if List(homeTeam.id, awayTeam.id).contains(team) => tag
@@ -76,11 +76,11 @@ case class ScoreEvent(
 )
 
 object ScoreType extends Enumeration {
-  val `Try` = Value("Try")
-  val Conversion = Value("Conversion")
-  val Penalty = Value("Penalty")
-  val DropGoal = Value("Drop goal")
-  val PenaltyTry = Value("Penalty Try")
+  val `Try`: Value = Value("Try")
+  val Conversion: Value = Value("Conversion")
+  val Penalty: Value = Value("Penalty")
+  val DropGoal: Value = Value("Drop goal")
+  val PenaltyTry: Value = Value("Penalty Try")
 }
 
 trait Status

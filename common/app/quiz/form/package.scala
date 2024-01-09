@@ -8,7 +8,7 @@ package object form {
 
   case class Inputs(answerIds: List[String])
 
-  val playForm = Form(
+  val playForm: Form[Inputs] = Form(
     mapping("answers" -> list(text))(Inputs.apply)(Inputs.unapply),
   )
 
@@ -47,8 +47,8 @@ package object form {
       entries: Seq[(Question, Answer)],
   ) {
 
-    val isKnowledge = quiz.quizType == "knowledge"
-    val isPersonality = quiz.quizType == "personality"
+    val isKnowledge: Boolean = quiz.quizType == "knowledge"
+    val isPersonality: Boolean = quiz.quizType == "personality"
 
     // Find the user's answer to the question specified.
     def getAnswerFor(question: Question): Option[Answer] =

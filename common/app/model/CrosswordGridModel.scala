@@ -11,11 +11,12 @@ import model.{CrosswordPosition, Entry}
 import Function.const
 
 trait CrosswordGridDataOrdering {
-  implicit val positionOrdering = Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
+  implicit val positionOrdering: Ordering[CrosswordPosition] =
+    Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
 }
 
 trait CrosswordGridColumnNotation {
-  val columnsByLetters = ('A' to 'Z').toList.zipWithIndex.map(_.swap).toMap
+  val columnsByLetters: Map[Int, Char] = ('A' to 'Z').toList.zipWithIndex.map(_.swap).toMap
 }
 
 case class Cell(number: Option[Int])

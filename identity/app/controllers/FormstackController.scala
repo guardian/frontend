@@ -14,7 +14,7 @@ class FormstackController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  val page = IdentityPage("/form", "Form")
+  val page: IdentityPage = IdentityPage("/form", "Form")
 
   def formstackFormEmbed(formReference: String): Action[AnyContent] =
     formstackForm(formReference)

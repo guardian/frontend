@@ -98,9 +98,9 @@ object VideoMedia {
     )
 }
 final case class VideoMedia(videoAssets: List[VideoAsset]) {
-  private implicit val ordering = EncodingOrdering
+  private implicit val ordering: EncodingOrdering.type = EncodingOrdering
 
-  val blockVideoAds = videoAssets.exists(_.blockVideoAds)
+  val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
 
   val encodings: Seq[Encoding] = {
     videoAssets
@@ -136,7 +136,7 @@ object AudioMedia {
     )
 }
 final case class AudioMedia(audioAssets: List[AudioAsset]) {
-  private implicit val ordering = EncodingOrdering
+  private implicit val ordering: EncodingOrdering.type = EncodingOrdering
 
   val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
   val encodings: Seq[Encoding] = {

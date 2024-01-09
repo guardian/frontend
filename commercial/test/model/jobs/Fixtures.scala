@@ -4,7 +4,7 @@ import commercial.model.merchandise.Job
 
 object Fixtures {
 
-  val xml =
+  val xml: String =
     """
       |<rootnode><Jobs>
       |  <Job>
@@ -96,7 +96,7 @@ object Fixtures {
       |</Jobs></rootnode>
       | """.stripMargin
 
-  val jobs = List(
+  val jobs: List[Job] = List(
     Job(
       1058606,
       "Area Management Training Programme (Graduate Area Manager)",

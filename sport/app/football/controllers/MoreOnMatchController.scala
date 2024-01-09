@@ -34,7 +34,7 @@ case class MatchNav(
 ) {
 
   // do not count stats as a report (stats will always be there)
-  lazy val hasReports = hasReport || hasMinByMin || hasPreview
+  lazy val hasReports: Boolean = hasReport || hasMinByMin || hasPreview
   lazy val hasMinByMin = minByMin.isDefined
   lazy val hasReport = matchReport.isDefined
   lazy val hasPreview = preview.isDefined
@@ -91,7 +91,7 @@ case class NxMatchData(
 ) extends NxAnswer
 
 object NxAnswer {
-  val reportedEventTypes = List("booking", "dismissal", "substitution")
+  val reportedEventTypes: List[String] = List("booking", "dismissal", "substitution")
   def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
     team.players.map { player =>
       val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>

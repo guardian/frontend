@@ -6,7 +6,7 @@ case class Encoding(format: String, url: String, rawFormat: String)
 
 object Encoding extends HttpsUrl {
 
-  val typeMapping = Map(
+  val typeMapping: Map[String, String] = Map(
     "mp4" -> "video/mp4",
   )
 

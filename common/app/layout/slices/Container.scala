@@ -36,7 +36,7 @@ object Container extends GuLogging {
     ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply)
 
   /** So that we don't blow up at runtime, which would SUCK */
-  val default = Fixed(FixedContainers.fixedSmallSlowIV)
+  val default: Fixed = Fixed(FixedContainers.fixedSmallSlowIV)
 
   def resolve(id: String, adFree: Boolean = false): Container = all(adFree).getOrElse(id, default)
 

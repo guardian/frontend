@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
 
 trait GuLogging {
 
-  lazy implicit val log = Logger(getClass)
+  lazy implicit val log: Logger = Logger(getClass)
 
   protected def logException(e: Exception): Unit = {
     log.error(ExceptionUtils.getStackTrace(e))

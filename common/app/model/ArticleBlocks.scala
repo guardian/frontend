@@ -16,7 +16,7 @@ case object CanonicalLiveBlog extends BlockRange {
   val timeline = "body:key-events"
   val summary = "body:summary"
   val pinned = "body:pinned"
-  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
+  val query: Some[Seq[String]] = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned))
 }
 
 case object TopicsLiveBlog extends BlockRange {
@@ -26,7 +26,7 @@ case object TopicsLiveBlog extends BlockRange {
   val summary = "body:summary"
   val pinned = "body:pinned"
   val body = "body" // this gets all blocks that's needed for filtering blog by topics
-  val query = Some(Seq(mainBlock, oldestPage, timeline, summary, pinned, body))
+  val query: Some[Seq[String]] = Some(Seq(mainBlock, oldestPage, timeline, summary, pinned, body))
 }
 
 // Created to handle ArticleController (for preview) specifically, where we may render an
@@ -40,7 +40,7 @@ case object GenericFallback extends BlockRange {
   val summary = "body:summary"
   val pinned = "body:pinned"
   val body = "body" // supports Dotcom Rendering model which currently requires field body
-  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned, body))
+  val query: Some[Seq[String]] = Some(Seq(mainBlock, firstPage, oldestPage, timeline, summary, pinned, body))
 }
 
 case class PageWithBlock(page: String) extends BlockRange {
@@ -50,7 +50,7 @@ case class PageWithBlock(page: String) extends BlockRange {
 
 case class SinceBlockId(lastUpdate: String) extends BlockRange {
   val mainBlock = "main"
-  val around = s"body:around:$lastUpdate:5"
+  val around: String = s"body:around:$lastUpdate:5"
   // more than 5 could come in (in one go), but unlikely and won't matter as it'll just fetch again soon
-  val query = Some(Seq(mainBlock, around))
+  val query: Some[Seq[String]] = Some(Seq(mainBlock, around))
 }

@@ -5,6 +5,7 @@ import StringCleaner._
 import org.scalatest.flatspec.AnyFlatSpec
 import play.api.test.FakeRequest
 import views.support.CommercialMPUForFronts
+import org.jsoup.nodes.Document
 
 class CommercialMPUForFrontsTest extends AnyFlatSpec with Matchers {
 
@@ -14,7 +15,8 @@ class CommercialMPUForFrontsTest extends AnyFlatSpec with Matchers {
     finally source.close()
   }
 
-  val body = getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts()(FakeRequest()))
+  val body: Document =
+    getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts()(FakeRequest()))
 
   it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")

@@ -6,7 +6,7 @@ trait TestComponents {
   self: AppComponents =>
 
   // Don't run lifecycle components in tests
-  override lazy val lifecycleComponents = List()
+  override lazy val lifecycleComponents: List[Nothing] = List()
 }
 
 class TestAppLoader extends AppLoader {

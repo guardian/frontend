@@ -19,7 +19,7 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
   // recent 15 minutes of results are unstable).
 
   // This key is (service, name, region)
-  val latestTimestampsSent =
+  val latestTimestampsSent: mutable.Map[(String, String, String), Long] =
     mutable.Map[(String, String, String), Long]().withDefaultValue(DateTime.now().minusMinutes(15).getMillis())
 
   // Be very explicit about which metrics we want. It is not necessary to cloudwatch everything.

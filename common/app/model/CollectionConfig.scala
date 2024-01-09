@@ -52,5 +52,5 @@ object CollectionConfig {
     CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(collectionJson))
   }
 
-  val empty = make(fapi.CollectionConfig.empty)
+  val empty: CollectionConfig = make(fapi.CollectionConfig.empty)
 }

@@ -5,6 +5,7 @@ import model.pressed.PressedContent
 import play.api.libs.json.Json
 
 import scala.util.Try
+import play.api.libs.json.OFormat
 
 case class Story(
     group: Int,
@@ -12,9 +13,9 @@ case class Story(
 )
 
 object Story {
-  implicit val jsonFormat = Json.format[Story]
+  implicit val jsonFormat: OFormat[Story] = Json.format[Story]
 
-  implicit val ordering = Ordering.by[Story, Int](_.group)
+  implicit val ordering: Ordering[Story] = Ordering.by[Story, Int](_.group)
 
   def unboosted(n: Int): Story = Story(n, isBoosted = false)
 

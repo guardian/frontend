@@ -37,21 +37,21 @@ import scala.concurrent.Future
   trait EditProfileFixture {
 
     val controllerComponent: ControllerComponents = _root_.play.api.test.Helpers.stubControllerComponents()
-    val idUrlBuilder = mock[IdentityUrlBuilder]
-    val api = mock[IdApiClient]
-    val idRequestParser = mock[IdRequestParser]
-    val authService = mock[AuthenticationService]
-    val idRequest = mock[IdentityRequest]
-    val trackingData = mock[TrackingData]
-    val returnUrlVerifier = mock[ReturnUrlVerifier]
-    val newsletterService = spy(new NewsletterService(api))
-    val httpConfiguration = HttpConfiguration.createWithDefaults()
-    val newsletterSignupAgent = mock[NewsletterSignupAgent]
+    val idUrlBuilder: IdentityUrlBuilder = mock[IdentityUrlBuilder]
+    val api: IdApiClient = mock[IdApiClient]
+    val idRequestParser: IdRequestParser = mock[IdRequestParser]
+    val authService: AuthenticationService = mock[AuthenticationService]
+    val idRequest: IdentityRequest = mock[IdentityRequest]
+    val trackingData: TrackingData = mock[TrackingData]
+    val returnUrlVerifier: ReturnUrlVerifier = mock[ReturnUrlVerifier]
+    val newsletterService: NewsletterService = spy(new NewsletterService(api))
+    val httpConfiguration: HttpConfiguration = HttpConfiguration.createWithDefaults()
+    val newsletterSignupAgent: NewsletterSignupAgent = mock[NewsletterSignupAgent]
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
-    val testAuth = ScGuU("abc")
-    val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+    val user: User = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
+    val testAuth: ScGuU = ScGuU("abc")
+    val authenticatedUser: AuthenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
     val authenticatedActions = new AuthenticatedActions(
@@ -62,8 +62,8 @@ import scala.concurrent.Future
       newsletterService,
       idRequestParser,
     )
-    val signinService = mock[PlaySigninService]
-    val profileFormsMapping = ProfileFormsMapping(
+    val signinService: PlaySigninService = mock[PlaySigninService]
+    val profileFormsMapping: ProfileFormsMapping = ProfileFormsMapping(
       new PrivacyMapping,
     )
 

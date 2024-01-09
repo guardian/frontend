@@ -92,7 +92,7 @@ private object RequestDebugInfo {
   private lazy val stage: String = Configuration.environment.stage
   private lazy val project: String = Configuration.environment.app
 
-  lazy val debugParams = Seq(
+  lazy val debugParams: String = Seq(
     s"ngw-host=${encode(host, "UTF-8")}",
     s"ngw-stage=${encode(stage, "UTF-8")}",
     s"ngw-project=${encode(project, "UTF-8")}",

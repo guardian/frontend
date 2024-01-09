@@ -182,8 +182,8 @@ import layout.slices.EmailLayouts
     tier should be(LocalRender)
   }
 
-  val linkSnap = FixtureBuilder.mkPressedLinkSnap(1).asInstanceOf[LinkSnap]
-  val supportedThrasher = PressedCollectionBuilder.mkPressedCollection(curated =
+  val linkSnap: LinkSnap = FixtureBuilder.mkPressedLinkSnap(1).asInstanceOf[LinkSnap]
+  val supportedThrasher: PressedCollection = PressedCollectionBuilder.mkPressedCollection(curated =
     List(
       linkSnap.copy(properties =
         linkSnap.properties

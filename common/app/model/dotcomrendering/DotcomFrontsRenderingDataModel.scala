@@ -12,6 +12,7 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
+import play.api.libs.json.OWrites
 
 case class DotcomFrontsRenderingDataModel(
     pressedPage: PressedPage,
@@ -35,7 +36,7 @@ case class DotcomFrontsRenderingDataModel(
 )
 
 object DotcomFrontsRenderingDataModel {
-  implicit val writes = Json.writes[DotcomFrontsRenderingDataModel]
+  implicit val writes: OWrites[DotcomFrontsRenderingDataModel] = Json.writes[DotcomFrontsRenderingDataModel]
 
   def apply(
       page: PressedPage,

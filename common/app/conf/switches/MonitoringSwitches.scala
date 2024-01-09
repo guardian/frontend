@@ -5,7 +5,7 @@ import conf.switches.Expiry.never
 trait MonitoringSwitches {
   // Monitoring
 
-  val OphanSwitch = Switch(
+  val OphanSwitch: Switch = Switch(
     SwitchGroup.Monitoring,
     "ophan",
     "Enables the new Ophan tracking javascript",
@@ -15,7 +15,7 @@ trait MonitoringSwitches {
     exposeClientSide = true,
   )
 
-  val SentryReporting = Switch(
+  val SentryReporting: Switch = Switch(
     SwitchGroup.Monitoring,
     "enable-sentry-reporting",
     "If this switch is on, then js errors will be reported to Sentry.",
@@ -25,7 +25,7 @@ trait MonitoringSwitches {
     exposeClientSide = true,
   )
 
-  val ComscoreSwitch = Switch(
+  val ComscoreSwitch: Switch = Switch(
     SwitchGroup.Monitoring,
     "comscore",
     "If this switch is on, then Comscore reporting is enabled",
@@ -35,7 +35,7 @@ trait MonitoringSwitches {
     exposeClientSide = true,
   )
 
-  val ThirdPartyEmbedTracking = Switch(
+  val ThirdPartyEmbedTracking: Switch = Switch(
     SwitchGroup.Monitoring,
     "third-party-embed-tracking",
     "Enables tracking on our off-site third party embedded content. Such as: videos on embed.theguardian.com.",
@@ -45,7 +45,7 @@ trait MonitoringSwitches {
     exposeClientSide = true,
   )
 
-  val LogstashLogging = Switch(
+  val LogstashLogging: Switch = Switch(
     SwitchGroup.Monitoring,
     "logstash-logging",
     "Enables sending logs to Logstash",
@@ -55,7 +55,7 @@ trait MonitoringSwitches {
     exposeClientSide = false,
   )
 
-  val BoostGAUserTimingFidelity = Switch(
+  val BoostGAUserTimingFidelity: Switch = Switch(
     SwitchGroup.Monitoring,
     "boost-ga-user-timing-fidelity",
     "CAUTION: check with Google.Analyticscore@guardian.co.uk before enabling. Extends the standard 0.1% sampling of user timing events on Google Analytics to 100%. Will send a LOT more events to GA, which costs $$$.",
@@ -65,7 +65,7 @@ trait MonitoringSwitches {
     exposeClientSide = true,
   )
 
-  val LogRemovedAmpElements = Switch(
+  val LogRemovedAmpElements: Switch = Switch(
     SwitchGroup.Monitoring,
     "log-removed-amp-elements",
     "Sends log messages to kibana whenever an element is removed from an AMP article.",
@@ -75,7 +75,7 @@ trait MonitoringSwitches {
     exposeClientSide = false,
   )
 
-  val CompareVariantDecisions = Switch(
+  val CompareVariantDecisions: Switch = Switch(
     SwitchGroup.Monitoring,
     "compare-variant-decision",
     "forward contributions variant (ab test) decision to evaluate new service",

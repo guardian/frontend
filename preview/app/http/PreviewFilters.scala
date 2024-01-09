@@ -9,6 +9,7 @@ import play.api.http.{HttpConfiguration, HttpFilters}
 import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
+import play.api.mvc.EssentialFilter
 
 class PreviewFilters(
     httpConfiguration: HttpConfiguration,
@@ -24,9 +25,10 @@ class PreviewFilters(
     httpConfiguration,
   )
 
-  val filters = previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters.common(
-    frontend.preview.BuildInfo,
-  )
+  val filters: List[EssentialFilter] =
+    previewAuthFilter :: new NoCacheFilter :: new ContentSecurityPolicyFilter :: Filters.common(
+      frontend.preview.BuildInfo,
+    )
 }
 
 // OBVIOUSLY this is only for the preview server

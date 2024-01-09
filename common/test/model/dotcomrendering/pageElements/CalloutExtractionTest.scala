@@ -134,7 +134,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
 
   }
 
-  def expectedCalloutBlockElementV2 = {
+  def expectedCalloutBlockElementV2: CalloutBlockElementV2 = {
     CalloutBlockElementV2(
       "b06a08e0-ca5f-410c-a28b-95e7d7ca37b7",
       Some("http://test.com"),
@@ -157,7 +157,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
     )
   }
 
-  def expectedRadioOptions =
+  def expectedRadioOptions: JsArray =
     JsArray.apply(
       Seq(
         Json.parse("""

@@ -97,7 +97,7 @@ case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String)
 
 object HostedLogo {
 
-  val placeholder = HostedLogo(
+  val placeholder: HostedLogo = HostedLogo(
     src = "",
     dimensions = None,
     link = "",

@@ -104,7 +104,7 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
    */
   object AllExperiments extends ExperimentsDefinition {
     val allExperiments: Set[Experiment] = TestCases.experiments
-    implicit val canCheckExperiment = new CanCheckExperiment(this)
+    implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
   }
 
   object TestCases {
@@ -163,7 +163,7 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
       override val extraHeader: Option[ExperimentHeader] = Some(ExperimentHeader("extraCond", "true"))
     }
 
-    val experiments = Set(
+    val experiments: Set[Experiment] = Set(
       experiment0,
       experiment1,
       experiment2,

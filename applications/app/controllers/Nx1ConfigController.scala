@@ -22,7 +22,7 @@ import experiments.ActiveExperiments._
  */
 
 object Nx1Config {
-  def makeAbTestReport(implicit request: RequestHeader) = {
+  def makeAbTestReport(implicit request: RequestHeader): Map[String, String] = {
     ActiveExperiments.allExperiments
       .filter(e => isParticipating(e) || isControl(e))
       .toSeq

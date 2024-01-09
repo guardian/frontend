@@ -18,7 +18,7 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
   val mdapiApiRoot = "https://mdapimock.com"
   val testUserId = "10000001"
 
-  val valid404ResponseJsonString =
+  val valid404ResponseJsonString: String =
     """
       |{
       |  "message":"Not found",
@@ -27,7 +27,7 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
       |}
     """.stripMargin
 
-  val validMdapiResponseJsonString =
+  val validMdapiResponseJsonString: String =
     """
       |{
       |"userId": "10000001",
@@ -42,7 +42,7 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
       |}
     """.stripMargin
 
-  val invalidMdapiResponseJsonString =
+  val invalidMdapiResponseJsonString: String =
     """
       |{
       |"userId": "10000001",

@@ -22,7 +22,8 @@ object IndexNav {
     }
   }
 
-  val contributorsAlpha = tagIndexSignposting("contributors", "Contributors")(ContributorAlphaIndexAutoRefresh.get)
+  val contributorsAlpha: NavItem =
+    tagIndexSignposting("contributors", "Contributors")(ContributorAlphaIndexAutoRefresh.get)
 
-  val keywordsAlpha = tagIndexSignposting("subjects", "Subjects")(KeywordAlphaIndexAutoRefresh.get)
+  val keywordsAlpha: NavItem = tagIndexSignposting("subjects", "Subjects")(KeywordAlphaIndexAutoRefresh.get)
 }

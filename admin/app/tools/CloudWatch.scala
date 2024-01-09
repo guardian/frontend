@@ -25,8 +25,8 @@ object CloudWatch extends GuLogging {
     defaultClient.shutdown()
   }
 
-  val stage = new Dimension().withName("Stage").withValue(environment.stage)
-  val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
+  val stage: Dimension = new Dimension().withName("Stage").withValue(environment.stage)
+  val stageFilter: DimensionFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
   lazy val defaultClientBuilder: AmazonCloudWatchAsyncClientBuilder = AmazonCloudWatchAsyncClient
     .asyncBuilder()
@@ -46,7 +46,7 @@ object CloudWatch extends GuLogging {
     LoadBalancer("frontend-applications"),
   ).flatten
 
-  val secondaryLoadBalancers = Seq(
+  val secondaryLoadBalancers: Seq[LoadBalancer] = Seq(
     LoadBalancer("frontend-discussion"),
     LoadBalancer("frontend-identity"),
     LoadBalancer("frontend-sport"),
@@ -73,7 +73,7 @@ object CloudWatch extends GuLogging {
     ("frontend-rss", ChartFormat(Colour.`tone-news-2`)),
   ).withDefaultValue(ChartFormat.SingleLineBlack)
 
-  val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
+  val loadBalancers: Seq[LoadBalancer] = primaryLoadBalancers ++ secondaryLoadBalancers
 
   private val fastlyMetrics = List(
     ("Fastly Errors (Europe) - errors per minute, average", "europe-errors"),
@@ -85,7 +85,7 @@ object CloudWatch extends GuLogging {
     ("Fastly Hits and Misses (USA) - per minute, average", "usa"),
   )
 
-  val assetsFiles = Seq(
+  val assetsFiles: Seq[String] = Seq(
     "app.js",
     "commercial.js",
     "facia.js",

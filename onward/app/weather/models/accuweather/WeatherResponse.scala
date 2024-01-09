@@ -4,11 +4,12 @@ import common.Edition
 import common.editions.Us
 import model.dotcomrendering.{DotcomRenderingDataModel, ElementsEnhancer}
 import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.Reads
 
 /** Not all the fields AccuWeather supplies, just the ones we care about */
 
 object WeatherResponse {
-  implicit val jsonReads = Json.reads[WeatherResponse]
+  implicit val jsonReads: Reads[WeatherResponse] = Json.reads[WeatherResponse]
 }
 
 case class WeatherResponse(

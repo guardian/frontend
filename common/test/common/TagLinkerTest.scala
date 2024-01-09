@@ -17,14 +17,15 @@ import play.api.test.FakeRequest
 import views.support.TagLinker
 
 import scala.jdk.CollectionConverters._
+import play.api.mvc.AnyContentAsEmpty
 
 class TagLinkerTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  implicit val edition = Uk
-  implicit val request = FakeRequest("GET", "/")
+  implicit val edition: Uk.type = Uk
+  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
   private implicit class Document2FirstPara(d: Document) {
-    val firstPara = d.select("p").asScala.head.html
+    val firstPara: String = d.select("p").asScala.head.html
   }
 
   "TagLinker" should "link tag at the start of the paragraph" in {

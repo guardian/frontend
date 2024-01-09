@@ -5,7 +5,7 @@ import conf.switches.Owner.group
 
 trait NewslettersSwitches {
 
-  val EmailSignupRecaptcha = Switch(
+  val EmailSignupRecaptcha: Switch = Switch(
     SwitchGroup.Newsletters,
     "email-signup-recaptcha",
     "Enables showing reCAPTCHA when signing up to email newsletters",
@@ -15,7 +15,7 @@ trait NewslettersSwitches {
     exposeClientSide = true,
   )
 
-  val NewslettersRemoveConfirmationStep = Switch(
+  val NewslettersRemoveConfirmationStep: Switch = Switch(
     SwitchGroup.Newsletters,
     "newsletters-remove-confirmation-step",
     "Remove confirmation step when user sign up to a newsletter",
@@ -25,7 +25,7 @@ trait NewslettersSwitches {
     exposeClientSide = false,
   )
 
-  val ShowNewPrivacyWordingOnEmailSignupEmbeds = Switch(
+  val ShowNewPrivacyWordingOnEmailSignupEmbeds: Switch = Switch(
     SwitchGroup.Newsletters,
     "show-new-privacy-wording-on-email-signup-embeds",
     "Show new privacy wording on email signup embeds",
@@ -35,7 +35,7 @@ trait NewslettersSwitches {
     exposeClientSide = true,
   )
 
-  val ValidateEmailSignupRecaptchaTokens = Switch(
+  val ValidateEmailSignupRecaptchaTokens: Switch = Switch(
     SwitchGroup.Newsletters,
     "validate-email-signup-recaptcha-tokens",
     "Enables validation of reCAPTCHA tokens on email signup submissions",
@@ -45,7 +45,7 @@ trait NewslettersSwitches {
     exposeClientSide = false,
   )
 
-  val UseDcrNewslettersPage = Switch(
+  val UseDcrNewslettersPage: Switch = Switch(
     SwitchGroup.Newsletters,
     "use-dcr-newsletters-page",
     "Use the dcr rendered version of the email newsletters page by default",

@@ -4,7 +4,7 @@ import conf.switches.Expiry.never
 import experiments.ActiveExperiments
 
 trait ServerSideExperimentSwitches {
-  val ServerSideExperiments = {
+  val ServerSideExperiments: Switch = {
 
     // It is not clear why the following instruction is needed.
     // It was added in this PR https://github.com/guardian/frontend/pull/8886/files
@@ -23,7 +23,7 @@ trait ServerSideExperimentSwitches {
     )
   }
 
-  val ContentPresser = Switch(
+  val ContentPresser: Switch = Switch(
     SwitchGroup.Feature,
     "content-presser",
     "Enables routes for pressing and cleaning articles and interactives.",

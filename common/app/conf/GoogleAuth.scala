@@ -34,7 +34,7 @@ case class GoogleAuth(
     )
   }
 
-  val config = oauthCredentials.map { cred =>
+  val config: Option[GoogleAuthConfig] = oauthCredentials.map { cred =>
     GoogleAuthConfig(
       cred.oauthClientId, // The client ID from the dev console
       cred.oauthSecret, // The client secret from the dev console

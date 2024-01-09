@@ -40,8 +40,8 @@ object TrailsToRss {
     is a bug (http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8179668).  For now, leaving this
     unchanged as the end result gives valid XML, although it may exclude supplementary characters.
    */
-  val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
-  def stripInvalidXMLCharacters(s: String) = {
+  val pattern: Pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
+  def stripInvalidXMLCharacters(s: String): String = {
     pattern.matcher(s).replaceAll("")
   }
 

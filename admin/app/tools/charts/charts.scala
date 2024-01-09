@@ -54,7 +54,7 @@ class ChartTable(private val labels: Seq[String]) {
 trait Chart[K] {
 
   //used in html as element id
-  lazy val id = UUID.randomUUID().toString
+  lazy val id: String = UUID.randomUUID().toString
 
   def name: String
   def labels: Seq[String]
@@ -96,12 +96,12 @@ object Colour {
 
 object ChartFormat {
 
-  val SingleLineBlack = ChartFormat(colours = Seq("#000000"))
-  val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"))
-  val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"))
-  val SingleLineRed = ChartFormat(colours = Seq("#FF0000"))
-  val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"))
-  val MultiLine =
+  val SingleLineBlack: ChartFormat = ChartFormat(colours = Seq("#000000"))
+  val SingleLineBlue: ChartFormat = ChartFormat(colours = Seq("#0033CC"))
+  val SingleLineGreen: ChartFormat = ChartFormat(colours = Seq("#00CC33"))
+  val SingleLineRed: ChartFormat = ChartFormat(colours = Seq("#FF0000"))
+  val DoubleLineBlueRed: ChartFormat = ChartFormat(colours = Seq("#0033CC", "#FF0000"))
+  val MultiLine: ChartFormat =
     ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass = "charts charts-full")
 
   def apply(colour: String*): ChartFormat = ChartFormat(colour)
@@ -134,7 +134,7 @@ class AwsLineChart(
 
   protected def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("HH:mm")
 
-  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
+  lazy val latest: Double = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 
   def formatRowKey(key: String): String = s"'$key'"
 }
@@ -190,10 +190,10 @@ object FormattedChart {
 
   case class Cell(v: String)
 
-  implicit val cellReads = Json.writes[Cell]
-  implicit val rowReads = Json.writes[Row]
-  implicit val columnReads = Json.writes[Column]
-  implicit val tableReads = Json.writes[DataTable]
+  implicit val cellReads: OWrites[Cell] = Json.writes[Cell]
+  implicit val rowReads: OWrites[Row] = Json.writes[Row]
+  implicit val columnReads: OWrites[Column] = Json.writes[Column]
+  implicit val tableReads: OWrites[DataTable] = Json.writes[DataTable]
 }
 
 // A variation of Chart that can be easily serialised into a Google Visualization DataTable Json object.
@@ -205,7 +205,7 @@ case class FormattedChart(
     format: ChartFormat,
 ) {
 
-  lazy val id = UUID.randomUUID().toString
+  lazy val id: String = UUID.randomUUID().toString
   lazy val labels: Seq[String] = columns.map(_.label)
   lazy val lastValue: Option[String] = rows.lastOption.flatMap { _.c.lastOption.map(_.v.take(6)) }
 

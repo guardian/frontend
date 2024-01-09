@@ -20,7 +20,7 @@ case class HostedGalleryPage(
     override val thumbnailUrl: String,
     override val metadata: MetaData,
 ) extends HostedPage {
-  override val mainImageUrl = images.headOption.map(_.url).getOrElse("")
+  override val mainImageUrl: String = images.headOption.map(_.url).getOrElse("")
 }
 
 case class HostedGalleryImage(

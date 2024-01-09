@@ -14,7 +14,7 @@ trait DiscussionControllers {
   def csrfAddToken: CSRFAddToken
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
-  lazy val commentCountController = wire[CommentCountController]
-  lazy val commentsController = wire[CommentsController]
-  lazy val profileActivityController = wire[ProfileActivityController]
+  lazy val commentCountController: CommentCountController = wire[CommentCountController]
+  lazy val commentsController: CommentsController = wire[CommentsController]
+  lazy val profileActivityController: ProfileActivityController = wire[ProfileActivityController]
 }

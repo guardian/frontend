@@ -4,7 +4,7 @@ import java.net.URI
 
 object GuardianFoundationHelper {
 
-  val foundationSectionIds = List(
+  val foundationSectionIds: List[String] = List(
     "the-guardian-foundation",
     "newswise",
     "gnmeducationcentre",

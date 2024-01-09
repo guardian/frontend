@@ -48,8 +48,8 @@ object WorldCupPAIDs {
 
   // http://sport.api.press.net/v1/stage?season=11421, then e.g.
   // http://sport.api.press.net/v1/standing?stage=849625 for each.
-  val worldCup2019GroupIDs = List(235175, 235176, 235178, 235180)
-  val worldCup2015GroupIDs = List(151079, 151081, 151083, 151085)
+  val worldCup2019GroupIDs: List[Int] = List(235175, 235176, 235178, 235180)
+  val worldCup2015GroupIDs: List[Int] = List(151079, 151081, 151083, 151085)
   val worldCupGroupIDs = worldCup2019GroupIDs
 }
 
@@ -68,8 +68,8 @@ class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with GuLogging {
 
 class PARugbyClient(wsClient: WSClient) extends RugbyClient with GuLogging {
 
-  val apiKey = conf.SportConfiguration.pa.rugbyKey.getOrElse("")
-  val basePath = conf.SportConfiguration.pa.rugbyEndpoint.getOrElse("")
+  val apiKey: String = conf.SportConfiguration.pa.rugbyKey.getOrElse("")
+  val basePath: String = conf.SportConfiguration.pa.rugbyEndpoint.getOrElse("")
 
   override def getEvents(seasonID: Int)(implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
 

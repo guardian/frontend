@@ -6,6 +6,7 @@ import jobs.SiteMapJob
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import renderers.DotcomRenderingService
 
 trait ApplicationsControllers {
 
@@ -16,29 +17,29 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
 
-  lazy val remoteRender = wire[renderers.DotcomRenderingService]
-  lazy val siteMapController = wire[SiteMapController]
-  lazy val crosswordPageController = wire[CrosswordPageController]
-  lazy val crosswordSearchController = wire[CrosswordSearchController]
-  lazy val tagIndexController = wire[TagIndexController]
-  lazy val embedController = wire[EmbedController]
-  lazy val AtomPageController = wire[AtomPageController]
-  lazy val preferencesController = wire[PreferencesController]
-  lazy val optInController = wire[OptInController]
-  lazy val newspaperController = wire[NewspaperController]
-  lazy val quizController = wire[QuizController]
-  lazy val allIndexController = wire[AllIndexController]
-  lazy val latestIndexController = wire[LatestIndexController]
-  lazy val galleryController = wire[GalleryController]
-  lazy val imageContentController = wire[ImageContentController]
-  lazy val mediaController = wire[MediaController]
-  lazy val interactiveController = wire[InteractiveController]
-  lazy val shortUrlsController = wire[ShortUrlsController]
-  lazy val indexController = wire[IndexController]
-  lazy val siteVerificationController = wire[SiteVerificationController]
-  lazy val youtubeController = wire[YoutubeController]
-  lazy val nx1ConfigController = wire[Nx1ConfigController]
+  lazy val remoteRender: DotcomRenderingService = wire[renderers.DotcomRenderingService]
+  lazy val siteMapController: SiteMapController = wire[SiteMapController]
+  lazy val crosswordPageController: CrosswordPageController = wire[CrosswordPageController]
+  lazy val crosswordSearchController: CrosswordSearchController = wire[CrosswordSearchController]
+  lazy val tagIndexController: TagIndexController = wire[TagIndexController]
+  lazy val embedController: EmbedController = wire[EmbedController]
+  lazy val AtomPageController: AtomPageController = wire[AtomPageController]
+  lazy val preferencesController: PreferencesController = wire[PreferencesController]
+  lazy val optInController: OptInController = wire[OptInController]
+  lazy val newspaperController: NewspaperController = wire[NewspaperController]
+  lazy val quizController: QuizController = wire[QuizController]
+  lazy val allIndexController: AllIndexController = wire[AllIndexController]
+  lazy val latestIndexController: LatestIndexController = wire[LatestIndexController]
+  lazy val galleryController: GalleryController = wire[GalleryController]
+  lazy val imageContentController: ImageContentController = wire[ImageContentController]
+  lazy val mediaController: MediaController = wire[MediaController]
+  lazy val interactiveController: InteractiveController = wire[InteractiveController]
+  lazy val shortUrlsController: ShortUrlsController = wire[ShortUrlsController]
+  lazy val indexController: IndexController = wire[IndexController]
+  lazy val siteVerificationController: SiteVerificationController = wire[SiteVerificationController]
+  lazy val youtubeController: YoutubeController = wire[YoutubeController]
+  lazy val nx1ConfigController: Nx1ConfigController = wire[Nx1ConfigController]
 
   // A fake geolocation controller to test it locally
-  lazy val geolocationController = wire[FakeGeolocationController]
+  lazy val geolocationController: FakeGeolocationController = wire[FakeGeolocationController]
 }

@@ -49,10 +49,10 @@ object RemoveOuterParaHtml {
 }
 
 case class RowInfo(rowNum: Int, isLast: Boolean = false) {
-  lazy val isFirst = rowNum == 1
-  lazy val isEven = rowNum % 2 == 0
-  lazy val isOdd = !isEven
-  lazy val rowClass = rowNum match {
+  lazy val isFirst: Boolean = rowNum == 1
+  lazy val isEven: Boolean = rowNum % 2 == 0
+  lazy val isOdd: Boolean = !isEven
+  lazy val rowClass: String = rowNum match {
     case 1           => s"first ${_rowClass}"
     case _ if isLast => s"last ${_rowClass}"
     case _           => _rowClass

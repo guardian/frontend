@@ -7,7 +7,7 @@ trait FormComponents {
 
   def messagesApi: MessagesApi
 
-  lazy val profileFormsMapping = wire[ProfileFormsMapping]
+  lazy val profileFormsMapping: ProfileFormsMapping = wire[ProfileFormsMapping]
 
-  lazy val privacyMapping = wire[PrivacyMapping]
+  lazy val privacyMapping: PrivacyMapping = wire[PrivacyMapping]
 }

@@ -31,6 +31,7 @@ import services.OphanApi
 import services.ophan.SurgingContentAgentLifecycle
 
 import scala.concurrent.ExecutionContext
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -46,17 +47,17 @@ trait SportServices {
   implicit val executionContext: ExecutionContext
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val footballClient = wire[FootballClient]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val footballClient: FootballClient = wire[FootballClient]
   lazy val competitionDefinitions = CompetitionsProvider.allCompetitions
-  lazy val competitionsService = wire[CompetitionsService]
-  lazy val cricketPaFeed = wire[PaFeed]
-  lazy val cricketStatsJob = wire[CricketStatsJob]
-  lazy val rugbyClient = wire[PARugbyClient]
-  lazy val rugbyFeed = wire[PARugbyFeed]
-  lazy val rugbyStatsJob = wire[RugbyStatsJob]
-  lazy val capiFeed = wire[CapiFeed]
-  lazy val ophanApi = wire[OphanApi]
+  lazy val competitionsService: CompetitionsService = wire[CompetitionsService]
+  lazy val cricketPaFeed: PaFeed = wire[PaFeed]
+  lazy val cricketStatsJob: CricketStatsJob = wire[CricketStatsJob]
+  lazy val rugbyClient: PARugbyClient = wire[PARugbyClient]
+  lazy val rugbyFeed: PARugbyFeed = wire[PARugbyFeed]
+  lazy val rugbyStatsJob: RugbyStatsJob = wire[RugbyStatsJob]
+  lazy val capiFeed: CapiFeed = wire[CapiFeed]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
 }
 
 trait AppComponents
@@ -66,11 +67,11 @@ trait AppComponents
     with RugbyControllers
     with SportServices {
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
@@ -83,7 +84,7 @@ trait AppComponents
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("sport")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("sport")
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.sport.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters

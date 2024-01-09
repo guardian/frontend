@@ -25,7 +25,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   }
 
   private case class fakePage() extends Page {
-    override val metadata = MetaData.make(
+    override val metadata: MetaData = MetaData.make(
       id = "",
       section = None,
       webTitle = "",

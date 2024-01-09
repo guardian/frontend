@@ -12,29 +12,29 @@ case object Mobile extends Breakpoint {
 }
 
 case object MobileMedium extends Breakpoint {
-  val minWidth = Some(360)
+  val minWidth: Some[Int] = Some(360)
 }
 
 case object MobileLandscape extends Breakpoint {
-  val minWidth = Some(480)
+  val minWidth: Some[Int] = Some(480)
 }
 
 case object Phablet extends Breakpoint {
-  val minWidth = Some(660)
+  val minWidth: Some[Int] = Some(660)
 }
 
 case object Tablet extends Breakpoint {
-  val minWidth = Some(740)
+  val minWidth: Some[Int] = Some(740)
 }
 
 case object Desktop extends Breakpoint {
-  val minWidth = Some(980)
+  val minWidth: Some[Int] = Some(980)
 }
 
 case object LeftCol extends Breakpoint {
-  val minWidth = Some(1140)
+  val minWidth: Some[Int] = Some(1140)
 }
 
 case object Wide extends Breakpoint {
-  val minWidth = Some(1300)
+  val minWidth: Some[Int] = Some(1300)
 }

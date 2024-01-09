@@ -66,11 +66,11 @@ trait LinkTo extends GuLogging {
 
 case class LinkCounts(internal: Int, external: Int) {
   def +(that: LinkCounts): LinkCounts = LinkCounts(this.internal + that.internal, this.external + that.external)
-  lazy val noLinks = internal == 0 && external == 0
+  lazy val noLinks: Boolean = internal == 0 && external == 0
 }
 
 object LinkCounts {
-  val None = LinkCounts(0, 0)
+  val None: LinkCounts = LinkCounts(0, 0)
 }
 
 object LinkTo extends LinkTo {

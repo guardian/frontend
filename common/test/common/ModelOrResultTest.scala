@@ -13,16 +13,17 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import org.scalatest.flatspec.AnyFlatSpec
 
 import scala.concurrent.Future
+import java.time.OffsetDateTime
 
 private object TestModel
 
 class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecutionContext with EitherValues {
 
-  val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+  val offsetDate: OffsetDateTime = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
   implicit val request: RequestHeader = TestRequest()
 
-  val testContent = Content(
+  val testContent: Content = Content(
     id = "the/id",
     sectionId = None,
     sectionName = None,
@@ -33,7 +34,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
     elements = None,
   )
 
-  val articleTag = Tag(
+  val articleTag: Tag = Tag(
     id = "type/article",
     `type` = TagType.Type,
     webTitle = "the title",
@@ -41,16 +42,16 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
     apiUrl = "http://foo.bar",
   )
 
-  val galleryTag = articleTag.copy(id = "type/gallery")
-  val videoTag = articleTag.copy(id = "type/video")
-  val audioTag = articleTag.copy(id = "type/audio")
+  val galleryTag: Tag = articleTag.copy(id = "type/gallery")
+  val videoTag: Tag = articleTag.copy(id = "type/video")
+  val audioTag: Tag = articleTag.copy(id = "type/audio")
 
-  val testArticle = testContent.copy(tags = List(articleTag))
-  val testGallery = testContent.copy(tags = List(galleryTag))
-  val testVideo = testContent.copy(tags = List(videoTag))
-  val testAudio = testContent.copy(tags = List(audioTag))
+  val testArticle: Content = testContent.copy(tags = List(articleTag))
+  val testGallery: Content = testContent.copy(tags = List(galleryTag))
+  val testVideo: Content = testContent.copy(tags = List(videoTag))
+  val testAudio: Content = testContent.copy(tags = List(audioTag))
 
-  val testSection = Section(
+  val testSection: Section = Section(
     id = "water",
     webTitle = "Water",
     webUrl = "http://foo.bar",
@@ -59,7 +60,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
   )
 
   // FML ٩(ఠ益ఠ)۶
-  val stubResponse = ItemResponse.apply(
+  val stubResponse: ItemResponse = ItemResponse.apply(
     status = "ok",
     userTier = "top_tier",
     total = None,

@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 
 trait DiscussionSwitches {
-  val DiscussionAllPageSizeSwitch = Switch(
+  val DiscussionAllPageSizeSwitch: Switch = Switch(
     SwitchGroup.Discussion,
     "discussion-all-page-size",
     "If this is switched on then users will have the option to load all comments",
@@ -13,7 +13,7 @@ trait DiscussionSwitches {
     exposeClientSide = true,
   )
 
-  val DiscussionAllowAnonymousRecommendsSwitch = Switch(
+  val DiscussionAllowAnonymousRecommendsSwitch: Switch = Switch(
     SwitchGroup.Discussion,
     "discussion-allow-anonymous-recommends-switch",
     "if this is switched on, comments can be recommended by signed out users",
@@ -23,7 +23,7 @@ trait DiscussionSwitches {
     exposeClientSide = true,
   )
 
-  val DiscussionFetchExternalAssets = Switch(
+  val DiscussionFetchExternalAssets: Switch = Switch(
     SwitchGroup.Discussion,
     "discussion-fetch-external-assets",
     "if this is switched on, discussion external assets map is fetched regularly",
@@ -33,7 +33,7 @@ trait DiscussionSwitches {
     exposeClientSide = false,
   )
 
-  val RegisterWithPhoneNumber = Switch(
+  val RegisterWithPhoneNumber: Switch = Switch(
     SwitchGroup.Discussion,
     "register-with-phone",
     "When ON, new registering users will be required to provide a mobile number",
@@ -43,7 +43,7 @@ trait DiscussionSwitches {
     exposeClientSide = true,
   )
 
-  val EnableDiscussionSwitch = Switch(
+  val EnableDiscussionSwitch: Switch = Switch(
     SwitchGroup.Discussion,
     "enable-discussion-switch",
     "When OFF, no requests will be possible from dotcom to DAPI and the comment UI will be removed",

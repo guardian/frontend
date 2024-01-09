@@ -15,18 +15,19 @@ trait CommercialControllers {
   def jobsAgent: JobsAgent
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
-  lazy val contentApiOffersController = wire[ContentApiOffersController]
-  lazy val creativeTestPage = wire[CreativeTestPage]
-  lazy val hostedContentController = wire[HostedContentController]
-  lazy val jobsController = wire[JobsController]
-  lazy val multi = wire[Multi]
-  lazy val travelOffersController = wire[TravelOffersController]
-  lazy val trafficDriverController = wire[TrafficDriverController]
-  lazy val piggybackPixelController = wire[PiggybackPixelController]
-  lazy val cmpDataController = wire[CmpDataController]
-  lazy val adsDotTextFileController = wire[AdsDotTextViewController]
-  lazy val prebidAnalyticsController = wire[PrebidAnalyticsController]
-  lazy val passbackController = wire[PassbackController]
-  lazy val ampIframeHtmlController = wire[AmpIframeHtmlController]
-  lazy val nonRefreshableLineItemsController = wire[nonRefreshableLineItemsController]
+  lazy val contentApiOffersController: ContentApiOffersController = wire[ContentApiOffersController]
+  lazy val creativeTestPage: CreativeTestPage = wire[CreativeTestPage]
+  lazy val hostedContentController: HostedContentController = wire[HostedContentController]
+  lazy val jobsController: JobsController = wire[JobsController]
+  lazy val multi: Multi = wire[Multi]
+  lazy val travelOffersController: TravelOffersController = wire[TravelOffersController]
+  lazy val trafficDriverController: TrafficDriverController = wire[TrafficDriverController]
+  lazy val piggybackPixelController: PiggybackPixelController = wire[PiggybackPixelController]
+  lazy val cmpDataController: CmpDataController = wire[CmpDataController]
+  lazy val adsDotTextFileController: AdsDotTextViewController = wire[AdsDotTextViewController]
+  lazy val prebidAnalyticsController: PrebidAnalyticsController = wire[PrebidAnalyticsController]
+  lazy val passbackController: PassbackController = wire[PassbackController]
+  lazy val ampIframeHtmlController: AmpIframeHtmlController = wire[AmpIframeHtmlController]
+  lazy val nonRefreshableLineItemsController: nonRefreshableLineItemsController =
+    wire[nonRefreshableLineItemsController]
 }

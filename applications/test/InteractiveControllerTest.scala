@@ -44,7 +44,7 @@ class DCRFake() extends renderers.DotcomRenderingService {
     new DCRFake(),
   )
 
-  val getWebWorkerPath = PrivateMethod[String](Symbol("getWebWorkerPath"))
+  val getWebWorkerPath: PrivateMethod[String] = PrivateMethod[String](Symbol("getWebWorkerPath"))
 
   "Interactive Controller" should "200 when content type is 'interactive'" in {
     val result = interactiveController.renderInteractive(url)(TestRequest(url))

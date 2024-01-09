@@ -5,9 +5,9 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class TagIndexPageTest extends AnyFlatSpec with Matchers with ResourcesHelper {
-  val fixture = slurpJsonOrDie[TagIndex]("c.json")
+  val fixture: TagIndex = slurpJsonOrDie[TagIndex]("c.json")
 
-  val cuba = TagDefinition(
+  val cuba: TagDefinition = TagDefinition(
     "Cuba",
     "travel/cuba",
     Some(
@@ -19,7 +19,7 @@ class TagIndexPageTest extends AnyFlatSpec with Matchers with ResourcesHelper {
     false,
   )
 
-  val crownProsecutionService = TagDefinition(
+  val crownProsecutionService: TagDefinition = TagDefinition(
     "Crown Prosecution Service",
     "law/crown-prosecution-service",
     None,

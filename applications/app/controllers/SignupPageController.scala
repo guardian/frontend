@@ -32,7 +32,7 @@ class SignupPageController(
     with GuLogging {
 
   val defaultCacheDuration: Duration = 15.minutes
-  val remoteRenderer = DotcomRenderingService()
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   private def localRenderNewslettersPage()(implicit
       request: RequestHeader,

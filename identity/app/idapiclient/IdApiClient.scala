@@ -9,6 +9,7 @@ import idapiclient.parser.IdApiJsonBodyParser
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{AutoSignInToken, DeletionBody}
+import net.liftweb.json.Formats
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
@@ -22,7 +23,7 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
 
   import idJsonBodyParser.{extractUnit, extract, jsonField}
 
-  private implicit val formats = idJsonBodyParser.formats
+  private implicit val formats: Formats = idJsonBodyParser.formats
 
   private def extractUser: (Response[HttpResponse]) => Response[User] = extract(jsonField("user"))
 

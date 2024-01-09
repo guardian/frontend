@@ -32,27 +32,25 @@ case class DotcomBlocksRenderingDataModel(
 
 object DotcomBlocksRenderingDataModel {
 
-  implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val pageElementWrites: Writes[PageElement] = PageElement.pageElementWrites
 
-  implicit val writes = new Writes[DotcomBlocksRenderingDataModel] {
-    def writes(model: DotcomBlocksRenderingDataModel) = {
-      val obj = Json.obj(
-        "blocks" -> model.blocks,
-        "format" -> model.format,
-        "pageId" -> model.pageId,
-        "webTitle" -> model.webTitle,
-        "ajaxUrl" -> model.ajaxUrl,
-        "isAdFreeUser" -> model.isAdFreeUser,
-        "isSensitive" -> model.isSensitive,
-        "edition" -> model.edition,
-        "section" -> model.section,
-        "sharedAdTargeting" -> Json.toJson(model.sharedAdTargeting),
-        "adUnit" -> model.adUnit,
-        "switches" -> model.switches,
-      )
+  implicit val writes: Writes[DotcomBlocksRenderingDataModel] = (model: DotcomBlocksRenderingDataModel) => {
+    val obj = Json.obj(
+      "blocks" -> model.blocks,
+      "format" -> model.format,
+      "pageId" -> model.pageId,
+      "webTitle" -> model.webTitle,
+      "ajaxUrl" -> model.ajaxUrl,
+      "isAdFreeUser" -> model.isAdFreeUser,
+      "isSensitive" -> model.isSensitive,
+      "edition" -> model.edition,
+      "section" -> model.section,
+      "sharedAdTargeting" -> Json.toJson(model.sharedAdTargeting),
+      "adUnit" -> model.adUnit,
+      "switches" -> model.switches,
+    )
 
-      ElementsEnhancer.enhanceBlocks(obj)
-    }
+    ElementsEnhancer.enhanceBlocks(obj)
   }
 
   def toJson(model: DotcomBlocksRenderingDataModel): String = {

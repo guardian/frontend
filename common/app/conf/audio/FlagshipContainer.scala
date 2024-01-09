@@ -6,7 +6,7 @@ import java.time.{Duration, ZonedDateTime, ZoneId, DayOfWeek}
 
 trait FlagshipContainer {
 
-  val londonTimezone = ZoneId.of("Europe/London")
+  val londonTimezone: ZoneId = ZoneId.of("Europe/London")
 
   //The container should appear at 03:15 on Monday, and disappear at 03:15 on Saturday
   private val threeHoursFifteenMinutes = Duration.ofHours(3) plus Duration.ofMinutes(15)

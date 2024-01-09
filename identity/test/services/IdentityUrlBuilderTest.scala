@@ -8,8 +8,8 @@ import org.scalatestplus.mockito.MockitoSugar
 import test.WithTestIdConfig
 
 class IdentityUrlBuilderTest extends PathAnyFreeSpec with Matchers with MockitoSugar with WithTestIdConfig {
-  val idRequest = mock[IdentityRequest]
-  val omnitureTracking = mock[TrackingData]
+  val idRequest: IdentityRequest = mock[IdentityRequest]
+  val omnitureTracking: TrackingData = mock[TrackingData]
   when(idRequest.trackingData) thenReturn omnitureTracking
   when(idRequest.returnUrl) thenReturn None
   when(idRequest.groupCode) thenReturn None

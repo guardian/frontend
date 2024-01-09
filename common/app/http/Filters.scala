@@ -150,7 +150,7 @@ class CommonFilters(frontendBuildInfo: FrontendBuildInfo)(implicit
     applicationContext: ApplicationContext,
     executionContext: ExecutionContext,
 ) extends HttpFilters {
-  val filters = Filters.common(frontendBuildInfo)
+  val filters: List[EssentialFilter] = Filters.common(frontendBuildInfo)
 }
 
 class PreloadFilters(implicit
@@ -164,5 +164,5 @@ class PreloadFilters(implicit
 class CommonGzipFilter @Inject() (implicit
     mat: Materializer,
 ) extends HttpFilters {
-  val filters = Seq(new Gzipper)
+  val filters: Seq[Gzipper] = Seq(new Gzipper)
 }

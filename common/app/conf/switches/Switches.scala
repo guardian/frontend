@@ -15,34 +15,34 @@ case object Off extends SwitchState
 
 case class SwitchGroup(name: String, description: Option[String] = None)
 object SwitchGroup {
-  val ABTests = SwitchGroup(
+  val ABTests: SwitchGroup = SwitchGroup(
     "A/B Tests",
     Some(
       "The expiry date of these switches does NOT affect the expiry of the AB tests; " +
         "these switches serve only to quickly enable/disable said tests.",
     ),
   )
-  val Commercial = SwitchGroup("Commercial")
-  val CommercialFeeds = SwitchGroup(
+  val Commercial: SwitchGroup = SwitchGroup("Commercial")
+  val CommercialFeeds: SwitchGroup = SwitchGroup(
     "Commercial: Feeds",
     Some("These switches enable the fetching and parsing of the commercial merchandising components."),
   )
-  val CommercialPrebid = SwitchGroup(
+  val CommercialPrebid: SwitchGroup = SwitchGroup(
     name = "Commercial: Header Bidding",
     description = Some("Features of our Prebid & A9 auction configuration."),
   )
-  val Discussion = SwitchGroup("Discussion")
-  val Facia = SwitchGroup("Facia")
-  val Feature = SwitchGroup("Feature")
-  val Identity = SwitchGroup("Identity")
-  val Journalism = SwitchGroup("Journalism")
-  val Monitoring = SwitchGroup("Monitoring")
-  val Performance = SwitchGroup("Performance")
-  val ServerSideExperiments = SwitchGroup("Server-side Experiments")
-  val Membership = SwitchGroup("Membership")
-  val Newsletters = SwitchGroup("Newsletters")
-  val Privacy = SwitchGroup("Privacy")
-  val TX = SwitchGroup("TX")
+  val Discussion: SwitchGroup = SwitchGroup("Discussion")
+  val Facia: SwitchGroup = SwitchGroup("Facia")
+  val Feature: SwitchGroup = SwitchGroup("Feature")
+  val Identity: SwitchGroup = SwitchGroup("Identity")
+  val Journalism: SwitchGroup = SwitchGroup("Journalism")
+  val Monitoring: SwitchGroup = SwitchGroup("Monitoring")
+  val Performance: SwitchGroup = SwitchGroup("Performance")
+  val ServerSideExperiments: SwitchGroup = SwitchGroup("Server-side Experiments")
+  val Membership: SwitchGroup = SwitchGroup("Membership")
+  val Newsletters: SwitchGroup = SwitchGroup("Newsletters")
+  val Privacy: SwitchGroup = SwitchGroup("Privacy")
+  val TX: SwitchGroup = SwitchGroup("TX")
 }
 
 trait Initializable[T] extends GuLogging {
@@ -80,7 +80,7 @@ case class Switch(
 ) extends Switchable
     with Initializable[Switch] {
 
-  val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
+  val delegate: DefaultSwitch = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
@@ -136,7 +136,7 @@ object Switch {
       exposeClientSide,
     )
 
-  val switches = Box[List[Switch]](Nil)
+  val switches: Box[List[Switch]] = Box[List[Switch]](Nil)
   def allSwitches: Seq[Switch] = switches.get()
 
   case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)

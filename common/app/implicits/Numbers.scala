@@ -7,11 +7,11 @@ trait Numbers {
 
   // yeah I know it might be too long to be an int
   implicit class String2isInt(s: String) {
-    lazy val isInt = s.matches("\\d+")
+    lazy val isInt: Boolean = s.matches("\\d+")
   }
 
   // yep, just a copy of isInt - but I prefer it this way when handling Longs
   implicit class String2isLong(s: String) {
-    lazy val isLong = s.matches("\\d+")
+    lazy val isLong: Boolean = s.matches("\\d+")
   }
 }

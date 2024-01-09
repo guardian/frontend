@@ -11,6 +11,7 @@ import play.filters.csrf.CSRFComponents
 import controllers.AssetsComponents
 import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator, OptionalDevContext}
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
+import play.core.SourceMapper
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
@@ -44,11 +45,11 @@ trait FrontendComponents
 
   lazy val jobScheduler = new JobScheduler(appContext)
   lazy val pekkoAsync = new PekkoAsync(environment, pekkoActorSystem)
-  lazy val appMetrics = ApplicationMetrics()
+  lazy val appMetrics: ApplicationMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration
   lazy val mode = environment.mode
   lazy val optionalDevContext = new OptionalDevContext(devContext)
-  override lazy val sourceMapper = devContext.map(_.sourceMapper)
+  override lazy val sourceMapper: Option[SourceMapper] = devContext.map(_.sourceMapper)
 
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity
@@ -69,7 +70,7 @@ trait LifecycleComponents {
 
 trait HttpFiltersComponent {
   self: BuiltInComponents =>
-  lazy val playApiHttpFilters = new HttpFilters {
+  lazy val playApiHttpFilters: HttpFilters = new HttpFilters {
     override def filters: Seq[EssentialFilter] = self.httpFilters
   }
 }

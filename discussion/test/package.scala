@@ -10,6 +10,8 @@ import scala.concurrent.duration._
 import discussion.api.DiscussionApiLike
 
 import scala.concurrent.ExecutionContext
+import play.api.libs.ws.WSResponse
+import scala.concurrent.Future
 
 object DiscussionApiHttpRecorder extends DefaultHttpRecorder {
   override lazy val baseDir = new File(System.getProperty("user.dir"), "data/discussion")
@@ -22,7 +24,9 @@ class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
 
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
-  override protected def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext) =
+  override protected def GET(url: String, headers: (String, String)*)(implicit
+      executionContext: ExecutionContext,
+  ): Future[WSResponse] =
     DiscussionApiHttpRecorder
       .load(url, Map.empty)(wsClient.url(url).withRequestTimeout(2.seconds).get())(executionContext)
 }

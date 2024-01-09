@@ -198,13 +198,13 @@ case class ContentCard(
     canHaveFloatingSublinks && checks.contains(true)
   }
 
-  val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if (displaySettings.isBoosted) "+" else ""}"
+  val analyticsPrefix: String = s"${cardStyle.toneString} | group-$group${if (displaySettings.isBoosted) "+" else ""}"
 
-  val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
+  val hasInlineSnapHtml: Boolean = snapStuff.exists(_.embedHtml.isDefined)
 
   val isMediaLink = mediaType.nonEmpty
 
-  val hasVideoMainMedia = displayElement match {
+  val hasVideoMainMedia: Boolean = displayElement match {
     case Some(_: InlineVideo) if !isMediaLink            => true
     case Some(_: InlineYouTubeMediaAtom) if !isMediaLink => true
     case _                                               => false

@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 
 case class CommentCount(id: String, count: Int) {
-  lazy val toJson = JsObject(
+  lazy val toJson: JsObject = JsObject(
     Seq(
       "id" -> JsString(id),
       "count" -> JsNumber(count),
@@ -105,7 +105,8 @@ case class Discussion(
 )
 
 object Discussion {
-  lazy val empty = Discussion("", "", "", "", isClosedForComments = false, isClosedForRecommendation = false)
+  lazy val empty: Discussion =
+    Discussion("", "", "", "", isClosedForComments = false, isClosedForRecommendation = false)
 
   def apply(json: JsValue): Discussion =
     Discussion(

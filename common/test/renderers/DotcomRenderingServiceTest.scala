@@ -14,6 +14,8 @@ import org.mockito.Mockito.when
 import scala.concurrent.{Future}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
 
 @DoNotDiscover class DotcomRenderingServiceTest
     extends AnyFlatSpec
@@ -26,10 +28,10 @@ import org.scalatest.flatspec.AnyFlatSpec
     with PrivateMethodTester
     with ScalaFutures {
 
-  val dotcomRenderingService = DotcomRenderingService()
+  val dotcomRenderingService: DotcomRenderingService = DotcomRenderingService()
   val articleUrl = "politics/2021/oct/07/coronavirus-report-warned-of-impact-on-uk-four-years-before-pandemic"
-  val post = PrivateMethod[Future[Result]](Symbol("post"))
-  val request = TestRequest()
+  val post: PrivateMethod[Future[Result]] = PrivateMethod[Future[Result]](Symbol("post"))
+  val request: FakeRequest[AnyContentAsEmpty.type] = TestRequest()
   private val wsMock = mock[WSClient]
   private val wsResponseMock = mock[WSResponse]
   private val wsRequestMock = mock[WSRequest]

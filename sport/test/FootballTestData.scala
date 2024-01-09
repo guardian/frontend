@@ -12,7 +12,7 @@ trait FootballTestData {
 
   def testFootballClient: FootballClient
 
-  lazy val testCompetitionsService = {
+  lazy val testCompetitionsService: CompetitionsService = {
     val service = new CompetitionsService(testFootballClient, FootballTestData.competitions)
     service.loadTestData()
     service
@@ -84,7 +84,7 @@ object FootballTestData {
     None,
   )
 
-  val competitions = Seq(
+  val competitions: Seq[Competition] = Seq(
     Competition(
       "100",
       "/football/premierleague",
@@ -170,7 +170,7 @@ object FootballTestData {
       awayScore: Int,
       date: ZonedDateTime,
       isLive: Boolean,
-  ) =
+  ): MatchDay =
     matchDay.copy(
       id = s"liveMatch $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
@@ -179,7 +179,7 @@ object FootballTestData {
       liveMatch = isLive,
     )
 
-  def fixture(homeName: String, awayName: String, date: ZonedDateTime) =
+  def fixture(homeName: String, awayName: String, date: ZonedDateTime): Fixture =
     _fixture.copy(
       id = s"fixture $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,
@@ -194,7 +194,7 @@ object FootballTestData {
       awayScore: Int,
       date: ZonedDateTime,
       comments: Option[String] = None,
-  ) =
+  ): Result =
     _result.copy(
       id = s"result $homeName $awayName ${date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"))}",
       date = date,

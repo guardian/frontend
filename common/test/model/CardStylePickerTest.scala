@@ -9,7 +9,7 @@ import java.util.UUID
 
 class CardStylePickerTest extends AnyFlatSpec with Matchers {
 
-  def createReportCampaign(campaignId: String) =
+  def createReportCampaign(campaignId: String): Campaign =
     Campaign(
       id = UUID.randomUUID(),
       name = "Campaign",
@@ -21,7 +21,7 @@ class CardStylePickerTest extends AnyFlatSpec with Matchers {
       fields = ReportFields(campaignId),
     )
 
-  val epicCampaign =
+  val epicCampaign: Campaign =
     Campaign(
       id = UUID.randomUUID(),
       name = "Campaign",

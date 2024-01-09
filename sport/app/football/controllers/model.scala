@@ -21,8 +21,8 @@ case class MatchesPage(
     comp: Option[Competition],
 ) extends Football {
 
-  lazy val isLive = days.flatMap(_.competitions.flatMap(_.matches)).exists(_.isLive)
-  lazy val urlBase = comp.map(c => c.url).getOrElse("/football")
+  lazy val isLive: Boolean = days.flatMap(_.competitions.flatMap(_.matches)).exists(_.isLive)
+  lazy val urlBase: String = comp.map(c => c.url).getOrElse("/football")
 }
 
 class FootballPage(

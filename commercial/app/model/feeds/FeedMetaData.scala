@@ -25,5 +25,5 @@ case class TravelOffersFeedMetaData(url: String) extends FeedMetaData {
 
   override def name: String = "travel-offers"
 
-  override val timeout = 10.seconds
+  override val timeout: FiniteDuration = 10.seconds
 }

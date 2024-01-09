@@ -26,6 +26,7 @@ import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
 
 import scala.concurrent.ExecutionContext
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -36,23 +37,23 @@ trait FapiServices {
   implicit val executionContext: ExecutionContext
   def wsClient: WSClient
   def pekkoActorSystem: PekkoActorSystem
-  lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
-  lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
-  lazy val blockingOperations = wire[BlockingOperations]
+  lazy val frontJsonFapiLive: FrontJsonFapiLive = wire[FrontJsonFapiLive]
+  lazy val frontJsonFapiDraft: FrontJsonFapiDraft = wire[FrontJsonFapiDraft]
+  lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
 }
 
 trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val ophanApi = wire[OphanApi]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
-  lazy val mostViewedAgent = wire[MostViewedAgent]
-  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val mostViewedAgent: MostViewedAgent = wire[MostViewedAgent]
+  lazy val deeplyReadAgent: DeeplyReadAgent = wire[DeeplyReadAgent]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
@@ -67,9 +68,9 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("facia")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("facia")
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontDecodingLatency,
     FaciaPressMetrics.FrontDownloadLatency,
     FaciaPressMetrics.FrontNotModifiedDownloadLatency,

@@ -9,12 +9,12 @@ import play.twirl.api.Html
 
 package object controllers {
 
-  val componentMaxAge = 15.minutes
+  val componentMaxAge: FiniteDuration = 15.minutes
 
   /*  if a service goes down or an agent becomes unavailable, we don't want each user request to
       hit frontend; allow Fastly to briefly cache Nil results
    */
-  val componentNilMaxAge = 5.seconds
+  val componentNilMaxAge: FiniteDuration = 5.seconds
 
   def segment(implicit request: RequestHeader): Segment = {
     val params = request.queryString

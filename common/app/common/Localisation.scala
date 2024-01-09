@@ -29,18 +29,18 @@ case class Translation(
 object Localisation {
   import Translation._
 
-  val caseInsensitive = Seq(
+  val caseInsensitive: Seq[(String, Seq[Translation])] = Seq(
     ("Film", becomes((Us, "Movies"))),
     ("Football", becomes((Us, "Soccer"))),
   )
 
-  val caseSensitive = Seq(
+  val caseSensitive: Seq[(String, Seq[Translation])] = Seq(
     ("in film", becomes((Us, "in movies"))),
     ("in football", becomes((Us, "in soccer"))),
     ("Football news, match reports and fixtures", becomes((Us, "Soccer news, match reports and fixtures"))),
   )
 
-  val all = (caseInsensitive ++ caseInsensitive.map(toLower) ++ caseSensitive).toMap
+  val all: Map[String, Seq[Translation]] = (caseInsensitive ++ caseInsensitive.map(toLower) ++ caseSensitive).toMap
 
   def localise(word: String, edition: Edition): String = {
     all.get(word) flatMap { translations =>

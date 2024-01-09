@@ -62,14 +62,14 @@ case class NavMenu(
 
 object NavMenu {
 
-  implicit val navlinkWrites = Json.writes[NavLink]
-  implicit val flatSubnavWrites = Json.writes[FlatSubnav]
-  implicit val parentSubnavWrites = Json.writes[ParentSubnav]
-  implicit val subnavWrites = Writes[Subnav] {
+  implicit val navlinkWrites: OWrites[NavLink] = Json.writes[NavLink]
+  implicit val flatSubnavWrites: OWrites[FlatSubnav] = Json.writes[FlatSubnav]
+  implicit val parentSubnavWrites: OWrites[ParentSubnav] = Json.writes[ParentSubnav]
+  implicit val subnavWrites: Writes[Subnav] = Writes[Subnav] {
     case nav: FlatSubnav   => flatSubnavWrites.writes(nav)
     case nav: ParentSubnav => parentSubnavWrites.writes(nav)
   }
-  implicit val writes = Json.writes[NavMenu]
+  implicit val writes: OWrites[NavMenu] = Json.writes[NavMenu]
 
   private[navigation] case class NavRoot(
       children: Seq[NavLink],
@@ -291,5 +291,5 @@ object SimpleMenu {
     SimpleMenu(root.children, root.otherLinks, root.brandExtensions, ReaderRevenueLinks.all)
   }
 
-  implicit val writes = Json.writes[SimpleMenu]
+  implicit val writes: OWrites[SimpleMenu] = Json.writes[SimpleMenu]
 }

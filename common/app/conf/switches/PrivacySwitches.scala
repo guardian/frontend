@@ -6,7 +6,7 @@ import conf.switches.SwitchGroup.Commercial
 
 trait PrivacySwitches {
 
-  val ConsentManagement = Switch(
+  val ConsentManagement: Switch = Switch(
     SwitchGroup.Privacy,
     "consent-management",
     "Enable consent management.",

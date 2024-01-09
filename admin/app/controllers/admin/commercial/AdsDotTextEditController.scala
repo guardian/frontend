@@ -12,7 +12,7 @@ import conf.Configuration.commercial.{adsTextObjectKey, appAdsTextObjectKey}
 case class AdsTextSellers(sellers: String)
 
 object AdsTextSellers {
-  val form = Form(
+  val form: Form[AdsTextSellers] = Form(
     mapping(
       "sellers" -> nonEmptyText,
     )(AdsTextSellers.apply)(AdsTextSellers.unapply),

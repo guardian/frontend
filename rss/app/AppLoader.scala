@@ -28,14 +28,14 @@ trait AppComponents extends FrontendComponents {
 
   // Services
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val sectionsLookUp = wire[SectionsLookUp]
-  lazy val ophanApi = wire[OphanApi]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val sectionsLookUp: SectionsLookUp = wire[SectionsLookUp]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
 
   // Controllers
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val rssController = wire[RssController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val rssController: RssController = wire[RssController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
@@ -49,9 +49,9 @@ trait AppComponents extends FrontendComponents {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("rss")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("rss")
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,

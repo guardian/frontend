@@ -3,7 +3,7 @@ package model
 import com.gu.i18n.CountryGroup
 
 object Countries {
-  val all = CountryGroup.countries.map(_.name)
+  val all: List[String] = CountryGroup.countries.map(_.name)
   def withCustom(maybeCountry: Option[String]): List[String] =
     maybeCountry match {
       case Some(s) if s.isEmpty         => all

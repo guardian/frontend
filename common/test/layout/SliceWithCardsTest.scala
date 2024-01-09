@@ -36,7 +36,7 @@ class SliceWithCardsTest
       isExpired = None,
     )
 
-  lazy val cardFixtures = (1 to NumberOfFixtures) map { n =>
+  lazy val cardFixtures: IndexedSeq[IndexedTrail] = (1 to NumberOfFixtures) map { n =>
     IndexedTrail(FaciaContentConvert.contentToFaciaContent(nthApiContent(n)), n)
   }
 

@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 
 class FaciaPressDeduplicationTest extends AnyFlatSpec with Matchers with FaciaPressDeduplicationTestData {
 
-  var sequence = List(
+  var sequence: List[PressedCollectionVisibility] = List(
     PressedCollectionVisibility(collection0, 0),
     PressedCollectionVisibility(collection1, 0),
     PressedCollectionVisibility(collection2, 0),
@@ -16,7 +16,7 @@ class FaciaPressDeduplicationTest extends AnyFlatSpec with Matchers with FaciaPr
   // Note that the integer (0) passed as second argument of PressedCollectionVisibility.apply is irrelevant. We use
   // it because the current version of PressedCollectionDeduplication.deduplication still takes PressedCollectionVisibility
 
-  val newSequence = PressedCollectionDeduplication.deduplication(sequence)
+  val newSequence: Seq[PressedCollectionVisibility] = PressedCollectionDeduplication.deduplication(sequence)
 
   it should "never remove curated elements" in {
     newSequence(0).pressedCollection.curated.size shouldBe sequence(0).pressedCollection.curated.size

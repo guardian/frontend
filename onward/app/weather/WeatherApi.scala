@@ -97,7 +97,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, pekkoActorSyst
       Json.fromJson[Seq[LocationResponse]](r).get
     })
 
-  def searchForCity(countryCode: String, city: String) =
+  def searchForCity(countryCode: String, city: String): Future[Seq[LocationResponse]] =
     getJson(searchForCityUrl(countryCode, city)).map({ r =>
       Json.fromJson[Seq[LocationResponse]](r).get
     })

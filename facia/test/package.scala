@@ -7,7 +7,7 @@ import services.dotcomrendering.FaciaPickerTest
 object `package` {
 
   implicit class WebElement2rich(element: FluentWebElement) {
-    lazy val href = element.attribute("href")
+    lazy val href: String = element.attribute("href")
 
     def hasAttribute(name: String): Boolean = element.attribute(name) != null
   }

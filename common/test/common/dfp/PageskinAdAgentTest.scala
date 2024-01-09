@@ -11,20 +11,21 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
 import play.api.test.Helpers.GET
+import play.api.mvc.AnyContentAsEmpty
 
 class PageskinAdAgentTest extends AnyFlatSpec with Matchers {
   val keywordParamSet: Set[AdTargetParam] = KeywordParam.fromItemId("sport-keyword").toSet
-  val commercialProperties = CommercialProperties(
+  val commercialProperties: CommercialProperties = CommercialProperties(
     editionBrandings = Set.empty,
     editionAdTargetings = Set(EditionAdTargeting(defaultEdition, Some(keywordParamSet))),
     prebidIndexSites = None,
   )
 
-  val requestAU = FakeRequest(GET, "/au?_edition=au")
-  val requestUS = FakeRequest(GET, "/us?_edition=us")
-  val requestUK = FakeRequest(GET, "/uk?_edition=uk")
-  val requestWithAdTestParam = FakeRequest(GET, "/uk?_edition=uk&adtest=6")
-  val colourSeriesCommercial = CommercialProperties(
+  val requestAU: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "/au?_edition=au")
+  val requestUS: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "/us?_edition=us")
+  val requestUK: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "/uk?_edition=uk")
+  val requestWithAdTestParam: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "/uk?_edition=uk&adtest=6")
+  val colourSeriesCommercial: CommercialProperties = CommercialProperties(
     editionBrandings = Set.empty,
     prebidIndexSites = None,
     editionAdTargetings = Set(
@@ -48,8 +49,8 @@ class PageskinAdAgentTest extends AnyFlatSpec with Matchers {
     ),
   )
 
-  val pressedFrontMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true)
-  val colourSeriesMeta = MetaData.make(
+  val pressedFrontMeta: MetaData = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true)
+  val colourSeriesMeta: MetaData = MetaData.make(
     "",
     None,
     "The title",
@@ -59,11 +60,11 @@ class PageskinAdAgentTest extends AnyFlatSpec with Matchers {
     commercial = Some(colourSeriesCommercial),
   )
 
-  val sportIndexFrontMeta =
+  val sportIndexFrontMeta: MetaData =
     MetaData.make("", None, "The title", None, isFront = true, commercial = Some(commercialProperties))
-  val articleMeta = MetaData.make("", None, "The title", None)
+  val articleMeta: MetaData = MetaData.make("", None, "The title", None)
 
-  val keywordPressedFrontMeta = MetaData.make(
+  val keywordPressedFrontMeta: MetaData = MetaData.make(
     "",
     None,
     "The title",
@@ -73,7 +74,7 @@ class PageskinAdAgentTest extends AnyFlatSpec with Matchers {
     commercial = Some(commercialProperties),
   )
 
-  val examplePageSponsorships = Seq(
+  val examplePageSponsorships: Seq[PageSkinSponsorship] = Seq(
     PageSkinSponsorship(
       "lineItemName",
       1234L,

@@ -4,9 +4,10 @@ import com.gu.identity.model.{LiftJsonConfig, Error => IdApiError}
 import idapiclient.responses.Error
 import net.liftweb.json.JsonAST.JValue
 import utils.SafeLogging
+import net.liftweb.json.Formats
 
 class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {
-  override implicit val formats = LiftJsonConfig.formats + JodaJsonSerializer
+  override implicit val formats: Formats = LiftJsonConfig.formats + JodaJsonSerializer
 
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
     try {

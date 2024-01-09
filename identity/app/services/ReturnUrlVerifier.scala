@@ -13,7 +13,7 @@ class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
   private val returnUrlDomains = List(conf.domain, "theguardian.com", "code.dev-theguardian.com", "thegulocal.com")
   private val validUris = List(new URI("sso.com.theguardian.jobs://ssologoutsuccess"))
 
-  val defaultReturnUrl = "http://www." + conf.domain
+  val defaultReturnUrl: String = "http://www." + conf.domain
 
   def getVerifiedReturnUrl(request: RequestHeader): Option[String] =
     getVerifiedReturnUrl(

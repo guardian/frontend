@@ -11,7 +11,7 @@ import services.RedirectService.{PermanentRedirect => GuardianRedirect}
 import java.io.File
 
 case class PageRedirect(from: String, to: String) {
-  lazy val trim = this.copy(from = from.trim, to = to.trim)
+  lazy val trim: PageRedirect = this.copy(from = from.trim, to = to.trim)
 }
 class RedirectController(
     redirects: RedirectService,
@@ -20,7 +20,9 @@ class RedirectController(
     extends BaseController
     with GuLogging {
 
-  val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
+  val redirectForm: Form[PageRedirect] = Form(
+    mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply),
+  )
 
   def redirect(): Action[AnyContent] =
     Action { implicit request =>

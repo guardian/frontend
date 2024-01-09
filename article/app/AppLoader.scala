@@ -33,6 +33,8 @@ import services.{
   SkimLinksCacheLifeCycle,
 }
 import topics.TopicService
+import app.LifecycleComponent
+import renderers.DotcomRenderingService
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -41,29 +43,29 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait TopicServices {
   lazy val topicS3Client: S3Client[TopicsApiResponse] = new S3ClientImpl(Configuration.aws.topMentionsStoreBucket)
-  lazy val topicService = wire[TopicService]
+  lazy val topicService: TopicService = wire[TopicService]
 }
 
 trait MessageUsServices {
   lazy val messageUsS3Client: S3Client[MessageUsConfigData] = new S3ClientImpl(Configuration.aws.messageUsStoreBucket)
-  lazy val messageUsService = wire[MessageUsService]
+  lazy val messageUsService: MessageUsService = wire[MessageUsService]
 }
 
 trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices with MessageUsServices {
 
-  lazy val newsletterApi = wire[NewsletterApi]
-  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
+  lazy val newsletterApi: NewsletterApi = wire[NewsletterApi]
+  lazy val newsletterSignupAgent: NewsletterSignupAgent = wire[NewsletterSignupAgent]
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val ophanApi = wire[OphanApi]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val remoteRender: DotcomRenderingService = wire[renderers.DotcomRenderingService]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[NewspaperBooksAndSectionsAutoRefresh],
     wire[DfpAgentLifecycle],
@@ -82,9 +84,9 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("article")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("article")
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,

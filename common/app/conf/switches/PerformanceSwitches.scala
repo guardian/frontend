@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 trait PerformanceSwitches {
 
-  val InlineJSStandardOptimisation = Switch(
+  val InlineJSStandardOptimisation: Switch = Switch(
     SwitchGroup.Performance,
     "inline-standard-optimisation",
     "If this switch is on, the inline JS will be compressed using closure compiler's standard optimisation instead of whitespace only",
@@ -16,7 +16,7 @@ trait PerformanceSwitches {
   )
 
   // Performance
-  val LazyLoadContainersSwitch = Switch(
+  val LazyLoadContainersSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "lazy-load-containers",
     "If this switch is on, containers past the 8th will be lazily loaded on mobile and tablet",
@@ -26,7 +26,7 @@ trait PerformanceSwitches {
     exposeClientSide = true,
   )
 
-  val LongCacheSwitch = Switch(
+  val LongCacheSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "long-cache-switch",
     "If this switch is on then content will get a longer cache time",
@@ -36,7 +36,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val PanicShedding = Switch(
+  val PanicShedding: Switch = Switch(
     SwitchGroup.Performance,
     "panic-shedding",
     "If this switch is on then all apps will return 304 Not Modified to all requests with an If-None-Match header (aka 'serve stale whenever possible')",
@@ -46,7 +46,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val interactivePressing = Switch(
+  val interactivePressing: Switch = Switch(
     SwitchGroup.Performance,
     "interactive-pressing",
     "If this switch is switched on then immersive interactives that are supplied as markup in Composer will be pressed into the page",
@@ -56,7 +56,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val CircuitBreakerSwitch = Switch(
+  val CircuitBreakerSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
@@ -66,7 +66,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val AutoRefreshSwitch = Switch(
+  val AutoRefreshSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
@@ -76,7 +76,7 @@ trait PerformanceSwitches {
     exposeClientSide = true,
   )
 
-  val RelatedContentSwitch = Switch(
+  val RelatedContentSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
@@ -86,7 +86,7 @@ trait PerformanceSwitches {
     exposeClientSide = true,
   )
 
-  val RichLinkSwitch = Switch(
+  val RichLinkSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "rich-links",
     "If this switch is turned off then rich links will not be shown. Turn off to help handle exceptional load.",
@@ -96,7 +96,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val InlineCriticalCss = Switch(
+  val InlineCriticalCss: Switch = Switch(
     SwitchGroup.Performance,
     "inline-critical-css",
     "If this switch is on critical CSS will be inlined into the head of the document.",
@@ -106,7 +106,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val AsyncCss = Switch(
+  val AsyncCss: Switch = Switch(
     SwitchGroup.Performance,
     "async-css",
     "If this switch is on CSS will be loaded with media set to 'only x' and updated to 'all' when the stylesheet " +
@@ -117,7 +117,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val PolyfillIO = Switch(
+  val PolyfillIO: Switch = Switch(
     SwitchGroup.Performance,
     "polyfill-io",
     "If this switch is on we will attempt to load polyfills from polyfill.io. If it is off, only our (full, larger) fullback will be loaded.",
@@ -127,7 +127,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val PolyfillIOFallbackMin = Switch(
+  val PolyfillIOFallbackMin: Switch = Switch(
     SwitchGroup.Performance,
     "polyfill-io-fallback-min",
     "If this switch is on we will load intersectionObserver and URL (UrlSearchParams) fallback polyfills from our own servers",
@@ -137,7 +137,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val ShowAllArticleEmbedsSwitch = Switch(
+  val ShowAllArticleEmbedsSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
@@ -147,7 +147,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val ExternalVideoEmbeds = Switch(
+  val ExternalVideoEmbeds: Switch = Switch(
     SwitchGroup.Performance,
     "external-video-embeds",
     "If switched on then we will accept and display external video views",
@@ -157,7 +157,7 @@ trait PerformanceSwitches {
     exposeClientSide = true,
   )
 
-  val DiscussionPageSizeSwitch = Switch(
+  val DiscussionPageSizeSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "discussion-page-size",
     "If this is switched on then users will have the option to change their discussion page size",
@@ -167,7 +167,7 @@ trait PerformanceSwitches {
     exposeClientSide = true,
   )
 
-  val ImageServerSwitch = Switch(
+  val ImageServerSwitch: Switch = Switch(
     SwitchGroup.Performance,
     "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
@@ -177,7 +177,7 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
-  val LazyLoadImages = Switch(
+  val LazyLoadImages: Switch = Switch(
     SwitchGroup.Performance,
     "blink-lazy-load-images",
     "If switched on, explicitly request lazy loading of images on supporting browsers.",

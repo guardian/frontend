@@ -32,19 +32,19 @@ sealed trait ItemKicker {
 }
 
 case object BreakingNewsKicker extends ItemKicker {
-  override val properties = KickerProperties.make(fapiutils.BreakingNewsKicker)
+  override val properties: KickerProperties = KickerProperties.make(fapiutils.BreakingNewsKicker)
 }
 case object LiveKicker extends ItemKicker {
-  override val properties = KickerProperties.make(fapiutils.LiveKicker)
+  override val properties: KickerProperties = KickerProperties.make(fapiutils.LiveKicker)
 }
 case object AnalysisKicker extends ItemKicker {
-  override val properties = KickerProperties.make(fapiutils.AnalysisKicker)
+  override val properties: KickerProperties = KickerProperties.make(fapiutils.AnalysisKicker)
 }
 case object ReviewKicker extends ItemKicker {
-  override val properties = KickerProperties.make(fapiutils.ReviewKicker)
+  override val properties: KickerProperties = KickerProperties.make(fapiutils.ReviewKicker)
 }
 case object CartoonKicker extends ItemKicker {
-  override val properties = KickerProperties.make(fapiutils.CartoonKicker)
+  override val properties: KickerProperties = KickerProperties.make(fapiutils.CartoonKicker)
 }
 
 final case class PodcastKicker(override val properties: KickerProperties, series: Option[Series]) extends ItemKicker

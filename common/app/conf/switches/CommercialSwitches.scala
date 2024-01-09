@@ -7,7 +7,7 @@ import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 
 trait CommercialSwitches {
 
-  val ShouldLoadGoogleTagSwitch = Switch(
+  val ShouldLoadGoogleTagSwitch: Switch = Switch(
     Commercial,
     "should-load-googletag",
     "If this switch is OFF, the commercial bundle won't load the googletag script. This is intended for use as a failsafe, and will disable all forms of advertising that are managed via Google Ad Manager, including Prebid and A9.",
@@ -17,7 +17,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val SurveySwitch = Switch(
+  val SurveySwitch: Switch = Switch(
     Commercial,
     "surveys",
     "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts. Switch OFF if there are no surveys active in GAM",
@@ -27,7 +27,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val ImrWorldwideSwitch = Switch(
+  val ImrWorldwideSwitch: Switch = Switch(
     Commercial,
     "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -37,7 +37,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val InizioSwitch = Switch(
+  val InizioSwitch: Switch = Switch(
     Commercial,
     "inizio",
     "Include the Inizio script on page so that creatives can show a survey.",
@@ -47,7 +47,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val TwitterUwtSwitch = Switch(
+  val TwitterUwtSwitch: Switch = Switch(
     Commercial,
     "twitter-uwt",
     "Include the Twitter universal website tag code.",
@@ -57,7 +57,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val PermutiveSwitch = Switch(
+  val PermutiveSwitch: Switch = Switch(
     Commercial,
     "permutive",
     "Enable Permutive library loading",
@@ -67,7 +67,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val ampAmazon = Switch(
+  val ampAmazon: Switch = Switch(
     Commercial,
     "amp-amazon",
     "Amp inventory is being auctioned through Amazon",
@@ -77,7 +77,7 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val RemarketingSwitch = Switch(
+  val RemarketingSwitch: Switch = Switch(
     Commercial,
     "remarketing",
     "Enable Remarketing tracking",
@@ -223,7 +223,7 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
-  val PrebidPermutiveAudience = Switch(
+  val PrebidPermutiveAudience: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-permutive-audience",
     description = "Enable Permutive’s Audience Connector to run with Prebid",

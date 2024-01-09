@@ -51,12 +51,12 @@ object Topic extends GuLogging {
 object TopicType extends Enumeration {
   type TopicType = Value
 
-  val Org = Value(1, "ORG")
-  val Product = Value(2, "PRODUCT")
-  val Person = Value(3, "PERSON")
-  val Gpe = Value(4, "GPE")
-  val WorkOfArt = Value(5, "WORK_OF_ART")
-  val Loc = Value(6, "LOC")
+  val Org: Value = Value(1, "ORG")
+  val Product: Value = Value(2, "PRODUCT")
+  val Person: Value = Value(3, "PERSON")
+  val Gpe: Value = Value(4, "GPE")
+  val WorkOfArt: Value = Value(5, "WORK_OF_ART")
+  val Loc: Value = Value(6, "LOC")
 
   def withNameOpt(s: String): Option[Value] = values.find(_.toString == s.toUpperCase)
 

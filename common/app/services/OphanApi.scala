@@ -17,13 +17,13 @@ import scala.concurrent.duration.DurationInt
 // Base on this response: https://dashboard.ophan.co.uk/api/mostread
 case class OphanMostReadItem(url: String, count: Int)
 object OphanMostReadItem {
-  implicit val jsonReads = Json.reads[OphanMostReadItem]
+  implicit val jsonReads: Reads[OphanMostReadItem] = Json.reads[OphanMostReadItem]
 }
 
 // Based on this response: https://dashboard.ophan.co.uk/api/deeplyread
 case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
 object OphanDeeplyReadItem {
-  implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
+  implicit val jsonReads: Reads[OphanDeeplyReadItem] = Json.reads[OphanDeeplyReadItem]
 }
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)

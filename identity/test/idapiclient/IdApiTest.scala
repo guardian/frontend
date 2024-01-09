@@ -26,7 +26,7 @@ class IdApiTest
   val jsonParser = new IdApiJsonBodyParser
   val testUserId = "10000001"
 
-  val validCookieResponseJsonString =
+  val validCookieResponseJsonString: String =
     """
       |{
       |    "status": "ok",
@@ -42,7 +42,7 @@ class IdApiTest
       |}
     """.stripMargin
 
-  val errorCookieResponseJsonString =
+  val errorCookieResponseJsonString: String =
     """
       |{
       |    "status": "error",
@@ -55,7 +55,7 @@ class IdApiTest
       |}
     """.stripMargin
 
-  val validUserResponseJsonString =
+  val validUserResponseJsonString: String =
     s"""
       |{
       |    "status": "ok",
@@ -87,15 +87,17 @@ class IdApiTest
       |}
     """.stripMargin
 
-  val errors = List(Error("Invalid email or password", "The email address or password were incorrect", 403))
+  val errors: List[Error] = List(
+    Error("Invalid email or password", "The email address or password were incorrect", 403),
+  )
 
-  val trackingParameters = mock[TrackingData]
+  val trackingParameters: TrackingData = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
   when(trackingParameters.ipAddress).thenReturn(None)
 
-  val wsMock = mock[WSClient]
-  val wsRequestMock = mock[WSRequest]
-  val wsResponseMock = mock[WSResponse]
+  val wsMock: WSClient = mock[WSClient]
+  val wsRequestMock: WSRequest = mock[WSRequest]
+  val wsResponseMock: WSResponse = mock[WSResponse]
 
   when(wsRequestMock.withBody("")).thenReturn(wsRequestMock)
   when(wsRequestMock.withBody("{}")).thenReturn(wsRequestMock)

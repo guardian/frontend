@@ -7,13 +7,11 @@ case class AdSize(width: Int, height: Int)
 
 object AdSize {
 
-  implicit val writes = new Writes[AdSize] {
-    def writes(size: AdSize): JsValue = {
-      Json.obj(
-        "width" -> size.width,
-        "height" -> size.height,
-      )
-    }
+  implicit val writes: Writes[AdSize] = (size: AdSize) => {
+    Json.obj(
+      "width" -> size.width,
+      "height" -> size.height,
+    )
   }
 
   implicit val reads: Reads[AdSize] = (
@@ -21,11 +19,11 @@ object AdSize {
       (JsPath \ "height").read[Int]
   )(AdSize.apply _)
 
-  val invisibleSize = AdSize(1, 1)
+  val invisibleSize: AdSize = AdSize(1, 1)
 
-  val leaderboardSize = AdSize(728, 90)
+  val leaderboardSize: AdSize = AdSize(728, 90)
 
-  val responsiveSize = AdSize(88, 70)
+  val responsiveSize: AdSize = AdSize(88, 70)
 
-  val billboardSize = AdSize(970, 250)
+  val billboardSize: AdSize = AdSize(970, 250)
 }

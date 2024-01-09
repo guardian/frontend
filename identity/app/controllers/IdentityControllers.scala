@@ -19,12 +19,12 @@ trait IdentityControllers extends IdApiComponents with IdentityServices with For
   def csrfCheck: CSRFCheck
   def csrfAddToken: CSRFAddToken
 
-  lazy val authenticatedActions = wire[AuthenticatedActions]
-  lazy val changePasswordController = wire[ChangePasswordController]
-  lazy val publicProfileController = wire[PublicProfileController]
-  lazy val editProfileController = wire[EditProfileController]
-  lazy val emailVerificationController = wire[EmailVerificationController]
-  lazy val formstackController = wire[FormstackController]
-  lazy val emailSignupController = wire[EmailSignupController]
-  lazy val accountDeletionController = wire[AccountDeletionController]
+  lazy val authenticatedActions: AuthenticatedActions = wire[AuthenticatedActions]
+  lazy val changePasswordController: ChangePasswordController = wire[ChangePasswordController]
+  lazy val publicProfileController: PublicProfileController = wire[PublicProfileController]
+  lazy val editProfileController: EditProfileController = wire[EditProfileController]
+  lazy val emailVerificationController: EmailVerificationController = wire[EmailVerificationController]
+  lazy val formstackController: FormstackController = wire[FormstackController]
+  lazy val emailSignupController: EmailSignupController = wire[EmailSignupController]
+  lazy val accountDeletionController: AccountDeletionController = wire[AccountDeletionController]
 }

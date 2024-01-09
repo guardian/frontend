@@ -112,9 +112,9 @@ case class DotcomRenderingDataModel(
 
 object DotcomRenderingDataModel {
 
-  implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val pageElementWrites: Writes[PageElement] = PageElement.pageElementWrites
 
-  implicit val writes = new Writes[DotcomRenderingDataModel] {
+  implicit val writes: Writes[DotcomRenderingDataModel] = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
         "availableTopics" -> model.availableTopics,
@@ -268,7 +268,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       blocks: APIBlocks,
-  ) = {
+  ): DotcomRenderingDataModel = {
 
     val linkedData = LinkedData.forArticle(
       article = mediaPage.media,
@@ -293,7 +293,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       mainBlock: Option[APIBlock],
-  ) = {
+  ): DotcomRenderingDataModel = {
 
     val linkedData = LinkedData.forArticle(
       article = imageContentPage.image,
@@ -318,7 +318,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       blocks: APIBlocks,
-  ) = {
+  ): DotcomRenderingDataModel = {
 
     val linkedData = LinkedData.forArticle(
       article = galleryPage.gallery,

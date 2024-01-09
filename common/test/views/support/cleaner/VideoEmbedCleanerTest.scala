@@ -9,14 +9,14 @@ import org.scalatest.matchers.should.Matchers
 
 class VideoEmbedCleanerTest extends AnyFlatSpec with Matchers {
 
-  val contentApi = ApiContent(
+  val contentApi: ApiContent = ApiContent(
     id = "foo/2012/jan/07/bar",
     webTitle = "Some article",
     webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
     apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
   )
 
-  val article = {
+  val article: Article = {
     val contentApiItem = contentApi
     val content = Content.make(contentApiItem)
     Article.make(content)

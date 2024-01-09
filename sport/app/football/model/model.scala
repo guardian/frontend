@@ -5,6 +5,7 @@ import pa.LeagueTableEntry
 import pa.MatchDayTeam
 import java.awt.Color
 import java.time.LocalDate
+import scala.util.matching.Regex
 
 /**
   * @param tableDividers divides the league table into zones for promotion/relegation, or for qualification to another competition.
@@ -27,19 +28,19 @@ case class Competition(
 ) extends implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
-  lazy val hasLiveMatches = matches.exists(_.isLive)
+  lazy val hasLiveMatches: Boolean = matches.exists(_.isLive)
   lazy val hasResults = results.nonEmpty
-  lazy val hasFixtures = matches.exists(_.isFixture)
+  lazy val hasFixtures: Boolean = matches.exists(_.isFixture)
   lazy val hasLeagueTable = leagueTable.nonEmpty
   lazy val hasTeams = teams.nonEmpty
 
-  lazy val matchDates = matches.map(_.date.toLocalDate).distinct
+  lazy val matchDates: Seq[LocalDate] = matches.map(_.date.toLocalDate).distinct
 
-  lazy val teams = leagueTable.map(_.team).sortBy(_.name)
+  lazy val teams: Seq[LeagueTeam] = leagueTable.map(_.team).sortBy(_.name)
 
   lazy val descriptionFullyLoaded = startDate.isDefined
 
-  lazy val results = matches.filter(_.isResult)
+  lazy val results: Seq[FootballMatch] = matches.filter(_.isResult)
 
   def teamResults(teamId: String): List[PrevResult] = {
     results
@@ -51,7 +52,7 @@ case class Competition(
 case class Group(round: Round, entries: Seq[LeagueTableEntry])
 
 case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolean = false) {
-  lazy val multiGroup = hasGroups || groups.size > 1
+  lazy val multiGroup: Boolean = hasGroups || groups.size > 1
 
   def topOfTableSnippet: Table = {
     val snippet = groups.map(g => g.copy(entries = g.entries.take(4)))
@@ -75,7 +76,7 @@ case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolea
 
 object Table {
 
-  val IsNumber = """(\d+)""".r
+  val IsNumber: Regex = """(\d+)""".r
 
   def apply(competition: Competition): Table = {
     val groups = competition.leagueTable
@@ -107,15 +108,15 @@ object LeagueTableEntryWithForm {
 }
 
 case class PrevResult(date: LocalDate, self: MatchDayTeam, foe: MatchDayTeam, wasHome: Boolean) {
-  val scores = self.score.flatMap { selfScore =>
+  val scores: Option[(Int, Int)] = self.score.flatMap { selfScore =>
     foe.score.map { foeScore =>
       (selfScore, foeScore)
     }
   }
   val hasResult = scores.isDefined
-  val won = scores.exists { case (selfScore, foeScore) => selfScore > foeScore }
-  val drew = scores.exists { case (selfScore, foeScore) => selfScore == foeScore }
-  val lost = scores.exists { case (selfScore, foeScore) => selfScore < foeScore }
+  val won: Boolean = scores.exists { case (selfScore, foeScore) => selfScore > foeScore }
+  val drew: Boolean = scores.exists { case (selfScore, foeScore) => selfScore == foeScore }
+  val lost: Boolean = scores.exists { case (selfScore, foeScore) => selfScore < foeScore }
 }
 object PrevResult {
   def apply(result: FootballMatch, thisTeamId: String): PrevResult = {
@@ -135,12 +136,12 @@ case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
     else awayTeam.teamColour.toLowerCase
 
   lazy val home = homeColour
-  lazy val away =
+  lazy val away: String =
     if (awayColour == "#ffffff" && homeColour == "#ffffff") darken(awayColour)
     else if (awayColour == homeColour) darken(awayColour)
     else awayColour
-  lazy val homeTeamIsLight = isLight(home)
-  lazy val awayTeamIsLight = isLight(away)
+  lazy val homeTeamIsLight: Boolean = isLight(home)
+  lazy val awayTeamIsLight: Boolean = isLight(away)
 
   private def isLight(colourHex: String): Boolean = {
     val colour = Color.decode(colourHex)

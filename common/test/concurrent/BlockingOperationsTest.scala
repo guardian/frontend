@@ -6,7 +6,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class BlockingOperationsTest extends AnyFlatSpec with Matchers with ScalaFutures {
-  val system = PekkoActorSystem()
+  val system: PekkoActorSystem = PekkoActorSystem()
 
   "BlockingOperations" should "execute blocks in a thread pool" in {
     val blockingOperaitons = new BlockingOperations(system)

@@ -2,7 +2,7 @@ package model
 
 object IpsosTags {
 
-  val tags = Map(
+  val tags: Map[String, String] = Map(
     "uk" -> "uk",
     "us" -> "us",
     "au" -> "au",

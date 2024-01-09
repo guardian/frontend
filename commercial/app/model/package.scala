@@ -30,6 +30,6 @@ package object model {
 
   case class Segment(context: Context, userSegments: Seq[String]) {
 
-    val isRepeatVisitor = userSegments contains "repeat"
+    val isRepeatVisitor: Boolean = userSegments contains "repeat"
   }
 }

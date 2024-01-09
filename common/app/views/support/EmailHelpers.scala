@@ -80,8 +80,8 @@ object EmailHelpers {
   }
 
   object Images {
-    val footerG = Static("images/email/grey-g.png")
-    val quote = Static("images/email/quote.png")
-    val play = Static("images/email/icons/play.png")
+    val footerG: String = Static("images/email/grey-g.png")
+    val quote: String = Static("images/email/quote.png")
+    val play: String = Static("images/email/icons/play.png")
   }
 }

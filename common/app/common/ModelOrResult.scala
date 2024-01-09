@@ -6,6 +6,7 @@ import play.api.mvc.{Result, RequestHeader, Results}
 import model._
 import implicits.ItemResponses
 import java.net.URI
+import scala.util.matching.Regex
 
 object ModelOrResult extends Results with GuLogging {
 
@@ -70,7 +71,7 @@ private object ItemOrRedirect extends ItemResponses with GuLogging {
 // this might have ended up at the wrong server if it has a 'funny' url
 object InternalRedirect extends implicits.Requests with GuLogging {
 
-  lazy val ShortUrl = """^(/p/.*)$""".r
+  lazy val ShortUrl: Regex = """^(/p/.*)$""".r
 
   def apply(response: ItemResponse)(implicit request: RequestHeader): Option[Result] =
     contentTypes(response)

@@ -42,7 +42,7 @@ trait WithTestFootballClient {
 
   def wsClient: WSClient
 
-  lazy val testFootballClient = new FootballClient(wsClient) {
+  lazy val testFootballClient: FootballClient = new FootballClient(wsClient) {
     override def GET(url: String): Future[PaResponse] = {
       FootballHttpRecorder
         .load(url.replace(SportConfiguration.pa.footballKey, "apikey")) {

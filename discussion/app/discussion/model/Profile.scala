@@ -14,7 +14,7 @@ case class Profile(
 )
 
 object Profile {
-  lazy val empty = Profile("", "", "", "")
+  lazy val empty: Profile = Profile("", "", "", "")
 
   def apply(json: JsValue): Profile = {
     val profileJson = json \ "userProfile"

@@ -10,5 +10,5 @@ final case class EnrichedContent(
 )
 
 object EnrichedContent {
-  val empty = EnrichedContent(None, None, None)
+  val empty: EnrichedContent = EnrichedContent(None, None, None)
 }

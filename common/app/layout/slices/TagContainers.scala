@@ -12,21 +12,21 @@ object TagContainers {
       case _ => slices(QuarterQuarterQuarterQuarter, TlTlTl, TlTlTl, TlTlTl, TlTlTl, TlTlTl, TlTlTl, TlTlMpu)
     }
 
-  val tagPage = slices(
+  val tagPage: ContainerDefinition = slices(
     HalfQQ,
     QuarterQuarterQuarterQuarter,
     TlTlTl,
     TlTlMpu,
   )
 
-  val contributorTagPage = slices(
+  val contributorTagPage: ContainerDefinition = slices(
     HalfQl4Ql4,
     TlTlTl,
     TlTlTl,
     TlTlMpu,
   )
 
-  val keywordPage = slices(
+  val keywordPage: ContainerDefinition = slices(
     TTT,
     TlTlTl,
     TlTlTl,

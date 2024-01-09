@@ -15,7 +15,7 @@ class PAFeedTest extends AsyncFlatSpec with Matchers {
 
   val feed = new PARugbyFeed(rugbyClient = StubClient)
 
-  val exampleMatch = Match(
+  val exampleMatch: Match = Match(
     date = DateTime.parse("2019-08-29T07:35:00Z"),
     id = "3000315",
     homeTeam = Team(

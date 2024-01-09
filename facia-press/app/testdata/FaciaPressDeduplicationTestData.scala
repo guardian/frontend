@@ -58,7 +58,7 @@ trait FaciaPressDeduplicationTestData {
   // collection1 is used to test that we do not touch curated elements and that we deduplicate backfilled elements
   // We expect: curated of size 2, backfill of size 3
   // -----------------------------------------------------
-  val collection0 = collectionFromCuratedAndBackfilled(
+  val collection0: PressedCollection = collectionFromCuratedAndBackfilled(
     List(
       "link10",
       "link11",
@@ -75,7 +75,7 @@ trait FaciaPressDeduplicationTestData {
   // collection1 is used to test that we do not touch curated elements and that we deduplicate backfilled elements
   // We expect: curated of size 3, backfill of size 1 ("link24")
   // -----------------------------------------------------
-  val collection1 = collectionFromCuratedAndBackfilled(
+  val collection1: PressedCollection = collectionFromCuratedAndBackfilled(
     List(
       "link10",
       "link11",
@@ -94,7 +94,7 @@ trait FaciaPressDeduplicationTestData {
   // collection2 is used to test that we do not touch curated elements and that we deduplicate backfilled elements
   // We expect: curated of size 3, backfill of size 2 ("link25", "link26")
   // -----------------------------------------------------
-  val collection2 = collectionFromCuratedAndBackfilled(
+  val collection2: PressedCollection = collectionFromCuratedAndBackfilled(
     List(
       "link11",
       "link12",
@@ -112,7 +112,7 @@ trait FaciaPressDeduplicationTestData {
   // collection3 is a variation of collection 1
   // collection3 is used to demonstrate that the Most Popular container is not deduplicated
   // -----------------------------------------------------
-  val collection3 = collection1.copy(
+  val collection3: PressedCollection = collection1.copy(
     config = collection1.config.copy(
       collectionType = "news/most-popular",
     ),
@@ -123,7 +123,7 @@ trait FaciaPressDeduplicationTestData {
   // collection4 is used to test that backfills are deduped against curated
   // from the same collection, as well as previous collections.
   // -----------------------------------------------------
-  val collection4 = collectionFromCuratedAndBackfilled(
+  val collection4: PressedCollection = collectionFromCuratedAndBackfilled(
     List(
       "link99",
       "link98",

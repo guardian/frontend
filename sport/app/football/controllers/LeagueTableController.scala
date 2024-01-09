@@ -13,7 +13,7 @@ case class TablesPage(
     filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
     comp: Option[Competition],
 ) {
-  lazy val singleCompetition = tables.size == 1
+  lazy val singleCompetition: Boolean = tables.size == 1
 }
 
 class LeagueTableController(

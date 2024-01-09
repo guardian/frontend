@@ -37,7 +37,7 @@ private case class RealClient(wsClient: WSClient)(implicit context: ExecutionCon
 }
 private case class TestClient(wsClient: WSClient, environment: Environment) extends Client {
 
-  lazy val log = Logger(getClass)
+  lazy val log: Logger = Logger(getClass)
 
   override def GET(urlString: String): Future[Response] = ???
 

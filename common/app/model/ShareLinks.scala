@@ -31,33 +31,33 @@ sealed trait SharePlatform {
 }
 
 object Facebook extends SharePlatform {
-  override val campaign = Some("sfb")
+  override val campaign: Some[String] = Some("sfb")
   override val text = "Facebook"
   override val css = "facebook"
   override val userMessage = "Share on Facebook"
 }
 
 object Messenger extends SharePlatform {
-  override val campaign = Some("sme")
+  override val campaign: Some[String] = Some("sme")
   override val text = "Messenger"
   override val css = "messenger"
   override val userMessage = "Share on Messenger"
 }
 
 object Email extends SharePlatform {
-  override val campaign = Some("sbl")
+  override val campaign: Some[String] = Some("sbl")
   override val text = "Email"
   override val css = "email"
   override val userMessage = "Share via Email"
 }
 object Twitter extends SharePlatform {
-  override val campaign = Some("stw")
+  override val campaign: Some[String] = Some("stw")
   override val text = "Twitter"
   override val css = "twitter"
   override val userMessage = "Share on Twitter"
 }
 object WhatsApp extends SharePlatform {
-  override val campaign = Some("swa")
+  override val campaign: Some[String] = Some("swa")
   override val text = "WhatsApp"
   override val css = "whatsapp"
   override val userMessage = "Share on WhatsApp"
@@ -71,7 +71,7 @@ object LinkedIn extends SharePlatform {
 
 object ShareLinks {
 
-  val defaultShares = List(Facebook, Twitter)
+  val defaultShares: List[SharePlatform] = List(Facebook, Twitter)
 
   private[model] def create(
       platform: SharePlatform,

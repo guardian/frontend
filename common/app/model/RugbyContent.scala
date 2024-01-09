@@ -8,7 +8,7 @@ object RugbyContent {
   val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("YYYY/MM/dd")
   timeFormatter.withZone(ZoneId.of("UTC"))
 
-  val teamNameIds = Map(
+  val teamNameIds: Map[String, String] = Map(
     ("sport/japanrugby", "73710"),
     ("sport/russia-rugby-union-team", "204077"),
     ("sport/australia-rugby-union-team", "73752"),

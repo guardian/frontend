@@ -8,7 +8,7 @@ class StyleCleanerTest extends AnyFlatSpec with Matchers {
 
   def ignoreWhiteSpaces(s: String): String = s.replaceAll("\\s", "")
 
-  lazy val styleCleaner = AttributeCleaner("style")
+  lazy val styleCleaner: AttributeCleaner = AttributeCleaner("style")
 
   it should "remove inline style attribute" in {
     val html: String = <html>

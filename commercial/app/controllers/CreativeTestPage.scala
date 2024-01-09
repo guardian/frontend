@@ -8,19 +8,19 @@ import play.api.mvc._
 case class TestPage(specifiedKeywords: List[String] = Nil) extends model.StandalonePage {
 
   val isNetworkFront: Boolean = false
-  val contentType = if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
+  val contentType: DotcomContentType = if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
   private val webTitle = "Commercial components"
 
-  val allTheKeywords = webTitle :: specifiedKeywords
-  val capitalisedKeywords = allTheKeywords.map(_.capitalize).mkString(",")
-  val lowerCaseKeywords = allTheKeywords.map(_.toLowerCase).mkString(",")
+  val allTheKeywords: List[String] = webTitle :: specifiedKeywords
+  val capitalisedKeywords: String = allTheKeywords.map(_.capitalize).mkString(",")
+  val lowerCaseKeywords: String = allTheKeywords.map(_.toLowerCase).mkString(",")
 
   val newMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(capitalisedKeywords),
     "keywordIds" -> JsString(lowerCaseKeywords),
   )
 
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = "1234567",
     description = None,
     section = Some(SectionId.fromId("Comercial components test page")),

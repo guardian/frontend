@@ -4,9 +4,10 @@ import org.slf4j.spi.LocationAwareLogger
 import org.slf4j.ext.LoggerWrapper
 import org.slf4j.{LoggerFactory, Marker}
 import scala.util.matching.Regex
+import org.slf4j.Logger
 
 trait Logging {
-  val logger = LoggerFactory.getLogger(this.getClass)
+  val logger: Logger = LoggerFactory.getLogger(this.getClass)
 }
 
 class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname: String)

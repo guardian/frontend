@@ -48,5 +48,5 @@ case class ContainerLayoutContext(
 }
 
 object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false)
+  val empty: ContainerLayoutContext = ContainerLayoutContext(Set.empty, hideCutOuts = false)
 }

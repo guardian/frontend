@@ -4,11 +4,11 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class AdSuffixHandlingForFrontsTest extends AnyFlatSpec with Matchers {
-  val NetworkFronts = MetaData.make(id = "", section = None, webTitle = "")
+  val NetworkFronts: MetaData = MetaData.make(id = "", section = None, webTitle = "")
 
-  val SectionFront = MetaData.make(id = "", section = Some(SectionId.fromId("business")), webTitle = "")
+  val SectionFront: MetaData = MetaData.make(id = "", section = Some(SectionId.fromId("business")), webTitle = "")
 
-  val TagFront = MetaData.make(id = "", section = Some(SectionId.fromId("education")), webTitle = "")
+  val TagFront: MetaData = MetaData.make(id = "", section = Some(SectionId.fromId("education")), webTitle = "")
 
   "Editionalised Network Front pages" should "have editions in the ad unit suffix and end with 'front'" in {
     AdSuffixHandlingForFronts.extractAdUnitSuffixFrom("uk", NetworkFronts.sectionId) should equal("uk/front")

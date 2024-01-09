@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 
 class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext)
     extends GuLogging {
-  val DelayBetweenRetries = 100.millis
+  val DelayBetweenRetries: FiniteDuration = 100.millis
   val MaxNumberRetries = 5
   val MaxPageSize = 1000
 

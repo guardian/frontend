@@ -754,12 +754,12 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
   }
 
   case class TestFakeBlocks(numberOfBlocks: Int, numberOfKeyEventsBlocks: Int, sinceBlockId: Option[String]) {
-    val blocksSequence = fakeBlocks(numberOfBlocks, numberOfKeyEventsBlocks).toSeq
+    val blocksSequence: List[BodyBlock] = fakeBlocks(numberOfBlocks, numberOfKeyEventsBlocks).toSeq
 
-    val index = blocksSequence.map(_.id).indexOf(sinceBlockId.getOrElse(""))
-    val minIndex = if (index - 2 > -1) index - 2 else 0
-    val maxIndex = if (index + 2 < blocksSequence.length) index + 3 else blocksSequence.length
-    val blocksType = Blocks(
+    val index: Int = blocksSequence.map(_.id).indexOf(sinceBlockId.getOrElse(""))
+    val minIndex: Int = if (index - 2 > -1) index - 2 else 0
+    val maxIndex: Int = if (index + 2 < blocksSequence.length) index + 3 else blocksSequence.length
+    val blocksType: Blocks = Blocks(
       blocksSequence.length,
       blocksSequence,
       None,

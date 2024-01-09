@@ -9,11 +9,11 @@ import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 
 class RugbyStatsJob(feed: RugbyFeed) extends GuLogging {
-  protected val fixturesAndResultsMatches = Box[Map[String, Match]](Map.empty)
-  protected val matchNavContent = Box[Map[String, MatchNavigation]](Map.empty)
-  protected val pastScoreEvents = Box[Map[String, Seq[ScoreEvent]]](Map.empty)
-  protected val pastMatchesStat = Box[Map[String, MatchStat]](Map.empty)
-  protected val groupTables = Box[Map[Event, Seq[GroupTable]]](Map.empty)
+  protected val fixturesAndResultsMatches: Box[Map[String, Match]] = Box[Map[String, Match]](Map.empty)
+  protected val matchNavContent: Box[Map[String, MatchNavigation]] = Box[Map[String, MatchNavigation]](Map.empty)
+  protected val pastScoreEvents: Box[Map[String, Seq[ScoreEvent]]] = Box[Map[String, Seq[ScoreEvent]]](Map.empty)
+  protected val pastMatchesStat: Box[Map[String, MatchStat]] = Box[Map[String, MatchStat]](Map.empty)
+  protected val groupTables: Box[Map[Event, Seq[GroupTable]]] = Box[Map[Event, Seq[GroupTable]]](Map.empty)
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 

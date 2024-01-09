@@ -16,6 +16,7 @@ import services.ConfigAgentLifecycle
 import router.Routes
 import _root_.commercial.targeting.TargetingLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -25,18 +26,18 @@ class AppLoader extends FrontendApplicationLoader {
 trait AppComponents extends FrontendComponents {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
 
-  lazy val liveFapiFrontPress = wire[LiveFapiFrontPress]
-  lazy val draftFapiFrontPress = wire[DraftFapiFrontPress]
-  lazy val toolPressQueueWorker = wire[ToolPressQueueWorker]
-  lazy val frontPressCron = wire[FrontPressCron]
+  lazy val liveFapiFrontPress: LiveFapiFrontPress = wire[LiveFapiFrontPress]
+  lazy val draftFapiFrontPress: DraftFapiFrontPress = wire[DraftFapiFrontPress]
+  lazy val toolPressQueueWorker: ToolPressQueueWorker = wire[ToolPressQueueWorker]
+  lazy val frontPressCron: FrontPressCron = wire[FrontPressCron]
 
-  lazy val healthCheck = wire[HealthCheck]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
   lazy val applicationController: Application = wire[Application]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[SwitchboardLifecycle],
@@ -47,9 +48,9 @@ trait AppComponents extends FrontendComponents {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("facia-press")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("facia-press")
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontPressCronSuccess,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,

@@ -6,18 +6,18 @@ import model.Competition
 import java.time.temporal.ChronoUnit
 
 trait CompetitionTestData {
-  val now = ZonedDateTime.now()
-  val startOfDay = now.truncatedTo(ChronoUnit.DAYS)
+  val now: ZonedDateTime = ZonedDateTime.now()
+  val startOfDay: ZonedDateTime = now.truncatedTo(ChronoUnit.DAYS)
 
-  val teams = (0 until 16).map { i =>
+  val teams: IndexedSeq[MatchDayTeam] = (0 until 16).map { i =>
     val idStr = i.toString
     MatchDayTeam(idStr, s"Test $idStr", Some(0), Some(0), None, None)
   }
-  val quarterFinals = Round("1", Some("Quarter Final"))
-  val semiFinals = Round("2", Some("Semi-final"))
-  val thirdPlacePlayoff = Round("2", Some("3rd/4th Play-Offs"))
-  val `final` = Round("2", Some("Final"))
-  val knockoutRounds = List(quarterFinals, semiFinals, thirdPlacePlayoff, `final`)
+  val quarterFinals: Round = Round("1", Some("Quarter Final"))
+  val semiFinals: Round = Round("2", Some("Semi-final"))
+  val thirdPlacePlayoff: Round = Round("2", Some("3rd/4th Play-Offs"))
+  val `final`: Round = Round("2", Some("Final"))
+  val knockoutRounds: List[Round] = List(quarterFinals, semiFinals, thirdPlacePlayoff, `final`)
 
   private val _matchDay = MatchDay(
     "1234",
@@ -105,7 +105,7 @@ trait CompetitionTestData {
       awayTeam = awayTeam,
     )
 
-  val pastLeagueMatches = {
+  val pastLeagueMatches: List[Result] = {
     val stage = Stage("1")
     val round = Round("1", Some("League"))
     List(
@@ -116,7 +116,7 @@ trait CompetitionTestData {
       result(now.minusDays(7), stage, round, "1"),
     )
   }
-  val currentLeagueMatches = {
+  val currentLeagueMatches: List[FootballMatch] = {
     val stage = Stage("1")
     val round = Round("1", Some("League"))
     List(
@@ -245,7 +245,7 @@ trait CompetitionTestData {
     )
   }
 
-  val currentMatchesWithoutAnyStage = {
+  val currentMatchesWithoutAnyStage: List[FootballMatch] = {
     val stage = Stage("1")
     val round = Round("1", Some("Cup"))
     val leg = "1"
@@ -302,37 +302,37 @@ trait CompetitionTestData {
   implicit def dateTimeOrdering: Ordering[ZonedDateTime] = Ordering.fromLessThan(_ isBefore _)
 
   // Premier League
-  val league = testCompetition(
+  val league: Competition = testCompetition(
     leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))),
     matches = currentLeagueMatches.sortBy(_.date),
   )
   // FA-cup
-  val tournament = testCompetition(
+  val tournament: Competition = testCompetition(
     leagueTable = Nil,
     matches = currentKnockoutMatches(Stage("1")).sortBy(_.date),
   )
   // Championship league / playoffs
-  val leagueWithPlayoffs = testCompetition(
+  val leagueWithPlayoffs: Competition = testCompetition(
     leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))),
     matches = (pastLeagueMatches ++ futureKnockoutMatches(Stage("2"))).sortBy(_.date),
   )
   // World-cup
-  val groupsThenKnockout = testCompetition(
+  val groupsThenKnockout: Competition = testCompetition(
     leagueTable = groupTables(Stage("1")),
     matches = (pastGroupMatches ++ currentKnockoutMatches(Stage("2"))).sortBy(_.date),
   )
   // Champions' league league
-  val groupsThenKnockoutWithLegs = testCompetition(
+  val groupsThenKnockoutWithLegs: Competition = testCompetition(
     leagueTable = groupTables(Stage("1")),
     matches = (pastGroupMatches ++ currentKnockoutMatchesWithLegs(Stage("2"))).sortBy(_.date),
   )
   // World cup qualifiers
-  val groupStage = testCompetition(
+  val groupStage: Competition = testCompetition(
     leagueTable = groupTables(Stage("1")),
     matches = currentGroupMatches.sortBy(_.date),
   )
   // International friendlies
-  val stageless = testCompetition(
+  val stageless: Competition = testCompetition(
     leagueTable = Nil,
     matches = currentMatchesWithoutAnyStage.sortBy(_.date),
   )

@@ -16,7 +16,7 @@ import com.gu.contentapi.client.model.v1.{
   * This allows us to easily construct such fixtures.
   */
 object FixtureTemplates {
-  val emptyApiContent = ApiContent(
+  val emptyApiContent: ApiContent = ApiContent(
     id = "",
     sectionId = None,
     sectionName = None,
@@ -27,7 +27,7 @@ object FixtureTemplates {
     elements = None,
   )
 
-  val emptyTag = ApiTag(
+  val emptyTag: ApiTag = ApiTag(
     "",
     TagType.Keyword,
     None,
@@ -37,7 +37,7 @@ object FixtureTemplates {
     "",
   )
 
-  val emptyElement = ApiElement(
+  val emptyElement: ApiElement = ApiElement(
     "",
     "",
     ElementType.Text,
@@ -45,7 +45,7 @@ object FixtureTemplates {
     Nil,
   )
 
-  val emptyAsset = ApiAsset(
+  val emptyAsset: ApiAsset = ApiAsset(
     AssetType.Image,
     None,
     None,

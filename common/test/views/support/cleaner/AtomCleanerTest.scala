@@ -26,10 +26,10 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
 
   val image: ImageMedia = ImageMedia.apply(Seq(imageAsset))
 
-  val youTubeAsset =
+  val youTubeAsset: MediaAsset =
     MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)
 
-  val youTubeAtom = Some(
+  val youTubeAtom: Some[Atoms] = Some(
     Atoms(
       quizzes = Nil,
       media = Seq(

@@ -16,7 +16,7 @@ import services.NewsletterData
 class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
 
   val requestedBlogs: Queue[PageWithStoryPackage] = new Queue[PageWithStoryPackage]()
-  val updatedBlocks = ArrayBuffer.empty[Block]
+  val updatedBlocks: ArrayBuffer[Block] = ArrayBuffer.empty[Block]
 
   override def getArticle(
       ws: WSClient,

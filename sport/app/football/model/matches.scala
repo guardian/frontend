@@ -46,7 +46,7 @@ trait MatchesList extends Football with RichList {
       case ((fMatch1, _), (fMatch2, _)) => timeComesFirstInList(fMatch1.date, fMatch2.date)
     }
   }
-  lazy val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
+  lazy val matchDates: List[LocalDate] = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
   // the subset of football matches to display for the given date
   lazy val relevantMatches: List[(FootballMatch, Competition)] = {
     val startDate = date
@@ -57,7 +57,7 @@ trait MatchesList extends Football with RichList {
         eligibleDates.contains(fMatch.date.toLocalDate)
     }
   }
-  def matchesGroupedByDate(implicit request: RequestHeader) = {
+  def matchesGroupedByDate(implicit request: RequestHeader): List[(LocalDate, List[(FootballMatch, Competition)])] = {
     relevantMatches.segmentBy(key = _._1.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate)
   }
   def matchesGroupedByDateAndCompetition(implicit
@@ -115,7 +115,7 @@ trait Results extends MatchesList {
 }
 trait MatchDays extends MatchesList {
   override val baseUrl: String = "/football/live"
-  override val pageType = if (LocalDate.now == date) "live" else "matches"
+  override val pageType: String = if (LocalDate.now == date) "live" else "matches"
   override val daysToDisplay = 1
   override lazy val nextPage: Option[String] = None
   override lazy val previousPage: Option[String] = None
@@ -125,7 +125,7 @@ trait TeamList { val teamId: String }
 trait CompetitionList {
   val competitions: Seq[Competition]
   val competitionId: String
-  lazy val competition = competitions.find(_.id == competitionId)
+  lazy val competition: Option[Competition] = competitions.find(_.id == competitionId)
 }
 
 case class FixturesList(date: LocalDate, competitions: Seq[Competition]) extends Fixtures {
@@ -200,7 +200,7 @@ case class CompetitionMatchDayList(competitions: Seq[Competition], competitionId
 case class CompetitionRoundMatchesList(competitions: Seq[Competition], competition: Competition, round: Round)
     extends MatchDays {
   override val daysToDisplay = 1000
-  override lazy val date = competition.startDate.getOrElse(LocalDate.now)
+  override lazy val date: LocalDate = competition.startDate.getOrElse(LocalDate.now)
   override def filterMatches(fMatch: FootballMatch, matchCompetition: Competition): Boolean =
     competition.id == matchCompetition.id && fMatch.round == round
 }

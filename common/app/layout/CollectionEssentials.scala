@@ -35,5 +35,5 @@ object CollectionEssentials {
       None,
     )
 
-  val empty = CollectionEssentials(Nil, Nil, None, None, None, None)
+  val empty: CollectionEssentials = CollectionEssentials(Nil, Nil, None, None, None, None)
 }

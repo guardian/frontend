@@ -19,6 +19,7 @@ import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
 import router.Routes
 import services.newsletters.NewsletterSignupLifecycle
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   def buildComponents(context: Context): FrontendComponents =
@@ -28,16 +29,16 @@ class AppLoader extends FrontendApplicationLoader {
 trait Controllers extends IdentityControllers {
   self: BuiltInComponents with IdentityConfigurationComponents =>
   def wsClient: WSClient
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
 }
 
 trait AppLifecycleComponents {
   self: FrontendComponents with Controllers =>
 
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[IdentityLifecycle],
     wire[CloudWatchMetricsLifecycle],
@@ -57,7 +58,7 @@ trait AppComponents
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("identity")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("identity")
   override lazy val httpFilters: Seq[EssentialFilter] = wire[IdentityFilters].filters
   override lazy val httpErrorHandler: HttpErrorHandler = wire[IdentityHttpErrorHandler]
 }

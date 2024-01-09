@@ -12,7 +12,7 @@ import services.CollectionConfigWithId
 import model.dotcomrendering.Trail
 
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
-  lazy val displayName = tag.id match {
+  lazy val displayName: String = tag.id match {
     case "commentisfree/commentisfree" => "opinion"
     case _                             => tag.metadata.webTitle
   }
@@ -27,7 +27,7 @@ case class SeriesStoriesDCR(
 )
 
 object SeriesStoriesDCR {
-  implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
+  implicit val seriesStoriesDCRWrites: OWrites[SeriesStoriesDCR] = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
     SeriesStoriesDCR(
       id = series.id,

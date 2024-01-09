@@ -14,7 +14,7 @@ import test.WithTestApplicationContext
     with WithTestApplicationContext
     with BeforeAndAfterAll {
 
-  val emptyFrontJson = FrontJson(
+  val emptyFrontJson: FrontJson = FrontJson(
     collections = List(),
     navSection = None,
     webTitle = None,
@@ -31,7 +31,7 @@ import test.WithTestApplicationContext
     group = None,
   );
 
-  val fronts = ConfigJson(
+  val fronts: ConfigJson = ConfigJson(
     Map(
       "front-1" -> emptyFrontJson.copy(collections = List("abc", "def", "ghi")),
       "front-2" -> emptyFrontJson.copy(collections = List("ghi")),

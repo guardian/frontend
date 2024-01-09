@@ -4,7 +4,7 @@ import java.awt.Color
 
 case class Colour(hexCode: String) {
 
-  val isLight = {
+  val isLight: Boolean = {
     val rgb = Integer.parseInt(hexCode.stripPrefix("#"), 16)
     val c = new Color(rgb)
     // the conversion in java.awt.Color uses HSB colour space, whereas we want HSL here
@@ -15,9 +15,9 @@ case class Colour(hexCode: String) {
     lightness > 0.5
   }
 
-  val isDark = !isLight
+  val isDark: Boolean = !isLight
 }
 
 object Colour {
-  val black = Colour("#000000")
+  val black: Colour = Colour("#000000")
 }

@@ -44,14 +44,14 @@ class CrosswordPageWithContent(content: CrosswordContent) extends ContentPage {
 
 class CrosswordSearchPage extends StandalonePage {
 
-  val metadata = MetaData.make(
+  val metadata: MetaData = MetaData.make(
     id = "crosswords/search",
     section = Some(SectionId.fromId("crosswords")),
     webTitle = "Crosswords search",
   )
 
-  val year = LocalDateTime.now().getYear
-  val searchYears = 1999 to year
+  val year: Int = LocalDateTime.now().getYear
+  val searchYears: Range.Inclusive = 1999 to year
 
   val crosswordTypes: Seq[String] = Seq(
     "quick",

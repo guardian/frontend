@@ -18,7 +18,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
   private val ophanPageViews = new AtomicLong(0L)
   private val googlePageViews = new AtomicLong(0L)
 
-  val ophanConversionRate = GaugeMetric(
+  val ophanConversionRate: GaugeMetric = GaugeMetric(
     name = "ophan-percent-conversion",
     description = "The percentage of raw page views that contain a recorded Ophan page view",
     metricUnit = StandardUnit.Percent,
@@ -27,7 +27,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
     },
   )
 
-  val googleConversionRate = GaugeMetric(
+  val googleConversionRate: GaugeMetric = GaugeMetric(
     name = "google-percent-conversion",
     description = "The percentage of raw page views that contain a recorded Google Analytics page view",
     metricUnit = StandardUnit.Percent,

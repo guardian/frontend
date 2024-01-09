@@ -13,7 +13,7 @@ import views.support.RenderOtherStatus
 import scala.concurrent.Future
 
 case class QuizAnswersPage(inputs: form.Inputs, contentPage: String, quiz: QuizAtom) extends model.StandalonePage {
-  override val metadata = MetaData.make("quiz atom", Some(SectionId.fromId("quizzes")), quiz.title)
+  override val metadata: MetaData = MetaData.make("quiz atom", Some(SectionId.fromId("quizzes")), quiz.title)
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
 

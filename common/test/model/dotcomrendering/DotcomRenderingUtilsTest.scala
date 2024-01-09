@@ -29,13 +29,13 @@ import java.time.ZoneOffset
 
 class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSugar {
 
-  val testContent = mock[ContentType]
-  val testMetadata = mock[MetaData]
-  val testCapiBlocks = mock[Blocks]
-  val relatedContent = mock[RelatedContent]
+  val testContent: ContentType = mock[ContentType]
+  val testMetadata: MetaData = mock[MetaData]
+  val testCapiBlocks: Blocks = mock[Blocks]
+  val relatedContent: RelatedContent = mock[RelatedContent]
   val formatWithArticleDesign = ContentFormat.defaultContentFormat
 
-  val testArticle = {
+  val testArticle: Article = {
     val item = ApiContent(
       id = "foo/2012/jan/07/bar",
       sectionId = None,
@@ -190,7 +190,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     result.map(_.id) should equal(Seq("6", "7", "8"))
   }
 
-  def getLiveblogPageWithBlockIds(pageBlokIds: Seq[Int]) = {
+  def getLiveblogPageWithBlockIds(pageBlokIds: Seq[Int]): LiveBlogPage = {
     val liveblogBlocks = pageBlokIds.map(id => getBodyBlockWithId(id))
     val liveblogCurrentPage = LiveBlogCurrentPage(
       currentPage = FirstPage(liveblogBlocks, filterKeyEvents = true, topicResult = None),
@@ -206,7 +206,11 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     )
   }
 
-  def getRequestedBlocks(keyEvents: Seq[Int], summaries: Seq[Int], latest60: Seq[Int] = Seq.empty) = {
+  def getRequestedBlocks(
+      keyEvents: Seq[Int],
+      summaries: Seq[Int],
+      latest60: Seq[Int] = Seq.empty,
+  ): Map[String, Seq[Block]] = {
     val offsetDate = jodaToJavaInstant(DateTime.now).atOffset(ZoneOffset.UTC)
     val keyEventBlocks =
       keyEvents.toSeq.map(digit => getApiBlockWithId(digit, offsetDate.plusMinutes(digit).toCapiDateTime))
@@ -222,7 +226,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     requested
   }
 
-  def getApiBlockWithId(id: Int, publishDate: CapiDateTime) = {
+  def getApiBlockWithId(id: Int, publishDate: CapiDateTime): Block = {
     Block(
       id = id.toString,
       bodyHtml = "",

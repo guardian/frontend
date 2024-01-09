@@ -22,12 +22,12 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   implicit val executionContext: ExecutionContext
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
 
-  lazy val returnUrlVerifier = wire[ReturnUrlVerifier]
-  lazy val idRequestParser = wire[IdRequestParser]
-  lazy val identityUrlBuilder = wire[IdentityUrlBuilder]
-  lazy val playSigninService = wire[PlaySigninService]
+  lazy val returnUrlVerifier: ReturnUrlVerifier = wire[ReturnUrlVerifier]
+  lazy val idRequestParser: IdRequestParser = wire[IdRequestParser]
+  lazy val identityUrlBuilder: IdentityUrlBuilder = wire[IdentityUrlBuilder]
+  lazy val playSigninService: PlaySigninService = wire[PlaySigninService]
   lazy val identityAuthService: IdentityPlayAuthService = {
     val blockingThreads = 30
 
@@ -44,12 +44,12 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   }
   lazy val identityCookieService: IdentityCookieService =
     IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
-  lazy val authenticationService = wire[AuthenticationService]
-  lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
-  lazy val emailService = wire[NewsletterService]
-  lazy val mdapiService = wire[MembersDataApiService]
-  lazy val discussionApiService = wire[DiscussionApiService]
-  lazy val discussionClient = wire[DiscussionClient]
-  lazy val newsletterApi = wire[NewsletterApi]
-  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
+  lazy val authenticationService: AuthenticationService = wire[AuthenticationService]
+  lazy val torNodeLoggingIdRequestParser: TorNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
+  lazy val emailService: NewsletterService = wire[NewsletterService]
+  lazy val mdapiService: MembersDataApiService = wire[MembersDataApiService]
+  lazy val discussionApiService: DiscussionApiService = wire[DiscussionApiService]
+  lazy val discussionClient: DiscussionClient = wire[DiscussionClient]
+  lazy val newsletterApi: NewsletterApi = wire[NewsletterApi]
+  lazy val newsletterSignupAgent: NewsletterSignupAgent = wire[NewsletterSignupAgent]
 }

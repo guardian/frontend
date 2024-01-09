@@ -17,7 +17,7 @@ object FootballNavigation {
     "/football/serieafootball",
   )
 
-  val defaultNav = Seq(
+  val defaultNav: Seq[Link] = Seq(
     Link("/football/tables", "tables", "Tables"),
     Link("/football/live", "livescores", "Live scores"),
     Link("/football/fixtures", "fixtures", "Fixtures"),

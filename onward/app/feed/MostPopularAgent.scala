@@ -18,7 +18,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   // Container for most_shared and most_commented
-  val mostSingleCardsBox = Box[Map[String, Content]](Map.empty)
+  val mostSingleCardsBox: Box[Map[String, Content]] = Box[Map[String, Content]](Map.empty)
 
   // Helper case class to read from the most/comments discussion API call.
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
@@ -26,7 +26,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   }
 
   private object MostDiscussedItem {
-    implicit val format = Json.format[MostDiscussedItem]
+    implicit val format: OFormat[MostDiscussedItem] = Json.format[MostDiscussedItem]
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String, Content]] = {

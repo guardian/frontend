@@ -45,9 +45,9 @@ trait PreviewLifecycleComponents
 
   //Override conflicting members
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  override lazy val contentApiClient = wire[ContentApiClient]
-  override lazy val ophanApi = wire[OphanApi]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  override lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  override lazy val ophanApi: OphanApi = wire[OphanApi]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
   def standaloneLifecycleComponents: List[LifecycleComponent] =
     List(
@@ -87,13 +87,13 @@ trait PreviewControllerComponents
   def wsClient: WSClient
   def frontJsonFapiDraft: FrontJsonFapiDraft
 
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val emailSignupController = wire[EmailSignupController]
-  lazy val faciaDraftController = wire[FaciaDraftController]
-  lazy val faviconController = wire[FaviconController]
-  lazy val itemController = wire[ItemController]
-  lazy val oAuthLoginController = wire[OAuthLoginPreviewController]
-  lazy val mostViewedAgent = wire[MostViewedAgent]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val emailSignupController: EmailSignupController = wire[EmailSignupController]
+  lazy val faciaDraftController: FaciaDraftController = wire[FaciaDraftController]
+  lazy val faviconController: FaviconController = wire[FaviconController]
+  lazy val itemController: ItemController = wire[ItemController]
+  lazy val oAuthLoginController: OAuthLoginPreviewController = wire[OAuthLoginPreviewController]
+  lazy val mostViewedAgent: MostViewedAgent = wire[MostViewedAgent]
 }
 
 trait AppComponents
@@ -106,10 +106,10 @@ trait AppComponents
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) {
     override val signer = Some(PreviewSigner())
   }
-  override lazy val contentApiClient = wire[PreviewContentApi]
-  override lazy val ophanApi = wire[OphanApi]
+  override lazy val contentApiClient: PreviewContentApi = wire[PreviewContentApi]
+  override lazy val ophanApi: OphanApi = wire[OphanApi]
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
@@ -118,8 +118,8 @@ trait AppComponents
     DCRMetrics.DCRRequestCountMetric,
   )
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val responsiveViewerController = wire[ResponsiveViewerController]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val responsiveViewerController: ResponsiveViewerController = wire[ResponsiveViewerController]
 
   lazy val router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("preview")

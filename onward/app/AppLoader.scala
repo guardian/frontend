@@ -26,6 +26,7 @@ import _root_.commercial.targeting.TargetingLifecycle
 import scala.concurrent.ExecutionContext
 import agents.DeeplyReadAgent
 import renderers.DotcomRenderingService
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -39,30 +40,30 @@ trait OnwardServices {
   implicit def appContext: ApplicationContext
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val ophanApi = wire[OphanApi]
-  lazy val stocksData = wire[StocksData]
-  lazy val weatherApi = wire[WeatherApi]
-  lazy val geoMostPopularAgent = wire[GeoMostPopularAgent]
-  lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
-  lazy val mostPopularAgent = wire[MostPopularAgent]
-  lazy val mostReadAgent = wire[MostReadAgent]
-  lazy val mostPopularSocialAutoRefresh = wire[MostPopularSocialAutoRefresh]
-  lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
-  lazy val mostViewedGalleryAgent = wire[MostViewedGalleryAgent]
-  lazy val mostViewedVideoAgent = wire[MostViewedVideoAgent]
-  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
-  lazy val remoteRenderer = wire[DotcomRenderingService]
-  lazy val popularInTagService = wire[PopularInTagService]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
+  lazy val stocksData: StocksData = wire[StocksData]
+  lazy val weatherApi: WeatherApi = wire[WeatherApi]
+  lazy val geoMostPopularAgent: GeoMostPopularAgent = wire[GeoMostPopularAgent]
+  lazy val dayMostPopularAgent: DayMostPopularAgent = wire[DayMostPopularAgent]
+  lazy val mostPopularAgent: MostPopularAgent = wire[MostPopularAgent]
+  lazy val mostReadAgent: MostReadAgent = wire[MostReadAgent]
+  lazy val mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh = wire[MostPopularSocialAutoRefresh]
+  lazy val mostViewedAudioAgent: MostViewedAudioAgent = wire[MostViewedAudioAgent]
+  lazy val mostViewedGalleryAgent: MostViewedGalleryAgent = wire[MostViewedGalleryAgent]
+  lazy val mostViewedVideoAgent: MostViewedVideoAgent = wire[MostViewedVideoAgent]
+  lazy val deeplyReadAgent: DeeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val remoteRenderer: DotcomRenderingService = wire[DotcomRenderingService]
+  lazy val popularInTagService: PopularInTagService = wire[PopularInTagService]
 }
 
 trait AppComponents extends FrontendComponents with OnwardControllers with OnwardServices {
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[OnwardJourneyLifecycle],
     wire[CloudWatchMetricsLifecycle],
@@ -75,9 +76,9 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("onward")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("onward")
 
-  val applicationMetrics = ApplicationMetrics(
+  val applicationMetrics: ApplicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
     ContentApiMetrics.ContentApiRequestsMetric,

@@ -17,8 +17,8 @@ import java.time.format.DateTimeFormatter
 import scala.concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
-  lazy val matchStarted = theMatch.isLive || theMatch.isResult
-  lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
+  lazy val matchStarted: Boolean = theMatch.isLive || theMatch.isResult
+  lazy val hasLineUp: Boolean = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
   def teamHasStats(team: LineUpTeam): Boolean =
     (team.offsides, team.shotsOn, team.shotsOff, team.fouls) match {
@@ -41,7 +41,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
       ),
     ),
   )
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = id,
     section = Some(SectionId.fromId("football")),
     webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score
@@ -81,7 +81,7 @@ case class TeamAnswer(
 case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
 
 object NsAnswer {
-  val reportedEventTypes = List("booking", "dismissal", "substitution")
+  val reportedEventTypes: List[String] = List("booking", "dismissal", "substitution")
 
   def makePlayers(team: LineUpTeam): Seq[PlayerAnswer] = {
     team.players.map { player =>

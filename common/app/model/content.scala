@@ -76,13 +76,13 @@ final case class Content(
   lazy val keywordTags: Seq[Tag] = tags.keywords.filter(tag => !tag.isSectionTag)
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
-  lazy val discussionId = Some(shortUrlId)
-  lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
-  lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
-  lazy val isColumn = fields.displayHint.contains("column")
-  lazy val isNumberedList = fields.displayHint.contains("numberedList")
-  lazy val isSplash = fields.displayHint.contains("column") || fields.displayHint.contains("numberedList")
-  lazy val isImmersive =
+  lazy val discussionId: Some[String] = Some(shortUrlId)
+  lazy val isGallery: Boolean = metadata.contentType.contains(DotcomContentType.Gallery)
+  lazy val isPhotoEssay: Boolean = fields.displayHint.contains("photoEssay")
+  lazy val isColumn: Boolean = fields.displayHint.contains("column")
+  lazy val isNumberedList: Boolean = fields.displayHint.contains("numberedList")
+  lazy val isSplash: Boolean = fields.displayHint.contains("column") || fields.displayHint.contains("numberedList")
+  lazy val isImmersive: Boolean =
     fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists { tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] =
@@ -182,7 +182,7 @@ final case class Content(
       .toInt // Assume image resizing maintains aspect ratio to calculate height
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
-  lazy val twitterCardImage = {
+  lazy val twitterCardImage: String = {
     val profile = OpenGraphImage.forCategory(shareImageCategory, TwitterShareImageLogoOverlay.isSwitchedOn)
     ImgSrc(openGraphImageOrFallbackUrl, profile)
   }
@@ -594,7 +594,7 @@ object Article {
 final case class Article(override val content: Content, lightboxProperties: GenericLightboxProperties)
     extends ContentType {
 
-  val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
+  val lightbox: GenericLightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
@@ -831,7 +831,7 @@ object Gallery {
 final case class Gallery(override val content: Content, lightboxProperties: GalleryLightboxProperties)
     extends ContentType {
 
-  val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
+  val lightbox: GalleryLightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
 
   def apply(index: Int): ImageAsset = lightbox.galleryImages(index).images.largestImage.get
 }
@@ -863,9 +863,9 @@ case class GalleryLightbox(
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
   val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))
   val size = galleryImages.size
-  val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
-  val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
-  val isInPicturesSeries = tags.tags.exists(_.id == "lifeandstyle/series/in-pictures")
+  val landscapes: Seq[ImageAsset] = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
+  val portraits: Seq[ImageAsset] = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
+  val isInPicturesSeries: Boolean = tags.tags.exists(_.id == "lifeandstyle/series/in-pictures")
   lazy val containsAffiliateableLinks: Boolean =
     largestCrops.flatMap(_.caption.map(AffiliateLinksCleaner.stringContainsAffiliateableLinks)).contains(true)
 
@@ -914,14 +914,15 @@ case class GenericLightbox(
     trail: Trail,
     properties: GenericLightboxProperties,
 ) {
-  lazy val mainFiltered = elements.mainPicture
+  lazy val mainFiltered: Seq[ImageElement] = elements.mainPicture
     .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth)
     .toSeq
   lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(
     _.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth,
   )
 
-  val lightboxImages = if (properties.includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
+  val lightboxImages: Seq[ImageElement] =
+    if (properties.includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
 
   lazy val isMainMediaLightboxable = mainFiltered.nonEmpty
 
@@ -959,7 +960,7 @@ case class GenericLightbox(
 
 final case class Interactive(override val content: Content, maybeBody: Option[String]) extends ContentType {
 
-  lazy val fallbackEl = {
+  lazy val fallbackEl: String = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
 
     if (noscriptEls.asScala.nonEmpty) {
@@ -969,7 +970,8 @@ final case class Interactive(override val content: Content, maybeBody: Option[St
     }
   }
 
-  lazy val figureEl = maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
+  lazy val figureEl: Option[String] =
+    maybeBody.map(Jsoup.parseBodyFragment(_).getElementsByTag("figure").html("").outerHtml())
 }
 
 object Interactive {
@@ -1026,7 +1028,7 @@ object ImageContent {
 final case class ImageContent(override val content: Content, lightboxProperties: GenericLightboxProperties)
     extends ContentType {
 
-  val lightBox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
+  val lightBox: GenericLightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 }
 
 object CrosswordContent {

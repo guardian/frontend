@@ -14,6 +14,7 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import services.newsletters.model.NewsletterResponseV2
 import services.NewsletterData
+import play.api.libs.json.OWrites
 
 case class DotcomNewslettersPageRenderingDataModel(
     newsletters: List[NewsletterData],
@@ -36,7 +37,8 @@ case class DotcomNewslettersPageRenderingDataModel(
 )
 
 object DotcomNewslettersPageRenderingDataModel {
-  implicit val writes = Json.writes[DotcomNewslettersPageRenderingDataModel]
+  implicit val writes: OWrites[DotcomNewslettersPageRenderingDataModel] =
+    Json.writes[DotcomNewslettersPageRenderingDataModel]
 
   def apply(
       page: SimplePage,

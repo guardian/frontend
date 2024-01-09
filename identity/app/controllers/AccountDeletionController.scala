@@ -42,10 +42,10 @@ class AccountDeletionController(
   import authenticatedActions._
   import views.html.profile.deletion._
 
-  val page = IdentityPage("/deletion", "Account Deletion")
-  val pageConfirm = IdentityPage("/deletion/confirm", "Account Deletion Confirmation")
+  val page: IdentityPage = IdentityPage("/deletion", "Account Deletion")
+  val pageConfirm: IdentityPage = IdentityPage("/deletion/confirm", "Account Deletion Confirmation")
 
-  val accountDeletionForm = Form(
+  val accountDeletionForm: Form[(String, Option[String])] = Form(
     tuple(
       "password" -> text.verifying(Constraints.nonEmpty),
       "reason" -> optional(text),

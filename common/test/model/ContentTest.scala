@@ -16,6 +16,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.JsBoolean
 import play.api.test.FakeRequest
 import play.api.test.Helpers.GET
+import play.api.mvc.AnyContentAsEmpty
 
 class ContentTest
     extends AnyFlatSpec
@@ -67,8 +68,8 @@ class ContentTest
     trail.elements.mainPicture.flatMap(_.images.largestImage.flatMap(_.url)) should be(Some("http://www.foo.com/bar"))
   }
 
-  val requestWithNoAdTestParam = FakeRequest(GET, "/uk")
-  val requestWithAdTestParam = FakeRequest(GET, "/uk?adtest=6")
+  val requestWithNoAdTestParam: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "/uk")
+  val requestWithAdTestParam: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "/uk?adtest=6")
   val noAdTestParam: Option[String] = None
 
   "Tags" should "understand tag types" in {
@@ -178,15 +179,15 @@ class ContentTest
     contentWithShortUrl("https://www.theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
-  val dateBeforeCutoff = Some(
+  val dateBeforeCutoff: Some[CapiDateTime] = Some(
     jodaToJavaInstant(new DateTime("2017-07-02T12:00:00.000Z")).atOffset(ZoneOffset.UTC).toCapiDateTime,
   )
-  val dateAfterCutoff = Some(
+  val dateAfterCutoff: Some[CapiDateTime] = Some(
     jodaToJavaInstant(new DateTime("2017-07-04T12:00:00.000Z")).atOffset(ZoneOffset.UTC).toCapiDateTime,
   )
   val edition: Edition = mock[Edition]
-  val sensitiveContentFields = Some(ContentFields(sensitive = Some(true)))
-  val nonSensitiveContentFields = Some(ContentFields(sensitive = Some(true)))
+  val sensitiveContentFields: Some[ContentFields] = Some(ContentFields(sensitive = Some(true)))
+  val nonSensitiveContentFields: Some[ContentFields] = Some(ContentFields(sensitive = Some(true)))
 
   when(edition.id) thenReturn "GB"
 

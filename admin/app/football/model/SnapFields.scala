@@ -14,6 +14,6 @@ case class SnapFields(
     def encode: String = URLEncoder.encode(string, "UTF-8")
   }
 
-  val snapUrl =
+  val snapUrl: String =
     s"$fallbackUrl?gu-snapType=${`type`.encode}&gu-snapCss=${css.encode}&gu-snapUri=${uri.encode}&gu-headline=${fallbackHeadline.encode}&gu-trailText=${fallbackTrailtext.encode}"
 }

@@ -82,7 +82,7 @@ trait Requests {
     lazy val isHeadlineText: Boolean =
       r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 
-    lazy val isModified = isJson || isRss || isEmail || isHeadlineText
+    lazy val isModified: Boolean = isJson || isRss || isEmail || isHeadlineText
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
@@ -123,7 +123,7 @@ trait Requests {
     lazy val forceLive: Boolean = r.getQueryString("live").isDefined && !forceLiveOff
 
     // slot machine
-    lazy val slotMachineFlags = r.getQueryString("slot-machine-flags").getOrElse("")
+    lazy val slotMachineFlags: String = r.getQueryString("slot-machine-flags").getOrElse("")
   }
 
 }

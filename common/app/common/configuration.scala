@@ -35,11 +35,11 @@ object Environment extends GuLogging {
     sys.env.get(name.toUpperCase).orElse(installVars.get(name)).getOrElse(default)
   }
 
-  val stack = get("stack", "frontend")
-  val app = get("app", "dev-build")
-  val stage = get("STAGE", "DEV")
-  val awsRegion = get("region", "eu-west-1")
-  val configBucket = get("configBucket", "aws-frontend-store")
+  val stack: String = get("stack", "frontend")
+  val app: String = get("app", "dev-build")
+  val stage: String = get("STAGE", "DEV")
+  val awsRegion: String = get("region", "eu-west-1")
+  val configBucket: String = get("configBucket", "aws-frontend-store")
 
   log.info(
     s"Environment loaded as: stack=$stack, app=$app, stage=$stage, awsRegion=$awsRegion, configBucket=$configBucket",
@@ -144,33 +144,33 @@ class GuardianConfiguration extends GuLogging {
   )
 
   object business {
-    lazy val stocksEndpoint =
+    lazy val stocksEndpoint: String =
       configuration.getMandatoryStringProperty("business_data.url") // Decommissioned, see marker: 7dde429f00b1
   }
 
   object rendering {
-    lazy val baseURL = configuration.getMandatoryStringProperty("rendering.baseURL")
-    lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
-    lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
-    lazy val timeout = 2.seconds
+    lazy val baseURL: String = configuration.getMandatoryStringProperty("rendering.baseURL")
+    lazy val sentryHost: String = configuration.getMandatoryStringProperty("rendering.sentryHost")
+    lazy val sentryPublicApiKey: String = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
+    lazy val timeout: FiniteDuration = 2.seconds
     lazy val circuitBreakerMaxFailures = 10 // we should increase this as DCR sees increasing usage
   }
 
   object contributionsService {
-    lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
+    lazy val url: String = configuration.getMandatoryStringProperty("contributionsService.url")
   }
 
   object weather {
-    lazy val apiKey = configuration.getStringProperty("weather.api.key")
+    lazy val apiKey: Option[String] = configuration.getStringProperty("weather.api.key")
   }
 
   object indexes {
-    lazy val tagIndexesBucket =
+    lazy val tagIndexesBucket: String =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
 
     // This shouldn't be > 60 as it's in the context of `0/$adminRebuildIndexRateInMinutes` and `0/60` is invalid
     // see: https://support.hcltechsw.com/csm?id=kb_article&sysparm_article=KB0091722
-    lazy val adminRebuildIndexRateInMinutes =
+    lazy val adminRebuildIndexRateInMinutes: Int =
       configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(59)
   }
 
@@ -178,16 +178,16 @@ class GuardianConfiguration extends GuLogging {
     lazy val stage = Environment.stage
     lazy val app = Environment.app
 
-    lazy val isProd = stage.equalsIgnoreCase("prod")
-    lazy val isCode = stage.equalsIgnoreCase("code")
-    lazy val isDev = stage.equalsIgnoreCase("dev")
-    lazy val isDevInfra = stage.equalsIgnoreCase("devinfra")
-    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
-    lazy val isNonDev = isProd || isCode || isDevInfra
+    lazy val isProd: Boolean = stage.equalsIgnoreCase("prod")
+    lazy val isCode: Boolean = stage.equalsIgnoreCase("code")
+    lazy val isDev: Boolean = stage.equalsIgnoreCase("dev")
+    lazy val isDevInfra: Boolean = stage.equalsIgnoreCase("devinfra")
+    lazy val isNonProd: Boolean = List("dev", "code", "gudev").contains(stage.toLowerCase)
+    lazy val isNonDev: Boolean = isProd || isCode || isDevInfra
   }
 
   object switches {
-    lazy val key = configuration.getMandatoryStringProperty("switches.key")
+    lazy val key: String = configuration.getMandatoryStringProperty("switches.key")
   }
 
   object healthcheck {
@@ -250,46 +250,49 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object ophanApi {
-    lazy val key = configuration.getStringProperty("ophan.api.key")
-    lazy val host = configuration.getStringProperty("ophan.api.host")
+    lazy val key: Option[String] = configuration.getStringProperty("ophan.api.key")
+    lazy val host: Option[String] = configuration.getStringProperty("ophan.api.host")
   }
 
   object ophan {
-    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
-    lazy val embedJsLocation =
+    lazy val jsLocation: String =
+      configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
+    lazy val embedJsLocation: String =
       configuration.getStringProperty("ophan.embed.js.location").getOrElse("//j.ophan.co.uk/ophan.embed")
   }
 
   object omniture {
-    lazy val account = configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-network")
-    lazy val ampAccount =
+    lazy val account: String =
+      configuration.getStringProperty("guardian.page.omnitureAccount").getOrElse("guardiangu-network")
+    lazy val ampAccount: String =
       configuration.getStringProperty("guardian.page.omnitureAmpAccount").getOrElse("guardiangudev-code")
-    lazy val thirdPartyAppsAccount =
+    lazy val thirdPartyAppsAccount: String =
       configuration.getStringProperty("guardian.page.thirdPartyAppsAccount").getOrElse("guardiangu-thirdpartyapps")
   }
 
   object googletag {
-    lazy val jsLocation = configuration
+    lazy val jsLocation: String = configuration
       .getStringProperty("googletag.js.location")
       .getOrElse("//securepubads.g.doubleclick.net/tag/js/gpt.js")
   }
 
   // Amazon A9 APS Transparent Ad Marketplace library
   object a9ApsTag {
-    lazy val key = configuration.getStringProperty("apstag.api.key").getOrElse("")
+    lazy val key: String = configuration.getStringProperty("apstag.api.key").getOrElse("")
   }
 
   object google {
-    lazy val subscribeWithGoogleApiUrl =
+    lazy val subscribeWithGoogleApiUrl: String =
       configuration.getStringProperty("google.subscribeWithGoogleApiUrl").getOrElse("https://swg.theguardian.com")
-    lazy val googleRecaptchaSiteKey = configuration.getMandatoryStringProperty("guardian.page.googleRecaptchaSiteKey")
-    lazy val googleRecaptchaSecret = configuration.getMandatoryStringProperty("google.googleRecaptchaSecret")
+    lazy val googleRecaptchaSiteKey: String =
+      configuration.getMandatoryStringProperty("guardian.page.googleRecaptchaSiteKey")
+    lazy val googleRecaptchaSecret: String = configuration.getMandatoryStringProperty("google.googleRecaptchaSecret")
   }
 
   object affiliateLinks {
     lazy val bucket: Option[String] = configuration.getStringProperty("skimlinks.bucket")
     lazy val domainsKey = "skimlinks/skimlinks-domains.csv"
-    lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
+    lazy val skimlinksId: String = configuration.getMandatoryStringProperty("skimlinks.id")
     lazy val affiliateLinkSections: Set[String] =
       configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
     lazy val defaultOffTags: Set[String] =
@@ -299,25 +302,25 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object frontend {
-    lazy val store = configuration.getMandatoryStringProperty("frontend.store")
-    lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
-    lazy val dotcomPlatformEmail = configuration.getStringProperty("email.dotcom_platform")
+    lazy val store: String = configuration.getMandatoryStringProperty("frontend.store")
+    lazy val webEngineersEmail: Option[String] = configuration.getStringProperty("email.web.engineers")
+    lazy val dotcomPlatformEmail: Option[String] = configuration.getStringProperty("email.dotcom_platform")
   }
 
   object site {
-    lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
+    lazy val host: String = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
   object cookies {
     lazy val lastSeenKey: String = "lastseen"
-    lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
+    lazy val sessionExpiryTime: Int = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
   }
 
   object db {
-    lazy val sentry_db_driver = configuration.getStringProperty("db.sentry.driver").getOrElse("")
-    lazy val sentry_db_url = configuration.getStringProperty("db.sentry.url").getOrElse("")
-    lazy val sentry_db_username = configuration.getStringProperty("db.sentry.user").getOrElse("")
-    lazy val sentry_db_password = configuration.getStringProperty("db.sentry.password").getOrElse("")
+    lazy val sentry_db_driver: String = configuration.getStringProperty("db.sentry.driver").getOrElse("")
+    lazy val sentry_db_url: String = configuration.getStringProperty("db.sentry.url").getOrElse("")
+    lazy val sentry_db_username: String = configuration.getStringProperty("db.sentry.user").getOrElse("")
+    lazy val sentry_db_password: String = configuration.getStringProperty("db.sentry.password").getOrElse("")
   }
 
   object proxy {
@@ -336,12 +339,12 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object github {
-    lazy val token = configuration.getStringProperty("github.token")
+    lazy val token: Option[String] = configuration.getStringProperty("github.token")
   }
 
   object ajax {
-    lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
-    lazy val nonSecureUrl =
+    lazy val url: String = configuration.getStringProperty("ajax.url").getOrElse("")
+    lazy val nonSecureUrl: String =
       configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration
       .getStringProperty("ajax.cors.origin")
@@ -355,10 +358,10 @@ class GuardianConfiguration extends GuLogging {
 
   object amp {
     private lazy val scheme = configuration.getStringProperty("amp.scheme").getOrElse("")
-    lazy val host = configuration.getStringProperty("amp.host").getOrElse("")
-    lazy val baseUrl = scheme + host
+    lazy val host: String = configuration.getStringProperty("amp.host").getOrElse("")
+    lazy val baseUrl: String = scheme + host
 
-    lazy val flushPublicKey = configuration.getMandatoryStringProperty("google.amp.flush.key.public")
+    lazy val flushPublicKey: String = configuration.getMandatoryStringProperty("google.amp.flush.key.public")
   }
 
   object dotcom {
@@ -366,47 +369,51 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object id {
-    lazy val url = configuration.getStringProperty("id.url").getOrElse("")
-    lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
-    lazy val domain =
+    lazy val url: String = configuration.getStringProperty("id.url").getOrElse("")
+    lazy val apiRoot: String = configuration.getStringProperty("id.apiRoot").getOrElse("")
+    lazy val domain: String =
       """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
-    lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
-    lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
-    lazy val mmaUrl = configuration.getStringProperty("id.manage.url").getOrElse("https://manage.theguardian.com")
-    lazy val membershipUrl =
+    lazy val apiClientToken: String = configuration.getStringProperty("id.apiClientToken").getOrElse("")
+    lazy val oauthUrl: String = configuration.getStringProperty("id.oauth.url").getOrElse("")
+    lazy val mmaUrl: String =
+      configuration.getStringProperty("id.manage.url").getOrElse("https://manage.theguardian.com")
+    lazy val membershipUrl: String =
       configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
-    lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
-    lazy val optimizeEpicUrl = configuration
+    lazy val supportUrl: String =
+      configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
+    lazy val optimizeEpicUrl: String = configuration
       .getStringProperty("id.support.optimize-epic-url")
       .getOrElse("https://support.theguardian.com/epic/control/index.html")
-    lazy val subscribeUrl =
+    lazy val subscribeUrl: String =
       configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
-    lazy val contributeUrl =
+    lazy val contributeUrl: String =
       configuration.getStringProperty("id.contribute.url").getOrElse("https://contribute.theguardian.com")
-    lazy val membersDataApiUrl =
+    lazy val membersDataApiUrl: String =
       configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
-    lazy val stripePublicToken = configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
-    lazy val accountDeletionApiKey = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")
-    lazy val accountDeletionApiRoot = configuration.getStringProperty("id.accountDeletion.apiRoot").getOrElse("")
+    lazy val stripePublicToken: String =
+      configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
+    lazy val accountDeletionApiKey: String = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")
+    lazy val accountDeletionApiRoot: String =
+      configuration.getStringProperty("id.accountDeletion.apiRoot").getOrElse("")
   }
 
   object images {
-    lazy val host = configuration.getMandatoryStringProperty("fastly-io.host")
+    lazy val host: String = configuration.getMandatoryStringProperty("fastly-io.host")
     lazy val signatureSalt: String = configuration.getMandatoryStringProperty("images.signature-salt")
-    val fallbackLogo = Static("images/fallback-logo.png")
+    val fallbackLogo: String = Static("images/fallback-logo.png")
   }
 
   object headlines {
-    lazy val spreadsheet = configuration.getMandatoryStringProperty("headlines.spreadsheet")
+    lazy val spreadsheet: String = configuration.getMandatoryStringProperty("headlines.spreadsheet")
   }
 
   object assets {
-    lazy val path = configuration.getMandatoryStringProperty("assets.path")
+    lazy val path: String = configuration.getMandatoryStringProperty("assets.path")
 
     // This configuration value determines if this server will load and resolve assets using the asset map.
     // Set this to true if you want to run the Play server in dev, and emulate prod mode asset-loading.
     // If true in dev, assets are locally loaded from the `hash` build output, otherwise assets come from 'target' for css, and 'src' for js.
-    lazy val useHashedBundles = configuration
+    lazy val useHashedBundles: Boolean = configuration
       .getStringProperty("assets.useHashedBundles")
       .map(_.toBoolean)
       .getOrElse(environment.isNonDev)
@@ -421,26 +428,26 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object staticSport {
-    lazy val path = configuration.getMandatoryStringProperty("staticSport.path")
+    lazy val path: String = configuration.getMandatoryStringProperty("staticSport.path")
   }
 
   object sport {
-    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.nonSecureUrl)
+    lazy val apiUrl: String = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.nonSecureUrl)
   }
 
   object oas {
-    lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
+    lazy val siteIdHost: String = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
   }
 
   object facebook {
-    lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
+    lazy val appId: String = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
     object pages {
-      lazy val authorisedIdsForLinkEdits =
+      lazy val authorisedIdsForLinkEdits: List[String] =
         configuration.getStringPropertiesSplitByComma("facebook.pages.authorisedIdsForLinkEdits")
     }
     object graphApi {
-      lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("3.2")
-      lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
+      lazy val version: String = configuration.getStringProperty("facebook.graphApi.version").getOrElse("3.2")
+      lazy val accessToken: String = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
     }
   }
 
@@ -450,12 +457,12 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object discussion {
-    lazy val apiRoot = configuration.getMandatoryStringProperty("guardian.page.discussionApiUrl")
-    lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
-    lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
-    lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
-    lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
-    lazy val frontendAssetsMapRefreshInterval = 5.seconds
+    lazy val apiRoot: String = configuration.getMandatoryStringProperty("guardian.page.discussionApiUrl")
+    lazy val apiTimeout: String = configuration.getMandatoryStringProperty("discussion.apiTimeout")
+    lazy val apiClientHeader: String = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+    lazy val d2Uid: String = configuration.getMandatoryStringProperty("discussion.d2Uid")
+    lazy val frontendAssetsMap: Option[String] = configuration.getStringProperty("discussion.frontend.assetsMap")
+    lazy val frontendAssetsMapRefreshInterval: FiniteDuration = 5.seconds
     lazy val frontendAssetsVersion = "v1.6.0"
   }
 
@@ -468,62 +475,63 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val contributionsPath = "/contributions-banner-deploy-log"
     lazy val subscriptionsPath = "/subscriptions-banner-deploy-log"
-    lazy val contributionsBannerDeployLogKey = s"$readerRevenueRoot$contributionsPath"
-    lazy val subscriptionsBannerDeployLogKey = s"$readerRevenueRoot$subscriptionsPath"
+    lazy val contributionsBannerDeployLogKey: String = s"$readerRevenueRoot$contributionsPath"
+    lazy val subscriptionsBannerDeployLogKey: String = s"$readerRevenueRoot$subscriptionsPath"
   }
 
   object commercial {
 
-    lazy val testDomain =
+    lazy val testDomain: String =
       if (environment.isProd) "https://m.code.dev-theguardian.com"
       else configuration.getStringProperty("guardian.page.host") getOrElse ""
 
-    lazy val dfpAdUnitGuRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
-    lazy val dfpFacebookIaAdUnitRoot =
+    lazy val dfpAdUnitGuRoot: String = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
+    lazy val dfpFacebookIaAdUnitRoot: String =
       configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
-    lazy val dfpMobileAppsAdUnitRoot =
+    lazy val dfpMobileAppsAdUnitRoot: String =
       configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
-    lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
+    lazy val dfpAccountId: String = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
 
-    lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
+    lazy val travelFeedUrl: Option[String] = configuration.getStringProperty("travel.feed.url")
 
     // root dir relative to S3 bucket
-    lazy val commercialRoot = {
+    lazy val commercialRoot: String = {
       configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
     }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
-    lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
-    lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
-    lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
-    lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
-    lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
-    lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
-    lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
-    lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
-    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v2.json"
-    lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
-    lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
-    lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
+    lazy val dfpInlineMerchandisingTagsDataKey: String = s"$dfpRoot/inline-merchandising-tags-v3.json"
+    lazy val dfpHighMerchandisingTagsDataKey: String = s"$dfpRoot/high-merchandising-tags.json"
+    lazy val dfpPageSkinnedAdUnitsKey: String = s"$dfpRoot/pageskinned-adunits-v9.json"
+    lazy val dfpNonRefreshableLineItemIdsKey: String = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
+    lazy val dfpLineItemsKey: String = s"$dfpRoot/lineitems-v7.json"
+    lazy val dfpActiveAdUnitListKey: String = s"$dfpRoot/active-ad-units.csv"
+    lazy val dfpMobileAppsAdUnitListKey: String = s"$dfpRoot/mobile-active-ad-units.csv"
+    lazy val dfpFacebookIaAdUnitListKey: String = s"$dfpRoot/facebookia-active-ad-units.csv"
+    lazy val dfpTemplateCreativesKey: String = s"$dfpRoot/template-creatives.json"
+    lazy val dfpCustomTargetingKey: String = s"$dfpRoot/custom-targeting-key-values.json"
+    lazy val topAboveNavSlotTakeoversKey: String = s"$dfpRoot/top-above-nav-slot-takeovers-v2.json"
+    lazy val adsTextObjectKey: String = s"$commercialRoot/ads.txt"
+    lazy val appAdsTextObjectKey: String = s"$commercialRoot/app-ads.txt"
+    lazy val takeoversWithEmptyMPUsKey: String = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
-    lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
+    lazy val merchandisingFeedsLatest: String = s"$merchandisingFeedsRoot/latest"
 
-    lazy val jobsUrl = configuration.getStringProperty("jobs.api.url")
+    lazy val jobsUrl: Option[String] = configuration.getStringProperty("jobs.api.url")
 
-    lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
-    lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeamAu")
-    lazy val adOpsUsTeam = configuration.getStringProperty("email.adOpsTeamUs")
-    lazy val adTechTeam = configuration.getStringProperty("email.adTechTeam")
-    lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
+    lazy val adOpsTeam: Option[String] = configuration.getStringProperty("email.adOpsTeam")
+    lazy val adOpsAuTeam: Option[String] = configuration.getStringProperty("email.adOpsTeamAu")
+    lazy val adOpsUsTeam: Option[String] = configuration.getStringProperty("email.adOpsTeamUs")
+    lazy val adTechTeam: Option[String] = configuration.getStringProperty("email.adTechTeam")
+    lazy val gLabsTeam: Option[String] = configuration.getStringProperty("email.gLabsTeam")
 
-    lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
+    lazy val expiredPaidContentUrl: String = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
 
-    lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
+    lazy val prebidAnalyticsStream: String =
+      configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
 
-    lazy val prebidServerUrl =
+    lazy val prebidServerUrl: String =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
 
     lazy val overrideCommercialBundleUrl: Option[String] =
@@ -532,12 +540,12 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object journalism {
-    lazy val calloutsUrl = configuration.getMandatoryStringProperty("journalism.callouts.url")
+    lazy val calloutsUrl: String = configuration.getMandatoryStringProperty("journalism.callouts.url")
   }
 
   object interactive {
     lazy val cdnPath = "https://interactive.guim.co.uk"
-    lazy val url = s"$cdnPath/next-gen/"
+    lazy val url: String = s"$cdnPath/next-gen/"
   }
 
   object javascript {
@@ -568,31 +576,31 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object front {
-    lazy val config = configuration.getMandatoryStringProperty("front.config")
+    lazy val config: String = configuration.getMandatoryStringProperty("front.config")
   }
 
   object targeting {
-    lazy val campaignsUrl = configuration.getStringProperty("targeting.campaignsUrl")
+    lazy val campaignsUrl: Option[String] = configuration.getStringProperty("targeting.campaignsUrl")
   }
 
   object facia {
-    lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
+    lazy val stage: String = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
     lazy val collectionCap: Int = 20
   }
 
   object faciatool {
-    lazy val crossAccountSourceBucket =
+    lazy val crossAccountSourceBucket: String =
       configuration.getMandatoryStringProperty("aws.cmsFronts.frontCollections.bucket")
-    lazy val outputBucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val outputBucket: String = configuration.getMandatoryStringProperty("aws.bucket")
 
-    lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
-    lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
-    lazy val frontPressStatusNotificationStream =
+    lazy val frontPressCronQueue: Option[String] = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
+    lazy val frontPressToolQueue: Option[String] = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
+    lazy val frontPressStatusNotificationStream: Option[String] =
       configuration.getStringProperty("frontpress.kinesis.status_notification_stream")
 
     lazy val configBeforePressTimeout: Int = 1000
 
-    val showTestContainers =
+    val showTestContainers: Boolean =
       configuration.getStringProperty("faciatool.show_test_containers").contains("true")
 
     lazy val adminPressJobStandardPushRateInMinutes: Int =
@@ -607,7 +615,7 @@ class GuardianConfiguration extends GuLogging {
       Try(configuration.getStringProperty("admin.pressjob.low.push.rate.inminutes").get.toInt)
         .getOrElse(60)
 
-    lazy val stsRoleToAssume = configuration.getStringProperty("aws.cmsFronts.account.role")
+    lazy val stsRoleToAssume: Option[String] = configuration.getStringProperty("aws.cmsFronts.account.role")
 
     def crossAccountMandatoryCredentials: AWSCredentialsProvider =
       crossAccountCredentials.getOrElse(
@@ -634,26 +642,30 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object r2Press {
-    lazy val sqsQueueUrl = configuration.getStringProperty("admin.r2.page.press.sqs.queue.url")
-    lazy val sqsTakedownQueueUrl = configuration.getStringProperty("admin.r2.page.press.takedown.sqs.queue.url")
-    lazy val pressRateInSeconds = configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
-    lazy val pressQueueWaitTimeInSeconds =
+    lazy val sqsQueueUrl: Option[String] = configuration.getStringProperty("admin.r2.page.press.sqs.queue.url")
+    lazy val sqsTakedownQueueUrl: Option[String] =
+      configuration.getStringProperty("admin.r2.page.press.takedown.sqs.queue.url")
+    lazy val pressRateInSeconds: Int =
+      configuration.getIntegerProperty("admin.r2.page.press.rate.seconds").getOrElse(60)
+    lazy val pressQueueWaitTimeInSeconds: Int =
       configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
-    lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
-    lazy val fallbackCachebustId = configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
+    lazy val pressQueueMaxMessages: Int =
+      configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
+    lazy val fallbackCachebustId: String =
+      configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
   }
 
   object redis {
-    lazy val endpoint = configuration.getStringProperty("redis.host")
+    lazy val endpoint: Option[String] = configuration.getStringProperty("redis.host")
   }
 
   object aws {
 
-    lazy val region = configuration.getMandatoryStringProperty("aws.region")
-    lazy val frontendStoreBucket = configuration.getMandatoryStringProperty("aws.bucket")
-    lazy val topMentionsStoreBucket =
+    lazy val region: String = configuration.getMandatoryStringProperty("aws.region")
+    lazy val frontendStoreBucket: String = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val topMentionsStoreBucket: Option[String] =
       configuration.getStringProperty("aws.topMentions.bucket")
-    lazy val messageUsStoreBucket =
+    lazy val messageUsStoreBucket: Option[String] =
       configuration.getStringProperty("aws.messageUs.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val videoEncodingsSns: String =
@@ -684,8 +696,8 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object riffraff {
-    lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
-    lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
+    lazy val url: String = configuration.getMandatoryStringProperty("riffraff.url")
+    lazy val apiKey: String = configuration.getMandatoryStringProperty("riffraff.apikey")
   }
 
   object standalone {
@@ -701,26 +713,26 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object googleOAuth {
-    lazy val playAppSecretParameterName = s"/frontend/${stage.toLowerCase()}/${app.toLowerCase()}/playAppSecret"
+    lazy val playAppSecretParameterName: String = s"/frontend/${stage.toLowerCase()}/${app.toLowerCase()}/playAppSecret"
   }
 
   object pngResizer {
-    val cacheTimeInSeconds = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
-    val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
+    val cacheTimeInSeconds: Int = configuration.getIntegerProperty("png_resizer.image_cache_time").getOrElse(86400)
+    val ttlInSeconds: Int = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 
   object emailSignup {
-    val url = configuration.getMandatoryStringProperty("email.signup.url")
+    val url: String = configuration.getMandatoryStringProperty("email.signup.url")
   }
 
   object Logstash {
-    lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
-    lazy val stream = configuration.getStringProperty("logstash.stream.name")
-    lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
+    lazy val enabled: Boolean = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
+    lazy val stream: Option[String] = configuration.getStringProperty("logstash.stream.name")
+    lazy val streamRegion: Option[String] = configuration.getStringProperty("logstash.stream.region")
   }
 
   object Elk {
-    lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
+    lazy val kibanaUrl: Option[String] = configuration.getStringProperty("elk.kibana.url")
   }
 
   object Survey {
@@ -728,16 +740,16 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object Media {
-    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
+    lazy val externalEmbedHost: String = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
   }
 
   object braze {
-    lazy val apiKey = configuration.getStringProperty("braze.apikey").getOrElse("")
+    lazy val apiKey: String = configuration.getStringProperty("braze.apikey").getOrElse("")
   }
 
   object newsletterApi {
-    lazy val host = configuration.getStringProperty("newsletterApi.host")
-    lazy val origin = configuration.getStringProperty("newsletterApi.origin")
+    lazy val host: Option[String] = configuration.getStringProperty("newsletterApi.host")
+    lazy val origin: Option[String] = configuration.getStringProperty("newsletterApi.origin")
   }
 }
 

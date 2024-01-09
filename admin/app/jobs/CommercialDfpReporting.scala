@@ -16,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
 object CommercialDfpReporting extends GuLogging {
 
   case class DfpReportRow(value: String) {
-    val fields = value.split(",").toSeq
+    val fields: Seq[String] = value.split(",").toSeq
   }
 
   case class DfpReport(rows: Seq[DfpReportRow], lastUpdated: LocalDateTime)
@@ -28,7 +28,7 @@ object CommercialDfpReporting extends GuLogging {
   val prebidBidderPerformance = "Prebid Bidder Performance"
 
   // These IDs correspond to queries saved in DFP's web console.
-  val reportMappings = Map(
+  val reportMappings: Map[String, Long] = Map(
     teamKPIReport -> 10060521970L, // This report is accessible by the DFP user: "NGW DFP Production"
   )
 

@@ -8,10 +8,11 @@ import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import java.time.OffsetDateTime
 
 class UrlsTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+  val offsetDate: OffsetDateTime = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
   "Urls" should "be created relative for articles" in {
 

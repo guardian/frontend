@@ -42,7 +42,7 @@ case class EmailPrefsData(
 )
 
 object EmailPrefsData {
-  val emailPrefsForm = Form(
+  val emailPrefsForm: Form[EmailPrefsData] = Form(
     Forms.mapping(
       "currentEmailSubscriptions" -> Forms.list(Forms.text),
       "addEmailSubscriptions" -> Forms.list(Forms.text),

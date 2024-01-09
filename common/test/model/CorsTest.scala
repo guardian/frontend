@@ -50,7 +50,7 @@ class CorsTest extends AnyFlatSpec with Matchers {
   }
 
   val validDomain = "theguardian.com"
-  val validSubDomain = s"manage.$validDomain"
+  val validSubDomain: String = s"manage.$validDomain"
 
   "isWhitelisted" should "return true if the origin exists in corsOrigins" in {
     isWhitelisted(s"https://$validSubDomain", Seq(s"https://$validSubDomain"), Seq.empty) shouldBe true

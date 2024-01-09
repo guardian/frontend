@@ -16,6 +16,7 @@ import io.lemonlabs.uri.config.{ExcludeNones, UriConfig}
 import io.lemonlabs.uri.typesafe.QueryKey.stringQueryKey
 
 import scala.concurrent.{ExecutionContext, Future}
+import play.api.libs.json.JsValue
 
 trait DiscussionApiLike extends Http with GuLogging {
 
@@ -25,7 +26,7 @@ trait DiscussionApiLike extends Http with GuLogging {
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
-  protected val defaultParams = List("api-key" -> Some("dotcom"))
+  protected val defaultParams: List[(String, Some[String])] = List("api-key" -> Some("dotcom"))
   protected val pageSize: String = "10"
 
   def endpointUrl(relativePath: String, params: List[(String, Option[String])] = List()): String = { //Using List for params because order is important for caching reason
@@ -196,7 +197,7 @@ trait DiscussionApiLike extends Http with GuLogging {
 
   override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*)(
       implicit executionContext: ExecutionContext,
-  ) = {
+  ): Future[JsValue] = {
     failIfDisabled().flatMap(_ => super.getJsonOrError(url, onError, headers :+ guClientHeader: _*))
   }
 

@@ -16,22 +16,24 @@ import test.{Fake, TestRequest, WithTestApplicationContext}
 
 import scala.concurrent.Future
 import scala.util.Left
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
 
 class PublicProfileControllerTest
     extends PathAnyFreeSpec
     with Matchers
     with WithTestApplicationContext
     with MockitoSugar {
-  val idUrlBuilder = mock[IdentityUrlBuilder]
-  val api = mock[IdApiClient]
-  val discussionApi = mock[DiscussionApiService]
-  val idRequestParser = mock[IdRequestParser]
-  val idRequest = mock[IdentityRequest]
+  val idUrlBuilder: IdentityUrlBuilder = mock[IdentityUrlBuilder]
+  val api: IdApiClient = mock[IdApiClient]
+  val discussionApi: DiscussionApiService = mock[DiscussionApiService]
+  val idRequestParser: IdRequestParser = mock[IdRequestParser]
+  val idRequest: IdentityRequest = mock[IdentityRequest]
 
   val userId: String = "123"
-  val discussionProfile = DiscussionProfile(userId, "John Smith")
+  val discussionProfile: DiscussionProfile = DiscussionProfile(userId, "John Smith")
   val vanityUrl: String = "bobski"
-  val user = User(
+  val user: User = User(
     "test@example.com",
     userId,
     publicFields = PublicFields(
@@ -44,7 +46,7 @@ class PublicProfileControllerTest
   )
 
   val userIdNotCommented: String = "789"
-  val userNotCommented = User(
+  val userNotCommented: User = User(
     "test@example.com",
     userIdNotCommented,
     publicFields = PublicFields(
@@ -65,7 +67,7 @@ class PublicProfileControllerTest
     discussionApi,
     play.api.test.Helpers.stubControllerComponents(),
   )
-  val request = TestRequest()
+  val request: FakeRequest[AnyContentAsEmpty.type] = TestRequest()
 
   "Given renderProfileFromId is called" - Fake {
     when(api.user(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))

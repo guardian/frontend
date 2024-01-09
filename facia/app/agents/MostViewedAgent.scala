@@ -22,8 +22,8 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   // todo: better typing for country codes
   def mostViewed(edition: Edition): Seq[RelatedContentItem] =
     mostViewedBox().getOrElse(edition, Nil)
-  def mostCommented = mostCommentedCardBox.get()
-  def mostShared = mostSharedCardBox.get()
+  def mostCommented: Option[Content] = mostCommentedCardBox.get()
+  def mostShared: Option[Content] = mostSharedCardBox.get()
 
   // Helper case class to read from the most/comments discussion API call.
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
@@ -31,7 +31,7 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   }
 
   private object MostDiscussedItem {
-    implicit val format = Json.format[MostDiscussedItem]
+    implicit val format: OFormat[MostDiscussedItem] = Json.format[MostDiscussedItem]
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[(Option[Content], Option[Content])] = {

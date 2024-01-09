@@ -10,17 +10,17 @@ import java.time.format.DateTimeFormatter
 import scala.concurrent.ExecutionContext
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
-  lazy val url = tag.map(_.metadata.url)
-  override lazy val name = shortName.getOrElse(team.name)
+  lazy val url: Option[String] = tag.map(_.metadata.url)
+  override lazy val name: String = shortName.getOrElse(team.name)
   override lazy val id = team.id
 }
 
 object TeamMap extends GuLogging {
 
-  val teamAgent = Box(Map.empty[String, Tag])
+  val teamAgent: Box[Map[String, Tag]] = Box(Map.empty[String, Tag])
 
   // teamId -> manually curated short name
-  val shortNames = Map(
+  val shortNames: Map[String, String] = Map(
     ("19", "Spurs"),
     ("5", "C Palace"),
     ("30", "Middlesbrough"),

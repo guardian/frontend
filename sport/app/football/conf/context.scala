@@ -21,7 +21,7 @@ class FootballLifecycle(
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
 
-  val defaultClock = Clock.systemDefaultZone()
+  val defaultClock: Clock = Clock.systemDefaultZone()
 
   appLifeCycle.addStopHook { () =>
     Future {

@@ -39,7 +39,7 @@ abstract class Edition(
 
   def isEditionalised(sectionId: String): Boolean = editionalisedSections.contains(sectionId)
   def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
-  def timezoneId = ZoneId.of(timezone.getID)
+  def timezoneId: ZoneId = ZoneId.of(timezone.getID)
 }
 
 object Edition {
@@ -50,7 +50,7 @@ object Edition {
   def editionsSupportingSection(sectionId: String): Seq[Edition] =
     allEditions.filter(_.isEditionalised(sectionId))
 
-  lazy val allEditions = List(
+  lazy val allEditions: List[Edition] = List(
     editions.Uk,
     editions.Us,
     editions.Au,
@@ -104,7 +104,7 @@ object Edition {
     (__ \ "id").read[String] map (Edition.byId(_).getOrElse(defaultEdition))
   }
 
-  lazy val editionRegex = allEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
+  lazy val editionRegex: String = allEditions.map(_.homePagePath.replaceFirst("/", "")).mkString("|")
   private lazy val EditionalisedFront = s"""^/($editionRegex)$$""".r
 
   private lazy val EditionalisedId = s"^/($editionRegex)/([\\w\\d-]+)$$".r

@@ -19,7 +19,7 @@ class ShouldServeFrontTest
     with ScalaFutures
     with BeforeAndAfterAll {
 
-  val fronts = ConfigJson(
+  val fronts: ConfigJson = ConfigJson(
     Map(
       "editorial-front" -> FrontJson(
         collections = List("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),

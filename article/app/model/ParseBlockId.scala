@@ -9,7 +9,7 @@ object ParseBlockId extends RegexParsers {
 
   sealed trait ParseBlockResult { def toOption: Option[String] }
   case object InvalidFormat extends ParseBlockResult { val toOption = None }
-  case class ParsedBlockId(blockId: String) extends ParseBlockResult { val toOption = Some(blockId) }
+  case class ParsedBlockId(blockId: String) extends ParseBlockResult { val toOption: Some[String] = Some(blockId) }
 
   private def withParser: Parser[Unit] = "with:" ^^ { _ => () }
   private def block: Parser[Unit] = "block-" ^^ { _ => () }

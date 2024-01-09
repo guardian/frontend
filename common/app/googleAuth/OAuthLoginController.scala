@@ -10,6 +10,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 
 import scala.concurrent.Future
+import scala.util.matching.Regex
 
 trait OAuthLoginController extends BaseController with ImplicitControllerExecutionContext with implicits.Requests {
 
@@ -22,8 +23,8 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "play-googleauth-session-id"
-  val forbiddenNoCredentials = Forbidden("Invalid OAuth credentials set")
-  lazy val validRedirectDomain = """^(\w+:\/\/[^/]+\.(?:dev-)?gutools\.co\.uk\/.*)$""".r
+  val forbiddenNoCredentials: Result = Forbidden("Invalid OAuth credentials set")
+  lazy val validRedirectDomain: Regex = """^(\w+:\/\/[^/]+\.(?:dev-)?gutools\.co\.uk\/.*)$""".r
 
   /*
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)

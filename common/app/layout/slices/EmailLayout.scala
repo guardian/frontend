@@ -37,7 +37,7 @@ object EmailLayouts {
     otherCards = EmailHidden,
   )
 
-  val all = Map(
+  val all: Map[String, EmailLayout] = Map(
     slow.name -> slow,
     medium.name -> medium,
     fast.name -> fast,

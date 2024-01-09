@@ -16,6 +16,8 @@ import services._
 import test._
 
 import scala.concurrent.Future
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
 
 class EmailVerificationControllerTest
     extends PathAnyFreeSpec
@@ -26,23 +28,23 @@ class EmailVerificationControllerTest
     with WithTestIdConfig {
 
   val controllerComponent: ControllerComponents = play.api.test.Helpers.stubControllerComponents()
-  val api = mock[IdApiClient]
-  val idUrlBuilder = mock[IdentityUrlBuilder]
-  val idRequestParser = mock[IdRequestParser]
-  val authenticationService = mock[AuthenticationService]
-  val identityUrlBuilder = mock[IdentityUrlBuilder]
-  val testRequest = TestRequest()
-  val authService = mock[AuthenticationService]
-  val trackingData = mock[TrackingData]
-  val idRequest = mock[IdentityRequest]
-  val returnUrlVerifier = mock[ReturnUrlVerifier]
-  val signinService = mock[PlaySigninService]
-  val newsletterService = spy(new NewsletterService(api))
+  val api: IdApiClient = mock[IdApiClient]
+  val idUrlBuilder: IdentityUrlBuilder = mock[IdentityUrlBuilder]
+  val idRequestParser: IdRequestParser = mock[IdRequestParser]
+  val authenticationService: AuthenticationService = mock[AuthenticationService]
+  val identityUrlBuilder: IdentityUrlBuilder = mock[IdentityUrlBuilder]
+  val testRequest: FakeRequest[AnyContentAsEmpty.type] = TestRequest()
+  val authService: AuthenticationService = mock[AuthenticationService]
+  val trackingData: TrackingData = mock[TrackingData]
+  val idRequest: IdentityRequest = mock[IdentityRequest]
+  val returnUrlVerifier: ReturnUrlVerifier = mock[ReturnUrlVerifier]
+  val signinService: PlaySigninService = mock[PlaySigninService]
+  val newsletterService: NewsletterService = spy(new NewsletterService(api))
 
   val userId: String = "123"
-  val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
-  val testAuth = ScGuU("abc")
-  val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+  val user: User = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
+  val testAuth: ScGuU = ScGuU("abc")
+  val authenticatedUser: AuthenticatedUser = AuthenticatedUser(user, testAuth, true)
   val phoneNumbers = PhoneNumbers
 
   when(authService.fullyAuthenticatedUser(any[RequestHeader])) thenReturn Some(authenticatedUser)

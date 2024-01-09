@@ -30,7 +30,7 @@ class MostViewedGalleryController(
     groups = Some(List("multimedia/gallery")),
   )
 
-  val featuredSeries = Seq(
+  val featuredSeries: Seq[(String, String)] = Seq(
     ("Photographs of the day", "/news/series/ten-best-photographs-of-the-day"),
     ("Eyewitness", "/world/series/eyewitness"),
     ("From the agencies", "/artanddesign/series/from-the-agencies"),

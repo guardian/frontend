@@ -11,12 +11,13 @@ import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import java.time.OffsetDateTime
 
 class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   lazy val imageHost = Configuration.images.host
 
-  val asset = Asset(
+  val asset: Asset = Asset(
     AssetType.Image,
     Some("image/jpeg"),
     Some(
@@ -25,9 +26,9 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     None,
   )
 
-  val element = Element("elementId", "main", ElementType.Image, Some(1), List(asset))
+  val element: Element = Element("elementId", "main", ElementType.Image, Some(1), List(asset))
 
-  val tag = List(
+  val tag: List[Tag] = List(
     Tag(
       id = "type/article",
       `type` = TagType.Keyword,
@@ -40,9 +41,9 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     ),
   )
 
-  val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+  val offsetDate: OffsetDateTime = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
 
-  val content = Content(
+  val content: Content = Content(
     id = "foo/2012/jan/07/bar",
     sectionId = None,
     sectionName = None,
@@ -54,11 +55,11 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     elements = Some(List(element)),
   )
 
-  val imageAsset = ImageAsset.make(asset, 1)
+  val imageAsset: ImageAsset = ImageAsset.make(asset, 1)
 
-  val image = ImageMedia.apply(Seq(imageAsset))
+  val image: ImageMedia = ImageMedia.apply(Seq(imageAsset))
 
-  val mediaImageAsset = ImageAsset.make(
+  val mediaImageAsset: ImageAsset = ImageAsset.make(
     Asset(
       AssetType.Image,
       Some("image/jpeg"),
@@ -68,9 +69,9 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     1,
   )
 
-  val mediaImage = ImageMedia.apply(Seq(mediaImageAsset))
+  val mediaImage: ImageMedia = ImageMedia.apply(Seq(mediaImageAsset))
 
-  val s3UploadJpgImageAsset = ImageAsset.make(
+  val s3UploadJpgImageAsset: ImageAsset = ImageAsset.make(
     Asset(
       AssetType.Image,
       Some("image/jpeg"),
@@ -80,9 +81,9 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     1,
   )
 
-  val s3UploadJpgImage = ImageMedia.apply(Seq(s3UploadJpgImageAsset))
+  val s3UploadJpgImage: ImageMedia = ImageMedia.apply(Seq(s3UploadJpgImageAsset))
 
-  val s3UploadPNGImageAsset = ImageAsset.make(
+  val s3UploadPNGImageAsset: ImageAsset = ImageAsset.make(
     Asset(
       AssetType.Image,
       Some("image/png"),
@@ -92,9 +93,9 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     1,
   )
 
-  val s3UploadPNGImage = ImageMedia.apply(Seq(s3UploadPNGImageAsset))
+  val s3UploadPNGImage: ImageMedia = ImageMedia.apply(Seq(s3UploadPNGImageAsset))
 
-  val s3UploadGifImageAsset = ImageAsset.make(
+  val s3UploadGifImageAsset: ImageAsset = ImageAsset.make(
     Asset(
       AssetType.Image,
       Some("image/gif"),
@@ -104,7 +105,7 @@ class ImgSrcTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     1,
   )
 
-  val s3UploadGifImage = ImageMedia.apply(Seq(s3UploadGifImageAsset))
+  val s3UploadGifImage: ImageMedia = ImageMedia.apply(Seq(s3UploadGifImageAsset))
 
   "ImgSrc" should "convert the URL of a static image to the resizing endpoint with a /static prefix" in {
     ImageServerSwitch.switchOn()

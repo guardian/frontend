@@ -9,7 +9,7 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
 
 object GoogleBotMetric {
-  val Googlebot404Count = CountMetric("googlebot-404s", "Googlebot 404s")
+  val Googlebot404Count: CountMetric = CountMetric("googlebot-404s", "Googlebot 404s")
 }
 
 class ArchiveMetrics(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(implicit ec: ExecutionContext)

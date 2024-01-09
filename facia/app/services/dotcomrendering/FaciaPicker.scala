@@ -44,7 +44,7 @@ object FrontChecks {
       "news/most-popular",
     )
 
-  def hasOnlySupportedCollections(faciaPage: PressedPage) =
+  def hasOnlySupportedCollections(faciaPage: PressedPage): Boolean =
     faciaPage.collections.forall(collection => SUPPORTED_COLLECTIONS.contains(collection.collectionType))
 
   /*

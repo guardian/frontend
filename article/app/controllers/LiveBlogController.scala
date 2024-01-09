@@ -463,7 +463,7 @@ class LiveBlogController(
     filterKeyEvents.getOrElse(false)
   }
 
-  def getTopicResult(blogId: String, topic: Option[String]) = {
+  def getTopicResult(blogId: String, topic: Option[String]): Option[TopicResult] = {
     val topicResult = for {
       selectedTopic <- Topic.fromString(topic)
       topicResult <- topicService.getSelectedTopic(blogId, selectedTopic)

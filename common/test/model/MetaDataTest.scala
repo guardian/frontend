@@ -8,6 +8,7 @@ import org.joda.time.DateTime
 import common.Chronos
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import java.time.LocalDateTime
 
 class MetaDataTest extends AnyFlatSpec with Matchers {
 
@@ -19,7 +20,7 @@ class MetaDataTest extends AnyFlatSpec with Matchers {
     testMetaData("world/2014/jun/19/obama-100-special-forces-iraq", "world").adUnitSuffix should be("world")
   }
 
-  val defaultTag = ApiTag(
+  val defaultTag: ApiTag = ApiTag(
     id = "type/article",
     `type` = TagType.Keyword,
     webTitle = "",
@@ -30,7 +31,7 @@ class MetaDataTest extends AnyFlatSpec with Matchers {
     references = Nil,
   )
 
-  val paidContentTag = ApiTag(
+  val paidContentTag: ApiTag = ApiTag(
     id = "tone/advertisement-features",
     `type` = TagType.Keyword,
     webTitle = "",
@@ -45,7 +46,7 @@ class MetaDataTest extends AnyFlatSpec with Matchers {
   val dateBeforeCutoff = new DateTime("2017-07-02T12:00:00.000Z")
   val dateAfterCutoff = new DateTime("2017-07-04T12:00:00.000Z")
   val dateBeforeHttpsMigration = new DateTime("2013-07-02T12:00:00.000Z")
-  val dateAfterWeStartedAdvertistingHttpsUrlsToFacebook =
+  val dateAfterWeStartedAdvertistingHttpsUrlsToFacebook: LocalDateTime =
     MetaData.StartDateForHttpsFacebookUrls.plusWeeks(2).toLocalDateTime
 
   private def contentApi(

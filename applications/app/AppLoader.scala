@@ -26,6 +26,7 @@ import router.Routes
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 
 import scala.concurrent.ExecutionContext
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -36,24 +37,24 @@ trait ApplicationsServices {
   def wsClient: WSClient
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val siteMapJob = wire[SiteMapJob]
-  lazy val sectionsLookUp = wire[SectionsLookUp]
-  lazy val ophanApi = wire[OphanApi]
-  lazy val newsletterApi = wire[NewsletterApi]
-  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val siteMapJob: SiteMapJob = wire[SiteMapJob]
+  lazy val sectionsLookUp: SectionsLookUp = wire[SectionsLookUp]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
+  lazy val newsletterApi: NewsletterApi = wire[NewsletterApi]
+  lazy val newsletterSignupAgent: NewsletterSignupAgent = wire[NewsletterSignupAgent]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
 
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val emailSignupController = wire[EmailSignupController]
-  lazy val surveyPageController = wire[SurveyPageController]
-  lazy val signupPageController = wire[SignupPageController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val emailSignupController: EmailSignupController = wire[EmailSignupController]
+  lazy val surveyPageController: SurveyPageController = wire[SurveyPageController]
+  lazy val signupPageController: SignupPageController = wire[SignupPageController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
@@ -72,9 +73,9 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("applications")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("applications")
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,

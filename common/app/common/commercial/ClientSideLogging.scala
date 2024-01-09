@@ -5,10 +5,11 @@ import common.GuLogging
 import conf.Configuration
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
 
 object ClientSideLogging extends GuLogging {
 
-  val reportFormat = DateTimeFormat.forPattern("ddMMYYYY-HH:mm:ss").withZoneUTC()
+  val reportFormat: DateTimeFormatter = DateTimeFormat.forPattern("ddMMYYYY-HH:mm:ss").withZoneUTC()
 
   def dataKeyFromId(viewId: String): String = viewId + "-data"
 

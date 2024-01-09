@@ -10,8 +10,8 @@ trait IdentityConfigurationComponents extends I18nComponents {
 
   def guardianConf: GuardianConfiguration
 
-  val identityConfiguration = wire[IdentityConfiguration]
-  lazy val frontendIdentityCookieDecoder = wire[FrontendIdentityCookieDecoder]
+  val identityConfiguration: IdentityConfiguration = wire[IdentityConfiguration]
+  lazy val frontendIdentityCookieDecoder: FrontendIdentityCookieDecoder = wire[FrontendIdentityCookieDecoder]
 
   lazy val identityKeys: IdentityKeys = environment.mode match {
     case Mode.Prod if conf.Configuration.environment.isNonProd => new PreProductionKeys

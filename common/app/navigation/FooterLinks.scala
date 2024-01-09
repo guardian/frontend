@@ -13,19 +13,19 @@ object FooterLinks {
 
   // Footer column one
 
-  val complaintsAndCorrections =
+  val complaintsAndCorrections: FooterLink =
     FooterLink("Complaints & corrections", "/info/complaints-and-corrections", "complaints")
-  val secureDrop = FooterLink("SecureDrop", "https://www.theguardian.com/securedrop", "securedrop")
-  val privacyPolicy = FooterLink("Privacy policy", "/info/privacy", "privacy")
-  val cookiePolicy = FooterLink("Cookie policy", "/info/cookies", "cookie")
-  val termsAndConditions = FooterLink("Terms & conditions", "/help/terms-of-service", "terms")
+  val secureDrop: FooterLink = FooterLink("SecureDrop", "https://www.theguardian.com/securedrop", "securedrop")
+  val privacyPolicy: FooterLink = FooterLink("Privacy policy", "/info/privacy", "privacy")
+  val cookiePolicy: FooterLink = FooterLink("Cookie policy", "/info/cookies", "cookie")
+  val termsAndConditions: FooterLink = FooterLink("Terms & conditions", "/help/terms-of-service", "terms")
 
   def help(edition: String): FooterLink =
     FooterLink("Help", "/help", s"${edition} : footer : tech feedback", "js-tech-feedback-report")
   def workForUs(edition: String): FooterLink =
     FooterLink("Work for us", "https://workforus.theguardian.com", s"${edition} : footer : work for us")
 
-  val ukListOne = List(
+  val ukListOne: List[FooterLink] = List(
     FooterLink("About us", "/about", "uk : footer : about us"),
     help("uk"),
     complaintsAndCorrections,
@@ -37,7 +37,7 @@ object FooterLinks {
     FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
   )
 
-  val usListOne = List(
+  val usListOne: List[FooterLink] = List(
     FooterLink("About us", "/info/about-guardian-us", "us : footer : about us"),
     help("us"),
     complaintsAndCorrections,
@@ -49,7 +49,7 @@ object FooterLinks {
     FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
   )
 
-  val auListOne = List(
+  val auListOne: List[FooterLink] = List(
     FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
     FooterLink("Information", "/info", "au : footer : information"),
     complaintsAndCorrections,
@@ -61,7 +61,7 @@ object FooterLinks {
     FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
   )
 
-  val intListOne = List(
+  val intListOne: List[FooterLink] = List(
     help("international"),
     complaintsAndCorrections,
     secureDrop,
@@ -97,7 +97,7 @@ object FooterLinks {
       dataLinkName = s"$edition : footer : newsletters",
     )
 
-  val ukListTwo = List(
+  val ukListTwo: List[FooterLink] = List(
     allTopics("uk"),
     allWriters("uk"),
     FooterLink(
@@ -114,7 +114,7 @@ object FooterLinks {
     newsletters("uk"),
   )
 
-  val usListTwo = List(
+  val usListTwo: List[FooterLink] = List(
     allTopics("us"),
     allWriters("us"),
     digitalNewspaperArchive,
@@ -126,7 +126,7 @@ object FooterLinks {
     newsletters("us"),
   )
 
-  val auListTwo = List(
+  val auListTwo: List[FooterLink] = List(
     allTopics("au"),
     allWriters("au"),
     FooterLink("Events", "/guardian-masterclasses/guardian-masterclasses-australia", "au : footer : masterclasses"),
@@ -139,7 +139,7 @@ object FooterLinks {
     newsletters("au"),
   )
 
-  val intListTwo = List(
+  val intListTwo: List[FooterLink] = List(
     allTopics("international"),
     allWriters("international"),
     digitalNewspaperArchive,
@@ -153,14 +153,14 @@ object FooterLinks {
 
   // Footer column three
 
-  val ukListThree = List(
+  val ukListThree: List[FooterLink] = List(
     FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
     FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
   )
 
-  val usListThree = List(
+  val usListThree: List[FooterLink] = List(
     FooterLink(
       "Advertise with us",
       "https://advertising.theguardian.com/us/advertising",
@@ -170,13 +170,13 @@ object FooterLinks {
     FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
   )
 
-  val auListThree = List(
+  val auListThree: List[FooterLink] = List(
     FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
     FooterLink("Advertise with us", "https://advertising.theguardian.com/", "au : footer : advertise with us"),
     cookiePolicy,
   )
 
-  val intListThree = List(
+  val intListThree: List[FooterLink] = List(
     FooterLink(
       "Advertise with us",
       "https://advertising.theguardian.com",

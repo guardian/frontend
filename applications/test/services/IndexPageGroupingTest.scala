@@ -15,7 +15,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 @DoNotDiscover class IndexPageGroupingTest extends AnyFlatSpec with Matchers with ConfiguredTestSuite {
-  val timeZone = DateTimeZone.forOffsetHours(0)
+  val timeZone: DateTimeZone = DateTimeZone.forOffsetHours(0)
 
   def makeFixture(dateTime: DateTime): ContentType =
     Content(

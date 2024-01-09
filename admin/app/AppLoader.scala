@@ -39,15 +39,15 @@ trait AdminServices extends I18nComponents {
   def pekkoActorSystem: PekkoActorSystem
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  lazy val contentApiClient = wire[ContentApiClient]
-  lazy val ophanApi = wire[OphanApi]
-  lazy val emailService = wire[EmailService]
-  lazy val fastlyStatisticService = wire[FastlyStatisticService]
-  lazy val fastlyCloudwatchLoadJob = wire[FastlyCloudwatchLoadJob]
-  lazy val redirects = wire[RedirectService]
-  lazy val r2PagePressJob = wire[R2PagePressJob]
-  lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
-  lazy val rebuildIndexJob = wire[RebuildIndexJob]
+  lazy val contentApiClient: ContentApiClient = wire[ContentApiClient]
+  lazy val ophanApi: OphanApi = wire[OphanApi]
+  lazy val emailService: EmailService = wire[EmailService]
+  lazy val fastlyStatisticService: FastlyStatisticService = wire[FastlyStatisticService]
+  lazy val fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob = wire[FastlyCloudwatchLoadJob]
+  lazy val redirects: RedirectService = wire[RedirectService]
+  lazy val r2PagePressJob: R2PagePressJob = wire[R2PagePressJob]
+  lazy val analyticsSanityCheckJob: AnalyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
+  lazy val rebuildIndexJob: RebuildIndexJob = wire[RebuildIndexJob]
 
   lazy val dfpApi: DfpApi = wire[DfpApi]
   lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
@@ -76,9 +76,9 @@ trait AdminServices extends I18nComponents {
 
 trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[AdminLifecycle],
@@ -94,9 +94,9 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("admin")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("admin")
 
-  override lazy val appMetrics = ApplicationMetrics(
+  override lazy val appMetrics: ApplicationMetrics = ApplicationMetrics(
     DfpApiMetrics.DfpSessionErrors,
     DfpApiMetrics.DfpApiErrors,
   )

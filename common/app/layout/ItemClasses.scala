@@ -20,7 +20,7 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
 }
 
 object ItemClasses {
-  val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
+  val showMore: ItemClasses = ItemClasses(mobile = ListItem, tablet = ListItem)
 
-  val liveBlogMore = ItemClasses(mobile = MediaList, tablet = Standard)
+  val liveBlogMore: ItemClasses = ItemClasses(mobile = MediaList, tablet = Standard)
 }

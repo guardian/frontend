@@ -17,6 +17,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
+import app.LifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -26,16 +27,16 @@ class AppLoader extends FrontendApplicationLoader {
 trait DiscussionServices {
   def wsClient: WSClient
 
-  lazy val discussionApi = wire[DiscussionApi]
+  lazy val discussionApi: DiscussionApi = wire[DiscussionApi]
 }
 
 trait AppComponents extends FrontendComponents with DiscussionControllers with DiscussionServices {
 
-  lazy val healthCheck = wire[HealthCheck]
-  lazy val devAssetsController = wire[DevAssetsController]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
+  lazy val devAssetsController: DevAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool: LogbackOperationsPool = wire[LogbackOperationsPool]
 
-  override lazy val lifecycleComponents = List(
+  override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
@@ -44,7 +45,7 @@ trait AppComponents extends FrontendComponents with DiscussionControllers with D
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("discussion")
+  lazy val appIdentity: ApplicationIdentity = ApplicationIdentity("discussion")
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.discussion.BuildInfo
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]

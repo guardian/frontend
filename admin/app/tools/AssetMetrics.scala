@@ -13,7 +13,7 @@ import scala.util.control.NonFatal
 
 case class AssetMetric(name: String, metric: GetMetricStatisticsResult, yLabel: String) {
   lazy val chart = new AwsLineChart(name, Seq(yLabel, name), ChartFormat.SingleLineBlack, metric)
-  lazy val change = BigDecimal(
+  lazy val change: Float = BigDecimal(
     chart.dataset.last.values.headOption.getOrElse(0.0) - chart.dataset.head.values.headOption.getOrElse(0.0),
   ).setScale(2, BigDecimal.RoundingMode.HALF_UP).toFloat
 }

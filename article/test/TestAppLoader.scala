@@ -18,7 +18,7 @@ trait TestComponents extends WithTestContentApiClient with WithTestTopicService 
   override lazy val remoteRender: DotcomRenderingService = new DCRFake()
 
   // Do not run lifecycle components in tests
-  override lazy val lifecycleComponents = List()
+  override lazy val lifecycleComponents: List[Nothing] = List()
 }
 
 trait WithTestTopicService extends TopicServices with MockitoSugar {

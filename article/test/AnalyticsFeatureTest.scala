@@ -13,7 +13,7 @@ import org.scalatest.matchers.should.Matchers
     with GivenWhenThen
     with Matchers
     with ConfiguredTestSuite {
-  implicit val config = Configuration
+  implicit val config: Configuration.type = Configuration
 
   Feature("Analytics") {
 

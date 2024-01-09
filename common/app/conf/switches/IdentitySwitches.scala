@@ -4,7 +4,7 @@ import conf.switches.Expiry.never
 
 trait IdentitySwitches {
 
-  val IdentityCookieRefreshSwitch = Switch(
+  val IdentityCookieRefreshSwitch: Switch = Switch(
     SwitchGroup.Identity,
     "id-cookie-refresh",
     "If switched on, users cookies will be refreshed.",
@@ -14,7 +14,7 @@ trait IdentitySwitches {
     exposeClientSide = true,
   )
 
-  val Okta = Switch(
+  val Okta: Switch = Switch(
     group = SwitchGroup.Identity,
     name = "okta",
     description = "Use Okta for authentication",

@@ -33,7 +33,7 @@ case class FrontendStatisticSet(datapoints: List[DataPoint], name: String, unit:
 }
 
 case class SimpleDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
-  override val time = Some(sampleTime)
+  override val time: Some[DateTime] = Some(sampleTime)
 }
 
 final case class SimpleMetric(override val name: String, datapoint: SimpleDataPoint) extends FrontendMetric {
@@ -147,7 +147,7 @@ object DurationMetric {
 }
 
 case class SampledDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
-  override val time = Some(sampleTime)
+  override val time: Some[DateTime] = Some(sampleTime)
 }
 
 final case class SamplerMetric(override val name: String, override val metricUnit: StandardUnit)

@@ -21,6 +21,7 @@ import services.{ConfigAgent, OphanApi}
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import play.api.mvc.AnyContentAsEmpty
 
 @DoNotDiscover class FaciaControllerTest
     extends AnyFlatSpec
@@ -37,7 +38,7 @@ import scala.concurrent.{Await, Future}
     with WithTestContentApiClient
     with WithAssets {
 
-  lazy val wsClient = mockWsResponse()
+  lazy val wsClient: WSClient = mockWsResponse()
 
   lazy val faciaController = new FaciaControllerImpl(
     fapi,
@@ -49,9 +50,11 @@ import scala.concurrent.{Await, Future}
   )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
-  val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)
+  val frontJson: FrontJson =
+    FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)
 
-  val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
+  val responsiveRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
   def mockWsResponse(): WSClient = {
     val wsClient = mock[WSClient]

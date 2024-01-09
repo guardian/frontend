@@ -12,23 +12,23 @@ import scala.language.implicitConversions
 trait Football {
 
   implicit class MatchSeq2Sorted(matches: Seq[FootballMatch]) {
-    lazy val sortByDate = matches.sortBy(m => (m.date.toInstant.toEpochMilli, m.homeTeam.name))
+    lazy val sortByDate: Seq[FootballMatch] = matches.sortBy(m => (m.date.toInstant.toEpochMilli, m.homeTeam.name))
   }
 
   implicit class Content2minByMin(c: ContentType) {
-    lazy val minByMin = c.tags.tags.exists(_.id == "tone/minutebyminute")
+    lazy val minByMin: Boolean = c.tags.tags.exists(_.id == "tone/minutebyminute")
   }
 
   implicit class Content2matchReport(c: ContentType) {
-    lazy val matchReport = c.tags.tags.exists(_.id == "tone/matchreports")
+    lazy val matchReport: Boolean = c.tags.tags.exists(_.id == "tone/matchreports")
   }
 
   implicit class Content2squadSheet(c: ContentType) {
-    lazy val squadSheet = c.tags.tags.exists(_.id == "football/series/squad-sheets")
+    lazy val squadSheet: Boolean = c.tags.tags.exists(_.id == "football/series/squad-sheets")
   }
 
   implicit class Content2preview(c: ContentType) {
-    lazy val preview = c.tags.tags.exists(_.id == "football/series/match-previews")
+    lazy val preview: Boolean = c.tags.tags.exists(_.id == "football/series/match-previews")
   }
 
   implicit def match2Trail(m: FootballMatch): FootballMatchTrail = {
@@ -48,20 +48,20 @@ trait Football {
       m.date.toLocalDate.isAfter(date) && m.date.toLocalDate.isBefore(date.plusDays(1))
 
     //results and fixtures do not actually have a status field in the API
-    lazy val matchStatus = m match {
+    lazy val matchStatus: String = m match {
       case f: Fixture   => "Fixture"
       case l: LiveMatch => l.status
       case r: Result    => "FT"
       case m: MatchDay  => m.matchStatus
     }
 
-    lazy val isFixture = m match {
+    lazy val isFixture: Boolean = m match {
       case f: Fixture  => true
       case m: MatchDay => m.matchStatus == "-" // yeah really even though its not in the docs
       case _           => false
     }
 
-    lazy val isResult = m match {
+    lazy val isResult: Boolean = m match {
       case r: Result   => true
       case m: MatchDay => m.result
       case _           => false
@@ -74,20 +74,20 @@ trait Football {
     def hasTeam(teamId: String): Boolean = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
     // England, Scotland, Wales, N. Ireland or Rep. Ireland
-    lazy val isHomeNationGame = {
+    lazy val isHomeNationGame: Boolean = {
       val homeNations = Seq("497", "630", "964", "494", "499")
       homeNations.contains(m.homeTeam.id) || homeNations.contains(m.awayTeam.id)
     }
   }
 
   implicit class TeamHasScored(t: MatchDayTeam) {
-    lazy val hasScored = t.score.exists(_ != 0)
+    lazy val hasScored: Boolean = t.score.exists(_ != 0)
   }
 
   implicit class GhostTeam(t: MatchDayTeam) {
-    lazy val isGhostTeam = ghostTeamIds.contains(t.id)
+    lazy val isGhostTeam: Boolean = ghostTeamIds.contains(t.id)
 
-    lazy val knockoutName = {
+    lazy val knockoutName: String = {
       if (isGhostTeam) ghostTeamNameMappings.foldLeft(t.name) { case (name, (from, to)) => name.replace(from, to) }
       else t.name
     }
@@ -160,7 +160,7 @@ trait Football {
 
   // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
 
-  val roundLinks = Map[String, Round => Option[String]]()
+  val roundLinks: Map[String, Round => Option[String]] = Map[String, Round => Option[String]]()
   def groupTag(competitionId: String, round: Round): Option[String] = roundLinks.get(competitionId).flatMap(_(round))
 }
 

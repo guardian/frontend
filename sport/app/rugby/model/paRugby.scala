@@ -8,6 +8,7 @@ import rugby.model._
 import PAReads._
 
 import scala.util.{Failure, Success, Try}
+import play.api.libs.json.Reads
 
 case class PAResult(
     code: String,
@@ -16,17 +17,17 @@ case class PAResult(
 )
 
 object PAReads {
-  implicit val dtReads = play.api.libs.json.JodaReads.DefaultJodaDateTimeReads
+  implicit val dtReads: Reads[DateTime] = play.api.libs.json.JodaReads.DefaultJodaDateTimeReads
 
-  implicit val resultReads = Json.reads[PAResult]
-  implicit val playerReads = Json.reads[PAPlayer]
-  implicit val nestedParticipantReads = Json.reads[NestedParticipant]
-  implicit val participantReads = Json.reads[Participant]
-  implicit val teamReads = Json.reads[PATeam]
-  implicit val venueReads = Json.reads[Venue]
-  implicit val tournamentReads = Json.reads[Tournament]
-  implicit val matchReads = Json.reads[PAMatch]
-  implicit val matchesReads = Json.reads[PAMatchesResponse]
+  implicit val resultReads: Reads[PAResult] = Json.reads[PAResult]
+  implicit val playerReads: Reads[PAPlayer] = Json.reads[PAPlayer]
+  implicit val nestedParticipantReads: Reads[NestedParticipant] = Json.reads[NestedParticipant]
+  implicit val participantReads: Reads[Participant] = Json.reads[Participant]
+  implicit val teamReads: Reads[PATeam] = Json.reads[PATeam]
+  implicit val venueReads: Reads[Venue] = Json.reads[Venue]
+  implicit val tournamentReads: Reads[Tournament] = Json.reads[Tournament]
+  implicit val matchReads: Reads[PAMatch] = Json.reads[PAMatch]
+  implicit val matchesReads: Reads[PAMatchesResponse] = Json.reads[PAMatchesResponse]
 }
 
 case class PAPlayer(

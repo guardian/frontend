@@ -64,7 +64,7 @@ object EditionAdTargeting {
       }
   }
 
-  implicit val editionAdTargetingFormat = Json.format[EditionAdTargeting]
+  implicit val editionAdTargetingFormat: OFormat[EditionAdTargeting] = Json.format[EditionAdTargeting]
 
   private val adTargeter = new AdTargeter(
     platform = "ng",

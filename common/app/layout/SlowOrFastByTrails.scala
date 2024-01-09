@@ -3,7 +3,7 @@ package layout
 import model.Trail
 
 object SlowOrFastByTrails {
-  val SlowTags = Set(
+  val SlowTags: Set[String] = Set(
     "type/cartoon",
     "type/gallery",
     "type/picture",

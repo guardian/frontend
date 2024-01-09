@@ -9,16 +9,16 @@ import org.scalatest.matchers.should.Matchers
 class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
   case class TestType(test: String)
 
-  val testErrors = List(Error("Test error", "Test description"))
-  val validJSONResponse = HttpResponse("""{"test": "value"}""", 200, "OK")
-  val invalidJSONResponse = HttpResponse("""Not valid JSON""", 200, "OK")
-  val badTypeJSONResponse = HttpResponse("""{"anotherKey": "some value"}""", 200, "OK")
-  val errorJSONResponse = HttpResponse(""""error body"""", 500, "Internal server error")
-  val emptyResponse = HttpResponse("""{}""", 200, "OK")
+  val testErrors: List[Error] = List(Error("Test error", "Test description"))
+  val validJSONResponse: HttpResponse = HttpResponse("""{"test": "value"}""", 200, "OK")
+  val invalidJSONResponse: HttpResponse = HttpResponse("""Not valid JSON""", 200, "OK")
+  val badTypeJSONResponse: HttpResponse = HttpResponse("""{"anotherKey": "some value"}""", 200, "OK")
+  val errorJSONResponse: HttpResponse = HttpResponse(""""error body"""", 500, "Internal server error")
+  val emptyResponse: HttpResponse = HttpResponse("""{}""", 200, "OK")
 
   object TestJsonBodyParser extends JsonBodyParser {
 
-    implicit val formats = new DefaultFormats {}
+    implicit val formats: DefaultFormats = new DefaultFormats {}
 
     def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = testErrors
   }

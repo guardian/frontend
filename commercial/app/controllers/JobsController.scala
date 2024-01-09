@@ -12,7 +12,7 @@ class JobsController(jobsAgent: JobsAgent, val controllerComponents: ControllerC
     extends BaseController
     with implicits.Requests {
 
-  implicit val codec = Codec.utf_8
+  implicit val codec: Codec = Codec.utf_8
 
   private def jobSample(specificIds: Seq[String], segment: Segment): Seq[Job] =
     (jobsAgent.specificJobs(specificIds) ++ jobsAgent.jobsTargetedAt(segment)).distinct.take(2)

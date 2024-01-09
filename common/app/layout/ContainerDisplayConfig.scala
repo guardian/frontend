@@ -9,7 +9,7 @@ case class ContainerDisplayConfig(
 )
 
 object ContainerDisplayConfig {
-  val empty = ContainerDisplayConfig(
+  val empty: ContainerDisplayConfig = ContainerDisplayConfig(
     CollectionConfigWithId(
       "",
       CollectionConfig.empty,

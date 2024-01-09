@@ -155,7 +155,7 @@ object S3FrontsApi extends S3 {
   override lazy val bucket: String = Configuration.aws.frontendStoreBucket
   lazy val stage: String = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
-  lazy val location = s"$stage/$namespace"
+  lazy val location: String = s"$stage/$namespace"
 
   private def putFapiPressedJson(live: String, path: String, json: String, suffix: String): Unit =
     putPrivateGzipped(s"$location/pressed/$live/$path/fapi/pressed.v2$suffix.json", json, "application/json")

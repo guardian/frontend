@@ -13,13 +13,14 @@ trait FootballControllers {
   def contentApiClient: ContentApiClient
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
-  lazy val fixturesController = wire[FixturesController]
-  lazy val resultsController = wire[ResultsController]
-  lazy val matchDayController = wire[MatchDayController]
-  lazy val leagueTableController = wire[LeagueTableController]
-  lazy val wallchartController = wire[WallchartController]
-  lazy val moreOnMatchController = wire[MoreOnMatchController]
-  lazy val competitionListController = wire[CompetitionListController]
-  lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
-  lazy val matchController = wire[MatchController]
+  lazy val fixturesController: FixturesController = wire[FixturesController]
+  lazy val resultsController: ResultsController = wire[ResultsController]
+  lazy val matchDayController: MatchDayController = wire[MatchDayController]
+  lazy val leagueTableController: LeagueTableController = wire[LeagueTableController]
+  lazy val wallchartController: WallchartController = wire[WallchartController]
+  lazy val moreOnMatchController: MoreOnMatchController = wire[MoreOnMatchController]
+  lazy val competitionListController: CompetitionListController = wire[CompetitionListController]
+  lazy val fixturesAndResultsContainerController: FixturesAndResultsContainerController =
+    wire[FixturesAndResultsContainerController]
+  lazy val matchController: MatchController = wire[MatchController]
 }

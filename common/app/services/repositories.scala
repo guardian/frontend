@@ -10,6 +10,7 @@ import org.joda.time.DateTime
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
+import scala.util.matching.Regex
 
 trait Index extends ConciergeRepository {
 
@@ -230,7 +231,7 @@ trait Index extends ConciergeRepository {
 
   // for some reason and for the life of me I cannot figure it out, this does not compile if these
   // are at the top of the file :(
-  val SinglePart = """([\w\d\.-]+)""".r
-  val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
-  val UkNewsSection = """^uk-news/(.+)$""".r
+  val SinglePart: Regex = """([\w\d\.-]+)""".r
+  val SeriesInSameSection: Regex = """(series/[\w\d\.-]+)""".r
+  val UkNewsSection: Regex = """^uk-news/(.+)$""".r
 }

@@ -1,5 +1,6 @@
 package feed
 
+import com.github.nscala_time.time.Imports
 import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
@@ -29,19 +30,19 @@ trait Competitions extends implicits.Football {
 
   def competitionsWithId(compId: String): Option[Competition] = competitions.find(_.id == compId)
 
-  lazy val competitionsWithTodaysMatchesAndFutureFixtures = Competitions(
+  lazy val competitionsWithTodaysMatchesAndFutureFixtures: Competitions = Competitions(
     competitions
       .map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(LocalDate.now()))))
       .filter(_.hasMatches),
   )
 
-  lazy val competitionsWithTodaysMatchesAndPastResults = Competitions(
+  lazy val competitionsWithTodaysMatchesAndPastResults: Competitions = Competitions(
     competitions
       .map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(LocalDate.now()))))
       .filter(_.hasMatches),
   )
 
-  lazy val withTodaysMatches = Competitions(
+  lazy val withTodaysMatches: Competitions = Competitions(
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(LocalDate.now())))).filter(_.hasMatches),
   )
 
@@ -59,7 +60,7 @@ trait Competitions extends implicits.Football {
       })
       .headOption
 
-  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
+  lazy val matchDates: Seq[LocalDate] = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: LocalDate, numDays: Int): Seq[LocalDate] =
     matchDates.filter(_ >= startDate).take(numDays)
@@ -390,7 +391,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with GuLogging
     with implicits.Football {
 
-  private implicit val dateOrdering = Ordering.comparatorToOrdering(
+  private implicit val dateOrdering: Ordering[Imports.DateTime] = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]],
   )
 
@@ -407,7 +408,9 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   override val teamNameBuilder = new TeamNameBuilder(this)
 
-  val competitionAgents = competitionDefinitions map { new CompetitionAgent(footballClient, teamNameBuilder, _) }
+  val competitionAgents: Seq[CompetitionAgent] = competitionDefinitions map {
+    new CompetitionAgent(footballClient, teamNameBuilder, _)
+  }
   val competitionIds: Seq[String] = competitionDefinitions map { _.id }
 
   override def competitions: Seq[Competition] = competitionAgents.map(_.competition)

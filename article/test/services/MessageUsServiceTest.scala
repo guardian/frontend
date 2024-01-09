@@ -14,6 +14,7 @@ import play.api.libs.json.Reads
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import model.Field
 
 class MessageUsServiceTest
     extends AnyFlatSpec
@@ -22,14 +23,15 @@ class MessageUsServiceTest
     with WithTestExecutionContext
     with MockitoSugar {
 
-  val fakeClient = mock[S3Client[MessageUsConfigData]]
+  val fakeClient: S3Client[MessageUsConfigData] = mock[S3Client[MessageUsConfigData]]
 
-  val formFields = List(
+  val formFields: List[Field] = List(
     NameField("nameField1", "name", "name", true, FieldType.Name),
     EmailField("emailField1", "email", "email", true, FieldType.Email),
     TextAreaField("textAreaField1", "textArea", "textArea", true, FieldType.TextArea),
   )
-  val successResponse = MessageUsConfigData(articleId = "key1", formId = "form1", formFields = formFields)
+  val successResponse: MessageUsConfigData =
+    MessageUsConfigData(articleId = "key1", formId = "form1", formFields = formFields)
 
   "refreshMessageUsData" should "return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))

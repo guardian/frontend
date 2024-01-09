@@ -33,7 +33,7 @@ case class PressedCollection(
 
   lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
 
-  lazy val adFree = {
+  lazy val adFree: PressedCollection = {
     copy(
       curated = curated.filterNot(_.isPaidFor),
       backfill = backfill.filterNot(_.isPaidFor),
@@ -63,13 +63,13 @@ case class PressedCollection(
     copy(hasMore = hasMore)
   }
 
-  lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
+  lazy val collectionConfigWithId: CollectionConfigWithId = CollectionConfigWithId(id, config)
 
-  lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy { c =>
+  lazy val curatedPlusBackfillDeduplicated: List[PressedContent] = (curated ++ backfill).distinctBy { c =>
     c.properties.maybeContentId.getOrElse(c.card.id)
   }
 
-  lazy val distinct = curatedPlusBackfillDeduplicated.distinctBy(_.header.url)
+  lazy val distinct: List[PressedContent] = curatedPlusBackfillDeduplicated.distinctBy(_.header.url)
 
   def branding(edition: Edition): Option[ContainerBranding] = {
     ContainerBrandingFinder.findBranding(

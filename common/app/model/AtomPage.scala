@@ -3,6 +3,7 @@ package model
 import model.content._
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+import play.twirl.api.HtmlFormat
 
 trait AtomPage extends Page {
   def atom: Atom
@@ -20,9 +21,9 @@ case class ChartAtomPage(
 )(implicit request: RequestHeader, context: ApplicationContext)
     extends AtomPage {
   override val atomType = "chart"
-  override val body = views.html.fragments.atoms.chart(atom, shouldFence = false)
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms.chart(atom, shouldFence = false)
   override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
     section = None,
@@ -36,9 +37,9 @@ case class GuideAtomPage(
 )(implicit request: RequestHeader)
     extends AtomPage {
   override val atomType = "guide"
-  override val body = views.html.fragments.atoms.snippets.guide(atom)
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms.snippets.guide(atom)
   override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Guide"),
     section = None,
@@ -52,9 +53,9 @@ case class InteractiveAtomPage(
 )(implicit request: RequestHeader, context: ApplicationContext)
     extends AtomPage {
   override val atomType = "interactive"
-  override val body = views.html.fragments.atoms.interactive(atom, shouldFence = false)
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms.interactive(atom, shouldFence = false)
   override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
     section = None,
@@ -68,10 +69,10 @@ case class MediaAtomPage(
 )(implicit request: RequestHeader)
     extends AtomPage {
   override val atomType = "media"
-  override val body = views.html.fragments.atoms
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms
     .media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
   override val javascriptModule = "youtube-embed"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
     section = None,
@@ -85,9 +86,9 @@ case class ProfileAtomPage(
 )(implicit request: RequestHeader)
     extends AtomPage {
   override val atomType = "profile"
-  override val body = views.html.fragments.atoms.snippets.profile(atom)
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms.snippets.profile(atom)
   override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Profile"),
     section = None,
@@ -101,9 +102,9 @@ case class QandaAtomPage(
 )(implicit request: RequestHeader)
     extends AtomPage {
   override val atomType = "qanda"
-  override val body = views.html.fragments.atoms.snippets.qanda(atom)
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms.snippets.qanda(atom)
   override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Q&A"),
     section = None,
@@ -117,9 +118,9 @@ case class TimelineAtomPage(
 )(implicit request: RequestHeader)
     extends AtomPage {
   override val atomType = "timeline"
-  override val body = views.html.fragments.atoms.snippets.timeline(atom)
+  override val body: HtmlFormat.Appendable = views.html.fragments.atoms.snippets.timeline(atom)
   override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
+  override val metadata: MetaData = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Timeline"),
     section = None,

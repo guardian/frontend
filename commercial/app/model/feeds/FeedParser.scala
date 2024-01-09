@@ -7,6 +7,7 @@ import commercial.model.merchandise.{Job, TravelOffer}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
+import commercial.model.merchandise.Merchandise
 
 sealed trait FeedParser[+T] {
 
@@ -41,7 +42,7 @@ class FeedsParser(
     }
   }
 
-  val all = Seq(jobs, travelOffers).flatten
+  val all: Seq[FeedParser[Merchandise]] = Seq(jobs, travelOffers).flatten
 }
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)

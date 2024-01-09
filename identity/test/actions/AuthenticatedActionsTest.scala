@@ -30,20 +30,20 @@ class AuthenticatedActionsTest
     val expectedEventParameters =
       "componentEventParams=componentType%3Didentityauthentication%26componentId%3Dsignin_redirect_for_action"
 
-    val authService = mock[AuthenticationService]
+    val authService: AuthenticationService = mock[AuthenticationService]
     val client: IdApiClient = mock[IdApiClient]
     val idRequestParser: IdRequestParser = mock[IdRequestParser]
     val controllerComponents: ControllerComponents = mock[ControllerComponents]
-    val user = User(
+    val user: User = User(
       "",
       "test@example.com",
       statusFields = new StatusFields(userEmailValidated = Some(true)),
     )
     val newsletterService: NewsletterService = mock[NewsletterService]
-    val rpCookie = mock[ScGuRp]
-    val guUCookie = mock[ScGuU]
-    val recentlyAuthedUser = AuthenticatedUser(user, guUCookie, true)
-    val notRecentlyAuthedUser = AuthenticatedUser(user, guUCookie, false)
+    val rpCookie: ScGuRp = mock[ScGuRp]
+    val guUCookie: ScGuU = mock[ScGuU]
+    val recentlyAuthedUser: AuthenticatedUser = AuthenticatedUser(user, guUCookie, true)
+    val notRecentlyAuthedUser: AuthenticatedUser = AuthenticatedUser(user, guUCookie, false)
     val mockResponse = mock[Response[User]]
 
     val actions = new AuthenticatedActions(
@@ -54,7 +54,7 @@ class AuthenticatedActionsTest
       mock[NewsletterService],
       mock[IdRequestParser],
     )
-    val userWithRpCookie = AuthenticatedUser(user, rpCookie)
+    val userWithRpCookie: AuthenticatedUser = AuthenticatedUser(user, rpCookie)
 
   }
 

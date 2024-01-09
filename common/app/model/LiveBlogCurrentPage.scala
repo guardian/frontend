@@ -245,7 +245,7 @@ sealed trait PageReference {
 
   def isArchivePage: Boolean
 
-  def buildQueryParam(topicResult: Option[TopicResult]) = {
+  def buildQueryParam(topicResult: Option[TopicResult]): String = {
     topicResult match {
       case Some(value) => s"&topics=${value.`type`}:${value.name}"
       case None        => ""
@@ -263,7 +263,7 @@ case class N1Pagination(
 
 case class FirstPage(blocks: Seq[BodyBlock], filterKeyEvents: Boolean, topicResult: Option[TopicResult])
     extends PageReference {
-  val suffix = s"?filterKeyEvents=$filterKeyEvents${buildQueryParam(topicResult)}"
+  val suffix: String = s"?filterKeyEvents=$filterKeyEvents${buildQueryParam(topicResult)}"
   val pageNumber = 1
   val isArchivePage = false
 }
@@ -275,7 +275,7 @@ case class BlockPage(
     filterKeyEvents: Boolean,
     topicResult: Option[TopicResult],
 ) extends PageReference {
-  val suffix = s"?page=with:block-$blockId&filterKeyEvents=$filterKeyEvents${buildQueryParam(topicResult)}"
+  val suffix: String = s"?page=with:block-$blockId&filterKeyEvents=$filterKeyEvents${buildQueryParam(topicResult)}"
   val isArchivePage = true
 }
 

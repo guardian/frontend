@@ -13,7 +13,7 @@ import scala.util.matching.Regex
 
 object USElection2020AmpPages {
 
-  val specialPathsToCapiIdsMap = Map(
+  val specialPathsToCapiIdsMap: Map[String, String] = Map(
     "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
     "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
     "/us-news/ng-interactive/2020/nov/03/us-election-2020-live-results-donald-trump-joe-biden-who-won-presidential-republican-democrat" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",

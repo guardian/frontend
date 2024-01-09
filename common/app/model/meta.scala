@@ -27,6 +27,7 @@ import scala.util.matching.Regex
 import utils.ShortUrls
 
 import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
+import play.api.libs.functional.FunctionalBuilder
 
 object Commercial {
 
@@ -118,7 +119,7 @@ final case class Fields(
     showTableOfContents: Option[Boolean],
 ) {
 
-  lazy val shortUrlId = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
+  lazy val shortUrlId: String = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
   lazy val isRightToLeftLang: Boolean = lang.contains("ar")
 
   def javascriptConfig: Map[String, JsValue] = {
@@ -242,7 +243,7 @@ object ContentFormat {
   def fromFapiContentFormat(fapiContentFormat: fapiContentFormat): ContentFormat =
     ContentFormat(fapiContentFormat.design, fapiContentFormat.theme, fapiContentFormat.display)
 
-  implicit val contentFormatWrites = new Writes[ContentFormat] {
+  implicit val contentFormatWrites: Writes[ContentFormat] = new Writes[ContentFormat] {
     def writes(format: ContentFormat) =
       Json.obj(
         "design" -> format.design.toString,
@@ -303,12 +304,12 @@ object ContentFormat {
       case _                     => StandardDisplay
     }
 
-  val contentFormatBuilder =
+  val contentFormatBuilder: FunctionalBuilder[Reads]#CanBuild3[Design, Theme, Display] =
     (JsPath \ "design").read[String].map(parseDesign) and
       (JsPath \ "theme").read[String].map(parseTheme) and
       (JsPath \ "display").readNullable[String].map(_.map(parseDisplay).getOrElse(StandardDisplay))
 
-  implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
+  implicit val contentFormatReads: Reads[ContentFormat] = contentFormatBuilder.apply(ContentFormat.apply _)
 }
 
 case class MetaData(
@@ -349,7 +350,7 @@ case class MetaData(
     isFoundation: Boolean = false,
     firstPublicationDate: Option[DateTime] = None,
 ) {
-  val sectionId = section map (_.value) getOrElse ""
+  val sectionId: String = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
 
   private lazy val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
@@ -626,10 +627,10 @@ final case class Elements(elements: Seq[Element]) {
   // if you change these rules make sure you update IMAGES.md (in this project)
   def mainPicture: Option[ImageElement] = images.find(_.properties.isMain)
 
-  lazy val hasMainPicture = mainPicture.flatMap(_.images.imageCrops.headOption).isDefined
+  lazy val hasMainPicture: Boolean = mainPicture.flatMap(_.images.imageCrops.headOption).isDefined
 
   // Currently, only Picture and Embed elements can be given the showcase role.
-  lazy val hasShowcaseMainElement = {
+  lazy val hasShowcaseMainElement: Boolean = {
     val showcasePicture = for {
       main <- mainPicture
       image <- main.images.largestImage
@@ -934,22 +935,22 @@ object Tags {
   val Interactive = "type/interactive"
   val Sudoku = "type/sudoku"
 
-  val liveMappings = Seq(
+  val liveMappings: Seq[String] = Seq(
     "tone/minutebyminute",
   )
 
-  val commentMappings = Seq(
+  val commentMappings: Seq[String] = Seq(
     "tone/comment",
   )
 
-  val mediaTypes = Seq(
+  val mediaTypes: Seq[String] = Seq(
     "type/video",
     "type/audio",
     "type/gallery",
     "type/picture",
   )
 
-  val featureMappings = Seq(
+  val featureMappings: Seq[String] = Seq(
     "tone/features",
     "tone/recipes",
     "tone/performances",
@@ -960,11 +961,11 @@ object Tags {
     "tone/childrens-user-reviews",
   )
 
-  val interviewMappings = Seq(
+  val interviewMappings: Seq[String] = Seq(
     "tone/interview",
   )
 
-  val reviewMappings = Seq(
+  val reviewMappings: Seq[String] = Seq(
     "tone/reviews",
   )
 

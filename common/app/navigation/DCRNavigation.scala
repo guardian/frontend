@@ -12,6 +12,7 @@ import navigation.ReaderRevenueSite.{
 }
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.OWrites
 
 case class ReaderRevenueLink(
     contribute: String,
@@ -21,7 +22,7 @@ case class ReaderRevenueLink(
 )
 
 object ReaderRevenueLink {
-  implicit val writes = Json.writes[ReaderRevenueLink]
+  implicit val writes: OWrites[ReaderRevenueLink] = Json.writes[ReaderRevenueLink]
 }
 
 case class ReaderRevenueLinks(
@@ -33,7 +34,7 @@ case class ReaderRevenueLinks(
 )
 
 object ReaderRevenueLinks {
-  implicit val writes = Json.writes[ReaderRevenueLinks]
+  implicit val writes: OWrites[ReaderRevenueLinks] = Json.writes[ReaderRevenueLinks]
 
   val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
     getReaderRevenueUrl(SupportContribute, Header),
@@ -70,7 +71,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupporterCTA, AmpFooter),
   )
 
-  val all = ReaderRevenueLinks(
+  val all: ReaderRevenueLinks = ReaderRevenueLinks(
     headerReaderRevenueLink,
     footerReaderRevenueLink,
     sideMenuReaderRevenueLink,
@@ -91,14 +92,14 @@ case class Nav(
 )
 
 object Nav {
-  implicit val flatSubnavWrites = Json.writes[FlatSubnav]
-  implicit val parentSubnavWrites = Json.writes[ParentSubnav]
-  implicit val subnavWrites = Writes[Subnav] {
+  implicit val flatSubnavWrites: OWrites[FlatSubnav] = Json.writes[FlatSubnav]
+  implicit val parentSubnavWrites: OWrites[ParentSubnav] = Json.writes[ParentSubnav]
+  implicit val subnavWrites: Writes[Subnav] = Writes[Subnav] {
     case nav: FlatSubnav   => flatSubnavWrites.writes(nav)
     case nav: ParentSubnav => parentSubnavWrites.writes(nav)
   }
 
-  implicit val writes = Json.writes[Nav]
+  implicit val writes: OWrites[Nav] = Json.writes[Nav]
 
   def apply(page: Page, edition: Edition): Nav = {
     val navMenu = NavMenu(page, edition)

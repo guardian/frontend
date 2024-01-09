@@ -17,10 +17,11 @@ import play.api.test.FakeRequest
 import java.time.ZoneOffset
 import scala.jdk.CollectionConverters._
 import scala.xml.{Node, XML}
+import play.api.mvc.AnyContentAsEmpty
 
 class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
 
-  val request = FakeRequest()
+  val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
   val imageMedia: ImageMedia = {
     val asset = ImageAsset(
@@ -35,7 +36,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
     ImageMedia(Seq(asset))
   }
 
-  val replacedImage = Replace("http://localhost/replaced-image.jpg", "1200", "1000", None)
+  val replacedImage: Replace = Replace("http://localhost/replaced-image.jpg", "1200", "1000", None)
 
   val smallImageMedia: ImageMedia = {
     val asset = ImageAsset(
@@ -64,9 +65,9 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
   }
 
   val wayBackWhen = new DateTime(2021, 3, 2, 12, 30, 1)
-  val lastModifiedWayBackWhen = wayBackWhen.plusHours(1)
+  val lastModifiedWayBackWhen: DateTime = wayBackWhen.plusHours(1)
 
-  val twoEncodedBulletItems =
+  val twoEncodedBulletItems: String =
     """
       | - Bullet 1
       |

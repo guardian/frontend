@@ -11,6 +11,7 @@ import play.api.test.Helpers._
 import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.NewsletterService
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
+import play.api.mvc.ControllerComponents
 
 @DoNotDiscover class PublicationControllerTest
     extends AnyFlatSpec
@@ -28,9 +29,9 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   private val OK = 200
 
   val emptySeq: Seq[TagDefinition] = Seq.empty
-  val bookAgent = mock[NewspaperBookTagAgent]
-  val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
-  lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
+  val bookAgent: NewspaperBookTagAgent = mock[NewspaperBookTagAgent]
+  val bookSectionAgent: NewspaperBookSectionTagAgent = mock[NewspaperBookSectionTagAgent]
+  lazy val controllerComponents: ControllerComponents = play.api.test.Helpers.stubControllerComponents()
   lazy val articleController =
     new ArticleController(
       testContentApiClient,

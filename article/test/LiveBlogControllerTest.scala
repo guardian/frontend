@@ -41,17 +41,17 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   val path = "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live"
 
   trait Setup {
-    var fakeTopicService = mock[TopicService]
-    var fakeMessageUsService = mock[MessageUsService]
+    var fakeTopicService: TopicService = mock[TopicService]
+    var fakeMessageUsService: MessageUsService = mock[MessageUsService]
     var fakeDcr = new DCRFake()
-    val topicResult = TopicResult(
+    val topicResult: TopicResult = TopicResult(
       name = "Fifa",
       `type` = TopicType.Org,
       blocks = Seq("56d08042e4b0d38537b1f70b"),
       count = 1,
       percentage_blocks = 1.2f,
     )
-    val messageUsResult = MessageUsData(
+    val messageUsResult: MessageUsData = MessageUsData(
       formId = "mock-form-id",
       formFields = List(
         NameField("nameField1", "name", "name", true, FieldType.Name),
@@ -60,7 +60,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       ),
     )
 
-    val fakeAvailableTopics = Vector(
+    val fakeAvailableTopics: Vector[Topic] = Vector(
       Topic(TopicType.Gpe, "United Kingdom", Some(6)),
       Topic(TopicType.Gpe, "Russia", Some(4)),
       Topic(TopicType.Org, "KPMG", Some(4)),

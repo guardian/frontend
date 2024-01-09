@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import pagepresser.InteractiveImmersiveHtmlCleaner
 
 class InteractiveImmersiveHtmlCleanerTest extends AnyFlatSpec with Matchers {
-  val now = LocalDateTime.parse("2021-08-26T10:15:30")
+  val now: LocalDateTime = LocalDateTime.parse("2021-08-26T10:15:30")
 
   "InteractiveImmersiveHtmlCleaner" should "only clean interactive immersives" in {
     val doc = Jsoup.parse(

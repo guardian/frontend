@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
+import play.api.libs.json
 import play.api.libs.json._
 import play.api.libs.json.JodaReads._
 
@@ -30,13 +31,9 @@ object GuLineItemType {
       case otherLineItemType    => Other(otherLineItemType)
     }
 
-  implicit val guLineItemWrites = new Writes[GuLineItemType] {
-    def writes(lineItemType: GuLineItemType): JsValue = {
-      lineItemType match {
-        case Sponsorship                 => JsString("sponsorship")
-        case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)
-      }
-    }
+  implicit val guLineItemWrites: Writes[GuLineItemType] = {
+    case Sponsorship                 => JsString("sponsorship")
+    case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)
   }
 
   implicit val guLineItemTypeReads: Reads[GuLineItemType] =
@@ -62,11 +59,11 @@ case class GuCustomTargetingValue(
 )
 
 object GuCustomTargetingValue {
-  implicit val format = Json.format[GuCustomTargetingValue]
+  implicit val format: OFormat[GuCustomTargetingValue] = Json.format[GuCustomTargetingValue]
 }
 
 object GuCustomTargeting {
-  implicit val format = Json.format[GuCustomTargeting]
+  implicit val format: OFormat[GuCustomTargeting] = Json.format[GuCustomTargeting]
 }
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
@@ -79,16 +76,16 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   def isPlatform(value: String): Boolean = isPositive("p") && values.contains(value)
   def isNotPlatform(value: String): Boolean = isNegative("p") && values.contains(value)
 
-  val isInlineMerchandisingSlot = isSlot("im")
+  val isInlineMerchandisingSlot: Boolean = isSlot("im")
 
-  val isHighMerchandisingSlot = isSlot("merchandising-high")
+  val isHighMerchandisingSlot: Boolean = isSlot("merchandising-high")
 
-  val isAdTest = isPositive("at")
+  val isAdTest: Boolean = isPositive("at")
 
-  val isKeywordTag = isPositive("k")
-  val isSeriesTag = isPositive("se")
-  val isContributorTag = isPositive("co")
-  val isEditionTag = isPositive("edition")
+  val isKeywordTag: Boolean = isPositive("k")
+  val isSeriesTag: Boolean = isPositive("se")
+  val isContributorTag: Boolean = isPositive("co")
+  val isEditionTag: Boolean = isPositive("edition")
 }
 
 object CustomTarget {
@@ -105,11 +102,13 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
     } else Nil
   }
 
-  val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
-  val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
-  val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedKeywords: Seq[String] =
+    filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedSeries: Seq[String] = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedContributors: Seq[String] =
+    filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
-  val highMerchandisingTargets =
+  val highMerchandisingTargets: Seq[String] =
     filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 }
 
@@ -123,11 +122,11 @@ case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name
 
   private def targetsCountry(name: String) = locationType == "COUNTRY" && name == name
 
-  lazy val targetsUk = targetsCountry("United Kingdom")
+  lazy val targetsUk: Boolean = targetsCountry("United Kingdom")
 
-  lazy val targetsUs = targetsCountry("United States")
+  lazy val targetsUs: Boolean = targetsCountry("United States")
 
-  lazy val targetsAustralia = targetsCountry("Australia")
+  lazy val targetsAustralia: Boolean = targetsCountry("Australia")
 }
 
 object GeoTarget {
@@ -157,18 +156,18 @@ object GuCustomField {
 }
 
 case class GuAdUnit(id: String, path: Seq[String], status: String) {
-  val fullPath = path.mkString("/")
+  val fullPath: String = path.mkString("/")
 
-  val isActive = status == "ACTIVE"
-  val isInactive = status == "INACTIVE"
-  val isArchived = status == "ARCHIVED"
+  val isActive: Boolean = status == "ACTIVE"
+  val isInactive: Boolean = status == "INACTIVE"
+  val isArchived: Boolean = status == "ARCHIVED"
 
   val isRunOfNetwork = path.isEmpty
 }
 
 object GuAdUnit {
 
-  implicit val adUnitFormats = Json.format[GuAdUnit]
+  implicit val adUnitFormats: OFormat[GuAdUnit] = Json.format[GuAdUnit]
 
   val ACTIVE = "ACTIVE"
   val INACTIVE = "INACTIVE"
@@ -241,10 +240,10 @@ case class GuLineItem(
     lastModified: DateTime,
 ) {
 
-  val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
-  val isExpired = endTime.exists(_.isBeforeNow)
-  val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
-  val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
+  val isCurrent: Boolean = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
+  val isExpired: Boolean = endTime.exists(_.isBeforeNow)
+  val isExpiredRecently: Boolean = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
+  val isExpiringSoon: Boolean = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
   val inlineMerchandisingTargetedKeywords: Seq[String] =
     targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
@@ -289,31 +288,29 @@ case class GuLineItem(
     (endTime.isEmpty || endTime.exists(_.isAfterNow))
   }
 
-  lazy val creativeSizes = creativePlaceholders map (_.size)
+  lazy val creativeSizes: Seq[AdSize] = creativePlaceholders map (_.size)
 }
 
 object GuLineItem {
 
   private val timeFormatter = ISODateTimeFormat.dateTime().withZoneUTC()
 
-  implicit val lineItemWrites = new Writes[GuLineItem] {
-    def writes(lineItem: GuLineItem): JsValue = {
-      Json.obj(
-        "id" -> lineItem.id,
-        "orderId" -> lineItem.orderId,
-        "name" -> lineItem.name,
-        "lineItemType" -> lineItem.lineItemType,
-        "startTime" -> timeFormatter.print(lineItem.startTime),
-        "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
-        "isPageSkin" -> lineItem.isPageSkin,
-        "sponsor" -> lineItem.sponsor,
-        "status" -> lineItem.status,
-        "costType" -> lineItem.costType,
-        "creativePlaceholders" -> lineItem.creativePlaceholders,
-        "targeting" -> lineItem.targeting,
-        "lastModified" -> timeFormatter.print(lineItem.lastModified),
-      )
-    }
+  implicit val lineItemWrites: Writes[GuLineItem] = (lineItem: GuLineItem) => {
+    Json.obj(
+      "id" -> lineItem.id,
+      "orderId" -> lineItem.orderId,
+      "name" -> lineItem.name,
+      "lineItemType" -> lineItem.lineItemType,
+      "startTime" -> timeFormatter.print(lineItem.startTime),
+      "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
+      "isPageSkin" -> lineItem.isPageSkin,
+      "sponsor" -> lineItem.sponsor,
+      "status" -> lineItem.status,
+      "costType" -> lineItem.costType,
+      "creativePlaceholders" -> lineItem.creativePlaceholders,
+      "targeting" -> lineItem.targeting,
+      "lastModified" -> timeFormatter.print(lineItem.lastModified),
+    )
   }
 
   implicit val lineItemReads: Reads[GuLineItem] = (
@@ -356,8 +353,8 @@ case class GuCreativeTemplateParameter(
 
 object GuCreativeTemplateParameter {
 
-  implicit val GuCreativeTemplateParameterWrites = new Writes[GuCreativeTemplateParameter] {
-    def writes(param: GuCreativeTemplateParameter): JsValue = {
+  implicit val GuCreativeTemplateParameterWrites: Writes[GuCreativeTemplateParameter] =
+    (param: GuCreativeTemplateParameter) => {
       Json.obj(
         "type" -> param.parameterType,
         "label" -> param.label,
@@ -365,7 +362,6 @@ object GuCreativeTemplateParameter {
         "description" -> param.description,
       )
     }
-  }
 
   implicit val GuCreativeTemplateParameterReads: Reads[GuCreativeTemplateParameter] = (
     (JsPath \ "type").read[String] and
@@ -397,7 +393,8 @@ object GuCreative {
     (mapById(old) ++ mapById(recent)).values.toSeq
   }
 
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val dateToTimestampWrites: json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val guCreativeFormats: Format[GuCreative] = Json.format[GuCreative]
 }
 

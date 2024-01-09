@@ -8,7 +8,7 @@ import model.pressed.PressedContent
 object Sublinks {
   import InclusiveRange.{unit, fromZero}
 
-  val Default = unit(0)
+  val Default: InclusiveRange = unit(0)
 
   def fromItemClasses(itemClasses: ItemClasses): InclusiveRange =
     itemClasses.tablet match {

@@ -5,15 +5,16 @@ import model.ApplicationContext
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import play.api.Mode.Test
+
 import scala.collection.mutable
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 object JobsState {
-  implicit val global = scala.concurrent.ExecutionContext.global
-  val jobs = mutable.Map[String, () => Future[_]]()
-  val outstanding = Box(Map[String, Int]().withDefaultValue(0))
+  implicit val global: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  val jobs: mutable.Map[String, () => Future[_]] = mutable.Map[String, () => Future[_]]()
+  val outstanding: Box[Map[String, Int]] = Box(Map[String, Int]().withDefaultValue(0))
 }
 
 class FunctionJob extends Job with GuLogging {

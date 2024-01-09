@@ -27,7 +27,7 @@ import scala.concurrent.duration._
     with WithTestExecutionContext
     with ScalaFutures {
 
-  val fixedClock = {
+  val fixedClock: Clock = {
     val fixedDate = ZonedDateTime.of(2016, 6, 22, 15, 0, 0, 0, ZoneId.systemDefault()).toInstant
     Clock.fixed(fixedDate, ZoneId.systemDefault())
   }
@@ -36,10 +36,10 @@ import scala.concurrent.duration._
     super.afterAll()
   }
 
-  override implicit val patienceConfig =
+  override implicit val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 
-  lazy val seasonStart = Some(LocalDate.of(2012, 8, 1))
+  lazy val seasonStart: Some[LocalDate] = Some(LocalDate.of(2012, 8, 1))
 
   def testCompetitionsService(competition: Competition): CompetitionsService =
     new CompetitionsService(testFootballClient, Seq(competition))

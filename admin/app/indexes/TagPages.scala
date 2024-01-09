@@ -11,7 +11,7 @@ import scala.util.Try
 object TagPages extends GuLogging {
 
   /** To be curated by Peter Martin */
-  val validSections = Map(
+  val validSections: Map[String, String] = Map(
     ("artanddesign", "Art and design"),
     ("better-business", "Better Business"),
     ("books", "Books"),
@@ -77,7 +77,7 @@ object TagPages extends GuLogging {
     ("world", "World news"),
   )
 
-  val publications = Map(
+  val publications: Map[String, String] = Map(
     ("theguardian", "The Guardian"),
     ("theobserver", "The Observer"),
   )

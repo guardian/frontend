@@ -30,9 +30,9 @@ import scala.util.{Failure, Success, Try}
 trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser {
 
   lazy val webClient = new WebClient(BrowserVersion.CHROME)
-  lazy val host = s"http://localhost:$port"
-  lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
-  lazy val testBrowser = TestBrowser(webDriver, None)
+  lazy val host: String = s"http://localhost:$port"
+  lazy val htmlUnitDriver: HtmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
+  lazy val testBrowser: TestBrowser = TestBrowser(webDriver, None)
   lazy val appId = "409128287"
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
@@ -114,7 +114,8 @@ trait WithTestExecutionContext {
 }
 
 trait WithTestApplicationContext {
-  implicit val testApplicationContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
+  implicit val testApplicationContext: ApplicationContext =
+    ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithMaterializer {
@@ -134,7 +135,7 @@ trait WithTestWsClient {
 trait WithTestContentApiClient extends WithTestExecutionContext {
   def wsClient: WSClient
 
-  val httpRecorder = new ContentApiHttpRecorder {
+  val httpRecorder: ContentApiHttpRecorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
@@ -175,7 +176,7 @@ trait WithTestFrontJsonFapi {
       }
     }
 
-    val recorder = new HttpRecorder[Option[PressedPage]] {
+    val recorder: HttpRecorder[Option[PressedPage]] = new HttpRecorder[Option[PressedPage]] {
       override lazy val baseDir = new File(System.getProperty("user.dir"), "data/pressedPage")
 
       //No transformation for now as we only store content that's there.

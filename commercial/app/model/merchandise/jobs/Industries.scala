@@ -9,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 object Industries {
 
   // note, these are ordered by importance
-  val sectorIdIndustryMap = Map[Int, String](
+  val sectorIdIndustryMap: Map[Int, String] = Map[Int, String](
     (111, "Charities"),
     (286, "Social care"),
     (127, "Education"),

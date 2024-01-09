@@ -93,7 +93,7 @@ case class ImageAsset(
 
   val showCaption: Boolean = caption.exists(_.trim.nonEmpty) || (displayCredit && credit.nonEmpty)
 
-  val creditEndsWithCaption = (for {
+  val creditEndsWithCaption: Boolean = (for {
     credit <- credit
     caption <- caption
   } yield caption.endsWith(credit)).getOrElse(false)

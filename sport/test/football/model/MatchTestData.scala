@@ -7,10 +7,10 @@ import model.Competition
 
 trait MatchTestData {
   // Set a fixed date and time to ensure repeatibility of the tests
-  val now = ZonedDateTime.of(2016, 8, 4, 10, 30, 0, 0, ZoneId.of("Europe/London"))
+  val now: ZonedDateTime = ZonedDateTime.of(2016, 8, 4, 10, 30, 0, 0, ZoneId.of("Europe/London"))
   val today = now.toLocalDate
 
-  val spurs = MatchDayTeam(
+  val spurs: MatchDayTeam = MatchDayTeam(
     "19",
     "Spurs",
     Some(4),
@@ -18,16 +18,16 @@ trait MatchTestData {
     None,
     Some("Emmanuel Adebayor (19),Joe Paulo Paulinho (53),Emmanuel Adebayor (82),Nacer Chadli (88)"),
   )
-  val arsenal = MatchDayTeam("1006", "Arsenal", Some(0), Some(0), None, None)
-  val manu = MatchDayTeam("12", "Man Utd", Some(0), Some(0), None, None)
-  val newcastle = MatchDayTeam("31", "Newcastle", Some(0), Some(0), None, None)
+  val arsenal: MatchDayTeam = MatchDayTeam("1006", "Arsenal", Some(0), Some(0), None, None)
+  val manu: MatchDayTeam = MatchDayTeam("12", "Man Utd", Some(0), Some(0), None, None)
+  val newcastle: MatchDayTeam = MatchDayTeam("31", "Newcastle", Some(0), Some(0), None, None)
 
-  val stage = Stage("1")
-  val round1 = Round("1", None)
-  val round2 = Round("2", None)
+  val stage: Stage = Stage("1")
+  val round1: Round = Round("1", None)
+  val round2: Round = Round("2", None)
 
   // this testdata (and thus also the tests) uses relative times so the tests always work
-  val matches1 = Seq(
+  val matches1: Seq[FootballMatch] = Seq(
     Fixture("13", now.plusDays(11), stage, round1, "1", newcastle, manu, None, None),
     Fixture("12", now.plusDays(10), stage, round2, "1", spurs, manu, None, None),
     Fixture("11", now.plusDays(4), stage, round1, "1", arsenal, spurs, None, None),
@@ -176,7 +176,7 @@ trait MatchTestData {
       None,
     ),
   )
-  val matches2 = Seq(
+  val matches2: Seq[FootballMatch] = Seq(
     Fixture("36", now.plusDays(10), stage, round1, "2", spurs, manu, None, None),
     Fixture("35", now.plusDays(4), stage, round1, "1", newcastle, manu, None, None),
     Fixture("34", now.plusDays(1), stage, round1, "1", arsenal, newcastle, None, None),
@@ -242,10 +242,10 @@ trait MatchTestData {
     ),
     Result("30", now.minusDays(2), Stage("1"), Round("1", None), "2", true, None, newcastle, manu, None, None, None),
   )
-  val leagueTable1 = Seq()
-  val leagueTable2 = Seq()
+  val leagueTable1: Seq[Nothing] = Seq()
+  val leagueTable2: Seq[Nothing] = Seq()
 
-  val competition1 = Competition(
+  val competition1: Competition = Competition(
     "500",
     "/football/test",
     "Test competition",
@@ -256,7 +256,7 @@ trait MatchTestData {
     leagueTable1,
     showInTeamsList = true,
   )
-  val competition2 = Competition(
+  val competition2: Competition = Competition(
     "100",
     "/football/test2",
     "Test competition 2",
@@ -268,5 +268,5 @@ trait MatchTestData {
     showInTeamsList = true,
   )
 
-  val competitions = Competitions(Seq(competition1, competition2))
+  val competitions: Competitions = Competitions(Seq(competition1, competition2))
 }

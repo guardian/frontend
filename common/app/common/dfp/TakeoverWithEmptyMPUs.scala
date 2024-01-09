@@ -14,6 +14,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import services.S3
 import java.net.{MalformedURLException, URL}
+import org.joda.time.format.DateTimeFormatter
 
 case class TakeoverWithEmptyMPUs(url: String, editions: Seq[Edition], startTime: DateTime, endTime: DateTime)
 
@@ -21,9 +22,9 @@ object TakeoverWithEmptyMPUs {
 
   private val timeJsonFormatter = ISODateTimeFormat.dateTime().withZoneUTC()
 
-  val timeViewFormatter = DateTimeFormat.forPattern("d MMM YYYY HH:mm:ss z").withZoneUTC()
+  val timeViewFormatter: DateTimeFormatter = DateTimeFormat.forPattern("d MMM YYYY HH:mm:ss z").withZoneUTC()
 
-  implicit val writes = new Writes[TakeoverWithEmptyMPUs] {
+  implicit val writes: Writes[TakeoverWithEmptyMPUs] = new Writes[TakeoverWithEmptyMPUs] {
     def writes(takeover: TakeoverWithEmptyMPUs): JsValue = {
       Json.obj(
         "url" -> takeover.url,
@@ -34,7 +35,7 @@ object TakeoverWithEmptyMPUs {
     }
   }
 
-  val mustBeAtLeastOneDirectoryDeep = Constraint[String] { s: String =>
+  val mustBeAtLeastOneDirectoryDeep: Constraint[String] = Constraint[String] { s: String =>
     try {
       val uri = new URL(s)
       uri.getPath.trim match {
@@ -54,7 +55,7 @@ object TakeoverWithEmptyMPUs {
       (JsPath \ "endTime").read[String].map(timeJsonFormatter.parseDateTime)
   )(TakeoverWithEmptyMPUs.apply _)
 
-  implicit val editionFormatter = new Formatter[Edition] {
+  implicit val editionFormatter: Formatter[Edition] = new Formatter[Edition] {
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Edition] = {
       val editionId = data(key)
       Edition.byId(editionId) map (Right(_)) getOrElse
@@ -65,7 +66,7 @@ object TakeoverWithEmptyMPUs {
     }
   }
 
-  val form = Form(
+  val form: Form[TakeoverWithEmptyMPUs] = Form(
     mapping(
       "url" -> nonEmptyText.verifying(mustBeAtLeastOneDirectoryDeep),
       "editions" -> seq(of[Edition]),

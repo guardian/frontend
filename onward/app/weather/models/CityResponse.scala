@@ -4,11 +4,12 @@ import common.Edition
 import common.editions.{Au, Uk, Us}
 import play.api.libs.json.{Json, Writes}
 import weather.models.accuweather.LocationResponse
+import play.api.libs.json.Reads
 
 object CityResponse {
-  implicit val jsonReads = Json.reads[CityResponse]
+  implicit val jsonReads: Reads[CityResponse] = Json.reads[CityResponse]
 
-  implicit val writes = new Writes[CityResponse] {
+  implicit val writes: Writes[CityResponse] = new Writes[CityResponse] {
     def writes(model: CityResponse) = {
       Json.obj(
         "id" -> model.id,
@@ -52,19 +53,19 @@ object CityResponse {
     )
   }
 
-  val London = CityResponse(
+  val London: CityResponse = CityResponse(
     id = "328328",
     city = "London",
     country = "England",
   )
 
-  val NewYork = CityResponse(
+  val NewYork: CityResponse = CityResponse(
     id = "349727",
     city = "New York",
     country = "US",
   )
 
-  val Sydney = CityResponse(
+  val Sydney: CityResponse = CityResponse(
     id = "22889",
     city = "Sydney",
     country = "Australia",

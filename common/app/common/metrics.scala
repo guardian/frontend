@@ -22,7 +22,7 @@ object SystemMetrics extends implicits.Numbers {
     private val lastGcCount = new AtomicLong(0)
     private val lastGcTime = new AtomicLong(0)
 
-    lazy val name = bean.getName.replace(" ", "_")
+    lazy val name: String = bean.getName.replace(" ", "_")
 
     def gcCount: Double = {
       val totalGcCount = bean.getCollectionCount
@@ -38,37 +38,37 @@ object SystemMetrics extends implicits.Numbers {
   lazy val garbageCollectors: Seq[GcRateMetric] =
     ManagementFactory.getGarbageCollectorMXBeans.asScala.map(new GcRateMetric(_)).toSeq
 
-  val MaxHeapMemoryMetric = GaugeMetric(
+  val MaxHeapMemoryMetric: GaugeMetric = GaugeMetric(
     name = "max-heap-memory",
     description = "Max heap memory (MB)",
     get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax),
   )
 
-  val UsedHeapMemoryMetric = GaugeMetric(
+  val UsedHeapMemoryMetric: GaugeMetric = GaugeMetric(
     name = "used-heap-memory",
     description = "Used heap memory (MB)",
     get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed),
   )
 
-  val MaxNonHeapMemoryMetric = GaugeMetric(
+  val MaxNonHeapMemoryMetric: GaugeMetric = GaugeMetric(
     name = "max-non-heap-memory",
     description = "Max non heap memory (MB)",
     get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax),
   )
 
-  val UsedNonHeapMemoryMetric = GaugeMetric(
+  val UsedNonHeapMemoryMetric: GaugeMetric = GaugeMetric(
     name = "used-non-heap-memory",
     description = "Used non heap memory (MB)",
     get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed),
   )
 
-  val FreeDiskSpaceMetric = GaugeMetric(
+  val FreeDiskSpaceMetric: GaugeMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
     get = () => bytesAsMb(new File("/").getUsableSpace),
   )
 
-  val ThreadCountMetric = GaugeMetric(
+  val ThreadCountMetric: GaugeMetric = GaugeMetric(
     name = "thread-count",
     description = "Thread Count",
     get = () => ManagementFactory.getThreadMXBean.getThreadCount,
@@ -76,7 +76,7 @@ object SystemMetrics extends implicits.Numbers {
   )
 
   // yeah, casting to com.sun.. ain't too pretty
-  val TotalPhysicalMemoryMetric = GaugeMetric(
+  val TotalPhysicalMemoryMetric: GaugeMetric = GaugeMetric(
     name = "total-physical-memory",
     description = "Total physical memory",
     get = () =>
@@ -86,7 +86,7 @@ object SystemMetrics extends implicits.Numbers {
       },
   )
 
-  val FreePhysicalMemoryMetric = GaugeMetric(
+  val FreePhysicalMemoryMetric: GaugeMetric = GaugeMetric(
     name = "free-physical-memory",
     description = "Free physical memory",
     get = () =>
@@ -101,7 +101,7 @@ object SystemMetrics extends implicits.Numbers {
     case _                      => -1 // dev machines do not have a build number
   }
 
-  val BuildNumberMetric = GaugeMetric(
+  val BuildNumberMetric: GaugeMetric = GaugeMetric(
     name = "build-number",
     description = "Build number",
     get = () => buildNumber,
@@ -111,27 +111,27 @@ object SystemMetrics extends implicits.Numbers {
 }
 
 object ContentApiMetrics {
-  val HttpLatencyTimingMetric = TimingMetric(
+  val HttpLatencyTimingMetric: TimingMetric = TimingMetric(
     "content-api-call-latency",
     "Content api call latency",
   )
 
-  val HttpTimeoutCountMetric = CountMetric(
+  val HttpTimeoutCountMetric: CountMetric = CountMetric(
     "content-api-timeouts",
     "Content api calls that timeout",
   )
 
-  val ContentApiErrorMetric = CountMetric(
+  val ContentApiErrorMetric: CountMetric = CountMetric(
     "content-api-errors",
     "Number of times the Content API returns errors (not counting when circuit breaker is on)",
   )
 
-  val ContentApi404Metric = CountMetric(
+  val ContentApi404Metric: CountMetric = CountMetric(
     "content-api-404",
     "Number of times the Content API has responded with a 404",
   )
 
-  val ContentApiRequestsMetric = CountMetric(
+  val ContentApiRequestsMetric: CountMetric = CountMetric(
     "content-api-requests",
     "Number of times the Content API has been called",
   )
@@ -139,47 +139,52 @@ object ContentApiMetrics {
 }
 
 object DfpApiMetrics {
-  val DfpSessionErrors = CountMetric(
+  val DfpSessionErrors: CountMetric = CountMetric(
     "dfp-session-errors",
     "Number of times the app failed to build a DFP session",
   )
 
-  val DfpApiErrors = CountMetric(
+  val DfpApiErrors: CountMetric = CountMetric(
     "dfp-api-errors",
     "Number of times a request to the DFP API results in an error",
   )
 }
 
 object FaciaPressMetrics {
-  val FrontPressCronSuccess = CountMetric(
+  val FrontPressCronSuccess: CountMetric = CountMetric(
     "front-press-cron-success",
     "Number of times facia-tool cron job has successfully pressed",
   )
 
-  val UkPressLatencyMetric = DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
-  val UsPressLatencyMetric = DurationMetric("us-press-latency", StandardUnit.Milliseconds)
-  val AuPressLatencyMetric = DurationMetric("au-press-latency", StandardUnit.Milliseconds)
-  val AllFrontsPressLatencyMetric = DurationMetric("front-press-latency", StandardUnit.Milliseconds)
-  val FrontPressContentSize = SamplerMetric("front-press-content-size", StandardUnit.Bytes)
-  val FrontPressContentSizeLite = SamplerMetric("front-press-content-size-lite", StandardUnit.Bytes)
-  val FrontDecodingLatency = DurationMetric("front-decoding-latency", StandardUnit.Milliseconds)
-  val FrontDownloadLatency = DurationMetric("front-download-latency", StandardUnit.Milliseconds)
-  val FrontNotModifiedDownloadLatency = DurationMetric("front-not-modified-download-latency", StandardUnit.Milliseconds)
+  val UkPressLatencyMetric: DurationMetric = DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
+  val UsPressLatencyMetric: DurationMetric = DurationMetric("us-press-latency", StandardUnit.Milliseconds)
+  val AuPressLatencyMetric: DurationMetric = DurationMetric("au-press-latency", StandardUnit.Milliseconds)
+  val AllFrontsPressLatencyMetric: DurationMetric = DurationMetric("front-press-latency", StandardUnit.Milliseconds)
+  val FrontPressContentSize: SamplerMetric = SamplerMetric("front-press-content-size", StandardUnit.Bytes)
+  val FrontPressContentSizeLite: SamplerMetric = SamplerMetric("front-press-content-size-lite", StandardUnit.Bytes)
+  val FrontDecodingLatency: DurationMetric = DurationMetric("front-decoding-latency", StandardUnit.Milliseconds)
+  val FrontDownloadLatency: DurationMetric = DurationMetric("front-download-latency", StandardUnit.Milliseconds)
+  val FrontNotModifiedDownloadLatency: DurationMetric =
+    DurationMetric("front-not-modified-download-latency", StandardUnit.Milliseconds)
 }
 
 object EmailSubsciptionMetrics {
-  val AllEmailSubmission = CountMetric("all-email-submission", "Any request to the submit email endpoint")
-  val EmailSubmission = CountMetric("email-submission", "Successful POST to the email API Gateway")
-  val NotAccepted = CountMetric("email-submission-not-accepted", "Any request with the wrong MIME type")
-  val EmailFormError = CountMetric("email-submission-form-error", "Email submission form error")
-  val APIHTTPError = CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
-  val APINetworkError = CountMetric("email-api-network-error", "Email subscription API network failure")
-  val ListIDError = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
-  val RecaptchaMissingTokenError = CountMetric("email-recaptcha-missing-token-failure", "Recaptcha missing token error")
-  val RecaptchaValidationError = CountMetric("email-recaptcha-validation-failure", "Recaptcha validation error")
-  val RecaptchaAPIUnavailableError =
+  val AllEmailSubmission: CountMetric = CountMetric("all-email-submission", "Any request to the submit email endpoint")
+  val EmailSubmission: CountMetric = CountMetric("email-submission", "Successful POST to the email API Gateway")
+  val NotAccepted: CountMetric = CountMetric("email-submission-not-accepted", "Any request with the wrong MIME type")
+  val EmailFormError: CountMetric = CountMetric("email-submission-form-error", "Email submission form error")
+  val APIHTTPError: CountMetric =
+    CountMetric("email-api-http-error", "Non-200/201 response from email subscription API")
+  val APINetworkError: CountMetric = CountMetric("email-api-network-error", "Email subscription API network failure")
+  val ListIDError: CountMetric = CountMetric("email-list-id-error", "Invalid list ID in email subscription")
+  val RecaptchaMissingTokenError: CountMetric =
+    CountMetric("email-recaptcha-missing-token-failure", "Recaptcha missing token error")
+  val RecaptchaValidationError: CountMetric =
+    CountMetric("email-recaptcha-validation-failure", "Recaptcha validation error")
+  val RecaptchaAPIUnavailableError: CountMetric =
     CountMetric("email-recaptcha-api-unavailable-failure", "Recaptcha API unavailable error")
-  val RecaptchaValidationSuccess = CountMetric("email-recaptcha-validation-success", "Recaptcha validation success")
+  val RecaptchaValidationSuccess: CountMetric =
+    CountMetric("email-recaptcha-validation-success", "Recaptcha validation success")
 }
 
 case class ApplicationMetrics(metrics: List[FrontendMetric])
@@ -189,12 +194,12 @@ object ApplicationMetrics {
 }
 
 object DCRMetrics {
-  val DCRLatencyMetric = TimingMetric(
+  val DCRLatencyMetric: TimingMetric = TimingMetric(
     "dcr-latency",
     "DCR response time",
   )
 
-  val DCRRequestCountMetric = CountMetric(
+  val DCRRequestCountMetric: CountMetric = CountMetric(
     "dcr-request-count",
     "DCR request count",
   )
@@ -208,7 +213,9 @@ class CloudWatchMetricsLifecycle(
     extends LifecycleComponent
     with GuLogging {
   val applicationMetricsNamespace: String = "Application"
-  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
+  val applicationDimension: List[Dimension] = List(
+    new Dimension().withName("ApplicationName").withValue(appIdentity.name),
+  )
 
   appLifecycle.addStopHook { () =>
     Future {

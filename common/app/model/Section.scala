@@ -5,6 +5,7 @@ import common.Pagination
 import common.commercial.CommercialProperties
 import navigation.GuardianFoundationHelper
 import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.OFormat
 
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
@@ -61,7 +62,7 @@ case class SectionId(value: String) extends AnyVal
 
 object SectionId {
 
-  implicit val jsonFormat = Json.format[SectionId]
+  implicit val jsonFormat: OFormat[SectionId] = Json.format[SectionId]
 
   def fromCapiSection(section: ApiSection): SectionId = SectionId(section.id)
 

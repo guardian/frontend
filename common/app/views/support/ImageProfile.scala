@@ -86,7 +86,7 @@ case class ImageProfile(
 ) extends ElementProfile
 
 object VideoProfile {
-  lazy val ratioHD = Fraction.getFraction(16, 9)
+  lazy val ratioHD: Fraction = Fraction.getFraction(16, 9)
 }
 
 case class VideoProfile(
@@ -303,7 +303,7 @@ object EmailVideoImage
   override val qualityparam: String = EmailImage.qualityparam
   override val dprParam: String = EmailImageParams.dprParam
   val overlayAlignParam = "overlay-align=bottom,left"
-  val overlayUrlParam = s"overlay-base64=${overlayUrlBase64("playx2.png")}"
+  val overlayUrlParam: String = s"overlay-base64=${overlayUrlBase64("playx2.png")}"
   val knownWidth: Int = width.get
 
   override def resizeString: String = {

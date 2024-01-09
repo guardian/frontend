@@ -19,7 +19,7 @@ trait Strings {
   }
 
   implicit class String2Dequote(s: String) {
-    lazy val dequote = s.replace("\"", "")
+    lazy val dequote: String = s.replace("\"", "")
   }
 
   implicit class String2FromLast(s: String) {
@@ -28,9 +28,9 @@ trait Strings {
 
   implicit class string2encodings(s: String) {
     // Note, this is idempotent - i.e. it will not double-encode %-escaped characters
-    lazy val urlEncoded = UriComponent.contextualEncode(s, UriComponent.Type.UNRESERVED, false)
-    lazy val javascriptEscaped = StringEscapeUtils.escapeJavaScript(s)
-    lazy val encodeURIComponent = {
+    lazy val urlEncoded: String = UriComponent.contextualEncode(s, UriComponent.Type.UNRESERVED, false)
+    lazy val javascriptEscaped: String = StringEscapeUtils.escapeJavaScript(s)
+    lazy val encodeURIComponent: String = {
       // This can be used to encode parts of a URI, eg. "example-component/uk?parameter=unsafe-chars-such-as ://+ must-be-encoded#fragment"
       // The fragment part is optional.
       // Use encodeURI below for full URI strings like "http://www.theguardian.com/path with spaces".
@@ -43,7 +43,7 @@ trait Strings {
         .replaceAll("\\%29", ")")
         .replaceAll("\\%7E", "~")
     }
-    lazy val encodeURI = {
+    lazy val encodeURI: String = {
       // For a URI like this, [scheme:][//authority][path][?query][#fragment]
       // The URI syntax rfc2396 does not permit encoding the [scheme:] and [//authority] components of the URI with % escape characters.
 
@@ -81,7 +81,7 @@ trait Strings {
   }
 
   implicit class string2decodings(s: String) {
-    lazy val stringDecoded = URLDecoder.decode(s, "UTF-8")
+    lazy val stringDecoded: String = URLDecoder.decode(s, "UTF-8")
   }
 }
 

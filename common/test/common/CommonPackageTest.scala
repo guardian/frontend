@@ -15,7 +15,7 @@ import scala.concurrent.Future
 class CommonPackageTest extends AnyFlatSpec with Matchers with WithTestApplicationContext {
 
   trait PackageTestScope {
-    val article = model.Content(
+    val article: model.ContentType = model.Content(
       Content(
         id = "/content",
         sectionId = None,
@@ -29,7 +29,7 @@ class CommonPackageTest extends AnyFlatSpec with Matchers with WithTestApplicati
         fields = None,
       ),
     )
-    val contentPage = SimpleContentPage(article)
+    val contentPage: SimpleContentPage = SimpleContentPage(article)
   }
 
   "renderEmail" should "render an email result page" in new PackageTestScope {

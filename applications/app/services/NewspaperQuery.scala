@@ -13,6 +13,7 @@ import org.joda.time.{DateTime, DateTimeConstants, DateTimeZone}
 import layout.slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
 
 import scala.concurrent.{ExecutionContext, Future}
+import org.joda.time.format.DateTimeFormatter
 
 case class BookSectionContent(tag: Tag, content: Seq[ApiContent])
 case class ContentByPage(page: Int, content: ApiContent)
@@ -21,10 +22,11 @@ case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionCo
 
 class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLogging {
 
-  val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
+  val dateForFrontPagePattern: DateTimeFormatter = DateTimeFormat.forPattern("EEEE d MMMM y")
   private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
   val FRONT_PAGE_DISPLAY_NAME = "Front page"
-  val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
+  val pathToTag: Map[String, String] =
+    Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
   def fetchLatestGuardianNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)

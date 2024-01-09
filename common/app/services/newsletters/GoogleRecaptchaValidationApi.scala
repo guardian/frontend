@@ -7,6 +7,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import utils.RemoteAddress
 
 import scala.concurrent.Future
+import play.api.libs.json.Reads
 
 class GoogleRecaptchaValidationService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
   def submit(token: String): Future[WSResponse] = {
@@ -21,5 +22,5 @@ class GoogleRecaptchaValidationService(wsClient: WSClient) extends LazyLogging w
 case class GoogleResponse(success: Boolean, `error-codes`: Option[Seq[String]])
 
 object GoogleResponse {
-  implicit val googleResponseReads = Json.reads[GoogleResponse]
+  implicit val googleResponseReads: Reads[GoogleResponse] = Json.reads[GoogleResponse]
 }

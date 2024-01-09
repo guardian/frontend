@@ -4,9 +4,10 @@ import common.GuLogging
 import play.api.libs.json.{Json, JsString, JsValue, Writes}
 
 import scala.util.Try
+import play.api.libs.json.OWrites
 
 object Trend {
-  implicit val jsonWrites = new Writes[Trend] {
+  implicit val jsonWrites: Writes[Trend] = new Writes[Trend] {
     override def writes(o: Trend): JsValue =
       o match {
         case Negative => JsString("negative")
@@ -30,7 +31,7 @@ case object Positive extends Trend
 case object Level extends Trend
 
 object StockValue {
-  implicit val jsonWrites = Json.writes[StockValue]
+  implicit val jsonWrites: OWrites[StockValue] = Json.writes[StockValue]
 }
 
 case class StockValue(
@@ -42,7 +43,7 @@ case class StockValue(
 )
 
 object Stocks extends GuLogging {
-  implicit val jsonWrites = Json.writes[Stocks]
+  implicit val jsonWrites: OWrites[Stocks] = Json.writes[Stocks]
 
   private val Commas = """,+""".r
 
