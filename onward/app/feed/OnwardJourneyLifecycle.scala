@@ -1,11 +1,13 @@
 package feed
 
 import agents.DeeplyReadAgent
+
 import java.util.concurrent.Executors
 import app.LifecycleComponent
-import common.{PekkoAsync, JobScheduler}
+import common.{JobScheduler, PekkoAsync}
 import play.api.inject.ApplicationLifecycle
-import scala.concurrent.{ExecutionContext, Future}
+
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
 class OnwardJourneyLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -21,7 +23,7 @@ class OnwardJourneyLifecycle(
     deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
-  implicit val capiClientExecutionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val capiClientExecutionContext: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {

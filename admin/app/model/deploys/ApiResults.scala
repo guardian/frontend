@@ -6,7 +6,7 @@ import play.api.mvc._
 object ApiResults extends Results {
 
   case class ApiError(message: String, statusCode: Int)
-  object ApiError { implicit val format = Json.format[ApiError] }
+  object ApiError { implicit val format: OFormat[ApiError] = Json.format[ApiError] }
 
   case class ApiErrors(errors: List[ApiError]) {
     def statusCode: Int = errors.map(_.statusCode).max

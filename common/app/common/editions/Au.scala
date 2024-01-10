@@ -23,5 +23,5 @@ object Au
       ),
     ) {
 
-  implicit val AU = Au
+  implicit val AU: Au.type = Au
 }

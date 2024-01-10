@@ -12,7 +12,7 @@ trait Forms extends I18nSupport {
   val httpConfiguration: HttpConfiguration
   private val formKey = "form-data"
 
-  private implicit val errorReads = new Reads[Seq[FormError]] {
+  private implicit val errorReads: Reads[Seq[FormError]] = new Reads[Seq[FormError]] {
     override def reads(js: JsValue): JsResult[Seq[FormError]] =
       Json.fromJson[Map[String, Seq[String]]](js).map {
         _.toSeq.map { case (k, v) => FormError(k, v) }
@@ -56,7 +56,7 @@ trait Forms extends I18nSupport {
     }
   }
 
-  implicit val formErrorWrites = new Writes[FormError] {
+  implicit val formErrorWrites: Writes[FormError] = new Writes[FormError] {
     def writes(formError: FormError) =
       Json.obj(
         "key" -> formError.key,

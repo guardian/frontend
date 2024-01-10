@@ -1,7 +1,7 @@
 package model
 
 import model.facia.PressedCollection
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OWrites}
 import play.api.mvc.RequestHeader
 import model.dotcomrendering.{Trail => DCRTrail}
 
@@ -13,7 +13,7 @@ case class OnwardCollection(
 
 object OnwardCollection {
 
-  implicit def writes = Json.writes[OnwardCollection]
+  implicit def writes: OWrites[OnwardCollection] = Json.writes[OnwardCollection]
 
   def pressedCollectionToOnwardCollection(
       collection: PressedCollection,

@@ -6,12 +6,13 @@ import crosswords.CrosswordGridColumnNotation
 import org.joda.time.DateTime
 import play.api.libs.json._
 import implicits.Dates.CapiRichDateTime
+import play.api.libs.json
 
 case class CrosswordPosition(x: Int, y: Int)
 
 object Entry {
-  implicit val positionWrites = Json.writes[CrosswordPosition]
-  implicit val jsonWrites = Json.writes[Entry]
+  implicit val positionWrites: OWrites[CrosswordPosition] = Json.writes[CrosswordPosition]
+  implicit val jsonWrites: OWrites[Entry] = Json.writes[Entry]
 
   def formatHumanNumber(numbers: String): Option[String] = {
 
@@ -77,13 +78,14 @@ case class CrosswordDimensions(
 
 object CrosswordData {
 
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val dateToTimestampWrites: json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
 
-  implicit val creatorWrites = Json.writes[CrosswordCreator]
+  implicit val creatorWrites: OWrites[CrosswordCreator] = Json.writes[CrosswordCreator]
 
-  implicit val dimensionsWrites = Json.writes[CrosswordDimensions]
+  implicit val dimensionsWrites: OWrites[CrosswordDimensions] = Json.writes[CrosswordDimensions]
 
-  implicit val jsonWrites = Json.writes[CrosswordData]
+  implicit val jsonWrites: OWrites[CrosswordData] = Json.writes[CrosswordData]
 
   def fromCrossword(crossword: Crossword, content: contentapi.Content): CrosswordData = {
     // For entry groups, all separator locations for entries within the

@@ -79,9 +79,9 @@ sealed trait FieldFormats {
     }
   }
 
-  implicit val nameFieldWrite = Json.writes[NameField]
-  implicit val emailFieldWrite = Json.writes[EmailField]
-  implicit val textAreaFieldWrite = Json.writes[TextAreaField]
+  implicit val nameFieldWrite: OWrites[NameField] = Json.writes[NameField]
+  implicit val emailFieldWrite: OWrites[EmailField] = Json.writes[EmailField]
+  implicit val textAreaFieldWrite: OWrites[TextAreaField] = Json.writes[TextAreaField]
 
   implicit val fieldWriteFmt: Writes[Field] = Json.writes[Field]
 }

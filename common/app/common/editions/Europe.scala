@@ -16,5 +16,5 @@ object Europe
       navigationLinks = International.navigationLinks,
     ) {
 
-  implicit val EUR = Europe
+  implicit val EUR: Europe.type = Europe
 }

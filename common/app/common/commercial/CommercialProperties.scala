@@ -6,14 +6,14 @@ import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
 import common.Edition.defaultEdition
 import common.dfp.DfpAgent
-import play.api.libs.json.Json
+import play.api.libs.json.{Format, Json, OFormat}
 
 case class EditionCommercialProperties(branding: Option[Branding], adTargeting: Set[AdTargetParam])
 
 object EditionCommercialProperties {
-  implicit val thirdNeedlessFormatter = EditionAdTargeting.adTargetParamFormat
-  implicit val secondNeedlessFormatter = EditionBranding.brandingFormat
-  implicit val firstNeedlessFormatter = Json.format[EditionCommercialProperties]
+  implicit val thirdNeedlessFormatter: Format[AdTargetParam] = EditionAdTargeting.adTargetParamFormat
+  implicit val secondNeedlessFormatter: Format[Branding] = EditionBranding.brandingFormat
+  implicit val firstNeedlessFormatter: OFormat[EditionCommercialProperties] = Json.format[EditionCommercialProperties]
 
 }
 case class CommercialProperties(
@@ -54,7 +54,7 @@ case class CommercialProperties(
 
 object CommercialProperties {
 
-  implicit val commercialPropertiesFormat = Json.format[CommercialProperties]
+  implicit val commercialPropertiesFormat: OFormat[CommercialProperties] = Json.format[CommercialProperties]
 
   val empty = CommercialProperties(
     editionBrandings = Set.empty,

@@ -4,10 +4,10 @@ import agents.MostViewedAgent
 
 import java.util.concurrent.Executors
 import app.LifecycleComponent
-import common.{PekkoAsync, JobScheduler}
+import common.{JobScheduler, PekkoAsync}
 import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
 class MostViewedLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -16,7 +16,7 @@ class MostViewedLifecycle(
     mostViewedAgent: MostViewedAgent,
 ) extends LifecycleComponent {
 
-  implicit val executionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val executionContext: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {

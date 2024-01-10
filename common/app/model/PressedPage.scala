@@ -8,13 +8,13 @@ import contentapi.Paths
 import model.facia.PressedCollection
 import model.pressed.PressedContent
 import navigation.GuardianFoundationHelper
-import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import play.api.libs.json.{JsBoolean, JsString, JsValue, OFormat}
 
 import scala.language.postfixOps
 
 object PressedPage {
 
-  implicit val pressedPageFormat = PressedPageFormat.format
+  implicit val pressedPageFormat: OFormat[PressedPage] = PressedPageFormat.format
 
   def makeMetadata(
       id: String,

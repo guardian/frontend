@@ -7,9 +7,9 @@ import conf.Configuration
 import com.gu.contentapi.client.model.v1.Content
 import experiments.ActiveExperiments
 import layout.ContentCard
-import model.{SimplePage, RelatedContentItem}
+import model.{RelatedContentItem, SimplePage}
 import navigation.{FooterLinks, Nav}
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import services.newsletters.model.NewsletterResponseV2
@@ -36,7 +36,8 @@ case class DotcomNewslettersPageRenderingDataModel(
 )
 
 object DotcomNewslettersPageRenderingDataModel {
-  implicit val writes = Json.writes[DotcomNewslettersPageRenderingDataModel]
+  implicit val writes: OWrites[DotcomNewslettersPageRenderingDataModel] =
+    Json.writes[DotcomNewslettersPageRenderingDataModel]
 
   def apply(
       page: SimplePage,

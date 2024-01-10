@@ -23,5 +23,5 @@ object Us
       ),
     ) {
 
-  implicit val US = Us
+  implicit val US: Us.type = Us
 }

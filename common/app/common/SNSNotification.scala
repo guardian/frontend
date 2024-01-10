@@ -1,9 +1,9 @@
 package common
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 object SNSNotification {
-  implicit val jsonFormats = Json.format[SNSNotification]
+  implicit val jsonFormats: OFormat[SNSNotification] = Json.format[SNSNotification]
 }
 
 case class SNSNotification(

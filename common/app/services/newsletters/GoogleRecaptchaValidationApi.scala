@@ -2,7 +2,7 @@ package services.newsletters
 
 import com.typesafe.scalalogging.LazyLogging
 import conf.Configuration
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Reads}
 import play.api.libs.ws.{WSClient, WSResponse}
 import utils.RemoteAddress
 
@@ -21,5 +21,5 @@ class GoogleRecaptchaValidationService(wsClient: WSClient) extends LazyLogging w
 case class GoogleResponse(success: Boolean, `error-codes`: Option[Seq[String]])
 
 object GoogleResponse {
-  implicit val googleResponseReads = Json.reads[GoogleResponse]
+  implicit val googleResponseReads: Reads[GoogleResponse] = Json.reads[GoogleResponse]
 }

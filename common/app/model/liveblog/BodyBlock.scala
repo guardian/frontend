@@ -8,6 +8,7 @@ import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.jsoup.Jsoup
+import play.api.libs.json
 import play.api.libs.json._
 
 object Blocks {
@@ -72,8 +73,9 @@ object BodyBlock {
   case object SummaryEvent extends EventType
   case object UnclassifiedEvent extends EventType
 
-  implicit val dateWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
-  implicit val blockElementWrites = BlockElement.blockElementWrites
+  implicit val dateWrites: json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val blockElementWrites: Writes[BlockElement] = BlockElement.blockElementWrites
   implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 

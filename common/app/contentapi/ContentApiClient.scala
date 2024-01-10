@@ -129,7 +129,7 @@ final case class CircuitBreakingContentApiClient(
 )(implicit executionContext: ExecutionContext)
     extends MonitoredContentApiClientLogic
     with RetryableContentApiClient {
-  override implicit val executor = ScheduledExecutor()
+  override implicit val executor: ScheduledExecutor = ScheduledExecutor()
   val retryDuration = Duration(250L, TimeUnit.MILLISECONDS)
   val retryAttempts = 3
   override val backoffStrategy: Retryable = BackoffStrategy.constantStrategy(retryDuration, retryAttempts)
