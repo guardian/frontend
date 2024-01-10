@@ -76,6 +76,7 @@ object PressedContent {
     "/us-news/2016/jun/02/chicago-water-lead-pipes-replacement",
     "/us-news/2016/jun/02/flint-water-crisis-tests-targeted-homes-far-from-lead-pipes",
     "/politics/ng-interactive/2016/jun/03/brexit-how-can-the-same-statistics-be-read-so-differently",
+    "/membership/ng-interactive/2016/jun/16/guardian-labour-liverpool-ewen-macaskill",
     "/membership/2016/jun/23/labour-liverpool-ewen-macaskill",
     "/global-development/2016/sep/06/poorest-countries-hit-hardest-world-lags-behind-global-education-goals-unesco-report",
     "/commentisfree/2016/jul/07/guardian-view-on-the-chilcot-report",
