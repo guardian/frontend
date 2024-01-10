@@ -16,7 +16,8 @@ class MostViewedLifecycle(
     mostViewedAgent: MostViewedAgent,
 ) extends LifecycleComponent {
 
-  implicit val executionContext: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val executionContext: ExecutionContextExecutorService =
+    ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {

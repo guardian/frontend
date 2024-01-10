@@ -23,7 +23,8 @@ class OnwardJourneyLifecycle(
     deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
-  implicit val capiClientExecutionContext: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val capiClientExecutionContext: ExecutionContextExecutorService =
+    ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {

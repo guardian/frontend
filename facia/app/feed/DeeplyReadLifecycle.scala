@@ -15,7 +15,8 @@ class DeeplyReadLifecycle(
     deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
-  implicit val executionContext: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val executionContext: ExecutionContextExecutorService =
+    ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {
