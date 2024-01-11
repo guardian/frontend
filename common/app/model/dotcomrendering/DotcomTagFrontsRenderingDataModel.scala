@@ -36,7 +36,7 @@ case class DotcomTagFrontsRenderingDataModel(
 )
 
 object DotcomTagFrontsRenderingDataModel {
-  implicit val writes = new Writes[DotcomTagFrontsRenderingDataModel] {
+  implicit val writes: Writes[DotcomTagFrontsRenderingDataModel] = new Writes[DotcomTagFrontsRenderingDataModel] {
     def writes(model: DotcomTagFrontsRenderingDataModel) = {
       Json.obj(
         "contents" -> model.contents,

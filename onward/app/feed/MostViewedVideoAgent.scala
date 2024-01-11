@@ -15,7 +15,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
 
   private val agent = Box[Seq[Video]](Nil)
 
-  implicit val ophanQueryReads = Json.reads[QueryResult]
+  implicit val ophanQueryReads: Reads[QueryResult] = Json.reads[QueryResult]
 
   def mostViewedVideo(): Seq[Video] = agent()
 

@@ -6,6 +6,9 @@ import json.ObjectDeduplication.deduplicate
 import model.content._
 import model.facia.PressedCollection
 import model.pressed._
+import play.api
+import play.api.libs
+import play.api.libs.json
 import play.api.libs.json._
 import play.api.libs.json.JodaReads._
 
@@ -213,12 +216,13 @@ object PressedContentFormat {
       }
   }
 
-  implicit val pillarFormat = Json.format[Pillar]
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
-  implicit val paginationFormat = Json.format[Pagination]
-  implicit val podcastFormat = Json.format[Podcast]
-  implicit val referenceFormat = Json.format[Reference]
-  implicit val tagPropertiesFormat = Json.format[TagProperties]
+  implicit val pillarFormat: OFormat[Pillar] = Json.format[Pillar]
+  implicit val dateToTimestampWrites: json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val paginationFormat: OFormat[Pagination] = Json.format[Pagination]
+  implicit val podcastFormat: OFormat[Podcast] = Json.format[Podcast]
+  implicit val referenceFormat: OFormat[Reference] = Json.format[Reference]
+  implicit val tagPropertiesFormat: OFormat[TagProperties] = Json.format[TagProperties]
   implicit val tagFormat: Format[Tag] =
     deduplicate(
       Json.format[Tag],
@@ -226,31 +230,31 @@ object PressedContentFormat {
       _.maximumSize(20000) // average Tag retains ~8KB in memory, so 20000 cached Tags retain only 160MB
         .expireAfterAccess(1.hour),
     )
-  implicit val tagsFormat = Json.format[Tags]
-  implicit val elementPropertiesFormat = Json.format[ElementProperties]
-  implicit val imageAssetFormat = Json.format[ImageAsset]
-  implicit val videoAssetFormat = Json.format[VideoAsset]
-  implicit val imageMediaFormat = Json.format[ImageMedia]
-  implicit val videoMediaFormat = Json.format[VideoMedia]
-  implicit val videoElementFormat = Json.format[VideoElement]
-  implicit val mediaAssetFormat = Json.format[MediaAsset]
-  implicit val mediaAtomFormat = Json.format[MediaAtom]
-  implicit val mediaTypeFormat = MediaTypeFormat
-  implicit val cardStyleFormat = CardStyleFormat
-  implicit val faciaImageFormat = FaciaImageFormat.format
-  implicit val itemKickerFormat = ItemKickerFormat.format
-  implicit val tagKickerFormat = ItemKickerFormat.tagKickerFormat
-  implicit val pressedCardHeader = Json.format[PressedCardHeader]
-  implicit val pressedDisplaySettings = Json.format[PressedDisplaySettings]
-  implicit val pressedDiscussionSettings = Json.format[PressedDiscussionSettings]
-  implicit val pressedCard = Json.format[PressedCard]
-  implicit val pressedFields = Json.format[PressedFields]
-  implicit val pressedTrail = Json.format[PressedTrail]
-  implicit val pressedMetadata = Json.format[PressedMetadata]
-  implicit val pressedElements = Json.format[PressedElements]
-  implicit val pressedStory = Json.format[PressedStory]
-  implicit val pressedPropertiesFormat = Json.format[PressedProperties]
-  implicit val enrichedContentFormat = Json.format[EnrichedContent]
+  implicit val tagsFormat: OFormat[Tags] = Json.format[Tags]
+  implicit val elementPropertiesFormat: OFormat[ElementProperties] = Json.format[ElementProperties]
+  implicit val imageAssetFormat: OFormat[ImageAsset] = Json.format[ImageAsset]
+  implicit val videoAssetFormat: OFormat[VideoAsset] = Json.format[VideoAsset]
+  implicit val imageMediaFormat: OFormat[ImageMedia] = Json.format[ImageMedia]
+  implicit val videoMediaFormat: OFormat[VideoMedia] = Json.format[VideoMedia]
+  implicit val videoElementFormat: OFormat[VideoElement] = Json.format[VideoElement]
+  implicit val mediaAssetFormat: OFormat[MediaAsset] = Json.format[MediaAsset]
+  implicit val mediaAtomFormat: OFormat[MediaAtom] = Json.format[MediaAtom]
+  implicit val mediaTypeFormat: MediaTypeFormat.type = MediaTypeFormat
+  implicit val cardStyleFormat: CardStyleFormat.type = CardStyleFormat
+  implicit val faciaImageFormat: FaciaImageFormat.format.type = FaciaImageFormat.format
+  implicit val itemKickerFormat: ItemKickerFormat.format.type = ItemKickerFormat.format
+  implicit val tagKickerFormat: OFormat[TagKicker] = ItemKickerFormat.tagKickerFormat
+  implicit val pressedCardHeader: OFormat[PressedCardHeader] = Json.format[PressedCardHeader]
+  implicit val pressedDisplaySettings: OFormat[PressedDisplaySettings] = Json.format[PressedDisplaySettings]
+  implicit val pressedDiscussionSettings: OFormat[PressedDiscussionSettings] = Json.format[PressedDiscussionSettings]
+  implicit val pressedCard: OFormat[PressedCard] = Json.format[PressedCard]
+  implicit val pressedFields: OFormat[PressedFields] = Json.format[PressedFields]
+  implicit val pressedTrail: OFormat[PressedTrail] = Json.format[PressedTrail]
+  implicit val pressedMetadata: OFormat[PressedMetadata] = Json.format[PressedMetadata]
+  implicit val pressedElements: OFormat[PressedElements] = Json.format[PressedElements]
+  implicit val pressedStory: OFormat[PressedStory] = Json.format[PressedStory]
+  implicit val pressedPropertiesFormat: OFormat[PressedProperties] = Json.format[PressedProperties]
+  implicit val enrichedContentFormat: OFormat[EnrichedContent] = Json.format[EnrichedContent]
 
   val latestSnapFormat = Json.format[LatestSnap]
   val linkSnapFormat = Json.format[LinkSnap]
@@ -259,9 +263,9 @@ object PressedContentFormat {
 }
 
 object ItemKickerFormat {
-  implicit val kickerPropertiesFormat = Json.format[KickerProperties]
-  implicit val seriesFormat = Json.format[Series]
-  val tagKickerFormat = Json.format[TagKicker]
+  implicit val kickerPropertiesFormat: OFormat[KickerProperties] = Json.format[KickerProperties]
+  implicit val seriesFormat: OFormat[Series] = Json.format[Series]
+  val tagKickerFormat: OFormat[TagKicker] = Json.format[TagKicker]
 
   private val podcastKickerFormat = Json.format[PodcastKicker]
   private val sectionKickerFormat = Json.format[SectionKicker]
@@ -317,9 +321,9 @@ object ItemKickerFormat {
 }
 
 object FaciaImageFormat {
-  implicit val cutoutFormat = Json.format[Cutout]
-  implicit val replaceFormat = Json.format[Replace]
-  implicit val slideshowFormat = Json.format[ImageSlideshow]
+  implicit val cutoutFormat: OFormat[Cutout] = Json.format[Cutout]
+  implicit val replaceFormat: OFormat[Replace] = Json.format[Replace]
+  implicit val slideshowFormat: OFormat[ImageSlideshow] = Json.format[ImageSlideshow]
 
   object format extends Format[Image] {
     def reads(json: JsValue): JsResult[Image] = {
@@ -343,15 +347,17 @@ object FaciaImageFormat {
 }
 
 object PressedCollectionFormat {
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
-  implicit val displayHintsFormat = Json.format[DisplayHints]
-  implicit val collectionConfigFormat = Json.format[CollectionConfig]
-  implicit val pressedContentFormat = PressedContentFormat.format
-  val format = Json.format[PressedCollection]
+  implicit val dateToTimestampWrites: libs.json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val displayHintsFormat: OFormat[DisplayHints] = Json.format[DisplayHints]
+  implicit val collectionConfigFormat: OFormat[CollectionConfig] = Json.format[CollectionConfig]
+  implicit val pressedContentFormat: PressedContentFormat.format.type = PressedContentFormat.format
+  val format: OFormat[PressedCollection] = Json.format[PressedCollection]
 }
 
 object PressedPageFormat {
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
-  implicit val pressedCollection = PressedCollectionFormat.format
-  val format = Json.format[PressedPage]
+  implicit val dateToTimestampWrites: api.libs.json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val pressedCollection: OFormat[PressedCollection] = PressedCollectionFormat.format
+  val format: OFormat[PressedPage] = Json.format[PressedPage]
 }

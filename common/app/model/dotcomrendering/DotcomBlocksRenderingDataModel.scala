@@ -34,9 +34,9 @@ case class DotcomBlocksRenderingDataModel(
 
 object DotcomBlocksRenderingDataModel {
 
-  implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val pageElementWrites: Writes[PageElement] = PageElement.pageElementWrites
 
-  implicit val writes = new Writes[DotcomBlocksRenderingDataModel] {
+  implicit val writes: Writes[DotcomBlocksRenderingDataModel] = new Writes[DotcomBlocksRenderingDataModel] {
     def writes(model: DotcomBlocksRenderingDataModel) = {
       val obj = Json.obj(
         "blocks" -> model.blocks,

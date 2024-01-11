@@ -11,7 +11,8 @@ import model.{CrosswordPosition, Entry}
 import Function.const
 
 trait CrosswordGridDataOrdering {
-  implicit val positionOrdering = Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
+  implicit val positionOrdering: Ordering[CrosswordPosition] =
+    Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
 }
 
 trait CrosswordGridColumnNotation {

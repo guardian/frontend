@@ -12,7 +12,7 @@ case class PrebidIndexSite(bp: Breakpoint, id: Int)
 
 object PrebidIndexSite {
 
-  implicit val breakpointFormat = new Format[Breakpoint] {
+  implicit val breakpointFormat: Format[Breakpoint] = new Format[Breakpoint] {
     def reads(json: JsValue): JsResult[Breakpoint] =
       json match {
         case JsString("D") => JsSuccess(Desktop)
@@ -28,7 +28,7 @@ object PrebidIndexSite {
         case _       => JsString("D")
       }
   }
-  implicit val format = Json.format[PrebidIndexSite]
+  implicit val format: OFormat[PrebidIndexSite] = Json.format[PrebidIndexSite]
 
   private val defaultSiteIds = Set(
     PrebidIndexSite(Desktop, 208283),

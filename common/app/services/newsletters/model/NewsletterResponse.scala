@@ -1,6 +1,6 @@
 package services.newsletters.model
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OWrites, Reads}
 
 case class NewsletterResponse(
     identityName: String,
@@ -26,12 +26,12 @@ case class NewsletterResponse(
 )
 
 object NewsletterResponse {
-  implicit val emailEmbedReads = Json.reads[EmailEmbed]
-  implicit val emailEmbedWrites = Json.writes[EmailEmbed]
-  implicit val newsletterIllustrationReads = Json.reads[NewsletterIllustration]
-  implicit val newsletterIllustrationWrites = Json.writes[NewsletterIllustration]
-  implicit val newsletterResponseReads = Json.reads[NewsletterResponse]
-  implicit val newsletterResponseWrites = Json.writes[NewsletterResponse]
+  implicit val emailEmbedReads: Reads[EmailEmbed] = Json.reads[EmailEmbed]
+  implicit val emailEmbedWrites: OWrites[EmailEmbed] = Json.writes[EmailEmbed]
+  implicit val newsletterIllustrationReads: Reads[NewsletterIllustration] = Json.reads[NewsletterIllustration]
+  implicit val newsletterIllustrationWrites: OWrites[NewsletterIllustration] = Json.writes[NewsletterIllustration]
+  implicit val newsletterResponseReads: Reads[NewsletterResponse] = Json.reads[NewsletterResponse]
+  implicit val newsletterResponseWrites: OWrites[NewsletterResponse] = Json.writes[NewsletterResponse]
 }
 
 case class NewsletterResponseV2(
@@ -57,8 +57,8 @@ case class NewsletterResponseV2(
 )
 
 object NewsletterResponseV2 {
-  implicit val newsletterResponseV2Reads = Json.reads[NewsletterResponseV2]
-  implicit val newsletterResponseV2Writes = Json.writes[NewsletterResponseV2]
+  implicit val newsletterResponseV2Reads: Reads[NewsletterResponseV2] = Json.reads[NewsletterResponseV2]
+  implicit val newsletterResponseV2Writes: OWrites[NewsletterResponseV2] = Json.writes[NewsletterResponseV2]
 }
 
 case class NewslettersGetResponseV2Body(
@@ -68,6 +68,8 @@ case class NewslettersGetResponseV2Body(
 )
 
 object NewslettersGetResponseV2Body {
-  implicit val newslettersGetResponseV2BodyReads = Json.reads[NewslettersGetResponseV2Body]
-  implicit val newslettersGetResponseV2BodyWrites = Json.writes[NewslettersGetResponseV2Body]
+  implicit val newslettersGetResponseV2BodyReads: Reads[NewslettersGetResponseV2Body] =
+    Json.reads[NewslettersGetResponseV2Body]
+  implicit val newslettersGetResponseV2BodyWrites: OWrites[NewslettersGetResponseV2Body] =
+    Json.writes[NewslettersGetResponseV2Body]
 }

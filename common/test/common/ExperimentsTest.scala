@@ -104,7 +104,7 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
    */
   object AllExperiments extends ExperimentsDefinition {
     val allExperiments: Set[Experiment] = TestCases.experiments
-    implicit val canCheckExperiment = new CanCheckExperiment(this)
+    implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
   }
 
   object TestCases {

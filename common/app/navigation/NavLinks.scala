@@ -1,6 +1,6 @@
 package navigation
 
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsValue, Json, OWrites}
 import common.Edition
 import play.api.libs.json.Json.toJson
 
@@ -735,8 +735,8 @@ case class EditionNavLinks(
 )
 
 object NavigationData {
-  implicit val navlinkWrites = Json.writes[NavLink]
-  implicit val editionNavLinksWrites = Json.writes[EditionNavLinks]
+  implicit val navlinkWrites: OWrites[NavLink] = Json.writes[NavLink]
+  implicit val editionNavLinksWrites: OWrites[EditionNavLinks] = Json.writes[EditionNavLinks]
 
   val nav: JsValue = toJson(
     (Edition.allEditions

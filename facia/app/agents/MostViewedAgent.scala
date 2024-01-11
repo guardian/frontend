@@ -31,7 +31,7 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, ws
   }
 
   private object MostDiscussedItem {
-    implicit val format = Json.format[MostDiscussedItem]
+    implicit val format: OFormat[MostDiscussedItem] = Json.format[MostDiscussedItem]
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[(Option[Content], Option[Content])] = {

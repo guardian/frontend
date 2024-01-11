@@ -16,7 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       OfferHttp3,
       DeeplyRead,
     )
-  implicit val canCheckExperiment = new CanCheckExperiment(this)
+  implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
 object DeeplyRead

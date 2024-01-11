@@ -6,7 +6,7 @@ import common.Strings./
 import play.api.libs.json._
 
 object SectionDefinition {
-  implicit val jsonFormat = Json.format[SectionDefinition]
+  implicit val jsonFormat: OFormat[SectionDefinition] = Json.format[SectionDefinition]
 }
 
 case class SectionDefinition(
@@ -15,7 +15,7 @@ case class SectionDefinition(
 )
 
 object TagDefinition {
-  implicit val jsonFormat = Json.format[TagDefinition]
+  implicit val jsonFormat: OFormat[TagDefinition] = Json.format[TagDefinition]
 
   def fromContentApiTag(apiTag: ApiTag): TagDefinition =
     TagDefinition(
@@ -54,7 +54,7 @@ case class TagDefinition(
 }
 
 object TagIndexListing {
-  implicit val jsonFormat = Json.format[TagIndexListing]
+  implicit val jsonFormat: OFormat[TagIndexListing] = Json.format[TagIndexListing]
 
   def fromTagIndex(tagIndex: TagIndex): TagIndexListing =
     TagIndexListing(tagIndex.id, tagIndex.title)
@@ -66,7 +66,7 @@ case class TagIndexListing(
 )
 
 object TagIndexListings {
-  implicit val jsonFormat = Json.format[TagIndexListings]
+  implicit val jsonFormat: OFormat[TagIndexListings] = Json.format[TagIndexListings]
 
   def fromTagIndexPages(pages: Seq[TagIndex]): TagIndexListings =
     TagIndexListings(pages.map(TagIndexListing.fromTagIndex).sortBy(_.title))
@@ -75,7 +75,7 @@ object TagIndexListings {
 case class TagIndexListings(pages: Seq[TagIndexListing])
 
 object TagIndex {
-  implicit val jsonFormat = Json.format[TagIndex]
+  implicit val jsonFormat: OFormat[TagIndex] = Json.format[TagIndex]
 }
 
 case class TagIndex(

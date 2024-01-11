@@ -1,6 +1,6 @@
 package idapiclient.responses
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 /**
   * FIXME:
@@ -10,5 +10,5 @@ import play.api.libs.json.Json
 case class Error(message: String, description: String, statusCode: Int = 500, context: Option[String] = None)
 
 object Error {
-  implicit val errorFormat = Json.format[Error]
+  implicit val errorFormat: OFormat[Error] = Json.format[Error]
 }

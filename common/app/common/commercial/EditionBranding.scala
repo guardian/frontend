@@ -11,7 +11,7 @@ case class EditionBranding(edition: Edition, branding: Option[Branding])
 
 object EditionBranding {
 
-  implicit val brandingFormat = {
+  implicit val brandingFormat: Format[Branding] = {
 
     implicit val dimensionsFormat = Json.format[Dimensions]
 
@@ -42,7 +42,7 @@ object EditionBranding {
     Format(brandingReads, Json.writes[Branding])
   }
 
-  implicit val editionBrandingFormat = Json.format[EditionBranding]
+  implicit val editionBrandingFormat: OFormat[EditionBranding] = Json.format[EditionBranding]
 
   val editions = Edition.allEditions.toSet
 

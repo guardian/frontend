@@ -32,10 +32,8 @@ import java.net.URLEncoder
 sealed trait DotcomRenderingMatchType
 
 object DotcomRenderingMatchType {
-  implicit val matchTypesWrites = new Writes[DotcomRenderingMatchType] {
-    def writes(matchType: DotcomRenderingMatchType) =
-      JsString(matchType.toString)
-  }
+  implicit val matchTypesWrites: Writes[DotcomRenderingMatchType] = (matchType: DotcomRenderingMatchType) =>
+    JsString(matchType.toString)
 }
 
 case object CricketMatchType extends DotcomRenderingMatchType

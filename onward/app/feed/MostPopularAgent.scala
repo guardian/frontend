@@ -26,7 +26,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   }
 
   private object MostDiscussedItem {
-    implicit val format = Json.format[MostDiscussedItem]
+    implicit val format: OFormat[MostDiscussedItem] = Json.format[MostDiscussedItem]
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String, Content]] = {

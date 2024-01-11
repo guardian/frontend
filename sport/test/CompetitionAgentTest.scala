@@ -36,7 +36,7 @@ import scala.concurrent.duration._
     super.afterAll()
   }
 
-  override implicit val patienceConfig =
+  override implicit val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 
   lazy val seasonStart = Some(LocalDate.of(2012, 8, 1))

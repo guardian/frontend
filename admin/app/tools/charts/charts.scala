@@ -190,10 +190,10 @@ object FormattedChart {
 
   case class Cell(v: String)
 
-  implicit val cellReads = Json.writes[Cell]
-  implicit val rowReads = Json.writes[Row]
-  implicit val columnReads = Json.writes[Column]
-  implicit val tableReads = Json.writes[DataTable]
+  implicit val cellReads: OWrites[Cell] = Json.writes[Cell]
+  implicit val rowReads: OWrites[Row] = Json.writes[Row]
+  implicit val columnReads: OWrites[Column] = Json.writes[Column]
+  implicit val tableReads: OWrites[DataTable] = Json.writes[DataTable]
 }
 
 // A variation of Chart that can be easily serialised into a Google Visualization DataTable Json object.
