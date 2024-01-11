@@ -34,7 +34,7 @@ object Lightbox
       description = "Testing the impact lightbox might have on our CWVs",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 1, 31),
-      participationGroup = Perc0B,
+      participationGroup = Perc5A,
     )
 
 // Removing while we are still implementing this content type in DCR
