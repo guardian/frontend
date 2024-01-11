@@ -17,7 +17,14 @@ class DevParametersHttpRequestHandler(
     configuration: HttpConfiguration,
     filters: HttpFilters,
     context: ApplicationContext,
-) extends DefaultHttpRequestHandler(webCommands, optionalDevContext, router, errorHandler, configuration, filters)
+) extends DefaultHttpRequestHandler(
+      webCommands,
+      optionalDevContext,
+      () => router,
+      errorHandler,
+      configuration,
+      filters,
+    )
     with implicits.Requests {
 
   /*
