@@ -5,7 +5,7 @@ import services.IndexPagePagination
 
 import scala.jdk.CollectionConverters._
 import conf.switches.Switches
-import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
+import io.fluentlenium.core.domain.{FluentList, FluentWebElement}
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 

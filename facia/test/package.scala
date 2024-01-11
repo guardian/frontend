@@ -1,6 +1,6 @@
 package test
 
-import org.fluentlenium.core.domain.FluentWebElement
+import io.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
 import services.dotcomrendering.FaciaPickerTest
 

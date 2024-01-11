@@ -3,8 +3,8 @@ package test
 import org.scalatest.{DoNotDiscover, GivenWhenThen}
 
 import scala.jdk.CollectionConverters._
-import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
+import io.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 

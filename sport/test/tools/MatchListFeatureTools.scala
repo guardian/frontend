@@ -1,6 +1,6 @@
 package tools
 
-import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
+import io.fluentlenium.core.domain.{FluentList, FluentWebElement}
 import org.openqa.selenium.interactions.Actions
 import play.api.test.TestBrowser
 
