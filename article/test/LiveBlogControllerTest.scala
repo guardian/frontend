@@ -22,7 +22,7 @@ import model.{
 }
 import play.api.libs.json.{JsValue, Json}
 import topics.TopicService
-import services.{MessageUsService, NewsletterService}
+import services.{NewsletterService, MessageUsService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class LiveBlogControllerTest
@@ -70,7 +70,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       Topic(TopicType.Gpe, "Moscow", Some(2)),
       Topic(TopicType.Org, "PZ Cussons", Some(2)),
       Topic(TopicType.Person, "Emmanuel Macron", Some(1)),
-    );
+    )
 
     when(
       fakeTopicService.getSelectedTopic(path, Topic(TopicType.Org, "Fifa")),
@@ -179,7 +179,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
     content should include("\"webTitle\"")
     content should include("\"headline\"")
-    content should not include ("FakeRemoteRender has found you out if you rely on this markup!")
+    content should not include "FakeRemoteRender has found you out if you rely on this markup!"
   }
 
   it should "return only the key event blocks of a live blog, when switch is on" in new Setup {
