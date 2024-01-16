@@ -542,4 +542,15 @@ trait FeatureSwitches {
     sellByDate = Some(LocalDate.of(2024, 6, 5)),
     exposeClientSide = true,
   )
+
+  val SplitRenderingStack = Switch(
+    SwitchGroup.Feature,
+    "split-rendering-stack",
+    "If this switch is on, we will split DCR traffic between rendering stacks",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    // This is a random date in the future but this switch should be removed far before then
+    sellByDate = Some(LocalDate.of(2024, 6, 5)),
+    exposeClientSide = false,
+  )
 }
