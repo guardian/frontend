@@ -103,19 +103,39 @@ object NavLinks {
 
   /* SPORT */
 
+  private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
+  private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
+  private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
+  private val footballResults = NavLink("Results", "/football/results", Some("football/results"))
+  private val footballCompetitions = NavLink("Competitions", "/football/competitions", Some("football/competitions"))
+  private val footballClubs = NavLink("Clubs", "/football/teams", Some("football/teams"))
+
+  private val soccerSchedules = footballFixtures.copy(title = "Schedules")
+
   val football = NavLink(
     "Football",
     "/football",
     children = List(
-      NavLink("Live scores", "/football/live", Some("football/live")),
-      NavLink("Tables", "/football/tables", Some("football/tables")),
-      NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
-      NavLink("Results", "/football/results", Some("football/results")),
-      NavLink("Competitions", "/football/competitions", Some("football/competitions")),
-      NavLink("Clubs", "/football/teams", Some("football/teams")),
+      footballScores,
+      footballTables,
+      footballFixtures,
+      footballResults,
+      footballCompetitions,
+      footballClubs,
     ),
   )
-  val soccer = football.copy(title = "Soccer", url = "/soccer")
+  val soccer = NavLink(
+    title = "Soccer",
+    url = "/soccer",
+    children = List(
+      footballScores,
+      footballTables,
+      soccerSchedules,
+      footballResults,
+      footballCompetitions,
+      footballClubs,
+    ),
+  )
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
