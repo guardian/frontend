@@ -2,7 +2,7 @@ package test
 
 import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
 import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.DoNotDiscover
+import org.scalatest.{DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
 
 import scala.jdk.CollectionConverters._
@@ -55,10 +55,11 @@ import scala.jdk.CollectionConverters._
 
   it should "select the largest main picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is OFF" in {
     FacebookShareUseTrailPicFirstSwitch.switchOff()
-    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+    goTo("/community/gallery/2024/jan/17/a-salty-sea-dog-and-a-vintage-wall-readers-best-photos") { browser =>
       import browser._
-      $("meta[property='og:image']").attributes("content").asScala.head should include(
-        "e3867edb-e9d5-4be9-9c51-12258b686869-1498x2040.jpeg",
+      val image = $("meta[property='og:image']").attributes("content").asScala.head
+      image should include(
+        "81d3038d96dab501ff33286e9df00a8c76b08f1c",
       )
     }
   }
