@@ -1,11 +1,11 @@
 package weather.models.accuweather
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Reads}
 
 /* Not all the fields the AccuWeather API returns, but the ones we care about */
 
 object LocationName {
-  implicit val jsonReads = Json.reads[LocationName]
+  implicit val jsonReads: Reads[LocationName] = Json.reads[LocationName]
 }
 
 case class LocationName(
@@ -14,7 +14,7 @@ case class LocationName(
 )
 
 object LocationResponse {
-  implicit val jsonReads = Json.reads[LocationResponse]
+  implicit val jsonReads: Reads[LocationResponse] = Json.reads[LocationResponse]
 }
 
 case class LocationResponse(

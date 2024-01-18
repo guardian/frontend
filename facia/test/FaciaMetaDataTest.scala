@@ -28,7 +28,8 @@ import scala.concurrent.duration._
     with WithTestWsClient
     with MockitoSugar
     with WithTestFrontJsonFapi
-    with WithTestContentApiClient {
+    with WithTestContentApiClient
+    with WithAssets {
 
   override def beforeAll(): Unit = {
     // These tests are designed to work with Frontend fronts not DCR fronts
@@ -49,6 +50,7 @@ import scala.concurrent.duration._
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
+    assets = assets,
   )
   val frontPath = "music"
 

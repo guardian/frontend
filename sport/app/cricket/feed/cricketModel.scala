@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 case class Team(name: String, id: String, home: Boolean, lineup: List[String])
 
 object Team {
-  implicit val writes = Json.writes[Team]
+  implicit val writes: OWrites[Team] = Json.writes[Team]
 }
 
 case class InningsBatsman(
@@ -25,19 +25,19 @@ case class InningsBatsman(
 }
 
 object InningsBatsman {
-  implicit val writes = Json.writes[InningsBatsman]
+  implicit val writes: OWrites[InningsBatsman] = Json.writes[InningsBatsman]
 }
 
 case class InningsBowler(name: String, order: Int, overs: Int, maidens: Int, runs: Int, wickets: Int)
 
 object InningsBowler {
-  implicit val writes = Json.writes[InningsBowler]
+  implicit val writes: OWrites[InningsBowler] = Json.writes[InningsBowler]
 }
 
 case class InningsWicket(order: Int, name: String, runs: Int)
 
 object InningsWicket {
-  implicit val writes = Json.writes[InningsWicket]
+  implicit val writes: OWrites[InningsWicket] = Json.writes[InningsWicket]
 }
 
 case class Innings(
@@ -58,7 +58,7 @@ case class Innings(
     wides: Int,
     extras: Int,
 ) {
-  implicit val writes = Json.writes[Innings]
+  implicit val writes: OWrites[Innings] = Json.writes[Innings]
   lazy val closed = declared || forfeited || allOut
   lazy val allOut = wickets == 10
   lazy val wickets = fallOfWicket.length
@@ -74,7 +74,7 @@ case class Innings(
 }
 
 object Innings {
-  implicit val writes = Json.writes[Innings]
+  implicit val writes: OWrites[Innings] = Json.writes[Innings]
 }
 
 case class Match(
@@ -102,5 +102,5 @@ case class Match(
 }
 
 object Match {
-  implicit val writes = Json.writes[Match]
+  implicit val writes: OWrites[Match] = Json.writes[Match]
 }

@@ -9,7 +9,7 @@ import experiments.ActiveExperiments
 import layout.ContentCard
 import model.{PressedPage, RelatedContentItem}
 import navigation.{FooterLinks, Nav}
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 
@@ -35,7 +35,7 @@ case class DotcomFrontsRenderingDataModel(
 )
 
 object DotcomFrontsRenderingDataModel {
-  implicit val writes = Json.writes[DotcomFrontsRenderingDataModel]
+  implicit val writes: OWrites[DotcomFrontsRenderingDataModel] = Json.writes[DotcomFrontsRenderingDataModel]
 
   def apply(
       page: PressedPage,

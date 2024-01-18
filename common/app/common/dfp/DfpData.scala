@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
+import play.api.libs.json
 import play.api.libs.json._
 import play.api.libs.json.JodaReads._
 
@@ -30,13 +31,9 @@ object GuLineItemType {
       case otherLineItemType    => Other(otherLineItemType)
     }
 
-  implicit val guLineItemWrites = new Writes[GuLineItemType] {
-    def writes(lineItemType: GuLineItemType): JsValue = {
-      lineItemType match {
-        case Sponsorship                 => JsString("sponsorship")
-        case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)
-      }
-    }
+  implicit val guLineItemWrites: Writes[GuLineItemType] = {
+    case Sponsorship                 => JsString("sponsorship")
+    case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)
   }
 
   implicit val guLineItemTypeReads: Reads[GuLineItemType] =
@@ -62,11 +59,11 @@ case class GuCustomTargetingValue(
 )
 
 object GuCustomTargetingValue {
-  implicit val format = Json.format[GuCustomTargetingValue]
+  implicit val format: OFormat[GuCustomTargetingValue] = Json.format[GuCustomTargetingValue]
 }
 
 object GuCustomTargeting {
-  implicit val format = Json.format[GuCustomTargeting]
+  implicit val format: OFormat[GuCustomTargeting] = Json.format[GuCustomTargeting]
 }
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
@@ -168,7 +165,7 @@ case class GuAdUnit(id: String, path: Seq[String], status: String) {
 
 object GuAdUnit {
 
-  implicit val adUnitFormats = Json.format[GuAdUnit]
+  implicit val adUnitFormats: OFormat[GuAdUnit] = Json.format[GuAdUnit]
 
   val ACTIVE = "ACTIVE"
   val INACTIVE = "INACTIVE"
@@ -296,24 +293,22 @@ object GuLineItem {
 
   private val timeFormatter = ISODateTimeFormat.dateTime().withZoneUTC()
 
-  implicit val lineItemWrites = new Writes[GuLineItem] {
-    def writes(lineItem: GuLineItem): JsValue = {
-      Json.obj(
-        "id" -> lineItem.id,
-        "orderId" -> lineItem.orderId,
-        "name" -> lineItem.name,
-        "lineItemType" -> lineItem.lineItemType,
-        "startTime" -> timeFormatter.print(lineItem.startTime),
-        "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
-        "isPageSkin" -> lineItem.isPageSkin,
-        "sponsor" -> lineItem.sponsor,
-        "status" -> lineItem.status,
-        "costType" -> lineItem.costType,
-        "creativePlaceholders" -> lineItem.creativePlaceholders,
-        "targeting" -> lineItem.targeting,
-        "lastModified" -> timeFormatter.print(lineItem.lastModified),
-      )
-    }
+  implicit val lineItemWrites: Writes[GuLineItem] = (lineItem: GuLineItem) => {
+    Json.obj(
+      "id" -> lineItem.id,
+      "orderId" -> lineItem.orderId,
+      "name" -> lineItem.name,
+      "lineItemType" -> lineItem.lineItemType,
+      "startTime" -> timeFormatter.print(lineItem.startTime),
+      "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
+      "isPageSkin" -> lineItem.isPageSkin,
+      "sponsor" -> lineItem.sponsor,
+      "status" -> lineItem.status,
+      "costType" -> lineItem.costType,
+      "creativePlaceholders" -> lineItem.creativePlaceholders,
+      "targeting" -> lineItem.targeting,
+      "lastModified" -> timeFormatter.print(lineItem.lastModified),
+    )
   }
 
   implicit val lineItemReads: Reads[GuLineItem] = (
@@ -356,8 +351,8 @@ case class GuCreativeTemplateParameter(
 
 object GuCreativeTemplateParameter {
 
-  implicit val GuCreativeTemplateParameterWrites = new Writes[GuCreativeTemplateParameter] {
-    def writes(param: GuCreativeTemplateParameter): JsValue = {
+  implicit val GuCreativeTemplateParameterWrites: Writes[GuCreativeTemplateParameter] =
+    (param: GuCreativeTemplateParameter) => {
       Json.obj(
         "type" -> param.parameterType,
         "label" -> param.label,
@@ -365,7 +360,6 @@ object GuCreativeTemplateParameter {
         "description" -> param.description,
       )
     }
-  }
 
   implicit val GuCreativeTemplateParameterReads: Reads[GuCreativeTemplateParameter] = (
     (JsPath \ "type").read[String] and
@@ -397,7 +391,8 @@ object GuCreative {
     (mapById(old) ++ mapById(recent)).values.toSeq
   }
 
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val dateToTimestampWrites: json.JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val guCreativeFormats: Format[GuCreative] = Json.format[GuCreative]
 }
 

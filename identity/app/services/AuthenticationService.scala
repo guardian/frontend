@@ -1,12 +1,12 @@
 package services
 
-import com.gu.identity.auth.UserCredentials
-import idapiclient.{Auth, ScGuRp, ScGuU}
-import com.gu.identity.model.User
+import com.gu.identity.auth.{IdapiAuthService, IdapiUserCredentials}
 import com.gu.identity.cookie.IdentityCookieService
-import com.gu.identity.play.IdentityPlayAuthService
-import play.api.mvc.{RequestHeader, Results}
+import com.gu.identity.model.User
+import com.gu.identity.play.IdapiPlayAuthService
+import idapiclient.{Auth, ScGuRp, ScGuU}
 import org.joda.time.Hours
+import play.api.mvc.{RequestHeader, Results}
 import utils.SafeLogging
 
 import scala.language.implicitConversions
@@ -18,7 +18,7 @@ object AuthenticatedUser {
 case class AuthenticatedUser(user: User, auth: Auth, hasRecentlyAuthenticated: Boolean = false)
 
 class AuthenticationService(
-    identityAuthService: IdentityPlayAuthService,
+    identityAuthService: IdapiAuthService,
     identityCookieService: IdentityCookieService,
 ) extends Results
     with SafeLogging {
@@ -30,24 +30,23 @@ class AuthenticationService(
     }
 
   /** User has SC_GU_U and GU_U cookies */
-  def fullyAuthenticatedUser[A](request: RequestHeader): Option[AuthenticatedUser] = {
-    identityAuthService
-      .getUserFromRequest(request)
-      .map {
-        case (credentials, user) =>
-          // have to explicitly match the retrieved credentials to UserCredentials to see if it's an SCGUUCookie or CryptoAccessToken
-          // in this case we're only looking for the SCGUUCookie, so return the value of that
-          val cookie = credentials match {
-            case UserCredentials.SCGUUCookie(value)      => value
-            case UserCredentials.CryptoAccessToken(_, _) => ""
-          }
-          AuthenticatedUser(
-            user = user,
-            auth = ScGuU(cookie),
-            hasRecentlyAuthenticated = hasRecentlyAuthenticate(user.id, request),
-          )
+  def fullyAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] = {
+    (for {
+      credentials <- IdapiPlayAuthService.getIdapiUserCredentialsFromRequest(request, None)
+      user <- identityAuthService.getUserFromCredentials(credentials)
+    } yield {
+      // have to explicitly match the retrieved credentials to UserCredentials to see if it's an SCGUUCookie or CryptoAccessToken
+      // in this case we're only looking for the SCGUUCookie, so return the value of that
+      val cookie = credentials match {
+        case IdapiUserCredentials.SCGUUCookie(value)      => value
+        case IdapiUserCredentials.CryptoAccessToken(_, _) => ""
       }
-      .redeem(
+      AuthenticatedUser(
+        user = user,
+        auth = ScGuU(cookie),
+        hasRecentlyAuthenticated = hasRecentlyAuthenticate(user.id, request),
+      )
+    }).redeem(
         err => {
           logger.error("unable to authenticate user using SC_GU_U cookie", err)
           None

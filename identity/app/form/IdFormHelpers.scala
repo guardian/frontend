@@ -5,7 +5,7 @@ import views.html.fragments.form.fieldConstructors.{frontendFieldConstructor, mu
 import play.api.data.Field
 
 object IdFormHelpers {
-  implicit val fields = FieldConstructor(frontendFieldConstructor.f)
+  implicit val fields: FieldConstructor = FieldConstructor(frontendFieldConstructor.f)
 
   val nonInputFields = FieldConstructor(multiInputFieldConstructor.f)
 

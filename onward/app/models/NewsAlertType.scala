@@ -31,7 +31,7 @@ object NewsAlertType {
       case "sport"         => Sport
     }
 
-  implicit val jf = new Format[NewsAlertType] {
+  implicit val jf: Format[NewsAlertType] = new Format[NewsAlertType] {
     def reads(json: JsValue): JsResult[NewsAlertType] =
       json match {
         case JsString(s) => fromString(s) map { JsSuccess(_) } getOrElse JsError(s"$s is not a valid news alert type")

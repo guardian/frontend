@@ -1,5 +1,6 @@
 package conf.switches
 
+import java.time.LocalDate
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
@@ -153,16 +154,6 @@ trait CommercialSwitches {
     name = "article-end-slot",
     description =
       "Enable the article end slot, this appears when the contributions epic does not. Currently only Public Good is served in this slot in the US.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val frontsBannerAds: Switch = Switch(
-    group = Commercial,
-    name = "fronts-banner-ads",
-    description = "Enable banner ads to display instead of MPUs and merch-high on fronts pages.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

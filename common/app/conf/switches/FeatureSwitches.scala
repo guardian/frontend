@@ -524,12 +524,22 @@ trait FeatureSwitches {
 
   val DarkModeInApps = Switch(
     SwitchGroup.Feature,
-    "dark-mode-apps",
+    "dark-mode-in-apps",
     "If this switch is on, we will allow dark mode in apps articles",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
     // This is a random date in the future but this switch should be removed far before then
     sellByDate = Some(LocalDate.of(2024, 6, 5)),
-    exposeClientSide = false,
+    exposeClientSide = true,
+  )
+  val DiscussionInApps = Switch(
+    SwitchGroup.Feature,
+    "discussion-in-apps",
+    "If this switch is on, we will render discussion in apps articles",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    // This is a random date in the future but this switch should be removed far before then
+    sellByDate = Some(LocalDate.of(2024, 6, 5)),
+    exposeClientSide = true,
   )
 }

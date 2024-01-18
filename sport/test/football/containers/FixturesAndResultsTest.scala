@@ -3,6 +3,8 @@ package football.containers
 import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
 import test._
 
 @DoNotDiscover class FixturesAndResultsTest
@@ -20,7 +22,7 @@ import test._
   lazy val fixturesAndResults = new FixturesAndResults(
     testCompetitionsService.competitionsWithTodaysMatchesAndFutureFixtures,
   )
-  implicit val fakeRequest = TestRequest()
+  implicit val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = TestRequest()
 
   "Creating container for a given team" should "be successful" in {
 

@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import implicits.Dates._
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json.{JodaWrites, JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{ImgSrc, Naked}
 
@@ -113,7 +113,8 @@ final case class Trail(
     }
   }
 
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val dateToTimestampWrites: JodaWrites.JodaDateTimeNumberWrites.type =
+    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   def javascriptConfig: Map[String, JsValue] =
     Map(
       ("sectionName", JsString(sectionName)),

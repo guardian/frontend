@@ -2,10 +2,10 @@ package services
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponseV2
 import common._
-import model.{ArticlePage, PageWithStoryPackage, LiveBlogPage, Tag}
+import model.{ArticlePage, LiveBlogPage, PageWithStoryPackage, Tag}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OWrites, Reads}
 import com.gu.contentapi.client.utils.format.NewsletterSignupDesign
 import com.gu.contentapi.client.model.v1.TagType
 
@@ -23,8 +23,8 @@ case class NewsletterData(
 )
 
 object NewsletterData {
-  implicit val newsletterDataReads = Json.reads[NewsletterData]
-  implicit val newsletterDataWrites = Json.writes[NewsletterData]
+  implicit val newsletterDataReads: Reads[NewsletterData] = Json.reads[NewsletterData]
+  implicit val newsletterDataWrites: OWrites[NewsletterData] = Json.writes[NewsletterData]
 }
 
 class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {

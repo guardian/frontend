@@ -1,15 +1,16 @@
 import type { ABTest } from '@guardian/ab-core';
 
-export const prebidKargo: ABTest = {
-	id: 'PrebidKargo',
+export const mpuWhenNoEpic: ABTest = {
+	id: 'MpuWhenNoEpic',
 	author: '@commercial-dev',
-	start: '2023-12-05',
-	expiry: '2024-02-29',
-	audience: 2 / 100,
-	audienceOffset: 0 / 100,
-	audienceCriteria: 'USA only',
+	start: '2023-11-22',
+	expiry: '2024-01-31',
+	audience: 10 / 100,
+	audienceOffset: 5 / 100,
+	audienceCriteria: '',
 	successMeasure: '',
-	description: 'Test Kargo as a prebid bidder for US traffic',
+	description:
+		'Test MPU when there is no epic at the end of Article on the page.',
 	variants: [
 		{
 			id: 'control',

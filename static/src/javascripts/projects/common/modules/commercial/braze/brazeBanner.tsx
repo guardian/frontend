@@ -5,6 +5,7 @@ import { reportError } from '../../../../../lib/report-error';
 import {
 	getAuthStatus,
 	getOptionsHeadersWithOkta,
+	getUserFromApiOrOkta,
 } from '../../../modules/identity/api';
 import { submitComponentEvent, submitViewEvent } from '../acquisitions-ophan';
 import type { BrazeMessageInterface } from './brazeMessageInterface';
@@ -80,8 +81,21 @@ const renderBanner = (
 					? getOptionsHeadersWithOkta(authStatus)
 					: {};
 
-			const fetchEmail = (): Promise<string | null> =>
-				Promise.resolve(null);
+			const fetchEmail = (): Promise<string | null> => {
+				return new Promise((resolve) => {
+					getUserFromApiOrOkta()
+						.then((res) => {
+							if (
+								res?.primaryEmailAddress &&
+								res.statusFields.userEmailValidated
+							) {
+								resolve(res.primaryEmailAddress);
+							}
+							resolve(null);
+						})
+						.catch(() => resolve(null));
+				});
+			};
 
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- IE does not support shadow DOM, so instead we just render
 			if (!container.attachShadow) {

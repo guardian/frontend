@@ -2,7 +2,7 @@ package layout.slices
 
 import common.Maps._
 import model.pressed.PressedContent
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 import scala.util.Try
 
@@ -12,9 +12,9 @@ case class Story(
 )
 
 object Story {
-  implicit val jsonFormat = Json.format[Story]
+  implicit val jsonFormat: OFormat[Story] = Json.format[Story]
 
-  implicit val ordering = Ordering.by[Story, Int](_.group)
+  implicit val ordering: Ordering[Story] = Ordering.by[Story, Int](_.group)
 
   def unboosted(n: Int): Story = Story(n, isBoosted = false)
 

@@ -15,7 +15,7 @@ import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, Duration}
-import play.api.libs.json.{JsError, JsSuccess, Json}
+import play.api.libs.json.{JsError, JsSuccess, Json, OFormat}
 import quiz._
 import views.support.GoogleStructuredData
 
@@ -331,8 +331,8 @@ final case class QuizAtom(
 
 object QuizAtom extends common.GuLogging {
 
-  implicit val assetFormat = Json.format[Asset]
-  implicit val imageFormat = Json.format[Image]
+  implicit val assetFormat: OFormat[Asset] = Json.format[Asset]
+  implicit val imageFormat: OFormat[Image] = Json.format[Image]
 
   private def transformAssets(quizAsset: Option[atomapi.quiz.Asset]): Option[QuizImageMedia] =
     quizAsset.flatMap { asset =>

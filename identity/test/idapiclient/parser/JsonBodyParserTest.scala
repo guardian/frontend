@@ -18,7 +18,7 @@ class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
 
   object TestJsonBodyParser extends JsonBodyParser {
 
-    implicit val formats = new DefaultFormats {}
+    implicit val formats: DefaultFormats = new DefaultFormats {}
 
     def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = testErrors
   }

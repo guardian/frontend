@@ -3,9 +3,10 @@ package services
 import common.GuLogging
 import conf.AdminConfiguration.fastly
 import com.amazonaws.services.cloudwatch.model.{Dimension, MetricDatum}
+
 import java.util.Date
 import play.api.libs.ws.WSClient
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsValue, Json, OFormat}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -33,7 +34,7 @@ class FastlyStatisticService(wsClient: WSClient) extends GuLogging {
       start_time: Long,
   )
 
-  private implicit val FastlyApiStatFormat = Json.format[FastlyApiStat]
+  private implicit val FastlyApiStatFormat: OFormat[FastlyApiStat] = Json.format[FastlyApiStat]
 
   private val regions = List("usa", "europe", "ausnz")
 

@@ -7,7 +7,7 @@ import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import layout.{ContentCard, DiscussionSettings}
 import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import model.pressed.PressedContent
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.{Json, OWrites, Writes}
 import play.api.mvc.RequestHeader
 import views.support.{ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 
@@ -37,7 +37,7 @@ case class Trail(
 
 object Trail {
 
-  implicit val brandingTypeWrites = new Writes[BrandingType] {
+  implicit val brandingTypeWrites: Writes[BrandingType] = new Writes[BrandingType] {
     def writes(bt: BrandingType) = {
       Json.obj(
         "name" -> bt.name,
@@ -45,15 +45,15 @@ object Trail {
     }
   }
 
-  implicit val dimensionsWrites = Json.writes[Dimensions]
+  implicit val dimensionsWrites: OWrites[Dimensions] = Json.writes[Dimensions]
 
-  implicit val logoWrites = Json.writes[CommercialLogo]
+  implicit val logoWrites: OWrites[CommercialLogo] = Json.writes[CommercialLogo]
 
-  implicit val brandingWrites = Json.writes[Branding]
+  implicit val brandingWrites: OWrites[Branding] = Json.writes[Branding]
 
-  implicit val discussionWrites = Json.writes[DiscussionSettings]
+  implicit val discussionWrites: OWrites[DiscussionSettings] = Json.writes[DiscussionSettings]
 
-  implicit val OnwardItemWrites = Json.writes[Trail]
+  implicit val OnwardItemWrites: OWrites[Trail] = Json.writes[Trail]
 
   private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 

@@ -79,12 +79,6 @@ val common = library("common")
 
 val commonWithTests = withTests(common)
 
-val sanityTest = application("sanity-tests")
-  .settings(
-    // Evict vulnerable versions of jackson-databind
-    libraryDependencies += jacksonDatabind,
-  )
-
 val facia = application("facia")
   .dependsOn(commonWithTests)
   .aggregate(common)
@@ -161,11 +155,11 @@ val identity = application("identity")
     libraryDependencies ++= Seq(
       filters,
       identityAuthPlay,
-      http4sCore,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,
     ),
+    dependencyOverrides ++= jackson,
     PlayKeys.playDefaultPort := 9009,
     Test / testOptions += Tests.Argument("-oF"),
   )

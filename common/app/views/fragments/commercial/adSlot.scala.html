@@ -6,13 +6,14 @@
     refresh: Boolean = true,
     outOfPage: Boolean = false,
     optId: Option[String] = None,
-    optClassNames: Option[String] = None
+    optClassNames: Option[String] = None,
+    useFlexContainer: Boolean = false
 )(placeholderContent: Html)(implicit request: RequestHeader)
 
 @import views.support.Commercial
 @import implicits.Requests._
 
-<div class="ad-slot-container">
+<div class="ad-slot-container" @if(useFlexContainer) { style="display: flex; justify-content: center;" }>
     <div
         id="dfp-ad--@optId.getOrElse(name)"
         class="js-ad-slot ad-slot ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ") @optClassNames"

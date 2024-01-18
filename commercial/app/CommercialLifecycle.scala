@@ -1,16 +1,15 @@
 package commercial
 
 import java.util.concurrent.Executors
-
 import commercial.model.merchandise.jobs.Industries
 import app.LifecycleComponent
 import commercial.model.feeds._
 import common.LoggingField._
-import common.{PekkoAsync, JobScheduler, GuLogging}
+import common.{GuLogging, JobScheduler, PekkoAsync}
 import metrics.MetricUploader
 import play.api.inject.ApplicationLifecycle
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 import scala.util.control.NonFatal
 
 object CommercialMetrics {
@@ -28,7 +27,7 @@ class CommercialLifecycle(
     with GuLogging {
 
   // This class does work that should be kept separate from the EC used to serve requests
-  implicit private val ec = ExecutionContext.fromExecutorService(
+  implicit private val ec: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(
     Executors.newFixedThreadPool(10),
   )
 

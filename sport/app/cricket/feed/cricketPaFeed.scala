@@ -23,7 +23,7 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
   private val paEndpoint = "https://cricket-api.guardianapis.com/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept", "application/xml")
-  private implicit val throttler = new CricketThrottler(pekkoActorSystem, materializer)
+  private implicit val throttler: CricketThrottler = new CricketThrottler(pekkoActorSystem, materializer)
 
   private def getMatchPaResponse(apiMethod: String)(implicit executionContext: ExecutionContext): Future[String] = {
     credentials
