@@ -1,7 +1,7 @@
 package football.model
 
 import com.madgag.scala.collection.decorators.MapDecorator
-import common.Edition
+import common.{Edition, editions}
 import football.collections.RichList
 import football.datetime.DateHelpers
 import implicits.Football
@@ -90,13 +90,14 @@ trait MatchesList extends Football with RichList {
     nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
 
-  def getPageTitle: String = {
+  def getPageTitle(edition: Edition): String = {
     pageType match {
-      case "live"     => "Live football scores"
-      case "matches"  => "Football scores"
-      case "fixtures" => "Football fixtures"
-      case "results"  => "Football results"
-      case _          => pageType
+      case "live"                                 => "Live football scores"
+      case "matches"                              => "Football scores"
+      case "fixtures" if (edition == editions.Us) => "Soccer schedules"
+      case "fixtures"                             => "Football fixtures"
+      case "results"                              => "Football results"
+      case _                                      => pageType
     }
   }
 }
