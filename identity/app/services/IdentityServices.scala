@@ -2,8 +2,8 @@ package services
 
 import java.util.concurrent.{Executors, ThreadPoolExecutor}
 import clients.DiscussionClient
+import com.gu.identity.auth.{IdapiAuthConfig, IdapiAuthService}
 import com.gu.identity.cookie.IdentityCookieService
-import com.gu.identity.play.IdentityPlayAuthService
 import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -28,7 +28,7 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val idRequestParser = wire[IdRequestParser]
   lazy val identityUrlBuilder = wire[IdentityUrlBuilder]
   lazy val playSigninService = wire[PlaySigninService]
-  lazy val identityAuthService: IdentityPlayAuthService = {
+  lazy val identityAuthService: IdapiAuthService = {
     val blockingThreads = 30
 
     val threadPool = Executors.newFixedThreadPool(blockingThreads).asInstanceOf[ThreadPoolExecutor]
@@ -36,10 +36,8 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
 
     val ec: ExecutionContext = ExecutionContext.fromExecutorService(threadPool)
 
-    IdentityPlayAuthService.unsafeInit(
-      Uri.unsafeFromString(identityConfiguration.apiRoot),
-      identityConfiguration.apiClientToken,
-      None,
+    IdapiAuthService.unsafeInit(
+      IdapiAuthConfig(Uri.unsafeFromString(identityConfiguration.apiRoot), identityConfiguration.apiClientToken),
     )(ec)
   }
   lazy val identityCookieService: IdentityCookieService =

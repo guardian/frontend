@@ -3,7 +3,7 @@ package model
 import com.gu.commercial.branding.Branding
 import common.commercial.{CommercialProperties, EditionBranding}
 import common.{Edition, GuLogging}
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class SeoDataJson(
     id: String,
@@ -16,7 +16,7 @@ case class SeoDataJson(
 case class SeoData(id: String, navSection: String, webTitle: String, title: Option[String], description: Option[String])
 
 object SeoData extends GuLogging {
-  implicit val seoFormatter = Json.format[SeoData]
+  implicit val seoFormatter: OFormat[SeoData] = Json.format[SeoData]
 
   val editions = Edition.allEditions.map(_.id.toLowerCase)
 
@@ -60,7 +60,7 @@ case class FrontProperties(
 }
 
 object FrontProperties {
-  implicit val jsonFormat = Json.format[FrontProperties]
+  implicit val jsonFormat: OFormat[FrontProperties] = Json.format[FrontProperties]
 
   val empty = FrontProperties(
     onPageDescription = None,

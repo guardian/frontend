@@ -1,7 +1,7 @@
 package pagepresser
 
 import org.jsoup.nodes.Document
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Reads}
 import play.api.libs.ws.WSClient
 
 import scala.jdk.CollectionConverters._
@@ -9,9 +9,9 @@ import scala.concurrent.{Await, ExecutionContext}
 import scala.concurrent.duration._
 
 object PollDeserializer {
-  implicit val jsonAnswers = Json.reads[Answer]
-  implicit val jsonQuestions = Json.reads[Question]
-  implicit val jsonPoll = Json.reads[Poll]
+  implicit val jsonAnswers: Reads[Answer] = Json.reads[Answer]
+  implicit val jsonQuestions: Reads[Question] = Json.reads[Question]
+  implicit val jsonPoll: Reads[Poll] = Json.reads[Poll]
 }
 
 case class Poll(pollId: String, questions: List[Question])

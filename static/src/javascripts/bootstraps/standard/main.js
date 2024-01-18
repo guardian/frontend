@@ -16,11 +16,8 @@
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
-import { storage } from '@guardian/libs';
-import { fetchJson } from 'lib/fetch-json';
 import { mediator } from 'lib/mediator';
 import { addEventListener } from 'lib/events';
-import { addCookie } from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
@@ -35,6 +32,7 @@ import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 import { initEmbedResize } from "./emailEmbeds";
 import { setAdFreeCookie } from 'common/modules/commercial/user-features';
+import { incrementAlreadyVisited } from "bootstraps/standard/alreadyVisited";
 
 const showHiringMessage = () => {
     try {
@@ -159,11 +157,8 @@ const bootStandard = () => {
         setAdFreeCookie(1);
     }
 
-    // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
-        const key = 'gu.alreadyVisited';
-        const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
-        storage.local.setRaw(key, alreadyVisited + 1);
+        void incrementAlreadyVisited();
     }
 
     ophan.setEventEmitter(mediator);

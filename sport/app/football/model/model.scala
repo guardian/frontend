@@ -168,6 +168,7 @@ object CompetitionDisplayHelpers {
     teamName
       .replace("Ladies", "")
       .replace("Holland", "The Netherlands")
+      .replace("Union Saint Gilloise", "Union Saint-Gilloise")
   }
 
   def cleanTeamNameNextGenApi(teamName: String): String = {
@@ -180,5 +181,11 @@ object CompetitionDisplayHelpers {
     teamName
       .replace("Czech Republic", "Czech Rep.")
       .replace("Holland", "Netherlands")
+  }
+
+  // We do not currently support scores above 10 so we default to a max
+  // number of goals to display if scores are above 10
+  def cleanScore(score: Int): Int = {
+    if (score > 10) 10 else score
   }
 }

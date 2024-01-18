@@ -7,13 +7,11 @@ case class AdSize(width: Int, height: Int)
 
 object AdSize {
 
-  implicit val writes = new Writes[AdSize] {
-    def writes(size: AdSize): JsValue = {
-      Json.obj(
-        "width" -> size.width,
-        "height" -> size.height,
-      )
-    }
+  implicit val writes: Writes[AdSize] = (size: AdSize) => {
+    Json.obj(
+      "width" -> size.width,
+      "height" -> size.height,
+    )
   }
 
   implicit val reads: Reads[AdSize] = (

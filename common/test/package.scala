@@ -114,7 +114,8 @@ trait WithTestExecutionContext {
 }
 
 trait WithTestApplicationContext {
-  implicit val testApplicationContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
+  implicit val testApplicationContext: ApplicationContext =
+    ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithMaterializer {

@@ -9,7 +9,7 @@ import scala.util.{Failure, Success, Try}
 object URIFormats {
 
   // URI serializer/deserializer
-  implicit val uf = new Format[URI] {
+  implicit val uf: Format[URI] = new Format[URI] {
     override def writes(uri: URI): JsValue = JsString(uri.toString)
     override def reads(json: JsValue): JsResult[URI] = {
       val error = JsError("Value is expected to convert to URI")

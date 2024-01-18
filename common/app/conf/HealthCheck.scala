@@ -208,7 +208,7 @@ abstract case class AnyGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(i
 class CachedHealthCheckLifeCycle(
     healthCheckController: CachedHealthCheck,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
 )(implicit executionContext: ExecutionContext)
     extends LifecycleComponent {
 
@@ -222,7 +222,7 @@ class CachedHealthCheckLifeCycle(
       }
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       healthCheckController.runChecks()
     }
   }

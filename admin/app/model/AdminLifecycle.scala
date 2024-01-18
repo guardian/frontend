@@ -17,7 +17,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AdminLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     emailService: EmailService,
     fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
     r2PagePressJob: R2PagePressJob,
@@ -68,17 +68,18 @@ class AdminLifecycle(
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
-      if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(HighFrequency)
+      if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(pekkoAsync)(HighFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
-      if (FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(StandardFrequency)
+      if (FrontPressJobSwitchStandardFrequency.isSwitchedOn)
+        RefreshFrontsJob.runFrequency(pekkoAsync)(StandardFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
-      if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(LowFrequency)
+      if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(pekkoAsync)(LowFrequency)
       Future.successful(())
     }
     //every 2, 17, 32, 47 minutes past the hour, on the 9th second past the minute (e.g 13:02:09, 13:17:09)
@@ -122,7 +123,7 @@ class AdminLifecycle(
     descheduleJobs()
     scheduleJobs()
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       rebuildIndexJob.run()
       AssetMetricsCache.run()
       LoadBalancer.refresh()

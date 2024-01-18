@@ -11,25 +11,20 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      FrontsBannerAdsDcr,
       Lightbox,
-      ServerSideLiveblogInlineAds,
-      OphanEsm,
-      SectionFrontsBannerAds,
-      HeaderTopBarSearchCapi,
       AdaptiveSite,
       OfferHttp3,
       DeeplyRead,
     )
-  implicit val canCheckExperiment = new CanCheckExperiment(this)
+  implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
 object DeeplyRead
     extends Experiment(
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 31),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 31),
       participationGroup = Perc0A,
     )
 
@@ -37,18 +32,9 @@ object Lightbox
     extends Experiment(
       name = "lightbox",
       description = "Testing the impact lightbox might have on our CWVs",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 9, 29),
-      participationGroup = Perc0B,
-    )
-
-object FrontsBannerAdsDcr
-    extends Experiment(
-      name = "fronts-banner-ads-dcr",
-      description = "Creates a new ad experience on fronts pages, replacing MPUs with banner ads",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc0E,
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 1, 31),
+      participationGroup = Perc5A,
     )
 
 // Removing while we are still implementing this content type in DCR
@@ -65,18 +51,9 @@ object AdaptiveSite
     extends Experiment(
       name = "adaptive-site",
       description = "Enables serving an adaptive version of the site that responds to page performance",
-      owners = Seq(Owner.withName("Open Journalism")),
-      sellByDate = LocalDate.of(2023, 12, 5),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 2, 1),
       participationGroup = Perc1A,
-    )
-
-object HeaderTopBarSearchCapi
-    extends Experiment(
-      name = "header-top-bar-search-capi",
-      description = "Adds CAPI search to the top nav",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2023, 10, 10),
-      participationGroup = Perc1B,
     )
 
 object OfferHttp3
@@ -84,34 +61,6 @@ object OfferHttp3
       name = "offer-http3",
       description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
       owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2023, 9, 29),
+      sellByDate = LocalDate.of(2024, 4, 3),
       participationGroup = Perc1E,
-    )
-
-object ServerSideLiveblogInlineAds
-    extends Experiment(
-      name = "server-side-liveblog-inline-ads",
-      description =
-        "Test whether we can load liveblog inline ads server-side without negative effects on user experience or revenue",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 11, 1),
-      participationGroup = Perc5A,
-    )
-
-object SectionFrontsBannerAds
-    extends Experiment(
-      name = "section-fronts-banner-ads",
-      description = "Creates a new ad experience on section fronts, replacing MPUs with banner ads",
-      owners = Seq(Owner.withGithub("@guardian/commercial-dev")),
-      sellByDate = LocalDate.of(2023, 10, 31),
-      participationGroup = Perc20A,
-    )
-
-object OphanEsm
-    extends Experiment(
-      name = "ophan-esm",
-      description = "Use ophan-tracker-js@2, which uses native ES Modules",
-      owners = Seq(Owner.withGithub("@guardian/ophan")),
-      sellByDate = LocalDate.of(2023, 10, 3),
-      participationGroup = Perc50,
     )

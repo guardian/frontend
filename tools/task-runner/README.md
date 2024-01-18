@@ -26,7 +26,7 @@ You can pass a `--dev` flag to prefer a dev version, if it exists (suffix the ta
 
 ### Modes
 
-Tasks can be run with `--verbose` and `--teamcity` flags for fuller output, but this shouldn't usually be needed (hopefully).
+Tasks can be run with `--verbose` flag for fuller output, but this shouldn't usually be needed (hopefully).
 
 ### Options
 

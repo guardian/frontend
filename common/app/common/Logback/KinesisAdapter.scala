@@ -17,7 +17,7 @@ import scala.annotation.nowarn
 
 // LogbackOperationsPool must be wired as a singleton
 class LogbackOperationsPool(val pekkoActorSystem: PekkoActorSystem) {
-  val logbackOperations: MessageDispatcher = pekkoActorSystem.dispatchers.lookup("akka.logback-operations")
+  val logbackOperations: MessageDispatcher = pekkoActorSystem.dispatchers.lookup("pekko.logback-operations")
 }
 
 // The KinesisAppender[ILoggingEvent] blocks logging operations on putMessage. This overrides the KinesisAppender api, executing putMessage in an

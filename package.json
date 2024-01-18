@@ -17,21 +17,21 @@
 		"@guardian/ab-core": "^5.0.0",
 		"@guardian/atom-renderer": "^2.0.0",
 		"@guardian/automat-modules": "^0.3.8",
-		"@guardian/braze-components": "^15.0.1",
-		"@guardian/commercial": "11.11.1",
-		"@guardian/consent-management-platform": "^13.6.1",
+		"@guardian/braze-components": "^16.3.0",
+		"@guardian/commercial": "12.0.0",
+		"@guardian/consent-management-platform": "13.7.1",
 		"@guardian/core-web-vitals": "^5.0.0",
-		"@guardian/identity-auth": "1.1.0",
+		"@guardian/identity-auth": "1.1.1",
 		"@guardian/identity-auth-frontend": "1.0.0",
 		"@guardian/libs": "^15.6.4",
 		"@guardian/shimport": "^1.0.2",
-		"@guardian/source-foundations": "^13.0.0",
+		"@guardian/source-foundations": "^13.2.1",
 		"@guardian/source-react-components": "^12.0.0",
 		"@guardian/source-react-components-development-kitchen": "^10.0.1",
-		"@guardian/support-dotcom-components": "1.0.7",
+		"@guardian/support-dotcom-components": "1.1.0",
 		"bean": "~1.0.14",
 		"bonzo": "~2.0.0",
-		"bootstrap-sass": "3.3.7",
+		"bootstrap-sass": "3.4.0",
 		"classnames": "~2.2.0",
 		"curl": "cujojs/curl#0.8.9",
 		"dialog-polyfill": "^0.5.6",
@@ -57,9 +57,11 @@
 		"wolfy87-eventemitter": "~5.2.4"
 	},
 	"resolutions": {
-		"unset-value": "^2.0.1"
+		"unset-value": "^2.0.1",
+		"**/crypto-js": "4.2.0"
 	},
 	"devDependencies": {
+		"@aws-sdk/client-cloudwatch": "3.441.0",
 		"@babel/cli": "^7.11.6",
 		"@babel/core": "^7.11.6",
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -84,7 +86,6 @@
 		"amphtml-validator": "^1.0.21",
 		"any-observable": "^0.2.0",
 		"autoprefixer": "^10.3.7",
-		"aws-sdk": "^2.411.0",
 		"babel-core": "^7.0.0-bridge.0",
 		"babel-eslint": "^10.1.0",
 		"babel-jest": "^26.3.0",
@@ -123,7 +124,6 @@
 		"jest": "^26.6.3",
 		"jest-environment-jsdom": "^26.6.2",
 		"jest-environment-jsdom-global": "^2.0.4",
-		"jest-teamcity-reporter": "^0.6.2",
 		"listr": "^0.14.3",
 		"lodash.merge": "^4.6.2",
 		"lodash.takewhile": "^4.6.0",
@@ -207,7 +207,6 @@
 			"ophan/ng": "ophan-tracker-js",
 			"ophan/embed": "ophan-tracker-js/build/ophan.embed"
 		},
-		"testResultsProcessor": "jest-teamcity-reporter",
 		"setupFilesAfterEnv": [
 			"<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
 		],

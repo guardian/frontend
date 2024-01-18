@@ -24,7 +24,7 @@ case class HostedVideoPage(
 }
 
 object HostedVideoPage extends GuLogging {
-  private implicit val ordering = EncodingOrdering
+  private implicit val ordering: EncodingOrdering.type = EncodingOrdering
 
   def fromContent(content: Content): Option[HostedVideoPage] = {
     log.info(s"Building hosted video ${content.id} ...")

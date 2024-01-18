@@ -23,5 +23,5 @@ object Uk
       ),
     ) {
 
-  implicit val UK = Uk
+  implicit val UK: Uk.type = Uk
 }

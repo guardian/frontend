@@ -28,7 +28,7 @@ case class Tag(
 )
 
 object Tag {
-  implicit val writes = Json.writes[Tag]
+  implicit val writes: OWrites[Tag] = Json.writes[Tag]
 
   def apply(t: model.Tag): Tag = {
     Tag(
@@ -60,8 +60,8 @@ case class Block(
 )
 
 object Block {
-  implicit val pageElementWrites = PageElement.pageElementWrites
-  implicit val writes = Json.writes[Block]
+  implicit val pageElementWrites: Writes[PageElement] = PageElement.pageElementWrites
+  implicit val writes: OWrites[Block] = Json.writes[Block]
 
   // TODO simplify date fields when DCR is ready
   def apply(
@@ -151,7 +151,7 @@ case class Pagination(
 )
 
 object Pagination {
-  implicit val writes = Json.writes[Pagination]
+  implicit val writes: OWrites[Pagination] = Json.writes[Pagination]
 }
 
 case class Commercial(
@@ -162,7 +162,7 @@ case class Commercial(
 )
 
 object Commercial {
-  implicit val writes = Json.writes[Commercial]
+  implicit val writes: OWrites[Commercial] = Json.writes[Commercial]
 }
 
 case class Config(
@@ -175,7 +175,7 @@ case class Config(
 )
 
 object Config {
-  implicit val writes = Json.writes[Config]
+  implicit val writes: OWrites[Config] = Json.writes[Config]
 }
 
 case class SubMetaLink(
@@ -184,7 +184,7 @@ case class SubMetaLink(
 )
 
 object SubMetaLink {
-  implicit val format = Json.format[SubMetaLink]
+  implicit val format: OFormat[SubMetaLink] = Json.format[SubMetaLink]
 
   def apply(sml: model.SubMetaLink): SubMetaLink = {
     SubMetaLink(
@@ -200,13 +200,13 @@ case class Author(
 )
 
 object Author {
-  implicit val writes = Json.writes[Author]
+  implicit val writes: OWrites[Author] = Json.writes[Author]
 }
 
 case class DCRBadge(seriesTag: String, imageUrl: String)
 
 object DCRBadge {
-  implicit val writes = Json.writes[DCRBadge]
+  implicit val writes: OWrites[DCRBadge] = Json.writes[DCRBadge]
 }
 
 case class PageFooter(
@@ -215,5 +215,5 @@ case class PageFooter(
 
 object PageFooter {
   implicit val footerLinkWrites: Writes[FooterLink] = Json.writes[FooterLink]
-  implicit val writes = Json.writes[PageFooter]
+  implicit val writes: OWrites[PageFooter] = Json.writes[PageFooter]
 }

@@ -11,7 +11,7 @@ import tools.Store
 
 import scala.concurrent.Future
 
-class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit
+class SwitchboardController(pekkoAsync: PekkoAsync, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
 ) extends BaseController
     with GuLogging
@@ -80,7 +80,7 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
       log.info("switches successfully updated")
 
       val changes = updates filterNot { current contains _ }
-      SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, changes)
+      SwitchNotification.onSwitchChanges(pekkoAsync)(requester, Configuration.environment.stage, changes)
       changes foreach { change =>
         log.info(s"Switch change by $requester: $change")
       }

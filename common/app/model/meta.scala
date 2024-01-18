@@ -242,14 +242,12 @@ object ContentFormat {
   def fromFapiContentFormat(fapiContentFormat: fapiContentFormat): ContentFormat =
     ContentFormat(fapiContentFormat.design, fapiContentFormat.theme, fapiContentFormat.display)
 
-  implicit val contentFormatWrites = new Writes[ContentFormat] {
-    def writes(format: ContentFormat) =
-      Json.obj(
-        "design" -> format.design.toString,
-        "theme" -> format.theme.toString,
-        "display" -> format.display.toString,
-      )
-  }
+  implicit val contentFormatWrites: Writes[ContentFormat] = (format: ContentFormat) =>
+    Json.obj(
+      "design" -> format.design.toString,
+      "theme" -> format.theme.toString,
+      "display" -> format.display.toString,
+    )
 
   // TODO I am sure these should be in shared code, but not aware of any at time
   //  of writing. Let's move it somewhere common in the future.
@@ -308,7 +306,7 @@ object ContentFormat {
       (JsPath \ "theme").read[String].map(parseTheme) and
       (JsPath \ "display").readNullable[String].map(_.map(parseDisplay).getOrElse(StandardDisplay))
 
-  implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
+  implicit val contentFormatReads: Reads[ContentFormat] = contentFormatBuilder.apply(ContentFormat.apply _)
 }
 
 case class MetaData(

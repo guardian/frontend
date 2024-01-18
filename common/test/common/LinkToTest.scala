@@ -3,14 +3,15 @@ package common
 import org.scalatest.matchers.should.Matchers
 import common.editions.{Au, Europe, International, Uk, Us}
 import org.scalatest.flatspec.AnyFlatSpec
+import play.api.mvc.AnyContentAsEmpty
 import test._
 import play.api.test.FakeRequest
 
 class LinkToTest extends AnyFlatSpec with Matchers with implicits.FakeRequests {
 
-  implicit val edition = Uk
-  implicit val editions = Seq(Uk, Us, Au)
-  implicit val request = FakeRequest("GET", "/")
+  implicit val edition: Uk.type = Uk
+  implicit val editions: Seq[Edition] = Seq(Uk, Us, Au)
+  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
   object TestLinkTo extends LinkTo {
     override lazy val host = "http://www.foo.com"

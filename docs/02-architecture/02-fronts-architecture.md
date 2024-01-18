@@ -12,7 +12,7 @@ In a nutshell:
 It is not a user facing service, it processes events published to queues.
 There are 2 queues:
 - one queue populated by a cron job running in the Admin app.
-- one queue where the Fronts tool (fronts.gutools.co.uk) publishes events when a front is being updated.
+- one queue which is subscribed to an SNS topic in the fronts account (the Fronts tool (fronts.gutools.co.uk) publishes events to the topic when a front is being updated).
 
 The cron job is very important since content for a front can be coming from CAPI and change without any update from the Fronts tool.
 

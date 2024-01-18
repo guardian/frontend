@@ -40,16 +40,17 @@ object RedirectService {
     }
   }
 
-  implicit val destinationFormat = DynamoFormat.xmap[Destination, Map[String, String]] {
-    // map -> destination (i.e. reads)
-    case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
-    case m if m.contains("archive")     => Right(ArchiveRedirect(m("source"), m("archive")))
-    case _                              => Left(MissingProperty)
-  } {
-    // destination -> map (i.e. writes)
-    case PermanentRedirect(source, destination) => Map("source" -> source, "destination" -> destination)
-    case ArchiveRedirect(source, archive)       => Map("source" -> source, "archive" -> archive)
-  }
+  implicit val destinationFormat: AnyRef with DynamoFormat[Destination] =
+    DynamoFormat.xmap[Destination, Map[String, String]] {
+      // map -> destination (i.e. reads)
+      case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
+      case m if m.contains("archive")     => Right(ArchiveRedirect(m("source"), m("archive")))
+      case _                              => Left(MissingProperty)
+    } {
+      // destination -> map (i.e. writes)
+      case PermanentRedirect(source, destination) => Map("source" -> source, "destination" -> destination)
+      case ArchiveRedirect(source, archive)       => Map("source" -> source, "archive" -> archive)
+    }
 
   // This is a permanent 3XX redirect - it could be guardian/non-guardian address
   case class PermanentRedirect(source: String, location: String) extends Destination

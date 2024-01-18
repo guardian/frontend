@@ -90,7 +90,7 @@ final case class EmbedJsonHtml(
 )
 
 object EmbedJsonHtml {
-  implicit val format = Json.format[EmbedJsonHtml]
+  implicit val format: OFormat[EmbedJsonHtml] = Json.format[EmbedJsonHtml]
 }
 
 case class EmailFrontPath(path: String, edition: String)

@@ -2,12 +2,12 @@ package model.deploys
 
 import conf.Configuration
 import model.deploys.ApiResults.{ApiError, ApiErrors, ApiResponse}
-import play.api.libs.json.{JsError, JsSuccess, Json}
+import play.api.libs.json.{JsError, JsSuccess, Json, OFormat}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 case class RiffRaffDeployTags(vcsRevision: Option[String])
-object RiffRaffDeployTags { implicit val format = Json.format[RiffRaffDeployTags] }
+object RiffRaffDeployTags { implicit val format: OFormat[RiffRaffDeployTags] = Json.format[RiffRaffDeployTags] }
 
 case class RiffRaffDeploy(
     uuid: String,
@@ -19,7 +19,7 @@ case class RiffRaffDeploy(
     time: String,
     tags: RiffRaffDeployTags,
 )
-object RiffRaffDeploy { implicit val format = Json.format[RiffRaffDeploy] }
+object RiffRaffDeploy { implicit val format: OFormat[RiffRaffDeploy] = Json.format[RiffRaffDeploy] }
 
 class RiffRaffService(httpClient: HttpLike) {
 

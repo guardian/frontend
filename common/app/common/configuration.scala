@@ -339,11 +339,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val token = configuration.getStringProperty("github.token")
   }
 
-  object teamcity {
-    lazy val host = configuration.getMandatoryStringProperty("teamcity.host")
-    lazy val internalHost = configuration.getMandatoryStringProperty("teamcity.internalhost")
-  }
-
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val nonSecureUrl =
@@ -516,20 +511,7 @@ class GuardianConfiguration extends GuLogging {
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
 
-    lazy val masterclassesToken = configuration.getStringProperty("masterclasses.token")
-    lazy val liveEventsToken = configuration.getStringProperty("live-events.token")
-    lazy val liveEventsMembershipUrl = "https://membership.theguardian.com/events.json"
     lazy val jobsUrl = configuration.getStringProperty("jobs.api.url")
-
-    object magento {
-      lazy val domain = configuration.getStringProperty("magento.domain")
-      lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
-      lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
-      lazy val accessToken = configuration.getStringProperty("magento.access.token.key")
-      lazy val accessTokenSecret = configuration.getStringProperty("magento.access.token.secret")
-      lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
-      lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
-    }
 
     lazy val adOpsTeam = configuration.getStringProperty("email.adOpsTeam")
     lazy val adOpsAuTeam = configuration.getStringProperty("email.adOpsTeamAu")

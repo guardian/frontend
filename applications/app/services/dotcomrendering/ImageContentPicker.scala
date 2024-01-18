@@ -2,6 +2,7 @@ package services.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block, ElementType}
 import common.GuLogging
+import implicits.AppsFormat
 import model.Cors.RichRequestHeader
 import model.ImageContentPage
 import play.api.mvc.RequestHeader
@@ -26,9 +27,24 @@ object ImageContentPicker extends GuLogging {
     }
 
     if (tier == RemoteRender) {
-      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", Map.empty, imageContentPage.image)
+      if (request.getRequestFormat == AppsFormat)
+        DotcomponentsLogger.logger.logRequest(
+          s"[ArticleRendering] path executing in dotcom rendering for apps (DCAR)",
+          Map.empty,
+          imageContentPage.image,
+        )
+      else
+        DotcomponentsLogger.logger.logRequest(
+          s"[ArticleRendering] path executing in dotcomponents",
+          Map.empty,
+          imageContentPage.image,
+        )
     } else {
-      DotcomponentsLogger.logger.logRequest(s"path executing in web", Map.empty, imageContentPage.image)
+      DotcomponentsLogger.logger.logRequest(
+        s"[ArticleRendering] path executing in web (frontend)",
+        Map.empty,
+        imageContentPage.image,
+      )
     }
 
     tier

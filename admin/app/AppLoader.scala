@@ -35,7 +35,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait AdminServices extends I18nComponents {
   def wsClient: WSClient
-  def akkaAsync: AkkaAsync
+  def pekkoAsync: PekkoAsync
   def pekkoActorSystem: PekkoActorSystem
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]

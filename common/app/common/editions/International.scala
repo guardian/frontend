@@ -24,5 +24,5 @@ object International
       ),
     ) {
 
-  implicit val INT = International
+  implicit val INT: International.type = International
 }

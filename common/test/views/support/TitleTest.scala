@@ -10,11 +10,12 @@ import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 
 class TitleTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  implicit val request = FakeRequest()
+  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
   it should "should create a 'default' title" in {
     val page = SimplePage(MetaData.make("", None, "The title", None))

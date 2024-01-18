@@ -9,7 +9,7 @@ object LinkedData {
   import org.json4s._
   import org.json4s.native.Serialization.write
 
-  implicit val formats = DefaultFormats + FieldSerializer[LinkedData]()
+  implicit val formats: Formats = DefaultFormats + FieldSerializer[LinkedData]()
 
   def toJson(list: LinkedData): String = write(list)
 }

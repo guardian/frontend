@@ -1,7 +1,7 @@
 package models.dotcomrendering
 
 import model.{ContentFormat, DotcomContentType, ImageAsset}
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OWrites}
 
 // duplicated in dotcomponentsdatamodel
 case class RichLinkTag(
@@ -11,7 +11,7 @@ case class RichLinkTag(
 )
 
 object RichLinkTag {
-  implicit val writes = Json.writes[RichLinkTag]
+  implicit val writes: OWrites[RichLinkTag] = Json.writes[RichLinkTag]
 }
 
 case class RichLink(
@@ -30,5 +30,5 @@ case class RichLink(
 )
 
 object RichLink {
-  implicit val writes = Json.writes[RichLink]
+  implicit val writes: OWrites[RichLink] = Json.writes[RichLink]
 }

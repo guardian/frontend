@@ -1,6 +1,6 @@
 package business
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Reads}
 
 /** Basic deserialization for the data exactly as it's given to us by Fingerpost.
   *
@@ -8,7 +8,7 @@ import play.api.libs.json.Json
   */
 
 object IndexChange {
-  implicit val jsonReads = Json.reads[IndexChange]
+  implicit val jsonReads: Reads[IndexChange] = Json.reads[IndexChange]
 }
 
 case class IndexChange(
@@ -18,7 +18,7 @@ case class IndexChange(
 )
 
 object IndexValue {
-  implicit val jsonReads = Json.reads[IndexValue]
+  implicit val jsonReads: Reads[IndexValue] = Json.reads[IndexValue]
 }
 
 case class IndexValue(
@@ -33,7 +33,7 @@ case class IndexValue(
 )
 
 object Index {
-  implicit val jsonReads = Json.reads[Index]
+  implicit val jsonReads: Reads[Index] = Json.reads[Index]
 }
 
 case class Index(
@@ -47,7 +47,7 @@ case class Index(
 )
 
 object Indices {
-  implicit val jsonReads = Json.reads[Indices]
+  implicit val jsonReads: Reads[Indices] = Json.reads[Indices]
 }
 
 case class Indices(

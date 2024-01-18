@@ -29,6 +29,7 @@ class LeagueTableController(
   val tableOrder: Seq[String] = Seq(
     "World Cup 2022",
     "Premier League",
+    "Africa Cup of Nations",
     "Bundesliga",
     "Serie A",
     "La Liga",
@@ -37,6 +38,7 @@ class LeagueTableController(
     "Champions League",
     "Euro 2024 qualifying",
     "Women's Champions League",
+    "Women's Nations League",
     "Europa League",
     "Carabao Cup",
     "International friendlies",

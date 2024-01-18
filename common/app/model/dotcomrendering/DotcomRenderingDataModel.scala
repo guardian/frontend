@@ -31,6 +31,7 @@ import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import services.NewsletterData
+import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -41,6 +42,7 @@ case class DotcomRenderingDataModel(
     headline: String,
     standfirst: String,
     webTitle: String,
+    affiliateLinksDisclaimer: Option[String],
     mainMediaElements: List[PageElement],
     main: String,
     availableTopics: Option[Seq[Topic]],
@@ -110,9 +112,9 @@ case class DotcomRenderingDataModel(
 
 object DotcomRenderingDataModel {
 
-  implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val pageElementWrites: Writes[PageElement] = PageElement.pageElementWrites
 
-  implicit val writes = new Writes[DotcomRenderingDataModel] {
+  implicit val writes: Writes[DotcomRenderingDataModel] = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
         "availableTopics" -> model.availableTopics,
@@ -122,6 +124,7 @@ object DotcomRenderingDataModel {
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
         "webTitle" -> model.webTitle,
+        "affiliateLinksDisclaimer" -> model.affiliateLinksDisclaimer,
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "filterKeyEvents" -> model.filterKeyEvents,
@@ -452,7 +455,14 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
+    def hasAffiliateLinks(
+        blocks: Seq[APIBlock],
+    ): Boolean = {
+      blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
+    }
+
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
+    val shouldAddDisclaimer = hasAffiliateLinks(bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -545,7 +555,16 @@ object DotcomRenderingDataModel {
 
     val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
+    def getAffiliateLinksDisclaimer(shouldAddAffiliateLinks: Boolean, shouldAddDisclaimer: Boolean) = {
+      if (shouldAddAffiliateLinks && shouldAddDisclaimer) {
+        Some(affiliateLinksDisclaimer("article").body)
+      } else {
+        None
+      }
+    }
+
     DotcomRenderingDataModel(
+      affiliateLinksDisclaimer = getAffiliateLinksDisclaimer(shouldAddAffiliateLinks, shouldAddDisclaimer),
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,

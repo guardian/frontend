@@ -5,17 +5,16 @@ import model.Tag
 import play.api.libs.json._
 
 object InlineMerchandisingTagSet {
-  implicit val jsonReads = Json.reads[InlineMerchandisingTagSet]
+  implicit val jsonReads: Reads[InlineMerchandisingTagSet] = Json.reads[InlineMerchandisingTagSet]
 
-  implicit val inlineMerchandisingTagSetWrites = new Writes[InlineMerchandisingTagSet] {
-    def writes(tagSet: InlineMerchandisingTagSet): JsValue = {
+  implicit val inlineMerchandisingTagSetWrites: Writes[InlineMerchandisingTagSet] =
+    (tagSet: InlineMerchandisingTagSet) => {
       Json.obj(
         "keywords" -> tagSet.keywords,
         "series" -> tagSet.series,
         "contributors" -> tagSet.contributors,
       )
     }
-  }
 
 }
 
@@ -42,16 +41,15 @@ case class InlineMerchandisingTagSet(
 }
 
 object InlineMerchandisingTargetedTagsReport {
-  implicit val jsonReads = Json.reads[InlineMerchandisingTargetedTagsReport]
+  implicit val jsonReads: Reads[InlineMerchandisingTargetedTagsReport] =
+    Json.reads[InlineMerchandisingTargetedTagsReport]
 
-  implicit val inlineMerchandisingTargetedTagsReportWrites =
-    new Writes[InlineMerchandisingTargetedTagsReport] {
-      def writes(report: InlineMerchandisingTargetedTagsReport): JsValue = {
-        Json.obj(
-          "updatedTimeStamp" -> report.updatedTimeStamp,
-          "targetedTags" -> report.targetedTags,
-        )
-      }
+  implicit val inlineMerchandisingTargetedTagsReportWrites: Writes[InlineMerchandisingTargetedTagsReport] =
+    (report: InlineMerchandisingTargetedTagsReport) => {
+      Json.obj(
+        "updatedTimeStamp" -> report.updatedTimeStamp,
+        "targetedTags" -> report.targetedTags,
+      )
     }
 }
 
@@ -68,8 +66,8 @@ object InlineMerchandisingTargetedTagsReportParser extends GuLogging {
 }
 
 object HighMerchandisingLineItems {
-  implicit val lineItemFormat = Json.format[HighMerchandisingLineItem]
-  implicit val lineItemsFormat = Json.format[HighMerchandisingLineItems]
+  implicit val lineItemFormat: OFormat[HighMerchandisingLineItem] = Json.format[HighMerchandisingLineItem]
+  implicit val lineItemsFormat: OFormat[HighMerchandisingLineItems] = Json.format[HighMerchandisingLineItems]
 }
 
 case class HighMerchandisingLineItems(items: Seq[HighMerchandisingLineItem] = Seq.empty) {
@@ -110,7 +108,8 @@ case class HighMerchandisingLineItem(
 }
 
 object HighMerchandisingTargetedTagsReport {
-  implicit val jsonFormat = Json.format[HighMerchandisingTargetedTagsReport]
+  implicit val jsonFormat: OFormat[HighMerchandisingTargetedTagsReport] =
+    Json.format[HighMerchandisingTargetedTagsReport]
 }
 
 case class HighMerchandisingTargetedTagsReport(updatedTimeStamp: String, lineItems: HighMerchandisingLineItems)

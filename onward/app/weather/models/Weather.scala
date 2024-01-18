@@ -1,11 +1,11 @@
 package weather.models
 
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.{Json, Reads, Writes}
 
 object Weather {
-  implicit val jsonReads = Json.reads[Weather]
+  implicit val jsonReads: Reads[Weather] = Json.reads[Weather]
 
-  implicit val writes = new Writes[Weather] {
+  implicit val writes: Writes[Weather] = new Writes[Weather] {
     def writes(model: Weather) = {
       Json.obj(
         "location" -> model.location,

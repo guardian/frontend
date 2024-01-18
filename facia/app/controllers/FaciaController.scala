@@ -47,6 +47,7 @@ trait FaciaController
   val mostViewedAgent: MostViewedAgent
   val deeplyReadAgent: DeeplyReadAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+  val assets: Assets
 
   implicit val context: ApplicationContext
 
@@ -66,6 +67,13 @@ trait FaciaController
       ),
     )
   }
+
+  //ApplePay MerchantId
+  def appleDeveloperMerchantId(): Action[AnyContent] =
+    if (Configuration.environment.isProd)
+      assets.at(path = "/public", file = "apple-developer-merchantid-domain-association-prod.txt")
+    else
+      assets.at(path = "/public", file = "apple-developer-merchantid-domain-association-code.txt")
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
   def renderFrontPressSpecial(path: String): Action[AnyContent] =
@@ -529,5 +537,6 @@ class FaciaControllerImpl(
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
+    val assets: Assets,
 )(implicit val context: ApplicationContext)
     extends FaciaController

@@ -32,10 +32,8 @@ import java.net.URLEncoder
 sealed trait DotcomRenderingMatchType
 
 object DotcomRenderingMatchType {
-  implicit val matchTypesWrites = new Writes[DotcomRenderingMatchType] {
-    def writes(matchType: DotcomRenderingMatchType) =
-      JsString(matchType.toString)
-  }
+  implicit val matchTypesWrites: Writes[DotcomRenderingMatchType] = (matchType: DotcomRenderingMatchType) =>
+    JsString(matchType.toString)
 }
 
 case object CricketMatchType extends DotcomRenderingMatchType
@@ -188,7 +186,7 @@ object DotcomRenderingUtils {
         elem.`type` match {
           case Text =>
             val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+            stringContainsAffiliateableLinks(textString)
           case _ => false
         },
       )
@@ -199,6 +197,10 @@ object DotcomRenderingUtils {
         elems
       }
     } else elems
+  }
+
+  def stringContainsAffiliateableLinks(textString: String): Boolean = {
+    AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
   }
 
   def blockElementsToPageElements(

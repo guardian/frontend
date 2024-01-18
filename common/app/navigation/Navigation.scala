@@ -62,14 +62,14 @@ case class NavMenu(
 
 object NavMenu {
 
-  implicit val navlinkWrites = Json.writes[NavLink]
-  implicit val flatSubnavWrites = Json.writes[FlatSubnav]
-  implicit val parentSubnavWrites = Json.writes[ParentSubnav]
-  implicit val subnavWrites = Writes[Subnav] {
+  implicit val navlinkWrites: OWrites[NavLink] = Json.writes[NavLink]
+  implicit val flatSubnavWrites: OWrites[FlatSubnav] = Json.writes[FlatSubnav]
+  implicit val parentSubnavWrites: OWrites[ParentSubnav] = Json.writes[ParentSubnav]
+  implicit val subnavWrites: Writes[Subnav] = Writes[Subnav] {
     case nav: FlatSubnav   => flatSubnavWrites.writes(nav)
     case nav: ParentSubnav => parentSubnavWrites.writes(nav)
   }
-  implicit val writes = Json.writes[NavMenu]
+  implicit val writes: OWrites[NavMenu] = Json.writes[NavMenu]
 
   private[navigation] case class NavRoot(
       children: Seq[NavLink],
@@ -137,13 +137,19 @@ object NavMenu {
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
   ): Option[NavLink] = {
-    // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
-    def isFootballInNews(parentTitle: String): Boolean = {
-      currentNavLink.title == "Football" && parentTitle == "News"
+
+    // When nav items can appear in two pillars, we want to ignore the least relevant one
+    def shouldIgnoreParent(parentTitle: String): Boolean = {
+      // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
+      (currentNavLink.title == "Football" && parentTitle == "News") ||
+      // Wellness is in both the News Pillar and the Lifestyle pillar, however we don't want the parent to be News.
+      (currentNavLink.title == "Wellness" && parentTitle == "News")
     }
 
-    def isParent(link: NavLink): Boolean =
-      link == currentNavLink || link.children.contains(currentNavLink) && !isFootballInNews(link.title)
+    def isParent(link: NavLink): Boolean = {
+      link == currentNavLink ||
+      link.children.contains(currentNavLink) && !shouldIgnoreParent(link.title)
+    }
 
     find(pillars ++ otherLinks, isParent)
       .orElse(find(getChildrenFromOtherEditions(edition), isParent))
@@ -285,5 +291,5 @@ object SimpleMenu {
     SimpleMenu(root.children, root.otherLinks, root.brandExtensions, ReaderRevenueLinks.all)
   }
 
-  implicit val writes = Json.writes[SimpleMenu]
+  implicit val writes: OWrites[SimpleMenu] = Json.writes[SimpleMenu]
 }

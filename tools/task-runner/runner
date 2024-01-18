@@ -18,16 +18,10 @@ const uniq = require('lodash.uniq');
 const tasksDirectory = '__tasks__';
 
 // use yargs to get a useful CLI
-const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS } = yargs
+const { dev: IS_DEV, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS } = yargs
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
-        type: 'boolean',
-        nargs: 0,
-    })
-    .option('teamcity', {
-        demand: false,
-        describe: 'Output the tasks formatted for teamcity.',
         type: 'boolean',
         nargs: 0,
     })
@@ -61,7 +55,7 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
     .argv;
 
 // if this is true, we log as much as we can
-const VERBOSE = IS_VERBOSE || IS_TEAMCITY || IS_DEBUG;
+const VERBOSE = IS_VERBOSE || IS_DEBUG;
 
 // look here for tasks that come in from yargs
 const taskSrc = path.resolve(__dirname, '..', tasksDirectory);
@@ -133,7 +127,6 @@ function listrify(steps, { concurrent = false } = {}) {
         });
 
     let renderer = 'default';
-    if (IS_TEAMCITY) renderer = require('./run-task-tc-formater');
     if (IS_VERBOSE) renderer = require('./run-task-verbose-formater');
 
     return new Listr(listrTasks, {

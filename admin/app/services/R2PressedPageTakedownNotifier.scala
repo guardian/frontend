@@ -1,14 +1,14 @@
 package services
 
-import common.{AkkaAsync, GuLogging}
+import common.{PekkoAsync, GuLogging}
 
 import scala.concurrent.ExecutionContext
 
 object R2PressedPageTakedownNotifier extends GuLogging {
 
-  def enqueue(akkaAsync: AkkaAsync)(path: String)(implicit executionContext: ExecutionContext): String = {
+  def enqueue(pekkoAsync: PekkoAsync)(path: String)(implicit executionContext: ExecutionContext): String = {
     try {
-      R2PressedPageTakedownNotification.sendWithoutSubject(akkaAsync)(path)
+      R2PressedPageTakedownNotification.sendWithoutSubject(pekkoAsync)(path)
       val msg = s"Queued for takedown: $path"
       log.info(msg)
       msg

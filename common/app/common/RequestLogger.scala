@@ -31,7 +31,7 @@ case class RequestLoggerFields(request: RequestHeader, response: Option[Result],
 
     val allowListedHeaders = (for {
       headerName <- allowListedHeaderNames
-      value <- allHeadersFields.get(headerName)
+      value <- allHeadersFields.map { case (key, value) => (key.toLowerCase, value) }.get(headerName.toLowerCase)
     } yield headerName -> value).toMap
 
     val guardianSpecificHeaders = allHeadersFields.view.filterKeys(_.toUpperCase.startsWith("X-GU-")).toMap

@@ -48,7 +48,7 @@ package object layout {
 
   val columnGen = Gen.oneOf(singleItemGen, rowGen, splitColumnGen, mpuGen)
 
-  implicit val arbitrarySlice = Arbitrary {
+  implicit val arbitrarySlice: Arbitrary[SliceLayout] = Arbitrary {
     for {
       id <- arbitrary[String]
       numberOfCols <- Gen.choose(1, 4)

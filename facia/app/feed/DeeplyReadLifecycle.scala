@@ -2,20 +2,21 @@ package feed
 
 import agents.DeeplyReadAgent
 import app.LifecycleComponent
-import common.{AkkaAsync, JobScheduler}
+import common.{JobScheduler, PekkoAsync}
 import play.api.inject.ApplicationLifecycle
 
 import java.util.concurrent.Executors
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
 class DeeplyReadLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    akkaAsync: AkkaAsync,
+    pekkoAsync: PekkoAsync,
     deeplyReadAgent: DeeplyReadAgent,
 ) extends LifecycleComponent {
 
-  implicit val executionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+  implicit val executionContext: ExecutionContextExecutorService =
+    ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () =>
     Future {
@@ -35,7 +36,7 @@ class DeeplyReadLifecycle(
       deeplyReadAgent.refresh()
     }
 
-    akkaAsync.after1s {
+    pekkoAsync.after1s {
       deeplyReadAgent.refresh()
     }
   }

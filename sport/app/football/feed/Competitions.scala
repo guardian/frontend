@@ -1,5 +1,6 @@
 package feed
 
+import com.github.nscala_time.time.Imports
 import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
@@ -390,7 +391,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with GuLogging
     with implicits.Football {
 
-  private implicit val dateOrdering = Ordering.comparatorToOrdering(
+  private implicit val dateOrdering: Ordering[Imports.DateTime] = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]],
   )
 

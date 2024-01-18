@@ -1,7 +1,6 @@
 package frontpress
 
 import java.nio.ByteBuffer
-
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.kinesis.{AmazonKinesisAsync, AmazonKinesisAsyncClient}
 import com.amazonaws.services.kinesis.model.{PutRecordRequest, PutRecordResult}
@@ -9,10 +8,10 @@ import com.gu.facia.api.ApiError
 import conf.Configuration
 import conf.switches.Switches.FaciaPressStatusNotifications
 import play.api.Logger
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 object StatusNotificationMessage {
-  implicit val jsonFormat = Json.format[StatusNotificationMessage]
+  implicit val jsonFormat: OFormat[StatusNotificationMessage] = Json.format[StatusNotificationMessage]
 }
 case class StatusNotificationMessage(
     status: String,

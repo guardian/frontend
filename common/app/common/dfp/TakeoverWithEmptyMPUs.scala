@@ -23,15 +23,13 @@ object TakeoverWithEmptyMPUs {
 
   val timeViewFormatter = DateTimeFormat.forPattern("d MMM YYYY HH:mm:ss z").withZoneUTC()
 
-  implicit val writes = new Writes[TakeoverWithEmptyMPUs] {
-    def writes(takeover: TakeoverWithEmptyMPUs): JsValue = {
-      Json.obj(
-        "url" -> takeover.url,
-        "editions" -> takeover.editions,
-        "startTime" -> timeJsonFormatter.print(takeover.startTime),
-        "endTime" -> timeJsonFormatter.print(takeover.endTime),
-      )
-    }
+  implicit val writes: Writes[TakeoverWithEmptyMPUs] = (takeover: TakeoverWithEmptyMPUs) => {
+    Json.obj(
+      "url" -> takeover.url,
+      "editions" -> takeover.editions,
+      "startTime" -> timeJsonFormatter.print(takeover.startTime),
+      "endTime" -> timeJsonFormatter.print(takeover.endTime),
+    )
   }
 
   val mustBeAtLeastOneDirectoryDeep = Constraint[String] { s: String =>
@@ -54,7 +52,7 @@ object TakeoverWithEmptyMPUs {
       (JsPath \ "endTime").read[String].map(timeJsonFormatter.parseDateTime)
   )(TakeoverWithEmptyMPUs.apply _)
 
-  implicit val editionFormatter = new Formatter[Edition] {
+  implicit val editionFormatter: Formatter[Edition] = new Formatter[Edition] {
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Edition] = {
       val editionId = data(key)
       Edition.byId(editionId) map (Right(_)) getOrElse
