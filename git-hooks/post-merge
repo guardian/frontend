@@ -18,7 +18,7 @@ execa
                     `Frontend now requires Node ${nvmrcVersion}. Switch to the latest version using \`nvm install\` or download from nodejs.org. Then run \`make reinstall\`.`
                 )}`
             );
-        } else if (changedFiles.includes('yarn.lock')) {
+        } else if (changedFiles.includes('pnpm-lock.yaml')) {
             console.log(
                 `${chalk.red(
                     'This application has new dependencies. Running `make install`...'

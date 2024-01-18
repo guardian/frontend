@@ -4,10 +4,10 @@ Scss
 ## Library dependencies
 
 
-We use [yarn](https://yarnpkg.com) to handle our Scss dependencies.
+We use [pnpm](https://pnpm.io) to handle our Scss dependencies.
 
 ### Usage
 
  * Adding a dependency
 
-    $ yarn add --dev _dependencyname_
+    $ pnpm add --dev _dependencyname_

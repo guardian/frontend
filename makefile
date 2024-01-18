@@ -19,7 +19,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node-env
-	@yarn -s install
+	@pnpm install --frozen-lockfile
 	@./tools/sync-githooks.js
 
 # Remove all 3rd party dependencies.
@@ -89,7 +89,7 @@ test: install
 
 # Run the modern JS test suite in watch mode.
 test-watch: install
-	@yarn test -- --watch --coverage
+	@pnpm test -- --watch --coverage
 
 # Check the JS test suite coverage.
 coverage: install

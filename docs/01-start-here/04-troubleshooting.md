@@ -30,7 +30,7 @@ If this doesn't work, you can clean everything with `cleanAll` in `root`.
 
 If you're still seeing errors, try clearing out all build and `.gitignore`d folders, which includes `target` folders:
 
-> **Note:** This will wipe *everything*, not just `target/` (built) folders - including `node_modules/` 
+> **Note:** This will wipe *everything*, not just `target/` (built) folders - including `node_modules/`
 
 ```
 git clean -fxd
@@ -73,7 +73,7 @@ The Flowtype checks happen automatically when you push your branch, assuming you
 Flow can sometimes take a long time to run. The first time you run Flowtype checks, Flow starts up a Flow server which is a slow process. If you think Flow is hanging ([a known bug](https://github.com/facebook/flow/issues/3528)), you can try stopping the Flow server by running:
 
 ```bash
-$ yarn flow stop
+$ pnpm flow stop
 ```
 
 Next time you push your branch or manually run the Flow checks, a new Flow server will be started.

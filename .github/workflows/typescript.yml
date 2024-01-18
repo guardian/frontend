@@ -16,10 +16,10 @@ jobs:
             - uses: bahmutov/npm-install@v1
 
             - name: Install
-              run: yarn
+              run: pnpm i
 
             - name: Lint files
-              run: yarn eslint static/src/javascripts --ext=ts,tsx
+              run: pnpm eslint static/src/javascripts --ext=ts,tsx
 
             - name: Check typescript
-              run: yarn tsc
+              run: pnpm tsc

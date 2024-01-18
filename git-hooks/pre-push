@@ -47,10 +47,10 @@ const validate = () =>
             stdio: 'inherit',
         }
     );
-const checkYarnLock = changed => {
+const checkLockfile = changed => {
     if (
         changed.some(file => file === 'package.json') &&
-        !changed.some(file => file === 'yarn.lock')
+        !changed.some(file => file === 'pnpm-lock.yaml')
     ) {
         return Promise.reject(
             new Error(
@@ -58,7 +58,7 @@ const checkYarnLock = changed => {
                     `${chalk.underline(
                         'package.json'
                     )} has changed but ${chalk.underline(
-                        'yarn.lock'
+                        'pnpm-lock.yaml'
                     )} is not included in this commit.`
                 )}\n${chalk.dim(
                     `If this is intentional, commit this change with --no-verify.`
@@ -83,7 +83,7 @@ const updateTOC = changed => {
 confirmIfMain
     .then(validate)
     .then(getChangedFiles)
-    .then(checkYarnLock)
+    .then(checkLockfile)
     .then(updateTOC)
     .catch(e => {
         console.log(`\n${e}\n`);

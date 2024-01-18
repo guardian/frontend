@@ -2,9 +2,7 @@
 	"name": "@guardian/frontend",
 	"version": "0.1.0",
 	"private": true,
-	"engines": {
-		"yarn": ">=1.22.19"
-	},
+	"packageManager": "pnpm@8.12.1",
 	"files": [
 		"static/src/**/*"
 	],
@@ -56,9 +54,9 @@
 		"web-vitals": "^3.3.0",
 		"wolfy87-eventemitter": "~5.2.4"
 	},
-	"resolutions": {
+	"overrides": {
 		"unset-value": "^2.0.1",
-		"**/crypto-js": "4.2.0"
+		"crypto-js": "4.2.0"
 	},
 	"devDependencies": {
 		"@aws-sdk/client-cloudwatch": "3.441.0",
@@ -152,7 +150,7 @@
 		"semver": "^5.4.1",
 		"split": "^1.0.0",
 		"stream-to-observable": "^0.2.0",
-		"svgo": "^2.3.0",
+		"svgo": "2.8.0",
 		"tcp-ping": "^0.1.1",
 		"ts-jest": "^26.4.4",
 		"ts-loader": "^8.0.12",
@@ -163,6 +161,7 @@
 		"webpack-cli": "^5.0.1",
 		"webpack-dev-server": "^4.13.2",
 		"webpack-merge": "^4.2.2",
+		"terser-webpack-plugin": "5.3.7",
 		"webshot": "^0.17.0",
 		"yargs": "^17.7.1"
 	},

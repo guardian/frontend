@@ -95,9 +95,9 @@ switch (process.argv[2]) {
         break;
     }
 
-    case 'should-yarn': {
+    case 'should-lock': {
         notify(
-            'Run `make install` and include any changes to `/yarn.lock` in your commit.',
+            'Run `make install` and include any changes to `/package-lock.yaml` in your commit.',
             {
                 heading: 'Dependencies have changed',
             },

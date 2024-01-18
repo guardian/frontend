@@ -38,26 +38,22 @@ const checkNodeEnv = async () => {
 	await checkVersion('node', nvmrcVersion);
 	logSuccess(`Node ${nvmrcVersion}`);
 
-	// check yarn
-	childProcess.exec('yarn --version', async (e, version) => {
-		const foundYarnVersion = version.trim();
-		const enginesYarnVersion = require('../package.json').engines.yarn;
+	// check package manager
+	childProcess.exec('pnpm --version', async (e, version) => {
+		if (!e) return;
 
-		if (foundYarnVersion) {
-			await checkVersion('yarn', enginesYarnVersion);
-			logSuccess(`Yarn ${foundYarnVersion}`);
-		} else {
-			// else install yarn with npm (mainly for TeamCity)
-			logFail(`Yarn not found!`);
-			console.log(`Installing yarn ${enginesYarnVersion} via npm`);
-			childProcess
-				.spawn('npm', ['i', '-g', `yarn@${enginesYarnVersion}`], {
-					stdio: 'inherit',
-				})
-				.on('close', (code) => {
-					if (code !== 0) process.exit(code);
-				});
-		}
+		logFail(`PNPM not found!`);
+		console.log(
+			`Enabling PNPM via corepack ${expectedPackageManagerVersion} via npm`,
+		);
+
+		childProcess
+			.spawn('corepack', ['enable'], {
+				stdio: 'inherit',
+			})
+			.on('close', (code) => {
+				if (code !== 0) process.exit(code);
+			});
 	});
 };
 

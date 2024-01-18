@@ -14,4 +14,4 @@ They're not that intuitive to write, ask around if you're lost.
   - tests are run with [Jest](https://facebook.github.io/jest/docs/getting-started.html)
   - you can run individual tests with `npm test -- ./__tests__/my-new-rule.js`
 3. Write your rule till it passes!
-4. Since we have to install the package from the local FS with `yarn`, you'll need to bump the version in `package.json` to pick your new rule up.
+4. Since we have to install the package from the local FS with `pnpm`, you'll need to bump the version in `package.json` to pick your new rule up.
