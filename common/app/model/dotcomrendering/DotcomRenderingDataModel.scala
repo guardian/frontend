@@ -16,6 +16,7 @@ import model.{
   CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
+  CrosswordData,
   GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
@@ -108,6 +109,7 @@ case class DotcomRenderingDataModel(
     showTableOfContents: Boolean,
     lang: Option[String],
     isRightToLeftLang: Boolean,
+    crossword: Option[CrosswordData],
 )
 
 object DotcomRenderingDataModel {
@@ -187,6 +189,7 @@ object DotcomRenderingDataModel {
         "showTableOfContents" -> model.showTableOfContents,
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
+        "crossword" -> model.crossword,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -338,6 +341,29 @@ object DotcomRenderingDataModel {
     )
   }
 
+  def forCrossword(
+      crosswordPage: ContentPage,
+      request: RequestHeader,
+      pageType: PageType,
+      crossword: CrosswordData, // TODO or move CrosswordPageWithContent to common so usable here
+  ): DotcomRenderingDataModel = {
+    val linkedData = LinkedData.forArticle(
+      article = crosswordPage.item,
+      baseURL = Configuration.dotcom.baseUrl,
+      fallbackLogo = Configuration.images.fallbackLogo,
+    )
+
+    apply(
+      page = crosswordPage,
+      request = request,
+      pageType = pageType,
+      linkedData = linkedData,
+      mainBlock = None,
+      bodyBlocks = Seq.empty,
+      crossword = Some(crossword),
+    )
+  }
+
   def keyEventsFallback(
       blocks: APIBlocks,
   ): Seq[APIBlock] = {
@@ -442,6 +468,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
+      crossword: Option[CrosswordData] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -635,6 +662,7 @@ object DotcomRenderingDataModel {
       showTableOfContents = content.fields.showTableOfContents.getOrElse(false),
       lang = content.fields.lang,
       isRightToLeftLang = content.fields.isRightToLeftLang,
+      crossword = crossword,
     )
   }
 }

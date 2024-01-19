@@ -1,13 +1,14 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
-import common.{Edition, ImplicitControllerExecutionContext, GuLogging}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
+  CrosswordPageWithContent,
   CrosswordPageWithSvg,
   CrosswordSearchPageNoResult,
   CrosswordSearchPageWithResults,
@@ -21,6 +22,7 @@ import play.api.data._
 import play.api.mvc.{Action, RequestHeader, Result, _}
 import services.{IndexPage, IndexPageItem}
 import html.HtmlPageHelpers.ContentCSSFile
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -83,6 +85,24 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
     Action.async { implicit request =>
       renderCrosswordPage(crosswordType, id)
     }
+
+  def renderJson(crosswordType: String, id: Int): Action[AnyContent] = {
+    Action.async { implicit request =>
+      withCrossword(crosswordType, id) { (crossword, content) =>
+        val crosswordContent = CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content)
+        val crosswordPage = new CrosswordPageWithContent(crosswordContent)
+
+        val pageType = PageType(crosswordPage, request, context)
+        common.renderJson(getDCRJson(crosswordPage, pageType), crosswordPage).as("application/json")
+      }
+    }
+  }
+  private def getDCRJson(crosswordPage: CrosswordPageWithContent, pageType: PageType)(implicit
+      request: RequestHeader,
+  ): String =
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, crosswordPage.crossword),
+    )
 
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
