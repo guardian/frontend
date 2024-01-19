@@ -5,7 +5,7 @@ export const prebidKargo: ABTest = {
 	author: '@commercial-dev',
 	start: '2023-12-05',
 	expiry: '2024-02-29',
-	audience: 2 / 100,
+	audience: 4 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'USA only',
 	successMeasure: '',
