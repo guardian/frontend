@@ -2,7 +2,7 @@ package rugby.jobs
 
 import common.{Box, GuLogging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
-import rugby.feed.{Event, MatchNavigation, PARugbyAPIException, RugbyFeed}
+import rugby.feed.{RugbyEvent, MatchNavigation, PARugbyAPIException, RugbyFeed}
 import rugby.model._
 
 import scala.collection.immutable
@@ -13,7 +13,7 @@ class RugbyStatsJob(feed: RugbyFeed) extends GuLogging {
   protected val matchNavContent = Box[Map[String, MatchNavigation]](Map.empty)
   protected val pastScoreEvents = Box[Map[String, Seq[ScoreEvent]]](Map.empty)
   protected val pastMatchesStat = Box[Map[String, MatchStat]](Map.empty)
-  protected val groupTables = Box[Map[Event, Seq[GroupTable]]](Map.empty)
+  protected val groupTables = Box[Map[RugbyEvent, Seq[GroupTable]]](Map.empty)
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 

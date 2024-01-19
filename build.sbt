@@ -105,6 +105,7 @@ val sport = application("sport")
     libraryDependencies ++= Seq(
       paClient,
     ),
+    dependencyOverrides ++= jackson,
   )
 
 val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
@@ -187,6 +188,7 @@ val dev = application("dev-build")
   .settings(
     RoutesKeys.routesImport += "bindables._",
     Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
+    dependencyOverrides ++= jackson,
   )
 
 val preview = application("preview")

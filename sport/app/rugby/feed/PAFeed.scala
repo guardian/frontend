@@ -1,7 +1,7 @@
 package rugby.feed
 
 import common.GuLogging
-import play.api.libs.json.{JsBoolean, Json}
+import play.api.libs.json.{JsBoolean, Json, OWrites}
 import play.api.libs.ws.WSClient
 import rugby.model._
 
@@ -26,16 +26,26 @@ trait RugbyClient {
 case class JsonParseException(msg: String) extends RuntimeException(msg)
 case class PARugbyAPIException(msg: String) extends RuntimeException(msg)
 
-sealed trait Event {
+sealed trait RugbyEvent {
   def competition: String
   def season: String
   def hasGroupTable(stage: Stage.Value): Boolean
 }
 
-case object WorldCup2019 extends Event {
+object RugbyEvent {
+  implicit val rugbyEventWrites: OWrites[RugbyEvent] = Json.writes[RugbyEvent]
+}
+
+case object WorldCup2019 extends RugbyEvent {
   override val competition = "482"
   override val season = "2019"
   override def hasGroupTable(stage: Stage.Value): Boolean = stage == Stage.Group
+  implicit val worldCup2019Writes: OWrites[WorldCup2019.type] = OWrites { (wc: WorldCup2019.type) =>
+    Json.obj(
+      "competition" -> wc.competition,
+      "season" -> wc.season,
+    )
+  }
 }
 
 object WorldCupPAIDs {

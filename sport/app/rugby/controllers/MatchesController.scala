@@ -3,6 +3,7 @@ package rugby.controllers
 import common._
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, SectionId, StandalonePage}
+import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.twirl.api.Html
 import rugby.jobs.RugbyStatsJob
@@ -40,7 +41,11 @@ class MatchesController(
 
           val page = MatchPage(aMatch)
           Cached(60) {
-            if (request.isJson)
+            if (request.isJson && request.forceDCR)
+              JsonComponent(
+                "liveScore" -> Json.toJson(page.liveScore),
+              )
+            else if (request.isJson)
               JsonComponent(
                 "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
                 "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
