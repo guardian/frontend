@@ -512,6 +512,7 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
   val PersonaliseSignInGateAfterCheckout = Switch(
     SwitchGroup.Feature,
     "personalise-sign-in-gate-after-checkout",
