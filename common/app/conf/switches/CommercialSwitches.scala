@@ -432,4 +432,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val youtubeIma: Switch = Switch(
+    group = Commercial,
+    name = "youtube-ima",
+    description = "When ON, the YouTube player will use the YouTube IMA (Interactive Media Ads) integration",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
