@@ -45,7 +45,7 @@ import scala.jdk.CollectionConverters._
 
   it should "select the trail picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
     FacebookShareUseTrailPicFirstSwitch.switchOn()
-    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures?page=on") { browser =>
       import browser._
       $("meta[property='og:image']").attributes("content").asScala.head should include(
         "61e027cb-fec8-4aa3-a12b-e50f99493399-2060x1236.jpeg",
@@ -55,7 +55,7 @@ import scala.jdk.CollectionConverters._
 
   it should "select the largest main picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is OFF" in {
     FacebookShareUseTrailPicFirstSwitch.switchOff()
-    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures?page=off") { browser =>
       import browser._
       $("meta[property='og:image']").attributes("content").asScala.head should include(
         "e3867edb-e9d5-4be9-9c51-12258b686869-1498x2040.jpeg",
