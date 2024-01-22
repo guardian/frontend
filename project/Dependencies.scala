@@ -74,7 +74,7 @@ object Dependencies {
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.16.0" % Test
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.17.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
-  val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
+  val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
