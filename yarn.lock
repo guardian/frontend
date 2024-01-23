@@ -2428,17 +2428,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
   integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
 
-"@guardian/commercial@0.0.0-beta-20240122155652":
-  version "0.0.0-beta-20240122155652"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240122155652.tgz#b4495d6904d05a7d012826a45bde909bcbd20cb4"
-  integrity sha512-DOKAZhuq2zJslQsMehOClpUoCt7y8UN7S25C7H/LijdChtmH83v05dLgNVD/v9xe4wLxySb6gW06KtCJVcPDLQ==
+"@guardian/commercial@0.0.0-beta-20240122183506":
+  version "0.0.0-beta-20240122183506"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240122183506.tgz#0c7f324d1f8ff149a40d166219f7581c0f400c9f"
+  integrity sha512-wpGUaMEAIwcw831q0GCMJDtMrh0UFtuNYAF5ybAjvyIf/CZTUq8sEB+vMmoTquFQkPdvtS3H7qJraHktHAm2MQ==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^2.0.1"
-    prebid.js guardian/prebid.js#23b621b364f4477710579ab6285e951a35cdad16
+    prebid.js guardian/prebid.js#a69808b0a18d5a7bd01f389202a4cc0330a7d9f3
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.5.3"
@@ -2488,6 +2488,11 @@
   version "15.6.4"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-15.6.4.tgz#13787065e5c58b884944c5c71d6e324c7f2e566a"
   integrity sha512-oN+xN7FBuVKLCbbjvAMdWjgWqOtvR38acnqwAKsjUDkFsBzRWU/pueDSEGTCTTVSFcRdCKOsWnop+Vwh59P47g==
+
+"@guardian/libs@^16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-16.0.0.tgz#35c567039f3a2a8440e3f0520b1bd9d275e6ad97"
+  integrity sha512-2i9cN6htXnvABIGhfqJGb9Bh/DdQOayUjb5ruqBGTiXEeDBHztctdVsi7+rPfMlwyPxQ+0qYLhM19f6J94vvhQ==
 
 "@guardian/prettier@^3.0.0":
   version "3.0.0"
@@ -11833,15 +11838,15 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#23b621b364f4477710579ab6285e951a35cdad16":
+"prebid.js@github:guardian/prebid.js#a69808b0a18d5a7bd01f389202a4cc0330a7d9f3":
   version "8.24.0"
-  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/23b621b364f4477710579ab6285e951a35cdad16"
+  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/a69808b0a18d5a7bd01f389202a4cc0330a7d9f3"
   dependencies:
     "@babel/core" "^7.23.2"
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
-    "@guardian/libs" "^15.6.4"
+    "@guardian/libs" "^16.0.0"
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
