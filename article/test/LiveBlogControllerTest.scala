@@ -1,6 +1,5 @@
 package test
 
-import agents.DeeplyReadAgent
 import controllers.LiveBlogController
 import org.mockito.Mockito._
 import org.mockito.Matchers.{anyObject, anyString}
@@ -11,19 +10,19 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import model.{
+  EmailField,
+  FieldType,
   LiveBlogPage,
+  MessageUsData,
+  NameField,
+  TextAreaField,
   Topic,
   TopicResult,
   TopicType,
-  MessageUsData,
-  FieldType,
-  EmailField,
-  MessageUsConfigData,
-  NameField,
-  TextAreaField,
 }
+import play.api.libs.json.{JsValue, Json}
 import topics.TopicService
-import services.{NewsletterService, MessageUsService}
+import services.{MessageUsService, NewsletterService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class LiveBlogControllerTest
@@ -331,10 +330,42 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     )(fakeRequest)
     status(result) should be(200)
 
-    val content = contentAsString(result)
-    content should include(
-      "messageUs\":{\"formId\":\"mock-form-id\",\"formFields\":[{\"_type\":\"model.NameField\",\"id\":\"nameField1\",\"label\":\"name\",\"name\":\"name\",\"required\":true,\"type\":\"text\"},{\"_type\":\"model.EmailField\",\"id\":\"emailField1\",\"label\":\"email\",\"name\":\"email\",\"required\":true,\"type\":\"email\"},{\"_type\":\"model.TextAreaField\",\"id\":\"textAreaField1\",\"label\":\"textArea\",\"name\":\"textArea\",\"required\":true,\"type\":\"textarea\",\"minlength\":0,\"maxlength\":1000}]}",
-    )
+    val actualMessageUsContent: JsValue = contentAsJson(result).result.get("messageUs")
+    val expectedMessageUsContent: String =
+      """
+        |{
+        |   "formId":"mock-form-id",
+        |   "formFields": [
+        |    {
+        |      "_type":"model.NameField",
+        |      "name":"name",
+        |      "label":"name",
+        |      "id":"nameField1",
+        |      "type":"text",
+        |      "required":true
+        |    },
+        |    {
+        |      "_type":"model.EmailField",
+        |      "name":"email",
+        |      "label":"email",
+        |      "id":"emailField1",
+        |      "type":"email",
+        |      "required":true
+        |    },
+        |    {
+        |      "name":"textArea",
+        |      "label":"textArea",
+        |      "id":"textAreaField1",
+        |      "maxlength":1000,
+        |      "minlength":0,
+        |      "_type":"model.TextAreaField",
+        |      "type":"textarea",
+        |      "required":true
+        |    }]
+        |}
+        |""".stripMargin
+
+    assert(actualMessageUsContent.equals(Json.parse(expectedMessageUsContent)))
   }
 
   it should "return no message us data, if not available" in new Setup {
