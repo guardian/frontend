@@ -23,6 +23,9 @@ import play.api.mvc.{Action, RequestHeader, Result, _}
 import services.{IndexPage, IndexPageItem}
 import html.HtmlPageHelpers.ContentCSSFile
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{CrosswordsPicker, RemoteRender}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -30,6 +33,9 @@ import scala.concurrent.duration._
 trait CrosswordController extends BaseController with GuLogging with ImplicitControllerExecutionContext {
 
   def contentApiClient: ContentApiClient
+
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+  val wsClient: WSClient
 
   def noResults()(implicit request: RequestHeader): Result
 
@@ -40,14 +46,14 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   }
 
   def withCrossword(crosswordType: String, id: Int)(
-      f: (Crossword, ApiContent) => Result,
+      f: (Crossword, ApiContent) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
-    getCrossword(crosswordType, id).map { response =>
+    getCrossword(crosswordType, id).flatMap { response =>
       val maybeCrossword = for {
         content <- response.content
         crossword <- content.crossword
       } yield f(crossword, content)
-      maybeCrossword getOrElse noResults()
+      maybeCrossword getOrElse Future.successful(noResults())
     } recover {
       case t: Throwable =>
         log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
@@ -60,22 +66,31 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       context: ApplicationContext,
   ): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(60.seconds)(
-        RevalidatableResult.Ok(
-          CrosswordHtmlPage.html(
-            CrosswordPageWithSvg(
-              CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
-              CrosswordSvg(crossword, None, None, false),
+      val page = CrosswordPageWithSvg(
+        CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
+        CrosswordSvg(crossword, None, None, false),
+      )
+
+      if (CrosswordsPicker.getTier(page) == RemoteRender)
+        remoteRenderer.getCrossword(wsClient, page, PageType(page, request, context))
+      else
+        Future.successful(
+          Cached(60.seconds)(
+            RevalidatableResult.Ok(
+              CrosswordHtmlPage.html(page),
             ),
           ),
-        ),
-      )
+        )
     }
   }
 }
 
-class CrosswordPageController(val contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(
-    implicit context: ApplicationContext,
+class CrosswordPageController(
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
+)(implicit
+    context: ApplicationContext,
 ) extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader): Result =
@@ -93,7 +108,9 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
         val crosswordPage = new CrosswordPageWithContent(crosswordContent)
 
         val pageType = PageType(crosswordPage, request, context)
-        common.renderJson(getDCRJson(crosswordPage, pageType), crosswordPage).as("application/json")
+        Future.successful(
+          common.renderJson(getDCRJson(crosswordPage, pageType), crosswordPage).as("application/json"),
+        )
       }
     }
   }
@@ -101,22 +118,24 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
       request: RequestHeader,
   ): String =
     DotcomRenderingDataModel.toJson(
-      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, crosswordPage.crossword),
+      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType),
     )
 
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, content) =>
-        Cached(60.seconds)(
-          RevalidatableResult.Ok(
-            CrosswordHtmlPage.html(
-              AccessibleCrosswordPage(
-                CrosswordContent.make(
-                  CrosswordData
-                    .fromCrossword(crossword.copy(name = s"Accessible version of ${crossword.name}"), content),
-                  content,
+        Future.successful(
+          Cached(60.seconds)(
+            RevalidatableResult.Ok(
+              CrosswordHtmlPage.html(
+                AccessibleCrosswordPage(
+                  CrosswordContent.make(
+                    CrosswordData
+                      .fromCrossword(crossword.copy(name = s"Accessible version of ${crossword.name}"), content),
+                    content,
+                  ),
+                  AccessibleCrosswordRows(crossword),
                 ),
-                AccessibleCrosswordRows(crossword),
               ),
             ),
           ),
@@ -127,12 +146,14 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
   def printableCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, content) =>
-        Cached(60.seconds)(
-          RevalidatableResult.Ok(
-            PrintableCrosswordHtmlPage.html(
-              CrosswordPageWithSvg(
-                CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
-                CrosswordSvg(crossword, None, None, false),
+        Future.successful(
+          Cached(60.seconds)(
+            RevalidatableResult.Ok(
+              PrintableCrosswordHtmlPage.html(
+                CrosswordPageWithSvg(
+                  CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
+                  CrosswordSvg(crossword, None, None, false),
+                ),
               ),
             ),
           ),
@@ -147,15 +168,17 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
 
         val globalStylesheet = Static(s"stylesheets/$ContentCSSFile.css")
 
-        Cached(60.seconds) {
-          val body = s"""$xml"""
-          RevalidatableResult(
-            Cors {
-              Ok(body).as("image/svg+xml")
-            },
-            body,
-          )
-        }
+        Future.successful(
+          Cached(60.seconds) {
+            val body = s"""$xml"""
+            RevalidatableResult(
+              Cors {
+                Ok(body).as("image/svg+xml")
+              },
+              body,
+            )
+          },
+        )
       }
     }
 }
@@ -163,6 +186,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
 class CrosswordSearchController(
     val contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends CrosswordController {
   val searchForm = Form(

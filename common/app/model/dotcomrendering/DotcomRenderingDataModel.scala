@@ -7,6 +7,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
+import crosswords.CrosswordPageWithContent
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
@@ -342,10 +343,9 @@ object DotcomRenderingDataModel {
   }
 
   def forCrossword(
-      crosswordPage: ContentPage,
+      crosswordPage: CrosswordPageWithContent,
       request: RequestHeader,
       pageType: PageType,
-      crossword: CrosswordData, // TODO or move CrosswordPageWithContent to common so usable here
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -360,7 +360,7 @@ object DotcomRenderingDataModel {
       linkedData = linkedData,
       mainBlock = None,
       bodyBlocks = Seq.empty,
-      crossword = Some(crossword),
+      crossword = Some(crosswordPage.crossword),
     )
   }
 
