@@ -124,7 +124,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
             .withHeaders("X-GU-Dotcomponents" -> "true")
         case _ =>
-          log.error(s"Request to DCR failed: status ${response.status}, body: ${response.body}")
+          log.error(s"Request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}")
           NoCache(
             InternalServerError("Remote renderer error (500)")
               .withHeaders("X-GU-Dotcomponents" -> "true"),
@@ -249,7 +249,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           Future.successful(response.body)
         else
           Future.failed(
-            DCRRenderingException(s"Request to DCR failed: status ${response.status}, body: ${response.body}"),
+            DCRRenderingException(
+              s"getBlocks request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}",
+            ),
           )
       })
   }
