@@ -1,9 +1,6 @@
 import { mountDynamic } from '@guardian/automat-modules';
 import { log } from '@guardian/libs';
-import {
-	getBanner,
-	getPuzzlesBanner,
-} from '@guardian/support-dotcom-components';
+import { getBanner } from '@guardian/support-dotcom-components';
 import type {
 	BannerPayload,
 	ModuleDataResponse,
@@ -34,7 +31,6 @@ import {
 	tracking,
 } from 'common/modules/support/supportMessaging';
 import userPrefs from 'common/modules/user-prefs';
-import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { getCountryCode } from 'lib/geolocation';
 import { reportError } from 'lib/report-error';
@@ -68,16 +64,11 @@ export const renderBanner = (
 
 	return dynamicImport(module.url, module.name)
 		.then((Banner: React.FC) => {
-			const isPuzzlesBanner = module.name === 'PuzzlesBanner';
-
 			return fastdom
 				.mutate(() => {
 					const container = document.createElement('div');
 					container.classList.add('site-message--banner');
 					container.classList.add('remote-banner');
-					if (isPuzzlesBanner) {
-						container.classList.add('remote-banner--puzzles');
-					}
 
 					document.body.insertAdjacentElement('beforeend', container);
 
@@ -85,7 +76,7 @@ export const renderBanner = (
 						container,
 						Banner,
 						{ submitComponentEvent, ...module.props },
-						!isPuzzlesBanner, // The puzzles banner has its own CacheProvider component, and needs this to be false
+						true,
 					);
 				})
 				.then(() => {
@@ -169,37 +160,6 @@ const buildBannerPayload = async (
 		targeting,
 	};
 };
-
-export const fetchPuzzlesData =
-	async (): Promise<ModuleDataResponse | null> => {
-		const { section, series } = window.guardian.config.page;
-
-		const payload = await buildBannerPayload();
-		const isPuzzlesBannerSwitchOn = config.get<boolean>(
-			'switches.puzzlesBanner',
-			false,
-		);
-		const isPuzzlesPage = section === 'crosswords' || series === 'Sudoku';
-
-		if (
-			payload.targeting.shouldHideReaderRevenue ||
-			payload.targeting.isPaidContent
-		) {
-			return null;
-		}
-
-		if (isPuzzlesBannerSwitchOn && isPuzzlesPage) {
-			return getPuzzlesBanner(supportDotcomComponentsUrl, payload).then(
-				(response: ModuleDataResponse) => {
-					if (!response.data) {
-						return null;
-					}
-					return response;
-				},
-			);
-		}
-		return null;
-	};
 
 export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
 	const purchaseInfo = getPurchaseInfo();

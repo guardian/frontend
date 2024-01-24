@@ -423,16 +423,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val puzzlesBanner = Switch(
-    SwitchGroup.Feature,
-    "puzzles-banner",
-    "Enables the puzzles banner on puzzles pages",
-    owners = Seq(Owner.withGithub("i-hardy")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val InteractivePickerFeature = Switch(
     SwitchGroup.Feature,
     "interactive-picker",

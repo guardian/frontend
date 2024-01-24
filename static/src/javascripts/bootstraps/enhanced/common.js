@@ -51,7 +51,6 @@ import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { buildBrazeBanner } from 'common/modules/commercial/braze/brazeBanner';
 import { buildBrazeMessaging } from 'common/modules/commercial/braze/buildBrazeMessaging';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
-import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 import { bufferedNotificationListener } from 'common/modules/bufferedNotificationListener';
 import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
@@ -306,7 +305,6 @@ const initialiseBanner = (brazeMessagesPromise) => {
         cmpBannerCandidate,
         signInGate,
         membershipBanner,
-        puzzlesBanner,
         readerRevenueBanner,
         adFreeBanner,
         brazeBanner,
