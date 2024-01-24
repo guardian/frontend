@@ -13,6 +13,7 @@ import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, 
 import model.pressed.{PressedContent, SpecialReport}
 import model.{
   ArticleDateTimes,
+  ArticlePage,
   CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
@@ -21,6 +22,7 @@ import model.{
   LiveBlogPage,
   Pillar,
 }
+import org.apache.pekko.util.Helpers.Requiring
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -39,11 +41,13 @@ object DotcomRenderingMatchType {
 case object CricketMatchType extends DotcomRenderingMatchType
 case object FootballMatchType extends DotcomRenderingMatchType
 
+case object RugbyMatchType extends DotcomRenderingMatchType
+
 case class DotcomRenderingMatchData(matchUrl: String, matchType: DotcomRenderingMatchType)
 
 object DotcomRenderingUtils {
   def makeMatchData(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
-    makeFootballMatch(articlePage).orElse(makeCricketMatch(articlePage))
+    makeFootballMatch(articlePage).orElse(makeCricketMatch(articlePage)).orElse(makeRugbyMatch(articlePage))
   }
 
   def makeCricketMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
@@ -56,6 +60,23 @@ object DotcomRenderingUtils {
           DotcomRenderingMatchData(
             s"${Configuration.ajax.url}/sport/cricket/match/$date/${team}.json?dcr=true",
             CricketMatchType,
+          ),
+        )
+      case _ => None
+    }
+  }
+
+  def makeRugbyMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
+    val rugbyURL = articlePage.item.content.conditionalConfig
+    val rugbyMatchOption = rugbyURL.get("rugbyMatch")
+    val pageId = articlePage.metadata.id
+    (rugbyMatchOption) match {
+      case (Some(url)) =>
+        val urlString = url.value.toString().replace("\"", "")
+        Some(
+          DotcomRenderingMatchData(
+            s"${Configuration.ajax.url}$urlString.json?dcr=true&page=$pageId",
+            RugbyMatchType,
           ),
         )
       case _ => None
