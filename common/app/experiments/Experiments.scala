@@ -25,7 +25,7 @@ object DeeplyRead
       description = "When ON, deeply read footer section is displayed",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 1, 31),
-      participationGroup = Perc0A,
+      participationGroup = Perc50,
     )
 
 object Lightbox
