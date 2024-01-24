@@ -187,6 +187,7 @@ val dev = application("dev-build")
   .settings(
     RoutesKeys.routesImport += "bindables._",
     Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
+    dependencyOverrides ++= jackson,
   )
 
 val preview = application("preview")
