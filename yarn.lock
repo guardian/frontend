@@ -2428,17 +2428,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
   integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
 
-"@guardian/commercial@0.0.0-beta-20240124151050":
-  version "0.0.0-beta-20240124151050"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240124151050.tgz#2e623af5ebe3a18082190440a53d6f43fc23ae60"
-  integrity sha512-hQbGLe8bmy8mwPtnjy5WazV/pEfOxmpt8LPAiE9UmKHtRghnimgeHOqu8HB2nkV4zqy6NvwJ5pubJJIDK4NwSA==
+"@guardian/commercial@0.0.0-beta-20240124171233":
+  version "0.0.0-beta-20240124171233"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240124171233.tgz#7913450a9e1d55398f8d945df804314ca2e1ccbe"
+  integrity sha512-LnGIaPZFE0jx+80qzqUnXpbTMxJAyMCKQ++bcwTa2GJUa94uF7KHJDy4sytW3ygd3EjTRtyCdQcxiGoxrc8owg==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
     ophan-tracker-js "^2.0.1"
-    prebid.js guardian/prebid.js#ei/update-node
+    prebid.js guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.5.3"
@@ -11838,9 +11838,9 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-prebid.js@guardian/prebid.js#ei/update-node:
+prebid.js@guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4:
   version "8.24.0"
-  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/c1065fc8533ef73470a5e834ea7e7edc00a3f73f"
+  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4"
   dependencies:
     "@babel/core" "^7.23.2"
     "@babel/plugin-transform-runtime" "^7.18.9"
