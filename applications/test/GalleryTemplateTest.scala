@@ -43,9 +43,18 @@ import scala.jdk.CollectionConverters._
     )
   }
 
+  //  The Play framework runs integration tests with a TestBrowser that uses a Selenium WebDriver.
+  //  Play 2.9 changes the version of Selenium it depends on under the hood from 3.141.59 to 4.14.1.
+  //  In the previous version of the code the tests above could run one after the other
+  //  without the first affecting the outcome of the second. This is not true anymore,
+  //  it looks like the TestBrowser we use in our test configuration does not automatically clear its cache after each test
+  //  so the second test will always fail. We have similar result if we swap the tests.
+  //  In the following two tests we're adding a flag in the url to make sure
+  //  the cache gets cleared and the tests run independently.
+  //  TODO: Find a way to clear the Selenium WebDriver cache programmatically: https://github.com/guardian/frontend/issues/26837
   it should "select the trail picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
     FacebookShareUseTrailPicFirstSwitch.switchOn()
-    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures?page=on") { browser =>
       import browser._
       $("meta[property='og:image']").attributes("content").asScala.head should include(
         "61e027cb-fec8-4aa3-a12b-e50f99493399-2060x1236.jpeg",
@@ -55,7 +64,7 @@ import scala.jdk.CollectionConverters._
 
   it should "select the largest main picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is OFF" in {
     FacebookShareUseTrailPicFirstSwitch.switchOff()
-    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
+    goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures?page=off") { browser =>
       import browser._
       $("meta[property='og:image']").attributes("content").asScala.head should include(
         "e3867edb-e9d5-4be9-9c51-12258b686869-1498x2040.jpeg",

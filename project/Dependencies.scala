@@ -35,8 +35,22 @@ object Dependencies {
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.2.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play28" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
-  val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
-  val identityAuthPlay = "com.gu.identity" %% "identity-auth-play" % identityLibVersion
+
+  /**
+    * There can only be one version of `scala-xml`. We will evict all v1.x
+    *
+    * Upgrade from v1 to v2 should be relatively safe, according to this thread:
+    * https://github.com/scala/scala-xml/discussions/605#discussioncomment-2828193
+    *
+    * Make sure that `scala-xml_***` matches the Scala version in ProjectSettings.scala
+    */
+  val excludeDirectScalaXMLDependency =
+    ExclusionRule("org.scala-lang.modules", "scala-xml_2.13")
+  val identityModel = ("com.gu.identity" %% "identity-model" % identityLibVersion)
+    .excludeAll(excludeDirectScalaXMLDependency)
+  val identityAuthPlay = ("com.gu.identity" %% "identity-auth-play" % identityLibVersion)
+    .excludeAll(excludeDirectScalaXMLDependency)
+
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
@@ -44,7 +58,7 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "4.0.4"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "7.0.5"
+  val paClient = "com.gu" %% "pa-client" % "7.0.7"
   val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "2.2.7"
   val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v28" % "0.18"
   val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "0.18"
@@ -56,11 +70,11 @@ object Dependencies {
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
-  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-3-4" % "3.3.0.0-SNAP3" % Test
-  val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.16.0" % Test
+  val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.17.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
-  val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
+  val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion

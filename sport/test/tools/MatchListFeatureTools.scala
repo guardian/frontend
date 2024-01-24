@@ -1,6 +1,7 @@
 package tools
 
-import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
+import io.fluentlenium.core.domain.{FluentList, FluentWebElement}
+import org.openqa.selenium.By
 import org.openqa.selenium.interactions.Actions
 import play.api.test.TestBrowser
 
@@ -45,10 +46,11 @@ trait MatchListFeatureTools extends Matchers {
     )
   }
   protected def scrollToElementAndClick(selector: String, browser: TestBrowser): Unit = {
-    val element = browser.$(selector).first
-    val builder = new Actions(browser.webDriver)
-    builder.moveToElement(element.getElement)
-    builder.click()
-    builder.build().perform()
+    val webDriver = browser.webDriver
+    val element = webDriver.findElement(By.cssSelector(selector))
+    new Actions(webDriver)
+      .moveToElement(element)
+      .click()
+      .perform()
   }
 }

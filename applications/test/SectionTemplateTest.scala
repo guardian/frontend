@@ -1,7 +1,7 @@
 package test
 
 import java.net.URI
-import org.fluentlenium.core.domain.FluentWebElement
+import io.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
