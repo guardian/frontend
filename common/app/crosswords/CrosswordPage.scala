@@ -1,8 +1,9 @@
 package crosswords
 
+import crosswords.CrosswordSvg.{BorderSize, CellSize}
 import model._
-import java.time.LocalDateTime
 
+import java.time.LocalDateTime
 import scala.xml.Elem
 
 sealed trait CrosswordPage extends Page
@@ -26,8 +27,6 @@ class CrosswordPageWithContent(content: CrosswordContent) extends ContentPage {
 
   override lazy val item = content
   val crossword = content.crossword
-
-  import crosswords.CrosswordSvg.{BorderSize, CellSize}
 
   case class SvgDimensions(width: Int, height: Int) {
     def styleString: String = s"width: $width; height: $height"

@@ -1,6 +1,6 @@
 package crosswords
 
-import com.gu.contentapi.client.model.v1.{CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{Crossword, CrosswordDimensions}
 import model.CrosswordPosition
 
 case class AccessibleCrosswordRow(rowNumber: Int, blankColumns: List[Char])
