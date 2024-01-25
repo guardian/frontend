@@ -137,7 +137,7 @@ object Dependencies {
   val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.100.Final"
 
   // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
+  val bootstrap = "org.webjars" % "bootstrap" % "3.4.0"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.2"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
