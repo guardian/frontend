@@ -125,13 +125,6 @@ val admin = application("admin")
     libraryDependencies ++= Seq(
       paClient,
       dfpAxis,
-      bootstrap,
-      jquery,
-      jqueryui,
-      lodash,
-      react,
-      epoch,
-      d3,
       awsElasticloadbalancing,
       awsSes,
       scalaUri,

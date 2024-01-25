@@ -135,13 +135,4 @@ object Dependencies {
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
   val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.100.Final"
-
-  // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
-  val jquery = "org.webjars" % "jquery" % "3.7.1"
-  val jqueryui = "org.webjars" % "jquery-ui" % "1.13.2"
-  val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
-  val react = "org.webjars" % "react" % "15.6.1"
-  val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
-  val d3 = "org.webjars.npm" % "d3" % "3.5.17"
 }
