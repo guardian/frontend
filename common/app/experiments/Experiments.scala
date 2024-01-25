@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       Lightbox,
       AdaptiveSite,
-      OfferHttp3,
       DeeplyRead,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -54,13 +53,4 @@ object AdaptiveSite
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 2, 1),
       participationGroup = Perc1A,
-    )
-
-object OfferHttp3
-    extends Experiment(
-      name = "offer-http3",
-      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
-      owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2024, 4, 3),
-      participationGroup = Perc1E,
     )
