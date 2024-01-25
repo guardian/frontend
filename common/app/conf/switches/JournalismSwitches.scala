@@ -62,4 +62,14 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val Lightbox = Switch(
+    SwitchGroup.Journalism,
+    name = "lightbox",
+    description = "Enable lightbox for images",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
