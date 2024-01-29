@@ -538,7 +538,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "crossword-mobile-banner",
     "If this switch is on, we will show an advert banner on mobile crossword pages",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 3, 15)),
     exposeClientSide = true,

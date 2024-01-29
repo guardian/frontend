@@ -746,7 +746,7 @@ class Crossword extends Component {
         };
         // Trigger the custom event when component has loaded for ad slot in commercial
         useEffect(() => {
-            const customEvent = new CustomEvent('crosswordLoaded', {detail: {source: 'frontend_bundle'}});
+            const customEvent = new CustomEvent('crossword-loaded', {detail: {source: 'frontend_bundle'}});
             window.dispatchEvent(customEvent);
           });
 
@@ -807,13 +807,12 @@ class Crossword extends Component {
                     clueInFocus={focused}
                     crossword={this}
                 />
-                <div class="below_controls"></div>
+                <div class="crossword__container__below-controls"></div>
                 <Clues
                     clues={this.cluesData()}
                     focussed={focused}
                     setReturnPosition={this.setReturnPosition.bind(this)}
                 />
-                <div>Below Controls</div>
             </div>
         );
     }
