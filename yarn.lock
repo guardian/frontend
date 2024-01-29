@@ -2445,10 +2445,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@13.7.1":
-  version "13.7.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.7.1.tgz#ba38f32de023775e615e79cfa97a3425f144eb89"
-  integrity sha512-BtUNkuCqd++A0Wkk9CA4kI95yVZJk1YMjPdppEnmq3cG/ros4ElXN4cNG7pWifeTR5cUtJflAiRRO4L5ewASpQ==
+"@guardian/consent-management-platform@13.8.0":
+  version "13.8.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.8.0.tgz#60d1d319a2b438cdc8c6587ac20adf7b553815d3"
+  integrity sha512-J8YBXxpl/oGLmDGtjvkSwGmkaTJtnr/rxmYJAynaX0dkqopdDvG9REdbxMZBz3kugBpqHzhREzAk5Ut/uiyl8w==
 
 "@guardian/core-web-vitals@^5.0.0":
   version "5.1.0"
@@ -11846,7 +11846,7 @@ prebid.js@guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4:
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
-    "@guardian/libs" "^16.0.0"
+    "@guardian/libs" "^15.6.4"
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"
