@@ -23,6 +23,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateMainControl,
     newsletterEmbeds,
     globalEoyHeaderTest,
+    crosswordMobileBanner,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [];
