@@ -22,7 +22,7 @@ object DeeplyRead
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 1, 31),
+      sellByDate = LocalDate.of(2024, 2, 31),
       participationGroup = Perc50,
     )
 
