@@ -158,7 +158,6 @@ val identity = application("identity")
       libPhoneNumber,
       supportInternationalisation,
     ),
-    dependencyOverrides ++= jackson,
     PlayKeys.playDefaultPort := 9009,
     Test / testOptions += Tests.Argument("-oF"),
   )
@@ -186,7 +185,6 @@ val dev = application("dev-build")
   .settings(
     RoutesKeys.routesImport += "bindables._",
     Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
-    dependencyOverrides ++= jackson,
   )
 
 val preview = application("preview")
