@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      Lightbox,
       AdaptiveSite,
       DeeplyRead,
     )
@@ -25,15 +24,6 @@ object DeeplyRead
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 1, 31),
       participationGroup = Perc50,
-    )
-
-object Lightbox
-    extends Experiment(
-      name = "lightbox",
-      description = "Testing the impact lightbox might have on our CWVs",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 1, 31),
-      participationGroup = Perc5A,
     )
 
 // Removing while we are still implementing this content type in DCR
