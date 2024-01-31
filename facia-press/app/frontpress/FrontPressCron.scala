@@ -23,13 +23,17 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
     }
   }
 
-  override val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
-    val credentials = Configuration.aws.mandatoryCredentials
+  override lazy val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map {
+    queueUrl =>
+      val credentials = Configuration.aws.mandatoryCredentials
 
-    JsonMessageQueue[SNSNotification](
-      AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build(),
-      queueUrl,
-    )
+      JsonMessageQueue[SNSNotification](
+        AmazonSQSAsyncClient.asyncBuilder
+          .withCredentials(credentials)
+          .withRegion(conf.Configuration.aws.region)
+          .build(),
+        queueUrl,
+      )
   }) getOrElse {
     throw new RuntimeException("Required property 'frontpress.sqs.cron_queue_url' not set")
   }

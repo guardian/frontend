@@ -63,7 +63,7 @@ object JsonQueueWorker {
 abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends GuLogging {
   import JsonQueueWorker._
 
-  val queue: JsonMessageQueue[A]
+  def queue: JsonMessageQueue[A]
   val deleteOnFailure: Boolean = false
 
   final private val lastSuccessfulReceipt = DateTimeRecorder()
