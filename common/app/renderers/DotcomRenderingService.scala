@@ -277,7 +277,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia)
   }
 
   def getTagFront(
@@ -292,7 +292,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/TagFront", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/TagFront", CacheTime.Facia)
   }
 
   def getInteractive(
