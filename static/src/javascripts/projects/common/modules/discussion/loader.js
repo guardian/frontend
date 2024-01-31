@@ -343,6 +343,7 @@ class Loader extends Component {
             '.js-discussion-change-page, .js-discussion-show-button',
             () => {
                 mediator.emit('discussion:comments:get-more-replies');
+                document.dispatchEvent(new CustomEvent('comments-expanded'));
                 this.removeTruncation();
             }
         );
