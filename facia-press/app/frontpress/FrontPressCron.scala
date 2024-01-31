@@ -23,7 +23,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
     }
   }
 
-  override val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
+  override lazy val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[SNSNotification](
