@@ -2445,10 +2445,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@13.7.2":
-  version "13.7.2"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.7.2.tgz#0841306affcf003f4532474ae92a34454d120457"
-  integrity sha512-DGjTrADOEO5+INGH+azwrX8c/t+f40U+RcGEaj/eTYJmA++ljNbRlBM21ioAKjZxIJ1OCIoqFwNbYPoqXykBCA==
+"@guardian/consent-management-platform@13.7.3":
+  version "13.7.3"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.7.3.tgz#f55304b2a07b083dad19f3ad4df16bbe19529856"
+  integrity sha512-fgA6JE0YYx20cjR2JvNaakvFp5pChic7rCTA99UPV1SO6f5NfX4o9kWL6oByZNA0rxsSLCwbLUiDbeXwe7aVbw==
 
 "@guardian/core-web-vitals@^5.0.0":
   version "5.1.0"
@@ -11838,7 +11838,7 @@ preact@^10.5.13:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
 
-"prebid.js@github:guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4":
+prebid.js@guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4:
   version "8.24.0"
   resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4"
   dependencies:
