@@ -2474,15 +2474,15 @@
     eslint-plugin-import "2.24.0"
     eslint-plugin-prettier "3.4.0"
 
-"@guardian/identity-auth-frontend@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth-frontend/-/identity-auth-frontend-1.0.0.tgz#22720eeeaf1382a65161abe67839903982c1d65c"
-  integrity sha512-lmuz8kIG5PeRjyjq1S9CMlfczOLxUdT+3UD8jYk3VZkGgLjN+3IX0e3GK7mMo/SnIojxLOD8x3tiVRCPjfiUdQ==
+"@guardian/identity-auth-frontend@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth-frontend/-/identity-auth-frontend-3.0.0.tgz#e20617ffbbbe62d64c29486fe277122d4b0d7317"
+  integrity sha512-EOZAr8zHBeh80jGh7hsD9/pH1cKX/vStmcNGqGUvoHMelM/kO4p3tKKmcDXu7/MtqGx2e85b1YoI7WmmWDBGGA==
 
-"@guardian/identity-auth@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-1.1.1.tgz#2e468e8fd2391d7efd25b5c25110f736d2a5a8da"
-  integrity sha512-3tAlnMUx6p+GXRd05P1lSGEBYq8OnZT7J8iYIjmPfe3YUgGbZQlZJGJhaaS0UqKFpDtkf8LVmlUegboNbLO2Uw==
+"@guardian/identity-auth@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-2.0.1.tgz#1164867ba84498058ad5d561337bc3c48dd30e6f"
+  integrity sha512-5EQB3LWDLxDaTKk/RHBGwoGy5mT90ZEa56XzrBStfyFi2FYma9bCvGdEEcOPmf3tLhdVxh93ikuooPveq76siA==
 
 "@guardian/libs@^15.6.4":
   version "15.6.4"
