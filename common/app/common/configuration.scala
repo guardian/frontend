@@ -151,6 +151,7 @@ class GuardianConfiguration extends GuLogging {
   object rendering {
     lazy val baseURL = configuration.getMandatoryStringProperty("rendering.baseURL")
     lazy val articleBaseURL = configuration.getMandatoryStringProperty("article-rendering.baseURL")
+    lazy val faciaBaseURL = configuration.getMandatoryStringProperty("facia-rendering.baseURL")
     lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
     lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
     lazy val timeout = 2.seconds

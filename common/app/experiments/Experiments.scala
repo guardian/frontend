@@ -11,9 +11,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      Lightbox,
       AdaptiveSite,
-      OfferHttp3,
       DeeplyRead,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -24,17 +22,8 @@ object DeeplyRead
       name = "deeply-read",
       description = "When ON, deeply read footer section is displayed",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 1, 31),
+      sellByDate = LocalDate.of(2024, 2, 27),
       participationGroup = Perc50,
-    )
-
-object Lightbox
-    extends Experiment(
-      name = "lightbox",
-      description = "Testing the impact lightbox might have on our CWVs",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 1, 31),
-      participationGroup = Perc5A,
     )
 
 // Removing while we are still implementing this content type in DCR
@@ -52,15 +41,6 @@ object AdaptiveSite
       name = "adaptive-site",
       description = "Enables serving an adaptive version of the site that responds to page performance",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 2, 1),
+      sellByDate = LocalDate.of(2024, 4, 2),
       participationGroup = Perc1A,
-    )
-
-object OfferHttp3
-    extends Experiment(
-      name = "offer-http3",
-      description = "Offer HTTP3 by providing the header and redirecting URLs to enable loading of assets with HTTP3",
-      owners = Seq(Owner.withGithub("paulmr")),
-      sellByDate = LocalDate.of(2024, 4, 3),
-      participationGroup = Perc1E,
     )

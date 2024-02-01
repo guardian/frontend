@@ -4,7 +4,7 @@ export const mpuWhenNoEpic: ABTest = {
 	id: 'MpuWhenNoEpic',
 	author: '@commercial-dev',
 	start: '2023-11-22',
-	expiry: '2024-01-31',
+	expiry: '2024-02-29',
 	audience: 10 / 100,
 	audienceOffset: 5 / 100,
 	audienceCriteria: '',

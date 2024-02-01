@@ -6,6 +6,7 @@ import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
+import crosswords.CrosswordPageWithContent
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
@@ -276,7 +277,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/Front", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia)
   }
 
   def getTagFront(
@@ -291,7 +292,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/TagFront", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/TagFront", CacheTime.Facia)
   }
 
   def getInteractive(
@@ -391,6 +392,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
 
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getCrossword(
+      ws: WSClient,
+      crosswordPage: CrosswordPageWithContent,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
   }
