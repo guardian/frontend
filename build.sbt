@@ -69,7 +69,6 @@ val common = library("common")
       atomRenderer,
       identityModel,
       capiAws,
-      okhttp,
       pekkoActor,
       pekkoStream,
       pekkoSlf4j,
