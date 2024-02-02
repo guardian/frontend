@@ -4,15 +4,18 @@ import com.gu.contentapi.client.model.v1.{Block, ItemResponse, Content => ApiCon
 import com.gu.contentapi.client.model.{Direction, FollowingSearchQuery, SearchQuery}
 import common._
 import conf.Configuration.contentApi
+import conf.switches.Switches
 import contentapi.ContentApiClient
 import implicits.{AppsFormat, JsonFormat}
 import model._
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import pages.ContentHtmlPage
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.ImageQuery
+import services.dotcomrendering.RemoteRender
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -36,7 +39,7 @@ class ImageContentController(
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     image(Edition(request), path).flatMap {
       case Right((content, mainBlock)) => remoteRender(content, mainBlock)
-      case Left(result)                => Future.successful(RenderOtherStatus(result))
+      case Left(result) => Future.successful(RenderOtherStatus(result))
     }
 
   private def getDCRJson(content: ImageContentPage, pageType: PageType, mainBlock: Option[Block])(implicit

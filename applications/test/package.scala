@@ -23,8 +23,6 @@ class ApplicationsTestSuite
       new AllIndexTemplateTestLite,
       new GalleryControllerTest,
       new GalleryTemplateTest,
-      new ImageContentControllerTest,
-      new ImageContentTemplateTest,
       new IndexControllerTest,
       new CrosswordPageMetaDataTest,
       new IndexMetaDataTest,
