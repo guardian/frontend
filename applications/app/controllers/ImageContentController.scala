@@ -15,7 +15,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.ImageQuery
-import services.dotcomrendering.{ImageContentPicker, RemoteRender}
+import services.dotcomrendering.RemoteRender
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -36,21 +36,9 @@ class ImageContentController(
 
   def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
-  private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = () => ContentHtmlPage.html(page)
-    val jsonResponse = () => views.html.fragments.imageContentBody(page)
-    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
-  }
-
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     image(Edition(request), path).flatMap {
-      case Right((content, mainBlock)) =>
-        val tier = ImageContentPicker.getTier(content, mainBlock)
-
-        tier match {
-          case RemoteRender => remoteRender(content, mainBlock)
-          case _            => Future.successful(renderImageContent(content))
-        }
+      case Right((content, mainBlock)) => remoteRender(content, mainBlock)
       case Left(result) => Future.successful(RenderOtherStatus(result))
     }
 
