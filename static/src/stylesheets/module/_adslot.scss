@@ -103,11 +103,15 @@
     margin: 0 auto;
 }
 
-.ad-slot-container--centre-slot.mobile-banner
-{
+.ad-slot-container--centre-slot.mobile-banner {
     width: fit-content;
     padding-bottom: 14px;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    @include mq($from: phablet) {
+        display: none;
+    }
 }
 
 .ad-slot-container .ad-slot--mobile {
