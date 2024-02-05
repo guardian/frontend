@@ -3,8 +3,8 @@ package test
 import controllers.ImageContentController
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import play.api.test.Helpers._
 
 @DoNotDiscover class ImageContentControllerTest
     extends AnyFlatSpec
@@ -23,12 +23,12 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     new ImageContentController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
 
   "Image Content Controller" should "200 when content type is picture" in {
-    val result = imageContentController.render(pictureUrl)(TestRequest(pictureUrl))
+    val result = imageContentController.render(pictureUrl)(TestRequest(s"$pictureUrl?dcr=false"))
     status(result) should be(200)
   }
 
   "Image Content Controller" should "200 when content type is cartoon" in {
-    val result = imageContentController.render(cartoonUrl)(TestRequest(cartoonUrl))
+    val result = imageContentController.render(cartoonUrl)(TestRequest(s"$cartoonUrl?dcr=false"))
     status(result) should be(200)
   }
 
