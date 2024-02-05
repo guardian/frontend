@@ -2423,10 +2423,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^16.3.0":
-  version "16.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
-  integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
+"@guardian/braze-components@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-18.0.0.tgz#65428cf808956f2ca2b16da65e40830ddce1e062"
+  integrity sha512-tK0waGQj/dEwpssxEOlHw7/d9XXnkQqZai/2LFUSuHwDtbeTgZZfIsAd9DoX02qFHNZlzvRvbLlS48zKcPKHDw==
 
 "@guardian/commercial@13.0.0":
   version "13.0.0"
@@ -2511,22 +2511,22 @@
   dependencies:
     tslib "^2.0.0"
 
-"@guardian/source-foundations@^13.2.1":
-  version "13.2.1"
-  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-13.2.1.tgz#4600c1934361078d6eb834def5573b05f820953d"
-  integrity sha512-co7Vm0gEmKgiyuiki6b7gMkM8bpEJfyGdJSHYELBRDSbA1yAO2K/qs0n7cEg1M/fqzSP00xDPeDZ+bofeXb1rA==
+"@guardian/source-foundations@^14.1.2":
+  version "14.1.4"
+  resolved "https://registry.yarnpkg.com/@guardian/source-foundations/-/source-foundations-14.1.4.tgz#157b875b81abe0c376b6992505fa76773e355538"
+  integrity sha512-SHkFVBxsE2dSNTKfzmGY1hD9BA7qJ2+bGY1plrUJlYJBCRQdno/YuNummO+wm0Q+kMgxRT0iz5md2DjKYERzQw==
   dependencies:
     mini-svg-data-uri "1.4.4"
 
-"@guardian/source-react-components-development-kitchen@^10.0.1":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-10.0.1.tgz#507ae5cc14c84f74661dec5de4e7641ec06c6a50"
-  integrity sha512-pfs4CztLYF1l5klAwiEy0mLidzxBv0xryi6naRkm+RWs8xbI/C97Sm11b+Ai7obvrsamwcFR1fJwKoiYbPfG2Q==
+"@guardian/source-react-components-development-kitchen@^16.0.0":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components-development-kitchen/-/source-react-components-development-kitchen-16.0.1.tgz#2f9d3dd7a819aac337033c7bd89b2010ecbbe94e"
+  integrity sha512-EkU46tW/n5z7KZQuG5NXI0OvX/NYD9H4cUiheQQjQsFIViFpLHAypmouRgdBJ7xZGOzHor7p5YrD0Io2tIFtHQ==
 
-"@guardian/source-react-components@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-12.0.0.tgz#bee742290ac8223990439c6d672d7c4908207e94"
-  integrity sha512-nqNQVsqJO8wuFVFoCH+tpPwleiSdlizuFtIqrx9jVm2s0Fzn17u6xYGHQAnVuwuKf2RzbzIJkDHqvc1AjbJDsw==
+"@guardian/source-react-components@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/source-react-components/-/source-react-components-18.0.0.tgz#ed18cd7196a1988f9254442a1db507381a66f0a1"
+  integrity sha512-7mt6RDmViRdUKUlU8OaswIsYnR+yFEt5iYbRhmXB+A0XjiTeLYP8EHKmazISRlGXTZjjG701WgY5witaShI1YA==
 
 "@guardian/src-foundations@^3.5.0":
   version "3.13.0"
@@ -11846,7 +11846,7 @@ prebid.js@guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4:
     "@babel/plugin-transform-runtime" "^7.18.9"
     "@babel/preset-env" "^7.16.8"
     "@babel/runtime" "^7.18.9"
-    "@guardian/libs" "^16.0.0"
+    "@guardian/libs" "^15.6.4"
     core-js "^3.13.0"
     core-js-pure "^3.13.0"
     criteo-direct-rsa-validate "^1.1.0"

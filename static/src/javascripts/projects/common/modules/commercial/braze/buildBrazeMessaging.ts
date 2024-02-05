@@ -8,6 +8,7 @@ import {
 	LocalMessageCache,
 	NullBrazeCards,
 	NullBrazeMessages,
+	canRenderBrazeMsg,
 } from '@guardian/braze-components/logic';
 import { log } from '@guardian/libs';
 import ophan from 'ophan/ng';
@@ -114,6 +115,8 @@ export const buildBrazeMessaging = async (): Promise<BrazeMessaging> => {
 			importedAppboy,
 			LocalMessageCache,
 			errorHandler,
+			canRenderBrazeMsg,
+
 		);
 		const brazeCards = config.get('switches.brazeContentCards')
 			? new BrazeCards(importedAppboy, errorHandler)
