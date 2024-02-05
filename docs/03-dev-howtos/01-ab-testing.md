@@ -1,6 +1,6 @@
 # How to setup and run A/B tests
 
-We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
+We have a homebrewed AB testing framework running in the application. The data it collects is logged with Ophan. It's then available downstream from Ophan in the BigQuery Lakehouse, in the pageview / online_traffic column `ab_test_array`.
 
 Most tests can be written in JavaScript, although we can serve variants via Varnish.
 
