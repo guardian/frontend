@@ -4,8 +4,8 @@
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
-GET            /email-newsletters.json                                                                                           controllers.SignupPageController.renderNewslettersJson()
-GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
+GET            /email-newsletters.json                                                                                           controllers.SignupPageController.renderNewsletters()
+GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewsletters()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
@@ -20,6 +20,7 @@ GET            /assets/*path                                                    
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id.json              controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|special|genius|speedy|weekend>/:id/print                  controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
 GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
