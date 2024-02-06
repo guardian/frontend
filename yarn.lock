@@ -2428,17 +2428,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
   integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
 
-"@guardian/commercial@14.0.0":
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.0.0.tgz#53cd7d5357dc016dc184628b585ff4d210883923"
-  integrity sha512-8YxmT0UdQIn/DukgqC31rSf7PwGn4TwHhqV9fLrjhzjD9l/b0Ha2eJEfka382SbTCvQqdHWsMSJySlJj0gkp+Q==
+"@guardian/commercial@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.2.0.tgz#bd0393df25907c03bd6b14e046602662cb6a2b22"
+  integrity sha512-D5yXKs+qefU07enkcnQ6ibhzyu5M2WaDL4KA97+3mCrnW3GtGefFGd2UPIR7I9srbtVngyFxemHXtHlOjJXWcQ==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
+    "@guardian/prebid.js" "8.34.0"
     "@octokit/core" "^4.0.5"
     fastdom "^1.0.11"
     lodash-es "^4.17.21"
-    prebid.js guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4
     process "^0.11.10"
     raven-js "^3.27.2"
     tslib "^2.6.2"
@@ -2498,6 +2498,29 @@
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@guardian/ophan-tracker-js/-/ophan-tracker-js-2.0.4.tgz#899cf3b3d91d403fb5afb6842b258fff1c286c60"
   integrity sha512-kwUNUSfnL8SQwzTlVzInYh7a6VSMFy3zEq2A6Hm7cmKSbl8D7ed03y7ANqquViFuPffRZRQ0IrkJHSbMnsRmrA==
+
+"@guardian/prebid.js@8.34.0":
+  version "8.34.0"
+  resolved "https://registry.yarnpkg.com/@guardian/prebid.js/-/prebid.js-8.34.0.tgz#6ab69684d254e52c44a0fe58ad5fc334ee133953"
+  integrity sha512-DLH/EuWGsM6oZcMVm+qsuWhYPl+TE4nqkDzAVJRjOkiP3AHHOZ7AnQaGzF9Y9tG3EeFU/iJwqJ43JlIjDBOt1A==
+  dependencies:
+    "@babel/core" "^7.23.2"
+    "@babel/plugin-transform-runtime" "^7.18.9"
+    "@babel/preset-env" "^7.16.8"
+    "@babel/runtime" "^7.18.9"
+    "@guardian/libs" "^16.0.0"
+    core-js "^3.13.0"
+    core-js-pure "^3.13.0"
+    criteo-direct-rsa-validate "^1.1.0"
+    crypto-js "^4.2.0"
+    dlv "1.1.3"
+    dset "3.1.2"
+    express "^4.15.4"
+    fun-hooks "^0.9.9"
+    just-clone "^1.0.2"
+    live-connect-js "^6.3.4"
+  optionalDependencies:
+    fsevents "^2.3.2"
 
 "@guardian/prettier@^3.0.0":
   version "3.0.0"
@@ -10105,17 +10128,17 @@ listr@^0.14.3:
     p-map "^2.0.0"
     rxjs "^6.3.3"
 
-live-connect-common@^v3.0.2:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/live-connect-common/-/live-connect-common-3.0.3.tgz#720ca29a22d59c8b26a0dac894bb4863b1b69627"
-  integrity sha512-ZPycT04ROBUvPiksnLTunrKC3ROhBSeO99fQ+4qMIkgKwP2CvS44L7fK+0WFV4nAi+65KbzSng7JWcSlckfw8w==
+live-connect-common@^v3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/live-connect-common/-/live-connect-common-3.1.1.tgz#7d0474bce04d6c03fb7157abebd37b0deac437a6"
+  integrity sha512-sV0oUvJnaTN41f30hOo3wDjZL2y8TYu5BQKvlxmek7Agpe2AGGN/dsPA8i2sHkessRKpcTfrPjmpnG2bIxq7Gg==
 
-live-connect-js@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-6.3.0.tgz#032d6015969293774430872d4d22ca8bae8ff2c9"
-  integrity sha512-1SnXQZq9gxHIb0scXPX1Da1rQ0oY2sloMGgeRreTAwhCtdQEuip/IYwgOh3/ZeZ6yT6iG9FLb7+AjORC4pO46g==
+live-connect-js@^6.3.4:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-6.5.0.tgz#3731fd8a20d117235c843f5d14502961483accd9"
+  integrity sha512-gZOKtGjPjTf6JuUtA6OZgg8w/uEP2lEtlAKWSox+rTiTRmD4U6o28MB9WEgSJWlZWwUwmWu9dL8ByxBFbsWZyg==
   dependencies:
-    live-connect-common "^v3.0.2"
+    live-connect-common "^v3.1.1"
     tiny-hashes "1.0.1"
 
 load-json-file@^4.0.0:
@@ -11837,28 +11860,6 @@ preact@^10.5.13:
   version "10.13.2"
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
   integrity sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==
-
-prebid.js@guardian/prebid.js#91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4:
-  version "8.24.0"
-  resolved "https://codeload.github.com/guardian/prebid.js/tar.gz/91cabf5cdfc3c01745f4b10e55044f95a9d7d1b4"
-  dependencies:
-    "@babel/core" "^7.23.2"
-    "@babel/plugin-transform-runtime" "^7.18.9"
-    "@babel/preset-env" "^7.16.8"
-    "@babel/runtime" "^7.18.9"
-    "@guardian/libs" "^16.0.0"
-    core-js "^3.13.0"
-    core-js-pure "^3.13.0"
-    criteo-direct-rsa-validate "^1.1.0"
-    crypto-js "^4.2.0"
-    dlv "1.1.3"
-    dset "3.1.2"
-    express "^4.15.4"
-    fun-hooks "^0.9.9"
-    just-clone "^1.0.2"
-    live-connect-js "^6.3.0"
-  optionalDependencies:
-    fsevents "^2.3.2"
 
 precinct@^8.0.0, precinct@^8.1.0:
   version "8.3.1"
