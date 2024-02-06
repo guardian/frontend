@@ -99,7 +99,6 @@ object Dependencies {
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
-  val okhttp = "com.squareup.okhttp3" % "okhttp" % "4.10.0"
 
   /*
     Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
@@ -137,7 +136,7 @@ object Dependencies {
   val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.100.Final"
 
   // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
+  val bootstrap = "org.webjars" % "bootstrap" % "3.4.0"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.2"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"

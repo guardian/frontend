@@ -308,7 +308,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     // Nb. interactives have a longer timeout because some of them are very
     // large unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.baseURL + "/Interactive", page.metadata.cacheTime, 4.seconds)
+    post(ws, json, Configuration.rendering.interactiveBaseURL + "/Interactive", page.metadata.cacheTime, 4.seconds)
   }
 
   def getAMPInteractive(
@@ -320,7 +320,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/AMPInteractive", page.metadata.cacheTime)
+    post(ws, json, Configuration.rendering.interactiveBaseURL + "/AMPInteractive", page.metadata.cacheTime)
   }
 
   def getAppsInteractive(
@@ -336,7 +336,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     // Nb. interactives have a longer timeout because some of them are very
     // large unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.baseURL + "/AppsInteractive", page.metadata.cacheTime, 4.seconds)
+    post(ws, json, Configuration.rendering.interactiveBaseURL + "/AppsInteractive", page.metadata.cacheTime, 4.seconds)
   }
 
   def getEmailNewsletters(
@@ -347,7 +347,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
     val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/EmailNewsletters", CacheTime.Facia)
   }
 
   def getImageContent(

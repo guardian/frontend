@@ -45,7 +45,7 @@ class ImageContentController(
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     image(Edition(request), path).flatMap {
       case Right((content, mainBlock)) =>
-        val tier = ImageContentPicker.getTier(content, mainBlock)
+        val tier = ImageContentPicker.getTier(content)
 
         tier match {
           case RemoteRender => remoteRender(content, mainBlock)

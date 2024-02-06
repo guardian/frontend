@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       AdaptiveSite,
       DeeplyRead,
+      CrosswordMobileBanner,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -26,16 +27,6 @@ object DeeplyRead
       participationGroup = Perc50,
     )
 
-// Removing while we are still implementing this content type in DCR
-//object DCRImageContent
-//    extends Experiment(
-//      name = "dcr-image-content",
-//      description = "Use DCR for image content",
-//      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-//      sellByDate = LocalDate.of(2024, 1, 1),
-//      participationGroup = Perc0E,
-//    )
-
 object AdaptiveSite
     extends Experiment(
       name = "adaptive-site",
@@ -43,4 +34,13 @@ object AdaptiveSite
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 2),
       participationGroup = Perc1A,
+    )
+
+object CrosswordMobileBanner
+    extends Experiment(
+      name = "crossword-mobile-banner",
+      description = "Test banner advert in mobile crossword page",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 4, 2),
+      participationGroup = Perc0A,
     )

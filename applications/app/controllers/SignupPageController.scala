@@ -1,7 +1,7 @@
 package controllers
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import conf.switches.Switches.{UseDcrNewslettersPage}
+import conf.switches.Switches.UseDcrNewslettersPage
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
 import pages.NewsletterHtmlPage
@@ -13,12 +13,12 @@ import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersRespons
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponseV2
 import staticpages.StaticPages
+import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
 
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import model.dotcomrendering.DotcomNewslettersPageRenderingDataModel
-import model.SimplePage
 import model.CacheTime
 
 class SignupPageController(
@@ -36,61 +36,48 @@ class SignupPageController(
 
   private def localRenderNewslettersPage()(implicit
       request: RequestHeader,
-  ): Result = {
+  ): Future[Result] = {
     val groupedNewsletters: Either[String, GroupedNewslettersResponse] =
       newsletterSignupAgent.getGroupedNewsletters()
+
     groupedNewsletters match {
       case Right(groupedNewsletters) =>
-        Cached(defaultCacheDuration)(
-          RevalidatableResult.Ok(
-            NewsletterHtmlPage.html(StaticPages.simpleNewslettersPage(request.path, groupedNewsletters)),
+        Future.successful(
+          Cached(defaultCacheDuration)(
+            RevalidatableResult.Ok(
+              NewsletterHtmlPage.html(StaticPages.simpleNewslettersPage(request.path, groupedNewsletters)),
+            ),
           ),
         )
       case Left(e) =>
         log.error(s"API call to get newsletters failed: $e")
-        NoCache(InternalServerError)
+        Future(NoCache(InternalServerError))
     }
   }
 
   private def remoteRenderNewslettersPage()(implicit
       request: RequestHeader,
-  ): Result = {
+  ): Future[Result] = {
 
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
 
     newsletters match {
       case Right(newsletters) =>
-        Await.result(
-          remoteRenderer.getEmailNewsletters(
-            ws = wsClient,
-            newsletters = newsletters,
-            page = StaticPages.dcrSimpleNewsletterPage(request.path),
-          ),
-          3.seconds,
+        remoteRenderer.getEmailNewsletters(
+          ws = wsClient,
+          newsletters = newsletters,
+          page = StaticPages.dcrSimpleNewsletterPage(request.path),
         )
       case Left(e) =>
         log.error(s"API call to get newsletters failed: $e")
-        NoCache(InternalServerError)
+        Future(NoCache(InternalServerError))
     }
   }
 
-  def renderNewslettersPage()(implicit
-      executionContext: ExecutionContext = this.executionContext,
-  ): Action[AnyContent] =
-    csrfAddToken {
-      Action { implicit request =>
-        if (request.forceDCR || UseDcrNewslettersPage.isSwitchedOn) {
-          remoteRenderNewslettersPage()
-        } else {
-          localRenderNewslettersPage()
-        }
-      }
-    }
-
   private def renderDCRNewslettersJson()(implicit
       request: RequestHeader,
-  ): Result = {
+  ): Future[Result] = {
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
 
@@ -100,7 +87,7 @@ class SignupPageController(
         val dataModel =
           DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
         val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
-        common.renderJson(dataJson, page).as("application/json")
+        Future.successful(common.renderJson(dataJson, page).as("application/json"))
       }
       case Left(e) =>
         log.error(s"API call to get newsletters failed: $e")
@@ -108,21 +95,27 @@ class SignupPageController(
     }
   }
 
-  private def renderNewslettersJson()(implicit
+  private def notFoundPage()(implicit
       request: RequestHeader,
-  ): Result = {
-    Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound))
+  ): Future[Result] = {
+    Future(Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)))
   }
 
-  def renderNewslettersJson()(implicit
+  def renderNewsletters()(implicit
       executionContext: ExecutionContext = this.executionContext,
   ): Action[AnyContent] =
     csrfAddToken {
-      Action { implicit request =>
-        if (request.forceDCR || UseDcrNewslettersPage.isSwitchedOn) {
-          renderDCRNewslettersJson()
-        } else {
-          renderNewslettersJson()
+      Action.async { implicit request =>
+        val useDCR = request.forceDCR || UseDcrNewslettersPage.isSwitchedOn
+
+        request.getRequestFormat match {
+          case HtmlFormat if useDCR =>
+            remoteRenderNewslettersPage()
+          case HtmlFormat =>
+            localRenderNewslettersPage()
+          case JsonFormat if useDCR =>
+            renderDCRNewslettersJson()
+          case _ => notFoundPage()
         }
       }
     }
