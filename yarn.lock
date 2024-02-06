@@ -2428,10 +2428,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
   integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
 
-"@guardian/commercial@14.1.0":
-  version "14.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.1.0.tgz#c3a693e216c1f4f920b7638b03abd35ef4ad226f"
-  integrity sha512-ZrokNbBYbZm1HbD5+MvTKajWMqQND0i4moHMp3faTniGjTqrKE6S6ykwgqbMIz5ZU0+s34kqCPNwkTV7/xvtrw==
+"@guardian/commercial@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.2.0.tgz#bd0393df25907c03bd6b14e046602662cb6a2b22"
+  integrity sha512-D5yXKs+qefU07enkcnQ6ibhzyu5M2WaDL4KA97+3mCrnW3GtGefFGd2UPIR7I9srbtVngyFxemHXtHlOjJXWcQ==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
