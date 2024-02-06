@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       AdaptiveSite,
       DeeplyRead,
       CrosswordMobileBanner,
+      OphanNext,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -43,4 +44,13 @@ object CrosswordMobileBanner
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 2),
       participationGroup = Perc0A,
+    )
+
+object OphanNext
+    extends Experiment(
+      name = "ophan-next",
+      description = "Use @guardian/ophan-tracker-js@2.1.0-next.1, which allows tracking of clicks on external links",
+      owners = Seq(Owner.withGithub("@guardian/ophan")),
+      sellByDate = LocalDate.of(2024, 4, 1),
+      participationGroup = Perc1B,
     )
