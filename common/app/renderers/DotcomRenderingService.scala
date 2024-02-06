@@ -347,7 +347,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
     val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.faciaBaseURL + "/EmailNewsletters", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.baseURL + "/EmailNewsletters", CacheTime.Facia)
   }
 
   def getImageContent(
