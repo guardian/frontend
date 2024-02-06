@@ -1,7 +1,7 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments}
+import experiments.{ActiveExperiments, DCRTagFronts}
 import implicits.Requests._
 import play.api.mvc.RequestHeader
 import services.IndexPage
@@ -9,7 +9,7 @@ import services.IndexPage
 object TagFrontPicker extends GuLogging {
 
   def getTier(tagFront: IndexPage)(implicit request: RequestHeader): RenderType = {
-    lazy val participatingInTest = false // There's no room for a 0% test at the moment - so we're just going with false
+    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRTagFronts)
     lazy val dcrCouldRender = false
 
     val tier = decideTier(
@@ -60,7 +60,7 @@ object TagFrontPicker extends GuLogging {
     val properties =
       Map(
         "participatingInTest" -> participatingInTest.toString,
-//        "testPercentage" -> DCRTagFronts.participationGroup.percentage,
+        "testPercentage" -> DCRTagFronts.participationGroup.percentage,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isTagFront" -> "true",
         "tier" -> tierReadable,

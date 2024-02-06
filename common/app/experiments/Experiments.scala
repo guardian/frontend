@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DeeplyRead,
       CrosswordMobileBanner,
       OphanNext,
+      DCRTagFronts,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -54,3 +55,12 @@ object OphanNext
       sellByDate = LocalDate.of(2024, 4, 1),
       participationGroup = Perc1B,
     )
+
+object DCRTagFronts
+  extends Experiment(
+    name = "dcr-tag-fronts",
+    description = "Render tag fronts with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    sellByDate = LocalDate.of(2024, 8, 5),
+    participationGroup = Perc1C,
+  )
