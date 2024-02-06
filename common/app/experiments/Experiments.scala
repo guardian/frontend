@@ -57,10 +57,10 @@ object OphanNext
     )
 
 object DCRTagFronts
-  extends Experiment(
-    name = "dcr-tag-fronts",
-    description = "Render tag fronts with DCR",
-    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-    sellByDate = LocalDate.of(2024, 8, 5),
-    participationGroup = Perc1C,
-  )
+    extends Experiment(
+      name = "dcr-tag-fronts",
+      description = "Render tag fronts with DCR",
+      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 8, 5),
+      participationGroup = Perc1C,
+    )
