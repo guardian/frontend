@@ -40,7 +40,6 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def noResults()(implicit request: RequestHeader): Result
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
-    println(s" request path: ${request.path}")
     contentApiClient.getResponse(
       contentApiClient.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"),
     )
@@ -66,7 +65,6 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       request: RequestHeader,
       context: ApplicationContext,
   ): Future[Result] = {
-    println(s" request path: ${request.path}")
     withCrossword(crosswordType, id) { (crossword, content) =>
       val page = CrosswordPageWithSvg(
         CrosswordContent.make(CrosswordData.fromCrossword(crossword, content), content),
