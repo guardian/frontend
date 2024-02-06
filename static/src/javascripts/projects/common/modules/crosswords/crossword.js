@@ -746,7 +746,7 @@ class Crossword extends Component {
         };
         // Trigger the custom event when component has loaded for ad slot in commercial
         useEffect(() => {
-            const customEvent = new CustomEvent('crossword-loaded', {detail: {source: 'frontend_bundle'}});
+            const customEvent = new CustomEvent('crossword-loaded');
             window.dispatchEvent(customEvent);
           });
 
