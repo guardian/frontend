@@ -33,11 +33,11 @@ case class DotcomFrontsLogger() extends GuLogging {
     )
   }
 
-  private def logFieldFromTagFront(tagFront: IndexPage): List[LogField] = {
+  private def logFieldFromTagPage(tagPage: IndexPage): List[LogField] = {
     List(
       LogFieldString(
-        "tagFront.id",
-        tagFront.metadata.id,
+        "tagPage.id",
+        tagPage.metadata.id,
       ),
     )
   }
@@ -56,7 +56,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   ): Unit = {
     logInfoWithCustomFields(
       msg,
-      logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromTagFront(indexPage),
+      logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromTagPage(indexPage),
     )
   }
 

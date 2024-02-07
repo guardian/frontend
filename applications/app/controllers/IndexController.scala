@@ -4,7 +4,7 @@ import common._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{DotcomTagFrontsRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomTagPagesRenderingDataModel, PageType}
 import pages.IndexHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{ControllerComponents, RequestHeader, Result}
@@ -32,7 +32,7 @@ class IndexController(
           successful(
             Cached(model.page) {
               JsonComponent.fromWritable(
-                DotcomTagFrontsRenderingDataModel(
+                DotcomTagPagesRenderingDataModel(
                   page = model,
                   request = request,
                   pageType = PageType(model, request, context),
@@ -41,7 +41,7 @@ class IndexController(
             },
           )
         } else
-          remoteRenderer.getTagFront(
+          remoteRenderer.getTagPage(
             ws = ws,
             page = model,
             pageType = PageType(model, request, context),
