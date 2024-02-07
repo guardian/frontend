@@ -1,16 +1,15 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments}
 import implicits.Requests._
 import play.api.mvc.RequestHeader
 import services.IndexPage
 
 object TagFrontPicker extends GuLogging {
 
-  def getTier(tagFront: IndexPage)(implicit request: RequestHeader): RenderType = {
+  def getTier(tagPage: IndexPage)(implicit request: RequestHeader): RenderType = {
     lazy val participatingInTest = false // There's no room for a 0% test at the moment - so we're just going with false
-    lazy val dcrCouldRender = false
+    val checks = dcrChecks(tagPage)
 
     val tier = decideTier(
       request.isRss,
@@ -18,12 +17,23 @@ object TagFrontPicker extends GuLogging {
       request.forceDCROff,
       request.forceDCR,
       participatingInTest,
-      dcrCouldRender,
+      dcrCouldRender(checks),
     )
 
-    logTier(tagFront, participatingInTest, dcrCouldRender, Map(), tier)
+    logTier(tagPage, participatingInTest, dcrCouldRender(checks), checks, tier)
 
     tier
+  }
+
+  private def dcrCouldRender(checks: Map[String, Boolean]): Boolean = {
+    checks.values.forall(identity)
+  }
+
+  private def dcrChecks(tagPage: IndexPage): Map[String, Boolean] = {
+    Map(
+      // until we complete https://github.com/guardian/dotcom-rendering/issues/5755
+      ("isNotAccessibilityPage", tagPage.page.metadata.id != "help/accessibility-help"),
+    )
   }
 
   private def decideTier(
