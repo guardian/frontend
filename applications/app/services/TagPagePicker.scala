@@ -6,7 +6,7 @@ import implicits.Requests._
 import play.api.mvc.RequestHeader
 import services.IndexPage
 
-object TagFrontPicker extends GuLogging {
+object TagPagePicker extends GuLogging {
 
   def getTier(tagPage: IndexPage)(implicit request: RequestHeader): RenderType = {
     lazy val participatingInTest = ActiveExperiments.isParticipating(DCRTagPages)
@@ -57,7 +57,7 @@ object TagFrontPicker extends GuLogging {
   }
 
   private def logTier(
-      tagFront: IndexPage,
+      tagPage: IndexPage,
       participatingInTest: Boolean,
       dcrCouldRender: Boolean,
       checks: Map[String, Boolean],
@@ -73,10 +73,10 @@ object TagFrontPicker extends GuLogging {
         "participatingInTest" -> participatingInTest.toString,
         "testPercentage" -> DCRTagPages.participationGroup.percentage,
         "dcrCouldRender" -> dcrCouldRender.toString,
-        "isTagFront" -> "true",
+        "isTagPage" -> "true",
         "tier" -> tierReadable,
       ) ++ checksToString
 
-    DotcomFrontsLogger.logger.logRequest(s"tag front executing in $tierReadable", properties, tagFront)
+    DotcomFrontsLogger.logger.logRequest(s"tag front executing in $tierReadable", properties, tagPage)
   }
 }

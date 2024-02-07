@@ -10,7 +10,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{ControllerComponents, RequestHeader, Result}
 import renderers.DotcomRenderingService
 import services.IndexPage
-import services.dotcomrendering.{LocalRender, RemoteRender, TagFrontPicker}
+import services.dotcomrendering.{LocalRender, RemoteRender, TagPagePicker}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -26,7 +26,7 @@ class IndexController(
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Future[Result] = {
-    TagFrontPicker.getTier(model) match {
+    TagPagePicker.getTier(model) match {
       case RemoteRender =>
         if (request.isJson) {
           successful(
