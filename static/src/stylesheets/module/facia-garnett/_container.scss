@@ -26,6 +26,8 @@ $header-image-size-desktop: 100px;
 
 .fc-container--commercial {
     padding-bottom: 0;
+    background-color: $brightness-97;
+    z-index: 2;
 }
 
 .fc-container__inner,
