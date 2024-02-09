@@ -292,7 +292,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomTagPagesRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.faciaBaseURL + "/TagFront", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/TagPage", CacheTime.Facia)
   }
 
   def getInteractive(
