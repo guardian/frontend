@@ -3,6 +3,7 @@ package services.dotcomrendering
 import common.GuLogging
 import experiments.{ActiveExperiments, DCRTagPages}
 import implicits.Requests._
+import model.TagCombiner
 import play.api.mvc.RequestHeader
 import services.IndexPage
 
@@ -34,6 +35,7 @@ object TagPagePicker extends GuLogging {
     Map(
       // until we complete https://github.com/guardian/dotcom-rendering/issues/5755
       ("isNotAccessibilityPage", tagPage.page.metadata.id != "help/accessibility-help"),
+      ("isNotTagCombiner", !tagPage.page.isInstanceOf[TagCombiner]),
     )
   }
 

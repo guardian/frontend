@@ -2428,10 +2428,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
   integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
 
-"@guardian/commercial@14.4.0":
-  version "14.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.4.0.tgz#ed842cbb6e1f807a6246c8f915872f732486755e"
-  integrity sha512-TuzcB0CDLv9zeC8fHxPEXgAOzwNeT8NuCBV6nLGz0+4fIxzXKeNCRaU1+0g69WTo4NL+yTMHNgtWtfMJWQ+0VA==
+"@guardian/commercial@14.4.1":
+  version "14.4.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.4.1.tgz#3a67d75f4f72786d238833c3a05dc3e94483d6d3"
+  integrity sha512-DG6YgAfl1fRWrD/KI7l+/XeQT3EQSxR9bIwIQq0vCdN6BITutm2AJ6sc3AapuuSpdy8PBPLlrTzwzLkgcIWt3A==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
@@ -2484,10 +2484,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-2.0.1.tgz#1164867ba84498058ad5d561337bc3c48dd30e6f"
   integrity sha512-5EQB3LWDLxDaTKk/RHBGwoGy5mT90ZEa56XzrBStfyFi2FYma9bCvGdEEcOPmf3tLhdVxh93ikuooPveq76siA==
 
-"@guardian/libs@16.0.1", "@guardian/libs@^16.0.0":
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-16.0.1.tgz#81214a701ef7159e8bdbba901af30bdaec901c28"
-  integrity sha512-/pgkDwWu9xp4TAEx07LFu80XsJWIti0VHRxjRRV6vNCMIb44OktONXs5Lu9deoSXWNZh+VcyAEj8vFF2DRPdMA==
+"@guardian/libs@16.0.2", "@guardian/libs@^16.0.0":
+  version "16.0.2"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-16.0.2.tgz#df739ffa67f938e125330b52587b33622f8ff797"
+  integrity sha512-GC3DTyRAWMYNOheSnQES24CA2k9WKZiv+WnZbe3hPu6MsZwjeSeRvylJ+VXk7d2ndX5uDW1OdwkWBX45fVXqsA==
 
 "@guardian/ophan-tracker-js@2.0.4":
   version "2.0.4"

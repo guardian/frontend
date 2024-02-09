@@ -38,7 +38,6 @@ abstract class Edition(
   val homePagePath: String = s"/$networkFrontId"
 
   def isEditionalised(sectionId: String): Boolean = editionalisedSections.contains(sectionId)
-  def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
   def timezoneId = ZoneId.of(timezone.getID)
 }
 
@@ -82,8 +81,8 @@ object Edition {
   }
 
   def apply(request: RequestHeader): Edition = {
-    val cookieValue = editionFromRequest(request)
-    allEditions.find(_.matchesCookie(cookieValue)).getOrElse(defaultEdition)
+    val edition = editionFromRequest(request)
+    allEditions.find(_.id.equalsIgnoreCase(edition)).getOrElse(defaultEdition)
   }
 
   def others(implicit request: RequestHeader): Seq[Edition] = {

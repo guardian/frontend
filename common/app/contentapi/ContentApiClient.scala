@@ -76,7 +76,7 @@ trait ApiQueryDefaults extends GuLogging {
 
   def item(id: String): ItemQuery = CapiContentApiClient.item(id)
 
-  def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
+  def item(id: String, edition: Edition): ItemQuery = item(id, EditionIdCAPIMapper.mapEditionId(edition))
 
   //Strip unnecessary leading slash in path, as this affects signing of IAM requests
   def item(id: String, edition: String): ItemQuery =
@@ -193,4 +193,16 @@ class PreviewContentApi(httpClient: HttpClient)(implicit executionContext: Execu
     targetUrl = Configuration.contentApi.previewHost.getOrElse(Configuration.contentApi.contentApiHost),
     apiKey = contentApi.key.getOrElse(""),
   )
+}
+
+object EditionIdCAPIMapper {
+  def mapEditionId(edition: Edition): String = {
+    edition match {
+      case editions.Uk            => "UK"
+      case editions.Us            => "US"
+      case editions.Au            => "AU"
+      case editions.International => "INTERNATIONAL"
+      case editions.Europe        => "EUROPE"
+    }
+  }
 }
