@@ -2428,10 +2428,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
   integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
 
-"@guardian/commercial@14.4.1":
-  version "14.4.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.4.1.tgz#3a67d75f4f72786d238833c3a05dc3e94483d6d3"
-  integrity sha512-DG6YgAfl1fRWrD/KI7l+/XeQT3EQSxR9bIwIQq0vCdN6BITutm2AJ6sc3AapuuSpdy8PBPLlrTzwzLkgcIWt3A==
+"@guardian/commercial@0.0.0-beta-20240209125551":
+  version "0.0.0-beta-20240209125551"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240209125551.tgz#2038abfac89d32d6d84457a69366e17e8f502b1e"
+  integrity sha512-nORARJP0yw5rFBUcnZBXuezjXyMAtDhYRYCDBfIAIdUhzlRlPj/TBuC6psA8TYp00yELHIf6dZXqYUVavRm9ZQ==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
@@ -2445,10 +2445,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@13.7.3":
-  version "13.7.3"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.7.3.tgz#f55304b2a07b083dad19f3ad4df16bbe19529856"
-  integrity sha512-fgA6JE0YYx20cjR2JvNaakvFp5pChic7rCTA99UPV1SO6f5NfX4o9kWL6oByZNA0rxsSLCwbLUiDbeXwe7aVbw==
+"@guardian/consent-management-platform@0.0.0-beta-20240209115205":
+  version "0.0.0-beta-20240209115205"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-0.0.0-beta-20240209115205.tgz#557d51965d3976224db9dd0ff3c9c569ac37ed39"
+  integrity sha512-s3HETvfkqTd25RF1lpQ5cKnMdfHeq7N1967ZK9QYqU8rbG+25IiOiRP/GwSEv8k9z4/esyO4Q8iLmwNkWwgQ6g==
 
 "@guardian/core-web-vitals@^5.0.0":
   version "5.1.0"
