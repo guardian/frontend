@@ -1,4 +1,4 @@
-import React, { Component, findDOMNode } from 'preact/compat';
+import React, { Component, findDOMNode, useEffect } from 'preact/compat';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { mediator } from 'lib/mediator';
@@ -744,6 +744,11 @@ class Crossword extends Component {
                 this.grid = grid;
             },
         };
+        // Trigger the custom event when component has loaded for ad slot in commercial
+        useEffect(() => {
+            const customEvent = new CustomEvent('crossword-loaded');
+            window.dispatchEvent(customEvent);
+          });
 
         return (
             <div
@@ -802,6 +807,7 @@ class Crossword extends Component {
                     clueInFocus={focused}
                     crossword={this}
                 />
+                <div class="crossword__container__below-controls"></div>
                 <Clues
                     clues={this.cluesData()}
                     focussed={focused}
