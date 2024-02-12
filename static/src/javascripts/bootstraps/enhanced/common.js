@@ -40,7 +40,6 @@ import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
-import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
 import {
@@ -48,11 +47,9 @@ import {
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
-import { buildBrazeBanner } from 'common/modules/commercial/braze/brazeBanner';
-import { buildBrazeMessaging } from 'common/modules/commercial/braze/buildBrazeMessaging';
+import { handleBraze } from 'common/modules/commercial/braze/buildBrazeMessaging';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
-import { bufferedNotificationListener } from 'common/modules/bufferedNotificationListener';
 import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
 
 const initialiseTopNavItems = () => {
@@ -262,71 +259,28 @@ const initPublicApi = () => {
     window.guardian.api = {};
 };
 
-const initialiseHeaderNotifications = (brazeCardsPromise) => {
-    const isValid = (card) => Boolean(
-        card.extras.target
-        && card.extras.message
-        && card.extras.ophanLabel
-    );
-
-    brazeCardsPromise.then(brazeCards => {
-        return brazeCards.getCardsForProfileBadge();
-    }).then(cards => {
-        const notifications = cards.filter((card) => isValid(card))
-            .map((card) => {
-                return {
-                    id: card.id,
-                    target: card.extras.target,
-                    message: card.extras.message,
-                    ophanLabel: card.extras.ophanLabel,
-                    logImpression: () => {
-                        card.logImpression();
-                    }
-                };
-        })
-
-        if (notifications.length > 0) {
-            bufferedNotificationListener.emit(notifications);
-        }
-    })
-};
-
-const initialiseBanner = (brazeMessagesPromise) => {
-    const brazeBanner = buildBrazeBanner(brazeMessagesPromise);
-
+const initialiseBanner = () => {
     const isPreview = config.get('page.isPreview', false)
     // ordered by priority
     // in preview we don't want to show most banners as they are an unnecessary interruption
-    // however braze banner does use preview for testing
     const bannerList = isPreview ? [
         cmpBannerCandidate,
-        brazeBanner,
     ] : [
         cmpBannerCandidate,
         signInGate,
         membershipBanner,
         readerRevenueBanner,
         adFreeBanner,
-        brazeBanner,
     ];
 
     initBannerPicker(bannerList);
 };
 
-const initialiseMessageSlots = () => {
-    const brazeMessagingPromise = buildBrazeMessaging();
-
-    const brazeMessagesPromise = brazeMessagingPromise.then(
-        ({ brazeMessages }) => brazeMessages
-    );
-    const brazeCardsPromise = brazeMessagingPromise.then(
-        ({ brazeCards }) => brazeCards
-    );
-
-    initialiseBanner(brazeMessagesPromise);
-    initialiseHeaderNotifications(brazeCardsPromise);
-};
-
+const handleBrazeAndReportErrors = () => {
+    handleBraze().catch((err) => {
+        reportError(err, { module: 'c-braze' })
+    });
+}
 
 const initialiseConsentCookieTracking = () =>
     trackConsentCookies(getAllAdConsentsWithState());
@@ -361,7 +315,8 @@ const init = () => {
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-membership', initMembership],
-        ['c-message-slots', initialiseMessageSlots],
+        ['c-banner', initialiseBanner],
+        ['c-braze', handleBrazeAndReportErrors],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
         ['c-load-google-analytics', loadGoogleAnalytics],

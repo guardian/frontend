@@ -2423,11 +2423,6 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@^16.3.0":
-  version "16.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-16.3.0.tgz#77e2c550507d4e5b86029bce716a9a102d7cc136"
-  integrity sha512-JQ9MkrJx6+7OXxwqPy2lfFNKvvmFGTCbdOedC2KczdLKusKUSWIw3EzLwdoRpgMTXsQSVpqrJ5N/VM3wDsAAxQ==
-
 "@guardian/commercial@14.4.1":
   version "14.4.1"
   resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-14.4.1.tgz#3a67d75f4f72786d238833c3a05dc3e94483d6d3"
