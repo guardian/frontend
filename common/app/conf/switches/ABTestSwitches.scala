@@ -65,7 +65,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-   Switch(
+  Switch(
     ABTests,
     "ab-mobile-discussion-ads",
     "Test ads in discussion for mobile",
