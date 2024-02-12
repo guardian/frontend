@@ -8,7 +8,7 @@ class AdSuffixHandlingForFrontsTest extends AnyFlatSpec with Matchers {
 
   val SectionFront = MetaData.make(id = "", section = Some(SectionId.fromId("business")), webTitle = "")
 
-  val TagFront = MetaData.make(id = "", section = Some(SectionId.fromId("education")), webTitle = "")
+  val TagPage = MetaData.make(id = "", section = Some(SectionId.fromId("education")), webTitle = "")
 
   "Editionalised Network Front pages" should "have editions in the ad unit suffix and end with 'front'" in {
     AdSuffixHandlingForFronts.extractAdUnitSuffixFrom("uk", NetworkFronts.sectionId) should equal("uk/front")
@@ -25,15 +25,15 @@ class AdSuffixHandlingForFrontsTest extends AnyFlatSpec with Matchers {
   }
 
   "Tag Fronts ad units" should "be the section, plus the word 'subsection'" in {
-    AdSuffixHandlingForFronts.extractAdUnitSuffixFrom("education/universitytables", TagFront.sectionId) should equal(
+    AdSuffixHandlingForFronts.extractAdUnitSuffixFrom("education/universitytables", TagPage.sectionId) should equal(
       "education/subsection",
     )
   }
 
   "Tag fronts ad units" should "revert to their section, plus the world 'subsection'" in {
     AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(
-      "tagfronts/actuallydontneedtocopythesection",
-      TagFront.sectionId,
+      "tagpages/actuallydontneedtocopythesection",
+      TagPage.sectionId,
     ) should equal("education/subsection")
   }
 

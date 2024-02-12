@@ -15,7 +15,7 @@ import services.IndexPage
 import views.support.{CamelCase, JavaScriptPage, PreviousAndNext}
 import model.PressedCollectionFormat.pressedContentFormat
 
-case class DotcomTagFrontsRenderingDataModel(
+case class DotcomTagPagesRenderingDataModel(
     contents: Seq[PressedContent],
     tags: Tags,
     date: DateTime,
@@ -35,9 +35,9 @@ case class DotcomTagFrontsRenderingDataModel(
     isAdFreeUser: Boolean,
 )
 
-object DotcomTagFrontsRenderingDataModel {
-  implicit val writes: Writes[DotcomTagFrontsRenderingDataModel] = new Writes[DotcomTagFrontsRenderingDataModel] {
-    def writes(model: DotcomTagFrontsRenderingDataModel) = {
+object DotcomTagPagesRenderingDataModel {
+  implicit val writes: Writes[DotcomTagPagesRenderingDataModel] = new Writes[DotcomTagPagesRenderingDataModel] {
+    def writes(model: DotcomTagPagesRenderingDataModel) = {
       Json.obj(
         "contents" -> model.contents,
         "date" -> model.date.toString(),
@@ -66,7 +66,7 @@ object DotcomTagFrontsRenderingDataModel {
       page: IndexPage,
       request: RequestHeader,
       pageType: PageType,
-  ): DotcomTagFrontsRenderingDataModel = {
+  ): DotcomTagPagesRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -97,7 +97,7 @@ object DotcomTagFrontsRenderingDataModel {
       }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
-    DotcomTagFrontsRenderingDataModel(
+    DotcomTagPagesRenderingDataModel(
       contents = page.contents.map(_.faciaItem),
       tags = page.tags,
       date = page.date,
@@ -118,7 +118,7 @@ object DotcomTagFrontsRenderingDataModel {
     )
   }
 
-  def toJson(model: DotcomTagFrontsRenderingDataModel): String = {
+  def toJson(model: DotcomTagPagesRenderingDataModel): String = {
     val jsValue = Json.toJson(model)
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
   }

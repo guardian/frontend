@@ -4,13 +4,13 @@ import common._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{DotcomTagFrontsRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomTagPagesRenderingDataModel, PageType}
 import pages.IndexHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{ControllerComponents, RequestHeader, Result}
 import renderers.DotcomRenderingService
 import services.IndexPage
-import services.dotcomrendering.{LocalRender, RemoteRender, TagFrontPicker}
+import services.dotcomrendering.{LocalRender, RemoteRender, TagPagePicker}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -26,13 +26,13 @@ class IndexController(
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Future[Result] = {
-    TagFrontPicker.getTier(model) match {
+    TagPagePicker.getTier(model) match {
       case RemoteRender =>
         if (request.isJson) {
           successful(
             Cached(model.page) {
               JsonComponent.fromWritable(
-                DotcomTagFrontsRenderingDataModel(
+                DotcomTagPagesRenderingDataModel(
                   page = model,
                   request = request,
                   pageType = PageType(model, request, context),
@@ -41,7 +41,7 @@ class IndexController(
             },
           )
         } else
-          remoteRenderer.getTagFront(
+          remoteRenderer.getTagPage(
             ws = ws,
             page = model,
             pageType = PageType(model, request, context),

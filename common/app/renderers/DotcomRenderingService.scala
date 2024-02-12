@@ -280,18 +280,18 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia)
   }
 
-  def getTagFront(
+  def getTagPage(
       ws: WSClient,
       page: IndexPage,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomTagFrontsRenderingDataModel(
+    val dataModel = DotcomTagPagesRenderingDataModel(
       page,
       request,
       pageType,
     )
 
-    val json = DotcomTagFrontsRenderingDataModel.toJson(dataModel)
+    val json = DotcomTagPagesRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.faciaBaseURL + "/TagPage", CacheTime.Facia)
   }
 
