@@ -156,7 +156,6 @@ object NavLinks {
   val MLB = NavLink("MLB", "/sport/mlb")
   val NBA = NavLink("NBA", "/sport/nba")
   val NHL = NavLink("NHL", "/sport/nhl")
-  val superbowl = NavLink("Super Bowl", "/sport/super-bowl")
 
   /* CULTURE */
   val film = NavLink("Film", "/film")
@@ -319,7 +318,6 @@ object NavLinks {
       science,
       newsletters,
       wellness,
-      superbowl,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -424,7 +422,6 @@ object NavLinks {
       NHL,
       formulaOne,
       golf,
-      superbowl,
     ),
   )
   val intSportPillar = ukSportPillar.copy(
