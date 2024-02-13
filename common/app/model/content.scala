@@ -136,8 +136,21 @@ final case class Content(
       .flatMap(_.url)
       .getOrElse(Configuration.images.fallbackLogo)
 
+  private val tagsWithoutAgeWarning = Seq(
+    "tone/help",
+    "info/info",
+    "tone/recipes",
+    "lifeandstyle/series/sudoku",
+    "type/crossword",
+    "lifeandstyle/series/kakuro",
+    "the-scott-trust/the-scott-trust",
+    "type/signup",
+    "info/newsletter-sign-up",
+    "guardian-live-events/guardian-live-events",
+  )
   def shareImageCategory: ShareImageCategory = {
-    val isOldNews = tags.tags.exists(_.id == "tone/news") &&
+
+    val isOldNews = !tags.tags.exists(tag => tagsWithoutAgeWarning.contains(tag.id)) &&
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
 
     val isOldOpinion = tags.tags.exists(_.id == "tone/comment") &&

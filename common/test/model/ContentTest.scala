@@ -178,6 +178,70 @@ class ContentTest
     contentWithShortUrl("https://www.theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
+  it should "show age warning in social post when article is 1 year old" in {
+    val oneYearOld = Some(
+      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+    )
+
+    val contentWithNewsTag = Content(
+      article.copy(
+        webPublicationDate = oneYearOld,
+        fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(false))),
+        tags = List(tag(s"tone/news")),
+      ),
+    )
+    val shareImageCategory = contentWithNewsTag.content.shareImageCategory
+    shareImageCategory.getClass.getSimpleName should be("GuardianOldContent")
+  }
+
+  it should "not show age warning in social post when article is less than 1 year old" in {
+    val threeMonthsOld = Some(
+      jodaToJavaInstant(new DateTime(DateTime.now().minusMonths(3))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+    )
+
+    val contentWithNewsTag = Content(
+      article.copy(
+        webPublicationDate = threeMonthsOld,
+        fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(false))),
+        tags = List(tag(s"tone/news")),
+      ),
+    )
+    contentWithNewsTag.content.shareImageCategory.getClass.getSimpleName should be("GuardianDefault$")
+  }
+
+  it should "show special opinion style overlay for age warning when article is tone/comment and is 1 year ago" in {
+    val oneYearOld = Some(
+      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+    )
+
+    val contentWithCommentTag = Content(
+      article.copy(
+        webPublicationDate = oneYearOld,
+        fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(false))),
+        tags = List(tag(s"tone/comment")),
+      ),
+    )
+    contentWithCommentTag.content.shareImageCategory.getClass.getSimpleName should be("CommentGuardianOldContent")
+  }
+
+  it should "not show age warning when article is 1 year old and has any of the tags excluded from age warning" in {
+    val oneYearOld = Some(
+      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+    )
+
+    val contentWithTagThatShouldNotHaveAgeWarning = Content(
+      article.copy(
+        webPublicationDate = oneYearOld,
+        fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(false))),
+        tags = List(tag(s"tone/recipes")),
+      ),
+    )
+
+    contentWithTagThatShouldNotHaveAgeWarning.content.shareImageCategory.getClass.getSimpleName should be(
+      "GuardianDefault$",
+    )
+  }
+
   val dateBeforeCutoff = Some(
     jodaToJavaInstant(new DateTime("2017-07-02T12:00:00.000Z")).atOffset(ZoneOffset.UTC).toCapiDateTime,
   )
