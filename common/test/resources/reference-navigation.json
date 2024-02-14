@@ -1010,11 +1010,6 @@
                 "url" : "/wellness",
                 "children" : [ ],
                 "classList" : [ ]
-            }, {
-                "title" : "Super Bowl",
-                "url" : "/sport/super-bowl",
-                "children" : [ ],
-                "classList" : [ ]
             } ],
             "classList" : [ ]
         },
@@ -1135,11 +1130,6 @@
             }, {
                 "title" : "Golf",
                 "url" : "/sport/golf",
-                "children" : [ ],
-                "classList" : [ ]
-            }, {
-                "title" : "Super Bowl",
-                "url" : "/sport/super-bowl",
                 "children" : [ ],
                 "classList" : [ ]
             } ],
