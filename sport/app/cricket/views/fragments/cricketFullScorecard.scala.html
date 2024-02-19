@@ -40,19 +40,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(batsman <- innings.batsmen) {
+                    @for(batter <- innings.batsmen) {
                         <tr>
                             <td class="table-column--importance-3">
-                                <b>@batsman.name</b>
+                                <b>@batter.name</b>
                                 <div class="mobile-only">
-                                    @batsman.howOut
+                                    @batter.howOut
                                 </div>
                             </td>
-                            <td class="table-column--importance-1">@batsman.howOut</td>
-                            <td class="table-column--importance-3">@batsman.runs</td>
-                            <td class="table-column--importance-3">@batsman.ballsFaced</td>
-                            <td class="table-column--importance-1">@batsman.fours</td>
-                            <td class="table-column--importance-1">@batsman.sixes</td>
+                            <td class="table-column--importance-1">@batter.howOut</td>
+                            <td class="table-column--importance-3">@batter.runs</td>
+                            <td class="table-column--importance-3">@batter.ballsFaced</td>
+                            <td class="table-column--importance-1">@batter.fours</td>
+                            <td class="table-column--importance-1">@batter.sixes</td>
                         </tr>
                     }
                     <tr class="table-row--divider">

@@ -101,20 +101,20 @@ object Parser {
       .toList
       .sortBy(_.order)
 
-  private def parseInningsBatsmen(batsmen: NodeSeq): List[InningsBatsman] =
+  private def parseInningsBatsmen(batsmen: NodeSeq): List[InningsBatter] =
     batsmen
-      .map { batsman =>
-        InningsBatsman(
-          (batsman \ "player" \ "name").text,
-          (batsman \ "@order").text.toInt,
-          getStatistic(batsman, "balls-faced") toInt,
-          getStatistic(batsman, "runs-scored") toInt,
-          getStatistic(batsman, "fours") toInt,
-          getStatistic(batsman, "sixes") toInt,
-          (batsman \ "status").text == "batted",
-          (batsman \ "dismissal" \ "description").text,
-          getStatistic(batsman, "on-strike").toInt > 0,
-          getStatistic(batsman, "runs-scored").toInt > 0,
+      .map { batter =>
+        InningsBatter(
+          (batter \ "player" \ "name").text,
+          (batter \ "@order").text.toInt,
+          getStatistic(batter, "balls-faced") toInt,
+          getStatistic(batter, "runs-scored") toInt,
+          getStatistic(batter, "fours") toInt,
+          getStatistic(batter, "sixes") toInt,
+          (batter \ "status").text == "batted",
+          (batter \ "dismissal" \ "description").text,
+          getStatistic(batter, "on-strike").toInt > 0,
+          getStatistic(batter, "runs-scored").toInt > 0,
         )
       }
       .toList

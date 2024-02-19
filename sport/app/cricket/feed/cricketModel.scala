@@ -9,7 +9,7 @@ object Team {
   implicit val writes: OWrites[Team] = Json.writes[Team]
 }
 
-case class InningsBatsman(
+case class InningsBatter(
     name: String,
     order: Int,
     ballsFaced: Int,
@@ -24,8 +24,8 @@ case class InningsBatsman(
   lazy val notOut: Boolean = !out
 }
 
-object InningsBatsman {
-  implicit val writes: OWrites[InningsBatsman] = Json.writes[InningsBatsman]
+object InningsBatter {
+  implicit val writes: OWrites[InningsBatter] = Json.writes[InningsBatter]
 }
 
 case class InningsBowler(name: String, order: Int, overs: Int, maidens: Int, runs: Int, wickets: Int)
@@ -48,7 +48,7 @@ case class Innings(
     declared: Boolean,
     forfeited: Boolean,
     description: String,
-    batsmen: List[InningsBatsman],
+    batsmen: List[InningsBatter],
     bowlers: List[InningsBowler],
     fallOfWicket: List[InningsWicket],
     byes: Int,
@@ -63,14 +63,14 @@ case class Innings(
   lazy val allOut = wickets == 10
   lazy val wickets = fallOfWicket.length
 
-  lazy val firstIn: Option[InningsBatsman] = batsmen.find(_.notOut)
-  lazy val secondIn: Option[InningsBatsman] = {
+  lazy val firstIn: Option[InningsBatter] = batsmen.find(_.notOut)
+  lazy val secondIn: Option[InningsBatter] = {
     batsmen.filter(_.notOut) match {
       case first :: second :: _ => Some(second)
       case _                    => None
     }
   }
-  lazy val lastOut: Option[InningsBatsman] = batsmen.filter(_.out).lastOption
+  lazy val lastOut: Option[InningsBatter] = batsmen.filter(_.out).lastOption
 }
 
 object Innings {
@@ -94,11 +94,11 @@ case class Match(
 
   def lastInnings: Option[Innings] = innings.lastOption
 
-  def firstInBatsman: Option[InningsBatsman] = lastInnings.flatMap(_.firstIn)
+  def firstInBatter: Option[InningsBatter] = lastInnings.flatMap(_.firstIn)
 
-  def secondInBatsman: Option[InningsBatsman] = lastInnings.flatMap(_.secondIn)
+  def secondInBatter: Option[InningsBatter] = lastInnings.flatMap(_.secondIn)
 
-  def lastOut: Option[InningsBatsman] = lastInnings.flatMap(_.lastOut)
+  def lastOut: Option[InningsBatter] = lastInnings.flatMap(_.lastOut)
 }
 
 object Match {
