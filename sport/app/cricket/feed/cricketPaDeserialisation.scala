@@ -87,7 +87,7 @@ object Parser {
           getStatistic(singleInnings, "declared") == "true",
           getStatistic(singleInnings, "forefeited") == "true",
           inningsDescription(inningsOrder, battingTeam),
-          parseInningsBatsmen(singleInnings \ "batting" \ "batter"),
+          parseInningsBatters(singleInnings \ "batting" \ "batter"),
           parseInningsBowlers(singleInnings \ "bowling" \ "bowler"),
           parseInningsWickets(singleInnings \ "fallenWicket"),
           getStatistic(singleInnings, "extra-byes").toInt,
@@ -101,8 +101,8 @@ object Parser {
       .toList
       .sortBy(_.order)
 
-  private def parseInningsBatsmen(batsmen: NodeSeq): List[InningsBatter] =
-    batsmen
+  private def parseInningsBatters(batters: NodeSeq): List[InningsBatter] =
+    batters
       .map { batter =>
         InningsBatter(
           (batter \ "player" \ "name").text,

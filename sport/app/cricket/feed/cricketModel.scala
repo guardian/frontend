@@ -48,7 +48,7 @@ case class Innings(
     declared: Boolean,
     forfeited: Boolean,
     description: String,
-    batsmen: List[InningsBatter],
+    batters: List[InningsBatter],
     bowlers: List[InningsBowler],
     fallOfWicket: List[InningsWicket],
     byes: Int,
@@ -63,14 +63,14 @@ case class Innings(
   lazy val allOut = wickets == 10
   lazy val wickets = fallOfWicket.length
 
-  lazy val firstIn: Option[InningsBatter] = batsmen.find(_.notOut)
+  lazy val firstIn: Option[InningsBatter] = batters.find(_.notOut)
   lazy val secondIn: Option[InningsBatter] = {
-    batsmen.filter(_.notOut) match {
+    batters.filter(_.notOut) match {
       case first :: second :: _ => Some(second)
       case _                    => None
     }
   }
-  lazy val lastOut: Option[InningsBatter] = batsmen.filter(_.out).lastOption
+  lazy val lastOut: Option[InningsBatter] = batters.filter(_.out).lastOption
 }
 
 object Innings {
