@@ -44,7 +44,7 @@ object CrosswordMobileBanner
       description = "Test banner advert in mobile crossword page",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 2),
-      participationGroup = Perc0A,
+      participationGroup = Perc2A,
     )
 
 object OphanNext
