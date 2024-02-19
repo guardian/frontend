@@ -64,14 +64,4 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 2, 29)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-mobile-discussion-ads",
-    "Test ads in discussion for mobile",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 3, 5)),
-    exposeClientSide = true,
-  )
 }
