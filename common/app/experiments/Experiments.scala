@@ -53,7 +53,7 @@ object OphanNext
       description = "Use @guardian/ophan-tracker-js@2.1.0-next.1, which allows tracking of clicks on external links",
       owners = Seq(Owner.withGithub("@guardian/ophan")),
       sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc10A,
+      participationGroup = Perc20A,
     )
 
 object DCRTagPages
