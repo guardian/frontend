@@ -62,5 +62,5 @@ object DCRTagPages
       description = "Render tag pages with DCR",
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 1),
-      participationGroup = Perc1C,
+      participationGroup = Perc2C,
     )
