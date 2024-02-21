@@ -68,7 +68,7 @@ trait PerformanceSwitches {
 
   val DCRCircuitBreakerSwitch = Switch(
     SwitchGroup.Performance,
-    "dcr-circuit-breaker",
+    "circuit-breaker",
     "If this switch is switched on then the DCR circuit breaker will be operational",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = On,
