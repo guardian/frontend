@@ -442,4 +442,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val mobileDiscussionAds: Switch = Switch(
+    group = Commercial,
+    name = "mobile-discussion-ads",
+    description = "Enables adverts to be added to the comments section on articles rendered by DCR on mobile devices",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
