@@ -51,9 +51,7 @@ object ProjectSettings {
       <dependencies>
         <exclude org="commons-logging" module="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
       </dependencies>,
-    resolvers ++= Resolver.sonatypeOssRepos("releases") ++ Seq(
-      "Spy" at "https://files.couchbase.com/maven2/",
-    ),
+    resolvers ++= Resolver.sonatypeOssRepos("releases"),
     update / evictionWarningOptions := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
       .withWarnDirectEvictions(false)
