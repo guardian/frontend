@@ -147,6 +147,7 @@ final case class Content(
     "type/signup",
     "info/newsletter-sign-up",
     "guardian-live-events/guardian-live-events",
+    "gnm-archive/gnm-archive",
   )
   def shareImageCategory: ShareImageCategory = {
 
