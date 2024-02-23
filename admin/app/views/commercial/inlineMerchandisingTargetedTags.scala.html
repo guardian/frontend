@@ -1,5 +1,5 @@
 @import common.dfp.InlineMerchandisingTargetedTagsReport
-@import tools.{CapiLink, SiteLink}
+@import tools.{CapiLink, SiteLink, DfpLink}
 
 @(report: InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -50,4 +50,30 @@
         </ol>
     }
 
+    <h2>Line Items</h2>
+    <p>Line items that target the <em>im</em> slot:</p>
+    @if(report.lineItems.items.isEmpty) {<p>None</p>} else {
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="col-md-3">Name</th>
+                    <th class="col-md-1">DFP link</th>
+                    <th class="col-md-2">Keyword Targeting</th>
+                    <th class="col-md-2">Series Targeting</th>
+                    <th class="col-md-2">Contributor Targeting</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(lineItem <- report.lineItems.sortedItems) {
+                    <tr>
+                        <td>@{lineItem.name}</td>
+                        <td><a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a></td>
+                        <td>@{lineItem.keywords.mkString(", ")}</td>
+                        <td>@{lineItem.series.mkString(", ")}</td>
+                        <td>@{lineItem.contributors.mkString(", ")}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }

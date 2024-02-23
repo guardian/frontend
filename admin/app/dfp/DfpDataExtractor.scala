@@ -7,6 +7,22 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
 
   val hasValidLineItems: Boolean = lineItems.nonEmpty
 
+  val inlineMerchandisingTargetedLineItems: InlineMerchandisingLineItems = {
+    val targetedLineItems = lineItems
+      .filter(_.targetsInlineMerchandising)
+      .foldLeft(Seq.empty[InlineMerchandisingLineItem]) { (soFar, lineItem) =>
+        soFar :+ InlineMerchandisingLineItem(
+          name = lineItem.name,
+          id = lineItem.id,
+          keywords = lineItem.inlineMerchandisingTargetedKeywords,
+          series = lineItem.inlineMerchandisingTargetedSeries,
+          contributors = lineItem.inlineMerchandisingTargetedContributors,
+        )
+      }
+
+    InlineMerchandisingLineItems(items = targetedLineItems)
+  }
+
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
     lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>
       soFar.copy(
