@@ -19,11 +19,6 @@ object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
   def writes(atom: com.gu.contentatom.thrift.Atom): JsObject = JsObject(Seq.empty)
 }
 
-object RecipeThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.recipe.RecipeAtom] {
-  def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
-  def writes(recipe: com.gu.contentatom.thrift.atom.recipe.RecipeAtom): JsObject = JsObject(Seq.empty)
-}
-
 object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(review: com.gu.contentatom.thrift.atom.review.ReviewAtom): JsObject = JsObject(Seq.empty)

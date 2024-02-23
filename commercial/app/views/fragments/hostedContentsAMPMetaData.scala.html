@@ -126,10 +126,6 @@
 
 *@
 @Page.getContentPage(page).map(_.item).map { item =>
-    @for(recipe <- item.content.atoms.map(_.recipes).getOrElse(Nil)) {
-        @fragments.atoms.structureddata.recipe(recipe, item.tags.contributors)
-    }
-
     @for(review <- item.content.atoms.map(_.reviews).getOrElse(Nil)) {
         @review.data.game.map { game => @fragments.atoms.structureddata.gameReview(review, game, item.tags.contributors) }
         @review.data.film.map { film => @fragments.atoms.structureddata.filmReview(review, film, item.tags.contributors) }
