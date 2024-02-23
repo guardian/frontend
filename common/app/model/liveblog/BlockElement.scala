@@ -1,12 +1,7 @@
 package model.liveblog
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{
-  ElementType,
-  SponsorshipType,
-  BlockElement => ApiBlockElement,
-  Sponsorship => ApiSponsorship,
-}
+import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 
@@ -179,6 +174,7 @@ object BlockElement {
       case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
       case Callout                   => Some(UnsupportedBlockElement(None))
       case Cartoon                   => Some(UnsupportedBlockElement(None))
+      case Recipe                    => Some(UnsupportedBlockElement(None))
 
     }
   }
