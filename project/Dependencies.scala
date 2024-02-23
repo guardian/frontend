@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.17"
   val awsVersion = "1.12.638"
-  val capiVersion = "19.4.1"
-  val faciaVersion = "4.0.6"
+  val capiVersion = "21.0.0"
+  val faciaVersion = "5.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -92,7 +92,7 @@ object Dependencies {
   val targetingClient = "com.gu" %% "targeting-client" % "1.1.4"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.1.8"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
