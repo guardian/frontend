@@ -30,7 +30,9 @@ indent_size = 2
 [package.json]
 indent_size = 2
 
-[riff-raff.yaml]
+[*.yaml]
+indent_size = 2
+[*.yml]
 indent_size = 2
 
 [makefile]
