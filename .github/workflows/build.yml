@@ -15,6 +15,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+        pull-requests: write # Required for riff-raff action
     steps:
       - uses: actions/checkout@v4
 
@@ -39,11 +41,6 @@ jobs:
         env:
           NODE_ENV: production
 
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: eu-west-1
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-
       - name: Test, compile
         # Australia/Sydney  -because it is too easy for devs to forget about timezones
         run: |
@@ -56,8 +53,10 @@ jobs:
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
 
-      - uses: guardian/actions-riff-raff@v2
+      - uses: guardian/actions-riff-raff@v4
         with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           projectName: dotcom:frontend-all
           configPath: riff-raff.yaml
           contentDirectories: |
