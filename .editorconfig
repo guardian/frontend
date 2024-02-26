@@ -30,10 +30,9 @@ indent_size = 2
 [package.json]
 indent_size = 2
 
-[*.yaml]
+[*.{yaml,yml}]
 indent_size = 2
-[*.yml]
-indent_size = 2
+quote_type = double
 
 [makefile]
 indent_style = tab
