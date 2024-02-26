@@ -1,4 +1,4 @@
-name: "Build"
+name: 'Build'
 
 on:
   push:
@@ -6,17 +6,16 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write # Required for riff-raff action
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-        pull-requests: write # Required for riff-raff action
     steps:
       - uses: actions/checkout@v4
 
