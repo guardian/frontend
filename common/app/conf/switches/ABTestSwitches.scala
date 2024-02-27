@@ -27,6 +27,26 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-guardian-live-offer",
+    "Show the Guardian Live offer sign in gate",
+    owners = Seq(Owner.withGithub("raphaelkabo")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-saturday-edition-offer",
+    "Show the Saturday Edition offer sign in gate",
+    owners = Seq(Owner.withGithub("raphaelkabo")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-consentless-ads",
     "Use consentless ad stack rather than consented / standalone",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
