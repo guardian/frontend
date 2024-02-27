@@ -21,6 +21,8 @@ object LinkedData {
         case re: Review          => Json.toJsObject(re)(Review.formats)
         case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
         case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
+        // Check if this is needed
+        case rp: Recipe => Json.toJsObject(rp)(Recipe.formats)
       }
 
     override def reads(json: JsValue): JsResult[LinkedData] =
@@ -85,6 +87,24 @@ object LinkedData {
   ): List[LinkedData] = {
     val authors = getAuthors(article.tags)
 
+    val articleLinkedData: List[LinkedData] = List(
+      NewsArticle(
+        `@id` = baseURL + "/" + article.metadata.id,
+        image = getImagesForArticle(article, fallbackLogo),
+        author = authors,
+        datePublished = article.trail.webPublicationDate.toString(),
+        dateModified = article.fields.lastModified.toString(),
+        headline = article.trail.headline,
+        mainEntityOfPage = article.metadata.webUrl,
+      ),
+      WebPage(
+        `@id` = article.metadata.webUrl,
+        potentialAction = Some(
+          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+        ),
+      ),
+    )
+
     article match {
       case filmReview if article.content.imdb.isDefined && article.tags.isReview => {
         article.content.imdb.toList.map(ref =>
@@ -96,27 +116,21 @@ object LinkedData {
         )
       }
       case recipeArticle if article.content.schemaOrg.recipe.isDefined => {
-        // TODO - add in recipe structure (?)
-      }
-      case newsArticle => {
-        List(
-          NewsArticle(
-            `@id` = baseURL + "/" + article.metadata.id,
-            image = getImagesForArticle(article, fallbackLogo),
-            author = authors,
-            datePublished = article.trail.webPublicationDate.toString(),
-            dateModified = article.fields.lastModified.toString(),
-            headline = article.trail.headline,
-            mainEntityOfPage = article.metadata.webUrl,
-          ),
-          WebPage(
-            `@id` = article.metadata.webUrl,
-            potentialAction = Some(
-              PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
-            ),
+        val recipe = article.content.schemaOrg.recipe
+
+        val recipeLinkedData = List(
+          Recipe(
+//              `@context`: recipe._atContext,
+//              `@type`: recipe._atType,
+//              name: recipe.name,
+//              ...
+            // Find a way to spread recipe data without having to specify each field?
           ),
         )
+
+        articleLinkedData ++ recipeLinkedData
       }
+      case newsArticle => articleLinkedData
     }
   }
 
@@ -423,5 +437,13 @@ object LiveBlogPosting {
 
 }
 
-// TODO - add recipe case class
-// Might not have to do parsing here, but do need to convert @ symbols
+/* TODO - deserialize / serialize from `article.content.schemaOrg.recipe` field:
+ *  Find and replace any `_at<field>` with `@field`, to fit schema org model
+ *  Result must extend `LinkedData` object as we provide a `List[LinkedData]` to DCR
+ */
+case class Recipe() extends LinkedData // get this structure from CAPI model?
+
+object Recipe {
+  // serialise here
+  implicit val formats: OFormat[Recipe] = Json.format[Recipe]
+}
