@@ -95,6 +95,9 @@ object LinkedData {
           ),
         )
       }
+      case recipeArticle if article.content.schemaOrg.recipe.isDefined => {
+        // TODO - add in recipe structure (?)
+      }
       case newsArticle => {
         List(
           NewsArticle(
@@ -419,3 +422,6 @@ object LiveBlogPosting {
   implicit val formats: OFormat[LiveBlogPosting] = Json.format[LiveBlogPosting]
 
 }
+
+// TODO - add recipe case class
+// Might not have to do parsing here, but do need to convert @ symbols

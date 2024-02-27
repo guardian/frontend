@@ -19,6 +19,7 @@ class CAPILookup(contentApiClient: ContentApiClient) {
       .showFields("all")
       .showReferences("all")
       .showAtoms("all")
+      .showSchemaorg("true") // TODO - check this
 
     val capiItemWithBlocks = range
       .map { blockRange =>
