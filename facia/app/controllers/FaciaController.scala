@@ -1,37 +1,32 @@
 package controllers
 
-import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import agents.{DeeplyReadAgent, MostViewedAgent}
-import common.JsonComponent.Ok
+import common._
+import conf.Configuration
+import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
+import http.HttpPreconnections
+import implicits.GUHeaders
+import layout.slices._
+import layout._
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
+import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import play.api.libs.json._
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
-import services.{CollectionConfigWithId, ConfigAgent}
-import layout.slices._
-import views.html.fragments.containers.facia_cards.container
-import views.support.FaciaToMicroFormat2Helpers.getCollection
-import conf.switches.Switches.InlineEmailStyles
-import implicits.GUHeaders
-import pages.{FrontEmailHtmlPage, FrontHtmlPage}
-import utils.TargetedCollections
-import conf.Configuration
-import conf.switches.Switches
-import contentapi.ContentApiClient
-import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
-import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
-import experiments.{ActiveExperiments, DeeplyRead}
-import play.api.http.ContentTypes.JSON
-import http.HttpPreconnections
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
+import services.{CollectionConfigWithId, ConfigAgent}
+import utils.TargetedCollections
+import views.html.fragments.containers.facia_cards.container
+import views.support.FaciaToMicroFormat2Helpers.getCollection
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -236,10 +231,7 @@ trait FaciaController
     }
 
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
-    val participatingInDeeplyReadTest = ActiveExperiments.isParticipating(DeeplyRead)
-    val deeplyRead = if (participatingInDeeplyReadTest) {
-      networkFrontEdition.map(deeplyReadAgent.getTrails)
-    } else None
+    val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
     val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
