@@ -13,7 +13,7 @@ import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.libs.json.JsArray
+import play.api.libs.json.{JsArray, JsValue, Json}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.test.Helpers._
 import play.api.test._
@@ -52,6 +52,7 @@ import scala.concurrent.{Await, Future}
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
+  val deeplyReadResults = "{}"
 
   def mockWsResponse(): WSClient = {
     val wsClient = mock[WSClient]
@@ -60,10 +61,19 @@ import scala.concurrent.{Await, Future}
 
     when(mockResponse.status).thenReturn(200)
     when(mockResponse.body).thenReturn("")
+    when(mockResponse.json).thenReturn(Json.parse(deeplyReadResults))
+
     when(mockRequest.withRequestTimeout(any())).thenReturn(mockRequest)
-    when(mockRequest.post(anyString())(any())).thenReturn(Future.successful(mockResponse))
     when(mockRequest.addHttpHeaders("Content-Type" -> "application/json")).thenReturn(mockRequest)
+
+    when(mockRequest.post(anyString())(any())).thenReturn(Future.successful(mockResponse))
+    when(mockRequest.get()).thenReturn(Future.successful(mockResponse))
+
     when(wsClient.url("http://localhost:3030/Front")).thenReturn(mockRequest)
+    when(wsClient.url("https://localhost/deeplyread?country=gb&api-key=none")).thenReturn(mockRequest)
+    when(wsClient.url("https://localhost/deeplyread?country=us&api-key=none")).thenReturn(mockRequest)
+    when(wsClient.url("https://localhost/deeplyread?country=au&api-key=none")).thenReturn(mockRequest)
+    when(wsClient.url("https://localhost/deeplyread?country=international&api-key=none")).thenReturn(mockRequest)
 
     wsClient
   }
