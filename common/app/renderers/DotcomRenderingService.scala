@@ -70,17 +70,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     * Returns a tuple of (baseURL, circuitBreaker)
     */
   private[this] def decideService(path: String): (String, CircuitBreaker) = {
+    val articlePattern = "(Article)|(Blocks)".r
+    val faciaPattern = "(Front)|(TagPage)".r
+    val interactivePattern = "(Interactive)".r
+
     path match {
-      case "/Article" | "/AppsArticle" | "/AMPArticle" | "/Blocks" =>
+      case articlePattern(_) =>
         (Configuration.rendering.articleBaseURL, circuitBreakerArticleRendering)
 
-      case "/Front" | "/TagPage" =>
+      case faciaPattern(_) =>
         (Configuration.rendering.faciaBaseURL, circuitBreakerFaciaRendering)
 
-      case "/Interactive" | "/AppsInteractive" | "/AMPInteractive" =>
+      case interactivePattern(_) =>
         (Configuration.rendering.interactiveBaseURL, circuitBreakerInteractiveRendering)
 
-      case "/EmailNewsletters" | _ =>
+      case _ =>
         (Configuration.rendering.baseURL, circuitBreakerRendering)
 
     }
