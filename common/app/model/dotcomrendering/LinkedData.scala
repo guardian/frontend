@@ -117,19 +117,13 @@ object LinkedData {
       }
       case recipeArticle if article.content.schemaOrg.isDefined && article.content.schemaOrg.get.recipe.isDefined => {
         val recipe = article.content.schemaOrg.get.recipe.get
+        val tidiedRecipe = recipe.toString().replaceAll("_atType", "@type").replaceAll("_atContext", "@context")
 
-//        val recipeLinkedData = List(
-////          Recipe(
-//            //  `@context`: recipe._atContext,
-//            //  `@type`: recipe._atType,
-//            //  name: recipe.name,
-//            //  ...
-//            // Find a way to spread recipe data without having to specify each field?
-////          ),
-//        )
-//
-//        articleLinkedData ++ recipeLinkedData
-        articleLinkedData
+        val recipeLinkedData = List(
+          Json.parse(tidiedRecipe).as[LinkedData],
+        )
+
+        articleLinkedData ++ recipeLinkedData
       }
       case newsArticle => articleLinkedData
     }
