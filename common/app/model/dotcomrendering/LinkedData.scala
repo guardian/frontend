@@ -22,7 +22,7 @@ object LinkedData {
         case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
         case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
         // Check if this is needed
-        case rp: Recipe => Json.toJsObject(rp)(Recipe.formats)
+//        case rp: Recipe => Json.toJsObject(rp)(Recipe.formats)
       }
 
     override def reads(json: JsValue): JsResult[LinkedData] =
@@ -115,21 +115,21 @@ object LinkedData {
           ),
         )
       }
-      case recipeArticle if article.content.schemaOrg.recipe.isDefined => {
-        val recipe = article.content.schemaOrg.recipe
-
-        val recipeLinkedData = List(
-          Recipe(
+//      case recipeArticle if article.content.schemaOrg => {
+//        val recipe = article.content.schemaOrg
+//
+//        val recipeLinkedData = List(
+//          Recipe(
 //              `@context`: recipe._atContext,
 //              `@type`: recipe._atType,
 //              name: recipe.name,
 //              ...
-            // Find a way to spread recipe data without having to specify each field?
-          ),
-        )
-
-        articleLinkedData ++ recipeLinkedData
-      }
+//            // Find a way to spread recipe data without having to specify each field?
+//          ),
+//        )
+//
+//        articleLinkedData ++ recipeLinkedData
+//      }
       case newsArticle => articleLinkedData
     }
   }
@@ -441,9 +441,9 @@ object LiveBlogPosting {
  *  Find and replace any `_at<field>` with `@field`, to fit schema org model
  *  Result must extend `LinkedData` object as we provide a `List[LinkedData]` to DCR
  */
-case class Recipe() extends LinkedData // get this structure from CAPI model?
-
-object Recipe {
-  // serialise here
-  implicit val formats: OFormat[Recipe] = Json.format[Recipe]
-}
+//case class Recipe() extends LinkedData // get this structure from CAPI model?
+//
+//object Recipe {
+//  // serialise here
+//  implicit val formats: OFormat[Recipe] = Json.format[Recipe]
+//}
