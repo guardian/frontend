@@ -179,7 +179,7 @@ object BlockElement {
       case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
       case Callout                   => Some(UnsupportedBlockElement(None))
       case Cartoon                   => Some(UnsupportedBlockElement(None))
-
+      case Recipe                    => Some(UnsupportedBlockElement(None))
     }
   }
 

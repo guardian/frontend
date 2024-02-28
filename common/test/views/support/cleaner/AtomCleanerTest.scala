@@ -48,7 +48,6 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
         ),
       ),
       interactives = Nil,
-      recipes = Nil,
       reviews = Nil,
       explainers = Nil,
       qandas = Nil,

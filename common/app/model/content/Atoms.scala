@@ -10,7 +10,6 @@ final case class Atoms(
     quizzes: Seq[QuizAtom],
     media: Seq[MediaAtom],
     interactives: Seq[InteractiveAtom],
-    recipes: Seq[RecipeAtom],
     reviews: Seq[ReviewAtom],
     explainers: Seq[ExplainerAtom],
     qandas: Seq[QandaAtom],
@@ -22,7 +21,7 @@ final case class Atoms(
     charts: Seq[ChartAtom],
 ) {
   val all: Seq[Atom] =
-    quizzes ++ media ++ interactives ++ recipes ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
+    quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
 
   def atomTypes: Map[String, Boolean] =
     Map(
@@ -75,8 +74,6 @@ object Atoms extends common.GuLogging {
 
       val interactives = extract(atoms.interactives.map(_.toSeq), atom => { InteractiveAtom.make(atom) })
 
-      val recipes = extract(atoms.recipes.map(_.toSeq), atom => { RecipeAtom.make(atom) })
-
       val reviews = extract(atoms.reviews.map(_.toSeq), atom => { ReviewAtom.make(atom) })
 
       val explainers = extract(atoms.explainers.map(_.toSeq), atom => { ExplainerAtom.make(atom) })
@@ -99,7 +96,6 @@ object Atoms extends common.GuLogging {
         quizzes = quizzes,
         media = media,
         interactives = interactives,
-        recipes = recipes,
         reviews = reviews,
         explainers = explainers,
         qandas = qandas,
