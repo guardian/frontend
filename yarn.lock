@@ -2423,10 +2423,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/commercial@16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-16.0.0.tgz#e46cd939ee0f98d84bfc21124f93d4b2d6b041e5"
-  integrity sha512-nR6vBM7Bu5E49m4vWMeeTg1fsM/hsiTKY32r/R3YlMMYbYf2OBk/ExZg+EwMiXA11Z6euUriutSKEiQQ10LdTw==
+"@guardian/commercial@16.1.1":
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-16.1.1.tgz#3dc1a4e082b93de7e2d977884d2aa11b24474bf5"
+  integrity sha512-HZX6zt96fRnyGTUMtPMKWZ0JbY76rLBlDXpedR5MtqIbMlnc0jbeKD/qUvFDm8HpWL1MVETnBEf3QWcjKXzkrg==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"

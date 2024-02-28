@@ -12,22 +12,12 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       AdaptiveSite,
-      DeeplyRead,
       CrosswordMobileBanner,
       OphanNext,
       DCRTagPages,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object DeeplyRead
-    extends Experiment(
-      name = "deeply-read",
-      description = "When ON, deeply read footer section is displayed",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 2, 27),
-      participationGroup = Perc50,
-    )
 
 object AdaptiveSite
     extends Experiment(

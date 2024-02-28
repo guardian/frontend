@@ -37,41 +37,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-consentless-ads",
-    "Use consentless ad stack rather than consented / standalone",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-integrate-ima",
-    "Test the commercial impact of replacing YouTube ads with Interactive Media Ads on first-party videos",
-    owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 2, 28)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-prebid-kargo",
-    "Test Kargo as a prebid bidder for US traffic.",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 2, 29)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-mpu-when-no-epic",
     "Test MPU when there is no epic at the end of Article on the page.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 2, 29)),
+    sellByDate = Some(LocalDate.of(2024, 3, 29)),
     exposeClientSide = true,
   )
 }
