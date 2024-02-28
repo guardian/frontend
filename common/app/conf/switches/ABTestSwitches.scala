@@ -27,18 +27,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-guardian-live-offer",
-    "Show the Guardian Live offer sign in gate",
-    owners = Seq(Owner.withGithub("raphaelkabo")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 12, 1)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-saturday-edition-offer",
-    "Show the Saturday Edition offer sign in gate",
+    "ab-sign-in-gate-alternative-wording",
+    "Test different messages on the sign in gate",
     owners = Seq(Owner.withGithub("raphaelkabo")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2025, 12, 1)),
