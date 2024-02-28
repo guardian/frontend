@@ -40,6 +40,38 @@ case class InlineMerchandisingTagSet(
   def nonEmpty: Boolean = keywords.nonEmpty || series.nonEmpty || contributors.nonEmpty
 }
 
+object InlineMerchandisingLineItem {
+  implicit val jsonReads: Reads[InlineMerchandisingLineItem] = Json.reads[InlineMerchandisingLineItem]
+
+  implicit val inlineMerchandisingLineItemWrites: Writes[InlineMerchandisingLineItem] =
+    (lineItem: InlineMerchandisingLineItem) => {
+      Json.obj(
+        "name" -> lineItem.name,
+        "id" -> lineItem.id,
+        "keywords" -> lineItem.keywords,
+        "series" -> lineItem.series,
+        "contributors" -> lineItem.contributors,
+      )
+    }
+}
+
+case class InlineMerchandisingLineItem(
+    name: String,
+    id: Long,
+    keywords: Seq[String],
+    series: Seq[String],
+    contributors: Seq[String],
+) {}
+
+object InlineMerchandisingLineItems {
+  implicit val lineItemFormat: OFormat[InlineMerchandisingLineItem] = Json.format[InlineMerchandisingLineItem]
+  implicit val lineItemsFormat: OFormat[InlineMerchandisingLineItems] = Json.format[InlineMerchandisingLineItems]
+}
+
+case class InlineMerchandisingLineItems(items: Seq[InlineMerchandisingLineItem] = Seq.empty) {
+  val sortedItems = items.sortBy(_.name)
+}
+
 object InlineMerchandisingTargetedTagsReport {
   implicit val jsonReads: Reads[InlineMerchandisingTargetedTagsReport] =
     Json.reads[InlineMerchandisingTargetedTagsReport]
@@ -49,11 +81,16 @@ object InlineMerchandisingTargetedTagsReport {
       Json.obj(
         "updatedTimeStamp" -> report.updatedTimeStamp,
         "targetedTags" -> report.targetedTags,
+        "lineItems" -> report.lineItems,
       )
     }
 }
 
-case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targetedTags: InlineMerchandisingTagSet)
+case class InlineMerchandisingTargetedTagsReport(
+    updatedTimeStamp: String,
+    targetedTags: InlineMerchandisingTagSet,
+    lineItems: InlineMerchandisingLineItems,
+)
 
 object InlineMerchandisingTargetedTagsReportParser extends GuLogging {
   def apply(jsonString: String): Option[InlineMerchandisingTargetedTagsReport] = {

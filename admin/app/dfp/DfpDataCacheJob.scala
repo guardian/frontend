@@ -167,9 +167,10 @@ class DfpDataCacheJob(
     if (data.hasValidLineItems) {
       val now = printLondonTime(DateTime.now())
 
+      val lineItems = data.inlineMerchandisingTargetedLineItems
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
       Store.putInlineMerchandisingSponsorships(
-        stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))),
+        stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags, lineItems))),
       )
     }
   }
