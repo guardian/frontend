@@ -20,7 +20,7 @@
 		"@guardian/commercial": "16.1.1",
 		"@guardian/consent-management-platform": "13.11.1",
 		"@guardian/core-web-vitals": "^5.0.0",
-		"@guardian/identity-auth": "2.0.1",
+		"@guardian/identity-auth": "2.1.0",
 		"@guardian/identity-auth-frontend": "3.0.0",
 		"@guardian/libs": "16.0.2",
 		"@guardian/shimport": "^1.0.2",
