@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.17"
   val awsVersion = "1.12.638"
-  val capiVersion = "23.0.0"
+  val capiVersion = "21.1.0-PREVIEW.recipe-schema-model-mersion.2024-02-28T1451.8e4f9b83"
   val faciaVersion = "5.0.3"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"

@@ -67,6 +67,7 @@ final case class Content(
     wordCount: Int,
     showByline: Boolean,
     rawOpenGraphImage: Option[ImageAsset],
+//    schemaOrg: Option[JsObject]
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -434,6 +435,7 @@ object Content {
     val references: Map[String, String] =
       apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent)
+    // Add schema org here?
 
     Content(
       trail = trail,
@@ -478,6 +480,7 @@ object Content {
         .flatten
         .orElse(elements.mainPicture.flatMap(_.images.largestImage))
         .orElse(trail.trailPicture.flatMap(_.largestImage)),
+      // Add schema org here?
     )
   }
 }
@@ -588,6 +591,7 @@ object Article {
     val lightbox = GenericLightbox(elements, fields, trail, lightboxProperties)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
     val sharelinks = content.sharelinks
+//    val schemaOrg = content.schemaOrg
 
     val contentOverrides = content.copy(
       trail = trail,
