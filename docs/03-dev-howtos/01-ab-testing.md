@@ -374,7 +374,7 @@ would be: `X-GU-Experiment-50perc : true`. For CODE or DEV environments, adapt t
 
 Then navigate to the page where you should see the test and you should be opted into the variant.
 
-To opt out you can use the url: `https://www.theguardian.com/opt/out/your-test-name`. `/opt` routes are defined [here](https://github.com/guardian/frontend/blob/master/applications/app/controllers/OptInController.scala#L42).
+To opt out you can use the url: `https://www.theguardian.com/opt/out/your-test-name`. `/opt` routes are defined [here](https://github.com/guardian/frontend/blob/master/applications/app/controllers/ler.scala#L42).
 
 *2. Use a header hacker extension:*
 
