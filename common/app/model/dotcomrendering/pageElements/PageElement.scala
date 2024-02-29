@@ -376,7 +376,7 @@ object ListItem {
 
 case class ListBlockElement(
     items: Seq[ListItem],
-    _type: Option[String],
+    listElementType: Option[String],
 ) extends PageElement
 object ListBlockElement {
   implicit val listBlockElementWrites: Writes[ListBlockElement] = Json.writes[ListBlockElement]
@@ -1457,7 +1457,7 @@ object PageElement {
                 title = item.title,
               )
             }.toSeq,
-            _type = listTypeData.`type`.map { _.name },
+          listElementType = listTypeData.`type`.map { _.name },
           )
         }.toList
 
