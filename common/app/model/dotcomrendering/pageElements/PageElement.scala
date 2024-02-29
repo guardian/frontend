@@ -851,6 +851,7 @@ object PageElement {
       case _: YoutubeBlockElement         => true
       case _: WitnessBlockElement         => true
       case _: VineBlockElement            => true
+      case _: ListBlockElement            => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
 
