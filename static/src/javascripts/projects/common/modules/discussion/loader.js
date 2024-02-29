@@ -199,6 +199,8 @@ class Loader extends Component {
 			);
 
 			this.loadComments({ page: 1 });
+
+			document.dispatchEvent(new CustomEvent('comments-state-change'));
 		});
 
 		this.on(
@@ -328,10 +330,13 @@ class Loader extends Component {
 			'.js-discussion-change-page, .js-discussion-show-button',
 			() => {
 				mediator.emit('discussion:comments:get-more-replies');
-				document.dispatchEvent(new CustomEvent('comments-expanded'));
 				this.removeTruncation();
 			},
 		);
+
+		this.on('click', '.js-discussion-show-button', () => {
+			document.dispatchEvent(new CustomEvent('comments-loaded'));
+		});
 
 		if (this.comments) {
 			this.comments.on('rendered', (paginationHtml) => {
@@ -460,6 +465,7 @@ class Loader extends Component {
 
 			this.setState('loading');
 			this.gotoPage(page);
+			document.dispatchEvent(new CustomEvent('comments-state-change'));
 		});
 	}
 
@@ -546,6 +552,15 @@ class Loader extends Component {
 
 		return this.comments.fetchComments(opts).then(() => {
 			this.removeState('loading');
+
+			/**
+			 * The initial fetch occurs on page load. Subsequent fetches are made
+			 * when the comments page is changed or the ordering is updated.
+			 */
+			const isInitialFetch = !opts?.page;
+			if (isInitialFetch) {
+				document.dispatchEvent(new CustomEvent('comments-loaded'));
+			}
 
 			if (opts.shouldTruncate) {
 				this.setState('truncated');
