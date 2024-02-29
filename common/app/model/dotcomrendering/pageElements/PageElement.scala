@@ -1,6 +1,6 @@
 package model.dotcomrendering.pageElements
 
-import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
+import com.gu.contentapi.client.model.v1.ElementType.{List => _, Map => _, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   ElementType,
@@ -364,6 +364,22 @@ case class InstagramBlockElement(
     with ThirdPartyEmbeddedContent
 object InstagramBlockElement {
   implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
+}
+
+case class ListItem(
+    list: Seq[PageElement],
+    title: Option[String],
+) extends PageElement
+object ListItem {
+  implicit val listItemWrites: Writes[ListItem] = Json.writes[ListItem]
+}
+
+case class ListBlockElement(
+    items: Seq[ListItem],
+    _type: Option[String],
+) extends PageElement
+object ListBlockElement {
+  implicit val listBlockElementWrites: Writes[ListBlockElement] = Json.writes[ListBlockElement]
 }
 
 case class MapBlockElement(
@@ -1415,7 +1431,35 @@ object PageElement {
         }).toList
       }
 
-      case Form                      => List(FormBlockElement(None))
+      case Form => List(FormBlockElement(None))
+
+      case ElementType.List =>
+        element.listTypeData.map { listTypeData =>
+          ListBlockElement(
+            items = listTypeData.items.map { item =>
+              ListItem(
+                list = item._1.flatMap {
+                  PageElement.make(
+                    _,
+                    addAffiliateLinks,
+                    pageUrl,
+                    atoms,
+                    isMainBlock = false,
+                    isImmersive,
+                    campaigns,
+                    calloutsUrl,
+                    overrideImage = None,
+                    edition,
+                    webPublicationDate,
+                  )
+                }.toSeq,
+                title = item.title,
+              )
+            }.toSeq,
+            _type = listTypeData.`type`.map { _.name },
+          )
+        }.toList
+
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
@@ -1841,5 +1885,5 @@ object PageElement {
        Because this attribute is a defacto a part of the frontend DCR datamodel contract, it would be nice to stop
        relying on the framework to provide it (for safety)
    */
-  val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
+  implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 }

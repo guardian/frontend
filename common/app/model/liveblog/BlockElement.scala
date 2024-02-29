@@ -1,6 +1,6 @@
 package model.liveblog
 
-import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
+import com.gu.contentapi.client.model.v1.ElementType.{List => _, Map => _, _}
 import com.gu.contentapi.client.model.v1.{
   ElementType,
   SponsorshipType,
@@ -180,7 +180,7 @@ object BlockElement {
       case Callout                   => Some(UnsupportedBlockElement(None))
       case Cartoon                   => Some(UnsupportedBlockElement(None))
       case Recipe                    => Some(UnsupportedBlockElement(None))
-
+      case ElementType.List          => Some(UnsupportedBlockElement(None))
     }
   }
 
