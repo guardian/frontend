@@ -1457,7 +1457,7 @@ object PageElement {
                 title = item.title,
               )
             }.toSeq,
-          listElementType = listTypeData.`type`.map { _.name },
+            listElementType = listTypeData.`type`.map { _.name },
           )
         }.toList
 
