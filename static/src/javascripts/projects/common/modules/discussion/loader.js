@@ -558,7 +558,7 @@ class Loader extends Component {
 			 * when the comments page is changed or the ordering is updated.
 			 */
 			const isInitialFetch = !opts?.page;
-			if (isInitialFetch) {
+			if (!isInitialFetch) {
 				document.dispatchEvent(new CustomEvent('comments-loaded'));
 			}
 
