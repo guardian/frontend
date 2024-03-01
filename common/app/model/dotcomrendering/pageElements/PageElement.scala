@@ -1,6 +1,7 @@
 package model.dotcomrendering.pageElements
 
-import com.gu.contentapi.client.model.v1.ElementType.{List => _, Map => _, _}
+import com.gu.contentapi.client.model.v1
+import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   ElementType,
@@ -1318,7 +1319,7 @@ object PageElement {
           case _ => None
         }).toList
 
-      case ElementType.Map => {
+      case GuMap => {
           for {
             mapElem <- element.mapTypeData
             originalUrl <- mapElem.originalUrl
@@ -1434,36 +1435,60 @@ object PageElement {
 
       case Form => List(FormBlockElement(None))
 
-      case ElementType.List =>
+      case GuList =>
         element.listTypeData.map { listTypeData =>
           ListBlockElement(
             items = listTypeData.items.map { item =>
-              ListItem(
-                list = item._1.flatMap {
-                  PageElement.make(
-                    _,
-                    addAffiliateLinks,
-                    pageUrl,
-                    atoms,
-                    isMainBlock = false,
-                    isImmersive,
-                    campaigns,
-                    calloutsUrl,
-                    overrideImage = None,
-                    edition,
-                    webPublicationDate,
-                  )
-                }.toSeq,
-                title = item.title,
+              makeListItem(
+                addAffiliateLinks,
+                pageUrl,
+                atoms,
+                isImmersive,
+                campaigns,
+                calloutsUrl,
+                edition,
+                webPublicationDate,
+                item,
               )
             }.toSeq,
-            listElementType = listTypeData.`type`.map { _.name },
+            listElementType = listTypeData.`type`.map(_.name),
           )
         }.toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
+  }
+
+  private def makeListItem(
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      item: v1.ListItem,
+  ) = {
+    ListItem(
+      list = item.elements.flatMap { element =>
+        PageElement.make(
+          element,
+          addAffiliateLinks,
+          pageUrl,
+          atoms,
+          isMainBlock = false,
+          isImmersive,
+          campaigns,
+          calloutsUrl,
+          overrideImage = None,
+          edition,
+          webPublicationDate,
+        )
+      }.toSeq,
+      title = item.title,
+    )
   }
 
   private[this] def ensureHTTPS(url: String): String = {
