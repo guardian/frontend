@@ -471,6 +471,11 @@
                 "children" : [ ],
                 "classList" : [ ]
             }, {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
+                "children" : [ ],
+                "classList" : [ ]
+            }, {
                 "title" : "Music",
                 "url" : "/music",
                 "children" : [ ],
@@ -832,6 +837,11 @@
                 "children" : [ ],
                 "classList" : [ ]
             }, {
+                "title" : "Super Tuesday",
+                "url" : "/us-news/super-tuesday",
+                "children" : [ ],
+                "classList" : [ ]
+            }, {
                 "title" : "World",
                 "url" : "/world",
                 "longTitle" : "World news",
@@ -1005,6 +1015,11 @@
                 "url" : "/wellness",
                 "children" : [ ],
                 "classList" : [ ]
+            }, {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
+                "children" : [ ],
+                "classList" : [ ]
             } ],
             "classList" : [ ]
         },
@@ -1138,6 +1153,11 @@
             "children" : [ {
                 "title" : "Film",
                 "url" : "/film",
+                "children" : [ ],
+                "classList" : [ ]
+            }, {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
                 "children" : [ ],
                 "classList" : [ ]
             }, {
@@ -1728,6 +1748,11 @@
             "children" : [ {
                 "title" : "Film",
                 "url" : "/film",
+                "children" : [ ],
+                "classList" : [ ]
+            }, {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
                 "children" : [ ],
                 "classList" : [ ]
             }, {
