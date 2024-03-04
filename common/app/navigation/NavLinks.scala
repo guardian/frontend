@@ -447,8 +447,8 @@ object NavLinks {
     longTitle = Some("Culture home"),
     iconName = Some("home"),
     List(
-      film,
       oscars2024,
+      film,
       music,
       tvAndRadio,
       books,
@@ -460,8 +460,8 @@ object NavLinks {
   )
   val auCulturePillar = ukCulturePillar.copy(
     children = List(
-      film,
       oscars2024,
+      film,
       music,
       books,
       tvAndRadio,
@@ -473,8 +473,8 @@ object NavLinks {
   )
   val usCulturePillar = ukCulturePillar.copy(
     children = List(
-      film,
       oscars2024,
+      film,
       books,
       music,
       artAndDesign,
