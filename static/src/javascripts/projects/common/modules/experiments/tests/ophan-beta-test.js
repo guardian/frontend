@@ -7,12 +7,12 @@ export const OphanBetaTest = {
         'Text experimental Heatphan features',
     audience: 0,
     audienceOffset: 0,
-    successMeasure: 'AV is not worse',
+    successMeasure: 'Test users can see the latest Heatphan features',
     audienceCriteria:
         'all pageviews',
     dataLinkNames: 'RRHeaderLinks',
     idealOutcome:
-        'AV is not worse',
+        'Test users can see the latest Heatphan features',
     showForSensitive: true,
     canRun: () => true,
     variants: [
