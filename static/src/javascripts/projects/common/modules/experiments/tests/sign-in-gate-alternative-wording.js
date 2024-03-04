@@ -25,6 +25,10 @@ export const signInGateAlternativeWording = {
             test: () => { },
         },
         {
+            id: 'alternative-wording-personalise',
+            test: () => { },
+        },
+        {
             id: 'alternative-wording-control',
             test: () => { },
         },
