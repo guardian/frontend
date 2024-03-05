@@ -44,4 +44,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 3, 29)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-section-ad-density",
+    "Increase inline advert density on article pages in high value sections.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 7, 26)),
+    exposeClientSide = true,
+  )
 }
