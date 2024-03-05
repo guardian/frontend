@@ -368,7 +368,7 @@ object InstagramBlockElement {
 }
 
 case class ListItem(
-    list: Seq[PageElement],
+    elements: Seq[PageElement],
     title: Option[String],
 ) extends PageElement
 object ListItem {
@@ -1472,7 +1472,7 @@ object PageElement {
       item: v1.ListItem,
   ) = {
     ListItem(
-      list = item.elements.flatMap { element =>
+      elements = item.elements.flatMap { element =>
         PageElement.make(
           element,
           addAffiliateLinks,
