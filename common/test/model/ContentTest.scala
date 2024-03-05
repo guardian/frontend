@@ -178,9 +178,9 @@ class ContentTest
     contentWithShortUrl("https://www.theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
-  it should "show age warning in social post when article is 1 year old" in {
+  it should "show age warning in social post when article is more than 1 year old" in {
     val oneYearOld = Some(
-      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1).minusDays(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
     )
 
     val contentWithNewsTag = Content(
@@ -209,9 +209,9 @@ class ContentTest
     contentWithNewsTag.content.shareImageCategory.getClass.getSimpleName should be("GuardianDefault$")
   }
 
-  it should "show special opinion style overlay for age warning when article is tone/comment and is 1 year ago" in {
+  it should "show special opinion style overlay for age warning when article is tone/comment and is more than 1 year ago" in {
     val oneYearOld = Some(
-      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1).minusDays(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
     )
 
     val contentWithCommentTag = Content(
@@ -224,9 +224,9 @@ class ContentTest
     contentWithCommentTag.content.shareImageCategory.getClass.getSimpleName should be("CommentGuardianOldContent")
   }
 
-  it should "not show age warning when article is 1 year old and has any of the tags excluded from age warning" in {
+  it should "not show age warning when article is more than 1 year old and has any of the tags excluded from age warning" in {
     val oneYearOld = Some(
-      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
+      jodaToJavaInstant(new DateTime(DateTime.now().minusYears(1).minusDays(1))).atOffset(ZoneOffset.UTC).toCapiDateTime,
     )
 
     val contentWithTagThatShouldNotHaveAgeWarning = Content(
