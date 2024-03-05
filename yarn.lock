@@ -2423,10 +2423,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/commercial@0.0.0-beta-20240219113619":
-  version "0.0.0-beta-20240219113619"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240219113619.tgz#628602d71a11455b6404488876a12674aad88a25"
-  integrity sha512-737XLpOsSdaeTcE4WXMRZJ34eQYDDJ1wnEGHDPkzcQlAgzEsPYmCdTja98eXdu9gxrq/xCZOwpHI2H9DFQP4vg==
+"@guardian/commercial@17.1.1":
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-17.1.1.tgz#ff98beb2435ba0882ea486b38a8873c3229ae173"
+  integrity sha512-DQkiX3lalNSqIj/u3tghxFBElJ/xv8+feV6fxveQhUwnPMYw8vOCIg1QZoPcyl0eDgwbl7JubK4MOccX+5AhGA==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
@@ -2440,10 +2440,10 @@
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
 
-"@guardian/consent-management-platform@0.0.0-beta-20240219110734":
-  version "0.0.0-beta-20240219110734"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-0.0.0-beta-20240219110734.tgz#79b87bb44bf54c940a6991a04adad9906864177f"
-  integrity sha512-0Vb52/L+ir8r/auW+a1l40L9ZtSv5f5UbFYK1kx9lCk7fIZmodlGpzKYYvLOM8LmbUcxU+e8zy9yM1asftwyaw==
+"@guardian/consent-management-platform@13.12.0":
+  version "13.12.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.12.0.tgz#7cd52881ac017eca8697b368c313678664acc10e"
+  integrity sha512-weLk3tR1ZtMvn5tfTFItvbIT84JFaXMdP5zcbu1Aynt+eTKZD8oVKTtuvdg6ZmTuxsEOIfsel0fFirjDUo5ccQ==
 
 "@guardian/core-web-vitals@^5.0.0":
   version "5.1.0"
