@@ -5,8 +5,8 @@ export const signInGateAlternativeWording = {
     author: 'Raphael Kabo',
     description:
         'Version of the main dismissable sign in gate, testing different messages',
-    audience: 0.3,
-    audienceOffset: 0.6,
+    audience: 0.2,
+    audienceOffset: 0.7,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
         '3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
