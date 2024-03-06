@@ -180,7 +180,7 @@ object BlockElement {
       case Callout                   => Some(UnsupportedBlockElement(None))
       case Cartoon                   => Some(UnsupportedBlockElement(None))
       case Recipe                    => Some(UnsupportedBlockElement(None))
-
+      case List                      => Some(UnsupportedBlockElement(None))
     }
   }
 

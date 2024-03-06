@@ -1,6 +1,6 @@
 package model.dotcomrendering.pageElements
 
-import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
+import com.gu.contentapi.client.model.v1.ElementType.{List => _, Map => _, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   ElementType,
