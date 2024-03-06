@@ -74,6 +74,7 @@ val common = library("common")
       pekkoSlf4j,
     ) ++ jackson,
     TestAssets / mappings ~= filterAssets,
+    dependencyOverrides += "com.gu" %% "content-api-client" % capiVersion
   )
 
 val commonWithTests = withTests(common)
@@ -83,6 +84,7 @@ val facia = application("facia")
   .aggregate(common)
   .settings(
     libraryDependencies += scalaCheck,
+    dependencyOverrides += "com.gu" %% "content-api-client" % capiVersion
   )
 
 val article = application("article").dependsOn(commonWithTests).aggregate(common)
