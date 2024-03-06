@@ -17,7 +17,7 @@
 		"@guardian/ab-core": "^5.0.0",
 		"@guardian/atom-renderer": "^2.0.0",
 		"@guardian/automat-modules": "^0.3.8",
-		"@guardian/commercial": "17.1.1",
+		"@guardian/commercial": "17.2.0",
 		"@guardian/consent-management-platform": "13.12.0",
 		"@guardian/core-web-vitals": "^5.0.0",
 		"@guardian/identity-auth": "2.1.0",
