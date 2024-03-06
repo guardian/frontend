@@ -1,6 +1,7 @@
 import type { ABTest } from '@guardian/ab-core';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
+import { signInGateAlternativeWording } from './tests/sign-in-gate-alternative-wording';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 
@@ -9,6 +10,7 @@ import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
 export const concurrentTests: readonly ABTest[] = [
 	signInGateMainVariant,
 	signInGateMainControl,
+	signInGateAlternativeWording,
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
 ];
