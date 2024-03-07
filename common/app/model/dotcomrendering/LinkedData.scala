@@ -1,13 +1,19 @@
 package model.dotcomrendering
 
+import com.gu.contentapi.client.model.schemaorg.SchemaRecipe
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
 import model.{Article, ContentType, ImageMedia, Interactive, LiveBlogPage, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
+import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
+import org.json4s._
+import org.json4s.FieldSerializer._
+import org.json4s.jackson.Serialization.write
+
 
 object LinkedData {
 
@@ -115,16 +121,16 @@ object LinkedData {
           ),
         )
       }
-      case recipeArticle if article.content.schemaOrg.isDefined && article.content.schemaOrg.get.recipe.isDefined => {
-        val recipe = article.content.schemaOrg.get.recipe.get
-        val tidiedRecipe = recipe.toString().replaceAll("_atType", "@type").replaceAll("_atContext", "@context")
-
-        val recipeLinkedData = List(
-          Json.parse(tidiedRecipe).as[LinkedData],
-        )
-
-        articleLinkedData ++ recipeLinkedData
-      }
+      // We need to convert the Seq[SchemaRecipe] to List[Recipe] (to satisfy type match of List[LinkedData]
+//      case recipeArticle if article.content.schemaOrg.isDefined && article.content.schemaOrg.get.recipe.isDefined => {
+//        val recipes = article.content.schemaOrg.get.recipe.get
+//
+//        val renameContext = FieldSerializer[SchemaRecipe](renameTo("_atContext", "@context"))
+//        val renameType = FieldSerializer[SchemaRecipe](renameTo("_atType", "@type"))
+//        implicit val format: Formats = DefaultFormats + renameContext + renameType
+//
+//        articleLinkedData ++ recipeLinkedData
+//      }
       case newsArticle => articleLinkedData
     }
   }
@@ -435,10 +441,20 @@ object LiveBlogPosting {
 /* TODO - deserialize / serialize from `article.content.schemaOrg.recipe` field:
  *  Find and replace any `_at<field>` with `@field`, to fit schema org model
  *  Result must extend `LinkedData` object as we provide a `List[LinkedData]` to DCR
+ *
+ * The data structure we have is:
+ * IN => Seq[SchemaRecipe] (from CAPI model)
+ * OUT => List[Recipe] (with @type, @context replacing _atType, _atContext RECURSIVELY within SchemaRecipe type)
  */
-//case class Recipe() extends LinkedData // get this structure from CAPI model?
+//case class Recipe(
+//      `@type`: String = "Recipe",
+//      `@context`: String = "http://schema.org",
+//      // can you spread types in Scala??
+//      ...recipe: SchemaRecipe,
+//) extends LinkedData
 //
-//object Recipe {
-//  // serialise here
+// object Recipe {
+    // serialise here
 //  implicit val formats: OFormat[Recipe] = Json.format[Recipe]
 //}
+
