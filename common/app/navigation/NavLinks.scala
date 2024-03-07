@@ -193,7 +193,6 @@ object NavLinks {
   val usTravel = ukTravel.copy(children = List(travelUs, travelEurope, travelUk))
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
   val wellness = NavLink("Wellness", "/wellness")
-  val superTuesday = NavLink("Super Tuesday", "/us-news/super-tuesday")
   val oscars2024 = NavLink("Oscars 2024", "/film/oscars-2024")
 
   val todaysPaper = NavLink(
@@ -310,7 +309,6 @@ object NavLinks {
     List(
       usNews,
       usElections2024,
-      superTuesday,
       world,
       usEnvironment,
       ukraine,
