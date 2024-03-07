@@ -14,7 +14,6 @@ import org.json4s._
 import org.json4s.FieldSerializer._
 import org.json4s.jackson.Serialization.write
 
-
 object LinkedData {
 
   implicit val formats: OFormat[LinkedData] = new OFormat[LinkedData] {
@@ -454,7 +453,6 @@ object LiveBlogPosting {
 //) extends LinkedData
 //
 // object Recipe {
-    // serialise here
+// serialise here
 //  implicit val formats: OFormat[Recipe] = Json.format[Recipe]
 //}
-
