@@ -837,11 +837,6 @@
                 "children" : [ ],
                 "classList" : [ ]
             }, {
-                "title" : "Super Tuesday",
-                "url" : "/us-news/super-tuesday",
-                "children" : [ ],
-                "classList" : [ ]
-            }, {
                 "title" : "World",
                 "url" : "/world",
                 "longTitle" : "World news",
