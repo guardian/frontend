@@ -14,6 +14,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       AdaptiveSite,
       CrosswordMobileBanner,
       DCRTagPages,
+      OscarsNewsletterEmbed1,
+      OscarsNewsletterEmbed2,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -43,4 +45,21 @@ object DCRTagPages
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 1),
       participationGroup = Perc2C,
+    )
+
+object OscarsNewsletterEmbed1
+    extends Experiment(
+      name = "oscars-newsletter-embed-1",
+      description = "Render variant 1 newsletter embed variants for Oscars article",
+      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 4, 2),
+      participationGroup = Perc2D,
+    )
+object OscarsNewsletterEmbed2
+    extends Experiment(
+      name = "oscars-newsletter-embed-2",
+      description = "Render variant 2 newsletter embed control for Oscars article",
+      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 4, 2),
+      participationGroup = Perc2E,
     )
