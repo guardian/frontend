@@ -1,6 +1,7 @@
 package model.dotcomrendering.pageElements
 
-import com.gu.contentapi.client.model.v1.ElementType.{List => _, Map => _, _}
+import com.gu.contentapi.client.model.v1
+import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   ElementType,
@@ -364,6 +365,22 @@ case class InstagramBlockElement(
     with ThirdPartyEmbeddedContent
 object InstagramBlockElement {
   implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
+}
+
+case class ListItem(
+    elements: Seq[PageElement],
+    title: Option[String],
+) extends PageElement
+object ListItem {
+  implicit val listItemWrites: Writes[ListItem] = Json.writes[ListItem]
+}
+
+case class ListBlockElement(
+    items: Seq[ListItem],
+    listElementType: Option[String],
+) extends PageElement
+object ListBlockElement {
+  implicit val listBlockElementWrites: Writes[ListBlockElement] = Json.writes[ListBlockElement]
 }
 
 case class MapBlockElement(
@@ -835,6 +852,7 @@ object PageElement {
       case _: YoutubeBlockElement         => true
       case _: WitnessBlockElement         => true
       case _: VineBlockElement            => true
+      case _: ListBlockElement            => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
 
@@ -1301,7 +1319,7 @@ object PageElement {
           case _ => None
         }).toList
 
-      case ElementType.Map => {
+      case GuMap => {
           for {
             mapElem <- element.mapTypeData
             originalUrl <- mapElem.originalUrl
@@ -1415,10 +1433,62 @@ object PageElement {
         }).toList
       }
 
-      case Form                      => List(FormBlockElement(None))
+      case Form => List(FormBlockElement(None))
+
+      case GuList =>
+        element.listTypeData.map { listTypeData =>
+          ListBlockElement(
+            items = listTypeData.items.map { item =>
+              makeListItem(
+                addAffiliateLinks,
+                pageUrl,
+                atoms,
+                isImmersive,
+                campaigns,
+                calloutsUrl,
+                edition,
+                webPublicationDate,
+                item,
+              )
+            }.toSeq,
+            listElementType = listTypeData.`type`.map(_.name),
+          )
+        }.toList
+
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
+  }
+
+  private def makeListItem(
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      item: v1.ListItem,
+  ) = {
+    ListItem(
+      elements = item.elements.flatMap { element =>
+        PageElement.make(
+          element,
+          addAffiliateLinks,
+          pageUrl,
+          atoms,
+          isMainBlock = false,
+          isImmersive,
+          campaigns,
+          calloutsUrl,
+          overrideImage = None,
+          edition,
+          webPublicationDate,
+        )
+      }.toSeq,
+      title = item.title,
+    )
   }
 
   private[this] def ensureHTTPS(url: String): String = {
@@ -1841,5 +1911,5 @@ object PageElement {
        Because this attribute is a defacto a part of the frontend DCR datamodel contract, it would be nice to stop
        relying on the framework to provide it (for safety)
    */
-  val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
+  implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 }

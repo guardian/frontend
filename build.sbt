@@ -94,8 +94,6 @@ val applications = application("applications")
 val archive = application("archive")
   .dependsOn(commonWithTests)
   .aggregate(common)
-  .settings(
-  )
 
 val sport = application("sport")
   .dependsOn(commonWithTests)
@@ -199,12 +197,11 @@ val preview = application("preview")
     commercial,
     onward,
   )
-  .settings(
-  )
 
 val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
+
 
 val main = root()
 // This evicts the version of
