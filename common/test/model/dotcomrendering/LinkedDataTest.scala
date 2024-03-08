@@ -58,8 +58,8 @@ class LinkedDataTest extends AnyFlatSpec with Matchers with MockitoSugar {
       elements = None,
       schemaOrg = Some(SchemaOrg(
         recipe = Some(Seq(SchemaRecipe(
-          _atContext = "context",
-          _atType = "recipe",
+          _atContext = "http://schema.org",
+          _atType = "Recipe",
           name = Some("Test recipe"),
           description = Some("This is yummy"),
           image = Some("https://path.to/image/on/server.jpg"),
