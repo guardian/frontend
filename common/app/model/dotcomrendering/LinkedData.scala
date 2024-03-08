@@ -26,8 +26,6 @@ object LinkedData {
         case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
         case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
         case rp: RecipeLinkedData => Json.toJsObject(rp)(RecipeLinkedData.formats)
-        // Check if this is needed
-//        case rp: Recipe => Json.toJsObject(rp)(Recipe.formats)
       }
 
     override def reads(json: JsValue): JsResult[LinkedData] =
@@ -121,17 +119,10 @@ object LinkedData {
         )
       }
       // We need to convert the Seq[SchemaRecipe] to List[Recipe] (to satisfy type match of List[LinkedData]
-      case recipeArticle if article.content.schemaOrg.isDefined && article.content.schemaOrg.get.recipe.isDefined => {
-        val recipes = article.content.schemaOrg.get.recipe.get
-//
-//        val renameContext = FieldSerializer[SchemaRecipe](renameTo("_atContext", "@context"))
-//        val renameType = FieldSerializer[SchemaRecipe](renameTo("_atType", "@type"))
-//        implicit val format: Formats = DefaultFormats + renameContext + renameType
-//
-//        articleLinkedData ++ recipeLinkedData
+      case recipeArticle if article.content.schemaOrg.flatMap(_.recipe).getOrElse(Seq()).nonEmpty =>
+        val recipes = recipeArticle.content.schemaOrg.flatMap(_.recipe).getOrElse(Seq())
         articleLinkedData ++ recipes.map(RecipeLinkedData.apply)
-      }
-      case newsArticle => articleLinkedData
+      case _ => articleLinkedData
     }
   }
 
@@ -501,23 +492,3 @@ object RecipeLinkedData {
 
   def apply(from: SchemaRecipe) = new RecipeLinkedData(`@type`=from._atType,`@context`=from._atContext, content=from)
 }
-
-/* TODO - deserialize / serialize from `article.content.schemaOrg.recipe` field:
- *  Find and replace any `_at<field>` with `@field`, to fit schema org model
- *  Result must extend `LinkedData` object as we provide a `List[LinkedData]` to DCR
- *
- * The data structure we have is:
- * IN => Seq[SchemaRecipe] (from CAPI model)
- * OUT => List[Recipe] (with @type, @context replacing _atType, _atContext RECURSIVELY within SchemaRecipe type)
- */
-//case class Recipe(
-//      `@type`: String = "Recipe",
-//      `@context`: String = "http://schema.org",
-//      // can you spread types in Scala??
-//      ...recipe: SchemaRecipe,
-//) extends LinkedData
-//
-// object Recipe {
-// serialise here
-//  implicit val formats: OFormat[Recipe] = Json.format[Recipe]
-//}
