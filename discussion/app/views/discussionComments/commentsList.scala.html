@@ -5,7 +5,7 @@
 
     @userMessageForLargeDiscussion
 
-    <ul class="d-thread d-thread--comments js-new-comments">
+    <ul class="d-thread d-thread--comments js-new-comments" data-commercial-id="comments-column">
 
         @page.comments.map { comment =>
             @fragments.comment(comment, page.isClosedForRecommendation, false)

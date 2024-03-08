@@ -441,3 +441,7 @@ Location: Bristol, UK
 Developer: Oliver Abrahams
 GitHub: oliverabrahams
 Location: Manchester, UK
+
+Developer: Alessia Amitrano
+GitHub: alessiaAmitrano
+Location: London, UK

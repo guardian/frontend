@@ -466,6 +466,11 @@
             "longTitle" : "Culture home",
             "iconName" : "home",
             "children" : [ {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
+                "children" : [ ],
+                "classList" : [ ]
+            }, {
                 "title" : "Film",
                 "url" : "/film",
                 "children" : [ ],
@@ -1005,6 +1010,11 @@
                 "url" : "/wellness",
                 "children" : [ ],
                 "classList" : [ ]
+            }, {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
+                "children" : [ ],
+                "classList" : [ ]
             } ],
             "classList" : [ ]
         },
@@ -1136,6 +1146,11 @@
             "longTitle" : "Culture home",
             "iconName" : "home",
             "children" : [ {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
+                "children" : [ ],
+                "classList" : [ ]
+            }, {
                 "title" : "Film",
                 "url" : "/film",
                 "children" : [ ],
@@ -1726,6 +1741,11 @@
             "longTitle" : "Culture home",
             "iconName" : "home",
             "children" : [ {
+                "title" : "Oscars 2024",
+                "url" : "/film/oscars-2024",
+                "children" : [ ],
+                "classList" : [ ]
+            },{
                 "title" : "Film",
                 "url" : "/film",
                 "children" : [ ],
