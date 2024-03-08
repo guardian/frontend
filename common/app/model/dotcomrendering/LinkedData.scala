@@ -6,13 +6,10 @@ import model.{Article, ContentType, ImageMedia, Interactive, LiveBlogPage, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
-import play.api.libs.json.Format.GenericFormat
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
-import org.json4s._
-import org.json4s.FieldSerializer._
-import org.json4s.jackson.Serialization.write
+
 
 object LinkedData {
 
@@ -26,6 +23,7 @@ object LinkedData {
         case re: Review          => Json.toJsObject(re)(Review.formats)
         case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
         case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
+        case rp: RecipeLinkedData => Json.toJsObject(rp)(RecipeLinkedData.formats)
         // Check if this is needed
 //        case rp: Recipe => Json.toJsObject(rp)(Recipe.formats)
       }
@@ -121,15 +119,16 @@ object LinkedData {
         )
       }
       // We need to convert the Seq[SchemaRecipe] to List[Recipe] (to satisfy type match of List[LinkedData]
-//      case recipeArticle if article.content.schemaOrg.isDefined && article.content.schemaOrg.get.recipe.isDefined => {
-//        val recipes = article.content.schemaOrg.get.recipe.get
+      case recipeArticle if article.content.schemaOrg.isDefined && article.content.schemaOrg.get.recipe.isDefined => {
+        val recipes = article.content.schemaOrg.get.recipe.get
 //
 //        val renameContext = FieldSerializer[SchemaRecipe](renameTo("_atContext", "@context"))
 //        val renameType = FieldSerializer[SchemaRecipe](renameTo("_atType", "@type"))
 //        implicit val format: Formats = DefaultFormats + renameContext + renameType
 //
 //        articleLinkedData ++ recipeLinkedData
-//      }
+        articleLinkedData ++ recipes.map(RecipeLinkedData.apply)
+      }
       case newsArticle => articleLinkedData
     }
   }
@@ -435,6 +434,44 @@ case class LiveBlogPosting(
 object LiveBlogPosting {
   implicit val formats: OFormat[LiveBlogPosting] = Json.format[LiveBlogPosting]
 
+}
+
+case class RecipeLinkedData(
+                 `@type`: String = "Recipe",
+                 `@context`: String = "http://schema.org",
+                 content: SchemaRecipe,
+                 ) extends LinkedData
+
+object RecipeLinkedData {
+  implicit val authorInfo: OFormat[com.gu.contentapi.client.model.schemaorg.AuthorInfo] = Json.format[com.gu.contentapi.client.model.schemaorg.AuthorInfo]
+
+  implicit val schemaRecipeStep: OFormat[com.gu.contentapi.client.model.schemaorg.RecipeStep] = Json.format[com.gu.contentapi.client.model.schemaorg.RecipeStep]
+  implicit val schemaFormat: OFormat[SchemaRecipe] = Json.format[SchemaRecipe]
+
+  implicit val formats: OFormat[RecipeLinkedData] = new OFormat[RecipeLinkedData] {
+    def writes(d:RecipeLinkedData) = Json.obj(
+      "@context" -> d.`@context`,
+      "@type" -> d.`@type`,
+      "name" -> d.content.name,
+      "description" -> d.content.description,
+      "image" -> d.content.image,
+      "datePublished" -> d.content.datePublished,
+      "url" -> d.content.url,
+      "recipeCategory" -> d.content.recipeCategory,
+      "recipeCuisine" -> d.content.recipeCuisine,
+      "recipeIngredient" -> d.content.recipeIngredient,
+      "recipeInstructions" -> d.content.recipeInstructions,
+      "recipeYield" -> d.content.recipeYield,
+      "prepTime" -> d.content.prepTime,
+      "cookTime" -> d.content.cookTime,
+      "totalTime" -> d.content.totalTime,
+      "author" -> d.content.author
+    )
+
+    override def reads(json: JsValue): JsResult[RecipeLinkedData] = throw new RuntimeException("Unexpected attempt to read RecipeLinkedData")
+  }
+
+  def apply(from: SchemaRecipe) = new RecipeLinkedData(content=from)
 }
 
 /* TODO - deserialize / serialize from `article.content.schemaOrg.recipe` field:
