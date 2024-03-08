@@ -104,13 +104,14 @@
 }
 
 #dfp-ad--crossword-banner-mobile {
-    width: 320px;
-    height: 74px;
+    padding: 10px 0 14px;
+    width: $mobile-sticky-width;
+    height: $mobile-sticky-height;
     background-color: #ffffff;
 }
 
 .ad-slot-container--centre-slot.crossword-mobile-banner-ad {
-    padding-bottom: 14px;
+
     display: flex;
     @include mq($from: phablet) {
         display: none;
