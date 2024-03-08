@@ -10,6 +10,8 @@ import play.api.libs.json.Reads._
 import play.api.libs.json._
 import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
 
+import scala.util.matching.Regex
+
 
 object LinkedData {
 
@@ -443,11 +445,37 @@ case class RecipeLinkedData(
                  ) extends LinkedData
 
 object RecipeLinkedData {
+  /*
+  What's all this about? Well, schema.org relies on fields prefixed with the `@` symbol as internal type discriminators.
+  Unfortunately, if we generate the schema.org upstream in Concierge we need to format it into Thrift to be passed into Frontend.
+  Thrift objects to the usage of the `@` symbol in field names.... so instead of `@type` we had to pass `_atType`.
+  When we render it back out to JSON, though, we need to replace the `_at` prefix with `@` (and fix the case of the first char).
+  This is done by defining a custom naming scheme in Play json - see https://www.playframework.com/documentation/3.0.x/ScalaJsonAutomated#Implementing-your-own-Naming-Strategy
+  for more details.
+  The scheme is defined by the `SchemaOrgNaming` static object, which is effectively a filter for every field name as it is serialized.
+  That's then wired into the formatter by overriding the implicit `JsonConfiguration` object _before_ defining the implicit formatters below -
+  as a result, _anything_ with the `@` prefix gets fixed
+   */
+  object SchemaOrgNaming extends JsonNaming {
+    private val atField = "^_at(\\w)(.*)$".r
+    override def apply(property: String): String = property match {
+      case atField(leadingChar, tail)=>s"@${leadingChar.toLowerCase}$tail"
+      case _=>property
+    }
+  }
+
+  implicit val config:JsonConfiguration = JsonConfiguration(SchemaOrgNaming)
+
   implicit val authorInfo: OFormat[com.gu.contentapi.client.model.schemaorg.AuthorInfo] = Json.format[com.gu.contentapi.client.model.schemaorg.AuthorInfo]
 
   implicit val schemaRecipeStep: OFormat[com.gu.contentapi.client.model.schemaorg.RecipeStep] = Json.format[com.gu.contentapi.client.model.schemaorg.RecipeStep]
   implicit val schemaFormat: OFormat[SchemaRecipe] = Json.format[SchemaRecipe]
 
+  /*
+  We define a manual formatter write here, just in order to be able to have a case class which simultaneously satisfies
+  the `LinkedData` trait but also contains the entire schema.org object with the funkily named fields and can be serialized
+  directly into valid schema.org json
+   */
   implicit val formats: OFormat[RecipeLinkedData] = new OFormat[RecipeLinkedData] {
     def writes(d:RecipeLinkedData) = Json.obj(
       "@context" -> d.`@context`,
@@ -471,7 +499,7 @@ object RecipeLinkedData {
     override def reads(json: JsValue): JsResult[RecipeLinkedData] = throw new RuntimeException("Unexpected attempt to read RecipeLinkedData")
   }
 
-  def apply(from: SchemaRecipe) = new RecipeLinkedData(content=from)
+  def apply(from: SchemaRecipe) = new RecipeLinkedData(`@type`=from._atType,`@context`=from._atContext, content=from)
 }
 
 /* TODO - deserialize / serialize from `article.content.schemaOrg.recipe` field:
