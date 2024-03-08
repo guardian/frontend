@@ -110,8 +110,9 @@ class LinkedDataTest extends AnyFlatSpec with Matchers with MockitoSugar {
     )
 
     linkedData.foreach(d=>println(d))
-    linkedData.headOption.map(_.`@type`) shouldEqual(Some("NewsArticle"))
     linkedData.length shouldEqual(3)
+    linkedData.head.`@type` shouldEqual("NewsArticle")
+    linkedData(1).`@type` shouldEqual("WebPage")
 
     val jsonString = Json.toJson(linkedData(2)).toString()
     println(jsonString)
