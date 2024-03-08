@@ -54,4 +54,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 7, 26)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-oscars-newsletter-embed",
+    "Will change the newsletter embed for Oscars articles.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 4, 2)),
+    exposeClientSide = true,
+  )
 }

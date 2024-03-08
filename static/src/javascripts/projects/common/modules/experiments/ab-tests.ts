@@ -1,5 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
+import { oscarsNewsletterEmbed } from './tests/oscars-newsletter-embed';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { sectionAdDensity } from './tests/section-ad-density';
 import { signInGateAlternativeWording } from './tests/sign-in-gate-alternative-wording';
@@ -15,4 +16,5 @@ export const concurrentTests: readonly ABTest[] = [
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
 	sectionAdDensity,
+	oscarsNewsletterEmbed,
 ];
