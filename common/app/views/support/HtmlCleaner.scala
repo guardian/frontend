@@ -897,6 +897,7 @@ case class AffiliateLinksCleaner(
         alwaysOffTags,
         tags,
         publishedDate,
+        pageUrl,
       )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
@@ -940,7 +941,9 @@ object AffiliateLinksCleaner {
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
   def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
-    document.body().append(affiliateLinksDisclaimer(contentType).toString())
+    if (contentType == "gallery") {
+      document.body().prepend(affiliateLinksDisclaimer(contentType).toString())
+    }
     document
   }
 
@@ -962,13 +965,24 @@ object AffiliateLinksCleaner {
       alwaysOffTags: Set[String],
       tagPaths: List[String],
       firstPublishedDate: Option[DateTime],
+      pageUrl: String,
   ): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
-    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
-    // date. The cut off date is temporary while we are working on improving the compliance of affiliate links
+    val affiliateLinksAllowList = List(
+      "/lifeandstyle/2023/dec/11/are-diy-face-masks-as-good-as-shop-bought-ones",
+      "/fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
+    )
+
+    val urlIsInAllowList = affiliateLinksAllowList.contains(pageUrl)
+
+    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off date.
+    // The cut off date is temporary while we are working on improving the compliance of affiliate links.
+    // The cut off date does not apply to any URL on the allow list
     if (
-      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(_.isBefore(publishedCutOffDate))
+      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
+        _.isBefore(publishedCutOffDate),
+      ) || urlIsInAllowList)
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
