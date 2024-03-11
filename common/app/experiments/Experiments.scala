@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       AdaptiveSite,
-      CrosswordMobileBanner,
       DCRTagPages,
       OscarsNewsletterEmbed1,
       OscarsNewsletterEmbed2,
@@ -27,15 +26,6 @@ object AdaptiveSite
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 2),
       participationGroup = Perc1A,
-    )
-
-object CrosswordMobileBanner
-    extends Experiment(
-      name = "crossword-mobile-banner",
-      description = "Test banner advert in mobile crossword page",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 4, 2),
-      participationGroup = Perc2A,
     )
 
 object DCRTagPages
