@@ -276,7 +276,7 @@ object DotcomRenderingUtils {
       alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
       tagPaths = content.content.tags.tags.map(_.id),
       firstPublishedDate = content.content.fields.firstPublicationDate,
-      pageUrl = content.metadata.webUrl,
+      pageUrl = content.metadata.id,
     )
   }
 

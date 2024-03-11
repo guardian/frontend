@@ -969,12 +969,16 @@ object AffiliateLinksCleaner {
   ): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
+    val cleanedPageUrl = if (pageUrl.charAt(0) == '/') {
+      pageUrl.substring(1);
+    } else pageUrl
+
     val affiliateLinksAllowList = List(
-      "/lifeandstyle/2023/dec/11/are-diy-face-masks-as-good-as-shop-bought-ones",
-      "/fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
+      "lifeandstyle/2023/dec/11/are-diy-face-masks-as-good-as-shop-bought-ones",
+      "fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
     )
 
-    val urlIsInAllowList = affiliateLinksAllowList.contains(pageUrl)
+    val urlIsInAllowList = affiliateLinksAllowList.contains(cleanedPageUrl)
 
     // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off date.
     // The cut off date is temporary while we are working on improving the compliance of affiliate links.
