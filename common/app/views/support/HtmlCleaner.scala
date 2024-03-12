@@ -942,7 +942,10 @@ object AffiliateLinksCleaner {
 
   def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
     if (contentType == "gallery") {
-      document.body().prepend(affiliateLinksDisclaimer(contentType).toString())
+      document
+        .getElementsByClass("gallery__meta-container")
+        .first()
+        .append(affiliateLinksDisclaimer(contentType).toString())
     }
     document
   }
