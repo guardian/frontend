@@ -15,7 +15,7 @@
 
             @if(gallery.item.fields.standfirst.isDefined) {
                 <div class="tonal__standfirst">
-                    @fragments.standfirst(gallery.item)
+                        @fragments.standfirst(gallery.item)
                 </div>
             }
 
@@ -46,7 +46,9 @@
                     @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.fields.firstPublicationDate, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
                 }
 
-                @fragments.affiliateLinksDisclaimer("gallery")
+                @if(shouldAddDisclaimer) {
+                    @fragments.affiliateLinksDisclaimer("gallery")
+                }
             </div>
         </div>
     </div>
