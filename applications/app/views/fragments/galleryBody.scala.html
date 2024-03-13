@@ -6,6 +6,9 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.{RenderClasses, RowInfo}
 @import views.GalleryCaptionCleaners
+@import views.support.AffiliateLinksCleaner
+@import conf.switches.Switches
+@import conf.Configuration
 
 @import model.DotcomContentType
 @(page: GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -19,7 +22,20 @@
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
 
-        @fragments.galleryHeader(page)
+        @fragments.galleryHeader(
+            page,
+            page.item.lightbox.containsAffiliateableLinks && AffiliateLinksCleaner.shouldAddAffiliateLinks(
+                switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+                section = page.gallery.content.metadata.sectionId,
+                showAffiliateLinks = page.gallery.content.fields.showAffiliateLinks,
+                supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
+                defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
+                alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+                tagPaths = page.gallery.content.tags.tags.map(_.id),
+                firstPublishedDate = page.gallery.content.fields.firstPublicationDate,
+                pageUrl = request.uri,
+            )
+        )
 
         <div class="@RenderClasses(
                     "l-side-margins", "l-side-margins--media", "l-side-margins--gallery"

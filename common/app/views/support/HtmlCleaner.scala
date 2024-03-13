@@ -879,7 +879,6 @@ case class AffiliateLinksCleaner(
     pageUrl: String,
     sectionId: String,
     showAffiliateLinks: Option[Boolean],
-    contentType: String,
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
     publishedDate: Option[DateTime],
@@ -900,7 +899,7 @@ case class AffiliateLinksCleaner(
         pageUrl,
       )
     ) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
     } else document
   }
 }
@@ -913,19 +912,14 @@ object AffiliateLinksCleaner {
   def replaceLinksInHtml(
       html: Document,
       pageUrl: String,
-      appendDisclaimer: Option[Boolean],
-      contentType: String,
       skimlinksId: String,
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
-    // respect appendDisclaimer (for Galleries), or if it's not set then always add the disclaimer if affilate links have been added
-    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
-    if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
-    else html
+    html
   }
 
-  def replaceLinksInElement(html: String, pageUrl: String, contentType: String): TextBlockElement = {
+  def replaceLinksInElement(html: String, pageUrl: String): TextBlockElement = {
     val doc = Jsoup.parseBodyFragment(html)
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
     linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
@@ -939,16 +933,6 @@ object AffiliateLinksCleaner {
 
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
-
-  def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
-    if (contentType == "gallery") {
-      document
-        .getElementsByClass("gallery__meta-container")
-        .first()
-        .append(affiliateLinksDisclaimer(contentType).toString())
-    }
-    document
-  }
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)

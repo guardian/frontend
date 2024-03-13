@@ -1,4 +1,5 @@
-@(gallery: model.GalleryPage)(implicit request: RequestHeader)
+@(gallery: model.GalleryPage,
+  shouldAddDisclaimer: Boolean)(implicit request: RequestHeader)
 
 @import views.support.TrailCssClasses.toneClass
 
@@ -44,6 +45,8 @@
                 @if(!gallery.item.trail.shouldHidePublicationDate) {
                     @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.fields.firstPublicationDate, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
                 }
+
+                @fragments.affiliateLinksDisclaimer("gallery")
             </div>
         </div>
     </div>
