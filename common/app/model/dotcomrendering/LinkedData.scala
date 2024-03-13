@@ -484,7 +484,8 @@ object RecipeLinkedData {
       "prepTime" -> d.content.prepTime,
       "cookTime" -> d.content.cookTime,
       "totalTime" -> d.content.totalTime,
-      "author" -> d.content.author
+      "author" -> d.content.author,
+      "suitableForDiet" -> d.content.suitableForDiet
     )
 
     override def reads(json: JsValue): JsResult[RecipeLinkedData] = throw new RuntimeException("Unexpected attempt to read RecipeLinkedData")

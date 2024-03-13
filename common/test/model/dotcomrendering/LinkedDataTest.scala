@@ -80,7 +80,8 @@ class LinkedDataTest extends AnyFlatSpec with Matchers with MockitoSugar {
           prepTime = Some("30 seconds"),
           cookTime = Some("10 hours"),
           totalTime = Some("10 hours 30 seconds"),
-          author = Some(com.gu.contentapi.client.model.schemaorg.AuthorInfo(_atType = "Person", name = "John Smith", sameAs = None))
+          author = Some(com.gu.contentapi.client.model.schemaorg.AuthorInfo(_atType = "Person", name = "John Smith", sameAs = None)),
+          suitableForDiet = Some(Seq("https://schema.org/VeganDiet", "https://schema.org/VegetarianDiet")),
         )))
       )),
     )
@@ -88,7 +89,7 @@ class LinkedDataTest extends AnyFlatSpec with Matchers with MockitoSugar {
   }
 
   /// This string should always correct validate at https://validator.schema.org/
-  val expectedRecipeJson = """{"@context":"http://schema.org","@type":"Recipe","name":"Test recipe","description":"This is yummy","image":"https://path.to/image/on/server.jpg","datePublished":"2012-01-02T03:04:05Z","url":"https://path.to/content/on/server.html","recipeCategory":["test","food"],"recipeCuisine":["test","British"],"recipeIngredient":["23 litres of sprunge","6 baked beans"],"recipeInstructions":[{"@type":"HowToStep","text":"Open the can","name":"Open"},{"@type":"HowToStep","text":"Pour the contents","name":"Pour"}],"recipeYield":["1 serving"],"prepTime":"30 seconds","cookTime":"10 hours","totalTime":"10 hours 30 seconds","author":{"@type":"Person","name":"John Smith"}}"""
+  val expectedRecipeJson = """{"@context":"http://schema.org","@type":"Recipe","name":"Test recipe","description":"This is yummy","image":"https://path.to/image/on/server.jpg","datePublished":"2012-01-02T03:04:05Z","url":"https://path.to/content/on/server.html","recipeCategory":["test","food"],"recipeCuisine":["test","British"],"recipeIngredient":["23 litres of sprunge","6 baked beans"],"recipeInstructions":[{"@type":"HowToStep","text":"Open the can","name":"Open"},{"@type":"HowToStep","text":"Pour the contents","name":"Pour"}],"recipeYield":["1 serving"],"prepTime":"30 seconds","cookTime":"10 hours","totalTime":"10 hours 30 seconds","author":{"@type":"Person","name":"John Smith"}},"suitableForDiet":["https://schema.org/VeganDiet","https://schema.org/VegetarianDiet"]}"""
 
   "LinkedData.forArticle" should "return news article linkedData" in {
     val linkedData = LinkedData.forArticle(
