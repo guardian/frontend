@@ -74,7 +74,6 @@ val common = library("common")
       pekkoSlf4j,
     ) ++ jackson,
     TestAssets / mappings ~= filterAssets,
-    dependencyOverrides += contentApiClient
   )
 
 val commonWithTests = withTests(common)
@@ -84,18 +83,13 @@ val facia = application("facia")
   .aggregate(common)
   .settings(
     libraryDependencies += scalaCheck,
-    dependencyOverrides += contentApiClient
   )
 
-val article = application("article")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-  .settings(dependencyOverrides += contentApiClient)
+val article = application("article").dependsOn(commonWithTests).aggregate(common)
 
 val applications = application("applications")
   .dependsOn(commonWithTests)
   .aggregate(common)
-  .settings(dependencyOverrides += contentApiClient)
 
 val archive = application("archive")
   .dependsOn(commonWithTests)
@@ -108,13 +102,9 @@ val sport = application("sport")
     libraryDependencies ++= Seq(
       paClient,
     ),
-    dependencyOverrides += contentApiClient
   )
 
-val discussion = application("discussion")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-  .settings(dependencyOverrides += contentApiClient)
+val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
 val diagnostics = application("diagnostics")
   .dependsOn(commonWithTests)
@@ -123,7 +113,6 @@ val diagnostics = application("diagnostics")
     libraryDependencies ++= Seq(
       redisClient,
     ),
-    dependencyOverrides += contentApiClient,
   )
 
 val admin = application("admin")
@@ -146,7 +135,6 @@ val admin = application("admin")
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
-    dependencyOverrides += contentApiClient,
   )
 
 val faciaPress = application("facia-press")
@@ -155,7 +143,6 @@ val faciaPress = application("facia-press")
     libraryDependencies ++= Seq(
       awsKinesis,
     ),
-    dependencyOverrides += contentApiClient,
   )
 
 val identity = application("identity")
@@ -170,20 +157,13 @@ val identity = application("identity")
       supportInternationalisation,
     ),
     dependencyOverrides ++= jackson,
-    dependencyOverrides += contentApiClient,
     PlayKeys.playDefaultPort := 9009,
     Test / testOptions += Tests.Argument("-oF"),
   )
 
-val commercial = application("commercial")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-  .settings(dependencyOverrides += contentApiClient)
+val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
-val onward = application("onward")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-  .settings(dependencyOverrides += contentApiClient)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -204,7 +184,6 @@ val dev = application("dev-build")
   .settings(
     RoutesKeys.routesImport += "bindables._",
     Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
-    dependencyOverrides += contentApiClient,
     dependencyOverrides ++= jackson,
   )
 
