@@ -12,19 +12,18 @@ import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
 
 import scala.util.matching.Regex
 
-
 object LinkedData {
 
   implicit val formats: OFormat[LinkedData] = new OFormat[LinkedData] {
     override def writes(ld: LinkedData): JsObject =
       ld match {
-        case guardian: Guardian  => Json.toJsObject(guardian)(Guardian.formats)
-        case wp: WebPage         => Json.toJsObject(wp)(WebPage.formats)
-        case il: ItemList        => Json.toJsObject(il)(ItemList.formats)
-        case na: NewsArticle     => Json.toJsObject(na)(NewsArticle.formats)
-        case re: Review          => Json.toJsObject(re)(Review.formats)
-        case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
-        case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
+        case guardian: Guardian   => Json.toJsObject(guardian)(Guardian.formats)
+        case wp: WebPage          => Json.toJsObject(wp)(WebPage.formats)
+        case il: ItemList         => Json.toJsObject(il)(ItemList.formats)
+        case na: NewsArticle      => Json.toJsObject(na)(NewsArticle.formats)
+        case re: Review           => Json.toJsObject(re)(Review.formats)
+        case lb: LiveBlogPosting  => Json.toJsObject(lb)(LiveBlogPosting.formats)
+        case po: BlogPosting      => Json.toJsObject(po)(BlogPosting.formats)
         case rp: RecipeLinkedData => Json.toJsObject(rp)(RecipeLinkedData.formats)
       }
 
@@ -430,10 +429,10 @@ object LiveBlogPosting {
 }
 
 case class RecipeLinkedData(
-                 `@type`: String = "Recipe",
-                 `@context`: String = "http://schema.org",
-                 content: SchemaRecipe,
-                 ) extends LinkedData
+    `@type`: String = "Recipe",
+    `@context`: String = "http://schema.org",
+    content: SchemaRecipe,
+) extends LinkedData
 
 object RecipeLinkedData {
   /*
@@ -449,17 +448,20 @@ object RecipeLinkedData {
    */
   object SchemaOrgNaming extends JsonNaming {
     private val atField = "^_at(\\w)(.*)$".r
-    override def apply(property: String): String = property match {
-      case atField(leadingChar, tail)=>s"@${leadingChar.toLowerCase}$tail"
-      case _=>property
-    }
+    override def apply(property: String): String =
+      property match {
+        case atField(leadingChar, tail) => s"@${leadingChar.toLowerCase}$tail"
+        case _                          => property
+      }
   }
 
-  implicit val config:JsonConfiguration = JsonConfiguration(SchemaOrgNaming)
+  implicit val config: JsonConfiguration = JsonConfiguration(SchemaOrgNaming)
 
-  implicit val authorInfo: OFormat[com.gu.contentapi.client.model.schemaorg.AuthorInfo] = Json.format[com.gu.contentapi.client.model.schemaorg.AuthorInfo]
+  implicit val authorInfo: OFormat[com.gu.contentapi.client.model.schemaorg.AuthorInfo] =
+    Json.format[com.gu.contentapi.client.model.schemaorg.AuthorInfo]
 
-  implicit val schemaRecipeStep: OFormat[com.gu.contentapi.client.model.schemaorg.RecipeStep] = Json.format[com.gu.contentapi.client.model.schemaorg.RecipeStep]
+  implicit val schemaRecipeStep: OFormat[com.gu.contentapi.client.model.schemaorg.RecipeStep] =
+    Json.format[com.gu.contentapi.client.model.schemaorg.RecipeStep]
   implicit val schemaFormat: OFormat[SchemaRecipe] = Json.format[SchemaRecipe]
 
   /*
@@ -468,28 +470,31 @@ object RecipeLinkedData {
   directly into valid schema.org json
    */
   implicit val formats: OFormat[RecipeLinkedData] = new OFormat[RecipeLinkedData] {
-    def writes(d:RecipeLinkedData) = Json.obj(
-      "@context" -> d.`@context`,
-      "@type" -> d.`@type`,
-      "name" -> d.content.name,
-      "description" -> d.content.description,
-      "image" -> d.content.image,
-      "datePublished" -> d.content.datePublished,
-      "url" -> d.content.url,
-      "recipeCategory" -> d.content.recipeCategory,
-      "recipeCuisine" -> d.content.recipeCuisine,
-      "recipeIngredient" -> d.content.recipeIngredient,
-      "recipeInstructions" -> d.content.recipeInstructions,
-      "recipeYield" -> d.content.recipeYield,
-      "prepTime" -> d.content.prepTime,
-      "cookTime" -> d.content.cookTime,
-      "totalTime" -> d.content.totalTime,
-      "author" -> d.content.author,
-      "suitableForDiet" -> d.content.suitableForDiet
-    )
+    def writes(d: RecipeLinkedData) =
+      Json.obj(
+        "@context" -> d.`@context`,
+        "@type" -> d.`@type`,
+        "name" -> d.content.name,
+        "description" -> d.content.description,
+        "image" -> d.content.image,
+        "datePublished" -> d.content.datePublished,
+        "url" -> d.content.url,
+        "recipeCategory" -> d.content.recipeCategory,
+        "recipeCuisine" -> d.content.recipeCuisine,
+        "recipeIngredient" -> d.content.recipeIngredient,
+        "recipeInstructions" -> d.content.recipeInstructions,
+        "recipeYield" -> d.content.recipeYield,
+        "prepTime" -> d.content.prepTime,
+        "cookTime" -> d.content.cookTime,
+        "totalTime" -> d.content.totalTime,
+        "author" -> d.content.author,
+        "suitableForDiet" -> d.content.suitableForDiet,
+      )
 
-    override def reads(json: JsValue): JsResult[RecipeLinkedData] = throw new RuntimeException("Unexpected attempt to read RecipeLinkedData")
+    override def reads(json: JsValue): JsResult[RecipeLinkedData] =
+      throw new RuntimeException("Unexpected attempt to read RecipeLinkedData")
   }
 
-  def apply(from: SchemaRecipe) = new RecipeLinkedData(`@type`=from._atType,`@context`=from._atContext, content=from)
+  def apply(from: SchemaRecipe) =
+    new RecipeLinkedData(`@type` = from._atType, `@context` = from._atContext, content = from)
 }
