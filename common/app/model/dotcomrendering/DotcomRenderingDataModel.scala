@@ -33,7 +33,6 @@ import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import services.NewsletterData
-import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -582,16 +581,16 @@ object DotcomRenderingDataModel {
 
     val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
 
-    def getAffiliateLinksDisclaimer(shouldAddAffiliateLinks: Boolean, shouldAddDisclaimer: Boolean) = {
+    def addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks: Boolean, shouldAddDisclaimer: Boolean) = {
       if (shouldAddAffiliateLinks && shouldAddDisclaimer) {
-        Some(affiliateLinksDisclaimer("article").body)
+        Some("true")
       } else {
         None
       }
     }
 
     DotcomRenderingDataModel(
-      affiliateLinksDisclaimer = getAffiliateLinksDisclaimer(shouldAddAffiliateLinks, shouldAddDisclaimer),
+      affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,

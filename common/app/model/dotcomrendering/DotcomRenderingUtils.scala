@@ -9,7 +9,7 @@ import common.Edition
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
-import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
+import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.pressed.{PressedContent, SpecialReport}
 import model.{
   ArticleDateTimes,
@@ -24,7 +24,6 @@ import model.{
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.html.fragments.affiliateLinksDisclaimer
 import views.support.AffiliateLinksCleaner
 
 import java.net.URLEncoder
@@ -175,30 +174,6 @@ object DotcomRenderingUtils {
     val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
     relevantBlocks.filter(block => ids(block.id))
   }.toSeq
-
-  private def addDisclaimer(
-      elems: List[PageElement],
-      capiElems: Seq[ClientBlockElement],
-      affiliateLinks: Boolean,
-  ): List[PageElement] = {
-    if (affiliateLinks) {
-      val hasLinks = capiElems.exists(elem =>
-        elem.`type` match {
-          case Text =>
-            val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-            stringContainsAffiliateableLinks(textString)
-          case _ => false
-        },
-      )
-
-      if (hasLinks) {
-        elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
-      } else {
-        elems
-      }
-    } else elems
-  }
-
   def stringContainsAffiliateableLinks(textString: String): Boolean = {
     AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
   }
@@ -238,8 +213,7 @@ object DotcomRenderingUtils {
     val withTagLinks =
       if (article.content.isPaidContent) elems
       else TextCleaner.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
-
-    addDisclaimer(withTagLinks, capiElems, affiliateLinks)
+    elems
   }
 
   def isSpecialReport(page: ContentPage): Boolean =
