@@ -16,7 +16,8 @@ object ElementsEnhancer {
     if (elementIsList) {
       val listItems = elementWithId.value("items").as[JsArray]
       val listItemsWithIds = listItems.value.map { item =>
-        enhanceElements(item.as[JsObject].value("elements"))
+        val obj = item.as[JsObject]
+        obj ++ Json.obj("elements" -> enhanceElements(obj.value("elements")))
       }
       elementWithId ++ Json.obj("items" -> listItemsWithIds)
     } else {
