@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.17"
   val awsVersion = "1.12.638"
-  val capiVersion = "23.0.0-PREVIEW.recipe-schema-model-mersion.2024-03-05T1353.fc329ef7"
-  val faciaVersion = "5.0.3"
+  val capiVersion = "24.0.0"
+  val faciaVersion = "5.0.5"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -34,7 +34,7 @@ object Dependencies {
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.2.0"
 
-  val faciaFapiScalaClient = ("com.gu" %% "fapi-client-play28" % faciaVersion)
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play28" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
   /**
