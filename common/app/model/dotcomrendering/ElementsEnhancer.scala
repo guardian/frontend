@@ -9,7 +9,20 @@ object ElementsEnhancer {
   //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
 
   def enhanceElement(element: JsValue): JsValue = {
-    element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
+    val elementWithId = element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
+    val elementType = elementWithId.value("_type").as[String]
+    val elementIsList = elementType == "model.dotcomrendering.pageElements.ListBlockElement"
+
+    if (elementIsList) {
+      val listItems = elementWithId.value("items").as[JsArray]
+      val listItemsWithIds = listItems.value.map { item =>
+        val obj = item.as[JsObject]
+        obj ++ Json.obj("elements" -> enhanceElements(obj.value("elements")))
+      }
+      elementWithId ++ Json.obj("items" -> listItemsWithIds)
+    } else {
+      elementWithId
+    }
   }
 
   def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
