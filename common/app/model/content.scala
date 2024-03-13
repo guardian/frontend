@@ -3,7 +3,7 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.model.v1.SchemaOrg
+import com.gu.contentapi.client.model.schemaorg.SchemaOrg
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.Campaign

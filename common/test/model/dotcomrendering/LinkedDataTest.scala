@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
-import com.gu.contentapi.client.model.schemaorg.{RecipeStep, SchemaRecipe}
-import com.gu.contentapi.client.model.v1.{CapiDateTime, SchemaOrg, Tag, TagType, Content => ApiContent}
+import com.gu.contentapi.client.model.schemaorg.{RecipeStep, SchemaOrg, SchemaRecipe}
+import com.gu.contentapi.client.model.v1.{CapiDateTime, Tag, TagType, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import model.{Article, Content, ContentType, DotcomContentType, MetaData, RelatedContent}
 import conf.Configuration
