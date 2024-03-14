@@ -23,7 +23,7 @@
                         <tr>
                             <td colspan="4">@experiment.name</td>
                             <td colspan="3">@status(experiment)</td>
-                            <td colspan="5">@variants(experiment)</td>
+                            <td colspan="5">@links(experiment)</td>
                             <td colspan="3"><pre>@experiment.participationGroup</pre></td>
                             <td colspan="3">@Switch.expiry(experiment.switch).daysToExpiry days</td>
                             <td colspan="3">@experiment.participationGroup.percentage%</td>
@@ -56,12 +56,19 @@
     }
 }
 
-@variants(experiment: Experiment) = {
+@links(experiment: Experiment) = {
     <div class="abtest-item__participation">
         <div class="component participation">
             <span class="participation__links">
-                <a class="participation__opt-out" href="@Configuration.site.host/opt/out/@experiment.name">opt out</a>
-                <a class="component participation-item" href="@Configuration.site.host/opt/in/@experiment.name">opt in</a>
+
+                    <a class="participation__opt-out" href="@Configuration.site.host/opt/out/@experiment.name">opt out</a>
+                    <a class="participation__opt-in" href="@Configuration.site.host/opt/in/@experiment.name">opt in</a>
+                 @if(Configuration.environment.isDev) {
+                    <p class="participation__help">
+                        These links won't work locally.<br>See
+                        <a href="https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/01-ab-testing.md#forcing-yourself-into-the-test">How to force yourself into the test locally</a>
+                    </p>
+                }
             </span>
         </div>
     </div>
