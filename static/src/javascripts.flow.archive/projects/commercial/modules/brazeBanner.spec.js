@@ -18,7 +18,7 @@ jest.mock('lib/raven');
 jest.mock('ophan/ng', () => null);
 
 let mockOnConsentChangeResult;
-jest.mock('@guardian/consent-management-platform', () => ({
+jest.mock('@guardian/libs', () => ({
     onConsentChange: callback => {
         callback(mockOnConsentChangeResult);
     }

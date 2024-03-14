@@ -1,4 +1,4 @@
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange } from '@guardian/libs';
 import type {
 	PageTracking,
 	Tag,

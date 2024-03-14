@@ -6,7 +6,7 @@
 
 import type { PageTargeting } from '@guardian/commercial';
 import { buildPageTargeting } from '@guardian/commercial';
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type { ConsentState } from '@guardian/libs';
 import { isString, log } from '@guardian/libs';
 import { once } from 'lodash-es';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';

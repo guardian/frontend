@@ -12,7 +12,7 @@
 
 // @flow
 import config from 'lib/config';
-import { cmp } from '@guardian/consent-management-platform';
+import { cmp } from '@guardian/libs';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 

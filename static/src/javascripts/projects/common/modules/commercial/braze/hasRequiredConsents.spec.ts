@@ -1,22 +1,20 @@
 import type {
 	Callback,
 	ConsentState,
-	GetConsentFor,
-} from '@guardian/consent-management-platform/dist/types';
+} from '@guardian/libs';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 let mockOnConsentChangeResult: ConsentState | undefined;
-jest.mock('@guardian/consent-management-platform', () => ({
+jest.mock('@guardian/libs', () => ({
+	// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
+	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
 	onConsentChange: (callback: Callback) => {
 		if (mockOnConsentChangeResult) {
 			callback(mockOnConsentChangeResult);
 		}
-	},
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- we know getConsentFor is available here
-	getConsentFor: jest.requireActual('@guardian/consent-management-platform')
-		.getConsentFor as GetConsentFor,
+	}
 }));
 
 afterEach(() => {
