@@ -1,7 +1,4 @@
-import type {
-	Callback,
-	ConsentState,
-} from '@guardian/libs';
+import type { Callback, ConsentState } from '@guardian/libs';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
@@ -14,7 +11,7 @@ jest.mock('@guardian/libs', () => ({
 		if (mockOnConsentChangeResult) {
 			callback(mockOnConsentChangeResult);
 		}
-	}
+	},
 }));
 
 afterEach(() => {

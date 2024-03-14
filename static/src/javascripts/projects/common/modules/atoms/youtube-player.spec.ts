@@ -2,10 +2,7 @@ import type {
 	AdsConfigCCPAorAus,
 	AdsConfigTCFV2,
 } from '@guardian/commercial/dist/cjs/core/types';
-import type {
-	Callback,
-	ConsentState,
-} from '@guardian/libs';
+import type { Callback, ConsentState } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({

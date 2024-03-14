@@ -1,7 +1,4 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/libs';
+import { getConsentFor, onConsentChange } from '@guardian/libs';
 
 const hasRequiredConsents = (): Promise<boolean> =>
 	new Promise((resolve, reject) => {
