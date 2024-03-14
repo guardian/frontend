@@ -42,11 +42,8 @@
             </div>
 
             @crosswordPage.crossword.instructions.map { instructions =>
-                <div class="crossword__instructions">
-                    <strong>Special instructions:</strong> @Html(instructions)
-                </div>
+                <div class="crossword__instructions"><strong>Special instructions:</strong> @Html(instructions)</div>
             }
         </div>
     </div>
 </header>
-
