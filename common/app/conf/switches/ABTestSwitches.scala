@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Block supporter revenue messaging in the Sport section",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 6, 1)),
+    sellByDate = Some(LocalDate.of(2024, 5, 31)),
     exposeClientSide = true,
   )
 }
