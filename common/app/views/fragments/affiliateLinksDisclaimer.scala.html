@@ -1,34 +1,10 @@
-@(contentType: String)
-
-
-@articleDisclaimer() = {
-    <p><sup>
-        The Guardian’s product and service reviews are independent and are
-        in no way influenced by any advertiser or commercial initiative. We
-        will earn a commission from the retailer if you buy something
-        through an affiliate link.
-        <a
-            href="https://www.theguardian.com/info/2017/nov/01/reader-information-on-affiliate-links"
-            data-link-name="in body link"
-            class="u-underline"
-            >Learn more</a
-        >.
-    </sup></p>
-}
-
-@galleryDisclaimer() = {
-    <br>
-        The Guardian’s product and service reviews are independent and are in no
-        way influenced by any advertiser or commercial initiative. We will earn a
-        commission from the retailer if you buy something through an affiliate link.
-	    <a
-		    href="https://www.theguardian.com/info/2017/nov/01/reader-information-on-affiliate-links"
-		    >Learn more</a
-	    >.
-}
-
-@{contentType match {
-    case "gallery" => galleryDisclaimer()
-    case "article" => articleDisclaimer()
-    case _ => Html("")
-}}
+<br>
+<p class="gallery__disclaimer">
+    The Guardian’s product and service reviews are independent and are in no
+    way influenced by any advertiser or commercial initiative. We will earn a
+    commission from the retailer if you buy something through an affiliate link.
+	<a
+        href="https://www.theguardian.com/info/2017/nov/01/reader-information-on-affiliate-links"
+		>Learn more</a
+	>.
+</p>
