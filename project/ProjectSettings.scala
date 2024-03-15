@@ -58,6 +58,9 @@ object ProjectSettings {
       .withWarnScalaVersionEviction(false),
   )
 
+  def isCi = sys.env.get("CI").getOrElse("false") == "true"
+  def testStage = if (isCi) "DEVINFRA" else "LOCALTEST"
+
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     Test / testOptions := Nil,
@@ -77,7 +80,7 @@ object ProjectSettings {
     Test / javaOptions += "-XX:+UseConcMarkSweepGC",
     Test / javaOptions += "-XX:ReservedCodeCacheSize=128m",
     Test / baseDirectory := file("."),
-    Test / envVars := Map("STAGE" -> "DEVINFRA"),
+    Test / envVars := Map("STAGE" -> testStage),
     // Set testResultLogger back to the default, fixes an issue with `sbt-teamcity-logger`
     //   See: https://github.com/JetBrains/sbt-tc-logger/issues/9
     Test / test / testResultLogger := TestResultLogger.Default,
