@@ -59,7 +59,8 @@ object ProjectSettings {
   )
 
   def getTestStage(isCi: Boolean): Map[String, String] = {
-    if (isCi) Map("STAGE" -> "DEVINFRA") else Map("STAGE" -> "LOCALTEST")
+    val stage = if (isCi) "DEVINFRA" else "LOCALTEST"
+    Map("STAGE" -> stage)
   }
 
   val frontendTestSettings = Seq(
