@@ -18,15 +18,6 @@ import play.api.libs.json.Json
 
 class LinkedDataTest extends AnyFlatSpec with Matchers with MockitoSugar {
 
-  // TODO - Add test schema org data here
-  //
-  //  val testSchemaOrg: SchemaOrg = {
-  //      recipe: [
-  //    ]
-  //  }
-  //
-  //  val testRecipe
-
   val publishDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime)
 
   val testArticle = {

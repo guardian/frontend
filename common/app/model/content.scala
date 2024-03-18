@@ -592,8 +592,6 @@ object Article {
     val lightbox = GenericLightbox(elements, fields, trail, lightboxProperties)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
     val sharelinks = content.sharelinks
-    // TODO - Do we need schema org here?
-    // val schemaOrg = content.schemaOrg
 
     val contentOverrides = content.copy(
       trail = trail,
