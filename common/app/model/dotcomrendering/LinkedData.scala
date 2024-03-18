@@ -1,5 +1,6 @@
 package model.dotcomrendering
 
+import com.gu.contentapi.client.model.schemaorg.SchemaRecipe
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
 import model.{Article, ContentType, ImageMedia, Interactive, LiveBlogPage, Tags}
 import org.joda.time.DateTime
@@ -9,18 +10,21 @@ import play.api.libs.json.Reads._
 import play.api.libs.json._
 import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
 
+import scala.util.matching.Regex
+
 object LinkedData {
 
   implicit val formats: OFormat[LinkedData] = new OFormat[LinkedData] {
     override def writes(ld: LinkedData): JsObject =
       ld match {
-        case guardian: Guardian  => Json.toJsObject(guardian)(Guardian.formats)
-        case wp: WebPage         => Json.toJsObject(wp)(WebPage.formats)
-        case il: ItemList        => Json.toJsObject(il)(ItemList.formats)
-        case na: NewsArticle     => Json.toJsObject(na)(NewsArticle.formats)
-        case re: Review          => Json.toJsObject(re)(Review.formats)
-        case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
-        case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
+        case guardian: Guardian   => Json.toJsObject(guardian)(Guardian.formats)
+        case wp: WebPage          => Json.toJsObject(wp)(WebPage.formats)
+        case il: ItemList         => Json.toJsObject(il)(ItemList.formats)
+        case na: NewsArticle      => Json.toJsObject(na)(NewsArticle.formats)
+        case re: Review           => Json.toJsObject(re)(Review.formats)
+        case lb: LiveBlogPosting  => Json.toJsObject(lb)(LiveBlogPosting.formats)
+        case po: BlogPosting      => Json.toJsObject(po)(BlogPosting.formats)
+        case rp: RecipeLinkedData => Json.toJsObject(rp)(RecipeLinkedData.formats)
       }
 
     override def reads(json: JsValue): JsResult[LinkedData] =
@@ -85,6 +89,24 @@ object LinkedData {
   ): List[LinkedData] = {
     val authors = getAuthors(article.tags)
 
+    val articleLinkedData: List[LinkedData] = List(
+      NewsArticle(
+        `@id` = baseURL + "/" + article.metadata.id,
+        image = getImagesForArticle(article, fallbackLogo),
+        author = authors,
+        datePublished = article.trail.webPublicationDate.toString(),
+        dateModified = article.fields.lastModified.toString(),
+        headline = article.trail.headline,
+        mainEntityOfPage = article.metadata.webUrl,
+      ),
+      WebPage(
+        `@id` = article.metadata.webUrl,
+        potentialAction = Some(
+          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+        ),
+      ),
+    )
+
     article match {
       case filmReview if article.content.imdb.isDefined && article.tags.isReview => {
         article.content.imdb.toList.map(ref =>
@@ -95,25 +117,11 @@ object LinkedData {
           ),
         )
       }
-      case newsArticle => {
-        List(
-          NewsArticle(
-            `@id` = baseURL + "/" + article.metadata.id,
-            image = getImagesForArticle(article, fallbackLogo),
-            author = authors,
-            datePublished = article.trail.webPublicationDate.toString(),
-            dateModified = article.fields.lastModified.toString(),
-            headline = article.trail.headline,
-            mainEntityOfPage = article.metadata.webUrl,
-          ),
-          WebPage(
-            `@id` = article.metadata.webUrl,
-            potentialAction = Some(
-              PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
-            ),
-          ),
-        )
-      }
+      // We need to convert the Seq[SchemaRecipe] to List[Recipe] (to satisfy type match of List[LinkedData]
+      case recipeArticle if article.content.schemaOrg.flatMap(_.recipe).getOrElse(Seq()).nonEmpty =>
+        val recipes = recipeArticle.content.schemaOrg.flatMap(_.recipe).getOrElse(Seq())
+        articleLinkedData ++ recipes.map(RecipeLinkedData.apply)
+      case _ => articleLinkedData
     }
   }
 
@@ -418,4 +426,75 @@ case class LiveBlogPosting(
 object LiveBlogPosting {
   implicit val formats: OFormat[LiveBlogPosting] = Json.format[LiveBlogPosting]
 
+}
+
+case class RecipeLinkedData(
+    `@type`: String = "Recipe",
+    `@context`: String = "http://schema.org",
+    content: SchemaRecipe,
+) extends LinkedData
+
+object RecipeLinkedData {
+  /*
+  What's all this about? Well, schema.org relies on fields prefixed with the `@` symbol as internal type discriminators.
+  Unfortunately, if we generate the schema.org upstream in Concierge we need to format it into Thrift to be passed into Frontend.
+  Thrift objects to the usage of the `@` symbol in field names.... so instead of `@type` we had to pass `_atType`.
+  When we render it back out to JSON, though, we need to replace the `_at` prefix with `@` (and fix the case of the first char).
+  This is done by defining a custom naming scheme in Play json - see https://www.playframework.com/documentation/3.0.x/ScalaJsonAutomated#Implementing-your-own-Naming-Strategy
+  for more details.
+  The scheme is defined by the `SchemaOrgNaming` static object, which is effectively a filter for every field name as it is serialized.
+  That's then wired into the formatter by overriding the implicit `JsonConfiguration` object _before_ defining the implicit formatters below -
+  as a result, _anything_ with the `@` prefix gets fixed
+   */
+  object SchemaOrgNaming extends JsonNaming {
+    private val atField = "^_at(\\w)(.*)$".r
+    override def apply(property: String): String =
+      property match {
+        case atField(leadingChar, tail) => s"@${leadingChar.toLowerCase}$tail"
+        case _                          => property
+      }
+  }
+
+  implicit val config: JsonConfiguration = JsonConfiguration(SchemaOrgNaming)
+
+  implicit val authorInfo: OFormat[com.gu.contentapi.client.model.schemaorg.AuthorInfo] =
+    Json.format[com.gu.contentapi.client.model.schemaorg.AuthorInfo]
+
+  implicit val schemaRecipeStep: OFormat[com.gu.contentapi.client.model.schemaorg.RecipeStep] =
+    Json.format[com.gu.contentapi.client.model.schemaorg.RecipeStep]
+  implicit val schemaFormat: OFormat[SchemaRecipe] = Json.format[SchemaRecipe]
+
+  /*
+  We define a manual formatter write here, just in order to be able to have a case class which simultaneously satisfies
+  the `LinkedData` trait but also contains the entire schema.org object with the funkily named fields and can be serialized
+  directly into valid schema.org json
+   */
+  implicit val formats: OFormat[RecipeLinkedData] = new OFormat[RecipeLinkedData] {
+    def writes(d: RecipeLinkedData) =
+      Json.obj(
+        "@context" -> d.`@context`,
+        "@type" -> d.`@type`,
+        "name" -> d.content.name,
+        "description" -> d.content.description,
+        "image" -> d.content.image,
+        "datePublished" -> d.content.datePublished,
+        "url" -> d.content.url,
+        "recipeCategory" -> d.content.recipeCategory,
+        "recipeCuisine" -> d.content.recipeCuisine,
+        "recipeIngredient" -> d.content.recipeIngredient,
+        "recipeInstructions" -> d.content.recipeInstructions,
+        "recipeYield" -> d.content.recipeYield,
+        "prepTime" -> d.content.prepTime,
+        "cookTime" -> d.content.cookTime,
+        "totalTime" -> d.content.totalTime,
+        "author" -> d.content.author,
+        "suitableForDiet" -> d.content.suitableForDiet,
+      )
+
+    override def reads(json: JsValue): JsResult[RecipeLinkedData] =
+      throw new RuntimeException("Unexpected attempt to read RecipeLinkedData")
+  }
+
+  def apply(from: SchemaRecipe) =
+    new RecipeLinkedData(`@type` = from._atType, `@context` = from._atContext, content = from)
 }
