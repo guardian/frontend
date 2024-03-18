@@ -960,7 +960,23 @@ object AffiliateLinksCleaner {
       pageUrl.substring(1);
     } else pageUrl
 
-    val affiliateLinksAllowList = List()
+    val affiliateLinksAllowList = List(
+      "lifeandstyle/2024/jan/03/six-winter-warmers-tried-and-tested-the-heated-poncho-has-changed-me-i-will-never-have-sex-again",
+      "lifeandstyle/2024/mar/11/im-south-asian-and-have-dark-eye-circles-what-can-i-do",
+      "fashion/2024/mar/08/the-four-makeup-staples-i-cant-live-without",
+      "travel/2023/mar/03/readers-favourite-budget-beach-campsites-hotels-in-europe",
+      "travel/2024/feb/25/10-of-the-best-places-in-the-uk-to-see-them-bloom",
+      "lifeandstyle/2023/dec/10/with-christmas-around-the-corner-what-to-give-the-gardener-in-your-life-",
+      "fashion/2024/mar/01/spring-is-around-the-corner-time-to-soothe-and-restore-your-cracked-heels",
+      "fashion/2024/mar/10/compact-and-bijou-why-women-need-a-pocket-mirror",
+      "fashion/2024/mar/03/how-to-reset-your-wardrobe-for-spring",
+      "lifeandstyle/2024/mar/03/beauty-spot-eyebrow-essentials-10-of-the-best",
+      "fashion/gallery/2024/mar/09/spring-in-your-step-10-menswear-trends-to-update-your-wardrobe-in-pictures",
+      "fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
+      "fashion/gallery/2024/mar/09/the-edit-mens-sweatshirts-in-pictures",
+      "lifeandstyle/gallery/2024/jan/22/colourful-glass-furniture-from-vases-to-lampshades-in-pictures",
+      "lifeandstyle/gallery/2023/nov/27/cosy-bedding-in-pictures",
+    )
 
     val urlIsInAllowList = affiliateLinksAllowList.contains(cleanedPageUrl)
 
