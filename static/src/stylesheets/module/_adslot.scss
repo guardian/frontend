@@ -105,14 +105,14 @@
 
 #dfp-ad--crossword-banner-mobile {
     padding: 10px 0 14px;
-    width: $mobile-sticky-width;
-    height: $mobile-sticky-height;
+    width: $crosswords-advert-width;
+    height: $crosswords-advert-height;
     background-color: #ffffff;
 }
 
 .ad-slot-container--centre-slot.crossword-mobile-banner-ad {
-
     display: flex;
+
     @include mq($from: phablet) {
         display: none;
     }
