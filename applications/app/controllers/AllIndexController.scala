@@ -66,8 +66,6 @@ class AllIndexController(
 
   def all(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val edition = Edition(request)
-
       if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
         indexController.render(path)(request)
       } else {
@@ -76,6 +74,8 @@ class AllIndexController(
         Future.successful(Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path"))))
       }
     }
+
+  def renderJson(path: String): Action[AnyContent] = indexController.render(path)
 
   def allOn(path: String, day: String, month: String, year: String): Action[AnyContent] =
     Action.async { implicit request =>

@@ -10,7 +10,9 @@ import services.IndexPage
 object TagPagePicker extends GuLogging {
 
   def getTier(tagPage: IndexPage)(implicit request: RequestHeader): RenderType = {
-    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRTagPages)
+//    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRTagPages)
+    lazy val participatingInTest = true
+
     val checks = dcrChecks(tagPage)
 
     val tier = decideTier(
