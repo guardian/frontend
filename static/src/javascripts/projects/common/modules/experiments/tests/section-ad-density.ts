@@ -5,7 +5,7 @@ export const sectionAdDensity: ABTest = {
 	author: '@commercial-dev',
 	start: '2024-03-07',
 	expiry: '2024-07-26',
-	audience: 0 / 100,
+	audience: 5 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria:
 		'Article pages in the following sections: business, environment, music, money, artanddesign, science, stage, travel, wellness, games',
