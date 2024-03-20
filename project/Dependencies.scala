@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.17"
+  val identityLibVersion = "4.22"
   val awsVersion = "1.12.638"
   val capiVersion = "25.0.0"
   val faciaVersion = "5.0.6"
@@ -11,7 +11,6 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.9.4"
-  val playJsonExtensionsVersion = "0.42.0"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
@@ -49,7 +48,7 @@ object Dependencies {
     ExclusionRule("org.scala-lang.modules", "scala-xml_2.13")
   val identityModel = ("com.gu.identity" %% "identity-model" % identityLibVersion)
     .excludeAll(excludeDirectScalaXMLDependency)
-  val identityAuthPlay = ("com.gu.identity" %% "identity-auth-play" % identityLibVersion)
+  val identityAuthCore = ("com.gu.identity" %% "identity-auth-core" % identityLibVersion)
     .excludeAll(excludeDirectScalaXMLDependency)
 
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
@@ -95,7 +94,6 @@ object Dependencies {
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
-  val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"

@@ -213,7 +213,8 @@ object DotcomRenderingUtils {
     val withTagLinks =
       if (article.content.isPaidContent) elems
       else TextCleaner.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
-    elems
+
+    withTagLinks
   }
 
   def isSpecialReport(page: ContentPage): Boolean =

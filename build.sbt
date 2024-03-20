@@ -62,7 +62,6 @@ val common = library("common")
       scalaUri,
       commercialShared,
       playJson,
-      playJsonExtensions,
       playJsonJoda,
       jodaForms,
       jacksonDataFormat,
@@ -151,7 +150,7 @@ val identity = application("identity")
   .settings(
     libraryDependencies ++= Seq(
       filters,
-      identityAuthPlay,
+      identityAuthCore,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,
