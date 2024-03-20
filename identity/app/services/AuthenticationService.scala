@@ -1,12 +1,12 @@
 package services
 
+import cats.effect.IO
 import com.gu.identity.auth.{IdapiAuthService, IdapiUserCredentials}
 import com.gu.identity.cookie.IdentityCookieService
 import com.gu.identity.model.User
-import com.gu.identity.play.IdapiPlayAuthService
 import idapiclient.{Auth, ScGuRp, ScGuU}
 import org.joda.time.Hours
-import play.api.mvc.{RequestHeader, Results}
+import play.api.mvc.{Cookie, RequestHeader, Results}
 import utils.SafeLogging
 
 import scala.language.implicitConversions
@@ -31,8 +31,24 @@ class AuthenticationService(
 
   /** User has SC_GU_U and GU_U cookies */
   def fullyAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] = {
+
+    case class UserCredentialsMissingError(message: String) extends Exception {
+      override def getMessage: String = message
+    }
+
+    def getSCGUUCookieFromRequest(request: RequestHeader): IO[Cookie] =
+      IO.fromEither(request.cookies.get("SC_GU_U").toRight(UserCredentialsMissingError("SC_GU_U cookie not set")))
+
+    def getIdapiUserCredentialsFromRequest(
+        request: RequestHeader,
+    ): IO[IdapiUserCredentials] =
+      getSCGUUCookieFromRequest(request).redeemWith(
+        err => IO.raiseError[IdapiUserCredentials](err),
+        cookie => IO(IdapiUserCredentials.SCGUUCookie(cookie.value)),
+      )
+
     (for {
-      credentials <- IdapiPlayAuthService.getIdapiUserCredentialsFromRequest(request, None)
+      credentials <- getIdapiUserCredentialsFromRequest(request)
       user <- identityAuthService.getUserFromCredentials(credentials)
     } yield {
       // have to explicitly match the retrieved credentials to UserCredentials to see if it's an SCGUUCookie or CryptoAccessToken
