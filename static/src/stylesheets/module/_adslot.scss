@@ -103,15 +103,17 @@
     margin: 0 auto;
 }
 
-#dfp-ad--crossword-banner-mobile {
-    width: 320px;
-    height: 74px;
+
+.ad-slot-container .ad-slot--crossword-banner-mobile {
+    width: $crosswords-advert-width;
+    height: $crosswords-advert-height;
     background-color: #ffffff;
 }
 
 .ad-slot-container--centre-slot.crossword-mobile-banner-ad {
-    padding-bottom: 14px;
     display: flex;
+    margin: 8px auto;
+
     @include mq($from: phablet) {
         display: none;
     }
