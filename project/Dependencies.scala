@@ -96,9 +96,6 @@ object Dependencies {
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val atomRenderer = ("com.gu" %% "atom-renderer" % "1.2.0")
     .excludeAll(excludeDirectScalaXMLDependency)
-//    .excludeAll(ExclusionRule("com.typesafe.play", "twirl-api_2.13"))
-//    .excludeAll(ExclusionRule("com.typesafe.play", "twirl-compiler_2.13"))
-//    .excludeAll(ExclusionRule("com.typesafe.play", "twirl-parser_2.13"))
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
 
