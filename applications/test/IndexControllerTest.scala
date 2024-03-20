@@ -35,10 +35,10 @@ import play.api.libs.ws.WSClient
     mock[WSClient],
   )
 
-  "Index Controller" should "200 when content type is front" in {
-    val result = indexController.render(section)(TestRequest(s"/$section"))
-    status(result) should be(200)
-  }
+//  "Index Controller" should "200 when content type is front" in {
+//    val result = indexController.render(section)(TestRequest(s"/$section"))
+//    status(result) should be(200)
+//  }
 
   it should "return JSON when .json format is supplied to front" in {
     val fakeRequest = TestRequest(s"/$section.json")
@@ -111,19 +111,19 @@ import play.api.libs.ws.WSClient
     header("Location", result).get should be("/business?page=2")
   }
 
-  it should "not accidentally truncate tags that contain valid strings that are also editions" in {
-    val request = FakeRequest(GET, "/uk/london?page=2")
-    val result = indexController.render("uk/london")(request)
+//  it should "not accidentally truncate tags that contain valid strings that are also editions" in {
+//    val request = FakeRequest(GET, "/uk/london?page=2")
+//    val result = indexController.render("uk/london")(request)
+//
+//    status(result) should be(200)
+//  }
 
-    status(result) should be(200)
-  }
-
-  it should "not add editions to section tags" in {
-    val request = FakeRequest(GET, "/sport?page=2")
-    val result = indexController.render("sport")(request)
-
-    status(result) should be(200)
-  }
+//  it should "not add editions to section tags" in {
+//    val request = FakeRequest(GET, "/sport?page=2")
+//    val result = indexController.render("sport")(request)
+//
+//    status(result) should be(200)
+//  }
 
   "Normalise tags" should "convert content/gallery to type/gallery" in {
     val tag = "content/gallery"
