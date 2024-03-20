@@ -25,5 +25,7 @@ export const blockSupporterRevenueMessagingSport: ABTest = {
 			},
 		},
 	],
-	canRun: () => true,
+	canRun: () =>
+		window.guardian.config.page.section === 'sport' ||
+		window.guardian.config.page.section === 'football',
 };
