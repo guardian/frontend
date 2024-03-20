@@ -62,7 +62,6 @@ val common = library("common")
       scalaUri,
       commercialShared,
       playJson,
-      playJsonExtensions,
       playJsonJoda,
       jodaForms,
       jacksonDataFormat,
