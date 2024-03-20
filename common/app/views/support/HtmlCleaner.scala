@@ -879,7 +879,6 @@ case class AffiliateLinksCleaner(
     pageUrl: String,
     sectionId: String,
     showAffiliateLinks: Option[Boolean],
-    contentType: String,
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
     publishedDate: Option[DateTime],
@@ -897,9 +896,10 @@ case class AffiliateLinksCleaner(
         alwaysOffTags,
         tags,
         publishedDate,
+        pageUrl,
       )
     ) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
     } else document
   }
 }
@@ -912,19 +912,14 @@ object AffiliateLinksCleaner {
   def replaceLinksInHtml(
       html: Document,
       pageUrl: String,
-      appendDisclaimer: Option[Boolean],
-      contentType: String,
       skimlinksId: String,
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
-    // respect appendDisclaimer (for Galleries), or if it's not set then always add the disclaimer if affilate links have been added
-    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
-    if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
-    else html
+    html
   }
 
-  def replaceLinksInElement(html: String, pageUrl: String, contentType: String): TextBlockElement = {
+  def replaceLinksInElement(html: String, pageUrl: String): TextBlockElement = {
     val doc = Jsoup.parseBodyFragment(html)
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
     linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
@@ -938,11 +933,6 @@ object AffiliateLinksCleaner {
 
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
-
-  def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
-    document.body().append(affiliateLinksDisclaimer(contentType).toString())
-    document
-  }
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
@@ -962,13 +952,41 @@ object AffiliateLinksCleaner {
       alwaysOffTags: Set[String],
       tagPaths: List[String],
       firstPublishedDate: Option[DateTime],
+      pageUrl: String,
   ): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
-    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
-    // date. The cut off date is temporary while we are working on improving the compliance of affiliate links
+    val cleanedPageUrl = if (pageUrl.charAt(0) == '/') {
+      pageUrl.substring(1);
+    } else pageUrl
+
+    val affiliateLinksAllowList = List(
+      "lifeandstyle/2024/jan/03/six-winter-warmers-tried-and-tested-the-heated-poncho-has-changed-me-i-will-never-have-sex-again",
+      "lifeandstyle/2024/mar/11/im-south-asian-and-have-dark-eye-circles-what-can-i-do",
+      "fashion/2024/mar/08/the-four-makeup-staples-i-cant-live-without",
+      "travel/2023/mar/03/readers-favourite-budget-beach-campsites-hotels-in-europe",
+      "travel/2024/feb/25/10-of-the-best-places-in-the-uk-to-see-them-bloom",
+      "lifeandstyle/2023/dec/10/with-christmas-around-the-corner-what-to-give-the-gardener-in-your-life-",
+      "fashion/2024/mar/01/spring-is-around-the-corner-time-to-soothe-and-restore-your-cracked-heels",
+      "fashion/2024/mar/10/compact-and-bijou-why-women-need-a-pocket-mirror",
+      "fashion/2024/mar/03/how-to-reset-your-wardrobe-for-spring",
+      "lifeandstyle/2024/mar/03/beauty-spot-eyebrow-essentials-10-of-the-best",
+      "fashion/gallery/2024/mar/09/spring-in-your-step-10-menswear-trends-to-update-your-wardrobe-in-pictures",
+      "fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
+      "fashion/gallery/2024/mar/09/the-edit-mens-sweatshirts-in-pictures",
+      "lifeandstyle/gallery/2024/jan/22/colourful-glass-furniture-from-vases-to-lampshades-in-pictures",
+      "lifeandstyle/gallery/2023/nov/27/cosy-bedding-in-pictures",
+    )
+
+    val urlIsInAllowList = affiliateLinksAllowList.contains(cleanedPageUrl)
+
+    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off date.
+    // The cut off date is temporary while we are working on improving the compliance of affiliate links.
+    // The cut off date does not apply to any URL on the allow list
     if (
-      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(_.isBefore(publishedCutOffDate))
+      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
+        _.isBefore(publishedCutOffDate),
+      ) || urlIsInAllowList)
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)

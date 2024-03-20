@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import implicits.Dates.CapiRichDateTime
 import play.api.libs.json
+import views.support.CamelCase
 
 case class CrosswordPosition(x: Int, y: Int)
 
@@ -149,7 +150,7 @@ object CrosswordData {
 
     // Revert back to the original order
     val sortedNewEntries = entries.flatMap(entry => newEntries.find(_.id == entry.id))
-    val crosswordType = crossword.`type`.name.toLowerCase
+    val crosswordType = CamelCase.toHyphenated(crossword.`type`.name)
 
     CrosswordData(
       s"crosswords/$crosswordType/${crossword.number.toString}",

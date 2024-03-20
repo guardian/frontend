@@ -12,9 +12,7 @@
     </h1>
 
     @crosswordPage.crossword.instructions.map { instructions =>
-        <h2 class="printable-crossword__instructions">
-            <strong>Special instructions:</strong> @instructions
-        </h2>
+        <h2 class="printable-crossword__instructions"><strong>Special instructions:</strong> @instructions</h2>
     }
 
     <div class="printable-crossword__grid">@crosswordPage.svg</div>

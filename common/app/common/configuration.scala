@@ -85,7 +85,7 @@ object GuardianConfiguration extends GuLogging {
   private lazy val parameterStore = new ParameterStore(awsRegion)
 
   lazy val configuration: Config = {
-    if (stage == "DEVINFRA")
+    if (stage == "DEVINFRA" || stage == "LOCALTEST")
       ConfigFactory.parseResourcesAnySyntax("env/DEVINFRA.properties")
     else {
       val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")

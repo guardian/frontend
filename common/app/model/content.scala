@@ -3,6 +3,7 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.model.schemaorg.SchemaOrg
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.Campaign
@@ -67,6 +68,7 @@ final case class Content(
     wordCount: Int,
     showByline: Boolean,
     rawOpenGraphImage: Option[ImageAsset],
+    schemaOrg: Option[SchemaOrg],
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -434,6 +436,7 @@ object Content {
     val references: Map[String, String] =
       apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent)
+    val schemaOrg = apiContent.schemaOrg
 
     Content(
       trail = trail,
@@ -478,6 +481,7 @@ object Content {
         .flatten
         .orElse(elements.mainPicture.flatMap(_.images.largestImage))
         .orElse(trail.trailPicture.flatMap(_.largestImage)),
+      schemaOrg = schemaOrg,
     )
   }
 }

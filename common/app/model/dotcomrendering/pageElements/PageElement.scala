@@ -222,11 +222,6 @@ object ContentAtomBlockElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
 }
 
-case class DisclaimerBlockElement(html: String) extends PageElement
-object DisclaimerBlockElement {
-  implicit val DisclaimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
-}
-
 case class DocumentBlockElement(
     embedUrl: Option[String],
     height: Option[Int],
@@ -821,7 +816,6 @@ object PageElement {
       case _: CodeBlockElement            => true
       case _: CommentBlockElement         => true
       case _: ContentAtomBlockElement     => true
-      case _: DisclaimerBlockElement      => true
       case _: DocumentBlockElement        => true
       case _: EmbedBlockElement           => true
       case _: ExplainerAtomBlockElement   => true

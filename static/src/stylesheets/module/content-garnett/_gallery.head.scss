@@ -286,3 +286,25 @@
         fill: $brightness-86;
     }
 }
+
+.gallery__disclaimer {
+    color: $brightness-86;
+    margin-bottom: .5rem;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size: 12px;
+
+    @include mq(desktop) {
+        padding-right: $gs-gutter / 2;
+    }
+
+    a {
+        color: $brightness-86;
+        border-bottom: 1px solid $brightness-46;
+        transition: border-color .15s ease-out;
+
+        &:hover {
+            border-bottom: 1px solid $brightness-97;
+            text-decoration: none;
+        }
+    }
+}

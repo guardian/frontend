@@ -19,6 +19,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
     val supportedSections = Set("film", "books", "fashion")
     val oldPublishedDate = Some(new DateTime(2020, 8, 13, 0, 0))
     val newPublishedDate = Some(new DateTime(2020, 8, 15, 0, 0))
+    val deniedPageUrl = "/fashion/2024/feb/16/sunscreen-in-winter-yep-spf-moisturiser-is-essential-all-year-round"
 
     shouldAddAffiliateLinks(
       switchedOn = false,
@@ -29,6 +30,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List.empty,
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -39,6 +41,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List.empty,
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -49,6 +52,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List.empty,
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -59,6 +63,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List.empty,
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -69,6 +74,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List("bereavement"),
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -79,6 +85,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List("tech"),
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -89,6 +96,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List("tech"),
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -99,6 +107,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       List("bereavement"),
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -109,16 +118,18 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set("bereavement"),
       List("tech"),
       oldPublishedDate,
+      deniedPageUrl,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
-      "fashion",
-      Some(true),
+      "film",
+      None,
       supportedSections,
       Set.empty,
-      Set("bereavement"),
-      List("tech"),
+      Set.empty,
+      List.empty,
       newPublishedDate,
+      deniedPageUrl,
     ) should be(false)
   }
 }
