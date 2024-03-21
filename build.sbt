@@ -150,7 +150,7 @@ val identity = application("identity")
   .settings(
     libraryDependencies ++= Seq(
       filters,
-      identityAuthPlay,
+      identityAuthCore,
       slf4jExt,
       libPhoneNumber,
       supportInternationalisation,

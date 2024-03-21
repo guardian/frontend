@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.17"
+  val identityLibVersion = "4.22"
   val awsVersion = "1.12.638"
   val capiVersion = "25.0.0"
   val faciaVersion = "5.0.6"
@@ -48,7 +48,7 @@ object Dependencies {
     ExclusionRule("org.scala-lang.modules", "scala-xml_2.13")
   val identityModel = ("com.gu.identity" %% "identity-model" % identityLibVersion)
     .excludeAll(excludeDirectScalaXMLDependency)
-  val identityAuthPlay = ("com.gu.identity" %% "identity-auth-play" % identityLibVersion)
+  val identityAuthCore = ("com.gu.identity" %% "identity-auth-core" % identityLibVersion)
     .excludeAll(excludeDirectScalaXMLDependency)
 
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
