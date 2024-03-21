@@ -9,7 +9,7 @@ export const blockSupporterRevenueMessagingSport: ABTest = {
 	audienceOffset: 0 / 100,
 	audienceCriteria: 'Fronts and articles in the Sport section',
 	successMeasure:
-		'Ad revenue and ad ration increases without significantly impacting supporter revenue',
+		'Ad revenue and ad ratio increases without significantly impacting supporter revenue',
 	description: 'Block supporter revenue messaging in the Sport section',
 	variants: [
 		{
