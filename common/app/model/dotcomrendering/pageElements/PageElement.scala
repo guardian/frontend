@@ -559,10 +559,10 @@ object TextBlockElement {
   implicit val TextBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
 }
 
-case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent])
+case class TimelineAtomBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent])
     extends PageElement
-object TimelineBlockElement {
-  implicit val TimelineBlockElementWrites: Writes[TimelineBlockElement] = Json.writes[TimelineBlockElement]
+object TimelineAtomBlockElement {
+  implicit val TimelineAtomBlockElementWrites: Writes[TimelineAtomBlockElement] = Json.writes[TimelineAtomBlockElement]
 }
 
 case class TweetBlockElement(
@@ -837,7 +837,7 @@ object PageElement {
       case _: SpotifyBlockElement         => true
       case _: SubheadingBlockElement      => true
       case _: TextBlockElement            => true
-      case _: TimelineBlockElement        => true
+      case _: TimelineAtomBlockElement        => true
       case _: TweetBlockElement           => true
       case _: VideoBlockElement           => true
       case _: VideoFacebookBlockElement   => true
@@ -1251,7 +1251,7 @@ object PageElement {
 
           case Some(timeline: TimelineAtom) => {
             Some(
-              TimelineBlockElement(
+              TimelineAtomBlockElement(
                 id = timeline.id,
                 title = timeline.atom.title.getOrElse(""),
                 description = timeline.data.description,
