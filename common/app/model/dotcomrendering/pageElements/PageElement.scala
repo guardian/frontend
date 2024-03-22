@@ -837,7 +837,7 @@ object PageElement {
       case _: SpotifyBlockElement         => true
       case _: SubheadingBlockElement      => true
       case _: TextBlockElement            => true
-      case _: TimelineAtomBlockElement        => true
+      case _: TimelineAtomBlockElement    => true
       case _: TweetBlockElement           => true
       case _: VideoBlockElement           => true
       case _: VideoFacebookBlockElement   => true
