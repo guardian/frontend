@@ -370,8 +370,8 @@ GET            /$path<.+>/latest/email.emailjson                                
 GET            /$path<.+>/latest/email.emailtxt                                                                                  controllers.LatestIndexController.latest(path)
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                          controllers.AllIndexController.allOn(path, day, month, year)
 GET            /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                                                      controllers.AllIndexController.altDate(path, day, month, year)
-GET            /$path<.+>/all                                                                                                    controllers.AllIndexController.all(path)
 GET            /$path<.+>/all.json                                                                                               controllers.AllIndexController.renderJson(path)
+GET            /$path<.+>/all                                                                                                    controllers.AllIndexController.all(path)
 
 # Newspaper pages paths
 # gallery format (?)
