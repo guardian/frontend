@@ -12,6 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       AdaptiveSite,
+      CommercialMegaTest,
       CrosswordMobileBanner,
       DCRTagPages,
       OscarsNewsletterEmbed1,
@@ -19,6 +20,15 @@ object ActiveExperiments extends ExperimentsDefinition {
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object CommercialMegaTest
+    extends Experiment(
+      name = "commercial-mega-test",
+      description = "Test the revenue effect of changes made during Q4",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 8, 8),
+      participationGroup = Perc0A,
+    )
 
 object AdaptiveSite
     extends Experiment(
