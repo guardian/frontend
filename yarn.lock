@@ -2423,10 +2423,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/commercial@0.0.0-beta-20240314101915":
-  version "0.0.0-beta-20240314101915"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240314101915.tgz#38e7d1e355a9e64944d7ab16244a0f556d1f3f3e"
-  integrity sha512-cswz6E+VJMRfd/fKYQPu/SoymUbYTat0qAZg7UU9PZqHIYjIxqeLfIQAWApA17EL80GpDxcjIyf9qok8/giM2g==
+"@guardian/commercial@0.0.0-beta-20240326120603":
+  version "0.0.0-beta-20240326120603"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240326120603.tgz#7fc2db19ce0413ec2a7fd8e0972e8c2087e2aff7"
+  integrity sha512-THYXBolKT//VP1XflhIf7RA7AKV2t9slBVhHhgnlMbYf3XAeG5rtLtIy1r7a4warnxz3GKdGPIor1WU2GB4i+A==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
@@ -2474,10 +2474,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-2.1.0.tgz#836f72df35d127a7239987e5fc53155130d0cb4d"
   integrity sha512-+AM0pcmRvRZUf92RYGJ2Q6KK1JpnQIxZ6pafsaBMGnF0IwiIk9DdfhaYZl0cyPQ3PwLTJJw2aSl453ivPAmHbw==
 
-"@guardian/libs@0.0.0-canary-20240314102721":
-  version "0.0.0-canary-20240314102721"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-0.0.0-canary-20240314102721.tgz#92c6450574d5fdd0a2dc60bc446a86854c1c8eca"
-  integrity sha512-hPaXN2+QpJNwlZ7aO8I9vZhjdgkgSthoT2szC6ZKjbQCB+wBte477vac11OCYVu0WAKi+mO55SAMnXYBehLQ9A==
+"@guardian/libs@0.0.0-canary-20240325210020":
+  version "0.0.0-canary-20240325210020"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-0.0.0-canary-20240325210020.tgz#4afd7a2864709bc8ea877cf91c7b6a5c245f5eda"
+  integrity sha512-hmPR5dnKNn/Gdbr9g6vEcfhYWdGEnVzBcF5tiZrwxBvZimCT+qXtUIJezOIkqobiNKUP7X7Ih5UN33Hrk/CifQ==
 
 "@guardian/libs@^16.0.0":
   version "16.0.2"

@@ -1,4 +1,4 @@
-import type { Callback, ConsentState } from '@guardian/libs';
+import type { OnConsentChangeCallback, ConsentState } from '@guardian/libs';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
@@ -7,7 +7,7 @@ let mockOnConsentChangeResult: ConsentState | undefined;
 jest.mock('@guardian/libs', () => ({
 	// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
-	onConsentChange: (callback: Callback) => {
+	onConsentChange: (callback: OnConsentChangeCallback) => {
 		if (mockOnConsentChangeResult) {
 			callback(mockOnConsentChangeResult);
 		}

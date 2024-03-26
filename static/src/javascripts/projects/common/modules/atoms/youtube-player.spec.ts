@@ -2,7 +2,7 @@ import type {
 	AdsConfigCCPAorAus,
 	AdsConfigTCFV2,
 } from '@guardian/commercial/dist/cjs/core/types';
-import type { Callback, ConsentState } from '@guardian/libs';
+import type { OnConsentChangeCallback, ConsentState } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
@@ -34,7 +34,7 @@ jest.mock('lib/config', () => ({
 jest.mock('@guardian/libs', () => ({
 	// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
-	onConsentChange: jest.fn((callback: Callback) =>
+	onConsentChange: jest.fn((callback: OnConsentChangeCallback) =>
 		callback({
 			tcfv2: {
 				consents: { 1: true },
