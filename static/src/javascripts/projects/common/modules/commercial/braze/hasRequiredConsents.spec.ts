@@ -1,4 +1,4 @@
-import type { OnConsentChangeCallback, ConsentState } from '@guardian/libs';
+import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
