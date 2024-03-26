@@ -17,6 +17,7 @@ import model.PressedCollectionFormat.pressedContentFormat
 
 case class DotcomTagPagesRenderingDataModel(
     contents: Seq[PressedContent],
+    pagination: Option[common.Pagination],
     tags: Tags,
     date: DateTime,
     tzOverride: Option[DateTimeZone],
@@ -40,6 +41,7 @@ object DotcomTagPagesRenderingDataModel {
     def writes(model: DotcomTagPagesRenderingDataModel) = {
       Json.obj(
         "contents" -> model.contents,
+        "pagination" -> model.pagination,
         "date" -> model.date.toString(),
         "tzOverride" -> model.tzOverride.map(_.toString),
         "previousAndNext" -> model.previousAndNext.map(previousAndNext =>
@@ -97,8 +99,14 @@ object DotcomTagPagesRenderingDataModel {
       }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
+    // `/all` tag pages have pagination in the metadata whilst for all other tag pages, pagination is in the tags.
+    val pagination = page.metadata.pagination.orElse {
+      page.tags.tags.headOption.flatMap(_.pagination)
+    }
+
     DotcomTagPagesRenderingDataModel(
       contents = page.contents.map(_.faciaItem),
+      pagination = pagination,
       tags = page.tags,
       date = page.date,
       tzOverride = page.tzOverride,
