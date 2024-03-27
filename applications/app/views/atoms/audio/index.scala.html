@@ -1,10 +1,12 @@
+@import utils.AtomsUtils
+@import views.html.atoms.icons.playaudio
 @(atom: com.gu.contentatom.thrift.Atom, data: com.gu.contentatom.thrift.atom.audio.AudioAtom)
 
 @defining(data.trackUrl) { srcUrl: String =>
 
     <div class="atom atom--audio atom--audio--podcast">
-        <span class="atom--audio__label">data.kicker</span>
-        <h4 class="atom--audio__headline">atom.title.getOrElse("")</h4>
+        <span class="atom--audio__label">@data.kicker</span>
+        <h4 class="atom--audio__headline">@atom.title.getOrElse("")</h4>
         <div class="atom--audio__body">
             <audio
             class="atom--audio__player-element"
@@ -23,17 +25,8 @@
 
             <div class="atom--audio__controls">
                 <button class="atom--audio__button-playaudio atom__button atom--audio__button--rounded atom--audio__handle">
-
-                    <svg class="icon icon--playaudio play-button-svg" width="30px" height="30px" viewBox="0 0 30 30">
-                        <g fill="none" fill-rule="evenodd"><circle fill="#C70000" cx="15" cy="15" r="15"/><path fill="#FFFFFF" d="M10.113 8.571l-.47.366V20.01l.472.347 13.456-5.593v-.598z"/></g>
-
-                    </svg>
-
-                    <svg class="icon icon--pauseaudio pause-button-svg" width="30px" height="30px" viewBox="0 0 30 30">
-                        <g fill="none" fill-rule="evenodd"><circle fill="#C70000" cx="15" cy="15" r="15"/><path d="M9.429 7.286h3.429v15.429h-3.43zm7.286 0h3.429v15.429h-3.43z" fill="#FFFFFF"/></g>
-
-                    </svg>
-
+                    @views.html.atoms.icons.playaudio()
+                    @views.html.atoms.icons.pauseaudio()
                 </button>
             </div>
 
@@ -45,7 +38,7 @@
                     <input type="range" min="0" max="100" step="1" value="0">
                 </div>
                 <div class="atom--audio__time-duration">
-                    <span>data.durationStr</span>
+                    <span>@AtomsUtils.durationStr(data)</span>
                 </div>
             </div>
         </div>
