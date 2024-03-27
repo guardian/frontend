@@ -181,6 +181,7 @@ object BlockElement {
       case Cartoon                   => Some(UnsupportedBlockElement(None))
       case Recipe                    => Some(UnsupportedBlockElement(None))
       case ElementType.List          => Some(UnsupportedBlockElement(None))
+      case Timeline                  => Some(UnsupportedBlockElement(None))
     }
   }
 
