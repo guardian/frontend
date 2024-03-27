@@ -1,0 +1,53 @@
+@(atom: com.gu.contentatom.thrift.Atom, data: com.gu.contentatom.thrift.atom.audio.AudioAtom)
+
+@defining(data.trackUrl) { srcUrl: String =>
+
+    <div class="atom atom--audio atom--audio--podcast">
+        <span class="atom--audio__label">data.kicker</span>
+        <h4 class="atom--audio__headline">atom.title.getOrElse("")</h4>
+        <div class="atom--audio__body">
+            <audio
+            class="atom--audio__player-element"
+            data-duration="@data.duration"
+            src="@srcUrl"
+            preload="none"
+            data-media-id="@data.contentId"
+            data-title="@data.kicker"
+            data-component="inarticle audio"
+            >
+                <p>
+                    Sorry your browser does not support audio - but you can download here
+                    and listen @data.trackUrl
+                </p>
+            </audio>
+
+            <div class="atom--audio__controls">
+                <button class="atom--audio__button-playaudio atom__button atom--audio__button--rounded atom--audio__handle">
+
+                    <svg class="icon icon--playaudio play-button-svg" width="30px" height="30px" viewBox="0 0 30 30">
+                        <g fill="none" fill-rule="evenodd"><circle fill="#C70000" cx="15" cy="15" r="15"/><path fill="#FFFFFF" d="M10.113 8.571l-.47.366V20.01l.472.347 13.456-5.593v-.598z"/></g>
+
+                    </svg>
+
+                    <svg class="icon icon--pauseaudio pause-button-svg" width="30px" height="30px" viewBox="0 0 30 30">
+                        <g fill="none" fill-rule="evenodd"><circle fill="#C70000" cx="15" cy="15" r="15"/><path d="M9.429 7.286h3.429v15.429h-3.43zm7.286 0h3.429v15.429h-3.43z" fill="#FFFFFF"/></g>
+
+                    </svg>
+
+                </button>
+            </div>
+
+            <div class="atom--audio__time">
+                <div class="atom--audio__time-played">
+                    <span>00:00:00</span>
+                </div>
+                <div class="atom--audio__progress-bar">
+                    <input type="range" min="0" max="100" step="1" value="0">
+                </div>
+                <div class="atom--audio__time-duration">
+                    <span>data.durationStr</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
