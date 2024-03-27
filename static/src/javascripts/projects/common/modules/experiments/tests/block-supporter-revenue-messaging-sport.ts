@@ -3,10 +3,10 @@ import type { ABTest } from '@guardian/ab-core';
 export const blockSupporterRevenueMessagingSport: ABTest = {
 	id: 'BlockSupporterRevenueMessagingSport',
 	author: '@commercial-dev',
-	start: '2024-03-14',
-	expiry: '2024-06-01',
-	audience: 0 / 100,
-	audienceOffset: 0 / 100,
+	start: '2024-03-27',
+	expiry: '2024-05-14',
+	audience: 10 / 100,
+	audienceOffset: 5 / 100,
 	audienceCriteria: 'Fronts and articles in the Sport section',
 	successMeasure:
 		'Ad revenue and ad ratio increases without significantly impacting supporter revenue',
