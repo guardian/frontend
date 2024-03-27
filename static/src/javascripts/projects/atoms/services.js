@@ -7,7 +7,7 @@ import { isAdFreeUser } from 'common/modules/commercial/user-features';
 import {
     onConsentChange,
     getConsentFor,
-} from '@guardian/consent-management-platform';
+} from '@guardian/libs';
 import { viewport } from './services/viewport';
 
 // Need to pass in the API to native services, something that looks

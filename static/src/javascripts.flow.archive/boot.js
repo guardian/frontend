@@ -21,7 +21,7 @@ import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
-import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { cmp, onConsentChange } from '@guardian/libs';
 import { getLocale } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';

@@ -13,7 +13,7 @@
 // @flow
 
 import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
-import { onConsentChange } from '@guardian/consent-management-platform'
+import { onConsentChange } from '@guardian/libs'
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,

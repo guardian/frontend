@@ -1,7 +1,4 @@
-import {
-	getConsentFor,
-	onConsentChange,
-} from '@guardian/consent-management-platform';
+import { getConsentFor, onConsentChange } from '@guardian/libs';
 import { mediator } from 'lib/mediator';
 
 export const init = (): void => {

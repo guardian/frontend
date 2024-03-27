@@ -21,7 +21,7 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { cmp } from '@guardian/consent-management-platform';
+import { cmp } from '@guardian/libs';
 import { submitClickEventTracking } from './component-event-tracking';
 import type { CurrentABTest, GateStatus, DismissalWindow } from './types';
 

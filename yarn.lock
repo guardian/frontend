@@ -2423,10 +2423,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/commercial@17.7.0":
-  version "17.7.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-17.7.0.tgz#4adfe90dfabb23e37aa2ec5b491423f42c782c3b"
-  integrity sha512-/5CS301ReNNS9+k5N3t9zX2FscuRT+NmQVKAMLcQ+/bDB1B0P9wN6T8vPj0QueX9Rmi18894ycCjYXy2xcG+0Q==
+"@guardian/commercial@0.0.0-beta-20240326120603":
+  version "0.0.0-beta-20240326120603"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial/-/commercial-0.0.0-beta-20240326120603.tgz#7fc2db19ce0413ec2a7fd8e0972e8c2087e2aff7"
+  integrity sha512-THYXBolKT//VP1XflhIf7RA7AKV2t9slBVhHhgnlMbYf3XAeG5rtLtIy1r7a4warnxz3GKdGPIor1WU2GB4i+A==
   dependencies:
     "@changesets/cli" "^2.26.2"
     "@guardian/ophan-tracker-js" "2.0.4"
@@ -2439,11 +2439,6 @@
     tslib "^2.6.2"
     web-vitals "^3.3.2"
     wolfy87-eventemitter "^5.2.9"
-
-"@guardian/consent-management-platform@13.12.1":
-  version "13.12.1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-13.12.1.tgz#699ee56cc695baeb26a1ec702e098d98b1ead255"
-  integrity sha512-ng6Pl760icPXobdm3qBhV82ATipW/o0nlnBTQTMuYvKVWFEebqFJ5su77/DSaCXyqJkXIKn3UeDTU8JyFQnBtQ==
 
 "@guardian/core-web-vitals@^5.0.0":
   version "5.1.0"
@@ -2479,7 +2474,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-2.1.0.tgz#836f72df35d127a7239987e5fc53155130d0cb4d"
   integrity sha512-+AM0pcmRvRZUf92RYGJ2Q6KK1JpnQIxZ6pafsaBMGnF0IwiIk9DdfhaYZl0cyPQ3PwLTJJw2aSl453ivPAmHbw==
 
-"@guardian/libs@16.0.2", "@guardian/libs@^16.0.0":
+"@guardian/libs@0.0.0-canary-20240325210020":
+  version "0.0.0-canary-20240325210020"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-0.0.0-canary-20240325210020.tgz#4afd7a2864709bc8ea877cf91c7b6a5c245f5eda"
+  integrity sha512-hmPR5dnKNn/Gdbr9g6vEcfhYWdGEnVzBcF5tiZrwxBvZimCT+qXtUIJezOIkqobiNKUP7X7Ih5UN33Hrk/CifQ==
+
+"@guardian/libs@^16.0.0":
   version "16.0.2"
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-16.0.2.tgz#df739ffa67f938e125330b52587b33622f8ff797"
   integrity sha512-GC3DTyRAWMYNOheSnQES24CA2k9WKZiv+WnZbe3hPu6MsZwjeSeRvylJ+VXk7d2ndX5uDW1OdwkWBX45fVXqsA==

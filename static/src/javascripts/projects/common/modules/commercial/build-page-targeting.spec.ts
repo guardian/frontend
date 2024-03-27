@@ -5,7 +5,7 @@
  */
 
 import { buildPageTargeting as buildPageTargeting_ } from '@guardian/commercial';
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type { ConsentState } from '@guardian/libs';
 import { getPageTargeting } from './build-page-targeting';
 
 const buildPageTargeting = buildPageTargeting_ as jest.MockedFunction<

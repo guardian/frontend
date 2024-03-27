@@ -28,7 +28,8 @@ jest.mock('@guardian/libs', () => ({
         local: {
             get: jest.fn(() => undefined),
         },
-    }
+    },
+    get: jest.fn(() => undefined),
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -51,10 +52,6 @@ jest.mock('common/modules/identity/api', () => ({
 }));
 
 jest.mock('common/modules/ui/cmp-ui', () => ({
-    get: jest.fn(() => undefined),
-}));
-
-jest.mock('@guardian/consent-management-platform', () => ({
     get: jest.fn(() => undefined),
 }));
 
