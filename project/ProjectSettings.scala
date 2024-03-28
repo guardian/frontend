@@ -5,7 +5,7 @@ import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt._
 import sbt.Keys._
 import com.gu.Dependencies._
-import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
+import play.sbt.{PlayPekkoHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
 import sbtbuildinfo.{BuildInfoKey, BuildInfoOption, BuildInfoPlugin}
@@ -32,7 +32,7 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.12",
+    scalaVersion := "2.13.13",
     initialize := {
       val _ = initialize.value
       assert(
@@ -77,7 +77,6 @@ object ProjectSettings {
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
     Test / javaOptions += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
     Test / javaOptions += "-Xmx2048M",
-    Test / javaOptions += "-XX:+UseConcMarkSweepGC",
     Test / javaOptions += "-XX:ReservedCodeCacheSize=128m",
     Test / baseDirectory := file("."),
     Test / envVars := Map("STAGE" -> testStage),
@@ -98,7 +97,7 @@ object ProjectSettings {
   def root(): Project =
     Project("root", base = file("."))
       .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayAkkaHttpServer)
+      .disablePlugins(PlayPekkoHttpServer)
       .settings(frontendCompilationSettings)
       .settings(frontendRootSettings)
 
@@ -130,7 +129,7 @@ object ProjectSettings {
   def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
       .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayAkkaHttpServer)
+      .disablePlugins(PlayPekkoHttpServer)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
