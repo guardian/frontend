@@ -57,16 +57,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-oscars-newsletter-embed",
-    "Will change the newsletter embed for Oscars articles.",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 4, 2)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-block-supporter-revenue-messaging-sport",
     "Block supporter revenue messaging in the Sport section",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
