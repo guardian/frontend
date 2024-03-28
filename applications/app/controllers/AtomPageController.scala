@@ -19,6 +19,7 @@ import play.api.data.format.Formats._
 import play.api.data.validation.Constraints._
 import play.api.libs.json.{JsNull, JsObject, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
+import views.html.atoms.audio
 
 class AtomPageController(
     contentApiClient: ContentApiClient,
@@ -110,8 +111,7 @@ class AtomPageController(
   ): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(s"atom/$atomType/$id") map {
-        case Right(atom: AudioAtom) => {
-
+        case Right(atom: AudioAtom) =>
           /*
           mark: 57cadc98-16c0-49ac-8bba-c96144c488a7
           author: Pascal
@@ -126,13 +126,12 @@ class AtomPageController(
                 decided to use atoms-rendering: https://github.com/guardian/atoms-rendering
            */
 
-          val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
-          val html1: String = ArticleAtomRenderer.getHTML(atom.atom, articleConfig)
+          val html1: String = views.html.atoms.audio.index(atom.atom, atom.data).body
           val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(atom.atom.atomType) // Option[String]
           val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(atom.atom.atomType) // Option[String]
           val html2: Html = views.html.fragments.atoms.audio(atom.id, Html(html1), css, js)
           Ok(html2)
-        }
+
         case Right(atom: ChartAtom) =>
           renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
         case Right(atom: GuideAtom) =>
