@@ -63,6 +63,7 @@ object Trail {
       isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
       isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJoda).exists(_.isAfterNow),
       byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
+      bylineHtml = apiContent.fields.flatMap(_.bylineHtml),
       trailPicture = findTrailImages(elements),
       tags = tags,
       commercial = commercial,
@@ -82,6 +83,7 @@ final case class Trail(
     webPublicationDate: DateTime,
     headline: String,
     byline: Option[String],
+    bylineHtml: Option[String],
     sectionName: String,
     trailPicture: Option[ImageMedia],
     thumbnailPath: Option[String] = None,
@@ -124,5 +126,6 @@ final case class Trail(
       ("headline", JsString(headline)),
       ("commentable", JsBoolean(isCommentable)),
       ("byline", JsString(byline.getOrElse(""))),
+      ("bylineHtml", JsString(bylineHtml.getOrElse(""))),
     )
 }

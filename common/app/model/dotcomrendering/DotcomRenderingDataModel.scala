@@ -57,6 +57,7 @@ case class DotcomRenderingDataModel(
     pagination: Option[Pagination],
     author: Author,
     byline: Option[String],
+    bylineHtml: Option[String],
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
@@ -137,6 +138,7 @@ object DotcomRenderingDataModel {
         "pagination" -> model.pagination,
         "author" -> model.author,
         "byline" -> model.byline,
+        "bylineHtml" -> model.bylineHtml,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
@@ -596,6 +598,7 @@ object DotcomRenderingDataModel {
       beaconURL = Configuration.debug.beaconUrl,
       blocks = bodyBlocksDCR,
       byline = content.trail.byline,
+      bylineHtml = content.trail.bylineHtml,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
       contentType = content.metadata.contentType.map(_.name).getOrElse(""),
