@@ -33,7 +33,7 @@ object AdaptiveSite
       name = "adaptive-site",
       description = "Enables serving an adaptive version of the site that responds to page performance",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 4, 2),
+      sellByDate = LocalDate.of(2024, 5, 2),
       participationGroup = Perc1A,
     )
 
