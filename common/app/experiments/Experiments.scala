@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       AdaptiveSite,
       CommercialMegaTest,
-      CrosswordMobileBanner,
       DCRTagPages,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -35,15 +34,6 @@ object AdaptiveSite
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 5, 2),
       participationGroup = Perc1A,
-    )
-
-object CrosswordMobileBanner
-    extends Experiment(
-      name = "crossword-mobile-banner",
-      description = "Test banner advert in mobile crossword page",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 4, 2),
-      participationGroup = Perc2A,
     )
 
 object DCRTagPages
