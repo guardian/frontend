@@ -92,7 +92,6 @@ val article =
 val applications = application("applications")
   .dependsOn(commonWithTests)
   .aggregate(common)
-  .settings(dependencyOverrides += contentApiClient)
 
 val archive = application("archive")
   .dependsOn(commonWithTests)
@@ -109,7 +108,7 @@ val sport = application("sport")
     dependencyOverrides += contentApiClient,
   )
 
-val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(dependencyOverrides += contentApiClient)
+val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
 val diagnostics = application("diagnostics")
   .dependsOn(commonWithTests)
