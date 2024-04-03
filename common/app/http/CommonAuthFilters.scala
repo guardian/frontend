@@ -11,7 +11,7 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
 
-object GoogleAuthFilters {
+object CommonAuthFilters {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
 
   class AuthFilterWithExemptions(loginUrl: FilterExemption, exemptions: Seq[FilterExemption])(implicit

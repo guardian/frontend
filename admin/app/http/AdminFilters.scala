@@ -1,8 +1,7 @@
 package http
 
 import org.apache.pekko.stream.Materializer
-import GoogleAuthFilters.AuthFilterWithExemptions
-import googleAuth.FilterExemptions
+import CommonAuthFilters.AuthFilterWithExemptions
 import model.ApplicationContext
 import play.api.http.{HttpConfiguration, HttpFilters}
 import play.api.mvc.EssentialFilter
