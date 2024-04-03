@@ -15,8 +15,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       CommercialMegaTest,
       CrosswordMobileBanner,
       DCRTagPages,
-      OscarsNewsletterEmbed1,
-      OscarsNewsletterEmbed2,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -53,8 +51,8 @@ object DCRTagPages
       name = "dcr-tag-pages",
       description = "Render tag pages with DCR",
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 1),
-      participationGroup = Perc2C,
+      sellByDate = LocalDate.of(2024, 4, 15),
+      participationGroup = Perc10A,
     )
 
 object OscarsNewsletterEmbed1

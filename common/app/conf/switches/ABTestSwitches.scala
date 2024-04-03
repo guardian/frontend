@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Test MPU when there is no epic at the end of Article on the page.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 3, 29)),
+    sellByDate = Some(LocalDate.of(2024, 4, 30)),
     exposeClientSide = true,
   )
 
@@ -52,16 +52,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 7, 26)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-oscars-newsletter-embed",
-    "Will change the newsletter embed for Oscars articles.",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 4, 2)),
     exposeClientSide = true,
   )
 
