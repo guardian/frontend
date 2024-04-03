@@ -35,8 +35,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       .sequence(Edition.allEditions.map { edition =>
         ophanApi.getDeeplyRead(edition).flatMap {
           ophanDeeplyReadItems =>
-            log.info(s"ophanItems updated with: ${ophanDeeplyReadItems.size} new items")
-            val constructedTrail: Seq[Future[Trail]] = ophanDeeplyReadItems.map {
+            log.info(s"Fetched ${ophanDeeplyReadItems.size} Deeply Read items for ${edition.displayName}")
+            val constructedTrail: Seq[Future[Option[Trail]]] = ophanDeeplyReadItems.map {
               ophanItem =>
                 log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
                 val path = removeStartingSlash(ophanItem.path)
@@ -47,7 +47,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
                   .showFields("all")
                   .showReferences("none")
                   .showAtoms("none")
-                val trailFromCapiResponse = contentApiClient
+
+                contentApiClient
                   .getResponse(capiRequest)
                   .map { res =>
                     res.content.flatMap { capiData =>
@@ -60,13 +61,23 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
                       log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
                       None
                   }
-                trailFromCapiResponse.map(_.get)
             }
             Future.sequence(constructedTrail)
+              .map { maybeTrails =>
+                (edition, maybeTrails.flatten)
+              }
+
+        }
+        .recover { e =>
+          log.error(s"Failed to fetch Deeply Read items for ${edition.displayName}. ${e.getMessage()}")
+          (edition, Seq.empty)
         }
       })
       .map(trailsList => {
-        val map = Edition.allEditions.zip(trailsList).toMap
+        val map = trailsList.toMap
+        for {
+          (edition, list) <- map
+        } yield log.info(s"Deeply Read in ${edition.displayName}: ${list.map(_.url).toString()}")
         deeplyReadItems.alter(map)
       })
   }
