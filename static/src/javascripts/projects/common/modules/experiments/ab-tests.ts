@@ -1,8 +1,7 @@
 import type { ABTest } from '@guardian/ab-core';
+import { blockSupporterRevenueMessagingSport } from './tests/block-supporter-revenue-messaging-sport';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
-import { oscarsNewsletterEmbed } from './tests/oscars-newsletter-embed';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
-import { sectionAdDensity } from './tests/section-ad-density';
 import { signInGateAlternativeWording } from './tests/sign-in-gate-alternative-wording';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
@@ -15,6 +14,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateAlternativeWording,
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
-	sectionAdDensity,
-	oscarsNewsletterEmbed,
+	blockSupporterRevenueMessagingSport,
 ];
