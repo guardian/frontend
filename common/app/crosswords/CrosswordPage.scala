@@ -56,6 +56,7 @@ class CrosswordSearchPage extends StandalonePage {
     "quick",
     "cryptic",
     "prize",
+    "quick-cryptic",
     "quiptic",
     "genius",
     "speedy",
