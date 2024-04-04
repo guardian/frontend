@@ -961,11 +961,22 @@ object AffiliateLinksCleaner {
       "fashion/2024/mar/10/compact-and-bijou-why-women-need-a-pocket-mirror",
       "fashion/2024/mar/03/how-to-reset-your-wardrobe-for-spring",
       "lifeandstyle/2024/mar/03/beauty-spot-eyebrow-essentials-10-of-the-best",
+      "fashion/2024/mar/17/beauty-spot-10-best-root-cover-ups",
+      "food/2024/mar/17/easter-egg-taste-test-will-our-baking-queen-love-them-to-bits",
+      "lifeandstyle/2024/mar/24/skip-salons-for-hi-tech-home-treatments",
+      "fashion/2024/mar/23/trend-watch-the-tailored-suit-is-back-but-more-relaxed",
+      "food/2024/mar/24/great-wines-for-easter-feasting",
       "fashion/gallery/2024/mar/09/spring-in-your-step-10-menswear-trends-to-update-your-wardrobe-in-pictures",
       "fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
       "fashion/gallery/2024/mar/09/the-edit-mens-sweatshirts-in-pictures",
       "lifeandstyle/gallery/2024/jan/22/colourful-glass-furniture-from-vases-to-lampshades-in-pictures",
       "lifeandstyle/gallery/2023/nov/27/cosy-bedding-in-pictures",
+      "fashion/gallery/2024/mar/16/editors-picks-how-to-wear-colour-in-pictures",
+      "fashion/gallery/2024/mar/16/take-flight-14-of-the-best-bomber-jackets-for-spring-in-pictures",
+      "fashion/gallery/2024/mar/22/hop-to-it-what-to-wear-for-a-spring-weekend",
+      "gallery/2024/mar/23/throwing-shade-18-of-the-best-sunglasses-in-pictures",
+      "fashion/gallery/2024/mar/24/we-love-fashion-fixes-for-the-week-ahead-in-pictures",
+      "lifeandstyle/gallery/2024/mar/25/light-of-my-life-best-new-table-lamps-in-pictures",
     )
 
     val urlIsInAllowList = affiliateLinksAllowList.contains(cleanedPageUrl)
