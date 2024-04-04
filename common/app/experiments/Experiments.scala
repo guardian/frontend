@@ -24,7 +24,7 @@ object CommercialMegaTest
       description = "Test the revenue effect of changes made during Q4",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 8, 8),
-      participationGroup = Perc0A,
+      participationGroup = Perc5A,
     )
 
 object AdaptiveSite
