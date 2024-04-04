@@ -974,7 +974,7 @@ object AffiliateLinksCleaner {
       "fashion/gallery/2024/mar/16/editors-picks-how-to-wear-colour-in-pictures",
       "fashion/gallery/2024/mar/16/take-flight-14-of-the-best-bomber-jackets-for-spring-in-pictures",
       "fashion/gallery/2024/mar/22/hop-to-it-what-to-wear-for-a-spring-weekend",
-      "gallery/2024/mar/23/throwing-shade-18-of-the-best-sunglasses-in-pictures",
+      "fashion/gallery/2024/mar/23/throwing-shade-18-of-the-best-sunglasses-in-pictures",
       "fashion/gallery/2024/mar/24/we-love-fashion-fixes-for-the-week-ahead-in-pictures",
       "lifeandstyle/gallery/2024/mar/25/light-of-my-life-best-new-table-lamps-in-pictures",
     )
