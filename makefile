@@ -98,6 +98,7 @@ coverage: install
 # Validate all assets.
 validate: install
 	@./tools/task-runner/runner validate --verbose
+	@yarn prettier */test/resources/*.json --check
 
 # Validate all SCSS.
 validate-sass: install # PRIVATE
@@ -110,6 +111,7 @@ validate-javascript: install # PRIVATE
 # Fix JS linting errors.
 fix: install
 	@./tools/task-runner/runner validate/javascript-fix
+	@yarn prettier */test/resources/*.json --write
 
 # Fix committed JS linting errors.
 fix-commits: install

@@ -67,7 +67,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
               Future
                 .sequence(constructedTrail)
                 .map { maybeTrails =>
-                  (edition, maybeTrails.flatten)
+                  (edition, maybeTrails.flatten.take(10))
                 }
 
           }
@@ -80,8 +80,14 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         val map = trailsList.toMap
         for {
           (edition, list) <- map
-        } yield log.info(s"Deeply Read in ${edition.displayName}: ${list.map(_.url).toString()}")
-        deeplyReadItems.alter(map)
+        } yield log.info(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
+
+        val mapWithTenItems = map.filter { case (_, list) => list.size == 10 }
+        log.info(
+          s"Updating the following ${mapWithTenItems.size} editions: ${mapWithTenItems.keys.map(_.id).toList.sorted.toString()}",
+        )
+
+        deeplyReadItems.alter(deeplyReadItems.get() ++ mapWithTenItems)
       })
   }
 
