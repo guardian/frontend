@@ -84,8 +84,7 @@ val facia = application("facia")
     libraryDependencies += scalaCheck,
   )
 
-val article =
-  application("article").dependsOn(commonWithTests).aggregate(common)
+val article = application("article").dependsOn(commonWithTests).aggregate(common)
 
 val applications = application("applications")
   .dependsOn(commonWithTests)
@@ -161,12 +160,9 @@ val identity = application("identity")
     Test / testOptions += Tests.Argument("-oF"),
   )
 
-val commercial = application("commercial")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
+val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
-val onward =
-  application("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -200,19 +196,16 @@ val preview = application("preview")
     commercial,
     onward,
   )
-  .settings(
-  )
 
 val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
-  .settings(
-  )
+
 
 val main = root()
-// This evicts the version of
-// "com.fasterxml.jackson.core:jackson-databind"
-// used by "com.typesafe.play:sbt-plugin"
+  // This evicts the version of
+  // "com.fasterxml.jackson.core:jackson-databind"
+  // used by "com.typesafe.play:sbt-plugin"
   .settings(
     libraryDependencies ++= Seq(
       jacksonDatabind,
