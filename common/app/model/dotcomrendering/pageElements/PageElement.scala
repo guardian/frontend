@@ -4,9 +4,9 @@ import com.gu.contentapi.client.model.v1
 import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
-  ElementType,
   EmbedTracking,
   SponsorshipType,
+  TimelineElementFields,
   WitnessElementFields,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
@@ -35,7 +35,7 @@ import scala.util.Try
 // TODO dates are being rendered as strings to avoid duplication of the
 // to-string logic, but ultimately we should pass unformatted date info to
 // DCR.
-case class TimelineEvent(
+case class TimelineAtomEvent(
     title: String,
     date: String,
     body: Option[String],
@@ -43,8 +43,8 @@ case class TimelineEvent(
     unixDate: Long,
     toUnixDate: Option[Long],
 )
-object TimelineEvent {
-  implicit val TimelineEventWrites: Writes[TimelineEvent] = Json.writes[TimelineEvent]
+object TimelineAtomEvent {
+  implicit val timelineAtomEventWrites: Writes[TimelineAtomEvent] = Json.writes[TimelineAtomEvent]
 }
 
 case class Sponsorship(
@@ -378,6 +378,32 @@ object ListBlockElement {
   implicit val listBlockElementWrites: Writes[ListBlockElement] = Json.writes[ListBlockElement]
 }
 
+case class TimelineEvent(
+    title: Option[String],
+    date: Option[String],
+    label: Option[String],
+    main: Option[PageElement],
+    body: Seq[PageElement],
+)
+
+object TimelineEvent {
+  implicit val timelineEvent: Writes[TimelineEvent] = Json.writes[TimelineEvent]
+}
+case class TimelineSection(
+    title: Option[String],
+    events: Seq[TimelineEvent],
+)
+object TimelineSection {
+  implicit val timelineSection: Writes[TimelineSection] = Json.writes[TimelineSection]
+}
+case class TimelineBlockElement(
+    sections: Seq[TimelineSection],
+) extends PageElement
+
+object TimelineBlockElement {
+  implicit val timelineBlockElement: Writes[TimelineBlockElement] = Json.writes[TimelineBlockElement]
+}
+
 case class MapBlockElement(
     embedUrl: String,
     originalUrl: String,
@@ -559,10 +585,14 @@ object TextBlockElement {
   implicit val TextBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
 }
 
-case class TimelineAtomBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent])
-    extends PageElement
+case class TimelineAtomBlockElement(
+    id: String,
+    title: String,
+    description: Option[String],
+    events: Seq[TimelineAtomEvent],
+) extends PageElement
 object TimelineAtomBlockElement {
-  implicit val TimelineAtomBlockElementWrites: Writes[TimelineAtomBlockElement] = Json.writes[TimelineAtomBlockElement]
+  implicit val timelineAtomBlockElementWrites: Writes[TimelineAtomBlockElement] = Json.writes[TimelineAtomBlockElement]
 }
 
 case class TweetBlockElement(
@@ -899,7 +929,7 @@ object PageElement {
           }
         }
 
-      case Tweet => {
+      case Tweet =>
         (for {
           data <- element.tweetTypeData
           id <- data.id
@@ -917,7 +947,6 @@ object PageElement {
             data.sourceDomain,
           )
         }).toList
-      }
 
       case RichLink =>
         List(
@@ -1257,7 +1286,7 @@ object PageElement {
                 description = timeline.data.description,
                 events = timeline.data.events
                   .map(event =>
-                    TimelineEvent(
+                    TimelineAtomEvent(
                       title = event.title,
                       date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
                       body = event.body,
@@ -1449,9 +1478,83 @@ object PageElement {
           )
         }.toList
 
+      case Timeline =>
+        element.timelineTypeData.map { timelineTypeData =>
+          TimelineBlockElement(
+            sections = makeTimelineSection(
+              addAffiliateLinks,
+              pageUrl,
+              atoms,
+              isImmersive,
+              campaigns,
+              calloutsUrl,
+              edition,
+              webPublicationDate,
+              timelineTypeData,
+            ),
+          )
+        }.toList
+
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
+  }
+
+  private def makeTimelineSection(
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      timelineTypeData: TimelineElementFields,
+  ) = {
+    timelineTypeData.sections.map { section =>
+      TimelineSection(
+        title = section.title,
+        events = section.events.map { event =>
+          TimelineEvent(
+            title = event.title,
+            date = event.date,
+            label = event.label,
+            main = event.main.flatMap { mainBlock =>
+              PageElement
+                .make(
+                  mainBlock,
+                  addAffiliateLinks,
+                  pageUrl,
+                  atoms,
+                  isMainBlock = true,
+                  isImmersive,
+                  campaigns,
+                  calloutsUrl,
+                  overrideImage = None,
+                  edition,
+                  webPublicationDate,
+                )
+                .headOption
+            },
+            body = event.body.flatMap { bodyBlock =>
+              PageElement.make(
+                bodyBlock,
+                addAffiliateLinks,
+                pageUrl,
+                atoms,
+                isMainBlock = false,
+                isImmersive,
+                campaigns,
+                calloutsUrl,
+                overrideImage = None,
+                edition,
+                webPublicationDate,
+              )
+            }.toSeq,
+          )
+        }.toSeq,
+      )
+    }.toSeq
   }
 
   private def makeListItem(
