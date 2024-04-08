@@ -223,15 +223,15 @@ object NavLinks {
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),
+      NavLink("Speedy", "/crosswords/series/speedy"),
+      NavLink("Quick Cryptic", "/crosswords/series/quick-cryptic"),
+      NavLink("Everyman", "/crosswords/series/everyman"),
+      NavLink("Quiptic", "/crosswords/series/quiptic"),
       NavLink("Cryptic", "/crosswords/series/cryptic"),
       NavLink("Prize", "/crosswords/series/prize"),
-      NavLink("Quick Cryptic", "/crosswords/series/quick-cryptic"),
-      NavLink("Weekend", "/crosswords/series/weekend-crossword"),
-      NavLink("Quiptic", "/crosswords/series/quiptic"),
-      NavLink("Genius", "/crosswords/series/genius"),
-      NavLink("Speedy", "/crosswords/series/speedy"),
-      NavLink("Everyman", "/crosswords/series/everyman"),
       NavLink("Azed", "/crosswords/series/azed"),
+      NavLink("Genius", "/crosswords/series/genius"),
+      NavLink("Weekend", "/crosswords/series/weekend-crossword"),
     ),
   )
   val wordiply = NavLink(
