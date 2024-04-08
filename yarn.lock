@@ -2479,10 +2479,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/identity-auth/-/identity-auth-2.1.0.tgz#836f72df35d127a7239987e5fc53155130d0cb4d"
   integrity sha512-+AM0pcmRvRZUf92RYGJ2Q6KK1JpnQIxZ6pafsaBMGnF0IwiIk9DdfhaYZl0cyPQ3PwLTJJw2aSl453ivPAmHbw==
 
-"@guardian/libs@16.0.2", "@guardian/libs@^16.0.0":
-  version "16.0.2"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-16.0.2.tgz#df739ffa67f938e125330b52587b33622f8ff797"
-  integrity sha512-GC3DTyRAWMYNOheSnQES24CA2k9WKZiv+WnZbe3hPu6MsZwjeSeRvylJ+VXk7d2ndX5uDW1OdwkWBX45fVXqsA==
+"@guardian/libs@16.1.0", "@guardian/libs@^16.0.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-16.1.0.tgz#70d986a312a04e609a89ef1a631f6a3000e322da"
+  integrity sha512-nb7r0C+UO4P6f0wH8sATtGYnGrfqCzOX4M1Pp2G+uj9c3tehMRSum4mgnqxSAVXN50LtkL2bwd4u3Ichk6670Q==
 
 "@guardian/ophan-tracker-js@2.0.4":
   version "2.0.4"
