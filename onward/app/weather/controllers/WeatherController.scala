@@ -2,7 +2,7 @@ package weather.controllers
 
 import common.JsonComponent.resultFor
 import common.Seqs.RichSeq
-import common.{ GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
+import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
 import model.{CacheTime, Cached}
 import play.api.libs.json.Json.{stringify, toJson}
 import play.api.mvc._
