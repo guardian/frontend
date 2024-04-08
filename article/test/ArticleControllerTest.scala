@@ -44,10 +44,13 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   }
 
   it should "count in body links" in {
-    val result = articleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
-    val body = contentAsString(result)
-    body should include(""""inBodyInternalLinkCount":38""")
-    body should include(""""inBodyExternalLinkCount":42""")
+    val fakeRequest = FakeRequest("GET", s"$liveBlogUrl.json?dcr")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+
+    val result = articleController.renderArticle(liveBlogUrl)(fakeRequest)
+    val content = contentAsString(result)
+    content should include(""""inBodyInternalLinkCount":38""")
+    content should include(""""inBodyExternalLinkCount":42""")
   }
 
   it should "not cache 404s" in {
