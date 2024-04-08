@@ -29,7 +29,6 @@ object ArticlePicker {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
-      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
     )
   }
 
@@ -39,7 +38,6 @@ object ArticlePicker {
       Set(
         "isSupportedType",
         "isNotAGallery",
-        "isNotLiveBlog",
       ),
     )
 
