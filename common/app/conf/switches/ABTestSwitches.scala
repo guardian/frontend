@@ -64,4 +64,24 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 5, 31)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-updated-header-design",
+    "Shows updated header with top bar and navigation design updates to check if it affects SR or ad revenue",
+    owners = Seq(Owner.withGithub("cemms1")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 9, 31)),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-masthead-with-highlights",
+    "Shows new masthead component, with highlights container, in place of current header/navigation and top bar",
+    owners = Seq(Owner.withEmail("cemms1")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 7, 31)),
+    exposeClientSide = true,
+  )
 }
