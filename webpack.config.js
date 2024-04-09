@@ -81,14 +81,10 @@ module.exports = {
     resolveLoader: {
         modules: [
             path.resolve(__dirname, 'dev', 'webpack-loaders'),
-            // TODO: atom-renderer's loaders are actually dependencies of frontend, not atom-renderer
-            // They should be listed as peerDependencies in atom-renderer
-            // https://github.com/guardian/atom-renderer/issues/41
             path.resolve(
                 __dirname,
                 'node_modules',
                 '@guardian',
-                'atom-renderer',
                 'node_modules'
             ),
             'node_modules',
@@ -102,7 +98,7 @@ module.exports = {
                     or: [/node_modules/, path.resolve(__dirname, 'static/vendor')],
                     not: [
                         // Include all @guardian modules, except automat-modules
-                        /@guardian\/(?!(automat-modules|automat-contributions|atom-renderer))/,
+                        /@guardian\/(?!(automat-modules|automat-contributions))/,
                         // Include the dynamic-import-polyfill
                         /dynamic-import-polyfill/,
                     ],
@@ -129,20 +125,6 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'raw-loader',
             },
-            // Atoms rely on locally defined variables (see atoms/vars.scss)
-            // to exhibit the same styles of the underlying platform. This
-            // module below exposes a loader that catches requests for
-            // atoms's CSS and automatically swaps in values for these variables
-            ...require('@guardian/atom-renderer/webpack/css')({
-                cssVarsPath: path.join(
-                    __dirname,
-                    'static',
-                    'src',
-                    'stylesheets',
-                    'atoms',
-                    'vars.scss'
-                ),
-            }),
         ],
     },
     plugins: [

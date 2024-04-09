@@ -83,7 +83,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         } yield log.info(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
 
         val mapWithTenItems = map.filter { case (_, list) => list.size == 10 }
-        log.info(s"Updating the followings keys: ${mapWithTenItems.keys.toString()}")
+        log.info(
+          s"Updating the following ${mapWithTenItems.size} editions: ${mapWithTenItems.keys.map(_.id).toList.sorted.toString()}",
+        )
 
         deeplyReadItems.alter(deeplyReadItems.get() ++ mapWithTenItems)
       })

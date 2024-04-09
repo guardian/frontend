@@ -2,8 +2,8 @@ package weather.controllers
 
 import common.JsonComponent.resultFor
 import common.Seqs.RichSeq
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
-import model.Cached
+import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
+import model.{CacheTime, Cached}
 import play.api.libs.json.Json.{stringify, toJson}
 import play.api.mvc._
 import weather.WeatherApi
@@ -16,13 +16,12 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
     extends BaseController
     with ImplicitControllerExecutionContext
     with GuLogging {
-  val MaximumForecastDays = 10
 
   def theWeather(): Action[AnyContent] =
     Action.async { implicit request =>
       val (country, city, region) = readLocationHeaders
 
-      for {
+      val weatherFuture: Future[Result] = for {
         location <- whatIsMyCity(country, city, region)
         currentWeather <- weatherApi.getWeatherForCityId(CityId(location.id))
         forecasts <- weatherApi.getForecastForCityId(CityId(location.id))
@@ -35,6 +34,14 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
         val weatherJson = stringify(toJson(weather))
         Cached(10.minutes)(resultFor(request, weatherJson))
       }
+
+      weatherFuture.recover({
+        case _: CityNotFoundException =>
+          Cached(CacheTime.NotFound)(JsonNotFound())
+
+        case error: Throwable =>
+          InternalServerError(s"An error occurred: ${error.getMessage}")
+      })
     }
 
   def forCity(cityId: String): Action[AnyContent] =
@@ -92,26 +99,12 @@ class WeatherController(weatherApi: WeatherApi, val controllerComponents: Contro
                   s"city [$maybeCity] and region [$maybeRegion]" +
                   s"to a valid location.",
               )
-              getWeatherFromEdition(request)
+              Future.failed(CityNotFoundException())
           }
         }
-      case (_, _) =>
-        getWeatherFromEdition(request)
-    }
-  }
-
-  private def getWeatherFromEdition(request: Request[AnyContent]) = {
-    val edition = Edition(request)
-    CityResponse.fromEdition(edition) match {
-      case Some(defaultLocation) => Future.successful(defaultLocation)
-      case None =>
-        Future.failed(
-          CityNotfoundException(
-            s"Could not work out a default location for edition [$edition].",
-          ),
-        )
+      case (_, _) => Future.failed(CityNotFoundException())
     }
   }
 }
 
-case class CityNotfoundException(message: String) extends Exception(message)
+case class CityNotFoundException() extends Exception("City not found")

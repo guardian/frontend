@@ -29,7 +29,6 @@ import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
-import { initAtoms } from './atoms';
 import { initEmbedResize } from "./emailEmbeds";
 import { setAdFreeCookie } from 'common/modules/commercial/user-features';
 import { incrementAlreadyVisited } from "bootstraps/standard/alreadyVisited";
@@ -177,8 +176,6 @@ const bootStandard = () => {
     if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {
         fixSecondaryColumn();
     }
-
-    initAtoms();
 
     initEmbedResize();
 

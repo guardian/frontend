@@ -2,12 +2,9 @@ package views.support
 
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
-import com.gu.contentatom.renderer.ArticleConfiguration
-import common.editions.Uk
 import common.{Edition, GuLogging, LinkTo}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
-import conf.switches.Switches
 import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
@@ -20,9 +17,6 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 import services.SkimLinksCache
-import views.html.fragments.affiliateLinksDisclaimer
-import views.support.Commercial.isAdFree
-
 import scala.jdk.CollectionConverters._
 import scala.collection.mutable
 import scala.util.Try
@@ -709,9 +703,6 @@ case class AtomsCleaner(
   override def clean(document: Document): Document = {
     if (UseAtomsSwitch.isSwitchedOn) {
 
-      val articleConfig: ArticleConfiguration =
-        Atoms.articleConfig(isAdFree(request), Switches.Acast.isSwitchedOn)
-
       for {
         atomContainer <- document.getElementsByClass("element-atom").asScala
         bodyElement <- atomContainer.getElementsByTag("gu-atom").asScala
@@ -735,7 +726,6 @@ case class AtomsCleaner(
             val html = views.html.fragments.atoms
               .atom(
                 atomData,
-                articleConfig,
                 shouldFence,
                 mediaWrapper,
                 posterImageOverride,
