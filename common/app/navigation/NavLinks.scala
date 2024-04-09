@@ -194,9 +194,6 @@ object NavLinks {
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
   val wellness = NavLink("Wellness", "/wellness")
 
-  /** temporary for April 2024 Total Solar Eclipse over America */
-  val eclipse = NavLink("Solar eclipse", "/science/solar-eclipse ")
-
   val todaysPaper = NavLink(
     "Today's paper",
     "/theguardian",
@@ -321,7 +318,6 @@ object NavLinks {
       science,
       newsletters,
       wellness,
-      eclipse,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
