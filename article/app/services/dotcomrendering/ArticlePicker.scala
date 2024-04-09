@@ -18,8 +18,6 @@ object ArticlePageChecks {
 
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
-  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
-
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.item.tags.isPaidContent
 }
 
