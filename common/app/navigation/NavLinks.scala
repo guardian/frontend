@@ -227,7 +227,7 @@ object NavLinks {
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),
       NavLink("Speedy", "/crosswords/series/speedy"),
-      NavLink("Quick Cryptic", "/crosswords/series/quick-cryptic"),
+      NavLink("Quick cryptic", "/crosswords/series/quick-cryptic"),
       NavLink("Everyman", "/crosswords/series/everyman"),
       NavLink("Quiptic", "/crosswords/series/quiptic"),
       NavLink("Cryptic", "/crosswords/series/cryptic"),
