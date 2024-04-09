@@ -7,9 +7,7 @@ import model._
 import model.content._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import com.gu.contentapi.client.model.v1.ItemResponse
-import com.gu.contentatom.renderer.{ArticleAtomRenderer, ArticleConfiguration}
 import play.api.mvc._
-import play.twirl.api.Html
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -110,29 +108,6 @@ class AtomPageController(
   ): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(s"atom/$atomType/$id") map {
-        case Right(atom: AudioAtom) => {
-
-          /*
-          mark: 57cadc98-16c0-49ac-8bba-c96144c488a7
-          author: Pascal
-          text: This code is experimental and was introduced on May 2020 as a way to demonstrate
-                showing atoms from first principles. It should not be considered ready for wide use because
-                the atom is showing fine but there are some missing bits in the HTML template.
-
-          Last update: 19th June 2020
-          author: Pascal
-          text: I am leaving this cde here as an example that may be useful in the future.
-                As far as he original idea of embedding atoms to be rendered by DCR, we have
-                decided to use atoms-rendering: https://github.com/guardian/atoms-rendering
-           */
-
-          val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
-          val html1: String = ArticleAtomRenderer.getHTML(atom.atom, articleConfig)
-          val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(atom.atom.atomType) // Option[String]
-          val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(atom.atom.atomType) // Option[String]
-          val html2: Html = views.html.fragments.atoms.audio(atom.id, Html(html1), css, js)
-          Ok(html2)
-        }
         case Right(atom: ChartAtom) =>
           renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
         case Right(atom: GuideAtom) =>

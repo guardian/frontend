@@ -1,7 +1,7 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.renderer.{ArticleConfiguration, AudioSettings}
+//import com.gu.contentatom.renderer.{ArticleConfiguration, AudioSettings}
 import com.gu.contentatom.thrift.{Atom => AtomApiAtom}
 import conf.Configuration
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
@@ -37,16 +37,6 @@ final case class Atoms(
 }
 
 object Atoms extends common.GuLogging {
-
-  def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false): ArticleConfiguration = {
-    val audioSettings = AudioSettings(externalAdvertising = !isAdFree && useAcast)
-    val artConf = ArticleConfiguration(
-      ajaxUrl = Configuration.ajax.url,
-      audioSettings = audioSettings,
-      commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true),
-    )
-    artConf
-  }
 
   def extract[T](
       atoms: Option[Seq[AtomApiAtom]],

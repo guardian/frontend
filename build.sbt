@@ -65,7 +65,6 @@ val common = library("common")
       playJsonJoda,
       jodaForms,
       jacksonDataFormat,
-      atomRenderer,
       identityModel,
       capiAws,
       pekkoActor,

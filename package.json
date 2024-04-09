@@ -15,7 +15,6 @@
 		"@emotion/react": "^11.1.5",
 		"@emotion/styled": "^10.0.27",
 		"@guardian/ab-core": "^5.0.0",
-		"@guardian/atom-renderer": "^2.0.0",
 		"@guardian/automat-modules": "^0.3.8",
 		"@guardian/commercial": "17.8.0",
 		"@guardian/consent-management-platform": "13.12.1",
