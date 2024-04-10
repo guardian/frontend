@@ -34,8 +34,6 @@ import userPrefs from 'common/modules/user-prefs';
 import fastdom from 'lib/fastdom-promise';
 import { getCountryCode } from 'lib/geolocation';
 import { reportError } from 'lib/report-error';
-import { isInVariantSynchronous } from '../experiments/ab';
-import { blockSupporterRevenueMessagingSport } from '../experiments/tests/block-supporter-revenue-messaging-sport';
 
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp'; // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20 * 60_000;
@@ -167,19 +165,11 @@ export const fetchBannerData = async (): Promise<ModuleDataResponse | null> => {
 	const purchaseInfo = getPurchaseInfo();
 	const isSignedIn = await isUserLoggedIn();
 	const payload = await buildBannerPayload(purchaseInfo, isSignedIn);
-	const shouldHideBannerForTest =
-		isInVariantSynchronous(
-			blockSupporterRevenueMessagingSport,
-			'variant',
-		) &&
-		(payload.targeting.sectionId === 'sport' ||
-			payload.targeting.sectionId === 'football');
 
 	if (
 		payload.targeting.shouldHideReaderRevenue ||
 		payload.targeting.isPaidContent ||
-		isHosted ||
-		shouldHideBannerForTest
+		isHosted
 	) {
 		return Promise.resolve(null);
 	}
