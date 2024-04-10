@@ -5,8 +5,7 @@ const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 let mockOnConsentChangeResult: ConsentState | undefined;
 jest.mock('@guardian/libs', () => ({
-
-	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
+	...jest.requireActual('@guardian/libs'),
 	onConsentChange: (callback: OnConsentChangeCallback) => {
 		if (mockOnConsentChangeResult) {
 			callback(mockOnConsentChangeResult);

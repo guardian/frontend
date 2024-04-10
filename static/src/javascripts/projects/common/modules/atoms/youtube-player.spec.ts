@@ -32,7 +32,7 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('@guardian/libs', () => ({
-	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
+	...jest.requireActual('@guardian/libs'),
 	onConsentChange: jest.fn((callback: OnConsentChangeCallback) =>
 		callback({
 			tcfv2: {
