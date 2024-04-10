@@ -11,7 +11,6 @@ module.exports = {
 		// window.guardian is our global config/settings object
 		'id-denylist': ['error', 'guardian'],
 	},
-	ignorePatterns: ['javascripts.flow.archive'],
 	overrides: [
 		{
 			files: ['*.ts', '*.tsx'],
@@ -35,13 +34,13 @@ module.exports = {
 				],
 			},
 		},
-        {
-            files: ['*.spec.ts'],
-            rules: {
-              // This rule erroneously flags up instances where you expect(obj.fn).toHaveBeenCalled
-              // Enabled for test files only
-              '@typescript-eslint/unbound-method': 'off',
-            },
-          },
+		{
+			files: ['*.spec.ts'],
+			rules: {
+				// This rule erroneously flags up instances where you expect(obj.fn).toHaveBeenCalled
+				// Enabled for test files only
+				'@typescript-eslint/unbound-method': 'off',
+			},
+		},
 	],
 };
