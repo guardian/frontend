@@ -5,7 +5,6 @@ import { cmpBannerCandidate } from './cmp-ui';
 jest.mock('lib/raven');
 
 jest.mock('@guardian/libs', () => ({
-    // eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
     cmp: {
         willShowPrivacyMessage: jest.fn(),

@@ -32,7 +32,6 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('@guardian/libs', () => ({
-	// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
 	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
 	onConsentChange: jest.fn((callback: OnConsentChangeCallback) =>
 		callback({

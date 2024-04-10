@@ -5,7 +5,7 @@ const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 let mockOnConsentChangeResult: ConsentState | undefined;
 jest.mock('@guardian/libs', () => ({
-	// eslint-disable-next-line -- ESLint doesn't understand jest.requireActual
+
 	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
 	onConsentChange: (callback: OnConsentChangeCallback) => {
 		if (mockOnConsentChangeResult) {
