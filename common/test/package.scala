@@ -1,6 +1,6 @@
 package test
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient}
 import common.Lazy
@@ -57,7 +57,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
   }
 
   /**
-    * `HTMLUnit` doesn't support [[org.fluentlenium.core.domain.FluentWebElement.html]]
+    * `HTMLUnit` doesn't support [[io.fluentlenium.core.domain.FluentWebElement.html]]
     * via TestBrowser, so use [[WebClient]] to retrieve a [[WebResponse]] instead, so
     * we can use [[WebResponse.getContentAsString]]
     */

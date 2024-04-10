@@ -1,6 +1,6 @@
 package http
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import model.ApplicationContext
 import play.api.http.HttpFilters
 

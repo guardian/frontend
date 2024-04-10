@@ -64,13 +64,12 @@ val common = library("common")
       playJson,
       playJsonJoda,
       jodaForms,
-      jacksonDataFormat,
       identityModel,
       capiAws,
       pekkoActor,
       pekkoStream,
       pekkoSlf4j,
-    ) ++ jackson,
+    ),
     TestAssets / mappings ~= filterAssets,
   )
 
@@ -154,7 +153,6 @@ val identity = application("identity")
       libPhoneNumber,
       supportInternationalisation,
     ),
-    dependencyOverrides ++= jackson,
     PlayKeys.playDefaultPort := 9009,
     Test / testOptions += Tests.Argument("-oF"),
   )
@@ -182,7 +180,6 @@ val dev = application("dev-build")
   .settings(
     RoutesKeys.routesImport += "bindables._",
     Runtime / javaOptions += "-Dconfig.file=dev-build/conf/dev-build.application.conf",
-    dependencyOverrides ++= jackson,
   )
 
 val preview = application("preview")
@@ -202,14 +199,6 @@ val rss = application("rss")
 
 
 val main = root()
-// This evicts the version of
-// "com.fasterxml.jackson.core:jackson-databind"
-// used by "com.typesafe.play:sbt-plugin"
-  .settings(
-    libraryDependencies ++= Seq(
-      jacksonDatabind,
-    ),
-  )
   .aggregate(
     common,
     facia,

@@ -158,10 +158,6 @@ object TrailsToRss {
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)
         .flatMap(_.curatedPlusBackfillDeduplicated)
-        .filter {
-          case _: LinkSnap => false
-          case _           => true
-        }
         .filter(_.properties.maybeContentId.isDefined)
         .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
         .flatMap(_.properties.maybeContent)

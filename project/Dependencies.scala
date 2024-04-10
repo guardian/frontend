@@ -10,7 +10,7 @@ object Dependencies {
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
-  val playJsonVersion = "2.9.4"
+  val playJsonVersion = "3.0.2"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
@@ -32,8 +32,7 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.2.0"
-
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play28" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
   /**
@@ -59,8 +58,8 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.7"
-  val playGoogleAuth = "com.gu.play-googleauth" %% "play-v28" % "4.0.0"
-  val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v28" % "7.1.0"
+  val playGoogleAuth = "com.gu.play-googleauth" %% "play-v30" % "4.0.0"
+  val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v30" % "7.1.0"
   val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "7.1.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
@@ -70,10 +69,10 @@ object Dependencies {
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.30.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.11" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
-  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.16.0" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.17.0" % Test
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.17.0" % Test
-  val scalaUri = "io.lemonlabs" %% "scala-uri" % "3.0.0"
+  val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.36"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
@@ -89,45 +88,14 @@ object Dependencies {
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client" % "1.1.4"
+  val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.7.0"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.0"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.2"
-  val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
-  val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
+  val playJson = "org.playframework" %% "play-json" % playJsonVersion
+  val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
-
-  /*
-    Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
-    may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
-    dependencies have been upgraded), then do remember to check for regressions.
-
-    The versions are currently set as they are because of:
-    https://github.com/orgs/playframework/discussions/11222
-   */
-  val jacksonVersion = "2.13.4"
-  val jacksonDatabindVersion = "2.13.4.1"
-  val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
-  val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
-  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
-  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
-  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
-  val jacksonParameterName = "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion
-  val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
-  val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
-
-  val jackson =
-    Seq(
-      jacksonCore,
-      jacksonAnnotations,
-      jacksonDataTypeJdk8,
-      jacksonDataType,
-      jacksonDataFormat,
-      jacksonParameterName,
-      jackModule,
-      jacksonDatabind,
-    )
 
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
