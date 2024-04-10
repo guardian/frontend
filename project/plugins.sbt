@@ -7,11 +7,9 @@ libraryDependencies ++= Seq(
   "org.joda" % "joda-convert" % "1.7",
 )
 
-resolvers ++= Resolver.sonatypeOssRepos("releases") ++ Seq(
-  Classpaths.typesafeReleases,
-)
+resolvers ++= Resolver.sonatypeOssRepos("releases")
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.1")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.2")
 
 addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.9.16")
 
@@ -21,6 +19,6 @@ addSbtPlugin("com.github.sbt" % "sbt-git" % "2.0.1")
 
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.0")
 
-addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.10.0-RC1")
+addDependencyTreePlugin
 
-addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.11.0")
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.12.0")

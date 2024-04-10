@@ -1,6 +1,6 @@
 package controllers
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import football.controllers.ResultsController
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
