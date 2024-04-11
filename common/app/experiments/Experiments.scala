@@ -54,3 +54,12 @@ object AMPGlobalAddressList
       sellByDate = LocalDate.of(2024, 4, 30),
       participationGroup = Perc0A,
     )
+
+object UpdatedHeaderDesign
+    extends Experiment(
+      name = "updated-header-design",
+      description = "Test an update to the header and nav components",
+      owners = Seq(Owner.withGithub("cemms1")),
+      sellByDate = LocalDate.of(2024, 9, 30),
+      participationGroup = Perc0B,
+    )

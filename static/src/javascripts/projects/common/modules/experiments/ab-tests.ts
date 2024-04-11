@@ -6,7 +6,6 @@ import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateAlternativeWording } from './tests/sign-in-gate-alternative-wording';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
-import { updatedHeaderDesign } from './tests/updated-header-design';
 
 // keep in sync with ab-tests in dotcom-rendering
 // https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/web/experiments/ab-tests.ts
@@ -17,6 +16,5 @@ export const concurrentTests: readonly ABTest[] = [
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
 	blockSupporterRevenueMessagingSport,
-	updatedHeaderDesign,
 	mastheadWithHighlights,
 ];
