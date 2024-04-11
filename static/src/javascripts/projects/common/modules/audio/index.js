@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import {
     onConsentChange,
     getConsentFor,
-} from '@guardian/consent-management-platform';
+} from '@guardian/libs';
 import { isAdFreeUser } from 'common/modules/commercial/user-features';
 import config from 'lib/config';
 import { AudioPlayer } from './AudioPlayer';

@@ -1,10 +1,11 @@
 import config from 'lib/config';
-import { cmp } from '@guardian/consent-management-platform';
+import { cmp } from '@guardian/libs';
 import { cmpBannerCandidate } from './cmp-ui';
 
 jest.mock('lib/raven');
 
-jest.mock('@guardian/consent-management-platform', () => ({
+jest.mock('@guardian/libs', () => ({
+	...jest.requireActual<typeof import('@guardian/libs')>('@guardian/libs'),
     cmp: {
         willShowPrivacyMessage: jest.fn(),
     },

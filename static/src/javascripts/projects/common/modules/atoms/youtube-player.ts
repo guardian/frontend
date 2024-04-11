@@ -6,9 +6,8 @@ import type {
 	AdsConfigEnabled,
 	AdsConfigTCFV2,
 } from '@guardian/commercial/dist/cjs/core/types';
-import { onConsentChange } from '@guardian/consent-management-platform';
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
-import { loadScript, log } from '@guardian/libs';
+import type { ConsentState } from '@guardian/libs';
+import { loadScript, log, onConsentChange } from '@guardian/libs';
 import fastdom from 'fastdom';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
