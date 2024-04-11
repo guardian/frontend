@@ -1,6 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
 import { blockSupporterRevenueMessagingSport } from './tests/block-supporter-revenue-messaging-sport';
-import { mastheadWithHighlights } from './tests/masthead-with-highlights';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateAlternativeWording } from './tests/sign-in-gate-alternative-wording';
@@ -16,5 +15,4 @@ export const concurrentTests: readonly ABTest[] = [
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
 	blockSupporterRevenueMessagingSport,
-	mastheadWithHighlights,
 ];
