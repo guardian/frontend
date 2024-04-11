@@ -15,6 +15,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       AdaptiveSite,
       CommercialMegaTest,
       DCRTagPages,
+      UpdatedHeaderDesign,
+      MastheadWithHighlights,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
