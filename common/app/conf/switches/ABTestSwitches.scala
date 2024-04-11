@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Shows updated header with top bar and navigation design updates to check if it affects SR or ad revenue",
     owners = Seq(Owner.withGithub("cemms1")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 31)),
+    sellByDate = Some(LocalDate.of(2024, 7, 31)),
     exposeClientSide = true,
   )
 

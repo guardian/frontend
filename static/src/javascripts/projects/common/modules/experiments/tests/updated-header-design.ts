@@ -26,5 +26,5 @@ export const updatedHeaderDesign: ABTest = {
 			},
 		},
 	],
-	canRun: () => window.guardian.config.isDotcomRendering
+	canRun: () => window.guardian.config.isDotcomRendering,
 };
