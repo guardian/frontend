@@ -10,10 +10,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - uses: guardian/actions-setup-node@main
 
-            # Cache npm dependencies using https://github.com/bahmutov/npm-install
-            - uses: bahmutov/npm-install@v1
+            - run: corepack enable
+            - uses: actions/setup-node@v4
+              with:
+                node-version-file: '.nvmrc'
+                cache: yarn
 
             - name: Install
               run: yarn

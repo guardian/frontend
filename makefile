@@ -19,7 +19,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node-env
-	@yarn -s install
+	@yarn install
 	@./tools/sync-githooks.js
 
 # Remove all 3rd party dependencies.
