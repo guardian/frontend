@@ -17,6 +17,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRTagPages,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
+      HomepageRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -74,4 +75,15 @@ object MastheadWithHighlights
       owners = Seq(Owner.withGithub("cemms1")),
       sellByDate = LocalDate.of(2024, 9, 30),
       participationGroup = Perc0C,
+    )
+
+// This will remain in zero percent since it is acting as a way for internal users to preview the new designs in a live environment
+object HomepageRedesign
+    extends Experiment(
+      name = "homepage-redesign",
+      description =
+        "Allows opting in to see latest designs for the homepage redesign project, ahead of the release date in September 2024",
+      owners = Seq(Owner.withGithub("cemms1")),
+      sellByDate = LocalDate.of(2024, 9, 30),
+      participationGroup = Perc0D,
     )
