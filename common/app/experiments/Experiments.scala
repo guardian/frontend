@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      AMPGlobalAddressList,
       AdaptiveSite,
       CommercialMegaTest,
       DCRTagPages,
@@ -46,15 +45,6 @@ object DCRTagPages
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 4, 15),
       participationGroup = Perc10A,
-    )
-
-object AMPGlobalAddressList
-    extends Experiment(
-      name = "amp-global-address-list",
-      description = "Test a change to the global address list on AMP",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 4, 30),
-      participationGroup = Perc0A,
     )
 
 object UpdatedHeaderDesign
