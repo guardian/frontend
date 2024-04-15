@@ -19,7 +19,15 @@ Tired of pointing your `facia.stage` at `CODE`?  Have you ever longed to change 
           facia.stage=CODE
         }
 
-3. If overriding switches, control what you want turned on in file switches-yournamehere.properties. Upload your file to the S3 frontend store bucket (aws-frontend-store/DEV/config).
+3. If overriding switches, control what you want turned on in file `switches-yournamehere.properties` then upload your file to the S3 frontend store bucket (`<bucket>/DEV/config`).
+  - An easy way to do this using the AWS CLI is to download the CODE switches JSON:
+  
+    ```aws s3 cp s3://<bucket>/CODE/config/switches.properties switches-yournamehere.properties --profile frontend```
+    
+    then amend the values you need, and upload back to the DEV section in S3:
+    
+    ```aws s3 cp switches-yournamehere.properties s3://<bucket>/DEV/config/switches-yournamehere.properties --profile frontend```
+
 
 4. Restart the app you're working on
 

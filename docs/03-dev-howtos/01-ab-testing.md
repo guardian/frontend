@@ -6,26 +6,35 @@ Most tests can be written in JavaScript, although we can serve variants via Varn
 
 Read this if you want to [write a server-side AB Test](#write-a-server-side-test)
 
-# Guide
+## Guide
 
 There are six steps in the test lifecycle:
 
- - [Adding a switch to turn the test on & off](#adding-a-switch)
- - [Writing a test, which is typically a simple JS module](#writing-a-test)
- - [Running the test](#running-the-test)
+ - [Adding a switch to turn the test on & off)](#adding-a-switch). For server-side tests, this is included in the test definition.
+ - Writing a test e.g. [client-side](#writing-a-test) or [server-side](#write-a-server-side-test)
+ - [Running the test](#running-the-test) or [configuring your server-side test](#configure-the-test)
  - [Analysis of the test data](#analysis-of-the-test-data)
  - [Share your findings](#share-your-findings)
  - Delete the test
 
 ## Quick Tips
 
+- Decide if you need to create a [server-side AB test](#write-a-server-side-test) or a [client-side](#client-side-ab-tests) one. 
+  - You should consider testing server-side if you:
+    - Are making **rendering** changes (e.g. in DCR) and might be concerned about layout shift during rendering
+    - Only require knowledge of the request header in order to vary the response (ie. anonymised page data is sufficient / you do not need to understand current state of a page)
+  - Server-side tests support simple A/B tests (control / variant) but not multivariant ones (control / variant1 / variant2), whereas you can do either with client-side tests
+
+Client side tests:
 - Creating your switch: if it's an ab test it should start with `ab-` (see more naming conventions in [Adding a switch](#adding-a-switch))
 - Choosing your audience offset: it is good to avoid overlapping tests. You can check [here](https://frontend.gutools.co.uk/analytics/abtests) to see what tests are currently running, and what their offset is.
 - Is your audience percentage appropriate for your test? Ask the data team if you don't know.
 - Starting/Stopping a test: You can start and stop your tests in production at any time using the [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
-- Ophan has a dashboard with all the active AB tests [here](https://dashboard.ophan.co.uk/ab)
+- ~~Ophan has a dashboard with all the active AB tests [here](https://dashboard.ophan.co.uk/ab)~~ _TODO: Dashboard link needs replacing_
 
-## Adding a switch
+## Client-side AB tests
+
+### Adding a switch
 
 A switch allows you to stop and start the AB test outside of a normal software release cycle.
 
@@ -45,7 +54,7 @@ e.g. if the switch id is `ab-geo-most-popular`, the test id must be `GeoMostPopu
 
 You will notice here that the switches we use to run our AB testing are the same switches we use to toggle features.
 
-## Writing a test
+### Writing a test
 
 A test is simply a JavaScript module written to some conventions.
 
@@ -192,15 +201,15 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
 
 To collect metrics for a client-side test, add your test here: `static/src/javascripts/projects/common/modules/analytics/shouldCaptureMetrics.ts`.
 
-### Forcing yourself into a test
+#### Forcing yourself into a test
 Add #ab-<TestName>=<VariantName> to the end of your URL (in dev or prod) to force yourself into a test.
 e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton. **Note that this will only work if the `canRun` of your test and variant is true on that pageview.**
 
-#### Firing complete events in dev mode
+##### Firing complete events in dev mode
 In prod, the completion events are fired based on the MVT ID cookie. This doesn't exist in dev, so if you need to test a complete event, force yourself into the test using the #ab-<TestName>=<VariantName> pattern described above.
 This way, the `success` function of the test and variant you specify will be run, so you can test your completion behaviour.
 
-### Detecting a user's bucket
+#### Detecting a user's bucket
 You can use this code to check anywhere in your JS whether you're in a test bucket. You need to import `isInVariant` from ```'common/modules/experiments/ab'``` and your test object (in this example `FaciaSlideshowTest`).
 ```
 if (isInVariant(FaciaSlideshowTest, 'variant')) {
@@ -208,7 +217,7 @@ if (isInVariant(FaciaSlideshowTest, 'variant')) {
 }
 ```
 
-## Running the test
+### Running the test
 
 Release the test in to the wild just means deploying the frontend software, so you
 can follow our standard [contributing guidelines](https://github.com/guardian/frontend/blob/main/CONTRIBUTING.md).
@@ -219,19 +228,20 @@ To see the test in action locally: `localhost:9000/[articleId]#ab-[testName]=[va
 
 To see the tests you are part of using Google Chrome: open the `Dev Console -> Application -> Local Storage` and choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row. You can also add `#experiments` to the URL to get an overlay on the left-hand side which shows the contents of `gu.ab.participations` and allows you to change them. **Note that if a test's `canRun` is false on that pageview, the participation will be removed from `gu.ab.participations` and therefore not appear in the `#experiments` overlay.**
 
-## Analysis of the test data
+### Analysis of the test data
 
-### Omniture
+#### Omniture
 
 For simple analysis of the data you can use [Omniture](https://sc.omniture.com)
 
 The data is logged under the Omniture property _p51_.
 
-### Ophan
+#### Ophan
 
 We have an [AB test dashboard](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
 
-Ophan also has a [dashboard](https://dashboard.ophan.co.uk/ab) where you can take a look at your test data
+~~Ophan also has a [dashboard](https://dashboard.ophan.co.uk/ab) where you can take a look at your test data~~ _TODO: Dashboard link needs replacing_
+
 
 For inspection of the raw test data you can query the datalake created by the data team.
 
@@ -295,7 +305,7 @@ It adds a rather large overhead to the cookie (mine is 2.5kb).
 
 # Write a Server-Side Test
 
-If you want to set up your AB test with scala instead of javascript, almost all the steps are different.
+If you want to set up your AB test to run away from the client ie. with scala, or in server-side rendered javascript, almost all the steps are different.
 
 *Advantages:*
 - Allows you to run tests that just won't work in javascript ie if you want to render a whole different page
@@ -393,6 +403,9 @@ Example Header Hacker configuration for putting yourself into a 50% test on CODE
 
     ```
 You can determine the header you need to set by looking at the [list of headers found here](https://github.com/guardian/frontend/blob/0657f594e2fd51125d28df9048c48d6eede26bb6/common/app/experiments/ParticipationGroups.scala#L10).
+
+> [!TIP]
+> You must ensure that the relevant AB test switch is turned on locally in order to opt in via request headers. See [overriding default configuration](../03-dev-howtos/14-override-default-configuration.md).
 
  ## Getting the results
 
