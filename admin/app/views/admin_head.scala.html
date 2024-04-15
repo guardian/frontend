@@ -1,6 +1,4 @@
-@(
-    isAuthed: Boolean = false
-)(implicit request: RequestHeader, context: model.ApplicationContext)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
 
@@ -13,16 +11,5 @@
                 </a>
             </div>
             <p class="navbar-text navbar-env" data-env="@Configuration.environment.stage.toLowerCase()">Environment: @Configuration.environment.stage</p>
-            @if(isAuthed){
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/logout" id="logout-button">Logout</a>
-                    </li>
-                </ul>
-            } else {
-                <form action="@controllers.admin.routes.OAuthLoginAdminController.login" method="post" class="navbar-form navbar-right">
-                    <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
-                </form>
-            }
         </div>
     </div>

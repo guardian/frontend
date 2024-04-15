@@ -1,28 +1,22 @@
 package controllers.cache
 
-import java.net.URI
-import java.util.UUID
-import com.gu.googleauth.UserIdentity
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
-import play.api.http.HttpConfiguration
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
 
+import java.net.URI
+import java.util.UUID
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 class ImageDecacheController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
-    val httpConfiguration: HttpConfiguration,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
-    with ImplicitControllerExecutionContext
-    with AdminAuthController {
+    with ImplicitControllerExecutionContext {
   import ImageDecacheController._
 
   private val iGuim = """i.(guim|guimcode).co.uk/img/(static|media|uploads|sport)(/.*)""".r
@@ -34,9 +28,8 @@ class ImageDecacheController(
     }
 
   def decache(): Action[AnyContent] =
-    AdminAuthAction(httpConfiguration).async { implicit request =>
-      getSubmittedImage(request)
-        .map(new URI(_))
+    Action.async { implicit request =>
+      getSubmittedImageURI(request)
         .map { imageUri =>
           // here we limit the url to ones for which purging is supported
           val originUrl: String = s"${imageUri.getHost}${imageUri.getPath}" match {
@@ -84,15 +77,15 @@ class ImageDecacheController(
 
         }
         .getOrElse(successful(BadRequest("No image submitted")))
-
     }
 
-  private def getSubmittedImage(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] =
+  private def getSubmittedImageURI(request: Request[AnyContent]): Option[URI] =
     request.body.asFormUrlEncoded
       .getOrElse(Map.empty)
       .get("url")
       .flatMap(_.headOption)
       .map(_.trim)
+      .map(new URI(_))
 
 }
 

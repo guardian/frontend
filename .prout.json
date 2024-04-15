@@ -8,7 +8,7 @@
             }
         },
         "ADMIN-PROD": {
-            "url": "https://frontend.gutools.co.uk/login",
+            "url": "https://frontend.gutools.co.uk/_healthcheck",
             "overdue": "30M",
             "messages": {
                 "seen": "prout/seen.md"

@@ -1,32 +1,24 @@
 package controllers.cache
 
 import java.net.URI
-import com.gu.googleauth.UserIdentity
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
 import org.apache.commons.codec.digest.DigestUtils
-import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
-import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
 import purge.{AjaxHost, CdnPurge, GuardianHost}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-case class PrePurgeTestResult(url: String, passed: Boolean)
-
 class PageDecacheController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
-    val httpConfiguration: HttpConfiguration,
 )(implicit
     context: ApplicationContext,
 ) extends BaseController
     with GuLogging
-    with ImplicitControllerExecutionContext
-    with AdminAuthController {
+    with ImplicitControllerExecutionContext {
 
   def renderPageDecache(): Action[AnyContent] =
     Action.async { implicit request =>
@@ -39,7 +31,7 @@ class PageDecacheController(
     }
 
   def decacheAjax(): Action[AnyContent] =
-    AdminAuthAction(httpConfiguration).async { implicit request =>
+    Action.async { implicit request =>
       getSubmittedUrlPathMd5(request) match {
         case Some(path) =>
           CdnPurge.soft(wsClient, path, AjaxHost).map(message => NoCache(Ok(views.html.cache.ajaxDecache(message))))
@@ -48,7 +40,7 @@ class PageDecacheController(
     }
 
   def decachePage(): Action[AnyContent] =
-    AdminAuthAction(httpConfiguration).async { implicit request =>
+    Action.async { implicit request =>
       getSubmittedUrlPathMd5(request) match {
         case Some(md5Path) =>
           CdnPurge
@@ -58,13 +50,15 @@ class PageDecacheController(
       }
     }
 
-  private def getSubmittedUrlPathMd5(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] = {
+  private def getSubmittedUrlPathMd5(request: Request[AnyContent]): Option[String] = {
     request.body.asFormUrlEncoded
       .getOrElse(Map.empty)
       .get("url")
       .flatMap(_.headOption)
       .map(_.trim)
-      .map(url => DigestUtils.md5Hex(new URI(url).getPath))
+      .map(new URI(_))
+      .map(_.getPath)
+      .map(DigestUtils.md5Hex)
   }
 
 }

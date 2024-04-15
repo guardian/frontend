@@ -1,6 +1,8 @@
 import agents.MostViewedAgent
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
@@ -17,7 +19,7 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
-import http.PreviewFilters
+import http.{Filters, GuardianAuthWithExemptions, PreviewContentSecurityPolicyFilter, PreviewNoCacheFilter, routes}
 import jobs.{MessageUsLifecycle, TopicLifecycle}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -32,6 +34,7 @@ import rugby.controllers.RugbyControllers
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
+import conf.Configuration.aws.mandatoryCredentials
 
 trait PreviewLifecycleComponents
     extends SportServices
@@ -92,7 +95,6 @@ trait PreviewControllerComponents
   lazy val faciaDraftController = wire[FaciaDraftController]
   lazy val faviconController = wire[FaviconController]
   lazy val itemController = wire[ItemController]
-  lazy val oAuthLoginController = wire[OAuthLoginPreviewController]
   lazy val mostViewedAgent = wire[MostViewedAgent]
 }
 
@@ -102,6 +104,19 @@ trait AppComponents
     with PreviewLifecycleComponents
     with OnwardServices
     with ApplicationsServices {
+
+  private lazy val s3Client =
+    AmazonS3ClientBuilder.standard().withRegion(Regions.EU_WEST_1).withCredentials(mandatoryCredentials).build()
+
+  private lazy val auth = new GuardianAuthWithExemptions(
+    controllerComponents,
+    wsClient,
+    toolsDomainPrefix = "preview",
+    oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
+    s3Client,
+    system = "preview",
+    extraDoNotAuthenticatePathPrefixes = healthCheck.healthChecks.map(_.path),
+  )
 
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) {
     override val signer = Some(PreviewSigner())
@@ -118,7 +133,7 @@ trait AppComponents
     DCRMetrics.DCRRequestCountMetric,
   )
 
-  lazy val healthCheck = wire[HealthCheck]
+  lazy val healthCheck: HealthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
 
   lazy val router: Router = wire[Routes]
@@ -127,7 +142,11 @@ trait AppComponents
   override def lifecycleComponents: List[LifecycleComponent] =
     standaloneLifecycleComponents :+ wire[CachedHealthCheckLifeCycle]
 
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[PreviewFilters].filters
+  override lazy val httpFilters: Seq[EssentialFilter] =
+    auth.filter :: new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: Filters.common(
+      frontend.preview.BuildInfo,
+    )
+
   override lazy val httpErrorHandler: HttpErrorHandler = wire[PreviewErrorHandler]
 }
 

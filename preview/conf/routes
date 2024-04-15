@@ -10,12 +10,8 @@ GET        /assets/internal/*file                                               
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 GET        /geolocation                                                                        controllers.FakeGeolocationController.geolocation
 
-#Login
 # authentication endpoints
-GET           /login                                                                           controllers.OAuthLoginPreviewController.login
-POST          /login                                                                           controllers.OAuthLoginPreviewController.loginAction
-GET           /oauth2callback                                                                  controllers.OAuthLoginPreviewController.oauth2Callback
-GET           /logout                                                                          controllers.OAuthLoginPreviewController.logout
+GET         /oauthCallback                                                                    http.GuardianAuthWithExemptions.oauthCallback
 
 # Crossword
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)

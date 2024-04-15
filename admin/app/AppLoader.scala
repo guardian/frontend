@@ -8,10 +8,12 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}
+import http.{AdminHttpErrorHandler, CommonGzipFilter, Filters, GuardianAuthWithExemptions, routes}
 import dev.DevAssetsController
 import jobs._
 import model.{AdminLifecycle, ApplicationIdentity}
@@ -25,6 +27,7 @@ import play.api.i18n.I18nComponents
 import play.api.libs.ws.WSClient
 import services.{ParameterStoreService, _}
 import router.Routes
+import conf.Configuration.aws.mandatoryCredentials
 
 import scala.concurrent.ExecutionContext
 
@@ -76,6 +79,35 @@ trait AdminServices extends I18nComponents {
 
 trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {
 
+  private lazy val s3Client = AmazonS3ClientBuilder
+    .standard()
+    .withRegion(Regions.EU_WEST_1)
+    .withCredentials(
+      mandatoryCredentials,
+    )
+    .build()
+
+  lazy val auth = new GuardianAuthWithExemptions(
+    controllerComponents,
+    wsClient,
+    toolsDomainPrefix = "frontend",
+    oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
+    s3Client,
+    system = "frontend-admin",
+    extraDoNotAuthenticatePathPrefixes = Seq(
+      "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
+      "/deploy", //not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
+      // Date: 06 July 2021
+      // Author: Pascal
+      // Added as part of posing the ground for the interactive migration.
+      // It should be removed when the Interactives migration is complete, meaning when we no longer need the routes
+      // POST /interactive-librarian/live-presser/*path
+      // POST /interactive-librarian/read-clean-write/*path
+      // in [admin].
+      "/interactive-librarian/",
+    ),
+  )
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
@@ -88,7 +120,6 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     wire[SurgingContentAgentLifecycle],
     wire[DfpAgentLifecycle],
     wire[DfpDataCacheLifecycle],
-    wire[CachedHealthCheckLifeCycle],
     wire[CommercialDfpReportingLifecycle],
   )
 
@@ -103,6 +134,8 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   def pekkoActorSystem: PekkoActorSystem
 
+  override lazy val httpFilters: Seq[EssentialFilter] =
+    auth.filter :: Filters.common(frontend.admin.BuildInfo) ++ wire[CommonGzipFilter].filters
+
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters ++ wire[AdminFilters].filters
 }

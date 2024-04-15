@@ -1,9 +1,9 @@
 package controllers.admin
 
-import com.gu.googleauth.UserIdentity
 import common._
 import conf.Configuration
 import conf.switches.Switches
+import http.GuardianAuthWithExemptions
 import model.{ApplicationContext, NoCache}
 import play.api.mvc._
 import services.SwitchNotification
@@ -11,7 +11,11 @@ import tools.Store
 
 import scala.concurrent.Future
 
-class SwitchboardController(pekkoAsync: PekkoAsync, val controllerComponents: ControllerComponents)(implicit
+class SwitchboardController(
+    pekkoAsync: PekkoAsync,
+    auth: GuardianAuthWithExemptions,
+    val controllerComponents: ControllerComponents,
+)(implicit
     context: ApplicationContext,
 ) extends BaseController
     with GuLogging
@@ -56,7 +60,9 @@ class SwitchboardController(pekkoAsync: PekkoAsync, val controllerComponents: Co
       } else {
         log.info("saving switchboard")
 
-        val requester: String = UserIdentity.fromRequest(request) map (_.fullName) getOrElse "unknown user (dev-build?)"
+        val requester: String =
+          auth.readAuthenticatedUser(request) map (authed => s"${authed.user.firstName} ${authed.user.lastName}",
+          ) getOrElse "unknown user (dev-build?)"
         val updates: Seq[String] = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
             switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")

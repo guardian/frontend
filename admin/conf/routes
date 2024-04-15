@@ -6,10 +6,7 @@
 GET         /_healthcheck                                                                           controllers.HealthCheck.healthCheck()
 
 # authentication endpoints
-GET         /login                                                                                  controllers.admin.OAuthLoginAdminController.login
-POST        /login                                                                                  controllers.admin.OAuthLoginAdminController.loginAction
-GET         /oauth2callback                                                                         controllers.admin.OAuthLoginAdminController.oauth2Callback
-GET         /logout                                                                                 controllers.admin.OAuthLoginAdminController.logout
+GET         /oauthCallback                                                                          http.GuardianAuthWithExemptions.oauthCallback
 
 # static files
 GET         /assets/admin/lib/*file                                                                 controllers.admin.UncachedWebAssets.at(file)
