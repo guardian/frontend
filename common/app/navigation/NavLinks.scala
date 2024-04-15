@@ -20,6 +20,7 @@ object NavLinks {
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = Some("US politics"))
   val usElections2024 = NavLink("US elections 2024", "/us-news/us-elections-2024")
+  val trumpTrials = NavLink("Donald Trump trials", "/us-news/donald-trump-trials")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -309,6 +310,7 @@ object NavLinks {
     List(
       usNews,
       usElections2024,
+      trumpTrials,
       world,
       usEnvironment,
       ukraine,
