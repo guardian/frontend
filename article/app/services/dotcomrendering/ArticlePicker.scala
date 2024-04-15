@@ -23,15 +23,15 @@ object ArticlePageChecks {
 
 object ArticlePicker {
 
-  def dcrChecks(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+  def dcrChecks(page: PageWithStoryPackage): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
     )
   }
 
-  private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    val allowListFeatures = dcrChecks(page, request)
+  private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage): Boolean = {
+    val allowListFeatures = dcrChecks(page)
     val article100PercentPageFeatures = allowListFeatures.view.filterKeys(
       Set(
         "isSupportedType",
@@ -45,14 +45,14 @@ object ArticlePicker {
   def getTier(page: PageWithStoryPackage, path: String)(implicit
       request: RequestHeader,
   ): RenderType = {
-    val checks = dcrChecks(page, request)
+    val checks = dcrChecks(page)
     val dcrCanRender = checks.values.forall(identity)
     val isNotPaidContent = ArticlePageChecks.isNotPaidContent(page)
     val shouldServePressed = PressedContent.isPressed(ensureStartingForwardSlash(path)) && isNotPaidContent
 
     val tier: RenderType = decideTier(shouldServePressed, dcrCanRender)
 
-    val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
+    val isArticle100PercentPage = dcrArticle100PercentPage(page)
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     // include features that we wish to log but not allow-list against
