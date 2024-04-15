@@ -18,7 +18,6 @@ object NavLinks {
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
-  val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = Some("US politics"))
   val usElections2024 = NavLink("US elections 2024", "/us-news/us-elections-2024")
   val trumpTrials = NavLink("Donald Trump trials", "/us-news/donald-trump-trials")
 
@@ -45,10 +44,8 @@ object NavLinks {
   val banking = NavLink("Banking", "/business/banking")
   val retail = NavLink("Retail", "/business/retail")
   val markets = NavLink("Markets", "/business/stock-markets")
-  val eurozone = NavLink("Eurozone", "/business/eurozone")
   val ukraine = NavLink("Ukraine", "/world/ukraine")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
-  val ourWideBrownLand = NavLink("Our wide brown land", "/environment/series/our-wide-brown-land")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
   val projectSyndicate = NavLink("Project Syndicate", "/business/series/project-syndicate-economists")
@@ -66,7 +63,6 @@ object NavLinks {
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/obituaries")
   val greenLight = NavLink("Green light", "/environment/series/green-light")
-  val fightForDemocracy = NavLink("Fight for democracy", "/us-news/series/the-fight-for-democracy")
   val ukNews = NavLink(
     "UK",
     "/uk-news",
@@ -148,7 +144,6 @@ object NavLinks {
   val usSports = NavLink("US sports", "/sport/us-sport")
   val racing = NavLink("Racing", "/sport/horse-racing")
   val rugbyLeague = NavLink("Rugby league", "/sport/rugbyleague")
-  val australiaSport = NavLink("Australia sport", "/sport/australia-sport")
   val AFL = NavLink("AFL", "/sport/afl")
   val NRL = NavLink("NRL", "/sport/nrl")
   val aLeague = NavLink("A-League", "/football/a-league")
@@ -187,7 +182,6 @@ object NavLinks {
   val travelUk = NavLink("UK", "/travel/uk")
   val travelEurope = NavLink("Europe", "/travel/europe")
   val travelUs = NavLink("US", "/travel/usa")
-  val skiing = NavLink("Skiing", "/travel/skiing")
   val travelAustralasia = NavLink("Australasia", "/travel/australasia")
   val travelAsia = NavLink("Asia", "/travel/asia")
   val ukTravel = NavLink("Travel", "/travel", children = List(travelUk, travelEurope, travelUs))
