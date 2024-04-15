@@ -10,7 +10,7 @@ Read this if you want to [write a server-side AB Test](#write-a-server-side-test
 
 There are six steps in the test lifecycle:
 
- - [Adding a switch to turn the test on & off)](#adding-a-switch). For server-side tests, this is included in the test definition.
+ - Adding a switch to turn the test on & off. [This is required explicitly for client-side AB tests](#adding-a-switch), though for server-side tests the switch is created automatically.
  - Writing a test e.g. [client-side](#writing-a-test) or [server-side](#write-a-server-side-test)
  - [Running the test](#running-the-test) or [configuring your server-side test](#configure-the-test)
  - [Analysis of the test data](#analysis-of-the-test-data)
@@ -305,11 +305,9 @@ It adds a rather large overhead to the cookie (mine is 2.5kb).
 
 # Write a Server-Side Test
 
-If you want to set up your AB test to run away from the client ie. with scala, or in server-side rendered javascript, almost all the steps are different.
-
 *Advantages:*
-- Allows you to run tests that just won't work in javascript ie if you want to render a whole different page
-- Avoid javascript rendering problems (eg a jump if a DOM element is rendered and then hidden)
+- Allows you to run tests that won't work in the client i.e. if you want to render a whole different page
+- Avoids client-side rendering problems (eg a jump if a DOM element is rendered and then hidden)
 
 *Disadvantages:*
 - Can only do AB tests, not multivariant ABC test
