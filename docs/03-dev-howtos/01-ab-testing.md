@@ -21,7 +21,7 @@ There are six steps in the test lifecycle:
 
 - Decide if you need to create a [server-side AB test](#write-a-server-side-test) or a [client-side](#client-side-ab-tests) one. 
   - You should consider testing server-side if you:
-    - Are making **rendering** changes (e.g. in DCR) and might be concerned about layout shift during rendering
+    - Are testing server-side **rendering** changes (e.g. in DCR)
     - Only require knowledge of the request header in order to vary the response (ie. anonymised page data is sufficient / you do not need to understand current state of a page)
   - Server-side tests support simple A/B tests (control / variant) but not multivariant ones (control / variant1 / variant2), whereas you can do either with client-side tests
 
