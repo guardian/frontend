@@ -877,6 +877,8 @@ object PageElement {
       case _: WitnessBlockElement         => true
       case _: VineBlockElement            => true
       case _: ListBlockElement            => true
+      case _: TimelineBlockElement        => true
+
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
 
@@ -1479,6 +1481,7 @@ object PageElement {
         }.toList
 
       case Timeline =>
+        println("inside timeline")
         element.timelineTypeData.map { timelineTypeData =>
           TimelineBlockElement(
             sections = makeTimelineSection(
