@@ -9,7 +9,6 @@ object ElementsEnhancer {
   //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
 
   def enhanceElement(element: JsValue): JsValue = {
-    println(">>> enhanceElement")
     val elementWithId = element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
     val elementType = elementWithId.value("_type").as[String]
     val elementIsList = elementType == "model.dotcomrendering.pageElements.ListBlockElement"
@@ -24,8 +23,6 @@ object ElementsEnhancer {
       }
       elementWithId ++ Json.obj("items" -> listItemsWithIds)
     } else if (elementIsTimeline) {
-      println(">>> enhanceElement : elementIsTimeline")
-
       val sectionsList = elementWithId.value("sections").as[List[JsObject]]
       val sectionListWithIds = sectionsList.map { section =>
         val eventList = section.value("events").as[List[JsObject]]
@@ -34,9 +31,7 @@ object ElementsEnhancer {
           val bodyListWithIds = bodyList.value.map(currentBlock => {
             enhanceElement(currentBlock)
           })
-
           event ++ Json.obj("body" -> bodyListWithIds)
-
         }
         section ++ Json.obj("events" -> eventListWithIds)
       }
