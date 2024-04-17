@@ -32,7 +32,7 @@ case class DotcomFrontsRenderingDataModel(
     mostShared: Option[Trail],
     deeplyRead: Option[Seq[Trail]],
     contributionsServiceUrl: String,
-    canonicalUrl: String
+    canonicalUrl: String,
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -94,7 +94,7 @@ object DotcomFrontsRenderingDataModel {
       mostShared = mostShared.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
       deeplyRead = deeplyRead,
       contributionsServiceUrl = Configuration.contributionsService.url,
-      canonicalUrl = CanonicalLink(request, page.metadata.webUrl)
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
     )
   }
 

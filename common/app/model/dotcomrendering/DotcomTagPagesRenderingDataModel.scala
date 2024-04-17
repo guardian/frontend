@@ -61,7 +61,7 @@ object DotcomTagPagesRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageFooter" -> model.pageFooter,
         "isAdFreeUser" -> model.isAdFreeUser,
-        "canonicalUrl" -> model.canonicalUrl
+        "canonicalUrl" -> model.canonicalUrl,
       )
     }
   }
@@ -125,7 +125,7 @@ object DotcomTagPagesRenderingDataModel {
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
-      canonicalUrl = CanonicalLink(request, page.metadata.webUrl)
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
     )
   }
 
