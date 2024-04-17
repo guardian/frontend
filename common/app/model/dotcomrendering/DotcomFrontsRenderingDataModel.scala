@@ -1,6 +1,6 @@
 package model.dotcomrendering
 
-import common.Edition
+import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
@@ -32,6 +32,7 @@ case class DotcomFrontsRenderingDataModel(
     mostShared: Option[Trail],
     deeplyRead: Option[Seq[Trail]],
     contributionsServiceUrl: String,
+    canonicalUrl: String
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -93,6 +94,7 @@ object DotcomFrontsRenderingDataModel {
       mostShared = mostShared.flatMap(ContentCard.fromApiContent).flatMap(Trail.contentCardToTrail),
       deeplyRead = deeplyRead,
       contributionsServiceUrl = Configuration.contributionsService.url,
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl)
     )
   }
 
