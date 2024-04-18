@@ -18,8 +18,6 @@ object ArticlePageChecks {
 
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
-  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
-
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.item.tags.isPaidContent
 }
 
@@ -29,7 +27,6 @@ object ArticlePicker {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
-      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
     )
   }
 
@@ -39,7 +36,6 @@ object ArticlePicker {
       Set(
         "isSupportedType",
         "isNotAGallery",
-        "isNotLiveBlog",
       ),
     )
 
