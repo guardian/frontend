@@ -1,11 +1,11 @@
 package model.dotcomrendering
 
-import common.Edition
+import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
 import experiments.ActiveExperiments
-import model.{MetaData, Tags}
+import model.Tags
 import model.pressed.PressedContent
 import navigation.{FooterLinks, Nav}
 import org.joda.time.{DateTime, DateTimeZone}
@@ -34,6 +34,7 @@ case class DotcomTagPagesRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageFooter: PageFooter,
     isAdFreeUser: Boolean,
+    canonicalUrl: String,
 )
 
 object DotcomTagPagesRenderingDataModel {
@@ -60,6 +61,7 @@ object DotcomTagPagesRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageFooter" -> model.pageFooter,
         "isAdFreeUser" -> model.isAdFreeUser,
+        "canonicalUrl" -> model.canonicalUrl,
       )
     }
   }
@@ -123,6 +125,7 @@ object DotcomTagPagesRenderingDataModel {
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
     )
   }
 
