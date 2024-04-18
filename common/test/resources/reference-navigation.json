@@ -1127,7 +1127,7 @@
 				},
 				{
 					"title": "Soccer",
-					"url": "/soccer",
+					"url": "/us/soccer",
 					"children": [
 						{
 							"title": "Live scores",
@@ -1176,7 +1176,7 @@
 				},
 				{
 					"title": "Business",
-					"url": "/business",
+					"url": "/us/business",
 					"children": [
 						{
 							"title": "Economics",
@@ -1207,7 +1207,7 @@
 				},
 				{
 					"title": "Tech",
-					"url": "/technology",
+					"url": "/us/technology",
 					"children": [],
 					"classList": []
 				},
@@ -1225,7 +1225,7 @@
 				},
 				{
 					"title": "Wellness",
-					"url": "/wellness",
+					"url": "/us/wellness",
 					"children": [],
 					"classList": []
 				}
@@ -1279,7 +1279,7 @@
 			"children": [
 				{
 					"title": "Soccer",
-					"url": "/soccer",
+					"url": "/us/soccer",
 					"children": [
 						{
 							"title": "Live scores",
@@ -1442,7 +1442,7 @@
 			"children": [
 				{
 					"title": "Wellness",
-					"url": "/wellness",
+					"url": "/us/wellness",
 					"children": [],
 					"classList": []
 				},
