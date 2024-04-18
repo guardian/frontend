@@ -1481,7 +1481,6 @@ object PageElement {
         }.toList
 
       case Timeline =>
-        println("inside timeline")
         element.timelineTypeData.map { timelineTypeData =>
           TimelineBlockElement(
             sections = makeTimelineSection(
