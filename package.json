@@ -14,7 +14,7 @@
 		"@emotion/core": "^10.0.27",
 		"@emotion/react": "^11.1.5",
 		"@emotion/styled": "^10.0.27",
-		"@guardian/ab-core": "^5.0.0",
+		"@guardian/ab-core": "^7.0.1",
 		"@guardian/automat-modules": "^0.3.8",
 		"@guardian/commercial": "^17.13.0",
 		"@guardian/core-web-vitals": "^5.0.0",
