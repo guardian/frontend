@@ -69,7 +69,7 @@
 		"@babel/preset-typescript": "^7.17.12",
 		"@babel/register": "^7.11.5",
 		"@babel/runtime": "^7.11.2",
-		"@guardian/eslint-config-typescript": "^0.7.0",
+		"@guardian/eslint-config-typescript": "^9.0.4",
 		"@guardian/prettier": "^3.0.0",
 		"@types/google.analytics": "^0.0.42",
 		"@types/googletag": "^1.1.3",
