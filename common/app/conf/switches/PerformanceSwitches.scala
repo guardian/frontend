@@ -186,4 +186,14 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val AdaptiveSite = Switch(
+    SwitchGroup.Performance,
+    "adaptive-site",
+    "If switched on, the site will run a pared-back set of features on poorly-performing page views.",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
