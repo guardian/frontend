@@ -8,7 +8,6 @@ import views.html.stacked
 import views.html.fragments._
 import views.html.fragments.page.body._
 import views.support.Commercial
-import conf.switches.Switches
 
 trait HtmlPage[P <: model.Page] {
   def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
@@ -31,7 +30,7 @@ object HtmlPageHelpers {
         .isAdFree(request)
     val headerContent: Html = stacked(
       commercial.topBanner() when showTop && showAds,
-      if (Switches.headerTopNav.isSwitchedOn && !page.metadata.hasSlimHeader) headerTopNav() else header() when showTop,
+      if (!page.metadata.hasSlimHeader) headerTopNav() else header() when showTop,
     )
     bannerAndHeaderDiv(headerContent)
   }

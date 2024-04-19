@@ -473,16 +473,6 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val headerTopNav = Switch(
-    SwitchGroup.Feature,
-    "header-top-nav",
-    "When ON, the header has a thin top bar above containing relevant links",
-    owners = group(Feature),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val Callout = Switch(
     SwitchGroup.Feature,
     "callouts",
