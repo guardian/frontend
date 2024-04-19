@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      AdaptiveSite,
       CommercialMegaTest,
       DCRTagPages,
       UpdatedHeaderDesign,
@@ -27,15 +26,6 @@ object CommercialMegaTest
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 8, 8),
       participationGroup = Perc5A,
-    )
-
-object AdaptiveSite
-    extends Experiment(
-      name = "adaptive-site",
-      description = "Enables serving an adaptive version of the site that responds to page performance",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 2),
-      participationGroup = Perc1A,
     )
 
 object DCRTagPages
