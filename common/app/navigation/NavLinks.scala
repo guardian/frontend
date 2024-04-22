@@ -131,7 +131,7 @@ object NavLinks {
       footballClubs,
     ),
   )
-  val soccer = NavLink(
+  val usSoccer = NavLink(
     title = "Soccer",
     url = "/us/soccer",
     children = List(
@@ -196,7 +196,7 @@ object NavLinks {
   val ukTravel = NavLink("Travel", "/travel", children = List(travelUk, travelEurope, travelUs))
   val usTravel = ukTravel.copy(children = List(travelUs, travelEurope, travelUk))
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
-  val wellness = NavLink("Wellness", "/us/wellness")
+  val usWellness = NavLink("Wellness", "/us/wellness")
 
   val todaysPaper = NavLink(
     "Today's paper",
@@ -317,12 +317,12 @@ object NavLinks {
       world,
       usEnvironment,
       ukraine,
-      soccer,
+      usSoccer,
       usBusiness,
       usTech,
       science,
       newsletters,
-      wellness,
+      usWellness,
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -418,7 +418,7 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      soccer,
+      usSoccer,
       NFL,
       tennis,
       MLB,
@@ -531,7 +531,7 @@ object NavLinks {
   )
   val usLifestylePillar = ukLifestylePillar.copy(
     children = List(
-      wellness,
+      usWellness,
       fashion,
       food,
       recipes,
