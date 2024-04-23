@@ -83,7 +83,7 @@ object NavLinks {
   )
 
   val usEnvironment =
-    NavLink("Environment", "/environment", children = List(climateCrisis, wildlife, energy, pollution, greenLight))
+    NavLink("Environment", "/us/environment", children = List(climateCrisis, wildlife, energy, pollution, greenLight))
 
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
