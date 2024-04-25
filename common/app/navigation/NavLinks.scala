@@ -132,8 +132,8 @@ object NavLinks {
     ),
   )
   val usSoccer = NavLink(
-    title = "Soccer",
-    url = "/us/soccer",
+    "Soccer",
+    "/us/soccer",
     children = List(
       footballScores,
       footballTables,
@@ -648,6 +648,7 @@ object NavLinks {
   // section tag. e.g. Content in technology section with world/europe-news will appear in the world section in
   // the navigation. The workaround for this is to add the section to this list,as has been done with CiF and education
   val tagPages = List(
+    "us/soccer",
     "us-news/us-politics",
     "australia-news/australian-politics",
     "australia-news/australian-immigration-and-asylum",
