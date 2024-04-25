@@ -707,7 +707,10 @@ object Video {
     val contentType = DotcomContentType.Video
     val elements = content.elements
     val section = content.metadata.sectionId
-    val source = elements.videos.find(_.properties.isMain).flatMap(_.videos.source).orElse(content.media.headOption.flatMap(_.source))
+    val source = elements.videos
+      .find(_.properties.isMain)
+      .flatMap(_.videos.source)
+      .orElse(content.media.headOption.flatMap(_.source))
 
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
