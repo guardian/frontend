@@ -116,6 +116,7 @@ trait AppComponents
     s3Client,
     system = "preview",
     extraDoNotAuthenticatePathPrefixes = healthCheck.healthChecks.map(_.path),
+    requiredEditorialPermissionName = "preview_access",
   )
 
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) {

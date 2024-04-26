@@ -5,7 +5,6 @@ import dfp._
 import common.dfp._
 import common._
 import conf.switches.SwitchboardLifecycle
-import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
 import com.amazonaws.regions.Regions
@@ -106,6 +105,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
       // in [admin].
       "/interactive-librarian/",
     ),
+    requiredEditorialPermissionName = "admin_tool_access",
   )
 
   lazy val healthCheck = wire[HealthCheck]
