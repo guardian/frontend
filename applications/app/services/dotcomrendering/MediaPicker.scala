@@ -2,9 +2,12 @@ package services.dotcomrendering
 
 import common.GuLogging
 import model.Cors.RichRequestHeader
-import model.MediaPage
+import model.{MediaPage, Video, Audio}
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
+import experiments.DCRVideoPages
+import navigation.NavLinks.media
+import experiments.ActiveExperiments
 
 object MediaPicker extends GuLogging {
 
@@ -17,7 +20,11 @@ object MediaPicker extends GuLogging {
     *
     * */
   private def dcrCouldRender(mediaPage: MediaPage): Boolean = {
-    false
+    mediaPage.media match {
+      case Video(content, source, mediaAtom) => true
+      case Audio(content)                    => false
+      case _                                 => false
+    }
   }
 
   def getTier(
@@ -27,7 +34,7 @@ object MediaPicker extends GuLogging {
   ): RenderType = {
 
     // defaulting to false until we are ready to release and create a 0% test
-    val participatingInTest = false // ActiveExperiments.isParticipating(DCRMedia)
+    val participatingInTest = ActiveExperiments.isParticipating(DCRVideoPages)
     val dcrCanRender = dcrCouldRender(mediaPage)
 
     val tier = {
