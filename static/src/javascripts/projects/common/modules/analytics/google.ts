@@ -120,7 +120,7 @@ const trackPerformance = (
 		timingLabel,
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- extra safety if undefined
+	// @ts-expect-error -- no-unnecessary-condition error but we want extra safety if ga is undefined
 	if (window.ga ?? false) {
 		sendPerformanceEvent(event);
 	} else {
