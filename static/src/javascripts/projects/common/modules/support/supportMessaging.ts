@@ -17,7 +17,7 @@ export const supportDotcomComponentsUrl = config.get('page.isDev')
 	? `https://contributions.code.dev-guardianapis.com`
 	: `https://contributions.guardianapis.com`;
 
-export const dynamicImport = async <T extends unknown>(
+export const dynamicImport = async <T>(
 	url: string,
 	name: string,
 ): Promise<React.FC<T>> => {

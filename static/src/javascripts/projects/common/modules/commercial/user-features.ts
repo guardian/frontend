@@ -173,8 +173,9 @@ const requestNewData = () => {
 				},
 			)
 				.then((response) => {
-					if (!validateResponse(response))
+					if (!validateResponse(response)) {
 						throw new Error('invalid response');
+					}
 					return response;
 				})
 				.then(persistResponse)

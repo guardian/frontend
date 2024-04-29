@@ -1,3 +1,3 @@
 interface Window {
-	guardianPolyfilledImport: <T extends unknown>(url: string) => Promise<T>;
+	guardianPolyfilledImport: <T>(url: string) => Promise<T>;
 }

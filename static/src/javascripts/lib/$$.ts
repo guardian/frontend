@@ -46,7 +46,7 @@ class $$ {
 	css(styles: CSS.Properties): $$ {
 		Object.entries(styles).forEach(([prop, val]) => {
 			this.#elements.forEach((element) =>
-				element.style.setProperty(prop, val),
+				element.style.setProperty(prop, String(val)),
 			);
 		});
 		return this;
