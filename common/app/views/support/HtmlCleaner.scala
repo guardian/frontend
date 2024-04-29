@@ -872,6 +872,7 @@ case class AffiliateLinksCleaner(
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
     publishedDate: Option[DateTime],
+    contentType: String,
 ) extends HtmlCleaner
     with GuLogging {
 
@@ -887,6 +888,7 @@ case class AffiliateLinksCleaner(
         tags,
         publishedDate,
         pageUrl,
+        contentType,
       )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
@@ -943,6 +945,7 @@ object AffiliateLinksCleaner {
       tagPaths: List[String],
       firstPublishedDate: Option[DateTime],
       pageUrl: String,
+      contentType: String,
   ): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
@@ -964,15 +967,6 @@ object AffiliateLinksCleaner {
       "fashion/2024/mar/17/beauty-spot-10-best-root-cover-ups",
       "fashion/2024/apr/05/peptides-help-with-good-looking-skin-but-dont-expect-botox-in-a-bottle",
       "fashion/2024/apr/13/sali-hughes-top-50-beauty-products-for-under-20-pounds",
-      "fashion/gallery/2024/mar/09/spring-in-your-step-10-menswear-trends-to-update-your-wardrobe-in-pictures",
-      "fashion/gallery/2024/mar/08/street-smart-what-to-wear-to-run-errands",
-      "fashion/gallery/2024/mar/09/the-edit-mens-sweatshirts-in-pictures",
-      "lifeandstyle/gallery/2024/jan/22/colourful-glass-furniture-from-vases-to-lampshades-in-pictures",
-      "lifeandstyle/gallery/2023/nov/27/cosy-bedding-in-pictures",
-      "fashion/gallery/2024/mar/24/we-love-fashion-fixes-for-the-week-ahead-in-pictures",
-      "fashion/gallery/2024/apr/06/we-love-fashion-fixes-for-the-week-ahead-in-pictures",
-      "fashion/gallery/2024/apr/05/instant-spark-what-to-wear-for-a-first-date",
-      "fashion/gallery/2024/mar/31/crossbody-carrier-18-of-the-best-handbags-in-pictures",
     )
 
     val urlIsInAllowList = affiliateLinksAllowList.contains(cleanedPageUrl)
@@ -983,7 +977,7 @@ object AffiliateLinksCleaner {
     if (
       !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
         _.isBefore(publishedCutOffDate),
-      ) || urlIsInAllowList)
+      ) || urlIsInAllowList || contentType == "gallery")
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
