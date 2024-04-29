@@ -169,18 +169,18 @@
 	},
 	"jest": {
 		"preset": "ts-jest/presets/js-with-babel",
-		"globals": {
-			"ts-jest": {
-				"tsconfig": "tsconfig.test.json"
-			}
-		},
 		"moduleFileExtensions": [
 			"ts",
 			"tsx",
 			"js"
 		],
 		"transform": {
-			"^.+\\.(ts|tsx)$": "ts-jest"
+			"^.+\\.(ts|tsx)$": [
+				"ts-jest",
+				{
+					"tsconfig": "tsconfig.test.json"
+				}
+			]
 		},
 		"testMatch": [
 			"**/*.(test|spec).+(ts|tsx|js)"
@@ -207,9 +207,11 @@
 			"<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
 		],
 		"testEnvironment": "jest-environment-jsdom-global",
-		"testURL": "http://testurl.theguardian.com",
+		"testEnvironmentOptions": {
+			"url": "http://testurl.theguardian.com"
+		},
 		"transformIgnorePatterns": [
-			"/node_modules/(?!(@guardian|lodash-es)/)"
+			"/node_modules/(?!(@guardian|lodash-es|preact)/)"
 		]
 	},
 	"scripts": {

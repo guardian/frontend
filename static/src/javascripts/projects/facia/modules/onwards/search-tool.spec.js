@@ -186,10 +186,10 @@ describe('Search tool', () => {
 
         sut.pushData();
 
-        jest.runTimersToTime(1);
+        jest.advanceTimersByTime(1);
         expect(sut.destroy).not.toHaveBeenCalled();
 
-        jest.runTimersToTime(51);
+        jest.advanceTimersByTime(51);
         expect(sut.destroy).toHaveBeenCalled();
     });
 
