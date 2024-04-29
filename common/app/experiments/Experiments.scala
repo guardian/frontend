@@ -16,29 +16,18 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRVideoPages,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
+      DeeplyReadRightColumn,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object DCRTagPages
+object DeeplyReadRightColumn
     extends Experiment(
-      name = "dcr-tag-pages",
-      description = "Render tag pages with DCR",
-      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 31),
-      participationGroup = Perc20A,
-    )
-
-object DCRVideoPages
-    extends Experiment(
-      name = "dcr-video-pages",
-      description = "Render video pages with DCR",
-      owners = Seq(
-        Owner.withGithub("commercial.dev@theguardian.com"),
-        Owner.withGithub("dotcom.platform@theguardian.com"),
-      ),
-      sellByDate = LocalDate.of(2024, 5, 30),
-      participationGroup = Perc10A,
+      name = "deeply-read-right-column",
+      description = "Test the impact of adding deeply read component to the right column",
+      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
+      sellByDate = LocalDate.of(2024, 7, 31),
+      participationGroup = Perc0A,
     )
 
 object UpdatedHeaderDesign
@@ -67,4 +56,25 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0D,
+    )
+
+object DCRVideoPages
+    extends Experiment(
+      name = "dcr-video-pages",
+      description = "Render video pages with DCR",
+      owners = Seq(
+        Owner.withGithub("commercial.dev@theguardian.com"),
+        Owner.withGithub("dotcom.platform@theguardian.com"),
+      ),
+      sellByDate = LocalDate.of(2024, 5, 30),
+      participationGroup = Perc10A,
+    )
+
+object DCRTagPages
+    extends Experiment(
+      name = "dcr-tag-pages",
+      description = "Render tag pages with DCR",
+      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 5, 31),
+      participationGroup = Perc20A,
     )
