@@ -74,7 +74,7 @@
 		"@guardian/prettier": "^3.0.0",
 		"@types/google.analytics": "^0.0.42",
 		"@types/googletag": "^1.1.3",
-		"@types/jest": "^26.0.20",
+		"@types/jest": "29.5.12",
 		"@types/lodash-es": "^4.17.4",
 		"@types/webpack-env": "^1.16.2",
 		"@types/youtube": "^0.0.44",
