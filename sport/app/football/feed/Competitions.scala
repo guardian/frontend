@@ -212,10 +212,10 @@ object CompetitionsProvider {
       tableDividers = List(2, 6, 21),
     ),
     Competition(
-      "750",
-      "/football/euro-2020",
-      "Euro 2020",
-      "Euro 2020",
+      "750", // This ID was also used for the 2020 Euros
+      "/football/euro-2024",
+      "Euro 2024",
+      "Euro 2024",
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
