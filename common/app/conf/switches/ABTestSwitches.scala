@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Test MPU when there is no epic at the end of Article on the page.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 4, 30)),
+    sellByDate = Some(LocalDate.of(2024, 5, 31)),
     exposeClientSide = true,
   )
 
