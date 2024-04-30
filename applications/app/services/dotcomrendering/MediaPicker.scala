@@ -27,6 +27,13 @@ object MediaPicker extends GuLogging {
     }
   }
 
+  private def dcrLogFlags(mediaPage: MediaPage): Map[String, String] = {
+    Map(
+      ("isVideo", mediaPage.media.isInstanceOf[Video].toString()),
+      ("isAudio", mediaPage.media.isInstanceOf[Audio].toString()),
+    )
+  }
+
   def getTier(
       mediaPage: MediaPage,
   )(implicit
@@ -36,6 +43,7 @@ object MediaPicker extends GuLogging {
     // defaulting to false until we are ready to release and create a 0% test
     val participatingInTest = ActiveExperiments.isParticipating(DCRVideoPages)
     val dcrCanRender = dcrCouldRender(mediaPage)
+    val flags = dcrLogFlags(mediaPage)
 
     val tier = {
       if (request.forceDCROff) LocalRender
@@ -45,9 +53,9 @@ object MediaPicker extends GuLogging {
     }
 
     if (tier == RemoteRender) {
-      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", Map.empty, mediaPage.media)
+      DotcomponentsLogger.logger.logRequest(s"path executing in dotcomponents", flags, mediaPage.media)
     } else {
-      DotcomponentsLogger.logger.logRequest(s"path executing in web", Map.empty, mediaPage.media)
+      DotcomponentsLogger.logger.logRequest(s"path executing in web", flags, mediaPage.media)
     }
 
     tier
