@@ -10,8 +10,9 @@ const fetchJson = async (
 	resource: string,
 	init: RequestInit = {},
 ): Promise<unknown> => {
-	if (typeof resource !== 'string')
+	if (typeof resource !== 'string') {
 		throw new Error('First argument should be of type `string`');
+	}
 
 	let path = resource;
 	if (isPathAbsoluteURL(path)) {

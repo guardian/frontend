@@ -269,7 +269,7 @@ type ComscoreGlobals = {
 
 type AdBlockers = {
 	active: boolean | undefined;
-	onDetect: function[];
+	onDetect: Array<(value: boolean) => void>;
 };
 
 /**

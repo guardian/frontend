@@ -9,10 +9,14 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 	getPageTargeting: jest.fn(() => ({ key: 'value' })),
 }));
 
-jest.mock('@guardian/commercial', () => ({
-	...jest.requireActual('@guardian/commercial'),
-	getPermutivePFPSegments: jest.fn(() => [42]),
-}));
+jest.mock(
+	'@guardian/commercial',
+	(): jest.Mock =>
+		({
+			...jest.requireActual('@guardian/commercial'),
+			getPermutivePFPSegments: jest.fn(() => [42]),
+		} as unknown as jest.Mock),
+);
 
 jest.mock('lib/config', () => ({
 	get: jest.fn((key: string, fallback?: unknown) => {
@@ -31,23 +35,27 @@ jest.mock('lib/config', () => ({
 	}),
 }));
 
-jest.mock('@guardian/libs', () => ({
-	...jest.requireActual('@guardian/libs'),
-	onConsentChange: jest.fn((callback: OnConsentChangeCallback) =>
-		callback({
-			tcfv2: {
-				consents: { 1: true },
-				gdprApplies: true,
-				eventStatus: 'tcloaded',
-				vendorConsents: { abc: true },
-				tcString: 'testTcString',
-				addtlConsent: 'testaddtlConsent',
-			},
-			canTarget: true,
-			framework: 'tcfv2',
-		}),
-	),
-}));
+jest.mock(
+	'@guardian/libs',
+	() =>
+		({
+			...jest.requireActual('@guardian/libs'),
+			onConsentChange: jest.fn((callback: OnConsentChangeCallback) =>
+				callback({
+					tcfv2: {
+						consents: { 1: true },
+						gdprApplies: true,
+						eventStatus: 'tcloaded',
+						vendorConsents: { abc: true },
+						tcString: 'testTcString',
+						addtlConsent: 'testaddtlConsent',
+					},
+					canTarget: true,
+					framework: 'tcfv2',
+				}),
+			),
+		} as unknown as jest.Mock),
+);
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: jest.fn(),

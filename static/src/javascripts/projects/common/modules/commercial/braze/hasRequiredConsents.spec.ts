@@ -4,14 +4,18 @@ import { hasRequiredConsents } from './hasRequiredConsents';
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 let mockOnConsentChangeResult: ConsentState | undefined;
-jest.mock('@guardian/libs', () => ({
-	...jest.requireActual('@guardian/libs'),
-	onConsentChange: (callback: OnConsentChangeCallback) => {
-		if (mockOnConsentChangeResult) {
-			callback(mockOnConsentChangeResult);
-		}
-	},
-}));
+jest.mock(
+	'@guardian/libs',
+	() =>
+		({
+			...jest.requireActual('@guardian/libs'),
+			onConsentChange: (callback: OnConsentChangeCallback) => {
+				if (mockOnConsentChangeResult) {
+					callback(mockOnConsentChangeResult);
+				}
+			},
+		} as unknown as jest.Mock),
+);
 
 afterEach(() => {
 	mockOnConsentChangeResult = undefined;
