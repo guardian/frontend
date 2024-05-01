@@ -203,6 +203,7 @@ object KnockoutSpider {
       ZonedDateTime.of(2023, 8, 20, 11, 0, 0, 0, ZoneId.of("Europe/London")), // Finals
     ),
     // Euro 2024
+    // https://www.uefa.com/euro2024/news/0275-151eb1c333ea-d30deec67b13-1000--uefa-euro-2024-fixtures-when-and-where-are-the-matches/
     "750" -> List(
       ZonedDateTime.of(2024, 6, 30, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 40
       ZonedDateTime.of(2024, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
