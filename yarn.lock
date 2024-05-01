@@ -3368,16 +3368,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/ab-core@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@guardian/ab-core@npm:7.0.1"
+"@guardian/ab-core@npm:7.0.2":
+  version: 7.0.2
+  resolution: "@guardian/ab-core@npm:7.0.2"
   peerDependencies:
     tslib: ^2.6.2
     typescript: ~5.3.3
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/803ac0098237db30a65bdbc99e0417e2accefb8b114d2a5ace1d8103a2f98c1ec049355e54fcfe9e3e9176ec107517aa2ee59e4aea3a99ae568bc4f03b2698ac
+  checksum: 10c0/0dd198d76045bc3717518b76f131c433acc3c2827df55225f93c5d4c0d242740de01067b01bb399b73549bbcbe72a99ee2ea3292f057392ec97718581416b362
   languageName: node
   linkType: hard
 
@@ -3491,7 +3491,7 @@ __metadata:
     "@emotion/core": "npm:^10.0.27"
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
-    "@guardian/ab-core": "npm:7.0.1"
+    "@guardian/ab-core": "npm:7.0.2"
     "@guardian/automat-modules": "npm:^0.3.8"
     "@guardian/commercial": "npm:18.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
