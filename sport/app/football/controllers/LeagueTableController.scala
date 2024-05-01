@@ -43,7 +43,7 @@ class LeagueTableController(
     "Champions League",
     "Women's Champions League",
     "Europa League",
-    "Euro 2024 qualifying",
+    "Euro 2024",
     "Nations League",
     "Women's Nations League",
     "Africa Cup of Nations",

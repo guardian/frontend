@@ -219,7 +219,7 @@ object CompetitionsProvider {
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
-      startDate = Some(LocalDate.of(2019, 11, 30)),
+      startDate = Some(LocalDate.of(2023, 12, 1)),
     ),
     Competition(
       "751",

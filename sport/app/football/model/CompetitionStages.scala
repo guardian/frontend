@@ -202,23 +202,24 @@ object KnockoutSpider {
       // Winner of Semi-final 1 vs Winner of Semi-final 2 (11am)
       ZonedDateTime.of(2023, 8, 20, 11, 0, 0, 0, ZoneId.of("Europe/London")), // Finals
     ),
-    // Euro 2020
+    // Euro 2024
+    // https://www.uefa.com/euro2024/news/0275-151eb1c333ea-d30deec67b13-1000--uefa-euro-2024-fixtures-when-and-where-are-the-matches/
     "750" -> List(
-      ZonedDateTime.of(2021, 6, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 40
-      ZonedDateTime.of(2021, 6, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
-      ZonedDateTime.of(2021, 6, 28, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 42
-      ZonedDateTime.of(2021, 6, 28, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 41
-      ZonedDateTime.of(2021, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 44
-      ZonedDateTime.of(2021, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 43
-      ZonedDateTime.of(2021, 6, 27, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 39
-      ZonedDateTime.of(2021, 6, 26, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 37
-      ZonedDateTime.of(2021, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 46
-      ZonedDateTime.of(2021, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 45
-      ZonedDateTime.of(2021, 7, 3, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 48
-      ZonedDateTime.of(2021, 7, 3, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 47
-      ZonedDateTime.of(2021, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 49
-      ZonedDateTime.of(2021, 7, 7, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 50
-      ZonedDateTime.of(2021, 7, 11, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final         // Match 51
+      ZonedDateTime.of(2024, 6, 30, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 40
+      ZonedDateTime.of(2024, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
+      ZonedDateTime.of(2024, 7, 1, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 42
+      ZonedDateTime.of(2024, 7, 1, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 41
+      ZonedDateTime.of(2024, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 44
+      ZonedDateTime.of(2024, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 43
+      ZonedDateTime.of(2024, 6, 30, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 39
+      ZonedDateTime.of(2024, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 37
+      ZonedDateTime.of(2024, 7, 5, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 46
+      ZonedDateTime.of(2024, 7, 5, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 45
+      ZonedDateTime.of(2024, 7, 6, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 48
+      ZonedDateTime.of(2024, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 47
+      ZonedDateTime.of(2024, 7, 9, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 49
+      ZonedDateTime.of(2024, 7, 10, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 50
+      ZonedDateTime.of(2024, 7, 14, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final         // Match 51
     ),
     // Womens Euro 2022
     "423" -> List(
