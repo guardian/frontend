@@ -10,6 +10,7 @@ import common.Environment.stage
 import conf.Configuration.aws.mandatoryCredentials
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
+import org.slf4j.LoggerFactory
 import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -33,6 +34,8 @@ class GuardianAuthWithExemptions(
     with BaseController {
 
   private val outer = this
+
+  val logger = LoggerFactory.getLogger(this.getClass)
 
   private val permissions: PermissionsProvider = PermissionsProvider(
     PermissionsConfig(
@@ -102,12 +105,14 @@ class GuardianAuthWithExemptions(
           if (permissions.hasPermission(requiredPermission, user.email)) {
             nextFilter(request)
           } else {
-            Future.successful(
-              Results.Forbidden(
-                s"You do not have permission to access $system. " +
-                  s"You should contact Central Production to request '$requiredEditorialPermissionName' permission.",
-              ),
-            )
+//            Future.successful(
+//              Results.Forbidden(
+//                s"You do not have permission to access $system. " +
+//                  s"You should contact Central Production to request '$requiredEditorialPermissionName' permission.",
+//              ),
+//            )
+            logger.warn(s"${user.email} used $system, but didn't have '$requiredEditorialPermissionName' permission.")
+            nextFilter(request)
           }
         }
       }
