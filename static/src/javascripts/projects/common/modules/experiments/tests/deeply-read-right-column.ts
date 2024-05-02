@@ -8,18 +8,18 @@ export const deeplyReadRightColumn: ABTest = {
 	audience: 0 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: '',
-	successMeasure: 'Improved CTR',
+	successMeasure: 'Improved click though rate',
 	description:
 		'Test the impact of adding deeply read component to the right column.',
 	variants: [
 		{
-			id: 'control',
+			id: 'most-viewed-only',
 			test: (): void => {
 				/* no-op */
 			},
 		},
 		{
-			id: 'deeply-read-and-most-read',
+			id: 'deeply-read-and-most-viewed',
 			test: (): void => {
 				/* no-op */
 			},
