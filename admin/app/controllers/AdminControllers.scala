@@ -5,6 +5,7 @@ import controllers.admin._
 import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import dfp._
+import http.GuardianAuthWithExemptions
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
@@ -37,8 +38,8 @@ trait AdminControllers {
   def placementService: PlacementService
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
+  def auth: GuardianAuthWithExemptions
 
-  lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]
   lazy val adminIndexController = wire[AdminIndexController]

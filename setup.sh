@@ -99,6 +99,16 @@ install_node() {
   fi
 }
 
+install_dev-nginx() {
+  if ! installed nginx; then
+    if linux; then
+      sudo apt-get install -y nginx
+    elif mac; then
+      brew install nginx
+    fi
+  fi
+}
+
 install_gcc() {
   if ! installed g++; then
     if linux; then

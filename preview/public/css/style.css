@@ -63,43 +63,6 @@ h1 {
     font-family: Georgia;
 }
 
-.login-form {
-    position: absolute;
-    top: 13px;
-    left: 160px;
-    z-index: 1;
-}
-
-.logged-in {
-    float: right;
-}
-
-.avatar {
-    float: right;
-}
-
-.logged-in-message {
-    padding: 0.4em;
-}
-
-.log-in-out {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: 51px;
-    padding: 15px 20px 0;
-    font-size: 14px;
-    float: right;
-    border-left: 1px solid #cfd8dc;
-}
-
-.log-in-out a {
-    color: #999999;
-}
-
-.log-in-out a:hover {
-    color: #333333;
-}
-
 .tool {
      display: inline-block;
      padding: 0 10px;

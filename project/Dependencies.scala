@@ -58,9 +58,7 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.7"
-  val playGoogleAuth = "com.gu.play-googleauth" %% "play-v30" % "4.0.0"
-  val playSecretRotation = "com.gu.play-secret-rotation" %% "play-v30" % "7.1.0"
-  val playSecretRotationAwsSdk = "com.gu.play-secret-rotation" %% "aws-parameterstore-sdk-v1" % "7.1.0"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "3.1.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion

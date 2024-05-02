@@ -1,0 +1,7 @@
+name: frontend
+domain-root: local.dev-gutools.co.uk
+mappings:
+  - port: 9000
+    prefix: preview
+  - port: 9000
+    prefix: frontend # for admin portal
