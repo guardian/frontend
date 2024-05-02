@@ -1,21 +1,26 @@
 package controllers
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.softwaremill.macwire._
 import common.PekkoAsync
 import controllers.admin._
 import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import dfp._
-import http.GuardianAuthWithExemptions
+import http.{GuardianAuthWithExemptions, routes}
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import services.{OphanApi, ParameterStoreService, RedirectService}
+import conf.Configuration.aws.mandatoryCredentials
+import org.apache.pekko.stream.Materializer
 
 trait AdminControllers {
   def pekkoAsync: PekkoAsync
   def wsClient: WSClient
   def ophanApi: OphanApi
+  implicit def materializer: Materializer
   implicit def appContext: ApplicationContext
   def redirects: RedirectService
   def httpConfiguration: HttpConfiguration
@@ -38,7 +43,36 @@ trait AdminControllers {
   def placementService: PlacementService
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
-  def auth: GuardianAuthWithExemptions
+
+  private lazy val s3Client = AmazonS3ClientBuilder
+    .standard()
+    .withRegion(Regions.EU_WEST_1)
+    .withCredentials(
+      mandatoryCredentials,
+    )
+    .build()
+
+  lazy val auth = new GuardianAuthWithExemptions(
+    controllerComponents,
+    wsClient,
+    toolsDomainPrefix = "frontend",
+    oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
+    s3Client,
+    system = "frontend-admin",
+    extraDoNotAuthenticatePathPrefixes = Seq(
+      "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
+      "/deploy", //not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
+      // Date: 06 July 2021
+      // Author: Pascal
+      // Added as part of posing the ground for the interactive migration.
+      // It should be removed when the Interactives migration is complete, meaning when we no longer need the routes
+      // POST /interactive-librarian/live-presser/*path
+      // POST /interactive-librarian/read-clean-write/*path
+      // in [admin].
+      "/interactive-librarian/",
+    ),
+    requiredEditorialPermissionName = "admin_tool_access",
+  )
 
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]
