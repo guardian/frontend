@@ -12,6 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       CommercialMegaTest,
+      DarkModeWeb,
       DCRTagPages,
       DCRVideoPages,
       UpdatedHeaderDesign,
@@ -67,4 +68,13 @@ object MastheadWithHighlights
       owners = Seq(Owner.withGithub("cemms1")),
       sellByDate = LocalDate.of(2024, 9, 30),
       participationGroup = Perc0C,
+    )
+
+object DarkModeWeb
+    extends Experiment(
+      name = "dark-mode-web",
+      description = "Enable dark mode on web",
+      owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
+      sellByDate = LocalDate.of(2024, 7, 30),
+      participationGroup = Perc0D,
     )
