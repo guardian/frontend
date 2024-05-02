@@ -1,15 +1,19 @@
 package http
 
+import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher}
+import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
+import conf.Configuration.aws.mandatoryCredentials
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
+import org.slf4j.LoggerFactory
 import play.api.Mode
 import play.api.libs.ws.WSClient
-import play.api.mvc.{BaseController, _}
+import play.api.mvc._
 
 import java.net.URL
 import scala.concurrent.Future
@@ -22,6 +26,7 @@ class GuardianAuthWithExemptions(
     s3Client: AmazonS3,
     system: String,
     extraDoNotAuthenticatePathPrefixes: Seq[String],
+    requiredEditorialPermissionName: String,
 )(implicit
     val mat: Materializer,
     context: ApplicationContext,
@@ -29,6 +34,21 @@ class GuardianAuthWithExemptions(
     with BaseController {
 
   private val outer = this
+
+  val logger = LoggerFactory.getLogger(this.getClass)
+
+  private val permissions: PermissionsProvider = PermissionsProvider(
+    PermissionsConfig(
+      stage = if (stage == "PROD") "PROD" else "CODE",
+      region = Regions.EU_WEST_1.getName,
+      awsCredentials = mandatoryCredentials,
+    ),
+  )
+
+  private val requiredPermission = PermissionDefinition(
+    name = requiredEditorialPermissionName,
+    app = "frontend",
+  )
 
   private def toolsDomainSuffix =
     stage match {
@@ -81,9 +101,19 @@ class GuardianAuthWithExemptions(
       if (doNotAuthenticate(request)) {
         nextFilter(request)
       } else {
-        // TODO: in future PR add a permission check here based on user, likely via a function passed in to GuardianAuthWithExemptions
         AuthAction.authenticateRequest(request) { user =>
-          nextFilter(request)
+          if (permissions.hasPermission(requiredPermission, user.email)) {
+            nextFilter(request)
+          } else {
+//            Future.successful(
+//              Results.Forbidden(
+//                s"You do not have permission to access $system. " +
+//                  s"You should contact Central Production to request '$requiredEditorialPermissionName' permission.",
+//              ),
+//            )
+            logger.warn(s"${user.email} used $system, but didn't have '$requiredEditorialPermissionName' permission.")
+            nextFilter(request)
+          }
         }
       }
     }

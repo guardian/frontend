@@ -39,6 +39,7 @@ val common = library("common")
       jSoup,
       json4s,
       panDomainAuth,
+      editorialPermissions,
       quartzScheduler,
       redisClient,
       rome,
