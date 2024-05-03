@@ -1790,7 +1790,7 @@
 				},
 				{
 					"title": "Environment",
-					"url": "/uk/environment",
+					"url": "/au/environment",
 					"children": [
 						{
 							"title": "Climate crisis",
@@ -1857,13 +1857,13 @@
 				},
 				{
 					"title": "Media",
-					"url": "/media",
+					"url": "/au/media",
 					"children": [],
 					"classList": []
 				},
 				{
 					"title": "Business",
-					"url": "/uk/business",
+					"url": "au/business",
 					"children": [
 						{
 							"title": "Markets",
@@ -1931,7 +1931,7 @@
 				},
 				{
 					"title": "Tech",
-					"url": "/technology",
+					"url": "/au/technology",
 					"children": [],
 					"classList": []
 				},
@@ -2103,7 +2103,7 @@
 			"children": [
 				{
 					"title": "Film",
-					"url": "/film",
+					"url": "/au/film",
 					"children": [],
 					"classList": []
 				},
@@ -2121,7 +2121,7 @@
 				},
 				{
 					"title": "TV & radio",
-					"url": "/tv-and-radio",
+					"url": "/us/tv-and-radio",
 					"children": [],
 					"classList": []
 				},
@@ -2160,7 +2160,7 @@
 			"children": [
 				{
 					"title": "Travel",
-					"url": "/uk/travel",
+					"url": "/au/travel",
 					"children": [
 						{
 							"title": "Australasia",
