@@ -11,7 +11,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v5
+      - uses: actions/stale@v9
         id: stale
         # Read about options here: https://github.com/actions/stale#all-options
         with:
