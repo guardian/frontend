@@ -20,7 +20,7 @@ jobs:
               id: latest-version
 
               # use the github-script action to fetch the current version from the package.json file, this avoids checking out the repo
-            - uses: actions/github-script@v6
+            - uses: actions/github-script@v7
               id: current-version
               with:
                   result-encoding: string
@@ -33,7 +33,7 @@ jobs:
             - name: Check for existing pull request
               id: pr-exists
               if: ${{ steps.latest-version.outputs.result != steps.current-version.outputs.result }}
-              uses: actions/github-script@v6
+              uses: actions/github-script@v7
               with:
                   result-encoding: string
                   github-token: ${{ github.token }}
