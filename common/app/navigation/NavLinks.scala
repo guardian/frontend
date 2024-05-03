@@ -86,6 +86,7 @@ object NavLinks {
     NavLink("Environment", "/us/environment", children = List(climateCrisis, wildlife, energy, pollution, greenLight))
 
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
+  val usMoney = NavLink("Money", "/us/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink(
     "Business",
     "/business",
@@ -164,13 +165,15 @@ object NavLinks {
 
   /* CULTURE */
   val film = NavLink("Film", "/film")
+  val usFilm = NavLink("Film", "/us/film")
   val tvAndRadio = NavLink("TV & radio", "/tv-and-radio")
+  val usTvAndRadio = NavLink("TV & radio", "/us/tv-and-radio")
   val music = NavLink("Music", "/music")
   val games = NavLink("Games", "/games")
   val books = NavLink("Books", "/books")
   val artAndDesign = NavLink("Art & design", "/artanddesign")
   val stage = NavLink("Stage", "/stage")
-  val classical = NavLink("Classical", "/music/classicalmusicandopera")
+  val classical = NavLink("Classical", "/music/classical-music-and-opera")
 
   /* LIFE */
   val fashion = NavLink("Fashion", "/fashion")
@@ -194,7 +197,7 @@ object NavLinks {
   val travelAustralasia = NavLink("Australasia", "/travel/australasia")
   val travelAsia = NavLink("Asia", "/travel/asia")
   val ukTravel = NavLink("Travel", "/travel", children = List(travelUk, travelEurope, travelUs))
-  val usTravel = ukTravel.copy(children = List(travelUs, travelEurope, travelUk))
+  val usTravel = NavLink("Travel", "/us/travel", children = List(travelUs, travelEurope, travelUk))
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
   val usWellness = NavLink("Wellness", "/us/wellness")
 
@@ -473,11 +476,11 @@ object NavLinks {
   )
   val usCulturePillar = ukCulturePillar.copy(
     children = List(
-      film,
+      usFilm,
       books,
       music,
       artAndDesign,
-      tvAndRadio,
+      usTvAndRadio,
       stage,
       classical,
       games,
@@ -540,7 +543,7 @@ object NavLinks {
       health,
       family,
       usTravel,
-      money,
+      usMoney,
     ),
   )
   val intLifestylePillar = ukLifestylePillar.copy(
