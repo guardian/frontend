@@ -57,7 +57,7 @@ class GuardianAuthWithExemptions(
       case _      => s"local.dev-gutools.co.uk" // covers DEV, LOCAL, tests etc.
     }
 
-  override val panDomainSettings =
+  override lazy val panDomainSettings =
     new PanDomainAuthSettingsRefresher(
       domain = toolsDomainSuffix,
       system,
