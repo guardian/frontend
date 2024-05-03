@@ -10,5 +10,16 @@ updates:
     schedule:
       interval: 'daily'
     allow:
-      - dependency-name: "@guardian/*"
+      - dependency-name: '@guardian/*'
+      - dependency-name: '@babel/*'
+    groups:
+      # Most Babel dependencies are released with synchronised versions
+      babel:
+        patterns:
+          - '@babel/*'
     open-pull-requests-limit: 10
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    rebase-strategy: 'disabled'
