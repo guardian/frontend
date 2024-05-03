@@ -9,6 +9,7 @@ object NavLinks {
   /* NEWS */
   val science = NavLink("Science", "/science")
   val tech = NavLink("Tech", "/technology")
+  val ukTech = NavLink("Tech", "/uk/technology")
   val usTech = NavLink("Tech", "/us/technology")
   val politics = NavLink("UK politics", "/politics")
   val media = NavLink("Media", "/media")
@@ -76,29 +77,29 @@ object NavLinks {
     longTitle = Some("World news"),
     children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, globalDevelopment),
   )
+
   val ukEnvironment =
-    NavLink("Environment", "/environment", children = List(climateCrisis, wildlife, energy, pollution))
+    NavLink("Environment", "/uk/environment", children = List(climateCrisis, wildlife, energy, pollution))
   val auEnvironment = ukEnvironment.copy(children =
     List(climateCrisis, energy, wildlife, biodiversity, oceans, pollution, greatBarrierReef),
   )
-
   val usEnvironment =
     NavLink("Environment", "/us/environment", children = List(climateCrisis, wildlife, energy, pollution, greenLight))
 
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
+  val ukMoney = NavLink("Money", "/uk/money", children = List(property, pensions, savings, borrowing, careers))
   val usMoney = NavLink("Money", "/us/money", children = List(property, pensions, savings, borrowing, careers))
+
   val ukBusiness = NavLink(
     "Business",
-    "/business",
+    "/uk/business",
     children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness, retail),
   )
-
   val usBusiness = NavLink(
     "Business",
     "/us/business",
     children = List(economics, diversityEquality, smallBusiness, retail),
   )
-
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
 
   /* OPINION */
@@ -165,8 +166,10 @@ object NavLinks {
 
   /* CULTURE */
   val film = NavLink("Film", "/film")
+  val ukFilm = NavLink("Film", "/uk/film")
   val usFilm = NavLink("Film", "/us/film")
   val tvAndRadio = NavLink("TV & radio", "/tv-and-radio")
+  val ukTvAndRadio = NavLink("TV & radio", "/uk/tv-and-radio")
   val usTvAndRadio = NavLink("TV & radio", "/us/tv-and-radio")
   val music = NavLink("Music", "/music")
   val games = NavLink("Games", "/games")
@@ -196,7 +199,7 @@ object NavLinks {
   val travelUs = NavLink("US", "/travel/usa")
   val travelAustralasia = NavLink("Australasia", "/travel/australasia")
   val travelAsia = NavLink("Asia", "/travel/asia")
-  val ukTravel = NavLink("Travel", "/travel", children = List(travelUk, travelEurope, travelUs))
+  val ukTravel = NavLink("Travel", "/uk/travel", children = List(travelUk, travelEurope, travelUs))
   val usTravel = NavLink("Travel", "/us/travel", children = List(travelUs, travelEurope, travelUk))
   val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
   val usWellness = NavLink("Wellness", "/us/wellness")
@@ -290,7 +293,7 @@ object NavLinks {
       education,
       society,
       science,
-      tech,
+      ukTech,
       globalDevelopment,
       obituaries,
     ),
@@ -452,9 +455,9 @@ object NavLinks {
     longTitle = Some("Culture home"),
     iconName = Some("home"),
     List(
-      film,
+      ukFilm,
       music,
-      tvAndRadio,
+      ukTvAndRadio,
       books,
       artAndDesign,
       stage,
@@ -516,7 +519,7 @@ object NavLinks {
       loveAndSex,
       beauty,
       home,
-      money,
+      ukMoney,
       cars,
     ),
   )
