@@ -48,7 +48,7 @@ object DCRVideoPages
         Owner.withGithub("dotcom.platform@theguardian.com"),
       ),
       sellByDate = LocalDate.of(2024, 5, 30),
-      participationGroup = Perc0A,
+      participationGroup = Perc10A,
     )
 
 object UpdatedHeaderDesign
