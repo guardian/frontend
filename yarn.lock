@@ -3092,7 +3092,7 @@ __metadata:
     "@guardian/prettier": "npm:^3.0.0"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:14.2.2"
-    "@guardian/source-react-components": "npm:22.1.0"
+    "@guardian/source-react-components": "npm:24.0.0"
     "@guardian/source-react-components-development-kitchen": "npm:19.0.0"
     "@guardian/support-dotcom-components": "npm:1.1.3"
     "@types/google.analytics": "npm:^0.0.42"
@@ -3364,19 +3364,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/source-react-components@npm:22.1.0":
-  version: 22.1.0
-  resolution: "@guardian/source-react-components@npm:22.1.0"
+"@guardian/source-react-components@npm:24.0.0":
+  version: 24.0.0
+  resolution: "@guardian/source-react-components@npm:24.0.0"
   peerDependencies:
     "@emotion/react": ^11.11.1
-    "@guardian/source-foundations": ^14.1.4
+    "@guardian/source-foundations": ^14.2.2
     react: ^18.2.0
     tslib: ^2.6.2
     typescript: ~5.3.3
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/ceeffbea73b27f63b1d23a6167de6978dfad4708967f82c50d86bc2b8e003995287946b072d13c2b2761c16457a7c5b0825d73cb3e362d0b46ade7bd2f5eb566
+  checksum: 10c0/7b7a1c8c696fea90bf414aefd9961710932dddb56ca2f28d7b61950f9f0b1d594a1da86d45b1ce9d6fe7e8e4a2a9b7ed3d0cd965e380797397a289b279b1f87f
   languageName: node
   linkType: hard
 
