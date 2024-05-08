@@ -1,4 +1,3 @@
-import { mountDynamic } from '@guardian/automat-modules';
 import { log } from '@guardian/libs';
 import { getBanner } from '@guardian/support-dotcom-components';
 import type {
@@ -34,6 +33,7 @@ import userPrefs from 'common/modules/user-prefs';
 import fastdom from 'lib/fastdom-promise';
 import { getCountryCode } from 'lib/geolocation';
 import { reportError } from 'lib/report-error';
+import { mountDynamic } from "common/modules/support/mountDynamic";
 
 export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp'; // timestamp of when we were last told not to show a RR banner
 const twentyMins = 20 * 60_000;

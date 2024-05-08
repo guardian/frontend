@@ -11,7 +11,6 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 import { fetchAndRenderHeaderLinks } from "common/modules/support/header";
-import { fetchAndRenderEpic } from "common/modules/support/epic";
 import { coreVitals } from 'common/modules/analytics/coreVitals';
 import { init as initCommercialMetrics } from 'commercial/commercial-metrics';
 
@@ -62,8 +61,6 @@ const bootEnhanced = () => {
         ],
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
-
-        ['remote-epics', fetchAndRenderEpic ],
 
         ['remote-header-links', fetchAndRenderHeaderLinks]
     ]);

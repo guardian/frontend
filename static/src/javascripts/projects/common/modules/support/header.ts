@@ -1,4 +1,3 @@
-import { mountDynamic } from '@guardian/automat-modules';
 import { log } from '@guardian/libs';
 import { getHeader } from '@guardian/support-dotcom-components';
 import type { HeaderPayload } from '@guardian/support-dotcom-components/dist/dotcom/src/types';
@@ -19,6 +18,7 @@ import {
 import config from 'lib/config';
 import { getCountryCode } from 'lib/geolocation';
 import { reportError } from 'lib/report-error';
+import { mountDynamic } from "common/modules/support/mountDynamic";
 
 const buildHeaderLinksPayload = async (): Promise<HeaderPayload> => {
 	const countryCode = getCountryCode();
