@@ -96,8 +96,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = NavMenu.findDescendantByUrl("/money/work-and-careers", edition, root.children, root.otherLinks)
     val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
-
-    parent.map(_ should be(money))
+    parent.map(_ should be(ukMoney))
     pillar.map(_ should be(ukLifestylePillar))
   }
 
@@ -120,7 +119,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
-    subnav shouldBe Some(ParentSubnav(money, money.children))
+    subnav shouldBe Some(ParentSubnav(ukMoney, ukMoney.children))
   }
 
   "On `/culture`, the subnav" should "only have children, which are not tertiary" in {
