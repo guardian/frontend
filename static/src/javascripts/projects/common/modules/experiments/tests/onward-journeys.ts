@@ -2,8 +2,8 @@ import type { ABTest } from '@guardian/ab-core';
 
 export const onwardJourneys: ABTest = {
 	id: 'OnwardJourneys',
-	start: '2025-03-01', //  update once test is ready to go live
-	expiry: '2025-12-01', //  update once test is ready to go live
+	start: '2024-05-09',
+	expiry: '2024-05-16',
 	author: '@web-experience',
 	description:
 		'Show the user one onward journey containers at a time to see which is the most effective',
