@@ -18,19 +18,27 @@ export const onwardJourneys: ABTest = {
 	variants: [
 		{
 			id: 'control',
-			test: (): void => {},
+			test: (): void => {
+				/* no-op */
+			},
 		},
 		{
 			id: 'variant-1',
-			test: (): void => {},
+			test: (): void => {
+				/* no-op */
+			},
 		},
 		{
 			id: 'variant-2',
-			test: (): void => {},
+			test: (): void => {
+				/* no-op */
+			},
 		},
 		{
 			id: 'variant-3',
-			test: (): void => {},
+			test: (): void => {
+				/* no-op */
+			},
 		},
 	],
 	successMeasure: '',
