@@ -54,4 +54,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 5, 31)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-onward-journeys",
+    "Test click through rate when there is only one onward journey container shown.",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 6, 7)),
+    exposeClientSide = true,
+  )
 }
