@@ -9,9 +9,6 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    allow:
-      - dependency-name: '@guardian/*'
-      - dependency-name: '@babel/*'
     groups:
       # Most Babel dependencies are released with synchronised versions
       babel:
