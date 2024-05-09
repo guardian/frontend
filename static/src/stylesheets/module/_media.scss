@@ -1,23 +1,3 @@
-/*doc
----
-title: Media
-name: media
-category: Common
----
-Nicole Sullivan's OOCSS CSS markup extraction pattern.
-
-```html_example
-<div class="media">
-    <div class="media__img">
-        <img src="http://i.guim.co.uk/w-140/h-140/q-95/sys-images/Guardian/Pix/pictures/2014/4/22/1398168161144/GeorgeMonbiot.jpg" alt="George Monbiot" />
-    </div>
-    <div class="media__body">
-        George Monbiot is the author of the bestselling books The Age of Consent: A Manifesto for a New World Order and Captive State: The Corporate Takeover of Britain, as well as the investigative travel books Poisoned Arrows, Amazon Watershed and No Man's Land. His latest book is <a href="http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781846147487">Feral: Searching for Enchantment on the Frontiers of Rewilding</a> (being published in paperback as Feral: Rewilding the Land, Sea and Human Life)
-    </div>
-</div>
-```
-*/
-
 .media,
 .media__body {
     @include clearfix;
