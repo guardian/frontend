@@ -3185,7 +3185,7 @@ __metadata:
     rimraf: "npm:^2.6.1"
     rxjs: "npm:^6.6.7"
     sass-graph: "npm:^4.0.1"
-    sass-lint: "npm:~1.10.2"
+    sass-lint: "npm:1.13.1"
     sass-loader: "npm:^10.4.1"
     sass-mq: "npm:~5.0.1"
     semver: "npm:^5.4.1"
@@ -10732,12 +10732,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"front-matter@npm:2.1.0":
-  version: 2.1.0
-  resolution: "front-matter@npm:2.1.0"
+"front-matter@npm:2.1.2":
+  version: 2.1.2
+  resolution: "front-matter@npm:2.1.2"
   dependencies:
     js-yaml: "npm:^3.4.6"
-  checksum: 10c0/264ebfacee77106a5a2a05da12cb84863cd6f6dc733480eed13723ed05e3f34711c22e779a45d84ac3c0fbb1adb9bf96b7b55163f6035c2dc5f4ed370d2ec1cf
+  checksum: 10c0/4bda8ea626dcc86898e23bedb64572f9ea5f9af81ef140513b223bfb9ff745e8b616c7253871a9cdedff78b34204236ed09ea9dc33d095d38edefd682dc885d1
   languageName: node
   linkType: hard
 
@@ -10748,7 +10748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:3.0.1":
+"fs-extra@npm:3.0.1, fs-extra@npm:^3.0.1":
   version: 3.0.1
   resolution: "fs-extra@npm:3.0.1"
   dependencies:
@@ -10756,17 +10756,6 @@ __metadata:
     jsonfile: "npm:^3.0.0"
     universalify: "npm:^0.1.0"
   checksum: 10c0/ac3a17c9355f80aa250e102dbc4939c50ec83fca49a144bdd432f43deb0a3c07f74ec313feb2b938d6b0c1de9bfb02c2358bc602efeed5174fca692b7d4694f1
-  languageName: node
-  linkType: hard
-
-"fs-extra@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "fs-extra@npm:1.0.0"
-  dependencies:
-    graceful-fs: "npm:^4.1.2"
-    jsonfile: "npm:^2.1.0"
-    klaw: "npm:^1.0.0"
-  checksum: 10c0/1128e46b3364f458ca07fbd186a05010b05255ad6ab17abc2a262086600f1925a9e5a259b9436ee42f57875e9ebb171348f25d4289fecd395b05488db9ceeda8
   languageName: node
   linkType: hard
 
@@ -11280,14 +11269,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gonzales-pe@npm:3.4.7":
-  version: 3.4.7
-  resolution: "gonzales-pe@npm:3.4.7"
+"gonzales-pe-sl@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "gonzales-pe-sl@npm:4.2.3"
   dependencies:
     minimist: "npm:1.1.x"
   bin:
     gonzales: ./bin/gonzales.js
-  checksum: 10c0/da0bfde475fdd5d3a67a790b84861de78f9b063d4480102dcb109655276a6c2b7004ca0d2a5828d4485e0567342a41facffcaf1f6efcb6502d36e7c4320d348c
+  checksum: 10c0/bab587fe29ac5283ce2343f582a4836f6c95191fb0d63a81affc6d3ce37fe8361e1a75a4029060a089c6821a9db40aec195c989ca4d689c89215973e48df1ee3
   languageName: node
   linkType: hard
 
@@ -13825,6 +13814,13 @@ __metadata:
   version: 2.0.6
   resolution: "klona@npm:2.0.6"
   checksum: 10c0/94eed2c6c2ce99f409df9186a96340558897b3e62a85afdc1ee39103954d2ebe1c1c4e9fe2b0952771771fa96d70055ede8b27962a7021406374fdb695fd4d01
+  languageName: node
+  linkType: hard
+
+"known-css-properties@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "known-css-properties@npm:0.3.0"
+  checksum: 10c0/e6a02eee7fa0b76e8069329c6eb70984af4cb5e67278c77efc62dcd8954b5a410eb1e56e6bb5fd61b8c1a211e71c8d917cf8a27fc2c1f766617b4047b2e12fda
   languageName: node
   linkType: hard
 
@@ -17513,18 +17509,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-lint@npm:~1.10.2":
-  version: 1.10.2
-  resolution: "sass-lint@npm:1.10.2"
+"sass-lint@npm:1.13.1":
+  version: 1.13.1
+  resolution: "sass-lint@npm:1.13.1"
   dependencies:
     commander: "npm:^2.8.1"
     eslint: "npm:^2.7.0"
-    front-matter: "npm:2.1.0"
-    fs-extra: "npm:^1.0.0"
+    front-matter: "npm:2.1.2"
+    fs-extra: "npm:^3.0.1"
     glob: "npm:^7.0.0"
     globule: "npm:^1.0.0"
-    gonzales-pe: "npm:3.4.7"
+    gonzales-pe-sl: "npm:^4.2.3"
     js-yaml: "npm:^3.5.4"
+    known-css-properties: "npm:^0.3.0"
     lodash.capitalize: "npm:^4.1.0"
     lodash.kebabcase: "npm:^4.0.0"
     merge: "npm:^1.2.0"
@@ -17532,7 +17529,7 @@ __metadata:
     util: "npm:^0.10.3"
   bin:
     sass-lint: ./bin/sass-lint.js
-  checksum: 10c0/a36782cb98d0a1f7f4ba2995391cfc3fdcea2484d0baa765d19c9414e763f9b8438e99b52e8d1e74eb0cb9148eff7f27a020b457e45d01ac025444dc0624df53
+  checksum: 10c0/40c966144799c75ac6b915fda9871b18a3001148c8a08c8debbedffcc325ed16f692fd646bb99ffb9590d6d56728e80d07b59749a19c004c3c5857d85807fdd0
   languageName: node
   linkType: hard
 

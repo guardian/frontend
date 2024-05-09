@@ -191,7 +191,7 @@ $video-width-desktop: 700px;
 .vertical-video-playlist__control {
     width: 300px;
     display: flex;
-    gap: 16px;
+    gap: 16px; // sass-lint:disable-line no-misspelled-properties
     justify-content: flex-start;
     align-items: center;
     margin-left: 20px;
