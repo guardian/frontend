@@ -23,19 +23,19 @@ export const onwardJourneys: ABTest = {
 			},
 		},
 		{
-			id: 'top-row',
+			id: 'top-row-most-viewed',
 			test: (): void => {
 				/* no-op */
 			},
 		},
 		{
-			id: 'bottom-row',
+			id: 'bottom-row-most-viewed',
 			test: (): void => {
 				/* no-op */
 			},
 		},
 		{
-			id: 'most-viewed',
+			id: 'most-viewed-only',
 			test: (): void => {
 				/* no-op */
 			},
