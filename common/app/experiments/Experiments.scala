@@ -87,5 +87,3 @@ object UpdateLogoAdPartner
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0A,
     )
-
-
