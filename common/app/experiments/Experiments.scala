@@ -78,3 +78,14 @@ object DarkModeWeb
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0D,
     )
+
+object UpdateLogoAdPartner
+    extends Experiment(
+      name = "update-logo-ad-partner",
+      description = "Update logo for advertising partner and exclusive advertising partner US",
+      owners = Seq(Owner.withGithub("deedeeh")),
+      sellByDate = LocalDate.of(2024, 7, 30),
+      participationGroup = Perc0A,
+    )
+
+
