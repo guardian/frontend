@@ -22,6 +22,7 @@ import model.{
   Pillar,
 }
 import org.joda.time.format.DateTimeFormat
+import org.jsoup.nodes.Document
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
@@ -241,7 +242,7 @@ object DotcomRenderingUtils {
     }
   }
 
-  def shouldAddAffiliateLinks(content: ContentType): Boolean = {
+  def shouldAddAffiliateLinks(content: ContentType, document: Document): Boolean = {
     AffiliateLinksCleaner.shouldAddAffiliateLinks(
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       section = content.metadata.sectionId,
@@ -253,6 +254,7 @@ object DotcomRenderingUtils {
       firstPublishedDate = content.content.fields.firstPublicationDate,
       pageUrl = content.metadata.id,
       contentType = "article",
+      document,
     )
   }
 

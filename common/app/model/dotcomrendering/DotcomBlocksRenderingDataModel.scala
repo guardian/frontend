@@ -11,6 +11,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
 import experiments.ActiveExperiments
+import org.jsoup.Jsoup
 
 // -----------------------------------------------------------------
 // DCR Blocks DataModel
@@ -69,7 +70,9 @@ object DotcomBlocksRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
+    val htmlBlocks = bodyBlocks.map { block => block.bodyHtml }
+    val document = Jsoup.parseBodyFragment(htmlBlocks.mkString(""))
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, document)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
     val edition = Edition(request)

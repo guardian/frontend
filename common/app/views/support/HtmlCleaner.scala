@@ -889,6 +889,7 @@ case class AffiliateLinksCleaner(
         publishedDate,
         pageUrl,
         contentType,
+        document,
       )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
@@ -946,6 +947,7 @@ object AffiliateLinksCleaner {
       firstPublishedDate: Option[DateTime],
       pageUrl: String,
       contentType: String,
+      document: Document = null,
   ): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 

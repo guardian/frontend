@@ -35,6 +35,8 @@
                 firstPublishedDate = page.gallery.content.fields.firstPublicationDate,
                 pageUrl = request.uri,
                 contentType = "gallery",
+                // This is a bit of a hack, but we need to pass the content
+                document = page.gallery.content
             )
         )
 

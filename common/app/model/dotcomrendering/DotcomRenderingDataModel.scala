@@ -7,6 +7,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
+import org.jsoup.Jsoup
 import crosswords.CrosswordPageWithContent
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
@@ -487,7 +488,10 @@ object DotcomRenderingDataModel {
       blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
     }
 
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
+    val htmlBlocks = bodyBlocks.map { block => block.bodyHtml }
+    val document = Jsoup.parseBodyFragment(htmlBlocks.mkString(""))
+
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, document)
     val shouldAddDisclaimer = hasAffiliateLinks(bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
