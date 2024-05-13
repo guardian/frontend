@@ -3028,9 +3028,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:18.1.0":
-  version: 18.1.0
-  resolution: "@guardian/commercial@npm:18.1.0"
+"@guardian/commercial@npm:18.3.0":
+  version: 18.3.0
+  resolution: "@guardian/commercial@npm:18.3.0"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/ophan-tracker-js": "npm:2.0.4"
@@ -3051,7 +3051,7 @@ __metadata:
     "@guardian/libs": ^16.1.0
     "@guardian/source-foundations": ^14.1.2
     typescript: ~5.3.3
-  checksum: 10c0/7c8dc716e14f4814fe75787be2840b6d458ee2a936ba5a34296ba0cf53ab7a0f1f7e9098aef97c3bb0c4730c9b42002f623e4abd78c804263f4e1496228e94b8
+  checksum: 10c0/483c8aa709e808ff1c0be8d285d8d48bdbc38cc8f3afb5c3fe6f4e609186b15f9ab2df1f7d9cf62094e33ac72665bbea0a8f5427d84ca21333bc9ade22a13d3a
   languageName: node
   linkType: hard
 
@@ -3125,7 +3125,7 @@ __metadata:
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:7.0.1"
     "@guardian/automat-modules": "npm:^0.3.8"
-    "@guardian/commercial": "npm:18.1.0"
+    "@guardian/commercial": "npm:18.3.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:2.1.0"
