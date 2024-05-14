@@ -18,7 +18,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
   }
 
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
-    val fakeTestVariantRequest = FakeRequest().withHeaders("X-GU-Experiment-0perc-E" -> "variant")
     val fakeTestControlRequest = FakeRequest().withHeaders("X-GU-Experiment-0perc-E" -> "control")
     val supportedSections = Set("film", "books", "fashion")
     val oldPublishedDate = Some(new DateTime(2020, 8, 13, 0, 0))
@@ -157,17 +156,5 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       deniedPageUrl,
       "gallery",
     )(fakeTestControlRequest) should be(true)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      "film",
-      None,
-      supportedSections,
-      Set.empty,
-      Set.empty,
-      List.empty,
-      newPublishedDate,
-      deniedPageUrl,
-      "article",
-    )(fakeTestVariantRequest) should be(true)
   }
 }
