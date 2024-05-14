@@ -5,7 +5,6 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import common.Edition
 import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
-import experiments.{ActiveExperiments, AffiliateLinksDCR}
 import model.dotcomrendering.pageElements.PageElement
 import model.{ContentFormat, ContentPage}
 import play.api.libs.json._
@@ -70,7 +69,6 @@ object DotcomBlocksRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
-    val isInAffiliateLinksTest = ActiveExperiments.isParticipating(AffiliateLinksDCR)(request)
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)(request)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
