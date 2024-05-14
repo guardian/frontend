@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRTagPages,
       DCRVideoPages,
       UpdatedHeaderDesign,
+      UpdateLogoAdPartner,
       MastheadWithHighlights,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
