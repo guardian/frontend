@@ -1,8 +1,10 @@
 package views.support.cleaner
 import conf.Configuration
+import conf.switches.Switches.ServerSideExperiments
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.test.FakeRequest
 import views.support.AffiliateLinksCleaner._
 
 class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
@@ -16,6 +18,8 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
   }
 
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
+    val fakeTestVariantRequest = FakeRequest().withHeaders("X-GU-Experiment-0perc-E" -> "variant")
+    val fakeTestControlRequest = FakeRequest().withHeaders("X-GU-Experiment-0perc-E" -> "control")
     val supportedSections = Set("film", "books", "fashion")
     val oldPublishedDate = Some(new DateTime(2020, 8, 13, 0, 0))
     val newPublishedDate = Some(new DateTime(2020, 8, 15, 0, 0))
@@ -32,7 +36,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "film",
@@ -44,7 +48,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "film",
@@ -56,7 +60,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "news",
@@ -68,7 +72,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "news",
@@ -80,7 +84,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "news",
@@ -92,7 +96,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "fashion",
@@ -104,7 +108,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "fashion",
@@ -116,7 +120,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "fashion",
@@ -128,7 +132,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       oldPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "film",
@@ -140,7 +144,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       newPublishedDate,
       deniedPageUrl,
       "article",
-    ) should be(false)
+    )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       "film",
@@ -152,6 +156,18 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       newPublishedDate,
       deniedPageUrl,
       "gallery",
-    ) should be(true)
+    )(fakeTestControlRequest) should be(true)
+    shouldAddAffiliateLinks(
+      switchedOn = true,
+      "film",
+      None,
+      supportedSections,
+      Set.empty,
+      Set.empty,
+      List.empty,
+      newPublishedDate,
+      deniedPageUrl,
+      "article",
+    )(fakeTestVariantRequest) should be(true)
   }
 }

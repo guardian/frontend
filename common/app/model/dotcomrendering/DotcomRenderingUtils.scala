@@ -242,7 +242,7 @@ object DotcomRenderingUtils {
     }
   }
 
-  def shouldAddAffiliateLinks(content: ContentType): Boolean = {
+  def shouldAddAffiliateLinks(content: ContentType)(implicit request: RequestHeader): Boolean = {
     val contentHtml = Jsoup.parse(content.fields.body)
     val bodyElements = contentHtml.select("body").first().children()
     if (bodyElements.size >= 2) {
