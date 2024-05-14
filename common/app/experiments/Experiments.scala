@@ -16,19 +16,9 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRVideoPages,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
-      DeeplyReadRightColumn,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object DeeplyReadRightColumn
-    extends Experiment(
-      name = "deeply-read-right-column",
-      description = "Test the impact of adding deeply read component to the right column",
-      owners = Seq(Owner.withGithub("@guardian/dotcom-platform")),
-      sellByDate = LocalDate.of(2024, 7, 31),
-      participationGroup = Perc0A,
-    )
 
 object UpdatedHeaderDesign
     extends Experiment(
