@@ -135,10 +135,15 @@ trait FaciaController
         FrontHeadline.headlineNotFound
       }
 
-      frontJsonFapi
-        .get(path, liteRequestType)
-        .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
-        .map(Cached(CacheTime.Facia))
+      if (!ConfigAgent.frontExistsInConfig(path)) {
+        successful(Cached(CacheTime.Facia)(notFound()))
+      } else {
+        frontJsonFapi
+          .get(path, liteRequestType)
+          .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
+          .map(Cached(CacheTime.Facia))
+      }
+
     }
 
   def renderFront(path: String): Action[AnyContent] =
@@ -170,11 +175,17 @@ trait FaciaController
   // see https://github.com/guardian/pressreader
   def renderFrontJsonMinimal(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, liteRequestType).map { resp =>
-        Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
-          case Some(pressedPage) => FapiFrontJsonMinimal.get(pressedPage)
-          case None              => JsObject(Nil)
-        }))
+      if (!ConfigAgent.frontExistsInConfig(path)) {
+        successful(
+          Cached(CacheTime.Facia)(JsonComponent.fromWritable(JsObject(Nil))),
+        )
+      } else {
+        frontJsonFapi.get(path, liteRequestType).map { resp =>
+          Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
+            case Some(pressedPage) => FapiFrontJsonMinimal.get(pressedPage)
+            case None              => JsObject(Nil)
+          }))
+        }
       }
     }
 
