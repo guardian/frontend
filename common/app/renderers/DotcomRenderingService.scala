@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
-import conf.switches.Switches.CircuitBreakerSwitch
+import conf.switches.Switches.CircuitBreakerDcrSwitch
 import crosswords.CrosswordPageWithContent
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -133,7 +133,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       }
     }
 
-    if (CircuitBreakerSwitch.isSwitchedOn) {
+    if (CircuitBreakerDcrSwitch.isSwitchedOn) {
       circuitBreaker.withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, timeout)).map(handler)
     } else {
       postWithoutHandler(ws, payload, endpoint, timeout).map(handler)

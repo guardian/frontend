@@ -66,6 +66,16 @@ trait PerformanceSwitches {
     exposeClientSide = false,
   )
 
+  val CircuitBreakerDcrSwitch = Switch(
+    SwitchGroup.Performance,
+    "circuit-breaker-dcr",
+    "If this switch is switched on then the DCR API circuit breaker will be operational",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
   val AutoRefreshSwitch = Switch(
     SwitchGroup.Performance,
     "auto-refresh",
