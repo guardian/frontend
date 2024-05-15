@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       DCRTagPages,
-      DCRVideoPages,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
     )
@@ -46,18 +45,6 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0D,
-    )
-
-object DCRVideoPages
-    extends Experiment(
-      name = "dcr-video-pages",
-      description = "Render video pages with DCR",
-      owners = Seq(
-        Owner.withGithub("commercial.dev@theguardian.com"),
-        Owner.withGithub("dotcom.platform@theguardian.com"),
-      ),
-      sellByDate = LocalDate.of(2024, 5, 30),
-      participationGroup = Perc10A,
     )
 
 object DCRTagPages
