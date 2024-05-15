@@ -20,27 +20,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object DCRTagPages
-    extends Experiment(
-      name = "dcr-tag-pages",
-      description = "Render tag pages with DCR",
-      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 31),
-      participationGroup = Perc20A,
-    )
-
-object DCRVideoPages
-    extends Experiment(
-      name = "dcr-video-pages",
-      description = "Render video pages with DCR",
-      owners = Seq(
-        Owner.withGithub("commercial.dev@theguardian.com"),
-        Owner.withGithub("dotcom.platform@theguardian.com"),
-      ),
-      sellByDate = LocalDate.of(2024, 5, 30),
-      participationGroup = Perc10A,
-    )
-
 object UpdatedHeaderDesign
     extends Experiment(
       name = "updated-header-design",
@@ -67,4 +46,25 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0D,
+    )
+
+object DCRVideoPages
+    extends Experiment(
+      name = "dcr-video-pages",
+      description = "Render video pages with DCR",
+      owners = Seq(
+        Owner.withGithub("commercial.dev@theguardian.com"),
+        Owner.withGithub("dotcom.platform@theguardian.com"),
+      ),
+      sellByDate = LocalDate.of(2024, 5, 30),
+      participationGroup = Perc10A,
+    )
+
+object DCRTagPages
+    extends Experiment(
+      name = "dcr-tag-pages",
+      description = "Render tag pages with DCR",
+      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 5, 31),
+      participationGroup = Perc20A,
     )
