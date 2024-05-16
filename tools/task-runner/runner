@@ -8,7 +8,7 @@ const path = require('path');
 const os = require('os');
 
 const yargs = require('yargs');
-const Listr = require('listr');
+const { Listr } = require('listr2');
 const execa = require('execa');
 const chalk = require('chalk');
 const figures = require('figures');
