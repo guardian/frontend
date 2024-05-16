@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      CommercialMegaTest,
       DarkModeWeb,
       DCRTagPages,
       DCRVideoPages,
@@ -21,36 +20,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object CommercialMegaTest
-    extends Experiment(
-      name = "commercial-mega-test",
-      description = "Test the revenue effect of changes made during Q4",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 8, 8),
-      participationGroup = Perc5A,
-    )
-
-object DCRTagPages
-    extends Experiment(
-      name = "dcr-tag-pages",
-      description = "Render tag pages with DCR",
-      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 31),
-      participationGroup = Perc20A,
-    )
-
-object DCRVideoPages
-    extends Experiment(
-      name = "dcr-video-pages",
-      description = "Render video pages with DCR",
-      owners = Seq(
-        Owner.withGithub("commercial.dev@theguardian.com"),
-        Owner.withGithub("dotcom.platform@theguardian.com"),
-      ),
-      sellByDate = LocalDate.of(2024, 5, 30),
-      participationGroup = Perc10A,
-    )
 
 object UpdatedHeaderDesign
     extends Experiment(
@@ -87,4 +56,24 @@ object UpdateLogoAdPartner
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0A,
+
+object DCRVideoPages
+    extends Experiment(
+      name = "dcr-video-pages",
+      description = "Render video pages with DCR",
+      owners = Seq(
+        Owner.withGithub("commercial.dev@theguardian.com"),
+        Owner.withGithub("dotcom.platform@theguardian.com"),
+      ),
+      sellByDate = LocalDate.of(2024, 5, 30),
+      participationGroup = Perc10A,
+    )
+
+object DCRTagPages
+    extends Experiment(
+      name = "dcr-tag-pages",
+      description = "Render tag pages with DCR",
+      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 5, 31),
+      participationGroup = Perc20A,
     )

@@ -64,4 +64,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 6, 7)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-deeply-read-right-column",
+    "Add deeply read component to the right hand column",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 7, 31)),
+    exposeClientSide = true,
+  )
 }
