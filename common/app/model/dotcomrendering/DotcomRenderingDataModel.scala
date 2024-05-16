@@ -487,7 +487,7 @@ object DotcomRenderingDataModel {
       blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
     }
 
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)(request)
     val shouldAddDisclaimer = hasAffiliateLinks(bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
