@@ -56,6 +56,7 @@ object UpdateLogoAdPartner
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0A,
+    )
 
 object DCRVideoPages
     extends Experiment(
