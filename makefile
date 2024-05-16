@@ -2,15 +2,6 @@
 # They're helper targets that you probably only need to know about
 # if you've got as far as reading the makefile.
 
-# Lists common tasks.
-# Also the default task (`make` === `make help`).
-help:
-	@node tools/messages.js describeMakefile
-
-# Lists *all* targets.
-list: # PRIVATE
-	@node tools/messages.js describeMakefile --all
-
 # Add phony targets
 .PHONY: sbt
 
