@@ -5,9 +5,9 @@ import model.Cors.RichRequestHeader
 import model.{MediaPage, Video, Audio}
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
-import experiments.DCRVideoPages
 import navigation.NavLinks.media
 import experiments.ActiveExperiments
+import conf.switches.Switches.DCRVideoPages
 
 object MediaPicker extends GuLogging {
 
@@ -40,15 +40,13 @@ object MediaPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    // defaulting to false until we are ready to release and create a 0% test
-    val participatingInTest = ActiveExperiments.isParticipating(DCRVideoPages)
     val dcrCanRender = dcrCouldRender(mediaPage)
     val flags = dcrLogFlags(mediaPage)
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && participatingInTest) RemoteRender
+      else if (dcrCanRender && DCRVideoPages.isSwitchedOn) RemoteRender
       else LocalRender
     }
 
