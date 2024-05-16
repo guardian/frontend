@@ -32,7 +32,7 @@ object StoryHtmlPage {
     if (pageWithStoryPackage.item.tags.isLiveBlog) {
       Html(s"<script>window.guardian.config.page.dcrCouldRender = true</script>")
     } else {
-      val thisDcrCouldRender: Boolean = dcrChecks(pageWithStoryPackage, request).values.forall(identity)
+      val thisDcrCouldRender: Boolean = dcrChecks(pageWithStoryPackage).values.forall(identity)
       Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
     }
   }
