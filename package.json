@@ -101,7 +101,6 @@
 		"jest-environment-jsdom-global": "4.0.0",
 		"listr": "^0.14.3",
 		"lodash-es": "^4.17.21",
-		"lodash.merge": "^4.6.2",
 		"lodash.takewhile": "^4.6.0",
 		"lodash.uniq": "^4.5.0",
 		"madge": "^5.0.1",
@@ -154,7 +153,6 @@
 		"webpack-cli": "^5.0.1",
 		"webpack-dev-server": "^4.13.2",
 		"webpack-merge": "^4.2.2",
-		"webshot": "^0.17.0",
 		"wolfy87-eventemitter": "~5.2.4",
 		"yargs": "^17.7.1"
 	},
