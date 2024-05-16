@@ -6,6 +6,7 @@ import common.{Edition, GuLogging, LinkTo}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches._
+import experiments.{ActiveExperiments, AffiliateLinksDCR}
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
@@ -873,7 +874,8 @@ case class AffiliateLinksCleaner(
     tags: List[String],
     publishedDate: Option[DateTime],
     contentType: String,
-) extends HtmlCleaner
+)(implicit request: RequestHeader)
+    extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
@@ -946,7 +948,7 @@ object AffiliateLinksCleaner {
       firstPublishedDate: Option[DateTime],
       pageUrl: String,
       contentType: String,
-  ): Boolean = {
+  )(implicit request: RequestHeader): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
     val cleanedPageUrl = if (pageUrl.charAt(0) == '/') {
@@ -973,11 +975,11 @@ object AffiliateLinksCleaner {
 
     // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off date.
     // The cut off date is temporary while we are working on improving the compliance of affiliate links.
-    // The cut off date does not apply to any URL on the allow list
+    // The cut off date does not apply to any URL on the allow list or to galleries
     if (
       !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
         _.isBefore(publishedCutOffDate),
-      ) || urlIsInAllowList || contentType == "gallery")
+      ) || urlIsInAllowList || contentType == "gallery" || ActiveExperiments.isParticipating(AffiliateLinksDCR))
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)

@@ -135,7 +135,10 @@ compile() {
 
 report() {
   if [[ ${#EXTRA_STEPS[@]} -gt 0 ]]; then
-    node ./tools/messages.js install-steps
+    echo "";
+    echo "Please run the following to complete your installation:"
+    echo "=======================================================";
+    echo "";
     for i in "${!EXTRA_STEPS[@]}"; do
       echo "  $((i+1)). ${EXTRA_STEPS[$i]}"
     done

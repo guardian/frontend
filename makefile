@@ -2,15 +2,6 @@
 # They're helper targets that you probably only need to know about
 # if you've got as far as reading the makefile.
 
-# Lists common tasks.
-# Also the default task (`make` === `make help`).
-help:
-	@node tools/messages.js describeMakefile
-
-# Lists *all* targets.
-list: # PRIVATE
-	@node tools/messages.js describeMakefile --all
-
 # Add phony targets
 .PHONY: sbt
 
@@ -119,10 +110,6 @@ fix-commits: install
 
 validate-a11y: install # PRIVATE
 	@./tools/task-runner/runner validate/a11y
-
-# Take screenshots for a visual check.
-screenshots: install
-	@./tools/task-runner/runner screenshot
 
 # Update caniuse db used by browserslist
 # https://github.com/browserslist/update-db
