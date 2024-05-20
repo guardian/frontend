@@ -351,6 +351,7 @@ trait FaciaController
     RevalidatableResult(Ok(showcaseWithoutDcDates).as("text/xml; charset=utf-8"), showcaseWithoutDcDates)
   }
 
+  // Used by dev-build only
   def renderFrontPress(path: String): Action[AnyContent] =
     Action.async { implicit request => renderFrontPressResult(path) }
 
@@ -403,41 +404,45 @@ trait FaciaController
 
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, fullRequestType).flatMap {
-        case Some(pressedPage) if request.forceDCR =>
-          val maybeResponse = for {
-            collection <- pressedPage.collections.find(_.id == collectionId)
-          } yield {
-            successful(Cached(CacheTime.Facia) {
-              val cards = collection.curated ++ collection.backfill
-
-              val adFreeFilteredCards = cards.filter(c => !(c.properties.isPaidFor && request.isAdFree))
-
-              implicit val pressedContentFormat = PressedContentFormat.format
-              JsonComponent.fromWritable(Json.toJson(adFreeFilteredCards))
-            })
-          }
-          maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
-        case Some(pressedPage) =>
-          val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
-          val maybeResponse =
-            for {
-              (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
-              containerLayout <- container.containerLayout
+      if (!ConfigAgent.frontExistsInConfig(path)) {
+        successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      } else {
+        frontJsonFapi.get(path, fullRequestType).flatMap {
+          case Some(pressedPage) if request.forceDCR =>
+            val maybeResponse = for {
+              collection <- pressedPage.collections.find(_.id == collectionId)
             } yield {
-              val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
-              val adFreeFilteredCards: Seq[FaciaCardAndIndex] = if (request.isAdFree) {
-                remainingCards.filter(c => !checkIfPaid(c.item))
-              } else {
-                remainingCards
-              }
               successful(Cached(CacheTime.Facia) {
-                JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
+                val cards = collection.curated ++ collection.backfill
+
+                val adFreeFilteredCards = cards.filter(c => !(c.properties.isPaidFor && request.isAdFree))
+
+                implicit val pressedContentFormat = PressedContentFormat.format
+                JsonComponent.fromWritable(Json.toJson(adFreeFilteredCards))
               })
             }
+            maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
+          case Some(pressedPage) =>
+            val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
+            val maybeResponse =
+              for {
+                (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
+                containerLayout <- container.containerLayout
+              } yield {
+                val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
+                val adFreeFilteredCards: Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+                  remainingCards.filter(c => !checkIfPaid(c.item))
+                } else {
+                  remainingCards
+                }
+                successful(Cached(CacheTime.Facia) {
+                  JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
+                })
+              }
 
-          maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-        case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+            maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+          case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+        }
       }
     }
 
