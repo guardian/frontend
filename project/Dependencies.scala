@@ -94,7 +94,7 @@ object Dependencies {
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.4"
 
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
