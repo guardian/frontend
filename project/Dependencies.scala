@@ -55,7 +55,7 @@ object Dependencies {
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.15.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.4"
-  val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
+  val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.9"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "3.1.0"
