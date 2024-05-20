@@ -103,7 +103,7 @@ object Dependencies {
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.4.1"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
-  val jqueryui = "org.webjars" % "jquery-ui" % "1.13.2"
+  val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
   val react = "org.webjars" % "react" % "15.6.1"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
