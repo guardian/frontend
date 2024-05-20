@@ -1,6 +1,5 @@
 package services
 
-import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.dynamodbv2.{
   AmazonDynamoDB,
   AmazonDynamoDBAsync,
@@ -11,7 +10,6 @@ import conf.Configuration
 
 object DynamoDB {
   private lazy val credentials = Configuration.aws.mandatoryCredentials
-  private lazy val region = Region.getRegion(Regions.fromName(Configuration.aws.region))
 
   lazy val asyncClient: AmazonDynamoDBAsync = AmazonDynamoDBAsyncClient
     .asyncBuilder()
