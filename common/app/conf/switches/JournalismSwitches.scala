@@ -63,4 +63,14 @@ trait JournalismSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val AbsoluteServerTimes = Switch(
+    SwitchGroup.Journalism,
+    name = "absolute-server-times",
+    description = "Force times on the server to be absolute to improve caching",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
