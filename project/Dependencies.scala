@@ -107,5 +107,5 @@ object Dependencies {
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
   val react = "org.webjars" % "react" % "16.5.2"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
-  val d3 = "org.webjars.npm" % "d3" % "3.5.17"
+  val d3 = "org.webjars.npm" % "d3" % "7.9.0"
 }
