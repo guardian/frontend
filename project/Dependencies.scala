@@ -93,7 +93,7 @@ object Dependencies {
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.3"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
-  val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.13"
+  val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.4"
 
   // Forcing a version of this to fix an issue with the dependency.
