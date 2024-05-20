@@ -196,7 +196,6 @@ val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
 
-
 val main = root()
   .aggregate(
     common,
