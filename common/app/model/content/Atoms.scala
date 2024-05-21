@@ -7,32 +7,36 @@ import conf.Configuration
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 
 final case class Atoms(
-    quizzes: Seq[QuizAtom],
-    media: Seq[MediaAtom],
-    interactives: Seq[InteractiveAtom],
-    reviews: Seq[ReviewAtom],
-    explainers: Seq[ExplainerAtom],
-    qandas: Seq[QandaAtom],
-    guides: Seq[GuideAtom],
-    profiles: Seq[ProfileAtom],
-    timelines: Seq[TimelineAtom],
-    commonsdivisions: Seq[CommonsDivisionAtom],
     audios: Seq[AudioAtom],
     charts: Seq[ChartAtom],
+    commonsdivisions: Seq[CommonsDivisionAtom],
+    explainers: Seq[ExplainerAtom],
+    guides: Seq[GuideAtom],
+    interactives: Seq[InteractiveAtom],
+    media: Seq[MediaAtom],
+    profiles: Seq[ProfileAtom],
+    qandas: Seq[QandaAtom],
+    quizzes: Seq[QuizAtom],
+    reviews: Seq[ReviewAtom],
+    timelines: Seq[TimelineAtom],
 ) {
   val all: Seq[Atom] =
     quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
 
   def atomTypes: Map[String, Boolean] =
     Map(
-      "guide" -> !guides.isEmpty,
-      "qanda" -> !qandas.isEmpty,
-      "profile" -> !profiles.isEmpty,
-      "timeline" -> !timelines.isEmpty,
-      "explainer" -> !explainers.isEmpty,
-      "commonsdivision" -> !commonsdivisions.isEmpty,
       "audio" -> !audios.isEmpty,
       "chart" -> !charts.isEmpty,
+      "commonsdivision" -> !commonsdivisions.isEmpty,
+      "explainer" -> !explainers.isEmpty,
+      "guide" -> !guides.isEmpty,
+      "interactive" -> !interactives.isEmpty,
+      "media" -> !media.isEmpty,
+      "profile" -> !profiles.isEmpty,
+      "qanda" -> !qandas.isEmpty,
+      "quizz" -> !quizzes.isEmpty,
+      "review" -> !reviews.isEmpty,
+      "timeline" -> !timelines.isEmpty,
     )
 }
 
