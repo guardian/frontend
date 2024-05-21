@@ -1,7 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { deeplyReadRightColumn } from './tests/deeply-read-right-column';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
-import { onwardJourneys } from './tests/onward-journeys';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateAlternativeWording } from './tests/sign-in-gate-alternative-wording';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -15,6 +14,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateAlternativeWording,
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
-	onwardJourneys,
 	deeplyReadRightColumn,
 ];
