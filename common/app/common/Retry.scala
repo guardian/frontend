@@ -4,8 +4,7 @@ import scala.util.{Failure, Success, Try}
 
 object Retry {
 
-  /**
-    * Execute some code n times, or until no exception is thrown
+  /** Execute some code n times, or until no exception is thrown
     * (If n is 0, code still gets executed once)
     */
   def apply[T](n: Int)(r: => T)(onFail: (Throwable, Int) => Unit): Try[T] = {

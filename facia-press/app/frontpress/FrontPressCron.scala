@@ -23,8 +23,8 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
     }
   }
 
-  override lazy val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map {
-    queueUrl =>
+  override lazy val queue: JsonMessageQueue[SNSNotification] =
+    (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
       val credentials = Configuration.aws.mandatoryCredentials
 
       JsonMessageQueue[SNSNotification](
@@ -34,9 +34,9 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
           .build(),
         queueUrl,
       )
-  }) getOrElse {
-    throw new RuntimeException("Required property 'frontpress.sqs.cron_queue_url' not set")
-  }
+    }) getOrElse {
+      throw new RuntimeException("Required property 'frontpress.sqs.cron_queue_url' not set")
+    }
 
   override def process(message: common.Message[SNSNotification]): Future[Unit] = {
     val path: String = message.get.Message

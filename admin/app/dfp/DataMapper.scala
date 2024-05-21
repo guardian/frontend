@@ -51,15 +51,15 @@ class DataMapper(
             ),
           )
 
-        val targets = criteria.getChildren collect {
-          case criterion: CustomCriteria => criterion
+        val targets = criteria.getChildren collect { case criterion: CustomCriteria =>
+          criterion
         } map toCustomTarget
         CustomTargetSet(criteria.getLogicalOperator.getValue, targets.toIndexedSeq)
       }
 
       criteriaSets.getChildren
-        .collect {
-          case criteria: CustomCriteriaSet => criteria
+        .collect { case criteria: CustomCriteriaSet =>
+          criteria
         }
         .map(toCustomTargetSet)
         .toSeq

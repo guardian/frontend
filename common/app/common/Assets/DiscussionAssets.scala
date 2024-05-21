@@ -11,8 +11,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-/**
-  * External assets are not hosted by frontend but referenced in an assets map
+/** External assets are not hosted by frontend but referenced in an assets map
   *
   * This class pull the assets map regularly and translates a generic name into a full URL
   *

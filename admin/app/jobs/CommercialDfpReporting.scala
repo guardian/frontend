@@ -71,9 +71,8 @@ object CommercialDfpReporting extends GuLogging {
               lastUpdated = LocalDateTime.now,
             )
         }
-        curr foreach {
-          case (key, report) =>
-            log.info(s"Updated report '$key' with ${report.rows.size} rows")
+        curr foreach { case (key, report) =>
+          log.info(s"Updated report '$key' with ${report.rows.size} rows")
         }
         curr
       }

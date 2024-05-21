@@ -2,8 +2,7 @@ package idapiclient
 
 import com.gu.identity.model._
 
-/**
-  * Represents up-to-date user data DTO that is serialised and posted to IDAPI
+/** Represents up-to-date user data DTO that is serialised and posted to IDAPI
   */
 case class UserUpdateDTO(
     primaryEmailAddress: Option[String] = None,

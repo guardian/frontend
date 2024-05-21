@@ -106,11 +106,10 @@ class CommercialController(
         .groupBy(_.targeting.adTestValue.get)
 
       val (hasNumericTestValue, hasStringTestValue) =
-        lineItemsByAdTest partition {
-          case (testValue, _) =>
-            def isNumber(s: String) = s forall Character.isDigit
+        lineItemsByAdTest partition { case (testValue, _) =>
+          def isNumber(s: String) = s forall Character.isDigit
 
-            isNumber(testValue)
+          isNumber(testValue)
         }
 
       val sortedGroups = {

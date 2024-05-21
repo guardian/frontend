@@ -164,8 +164,8 @@ object GetClasses {
         ("fc-container--dynamic-slow-mpu", dynamicSlowMpu),
         ("fc-container--will-have-toggle", showToggle),
         ("js-container--toggle", showToggle),
-      ) collect {
-        case (kls, true) => kls
+      ) collect { case (kls, true) =>
+        kls
       }) ++ extraClasses: _*,
     )
   }

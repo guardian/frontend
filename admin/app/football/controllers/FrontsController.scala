@@ -36,9 +36,8 @@ class FrontsController(
 
   def index: Action[AnyContent] =
     Action.async { implicit request =>
-      fetchCompetitionsAndTeams.map {
-        case (competitions, teams) =>
-          Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
+      fetchCompetitionsAndTeams.map { case (competitions, teams) =>
+        Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
       }
     }
 
@@ -280,10 +279,9 @@ class FrontsController(
     } yield {
       val embedContent = (previewResponse.json \ "html").as[String]
       Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.viewEmbed(Html(embedContent), snapFields)))
-    }).recover {
-      case e =>
-        log.error(s"Failed to preview snap content from ${snapFields.uri}", e)
-        NoCache(Ok(views.html.football.fronts.failedEmbed(Html(e.getMessage), snapFields)))
+    }).recover { case e =>
+      log.error(s"Failed to preview snap content from ${snapFields.uri}", e)
+      NoCache(Ok(views.html.football.fronts.failedEmbed(Html(e.getMessage), snapFields)))
     }
     result
   }

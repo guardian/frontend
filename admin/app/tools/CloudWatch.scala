@@ -197,9 +197,27 @@ object CloudWatch extends GuLogging {
     )
 
   def fastlyErrors()(implicit executionContext: ExecutionContext): Future[List[AwsLineChart]] =
-    Future.traverse(fastlyMetrics) {
-      case (graphTitle, metric) =>
-        withErrorLogging(
+    Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
+      withErrorLogging(
+        euWestClient.getMetricStatisticsFuture(
+          new GetMetricStatisticsRequest()
+            .withStartTime(new DateTime().minusHours(6).toDate)
+            .withEndTime(new DateTime().toDate)
+            .withPeriod(120)
+            .withStatistics("Average")
+            .withNamespace("Fastly")
+            .withDimensions(stage)
+            .withMetricName(metric),
+        ),
+      ) map { metricsResult =>
+        new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
+      }
+    }
+
+  def fastlyHitMissStatistics()(implicit executionContext: ExecutionContext): Future[List[AwsLineChart]] =
+    Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
+      for {
+        hits <- withErrorLogging(
           euWestClient.getMetricStatisticsFuture(
             new GetMetricStatisticsRequest()
               .withStartTime(new DateTime().minusHours(6).toDate)
@@ -207,50 +225,30 @@ object CloudWatch extends GuLogging {
               .withPeriod(120)
               .withStatistics("Average")
               .withNamespace("Fastly")
-              .withDimensions(stage)
-              .withMetricName(metric),
+              .withMetricName(s"$region-hits")
+              .withDimensions(stage),
           ),
-        ) map { metricsResult =>
-          new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
-        }
-    }
-
-  def fastlyHitMissStatistics()(implicit executionContext: ExecutionContext): Future[List[AwsLineChart]] =
-    Future.traverse(fastlyHitMissMetrics) {
-      case (graphTitle, region) =>
-        for {
-          hits <- withErrorLogging(
-            euWestClient.getMetricStatisticsFuture(
-              new GetMetricStatisticsRequest()
-                .withStartTime(new DateTime().minusHours(6).toDate)
-                .withEndTime(new DateTime().toDate)
-                .withPeriod(120)
-                .withStatistics("Average")
-                .withNamespace("Fastly")
-                .withMetricName(s"$region-hits")
-                .withDimensions(stage),
-            ),
-          )
-
-          misses <- withErrorLogging(
-            euWestClient.getMetricStatisticsFuture(
-              new GetMetricStatisticsRequest()
-                .withStartTime(new DateTime().minusHours(6).toDate)
-                .withEndTime(new DateTime().toDate)
-                .withPeriod(120)
-                .withStatistics("Average")
-                .withNamespace("Fastly")
-                .withMetricName(s"$region-miss")
-                .withDimensions(stage),
-            ),
-          )
-        } yield new AwsLineChart(
-          graphTitle,
-          Seq("Time", "Hits", "Misses"),
-          ChartFormat(Colour.success, Colour.error),
-          hits,
-          misses,
         )
+
+        misses <- withErrorLogging(
+          euWestClient.getMetricStatisticsFuture(
+            new GetMetricStatisticsRequest()
+              .withStartTime(new DateTime().minusHours(6).toDate)
+              .withEndTime(new DateTime().toDate)
+              .withPeriod(120)
+              .withStatistics("Average")
+              .withNamespace("Fastly")
+              .withMetricName(s"$region-miss")
+              .withDimensions(stage),
+          ),
+        )
+      } yield new AwsLineChart(
+        graphTitle,
+        Seq("Time", "Hits", "Misses"),
+        ChartFormat(Colour.success, Colour.error),
+        hits,
+        misses,
+      )
     }
 
   def confidenceGraph(metricName: String)(implicit executionContext: ExecutionContext): Future[AwsLineChart] =

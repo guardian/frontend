@@ -30,9 +30,8 @@ class MessageUsService(messageUsS3Client: S3Client[MessageUsConfigData]) extends
         messageUsConfigData send Some(response.toMap)
         log.info("successfully refreshed message us configs")
       })
-      .recover {
-        case e =>
-          log.error(s"Could not refresh message us configs due to \'${e.getMessage}\'")
+      .recover { case e =>
+        log.error(s"Could not refresh message us configs due to \'${e.getMessage}\'")
       }
   }
 

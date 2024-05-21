@@ -63,15 +63,15 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
     throw new RuntimeException("Required property 'r2Press.sqsQueueUrl' not set")
   }
 
-  private lazy val takedownQueue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsTakedownQueueUrl map {
-    queueUrl =>
+  private lazy val takedownQueue: TextMessageQueue[SNSNotification] =
+    (Configuration.r2Press.sqsTakedownQueueUrl map { queueUrl =>
       TextMessageQueue[SNSNotification](
         sqsClient,
         queueUrl,
       )
-  }) getOrElse {
-    throw new RuntimeException("Required property 'r2Press.sqsTakedownQueueUrl' not set")
-  }
+    }) getOrElse {
+      throw new RuntimeException("Required property 'r2Press.sqsTakedownQueueUrl' not set")
+    }
 
   private def stripProtocol(url: String): String =
     url

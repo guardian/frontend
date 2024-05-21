@@ -45,11 +45,10 @@ class Industries(contentApiClient: ContentApiClient) {
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] =
     Future.sequence {
-      Industries.sectorIdIndustryMap map {
-        case (id, name) =>
-          lookup.keyword(name) flatMap { keywords =>
-            industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))
-          }
+      Industries.sectorIdIndustryMap map { case (id, name) =>
+        lookup.keyword(name) flatMap { keywords =>
+          industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))
+        }
       }
     }
 

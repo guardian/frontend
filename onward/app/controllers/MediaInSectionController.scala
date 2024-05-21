@@ -70,10 +70,9 @@ class MediaInSectionController(
         }
       }
 
-    promiseOrResponse recover {
-      case ContentApiError(404, message, _) =>
-        log.info(s"Got a 404 calling content api: $message")
-        None
+    promiseOrResponse recover { case ContentApiError(404, message, _) =>
+      log.info(s"Got a 404 calling content api: $message")
+      None
     }
   }
 
