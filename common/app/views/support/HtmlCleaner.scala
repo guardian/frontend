@@ -888,7 +888,6 @@ case class AffiliateLinksCleaner(
         alwaysOffTags,
         tags,
         publishedDate,
-        pageUrl,
       )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
@@ -944,39 +943,15 @@ object AffiliateLinksCleaner {
       alwaysOffTags: Set[String],
       tagPaths: List[String],
       firstPublishedDate: Option[DateTime],
-      pageUrl: String,
   )(implicit request: RequestHeader): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
-    val cleanedPageUrl = if (pageUrl.charAt(0) == '/') {
-      pageUrl.substring(1);
-    } else pageUrl
-
-    val affiliateLinksAllowList = List(
-      "lifeandstyle/2024/jan/03/six-winter-warmers-tried-and-tested-the-heated-poncho-has-changed-me-i-will-never-have-sex-again",
-      "lifeandstyle/2024/mar/11/im-south-asian-and-have-dark-eye-circles-what-can-i-do",
-      "fashion/2024/mar/08/the-four-makeup-staples-i-cant-live-without",
-      "travel/2023/mar/03/readers-favourite-budget-beach-campsites-hotels-in-europe",
-      "travel/2024/feb/25/10-of-the-best-places-in-the-uk-to-see-them-bloom",
-      "lifeandstyle/2023/dec/10/with-christmas-around-the-corner-what-to-give-the-gardener-in-your-life-",
-      "fashion/2024/mar/01/spring-is-around-the-corner-time-to-soothe-and-restore-your-cracked-heels",
-      "fashion/2024/mar/10/compact-and-bijou-why-women-need-a-pocket-mirror",
-      "fashion/2024/mar/03/how-to-reset-your-wardrobe-for-spring",
-      "lifeandstyle/2024/mar/03/beauty-spot-eyebrow-essentials-10-of-the-best",
-      "fashion/2024/mar/17/beauty-spot-10-best-root-cover-ups",
-      "fashion/2024/apr/05/peptides-help-with-good-looking-skin-but-dont-expect-botox-in-a-bottle",
-      "fashion/2024/apr/13/sali-hughes-top-50-beauty-products-for-under-20-pounds",
-    )
-
-    val urlIsInAllowList = affiliateLinksAllowList.contains(cleanedPageUrl)
-
     // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off date.
     // The cut off date is temporary while we are working on improving the compliance of affiliate links.
-    // The cut off date does not apply to any URL on the allow list or to galleries
     if (
       !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
         _.isBefore(publishedCutOffDate),
-      ) || urlIsInAllowList || ActiveExperiments.isParticipating(AffiliateLinksDCR))
+      ) || ActiveExperiments.isParticipating(AffiliateLinksDCR))
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
