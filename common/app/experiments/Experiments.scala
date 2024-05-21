@@ -16,7 +16,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       UpdatedHeaderDesign,
       UpdateLogoAdPartner,
       MastheadWithHighlights,
-      AffiliateLinksDCR,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -56,15 +55,6 @@ object UpdateLogoAdPartner
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0A,
-    )
-
-object AffiliateLinksDCR
-    extends Experiment(
-      name = "affiliate-links-dcr",
-      description = "Display affiliate links on all eligible DCR articles",
-      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 30),
-      participationGroup = Perc0E,
     )
 
 object DCRTagPages
