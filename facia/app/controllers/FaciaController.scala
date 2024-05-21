@@ -135,10 +135,15 @@ trait FaciaController
         FrontHeadline.headlineNotFound
       }
 
-      frontJsonFapi
-        .get(path, liteRequestType)
-        .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
-        .map(Cached(CacheTime.Facia))
+      if (!ConfigAgent.frontExistsInConfig(path)) {
+        successful(Cached(CacheTime.Facia)(notFound()))
+      } else {
+        frontJsonFapi
+          .get(path, liteRequestType)
+          .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
+          .map(Cached(CacheTime.Facia))
+      }
+
     }
 
   def renderFront(path: String): Action[AnyContent] =
@@ -170,11 +175,17 @@ trait FaciaController
   // see https://github.com/guardian/pressreader
   def renderFrontJsonMinimal(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, liteRequestType).map { resp =>
-        Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
-          case Some(pressedPage) => FapiFrontJsonMinimal.get(pressedPage)
-          case None              => JsObject(Nil)
-        }))
+      if (!ConfigAgent.frontExistsInConfig(path)) {
+        successful(
+          Cached(CacheTime.Facia)(JsonComponent.fromWritable(JsObject(Nil))),
+        )
+      } else {
+        frontJsonFapi.get(path, liteRequestType).map { resp =>
+          Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
+            case Some(pressedPage) => FapiFrontJsonMinimal.get(pressedPage)
+            case None              => JsObject(Nil)
+          }))
+        }
       }
     }
 
@@ -340,6 +351,7 @@ trait FaciaController
     RevalidatableResult(Ok(showcaseWithoutDcDates).as("text/xml; charset=utf-8"), showcaseWithoutDcDates)
   }
 
+  // Used by dev-build only
   def renderFrontPress(path: String): Action[AnyContent] =
     Action.async { implicit request => renderFrontPressResult(path) }
 
@@ -392,41 +404,45 @@ trait FaciaController
 
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] =
     Action.async { implicit request =>
-      frontJsonFapi.get(path, fullRequestType).flatMap {
-        case Some(pressedPage) if request.forceDCR =>
-          val maybeResponse = for {
-            collection <- pressedPage.collections.find(_.id == collectionId)
-          } yield {
-            successful(Cached(CacheTime.Facia) {
-              val cards = collection.curated ++ collection.backfill
-
-              val adFreeFilteredCards = cards.filter(c => !(c.properties.isPaidFor && request.isAdFree))
-
-              implicit val pressedContentFormat = PressedContentFormat.format
-              JsonComponent.fromWritable(Json.toJson(adFreeFilteredCards))
-            })
-          }
-          maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
-        case Some(pressedPage) =>
-          val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
-          val maybeResponse =
-            for {
-              (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
-              containerLayout <- container.containerLayout
+      if (!ConfigAgent.frontExistsInConfig(path)) {
+        successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      } else {
+        frontJsonFapi.get(path, fullRequestType).flatMap {
+          case Some(pressedPage) if request.forceDCR =>
+            val maybeResponse = for {
+              collection <- pressedPage.collections.find(_.id == collectionId)
             } yield {
-              val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
-              val adFreeFilteredCards: Seq[FaciaCardAndIndex] = if (request.isAdFree) {
-                remainingCards.filter(c => !checkIfPaid(c.item))
-              } else {
-                remainingCards
-              }
               successful(Cached(CacheTime.Facia) {
-                JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
+                val cards = collection.curated ++ collection.backfill
+
+                val adFreeFilteredCards = cards.filter(c => !(c.properties.isPaidFor && request.isAdFree))
+
+                implicit val pressedContentFormat = PressedContentFormat.format
+                JsonComponent.fromWritable(Json.toJson(adFreeFilteredCards))
               })
             }
+            maybeResponse.getOrElse { successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))) }
+          case Some(pressedPage) =>
+            val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
+            val maybeResponse =
+              for {
+                (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
+                containerLayout <- container.containerLayout
+              } yield {
+                val remainingCards: Seq[FaciaCardAndIndex] = containerLayout.remainingCards.map(_.withFromShowMore)
+                val adFreeFilteredCards: Seq[FaciaCardAndIndex] = if (request.isAdFree) {
+                  remainingCards.filter(c => !checkIfPaid(c.item))
+                } else {
+                  remainingCards
+                }
+                successful(Cached(CacheTime.Facia) {
+                  JsonComponent(views.html.fragments.containers.facia_cards.showMore(adFreeFilteredCards, index))
+                })
+              }
 
-          maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-        case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+            maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+          case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+        }
       }
     }
 
