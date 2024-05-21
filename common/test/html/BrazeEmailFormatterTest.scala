@@ -55,9 +55,9 @@ class BrazeEmailFormatterTest extends AnyFlatSpec with Matchers {
         |<head></head>
         |<body>
         |<h2>Heading text</h2>
-        |<p>Paragraph.</p> <br>
+        |<p>Paragraph.</p><br>
         |<div><span>My name is:</span> Bill
-        |</div> <a href="/link/?##braze_utm##">some link</a> <a href="https://www.theguardian.com/environment/2018/sep/26/dont-post-crisp-packets-royal-mail-begs-packaging-protesters?##braze_utm##">article link</a>
+        |</div><a href="/link/?##braze_utm##">some link</a> <a href="https://www.theguardian.com/environment/2018/sep/26/dont-post-crisp-packets-royal-mail-begs-packaging-protesters?##braze_utm##">article link</a>
         |<table>
         |<tbody>
         |<tr>
