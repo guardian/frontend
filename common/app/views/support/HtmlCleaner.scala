@@ -941,11 +941,11 @@ object AffiliateLinksCleaner {
   ): Boolean = {
 
     // Never include affiliate links if it is tagged with an always off tag
-    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags)) {
+    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && switchedOn) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {
-        switchedOn && supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
+        supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
       }
     } else false
   }
