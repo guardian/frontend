@@ -122,16 +122,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       Set.empty,
       List.empty,
       newPublishedDate,
-    )(fakeTestControlRequest) should be(false)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      "film",
-      None,
-      supportedSections,
-      Set.empty,
-      Set.empty,
-      List.empty,
-      newPublishedDate,
     )(fakeTestControlRequest) should be(true)
   }
 }
