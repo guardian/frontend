@@ -32,14 +32,7 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.13",
-    initialize := {
-      val _ = initialize.value
-      assert(
-        sys.props("java.specification.version") == "11",
-        "Java 11 is required for this project.",
-      )
-    },
+    scalaVersion := "2.13.14",
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)

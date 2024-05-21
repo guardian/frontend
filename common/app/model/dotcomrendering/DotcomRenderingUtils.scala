@@ -22,6 +22,7 @@ import model.{
   Pillar,
 }
 import org.joda.time.format.DateTimeFormat
+import org.jsoup.Jsoup
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
@@ -241,19 +242,27 @@ object DotcomRenderingUtils {
     }
   }
 
-  def shouldAddAffiliateLinks(content: ContentType): Boolean = {
-    AffiliateLinksCleaner.shouldAddAffiliateLinks(
-      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-      section = content.metadata.sectionId,
-      showAffiliateLinks = content.content.fields.showAffiliateLinks,
-      supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
-      defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
-      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-      tagPaths = content.content.tags.tags.map(_.id),
-      firstPublishedDate = content.content.fields.firstPublicationDate,
-      pageUrl = content.metadata.id,
-      contentType = "article",
-    )
+  def shouldAddAffiliateLinks(content: ContentType)(implicit request: RequestHeader): Boolean = {
+    val contentHtml = Jsoup.parse(content.fields.body)
+    val bodyElements = contentHtml.select("body").first().children()
+    if (bodyElements.size >= 2) {
+      val firstEl = bodyElements.get(0)
+      val secondEl = bodyElements.get(1)
+      if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 250) {
+        AffiliateLinksCleaner.shouldAddAffiliateLinks(
+          switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+          section = content.metadata.sectionId,
+          showAffiliateLinks = content.content.fields.showAffiliateLinks,
+          supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
+          defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
+          alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+          tagPaths = content.content.tags.tags.map(_.id),
+          firstPublishedDate = content.content.fields.firstPublicationDate,
+          pageUrl = content.metadata.id,
+          contentType = "article",
+        )
+      } else false
+    } else false
   }
 
   def contentDateTimes(content: ContentType): ArticleDateTimes = {
