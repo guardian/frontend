@@ -259,7 +259,6 @@ object DotcomRenderingUtils {
           tagPaths = content.content.tags.tags.map(_.id),
           firstPublishedDate = content.content.fields.firstPublicationDate,
           pageUrl = content.metadata.id,
-          contentType = "article",
         )
       } else false
     } else false

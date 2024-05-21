@@ -873,7 +873,6 @@ case class AffiliateLinksCleaner(
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
     publishedDate: Option[DateTime],
-    contentType: String,
 )(implicit request: RequestHeader)
     extends HtmlCleaner
     with GuLogging {
@@ -890,7 +889,6 @@ case class AffiliateLinksCleaner(
         tags,
         publishedDate,
         pageUrl,
-        contentType,
       )
     ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
@@ -947,7 +945,6 @@ object AffiliateLinksCleaner {
       tagPaths: List[String],
       firstPublishedDate: Option[DateTime],
       pageUrl: String,
-      contentType: String,
   )(implicit request: RequestHeader): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
@@ -979,7 +976,7 @@ object AffiliateLinksCleaner {
     if (
       !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
         _.isBefore(publishedCutOffDate),
-      ) || urlIsInAllowList || contentType == "gallery" || ActiveExperiments.isParticipating(AffiliateLinksDCR))
+      ) || urlIsInAllowList || ActiveExperiments.isParticipating(AffiliateLinksDCR))
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)

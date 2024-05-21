@@ -34,7 +34,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List.empty,
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -46,7 +45,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List.empty,
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -58,7 +56,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List.empty,
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -70,7 +67,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List.empty,
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -82,7 +78,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List("bereavement"),
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -94,7 +89,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List("tech"),
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -106,7 +100,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List("tech"),
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -118,7 +111,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List("bereavement"),
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -130,7 +122,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List("tech"),
       oldPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -142,7 +133,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List.empty,
       newPublishedDate,
       deniedPageUrl,
-      "article",
     )(fakeTestControlRequest) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
@@ -154,7 +144,6 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       List.empty,
       newPublishedDate,
       deniedPageUrl,
-      "gallery",
     )(fakeTestControlRequest) should be(true)
   }
 }
