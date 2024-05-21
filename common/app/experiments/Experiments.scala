@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRTagPages,
       UpdatedHeaderDesign,
+      UpdateLogoAdPartner,
       MastheadWithHighlights,
       AffiliateLinksDCR,
     )
@@ -46,6 +47,15 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0D,
+    )
+
+object UpdateLogoAdPartner
+    extends Experiment(
+      name = "update-logo-ad-partner",
+      description = "Update logo for advertising partner and exclusive advertising partner US",
+      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 7, 30),
+      participationGroup = Perc0A,
     )
 
 object AffiliateLinksDCR
