@@ -6,7 +6,6 @@ import common.{Edition, GuLogging, LinkTo}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches._
-import experiments.{ActiveExperiments, AffiliateLinksDCR}
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
@@ -873,8 +872,7 @@ case class AffiliateLinksCleaner(
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
     publishedDate: Option[DateTime],
-)(implicit request: RequestHeader)
-    extends HtmlCleaner
+) extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
@@ -943,15 +941,15 @@ object AffiliateLinksCleaner {
       alwaysOffTags: Set[String],
       tagPaths: List[String],
       firstPublishedDate: Option[DateTime],
-  )(implicit request: RequestHeader): Boolean = {
+  ): Boolean = {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
     // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off date.
     // The cut off date is temporary while we are working on improving the compliance of affiliate links.
     if (
-      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && (firstPublishedDate.exists(
+      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(
         _.isBefore(publishedCutOffDate),
-      ) || ActiveExperiments.isParticipating(AffiliateLinksDCR))
+      )
     ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
