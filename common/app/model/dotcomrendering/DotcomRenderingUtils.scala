@@ -242,9 +242,16 @@ object DotcomRenderingUtils {
     }
   }
 
-  def shouldAddAffiliateLinks(content: ContentType)(implicit request: RequestHeader): Boolean = {
+  def shouldAddAffiliateLinks(content: ContentType): Boolean = {
     val contentHtml = Jsoup.parse(content.fields.body)
     val bodyElements = contentHtml.select("body").first().children()
+
+    /**
+      * On smaller devices, the disclaimer is inserted before paragraph 2 of the article body and floats left.
+      * This logic ensures there are two clear paragraphs of text at the top of the article.
+      * We don't support inserting the disclaimer next to other element types.
+      * It also ensures the second paragraph is long enough to accommodate the disclaimer appearing alongside it.
+      */
     if (bodyElements.size >= 2) {
       val firstEl = bodyElements.get(0)
       val secondEl = bodyElements.get(1)
@@ -257,9 +264,6 @@ object DotcomRenderingUtils {
           defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
           alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
           tagPaths = content.content.tags.tags.map(_.id),
-          firstPublishedDate = content.content.fields.firstPublicationDate,
-          pageUrl = content.metadata.id,
-          contentType = "article",
         )
       } else false
     } else false

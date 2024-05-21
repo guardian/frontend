@@ -14,8 +14,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRTagPages,
       UpdatedHeaderDesign,
+      UpdateLogoAdPartner,
       MastheadWithHighlights,
-      AffiliateLinksDCR,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -48,13 +48,13 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object AffiliateLinksDCR
+object UpdateLogoAdPartner
     extends Experiment(
-      name = "affiliate-links-dcr",
-      description = "Display affiliate links on all eligible DCR articles",
+      name = "update-logo-ad-partner",
+      description = "Update logo for advertising partner and exclusive advertising partner US",
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
-      participationGroup = Perc0E,
+      participationGroup = Perc0A,
     )
 
 object DCRTagPages

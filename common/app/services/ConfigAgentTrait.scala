@@ -133,6 +133,9 @@ object ConfigAgent extends GuLogging {
   def shouldServeFront(id: String)(implicit context: ApplicationContext): Boolean =
     getPathIds.contains(id) && (context.isPreview || !isFrontHidden(id))
 
+  def frontExistsInConfig(id: String)(implicit context: ApplicationContext): Boolean =
+    getPathIds.contains(id)
+
   def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext): Boolean = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
   }
