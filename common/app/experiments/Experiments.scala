@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       UpdatedHeaderDesign,
       UpdateLogoAdPartner,
       MastheadWithHighlights,
+      TagLinkDesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -64,4 +65,13 @@ object DCRTagPages
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 5, 31),
       participationGroup = Perc20A,
+    )
+
+object TagLinkDesign
+    extends Experiment(
+      name = "tag-link-design",
+      description = "Render an updated sticky design for tag links",
+      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 7, 31),
+      participationGroup = Perc0E,
     )
