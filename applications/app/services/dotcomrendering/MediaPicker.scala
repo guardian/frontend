@@ -5,8 +5,6 @@ import model.Cors.RichRequestHeader
 import model.{MediaPage, Video, Audio}
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
-import navigation.NavLinks.media
-import experiments.ActiveExperiments
 import conf.switches.Switches.DCRVideoPages
 
 object MediaPicker extends GuLogging {
