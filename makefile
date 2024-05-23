@@ -108,9 +108,6 @@ fix: install
 fix-commits: install
 	@./tools/task-runner/runner validate-head/javascript-fix
 
-validate-a11y: install # PRIVATE
-	@./tools/task-runner/runner validate/a11y
-
 # Update caniuse db used by browserslist
 # https://github.com/browserslist/update-db
 update-caniusedb: install
