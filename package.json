@@ -109,7 +109,6 @@
 		"object-fit-videos": "^1.0.3",
 		"ophan-tracker-js": "1.4.0",
 		"ora": "^1.3.0",
-		"pa11y": "^6.2.3",
 		"pify": "^5.0.0",
 		"postcss": "^8.3.10",
 		"postcss-pxtorem": "^6.0.0",
