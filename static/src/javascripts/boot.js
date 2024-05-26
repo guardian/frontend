@@ -9,7 +9,6 @@ import { captureOphanInfo } from 'lib/capture-ophan-info';
 import { reportError } from 'lib/report-error';
 import { cmp, getLocale, loadScript, onConsentChange } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
-import { trackPerformance } from 'common/modules/analytics/google';
 import { init as detectAdBlockers } from 'commercial/detect-adblock';
 import ophan from 'ophan/ng';
 
@@ -58,13 +57,7 @@ const go = () => {
 
             if (!recordedConsentTime) {
                 recordedConsentTime = true;
-                cmp.willShowPrivacyMessage().then(willShow => {
-                    trackPerformance(
-                        'consent',
-                        'acquired',
-                        willShow ? 'new' : 'existing'
-                    );
-                });
+                cmp.willShowPrivacyMessage();
             }
 
             // ------------------------------------------------------
