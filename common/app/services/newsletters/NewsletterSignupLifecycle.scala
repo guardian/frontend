@@ -28,7 +28,7 @@ class NewsletterSignupLifecycle(
 
     descheduleAll()
     newsletterSignupAgent.refresh()
-    jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 60) {
+    jobs.scheduleEveryNMinutes("NewsletterSignupAgentLowFrequencyRefreshJob", 15) {
       newsletterSignupAgent.refresh()
     }
   }
