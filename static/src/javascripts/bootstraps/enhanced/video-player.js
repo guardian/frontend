@@ -2,14 +2,9 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import bean from 'bean';
 import raven from 'lib/raven';
-import {
-    buildGoogleAnalyticsEvent,
-    getGoogleAnalyticsEventAction,
-} from 'common/modules/video/ga-helper';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 
-const gaTracker = config.get('googleAnalytics.trackers.editorial');
 const isEmbed = !!window.guardian.isEmbed;
 
 const getCanonicalUrl = (dataset) =>
@@ -36,19 +31,6 @@ const bindTrackingEvents = (el) => {
         const events = {
             play: 'metric1',
         };
-
-        window.ga(
-            `${gaTracker}.send`,
-            'event',
-            buildGoogleAnalyticsEvent(
-                mediaEvent,
-                events,
-                canonicalUrl,
-                'guardian-videojs',
-                getGoogleAnalyticsEventAction,
-                mediaId
-            )
-        );
 
         // on play, fire Ophan event
         const record = ophanEmbed => {

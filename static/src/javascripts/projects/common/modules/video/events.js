@@ -7,10 +7,6 @@ import { isBreakpoint } from 'lib/detect';
 import { isRevisit } from 'common/modules/onward/history';
 import throttle from 'lodash/throttle';
 import forOwn from 'lodash/forOwn';
-import {
-    buildGoogleAnalyticsEvent,
-    getGoogleAnalyticsEventAction,
-} from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 const isDesktop = isBreakpoint({
@@ -28,7 +24,6 @@ const EVENTS = [
     'content:play',
     'content:end',
 ];
-const gaTracker = config.get('googleAnalytics.trackers.editorial');
 
 const bindCustomMediaEvents = (
     eventsMap,
@@ -87,36 +82,6 @@ const addContentEvents = (
     );
 
     bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, false);
-};
-
-const bindGoogleAnalyticsEvents = (player, canonicalUrl) => {
-    const events = {
-        play: 'metric1',
-        skip: 'metric2',
-        watched25: 'metric3',
-        watched50: 'metric4',
-        watched75: 'metric5',
-        end: 'metric6',
-    };
-
-    Object.keys(events)
-        .map(eventName => `media:${eventName}`)
-        .forEach(playerEvent => {
-            player.on(playerEvent, (_, mediaEvent) => {
-                window.ga(
-                    `${gaTracker}.send`,
-                    'event',
-                    buildGoogleAnalyticsEvent(
-                        mediaEvent,
-                        events,
-                        canonicalUrl,
-                        'guardian-videojs',
-                        getGoogleAnalyticsEventAction,
-                        mediaEvent.mediaId
-                    )
-                );
-            });
-        });
 };
 
 const getMediaType = player => (isEmbed ? 'video' : player.guMediaType);
@@ -253,5 +218,4 @@ export default {
     handleInitialMediaError,
     bindErrorHandler,
     addContentEvents,
-    bindGoogleAnalyticsEvents,
 };

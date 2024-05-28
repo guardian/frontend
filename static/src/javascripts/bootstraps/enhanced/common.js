@@ -48,7 +48,6 @@ import {
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { handleBraze } from 'common/modules/commercial/braze/buildBrazeMessaging';
-import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
 
 const initialiseTopNavItems = () => {
@@ -98,19 +97,6 @@ const initialiseClickstream = () => {
 const loadAnalytics = () => {
     interactionTracking.init();
 };
-
-const loadGoogleAnalytics = () => {
-    const handleGoogleAnalytics = (gaHasConsent) => {
-        if (gaHasConsent && !config.get('page.gaIsInitalised')) {
-            window.guardian.googleAnalytics.initialiseGa()
-        } else {
-            // set window.ga back to a stub function when ga consents are removed so that we don't track events
-            window.ga = function() {}
-            config.set('page.gaIsInitalised', false)
-        }
-    }
-    mediator.on('ga:gaConsentChange', handleGoogleAnalytics)
-}
 
 const cleanupCookies = () => {
     cleanUp([
@@ -317,8 +303,6 @@ const init = () => {
         ['c-braze', handleBrazeAndReportErrors],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
-        ['c-load-google-analytics', loadGoogleAnalytics],
-        ['c-google-analytics', initGoogleAnalytics],
     ]);
 
     return refreshUserFeatures().catch((err) => {
