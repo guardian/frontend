@@ -167,7 +167,7 @@ trait CommercialSwitches {
       "Enable the updated logo styling for advertising partner and exclusive advertising partner US labels.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = LocalDate.of(2024, 7, 31),
     exposeClientSide = true,
   )
 }
