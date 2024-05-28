@@ -524,4 +524,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val DCRTagPages = Switch(
+    group = SwitchGroup.Feature,
+    name = "dcr-tag-pages",
+    description = "Render tag pages with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }
