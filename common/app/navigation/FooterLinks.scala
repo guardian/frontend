@@ -88,8 +88,8 @@ object FooterLinks {
     FooterLink("LinkedIn", "https://www.linkedin.com/company/theguardian", s"${edition} : footer : linkedin")
   def instagram(edition: String): FooterLink =
     FooterLink("Instagram", "https://www.instagram.com/guardian", s"${edition} : footer : instagram")
-  def twitter(edition: String): FooterLink =
-    FooterLink("Twitter", "https://twitter.com/guardian", s"${edition}: footer : twitter")
+  def x(edition: String): FooterLink =
+    FooterLink("X", "https://x.com/guardian", s"${edition}: footer : x")
   def newsletters(edition: String): FooterLink =
     FooterLink(
       text = "Newsletters",
@@ -110,7 +110,7 @@ object FooterLinks {
     youtube("uk"),
     instagram("uk"),
     linkedin("uk"),
-    twitter("uk"),
+    x("uk"),
     newsletters("uk"),
   )
 
@@ -122,7 +122,7 @@ object FooterLinks {
     youtube("us"),
     instagram("us"),
     linkedin("us"),
-    twitter("us"),
+    x("us"),
     newsletters("us"),
   )
 
@@ -135,7 +135,7 @@ object FooterLinks {
     youtube("au"),
     instagram("au"),
     linkedin("au"),
-    twitter("au"),
+    x("au"),
     newsletters("au"),
   )
 
@@ -147,7 +147,7 @@ object FooterLinks {
     youtube("international"),
     instagram("international"),
     linkedin("international"),
-    twitter("international"),
+    x("international"),
     newsletters("international"),
   )
 
