@@ -89,7 +89,7 @@ object FooterLinks {
   def instagram(edition: String): FooterLink =
     FooterLink("Instagram", "https://www.instagram.com/guardian", s"${edition} : footer : instagram")
   def x(edition: String): FooterLink =
-    FooterLink("X", "https://x.com/guardian", s"${edition}: footer : x")
+    FooterLink("X", "https://x.com/guardian", s"${edition}: footer : twitter")
   def newsletters(edition: String): FooterLink =
     FooterLink(
       text = "Newsletters",
