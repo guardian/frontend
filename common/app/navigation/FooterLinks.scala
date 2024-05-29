@@ -21,7 +21,12 @@ object FooterLinks {
   val termsAndConditions = FooterLink("Terms & conditions", "/help/terms-of-service", "terms")
 
   def help(edition: String): FooterLink =
-    FooterLink("Help", "https://manage.theguardian.com/help-centre", s"${edition} : footer : tech feedback", "js-tech-feedback-report")
+    FooterLink(
+      "Help",
+      "https://manage.theguardian.com/help-centre",
+      s"${edition} : footer : tech feedback",
+      "js-tech-feedback-report",
+    )
   def workForUs(edition: String): FooterLink =
     FooterLink("Work for us", "https://workforus.theguardian.com", s"${edition} : footer : work for us")
 
