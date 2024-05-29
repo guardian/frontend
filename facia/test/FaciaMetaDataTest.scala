@@ -60,12 +60,12 @@ import scala.concurrent.duration._
   }
 
   it should "Include webpage metadata" in {
-    val result = faciaController.renderFront(frontPath)(TestRequest(frontPath))
+    val result = faciaController.renderFront(frontPath)(TestRequest(s"$frontPath?dcr=false"))
     MetaDataMatcher.ensureWebPage(result, frontPath)
   }
 
   it should "Include item list metadata" in {
-    val result = faciaController.renderFront(frontPath)(TestRequest(frontPath))
+    val result = faciaController.renderFront(frontPath)(TestRequest(s"$frontPath?dcr=false"))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
