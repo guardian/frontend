@@ -12,7 +12,7 @@ try {
                 return decodeURIComponent(atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '=')));
             }
 
-            // Short version of cookie.get(), inspired by Google Analytics' code
+            // Short version of cookie.get()
             var cookieData = (function(a) {
                 var d = new window.Array(),
                     e = new window.Array();

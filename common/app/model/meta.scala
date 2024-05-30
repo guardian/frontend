@@ -14,7 +14,6 @@ import conf.Configuration
 import conf.cricketPa.CricketTeams
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
-import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
 import play.api.libs.json._
@@ -451,12 +450,6 @@ case class MetaData(
       .getOrElse(Nil)
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
-
-  /**
-    * Content type, lowercased and with spaces removed.
-    * This is used for Google Analytics, to be consistent with what the mobile apps do.
-    */
-  def normalisedContentType: String = StringUtils.remove(contentType.map(_.name.toLowerCase).getOrElse(""), ' ')
 }
 
 object Page {
