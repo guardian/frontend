@@ -21,17 +21,6 @@ const bindTrackingEvents = (el) => {
     const canonicalUrl = getCanonicalUrl(dataset);
 
     const playHandler = () => {
-        // on play, fire GA event
-        const mediaEvent = {
-            mediaId,
-            mediaType,
-            eventType: 'play',
-            isPreroll: false,
-        };
-        const events = {
-            play: 'metric1',
-        };
-
         // on play, fire Ophan event
         const record = ophanEmbed => {
             const eventObject = {
