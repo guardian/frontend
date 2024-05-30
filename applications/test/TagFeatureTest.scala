@@ -17,7 +17,7 @@ import org.scalatest.matchers.should.Matchers
 
       Given("I visit a tag page")
 
-      goTo("/technology/askjack") { browser =>
+      goTo("/technology/askjack?dcr=false") { browser =>
         val trails = browser.$(".fc-item__container")
         trails.asScala.length should be(IndexPagePagination.pageSize)
       }
@@ -31,7 +31,7 @@ import org.scalatest.matchers.should.Matchers
       Given("I visit the 'Jemima Kiss' contributor page")
       Switches.ImageServerSwitch.switchOn()
 
-      goTo("/profile/jemimakiss") { browser =>
+      goTo("/profile/jemimakiss?dcr=false") { browser =>
         Then("I should see her profile image")
         val profileImage = browser.el("[data-test-id=header-image]")
         profileImage.attribute("src") should include(s"42593747/Jemima-Kiss.jpg")
@@ -41,7 +41,7 @@ import org.scalatest.matchers.should.Matchers
     Scenario("Should not not display profiles where they don't exist") {
 
       Given("I visit the 'Sam Jones' contributor page")
-      goTo("/profile/samjones") { browser =>
+      goTo("/profile/samjones?dcr=false") { browser =>
         Then("I should not see her profile image")
         val profileImages = browser.find(".profile__img img")
         profileImages.asScala.length should be(0)
@@ -65,7 +65,7 @@ import org.scalatest.matchers.should.Matchers
 
       Given("I visit the 'Cycling' tag page")
 
-      goTo("/sport/cycling") { browser =>
+      goTo("/sport/cycling?dcr=false") { browser =>
         import browser._
 
         val cardsOnFirstPage = browser.find("[data-test-id=facia-card]")
@@ -96,7 +96,7 @@ import org.scalatest.matchers.should.Matchers
 
       Given("I visit page 2 of the 'Cycling' tag page")
 
-      goTo("/sport/cycling?page=2") { browser =>
+      goTo("/sport/cycling?page=2&dcr=false") { browser =>
         import browser._
 
         val cardsOnNextPage = browser.find("[data-test-id=facia-card]")
