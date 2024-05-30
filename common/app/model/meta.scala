@@ -860,7 +860,6 @@ final case class Tags(tags: List[Tag]) {
     _.id
   }
 
-  lazy val commissioningDesks: List[String] = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
   lazy val blogOrSeriesTag: Option[Tag] = {
     tags.find(tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries))
   }
@@ -904,7 +903,6 @@ final case class Tags(tags: List[Tag]) {
         ),
       ),
       ("blogIds", JsString(blogs.map(_.id).mkString(","))),
-      ("commissioningDesks", JsString(commissioningDesks.mkString(","))),
     )
 }
 
@@ -958,8 +956,6 @@ object Tags {
   val reviewMappings = Seq(
     "tone/reviews",
   )
-
-  val CommissioningDesk: Regex = """tracking/commissioningdesk/(.*)""".r
 
   def make(apiContent: contentapi.Content): Tags = {
     Tags(apiContent.tags.toList map {
