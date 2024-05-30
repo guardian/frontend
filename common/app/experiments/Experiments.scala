@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       DarkModeWeb,
-      DCRTagPages,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
       TagLinkDesign,
@@ -46,15 +45,6 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc0D,
-    )
-
-object DCRTagPages
-    extends Experiment(
-      name = "dcr-tag-pages",
-      description = "Render tag pages with DCR",
-      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 31),
-      participationGroup = Perc20A,
     )
 
 object TagLinkDesign

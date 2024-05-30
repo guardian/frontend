@@ -36,7 +36,7 @@ import play.api.libs.ws.WSClient
   )
 
   "Index Controller" should "200 when content type is front" in {
-    val result = indexController.render(section)(TestRequest(s"/$section"))
+    val result = indexController.render(section)(TestRequest(s"/$section?dcr=false"))
     status(result) should be(200)
   }
 
@@ -112,14 +112,14 @@ import play.api.libs.ws.WSClient
   }
 
   it should "not accidentally truncate tags that contain valid strings that are also editions" in {
-    val request = FakeRequest(GET, "/uk/london?page=2")
+    val request = FakeRequest(GET, "/uk/london?page=2&dcr=false")
     val result = indexController.render("uk/london")(request)
 
     status(result) should be(200)
   }
 
   it should "not add editions to section tags" in {
-    val request = FakeRequest(GET, "/sport?page=2")
+    val request = FakeRequest(GET, "/sport?page=2&dcr=false")
     val result = indexController.render("sport")(request)
 
     status(result) should be(200)
