@@ -10,7 +10,7 @@ import services.ConfigAgent
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker)(implicit
+class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress)(implicit
     executionContext: ExecutionContext,
 ) extends JsonQueueWorker[SNSNotification] {
   override val deleteOnFailure: Boolean = true
