@@ -1,9 +1,11 @@
-const path = require('path');
-const rimraf = require('rimraf');
+import path from 'node:path';
+import rimraf from 'rimraf';
 
-const { target, hash, src } = require('../../config').paths;
+import { paths } from '../../config.mjs';
 
-module.exports = {
+const { target, hash, src } = paths;
+
+export default {
     description: 'Clear image build artefacts',
     task: () => {
         rimraf.sync(path.resolve(src, 'stylesheets', 'icons'));

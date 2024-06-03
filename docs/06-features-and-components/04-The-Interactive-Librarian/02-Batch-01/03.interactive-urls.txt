@@ -615,7 +615,7 @@ environment/ng-interactive/2019/oct/27/australian-bird-of-the-year-2019-vote-for
 football/ng-interactive/2019/nov/12/david-squires-on-football-and-the-poppy
 world/ng-interactive/2019/nov/10/spanish-general-election-2019-live-results
 culture/ng-interactive/2019/nov/10/simone-lia-on-how-not-to-worry
-lifeandstyle/ng-interactive/2019/nov/09/stephen-collins-on-blade-runner-in-2019-cartoon
+lifeandstyle/ng-interactive/2019/nov/09/stephen-collins-on-blade-runner.mjs-in-2019-cartoon
 sport/ng-interactive/2019/nov/08/david-squires-on-the-a-league-according-to-louis-fentons-foul-mouth
 us-news/ng-interactive/2019/nov/07/which-us-states-hardest-vote-supression-election
 politics/ng-interactive/2019/nov/07/should-you-vote-at-home-or-at-uni-students
@@ -3603,8 +3603,8 @@ world/ng-interactive/2014/oct/27/visualised-ebola-cases-over-time
 media/ng-interactive/2014/oct/27/the-great-british-tv-sell-off-interactive
 culture/ng-interactive/2014/oct/27/london-comic-con-2014-cosplay-facewall
 books/ng-interactive/2014/oct/26/the-river-alexis-deacon-observer-graphic-short-story-prize-2014-winner
-books/ng-interactive/2014/oct/26/after-life-beth-dawsonobserver-graphic-short-story-prize-2014-runner-up
-books/ng-interactive/2014/oct/26/countess-markievicz-fionnuala-doran-observer-graphic-short-story-prize-2014-runner-up
+books/ng-interactive/2014/oct/26/after-life-beth-dawsonobserver-graphic-short-story-prize-2014-runner.mjs-up
+books/ng-interactive/2014/oct/26/countess-markievicz-fionnuala-doran-observer-graphic-short-story-prize-2014-runner.mjs-up
 news/datablog/ng-interactive/2014/oct/23/looking-for-a-litigator-europes-skills-mapped
 world/ng-interactive/2014/oct/23/british-jihadis-died-in-iraq-and-syria-interactive
 sustainable-business/ng-interactive/2014/oct/23/lgbt-gay-rights-business-employers-work-idahot-2014

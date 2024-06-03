@@ -1,9 +1,10 @@
-const path = require('path');
-const cpy = require('cpy');
+import cpy from 'cpy';
+import path from 'node:path';
+import { paths } from '../.././config.mjs';
 
-const { vendor, target } = require('../../config').paths;
+const { vendor, target } = paths;
 
-module.exports = {
+export default {
     description: 'Copy 3rd JS party libraries',
     task: () =>
         Promise.all([

@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
-const { src, root } = require('../../config').paths;
+import { paths } from '../../config.mjs';
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const btoa = require('btoa');
-const { optimize, extendDefaultPlugins } = require('svgo')
-const mkdirp = require('mkdirp');
+const { src, root } = paths;
+
+import fs from 'fs';
+import path from 'path';
+import glob from 'glob';
+import btoa from 'btoa';
+import { optimize } from 'svgo';
+import mkdirp from 'mkdirp';
 
 const getSVG = iconPath =>
     new Promise((resolve, reject) => {
@@ -94,7 +96,7 @@ const saveSass = (sass, dest, fileName) =>
         );
     });
 
-module.exports = {
+export default {
     description: 'Create sprites',
     task: ['commercial', 'global', 'membership', 'video'].map(target => ({
         description: `Spriting ${target}`,

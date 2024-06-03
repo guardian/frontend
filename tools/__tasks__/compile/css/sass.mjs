@@ -1,6 +1,6 @@
-const compile = require('../../../compile-css');
+import compile from '../../../compile-css.mjs';
 
-module.exports = {
+export default {
     description: 'Compile Sass',
     task: [
         {

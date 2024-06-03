@@ -9,7 +9,7 @@ const chalk = require('chalk');
 
 const cloudwatch = require('./cloudwatch');
 
-const { target } = require('../__tasks__/config').paths;
+const { target } = require('../__tasks__/./config.mjs').paths;
 
 const credentials = '/etc/gu/frontend.properties';
 

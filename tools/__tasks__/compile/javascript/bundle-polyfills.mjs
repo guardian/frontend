@@ -1,23 +1,24 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'node:path';
+import fs from 'node:fs';
 
-const mkdirp = require('mkdirp');
-const pify = require('pify');
-const uglify = require('uglify-js');
-const request = require('request');
+import mkdirp from 'mkdirp';
+import pify from 'pify';
+import uglify from 'uglify-js';
+import request from 'request';
 
 const readFileP = pify(fs.readFile);
 const writeFileP = pify(fs.writeFile);
 const requestP = pify(request, { multiArgs: true });
 
-const { src, target, vendor } = require('../../config').paths;
+import { paths } from '../../config.mjs';
+const { src, target, vendor } = paths;
 
 const dest = path.resolve(target, 'javascripts', 'vendor');
 const polyfillURL = fs
     .readFileSync(path.resolve(src, 'javascripts', 'polyfill.io'), 'utf8')
     .trim();
 
-module.exports = {
+export default {
     description: 'Bundle polyfill.io fallback',
     task: () => {
         mkdirp.sync(dest);

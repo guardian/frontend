@@ -1,8 +1,8 @@
 module.exports = {
     description: 'Compile JS',
     task: [
-        require('./clean'),
-        require('../inline-svgs'),
+        require('./clean.mjs'),
+        require('../inline-svgs/index.mjs'),
         require('./webpack-atoms'),
     ],
 };

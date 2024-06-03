@@ -90,7 +90,7 @@ const sassGraph = require('sass-graph').parseDir(sassDir, {
     loadPaths: [sassDir],
 });
 
-const compileSass = require('../tools/compile-css');
+const compileSass = require('../tools/compile-css.mjs');
 
 // when we detect a change in a sass file, we look up the tree of imports
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.

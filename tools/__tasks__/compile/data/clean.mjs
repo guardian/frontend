@@ -1,9 +1,11 @@
-const path = require('path');
-const rimraf = require('rimraf');
+import path from 'node:path';
 
-const { target, hash } = require('../../config').paths;
+import rimraf from 'rimraf';
 
-module.exports = {
+import { paths } from '../.././config.mjs';
+const { target, hash } = paths;
+
+export default {
     description: 'Clear Data build artefacts',
     task: () => {
         rimraf.sync(path.resolve(target, 'data'));

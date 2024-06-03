@@ -1,17 +1,19 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'node:path';
+import fs from 'node:fs';
 
-const glob = require('glob');
-const pify = require('pify');
+import glob from 'glob';
+import pify from 'pify';
 
 const readFile = pify(fs.readFile);
 const stat = pify(fs.stat);
 
-const { src } = require('../../config').paths;
+import { paths } from '../../config.mjs';
+
+const { src } = paths;
 
 const srcDir = path.resolve(src);
 
-module.exports = {
+export default {
     description:
         'Prohibit inline data URIs in svgs and other unoptimised things',
     task: () =>

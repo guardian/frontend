@@ -9,7 +9,7 @@ const pify = require('pify');
 
 const writeFile = pify(fs.writeFile);
 
-const { hash, target } = require('../../config').paths;
+const { hash, target } = require('../.././config.mjs').paths;
 
 module.exports = {
     description: 'Version assets',

@@ -4,23 +4,25 @@
 // 1. glob for files in static/src/stylesheets
 // 2. options object offering `remify` (boolean) and `browsers` (browserlist)
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
 
-const mkdirp = require('mkdirp');
-const glob = require('glob');
-const pify = require('pify');
+import mkdirp from 'mkdirp';
+import glob from 'glob';
+import pify from 'pify';
 
-const sass = require('node-sass');
+import sass from 'node-sass';
 
-const postcss = require('postcss');
-const autoprefixer = require('autoprefixer');
-const pxtorem = require('postcss-pxtorem');
+import postcss from 'postcss';
+import autoprefixer from 'autoprefixer';
+import pxtorem from 'postcss-pxtorem';
 
 const sassRenderP = pify(sass.render);
 const writeFileP = pify(fs.writeFile);
 
-const { src, target } = require('./__tasks__/config').paths;
+import { paths } from "./__tasks__/./config.mjs";
+
+const { src, target } = paths;
 
 const sassDir = path.resolve(src, 'stylesheets');
 
@@ -55,7 +57,7 @@ const REMIFICATIONS = {
 
 const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));
 
-module.exports = (
+export default (
     sassGlob,
     { remify = true, browsers = BROWSERS_LIST } = {}
 ) => {

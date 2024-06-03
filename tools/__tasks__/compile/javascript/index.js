@@ -1,11 +1,11 @@
 module.exports = {
     description: 'Compile JS',
     task: [
-        require('./clean'),
-        require('../inline-svgs'),
-        require('./copy'),
+        require('./clean.mjs'),
+        require('../inline-svgs/index.mjs'),
+        require('./copy.mjs'),
         require('./webpack'),
         require('./webpack-atoms'),
-        require('./bundle-polyfills'),
+        require('./bundle-polyfills.mjs'),
     ],
 };

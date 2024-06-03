@@ -1,7 +1,9 @@
-const path = require('path');
-const cpy = require('cpy');
+import path from "node:path";
+import cpy from 'cpy';
 
-const { vendor, target } = require('../../config').paths;
+import { paths } from '../../config.mjs';
+
+const { vendor, target } = paths;
 
 // Source
 const ampIframeHtml = path.join(vendor, 'data/amp-iframe.html');
@@ -10,7 +12,7 @@ const ampIframeHtml = path.join(vendor, 'data/amp-iframe.html');
 // The static assets
 const staticDir = path.resolve(target, 'data', 'vendor');
 
-module.exports = {
+export default {
     description: 'Copy AMP iframe HTML',
     task: () =>
         cpy(ampIframeHtml, staticDir, {

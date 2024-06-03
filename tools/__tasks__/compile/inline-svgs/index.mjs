@@ -1,19 +1,22 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'node:path';
 
-const mkdirp = require('mkdirp');
-const glob = require('glob');
-const { optimize } = require('svgo')
-const pify = require('pify');
+import fs from 'node:fs';
+
+import mkdirp from 'mkdirp';
+import glob from 'glob';
+import { optimize } from 'svgo';
+import pify from 'pify';
 
 const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
 
-const { src, conf } = require('../../config').paths;
+import { paths } from '../.././config.mjs';
+
+const { src, conf } = paths;
 
 const srcDir = path.resolve(src, 'inline-svgs');
 
-module.exports = {
+export default {
     description: 'Prepare inline SVGs',
     task: () =>
         Promise.all(

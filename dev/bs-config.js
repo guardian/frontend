@@ -3,7 +3,7 @@ const path = require('path');
 // To run browser-sync with this config:
 //
 // - npm install -g browser-sync
-// - browser-sync start --config ./bs-config.js
+// - browser-sync start --config ./bs-config.mjs
 
 /*
  |--------------------------------------------------------------------------

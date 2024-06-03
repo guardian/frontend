@@ -1,11 +1,12 @@
-const path = require('path');
-const fs = require('fs');
-const request = require('request');
-const chalk = require('chalk');
+import path  from 'node:path';
+import fs  from 'node:fs';
+import request  from 'request';
+import chalk  from 'chalk';
 
 const warning = chalk.keyword('orange');
 
-const { vendor } = require('../../config').paths;
+import { paths }  from '../.././config.mjs';
+const { vendor } = paths;
 
 // Sources
 const vendorListOfficialUrl = 'https://vendorlist.consensu.org/vendorlist.json';
@@ -17,7 +18,7 @@ const fallbackVendorListJSON = path.join(
 // Destination
 const currentVendorListJSON = path.join(vendor, 'data/cmp_vendorlist.json');
 
-module.exports = {
+export default {
     description: 'Downloading data files',
     task: () =>
         new Promise((resolve, reject) => {

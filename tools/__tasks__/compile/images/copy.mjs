@@ -1,9 +1,10 @@
-const path = require('path');
-const cpy = require('cpy');
+import cpy from 'cpy';
+import path from 'node:path';
+import { paths } from '../.././config.mjs';
 
-const { public: publicDir, target } = require('../../config').paths;
+const { public: publicDir, target } = paths;
 
-module.exports = {
+export default {
     description: 'Copy images',
     task: () =>
         cpy(['**/*'], path.resolve(target, 'images'), {

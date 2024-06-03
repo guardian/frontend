@@ -22,7 +22,7 @@ To do this you have to modify a few files files:
     - Then modify the `canShow` method, this method determines if the test can be shown on that page view for that variant
     - After modify the `show` method to run anything thats needed to get the gate to show, e.g. setting the template, adding click handlers etc.
     - Finally export a `SignInGateVariant` type, which is an object that exports `name`, `canShow`, and `show`.
-4. Import this object in `./variants/index.js`, and add it to the export `tests` array. From this point on the variant will be able to be used.
+4. Import this object in `./variants/index.mjs`, and add it to the export `tests` array. From this point on the variant will be able to be used.
 
 ## Styling the gate
 

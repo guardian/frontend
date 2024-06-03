@@ -40,43 +40,43 @@ sbt: # PRIVATE
 
 # Compile all assets in production.
 compile: install
-	@NODE_ENV=production ./tools/task-runner/runner compile
+	@NODE_ENV=production ./tools/task-runner/runner.mjs compile
 
 # Compile all assets in development.
 compile-dev: install
-	@NODE_ENV=development ./tools/task-runner/runner compile --dev
+	@NODE_ENV=development ./tools/task-runner/runner.mjs compile --dev
 
 # Compile atom-specific JS
 compile-atoms: install
-	@./tools/task-runner/runner compile/javascript/index.atoms
+	@./tools/task-runner/runner.mjs compile/javascript/index.atoms
 
 # Compile all assets for watch.
 compile-watch: install # PRIVATE
-	@NODE_ENV=development ./tools/task-runner/runner compile/index.watch
+	@NODE_ENV=development ./tools/task-runner/runner.mjs compile/index.watch.mjs
 
 compile-javascript: install # PRIVATE
-	@./tools/task-runner/runner compile/javascript
+	@./tools/task-runner/runner.mjs compile/javascript
 
 compile-javascript-dev: install # PRIVATE
-	@./tools/task-runner/runner compile/javascript --dev
+	@./tools/task-runner/runner.mjs compile/javascript --dev
 
 compile-css: install # PRIVATE
-	@./tools/task-runner/runner compile/css
+	@./tools/task-runner/runner.mjs compile/css
 
 compile-images: install # PRIVATE
-	@./tools/task-runner/runner compile/images
+	@./tools/task-runner/runner.mjs compile/images
 
 compile-svgs: install # PRIVATE
-	@./tools/task-runner/runner compile/inline-svgs
+	@./tools/task-runner/runner.mjs compile/inline-svgs
 
 compile-fonts: install # PRIVATE
-	@./tools/task-runner/runner compile/fonts
+	@./tools/task-runner/runner.mjs compile/fonts
 
 # *********************** CHECKS ***********************
 
 # Run the JS test suite.
 test: install
-	@./tools/task-runner/runner test/javascript --verbose
+	@./tools/task-runner/runner.mjs test/javascript --verbose
 
 # Run the modern JS test suite in watch mode.
 test-watch: install
@@ -84,29 +84,29 @@ test-watch: install
 
 # Check the JS test suite coverage.
 coverage: install
-	@./tools/task-runner/runner test/javascript/coverage --stdout
+	@./tools/task-runner/runner.mjs test/javascript/coverage --stdout
 
 # Validate all assets.
 validate: install
-	@./tools/task-runner/runner validate --verbose
+	@./tools/task-runner/runner.mjs validate --verbose
 	@yarn prettier */test/resources/*.json --check
 
 # Validate all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/task-runner/runner validate/sass --verbose
+	@./tools/task-runner/runner.mjs validate/sass --verbose
 
 # Validate all JS.
 validate-javascript: install # PRIVATE
-	@./tools/task-runner/runner validate/javascript
+	@./tools/task-runner/runner.mjs validate/javascript
 
 # Fix JS linting errors.
 fix: install
-	@./tools/task-runner/runner validate/javascript-fix
+	@./tools/task-runner/runner.mjs validate/javascript-fix
 	@yarn prettier */test/resources/*.json --write
 
 # Fix committed JS linting errors.
 fix-commits: install
-	@./tools/task-runner/runner validate-head/javascript-fix
+	@./tools/task-runner/runner.mjs validate-head/javascript-fix
 
 # Update caniuse db used by browserslist
 # https://github.com/browserslist/update-db

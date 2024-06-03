@@ -1,9 +1,10 @@
-const path = require('path');
-const cpy = require('cpy');
+import cpy from 'cpy';
+import path from 'node:path';
+import { paths } from '../.././config.mjs';
 
-const { conf, target, hash, src } = require('../../config').paths;
+const { conf, target, hash, src } = paths;
 
-module.exports = {
+export default {
     description: 'Copy assets',
     task: () =>
         Promise.all([

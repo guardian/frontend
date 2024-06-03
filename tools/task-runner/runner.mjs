@@ -2,23 +2,26 @@
 /* eslint-disable import/no-dynamic-require, global-require */
 
 // force any plugins that use `chalk` to output in full colour
+import {fileURLToPath} from "node:url";
+
 process.env.FORCE_COLOR = true;
 
-const path = require('path');
-const os = require('os');
+import path from 'node:path';
+import os from 'node:os';
 
-const yargs = require('yargs');
-const { Listr } = require('listr2');
-const execa = require('execa');
-const chalk = require('chalk');
-const figures = require('figures');
-const uniq = require('lodash.uniq');
+import yargs from 'yargs';
+import { Listr } from 'listr2';
+import execa from 'execa';
+import chalk from 'chalk';
+import figures from 'figures';
+import uniq from 'lodash.uniq';
+import {hideBin} from "yargs/helpers";
 
 // name of the tasks directory
 const tasksDirectory = '__tasks__';
 
 // use yargs to get a useful CLI
-const { dev: IS_DEV, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS } = yargs
+const { dev: IS_DEV, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS } = yargs(hideBin(process.argv))
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
@@ -58,7 +61,7 @@ const { dev: IS_DEV, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _:
 const VERBOSE = IS_VERBOSE || IS_DEBUG;
 
 // look here for tasks that come in from yargs
-const taskSrc = path.resolve(__dirname, '..', tasksDirectory);
+const taskSrc = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', tasksDirectory);
 
 // we will store tasks that we run in here, to prevent running them more than once
 // e.g. if two tasks rely on the same thing
@@ -109,6 +112,8 @@ function listrify(steps, { concurrent = false } = {}) {
             // treat tasks that are strings as terminal commands
             if (typeof task === 'string') return { title, task: ctx => exec(task, onError, ctx), skip };
 
+            console.log("TASK HERE:", task);
+            console.log("TITLE HERE:", title);
             // assume the task is a function
             // if it's not, listr will blow up anyway, which is fine
             return {
@@ -127,7 +132,7 @@ function listrify(steps, { concurrent = false } = {}) {
         });
 
     let renderer = 'default';
-    if (IS_VERBOSE) renderer = require('./run-task-verbose-formater');
+    if (IS_VERBOSE) renderer = import('./run-task-verbose-formater');
 
     return new Listr(listrTasks, {
         concurrent: concurrent ? getCpuCount() : false,
@@ -142,13 +147,15 @@ const getTasksFromModule = (taskName) => {
         const modulePath = path.resolve(taskSrc, taskName);
         if (IS_DEV) {
             try {
-                return require(`${modulePath}.dev`);
+                return import(`${modulePath}.dev`);
             } catch (e) { /* do nothing */ }
             try {
-                return require(`${modulePath}/index.dev`);
+                return import(`${modulePath}/index.dev`);
             } catch (e) { /* do nothing */ }
         }
-        return require(modulePath);
+        console.log(modulePath);
+
+        return import(modulePath);
     } catch (e) {
         // we can't find any modules, or something else has gone wrong in resolving it
         // so output an erroring task
@@ -172,11 +179,11 @@ listrify(taskModules).run({
     if (!e.stderr && !e.stdout) console.log(e);
     if (e.stderr) console.error(`\n${e.stderr.trim()}`);
     if (e.stdout) console.log(`\n${e.stdout.trim()}`);
-    return Object.assign(e.context, { error: true });
+    return Object.assign(e.context ?? {}, { error: true });
 }).then((ctx) => {
     if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString().trim()));
 
-    if (ctx.messages.length) {
+    if (ctx.messages?.length) {
         console.log('');
         uniq(ctx.messages).forEach(message => console.log(chalk.dim(`${figures.arrowRight} ${message.split('\n').join('\n  ')}`)));
     }
