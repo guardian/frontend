@@ -6,13 +6,13 @@ import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{Application, HealthCheck}
 import frontpress.{DraftFapiFrontPress, FrontPressCron, LiveFapiFrontPress, ToolPressQueueWorker}
-import lifecycle.FaciaPressLifecycle
+import lifecycle.{ElectionResultsAgentLifecycle, FaciaPressLifecycle}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.routing.Router
 import play.api._
 import play.api.mvc.EssentialFilter
-import services.ConfigAgentLifecycle
+import services.{ConfigAgentLifecycle, ElectionResultsAgent}
 import router.Routes
 import _root_.commercial.targeting.TargetingLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
@@ -32,6 +32,8 @@ trait AppComponents extends FrontendComponents {
   lazy val toolPressQueueWorker = wire[ToolPressQueueWorker]
   lazy val frontPressCron = wire[FrontPressCron]
 
+  lazy val electionResultsAgent = wire[ElectionResultsAgent]
+
   lazy val healthCheck = wire[HealthCheck]
   lazy val applicationController: Application = wire[Application]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
@@ -43,6 +45,7 @@ trait AppComponents extends FrontendComponents {
     wire[CloudWatchMetricsLifecycle],
     wire[FaciaPressLifecycle],
     wire[TargetingLifecycle],
+    wire[ElectionResultsAgentLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
