@@ -214,7 +214,7 @@ class MostPopularController(
         case "CA" => editions.Us
         case "AU" => editions.Au
         case "NZ" => editions.Au
-        case _    => Edition.defaultEdition
+        case _    => editions.International
       }
 
       // Synchronous edition popular, from the mostPopularAgent (stateful)
