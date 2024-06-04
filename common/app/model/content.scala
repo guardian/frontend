@@ -279,6 +279,7 @@ final case class Content(
 
   def javascriptConfig: Map[String, JsValue] =
     Map(
+      ("contentId", JsString(metadata.id)),
       ("publication", JsString(publication)),
       ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
       ("pageCode", JsString(internalPageCode)),

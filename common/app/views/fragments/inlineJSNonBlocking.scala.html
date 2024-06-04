@@ -24,6 +24,9 @@
 
 // ************* ANALYTICS *************
 
+// Ophan pageview ID and browser ID
+@InlineJs(ophanConfig().body, "ophanConfig.js")
+
 @if(page.metadata.contentType.exists { c =>
         c == DotcomContentType.Article ||
         c == DotcomContentType.LiveBlog ||
