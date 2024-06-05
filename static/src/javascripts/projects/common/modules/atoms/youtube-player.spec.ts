@@ -81,9 +81,10 @@ const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 const canTargetCCPA = (canTarget: boolean): ConsentState => ({
 	ccpa: {
 		doNotSell: !canTarget,
+		signalStatus: 'ready'
 	},
 	canTarget,
-	framework: 'ccpa',
+	framework: 'usnat',
 });
 
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
