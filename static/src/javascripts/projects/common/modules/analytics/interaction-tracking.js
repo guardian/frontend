@@ -7,7 +7,7 @@ let loc = document.location;
 
 const trackInternalLinkClick = (spec) => {
     // Store in session storage.
-    // Omniture will both pick it up on next page load,
+    // Omniture will pick it up on next page load,
     // then Omniture will remove it from storage.
     const storeObj = {
         path: loc.pathname,
