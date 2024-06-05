@@ -94,9 +94,9 @@ const go = () => {
                     ];
                 }
                 if (consentState.ccpa) {
-                    const ccpaUUID = getCookie('ccpaUUID') || '';
+                    const usnatUUID = getCookie('usnatUUID') || '';
                     const flag = consentState.ccpa?.doNotSell ? 'true' : 'false';
-                    return ['01:CCPA', `04:${ccpaUUID}`, `05:${flag}`];
+                    return ['01:USNAT', `04:${usnatUUID}`, `05:${flag}`];
                 }
                 if (consentState.aus) {
                     const ccpaUUID = getCookie('ccpaUUID') || '';
@@ -155,8 +155,8 @@ const go = () => {
                     }
                     if (consentState.ccpa) {
                         return {
-                            consentJurisdiction: 'CCPA',
-                            consentUUID: getCookie({ name: 'ccpaUUID' }) ?? '',
+                            consentJurisdiction: 'USNAT',
+                            consentUUID: getCookie({ name: 'usnatUUID' }) ?? '',
                             consent: consentState.ccpa.doNotSell ? 'false' : 'true',
                         };
                     }
