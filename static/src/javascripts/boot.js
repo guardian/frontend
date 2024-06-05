@@ -57,7 +57,6 @@ const go = () => {
 
             if (!recordedConsentTime) {
                 recordedConsentTime = true;
-                cmp.willShowPrivacyMessage();
             }
 
             // ------------------------------------------------------
