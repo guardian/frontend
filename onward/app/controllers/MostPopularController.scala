@@ -214,12 +214,12 @@ class MostPopularController(
         case "CA" => editions.Us
         case "AU" => editions.Au
         case "NZ" => editions.Au
-        case _    => editions.International
+        case _    => Edition.defaultEdition
       }
 
       // Synchronous edition popular, from the mostPopularAgent (stateful)
       val editionPopular: Option[MostPopularCollectionResponse] = {
-        val editionPopularContent = mostPopularAgent.mostPopular(edition)
+        val editionPopularContent = geoMostPopularAgent.mostPopular(countryCode)
         if (editionPopularContent.isEmpty) None
         Some(
           MostPopularCollectionResponse(
