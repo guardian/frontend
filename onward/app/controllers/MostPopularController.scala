@@ -208,14 +208,6 @@ class MostPopularController(
     Action.async { implicit request =>
       val headers = request.headers.toSimpleMap
       val countryCode = headers.getOrElse("X-GU-GeoLocation", "country:row").replace("country:", "")
-      val edition = countryCode match {
-        case "GB" => editions.Uk
-        case "US" => editions.Us
-        case "CA" => editions.Us
-        case "AU" => editions.Au
-        case "NZ" => editions.Au
-        case _    => Edition.defaultEdition
-      }
 
       // Synchronous edition popular, from the mostPopularAgent (stateful)
       val editionPopular: Option[MostPopularCollectionResponse] = {
@@ -232,6 +224,14 @@ class MostPopularController(
         )
       }
 
+      val edition = countryCode match {
+        case "GB" => editions.Uk
+        case "US" => editions.Us
+        case "CA" => editions.Us
+        case "AU" => editions.Au
+        case "NZ" => editions.Au
+        case _    => Edition.defaultEdition
+      }
       val deeplyReadItems = deeplyReadAgent.getTrails(edition)
 
       // Async global deeply read
