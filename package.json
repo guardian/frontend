@@ -32,7 +32,7 @@
 		"@guardian/commercial": "19.1.0",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/eslint-config-typescript": "9.0.1",
-		"@guardian/identity-auth": "2.1.0",
+		"@guardian/identity-auth": "2.1.1",
 		"@guardian/identity-auth-frontend": "4.0.0",
 		"@guardian/libs": "16.1.0",
 		"@guardian/prettier": "^3.0.0",
