@@ -167,7 +167,7 @@ const getTasksFromModule = (taskName) => {
 };
 
 // get a list of the tasks we're going to run
-const taskModules = TASKS.map(getTasksFromModule);
+const taskModules = await Promise.all(TASKS.map(getTasksFromModule));
 
 // run them!
 listrify(taskModules).run({

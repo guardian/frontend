@@ -1,4 +1,4 @@
-const execa = require('execa');
+import execa from 'execa';
 
 const config = ['--quiet', '--color', '--fix'];
 
@@ -6,9 +6,9 @@ const handleSuccess = ctx => {
     ctx.messages.push("Don't forget to commit any fixes...");
 };
 
-module.exports = {
-    description: 'Fix JS linting errors',
-    task: [
+
+    export const description = 'Fix JS linting errors';
+    export const task = [
         {
             description: 'Fix static/src',
             task: ctx =>
@@ -29,6 +29,6 @@ module.exports = {
                     ].concat(config)
                 ).then(handleSuccess.bind(null, ctx)),
         },
-    ],
-    concurrent: true,
-};
+    ];
+    export const concurrent = true;
+
