@@ -2,6 +2,7 @@
 @import common.Edition
 @import java.time.LocalTime
 @import java.time.ZonedDateTime
+@import java.time.ZoneId
 @(fm: pa.FootballMatch, round: pa.Round, competition: model.Competition)(implicit request: RequestHeader)
 
 @import implicits.Football._
@@ -25,8 +26,8 @@
             }
             @if(fm.isFixture){
                 <div class="football-match__date">
-                    <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm  z").withZone(Edition(request).timezoneId))</span>
-                    @fm.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate.format(DateTimeFormatter.ofPattern("E dd MMMM "))
+                    <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm  z").withZone(ZoneId.of("Europe/London")))</span>
+                    @fm.date.withZoneSameInstant(ZoneId.of("Europe/London")).toLocalDate.format(DateTimeFormatter.ofPattern("E dd MMMM "))
                 </div>
             }
 
