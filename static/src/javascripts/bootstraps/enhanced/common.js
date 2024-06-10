@@ -48,7 +48,6 @@ import {
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { handleBraze } from 'common/modules/commercial/braze/buildBrazeMessaging';
-import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
 
@@ -269,7 +268,6 @@ const initialiseBanner = () => {
         cmpBannerCandidate,
         signInGate,
         membershipBanner,
-        readerRevenueBanner,
         adFreeBanner,
     ];
 
