@@ -5,7 +5,7 @@ export const deeplyReadRightColumn: ABTest = {
 	author: '@dotcom-platform',
 	start: '2024-05-01',
 	expiry: '2024-07-31',
-	audience: 0 / 100,
+	audience: 15 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: '',
 	successMeasure: 'Improved click though rate',
