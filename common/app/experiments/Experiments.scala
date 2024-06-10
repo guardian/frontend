@@ -52,6 +52,6 @@ object TagLinkDesign
       name = "tag-link-design",
       description = "Render an updated sticky design for tag links",
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 31),
-      participationGroup = Perc0E,
+      sellByDate = LocalDate.of(2024, 7, 25),
+      participationGroup = Perc20A,
     )
