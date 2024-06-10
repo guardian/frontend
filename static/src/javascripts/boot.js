@@ -50,7 +50,7 @@ const go = () => {
             pageViewId,
         };
 
-        // keep this in sync with CONSENT_TIMING in src/web/components/App.tsx in frontend
+        // keep this in sync with CONSENT_TIMING in src/client/bootCmp.ts in dotcom-rendering
         // mark: CONSENT_TIMING
         let recordedConsentTime = false;
         onConsentChange((consentState) => {
