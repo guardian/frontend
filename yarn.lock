@@ -2804,7 +2804,7 @@ __metadata:
     "@guardian/source-foundations": "npm:14.2.2"
     "@guardian/source-react-components": "npm:22.1.0"
     "@guardian/source-react-components-development-kitchen": "npm:19.0.0"
-    "@guardian/support-dotcom-components": "npm:1.1.3"
+    "@guardian/support-dotcom-components": "npm:2.3.3"
     "@types/googletag": "npm:^1.1.3"
     "@types/jest": "npm:29.5.12"
     "@types/lodash-es": "npm:^4.17.4"
@@ -3079,10 +3079,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/support-dotcom-components@npm:1.1.3":
-  version: 1.1.3
-  resolution: "@guardian/support-dotcom-components@npm:1.1.3"
-  checksum: 10c0/b214be3947bbfac3e0d434e43d9c005326f04fd2905fb9cbf2ef1d1fad9ff55a3edd52d137a07fcf39b04e3ad569007089c88a2b492a07764b5903324695bf2f
+"@guardian/support-dotcom-components@npm:2.3.3":
+  version: 2.3.3
+  resolution: "@guardian/support-dotcom-components@npm:2.3.3"
+  peerDependencies:
+    zod: ^3.22.4
+  checksum: 10c0/3f9871465586ea7da7f27f092f2e33c8eb966792206f36a090d56830841da3c7d5e5a700ef4f777c8b5ce49c6bf1c9a53e44001a973d7ed945a0021dcc49063d
   languageName: node
   linkType: hard
 
