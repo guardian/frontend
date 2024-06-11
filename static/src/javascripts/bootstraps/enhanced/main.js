@@ -7,7 +7,6 @@ import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
 import { runAndTrackAbTests } from 'common/modules/experiments/ab';
 import { initSport } from 'bootstraps/enhanced/sport';
-import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 import { fetchAndRenderHeaderLinks } from "common/modules/support/header";
@@ -31,17 +30,6 @@ const bootEnhanced = () => {
     markTime('App Begin');
 
     catchErrorsWithContext([
-        [
-            'ga-user-timing-enhanced-start',
-            () => {
-                trackPerformance(
-                    'Javascript Load',
-                    'enhancedStart',
-                    'Enhanced start parse time'
-                );
-            },
-        ],
-
         ['core-web-vitals', coreVitals],
 
         ['commercial-metrics', initCommercialMetrics],
@@ -352,18 +340,6 @@ const bootEnhanced = () => {
 
             // Mark the end of synchronous execution.
             markTime('App End');
-            catchErrorsWithContext([
-                [
-                    'ga-user-timing-enhanced-end',
-                    () => {
-                        trackPerformance(
-                            'Javascript Load',
-                            'enhancedEnd',
-                            'Enhanced end parse time'
-                        );
-                    },
-                ],
-            ]);
         });
 };
 

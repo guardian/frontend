@@ -12,7 +12,6 @@ import { FiniteStateMachine } from '../../../../lib/fsm';
 import { loadCssPromise } from '../../../../lib/load-css-promise';
 import { mediator } from '../../../../lib/mediator';
 import { pushUrl } from '../../../../lib/url';
-import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 
 class HostedGallery {
 	constructor() {
@@ -394,15 +393,6 @@ class HostedGallery {
 		fastdom.mutate(() => {
 			scrollEl.scrollTop = ((index - 1) * scrollHeight) / length;
 		});
-	}
-
-	trackNavBetweenImages(data) {
-		if (data && data.nav) {
-			const trackingPrefix = config.get('page.trackingPrefix', '');
-			interactionTracking.trackNonClickInteraction(
-				`${trackingPrefix + data.nav} - image ${this.index}`,
-			);
-		}
 	}
 
 	onResize() {

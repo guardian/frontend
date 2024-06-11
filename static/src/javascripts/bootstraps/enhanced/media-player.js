@@ -121,7 +121,6 @@ const enhanceVideo = (el, autoplay) => {
     );
 
     events.addContentEvents(player, mediaId, mediaType);
-    events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
     getVideoInfo(el).then(videoInfo => {
         if (videoInfo.expired) {

@@ -6,24 +6,6 @@ import { mediator } from 'lib/mediator';
 
 let seen = false;
 
-const sendToGA = (label, customDimensions = {}) => {
-    const tracker = config.get('googleAnalytics.trackers.editorial');
-
-    window.ga(
-        `${tracker}.send`,
-        'event',
-        'element view',
-        'onpage item',
-        label,
-        Object.assign(
-            {
-                nonInteraction: true, // to avoid affecting bounce rate
-            },
-            customDimensions
-        )
-    );
-};
-
 const jumpedToComments = () => {
     if (!seen) {
         seen = true;
@@ -38,7 +20,6 @@ const commentPermalink = () => {
 
 const scrolledToComments = () => {
     if (!seen) {
-        sendToGA('scroll to comments');
         seen = true;
     }
 };

@@ -454,7 +454,6 @@ case class MetaData(
 
   /**
     * Content type, lowercased and with spaces removed.
-    * This is used for Google Analytics, to be consistent with what the mobile apps do.
     */
   def normalisedContentType: String = StringUtils.remove(contentType.map(_.name.toLowerCase).getOrElse(""), ' ')
 }
