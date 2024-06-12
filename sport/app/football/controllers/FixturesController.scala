@@ -35,12 +35,12 @@ class FixturesController(
 
   private def renderAllFixtures(date: LocalDate): Action[AnyContent] =
     Action { implicit request =>
-      renderMatchList(page, fixtures(date), filters)
+      renderMatchList(page, fixtures(date), filters, None)
     }
 
   private def renderMoreFixtures(fixtures: Fixtures): Action[AnyContent] =
     Action { implicit request =>
-      renderMoreMatches(page, fixtures, filters)
+      renderMoreMatches(page, fixtures, filters, None)
     }
 
   def moreTagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
@@ -86,6 +86,7 @@ class FixturesController(
             result._1,
             result._2,
             filters,
+            None,
           )
         },
       )

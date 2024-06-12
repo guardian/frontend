@@ -34,7 +34,7 @@ class MatchDayController(
       val matches = MatchDayList(competitionsService.competitions, date)
       val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezoneId)) "Live matches" else "Matches"
       val page = new FootballPage("football/live", "football", webTitle)
-      renderMatchList(page, matches, filters)
+      renderMatchList(page, matches, filters, None)
     }
 
   def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
@@ -59,7 +59,7 @@ class MatchDayController(
           val maybeInteractiveAtom = contentApiClient.getResponse(contentApiClient.item("/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header", edition)).map(_.interactive.map(atom => InteractiveAtom.make(atom)))
           maybeInteractiveAtom.map(maybeAtom => {
             println(maybeAtom)
-            renderMatchList(page, matches, filters)
+            renderMatchList(page, matches, filters, maybeAtom)
           })
         }
         .getOrElse {

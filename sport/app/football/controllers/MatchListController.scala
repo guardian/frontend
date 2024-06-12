@@ -13,6 +13,7 @@ import play.api.mvc.{BaseController, RequestHeader}
 import play.twirl.api.Html
 
 import java.time.format.DateTimeFormatter
+import model.content.InteractiveAtom
 
 trait MatchListController extends BaseController with Requests {
   def competitionsService: Competitions
@@ -25,6 +26,7 @@ trait MatchListController extends BaseController with Requests {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom],
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson)
@@ -32,9 +34,10 @@ trait MatchListController extends BaseController with Requests {
           "html" -> football.views.html.matchList.matchesComponent(matchesList),
           "next" -> Html(matchesList.nextPage.getOrElse("")),
           "previous" -> Html(matchesList.previousPage.getOrElse("")),
+          "atom" -> atom,
         )
       else
-        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
+        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
     }
   }
 
@@ -42,6 +45,7 @@ trait MatchListController extends BaseController with Requests {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom],
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson)
@@ -51,7 +55,7 @@ trait MatchListController extends BaseController with Requests {
           "previous" -> Html(matchesList.previousPage.getOrElse("")),
         )
       else
-        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
+        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
     }
   }
 
