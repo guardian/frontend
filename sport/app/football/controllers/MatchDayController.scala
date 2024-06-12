@@ -10,6 +10,7 @@ import contentapi.ContentApiClient
 import model.content.InteractiveAtom
 import common.ImplicitControllerExecutionContext
 import scala.concurrent.Future
+import conf.switches.Switches
 
 class MatchDayController(
     val competitionsService: CompetitionsService,
@@ -55,12 +56,14 @@ class MatchDayController(
             else s" ${competition.fullName} matches"
           val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
-          val edition = Edition(request)
-          val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
-          contentApiClient
-            .getResponse(contentApiClient.item(id, edition))
-            .map(_.interactive.map(InteractiveAtom.make(_)))
-            .map(renderMatchList(page, matches, filters, _))
+          if (Switches.Euro2024Header.isSwitchedOn) {
+            val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
+            val edition = Edition(request)
+            contentApiClient
+              .getResponse(contentApiClient.item(id, edition))
+              .map(_.interactive.map(InteractiveAtom.make(_)))
+              .map(renderMatchList(page, matches, filters, _))
+          } else Future.successful(renderMatchList(page, matches, filters, None))
         }
         .getOrElse {
           Future.successful(NotFound)

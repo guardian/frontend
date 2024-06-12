@@ -14,8 +14,12 @@
 <div class="l-side-margins">
     <article id="article" class="content content--footballfixtures" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
         <div class="content__main">
+            @maybeAtom.map{ atom =>
+                <div class="gs-container">
+                    @views.html.fragments.atoms.interactive(atom, shouldFence = false)
+                </div>
+            }
             <div class="gs-container">
-                @maybeAtom.map(atom => views.html.fragments.atoms.interactive(atom, shouldFence = false))
                 <div class="content__main-column">
                     <h2 class="hide-on-mobile-if-localnav content__inline-section page-type--football">
                     @matchesList.getPageTitle(Edition(request))
