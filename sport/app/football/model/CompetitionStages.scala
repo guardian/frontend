@@ -205,21 +205,60 @@ object KnockoutSpider {
     // Euro 2024
     // https://www.uefa.com/euro2024/news/0275-151eb1c333ea-d30deec67b13-1000--uefa-euro-2024-fixtures-when-and-where-are-the-matches/
     "750" -> List(
-      ZonedDateTime.of(2024, 6, 30, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 40
-      ZonedDateTime.of(2024, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 38
-      ZonedDateTime.of(2024, 7, 1, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 42
-      ZonedDateTime.of(2024, 7, 1, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 41
-      ZonedDateTime.of(2024, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 44
-      ZonedDateTime.of(2024, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 43
-      ZonedDateTime.of(2024, 6, 30, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 39
-      ZonedDateTime.of(2024, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16   // Match 37
-      ZonedDateTime.of(2024, 7, 5, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 46
-      ZonedDateTime.of(2024, 7, 5, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 45
-      ZonedDateTime.of(2024, 7, 6, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 48
-      ZonedDateTime.of(2024, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Final  // Match 47
-      ZonedDateTime.of(2024, 7, 9, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 49
-      ZonedDateTime.of(2024, 7, 10, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final     // Match 50
-      ZonedDateTime.of(2024, 7, 14, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final         // Match 51
+      //   Round of 16
+      //
+      //   1 ━┓           ┏━ 5
+      //      ┣━━━┓   ┏━━━┫
+      //   2 ━┛   ┃   ┃   ┗━ 6
+      //          ┣━━━┫
+      //   3 ━┓   ┃   ┃   ┏━ 7
+      //      ┣━━━┛   ┗━━━┫
+      //   4 ━┛           ┗━ 8
+      ZonedDateTime.of(2024, 6, 29, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 38
+      ZonedDateTime.of(2024, 6, 30, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 40
+      ZonedDateTime.of(2024, 7, 1, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 41
+      ZonedDateTime.of(2024, 7, 1, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 42
+      ZonedDateTime.of(2024, 6, 30, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 39
+      ZonedDateTime.of(2024, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 37
+      ZonedDateTime.of(2024, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 43
+      ZonedDateTime.of(2024, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 44
+
+      //   Quarter Final
+      //
+      //   ━┓               ┏━
+      //    ┣━ 1 ━┓   ┏━ 3 ━┫
+      //   ━┛     ┃   ┃     ┗━
+      //          ┣━━━┫
+      //   ━┓     ┃   ┃     ┏━
+      //    ┣━ 2 ━┛   ┗━ 4 ━┫
+      //   ━┛               ┗━
+      ZonedDateTime.of(2024, 7, 6, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 48
+      ZonedDateTime.of(2024, 7, 5, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 46
+      ZonedDateTime.of(2024, 7, 5, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 45
+      ZonedDateTime.of(2024, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 47
+
+      //   Semi-Final
+      //
+      //   ━┓                ┏━
+      //    ┣━━┓          ┏━━┫
+      //   ━┛  ┃          ┃  ┗━
+      //       ┣━ 1 ━━ 2 ━┫
+      //   ━┓  ┃          ┃  ┏━
+      //    ┣━━┛          ┗━━┫
+      //   ━┛                ┗━
+      ZonedDateTime.of(2024, 7, 10, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 50
+      ZonedDateTime.of(2024, 7, 9, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 49
+
+      //   Final
+      //
+      //   ━┓             ┏━
+      //    ┣━━┓       ┏━━┫
+      //   ━┛  ┃       ┃  ┗━
+      //       ┣━━ 1 ━━┫
+      //   ━┓  ┃       ┃  ┏━
+      //    ┣━━┛       ┗━━┫
+      //   ━┛             ┗━
+      ZonedDateTime.of(2024, 7, 14, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 51
     ),
     // Womens Euro 2022
     "423" -> List(
