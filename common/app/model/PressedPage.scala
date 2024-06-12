@@ -134,12 +134,10 @@ case class PressedPage(
       item <- pressedCollection.curatedPlusBackfillDeduplicated
       id <- {
         item match {
-          case curatedContent: pressed.CuratedContent => {
-            curatedContent.properties.maybeContent match {
-              case Some(content) => content.metadata.sectionId.map(_.value) ++ content.tags.tags.map(_.id)
-              case None          => Nil
-            }
-          }
+          case curatedContent: pressed.CuratedContent =>
+            curatedContent.properties.maybeContent
+              .map(content => content.metadata.sectionId.map(_.value) ++ content.tags.tags.map(_.id))
+              .getOrElse(Nil)
           case _ => Nil
         }
       }
