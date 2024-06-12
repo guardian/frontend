@@ -218,7 +218,6 @@ object KnockoutSpider {
       ZonedDateTime.of(2024, 6, 30, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 40
       ZonedDateTime.of(2024, 7, 1, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 41
       ZonedDateTime.of(2024, 7, 1, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 42
-
       ZonedDateTime.of(2024, 6, 30, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 39
       ZonedDateTime.of(2024, 6, 29, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 37
       ZonedDateTime.of(2024, 7, 2, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 43
@@ -233,10 +232,10 @@ object KnockoutSpider {
       //   ━┓     ┃   ┃     ┏━
       //    ┣━ 2 ━┛   ┗━ 4 ━┫
       //   ━┛               ┗━
-      ZonedDateTime.of(2024, 7, 6, 17, 0, 0, 0, ZoneId.of("Europe/London")),  // Match 48
-      ZonedDateTime.of(2024, 7, 5, 20, 0, 0, 0, ZoneId.of("Europe/London")),  // Match 46
-      ZonedDateTime.of(2024, 7, 5, 17, 0, 0, 0, ZoneId.of("Europe/London")),  // Match 45
-      ZonedDateTime.of(2024, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")),  // Match 47
+      ZonedDateTime.of(2024, 7, 6, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 48
+      ZonedDateTime.of(2024, 7, 5, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 46
+      ZonedDateTime.of(2024, 7, 5, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Match 45
+      ZonedDateTime.of(2024, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 47
 
       //   Semi-Final
       //
