@@ -137,7 +137,7 @@ case class PressedPage(
           case curatedContent: pressed.CuratedContent => {
             curatedContent.properties.maybeContent match {
               case Some(content) => content.metadata.sectionId.map(_.value) ++ content.tags.tags.map(_.id)
-              case None => List.empty
+              case None          => Nil
             }
           }
           case _ => Nil
