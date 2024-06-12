@@ -57,7 +57,8 @@ class MatchDayController(
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
           val edition = Edition(request)
           val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
-          contentApiClient.getResponse(contentApiClient.item(id, edition))
+          contentApiClient
+            .getResponse(contentApiClient.item(id, edition))
             .map(_.interactive.map(InteractiveAtom.make(_)))
             .map(renderMatchList(page, matches, filters, _))
         }
