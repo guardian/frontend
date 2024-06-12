@@ -6,13 +6,19 @@ import java.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, JsonComponent}
+import contentapi.ContentApiClient
+import model.content.InteractiveAtom
+import common.ImplicitControllerExecutionContext
+import scala.concurrent.Future
 
 class MatchDayController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
-    with CompetitionLiveFilters {
+    with CompetitionLiveFilters
+    with ImplicitControllerExecutionContext {
 
   def liveMatchesJson(): Action[AnyContent] = liveMatches()
   def liveMatches(): Action[AnyContent] =
@@ -41,7 +47,7 @@ class MatchDayController(
     competitionMatchesFor(competitionTag, year, month, day)
 
   private def renderCompetitionMatches(competitionTag: String, date: LocalDate): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       lookupCompetition(competitionTag)
         .map { competition =>
           val webTitle =
@@ -49,10 +55,15 @@ class MatchDayController(
             else s" ${competition.fullName} matches"
           val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
-          renderMatchList(page, matches, filters)
+          val edition = Edition(request)
+          val maybeInteractiveAtom = contentApiClient.getResponse(contentApiClient.item("/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header", edition)).map(_.interactive.map(atom => InteractiveAtom.make(atom)))
+          maybeInteractiveAtom.map(maybeAtom => {
+            println(maybeAtom)
+            renderMatchList(page, matches, filters)
+          })
         }
         .getOrElse {
-          NotFound
+          Future.successful(NotFound)
         }
     }
 
