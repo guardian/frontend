@@ -15,9 +15,7 @@
     <article id="article" class="content content--footballfixtures" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
         <div class="content__main">
             <div class="gs-container">
-                <div class="interactive-atom-euro-2024" style="width: 100%;">
-                    @maybeAtom.map(atom => views.html.fragments.atoms.interactive(atom, shouldFence = false))
-                </div>
+                @maybeAtom.map(atom => views.html.fragments.atoms.interactive(atom, shouldFence = false))
                 <div class="content__main-column">
                     <h2 class="hide-on-mobile-if-localnav content__inline-section page-type--football">
                     @matchesList.getPageTitle(Edition(request))

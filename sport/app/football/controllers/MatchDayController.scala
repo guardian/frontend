@@ -56,11 +56,10 @@ class MatchDayController(
           val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
           val edition = Edition(request)
-          val maybeInteractiveAtom = contentApiClient.getResponse(contentApiClient.item("/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header", edition)).map(_.interactive.map(atom => InteractiveAtom.make(atom)))
-          maybeInteractiveAtom.map(maybeAtom => {
-            println(maybeAtom)
-            renderMatchList(page, matches, filters, maybeAtom)
-          })
+          val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
+          contentApiClient.getResponse(contentApiClient.item(id, edition))
+            .map(_.interactive.map(InteractiveAtom.make(_)))
+            .map(renderMatchList(page, matches, filters, _))
         }
         .getOrElse {
           Future.successful(NotFound)
