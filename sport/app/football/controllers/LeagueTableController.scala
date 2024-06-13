@@ -5,6 +5,9 @@ import conf.switches.Switches
 import feed.CompetitionsService
 import model._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import model.content.InteractiveAtom
+import contentapi.ContentApiClient
+import scala.concurrent.Future
 
 case class TablesPage(
     page: Page,
@@ -12,6 +15,7 @@ case class TablesPage(
     urlBase: String,
     filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
     comp: Option[Competition],
+    atom: Option[InteractiveAtom],
 ) {
   lazy val singleCompetition = tables.size == 1
 }
@@ -19,6 +23,7 @@ case class TablesPage(
 class LeagueTableController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -80,10 +85,12 @@ class LeagueTableController(
 
       val htmlResponse =
         () =>
-          football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
+          football.views.html.tablesList
+            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None, None))
       val jsonResponse =
         () =>
-          football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
+          football.views.html.tablesList
+            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None, None))
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
     }
@@ -104,18 +111,19 @@ class LeagueTableController(
       val comps = competitionsService.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
 
       val htmlResponse =
-        () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters(tableOrder), None), comps)
+        () =>
+          football.views.html.teamlist(TablesPage(page, groups, "/football", filters(tableOrder), None, None), comps)
       val jsonResponse =
         () =>
           football.views.html.fragments
-            .teamlistBody(TablesPage(page, groups, "/football", filters(tableOrder), None), comps)
+            .teamlistBody(TablesPage(page, groups, "/football", filters(tableOrder), None, None), comps)
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
     }
 
   def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
   def renderCompetition(competition: String): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       val table = loadTables
         .find(_.competition.url.endsWith(s"/$competition"))
         .orElse(loadTables.find(_.competition.id == competition))
@@ -127,13 +135,30 @@ class LeagueTableController(
             s"${table.competition.fullName} table",
           )
 
+          val futureAtom = if (Switches.Euro2024Header.isSwitchedOn && competition == "euro-2024") {
+            val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
+            val edition = Edition(request)
+            contentApiClient
+              .getResponse(contentApiClient.item(id, edition))
+              .map(_.interactive.map(InteractiveAtom.make(_)))
+              .recover { case _ => None }
+          } else Future.successful(None)
+
           val smallTableGroup =
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
-          val htmlResponse = () =>
-            football.views.html.tablesList
-              .tablesPage(
-                TablesPage(page, Seq(table), table.competition.url, filters(tableOrder), Some(table.competition)),
-              )
+          val htmlResponse = (atom: Option[InteractiveAtom]) =>
+            () =>
+              football.views.html.tablesList
+                .tablesPage(
+                  TablesPage(
+                    page,
+                    Seq(table),
+                    table.competition.url,
+                    filters(tableOrder),
+                    Some(table.competition),
+                    atom,
+                  ),
+                )
           val jsonResponse = () =>
             football.views.html.tablesList.tablesComponent(
               table.competition,
@@ -142,14 +167,13 @@ class LeagueTableController(
               multiGroup = table.multiGroup,
             )
 
-          renderFormat(htmlResponse, jsonResponse, page)
-
+          futureAtom.map(maybeAtom => renderFormat(htmlResponse(maybeAtom), jsonResponse, page))
         }
         .getOrElse(
           if (request.isJson) {
-            Cached(60)(JsonNotFound())
+            Future.successful(Cached(60)(JsonNotFound()))
           } else {
-            Redirect("/football/tables")
+            Future.successful(Redirect("/football/tables"))
           },
         )
     }
@@ -181,7 +205,14 @@ class LeagueTableController(
         val htmlResponse = () =>
           football.views.html.tablesList
             .tablesPage(
-              TablesPage(page, Seq(groupTable), table.competition.url, filters(tableOrder), Some(table.competition)),
+              TablesPage(
+                page,
+                Seq(groupTable),
+                table.competition.url,
+                filters(tableOrder),
+                Some(table.competition),
+                None,
+              ),
             )
         val jsonResponse = () =>
           football.views.html.tablesList.tablesComponent(
