@@ -153,9 +153,7 @@ Gets the [Ophan browserId](https://github.com/guardian/frontend/blob/main/common
 
 ### Analytics
 
-The analytics for Dotcom are defined in [analytics/base.scala.html](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/analytics/base.scala.html). It contains [Google Analytics](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/analytics/google.scala.html), [Omniture](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/analytics/omniture.scala.html) and [Comscore](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/analytics/comscore.scala.html).
-
-[Read more about the Google Analytics implementation](https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/14-implement-google-analytics.md).
+The analytics for Dotcom are defined in [analytics/base.scala.html](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/analytics/base.scala.html).
 
 ### Bootstraps
 

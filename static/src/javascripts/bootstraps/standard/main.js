@@ -26,7 +26,6 @@ import { init as initDynamicImport } from 'lib/dynamic-import-init';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { headerTopNavInit } from 'common/modules/navigation/header-top-nav';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
-import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initEmbedResize } from "./emailEmbeds";
@@ -115,19 +114,6 @@ const bootStandard = () => {
 
     markTime('standard start');
 
-    catchErrorsWithContext([
-        [
-            'ga-user-timing-standard-start',
-            () => {
-                trackPerformance(
-                    'Javascript Load',
-                    'standardStart',
-                    'Standard start parse time'
-                );
-            },
-        ],
-    ]);
-
     /*
         Add global pooled event listeners
         CAUTION: those are *passive*, which means calls to event.preventDefault
@@ -180,19 +166,6 @@ const bootStandard = () => {
     showHiringMessage();
 
     markTime('standard end');
-
-    catchErrorsWithContext([
-        [
-            'ga-user-timing-standard-end',
-            () => {
-                trackPerformance(
-                    'Javascript Load',
-                    'standardEnd',
-                    'Standard end parse time'
-                );
-            },
-        ],
-    ]);
 };
 
 export { bootStandard };

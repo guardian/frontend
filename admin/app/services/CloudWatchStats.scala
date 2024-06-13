@@ -44,7 +44,4 @@ object CloudWatchStats extends GuLogging {
 
   def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
     sanityData("kpis-page-views")
-
-  def googleAnalyticsPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-    sanityData("kpis-analytics-page-views-google")
 }
