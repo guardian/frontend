@@ -34,7 +34,7 @@ trait MatchListController extends BaseController with Requests {
           "html" -> football.views.html.matchList.matchesComponent(matchesList),
           "next" -> Html(matchesList.nextPage.getOrElse("")),
           "previous" -> Html(matchesList.previousPage.getOrElse("")),
-          "atom" -> atom,
+          "atom" -> atom.isDefined,
         )
       else
         RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
