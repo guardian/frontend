@@ -26,7 +26,7 @@ object UseSourcepointPropertyId
       description = "Use Sourcepoint propertyId instead of propertyHref",
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
-      participationGroup = Perc0A,
+      participationGroup = Perc5A,
     )
 
 object UpdatedHeaderDesign
