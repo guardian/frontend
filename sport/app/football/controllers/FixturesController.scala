@@ -92,7 +92,7 @@ class FixturesController(
           Action.async { implicit request =>
             tag match {
               case "euro-2024" if Switches.Euro2024Header.isSwitchedOn =>
-                val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
+                val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
                 val edition = Edition(request)
                 contentApiClient
                   .getResponse(contentApiClient.item(id, edition))
