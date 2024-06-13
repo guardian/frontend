@@ -97,6 +97,7 @@ class FixturesController(
                 contentApiClient
                   .getResponse(contentApiClient.item(id, edition))
                   .map(_.interactive.map(InteractiveAtom.make(_)))
+                  .recover{ case _ => None}
                   .map(renderMatchList(page, fixtures, filters, _))
               case _ =>
                 Future.successful(renderMatchList(page, fixtures, filters, None))

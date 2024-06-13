@@ -62,6 +62,7 @@ class MatchDayController(
             contentApiClient
               .getResponse(contentApiClient.item(id, edition))
               .map(_.interactive.map(InteractiveAtom.make(_)))
+              .recover{ case _ => None}
               .map(renderMatchList(page, matches, filters, _))
           } else Future.successful(renderMatchList(page, matches, filters, None))
         }
