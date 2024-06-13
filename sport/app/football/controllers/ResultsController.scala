@@ -8,6 +8,7 @@ import model._
 import football.model._
 import pa.FootballTeam
 import model.Competition
+import model.content.InteractiveAtom
 
 class ResultsController(
     val competitionsService: CompetitionsService,
@@ -54,13 +55,13 @@ class ResultsController(
   }
 
   private def renderWith(
-      renderFunction: (FootballPage, Results, Map[String, Seq[CompetitionFilter]]) => Result,
+      renderFunction: (FootballPage, Results, Map[String, Seq[CompetitionFilter]], Option[InteractiveAtom]) => Result,
   )(date: LocalDate, tag: Option[String] = None): Result = {
     val result = for {
       p <- page(tag)
       r <- results(date, tag)
     } yield {
-      renderFunction(p, r, filters)
+      renderFunction(p, r, filters, None)
     }
     result.getOrElse(NotFound("No results"))
   }
