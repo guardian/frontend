@@ -35,7 +35,7 @@ class MatchDayController(
       val matches = MatchDayList(competitionsService.competitions, date)
       val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezoneId)) "Live matches" else "Matches"
       val page = new FootballPage("football/live", "football", webTitle)
-      renderMatchList(page, matches, filters, None)
+      renderMatchList(page, matches, filters)
     }
 
   def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
@@ -64,7 +64,7 @@ class MatchDayController(
               .map(_.interactive.map(InteractiveAtom.make(_)))
               .recover { case _ => None }
               .map(renderMatchList(page, matches, filters, _))
-          } else Future.successful(renderMatchList(page, matches, filters, None))
+          } else Future.successful(renderMatchList(page, matches, filters))
         }
         .getOrElse {
           Future.successful(NotFound)

@@ -86,11 +86,11 @@ class LeagueTableController(
       val htmlResponse =
         () =>
           football.views.html.tablesList
-            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None, None))
+            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
       val jsonResponse =
         () =>
           football.views.html.tablesList
-            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None, None))
+            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
     }
