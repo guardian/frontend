@@ -452,6 +452,13 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"longTitle": "football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -1299,6 +1306,13 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"longTitle": "football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
@@ -2023,6 +2037,13 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"longTitle": "football/euro-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -2840,6 +2861,13 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"longTitle": "football/euro-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -3846,6 +3874,13 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"longTitle": "football/euro-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
