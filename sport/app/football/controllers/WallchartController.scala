@@ -9,10 +9,16 @@ import football.model.{CompetitionStage, Groups, KnockoutSpider}
 import pa.{FootballMatch}
 
 import java.time.ZonedDateTime
+import scala.concurrent.Future
+import contentapi.ContentApiClient
+import conf.switches.Switches
+import common.Edition
+import model.content.InteractiveAtom
 
 class WallchartController(
     competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -28,7 +34,7 @@ class WallchartController(
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)
 
   def renderWallchart(competitionTag: String, embed: Boolean = false): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       competitionsService
         .competitionsWithTag(competitionTag)
         .map { competition =>
@@ -40,18 +46,30 @@ class WallchartController(
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
           val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
-          Cached(60) {
-            if (embed)
-              RevalidatableResult.Ok(
-                football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
-              )
-            else
-              RevalidatableResult.Ok(
-                football.views.html.wallchart.page(page, competition, competitionStages, nextMatch),
-              )
+          val futureAtom = if (Switches.Euro2024Header.isSwitchedOn && competitionTag == "euro-2024") {
+            val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
+            val edition = Edition(request)
+            contentApiClient
+              .getResponse(contentApiClient.item(id, edition))
+              .map(_.interactive.map(InteractiveAtom.make(_)))
+              .recover { case _ => None }
+          } else Future.successful(None)
+
+          futureAtom.map { maybeAtom =>
+            Cached(60) {
+              if (embed)
+                RevalidatableResult.Ok(
+                  football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
+                )
+              else
+                RevalidatableResult.Ok(
+                  football.views.html.wallchart.page(page, competition, competitionStages, nextMatch, maybeAtom),
+                )
+            }
           }
+
         }
-        .getOrElse(NotFound)
+        .getOrElse(Future.successful(NotFound))
     }
 
   def renderGroupTablesEmbed(competitionTag: String): Action[AnyContent] =
