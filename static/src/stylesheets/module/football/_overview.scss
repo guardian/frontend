@@ -228,11 +228,8 @@
         }
 
         @include mq(desktop) {
-            width: 24.5%;
-        }
-
-        @include mq(leftCol) {
-            &:nth-of-type(-n+4) {
+            width: 33.3%;
+            &:nth-of-type(-n + 3) {
                 .table--league-table {
                     border: 0;
                     .table__caption--top {
