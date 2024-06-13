@@ -21,7 +21,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
     with WithTestContentApiClient {
 
   lazy val leagueTableController =
-    new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents(), testContentApiClient)
+    new LeagueTableController(
+      testCompetitionsService,
+      play.api.test.Helpers.stubControllerComponents(),
+      testContentApiClient,
+    )
 
   "League Table Controller" should "200 when content type is table" in {
     val result = leagueTableController.renderLeagueTables()(TestRequest())
