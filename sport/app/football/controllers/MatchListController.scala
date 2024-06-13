@@ -26,7 +26,7 @@ trait MatchListController extends BaseController with Requests {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
-      atom: Option[InteractiveAtom],
+      atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson)
@@ -45,7 +45,7 @@ trait MatchListController extends BaseController with Requests {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
-      atom: Option[InteractiveAtom],
+      atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson)

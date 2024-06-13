@@ -15,7 +15,7 @@ case class TablesPage(
     urlBase: String,
     filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
     comp: Option[Competition],
-    atom: Option[InteractiveAtom],
+    atom: Option[InteractiveAtom] = None,
 ) {
   lazy val singleCompetition = tables.size == 1
 }
@@ -111,12 +111,11 @@ class LeagueTableController(
       val comps = competitionsService.competitions.filter(_.showInTeamsList).filter(_.hasTeams)
 
       val htmlResponse =
-        () =>
-          football.views.html.teamlist(TablesPage(page, groups, "/football", filters(tableOrder), None, None), comps)
+        () => football.views.html.teamlist(TablesPage(page, groups, "/football", filters(tableOrder), None), comps)
       val jsonResponse =
         () =>
           football.views.html.fragments
-            .teamlistBody(TablesPage(page, groups, "/football", filters(tableOrder), None, None), comps)
+            .teamlistBody(TablesPage(page, groups, "/football", filters(tableOrder), None), comps)
       renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
     }
@@ -211,7 +210,6 @@ class LeagueTableController(
                 table.competition.url,
                 filters(tableOrder),
                 Some(table.competition),
-                None,
               ),
             )
         val jsonResponse = () =>
