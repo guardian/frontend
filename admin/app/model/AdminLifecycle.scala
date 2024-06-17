@@ -1,6 +1,7 @@
 package model
 
 import java.util.TimeZone
+import java.nio.file.Files.deleteIfExists
 
 import app.LifecycleComponent
 import common._
@@ -13,6 +14,7 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
+import conf.AdminConfiguration
 
 class AdminLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -32,6 +34,7 @@ class AdminLifecycle(
       descheduleJobs()
       CloudWatch.shutdown()
       emailService.shutdown()
+      deleteTmpFiles()
     }
   }
 
@@ -118,6 +121,8 @@ class AdminLifecycle(
     jobs.deschedule("ExpiringSwitchesAfternoonEmailJob")
     jobs.deschedule("AssetMetricsCache")
   }
+
+  private def deleteTmpFiles(): Unit = AdminConfiguration.dfpApi.serviceAccountKeyFile.map(deleteIfExists)
 
   override def start(): Unit = {
     descheduleJobs()
