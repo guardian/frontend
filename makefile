@@ -85,7 +85,7 @@ coverage: install
 
 # Validate all assets.
 validate: install
-	@./tools/task-runner/runner.mjs validate --verbose
+	@./tools/task-runner/runner.mjs validate/index.mjs --verbose
 	@yarn prettier */test/resources/*.json --check
 
 # Validate all SCSS.
