@@ -29,7 +29,7 @@
 		"@emotion/styled": "^10.0.27",
 		"@guardian/ab-core": "7.0.1",
 		"@guardian/automat-modules": "^0.3.8",
-		"@guardian/commercial": "0.0.0-beta-20240613150030",
+		"@guardian/commercial": "0.0.0-beta-20240620095401",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/eslint-config-typescript": "9.0.1",
 		"@guardian/identity-auth": "2.1.0",
