@@ -1,11 +1,9 @@
-import 'any-observable/register/rxjs-all';
-
-import Observable from 'any-observable';
+import Observable from 'any-observable/register/rxjs-all.js';
 
 import webpack from 'webpack';
 import chalk from 'chalk';
 
-import config, { plugins } from '../../../../webpack.config.prod.js';
+import webpackConfigProd from '../../../../webpack.config.prod.mjs';
 
 const { red } = chalk;
 
@@ -15,7 +13,7 @@ export default {
 		return new Observable((observer) => {
 			plugins = [
 				require('../../../webpack-progress-reporter.js')(observer),
-				...plugins,
+				...webpackConfigProd.plugins,
 			];
 
 			const bundler = webpack(config);

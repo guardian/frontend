@@ -1,11 +1,9 @@
-import 'any-observable/register/rxjs-all';
-
-import Observable from 'any-observable';
+import Observable from 'any-observable/register/rxjs-all.js';
 
 import webpack from 'webpack';
 import chalk from 'chalk';
 
-import config, { plugins } from '../../../../webpack.config.atoms.js';
+import webpackConfigAtoms from '../../../../webpack.config.atoms.mjs';
 
 const { red } = chalk;
 
@@ -15,10 +13,10 @@ export default {
 		return new Observable((observer) => {
 			plugins = [
 				require('../../../webpack-progress-reporter.js')(observer),
-				...plugins,
+				...webpackConfigAtoms.plugins,
 			];
 
-			const bundler = webpack(config);
+			const bundler = webpack(webpackConfigAtoms.config);
 
 			bundler.run((err, stats) => {
 				if (err) {

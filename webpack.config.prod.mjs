@@ -1,18 +1,17 @@
-const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
-const BundleAnalyzerPlugin =
-	require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const TerserPlugin = require('terser-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import webpack from 'webpack';
+import { smart } from 'webpack-merge';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import TerserPlugin from 'terser-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 
-const config = require('./webpack.config.js');
+import config from './webpack.config.mjs';
 
-module.exports = webpackMerge.smart(config, {
+export default smart(config, {
 	mode: 'production',
 	output: {
 		filename: `[chunkhash]/graun.[name].js`,
 		chunkFilename: `[chunkhash]/graun.[name].js`,
-        clean: true,
+		clean: true,
 	},
 	devtool: 'source-map',
 	plugins: [
