@@ -3,6 +3,8 @@ package conf
 import common.GuardianConfiguration
 import conf.Configuration.{OAuthCredentialsWithMultipleCallbacks, OAuthCredentials}
 import pa.PaClientConfig
+import java.nio.file.Files
+import java.nio.file.Files.createTempFile
 
 case class OmnitureCredentials(userName: String, secret: String)
 
@@ -39,9 +41,13 @@ object AdminConfiguration {
   }
 
   object dfpApi {
-    lazy val clientId = configuration.getStringProperty("api.dfp.clientId")
-    lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
-    lazy val refreshToken = configuration.getStringProperty("api.dfp.refreshToken")
+    lazy val serviceAccountKeyFile = configuration
+      .getStringProperty("api.dfp.serviceAccountJson")
+      .map(serviceAccountJson => {
+        val tempFile = createTempFile("dfpApiCredentials", ".json")
+        Files.writeString(tempFile, serviceAccountJson)
+        tempFile
+      })
     lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
   }
 
