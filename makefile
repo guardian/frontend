@@ -31,7 +31,7 @@ check-node-env: # PRIVATE
 # Watch and automatically compile/reload all JS/SCSS.
 # Uses port 3000 insead of 9000.
 watch: compile-watch
-	@./dev/watch.js
+	@./dev/watch.mjs
 
 sbt: # PRIVATE
 	./sbt

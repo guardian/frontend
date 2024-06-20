@@ -1,10 +1,14 @@
-const figures = require('figures');
-const chalk = require('chalk');
+import figures from 'figures';
+import chalk from 'chalk';
+
+const { dim, red } = chalk;
+
+const { arrowRight, cross, arrowDown, tick } = figures
 
 const log = (title, parents, message = '') => {
     console.log(
-        `${chalk.dim(
-            `${parents.concat(['']).join(` ${figures.arrowRight} `)}${title}`
+        `${dim(
+            `${parents.concat(['']).join(` ${arrowRight} `)}${title}`
         )} ${message}`
     );
 };
@@ -17,16 +21,16 @@ const render = (tasks, parents = []) => {
         });
         task.on('STATE', event => {
             if (task.isPending()) {
-                log(task.title, parents, chalk.dim('...'));
+                log(task.title, parents, dim('...'));
             }
             if (task.hasFailed()) {
-                log(task.title, parents, chalk.red(figures.cross));
+                log(task.title, parents, red(cross));
             }
             if (task.isSkipped()) {
                 log(
                     task.title,
                     parents,
-                    `${chalk.dim(figures.arrowDown)} (${task.output})`
+                    `${dim(arrowDown)} (${task.output})`
                 );
             }
             if (
@@ -34,7 +38,7 @@ const render = (tasks, parents = []) => {
                 !task.hasFailed() &&
                 !task.isSkipped()
             ) {
-                log(task.title, parents, chalk.dim.green(figures.tick));
+                log(task.title, parents, dim.green(tick));
             }
         });
         task.on('DATA', event => {
@@ -65,4 +69,4 @@ class VerboseRenderer {
     }
 }
 
-module.exports = VerboseRenderer;
+export default VerboseRenderer;

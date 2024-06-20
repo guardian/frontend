@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const cpy = require('cpy');
-const chalk = require('chalk');
+import { resolve, basename } from 'path';
+import cpy from 'cpy';
+import { red, yellow } from 'chalk';
 const browserSync = require('browser-sync').create();
-const bsConfig = require('./bs-config');
+import bsConfig from './bs-config.js';
 
 // ********************************** JAVASCRIPT **********************************
 
@@ -15,7 +15,7 @@ let INITIAL_BUNDLE = true;
 
 // just a bit of visual feedback while webpack creates its initial bundles.
 // fakes a listr step
-const ora = require('ora');
+import ora from 'ora';
 
 const wpNotification = ora({
     text: 'Create initial webpack bundles',
@@ -23,7 +23,7 @@ const wpNotification = ora({
 });
 wpNotification.start();
 
-const webpack = require('webpack');
+import webpack from 'webpack';
 
 const watchArguments = [
     {
@@ -32,7 +32,7 @@ const watchArguments = [
     (err, stats) => {
         if (err) {
             // log any unexpected error
-            console.log(chalk.red(err));
+            console.log(red(err));
         }
 
         if (INITIAL_BUNDLE) {
@@ -46,7 +46,7 @@ const watchArguments = [
         const info = stats.toJson();
         // send editing errors to console and browser
         if (stats.hasErrors()) {
-            console.log(chalk.red(info.errors));
+            console.log(red(info.errors));
             return browserSync.sockets.emit('fullscreen:message', {
                 title: 'Webpack Error:',
                 body: info.errors,
@@ -55,7 +55,7 @@ const watchArguments = [
         }
 
         if (stats.hasWarnings()) {
-            console.warn(chalk.yellow(info.warnings));
+            console.warn(yellow(info.warnings));
         }
 
         // announce the changes
@@ -74,11 +74,11 @@ mainWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 
-const chokidar = require('chokidar');
+import { watch } from 'chokidar';
 
-const sassDir = path.resolve(__dirname, '../', 'static', 'src', 'stylesheets');
-const targetDir = path.resolve(__dirname, '../', 'static', 'target');
-const inlineStylesDir = path.resolve(
+const sassDir = resolve(__dirname, '../', 'static', 'src', 'stylesheets');
+const targetDir = resolve(__dirname, '../', 'static', 'target');
+const inlineStylesDir = resolve(
     __dirname,
     '../',
     'common',
@@ -90,19 +90,19 @@ const sassGraph = require('sass-graph').parseDir(sassDir, {
     loadPaths: [sassDir],
 });
 
-const compileSass = require('../tools/compile-css.mjs');
+import compileSass from '../tools/compile-css.mjs';
 
 // when we detect a change in a sass file, we look up the tree of imports
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
 const ignoredSassRegEx = /^(_|ie9|old-ie)/;
 
-chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
+watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
     // see what top-level files need to be recompiled
     const filesToCompile = [];
-    const changedFileBasename = path.basename(changedFile);
+    const changedFileBasename = basename(changedFile);
 
     sassGraph.visitAncestors(changedFile, ancestorPath => {
-        const ancestorFileName = path.basename(ancestorPath);
+        const ancestorFileName = basename(ancestorPath);
         if (!ignoredSassRegEx.test(ancestorFileName)) {
             filesToCompile.push(ancestorFileName);
         }
@@ -150,7 +150,7 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
         })
         .catch(e => {
             // send editing errors to console and browser
-            console.log(chalk.red(`\n${e.formatted}`));
+            console.log(red(`\n${e.formatted}`));
             browserSync.sockets.emit('fullscreen:message', {
                 title: 'CSS Error:',
                 body: e.formatted,

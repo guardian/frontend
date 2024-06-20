@@ -88,6 +88,8 @@ const getCpuCount = () => os.cpus().length;
 
 // turn a list of our tasks into objects listr can use
 function listrify(steps, { concurrent = false } = {}) {
+    console.log({steps});
+
     const listrTasks = steps
         .map((step) => {
             const { description: title, task, concurrent: isConcurrent, onError } = step;
@@ -114,6 +116,7 @@ function listrify(steps, { concurrent = false } = {}) {
 
             console.log("TASK HERE:", task);
             console.log("TITLE HERE:", title);
+
             // assume the task is a function
             // if it's not, listr will blow up anyway, which is fine
             return {
@@ -132,7 +135,7 @@ function listrify(steps, { concurrent = false } = {}) {
         });
 
     let renderer = 'default';
-    if (IS_VERBOSE) renderer = import('./run-task-verbose-formater');
+    if (IS_VERBOSE) renderer = import('./run-task-verbose-formater.mjs');
 
     return new Listr(listrTasks, {
         concurrent: concurrent ? getCpuCount() : false,
@@ -144,7 +147,7 @@ function listrify(steps, { concurrent = false } = {}) {
 // resolve the tasks from yargs to actual files
 const getTasksFromModule = (taskName) => {
     try {
-        const modulePath = path.resolve(taskSrc, taskName);
+        const modulePath = path.resolve(taskSrc, taskName, 'index.mjs');
         if (IS_DEV) {
             try {
                 return import(`${modulePath}.dev`);
@@ -155,7 +158,7 @@ const getTasksFromModule = (taskName) => {
         }
         console.log(modulePath);
 
-        return import(modulePath);
+        return import(modulePath).then((module) => module.default);
     } catch (e) {
         // we can't find any modules, or something else has gone wrong in resolving it
         // so output an erroring task

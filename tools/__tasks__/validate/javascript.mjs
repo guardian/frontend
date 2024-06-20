@@ -1,0 +1,35 @@
+import chalk from 'chalk';
+const config = '--quiet --color';
+
+const {blue, underline} = chalk;
+
+const error = ctx => {
+    ctx.messages.push(
+        `${blue('make fix')} can correct simple errors automatically.`
+    );
+    ctx.messages.push(
+        `Your editor may be able to catch eslint errors as you work:\n${underline(
+            'http://eslint.org/docs/user-guide/integrations#editors'
+        )}`
+    );
+};
+
+export const description = 'Lint JS';
+export const task = [
+    {
+        description: 'Static',
+        task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
+        onError: error,
+    },
+    {
+        description: 'Tools etc.',
+        task: `eslint tools ${config}`,
+        onError: error,
+    },
+    {
+        description: 'Git hooks',
+        task: `eslint git-hooks/* ${config}`,
+        onError: error,
+    },
+];
+export const concurrent = true;
