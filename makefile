@@ -40,37 +40,34 @@ sbt: # PRIVATE
 
 # Compile all assets in production.
 compile: install
-	@NODE_ENV=production ./tools/task-runner/runner.mjs compile
+	@NODE_ENV=production ./tools/task-runner/runner.mjs compile/index.mjs
 
 # Compile all assets in development.
 compile-dev: install
-	@NODE_ENV=development ./tools/task-runner/runner.mjs compile --dev
+	@NODE_ENV=development ./tools/task-runner/runner.mjs compile/index.mjs --dev
 
 # Compile atom-specific JS
 compile-atoms: install
-	@./tools/task-runner/runner.mjs compile/javascript/index.atoms
+	@./tools/task-runner/runner.mjs compile/javascript/index.atoms.js
 
 # Compile all assets for watch.
 compile-watch: install # PRIVATE
 	@NODE_ENV=development ./tools/task-runner/runner.mjs compile/index.watch.mjs
 
 compile-javascript: install # PRIVATE
-	@./tools/task-runner/runner.mjs compile/javascript
+	@./tools/task-runner/runner.mjs compile/javascript/index.mjs
 
 compile-javascript-dev: install # PRIVATE
-	@./tools/task-runner/runner.mjs compile/javascript --dev
+	@./tools/task-runner/runner.mjs compile/javascript/index.mjs --dev
 
 compile-css: install # PRIVATE
-	@./tools/task-runner/runner.mjs compile/css
+	@./tools/task-runner/runner.mjs compile/css/index.mjs
 
 compile-images: install # PRIVATE
-	@./tools/task-runner/runner.mjs compile/images
+	@./tools/task-runner/runner.mjs compile/images/index.mjs
 
 compile-svgs: install # PRIVATE
-	@./tools/task-runner/runner.mjs compile/inline-svgs
-
-compile-fonts: install # PRIVATE
-	@./tools/task-runner/runner.mjs compile/fonts
+	@./tools/task-runner/runner.mjs compile/inline-svgs/index.mjs
 
 # *********************** CHECKS ***********************
 

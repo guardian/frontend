@@ -88,8 +88,6 @@ const getCpuCount = () => os.cpus().length;
 
 // turn a list of our tasks into objects listr can use
 function listrify(steps, { concurrent = false } = {}) {
-    console.log({steps});
-
     const listrTasks = steps
         .map((step) => {
             const { description: title, task, concurrent: isConcurrent, onError } = step;
@@ -113,9 +111,6 @@ function listrify(steps, { concurrent = false } = {}) {
 
             // treat tasks that are strings as terminal commands
             if (typeof task === 'string') return { title, task: ctx => exec(task, onError, ctx), skip };
-
-            console.log("TASK HERE:", task);
-            console.log("TITLE HERE:", title);
 
             // assume the task is a function
             // if it's not, listr will blow up anyway, which is fine
@@ -145,9 +140,9 @@ function listrify(steps, { concurrent = false } = {}) {
 }
 
 // resolve the tasks from yargs to actual files
-const getTasksFromModule = (taskName) => {
+const getTasksFromModule = async (taskName) => {
     try {
-        const modulePath = path.resolve(taskSrc, taskName, 'index.mjs');
+        const modulePath = path.resolve(taskSrc, taskName);
         if (IS_DEV) {
             try {
                 return import(`${modulePath}.dev`);
@@ -156,12 +151,21 @@ const getTasksFromModule = (taskName) => {
                 return import(`${modulePath}/index.dev`);
             } catch (e) { /* do nothing */ }
         }
-        console.log(modulePath);
 
-        return import(modulePath).then((module) => module.default);
+        const { description, task: imports } = await import(modulePath)
+          .then(module => module.default)
+
+        const task = await Promise.all(imports)
+          .then(tasks => tasks.map(module => module.default))
+
+        return {
+          description,
+          task,
+        }
     } catch (e) {
         // we can't find any modules, or something else has gone wrong in resolving it
         // so output an erroring task
+        console.error(e)
         return {
             description: `${chalk.red(taskName)} failed:`,
             task: () => Promise.reject(e),

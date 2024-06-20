@@ -1,9 +1,9 @@
 export default {
     description: 'Prepare JS for development',
     task: [
-        import('../inline-svgs/index.mjs'),
-        import('./clean.mjs'),
-        import('./copy.mjs'),
-        import('./bundle-polyfills.mjs'),
+        (await import('../inline-svgs/index.mjs')).then(module => module.default),
+        (await import('./clean.mjs')).then(module => module.default),
+        (await import('./copy.mjs')).then(module => module.default),
+        (await import('./bundle-polyfills.mjs')).then(module => module.default),
     ],
 };
