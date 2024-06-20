@@ -1,11 +1,11 @@
 export default {
   description: 'Compile assets for production',
   task: [
-    import('./conf/clean.mjs'),
-    import('./css/index.mjs'),
-    import('./data/index.mjs'),
-    import('./javascript/index.mjs'),
-    import('./hash/index.mjs'),
-    import('./conf/index.mjs'),
+    await import('./conf/clean.mjs').then(module => module.default),
+    await import('./css/index.mjs').then(module => module.default),
+    await import('./data/index.mjs').then(module => module.default),
+    await import('./javascript/index.mjs').then(module => module.default),
+    await import('./hash/index.mjs').then(module => module.default),
+    await import('./conf/index.mjs').then(module => module.default),
   ],
 }
