@@ -35,10 +35,10 @@ jobs:
       - run: make reinstall
 
       - name: assets test
-        run: ./tools/task-runner.mjs/runner.mjs validate test
+        run: ./tools/task-runner/runner.mjs validate test
 
       - name: assets compile
-        run: ./tools/task-runner.mjs/runner.mjs compile
+        run: ./tools/task-runner/runner.mjs compile
         env:
           NODE_ENV: production
 

@@ -9,7 +9,7 @@ It's intended to exist ‘behind the scenes’, and you should probably be runni
 It takes one or more tasks to run as arguments, which should be relative paths within the `__tasks__` directory, so that:
 
 ```
-./tools/task-runner.mjs/runner.mjs fakemodule/fakemodule
+./tools/task-runner/runner.mjs fakemodule/fakemodule
 ```
 
 will run the task defined in `tools/__tasks__/fakemodule/fakemodule.js`.
@@ -19,7 +19,7 @@ will run the task defined in `tools/__tasks__/fakemodule/fakemodule.js`.
 You can pass a `--dev` flag to prefer a dev version, if it exists (suffix the task's filename with `.dev`), so that:
 
 ```
-./tools/task-runner.mjs/runner.mjs fakemodule/fakemodule --dev
+./tools/task-runner/runner.mjs fakemodule/fakemodule --dev
 ```
 - runs `tools/__tasks__/fakemodule/fakemodule.dev.js` if it exists
 - reverts to `tools/__tasks__/fakemodule/fakemodule.js` if the above fails
@@ -30,7 +30,7 @@ Tasks can be run with `--verbose` flag for fuller output, but this shouldn't usu
 
 ### Options
 
-For a full list, run `./tools/task-runner.mjs/runner.mjs -h`.
+For a full list, run `./tools/task-runner/runner.mjs -h`.
 
 ## Defining tasks
 
