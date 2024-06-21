@@ -2,20 +2,18 @@ import { Observable } from 'rxjs';
 import webpack from 'webpack';
 import chalk from 'chalk';
 
-import webpackConfigAtoms from '../../../../webpack.config.atoms.mjs';
+import config from '../../../../webpack.config.atoms.mjs';
 import { reporter } from './webpack-progress-reporter.mjs';
 
 const { red } = chalk;
 
 export default {
 	description: 'Create Webpack bundles for atoms',
-	task: () => new Observable((observer) => {
+	task: () =>
+		new Observable((observer) => {
 			const bundler = webpack({
-			 ...webpackConfigAtoms.config,
-				plugins: [
-				  reporter(observer),
-					...webpackConfigAtoms.plugins,
-				]
+				...config,
+				plugins: [reporter(observer), ...config.plugins],
 			});
 
 			bundler.run((err, stats) => {
@@ -28,5 +26,5 @@ export default {
 				}
 				observer.complete();
 			});
-		})
+		}),
 };

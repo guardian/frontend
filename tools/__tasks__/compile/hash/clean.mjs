@@ -5,6 +5,6 @@ import { paths } from '../.././config.mjs';
 const { hash } = paths;
 
 export default {
-    description: 'Clear asset hash artefacts',
-    task: () => rimraf.sync(resolve(hash, 'assets')),
+	description: 'Clear asset hash artefacts',
+	task: () => rimraf.sync(resolve(hash, 'assets')),
 };

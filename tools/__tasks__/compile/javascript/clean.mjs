@@ -6,9 +6,9 @@ import { paths } from '../../config.mjs';
 const { target, hash } = paths;
 
 export default {
-    description: 'Clear JS build artefacts',
-    task: () => {
-        rimraf.sync(path.resolve(target, 'javascripts'));
-        rimraf.sync(path.resolve(hash, 'javascripts'));
-    },
+	description: 'Clear JS build artefacts',
+	task: () => {
+		rimraf.sync(path.resolve(target, 'javascripts'));
+		rimraf.sync(path.resolve(hash, 'javascripts'));
+	},
 };

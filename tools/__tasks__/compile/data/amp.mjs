@@ -1,4 +1,4 @@
-import path from "node:path";
+import path from 'node:path';
 import cpy from 'cpy';
 
 import { paths } from '../../config.mjs';
@@ -13,10 +13,10 @@ const ampIframeHtml = path.join(vendor, 'data/amp-iframe.html');
 const staticDir = path.resolve(target, 'data', 'vendor');
 
 export default {
-    description: 'Copy AMP iframe HTML',
-    task: () =>
-        cpy(ampIframeHtml, staticDir, {
-            parents: false,
-            nodir: false,
-        }),
+	description: 'Copy AMP iframe HTML',
+	task: () =>
+		cpy(ampIframeHtml, staticDir, {
+			parents: false,
+			nodir: false,
+		}),
 };

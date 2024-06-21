@@ -1,4 +1,4 @@
 export default {
-    description: 'Lint Sass',
-    task: 'stylelint **/*.scss',
+	description: 'Lint Sass',
+	task: 'stylelint **/*.scss',
 };
