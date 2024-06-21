@@ -168,6 +168,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -445,9 +451,21 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -1130,6 +1148,12 @@
 					"url": "/us/soccer",
 					"children": [
 						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -1278,9 +1302,21 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
+						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -1996,9 +2032,21 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -2614,6 +2662,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2799,9 +2853,21 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -3606,6 +3672,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3791,9 +3863,21 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Euro 2024",
+					"url": "/football/euro-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2024",
+							"url": "/football/euro-2024",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",

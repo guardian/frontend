@@ -95,7 +95,6 @@
         }
         <span class="football-matches__date">
             @date.format(DateTimeFormatter.ofPattern("E d MMMM "))
-            <span class="football-matches__timezone">(@DateTimeFormatter.ofPattern("z").format(ZonedDateTime.of(date, LocalTime.of(0, 0), Edition(request).timezoneId)))</span>
         </span>
 
     </caption>

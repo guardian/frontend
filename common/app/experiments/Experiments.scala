@@ -11,6 +11,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      UseSourcepointPropertyId,
       DarkModeWeb,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
@@ -18,6 +19,15 @@ object ActiveExperiments extends ExperimentsDefinition {
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object UseSourcepointPropertyId
+    extends Experiment(
+      name = "use-sourcepoint-property-id",
+      description = "Use Sourcepoint propertyId instead of propertyHref",
+      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 7, 30),
+      participationGroup = Perc5A,
+    )
 
 object UpdatedHeaderDesign
     extends Experiment(
@@ -52,6 +62,6 @@ object TagLinkDesign
       name = "tag-link-design",
       description = "Render an updated sticky design for tag links",
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 31),
-      participationGroup = Perc0E,
+      sellByDate = LocalDate.of(2024, 7, 25),
+      participationGroup = Perc20A,
     )

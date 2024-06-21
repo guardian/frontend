@@ -3,7 +3,7 @@
 @import conf.Static
 @import conf.Configuration
 @import play.api.libs.json.Json
-@import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
+@import views.support.{CamelCase, JavaScriptPage}
 @import conf.Configuration.environment
 @import navigation.NavMenu
 
@@ -45,14 +45,6 @@
                     "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
                 }
             }
-        },
-        "googleAnalytics": {
-            "trackers": {
-                "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
-                "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
-                "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
-            },
-            "timingEvents": []
         },
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",

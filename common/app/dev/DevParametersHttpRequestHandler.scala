@@ -77,10 +77,6 @@ class DevParametersHttpRequestHandler(
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
     "cmpdebug", // CMP troubleshooting
-    "utm_source", // Google Analytics source
-    "utm_medium", // Google Analytics medium
-    "utm_campaign", // Google Analytics campaign
-    "utm_term", // Google Analytics term
     "sfdebug", // enable spacefinder visualiser. '1' = inline ads (first pass), '2' = inline ads (second pass), 'im' = inline merchandising ads, 'carrot' = carrot ads
     "rikerdebug", // enable debug logging for Canadian ad setup managed by the Globe and Mail
     "forceSendMetrics", // enable force sending of commercial metrics

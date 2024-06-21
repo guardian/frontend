@@ -181,6 +181,7 @@ object CompetitionDisplayHelpers {
     teamName
       .replace("Czech Republic", "Czech Rep.")
       .replace("Holland", "Netherlands")
+      .replace("Winner of Match", "Winner match")
   }
 
   // We do not currently support scores above 10 so we default to a max
