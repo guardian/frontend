@@ -20,7 +20,7 @@ export default {
 				}
 				const info = stats.toJson();
 				if (stats.hasErrors()) {
-					throw new Error(chalk.red(info.errors));
+					throw new Error(chalk.red(info.errors.map(e => JSON.stringify(e))));
 				}
 				observer.complete();
 			});

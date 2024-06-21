@@ -31,7 +31,7 @@ check-node-env: # PRIVATE
 # Watch and automatically compile/reload all JS/SCSS.
 # Uses port 3000 insead of 9000.
 watch: compile-watch
-	@./dev/watch.mjs
+	@node ./dev/watch.mjs
 
 sbt: # PRIVATE
 	./sbt
@@ -40,40 +40,40 @@ sbt: # PRIVATE
 
 # Compile all assets in production.
 compile: install
-	@NODE_ENV=production ./tools/task-runner/runner compile/index.mjs
+	@NODE_ENV=production node ./tools/task-runner/runner.mjs compile/index.mjs
 
 # Compile all assets in development.
 compile-dev: install
-	@NODE_ENV=development ./tools/task-runner/runner compile/index.mjs --dev
+	@NODE_ENV=development node ./tools/task-runner/runner.mjs compile/index.mjs --dev
 
 # Compile atom-specific JS
 compile-atoms: install
-	@./tools/task-runner/runner compile/javascript/index.atoms.js
+	@node ./tools/task-runner/runner.mjs compile/javascript/index.atoms.js
 
 # Compile all assets for watch.
 compile-watch: install # PRIVATE
-	@NODE_ENV=development ./tools/task-runner/runner compile/index.watch.mjs
+	@NODE_ENV=development node ./tools/task-runner/runner.mjs compile/index.watch.mjs
 
 compile-javascript: install # PRIVATE
-	@./tools/task-runner/runner compile/javascript/index.mjs
+	@node ./tools/task-runner/runner.mjs compile/javascript/index.mjs
 
 compile-javascript-dev: install # PRIVATE
-	@./tools/task-runner/runner compile/javascript/index.mjs --dev
+	@node ./tools/task-runner/runner.mjs compile/javascript/index.mjs --dev
 
 compile-css: install # PRIVATE
-	@./tools/task-runner/runner compile/css/index.mjs
+	@node ./tools/task-runner/runner.mjs compile/css/index.mjs
 
 compile-images: install # PRIVATE
-	@./tools/task-runner/runner compile/images/index.mjs
+	@node ./tools/task-runner/runner.mjs compile/images/index.mjs
 
 compile-svgs: install # PRIVATE
-	@./tools/task-runner/runner compile/inline-svgs/index.mjs
+	@node ./tools/task-runner/runner.mjs compile/inline-svgs/index.mjs
 
 # *********************** CHECKS ***********************
 
 # Run the JS test suite.
 test: install
-	@./tools/task-runner/runner test/javascript --verbose
+	@node ./tools/task-runner/runner.mjs test/javascript --verbose
 
 # Run the modern JS test suite in watch mode.
 test-watch: install
@@ -81,29 +81,29 @@ test-watch: install
 
 # Check the JS test suite coverage.
 coverage: install
-	@./tools/task-runner/runner test/javascript/coverage --stdout
+	@node ./tools/task-runner/runner.mjs test/javascript/coverage --stdout
 
 # Validate all assets.
 validate: install
-	@./tools/task-runner/runner validate/index.mjs --verbose
+	@node ./tools/task-runner/runner.mjs validate/index.mjs --verbose
 	@yarn prettier */test/resources/*.json --check
 
 # Validate all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/task-runner/runner validate/sass --verbose
+	@node ./tools/task-runner/runner.mjs validate/sass --verbose
 
 # Validate all JS.
 validate-javascript: install # PRIVATE
-	@./tools/task-runner/runner validate/javascript
+	@node ./tools/task-runner/runner.mjs validate/javascript
 
 # Fix JS linting errors.
 fix: install
-	@./tools/task-runner/runner validate/javascript-fix.mjs
+	@node ./tools/task-runner/runner.mjs validate/javascript-fix.mjs
 	@yarn prettier */test/resources/*.json --write
 
 # Fix committed JS linting errors.
 fix-commits: install
-	@./tools/task-runner/runner validate-head/javascript-fix.mjs
+	@node ./tools/task-runner/runner.mjs validate-head/javascript-fix.mjs
 
 # Update caniuse db used by browserslist
 # https://github.com/browserslist/update-db

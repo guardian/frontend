@@ -1,5 +1,5 @@
 import { smart } from 'webpack-merge';
-import config from './webpack.config.js';
+import config from './webpack.config.mjs';
 import CopyPlugin from 'copy-webpack-plugin';
 
 export default smart(config, {

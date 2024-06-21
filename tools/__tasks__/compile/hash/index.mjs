@@ -15,7 +15,7 @@ const { hash, target } = paths;
 export default {
 	description: 'Version assets',
 	task: [
-		await import('./clean.mjs').then((module) => module.default),
+		(await import('./clean.mjs')).default,
 		{
 			description: 'Hash assets',
 			task: () => {

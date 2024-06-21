@@ -1,5 +1,5 @@
-import path from 'node:path';
 import cpy from 'cpy';
+import path from 'node:path';
 import { paths } from '../.././config.mjs';
 
 export default {

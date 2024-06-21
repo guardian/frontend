@@ -9,9 +9,7 @@ const stat = pify(fs.stat);
 
 import { paths } from '../../config.mjs';
 
-const { src } = paths;
-
-const srcDir = path.resolve(src);
+const srcDir = path.resolve(paths.src);
 
 export default {
 	description:

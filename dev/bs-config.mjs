@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // To run browser-sync with this config:
 //
@@ -55,7 +56,7 @@ export default {
     scrollThrottle: 0,
     reloadDelay: 0,
     reloadDebounce: 100,
-    plugins: [path.dirname(require.resolve('bs-fullscreen-message'))],
+    plugins: [path.dirname(fileURLToPath(import.meta.resolve('bs-fullscreen-message')))],
     injectChanges: true,
     startPath: null,
     minify: false,

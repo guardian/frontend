@@ -1,7 +1,7 @@
-import path from 'node:path';
+const path = require('path');
 
 /** @type {(content: string) => string} content */
-export default function svgLoader(content) {
+module.exports = function svgLoader(content) {
     const match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
     const prefix = 'inline-';
     const imageType = path
@@ -16,5 +16,5 @@ export default function svgLoader(content) {
 
     this.value = markup;
 
-    return `export default ${JSON.stringify({ markup })}`;
+    return `module.exports = ${JSON.stringify({ markup })}`;
 };

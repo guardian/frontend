@@ -1,6 +1,5 @@
-#!/usr/bin/env node --experimental-default-type=module
-
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import cpy from 'cpy';
 import chalk from 'chalk';
 import bs from 'browser-sync';
@@ -78,6 +77,11 @@ mainWebpackBundler.watch(...watchArguments);
 // ********************************** Sass **********************************
 
 import { watch } from 'chokidar';
+import compileSass from '../tools/compile-css.mjs';
+import { parseDir } from 'sass-graph';
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 const sassDir = path.resolve(__dirname, '../', 'static', 'src', 'stylesheets');
 const targetDir = path.resolve(__dirname, '../', 'static', 'target');
@@ -89,11 +93,10 @@ const inlineStylesDir = path.resolve(
     'assets',
     'inline-stylesheets'
 );
-const sassGraph = require('sass-graph').parseDir(sassDir, {
+const sassGraph = parseDir(sassDir, {
     loadPaths: [sassDir],
 });
 
-import compileSass from '../tools/compile-css.mjs';
 
 // when we detect a change in a sass file, we look up the tree of imports
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.

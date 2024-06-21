@@ -1,5 +1,3 @@
-#!/usr/bin/env node --experimental-default-type=module
-
 // force any plugins that use `chalk` to output in full colour
 import { fileURLToPath } from 'node:url';
 
