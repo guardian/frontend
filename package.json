@@ -151,9 +151,6 @@
 		"wolfy87-eventemitter": "~5.2.4",
 		"yargs": "^17.7.1"
 	},
-	"resolutions": {
-		"unset-value": "^2.0.1"
-	},
 	"optionalDependencies": {
 		"fsevents": "^2.3.2",
 		"react": "18.2.0",
@@ -211,5 +208,9 @@
 		"test": "jest"
 	},
 	"prettier": "@guardian/prettier",
-	"packageManager": "yarn@4.1.1"
+	"packageManager": "yarn@4.1.1",
+	"resolutions": {
+		"micromatch": "4.0.7",
+		"unset-value": "^2.0.1"
+	}
 }
