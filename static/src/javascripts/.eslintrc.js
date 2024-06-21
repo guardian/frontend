@@ -1,5 +1,9 @@
 module.exports = {
     settings: {
-        'import/resolver': 'webpack',
+        'import/resolver': {
+          'node': {
+            'extensions': [".js", ".ts"]
+          }
+        }
     },
 };

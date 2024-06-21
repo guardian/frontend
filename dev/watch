@@ -5,6 +5,7 @@ import cpy from 'cpy';
 import chalk from 'chalk';
 import bs from 'browser-sync';
 import bsConfig from './bs-config.mjs';
+import config from '../webpack.config.dev.mjs';
 
 const browserSync = bs.create();
 
@@ -70,7 +71,7 @@ const watchArguments = [
     },
 ];
 
-const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
+const mainWebpackBundler = webpack(config);
 
 mainWebpackBundler.watch(...watchArguments);
 
