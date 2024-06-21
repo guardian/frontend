@@ -8,41 +8,43 @@ const __filename = fileURLToPath(import.meta.url); // get the resolved path to t
 const __dirname = path.dirname(__filename); // get the name of the directory
 
 export default {
-	standard: join(__dirname, 'static', 'src', 'javascripts', 'boot.js'),
-	admin: join(
-		__dirname,
-		'static',
-		'src',
-		'javascripts',
-		'bootstraps',
-		'admin.js',
-	),
-	// Old VideoJS embed
-	'videojs-embed': join(
-		__dirname,
-		'static',
-		'src',
-		'javascripts',
-		'bootstraps',
-		'videojs-embed.js',
-	),
-	// Video embed with native video player enhancements
-	'video-embed': join(
-		__dirname,
-		'static',
-		'src',
-		'javascripts',
-		'bootstraps',
-		'video-embed.js',
-	),
-	'youtube-embed': join(
-		__dirname,
-		'static',
-		'src',
-		'javascripts',
-		'bootstraps',
-		'youtube-embed.ts',
-	),
+  entry: {
+  	standard: join(__dirname, 'static', 'src', 'javascripts', 'boot.js'),
+  	admin: join(
+  		__dirname,
+  		'static',
+  		'src',
+  		'javascripts',
+  		'bootstraps',
+  		'admin.js',
+  	),
+  	// Old VideoJS embed
+  	'videojs-embed': join(
+  		__dirname,
+  		'static',
+  		'src',
+  		'javascripts',
+  		'bootstraps',
+  		'videojs-embed.js',
+  	),
+  	// Video embed with native video player enhancements
+  	'video-embed': join(
+  		__dirname,
+  		'static',
+  		'src',
+  		'javascripts',
+  		'bootstraps',
+  		'video-embed.js',
+  	),
+  	'youtube-embed': join(
+  		__dirname,
+  		'static',
+  		'src',
+  		'javascripts',
+  		'bootstraps',
+  		'youtube-embed.ts',
+  	),
+  },
 	output: join(__dirname, 'static', 'target', 'javascripts'),
 	resolve: {
 		modules: [

@@ -2814,7 +2814,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:5.61.0"
     "@typescript-eslint/parser": "npm:5.61.0"
     amphtml-validator: "npm:^1.0.21"
-    any-observable: "npm:^0.2.0"
     autoprefixer: "npm:^10.3.7"
     babel-core: "npm:^7.0.0-bridge.0"
     babel-jest: "npm:29.7.0"

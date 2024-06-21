@@ -1,35 +1,33 @@
-import 'any-observable/register/rxjs-all';
-
-import Observable from 'any-observable';
-
+import { Observable } from 'rxjs';
 import webpack from 'webpack';
 import chalk from 'chalk';
 
-import config, { plugins } from '../../../../webpack.config.dev.js';
+import webpackDevConfig from '../../../../webpack.config.dev.js';
+import { reporter } from './webpack-progress-reporter.mjs';
 
 const { red } = chalk;
 
 export default {
 	description: 'Create Webpack bundles',
-	task: () => {
-		return new Observable((observer) => {
-			plugins = [
-				require('../../../webpack-progress-reporter.js')(observer),
-				...plugins,
-			];
+	task: () => new Observable((observer) => {
 
-			const bundler = webpack(config);
-
-			bundler.run((err, stats) => {
-				if (err) {
-					throw new Error(red(err));
-				}
-				const info = stats.toJson();
-				if (stats.hasErrors()) {
-					throw new Error(red(info.errors));
-				}
-				observer.complete();
-			});
+		const bundler = webpack({
+		  ...webpackDevConfig,
+				plugins: [
+				  reporter(observer),
+				...webpackDevConfig.plugins,
+				]
 		});
-	},
+
+		bundler.run((err, stats) => {
+			if (err) {
+				throw new Error(red(err));
+			}
+			const info = stats.toJson();
+			if (stats.hasErrors()) {
+				throw new Error(red(info.errors));
+			}
+			observer.complete();
+		});
+	})
 };
