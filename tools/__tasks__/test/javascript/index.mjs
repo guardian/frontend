@@ -1,24 +1,20 @@
-const execa = require('execa');
-const split = require('split');
-
-require('any-observable/register/rxjs-all');
-const streamToObservable = require('stream-to-observable');
-const rxjs = require('rxjs');
+import execa from 'execa';
+import split from 'split';
+import streamToObservable from 'stream-to-observable';
+import { merge } from 'rxjs';
 // rxjs6 operators are now packaged separately
-const rxjsOperators = require('rxjs/operators');
+import { filter } from 'rxjs/operators';
 
 const exec = (cmd, args, opts) => {
 	const cp = execa(cmd, args, opts);
 
-	return rxjs
-		.merge(
-			streamToObservable(cp.stdout.pipe(split()), { await: cp }),
-			streamToObservable(cp.stderr.pipe(split()), { await: cp }),
-		)
-		.pipe(rxjsOperators.filter(Boolean));
+	return merge(
+		streamToObservable(cp.stdout.pipe(split()), { await: cp }),
+		streamToObservable(cp.stderr.pipe(split()), { await: cp }),
+	).pipe(filter(Boolean));
 };
 
-module.exports = {
+export default {
 	description: 'Test JS app',
 	task: [
 		{

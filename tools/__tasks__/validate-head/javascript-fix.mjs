@@ -1,7 +1,7 @@
-const execa = require('execa');
-const getChangedFiles = require('../lib/get-changed-files');
+import execa from 'execa';
+import getChangedFiles from '../lib/get-changed-files';
 
-module.exports = {
+export default {
 	description: 'Fix committed linting errors',
 	task: () =>
 		getChangedFiles().then((files) => {

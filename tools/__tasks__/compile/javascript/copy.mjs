@@ -2,8 +2,6 @@ import cpy from 'cpy';
 import path from 'node:path';
 import { paths } from '../.././config.mjs';
 
-const { vendor, target } = paths;
-
 export default {
 	description: 'Copy 3rd JS party libraries',
 	task: () =>
@@ -15,9 +13,9 @@ export default {
 					'polyfillio.minimum.fallback.js',
 					'omsdk-v1.js',
 				],
-				path.resolve(target, 'javascripts', 'vendor'),
+				path.resolve(paths.target, 'javascripts', 'vendor'),
 				{
-					cwd: path.resolve(vendor, 'javascripts'),
+					cwd: path.resolve(paths.vendor, 'javascripts'),
 					parents: true,
 					nodir: true,
 				},

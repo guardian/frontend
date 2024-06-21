@@ -5,8 +5,6 @@ import chalk from 'chalk';
 import config from '../../../../webpack.config.dev.mjs';
 import { reporter } from './webpack-progress-reporter.mjs';
 
-const { red } = chalk;
-
 export default {
 	description: 'Create Webpack bundles',
 	task: () =>
@@ -18,11 +16,11 @@ export default {
 
 			bundler.run((err, stats) => {
 				if (err) {
-					throw new Error(red(err));
+					throw new Error(chalk.red(err));
 				}
 				const info = stats.toJson();
 				if (stats.hasErrors()) {
-					throw new Error(red(info.errors));
+					throw new Error(chalk.red(info.errors));
 				}
 				observer.complete();
 			});

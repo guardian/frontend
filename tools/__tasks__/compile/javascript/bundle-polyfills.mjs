@@ -11,11 +11,10 @@ const writeFileP = pify(fs.writeFile);
 const requestP = pify(request, { multiArgs: true });
 
 import { paths } from '../../config.mjs';
-const { src, target, vendor } = paths;
 
-const dest = path.resolve(target, 'javascripts', 'vendor');
+const dest = path.resolve(paths.target, 'javascripts', 'vendor');
 const polyfillURL = fs
-	.readFileSync(path.resolve(src, 'javascripts', 'polyfill.io'), 'utf8')
+	.readFileSync(path.resolve(paths.src, 'javascripts', 'polyfill.io'), 'utf8')
 	.trim();
 
 export default {
@@ -41,7 +40,7 @@ export default {
 				.catch(() =>
 					readFileP(
 						path.resolve(
-							vendor,
+							paths.vendor,
 							'javascripts',
 							'polyfillio.fallback.js',
 						),

@@ -1,15 +1,19 @@
-import { blue } from 'chalk';
+import chalk from 'chalk';
 const config = '--error';
 
 const error = (ctx) => {
-	ctx.messages.push(`Run ${blue('./sbt scalafmt')} to format Scala files.`);
+	ctx.messages.push(
+		`Run ${chalk.blue('./sbt scalafmt')} to format Scala files.`,
+	);
 };
 
-export const description = 'scalafmt check';
-export const task = [
-	{
-		description: 'scalafmtCheckAll',
-		task: `./sbt scalafmtCheckAll ${config}`,
-		onError: error,
-	},
-];
+export default {
+	description: 'scalafmt check',
+	task: [
+		{
+			description: 'scalafmtCheckAll',
+			task: `./sbt scalafmtCheckAll ${config}`,
+			onError: error,
+		},
+	],
+};

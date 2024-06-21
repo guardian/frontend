@@ -1,22 +1,18 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const { promisify } = require('util');
-const path = require('path');
-const execa = require('execa');
-const chalk = require('chalk');
-const getChangedFiles = require('../tools/__tasks__/lib/get-changed-files');
+import { writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import execa from 'execa';
+import { red, inverse, underline, dim } from 'chalk';
+import getChangedFiles from '../tools/__tasks__/lib/get-changed-files.m';
 
-const writeFile = promisify(fs.writeFile);
-
-const confirmIfMainMessage = `${chalk.red(
-    `${chalk.inverse(
+const confirmIfMainMessage = `${red(
+    `${inverse(
         'You are about to push main!'
     )}\nIs that what you intended?`
 )} [y/N]`;
-const confirmIfMain = execa
-    .shell(
+const confirmIfMain = execa.shell(
         `
         protected_branch='main'
         current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\\(.*\\),\\1,')
@@ -42,7 +38,7 @@ const confirmIfMain = execa
 const validate = () =>
     execa(
         './tools/task-runner/runner.mjs',
-        ['validate/scalafmt', 'validate-head/index', 'validate/check-for-disallowed-strings'],
+        ['validate/scalafmt.mjs', 'validate-head/index.mjs', 'validate/check-for-disallowed-strings.mjs'],
         {
             stdio: 'inherit',
         }

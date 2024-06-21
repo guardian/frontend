@@ -2,8 +2,6 @@ import { stdout } from 'execa';
 import chalk from 'chalk';
 import disallowedStrings from '../../../disallowed-strings.mjs';
 
-const { red } = chalk;
-
 export const description = 'Check for disallowed strings';
 export function task() {
 	return Promise.all(
@@ -19,10 +17,10 @@ export function task() {
 				.then((matches) => {
 					if (matches.length > maxOccurrences) {
 						const msg = [
-							red(
+							chalk.red(
 								`More than ${maxOccurrences} match for regex ${regex.source}`,
 							),
-							red(message),
+							chalk.red(message),
 							...matches,
 						].join('\n');
 

@@ -1,11 +1,11 @@
-const execa = require('execa');
-const chalk = require('chalk');
-const os = require('os');
-const getChangedFiles = require('../lib/get-changed-files');
+import { cpus } from 'node:os';
+import execa from 'execa';
+import chalk from 'chalk';
+import getChangedFiles from '../lib/get-changed-files';
 
-const getCpuCount = () => os.cpus().length;
+const getCpuCount = () => cpus().length;
 
-module.exports = {
+export default {
 	description: 'Validate committed JS',
 	task: [
 		{

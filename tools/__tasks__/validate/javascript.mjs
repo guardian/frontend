@@ -1,14 +1,12 @@
 import chalk from 'chalk';
 const config = '--quiet --color';
 
-const { blue, underline } = chalk;
-
 const error = (ctx) => {
 	ctx.messages.push(
-		`${blue('make fix')} can correct simple errors automatically.`,
+		`${chalk.blue('make fix')} can correct simple errors automatically.`,
 	);
 	ctx.messages.push(
-		`Your editor may be able to catch eslint errors as you work:\n${underline(
+		`Your editor may be able to catch eslint errors as you work:\n${chalk.underline(
 			'http://eslint.org/docs/user-guide/integrations#editors',
 		)}`,
 	);

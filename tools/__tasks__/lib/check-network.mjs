@@ -1,7 +1,7 @@
-const tcpp = require('tcp-ping');
-const pify = require('pify');
+import tcpp from 'tcp-ping';
+import pify from 'pify';
 
-module.exports = (domain, port) => ({
+export default (domain, port) => ({
 	description: `Probing ${domain} on port ${port}...`,
 	task: () =>
 		pify(tcpp.probe, { multiArgs: true })(domain, port).then((result) => {

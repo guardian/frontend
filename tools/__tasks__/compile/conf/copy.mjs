@@ -5,7 +5,7 @@ import { paths } from '../.././config.mjs';
 
 const { conf, target, hash, src } = paths;
 
-const curl = fileURLToPath(import.meta.resolve('curl'))
+const curl = fileURLToPath(import.meta.resolve('curl'));
 
 export default {
 	description: 'Copy assets',
