@@ -1,11 +1,10 @@
-import { join, resolve as _resolve } from 'path';
+import { join, resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import webpack from 'webpack';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+const __dirname = dirname(__filename); // get the name of the directory
 
 export default {
   entry: {
@@ -76,8 +75,8 @@ export default {
 	},
 	resolveLoader: {
 		modules: [
-			_resolve(__dirname, 'dev', 'webpack-loaders'),
-			_resolve(__dirname, 'node_modules', '@guardian', 'node_modules'),
+			resolve(__dirname, 'dev', 'webpack-loaders'),
+			resolve(__dirname, 'node_modules', '@guardian', 'node_modules'),
 			'node_modules',
 		],
 	},
@@ -86,7 +85,7 @@ export default {
 			{
 				test: /\.[jt]sx?|mjs$/,
 				exclude: {
-					or: [/node_modules/, _resolve(__dirname, 'static/vendor')],
+					or: [/node_modules/, resolve(__dirname, 'static/vendor')],
 					not: [
 						// Include all @guardian modules, except automat-modules
 						/@guardian\/(?!(automat-modules|automat-contributions))/,
