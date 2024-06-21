@@ -12,6 +12,7 @@ import scala.io.Codec.UTF8
 object DfpAgent
     extends PageskinAdAgent
     with InlineMerchandiseComponentAgent
+    with LiveBlogTopSponsorship
     with HighMerchandiseComponentAgent
     with AdSlotAgent {
 
@@ -19,6 +20,7 @@ object DfpAgent
 
   private lazy val inlineMerchandisingTagsAgent = Box[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val targetedHighMerchandisingLineItemsAgent = Box[Seq[HighMerchandisingLineItem]](Seq.empty)
+  private lazy val liveblogTopAgent = Box[LiveBlogTopSponsorship](LiveBlogTopSponsorship())
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = Box[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
@@ -28,6 +30,8 @@ object DfpAgent
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
     targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
+
+  protected def liveBlogTopSponsorships: LiveBlogTopSponsorship = liveblogTopAgent.get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
     takeoverWithEmptyMPUsAgent.get()
@@ -53,6 +57,14 @@ object DfpAgent
       reportOption.fold(Seq[PageSkinSponsorship]())(_.sponsorships)
     }
 
+    def grabLiveblogTopSponsorshipsFromStore(): LiveBlogTopSponsorship = {
+      val maybeTargeting = for {
+        jsonString <- stringFromS3(dfpLiveBlogTopSponsorshipDataKey)
+        report <- LiveblogTopTargetingReportParser(jsonString)
+      } yield LiveBlogTopSponsorship(report.targetedContentTypes, report.targetedSections)
+      maybeTargeting getOrElse LiveBlogTopSponsorship()
+    }
+
     def grabInlineMerchandisingTargetedTagsFromStore(): InlineMerchandisingTagSet = {
       val maybeTagSet = for {
         jsonString <- stringFromS3(dfpInlineMerchandisingTagsDataKey)
@@ -76,6 +88,12 @@ object DfpAgent
       } yield lineItems
     }
 
+    def updateLiveBlogTopSponsorshipTargeting(freshData: LiveBlogTopSponsorship): Unit = {
+      liveblogTopAgent send { oldData =>
+        if (freshData.nonEmpty) freshData else oldData
+      }
+    }
+
     def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet): Unit = {
       inlineMerchandisingTagsAgent send { oldData =>
         if (freshData.nonEmpty) freshData else oldData
@@ -91,6 +109,8 @@ object DfpAgent
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
 
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
+
+    updateLiveBlogTopSponsorshipTargeting(grabLiveblogTopSponsorshipsFromStore())
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 

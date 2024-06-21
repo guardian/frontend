@@ -30,13 +30,14 @@ import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
 
 object Commercial {
 
-  def make(tags: Tags, apiContent: CapiContent): model.Commercial = {
+  def make(tags: Tags, section: Section, contentType: ContentType, apiContent: CapiContent): model.Commercial = {
     val isInappropriateForSponsorship: Boolean =
       apiContent.fields.exists(_.isInappropriateForSponsorship.contains(true))
 
     model.Commercial(
       isInappropriateForSponsorship,
       hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags),
+      hasLiveBlogAd = DfpAgent.hasLiveBlogTopSponsorship(section.metadata.sectionId, contentType.),
     )
   }
 
@@ -44,11 +45,12 @@ object Commercial {
     model.Commercial(
       isInappropriateForSponsorship = false,
       hasInlineMerchandise = false,
+      hasLiveBlogAd = false
     )
   }
 }
 
-final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean)
+final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean, hasLiveBlogAd: Boolean)
 
 /**
   * MetaData represents a page on the site, whether facia or content

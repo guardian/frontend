@@ -174,4 +174,18 @@ class DfpDataCacheJob(
       )
     }
   }
+
+  private def writeLiveblogTopTargeting(data: DfpDataExtractor): Unit = {
+
+    if (data.hasValidLineItems) {
+      val now = printLondonTime(DateTime.now())
+
+      val lineItems = data.liveblogTopLineItems
+      val targetedSections = data.liveblogTopTargetedSections
+      val targetedContentTypes = data.liveblogTopTargetedContentTypes
+      Store.putLiveblogTopSponsorships(
+        stringify(toJson(LiveblogTopTargetingReport(now, targetedSections, targetedContentTypes, lineItems))),
+      )
+    }
+  }
 }

@@ -270,6 +270,15 @@ case class GuLineItem(
     targetSlotIsInlineMerch.nonEmpty
   }
 
+  val targetsLiveBlogTop: Boolean = {
+    val targetSlotIsLiveBlogTop = for {
+      targetSet <- targeting.customTargetSets
+      target <- targetSet.targets
+      if target.name == "slot" && target.values.contains("liveblog-top")
+    } yield target
+    targetSlotIsLiveBlogTop.nonEmpty
+  }
+
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnitsIncluded.exists { adUnit =>
       val path = adUnit.path
