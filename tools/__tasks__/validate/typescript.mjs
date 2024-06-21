@@ -11,12 +11,14 @@ const error = (ctx) => {
 	);
 };
 
-export const description = 'Compile TS';
-export const task = [
-	{
-		description: 'Compile',
-		task: `tsc --noEmit`,
-		onError: error,
-	},
-];
-export const concurrent = true;
+export default {
+	description: 'Compile TS',
+	task: [
+		{
+			description: 'Compile',
+			task: `tsc --noEmit`,
+			onError: error,
+		},
+	],
+	concurrent: true,
+};

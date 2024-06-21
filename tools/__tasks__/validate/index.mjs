@@ -1,10 +1,10 @@
 export default {
 	description: 'Lint assets',
 	task: [
-		await import('./javascript.mjs'),
-		await import('./typescript.mjs'),
-		await import('./sass.mjs'),
-		await import('./check-for-disallowed-strings.mjs'),
+		(await import('./javascript.mjs')).default,
+		(await import('./typescript.mjs')).default,
+		(await import('./sass.mjs')).default,
+		(await import('./check-for-disallowed-strings.mjs')).default,
 	],
 	concurrent: true,
 };

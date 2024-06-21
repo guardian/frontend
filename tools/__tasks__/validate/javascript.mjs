@@ -12,22 +12,24 @@ const error = (ctx) => {
 	);
 };
 
-export const description = 'Lint JS';
-export const task = [
-	{
-		description: 'Static',
-		task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
-		onError: error,
-	},
-	{
-		description: 'Tools etc.',
-		task: `eslint tools ${config}`,
-		onError: error,
-	},
-	{
-		description: 'Git hooks',
-		task: `eslint git-hooks/* ${config}`,
-		onError: error,
-	},
-];
-export const concurrent = true;
+export default {
+	description: 'Lint JS',
+	task: [
+		{
+			description: 'Static',
+			task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
+			onError: error,
+		},
+		{
+			description: 'Tools etc.',
+			task: `eslint tools ${config}`,
+			onError: error,
+		},
+		{
+			description: 'Git hooks',
+			task: `eslint git-hooks/* ${config}`,
+			onError: error,
+		},
+	],
+	concurrent: true,
+};

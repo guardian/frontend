@@ -1,9 +1,9 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --experimental-default-type=module
 /* eslint-disable no-console */
 
-const execa = require('execa');
-const chalk = require('chalk');
-const fs = require('fs');
+import execa from 'execa';
+import chalk from 'chalk';
+import fs from 'node:fs';
 
 execa
     .shell('git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD')

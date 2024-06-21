@@ -1,14 +1,14 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --experimental-default-type=module
 /* eslint-disable no-console */
 
 import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import execa from 'execa';
-import { red, inverse, underline, dim } from 'chalk';
-import getChangedFiles from '../tools/__tasks__/lib/get-changed-files.m';
+import chalk from 'chalk';
+import getChangedFiles from '../tools/__tasks__/lib/get-changed-files.mjs';
 
-const confirmIfMainMessage = `${red(
-    `${inverse(
+const confirmIfMainMessage = `${chalk.red(
+    `${chalk.inverse(
         'You are about to push main!'
     )}\nIs that what you intended?`
 )} [y/N]`;

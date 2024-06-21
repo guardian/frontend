@@ -1,7 +1,7 @@
 import os from 'node:os';
 import execa from 'execa';
 import chalk from 'chalk';
-import getChangedFiles from '../lib/get-changed-files';
+import getChangedFiles from '../lib/get-changed-files.mjs';
 
 const getCpuCount = () => os.cpus().length;
 

@@ -2,8 +2,8 @@ export default {
 	description: 'Test assets',
 	task: [
 		// prettier
-		await import('../compile/data/index.mjs'),
-		require('./javascript/index.mjs'),
+		(await import('../compile/data/index.mjs')).default,
+		(await import('./javascript/index.mjs')).default,
 	],
 	concurrent: true,
 };
