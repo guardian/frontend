@@ -37,7 +37,7 @@ const confirmIfMain = execa.shell(
     .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
 const validate = () =>
     execa(
-        './tools/task-runner/runner.mjs',
+        './tools/task-runner/runner',
         ['validate/scalafmt.mjs', 'validate-head/index.mjs', 'validate/check-for-disallowed-strings.mjs'],
         {
             stdio: 'inherit',

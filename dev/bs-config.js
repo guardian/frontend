@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'node:path';
 
 // To run browser-sync with this config:
 //
@@ -18,7 +18,7 @@ const path = require('path');
  |
  |
  */
-module.exports = {
+export default {
     ui: {
         port: 3001,
         weinre: {

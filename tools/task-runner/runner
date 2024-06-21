@@ -1,5 +1,4 @@
-#!/usr/bin/env node
-/* eslint-disable import/no-dynamic-require, global-require */
+#!/usr/bin/env node --experimental-default-type=module
 
 // force any plugins that use `chalk` to output in full colour
 import { fileURLToPath } from 'node:url';
@@ -199,18 +198,8 @@ const getTasksFromModule = async (taskName) => {
 			}
 		}
 
-		const { description, task: imports } = await import(modulePath).then(
-			(module) => module.default,
-		);
+		return (await import(modulePath)).default
 
-		const task = await Promise.all(imports).then((tasks) =>
-			tasks.map((module) => module.default),
-		);
-
-		return {
-			description,
-			task,
-		};
 	} catch (e) {
 		// we can't find any modules, or something else has gone wrong in resolving it
 		// so output an erroring task

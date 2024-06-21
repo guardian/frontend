@@ -1,12 +1,12 @@
 import execa from 'execa';
 
 const getCurrentBranchName = () =>
-	stdout('git', ['symbolic-ref', '--short', 'HEAD']);
+	execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']);
 
 const hasRemoteBranch = (branch) =>
-	stdout('git', ['status', '--porcelain', '-b']).then((status) =>
-		status.includes(`...origin/${branch}`),
-	);
+	execa
+		.stdout('git', ['status', '--porcelain', '-b'])
+		.then((status) => status.includes(`...origin/${branch}`));
 
 // return files that have changed locally
 // compared to remote feature branch
