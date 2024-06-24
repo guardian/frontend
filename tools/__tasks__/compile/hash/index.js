@@ -9,12 +9,13 @@ const pify = require('pify');
 
 const writeFile = pify(fs.writeFile);
 
+const clean = require('./clean.js');
 const { paths } = require('../../config');
 
 const task = {
 	description: 'Version assets',
 	task: [
-		require('./clean'),
+		clean,
 		{
 			description: 'Hash assets',
 			task: () => {

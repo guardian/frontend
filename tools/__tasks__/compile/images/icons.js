@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const { paths } = require('../../config');
 
 const fs = require('fs');

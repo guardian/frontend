@@ -1,12 +1,18 @@
+const clean = require('./conf/clean.js');
+const css = require('./css/index.dev.js');
+const data = require('./data/index.watch.js');
+const javascript = require('./javascript/index.watch.js');
+const conf = require('./conf/index.js');
+
 const task = {
 	description: 'Compile assets for development',
 	task: [
 		// prettier: multi-line
-		require('./conf/clean'),
-		require('./css/index.dev'),
-		require('./data/index.watch'),
-		require('./javascript/index.watch'),
-		require('./conf'),
+		clean,
+		css,
+		data,
+		javascript,
+		conf,
 	],
 };
 
