@@ -34,11 +34,11 @@ jobs:
 
       - run: make reinstall
 
-      - name: assets test
-        run: ./tools/task-runner/runner.mjs validate test
+      - run: make validate
 
-      - name: assets compile
-        run: ./tools/task-runner/runner.mjs compile
+      - run: make test
+
+      - run: make compile
         env:
           NODE_ENV: production
 
