@@ -1,20 +1,20 @@
 #!/usr/bin/env node
-/* eslint-disable import/no-dynamic-require, global-require */
 
 // force any plugins that use `chalk` to output in full colour
 process.env.FORCE_COLOR = true;
 
-const path = require('path');
-const os = require('os');
+import path from 'node:path';
+import os from 'node:os';
+import { fileURLToPath } from 'node:url';
 
-const yargs = require('yargs');
-const { hideBin } = require('yargs/helpers');
-const { Listr } = require('listr2');
-const execa = require('execa');
-const chalk = require('chalk');
-const figures = require('figures');
-const uniq = require('lodash.uniq');
-const { VerboseRenderer } = require('./run-task-verbose-formater.js');
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { Listr } from 'listr2';
+import execa from 'execa';
+import chalk from 'chalk';
+import figures from 'figures';
+import uniq from 'lodash.uniq';
+import { VerboseRenderer } from './run-task-verbose-formater.mjs';
 
 // name of the tasks directory
 const tasksDirectory = '__tasks__';
@@ -68,7 +68,11 @@ const {
 const VERBOSE = IS_VERBOSE || IS_DEBUG;
 
 // look here for tasks that come in from yargs
-const taskSrc = path.resolve(__dirname, '..', tasksDirectory);
+const taskSrc = path.resolve(
+	path.dirname(fileURLToPath(import.meta.url)),
+	'..',
+	tasksDirectory,
+);
 
 // we will store tasks that we run in here, to prevent running them more than once
 // e.g. if two tasks rely on the same thing
@@ -170,10 +174,10 @@ function listrify(steps, { concurrent = false } = {}) {
 }
 
 // resolve the tasks from yargs to actual files
-const getTasksFromModule = (taskName) => {
+const getTasksFromModule = async (taskName) => {
 	try {
 		const modulePath = path.resolve(taskSrc, taskName);
-		return require(modulePath);
+		return (await import(modulePath)).default;
 	} catch (e) {
 		// we can't find any modules, or something else has gone wrong in resolving it
 		// so output an erroring task
@@ -185,7 +189,7 @@ const getTasksFromModule = (taskName) => {
 };
 
 // get a list of the tasks we're going to run
-const taskModules = TASKS.map(getTasksFromModule);
+const taskModules = await Promise.all(TASKS.map(getTasksFromModule));
 
 // run them!
 listrify(taskModules)
