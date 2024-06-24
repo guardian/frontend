@@ -48,15 +48,12 @@ const {
 	})
 	.usage('Usage: $0 <task> [<task>] [--dev]')
 	.command('task', `Run a task defined in '${tasksDirectory}'.`)
-	.example('$0 copy', 'Run all the copy tasks.')
-	.example('$0 javascript/copy', 'Run the javascript copy task.')
+	.example('$0 copy/index.js', 'Run all the copy tasks.')
+	.example('$0 javascript/copy.js', 'Run the javascript copy task.')
+	.example('$0 compile/index.dev.js', 'Run the compile dev copy task.')
 	.example(
-		'$0 javascript/copy --dev',
-		'Run the javascript copy task, and prefer the development version, if it exists.',
-	)
-	.example(
-		'$0 javascript/copy css/copy --dev',
-		'Run the javascript and css copy tasks, and prefer the development versions, if they exist.',
+		'$0 compile/javascript/copy.js compile/css/copy.js',
+		'Run the javascript copy and css copy tasks.',
 	)
 	.demand(1)
 	.help()
