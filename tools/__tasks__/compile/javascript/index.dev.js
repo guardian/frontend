@@ -2,7 +2,6 @@ const inlineSVGs = require('../inline-svgs/index.js');
 const clean = require('./clean.js');
 const copy = require('./copy.js');
 const webpack = require('./webpack.dev');
-const webpackDCR = require('./webpack-dcr.dev');
 const bundlePolyfills = require('./bundle-polyfills');
 
 const task = {
@@ -13,7 +12,6 @@ const task = {
 		clean,
 		copy,
 		webpack,
-		webpackDCR,
 		bundlePolyfills,
 	],
 };
