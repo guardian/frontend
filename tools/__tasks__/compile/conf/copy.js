@@ -23,10 +23,10 @@ const task = {
 				},
 			),
 			cpy(['**/assets.map'], path.resolve(paths.conf), {
-				cwd: path.resolve(hash, 'assets'),
+				cwd: path.resolve(paths.hash, 'assets'),
 			}),
 			cpy(['polyfill.io'], path.resolve(paths.conf), {
-				cwd: path.resolve(src, 'javascripts'),
+				cwd: path.resolve(paths.src, 'javascripts'),
 			}),
 		]),
 };
