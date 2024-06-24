@@ -39,8 +39,6 @@ jobs:
       - run: make test
 
       - run: make compile
-        env:
-          NODE_ENV: production
 
       - name: Test, compile
         # Australia/Sydney  -because it is too easy for devs to forget about timezones
