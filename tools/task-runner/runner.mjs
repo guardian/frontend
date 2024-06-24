@@ -57,9 +57,9 @@ const {
 	)
 	.demand(1)
 	.help()
-	.alias('h', 'help') // eslint-disable-line newline-per-chained-call
+	.alias('h', 'help')
 	.version()
-	.alias('v', 'version').argv; // eslint-disable-line newline-per-chained-call
+	.alias('v', 'version').argv;
 
 // if this is true, we log as much as we can
 const VERBOSE = IS_VERBOSE || IS_DEBUG;
