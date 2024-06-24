@@ -1,11 +1,16 @@
+const clean = require('./clean.js');
+const mkdir = require('./mkdir.js');
+const images = require('../images/index.js');
+const sass = require('./sass.js');
+
 const task = {
 	description: 'Compile CSS',
 	task: [
 		// prettier: multi-line
-		require('./clean'),
-		require('./mkdir'),
-		require('../images'),
-		require('./sass'),
+		clean,
+		mkdir,
+		images,
+		sass,
 	],
 };
 

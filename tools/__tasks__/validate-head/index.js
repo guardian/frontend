@@ -1,9 +1,12 @@
+const javascript = require('./javascript.js');
+const sass = require('./sass.js');
+
 const task = {
 	description: 'Validate commits',
 	task: [
 		// prettier: multi-line
-		require('./javascript'),
-		require('./sass'),
+		javascript,
+		sass,
 	],
 	concurrent: true,
 };

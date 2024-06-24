@@ -1,9 +1,12 @@
+const data = require('../compile/data/index.js');
+const javascript = require('./javascript/index.js');
+
 const task = {
 	description: 'Test assets',
 	task: [
 		// prettier: multi-line
-		require('../compile/data'),
-		require('./javascript'),
+		data,
+		javascript,
 	],
 	concurrent: true,
 };

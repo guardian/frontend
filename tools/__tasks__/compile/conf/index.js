@@ -1,9 +1,12 @@
+const copy = require('./copy.js');
+const inlineSVGs = require('../inline-svgs/index.js');
+
 const task = {
 	description: 'Compile assets for template rendering in Play',
 	task: [
 		// prettier: multi-line
-		require('./copy'),
-		require('../inline-svgs'),
+		copy,
+		inlineSVGs,
 	],
 };
 

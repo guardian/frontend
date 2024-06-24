@@ -1,14 +1,20 @@
+const inlineSVGs = require('../inline-svgs/index.js');
+const clean = require('./clean.js');
+const copy = require('./copy.js');
+const webpack = require('./webpack.dev');
+const webpackDCR = require('./webpack-dcr.dev');
+const bundlePolyfills = require('./bundle-polyfills');
+
 const task = {
 	description: 'Prepare JS for development',
 	task: [
 		// prettier: multi-line
-		require('../inline-svgs'),
-		require('./clean'),
-		require('./copy'),
-		require('../../commercial/compile'),
-		require('./webpack.dev'),
-		require('./webpack-dcr.dev'),
-		require('./bundle-polyfills'),
+		inlineSVGs,
+		clean,
+		copy,
+		webpack,
+		webpackDCR,
+		bundlePolyfills,
 	],
 };
 

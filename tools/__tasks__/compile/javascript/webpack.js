@@ -6,15 +6,13 @@ const webpack = require('webpack');
 const chalk = require('chalk');
 
 const config = require('../../../../webpack.config.prod.js');
+const reporter = require('../../../webpack-progress-reporter.js');
 
 const task = {
 	description: 'Create Webpack bundles',
 	task: () =>
 		new Observable((observer) => {
-			config.plugins = [
-				require('../../../webpack-progress-reporter')(observer),
-				...config.plugins,
-			];
+			config.plugins = [reporter(observer), ...config.plugins];
 
 			const bundler = webpack(config);
 
