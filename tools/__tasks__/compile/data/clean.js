@@ -1,12 +1,14 @@
 const path = require('path');
 const rimraf = require('rimraf');
 
-const { target, hash } = require('../../config').paths;
+const paths = require('../../config');
 
-module.exports = {
-    description: 'Clear Data build artefacts',
-    task: () => {
-        rimraf.sync(path.resolve(target, 'data'));
-        rimraf.sync(path.resolve(hash, 'data'));
-    },
+const task = {
+	description: 'Clear Data build artefacts',
+	task: () => {
+		rimraf.sync(path.resolve(paths.target, 'data'));
+		rimraf.sync(path.resolve(paths.hash, 'data'));
+	},
 };
+
+module.exports = task;

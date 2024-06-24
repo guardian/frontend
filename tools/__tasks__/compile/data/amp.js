@@ -1,20 +1,22 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const { vendor, target } = require('../../config').paths;
+const paths = require('../../config');
 
 // Source
-const ampIframeHtml = path.join(vendor, 'data/amp-iframe.html');
+const ampIframeHtml = path.join(paths.vendor, 'data/amp-iframe.html');
 
 // Destinations
 // The static assets
-const staticDir = path.resolve(target, 'data', 'vendor');
+const staticDir = path.resolve(paths.target, 'data', 'vendor');
 
-module.exports = {
-    description: 'Copy AMP iframe HTML',
-    task: () =>
-        cpy(ampIframeHtml, staticDir, {
-            parents: false,
-            nodir: false,
-        }),
+const task = {
+	description: 'Copy AMP iframe HTML',
+	task: () =>
+		cpy(ampIframeHtml, staticDir, {
+			parents: false,
+			nodir: false,
+		}),
 };
+
+module.exports = task;

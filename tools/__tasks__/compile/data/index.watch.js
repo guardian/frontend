@@ -1,4 +1,11 @@
-module.exports = {
-    description: 'Clean, download and build data assets (watch)',
-    task: [require('./clean'), require('./download'), require('./amp')],
+const task = {
+	description: 'Clean, download and build data assets (watch)',
+	task: [
+		// prettier: multi-line
+		require('./clean'),
+		require('./download'),
+		require('./amp'),
+	],
 };
+
+module.exports = task;

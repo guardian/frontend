@@ -1,7 +1,9 @@
 const mkdirp = require('mkdirp');
-const { target } = require('../../config').paths;
+const paths = require('../../config');
 
-module.exports = {
-    description: 'Create CSS target directory',
-    task: () => mkdirp.sync(`${target}/stylesheets`),
+const task = {
+	description: 'Create CSS target directory',
+	task: () => mkdirp.sync(`${paths.target}/stylesheets`),
 };
+
+module.exports = task;

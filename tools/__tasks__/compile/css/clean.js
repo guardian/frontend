@@ -1,12 +1,14 @@
 const path = require('path');
 const rimraf = require('rimraf');
 
-const { target, hash } = require('../../config').paths;
+const paths = require('../../config');
 
-module.exports = {
-    description: 'Clear CSS build artefacts',
-    task: () => {
-        rimraf.sync(path.resolve(target, 'stylesheets'));
-        rimraf.sync(path.resolve(hash, 'stylesheets'));
-    },
+const task = {
+	description: 'Clear CSS build artefacts',
+	task: () => {
+		rimraf.sync(path.resolve(paths.target, 'stylesheets'));
+		rimraf.sync(path.resolve(paths.hash, 'stylesheets'));
+	},
 };
+
+module.exports = task;

@@ -1,4 +1,6 @@
-module.exports = {
-    description: 'Lint Sass',
-    task: 'stylelint **/*.scss',
+const task = {
+	description: 'Lint Sass',
+	task: 'stylelint **/*.scss',
 };
+
+module.exports = task;

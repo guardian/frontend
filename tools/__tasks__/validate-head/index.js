@@ -1,5 +1,11 @@
-module.exports = {
-    description: 'Validate commits',
-    task: [require('./javascript'), require('./sass')],
-    concurrent: true,
+const task = {
+	description: 'Validate commits',
+	task: [
+		// prettier: multi-line
+		require('./javascript'),
+		require('./sass'),
+	],
+	concurrent: true,
 };
+
+module.exports = task;
