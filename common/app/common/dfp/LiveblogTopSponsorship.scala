@@ -9,7 +9,6 @@ object LiveBlogTopSponsorship {
   implicit val LiveBlogTopSponsorshipWrites: Writes[LiveBlogTopSponsorship] =
     (targeting: LiveBlogTopSponsorship) => {
       Json.obj(
-        "contentTypes" -> targeting.contentTypes,
         "section" -> targeting.sections,
       )
     }
@@ -17,77 +16,68 @@ object LiveBlogTopSponsorship {
 }
 
 case class LiveBlogTopSponsorship(
-    contentTypes: Set[String] = Set.empty,
     sections: Set[String] = Set.empty,
 ) {
 
   def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
 
-  def hasTargetedContentType(contentType: String): Boolean = contentType.isEmpty || this.contentTypes.contains(contentType)
+  def hasLiveBlogTopSponsorship(targetedSection: String): Boolean =
+    hasTargetedSection(targetedSection)
 
-  def hasLiveBlogTopSponsorship(targetedSection: String, targetedContentType: String): Boolean =
-    hasTargetedSection(targetedSection) && hasTargetedContentType(targetedContentType)
-
-  def nonEmpty: Boolean = contentTypes.nonEmpty || sections.nonEmpty
+  def nonEmpty: Boolean = sections.nonEmpty
 }
 
-object LiveblogTopLineItem {
-  implicit val jsonReads: Reads[LiveblogTopLineItem] = Json.reads[LiveblogTopLineItem]
+object LiveBlogTopLineItem {
+  implicit val jsonReads: Reads[LiveBlogTopLineItem] = Json.reads[LiveBlogTopLineItem]
 
-  implicit val liveblogTopLineItemWrites: Writes[LiveblogTopLineItem] =
-    (lineItem: LiveblogTopLineItem) => {
+  implicit val liveblogTopLineItemWrites: Writes[LiveBlogTopLineItem] =
+    (lineItem: LiveBlogTopLineItem) => {
       Json.obj(
         "name" -> lineItem.name,
         "id" -> lineItem.id,
-        "targetedSections" -> lineItem.targetedSections,
-        "targetedContentTypes" -> lineItem.targetedContentTypes,
       )
     }
 }
 
-case class LiveblogTopLineItem(
+case class LiveBlogTopLineItem(
     name: String,
     id: Long,
-    targetedSections: Set[String] = Set.empty,
-    targetedContentTypes: Set[String] = Set.empty,
 ) {}
 
-object LiveblogTopLineItems {
-  implicit val lineItemFormat: OFormat[LiveblogTopLineItem] = Json.format[LiveblogTopLineItem]
-  implicit val lineItemsFormat: OFormat[LiveblogTopLineItems] = Json.format[LiveblogTopLineItems]
+object LiveBlogTopLineItems {
+  implicit val lineItemFormat: OFormat[LiveBlogTopLineItem] = Json.format[LiveBlogTopLineItem]
+  implicit val lineItemsFormat: OFormat[LiveBlogTopLineItems] = Json.format[LiveBlogTopLineItems]
 }
 
-case class LiveblogTopLineItems(items: Seq[LiveblogTopLineItem] = Seq.empty) {
+case class LiveBlogTopLineItems(items: Seq[LiveBlogTopLineItem] = Seq.empty) {
   val sortedItems = items.sortBy(_.name)
 }
 
-object LiveblogTopTargetingReport {
-  implicit val jsonReads: Reads[LiveblogTopTargetingReport] =
-    Json.reads[LiveblogTopTargetingReport]
+object LiveBlogTopTargetingReport {
+  implicit val jsonReads: Reads[LiveBlogTopTargetingReport] =
+    Json.reads[LiveBlogTopTargetingReport]
 
-  implicit val liveblogTopTargetingReportWrites: Writes[LiveblogTopTargetingReport] =
-    (report: LiveblogTopTargetingReport) => {
+  implicit val liveBlogTopTargetingReportWrites: Writes[LiveBlogTopTargetingReport] =
+    (report: LiveBlogTopTargetingReport) => {
       Json.obj(
         "updatedTimeStamp" -> report.updatedTimeStamp,
         "targetedSections" -> report.targetedSections,
-        "targetedContentTypes" -> report.targetedContentTypes,
         "lineItems" -> report.lineItems,
       )
     }
 }
 
-case class LiveblogTopTargetingReport(
-    updatedTimeStamp: String,
+case class LiveBlogTopTargetingReport(
+    updatedTimeStamp: Option[String],
     targetedSections: Set[String],
-    targetedContentTypes: Set[String],
-    lineItems: LiveblogTopLineItems,
+    lineItems: LiveBlogTopLineItems,
 )
 
-object LiveblogTopTargetingReportParser extends GuLogging {
-  def apply(jsonString: String): Option[LiveblogTopTargetingReport] = {
+object LiveBlogTopTargetingReportParser extends GuLogging {
+  def apply(jsonString: String): Option[LiveBlogTopTargetingReport] = {
     val json = Json.parse(jsonString)
-    json.validate[LiveblogTopTargetingReport] match {
-      case s: JsSuccess[LiveblogTopTargetingReport] => Some(s.get)
+    json.validate[LiveBlogTopTargetingReport] match {
+      case s: JsSuccess[LiveBlogTopTargetingReport] => Some(s.get)
       case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }

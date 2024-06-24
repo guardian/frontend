@@ -30,6 +30,7 @@ class DfpDataCacheJob(
       write(data)
       Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
       writeInlineMerchandisingTargetedTags(currentLineItems)
+      writeLiveBlogTopTargeting(currentLineItems)
     }
 
   /*
@@ -175,16 +176,15 @@ class DfpDataCacheJob(
     }
   }
 
-  private def writeLiveblogTopTargeting(data: DfpDataExtractor): Unit = {
+  private def writeLiveBlogTopTargeting(data: DfpDataExtractor): Unit = {
 
     if (data.hasValidLineItems) {
       val now = printLondonTime(DateTime.now())
 
-      val lineItems = data.liveblogTopLineItems
-      val targetedSections = data.liveblogTopTargetedSections
-      val targetedContentTypes = data.liveblogTopTargetedContentTypes
-      Store.putLiveblogTopSponsorships(
-        stringify(toJson(LiveblogTopTargetingReport(now, targetedSections, targetedContentTypes, lineItems))),
+      val lineItems = data.liveBlogTopTargetedLineItems
+      val targetedSections = data.liveBlogTopTargetedSections
+      Store.putLiveBlogTopSponsorships(
+        stringify(toJson(LiveBlogTopTargetingReport(Some(now), targetedSections, lineItems))),
       )
     }
   }

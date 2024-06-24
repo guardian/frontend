@@ -12,7 +12,7 @@ import scala.io.Codec.UTF8
 object DfpAgent
     extends PageskinAdAgent
     with InlineMerchandiseComponentAgent
-    with LiveBlogTopSponsorship
+    with LiveBlogTopAdComponentAgent
     with HighMerchandiseComponentAgent
     with AdSlotAgent {
 
@@ -31,7 +31,7 @@ object DfpAgent
     targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
 
-  protected def liveBlogTopSponsorships: LiveBlogTopSponsorship = liveblogTopAgent.get()
+  protected def liveBlogTopTargetedSections: LiveBlogTopSponsorship = liveblogTopAgent.get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
     takeoverWithEmptyMPUsAgent.get()
@@ -57,11 +57,11 @@ object DfpAgent
       reportOption.fold(Seq[PageSkinSponsorship]())(_.sponsorships)
     }
 
-    def grabLiveblogTopSponsorshipsFromStore(): LiveBlogTopSponsorship = {
+    def grabLiveBlogTopSponsorshipsFromStore(): LiveBlogTopSponsorship = {
       val maybeTargeting = for {
         jsonString <- stringFromS3(dfpLiveBlogTopSponsorshipDataKey)
-        report <- LiveblogTopTargetingReportParser(jsonString)
-      } yield LiveBlogTopSponsorship(report.targetedContentTypes, report.targetedSections)
+        report <- LiveBlogTopTargetingReportParser(jsonString)
+      } yield LiveBlogTopSponsorship(report.targetedSections)
       maybeTargeting getOrElse LiveBlogTopSponsorship()
     }
 
@@ -110,7 +110,7 @@ object DfpAgent
 
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
 
-    updateLiveBlogTopSponsorshipTargeting(grabLiveblogTopSponsorshipsFromStore())
+    updateLiveBlogTopSponsorshipTargeting(grabLiveBlogTopSponsorshipsFromStore())
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 

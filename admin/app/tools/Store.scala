@@ -27,8 +27,8 @@ trait Store extends GuLogging with Dates {
   def putInlineMerchandisingSponsorships(keywordsJson: String): Unit = {
     S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
-  def putLiveblogTopSponsorships(sponsorshipsJson: String): Unit = {
-    S3.putPublic(dfpLiveblogTagsDataKey, sponsorshipsJson, defaultJsonEncoding)
+  def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
+    S3.putPublic(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
   }
   def putHighMerchandisingSponsorships(keywordsJson: String): Unit = {
     S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
@@ -67,12 +67,11 @@ trait Store extends GuLogging with Dates {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
   } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet(), InlineMerchandisingLineItems())
 
-  def getDfpLiveblogTagsReport(): LiveBlogTopTargetingReport = {
-    S3.get(dfpLiveblogTagsDataKey) flatMap (LiveblogTopTargetingReportParser(_)) getOrElse LiveBlogTopTargetingReport(
-      now,
+  def getDfpLiveBlogTagsReport(): LiveBlogTopTargetingReport = {
+    S3.get(dfpLiveBlogTopSponsorshipDataKey) flatMap (LiveBlogTopTargetingReportParser(_)) getOrElse LiveBlogTopTargetingReport(
+      None,
       Set.empty,
-      Set.empty,
-      LiveblogTopLineItems(),
+      LiveBlogTopLineItems(),
     )
   }
   def getDfpHighMerchandisingTargetedTagsReport(): HighMerchandisingTargetedTagsReport = {

@@ -78,6 +78,12 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(report)))
     }
 
+  def renderLiveBlogTopTargetedLineItems: Action[AnyContent] =
+    Action { implicit request =>
+      val report = Store.getDfpLiveBlogTagsReport()
+      NoCache(Ok(views.html.commercial.liveBlogTopTargetedLineItems(report)))
+    }
+
   def renderCreativeTemplates: Action[AnyContent] =
     Action { implicit request =>
       val emptyTemplates = createTemplateAgent.get

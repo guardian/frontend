@@ -25,6 +25,7 @@ import scala.util.Try
 import implicits.Booleans._
 import org.joda.time.DateTime
 import conf.switches.Switches.InteractiveHeaderSwitch
+import _root_.contentapi.SectionTagLookUp.sectionId
 
 sealed trait ContentType {
   def content: Content
@@ -532,7 +533,7 @@ object Article {
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
-      ("hasLiveBlogAd", JsBoolean(commercial.hasLiveBlogAd)),
+      ("hasLiveBlogAd", JsBoolean(commercial.hasLiveBlogTopAd)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),

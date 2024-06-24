@@ -80,12 +80,15 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   val isHighMerchandisingSlot = isSlot("merchandising-high")
 
+  val isLiveblogTopSlot = isSlot("liveblog-top")
+
   val isAdTest = isPositive("at")
 
   val isKeywordTag = isPositive("k")
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
   val isEditionTag = isPositive("edition")
+  val isSectionTag = isPositive("s")
 }
 
 object CustomTarget {
@@ -108,6 +111,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
   val highMerchandisingTargets =
     filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
+
+  val liveblogTopTargetedSections = filterTags(tag => tag.isSectionTag)(_.isLiveblogTopSlot)
 }
 
 object CustomTargetSet {
@@ -252,6 +257,8 @@ case class GuLineItem(
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
+  val liveBlogTopTargetedSections: Seq[String] = targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct
+
   val targetsHighMerchandising: Boolean = {
     val targetSlotIsHighMerch = for {
       targetSet <- targeting.customTargetSets
@@ -271,12 +278,31 @@ case class GuLineItem(
   }
 
   val targetsLiveBlogTop: Boolean = {
-    val targetSlotIsLiveBlogTop = for {
+    val matchingLiveblogTargeting = for {
       targetSet <- targeting.customTargetSets
       target <- targetSet.targets
-      if target.name == "slot" && target.values.contains("liveblog-top")
+      if target.name == "slot" || target.name == "ct" || target.name == "s" || target.name == "bp"
     } yield target
-    targetSlotIsLiveBlogTop.nonEmpty
+
+    val isLiveblogTopSlot = matchingLiveblogTargeting.exists { target =>
+      target.name == "slot" && target.values.contains("liveblog-top")
+    }
+
+    val isLiveblogContentType = matchingLiveblogTargeting.exists { target =>
+      target.name == "ct" && target.values.contains("liveblog")
+    }
+
+    val isLCultureORSportSection = matchingLiveblogTargeting.exists { target =>
+      target.name == "s" && (target.values.contains("culture") || target.values.contains("sport"))
+    }
+
+    val isMobileBreakpoint = matchingLiveblogTargeting.exists { target =>
+      target.name == "bp" && target.values.contains("mobile")
+    }
+
+    val isSponsorship = lineItemType == Sponsorship
+
+    isLiveblogTopSlot && isLiveblogContentType && isLCultureORSportSection && isMobileBreakpoint && isSponsorship
   }
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
