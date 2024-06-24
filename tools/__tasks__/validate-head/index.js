@@ -1,5 +1,5 @@
-const javascript = require('./javascript');
-const sass = require('./sass');
+const javascript = require('./javascript.js');
+const sass = require('./sass.js');
 
 const task = {
 	description: 'Validate commits',
