@@ -73,7 +73,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch {
     @include fs-textSans(4);
-    @include identity-switch($brightness-7)
+    @include identity-switch($brightness-7);
     line-height: 1.333;
     overflow: visible;
     position: relative;
