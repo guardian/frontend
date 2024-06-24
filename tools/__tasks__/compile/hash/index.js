@@ -9,7 +9,7 @@ const pify = require('pify');
 
 const writeFile = pify(fs.writeFile);
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const task = {
 	description: 'Version assets',

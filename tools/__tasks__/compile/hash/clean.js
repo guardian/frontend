@@ -1,7 +1,7 @@
 const path = require('path');
 const rimraf = require('rimraf');
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const task = {
 	description: 'Clear asset hash artefacts',

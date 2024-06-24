@@ -5,7 +5,7 @@ const chalk = require('chalk');
 
 const warning = chalk.keyword('orange');
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 // Sources
 const vendorListOfficialUrl = 'https://vendorlist.consensu.org/vendorlist.json';

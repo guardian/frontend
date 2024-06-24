@@ -1,7 +1,7 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 // Source
 const ampIframeHtml = path.join(paths.vendor, 'data/amp-iframe.html');

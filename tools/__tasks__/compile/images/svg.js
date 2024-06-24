@@ -7,7 +7,7 @@ const pify = require('pify');
 const readFile = pify(fs.readFile);
 const stat = pify(fs.stat);
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const srcDir = path.resolve(paths.src);
 

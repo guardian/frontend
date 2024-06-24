@@ -1,5 +1,5 @@
 const mkdirp = require('mkdirp');
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const task = {
 	description: 'Create CSS target directory',

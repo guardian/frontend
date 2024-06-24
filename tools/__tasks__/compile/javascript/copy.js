@@ -1,7 +1,7 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const task = {
 	description: 'Copy 3rd JS party libraries',

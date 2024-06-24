@@ -10,7 +10,7 @@ const readFileP = pify(fs.readFile);
 const writeFileP = pify(fs.writeFile);
 const requestP = pify(request, { multiArgs: true });
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const dest = path.resolve(paths.target, 'javascripts', 'vendor');
 const polyfillURL = fs

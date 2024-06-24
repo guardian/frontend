@@ -9,7 +9,7 @@ const pify = require('pify');
 const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const srcDir = path.resolve(paths.src, 'inline-svgs');
 

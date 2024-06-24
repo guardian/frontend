@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const paths = require('../../config');
+const { paths } = require('../../config');
 
 const fs = require('fs');
 const path = require('path');
