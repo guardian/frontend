@@ -44,7 +44,7 @@ compile: install
 
 # Compile all assets in development.
 compile-dev: install
-	@NODE_ENV=development ./tools/task-runner/runner compile --dev
+	@NODE_ENV=development ./tools/task-runner/runner compile/index.dev
 
 # Compile atom-specific JS
 compile-atoms: install
@@ -58,7 +58,7 @@ compile-javascript: install # PRIVATE
 	@./tools/task-runner/runner compile/javascript
 
 compile-javascript-dev: install # PRIVATE
-	@./tools/task-runner/runner compile/javascript --dev
+	@./tools/task-runner/runner compile/javascript/index.dev
 
 compile-css: install # PRIVATE
 	@./tools/task-runner/runner compile/css

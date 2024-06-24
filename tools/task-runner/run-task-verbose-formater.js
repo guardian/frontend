@@ -61,4 +61,4 @@ class VerboseRenderer {
 	}
 }
 
-module.exports = VerboseRenderer;
+module.exports = { VerboseRenderer };
