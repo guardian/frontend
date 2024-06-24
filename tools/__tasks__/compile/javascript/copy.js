@@ -1,25 +1,27 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const { vendor, target } = require('../../config').paths;
+const { paths } = require('../../config');
 
-module.exports = {
-    description: 'Copy 3rd JS party libraries',
-    task: () =>
-        Promise.all([
-            cpy(
-                [
-                    'formstack-interactive/**/*',
-                    'prebid_safeframe.js',
-                    'polyfillio.minimum.fallback.js',
-                    'omsdk-v1.js',
-                ],
-                path.resolve(target, 'javascripts', 'vendor'),
-                {
-                    cwd: path.resolve(vendor, 'javascripts'),
-                    parents: true,
-                    nodir: true,
-                }
-            ),
-        ]),
+const task = {
+	description: 'Copy 3rd JS party libraries',
+	task: () =>
+		Promise.all([
+			cpy(
+				[
+					'formstack-interactive/**/*',
+					'prebid_safeframe.js',
+					'polyfillio.minimum.fallback.js',
+					'omsdk-v1.js',
+				],
+				path.resolve(paths.target, 'javascripts', 'vendor'),
+				{
+					cwd: path.resolve(paths.vendor, 'javascripts'),
+					parents: true,
+					nodir: true,
+				},
+			),
+		]),
 };
+
+module.exports = task;

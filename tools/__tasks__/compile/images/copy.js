@@ -1,14 +1,16 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const { public: publicDir, target } = require('../../config').paths;
+const { paths } = require('../../config');
 
-module.exports = {
-    description: 'Copy images',
-    task: () =>
-        cpy(['**/*'], path.resolve(target, 'images'), {
-            cwd: path.resolve(publicDir, 'images'),
-            parents: true,
-            nodir: true,
-        }),
+const task = {
+	description: 'Copy images',
+	task: () =>
+		cpy(['**/*'], path.resolve(paths.target, 'images'), {
+			cwd: path.resolve(paths.public, 'images'),
+			parents: true,
+			nodir: true,
+		}),
 };
+
+module.exports = task;

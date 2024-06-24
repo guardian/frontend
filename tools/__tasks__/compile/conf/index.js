@@ -1,4 +1,10 @@
-module.exports = {
-    description: 'Compile assets for template rendering in Play',
-    task: [require('./copy'), require('../inline-svgs')],
+const task = {
+	description: 'Compile assets for template rendering in Play',
+	task: [
+		// prettier: multi-line
+		require('./copy'),
+		require('../inline-svgs'),
+	],
 };
+
+module.exports = task;

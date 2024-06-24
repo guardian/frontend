@@ -1,9 +1,12 @@
 const path = require('path');
 const rimraf = require('rimraf');
 
-const { root } = require('../../config').paths;
+const { paths } = require('../../config');
 
-module.exports = {
-    description: 'Clear template rendering artefacts',
-    task: () => rimraf.sync(path.resolve(root, 'common', 'conf', 'assets')),
+const task = {
+	description: 'Clear template rendering artefacts',
+	task: () =>
+		rimraf.sync(path.resolve(paths.root, 'common', 'conf', 'assets')),
 };
+
+module.exports = task;

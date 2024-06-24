@@ -8324,8 +8324,8 @@ __metadata:
 
 "eslint-plugin-guardian-frontend@file:tools/eslint-plugin-guardian-frontend::locator=%40guardian%2Ffrontend%40workspace%3A.":
   version: 5.0.0
-  resolution: "eslint-plugin-guardian-frontend@file:tools/eslint-plugin-guardian-frontend#tools/eslint-plugin-guardian-frontend::hash=6c4c1e&locator=%40guardian%2Ffrontend%40workspace%3A."
-  checksum: 10c0/ac97662d8e3d9312e34ff13f2c9708a030afc8028098d0ef7b875a09f8c16107720ff9032810caadbc539cb94babeac304fca7c264e864fb21ed03fdb8609797
+  resolution: "eslint-plugin-guardian-frontend@file:tools/eslint-plugin-guardian-frontend#tools/eslint-plugin-guardian-frontend::hash=53ad28&locator=%40guardian%2Ffrontend%40workspace%3A."
+  checksum: 10c0/436fbc5541e58f42e943544bdd98163d113a3421082ac875e6d3dbb6a5f3a278e80f857042f67a308aaf29c09fbf00bd6f57c430628c4151dad79f01d9e79629
   languageName: node
   linkType: hard
 
