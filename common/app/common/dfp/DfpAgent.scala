@@ -113,7 +113,6 @@ object DfpAgent
 
     update(liveblogTopAgent)(grabLiveBlogTopSponsorshipsFromStore())
 
-
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 
     updateTargetedHighMerchandisingLineItems(grabTargetedHighMerchandisingLineItemFromStore())

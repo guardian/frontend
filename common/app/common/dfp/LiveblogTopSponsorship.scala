@@ -48,7 +48,7 @@ case class LiveBlogTopSponsorship(
     adTest: Option[String],
     targetsAdTest: Boolean,
 ) {
-    def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
+  def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
 
   def hasTargetedAdTest(adTest: String): Boolean = this.adTest == Some(adTest)
 
@@ -72,7 +72,7 @@ case class LiveBlogTopSponsorshipReport(
     updatedTimeStamp: Option[String],
     sponsorships: Seq[LiveBlogTopSponsorship],
 ) {
-    val (testSponsorships, deliverableSponsorships) = sponsorships partition (_.targetsAdTest)
+  val (testSponsorships, deliverableSponsorships) = sponsorships partition (_.targetsAdTest)
 }
 
 object LiveBlogTopSponsorshipReport {
@@ -85,7 +85,7 @@ object LiveBlogTopSponsorshipReportParser extends GuLogging {
     val json = Json.parse(jsonString)
     json.validate[LiveBlogTopSponsorshipReport] match {
       case s: JsSuccess[LiveBlogTopSponsorshipReport] => Some(s.get)
-      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
+      case e: JsError                                 => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }
 }

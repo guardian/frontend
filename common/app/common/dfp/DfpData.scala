@@ -259,7 +259,8 @@ case class GuLineItem(
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
-  val liveBlogTopTargetedSections: Set[String] = targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct.toSet
+  val liveBlogTopTargetedSections: Set[String] =
+    targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct.toSet
 
   val targetsHighMerchandising: Boolean = {
     val targetSlotIsHighMerch = for {

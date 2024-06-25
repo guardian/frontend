@@ -10,10 +10,10 @@ trait LiveBlogTopAdComponentAgent {
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship]
 
   def hasLiveBlogTopAd(isLiveBlog: Boolean, sectionId: String, request: RequestHeader): Boolean = {
-    if(isLiveBlog) {
+    if (isLiveBlog) {
       val adTest = request.getQueryString("adtest")
       liveBlogTopSponsorships.exists { sponsorship =>
-        if(sponsorship.targetsAdTest) {
+        if (sponsorship.targetsAdTest) {
           sponsorship.hasTargetedSection(sectionId) && sponsorship.adTest == adTest
         } else {
           sponsorship.hasTargetedSection(sectionId)
