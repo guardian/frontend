@@ -30,7 +30,6 @@ object DfpAgent
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
     targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
-
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopAgent.get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
@@ -88,12 +87,6 @@ object DfpAgent
         lineItems <- report.lineItems.items
       } yield lineItems
     }
-
-    // def updateLiveBlogTopSponsorshipTargeting(freshData: LiveBlogTopSponsorship): Unit = {
-    //   liveblogTopAgent send { oldData =>
-    //     if (freshData.nonEmpty) freshData else oldData
-    //   }
-    // }
 
     def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet): Unit = {
       inlineMerchandisingTagsAgent send { oldData =>
