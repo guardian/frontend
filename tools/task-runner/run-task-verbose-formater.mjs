@@ -1,5 +1,5 @@
-const figures = require('figures');
-const chalk = require('chalk');
+import figures from 'figures';
+import chalk from 'chalk';
 
 const log = (title, parents, message = '') => {
 	console.log(
@@ -39,7 +39,7 @@ const render = (tasks, parents = []) => {
 	}
 };
 
-class VerboseRenderer {
+export class VerboseRenderer {
 	constructor(tasks) {
 		// eslint-disable-next-line no-underscore-dangle
 		this._tasks = tasks;
@@ -60,5 +60,3 @@ class VerboseRenderer {
 		// do nothing
 	}
 }
-
-module.exports = { VerboseRenderer };
