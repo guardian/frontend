@@ -1,4 +1,4 @@
-const execa = require('execa');
+import execa from 'execa';
 
 /** @type {import('listr2').ListrTask} */
 const task = {
