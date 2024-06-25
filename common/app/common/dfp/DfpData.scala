@@ -89,6 +89,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isContributorTag = isPositive("co")
   val isEditionTag = isPositive("edition")
   val isSectionTag = isPositive("s")
+
+  val isLiveBlogTopTargetedSection = isSectionTag && (values.contains("culture") || values.contains("sport"))
 }
 
 object CustomTarget {
@@ -112,7 +114,7 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val highMerchandisingTargets =
     filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 
-  val liveblogTopTargetedSections = filterTags(tag => tag.isSectionTag)(_.isLiveblogTopSlot)
+  val liveblogTopTargetedSections = filterTags(_.isLiveBlogTopTargetedSection)(_.isLiveblogTopSlot)
 }
 
 object CustomTargetSet {
@@ -257,7 +259,7 @@ case class GuLineItem(
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
-  val liveBlogTopTargetedSections: Seq[String] = targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct
+  val liveBlogTopTargetedSections: Set[String] = targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct.toSet
 
   val targetsHighMerchandising: Boolean = {
     val targetSlotIsHighMerch = for {

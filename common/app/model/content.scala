@@ -533,7 +533,6 @@ object Article {
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
-      ("hasLiveBlogAd", JsBoolean(commercial.hasLiveBlogTopAd)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),

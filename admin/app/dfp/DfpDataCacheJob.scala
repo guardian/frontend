@@ -181,10 +181,9 @@ class DfpDataCacheJob(
     if (data.hasValidLineItems) {
       val now = printLondonTime(DateTime.now())
 
-      val lineItems = data.liveBlogTopTargetedLineItems
-      val targetedSections = data.liveBlogTopTargetedSections
+      val sponsorships = data.liveBlogTopSponsorships
       Store.putLiveBlogTopSponsorships(
-        stringify(toJson(LiveBlogTopTargetingReport(Some(now), targetedSections, lineItems))),
+        stringify(toJson(LiveBlogTopSponsorshipReport(Some(now), sponsorships))),
       )
     }
   }

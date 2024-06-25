@@ -1,0 +1,49 @@
+@import common.dfp.LiveBlogTopSponsorshipReport
+@import tools.{CapiLink, SiteLink, DfpLink}
+
+@(report: LiveBlogTopSponsorshipReport)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main("Commercial 'liveblog-top' Slot", isAuthed = true, hasCharts = false) {
+
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at(" css/commercial.css")">
+    <style>
+        pre {
+            display: inline;
+            padding: 0.1rem;
+            font-size: 0.8rem;
+            margin: 0;
+            border-radius: 4px;
+        }
+    </style>
+
+    <h1>LiveBlog Top Slot</h1>
+
+    <p>Last updated: @if(report.updatedTimeStamp) { @{report.updatedTimeStamp} } else { never }</p>
+
+    <p>Pages will show a liveblog top slot if you set up a LineItem in DFP with the following parameters:</p>
+    <ol>
+        <li>Is a Sponsorship</li>
+        <li>Targets the <pre>liveblog-top</pre> slot</li>
+        <li>Targets the <pre>sport</pre> or <pre>culture</pre> section</li>
+        <li>Targets the <pre>liveblog</pre> content type</li>
+        <li>Targets the <pre>mobile</pre> breakpoint</li>
+    </ol>
+
+    <h2>Sponsorships</h2>
+    <p>Line items that match the above targeting:</p>
+    @if(report.sponsorships.isEmpty) {<p>None</p>} else {
+        @for(sponsorship <- report.sponsorships) {
+
+        <li class="lineItem">@sponsorship.lineItemName
+    (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+    <br />
+    <small>Sections:</small>
+
+      @for(section <- sponsorship.sections) {
+          <pre>@section</pre>,
+      }
+
+  </li>
+        }
+    }
+}

@@ -38,7 +38,6 @@ object Commercial {
     model.Commercial(
       isInappropriateForSponsorship,
       hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags),
-      hasLiveBlogTopAd = DfpAgent.hasLiveBlogTopAd(apiContent.isLiveBlog, apiContent.sectionName getOrElse ""),
     )
   }
 
@@ -46,12 +45,11 @@ object Commercial {
     model.Commercial(
       isInappropriateForSponsorship = false,
       hasInlineMerchandise = false,
-      hasLiveBlogTopAd = false
     )
   }
 }
 
-final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean, hasLiveBlogTopAd: Boolean)
+final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean)
 
 /**
   * MetaData represents a page on the site, whether facia or content
@@ -357,6 +355,9 @@ case class MetaData(
 
   def hasPageSkin(request: RequestHeader): Boolean =
     DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
+
+  def hasLiveBlogTopAd(request: RequestHeader): Boolean = DfpAgent.hasLiveBlogTopAd(contentType == Some(DotcomContentType.LiveBlog), sectionId, request)
+
 
   def omitMPUsFromContainers(edition: Edition): Boolean =
     if (isPressedPage) {

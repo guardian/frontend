@@ -67,11 +67,10 @@ trait Store extends GuLogging with Dates {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
   } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet(), InlineMerchandisingLineItems())
 
-  def getDfpLiveBlogTagsReport(): LiveBlogTopTargetingReport = {
-    S3.get(dfpLiveBlogTopSponsorshipDataKey) flatMap (LiveBlogTopTargetingReportParser(_)) getOrElse LiveBlogTopTargetingReport(
+  def getDfpLiveBlogTagsReport(): LiveBlogTopSponsorshipReport = {
+    S3.get(dfpLiveBlogTopSponsorshipDataKey) flatMap (LiveBlogTopSponsorshipReportParser(_)) getOrElse LiveBlogTopSponsorshipReport(
       None,
-      Set.empty,
-      LiveBlogTopLineItems(),
+      Nil
     )
   }
   def getDfpHighMerchandisingTargetedTagsReport(): HighMerchandisingTargetedTagsReport = {
