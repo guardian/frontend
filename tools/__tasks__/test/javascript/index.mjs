@@ -1,11 +1,11 @@
 import execa from 'execa';
 import split from 'split';
 
-require('any-observable/register/rxjs-all');
+import 'any-observable/register/rxjs-all.js';
 import streamToObservable from 'stream-to-observable';
 import rxjs from 'rxjs';
 // rxjs6 operators are now packaged separately
-import rxjsOperators from 'rxjs/operators';
+import rxjsOperators from 'rxjs/operators/index.js';
 
 const exec = (cmd, args, opts) => {
 	const cp = execa(cmd, args, opts);
