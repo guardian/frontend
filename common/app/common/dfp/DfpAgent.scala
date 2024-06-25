@@ -12,7 +12,7 @@ import scala.io.Codec.UTF8
 object DfpAgent
     extends PageskinAdAgent
     with InlineMerchandiseComponentAgent
-    with LiveBlogTopAdComponentAgent
+    with LiveBlogTopSponsorshipAgent
     with HighMerchandiseComponentAgent
     with AdSlotAgent {
 

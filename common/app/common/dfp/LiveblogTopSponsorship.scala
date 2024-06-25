@@ -3,44 +3,6 @@ package common.dfp
 import common.{Edition, GuLogging}
 import play.api.libs.json._
 
-// object LiveBlogTopSponsorship {
-//   implicit val jsonReads: Reads[LiveBlogTopSponsorship] = Json.reads[LiveBlogTopSponsorship]
-
-//   implicit val LiveBlogTopSponsorshipWrites: Writes[LiveBlogTopSponsorship] =
-//     (targeting: LiveBlogTopSponsorship) => {
-//       Json.obj(
-//         "section" -> targeting.sections,
-//         "adTests" -> targeting.adTests,
-//       )
-//     }
-
-// }
-
-// case class LiveBlogTopSponsorship(
-//     sections: Set[String] = Set.empty,
-//     adTests: Set[String] = Set.empty
-// ) {
-
-//   def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
-
-//   def hasTargetedAdTest(adTest: String): Boolean = this.adTests.contains(adTest)
-
-//   def nonEmpty: Boolean = sections.nonEmpty
-// }
-
-// object LiveBlogTopLineItem {
-//   implicit val jsonReads: Reads[LiveBlogTopLineItem] = Json.reads[LiveBlogTopLineItem]
-
-//   implicit val liveblogTopLineItemWrites: Writes[LiveBlogTopLineItem] =
-//     (lineItem: LiveBlogTopLineItem) => {
-//       Json.obj(
-//         "name" -> lineItem.name,
-//         "id" -> lineItem.id,
-//         "adTest" -> lineItem.adTest
-//       )
-//     }
-// }
-
 case class LiveBlogTopSponsorship(
     lineItemName: String,
     lineItemId: Long,
@@ -58,15 +20,6 @@ case class LiveBlogTopSponsorship(
 object LiveBlogTopSponsorship {
   implicit val sponsorShipFormat: Format[LiveBlogTopSponsorship] = Json.format[LiveBlogTopSponsorship]
 }
-
-// object LiveBlogTopSponsorships {
-//   implicit val lineItemFormat: OFormat[LiveBlogTopSponsorship] = Json.format[LiveBlogTopSponsorship]
-//   implicit val lineItemsFormat: OFormat[LiveBlogTopSponsorships] = Json.format[LiveBlogTopSponsorships]
-// }
-
-// case class LiveBlogTopSponsorships(items: Seq[LiveBlogTopSponsorship] = Seq.empty) {
-//   val sortedItems = items.sortBy(_.lineItemName)
-// }
 
 case class LiveBlogTopSponsorshipReport(
     updatedTimeStamp: Option[String],

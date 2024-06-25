@@ -4,19 +4,21 @@ import model.Tag
 import model.ContentType
 import model.Section
 import play.api.mvc.RequestHeader
+import model.{MetaData}
+import model.DotcomContentType
 
-trait LiveBlogTopAdComponentAgent {
+trait LiveBlogTopSponsorshipAgent {
 
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship]
 
-  def hasLiveBlogTopAd(isLiveBlog: Boolean, sectionId: String, request: RequestHeader): Boolean = {
-    if (isLiveBlog) {
+  def hasLiveBlogTopAd(metadata: MetaData, request: RequestHeader): Boolean = {
+    if (metadata.contentType == Some(DotcomContentType.LiveBlog)) {
       val adTest = request.getQueryString("adtest")
       liveBlogTopSponsorships.exists { sponsorship =>
         if (sponsorship.targetsAdTest) {
-          sponsorship.hasTargetedSection(sectionId) && sponsorship.adTest == adTest
+          sponsorship.hasTargetedSection(metadata.sectionId) && sponsorship.adTest == adTest
         } else {
-          sponsorship.hasTargetedSection(sectionId)
+          sponsorship.hasTargetedSection(metadata.sectionId)
         }
       }
     } else {
