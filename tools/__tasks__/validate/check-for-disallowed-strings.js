@@ -2,8 +2,9 @@ const execa = require('execa');
 const chalk = require('chalk');
 const disallowedStrings = require('../../../disallowed-strings.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Check for disallowed strings',
+	title: 'Check for disallowed strings',
 	task: () =>
 		Promise.all(
 			disallowedStrings.map(
@@ -49,7 +50,6 @@ const task = {
 						}),
 			),
 		),
-	concurrent: true,
 };
 
 module.exports = task;

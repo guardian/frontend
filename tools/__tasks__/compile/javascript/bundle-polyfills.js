@@ -17,8 +17,9 @@ const polyfillURL = fs
 	.readFileSync(path.resolve(paths.src, 'javascripts', 'polyfill.io'), 'utf8')
 	.trim();
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Bundle polyfill.io fallback',
+	title: 'Bundle polyfill.io fallback',
 	task: () => {
 		mkdirp.sync(dest);
 		// try and get the lastest result from polyfill.io

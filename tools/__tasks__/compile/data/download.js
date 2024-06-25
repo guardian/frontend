@@ -20,8 +20,9 @@ const currentVendorListJSON = path.join(
 	'data/cmp_vendorlist.json',
 );
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Downloading data files',
+	title: 'Downloading data files',
 	task: () =>
 		new Promise((resolve, reject) => {
 			request(vendorListOfficialUrl, (error, response, body) => {

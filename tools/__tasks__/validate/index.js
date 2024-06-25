@@ -3,16 +3,22 @@ const typescript = require('./typescript.js');
 const sass = require('./sass.js');
 const checkForDisallowedStrings = require('./check-for-disallowed-strings.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Lint assets',
-	task: [
-		// prettier: multi-line
-		javascript,
-		typescript,
-		sass,
-		checkForDisallowedStrings,
-	],
-	concurrent: true,
+	title: 'Lint assets',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				javascript,
+				typescript,
+				sass,
+				checkForDisallowedStrings,
+			],
+			{
+				concurrent: !!ctx.verbose ? false : true,
+			},
+		),
 };
 
 module.exports = task;

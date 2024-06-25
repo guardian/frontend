@@ -3,15 +3,20 @@ const clean = require('./clean.js');
 const copy = require('./copy.js');
 const bundlePolyfills = require('./bundle-polyfills.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Prepare JS for development',
-	task: [
-		// prettier: multi-line
-		inlineSVGs,
-		clean,
-		copy,
-		bundlePolyfills,
-	],
+	title: 'Prepare JS for development',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				inlineSVGs,
+				clean,
+				copy,
+				bundlePolyfills,
+			],
+			{ concurrent: false },
+		),
 };
 
 module.exports = task;

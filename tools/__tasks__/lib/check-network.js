@@ -1,8 +1,9 @@
 const tcpp = require('tcp-ping');
 const pify = require('pify');
 
-module.exports = (domain, port) => ({
-	description: `Probing ${domain} on port ${port}...`,
+/** @type {(domain: string, port: number) => import('listr2').ListrTask} */
+const createTask = (domain, port) => ({
+	title: `Probing ${domain} on port ${port}...`,
 	task: () =>
 		pify(tcpp.probe, { multiArgs: true })(domain, port).then((result) => {
 			if (!result[0]) {
@@ -12,3 +13,5 @@ module.exports = (domain, port) => ({
 			}
 		}),
 });
+
+module.exports = createTask;

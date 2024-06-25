@@ -3,8 +3,9 @@ const cpy = require('cpy');
 
 const { paths } = require('../../config');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Copy images',
+	title: 'Copy images',
 	task: () =>
 		cpy(['**/*'], path.resolve(paths.target, 'images'), {
 			cwd: path.resolve(paths.public, 'images'),

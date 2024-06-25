@@ -8,8 +8,9 @@ const chalk = require('chalk');
 const config = require('../../../../webpack.config.dev.js');
 const reporter = require('../../../webpack-progress-reporter.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Create Webpack bundles',
+	title: 'Create Webpack bundles',
 	task: () =>
 		new Observable((observer) => {
 			config.plugins = [reporter(observer), ...config.plugins];

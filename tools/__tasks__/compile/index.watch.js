@@ -4,16 +4,21 @@ const data = require('./data/index.watch.js');
 const javascript = require('./javascript/index.watch.js');
 const conf = require('./conf/index.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Compile assets for development',
-	task: [
-		// prettier: multi-line
-		clean,
-		css,
-		data,
-		javascript,
-		conf,
-	],
+	title: 'Compile assets for development',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				clean,
+				css,
+				data,
+				javascript,
+				conf,
+			],
+			{ concurrent: false },
+		),
 };
 
 module.exports = task;

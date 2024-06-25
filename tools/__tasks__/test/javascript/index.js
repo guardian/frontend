@@ -18,30 +18,35 @@ const exec = (cmd, args, opts) => {
 		.pipe(rxjsOperators.filter(Boolean));
 };
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Test JS app',
-	task: [
-		{
-			description: 'Run tests',
-			task: [
-				{
-					description: 'JS tests',
-					task: () =>
-						exec('jest', null, {
-							env: {
-								/**
-								 * We test some things like relative dates and formatting
-								 * that rely on a specific timezone. We set this here so
-								 * that it's not determined by the machine's timezone.
-								 */
-								TZ: 'Europe/London',
+	title: 'Test JS app',
+	task: (ctx, task) =>
+		task.newListr([
+			{
+				title: 'Run tests',
+				task: (ctx, task) =>
+					task.newListr(
+						[
+							{
+								title: 'JS tests',
+								task: () =>
+									exec('jest', null, {
+										env: {
+											/**
+											 * We test some things like relative dates and formatting
+											 * that rely on a specific timezone. We set this here so
+											 * that it's not determined by the machine's timezone.
+											 */
+											TZ: 'Europe/London',
+										},
+									}),
 							},
-						}),
-				},
-			],
-			concurrent: true,
-		},
-	],
+						],
+						{ concurrent: !!ctx.verbose ? false : true },
+					),
+			},
+		]),
 };
 
 module.exports = task;

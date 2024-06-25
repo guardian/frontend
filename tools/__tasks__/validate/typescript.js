@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const execa = require('execa');
 
 const error = (ctx) => {
 	ctx.messages.push(
@@ -11,16 +12,20 @@ const error = (ctx) => {
 	);
 };
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Compile TS',
-	task: [
-		{
-			description: 'Compile',
-			task: `tsc --noEmit`,
-			onError: error,
-		},
-	],
-	concurrent: true,
+	title: 'Compile TS',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				{
+					title: 'Compile',
+					task: () => execa('tsc', ['--noEmit']),
+					onError: error,
+				},
+			],
+			{ concurrent: !!ctx.verbose ? false : true },
+		),
 };
 
 module.exports = task;

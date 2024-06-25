@@ -10,8 +10,9 @@ const ampIframeHtml = path.join(paths.vendor, 'data/amp-iframe.html');
 // The static assets
 const staticDir = path.resolve(paths.target, 'data', 'vendor');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Copy AMP iframe HTML',
+	title: 'Copy AMP iframe HTML',
 	task: () =>
 		cpy(ampIframeHtml, staticDir, {
 			parents: false,

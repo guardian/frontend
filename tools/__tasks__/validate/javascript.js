@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const execa = require('execa');
 const config = '--quiet --color';
 
 const error = (ctx) => {
@@ -12,26 +13,35 @@ const error = (ctx) => {
 	);
 };
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Lint JS',
-	task: [
-		{
-			description: 'Static',
-			task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
-			onError: error,
-		},
-		{
-			description: 'Tools etc.',
-			task: `eslint tools ${config}`,
-			onError: error,
-		},
-		{
-			description: 'Git hooks',
-			task: `eslint git-hooks/* ${config}`,
-			onError: error,
-		},
-	],
-	concurrent: true,
+	title: 'Lint JS',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				{
+					title: 'Static',
+					task: () =>
+						execa('eslint', [
+							'static/src/javascripts',
+							'--ext=ts,tsx,js',
+							config,
+						]),
+					onError: error,
+				},
+				{
+					title: 'Tools etc.',
+					task: () => execa('eslint', ['tools', config]),
+					onError: error,
+				},
+				{
+					title: 'Git hooks',
+					task: () => execa('eslint', ['git-hooks/*', config]),
+					onError: error,
+				},
+			],
+			{ concurrent: !!ctx.verbose ? false : true },
+		),
 };
 
 module.exports = task;

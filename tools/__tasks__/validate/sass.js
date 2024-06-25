@@ -1,6 +1,9 @@
+const execa = require('execa');
+
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Lint Sass',
-	task: 'stylelint **/*.scss',
+	title: 'Lint Sass',
+	task: () => execa('stylelint', ['**/*.scss']),
 };
 
 module.exports = task;

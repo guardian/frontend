@@ -5,17 +5,22 @@ const webpack = require('./webpack.js');
 const webpackAtoms = require('./webpack-atoms.js');
 const bundlePolyfills = require('./bundle-polyfills.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Compile JS',
-	task: [
-		// prettier: multi-line
-		clean,
-		inlineSVGs,
-		copy,
-		webpack,
-		webpackAtoms,
-		bundlePolyfills,
-	],
+	title: 'Compile JS',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				clean,
+				inlineSVGs,
+				copy,
+				webpack,
+				webpackAtoms,
+				bundlePolyfills,
+			],
+			{ concurrent: false },
+		),
 };
 
 module.exports = task;

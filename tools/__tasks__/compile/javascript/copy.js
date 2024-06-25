@@ -3,8 +3,9 @@ const cpy = require('cpy');
 
 const { paths } = require('../../config');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Copy 3rd JS party libraries',
+	title: 'Copy 3rd JS party libraries',
 	task: () =>
 		Promise.all([
 			cpy(
