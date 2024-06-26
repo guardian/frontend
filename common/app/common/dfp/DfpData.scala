@@ -295,8 +295,10 @@ case class GuLineItem(
       target.name == "ct" && target.values.contains("liveblog")
     }
 
-    val isLCultureORSportSection = matchingLiveblogTargeting.exists { target =>
-      target.name == "s" && (target.values.contains("culture") || target.values.contains("sport"))
+    val allowedSections = Set("culture", "sport", "football")
+
+    val targetsOnlyAllowedSections = matchingLiveblogTargeting.exists { target =>
+      target.name == "s" && target.values.forall(allowedSections.contains)
     }
 
     val isMobileBreakpoint = matchingLiveblogTargeting.exists { target =>
@@ -305,7 +307,7 @@ case class GuLineItem(
 
     val isSponsorship = lineItemType == Sponsorship
 
-    isLiveblogTopSlot && isLiveblogContentType && isLCultureORSportSection && isMobileBreakpoint && isSponsorship
+    isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship
   }
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
