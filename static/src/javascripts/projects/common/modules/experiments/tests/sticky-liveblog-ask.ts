@@ -3,7 +3,7 @@ import type { ABTest } from '@guardian/ab-core';
 export const stickyLiveBlogAskTest: ABTest = {
 	id: 'StickyLiveBlogAskTest',
 	author: '@growth',
-	start: '2024-07-01',
+	start: '2024-06-25',
 	expiry: '2024-07-31',
 	audience: 1,
 	audienceOffset: 0,
