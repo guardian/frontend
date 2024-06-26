@@ -28,7 +28,7 @@
     }
 
     p {
-        @include fs-bodyCopy(2, size-only = true);
+        @include fs-bodyCopy(2, $size-only: true);
         margin-bottom: $gs-baseline;
     }
 

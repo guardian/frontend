@@ -27,23 +27,12 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
     },
   )
 
-  val googleConversionRate = GaugeMetric(
-    name = "google-percent-conversion",
-    description = "The percentage of raw page views that contain a recorded Google Analytics page view",
-    metricUnit = StandardUnit.Percent,
-    get = () => {
-      googlePageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
-    },
-  )
-
   def run()(implicit executionContext: ExecutionContext): Unit = {
 
     val fRawPageViews: Future[GetMetricStatisticsResult] = CloudWatchStats.rawPageViews()
-    val fGooglePageViews = CloudWatchStats.googleAnalyticsPageViews()
     val fOphanViews = ophanViews()
     for {
       rawPageViewsStats <- fRawPageViews
-      googlePageViewsStats <- fGooglePageViews
       ophanViewsCount <- fOphanViews
     } yield {
 
@@ -51,10 +40,9 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends GuLogging {
         stats.getDatapoints.asScala.headOption.map(_.getSum.longValue).getOrElse(0L)
 
       rawPageViews.set(metricLastSum(rawPageViewsStats))
-      googlePageViews.set(metricLastSum(googlePageViewsStats))
       ophanPageViews.set(ophanViewsCount)
 
-      CloudWatch.putMetrics("Analytics", List(ophanConversionRate, googleConversionRate), List.empty)
+      CloudWatch.putMetrics("Analytics", List(ophanConversionRate), List.empty)
     }
 
   }

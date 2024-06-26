@@ -206,15 +206,12 @@ object SessionWrapper extends GuLogging {
     val dfpSession =
       try {
         for {
-          clientId <- AdminConfiguration.dfpApi.clientId
-          clientSecret <- AdminConfiguration.dfpApi.clientSecret
-          refreshToken <- AdminConfiguration.dfpApi.refreshToken
+          serviceAccountKeyFile <- AdminConfiguration.dfpApi.serviceAccountKeyFile
           appName <- AdminConfiguration.dfpApi.appName
         } yield {
           val credential = new OfflineCredentials.Builder()
             .forApi(Api.AD_MANAGER)
-            .withClientSecrets(clientId, clientSecret)
-            .withRefreshToken(refreshToken)
+            .withJsonKeyFilePath(serviceAccountKeyFile.toString())
             .build()
             .generateCredential()
           new AdManagerSession.Builder()

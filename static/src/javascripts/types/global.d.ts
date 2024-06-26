@@ -106,12 +106,6 @@ interface Config {
 		[key: `${string}Variant`]: 'variant';
 	};
 	isDotcomRendering: boolean;
-	googleAnalytics?: {
-		trackers?: {
-			editorial?: string;
-		};
-		timingEvents?: GoogleTimingEvent[];
-	};
 	stage: Stage;
 }
 

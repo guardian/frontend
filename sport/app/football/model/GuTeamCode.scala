@@ -17,16 +17,18 @@ object GuTeamCodes {
     team.name match {
       case "China PR"        => "CHN"
       case "Costa Rica"      => "CRC"
+      case "Germany"         => "GER"
       case "Japan"           => "JPN"
       case "Morocco"         => "MAR"
       case "Nigeria"         => "NGA"
       case "Netherlands"     => "NED"
       case "North Macedonia" => "MKD"
       case "New Zealand"     => "NZL"
+      case "Portugal"        => "POR"
       case "Rep of Ireland"  => "IRL"
       case "South Africa"    => "RSA"
       case "South Korea"     => "KOR"
-      case "Spain"           => "ESP"
+      case "Spain"           => "SPA"
       case "Switzerland"     => "SUI"
       case _                 => TeamCodes.codeFor(team)
     }

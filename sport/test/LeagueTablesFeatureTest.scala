@@ -18,7 +18,8 @@ import org.scalatest.matchers.should.Matchers
     with BeforeAndAfterAll
     with WithMaterializer
     with WithTestApplicationContext
-    with WithTestWsClient {
+    with WithTestWsClient
+    with WithTestContentApiClient {
 
   Feature("League Tables") {
 
@@ -67,7 +68,11 @@ import org.scalatest.matchers.should.Matchers
 
     Scenario("Should redirect when no competition table data found") {
       val leagueTableController =
-        new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+        new LeagueTableController(
+          testCompetitionsService,
+          play.api.test.Helpers.stubControllerComponents(),
+          testContentApiClient,
+        )
       val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }

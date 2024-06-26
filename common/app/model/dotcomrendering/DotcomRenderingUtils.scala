@@ -255,7 +255,7 @@ object DotcomRenderingUtils {
     if (bodyElements.size >= 2) {
       val firstEl = bodyElements.get(0)
       val secondEl = bodyElements.get(1)
-      if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 250) {
+      if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 150) {
         AffiliateLinksCleaner.shouldAddAffiliateLinks(
           switchedOn = Switches.AffiliateLinks.isSwitchedOn,
           section = content.metadata.sectionId,

@@ -28,8 +28,7 @@
 		"@emotion/react": "11.11.1",
 		"@emotion/styled": "^10.0.27",
 		"@guardian/ab-core": "7.0.1",
-		"@guardian/automat-modules": "^0.3.8",
-		"@guardian/commercial": "19.0.0",
+		"@guardian/commercial": "19.9.0",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/eslint-config-typescript": "9.0.1",
 		"@guardian/identity-auth": "2.1.0",
@@ -41,7 +40,6 @@
 		"@guardian/source-react-components": "22.1.0",
 		"@guardian/source-react-components-development-kitchen": "19.0.0",
 		"@guardian/support-dotcom-components": "1.1.3",
-		"@types/google.analytics": "^0.0.42",
 		"@types/googletag": "^1.1.3",
 		"@types/jest": "29.5.12",
 		"@types/lodash-es": "^4.17.4",
@@ -105,7 +103,6 @@
 		"madge": "^5.0.1",
 		"mkdirp": "^1.0.4",
 		"mockdate": "^3.0.5",
-		"node-sass": "^8.0.0",
 		"object-fit-videos": "^1.0.3",
 		"ophan-tracker-js": "1.4.0",
 		"ora": "^1.3.0",
@@ -123,9 +120,10 @@
 		"requireindex": "^1.1.0",
 		"rimraf": "^2.6.1",
 		"rxjs": "^6.6.7",
-		"sass-graph": "^4.0.1",
-		"sass-loader": "^10.4.1",
-		"sass-mq": "~5.0.1",
+		"sass": "1.77.6",
+		"sass-graph": "4.0.1",
+		"sass-loader": "14.2.1",
+		"sass-mq": "5.0.1",
 		"semver": "^5.4.1",
 		"split": "^1.0.0",
 		"stream-to-observable": "^0.2.0",
@@ -152,9 +150,6 @@
 		"webpack-merge": "^4.2.2",
 		"wolfy87-eventemitter": "~5.2.4",
 		"yargs": "^17.7.1"
-	},
-	"resolutions": {
-		"unset-value": "^2.0.1"
 	},
 	"optionalDependencies": {
 		"fsevents": "^2.3.2",
@@ -213,5 +208,9 @@
 		"test": "jest"
 	},
 	"prettier": "@guardian/prettier",
-	"packageManager": "yarn@4.1.1"
+	"packageManager": "yarn@4.1.1",
+	"resolutions": {
+		"micromatch": "4.0.7",
+		"unset-value": "^2.0.1"
+	}
 }

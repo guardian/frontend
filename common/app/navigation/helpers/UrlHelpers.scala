@@ -103,7 +103,6 @@ object UrlHelpers {
 
     import io.lemonlabs.uri.typesafe.dsl._
 
-    // INTCMP is passed as a separate param because people look at it in Google Analytics
     // It's set to the most specific thing (componentId) to maximise its usefulness
     val url = destination.url ? ("INTCMP" -> componentId) & ("acquisitionData" -> acquisitionData.toString)
     Url.parse(url.toString).toString

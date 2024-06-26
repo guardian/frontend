@@ -9,7 +9,7 @@ It's intended to exist ‘behind the scenes’, and you should probably be runni
 It takes one or more tasks to run as arguments, which should be relative paths within the `__tasks__` directory, so that:
 
 ```
-./tools/task-runner/runner fakemodule/fakemodule
+./tools/task-runner/runner.mjs fakemodule/fakemodule.js
 ```
 
 will run the task defined in `tools/__tasks__/fakemodule/fakemodule.js`.
@@ -19,10 +19,11 @@ will run the task defined in `tools/__tasks__/fakemodule/fakemodule.js`.
 You can pass a `--dev` flag to prefer a dev version, if it exists (suffix the task's filename with `.dev`), so that:
 
 ```
-./tools/task-runner/runner fakemodule/fakemodule --dev
+./tools/task-runner/runner.mjs fakemodule/fakemodule.dev.js
 ```
-- runs `tools/__tasks__/fakemodule/fakemodule.dev.js` if it exists
-- reverts to `tools/__tasks__/fakemodule/fakemodule.js` if the above fails
+
+-   runs `tools/__tasks__/fakemodule/fakemodule.dev.js` if it exists
+-   reverts to `tools/__tasks__/fakemodule/fakemodule.js` if the above fails
 
 ### Modes
 
@@ -30,7 +31,7 @@ Tasks can be run with `--verbose` flag for fuller output, but this shouldn't usu
 
 ### Options
 
-For a full list, run `./tools/task-runner/runner -h`.
+For a full list, run `./tools/task-runner/runner.mjs -h`.
 
 ## Defining tasks
 
@@ -38,7 +39,6 @@ Task definitions are standard node modules that export a task object. As a minum
 
 1. `description`
 2. `task`
-
 
 ### `description#String`
 
@@ -50,16 +50,14 @@ Strings are treated as a standard terminal command:
 
 ```js
 module.exports = {
-    description: "Print 'hello'",
-    task: "echo 'hello'"
-}
+	description: "Print 'hello'",
+	task: "echo 'hello'",
+};
 ```
 
 They are run with [execa](https://github.com/sindresorhus/execa), which checks for locally installed binaries (`./node_modules`) before global ones, just as with npm scripts.
 
 ### `task#Function`
-
-
 
 ```js
 module.exports = {
@@ -67,6 +65,7 @@ module.exports = {
     task: () => {...}
 }
 ```
+
 The ['Task' section of the listr docs](https://github.com/SamVerschueren/listr#task) covers this best (since they map directly onto them).
 
 ### `task#Array`
@@ -75,32 +74,32 @@ Tasks can also be an array of subtasks (which must also be valid tasks):
 
 ```js
 module.exports = {
-    description: "my task",
-    task: [
-        {
-            description: 'a subtask',
-            task: "command to run"
-        },
-        {
-            description: 'another subtask',
-            task: () => {
-                // do something...
-            }
-        }
-    ]
-}
+	description: 'my task',
+	task: [
+		{
+			description: 'a subtask',
+			task: 'command to run',
+		},
+		{
+			description: 'another subtask',
+			task: () => {
+				// do something...
+			},
+		},
+	],
+};
 ```
 
 If the task is an array of other tasks, you can also specify that its tasks should run concurrently:
 
 ```js
 module.exports = {
-    description: "my concurrent task",
-    task: [
-    	// tasks...
-    ],
-    concurrent: true
-}
+	description: 'my concurrent task',
+	task: [
+		// tasks...
+	],
+	concurrent: true,
+};
 ```
 
 ### Requiring task modules
@@ -109,7 +108,7 @@ Since tasks are just JS objects, you can `require` them in the standard node way
 
 ```js
 module.exports = {
-    description: "run another task",
-    task: require('./another-task')
-}
+	description: 'run another task',
+	task: require('./another-task'),
+};
 ```

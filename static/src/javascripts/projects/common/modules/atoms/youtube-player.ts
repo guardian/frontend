@@ -11,13 +11,11 @@ import { loadScript, log, onConsentChange } from '@guardian/libs';
 import fastdom from 'fastdom';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { buildPfpEvent } from 'common/modules/video/ga-helper';
 import config from 'lib/config';
 import type { MaybeArray } from 'lib/url';
 import { constructQuery } from 'lib/url';
 
 interface WindowLocal extends Window {
-	ga: UniversalAnalytics.ga;
 	onYouTubeIframeAPIReady?: () => void;
 	YT?: typeof YT;
 }
@@ -221,8 +219,6 @@ const setupPlayer = (
 	onReady: (event: YTPlayerEvent) => void,
 	onStateChange: (event: YTPlayerEvent) => void,
 	onError: (event: YTPlayerEvent) => void,
-	onAdStart: () => void,
-	onAdEnd: () => void,
 	consentState: ConsentState,
 ): YT.Player => {
 	// relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
@@ -258,8 +254,6 @@ const setupPlayer = (
 			onReady,
 			onStateChange,
 			onError,
-			onAdStart,
-			onAdEnd,
 		},
 		embedConfig: {
 			relatedChannels,
@@ -299,34 +293,12 @@ export const initYoutubePlayer = async (
 		console.dir(event);
 	};
 
-	const gaTracker = config.get(
-		'googleAnalytics.trackers.editorial',
-	) as string;
-
-	const onAdStart = () => {
-		(window as WindowLocal).ga(
-			`${gaTracker}.send`,
-			'event',
-			buildPfpEvent('adStart', videoId),
-		);
-	};
-
-	const onAdEnd = () => {
-		(window as WindowLocal).ga(
-			`${gaTracker}.send`,
-			'event',
-			buildPfpEvent('adEnd', videoId),
-		);
-	};
-
 	return setupPlayer(
 		el,
 		videoId,
 		onPlayerReady,
 		onPlayerStateChange,
 		onPlayerError,
-		onAdStart,
-		onAdEnd,
 		consentState,
 	);
 };
