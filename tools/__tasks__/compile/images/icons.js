@@ -92,26 +92,36 @@ const saveSass = (sass, dest, fileName) =>
 		);
 	});
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Create sprites',
-	task: ['commercial', 'global', 'membership', 'video'].map((target) => ({
-		description: `Spriting ${target}`,
-		concurrent: true,
-		task: () => {
-			const srcPath = path.join(paths.src, 'images', target);
-			const destPath = path.join(paths.src, 'stylesheets', 'icons');
-			const fileName = `_${target}-icons-svg.scss`;
+	title: 'Create sprites',
+	task: (ctx, task) =>
+		task.newListr(
+			['commercial', 'global', 'membership', 'video'].map((target) => ({
+				title: `Spriting ${target}`,
+				task: () => {
+					const srcPath = path.join(paths.src, 'images', target);
+					const destPath = path.join(
+						paths.src,
+						'stylesheets',
+						'icons',
+					);
+					const fileName = `_${target}-icons-svg.scss`;
 
-			const iconPaths = glob.sync(path.join(srcPath, '*.svg'));
+					const iconPaths = glob.sync(path.join(srcPath, '*.svg'));
 
-			mkdirp.sync(destPath);
+					mkdirp.sync(destPath);
 
-			return Promise.all(iconPaths.map(getSVG))
-				.then(sortSVGs)
-				.then((svgs) => svgs.map(generateSassForSVG).join('').trim())
-				.then((sass) => saveSass(sass, destPath, fileName));
-		},
-	})),
+					return Promise.all(iconPaths.map(getSVG))
+						.then(sortSVGs)
+						.then((svgs) =>
+							svgs.map(generateSassForSVG).join('').trim(),
+						)
+						.then((sass) => saveSass(sass, destPath, fileName));
+				},
+			})),
+			{ concurrent: !!ctx.verbose ? false : true },
+		),
 };
 
 module.exports = task;

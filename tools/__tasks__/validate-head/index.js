@@ -1,14 +1,18 @@
 const javascript = require('./javascript.js');
 const sass = require('./sass.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Validate commits',
-	task: [
-		// prettier: multi-line
-		javascript,
-		sass,
-	],
-	concurrent: true,
+	title: 'Validate commits',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				javascript,
+				sass,
+			],
+			{ concurrent: !!ctx.verbose ? false : true },
+		),
 };
 
 module.exports = task;

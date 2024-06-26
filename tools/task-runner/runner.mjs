@@ -4,13 +4,11 @@
 process.env.FORCE_COLOR = true;
 
 import path from 'node:path';
-import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { Listr } from 'listr2';
-import execa from 'execa';
 import chalk from 'chalk';
 import figures from 'figures';
 import uniq from 'lodash.uniq';
@@ -71,106 +69,9 @@ const taskSrc = path.resolve(
 	tasksDirectory,
 );
 
-// we will store tasks that we run in here, to prevent running them more than once
-// e.g. if two tasks rely on the same thing
-const cache = [];
-
-// use exaca to run simple terminal commands
-const exec = (task, onError, ctx) => {
-	const [cmd, ...args] = task.trim().split(' ');
-
-	return execa(cmd, args)
-		.then((result) => {
-			// store any stdout incase we need it later
-			if (result.stdout) ctx.stdouts.push(result.stdout);
-		})
-		.catch((e) => {
-			// if the task supplies an `onError` function, run it
-			if (typeof onError === 'function') onError(ctx);
-			// continue with a fake rejected promise
-			return Promise.reject(e);
-		});
-};
-
-const getCpuCount = () => os.cpus().length;
-
-// turn a list of our tasks into objects listr can use
-function listrify(steps, { concurrent = false } = {}) {
-	const listrTasks = steps.map((step) => {
-		const {
-			description: title,
-			task,
-			concurrent: isConcurrent,
-			onError,
-		} = step;
-
-		// if another task has included this one, don't run it again
-		const skip =
-			cache.indexOf(step) !== -1
-				? () => 'Skipping: already run by another task'
-				: false;
-		cache.push(step);
-
-		// if the task is a set of subtasks, prepare them
-		if (Array.isArray(task)) {
-			return {
-				title,
-				task: () =>
-					listrify(
-						task.map((_task) => {
-							if (_task.task) return _task;
-							if (typeof _task === 'string')
-								return {
-									title,
-									task: (ctx) => exec(_task, onError, ctx),
-									skip,
-								};
-							return { title, task: _task, skip };
-						}),
-						{
-							concurrent: VERBOSE
-								? false
-								: isConcurrent
-								? getCpuCount()
-								: false,
-						},
-					),
-				skip,
-			};
-		}
-
-		// treat tasks that are strings as terminal commands
-		if (typeof task === 'string')
-			return { title, task: (ctx) => exec(task, onError, ctx), skip };
-
-		// assume the task is a function
-		// if it's not, listr will blow up anyway, which is fine
-		return {
-			title,
-			task: (ctx) =>
-				new Promise((resolve, reject) => {
-					try {
-						resolve(task(ctx));
-					} catch (e) {
-						if (typeof onError === 'function') onError(ctx);
-						if (VERBOSE) console.log(e);
-						reject(e);
-					}
-				}),
-			skip,
-		};
-	});
-
-	const renderer = IS_VERBOSE ? VerboseRenderer : 'default';
-
-	return new Listr(listrTasks, {
-		concurrent: concurrent ? getCpuCount() : false,
-		collapse: true,
-		renderer,
-	});
-}
-
-// resolve the tasks from yargs to actual files
+/**
+ * resolve the tasks from yargs to actual files
+ */
 const getTasksFromModule = async (taskName) => {
 	try {
 		const modulePath = path.resolve(taskSrc, taskName);
@@ -185,15 +86,20 @@ const getTasksFromModule = async (taskName) => {
 	}
 };
 
-// get a list of the tasks we're going to run
+/** get a list of the tasks we're going to run */
 const taskModules = await Promise.all(TASKS.map(getTasksFromModule));
 
 // run them!
-listrify(taskModules)
+new Listr(taskModules, {
+	collapse: true,
+	renderer: IS_VERBOSE ? VerboseRenderer : 'default',
+	concurrent: VERBOSE ? false : true,
+})
 	.run({
-		// we're adding these to the [listr context](https://github.com/SamVerschueren/listr#context)
+		// we're adding these to the [listr context](https://listr2.kilic.dev/listr/context.html)
 		messages: [],
 		stdouts: [],
+		verbose: VERBOSE,
 	})
 	.catch((e) => {
 		// something went wrong, so log whatever we have

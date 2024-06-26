@@ -13,8 +13,9 @@ const { paths } = require('../../config');
 
 const srcDir = path.resolve(paths.src, 'inline-svgs');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Prepare inline SVGs',
+	title: 'Prepare inline SVGs',
 	task: () =>
 		Promise.all(
 			glob.sync('**/*.svg', { cwd: srcDir }).map((svgPath) => {

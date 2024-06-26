@@ -1,8 +1,9 @@
 const execa = require('execa');
 const getChangedFiles = require('../lib/get-changed-files');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Fix committed linting errors',
+	title: 'Fix committed linting errors',
 	task: () =>
 		getChangedFiles().then((files) => {
 			const jsFiles = files.filter(

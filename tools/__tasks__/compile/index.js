@@ -5,17 +5,22 @@ const javascript = require('./javascript/index.js');
 const hash = require('./hash/index.js');
 const conf = require('./conf/index.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Compile assets for production',
-	task: [
-		// prettier: multi-line
-		clean,
-		css,
-		data,
-		javascript,
-		hash,
-		conf,
-	],
+	title: 'Compile assets for production',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				clean,
+				css,
+				data,
+				javascript,
+				hash,
+				conf,
+			],
+			{ concurrent: false },
+		),
 };
 
 module.exports = task;

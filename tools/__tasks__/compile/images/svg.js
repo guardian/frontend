@@ -11,9 +11,9 @@ const { paths } = require('../../config');
 
 const srcDir = path.resolve(paths.src);
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description:
-		'Prohibit inline data URIs in svgs and other unoptimised things',
+	title: 'Prohibit inline data URIs in svgs and other unoptimised things',
 	task: () =>
 		Promise.all(
 			glob.sync('**/*.svg', { cwd: srcDir }).map((svgPath) =>

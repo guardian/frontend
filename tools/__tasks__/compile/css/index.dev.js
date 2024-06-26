@@ -3,15 +3,20 @@ const mkdir = require('./mkdir.js');
 const images = require('../images/index.js');
 const sass = require('./sass.js');
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'Compile CSS',
-	task: [
-		// prettier: multi-line
-		clean,
-		mkdir,
-		images,
-		sass,
-	],
+	title: 'Compile CSS (dev)',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				// prettier: multi-line
+				clean,
+				mkdir,
+				images,
+				sass,
+			],
+			{ concurrent: false },
+		),
 };
 
 module.exports = task;

@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const execa = require('execa');
 const config = '--error';
 
 const error = (ctx) => {
@@ -7,15 +8,20 @@ const error = (ctx) => {
 	);
 };
 
+/** @type {import('listr2').ListrTask} */
 const task = {
-	description: 'scalafmt check',
-	task: [
-		{
-			description: 'scalafmtCheckAll',
-			task: `./sbt scalafmtCheckAll ${config}`,
-			onError: error,
-		},
-	],
+	title: 'Check Scala formatting',
+	task: (ctx, task) =>
+		task.newListr(
+			[
+				{
+					title: 'scalafmtCheckAll',
+					task: () => execa('./sbt', ['scalafmtCheckAll', config]),
+					onError: error,
+				},
+			],
+			{ concurrent: !!ctx.verbose ? false : true },
+		),
 };
 
 module.exports = task;
