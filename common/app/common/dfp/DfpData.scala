@@ -90,7 +90,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isEditionTag = isPositive("edition")
   val isSectionTag = isPositive("s")
 
-  val isLiveBlogTopTargetedSection = isSectionTag && (values.contains("culture") || values.contains("sport"))
+  val isLiveBlogTopTargetedSection =
+    isSectionTag && (values.contains("culture") || values.contains("sport") || values.contains("football"))
 }
 
 object CustomTarget {
