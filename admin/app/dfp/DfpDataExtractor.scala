@@ -35,7 +35,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
 
   val liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = {
     lineItems
-      .filter(_.targetsLiveBlogTop)
+      .filter(lineItem => lineItem.targetsLiveBlogTop && lineItem.isCurrent)
       .foldLeft(Seq.empty[LiveBlogTopSponsorship]) { (soFar, lineItem) =>
         soFar :+ LiveBlogTopSponsorship(
           lineItemName = lineItem.name,
@@ -45,12 +45,6 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
           targetsAdTest = lineItem.targeting.hasAdTestTargetting,
         )
       }
-  }
-
-  val liveBlogTopTargetedSections: Set[String] = {
-    lineItems.foldLeft(Set.empty[String]) { (soFar, lineItem) =>
-      soFar ++ lineItem.liveBlogTopTargetedSections
-    }
   }
 
   val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
