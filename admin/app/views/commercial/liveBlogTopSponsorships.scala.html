@@ -3,7 +3,7 @@
 
 @(report: LiveBlogTopSponsorshipReport)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@admin_main("Commercial 'liveblog-top' Slot", isAuthed = true, hasCharts = false) {
+@admin_main("Commercial Live Blog Top Sponsorships", isAuthed = true, hasCharts = false) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at(" css/commercial.css")">
     <style>
@@ -16,11 +16,11 @@
         }
     </style>
 
-    <h1>LiveBlog Top Slot</h1>
+    <h1>LiveBlog Top Sponsorships</h1>
 
     <p>Last updated: @if(report.updatedTimeStamp) { @{report.updatedTimeStamp} } else { never }</p>
 
-    <p>Pages will show a liveblog top slot if you set up a LineItem in DFP with the following parameters:</p>
+    <p>Pages will show a liveblog top slot if you set up a LineItem in GAM with the following parameters:</p>
     <ol>
         <li>Is a Sponsorship</li>
         <li>Targets the <pre>liveblog-top</pre> slot</li>
