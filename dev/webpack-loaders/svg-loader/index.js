@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('node:path');
 
 function svgLoader(content) {
 	const match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
