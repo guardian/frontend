@@ -1,4 +1,4 @@
-import path from 'node:path';
+const path = require('node:path');
 
 function svgLoader(content) {
 	const match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
@@ -15,4 +15,4 @@ function svgLoader(content) {
 	return `module.exports = ${JSON.stringify({ markup })}`;
 }
 
-export default svgLoader;
+module.exports = svgLoader;
