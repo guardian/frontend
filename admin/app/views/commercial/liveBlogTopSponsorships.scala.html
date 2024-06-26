@@ -34,15 +34,14 @@
     @if(report.sponsorships.isEmpty) {<p>None</p>} else {
         @for(sponsorship <- report.sponsorships) {
 
-        <li class="lineItem">@sponsorship.lineItemName
-    (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
-    <br />
-    <small>Sections:</small>
-
-      @for(section <- sponsorship.sections) {
-          <pre>@section</pre>,
-      }
-
+        <li class="lineItem">
+            @sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+            <br />
+            <small>Sections:</small>
+            @for(section <- sponsorship.sections) {
+                <pre>@section</pre>@if(section != sponsorship.sections.last) {, }
+            }
+            @if(sponsorship.targetsAdTest) {<br /><small>Adtest:</small> <pre>@sponsorship.adTest</pre>}
   </li>
         }
     }
