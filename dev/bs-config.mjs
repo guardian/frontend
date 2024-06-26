@@ -1,4 +1,5 @@
-const path = require('path');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // To run browser-sync with this config:
 //
@@ -56,7 +57,11 @@ const config = {
 	scrollThrottle: 0,
 	reloadDelay: 0,
 	reloadDebounce: 100,
-	plugins: [path.dirname(require.resolve('bs-fullscreen-message'))],
+	plugins: [
+		path.dirname(
+			fileURLToPath(import.meta.resolve('bs-fullscreen-message')),
+		),
+	],
 	injectChanges: true,
 	startPath: null,
 	minify: false,
@@ -92,4 +97,4 @@ const config = {
 	},
 };
 
-module.exports = config;
+export default config;

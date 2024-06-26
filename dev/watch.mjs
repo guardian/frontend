@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const cpy = require('cpy');
-const chalk = require('chalk');
-const browserSync = require('browser-sync').create();
-const bsConfig = require('./bs-config');
+import path, { dirname } from 'path';
+import cpy from 'cpy';
+import chalk from 'chalk';
+import { create } from 'browser-sync';
+import bsConfig from './bs-config.mjs';
+
+const browserSync = create();
 
 // ********************************** JAVASCRIPT **********************************
 
@@ -15,7 +17,7 @@ let INITIAL_BUNDLE = true;
 
 // just a bit of visual feedback while webpack creates its initial bundles.
 // fakes a listr step
-const ora = require('ora');
+import ora from 'ora';
 
 const wpNotification = ora({
 	text: 'Create initial webpack bundles',
@@ -23,7 +25,7 @@ const wpNotification = ora({
 });
 wpNotification.start();
 
-const webpack = require('webpack');
+import webpack from 'webpack';
 
 const watchArguments = [
 	{
@@ -50,7 +52,7 @@ const watchArguments = [
 			return browserSync.sockets.emit('fullscreen:message', {
 				title: 'Webpack Error:',
 				body: info.errors,
-				timeout: 100000,
+				timeout: 100_000,
 			});
 		}
 
@@ -70,13 +72,18 @@ const watchArguments = [
 	},
 ];
 
-const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
+const mainWebpackBundler = webpack(
+	(await import('../webpack.config.dev.js')).default,
+);
 
 mainWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 
-const chokidar = require('chokidar');
+import chokidar from 'chokidar';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const sassDir = path.resolve(__dirname, '../', 'static', 'src', 'stylesheets');
 const targetDir = path.resolve(__dirname, '../', 'static', 'target');
@@ -88,11 +95,14 @@ const inlineStylesDir = path.resolve(
 	'assets',
 	'inline-stylesheets',
 );
-const sassGraph = require('sass-graph').parseDir(sassDir, {
+
+import { parseDir } from 'sass-graph';
+
+const sassGraph = parseDir(sassDir, {
 	loadPaths: [sassDir],
 });
 
-const compileSass = require('../tools/compile-css');
+import { compileSass } from '../tools/compile-css.mjs';
 
 // when we detect a change in a sass file, we look up the tree of imports
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
@@ -156,7 +166,7 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', (changedFile) => {
 			browserSync.sockets.emit('fullscreen:message', {
 				title: 'CSS Error:',
 				body: e.formatted,
-				timeout: 100000,
+				timeout: 100_000,
 			});
 		});
 });

@@ -53,9 +53,16 @@ const REMIFICATIONS = {
 	propList: ['*'],
 };
 
+/** @param {string} sassGlob */
 const getFiles = (sassGlob) => glob.sync(path.resolve(sassDir, sassGlob));
 
-export default (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) => {
+/**
+ * @param {string} sassGlob
+ * @param {object} [options]
+ * @param {boolean} options.remify
+ * @param {string[]} options.browsers
+ */
+export const compileSass = (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) => {
 	if (typeof sassGlob !== 'string') {
 		return Promise.reject(new Error('No glob provided.'));
 	}
@@ -105,3 +112,5 @@ export default (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) => {
 		}),
 	);
 };
+
+export default compileSass
