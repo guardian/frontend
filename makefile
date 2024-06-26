@@ -82,24 +82,26 @@ test-watch: install
 # Validate all assets.
 validate: install
 	@./tools/task-runner/runner.mjs validate/index.mjs --verbose
+	@yarn prettier dev --check
 	@yarn prettier */test/resources/*.json --check
 
 # Validate all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/task-runner/runner.mjs validate/sass.js --verbose
+	@./tools/task-runner/runner.mjs validate/sass.mjs --verbose
 
 # Validate all JS.
 validate-javascript: install # PRIVATE
-	@./tools/task-runner/runner.mjs validate/javascript.js
+	@./tools/task-runner/runner.mjs validate/javascript.mjs
 
 # Fix JS linting errors.
 fix: install
-	@./tools/task-runner/runner.mjs validate/javascript-fix.js
+	@./tools/task-runner/runner.mjs validate/javascript-fix.mjs
+	@yarn prettier dev --write
 	@yarn prettier */test/resources/*.json --write
 
 # Fix committed JS linting errors.
 fix-commits: install
-	@./tools/task-runner/runner.mjs validate-head/javascript-fix.js
+	@./tools/task-runner/runner.mjs validate-head/javascript-fix.mjs
 
 # Update caniuse db used by browserslist
 # https://github.com/browserslist/update-db
