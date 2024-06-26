@@ -2681,12 +2681,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:19.6.0":
-  version: 19.6.0
-  resolution: "@guardian/commercial@npm:19.6.0"
+"@guardian/commercial@npm:19.9.1":
+  version: 19.9.1
+  resolution: "@guardian/commercial@npm:19.9.1"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
-    "@guardian/ophan-tracker-js": "npm:2.0.4"
+    "@guardian/ophan-tracker-js": "npm:2.1.1"
     "@guardian/prebid.js": "npm:8.34.0"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
@@ -2701,10 +2701,10 @@ __metadata:
     "@guardian/core-web-vitals": ^6.0.0
     "@guardian/identity-auth": ^2.1.0
     "@guardian/identity-auth-frontend": ^4.0.0
-    "@guardian/libs": ^16.1.0
+    "@guardian/libs": ^17.0.0
     "@guardian/source-foundations": ^14.1.2
     typescript: ~5.3.3
-  checksum: 10c0/58228c1cc2368f91423de53c84d0954e1e23fd280b37638685f7123fd484a387b46cedac14ce7c635a35b155e8848c7dac8e5d9047dddc982c7ad323b32ac427
+  checksum: 10c0/bacc021d3bfca4fbdab26fcaba037ea936a9a5a98df6f0c577f60ef8d748a85c8e8bbd2a5a83084f774bc4674d23af7e06daa9c7e9fdff68185c9806e0522130
   languageName: node
   linkType: hard
 
@@ -2777,7 +2777,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:7.0.1"
-    "@guardian/commercial": "npm:19.6.0"
+    "@guardian/commercial": "npm:19.9.1"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:2.1.0"
@@ -2954,10 +2954,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/ophan-tracker-js@npm:2.0.4":
-  version: 2.0.4
-  resolution: "@guardian/ophan-tracker-js@npm:2.0.4"
-  checksum: 10c0/59eed1992681e12956c6f4503094d97d8b238f8e58db1592414cdd1f0bc64eb9ed7c97402f9715bc0bba0f0d48cd07538c7d6a686dc444e800df8824a55d7aa9
+"@guardian/ophan-tracker-js@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@guardian/ophan-tracker-js@npm:2.1.1"
+  checksum: 10c0/db3bf9ff5f1a705c84fa0e3a59e727fd6d187adcef0fd995ede80858bdb6e193f83071bac21a8e1471c989dc06d7c21e0f01efec45459991dd5675b4d29b9dba
   languageName: node
   linkType: hard
 
