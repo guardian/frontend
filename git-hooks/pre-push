@@ -42,7 +42,7 @@ const confirmIfMain = execa
 const validate = () =>
     execa(
         './tools/task-runner/runner.mjs',
-        ['validate/scalafmt.js', 'validate-head/index.js', 'validate/check-for-disallowed-strings.js'],
+        ['validate-head/index.mjs'],
         {
             stdio: 'inherit',
         }
