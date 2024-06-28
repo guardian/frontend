@@ -83,7 +83,7 @@ object Dependencies {
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
   val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
 
-  val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "4.11"
+  val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "7.4"
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "2.1.3"
