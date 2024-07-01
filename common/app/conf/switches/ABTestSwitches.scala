@@ -57,7 +57,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sticky-liveblog-ask-test",
+    "ab-sticky-live-blog-ask-test",
     "A sticky reader revenue ask on the left column of a liveblog",
     owners = Seq(Owner.withEmail("growth@theguardian.com")),
     safeState = Off,
