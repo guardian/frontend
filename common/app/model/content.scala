@@ -25,6 +25,7 @@ import scala.util.Try
 import implicits.Booleans._
 import org.joda.time.DateTime
 import conf.switches.Switches.InteractiveHeaderSwitch
+import _root_.contentapi.SectionTagLookUp.sectionId
 
 sealed trait ContentType {
   def content: Content

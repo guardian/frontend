@@ -27,6 +27,7 @@ import scala.util.matching.Regex
 import utils.ShortUrls
 
 import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
+import model.ApiContent2Is
 
 object Commercial {
 
@@ -354,6 +355,9 @@ case class MetaData(
 
   def hasPageSkin(request: RequestHeader): Boolean =
     DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
+
+  def hasLiveBlogTopAd(request: RequestHeader): Boolean =
+    DfpAgent.hasLiveBlogTopAd(this, request)
 
   def omitMPUsFromContainers(edition: Edition): Boolean =
     if (isPressedPage) {
