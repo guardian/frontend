@@ -54,4 +54,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 7, 31)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-sticky-liveblog-ask-test",
+    "A sticky reader revenue ask on the left column of a liveblog",
+    owners = Seq(Owner.withEmail("growth@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 7, 31)),
+    exposeClientSide = true,
+  )
 }
