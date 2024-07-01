@@ -6,7 +6,7 @@ import play.api.libs.json._
 case class LiveBlogTopSponsorship(
     lineItemName: String,
     lineItemId: Long,
-    sections: Set[String],
+    sections: Seq[String],
     adTest: Option[String],
     targetsAdTest: Boolean,
 ) {

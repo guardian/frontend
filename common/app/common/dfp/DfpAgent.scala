@@ -20,7 +20,7 @@ object DfpAgent
 
   private lazy val inlineMerchandisingTagsAgent = Box[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val targetedHighMerchandisingLineItemsAgent = Box[Seq[HighMerchandisingLineItem]](Seq.empty)
-  private lazy val liveblogTopAgent = Box[Seq[LiveBlogTopSponsorship]](Nil)
+  private lazy val liveblogTopSponsorshipAgent = Box[Seq[LiveBlogTopSponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = Box[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
@@ -30,7 +30,7 @@ object DfpAgent
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
     targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
-  protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopAgent.get()
+  protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopSponsorshipAgent.get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
     takeoverWithEmptyMPUsAgent.get()
@@ -104,7 +104,7 @@ object DfpAgent
 
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
 
-    update(liveblogTopAgent)(grabLiveBlogTopSponsorshipsFromStore())
+    update(liveblogTopSponsorshipAgent)(grabLiveBlogTopSponsorshipsFromStore())
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 
