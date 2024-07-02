@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .element-rich-link--not-upgraded.element-rich-link--tag {
     // only display tag based rich links when they are fully upgraded (as we have no link text)
     // not using `display: none` here so spacefinder still sees it
@@ -16,9 +18,9 @@
     @include stars();
 
     .stars {
-        padding: $gs-baseline / 6;
+        padding: math.div($gs-baseline, 6);
         display: inline-block;
-        margin-top: $gs-baseline / 2;
+        margin-top: $gs-baseline * 0.5;
         margin-left: 0;
     }
 
@@ -69,7 +71,7 @@
 
 .rich-link--gallery {
     .rich-link__header {
-        padding-top: $gs-baseline / 4;
+        padding-top: $gs-baseline * 0.25;
     }
 }
 
@@ -152,5 +154,5 @@
     @include fs-textSans(1);
     color: $brightness-46;
     font-weight: bold;
-    margin: -$gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+    margin: -$gs-baseline * 0.5 $gs-gutter * 0.25 $gs-baseline;
 }

@@ -76,7 +76,7 @@ $breaking-news-close-icon-width: 32px;
 
     .inline-marque-36 {
         position: absolute;
-        left: 0 - $breaking-news-icon-width - $gs-gutter / 2;
+        left: 0 - $breaking-news-icon-width - $gs-gutter * 0.5;
         top: 0;
     }
 }

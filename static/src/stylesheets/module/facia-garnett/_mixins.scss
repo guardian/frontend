@@ -15,8 +15,8 @@ $breakpoints: (
     .index-page-header {
         overflow: hidden;
         position: relative;
-        margin-left: $gs-gutter / 2;
-        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter * 0.5;
+        margin-right: $gs-gutter * 0.5;
 
         @include mq(mobileLandscape) {
             margin-left: $gs-gutter;

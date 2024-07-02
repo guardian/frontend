@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .amp-ad-container {
     background: $brightness-93;
     background-size: 105px;
@@ -7,7 +9,7 @@
     float: right;
     height: 272px;
     width: 300px;
-    margin: $gs-baseline / 3 0 $gs-baseline $gs-gutter;
+    margin: math.div($gs-baseline, 3) 0 $gs-baseline $gs-gutter;
 
     @include mq($until: 550px) {
         clear: both;
@@ -23,7 +25,7 @@
         font-size: 12px;
         line-height: 1rem;
         font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-        padding: $gs-baseline / 4 $gs-gutter / 2;
+        padding: $gs-baseline * 0.25 $gs-gutter * 0.5;
         color: $brightness-46;
         text-align: right;
     }

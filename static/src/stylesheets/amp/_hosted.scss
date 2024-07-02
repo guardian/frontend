@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $header-height: 4 * $gs-baseline;
 $thumb-width: 1.5 * $gs-column-width;
 $badge-width: $gs-column-width + $gs-gutter;
@@ -7,7 +9,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 }
 
 .hosted__glogo {
-    padding: $gs-baseline/3 $gs-gutter/2;
+    padding: math.div($gs-baseline, 3) $gs-gutter*0.5;
     background-color: $brightness-7;
     position: absolute;
     top: 0;
@@ -89,7 +91,7 @@ $badge-width: $gs-column-width + $gs-gutter;
     display: block;
     color: #ffffff;
     line-height: 28px;
-    padding-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline * 0.5;
 }
 
 .hosted__cta-btn-text {
@@ -166,7 +168,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 
 .hosted__label {
     position: absolute;
-    left: $badge-width + $gs-gutter/2;
+    left: $badge-width + $gs-gutter*0.5;
     top: 0;
     bottom: 0;
     padding-top: $gs-baseline;
@@ -209,14 +211,14 @@ $badge-width: $gs-column-width + $gs-gutter;
         font-size: 24px;
         font-weight: 500;
         margin: 0;
-        padding: $gs-baseline/2 $gs-gutter/2;
+        padding: $gs-baseline*0.5 $gs-gutter*0.5;
         height: 38px;
         text-align: left;
         line-height: 1;
     }
 
     .survey-text {
-        padding: $gs-baseline/3 $gs-gutter/2 0;
+        padding: math.div($gs-baseline, 3) $gs-gutter*0.5 0;
         border-left: 1px solid $text-colour;
         border-right: 1px solid $text-colour;
         border-bottom: 1px solid $text-colour;
@@ -332,7 +334,7 @@ $badge-width: $gs-column-width + $gs-gutter;
     bottom: 0;
     width: $badge-width;
     z-index: $zindex-ads;
-    margin: 0 $gs-gutter/2;
+    margin: 0 $gs-gutter*0.5;
     @include mq(mobileLandscape) {
         margin: 0 $gs-gutter;
     }
@@ -375,14 +377,14 @@ $badge-width: $gs-column-width + $gs-gutter;
 .hosted__next-page-title {
     font-size: 14px;
     line-height: 16px;
-    padding: $gs-baseline / 2;
+    padding: $gs-baseline * 0.5;
     min-height: 42px;
 }
 
 .hosted-video-page {
     .hosted__next-page {
         margin: $gs-baseline 0 0;
-        padding: 0 $gs-gutter / 2 $gs-baseline;
+        padding: 0 $gs-gutter * 0.5 $gs-baseline;
         background: $brightness-97;
         @include mq(480px) {
             padding: 0 $gs-gutter $gs-baseline;

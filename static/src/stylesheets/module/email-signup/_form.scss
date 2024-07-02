@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .email-sub {
     @include clearfix();
 }
@@ -13,7 +15,7 @@
     // pixel calculations are manual design
     // adjustments, off grid, based on element font-size
     width: calc(100% + #{$rounded-adjustment});
-    margin-left: -#{$rounded-adjustment / 2};
+    margin-left: -#{$rounded-adjustment * 0.5};
 }
 
 .email-sub__form {
@@ -113,7 +115,7 @@
 
     .submit-input__icon {
         display: inline-block;
-        margin-right: $gs-gutter / 4;
+        margin-right: $gs-gutter * 0.25;
     }
 }
 
@@ -133,7 +135,7 @@
     @include fs-textSans(1, $size-only: true);
     color: $brand-main;
     display: block;
-    padding-left: $gs-baseline / 3;
+    padding-left: math.div($gs-baseline, 3);
     position: relative;
 }
 
@@ -157,10 +159,10 @@
         width: $icon-size;
 
         svg {
-            height: $icon-size / 2;
-            margin-top: $icon-size / 4;
-            margin-left: $icon-size / 4;
-            width: $icon-size / 2;
+            height: $icon-size * 0.5;
+            margin-top: $icon-size * 0.25;
+            margin-left: $icon-size * 0.25;
+            width: $icon-size * 0.5;
         }
     }
 }
@@ -413,7 +415,7 @@
 .email-sub__form--plaintone {
     .label__icon {
         display: inline-block;
-        margin-right: $gs-gutter / 4;
+        margin-right: $gs-gutter * 0.25;
     }
 
     .email-sub__text-input {

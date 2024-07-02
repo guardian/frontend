@@ -5,15 +5,17 @@
  * Full, enhanced styles provided directly by card endpoint,
  * e.g. https://membership.theguardian.com/event/the-observer-election-countdown-16253236869/card
  */
+@use "sass:math";
+
 .element-membership--not-upgraded {
     border-top: 1px dotted $brightness-86;
     border-bottom: 1px dotted $brightness-86;
-    margin-bottom: $gs-baseline / 1.5;
+    margin-bottom: math.div($gs-baseline, 1.5);
 
     @include mq(mobileLandscape) {
         float: left;
         width: gs-span(3);
-        margin: $gs-baseline / 3 $gs-gutter $gs-baseline / 2 0;
+        margin: math.div($gs-baseline, 3) $gs-gutter $gs-baseline * 0.5 0;
     }
 
     p {
@@ -24,7 +26,7 @@
         @include fs-textSans(1);
         display: block;
         color: $brightness-46;
-        padding: $gs-baseline/4 0;
+        padding: $gs-baseline*0.25 0;
     }
 
     a {

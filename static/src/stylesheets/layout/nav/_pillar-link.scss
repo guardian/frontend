@@ -7,7 +7,7 @@
     display: block;
     // Weird number to get the most out of available space
     font-size: 15.4px;
-    height: $pillar-height - $gs-baseline / 2;
+    height: $pillar-height - $gs-baseline * 0.5;
     line-height: 1;
     padding: 9px 5px 0;
     position: relative;
@@ -32,13 +32,13 @@
     @include mq(tablet) {
         font-size: 22px;
         padding-top: $gs-baseline - 1px;
-        height: $pillar-height + ($gs-baseline / 2);
+        height: $pillar-height + ($gs-baseline * 0.5);
         padding-right: $gs-gutter;
         padding-left: $pillar-padding;
 
         .new-header--slim &,
         .header-top-nav--slim & {
-            height: $pillar-height + ($gs-baseline / 2);
+            height: $pillar-height + ($gs-baseline * 0.5);
             padding-top: $gs-baseline - 1px;
         }
     }
@@ -154,7 +154,7 @@
     color: $brightness-100;
     font-weight: 300;
     float: left;
-    padding-right: $gs-gutter / 4;
+    padding-right: $gs-gutter * 0.25;
     transition: color 250ms ease-out;
 
     &:hover,

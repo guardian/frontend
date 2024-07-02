@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .right-most-popular {
     clear: left;
 }
@@ -6,12 +8,12 @@
     @include multiline(4, $brightness-86, top);
     border-top: 0;
     padding-top: $gs-baseline*1.2;
-    padding-bottom: $gs-baseline/1.5;
+    padding-bottom: math.div($gs-baseline, 1.5);
 }
 
 .right-most-popular-item {
     clear: left;
-    padding-top: $gs-baseline/3;
+    padding-top: math.div($gs-baseline, 3);
     margin-bottom: $gs-baseline;
     border-top: 1px solid $brightness-86;
 
@@ -69,7 +71,7 @@
         width: $gs-baseline*6;
         height: $gs-baseline*6;
         padding-top: 3px;
-        margin-right: $gs-gutter/2;
+        margin-right: $gs-gutter*0.5;
         overflow: hidden;
         position: relative;
         float: left;
@@ -86,7 +88,7 @@
     .trail__count {
         bottom: -4px;
         top: auto;
-        left: $gs-column-width*2 + $gs-gutter/2;
+        left: $gs-column-width*2 + $gs-gutter*0.5;
 
         a {
             @include fs-textSans(2, true);
@@ -95,5 +97,5 @@
 }
 
 .right-most-popular__content {
-    margin-left: ($gs-baseline*6) + ($gs-gutter/2);
+    margin-left: ($gs-baseline*6) + ($gs-gutter*0.5);
 }

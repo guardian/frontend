@@ -1,6 +1,8 @@
 // Base rich link styles
 //----------------------------------
 
+@use "sass:math";
+
 .rich-link {
     background-color: $brightness-93;
     margin: 0;
@@ -25,13 +27,13 @@
 .rich-link .rich-link__header {
     @include fs-headline(3);
     font-weight: 500;
-    padding: $gs-baseline / 3 $gs-gutter / 4 .5em;
+    padding: math.div($gs-baseline, 3) $gs-gutter * 0.25 .5em;
     box-sizing: border-box;
     min-height: $gs-baseline * 3;
 }
 
 .rich-link__read-more {
-    padding-left: $gs-gutter / 4;
+    padding-left: $gs-gutter * 0.25;
 }
 
 .rich-link__arrow {
@@ -91,8 +93,8 @@
 
     @include mq($until: mobileLandscape) {
         width: $gs-gutter * 6.5;
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
+        margin-bottom: $gs-baseline * 0.5;
+        margin-right: $gs-gutter * 0.5;
 
         .rich-link__header {
             @include fs-headline(1, true);

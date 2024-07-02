@@ -1,5 +1,7 @@
 @charset 'UTF-8';
 
+@use "sass:math";
+
 // The main image needs to take up 100vh and the slim header needs to sit just on top of it.
 .l-header--new-gallery {
     position: absolute;
@@ -10,7 +12,7 @@
 
 .gallery__divider {
     @include mq(desktop) {
-        padding-top: $gs-gutter / 2;
+        padding-top: $gs-gutter * 0.5;
     }
 }
 
@@ -32,9 +34,9 @@
         &:before {
             content: '';
             position: absolute;
-            top: -$gs-gutter/2;
+            top: -$gs-gutter*0.5;
             bottom: 0;
-            left: -$gs-gutter/2;
+            left: -$gs-gutter*0.5;
             border-left: 1px solid $brightness-20;
         }
     }
@@ -50,7 +52,7 @@
     @include mq($until: tablet) {
         margin-left: -$gs-gutter;
         margin-right: -$gs-gutter;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline * 0.5;
         border-top: 1px solid $brightness-20;
 
         &:first-of-type {
@@ -59,8 +61,8 @@
     }
 
     @include mq($until: mobileLandscape) {
-        margin-left: -$gs-gutter / 2;
-        margin-right: -$gs-gutter / 2;
+        margin-left: -$gs-gutter * 0.5;
+        margin-right: -$gs-gutter * 0.5;
     }
 
     @include mq(desktop) {
@@ -92,14 +94,14 @@
 
     @include mq($until: desktop) {
         margin-bottom: $gs-baseline * 2;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline * 0.5;
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
 
     @include mq($until: mobileLandscape) {
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
+        padding-right: $gs-gutter * 0.5;
     }
 
     @include mq(desktop) {
@@ -117,7 +119,7 @@
     margin-bottom: .5rem;
 
     @include mq(desktop) {
-        padding-right: $gs-gutter / 2;
+        padding-right: $gs-gutter * 0.5;
     }
 
     a {
@@ -143,7 +145,7 @@
     color: $brightness-86;
 
     @include mq(desktop) {
-        padding-right: $gs-gutter / 2;
+        padding-right: $gs-gutter * 0.5;
     }
 }
 
@@ -187,7 +189,7 @@
     .meta__comment-count--bottom {
         display: block;
         float: none;
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline*0.5;
 
         .commentcount {
             position: static;
@@ -242,7 +244,7 @@
     right: 0;
     width: 44px;
     height: 44px;
-    margin: $gs-gutter/2;
+    margin: $gs-gutter*0.5;
     position: absolute;
 }
 
@@ -255,7 +257,7 @@
     .element--thumbnail & {
         width: 33px;
         height: 33px;
-        margin: $gs-baseline/3 $gs-gutter/5;
+        margin: math.div($gs-baseline, 3) $gs-gutter*0.2;
         display: none;
     }
 

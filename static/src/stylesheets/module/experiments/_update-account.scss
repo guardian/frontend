@@ -34,7 +34,7 @@
         }
 
         display: block;
-        top: $gs-baseline/2;
+        top: $gs-baseline*0.5;
         right: $gs-baseline + 36px;
         svg {
             width: 36px;
@@ -58,7 +58,7 @@
 
     .site-message__close-btn {
         position: absolute;
-        top: $gs-baseline/2;
+        top: $gs-baseline*0.5;
         right: $gs-baseline;
         height: 36px;
         width: 36px;
@@ -75,7 +75,7 @@
 
     .site-message__copy {
         @include padding;
-        padding-top: $gs-baseline/4 !important;
+        padding-top: $gs-baseline*0.25 !important;
         @include mq(desktop) {
             margin-left: gs-span(1);
         }

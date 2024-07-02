@@ -135,7 +135,7 @@
 
     position: static !important;
     width: 100% !important;
-    height: $gs-row-height / 2 !important;
+    height: $gs-row-height * 0.5 !important;
     text-align: center;
 }
 

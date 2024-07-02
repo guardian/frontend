@@ -79,7 +79,7 @@
     }
 
     .player {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: $gs-baseline*0.5;
     }
 
     .gu-media-wrapper {
@@ -118,7 +118,7 @@
             max-width: gs-span(9);
         }
         @include mq(desktop) {
-            padding-left: $gs-gutter/2;
+            padding-left: $gs-gutter*0.5;
             border-left: 1px solid $brightness-20;
         }
     }
@@ -171,18 +171,18 @@
     .most-viewed-container__heading {
         @include fs-header(2);
         position: relative;
-        top: $gs-baseline/4;
+        top: $gs-baseline*0.25;
         color: $brightness-93;
     }
 }
 .most-viewed--media {
-    margin-left: -$gs-gutter/2;
-    margin-right: -$gs-gutter/2;
+    margin-left: -$gs-gutter*0.5;
+    margin-right: -$gs-gutter*0.5;
 
     .fc-item--media {
         float: left;
         width: 50%;
-        padding: 0 $gs-gutter/2;
+        padding: 0 $gs-gutter*0.5;
 
         @include mq($until: tablet) {
             &:nth-child(odd):before {

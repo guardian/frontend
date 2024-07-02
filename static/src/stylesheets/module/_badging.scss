@@ -1,12 +1,12 @@
 .badge-slot {
     @include mq($until: leftCol) {
         float: left;
-        margin-right: $gs-gutter / 2;
+        margin-right: $gs-gutter * 0.5;
     }
 
     @include mq(desktop) {
         article:not(.content--type-immersive) & {
-            margin-bottom: $gs-baseline / 2;
+            margin-bottom: $gs-baseline * 0.5;
         }
     }
 }

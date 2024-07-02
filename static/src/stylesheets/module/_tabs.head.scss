@@ -5,6 +5,8 @@
 /* Default tabs
    ========================================================================== */
 
+@use "sass:math";
+
 .tabs {
 }
 
@@ -62,7 +64,7 @@
         display: block;
         box-sizing: border-box;
         min-height: $gs-row-height;
-        padding: $gs-baseline/3 $gs-gutter/3.5 0;
+        padding: math.div($gs-baseline, 3) math.div($gs-gutter, 3.5) 0;
         text-align: left;
         text-decoration: none;
         overflow: hidden;
@@ -94,7 +96,7 @@
 .tabs__content {
     position: relative;
     clear: both;
-    padding-top: ($gs-baseline/3)*2;
+    padding-top: math.div($gs-baseline, 3)*2;
     z-index: 1;
 
     @include mq(tablet) {

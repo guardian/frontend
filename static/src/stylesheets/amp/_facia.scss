@@ -1,6 +1,6 @@
 .fc-container__inner {
     border-top: 1px solid $brightness-86;
-    padding-top: $gs-baseline / 4;
+    padding-top: $gs-baseline * 0.25;
     overflow: hidden;
     position: relative;
     margin-top: $gs-baseline * 2;
@@ -37,7 +37,7 @@
 .fc-item__content {
     // visually the best height
     min-height: gs-span(1);
-    padding: 0 $gs-gutter / 4;
+    padding: 0 $gs-gutter * 0.25;
     position: relative;
     overflow: hidden;
 }
@@ -70,8 +70,8 @@
     line-height: 16px;
     position: absolute;
     bottom: 0;
-    left: $gs-gutter / 4;
-    right: $gs-gutter / 4;
+    left: $gs-gutter * 0.25;
+    right: $gs-gutter * 0.25;
     color: $brightness-86;
 }
 
@@ -96,5 +96,5 @@
 .fc-item__camera-icon__svg {
     width: 17px;
     height: 12px;
-    margin-right: $gs-gutter/5;
+    margin-right: $gs-gutter*0.2;
 }

@@ -114,7 +114,7 @@ td {
 .table__headline {
     @include fs-bodyHeading(2);
     border-top: 1px dotted $brightness-86;
-    padding: $gs-baseline/2 0 $gs-baseline;
+    padding: $gs-baseline*0.5 0 $gs-baseline;
 }
 
 // We replicate the table style

@@ -23,7 +23,7 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
     /* Filthy hacks during AB test */
     /* TODO: Remove these and update iframe class post-AB test */
     width: calc(100% - #{$rounded-adjustment});
-    margin-left: #{$rounded-adjustment / 2};
+    margin-left: #{$rounded-adjustment * 0.5};
 }
 .newsletter-embed__image {
     max-width: $mobile-img-size;

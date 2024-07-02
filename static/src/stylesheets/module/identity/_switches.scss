@@ -2,6 +2,8 @@
 /* Switchboard
    ========================================================================== */
 
+@use "sass:math";
+
 @mixin identity-switch($color) {
     .manage-account__switch-title {
         color: $color;
@@ -14,10 +16,10 @@
     }
 }
 
-$local-gutter: $gs-gutter / 3.5;
-$row-gutter: $gs-gutter / 2;
+$local-gutter: math.div($gs-gutter, 3.5);
+$row-gutter: $gs-gutter * 0.5;
 
-$checkbox-size: $gs-gutter / 1.25;
+$checkbox-size: math.div($gs-gutter, 1.25);
 
 .manage-account__switches ul,
 .manage-account__switches li {
@@ -175,7 +177,7 @@ $checkbox-size: $gs-gutter / 1.25;
     width: $checkbox-size;
     border: 1px solid $brightness-86;
     border-radius: 2px;
-    background-size: $checkbox-size / 1.5;
+    background-size: math.div($checkbox-size, 1.5);
     background: #ffffff no-repeat center center;
     cursor: pointer;
     transition: background-color .125s, border-color .125s;

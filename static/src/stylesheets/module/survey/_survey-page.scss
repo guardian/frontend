@@ -14,7 +14,7 @@
 
     h1 {
         font-weight: bold;
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline*0.5;
         margin-bottom: $gs-baseline;
 
         @include mq(tablet) {
@@ -24,7 +24,7 @@
     }
 
     h2 {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: $gs-baseline*0.5;
     }
 
     p {

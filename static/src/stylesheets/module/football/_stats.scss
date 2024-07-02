@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .match-stats {
     position: relative;
     z-index: 2;
@@ -28,7 +30,7 @@
 
 .match-stats__caption {
     @include fs-textSans(5);
-    margin-bottom: $gs-baseline/6;
+    margin-bottom: math.div($gs-baseline, 6);
     color: $brightness-7;
     font-weight: 400;
     text-align: left;

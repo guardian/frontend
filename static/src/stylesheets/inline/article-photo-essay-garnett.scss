@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../_vars';
 @import '../_mixins';
 
@@ -42,7 +44,7 @@
 
         &:not(.quoted) {
             background-color: $brightness-93;
-            padding: $gs-baseline / 1.5  $gs-baseline $gs-baseline;
+            padding: math.div($gs-baseline, 1.5)  $gs-baseline $gs-baseline;
         }
 
         .inline-icon {
@@ -138,7 +140,7 @@
             // Makes sure that elements which come after the block of images are no longer floating
             & + p, & + blockquote, & + .element-pullquote:not(.element--halfWidth) {
                 clear: both;
-                padding-top: $gs-baseline / 2;
+                padding-top: $gs-baseline * 0.5;
             }
             // changes the padding for a half width quote after directly after a half width image
             & + .element-pullquote.element--halfWidth {
@@ -177,7 +179,7 @@
             float: left;
             margin-right: $gs-gutter;
             border-bottom: 0;
-            margin-top: $gs-baseline / 2;
+            margin-top: $gs-baseline * 0.5;
             clear: none;
         }
 
@@ -216,7 +218,7 @@
     width: 98%;
     margin-top: 0;
     @include mq($until: mobileLandscape) {
-        margin-top: -$gs-baseline / 2;
+        margin-top: -$gs-baseline * 0.5;
     }
 
     & > li {
@@ -226,7 +228,7 @@
         width: 100%;
         margin-right: 1%;
         line-height: 14px;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline * 0.5;
         padding-left: 0 !important; // override padding applied in from-content-api.scss
         border-top: 1px solid $brand-main;
 

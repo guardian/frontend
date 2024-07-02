@@ -1,4 +1,6 @@
-$fc-item-gutter: $gs-gutter / 4;
+@use "sass:math";
+
+$fc-item-gutter: $gs-gutter * 0.25;
 
 /* Garnett items
    ==========================================================================
@@ -12,7 +14,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     @for $imageIndex from 2 through $slideshowSize {
         figure:nth-child(#{$imageIndex}) {
-            animation-delay: #{($totalLoopTime / $slideshowSize) * ($imageIndex - 1)}s;
+            animation-delay: #{math.div($totalLoopTime, $slideshowSize) * ($imageIndex - 1)}s;
         }
     }
 }
@@ -198,8 +200,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title {
-    padding-top: $gs-baseline/12;
-    padding-bottom: $gs-baseline/6;
+    padding-top: math.div($gs-baseline, 12);
+    padding-bottom: math.div($gs-baseline, 6);
     word-wrap: break-word;
     overflow: hidden;
     margin-bottom: 0;
@@ -259,7 +261,7 @@ $fc-item-gutter: $gs-gutter / 4;
     display: none;
     flex: 1 1 auto;
     padding-right: $gs-gutter * .25;
-    padding-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline * 0.5;
 
     .fc-item--has-boosted-title & {
         display: none !important;
@@ -315,7 +317,7 @@ $block-height: 58px;
     line-height: 1rem;
     color: mix(#ffffff, $news-dark, 92%);
     max-height: $block-height;
-    padding: $gs-baseline/4 $gs-baseline/2;
+    padding: $gs-baseline*0.25 $gs-baseline*0.5;
     border-top: 1px solid mix(#ffffff, $news-dark, 50%);
     border-bottom: 4px solid #cc2b12;
     background-color: $news-main;
@@ -464,8 +466,8 @@ $block-height: 58px;
             background-color: $highlight-main;
             display: inline-block;
             line-height: 0;
-            padding: $gs-baseline / 4;
-            margin-top: $gs-baseline / 6;
+            padding: $gs-baseline * 0.25;
+            margin-top: math.div($gs-baseline, 6);
         }
 
         .inline-star {
@@ -622,13 +624,13 @@ $block-height: 58px;
         0% {
             opacity: 0;
         }
-        #{(100% / $totalLoopTime) * $fadeTime} {
+        #{math.div(100%, $totalLoopTime) * $fadeTime} {
             opacity: 1;
         }
-        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime)} {
+        #{math.div(100%, $totalLoopTime) * ($fadeTime + $hangTime)} {
             opacity: 1;
         }
-        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
+        #{math.div(100%, $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
             opacity: 0;
         }
     }

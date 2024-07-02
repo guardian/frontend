@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .content {
     padding-top: 0;
     padding-bottom: $gs-baseline*3;
@@ -115,7 +117,7 @@
 .content__keywords {
     @include fs-textSans(2);
     padding-top: $gs-baseline;
-    padding-bottom: $gs-baseline/3;
+    padding-bottom: math.div($gs-baseline, 3);
 
     .content--media & a {
         color: $brightness-86;
@@ -124,7 +126,7 @@
 
 .content__labels {
     box-sizing: border-box;
-    padding: $gs-baseline/2 0;
+    padding: $gs-baseline*0.5 0;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
@@ -162,7 +164,7 @@
 .content__section-label {
     @include fs-header(2);
     float: left;
-    padding-right: $gs-gutter/3;
+    padding-right: math.div($gs-gutter, 3);
 
     @include mq(leftCol) {
         @include fs-header(3, true);
@@ -171,12 +173,12 @@
     }
 
     .content--interactive & {
-        padding-right: $gs-gutter/3 !important;
+        padding-right: math.div($gs-gutter, 3) !important;
     }
 }
 
 .content__section-label--gallery {
-    margin-right: $gs-gutter / 4;
+    margin-right: $gs-gutter * 0.25;
 }
 
 .content__series-label {
@@ -185,7 +187,7 @@
 
     @include mq($until: tablet) {
         @include fs-header(2);
-        padding-top: $gs-baseline / 3;
+        padding-top: math.div($gs-baseline, 3);
     }
 
     @include mq(leftCol) {
@@ -224,17 +226,17 @@
 .content__inline-section {
     @include fs-header(3);
     box-sizing: border-box;
-    padding: $gs-baseline/2 0 $gs-baseline;
+    padding: $gs-baseline*0.5 0 $gs-baseline;
     border-top: 1px dotted $brightness-86 !important; // Disable tone colour
 }
 
 .content__headline {
     @include fs-headline(5);
-    padding-top: $gs-baseline/6;
+    padding-top: math.div($gs-baseline, 6);
     padding-bottom: $gs-baseline*2;
 
     @include mq($until: tablet) {
-        padding-top: $gs-baseline / 3;
+        padding-top: math.div($gs-baseline, 3);
     }
 
     @include mq(mobileLandscape) {
@@ -242,7 +244,7 @@
     }
 
     @include mq(leftCol) {
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline*0.5;
         padding-bottom: $gs-row-height;
     }
 
@@ -279,7 +281,7 @@
     padding-bottom: 0;
 
     @include mq(leftCol) {
-        margin-bottom: -$gs-baseline / 2;
+        margin-bottom: -$gs-baseline * 0.5;
     }
 }
 
@@ -351,7 +353,7 @@
 
 .content__standfirst {
     @include fs-headline(2);
-    margin-bottom: $gs-baseline/2;
+    margin-bottom: $gs-baseline*0.5;
     color: $brightness-46;
     z-index: 1;
 
@@ -370,7 +372,7 @@
         }
 
         * {
-            margin-bottom: $gs-baseline / 2;
+            margin-bottom: $gs-baseline * 0.5;
         }
     }
 
@@ -407,8 +409,8 @@
     position: relative;
     color: $brightness-46;
     box-sizing: border-box;
-    padding-top: $gs-baseline / 6;
-    margin-bottom: $gs-baseline / 2;
+    padding-top: math.div($gs-baseline, 6);
+    margin-bottom: $gs-baseline * 0.5;
 
     time {
         display: inline-block;
@@ -416,7 +418,7 @@
         @include mq(desktop) {
             .content--interactive & {
                 display: inline;
-                padding-right: $gs-gutter/4;
+                padding-right: $gs-gutter*0.25;
             }
         }
     }
@@ -437,7 +439,7 @@
 
     @include mq(leftCol) {
         min-height: gs-height(1) + $gs-baseline;
-        padding-top: $gs-baseline/6;
+        padding-top: math.div($gs-baseline, 6);
         padding-bottom: $gs-baseline;
         margin-bottom: 0;
         border-top: 1px dotted $brightness-86;
@@ -455,10 +457,10 @@
 }
 
 .content__dateline-lm {
-    padding-top: $gs-baseline/4;
+    padding-top: $gs-baseline*0.25;
 
     @include mq(leftCol) {
-        padding-top: $gs-baseline/6;
+        padding-top: math.div($gs-baseline, 6);
     }
 }
 
@@ -473,7 +475,7 @@
         position: absolute;
         top: 0;
         margin-left: ($left-column + $gs-gutter)*-1;
-        margin-bottom: ($gs-baseline/3)*4;
+        margin-bottom: math.div($gs-baseline, 3)*4;
         width: $left-column;
     }
 
@@ -487,7 +489,7 @@
         position: relative;
         width: gs-span(1);
         height: 60px; //Intentionally off grid
-        margin: $gs-baseline/2 0;
+        margin: $gs-baseline*0.5 0;
         overflow: hidden;
         background-color: $brightness-97;
 
@@ -532,8 +534,8 @@
 .content__mobile-full-width {
     @include mq(mobile, tablet) {
         width: auto;
-        margin-left: -($gs-gutter/2);
-        margin-right: -($gs-gutter/2);
+        margin-left: -($gs-gutter*0.5);
+        margin-right: -($gs-gutter*0.5);
     }
 
     @include mq(mobileLandscape, tablet) {
@@ -550,13 +552,13 @@
 .meta__comment-count--top { // currently used on video page only
     display: none;
     float: right;
-    margin-top: $gs-baseline/2;
-    margin-left: $gs-gutter/4;
+    margin-top: $gs-baseline*0.5;
+    margin-left: $gs-gutter*0.25;
 }
 
 .meta__numbers {
-    padding-bottom: $gs-baseline / 2;
-    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline * 0.5;
+    padding-top: $gs-baseline * 0.5;
     position: absolute;
     right: 0;
     top: 0;
@@ -566,8 +568,8 @@
         border-bottom: 1px dotted;
         border-color: $brightness-86;
         height: 36px;
-        padding-bottom: $gs-baseline / 4;
-        padding-top: $gs-baseline / 4;
+        padding-bottom: $gs-baseline * 0.25;
+        padding-top: $gs-baseline * 0.25;
         position: static;
     }
 }
@@ -576,7 +578,7 @@
     @include fs-bodyHeading(2);
     margin-bottom: 0;
     display: inline-block;
-    padding-top: $gs-baseline/3;
+    padding-top: math.div($gs-baseline, 3);
     color: $brightness-46;
 
     @include mq(leftCol) {
@@ -585,7 +587,7 @@
         display: block;
         border-top: 1px dotted $brightness-86;
         box-sizing: border-box;
-        padding-top: $gs-baseline/6;
+        padding-top: math.div($gs-baseline, 6);
         padding-bottom: $gs-baseline;
         min-height: $gs-baseline*4;
     }
@@ -663,7 +665,7 @@
         display: block;
         position: absolute;
         right: 0;
-        top: $gs-baseline/1.5;
+        top: math.div($gs-baseline, 1.5);
 
         .content__head & {
             display: none;
@@ -681,7 +683,7 @@
 
         .content__meta-container & {
             display: block;
-            padding-top: $gs-baseline/3;
+            padding-top: math.div($gs-baseline, 3);
             margin-bottom: $gs-baseline;
             border-top: 1px dotted $brightness-86;
         }
@@ -1008,8 +1010,8 @@
 
 .content__meta-heading {
     @include fs-header(2);
-    padding-top: ($gs-baseline/3);
-    padding-bottom: ($gs-baseline/3)*4;
+    padding-top: math.div($gs-baseline, 3);
+    padding-bottom: math.div($gs-baseline, 3)*4;
     margin-bottom: 0;
     border-top: 1px solid $brightness-86;
 }
@@ -1073,17 +1075,17 @@
 
 .meta__twitter,
 .meta__email {
-    margin: (-$gs-baseline*2/3) ($gs-gutter/4) (-$gs-baseline/6) 0;
+    margin: math.div(-$gs-baseline*2, 3) ($gs-gutter*0.25) math.div(-$gs-baseline, 6) 0;
     display: inline;
 
     .content__meta-container--tonal-header & {
         @include mq($until: leftCol) {
-            margin-top: -($gs-baseline/3);
+            margin-top: -(math.div($gs-baseline, 3));
         }
     }
 
     svg {
-        margin-top: -1 * $gs-baseline/6;
+        margin-top: math.div(-1 * $gs-baseline, 6);
         overflow: visible;
     }
 
@@ -1110,8 +1112,8 @@
 
         @include mq($until: leftCol) {
             position: relative;
-            margin-top: -$gs-baseline/4;
-            margin-bottom: -$gs-baseline/2;
+            margin-top: -$gs-baseline*0.25;
+            margin-bottom: -$gs-baseline*0.5;
             width: 32px;
             height: 32px;
             padding: 0;
@@ -1157,8 +1159,8 @@
     }
 
     @include mq(leftCol) {
-        margin-top: $gs-baseline/1.2;
-        margin-bottom: $gs-baseline * 3/2;
+        margin-top: math.div($gs-baseline, 1.2);
+        margin-bottom: $gs-baseline * 3*0.5;
         display: block;
     }
 
@@ -1170,7 +1172,7 @@
 @include mq(leftCol) {
     .meta__email {
         .content__meta-container--email.content__meta-container--twitter & {
-            margin-top: $gs-baseline/2;
+            margin-top: $gs-baseline*0.5;
         }
     }
 
@@ -1184,7 +1186,7 @@
 .meta__bio {
     @include fs-headline(1);
     margin-bottom: $gs-baseline;
-    padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline*0.5;
 
     color: $brightness-46;
 
@@ -1197,7 +1199,7 @@
     }
 
     .meta__author--comment & {
-        padding-top: $gs-baseline/6;
+        padding-top: math.div($gs-baseline, 6);
         border-top: 1px dotted $brightness-86;
     }
 
@@ -1208,7 +1210,7 @@
 
     .content__meta-container--tonal-header & {
         border-top: 1px dotted $brightness-86;
-        padding-top: $gs-baseline/6;
+        padding-top: math.div($gs-baseline, 6);
     }
 }
 
@@ -1218,7 +1220,7 @@
     color: $brightness-46;
     margin-bottom: 0;
     border-top: 1px dotted $brightness-86;
-    padding-top: $gs-baseline/6;
+    padding-top: math.div($gs-baseline, 6);
 
     .content__meta-container--bio & {
         margin-top: $gs-baseline;
@@ -1226,7 +1228,7 @@
 
     @include mq($until: leftCol) {
         border: 0;
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline*0.5;
         float: left;
 
 

@@ -4,7 +4,7 @@
     font-size: 20px;
     left: 0;
     line-height: 1;
-    margin-right: 6px + ($veggie-burger / 2);
+    margin-right: 6px + ($veggie-burger * 0.5);
     padding-bottom: $gs-baseline * 2;
     top: 0;
     z-index: $zindex-main-menu;
@@ -16,7 +16,7 @@
         bottom: 0;
         height: 100%;
         overflow: auto;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline * 0.5;
         position: fixed;
         z-index: $zindex-main-menu + 2;
         right: 0;
@@ -25,11 +25,11 @@
     }
 
     @include mq(mobileMedium) {
-        margin-right: 8px + ($veggie-burger / 2);
+        margin-right: 8px + ($veggie-burger * 0.5);
     }
 
     @include mq(mobileLandscape) {
-        margin-right: $gs-gutter + ($veggie-burger / 2);
+        margin-right: $gs-gutter + ($veggie-burger * 0.5);
     }
 
     @include mq(desktop) {

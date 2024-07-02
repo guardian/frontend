@@ -265,7 +265,7 @@
         margin: 0;
         border: 0;
         margin-top: $gs-baseline * 4;
-        margin-bottom: $gs-baseline / 4;
+        margin-bottom: $gs-baseline * 0.25;
         background-color: $brightness-97;
     }
 
@@ -296,7 +296,7 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, .5);
         color: #ffffff;
-        padding: .1em $gs-gutter / 2 .5em;
+        padding: .1em $gs-gutter * 0.5 .5em;
 
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
@@ -328,7 +328,7 @@
         position: relative;
         width: auto;
         margin-left: 0;
-        margin-bottom: $gs-baseline / 2;
+        margin-bottom: $gs-baseline * 0.5;
         border-top: 1px solid $brightness-97;
         border-bottom: 1px solid $brightness-97;
         padding: 0;
@@ -336,7 +336,7 @@
         padding-bottom: $gs-baseline * 3;
 
         .inline-quote {
-            margin: ($gs-baseline / 4) 0;
+            margin: ($gs-baseline * 0.25) 0;
             height: auto;
             width: auto;
             line-height: 1;
@@ -447,8 +447,8 @@
     }
 
     figure.element--immersive {
-        margin-left: -$gs-gutter / 2;
-        margin-right: -$gs-gutter / 2;
+        margin-left: -$gs-gutter * 0.5;
+        margin-right: -$gs-gutter * 0.5;
 
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
@@ -473,8 +473,8 @@
         }
 
         .caption {
-            margin-left: $gs-gutter / 2;
-            margin-right: $gs-gutter / 2;
+            margin-left: $gs-gutter * 0.5;
+            margin-right: $gs-gutter * 0.5;
 
             @include mq(mobileLandscape) {
                 margin-left: $gs-gutter;

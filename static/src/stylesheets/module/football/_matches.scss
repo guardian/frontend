@@ -9,7 +9,7 @@
                 visibility: visible;
 
                 a {
-                    padding-left: $gs-gutter/2;
+                    padding-left: $gs-gutter*0.5;
                     background: darken($brightness-97, 4%);
                 }
             }
@@ -39,7 +39,7 @@
 .football-matches__date {
     color: $brightness-7;
     display: block;
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline*0.5;
 }
 
 .football-match__report {
@@ -74,7 +74,7 @@
     text-align: right;
 
     .football-team__score {
-        right: ($gs-gutter/4)+1;
+        right: ($gs-gutter*0.25)+1;
     }
 
     .team-crest {
@@ -94,7 +94,7 @@
     text-align: left;
 
     .football-team__score {
-        left: ($gs-gutter/4)+1;
+        left: ($gs-gutter*0.25)+1;
     }
 
     .team-crest {
@@ -155,7 +155,7 @@
 }
 
 .football-matches__show-more {
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline*0.5;
     outline: none;
 }
 

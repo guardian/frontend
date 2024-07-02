@@ -1,6 +1,8 @@
 // This will will be removed when the atom library is handling
 // the rendering of all snippet atoms
 
+@use "sass:math";
+
 @mixin clean($element) {
     #{$element}.clean {
         @content;
@@ -19,14 +21,14 @@
 
 .explainer-snippet {
     position: relative;
-    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline / 2;
-    margin: $gs-baseline * 4 / 3 0 $gs-baseline * 3;
+    padding: math.div($gs-baseline, 3) $gs-gutter * 0.25 $gs-baseline * 0.5;
+    margin: math.div($gs-baseline * 4, 3) 0 $gs-baseline * 3;
 
     font-family: $f-sans-serif-text;
 }
 
 .explainer-snippet__header {
-    margin: 0 0 $gs-baseline * 4 / 3;
+    margin: 0 0 math.div($gs-baseline * 4, 3);
     font-weight: bold;
 }
 
@@ -55,7 +57,7 @@
     svg {
         width: 20px;
         height: 20px;
-        margin-right: $gs-gutter / 2;
+        margin-right: $gs-gutter * 0.5;
     }
 }
 

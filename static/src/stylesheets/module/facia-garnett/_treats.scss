@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .treats__container {
     list-style-type: none;
     margin: $gs-baseline 0;
@@ -46,7 +48,7 @@
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline;
-    padding: ($gs-baseline / 4) 0 ($gs-baseline / 6) ($gs-baseline / 2);
+    padding: ($gs-baseline * 0.25) 0 math.div($gs-baseline, 6) ($gs-baseline * 0.5);
     width: 190px;
 
     @include mq(leftCol) {
@@ -66,7 +68,7 @@
 }
 
 .treats__list-item {
-    margin-top: $gs-baseline * 2/3;
+    margin-top: math.div($gs-baseline * 2, 3);
 
     &:first-child {
         margin-top: 0;
@@ -75,8 +77,8 @@
 
 .treats__crossword {
     display: block;
-    margin-top: $gs-baseline * 4/3;
-    margin-bottom: $gs-baseline * 2/3;
+    margin-top: math.div($gs-baseline * 4, 3);
+    margin-bottom: math.div($gs-baseline * 2, 3);
 }
 
 .treats__crossword-link {

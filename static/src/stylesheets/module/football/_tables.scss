@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin table-football--medium {
     th,
     td {
@@ -80,7 +82,7 @@
 
 .team-crest {
     height: 10px;
-    margin-right: $gs-gutter/4;
+    margin-right: $gs-gutter*0.25;
     max-width: 15px;
 }
 
@@ -102,10 +104,10 @@
     @include mq(leftCol) {
         .table__caption--top {
             @include fs-header(2);
-            margin-bottom: ($gs-baseline/3)*4;
+            margin-bottom: math.div($gs-baseline, 3)*4;
             margin-left: ($left-column + $gs-gutter)*-1;
-            padding-bottom: ($gs-baseline/3)*4;
-            padding-top: ($gs-baseline/3);
+            padding-bottom: math.div($gs-baseline, 3)*4;
+            padding-top: math.div($gs-baseline, 3);
             width: $left-column;
             background: none;
             border-bottom: 0;

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $hosted-stripe: 28px;
 $hosted-video-width: 980px;
 $hosted-video-height: 551px;
@@ -12,7 +14,7 @@ $hosted-video-height: 551px;
 }
 
 .host {
-    padding: 0 $gs-gutter / 2;
+    padding: 0 $gs-gutter * 0.5;
     position: relative;
 
     @include mq(tablet) {
@@ -49,7 +51,7 @@ $hosted-video-height: 551px;
 
         > .host__header {
             box-sizing: border-box;
-            padding: $gs-baseline $gs-gutter / 5 * 2;
+            padding: $gs-baseline $gs-gutter * 0.2 * 2;
             width: 160px;
         }
 
@@ -79,11 +81,11 @@ $hosted-video-height: 551px;
 
     > .host__header {
         @include mq($until: mobileLandscape) {
-            padding: $gs-baseline / 2 $gs-gutter / 2;
+            padding: $gs-baseline * 0.5 $gs-gutter * 0.5;
         }
 
         @include mq(mobileLandscape, leftCol) {
-            padding: $gs-baseline / 2 $gs-gutter;
+            padding: $gs-baseline * 0.5 $gs-gutter;
         }
     }
 
@@ -175,7 +177,7 @@ $hosted-video-height: 551px;
 
 .hosted__glogo {
     display: inline-block;
-    padding: 4px $gs-gutter / 2;
+    padding: 4px $gs-gutter * 0.5;
     background-color: $brightness-7;
     text-align: right;
 
@@ -778,7 +780,7 @@ $hosted-video-height: 551px;
     @include f-textSans;
 
     display: inline-block;
-    margin-top: $gs-row-height / 2;
+    margin-top: $gs-row-height * 0.5;
     font-size: 12px;
     line-height: 1.2;
     color: #767676;
@@ -795,13 +797,13 @@ $hosted-video-height: 551px;
         order: 2;
     }
     @include mq($until: tablet) {
-        margin-top: $gs-gutter / 2;
+        margin-top: $gs-gutter * 0.5;
     }
 }
 
 .hosted__social-wrapper {
     border: 0;
-    padding: $gs-gutter / 2 0;
+    padding: $gs-gutter * 0.5 0;
 
     @include mq($until: leftCol) {
         border-top: 1px solid #eeeeee;
@@ -809,7 +811,7 @@ $hosted-video-height: 551px;
     }
     @include mq(leftCol) {
         padding-top: 0;
-        padding-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
 
         .social__item {
             min-width: 30px;
@@ -894,10 +896,10 @@ $hosted-video-height: 551px;
 }
 
 $nextPageThumbHeight: 72px;
-$nextPageThumbWidth: #{$nextPageThumbHeight * 5 / 3};
+$nextPageThumbWidth: #{math.div($nextPageThumbHeight * 5, 3)};
 
 $nextPageThumbHeightMobile: 54px;
-$nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
+$nextPageThumbWidthMobile: #{math.div($nextPageThumbHeightMobile * 5, 3)};
 
 .hosted__next-page .hosted__next-page--tile {
     display: block;

@@ -35,7 +35,7 @@
 
     .caption {
         @include content-gutter();
-        margin: $gs-baseline/2 0;
+        margin: $gs-baseline*0.5 0;
         text-align: right;
     }
 
@@ -43,7 +43,7 @@
         font-size: 12px;
         line-height: 16px;
         color: $brightness-46;
-        margin-top: $gs-baseline/4;
+        margin-top: $gs-baseline*0.25;
     }
 
     .content__article-body p {
@@ -95,7 +95,7 @@
     .inline-hosted-quote {
         position: absolute;
         top: 0;
-        left: $gs-gutter / 2;
+        left: $gs-gutter * 0.5;
     }
 
     .inline-hosted-quote__svg {

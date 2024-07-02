@@ -1,10 +1,12 @@
+@use "sass:math";
+
 .media-primary {
     margin: 0 $gs-gutter * -.5;
     position: relative;
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / -1;
-        margin-right: $gs-gutter / -1;
+        margin-left: math.div($gs-gutter, -1);
+        margin-right: math.div($gs-gutter, -1);
     }
     @include mq(phablet) {
         margin-left: 0;

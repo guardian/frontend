@@ -1,8 +1,10 @@
+@use "sass:math";
+
 $caption-button-size: 32px;
 
 .reveal-caption {
     position: absolute;
-    right: $gs-gutter / 4;
+    right: $gs-gutter * 0.25;
     width: $caption-button-size;
     height: $caption-button-size;
     z-index: 1;
@@ -16,13 +18,13 @@ $caption-button-size: 32px;
 
 
 .reveal-caption--img {
-    bottom: $gs-baseline/2;
+    bottom: $gs-baseline*0.5;
 }
 
 .caption--main {
-    min-height: ($gs-baseline / 3) * 7;
+    min-height: math.div($gs-baseline, 3) * 7;
     max-width: gs-span(7);
-    padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline * 2;
+    padding: math.div($gs-baseline, 3) * 2 $gs-gutter * 0.5 $gs-baseline * 2;
 
     &.caption--img {
         position: absolute;
@@ -32,7 +34,7 @@ $caption-button-size: 32px;
         background: rgba($brightness-7, .8);
         color: #ffffff;
         display: none;
-        padding: $gs-baseline / 2 $gs-gutter * 2 $gs-baseline $gs-gutter / 2;
+        padding: $gs-baseline * 0.5 $gs-gutter * 2 $gs-baseline $gs-gutter * 0.5;
         max-width: 100%;
 
         a {

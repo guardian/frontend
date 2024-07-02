@@ -1,6 +1,8 @@
 // ********************* quiz layout *********************
 // see bottom for auto-reveal stuff
 
+@use "sass:math";
+
 .atom-quiz {
     counter-reset: quiz-question;
     margin: 0; // override pasteup
@@ -34,7 +36,7 @@
 
 // image attached to the question, rather than an answer
 .atom-quiz__question-image {
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
 }
 
 // space answers out
@@ -283,7 +285,7 @@
     display: none;
     border-top: 1px solid $brightness-86;
     background-color: $brightness-97;
-    padding: $gs-baseline / 2 $gs-gutter * 2 / 3;
+    padding: $gs-baseline * 0.5 math.div($gs-gutter * 2, 3);
 
     .atom-quiz--is-results & {
         display: block;
@@ -308,7 +310,7 @@
 
 .atom-quiz__share {
     border-top: 1px solid $brightness-86;
-    padding-top: $gs-baseline * 2 / 3;
+    padding-top: math.div($gs-baseline * 2, 3);
     margin-top: $gs-baseline;
 }
 

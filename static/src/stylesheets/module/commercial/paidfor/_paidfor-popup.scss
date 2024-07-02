@@ -1,12 +1,12 @@
 .popup--paidfor {
     background: $brightness-7;
     box-shadow: none;
-    left: -$gs-gutter / 2;
+    left: -$gs-gutter * 0.5;
     top: $gs-baseline * 4;
     padding: $gs-baseline $gs-gutter;
     color: $brightness-100;
     width: gs-span(3);
-    border-radius: $gs-baseline / 4;
+    border-radius: $gs-baseline * 0.25;
     z-index: $zindex-main-menu;
 
     &,
