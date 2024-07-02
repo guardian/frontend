@@ -13,7 +13,17 @@ object LowFrequency extends FrontType
 object StandardFrequency extends FrontType
 object HighFrequency extends FrontType {
   def highFrequencyPaths: List[String] =
-    List("uk", "us", "au", "europe", "international", "uk/sport", "us/sport", "au/sport")
+    List(
+      "uk",
+      "us",
+      "au",
+      "europe",
+      "international",
+      "uk/sport",
+      "us/sport",
+      "au/sport",
+      "politics/general-election-2024",
+    )
 }
 
 case class CronUpdate(path: String, frontType: FrontType)
