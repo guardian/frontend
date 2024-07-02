@@ -290,10 +290,10 @@ $identity-header-height: 48px;
         width: 18px;
 
         svg {
-            height: 18 * 0.5 + px;
-            margin-top: 18 * 0.25 + px;
-            margin-left: 18 * 0.25 + px;
-            width: 18 * 0.5 + px;
+            height: math.div(18, 2) + px;
+            margin-top: math.div(18, 4) + px;
+            margin-left: math.div(18, 4) + px;
+            width: math.div(18, 2) + px;
             transform: scale(1.2);
             position: absolute;
         }
