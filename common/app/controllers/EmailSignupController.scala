@@ -82,10 +82,13 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
         .fields,
     )
 
+    log.info("++SUBMIT WITH MANY")
+
     val queryStringParameters = form.ref.map("ref" -> _).toList ++
       form.refViewId.map("refViewId" -> _).toList ++
       form.listNames.map("listName" -> _).toList
 
+    log.info("++MAKE REQUEST")
     //FIXME: this should go via the identity api client / app
     // NOTE - always using the '/consent-signup' (no confirmation email)
     // should we be splitting the list into newsletters that require confirmation
