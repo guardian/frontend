@@ -34,8 +34,6 @@ object TagPagePicker extends GuLogging {
 
   private def dcrChecks(tagPage: IndexPage): Map[String, Boolean] = {
     Map(
-      // until we complete https://github.com/guardian/dotcom-rendering/issues/5755
-      ("isNotAccessibilityPage", tagPage.page.metadata.id != "help/accessibility-help"),
       ("isNotTagCombiner", !tagPage.page.isInstanceOf[TagCombiner]),
     )
   }
