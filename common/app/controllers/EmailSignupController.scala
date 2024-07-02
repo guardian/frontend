@@ -93,7 +93,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     // Currently, no editorial newsletters require confirmation emails, but the
     // feature is still supported.
     wsClient
-      .url(s"${Configuration.id.apiRoot}/consent-signup")
+      .url(s"${Configuration.id.apiRoot}/consent-email")
       .withQueryStringParameters(queryStringParameters: _*)
       .addHttpHeaders(getHeaders(request): _*)
       .post(consentMailerPayload)
