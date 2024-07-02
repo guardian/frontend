@@ -83,7 +83,7 @@
 .fc-podcast-container__episode-details .fc-item__standfirst {
     @include mq(desktop) {
         display: block;
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: $gs-baseline*0.5;
         font-size: 13px;
     }
 }

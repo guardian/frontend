@@ -1,17 +1,17 @@
 /* ==========================================================================
     Pop-up
     ========================================================================== */
-$popup-top: $headerHeight + $gs-baseline/2 + 3;
+$popup-top: $headerHeight + $gs-baseline*0.5 + 3;
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
 // TODO:
 // use a proper icon size variabe when the icons are redrawn at mulptile sizes
-$control-offset: 36 + $gs-gutter/2;
+$control-offset: 36 + $gs-gutter*0.5;
 
 .popup--default {
     background: $brightness-100;
-    border-radius: $gs-baseline / 4;
+    border-radius: $gs-baseline * 0.25;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
     left: 0;
     top: $popup-top - 2;
@@ -52,13 +52,13 @@ $control-offset: 36 + $gs-gutter/2;
 .popup__group {
     z-index: 3;
     margin: 0;
-    padding: 0 $gs-gutter/2;
+    padding: 0 $gs-gutter*0.5;
 }
 
 .popup__group-header {
     @include fs-textSans(2);
     color: $brightness-46;
-    padding: $gs-baseline/2 $gs-gutter/2;
+    padding: $gs-baseline*0.5 $gs-gutter*0.5;
     border-top: 1px solid $brightness-86;
     padding-bottom: 0;
     margin: 0;
@@ -200,10 +200,10 @@ $control-offset: 36 + $gs-gutter/2;
     ========================================================================== */
 .popup--search {
     background-color: $brightness-100;
-    border-radius: $gs-baseline / 4;
+    border-radius: $gs-baseline * 0.25;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
     padding: $gs-baseline $gs-gutter 0;
-    top: ($gs-baseline * 2) + $gs-baseline / 2;
+    top: ($gs-baseline * 2) + $gs-baseline * 0.5;
     z-index: $zindex-main-menu + 1;
     outline: 0;
     left: auto;

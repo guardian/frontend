@@ -2,13 +2,15 @@
  * Brand badges
  */
 
+@use "sass:math";
+
 .badge {
     @include fs-textSans(1);
     color: $brightness-46;
     font-weight: bold;
-    margin-top: $gs-baseline / 2;
-    padding-right: $gs-gutter / 2;
-    padding-bottom: $gs-gutter / 2;
+    margin-top: $gs-baseline * 0.5;
+    padding-right: $gs-gutter * 0.5;
+    padding-bottom: $gs-gutter * 0.5;
     text-align: right;
 
     .dumathoin-more + & {
@@ -23,8 +25,8 @@
 .badge--alt {
     float: none;
     border-top: 0;
-    margin-top: $gs-baseline / 3;
-    padding-top: $gs-baseline / 6;
+    margin-top: math.div($gs-baseline, 3);
+    padding-top: math.div($gs-baseline, 6);
     text-align: left;
     padding-right: 0;
 
@@ -55,7 +57,7 @@
     }
 
     > .badge__link {
-        margin: 3 / 4 * $gs-baseline 0 $gs-baseline;
+        margin: 3 * 0.25 * $gs-baseline 0 $gs-baseline;
     }
 
     > .badge__help {
@@ -117,8 +119,8 @@
     @include mq(desktop) {
         min-height: 135px;
         position: absolute;
-        top: $gs-baseline / 2;
-        right: -1 * (gs-span(4) + $gs-gutter / 2);
+        top: $gs-baseline * 0.5;
+        right: -1 * (gs-span(4) + $gs-gutter * 0.5);
     }
 
     @include mq(wide) {
@@ -139,6 +141,6 @@
 
 .badge__logo {
     max-height: $gs-baseline * 5;
-    margin-left: $gs-gutter / 2;
+    margin-left: $gs-gutter * 0.5;
     vertical-align: middle;
 }

@@ -32,7 +32,7 @@
     font-weight: 400;
     line-height: 20px;
     outline: none;
-    padding: 8px $gs-gutter / 2 8px $menu-spacing-left-small;
+    padding: 8px $gs-gutter * 0.5 8px $menu-spacing-left-small;
     position: relative;
     text-align: left;
     width: 100%;
@@ -50,7 +50,7 @@
     font-weight: 500;
     font-size: 24px;
     padding-bottom: 16px;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
 }
 
 

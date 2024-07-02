@@ -169,10 +169,10 @@ $btn-primary-border: $brand-secondary;
         flex: 1 1 300px;
         background: #ffffff;
         border-left: 1px solid $gray-lighter;
-        padding: $grid-gutter-width/2 $grid-gutter-width;
+        padding: $grid-gutter-width*0.5 $grid-gutter-width;
     }
     .container__main {
-        padding: $grid-gutter-width/2 $grid-gutter-width;
+        padding: $grid-gutter-width*0.5 $grid-gutter-width;
     }
 }
 
@@ -195,7 +195,7 @@ $btn-primary-border: $brand-secondary;
 
 .well {
     box-shadow: none;
-    padding: $grid-gutter-width/4 $grid-gutter-width/2 $grid-gutter-width/2;
+    padding: $grid-gutter-width*0.25 $grid-gutter-width*0.5 $grid-gutter-width*0.5;
     border-left: 0;
     border-right: 0;
     border-bottom: 0;

@@ -88,7 +88,7 @@
     z-index: 2;
     width: $garnett-large-button-size;
     height: $garnett-large-button-size;
-    border-radius: $garnett-x-large-button-size / 2;
+    border-radius: $garnett-x-large-button-size * 0.5;
     background-color: $brightness-100;
     box-sizing: border-box;
     overflow: hidden;
@@ -117,7 +117,7 @@
     left: $garnett-large-button-size - 6px;
     width: $garnett-large-button-size;
     height: $garnett-large-button-size;
-    border-radius: $garnett-x-large-button-size / 2;
+    border-radius: $garnett-x-large-button-size * 0.5;
     border: 1px solid $brightness-7;
     background-color: $highlight-main;
 
@@ -189,7 +189,7 @@
 }
 
 .match-summary__comment + .match-summary__comment {
-    margin-left: $gs-gutter / 4;
-    padding-left: $gs-gutter / 4;
+    margin-left: $gs-gutter * 0.25;
+    padding-left: $gs-gutter * 0.25;
     border-left: 1px solid mix($brightness-7, $highlight-main, 20%);
 }

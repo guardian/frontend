@@ -2,8 +2,8 @@
     @include fs-textSans(1);
     color: $brightness-7;
     display: block;
-    height: $pillar-height - $gs-baseline / 2;
-    line-height: $pillar-height - $gs-baseline / 2;
+    height: $pillar-height - $gs-baseline * 0.5;
+    line-height: $pillar-height - $gs-baseline * 0.5;
     padding: 0 4px;
     position: relative;
 
@@ -22,7 +22,7 @@
             border-bottom: 1px solid $brightness-86;
             bottom: -1px;
             content: '';
-            left: $gs-gutter / 4;
+            left: $gs-gutter * 0.25;
             position: absolute;
             right: -9999px;
         }

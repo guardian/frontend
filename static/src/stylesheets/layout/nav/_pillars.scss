@@ -1,7 +1,7 @@
 .pillars {
     clear: right;
     margin: 0;
-    padding: 0 0 0 ($gs-gutter / 2);
+    padding: 0 0 0 ($gs-gutter * 0.5);
 
     .new-header:not(.new-header--slim) &,
     .header-top-nav:not(.header-top-nav--slim) & {
@@ -13,7 +13,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: $pillar-height - $gs-baseline / 2;
+            height: $pillar-height - $gs-baseline * 0.5;
 
             @include mq($until: tablet) {
                 border-left: 0;
@@ -21,7 +21,7 @@
             }
 
             @include mq(tablet) {
-                height: $pillar-height + ($gs-baseline / 2);
+                height: $pillar-height + ($gs-baseline * 0.5);
             }
 
             @include mq(desktop) {
@@ -72,12 +72,12 @@
         margin-left: -$gs-gutter;
 
         @include mq(desktop) {
-            width: $pillar-width--desktop + ($gs-gutter / 2);
+            width: $pillar-width--desktop + ($gs-gutter * 0.5);
         }
 
         body:not(.has-page-skin) & {
             @include mq(leftCol) {
-                width: $pillar-width--leftCol + ($gs-gutter / 2);
+                width: $pillar-width--leftCol + ($gs-gutter * 0.5);
             }
         }
 

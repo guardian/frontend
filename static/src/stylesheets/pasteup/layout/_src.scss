@@ -1,4 +1,6 @@
 // ROWS
+@use "sass:math";
+
 @mixin layout-row($class, $detect: false) {
     @if ($detect) {
 
@@ -76,7 +78,7 @@
 
     @each $i in 2, 3, 4 {
         .#{$class}--items-#{$i} .#{$class}__item {
-            width: $fallback-width / $i;
+            width: math.div($fallback-width, $i);
         }
     }
 }
@@ -84,7 +86,7 @@
 // COLUMNS
 
 @function width-of-fallback-column-item($container-width, $gap-between-columns, $number-of-columns) {
-    @return ($container-width - $gap-between-columns * ($number-of-columns - 1)) / $number-of-columns;
+    @return math.div($container-width - $gap-between-columns * ($number-of-columns - 1), $number-of-columns);
 }
 
 @mixin layout-columns(
@@ -111,14 +113,14 @@
     @if not $browser-supports-columns {
         .#{$class} {
             @include clearfix;
-            margin-left: $column-gap / 2 * -1;
-            margin-right: $column-gap / 2 * -1;
+            margin-left: $column-gap * 0.5 * -1;
+            margin-right: $column-gap * 0.5 * -1;
         }
         .#{$class}__item {
             position: relative;
             display: block;
-            margin-left: $column-gap / 2;
-            margin-right: $column-gap / 2;
+            margin-left: $column-gap * 0.5;
+            margin-right: $column-gap * 0.5;
             width: width-of-fallback-column-item(
                 $container-width: $columns-fallback-width,
                 $gap-between-columns: $column-gap,

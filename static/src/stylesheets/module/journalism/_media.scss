@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .podcast {
     @include mq(leftCol) {
         display: grid;
@@ -82,7 +84,7 @@
 .podcast__submeta,
 .podcast__support {
     @include mq(leftCol) {
-        padding-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
         padding-bottom: $gs-baseline;
         border-left: 1px solid $brightness-20;
     }
@@ -101,7 +103,7 @@
     @include mq(leftCol) {
         border-top: 1px solid $brightness-20;
         margin-top: $gs-baseline;
-        padding: ($gs-baseline/2) ($gs-gutter/2) 0 0;
+        padding: ($gs-baseline*0.5) ($gs-gutter*0.5) 0 0;
 
         .content__meta-container {
             margin-bottom: 0;
@@ -126,7 +128,7 @@
 
         .content & {
             @include mq($until: leftCol) {
-                margin-top: $gs-baseline/3;
+                margin-top: math.div($gs-baseline, 3);
             }
             background-image: none;
         }
@@ -167,7 +169,7 @@
     }
 
     @include mq (leftCol) {
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline * 0.5;
     }
 }
 
@@ -186,8 +188,8 @@
 
         @include mq(leftCol) {
             border-left: 1px solid $brightness-20;
-            margin-right: $gs-gutter / 2;
-            padding-bottom: $gs-baseline / 2;
+            margin-right: $gs-gutter * 0.5;
+            padding-bottom: $gs-baseline * 0.5;
         }
     }
 }
@@ -195,31 +197,31 @@
 .podcast__cover-image {
     @include mq(leftCol) {
         max-width: calc(100% - 10px);
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: $gs-baseline*0.5;
     }
 
     @include mq($until: leftCol) {
         float: left;
         height: 120px;
-        margin-right: $gs-gutter / 2;
-        margin-top: $gs-baseline / 2;
+        margin-right: $gs-gutter * 0.5;
+        margin-top: $gs-baseline * 0.5;
         width: 120px;
     }
 }
 
 .podcast__section {
     @include mq($until: phablet) {
-        margin-left: $gs-gutter / -2;
-        margin-right: $gs-gutter / -2;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
+        margin-left: math.div($gs-gutter, -2);
+        margin-right: math.div($gs-gutter, -2);
+        padding-left: $gs-gutter * 0.5;
+        padding-right: $gs-gutter * 0.5;
     }
 }
 
 .podcast__section-heading {
     color: #ffffff;
     font: bold 18px/20px $f-serif-headline;
-    margin: ($gs-gutter / 3) 0;
+    margin: math.div($gs-gutter, 3) 0;
 }
 
 .podcast__section-link {
@@ -248,7 +250,7 @@
     margin-bottom: 0;
 
     @include mq($until: leftCol) {
-        margin-top: $gs-baseline / 3 * 8;
+        margin-top: math.div($gs-baseline, 3) * 8;
     }
 
     @include mq(leftCol, wide) {
@@ -264,7 +266,7 @@
 }
 
 .podcast__meta-item {
-    margin-right: $gs-gutter / 2;
+    margin-right: $gs-gutter * 0.5;
     display: block;
 
     @include mq($until: leftCol) {
@@ -273,7 +275,7 @@
 }
 
 .podcast__meta-icon {
-    margin-right: $gs-gutter / 3;
+    margin-right: math.div($gs-gutter, 3);
 }
 
 .podcast__meta__item-link {
@@ -294,7 +296,7 @@
 }
 
 .podcast__support-icon {
-    margin-left: $gs-gutter / 3;
+    margin-left: math.div($gs-gutter, 3);
 }
 
 .podcast__support-link {
@@ -321,7 +323,7 @@
     border-top: 1px solid $brightness-20;
     margin-top: $gs-baseline * 1.5;
     padding-top: 0;
-    padding-right: $gs-gutter / 2;
+    padding-right: $gs-gutter * 0.5;
 
     display: flex;
     justify-content: space-between;
@@ -335,13 +337,13 @@
 
         .meta__numbers.meta__numbers.meta__numbers.meta__numbers {
             border-top: 1px solid $brightness-20;
-            margin-right: $gs-gutter / -2;
-            padding-right: $gs-gutter / 2;
+            margin-right: math.div($gs-gutter, -2);
+            padding-right: $gs-gutter * 0.5;
         }
     }
 
     .social {
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline * 0.5;
     }
 
     .social-icon__svg.social-icon__svg.social-icon__svg {
@@ -362,7 +364,7 @@
     }
 
     .meta__number.meta__number.meta__number.meta__number {
-        padding-left: $gs-gutter / 4;
+        padding-left: $gs-gutter * 0.25;
         border-color: $brightness-20;
     }
 
@@ -412,7 +414,7 @@
     }
 
     @include mq(leftCol) {
-        padding-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
 
         .most-viewed-container--media {
             border-top-color: $brightness-20;

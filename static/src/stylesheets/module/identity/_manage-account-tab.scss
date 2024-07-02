@@ -16,7 +16,7 @@
     ========================================================================== */
     .manage-account-warning {
         border: 0;
-        padding: $gs-baseline/2 0 0;
+        padding: $gs-baseline*0.5 0 0;
         height: auto;
         &:after {
             @include multiline(4, $brightness-86, top);
@@ -25,7 +25,7 @@
             height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
             background-color: #ffffff;
             margin-bottom: -1px;
-            margin-top: $gs-baseline/2;
+            margin-top: $gs-baseline*0.5;
             width: 100%;
         }
     }
@@ -91,7 +91,7 @@
    ========================================================================== */
     .manage-account-cta {
         width: $gs-baseline*10;
-        margin: ($gs-baseline/2) 0 0;
+        margin: ($gs-baseline*0.5) 0 0;
         display: block;
 
         @include mq(tablet) {
@@ -352,11 +352,11 @@
     @include multiline(4, $brightness-86, top);
     height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
     border: 0;
-    margin: $gs-baseline auto ($gs-baseline / 2);
+    margin: $gs-baseline auto ($gs-baseline * 0.5);
 }
 
 .manage-account-small-divider {
-    margin: $gs-baseline auto ($gs-baseline / 2);
+    margin: $gs-baseline auto ($gs-baseline * 0.5);
     border: 0;
     border-top: 1px solid $brightness-86;
 }
@@ -404,7 +404,7 @@ $modal-close-size: $gs-gutter * 1.75;
     z-index: 10;
     margin: auto;
     float: none;
-    padding: ($gs-gutter + $modal-close-size) $gs-gutter/2 $gs-gutter;
+    padding: ($gs-gutter + $modal-close-size) $gs-gutter*0.5 $gs-gutter;
     @include mq(tablet) {
         padding: $gs-gutter ($gs-gutter*2 + $modal-close-size);
     }
@@ -423,8 +423,8 @@ $modal-close-size: $gs-gutter * 1.75;
     border-radius: 100%;
     display: block;
     position: absolute;
-    top: $gs-gutter / 2;
-    right: $gs-gutter / 2;
+    top: $gs-gutter * 0.5;
+    right: $gs-gutter * 0.5;
     background: transparent;
     @include mq(tablet) {
         right: $gs-gutter;

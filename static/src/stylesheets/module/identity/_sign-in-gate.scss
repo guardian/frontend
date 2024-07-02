@@ -1,4 +1,6 @@
 
+@use "sass:math";
+
 .signin-gate {
     clear: left;
     margin-bottom: $gs-baseline * 2;
@@ -191,7 +193,7 @@
 }
 
 .signin-gate__benefits--text {
-    padding-top: $gs-baseline / 3;
+    padding-top: math.div($gs-baseline, 3);
     font-weight: bold;
     color: $sport-main;
     font-size: 17px;
@@ -235,7 +237,7 @@
     font-size: 20px;
     font-weight: bold;
     color: $brightness-7;
-    padding-top: $gs-baseline / 3;
+    padding-top: math.div($gs-baseline, 3);
     @include mq(tablet) {
         font-size: 20px;
     }

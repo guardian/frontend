@@ -2,7 +2,7 @@
     @include multiline(4, $brightness-86, top);
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     margin-top: $gs-baseline;
-    padding-top: $gs-baseline + $gs-baseline / 2;
+    padding-top: $gs-baseline + $gs-baseline * 0.5;
 }
 
 .submeta--borderless-bottom .submeta__keywords {
@@ -14,14 +14,14 @@
     line-height: 16px;
     color: $brightness-46;
     display: block;
-    margin-bottom: -($gs-baseline / 4);
+    margin-bottom: -($gs-baseline * 0.25);
 }
 
 .submeta__keywords {
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
     padding-bottom: $gs-baseline;
     border-bottom: 1px solid $brightness-86;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
 }
 
 .submeta__links {
@@ -29,7 +29,7 @@
     list-style: none;
     overflow: hidden;
     margin-bottom: 0;
-    margin-left: -$gs-gutter / 4;
+    margin-left: -$gs-gutter * 0.25;
     margin-top: 0;
 }
 
@@ -60,5 +60,5 @@
 .submeta__badge {
     float: right;
     margin-top: -$gs-baseline;
-    margin-left: $gs-gutter / 2;
+    margin-left: $gs-gutter * 0.5;
 }

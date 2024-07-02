@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .formstack-iframe {
     display: block;
     margin: 0 auto;
@@ -12,7 +14,7 @@
 
 .formstack-heading--first {
     @include fs-header(5);
-    margin-top: ($gs-baseline/3)*4;
+    margin-top: math.div($gs-baseline, 3)*4;
 }
 
 .formstack-heading--first + .formstack-section {
@@ -35,5 +37,5 @@
     font-family: $f-sans-serif-text;
     font-size: 13px;
     margin-left: 6px;
-    padding-top: ($gs-baseline/3)*9;
+    padding-top: math.div($gs-baseline, 3)*9;
 }

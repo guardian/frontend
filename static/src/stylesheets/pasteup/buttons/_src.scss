@@ -1,4 +1,6 @@
-$base-size: $gs-baseline / 2;
+@use "sass:math";
+
+$base-size: $gs-baseline * 0.5;
 
 /**
  * 1. As on mobile devices we use Helvetica font which have a different baseline
@@ -6,14 +8,14 @@ $base-size: $gs-baseline / 2;
  */
 @mixin button-height($button-size) {
     height: $button-size;
-    padding: 0 ($button-size / 3);
-    margin-right: $button-size / 3;
+    padding: 0 math.div($button-size, 3);
+    margin-right: math.div($button-size, 3);
     line-height: $button-size - 2px; /* [1] */
 
     .i {
         width: $button-size;
         height: $button-size;
-        margin: -1px (-$button-size / 3) 0;
+        margin: -1px math.div(-$button-size, 3) 0;
     }
 
     svg {
@@ -22,18 +24,18 @@ $base-size: $gs-baseline / 2;
     }
 
     .i-left {
-        margin-left: -($button-size / 3);
+        margin-left: -(math.div($button-size, 3));
         margin-right: 0;
     }
     .i-right {
-        margin-right: -($button-size / 3);
+        margin-right: -(math.div($button-size, 3));
         margin-left: 0;
     }
 }
 
 @mixin button-height-simple($button-size) {
     height: $button-size;
-    padding: 0 ($button-size / 3);
+    padding: 0 math.div($button-size, 3);
     line-height: $button-size - 2px; /* [1] */
 }
 

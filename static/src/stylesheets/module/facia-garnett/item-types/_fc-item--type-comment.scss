@@ -1,8 +1,10 @@
+@use "sass:math";
+
 @mixin comment-avatar($size) {
     .fc-item__avatar {
         border-radius: 50%;
         right: $gs-gutter * .5;
-        top: $gs-baseline / 2;
+        top: $gs-baseline * 0.5;
         overflow: hidden;
         height: gs-height($size);
         width: gs-height($size);
@@ -13,7 +15,7 @@
 
         @include mq($from: tablet) {
             top: auto;
-            bottom: $gs-baseline / 2;
+            bottom: $gs-baseline * 0.5;
         }
     }
 
@@ -24,7 +26,7 @@
         bottom: 0;
         right: 0;
         height: gs-height($size);
-        left: 0 - ($gs-gutter * ($size / 6));
+        left: 0 - ($gs-gutter * math.div($size, 6));
     }
 }
 

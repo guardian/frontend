@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .fc-slice {
     overflow: hidden;
     margin-left: auto;
@@ -211,7 +213,7 @@ Hence why a greater depth of selector specificity is needed.
 
                 .fc-item__avatar__media {
                     height: gs-height(2.5);
-                    left: 0 - ($gs-gutter * (2.5 / 6));
+                    left: 0 - ($gs-gutter * math.div(2.5, 6));
                 }
 
                 .fc-item__standfirst {
@@ -239,7 +241,7 @@ Hence why a greater depth of selector specificity is needed.
 .popular-trails__content {
     @include mq(desktop) {
         min-width: gs-span(8);
-        max-width: (100% / 3) * 2;
+        max-width: math.div(100%, 3) * 2;
     }
 }
 
@@ -259,7 +261,7 @@ Hence why a greater depth of selector specificity is needed.
         }
 
         .tabs__pane--without-mpu {
-            width: (100% / 3) * 3;
+            width: math.div(100%, 3) * 3;
             min-height: 300px;
         }
     }
@@ -291,7 +293,7 @@ Hence why a greater depth of selector specificity is needed.
         .has-no-flex & {
             position: absolute;
             top: $gs-baseline;
-            right: -($gs-gutter / 2);
+            right: -($gs-gutter * 0.5);
         }
     }
 

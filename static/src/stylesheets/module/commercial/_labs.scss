@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin separator($colour, $left, $margin-left: 0) {
     content: '';
     position: absolute;
@@ -17,7 +19,7 @@
 // Using the string `dumathoin` gives zero chance of classname collisions, so
 // changing/rotating these classnames becomes as straightforward as possible.
 .dumathoin {
-    margin: 0 $gs-gutter / 2;
+    margin: 0 $gs-gutter * 0.5;
     position: relative;
 
     @include mq(tablet) {
@@ -47,19 +49,19 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: $gs-baseline / 2 $gs-gutter / 2;
+    padding: $gs-baseline * 0.5 $gs-gutter * 0.5;
     width: 100%;
 
     @include mq(mobileLandscape, leftCol) {
         flex-direction: row;
         justify-content: space-between;
-        padding: $gs-baseline / 2 $gs-gutter;
+        padding: $gs-baseline * 0.5 $gs-gutter;
     }
 
     @include mq(leftCol) {
-        padding: $gs-baseline $gs-gutter / 5 * 2;
+        padding: $gs-baseline $gs-gutter * 0.2 * 2;
         // Extra 1px to line up with borders on sections above / below
-        width: 160px + $gs-gutter / 2 + 1px;
+        width: 160px + $gs-gutter * 0.5 + 1px;
     }
 
     @include mq(tablet, desktop) {
@@ -69,7 +71,7 @@
     @include mq(wide) {
         padding: $gs-baseline $gs-gutter;
         // Extra 1px to line up with borders on sections above / below
-        width: 240px + $gs-gutter / 2 + 1px;
+        width: 240px + $gs-gutter * 0.5 + 1px;
     }
 
     .button {
@@ -171,7 +173,7 @@
 
             /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
             > * + * {
-                margin-top: $gs-baseline / 2;
+                margin-top: $gs-baseline * 0.5;
             }
         }
     }
@@ -184,11 +186,11 @@
     }
 
     .dumathoin__row {
-        padding: $gs-baseline / 2 $gs-gutter / 2;
+        padding: $gs-baseline * 0.5 $gs-gutter * 0.5;
         display: flex;
 
         > * {
-            margin: 0 $gs-gutter / 2;
+            margin: 0 $gs-gutter * 0.5;
             position: relative;
 
             /* In Firefox, flex items have a min-width: auto, which prevents
@@ -217,7 +219,7 @@
                 position: relative;
 
                 &:nth-child(even)::before {
-                    @include separator($brightness-86, $gs-gutter / -2);
+                    @include separator($brightness-86, math.div($gs-gutter, -2));
                 }
             }
         }
@@ -227,7 +229,7 @@
                 position: relative;
 
                 &::before {
-                    @include separator($brightness-86, $gs-gutter / -2);
+                    @include separator($brightness-86, math.div($gs-gutter, -2));
                 }
             }
         }
@@ -280,7 +282,7 @@
             }
 
             &::after {
-                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 2), $gs-gutter / 2);
+                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 2), $gs-gutter * 0.5);
             }
         }
     }
@@ -293,11 +295,11 @@
             }
 
             &::before {
-                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
+                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 3), $gs-gutter * 0.5);
             }
 
             &::after {
-                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
+                @include separator($brightness-86, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter * 0.5);
             }
         }
     }
@@ -315,12 +317,12 @@
         }
 
         .vergadain--inverse > .advert__image-container {
-            flex-basis: calc(33.33% - #{$gs-gutter / 2});
+            flex-basis: calc(33.33% - #{$gs-gutter * 0.5});
             margin-right: 0;
         }
 
         .dumathoin__row > .vergadain::after {
-            @include separator($brightness-86, 100%, $gs-gutter / 2);
+            @include separator($brightness-86, 100%, $gs-gutter * 0.5);
         }
 
         .dumathoin__row > .button {
@@ -339,7 +341,7 @@
         }
 
         .vergadain--landscape > .advert__image-container {
-            width: calc(33.33% - #{$gs-gutter / 2});
+            width: calc(33.33% - #{$gs-gutter * 0.5});
         }
     }
 }
@@ -367,7 +369,7 @@
 
     @include mq(tablet) {
         display: flex;
-        padding: $gs-baseline $gs-gutter / 2 0;
+        padding: $gs-baseline $gs-gutter * 0.5 0;
 
         > * {
             flex: 1;
@@ -384,7 +386,7 @@
 
 .dumathoin__2cols {
     > * {
-        flex-basis: calc(50% - #{$gs-gutter / 2});
+        flex-basis: calc(50% - #{$gs-gutter * 0.5});
         flex-grow: 0;
     }
 
@@ -399,7 +401,7 @@
     .has-no-flex .dumathoin--legacy & {
         > * {
             float: left;
-            width: calc(50% - #{$gs-gutter / 2});
+            width: calc(50% - #{$gs-gutter * 0.5});
         }
 
         > :nth-child(even) {
@@ -491,7 +493,7 @@
 .dumathoin-more__button {
     cursor: pointer;
     display: block;
-    margin: 0 0 $gs-baseline $gs-gutter / 2;
+    margin: 0 0 $gs-baseline $gs-gutter * 0.5;
     outline: none;
     width: max-content;
     border-radius: 1000px;

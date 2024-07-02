@@ -47,12 +47,12 @@
 
 .cta-bar__text {
     display: block;
-    margin: ($gs-baseline / 4) 0 9px;
+    margin: ($gs-baseline * 0.25) 0 9px;
 
     @include mq($until: tablet) {
         // These changes are only visible in the footer
         border-top: 1px solid $brand-pastel;
-        padding-top: $gs-baseline / 4;
+        padding-top: $gs-baseline * 0.25;
     }
 }
 
@@ -81,7 +81,7 @@
     color: $brightness-100;
     font-weight: 400;
     line-height: 1.2;
-    margin-top: $gs-baseline / 4;
+    margin-top: $gs-baseline * 0.25;
 }
 
 .cta-bar__cta {
@@ -95,8 +95,8 @@
     line-height: 1;
     height: 29px;
     padding: 6px 11px 0;
-    margin-bottom: $gs-baseline / 2;
-    margin-right: $gs-gutter / 2;
+    margin-bottom: $gs-baseline * 0.5;
+    margin-right: $gs-gutter * 0.5;
     position: relative;
     float: left;
 

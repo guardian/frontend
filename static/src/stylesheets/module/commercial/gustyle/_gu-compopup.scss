@@ -1,18 +1,18 @@
 .gu-compopup {
     @include f-textSans;
 
-    padding: $gs-baseline / 2;
+    padding: $gs-baseline * 0.5;
     width: 80%;
     top: 44px;
     left: auto;
-    right: $gs-baseline / 2;
+    right: $gs-baseline * 0.5;
     z-index: $zindex-modal;
     text-align: left;
     max-width: 16em;
     background-color: #fedd79;
 
     @include mq(gs-span(5) + $gs-gutter, phablet) {
-        padding: $gs-baseline $gs-gutter / 4 * 3;
+        padding: $gs-baseline $gs-gutter * 0.25 * 3;
         top: 62px;
     }
 

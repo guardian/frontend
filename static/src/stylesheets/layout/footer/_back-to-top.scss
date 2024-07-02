@@ -3,10 +3,10 @@
     color: $brightness-100;
     font-weight: 700;
     position: absolute;
-    right: $gs-gutter / 2;
+    right: $gs-gutter * 0.5;
     text-align: right;
     background-color: $brand-main;
-    padding: 0 $gs-gutter / 4;
+    padding: 0 $gs-gutter * 0.25;
     transform: translateY(-50%);
 
     @include mq(mobileLandscape) {
@@ -22,7 +22,7 @@
 .back-to-top__text {
     display: inline-block;
     line-height: 1;
-    padding: $gs-baseline ($gs-gutter / 4) 0 0;
+    padding: $gs-baseline ($gs-gutter * 0.25) 0 0;
 }
 
 .back-to-top__icon-container {

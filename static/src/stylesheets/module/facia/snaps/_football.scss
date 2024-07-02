@@ -1,5 +1,7 @@
+@use "sass:math";
+
 .facia-snap--football {
-    $slice-innerHeight: gs-height(5) - $gs-baseline / 3;
+    $slice-innerHeight: gs-height(5) - math.div($gs-baseline, 3);
 
     overflow: hidden;
     padding: 0;
@@ -9,7 +11,7 @@
     // Generic
     &.facia-snap-embed {
         height: 14rem;
-        margin: 0 $gs-gutter/2;
+        margin: 0 $gs-gutter*0.5;
         padding: 0;
         position: relative;
         background: #ffffff;
@@ -41,7 +43,7 @@
     }
 
     .table__caption--top {
-        $title-padding: $gs-baseline*(2/3);
+        $title-padding: $gs-baseline*math.div(2, 3);
         padding: 0;
 
         .football-matches__heading {
@@ -140,8 +142,8 @@
     // Big match special
     // =============================================================================
     .match-summary {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        padding-left: $gs-gutter*0.5;
+        padding-right: $gs-gutter*0.5;
         background: $brightness-97;
         height: 100%;
         &:hover,
@@ -157,7 +159,7 @@
     }
 
     .status__time {
-        top: $gs-baseline/2;
+        top: $gs-baseline*0.5;
     }
 
     .team__scorers {
@@ -238,7 +240,7 @@ $footballBadgeSizeDesktop: 120px;
 
     background: $brightness-97;
     width: 100%;
-    padding: $gs-baseline/1.5;
+    padding: math.div($gs-baseline, 1.5);
 }
 
 .knockout-embed {

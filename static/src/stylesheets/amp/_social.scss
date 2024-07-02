@@ -7,8 +7,8 @@
 }
 
 .social--top {
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
+    padding-bottom: $gs-baseline * 0.5;
 }
 
 .inline-icon__fallback {
@@ -17,7 +17,7 @@
 
 .social__item {
     float: left;
-    padding: 0 3px $gs-baseline/2 0;
+    padding: 0 3px $gs-baseline*0.5 0;
 }
 
 .social-icon {

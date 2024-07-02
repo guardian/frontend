@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .paidfor-meta {
     @include fs-textSans(3);
     color: $brightness-7;
@@ -11,7 +13,7 @@
 
 .paidfor-meta__label,
 .paidfor-meta__more > .popup__toggle {
-    padding: $gs-baseline / 3 $gs-gutter / 4;
+    padding: math.div($gs-baseline, 3) $gs-gutter * 0.25;
 }
 
 .paidfor-meta__label {

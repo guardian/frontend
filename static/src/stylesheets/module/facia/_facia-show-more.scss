@@ -17,7 +17,7 @@
     transition: opacity 1.5s;
     color: $news-main;
     display: inline-block;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
     opacity: 1;
 }
 

@@ -28,7 +28,7 @@
     @include fs-header(2);
     color: $brightness-7;
     position: relative;
-    margin: ($gs-baseline / 2) 0 $gs-baseline;
+    margin: ($gs-baseline * 0.5) 0 $gs-baseline;
     padding-left: 8px;
 
     @include mq(leftCol) {
@@ -147,7 +147,7 @@
     margin-bottom: $gs-baseline;
     border-top: 1px solid $brightness-86;
     background-color: $brightness-93;
-    padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline;
+    padding: $gs-baseline * 0.5 $gs-gutter * 0.5 $gs-baseline;
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -171,7 +171,7 @@
     @include fs-header(5);
     font-weight: 900;
     line-height: 24px;
-    padding-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline * 0.5;
 }
 
 .newsletter-card__content {
@@ -272,7 +272,7 @@
 .newsletter-card__frequency {
     @include fs-textSans(1);
     color: $brightness-20;
-    padding-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline * 0.5;
 
     .inline-icon {
         fill: $brightness-20;
@@ -341,7 +341,7 @@
     @include fs-header(5);
     color: $brightness-7;
     position: relative;
-    margin: ($gs-baseline / 2) 0 $gs-baseline;
+    margin: ($gs-baseline * 0.5) 0 $gs-baseline;
 
     @include mq(leftCol) {
         position: absolute;

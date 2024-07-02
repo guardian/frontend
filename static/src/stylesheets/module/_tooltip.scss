@@ -7,7 +7,7 @@
     top: 0;
     right: 0;
     z-index: $zindex-content;
-    padding: $gs-baseline / 2 $gs-gutter / 2;
+    padding: $gs-baseline * 0.5 $gs-gutter * 0.5;
 }
 
 .tooltip-box--neutral {
@@ -22,11 +22,11 @@
 
 .tooltip-box__close {
     float: right;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
     width: auto;
 }
 
 .tooltip-box__p {
-    margin-top: $gs-baseline / 2;
+    margin-top: $gs-baseline * 0.5;
     text-align: left;
 }

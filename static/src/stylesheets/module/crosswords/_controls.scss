@@ -1,6 +1,6 @@
 .crossword__controls {
     display: block;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
 
     .button {
         @include fs-textSans(4);
@@ -39,7 +39,7 @@
 
 .crossword__controls_autosave_label {
     @include fs-textSans(3);
-    margin-left: $gs-gutter / 4;
+    margin-left: $gs-gutter * 0.25;
     font-style: italic;
 }
 

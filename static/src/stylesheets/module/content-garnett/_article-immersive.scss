@@ -168,12 +168,12 @@
 
 .caption--immersive {
     @include mq($until: leftCol) {
-        margin: $gs-baseline 0 ($gs-baseline / 2);
+        margin: $gs-baseline 0 ($gs-baseline * 0.5);
     }
 
     @include mq(leftCol) {
         margin-left: -$gs-gutter;
-        padding-top: $gs-baseline / 4;
+        padding-top: $gs-baseline * 0.25;
         position: absolute;
         top: 100px;
         width: gs-span(2);
@@ -191,7 +191,7 @@
 
 .content__standfirst--immersive-article {
     position: relative;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
 
@@ -209,7 +209,7 @@
         position: relative;
         width: auto;
         margin-left: 0;
-        margin-bottom: $gs-baseline / 2;
+        margin-bottom: $gs-baseline * 0.5;
         border-top: 1px solid $brightness-97;
         border-bottom: 1px solid $brightness-97;
         padding: 0;
@@ -217,7 +217,7 @@
         padding-bottom: $gs-baseline * 3;
 
         .inline-quote {
-            margin: ($gs-baseline / 4) 0;
+            margin: ($gs-baseline * 0.25) 0;
             height: auto;
             width: auto;
             line-height: 1;
@@ -392,7 +392,7 @@
         margin: 0;
         border: 0;
         margin-top: $gs-baseline * 4;
-        margin-bottom: $gs-baseline / 4;
+        margin-bottom: $gs-baseline * 0.25;
         background-color: $brightness-97;
     }
 
@@ -423,7 +423,7 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, .5);
         color: #ffffff;
-        padding: .1em $gs-gutter / 2 .5em;
+        padding: .1em $gs-gutter * 0.5 .5em;
 
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
@@ -452,8 +452,8 @@
     }
 
     figure.element--immersive {
-        margin-left: -$gs-gutter / 2;
-        margin-right: -$gs-gutter / 2;
+        margin-left: -$gs-gutter * 0.5;
+        margin-right: -$gs-gutter * 0.5;
         z-index: 1;
 
         @include mq(mobileLandscape) {
@@ -479,8 +479,8 @@
         }
 
         .caption {
-            margin-left: $gs-gutter / 2;
-            margin-right: $gs-gutter / 2;
+            margin-left: $gs-gutter * 0.5;
+            margin-right: $gs-gutter * 0.5;
 
             @include mq(mobileLandscape) {
                 margin-left: $gs-gutter;
@@ -534,7 +534,7 @@
     }
 
     .element-image.element--showcase {
-        margin-bottom: $gs-gutter/2;
+        margin-bottom: $gs-gutter*0.5;
     }
 
     figure.element--showcase,
@@ -624,19 +624,19 @@
     }
     .content__article-body {
         @include mq($from: desktop) {
-            margin-left: -$gs-gutter / 2;
+            margin-left: -$gs-gutter * 0.5;
         }
     }
 
     .content__labels--immersive {
         margin-left: -$gs-gutter;
-        padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 4) $gs-gutter;
+        padding: ($gs-baseline * 0.25) ($gs-gutter * 0.5) ($gs-baseline * 0.25) $gs-gutter;
         display: inline-block;
 
         @include mq($from: tablet) {
-            margin-left: -($gs-gutter / 2);
-            max-width: gs-span(4) + ($gs-gutter / 2);
-            padding: ($gs-baseline / 2) ($gs-gutter / 2);
+            margin-left: -($gs-gutter * 0.5);
+            max-width: gs-span(4) + ($gs-gutter * 0.5);
+            padding: ($gs-baseline * 0.5) ($gs-gutter * 0.5);
 
             .badge-slot {
                 width: auto;
@@ -681,10 +681,10 @@
 
         .badge-slot {
             float: left;
-            margin-right: $gs-gutter / 4;
+            margin-right: $gs-gutter * 0.25;
 
             @include mq($from: tablet) {
-                margin-right: $gs-gutter / 2;
+                margin-right: $gs-gutter * 0.5;
             }
         }
 
@@ -706,12 +706,12 @@
             min-height: 112px;
 
             @include mq($from: tablet) {
-                padding-left: $gs-gutter / 2;
+                padding-left: $gs-gutter * 0.5;
                 width: 100%;
-                left: $gs-gutter / 2;
+                left: $gs-gutter * 0.5;
             }
             @include mq($from: desktop) {
-                left: $gs-gutter / 2;
+                left: $gs-gutter * 0.5;
             }
             @include mq(leftCol) {
                 margin-left: $left-column + $gs-gutter;
@@ -747,7 +747,7 @@
         font-weight: 300;
         position: relative;
         padding-left: 0px;
-        margin-top: $gs-baseline / 2;
+        margin-top: $gs-baseline * 0.5;
         max-width: 280px;
         margin-bottom: $gs-baseline;
         margin-left: 0px;
@@ -761,8 +761,8 @@
             max-width: 460px;
             padding-bottom: 1rem;
             margin-bottom: -$gs-baseline * 2;
-            margin-top: $gs-baseline / 2;
-            margin-left: -$gs-gutter / 2;
+            margin-top: $gs-baseline * 0.5;
+            margin-left: -$gs-gutter * 0.5;
         }
 
         @include mq(leftCol) {
@@ -774,7 +774,7 @@
             position: absolute;
             top: -$gs-baseline * 3;
             bottom: -$gs-baseline * 2;
-            left: -$gs-gutter / 2;
+            left: -$gs-gutter * 0.5;
             width: 1px;
             background-color: $brightness-86;
             content: '';
@@ -797,10 +797,10 @@
     }
 
     .content__meta-container {
-        margin-left: -$gs-gutter/2;
-        margin-right: -$gs-gutter/2;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        margin-left: -$gs-gutter*0.5;
+        margin-right: -$gs-gutter*0.5;
+        padding-left: $gs-gutter*0.5;
+        padding-right: $gs-gutter*0.5;
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
@@ -814,7 +814,7 @@
             padding-right: 0;
         }
         @include mq(desktop) {
-            margin-left: -$gs-gutter / 2;
+            margin-left: -$gs-gutter * 0.5;
         }
         @include mq(leftCol) {
             margin-left: -(gs-span(2) + $gs-gutter);
@@ -824,8 +824,8 @@
         }
     }
     .meta__extras  {
-        margin-left: -$gs-gutter / 2;
-        margin-right: -$gs-gutter / 2;
+        margin-left: -$gs-gutter * 0.5;
+        margin-right: -$gs-gutter * 0.5;
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
@@ -858,7 +858,7 @@
     }
 
     .element-pullquote {
-        padding: $gs-baseline / 2;
+        padding: $gs-baseline * 0.5;
         padding-bottom: $gs-baseline;
     }
 }

@@ -11,8 +11,8 @@
     .content__head--interactive) {
 
     @include mq($until: mobileLandscape) {
-        margin-right: -$gs-gutter / 2;
-        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter * 0.5;
+        margin-left: -$gs-gutter * 0.5;
     }
 
     @include mq($from: mobileLandscape, $until: phablet) {

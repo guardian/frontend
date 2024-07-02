@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .search-tool__input {
     @include ellipsis();
     display: block;
@@ -43,18 +45,18 @@
     @include fs-headline(2);
     box-sizing: border-box;
     color: $brightness-7;
-    padding-top: $gs-baseline / 3;
+    padding-top: math.div($gs-baseline, 3);
     padding-bottom: $gs-baseline;
     width: 100%;
     display: block;
 
     @include mq(tablet, leftCol) {
-        padding-left: $gs-gutter / 4;
+        padding-left: $gs-gutter * 0.25;
     }
 
     .has-page-skin & {
         @include mq(wide) {
-            padding-left: $gs-gutter / 4;
+            padding-left: $gs-gutter * 0.25;
         }
     }
 

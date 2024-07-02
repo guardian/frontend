@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import 'sass-mq/_mq';
 @import 'pasteup/src';
 
@@ -23,7 +25,7 @@
 }
 
 @function aspect-ratio-height($x, $y, $startingWidth: 100%) {
-    @return ($y / $x) * $startingWidth;
+    @return math.div($y, $x) * $startingWidth;
 }
 
 @mixin fix-aspect-ratio($x, $y, $startingWidth: 100%) {
@@ -170,7 +172,7 @@
         margin-right: 0 - $gap * .5;
         & > * {
             box-sizing: border-box;
-            width: (100% / $cols);
+            width: math.div(100%, $cols);
             float: left;
             padding-left: $gap * .5;
             padding-right: $gap * .5;
@@ -220,8 +222,8 @@
 }
 
 @mixin content-gutter {
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+    padding-left: $gs-gutter*0.5;
+    padding-right: $gs-gutter*0.5;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -275,8 +277,8 @@
 @mixin video-icon-size($buttonSize, $iconSize) {
     border-radius: 50%;
     position: absolute;
-    bottom: $buttonSize / 5;
-    left: $buttonSize / 5;
+    bottom: $buttonSize * 0.2;
+    left: $buttonSize * 0.2;
     transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
     user-select: none;
     width: $buttonSize;
