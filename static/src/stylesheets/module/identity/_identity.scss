@@ -1,7 +1,7 @@
-/* Variables
-   ========================================================================== */
 @use "sass:math";
 
+/* Variables
+   ========================================================================== */
 $identity-header-height: 48px;
 
 /* Identity and registration
@@ -471,7 +471,7 @@ $identity-header-height: 48px;
     }
 
     .email-subscription__fieldset & {
-        float: none;;
+        float: none;
     }
 
 }

@@ -1,10 +1,9 @@
+@use "sass:math";
+
 //
 //  Function to create an optimized svg url
 //  See: http://codepen.io/tigt/post/optimizing-svgs-in-data-uris
 //
-//
-@use "sass:math";
-
 @function svg-url($svg) {
     //
     //  Chunk up string in order to avoid
