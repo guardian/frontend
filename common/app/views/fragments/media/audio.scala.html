@@ -24,13 +24,6 @@
                            data-link-name="@trackingCode("iTunes")">Apple Podcasts</a>
                     </li>
                 }
-                @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
-                    <li class="podcast-meta__item podcast-meta__item--googlePodcasts">
-                        <a class="podcast-meta__item__link pseudo-icon"
-                        href="@googlePodcastsUrl"
-                        data-link-name="@trackingCode("googlePodcasts")">Google Podcasts</a>
-                    </li>
-                }
                 @audio.spotifyUrl.map { spotifyUrl =>
                     <li class="podcast-meta__item podcast-meta__item--spotify">
                         <a class="podcast-meta__item__link pseudo-icon"
