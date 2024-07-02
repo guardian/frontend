@@ -36,7 +36,7 @@
 		"@guardian/libs": "17.0.1",
 		"@guardian/prettier": "^3.0.0",
 		"@guardian/shimport": "^1.0.2",
-		"@guardian/source-foundations": "14.2.2",
+		"@guardian/source-foundations": "16.0.0",
 		"@guardian/source-react-components": "22.1.0",
 		"@guardian/source-react-components-development-kitchen": "19.0.0",
 		"@guardian/support-dotcom-components": "1.1.3",
