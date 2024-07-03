@@ -203,9 +203,7 @@ object MatchMetadata extends Football {
     }
 
     val minByMin = related.find { c =>
-      val webPublicationDate =
-        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-      DateHelpers.sameDay(webPublicationDate, matchDate) && c.minByMin && !c.preview
+      c.minByMin && !c.preview
     }
     val preview = related.find { c =>
       val webPublicationDate =
