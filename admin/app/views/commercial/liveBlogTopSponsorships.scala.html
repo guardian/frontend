@@ -27,6 +27,7 @@
         <li>Targets the <pre>culture</pre>,<pre>sport</pre> or <pre>football</pre> section</li>
         <li>Targets the <pre>liveblog</pre> content type</li>
         <li>Targets the <pre>mobile</pre> breakpoint</li>
+        <li>[Optionally] targets an edition</li>
     </ol>
 
     <h2>Sponsorships</h2>
@@ -42,6 +43,7 @@
                 <pre>@section</pre>@if(section != sponsorship.sections.last) {, }
             }
             @if(sponsorship.targetsAdTest) {<br /><small>Adtest:</small> <pre>@sponsorship.adTest</pre>}
+            @if(!sponsorship.editions.isEmpty) {<br /><small>Editions:</small> @for(edition <- sponsorship.editions.map(_.id)) {<pre>@edition</pre>@if(edition != sponsorship.editions.last.id) {, }}}
   </li>
         }
     }

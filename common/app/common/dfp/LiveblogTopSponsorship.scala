@@ -7,6 +7,7 @@ case class LiveBlogTopSponsorship(
     lineItemName: String,
     lineItemId: Long,
     sections: Seq[String],
+    editions: Seq[Edition],
     adTest: Option[String],
     targetsAdTest: Boolean,
 ) {
