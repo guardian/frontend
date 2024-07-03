@@ -19,7 +19,7 @@ trait LiveBlogTopSponsorshipAgent {
       adTest: Option[String],
   ): Seq[LiveBlogTopSponsorship] = {
     liveBlogTopSponsorships.filter { sponsorship =>
-      sponsorship.editions.contains(edition) && sponsorship.hasTargetedSection(sectionId) && sponsorship
+      sponsorship.editions.contains(edition) && sponsorship.sections.contains(sectionId) && sponsorship
         .matchesTargetedAdTest(adTest)
     }
   }

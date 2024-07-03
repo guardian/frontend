@@ -11,13 +11,9 @@ case class LiveBlogTopSponsorship(
     adTest: Option[String],
     targetsAdTest: Boolean,
 ) {
-  def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
-
   def matchesTargetedAdTest(adTest: Option[String]): Boolean =
     if (this.targetsAdTest) { adTest == this.adTest }
     else { true }
-
-  def nonEmpty: Boolean = sections.nonEmpty
 }
 
 object LiveBlogTopSponsorship {
