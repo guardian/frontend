@@ -13,9 +13,14 @@ trait LiveBlogTopSponsorshipAgent {
 
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship]
 
-  private[dfp] def findSponsorships(edition: Edition): Seq[LiveBlogTopSponsorship] = {
+  private[dfp] def findSponsorships(
+      edition: Edition,
+      sectionId: String,
+      adTest: Option[String],
+  ): Seq[LiveBlogTopSponsorship] = {
     liveBlogTopSponsorships.filter { sponsorship =>
-      sponsorship.editions.isEmpty || sponsorship.editions.contains(edition)
+      sponsorship.editions.contains(edition) && sponsorship.hasTargetedSection(sectionId) && sponsorship
+        .matchesTargetedAdTest(adTest)
     }
   }
 
@@ -28,13 +33,7 @@ trait LiveBlogTopSponsorshipAgent {
       val adTest = request.getQueryString("adtest")
       val edition = Edition(request)
 
-      findSponsorships(edition).exists { sponsorship =>
-        if (sponsorship.targetsAdTest) {
-          sponsorship.hasTargetedSection(metadata.sectionId) && sponsorship.adTest == adTest
-        } else {
-          sponsorship.hasTargetedSection(metadata.sectionId)
-        }
-      }
+      findSponsorships(edition, metadata.sectionId, adTest).nonEmpty
     } else {
       false
     }

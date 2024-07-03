@@ -13,7 +13,7 @@ case class LiveBlogTopSponsorship(
 ) {
   def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
 
-  def hasTargetedAdTest(adTest: String): Boolean = this.adTest == Some(adTest)
+  def matchesTargetedAdTest(adTest: Option[String]): Boolean = this.targetsAdTest && this.adTest == adTest
 
   def nonEmpty: Boolean = sections.nonEmpty
 }

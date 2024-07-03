@@ -308,7 +308,9 @@ case class GuLineItem(
 
     val isSponsorship = lineItemType == Sponsorship
 
-    isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship
+    val hasEditionTargeting = targeting.editions.nonEmpty
+
+    isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship && hasEditionTargeting
   }
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
