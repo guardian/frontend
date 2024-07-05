@@ -107,10 +107,10 @@ class ImageContentController(
       val direction = Direction.forPathSegment(rawDirection)
 
       /**
-       * unfortunately we have to infer the date from the path,
-       * because getting the real publication date would require
-       * another call to the content API…
-       */
+        * unfortunately we have to infer the date from the path,
+        * because getting the real publication date would require
+        * another call to the content API…
+        */
       val maybeDate = path match {
         case dateExtractor(rawYear, rawMonth, rawDate) => {
           (Try(rawYear.toInt).toOption, rawMonth, Try(rawDate.toInt).toOption) match {
@@ -164,6 +164,7 @@ class ImageContentController(
               Json.obj(
                 "total" -> response.total,
                 "direction" -> timeDirection,
+                "date" -> maybeDate,
                 "images" -> JsArray(lightboxJson),
               ),
             ),
