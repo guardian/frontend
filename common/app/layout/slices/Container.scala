@@ -18,6 +18,7 @@ case object NavMediaList extends Container
 case object MostPopular extends Container
 case object Video extends Container
 case object VerticalVideo extends Container
+case object Highlights extends Container
 
 object Container extends GuLogging {
 
@@ -33,6 +34,7 @@ object Container extends GuLogging {
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
+      ("fixed/highlights", Highlights),
     ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply)
 
   /** So that we don't blow up at runtime, which would SUCK */
@@ -85,8 +87,8 @@ object Container extends GuLogging {
 
   def showToggle(container: Container): Boolean =
     container match {
-      case NavList | NavMediaList => false
-      case _                      => true
+      case NavList | NavMediaList | Highlights => false
+      case _                                   => true
     }
 
   def customClasses(container: Container): Iterable[String] =
