@@ -18,16 +18,11 @@ import services.ImageQuery
 import services.dotcomrendering.{ImageContentPicker, RemoteRender}
 import views.support.RenderOtherStatus
 
-import scala.concurrent.Future
 import com.gu.contentapi.client.model.Direction.Next
 import com.gu.contentapi.client.model.Direction.Previous
-import java.time.LocalDate
-import java.time.Instant
-import java.time.LocalTime
-import org.joda.time.DateTime
+import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
+import scala.concurrent.Future
 import scala.util.Try
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class ImageContentController(
     val contentApiClient: ContentApiClient,
@@ -99,7 +94,6 @@ class ImageContentController(
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
-  private val ONE_HUNDRED_YEARS = 3600 * 24 * 365 * 100
   private lazy val dateExtractor = """.+/(\d{4})/(\w{3})/(\d{2})/.+""".r
 
   def getNextLightboxJson(path: String, tag: String, rawDirection: String): Action[AnyContent] =
