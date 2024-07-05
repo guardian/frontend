@@ -9,7 +9,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.{FieldType, LiveBlogPage, NameField, TextAreaField, Topic, TopicResult, TopicType}
+import model.{LiveBlogPage, Topic, TopicResult, TopicType}
 import play.api.libs.json.{JsValue, Json}
 import topics.TopicService
 import services.{NewsletterService}
