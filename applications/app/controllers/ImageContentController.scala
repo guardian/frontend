@@ -105,7 +105,19 @@ class ImageContentController(
             case _                     => None
           },
         )
-        Cached(CacheTime.Default)(JsonComponent.fromWritable(JsArray(lightboxJson)))
+
+        if (request.forceDCR)
+          Cached(CacheTime.Default)(
+            JsonComponent.fromWritable(
+              Json.obj(
+                "total" -> response.total,
+                "images" -> JsArray(lightboxJson),
+              ),
+            ),
+          )
+        else
+          Cached(CacheTime.Default)(JsonComponent.fromWritable(JsArray(lightboxJson)))
+
       }
     }
 }
