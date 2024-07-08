@@ -27,10 +27,7 @@ class AudioContainer extends Component {
 		const acastEnabled = config.get('switches.acast');
 		const isPodcast = config.get('page.isPodcast');
 		const sourceUrl =
-			acastEnabled &&
-			isPodcast &&
-			this.state.acastConsent &&
-			!isAdFreeUser()
+			acastEnabled && isPodcast && this.state.acastConsent
 				? this.props.source.replace(
 						'https://',
 						'https://flex.acast.com/',
