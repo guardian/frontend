@@ -6,7 +6,7 @@ import model.{ApplicationContext, TopicsApiResponse}
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
-import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, S3Client, MessageUsService}
+import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, S3Client}
 import services.newsletters.NewsletterSignupAgent
 import topics.TopicService
 
@@ -17,7 +17,6 @@ trait ArticleControllers {
   def remoteRender: DotcomRenderingService
   def topicS3Client: S3Client[TopicsApiResponse]
   def topicService: TopicService
-  def messageUsService: MessageUsService
   def newsletterSignupAgent: NewsletterSignupAgent
 
   implicit def appContext: ApplicationContext
