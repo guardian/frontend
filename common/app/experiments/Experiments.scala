@@ -22,7 +22,7 @@ object ActiveExperiments extends ExperimentsDefinition {
 
 object UseSourcepointPropertyId
     extends Experiment(
-      name = "use-sourcepoint-property-idDSTEST",
+      name = "use-sourcepoint-property-id",
       description = "Use Sourcepoint propertyId instead of propertyHref",
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),

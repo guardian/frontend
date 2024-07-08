@@ -309,6 +309,16 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
+  val LiveBlogTopSponsorshipSwitch = Switch(
+    SwitchGroup.Feature,
+    "live-blog-top-sponsorship",
+    "When on allows new sposorship ad to be displayed on live blogs",
+    owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   // Owner: Maria Livia Chiorean
   val SmartAppBanner = Switch(
     SwitchGroup.Feature,
