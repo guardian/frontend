@@ -129,7 +129,6 @@ class ArticleController(
           blocks,
           pageType,
           newsletter,
-          messageUs = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
