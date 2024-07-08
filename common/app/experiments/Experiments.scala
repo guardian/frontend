@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       UseSourcepointPropertyId,
-      LiveBlogTopSponsorship,
       DarkModeWeb,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
@@ -23,20 +22,11 @@ object ActiveExperiments extends ExperimentsDefinition {
 
 object UseSourcepointPropertyId
     extends Experiment(
-      name = "use-sourcepoint-property-id",
+      name = "use-sourcepoint-property-idDSTEST",
       description = "Use Sourcepoint propertyId instead of propertyHref",
       owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc5A,
-    )
-
-object LiveBlogTopSponsorship
-    extends Experiment(
-      name = "live-blog-top-sponsorship",
-      description = "Test a new sponsorship slot at the top of live blogs",
-      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 30),
-      participationGroup = Perc0A,
     )
 
 object UpdatedHeaderDesign
