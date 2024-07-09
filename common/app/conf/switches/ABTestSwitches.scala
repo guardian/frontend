@@ -47,16 +47,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-deeply-read-right-column",
-    "Add deeply read component to the right hand column",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 7, 31)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-sticky-live-blog-ask-test",
     "A sticky reader revenue ask on the left column of a liveblog",
     owners = Seq(Owner.withEmail("growth@theguardian.com")),
