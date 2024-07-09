@@ -103,47 +103,42 @@ object CrosswordData {
     val entryGroups = entries
       .groupBy(_.group)
       // Sort using the group ordering
-      .map {
-        case (orderedGroupEntryIds, groupEntries) =>
-          (orderedGroupEntryIds, orderedGroupEntryIds.flatMap(id => groupEntries.find(_.id == id)))
+      .map { case (orderedGroupEntryIds, groupEntries) =>
+        (orderedGroupEntryIds, orderedGroupEntryIds.flatMap(id => groupEntries.find(_.id == id)))
       }
 
     val newEntries = entryGroups
-      .map {
-        case (_, groupEntries) =>
-          val maybeSeparatorLocations: Option[Map[String, Seq[Int]]] =
-            groupEntries
-              .find(_.separatorLocations.exists(_.nonEmpty))
-              .flatMap(_.separatorLocations)
+      .map { case (_, groupEntries) =>
+        val maybeSeparatorLocations: Option[Map[String, Seq[Int]]] =
+          groupEntries
+            .find(_.separatorLocations.exists(_.nonEmpty))
+            .flatMap(_.separatorLocations)
 
-          val bounds: Map[(Int, Int), Entry] =
-            groupEntries
-              .foldLeft((0, Map.empty[(Int, Int), Entry])) {
-                case ((upperBound, m), entry) =>
-                  val newLowerBound = upperBound
-                  val newUpperBound = upperBound + entry.length
-                  (newUpperBound, m + ((newLowerBound, newUpperBound) -> entry))
+        val bounds: Map[(Int, Int), Entry] =
+          groupEntries
+            .foldLeft((0, Map.empty[(Int, Int), Entry])) { case ((upperBound, m), entry) =>
+              val newLowerBound = upperBound
+              val newUpperBound = upperBound + entry.length
+              (newUpperBound, m + ((newLowerBound, newUpperBound) -> entry))
+            }
+            ._2
+
+        val newGroupEntries: Seq[Entry] = bounds.map { case ((lowerBound, upperBound), entry) =>
+          maybeSeparatorLocations
+            .map { separatorLocations =>
+              val newSeparatorLocations: Map[String, Seq[Int]] = separatorLocations.map { case (separator, locations) =>
+                val newLocations =
+                  locations
+                    .filter(location => location > lowerBound && location <= upperBound)
+                    .map(location => location - lowerBound)
+                (separator, newLocations)
               }
-              ._2
+              entry.copy(separatorLocations = Some(newSeparatorLocations))
+            }
+            .getOrElse(entry)
+        }.toList
 
-          val newGroupEntries: Seq[Entry] = bounds.map {
-            case ((lowerBound, upperBound), entry) =>
-              maybeSeparatorLocations
-                .map { separatorLocations =>
-                  val newSeparatorLocations: Map[String, Seq[Int]] = separatorLocations.map {
-                    case (separator, locations) =>
-                      val newLocations =
-                        locations
-                          .filter(location => location > lowerBound && location <= upperBound)
-                          .map(location => location - lowerBound)
-                      (separator, newLocations)
-                  }
-                  entry.copy(separatorLocations = Some(newSeparatorLocations))
-                }
-                .getOrElse(entry)
-          }.toList
-
-          newGroupEntries
+        newGroupEntries
       }
       .toList
       .flatten

@@ -100,13 +100,12 @@ class FixturesAndResults(competitions: Competitions) extends Football {
               if (resultsComponent.isDefined) cssClasses else missingComponentClasses,
             ),
           ),
-          maybeCompetitionAndGroup map {
-            case CompetitionAndGroup(competition, group) =>
-              HtmlAndClasses(
-                3,
-                tablesComponent(competition, group, competition.fullName, highlightTeamId = Some(teamId), false),
-                cssClasses,
-              )
+          maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
+            HtmlAndClasses(
+              3,
+              tablesComponent(competition, group, competition.fullName, highlightTeamId = Some(teamId), false),
+              cssClasses,
+            )
           },
         ).flatten
 

@@ -2,8 +2,7 @@ package idapiclient.responses
 
 import play.api.libs.json.{Json, OFormat}
 
-/**
-  * FIXME:
+/** FIXME:
   *   This seems to be exactly the same as com.gu.identity.model.Error from identity-request library.
   *   Is this only representing IDAPI errors?
   */

@@ -21,8 +21,8 @@ object Analytics extends Results {
     if (switch.isSwitchedOn) {
       if (isProd) {
         val result = Firehose.stream(streamName)(analytics)
-        result.failed foreach {
-          case NonFatal(e) => log.error(s"Failed to put '$analytics'", e)
+        result.failed foreach { case NonFatal(e) =>
+          log.error(s"Failed to put '$analytics'", e)
         }
       } else log.info(prettyPrint(Json.parse(analytics)))
       TinyResponse.noContent()

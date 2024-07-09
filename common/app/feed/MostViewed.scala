@@ -51,10 +51,9 @@ object MostViewed extends GuLogging {
               .filterNot { content => BrandingFinder.findBranding(edition.id)(content).exists(_.isPaid) }
               .map(RelatedContentItem(_)),
           )
-          .recover {
-            case NonFatal(e) =>
-              log.error(s"Error requesting $url", e)
-              None
+          .recover { case NonFatal(e) =>
+            log.error(s"Error requesting $url", e)
+            None
           }
       }
       Future.sequence(allRelatedContentItems)

@@ -114,14 +114,12 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   }
 
   def run(): Unit = {
-    rebuildKeywordIndexes().withErrorLogging andThen {
-      case _ =>
-        rebuildContributorIndex().withErrorLogging andThen {
-          case _ =>
-            rebuildNewspaperBooks().withErrorLogging andThen {
-              case _ => rebuildNewspaperBookSections().withErrorLogging
-            }
+    rebuildKeywordIndexes().withErrorLogging andThen { case _ =>
+      rebuildContributorIndex().withErrorLogging andThen { case _ =>
+        rebuildNewspaperBooks().withErrorLogging andThen { case _ =>
+          rebuildNewspaperBookSections().withErrorLogging
         }
+      }
     }
   }
 }

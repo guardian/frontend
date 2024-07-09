@@ -35,8 +35,7 @@ object Dependencies {
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
-  /**
-    * There can only be one version of `scala-xml`. We will evict all v1.x
+  /** There can only be one version of `scala-xml`. We will evict all v1.x
     *
     * Upgrade from v1 to v2 should be relatively safe, according to this thread:
     * https://github.com/scala/scala-xml/discussions/605#discussioncomment-2828193

@@ -76,8 +76,8 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
       foundUser <- Future.fromTry(handleApiResponse(response, userId))
     } yield foundUser.map(_.as[DiscussionProfileResponse])
 
-    discussionUserF.recoverWith {
-      case e => Future.failed(new DiscussionApiServiceException(s"findDiscussionUser failure to find $userId", e))
+    discussionUserF.recoverWith { case e =>
+      Future.failed(new DiscussionApiServiceException(s"findDiscussionUser failure to find $userId", e))
     }
   }
 
@@ -90,13 +90,12 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
       foundUser <- Future.fromTry(handleApiResponse(response, userId))
     } yield foundUser.map(_.as[DiscussionProfileStats])
 
-    discussionStatsF.recoverWith {
-      case e => Future.failed(new DiscussionApiServiceException(s"findProfileStats failure to find $userId", e))
+    discussionStatsF.recoverWith { case e =>
+      Future.failed(new DiscussionApiServiceException(s"findProfileStats failure to find $userId", e))
     }
   }
 
-  /**
-    * Check if the user has at least one comment.
+  /** Check if the user has at least one comment.
     * This method simply requests a single comment, and checks if the response is non-empty.
     * If it is, the user has at least one publicly visible comment, and their profile can be shown.
     */
@@ -110,9 +109,8 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
       parsedCommentsResponse <- Future(userCommentsResponse.map(_.as[DiscussionCommentsResponse]))
     } yield parsedCommentsResponse.exists(_.comments.nonEmpty)
 
-    hasCommentsF.recoverWith {
-      case e =>
-        Future.failed(new DiscussionApiServiceException(s"profileHasAtLeastOneComment failure to find $userId", e))
+    hasCommentsF.recoverWith { case e =>
+      Future.failed(new DiscussionApiServiceException(s"profileHasAtLeastOneComment failure to find $userId", e))
     }
 
   }

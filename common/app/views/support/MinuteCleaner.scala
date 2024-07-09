@@ -13,8 +13,7 @@ case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
 
 case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
-  /**
-    * Associate child classes (keys) with those to add to the parent (values).
+  /** Associate child classes (keys) with those to add to the parent (values).
     */
   val ParentClasses = Map(
     "element-video" -> "block--minute-article--embed block--minute-article--video",
@@ -25,8 +24,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "element--thumbnail" -> "block--minute-article--bottom-image block--minute-article--image",
   )
 
-  /**
-    * Classes to strip from block children.
+  /** Classes to strip from block children.
     */
   val strippable = Seq(
     "element--thumbnail",
@@ -67,10 +65,9 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         }
 
         // Add relevant classes
-        ParentClasses.foldLeft(Set(): Set[String]) {
-          case (classes, (childClass, parentClass)) =>
-            if (allElements.asScala.exists(_.hasClass(childClass))) classes + parentClass
-            else classes
+        ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
+          if (allElements.asScala.exists(_.hasClass(childClass))) classes + parentClass
+          else classes
         } foreach block.addClass
 
         // Check if the heading has a number and is an embed or quote

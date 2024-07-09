@@ -56,8 +56,7 @@ object ImageAsset {
   implicit val imageAssetWrites: Writes[ImageAsset] = Json.writes[ImageAsset]
 }
 
-/**
-  * ImageAsset is the main internal model for images, and is generated directly from CAPI (atom) data.
+/** ImageAsset is the main internal model for images, and is generated directly from CAPI (atom) data.
   */
 case class ImageAsset(
     // Order (zero indexed) if image is in a set.

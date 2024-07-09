@@ -35,40 +35,37 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       .sequence(Edition.allEditions.map { edition =>
         ophanApi
           .getDeeplyRead(edition)
-          .flatMap {
-            ophanDeeplyReadItems =>
-              log.info(s"Fetched ${ophanDeeplyReadItems.size} Deeply Read items for ${edition.displayName}")
-              val constructedTrail: Seq[Future[Option[Trail]]] = ophanDeeplyReadItems.map {
-                ophanItem =>
-                  log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-                  val path = removeStartingSlash(ophanItem.path)
-                  log.info(s"CAPI Lookup for path: $path")
-                  val capiRequest = contentApiClient
-                    .item(path)
-                    .showTags("all")
-                    .showFields("all")
-                    .showReferences("none")
-                    .showAtoms("none")
+          .flatMap { ophanDeeplyReadItems =>
+            log.info(s"Fetched ${ophanDeeplyReadItems.size} Deeply Read items for ${edition.displayName}")
+            val constructedTrail: Seq[Future[Option[Trail]]] = ophanDeeplyReadItems.map { ophanItem =>
+              log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
+              val path = removeStartingSlash(ophanItem.path)
+              log.info(s"CAPI Lookup for path: $path")
+              val capiRequest = contentApiClient
+                .item(path)
+                .showTags("all")
+                .showFields("all")
+                .showReferences("none")
+                .showAtoms("none")
 
-                  contentApiClient
-                    .getResponse(capiRequest)
-                    .map { res =>
-                      res.content.flatMap { capiData =>
-                        log.info(s"Retrieved CAPI data for Deeply Read item: ${path}")
-                        deeplyReadUrlToTrail(capiData)
-                      }
-                    }
-                    .recover {
-                      case NonFatal(e) =>
-                        log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
-                        None
-                    }
-              }
-              Future
-                .sequence(constructedTrail)
-                .map { maybeTrails =>
-                  (edition, maybeTrails.flatten.take(10))
+              contentApiClient
+                .getResponse(capiRequest)
+                .map { res =>
+                  res.content.flatMap { capiData =>
+                    log.info(s"Retrieved CAPI data for Deeply Read item: ${path}")
+                    deeplyReadUrlToTrail(capiData)
+                  }
                 }
+                .recover { case NonFatal(e) =>
+                  log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
+                  None
+                }
+            }
+            Future
+              .sequence(constructedTrail)
+              .map { maybeTrails =>
+                (edition, maybeTrails.flatten.take(10))
+              }
 
           }
           .recover { e =>

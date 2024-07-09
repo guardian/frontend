@@ -50,11 +50,11 @@ class FastlyStatisticService(wsClient: WSClient) extends GuLogging {
             .withHttpHeaders("Fastly-Key" -> fastly.key)
             .withRequestTimeout(20.seconds)
 
-          val response: Future[Option[JsValue]] = request.get().map { resp => Some(resp.json) }.recover {
-            case e: Throwable =>
+          val response: Future[Option[JsValue]] =
+            request.get().map { resp => Some(resp.json) }.recover { case e: Throwable =>
               log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
               None
-          }
+            }
           response
         }
 
@@ -77,8 +77,8 @@ class FastlyStatisticService(wsClient: WSClient) extends GuLogging {
             ("errors", sample.errors.toString),
           )
 
-          statistics map {
-            case (name, stat) => FastlyStatistic(service, region, timestamp, name, stat)
+          statistics map { case (name, stat) =>
+            FastlyStatistic(service, region, timestamp, name, stat)
           }
         }
       }
