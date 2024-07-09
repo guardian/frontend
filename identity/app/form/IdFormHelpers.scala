@@ -64,9 +64,8 @@ object IdFormHelpers {
 
   private def updateArgs(args: Seq[(Symbol, Any)], defaults: (Symbol, Any)*): Seq[(Symbol, Any)] = {
     val argsMap = collection.mutable.Map(args: _*)
-    defaults.foreach {
-      case (symbol, default) =>
-        if (!argsMap.contains(symbol)) argsMap.put(symbol, default)
+    defaults.foreach { case (symbol, default) =>
+      if (!argsMap.contains(symbol)) argsMap.put(symbol, default)
     }
     argsMap.toSeq
   }

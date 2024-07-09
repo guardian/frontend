@@ -20,8 +20,7 @@ import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
-/**
-  * ConfigAgent is a cache for Fronts config.
+/** ConfigAgent is a cache for Fronts config.
   *
   * It is the metadata overview for all fronts on www.theguardian.com. It
   * describes the fronts on website along with the collections they contain. The

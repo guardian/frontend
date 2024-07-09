@@ -48,8 +48,8 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
       host <- ophanApi.host
       key <- ophanApi.key
     } yield {
-      val queryString = params map {
-        case (k, v) => s"$k=${URLEncoder.encode(v, "utf-8")}"
+      val queryString = params map { case (k, v) =>
+        s"$k=${URLEncoder.encode(v, "utf-8")}"
       } mkString "&"
       val url = s"${ensureHostSecure(host)}/$path?$queryString&api-key=$key"
       log.info(s"Making request to Ophan API: $url")

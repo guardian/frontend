@@ -138,14 +138,14 @@ class CommercialLifecycle(
 
     val refreshJobDelay = jobRefreshStep / refreshJobs.size
 
-    refreshJobs.zipWithIndex foreach {
-      case (job, i) => job.start(delayedStartSchedule(delayedStart = i * refreshJobDelay, refreshStep = jobRefreshStep))
+    refreshJobs.zipWithIndex foreach { case (job, i) =>
+      job.start(delayedStartSchedule(delayedStart = i * refreshJobDelay, refreshStep = jobRefreshStep))
     }
 
     pekkoAsync.after1s {
 
-      industries.refresh().failed.foreach {
-        case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
+      industries.refresh().failed.foreach { case NonFatal(e) =>
+        log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 
       for (fetcher <- feedsFetcher.all) {

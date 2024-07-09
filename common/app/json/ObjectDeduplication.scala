@@ -4,8 +4,7 @@ import com.github.blemale.scaffeine.Scaffeine
 import com.gu.etagcaching.ConfigCache
 import play.api.libs.json.Format
 
-/**
-  * This class is a memory optimisation for when many identical objects (eg `Tag`s) are being
+/** This class is a memory optimisation for when many identical objects (eg `Tag`s) are being
   * read from JSON, and then held in memory. If the objects are immutable & identical,
   * we don't want to hold multiple copies of them - we can just hold one in a cache, and have all
   * references to the object point to that same object.
@@ -25,8 +24,7 @@ import play.api.libs.json.Format
   */
 object ObjectDeduplication {
 
-  /**
-    * @param id as precaution, this function provides an object distinguisher beyond the object hashcode. For a Tag,
+  /** @param id as precaution, this function provides an object distinguisher beyond the object hashcode. For a Tag,
     *           you might just provide the tag id.
     */
   def deduplicate[A](f: Format[A], id: A => Any, configCache: ConfigCache): Format[A] = {

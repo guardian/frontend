@@ -122,8 +122,7 @@ class LiveBlogController(
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
 
-        /**
-          * When DCR requests new blocks from the client, it will add a `lastUpdate` parameter.
+        /** When DCR requests new blocks from the client, it will add a `lastUpdate` parameter.
           * If no such parameter is present, we should return a JSON representation of the whole
           * payload that would be sent to DCR when initially server side rendering the LiveBlog page.
           */
@@ -360,8 +359,7 @@ class LiveBlogController(
     }
   }
 
-  /**
-    * Returns a JSON representation of the payload that's sent to DCR when rendering the whole LiveBlog page.
+  /** Returns a JSON representation of the payload that's sent to DCR when rendering the whole LiveBlog page.
     */
   private[this] def renderDCRJson(
       blog: LiveBlogPage,
@@ -430,8 +428,7 @@ class LiveBlogController(
           topicResult,
         ).map(_ -> blocks)
       case nonLiveBlogArticle: Article =>
-        /**
-          * If `isLiveBlog` is false, it must be because the article has no blocks, or lacks
+        /** If `isLiveBlog` is false, it must be because the article has no blocks, or lacks
           * the `tone/minutebyminute` tag, or both.
           * Logging these values will help us to identify which is causing the issue.
           */

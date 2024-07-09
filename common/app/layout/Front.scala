@@ -132,20 +132,18 @@ object Front {
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(
       url = LinkTo(url),
-      itemListElement = collections.zipWithIndex.map {
-        case (collection, index) =>
-          ListItem(
-            position = index,
-            item = Some(
-              ItemList(
-                url = LinkTo(url), // don't have a uri for each container
-                itemListElement = collection.items.zipWithIndex.map {
-                  case (item, i) =>
-                    ListItem(position = i, url = Some(LinkTo(item.header.url)))
-                },
-              ),
+      itemListElement = collections.zipWithIndex.map { case (collection, index) =>
+        ListItem(
+          position = index,
+          item = Some(
+            ItemList(
+              url = LinkTo(url), // don't have a uri for each container
+              itemListElement = collection.items.zipWithIndex.map { case (item, i) =>
+                ListItem(position = i, url = Some(LinkTo(item.header.url)))
+              },
             ),
-          )
+          ),
+        )
       },
     )
   }

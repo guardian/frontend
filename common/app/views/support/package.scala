@@ -20,8 +20,7 @@ import layout.slices.ContainerDefinition
 
 import scala.jdk.CollectionConverters._
 
-/**
-  * Encapsulates previous and next urls
+/** Encapsulates previous and next urls
   */
 case class PreviousAndNext(prev: Option[String], next: Option[String]) {
   val isDefined: Boolean = prev.isDefined || next.isDefined
@@ -125,14 +124,13 @@ object ContributorLinks {
 
   def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html = {
     Html {
-      removeDuplicateNames(tags).foldLeft(text) {
-        case (t, tag) =>
-          t.replaceFirst(
-            tag.name,
-            s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+      removeDuplicateNames(tags).foldLeft(text) { case (t, tag) =>
+        t.replaceFirst(
+          tag.name,
+          s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
              |  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
              |    href="${LinkTo("/" + tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin,
-          )
+        )
       }
     }
   }
@@ -165,8 +163,8 @@ object `package` {
 
   implicit class Seq2zipWithRowInfo[A](seq: Seq[A]) {
     def zipWithRowInfo: Seq[(A, RowInfo)] =
-      seq.zipWithIndex.map {
-        case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
+      seq.zipWithIndex.map { case (item, index) =>
+        (item, RowInfo(index + 1, seq.length == index + 1))
       }
   }
 }

@@ -10,8 +10,8 @@ object Maps {
 
     /** Obviously, if you get a collision, you're going to lose a pair */
     def mapKeys[C](f: A => C): Map[C, B] =
-      (map.toSeq map {
-        case (k, v) => (f(k), v)
+      (map.toSeq map { case (k, v) =>
+        (f(k), v)
       }).toMap
 
     def reverseMap: Map[B, A] = (map.toSeq map { case (a, b) => (b, a) }).toMap

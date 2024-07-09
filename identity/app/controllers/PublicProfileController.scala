@@ -53,8 +53,7 @@ class PublicProfileController(
           Future.successful(renderUserNotFoundPage(url, request))
 
         case Right(user) =>
-          /**
-            * Only render public profile if a user in Identity also exists in Discussion
+          /** Only render public profile if a user in Identity also exists in Discussion
             * and has one or more comments, otherwise return a no comments page.
             */
           discussionService.findDiscussionUserFilterCommented(user.id).map {

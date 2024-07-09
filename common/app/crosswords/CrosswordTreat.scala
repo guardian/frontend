@@ -69,11 +69,10 @@ object CrosswordPreview {
          class="treats__crossword">
       <rect x="0" y="0" fill="#000000" width={Width.toString} height={Height.toString} />
       {
-      crosswordGrid.cellsInPlay map {
-        case Position(x, y) =>
-          <rect x={position(x).toString} y={position(y).toString} width={CellSize.toString} height={
-            CellSize.toString
-          } fill="#ffffff" />
+      crosswordGrid.cellsInPlay map { case Position(x, y) =>
+        <rect x={position(x).toString} y={position(y).toString} width={CellSize.toString} height={
+          CellSize.toString
+        } fill="#ffffff" />
       }
     }
     </svg>

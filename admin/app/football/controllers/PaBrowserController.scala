@@ -22,18 +22,17 @@ class PaBrowserController(val wsClient: WSClient, val controllerComponents: Cont
       val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
       val query = getOneOrFail(submission, "query")
       val replacements = """(\{.*?\})""".r.findAllIn(query).toList.filter("{apiKey}" !=)
-      val replacedQuery = replacements.foldLeft(query) {
-        case (replacingQuery, replacement) =>
-          val fieldName = replacement.dropWhile('{' ==).dropWhile('*' ==).takeWhile('}' !=)
-          if (replacement.startsWith("{*")) {
-            getOne(submission, fieldName)
-              .map { newValue =>
-                replacingQuery.replace(replacement, newValue)
-              }
-              .getOrElse(replacingQuery.replace("/" + replacement, ""))
-          } else {
-            replacingQuery.replace(replacement, getOneOrFail(submission, fieldName))
-          }
+      val replacedQuery = replacements.foldLeft(query) { case (replacingQuery, replacement) =>
+        val fieldName = replacement.dropWhile('{' ==).dropWhile('*' ==).takeWhile('}' !=)
+        if (replacement.startsWith("{*")) {
+          getOne(submission, fieldName)
+            .map { newValue =>
+              replacingQuery.replace(replacement, newValue)
+            }
+            .getOrElse(replacingQuery.replace("/" + replacement, ""))
+        } else {
+          replacingQuery.replace(replacement, getOneOrFail(submission, fieldName))
+        }
       }
       NoCache(SeeOther("/admin/football/browser/%s".format(replacedQuery.dropWhile('/' ==))))
     }

@@ -82,8 +82,8 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
     nextFilter(r).map { rh =>
       val experimentHeaders = experimentsResponseHeaders(r)
       val varyHeaderValues = rh.header.headers.get("Vary").toSeq ++ experimentHeaders.get("Vary").toSeq
-      val responseHeaders = (experimentHeaders + ("Vary" -> varyHeaderValues.mkString(","))).filterNot {
-        case (_, v) => v.isEmpty
+      val responseHeaders = (experimentHeaders + ("Vary" -> varyHeaderValues.mkString(","))).filterNot { case (_, v) =>
+        v.isEmpty
       }.toSeq
       rh.withHeaders(responseHeaders: _*)
     }

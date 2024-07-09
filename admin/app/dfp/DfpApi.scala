@@ -123,8 +123,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
       .withBindVariableValue("threshold", threshold.getMillis)
 
     withDfpSession {
-      _.creatives.get(stmtBuilder) collect {
-        case creative: TemplateCreative => creative
+      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative =>
+        creative
       } map dataMapper.toGuTemplateCreative
     }
   }

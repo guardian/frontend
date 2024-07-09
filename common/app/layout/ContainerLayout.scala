@@ -50,18 +50,17 @@ object ContainerLayout {
         (slicesSoFar :+ slice, remainingTrails, newContext)
     }
 
-    val remainingCards = showMore.map {
-      case IndexedTrail(trail, index) =>
-        FaciaCardAndIndex(
-          index,
-          FaciaCard.fromTrail(
-            trail,
-            config.collectionConfigWithId.config,
-            ItemClasses.showMore,
-            config.showSeriesAndBlogKickers,
-          ),
-          hideUpTo = Some(Desktop),
-        )
+    val remainingCards = showMore.map { case IndexedTrail(trail, index) =>
+      FaciaCardAndIndex(
+        index,
+        FaciaCard.fromTrail(
+          trail,
+          config.collectionConfigWithId.config,
+          ItemClasses.showMore,
+          config.showSeriesAndBlogKickers,
+        ),
+        hideUpTo = Some(Desktop),
+      )
     }
 
     (ContainerLayout(slices, remainingCards, hasMore), finalContext)

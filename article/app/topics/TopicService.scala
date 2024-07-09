@@ -27,9 +27,8 @@ class TopicService(topicS3Client: S3Client[TopicsApiResponse]) extends GuLogging
         topicsDetails send Some(response.toMap)
         log.info("successfully refreshed topics")
       })
-      .recover {
-        case e =>
-          log.error("Could not refresh topics", e)
+      .recover { case e =>
+        log.error("Could not refresh topics", e)
       }
   }
 

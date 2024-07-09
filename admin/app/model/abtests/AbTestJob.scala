@@ -16,8 +16,8 @@ object AbTestJob extends GuLogging {
       // Group variant names by test name
       val tests = result.getMetrics.asScala
         .map(_.getMetricName.split("-").toList)
-        .collect {
-          case test :: variant => (test, variant.mkString("-"))
+        .collect { case test :: variant =>
+          (test, variant.mkString("-"))
         }
         .groupBy(_._1)
 

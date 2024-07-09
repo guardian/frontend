@@ -72,8 +72,8 @@ class HostedContentController(
       val capiResponse = {
         val itemId = s"advertiser-content/$campaignName/$pageName"
         val response = contentApiClient.getResponse(baseQuery(itemId))
-        response.failed.foreach {
-          case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
+        response.failed.foreach { case NonFatal(e) =>
+          log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
         }
         response
       }
@@ -141,8 +141,8 @@ class HostedContentController(
           .pageSize(100)
           .orderBy("oldest")
         val response = contentApiClient.getResponse(query)
-        response.failed.foreach {
-          case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
+        response.failed.foreach { case NonFatal(e) =>
+          log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
         }
         response
       }
@@ -177,8 +177,8 @@ class HostedContentController(
           .pageSize(100)
           .orderBy("oldest")
         val response = contentApiClient.getResponse(query)
-        response.failed.foreach {
-          case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
+        response.failed.foreach { case NonFatal(e) =>
+          log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
         }
         response
       }

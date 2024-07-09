@@ -46,13 +46,12 @@ object SliceWithCards {
 
           val columnAndCards = ColumnAndCards(
             column,
-            itemsForColumn.zipWithIndex map {
-              case (HtmlAndClasses(index, html, classes), positionInColumn) =>
-                FaciaCardAndIndex(
-                  index,
-                  HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
-                  None,
-                )
+            itemsForColumn.zipWithIndex map { case (HtmlAndClasses(index, html, classes), positionInColumn) =>
+              FaciaCardAndIndex(
+                index,
+                HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
+                None,
+              )
             },
           )
           columnsWithCards(remainingColumns, itemsNotConsumed, accumulation :+ columnAndCards)

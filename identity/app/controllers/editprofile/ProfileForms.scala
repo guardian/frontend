@@ -6,8 +6,7 @@ import model.IdentityPage
 import play.api.data.Form
 import play.api.i18n.MessagesProvider
 
-/**
-  * Holds all Edit Profile forms and designates which one is user currently viewing
+/** Holds all Edit Profile forms and designates which one is user currently viewing
   *
   * @param privacyForm  /privacy/edit
   * @param activePage   which page is user currently viewing and hence which form
@@ -19,8 +18,7 @@ case class ProfileForms(
 
 object ProfileForms {
 
-  /**
-    * Constructs ProfileForms instance by filling all the Edit Profile forms (Public, Account, Privacy)
+  /** Constructs ProfileForms instance by filling all the Edit Profile forms (Public, Account, Privacy)
     * with the corresponding DTO that will be constructed out of the provided User DO
     *
     * @param userDO User domain object from IDAPI used to create per-form specialised DTO fillers

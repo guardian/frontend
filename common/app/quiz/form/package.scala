@@ -22,8 +22,8 @@ package object form {
   private def findQuizDataFor(answerId: String, quiz: QuizContent): Option[(Question, Answer)] = {
     val questionsWithAnswers = quiz.questions.flatMap(question => question.answers.map(question -> _))
 
-    questionsWithAnswers.find {
-      case (_, answer) => answer.id == answerId
+    questionsWithAnswers.find { case (_, answer) =>
+      answer.id == answerId
     }
   }
 
@@ -79,18 +79,16 @@ package object form {
 
       // Find the bucket which the user responded to the most.
       val buckets: Seq[(String, Int)] = entries
-        .flatMap {
-          case (_, answer) =>
-            answer.buckets
+        .flatMap { case (_, answer) =>
+          answer.buckets
         }
         .groupBy(identity)
         .toList
         .map { case (bucketId, occurrences) => bucketId -> occurrences.size }
         .sortBy(-_._2)
 
-      buckets.headOption.flatMap {
-        case (bucketId, _) =>
-          quiz.content.resultBuckets.find(_.id == bucketId)
+      buckets.headOption.flatMap { case (bucketId, _) =>
+        quiz.content.resultBuckets.find(_.id == bucketId)
       }
     }
 

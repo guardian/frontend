@@ -58,8 +58,8 @@ object PressedProperties {
       maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(content),
       href = FaciaContentUtils.href(content),
       webUrl = FaciaContentUtils.webUrl(content),
-      editionBrandings = Some(content.brandingByEdition.flatMap {
-        case (editionId, branding) => Edition.byId(editionId) map (EditionBranding(_, branding))
+      editionBrandings = Some(content.brandingByEdition.flatMap { case (editionId, branding) =>
+        Edition.byId(editionId) map (EditionBranding(_, branding))
       }.toSeq),
       atomId = FaciaContentUtils.atomId(content),
     )

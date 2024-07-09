@@ -8,8 +8,7 @@ import play.api.libs.json.{JodaWrites, JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{ImgSrc, Naked}
 
-/**
-  * additional information needed to display something on a facia page from CAPI
+/** additional information needed to display something on a facia page from CAPI
   */
 object Trail {
 
