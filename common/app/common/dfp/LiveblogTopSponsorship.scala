@@ -7,14 +7,13 @@ case class LiveBlogTopSponsorship(
     lineItemName: String,
     lineItemId: Long,
     sections: Seq[String],
+    editions: Seq[Edition],
     adTest: Option[String],
     targetsAdTest: Boolean,
 ) {
-  def hasTargetedSection(section: String): Boolean = section.isEmpty || this.sections.contains(section)
-
-  def hasTargetedAdTest(adTest: String): Boolean = this.adTest == Some(adTest)
-
-  def nonEmpty: Boolean = sections.nonEmpty
+  def matchesTargetedAdTest(adTest: Option[String]): Boolean =
+    if (this.targetsAdTest) { adTest == this.adTest }
+    else { true }
 }
 
 object LiveBlogTopSponsorship {
