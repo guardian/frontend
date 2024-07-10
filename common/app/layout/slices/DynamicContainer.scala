@@ -52,9 +52,8 @@ private[slices] trait DynamicContainer {
 
   final def slicesFor(stories: Seq[Story]): Option[Seq[Slice]] = {
     if (stories.nonEmpty && stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
-      optionalFirstSlice(stories) map {
-        case (firstSlice, remaining) =>
-          Some(firstSlice +: standardSlices(remaining, Some(firstSlice)))
+      optionalFirstSlice(stories) map { case (firstSlice, remaining) =>
+        Some(firstSlice +: standardSlices(remaining, Some(firstSlice)))
       } getOrElse {
         Some(standardSlices(stories, None))
       }

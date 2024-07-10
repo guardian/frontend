@@ -15,8 +15,7 @@ import scala.util.{Failure, Success, Try}
 
 case class Response(body: Array[Byte], status: Int, statusText: String)
 
-/**
-  * CAPI preview uses IAM authorization.
+/** CAPI preview uses IAM authorization.
   * The signer generates AWS sig4v signed headers based on the request and the capi credentials
   */
 object PreviewSigner {

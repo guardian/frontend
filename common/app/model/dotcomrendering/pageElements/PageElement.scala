@@ -974,26 +974,25 @@ object PageElement {
           else if (isImmersive) ImmersiveMedia
           else BodyMedia
 
-        val imageSources = imageRoleWidthsByBreakpoint.all.map {
-          case (weighting, widths) =>
-            val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
-              Seq(
-                ImgSrc.srcsetForBreakpoint(
-                  b,
-                  imageRoleWidthsByBreakpoint.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
-                ),
-                ImgSrc.srcsetForBreakpoint(
-                  b,
-                  imageRoleWidthsByBreakpoint.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
-                  hidpi = true,
-                ),
-              )
-            }.flatten
-            // A few very old articles use non-https hosts, which won't render
-            val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
-            ImageSource(weighting, httpsSrcSet)
+        val imageSources = imageRoleWidthsByBreakpoint.all.map { case (weighting, widths) =>
+          val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
+            Seq(
+              ImgSrc.srcsetForBreakpoint(
+                b,
+                imageRoleWidthsByBreakpoint.immersive.breakpoints,
+                maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
+              ),
+              ImgSrc.srcsetForBreakpoint(
+                b,
+                imageRoleWidthsByBreakpoint.immersive.breakpoints,
+                maybeImageMedia = Some(ImageMedia(imageAssets.toSeq)),
+                hidpi = true,
+              ),
+            )
+          }.flatten
+          // A few very old articles use non-https hosts, which won't render
+          val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
+          ImageSource(weighting, httpsSrcSet)
         }.toSeq
 
         // The default role is used when an image doesn't have one and is then meant to be Inline,
@@ -1072,8 +1071,8 @@ object PageElement {
                 element.assets
                   .filter(_.mimeType.exists(_.startsWith("image")))
                   .zipWithIndex
-                  .map {
-                    case (a, i) => ImageAsset.make(a, i)
+                  .map { case (a, i) =>
+                    ImageAsset.make(a, i)
                   }
                   .toSeq,
               ),
@@ -1344,7 +1343,8 @@ object PageElement {
           case _ => None
         }).toList
 
-      case GuMap => {
+      case GuMap =>
+        {
           for {
             mapElem <- element.mapTypeData
             originalUrl <- mapElem.originalUrl

@@ -235,8 +235,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     def pressDependentPaths(paths: Seq[String]): Future[Unit] = {
       Future
         .traverse(paths)(p => pressPath(p, messageId))
-        .recover {
-          case e => log.error(s"Error when pressing $paths", e)
+        .recover { case e =>
+          log.error(s"Error when pressing $paths", e)
         }
         .map(_ => ())
     }

@@ -18,8 +18,8 @@ class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
   }
 
   private def forAllABTestSwitches(test: Switch => Unit): Unit = {
-    Switches.grouped.find(_._1.name == "A/B Tests") foreach {
-      case (_, switches) => forAllSwitches(test, switches)
+    Switches.grouped.find(_._1.name == "A/B Tests") foreach { case (_, switches) =>
+      forAllSwitches(test, switches)
     }
   }
 

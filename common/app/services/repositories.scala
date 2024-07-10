@@ -23,12 +23,11 @@ trait Index extends ConciergeRepository {
     val conversions: Map[String, String] =
       Map("content" -> "type")
 
-    val convertedTag = conversions.foldLeft(tag) {
-      case (newTag, (from, to)) =>
-        if (newTag.startsWith(s"$from/"))
-          newTag.replace(from, to)
-        else
-          newTag
+    val convertedTag = conversions.foldLeft(tag) { case (newTag, (from, to)) =>
+      if (newTag.startsWith(s"$from/"))
+        newTag.replace(from, to)
+      else
+        newTag
     }
 
     convertedTag match {

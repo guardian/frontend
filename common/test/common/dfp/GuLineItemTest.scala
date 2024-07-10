@@ -53,15 +53,15 @@ class GuLineItemTest extends AnyFlatSpec with Matchers {
 
   "isSuitableForTopAboveNavSlot" should
     "be true for a line item that meets all the rules" in {
-    lineItem() shouldBe Symbol("suitableForTopAboveNavSlot")
-  }
+      lineItem() shouldBe Symbol("suitableForTopAboveNavSlot")
+    }
 
   it should
     "be true for a line item that has relevant creative targeting" in {
-    val creativePlaceholders =
-      Seq(GuCreativePlaceholder(leaderboardSize, targeting = Some(defaultTargeting)))
-    lineItem(creativePlaceholders = creativePlaceholders) shouldBe Symbol("suitableForTopAboveNavSlot")
-  }
+      val creativePlaceholders =
+        Seq(GuCreativePlaceholder(leaderboardSize, targeting = Some(defaultTargeting)))
+      lineItem(creativePlaceholders = creativePlaceholders) shouldBe Symbol("suitableForTopAboveNavSlot")
+    }
 
   it should "be false for a section front targeted indirectly" in {
     val target = targeting(Seq(GuAdUnit("id", Seq("theguardian.com"), GuAdUnit.ACTIVE)))

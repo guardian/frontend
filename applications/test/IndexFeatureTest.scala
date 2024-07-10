@@ -26,13 +26,12 @@ import scala.jdk.CollectionConverters._
         )
       }
 
-      /**
-        * NOTE - these tests run off real sponsored data which might not be reliable
+      /** NOTE - these tests run off real sponsored data which might not be reliable
         *
-       * If a test fails, i.e. because a sponsorship expires, see
+        * If a test fails, i.e. because a sponsorship expires, see
         * https://frontend.gutools.co.uk/analytics/commercial/sponsorships for a different sponsorship to use
         *
-       * If they fail often, might need to look into setting up a reliable data source
+        * If they fail often, might need to look into setting up a reliable data source
         */
       Scenario("Advertisement Feature Front") {
 

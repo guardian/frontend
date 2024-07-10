@@ -46,9 +46,8 @@ object ConsentBlock {
         case _                       => false
       })
       .head
-    displaySteps.zipWithIndex.map {
-      case (block, index) =>
-        views.html.consentJourneyFragments.block(block, block == firstHelpableBlock, index == (displaySteps.size - 1))
+    displaySteps.zipWithIndex.map { case (block, index) =>
+      views.html.consentJourneyFragments.block(block, block == firstHelpableBlock, index == (displaySteps.size - 1))
     }
   }
 

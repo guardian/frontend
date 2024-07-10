@@ -108,7 +108,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           response.header("Link") match {
             case Some(linkValue) =>
               cachedRequest
-              // Send both the prefetch header for offline reading, and the usual preconnect URLs
+                // Send both the prefetch header for offline reading, and the usual preconnect URLs
                 .withHeaders("Link" -> linkValue)
                 .withPreconnect(HttpPreconnections.defaultUrls)
             // For any other requests, we return just the default link header with preconnect urls

@@ -96,8 +96,7 @@ object ContentWidths {
       wide = Some(1020.px),
     )
 
-    /**
-      * main image is showcase on a feature article, e.g.
+    /** main image is showcase on a feature article, e.g.
       * http://www.theguardian.com/politics/2015/may/02/nicola-sturgeon-im-the-boss-now
       */
     val featureShowcase = WidthsByBreakpoint(
@@ -110,8 +109,7 @@ object ContentWidths {
       wide = Some(1300.px),
     )
 
-    /**
-      * Used when the main image is an immersive image
+    /** Used when the main image is an immersive image
       * like on galleries and immersive articles
       */
     override val immersive = WidthsByBreakpoint(
@@ -125,8 +123,7 @@ object ContentWidths {
     )
   }
 
-  /**
-    * Immersive media is all the media within immersive content body
+  /** Immersive media is all the media within immersive content body
     */
   object ImmersiveMedia extends ImageRoleWidthsByBreakpointMapping {
     override val inline = BodyMedia.inline

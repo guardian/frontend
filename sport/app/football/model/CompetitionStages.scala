@@ -27,43 +27,40 @@ class CompetitionStage(competitions: Seq[Competition]) {
       if (allStagesHaveStarted) stagesWithMatches.reverse
       else stagesWithMatches
 
-    sortedStagesWithMatches.flatMap {
-      case (stage, stageMatches) =>
-        // work out stage type
-        val stageLeagueEntries = competition.leagueTable.filter(_.stageNumber == stage.stageNumber)
-        val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber)
-        if (stageLeagueEntries.isEmpty) {
-          if (rounds.size > 1) {
-            orderings.get(competition.id) match {
-              case Some(matchDates) if orderingsApplyToTheseMatches(matchDates, stageMatches) =>
-                // for knockout tournaments PA delete and re-issue ghost/placeholder matches when the actual teams become available
-                // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on KO time
-                val dedupedMatches = stageMatches.groupBy(_.date).flatMap {
-                  case (_, dateMatches) =>
-                    dateMatches.sortWith {
-                      case (match1, match2) =>
-                        Try(match1.id.toInt > match2.id.toInt)
-                          .getOrElse(match1.id > match2.id)
-                    }.headOption
-                }
-                Some(KnockoutSpider(competitions, dedupedMatches.toList, rounds, matchDates))
-              case _ =>
-                // if there are no orderings, or the provided orderings do not apply to the
-                // matches in this round then we cannot show a spider, fall back to list
-                // NOTE: check the timezone on your orderings (we use UK time for all football stuff)
-                Some(KnockoutList(competitions, stageMatches, rounds))
-            }
-          } else None // or just a collection of matches (e.g. international friendlies)
-        } else {
-          if (rounds.size > 1) {
-            // multiple rounds and league table entries is a group stage
-            val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber)
-            Some(Groups(competitions, stageMatches, groupTables))
-          } else if (rounds.size == 1) {
-            // single round with table is league
-            rounds.headOption.map(League(stageMatches, stageLeagueEntries, _))
-          } else None
-        }
+    sortedStagesWithMatches.flatMap { case (stage, stageMatches) =>
+      // work out stage type
+      val stageLeagueEntries = competition.leagueTable.filter(_.stageNumber == stage.stageNumber)
+      val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber)
+      if (stageLeagueEntries.isEmpty) {
+        if (rounds.size > 1) {
+          orderings.get(competition.id) match {
+            case Some(matchDates) if orderingsApplyToTheseMatches(matchDates, stageMatches) =>
+              // for knockout tournaments PA delete and re-issue ghost/placeholder matches when the actual teams become available
+              // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on KO time
+              val dedupedMatches = stageMatches.groupBy(_.date).flatMap { case (_, dateMatches) =>
+                dateMatches.sortWith { case (match1, match2) =>
+                  Try(match1.id.toInt > match2.id.toInt)
+                    .getOrElse(match1.id > match2.id)
+                }.headOption
+              }
+              Some(KnockoutSpider(competitions, dedupedMatches.toList, rounds, matchDates))
+            case _ =>
+              // if there are no orderings, or the provided orderings do not apply to the
+              // matches in this round then we cannot show a spider, fall back to list
+              // NOTE: check the timezone on your orderings (we use UK time for all football stuff)
+              Some(KnockoutList(competitions, stageMatches, rounds))
+          }
+        } else None // or just a collection of matches (e.g. international friendlies)
+      } else {
+        if (rounds.size > 1) {
+          // multiple rounds and league table entries is a group stage
+          val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber)
+          Some(Groups(competitions, stageMatches, groupTables))
+        } else if (rounds.size == 1) {
+          // single round with table is league
+          rounds.headOption.map(League(stageMatches, stageLeagueEntries, _))
+        } else None
+      }
     }
   }
 

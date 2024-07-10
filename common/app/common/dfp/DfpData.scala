@@ -329,7 +329,7 @@ case class GuLineItem(
     costType == "CPD" &&
     placeholder.nonEmpty && (
       targeting.targetsSectionFrontDirectly("business") ||
-      placeholder.exists(_.targetsSectionFrontDirectly("business"))
+        placeholder.exists(_.targetsSectionFrontDirectly("business"))
     ) &&
     targeting.geoTargetsIncluded.exists { geoTarget =>
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia

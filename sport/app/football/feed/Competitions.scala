@@ -452,11 +452,10 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     log.info("Refreshing match day data")
-    val result = getLiveMatches(clock).map(_.map {
-      case (compId, newMatches) =>
-        competitionAgents.find(_.competition.id == compId).map { agent =>
-          agent.addMatches(newMatches)
-        }
+    val result = getLiveMatches(clock).map(_.map { case (compId, newMatches) =>
+      competitionAgents.find(_.competition.id == compId).map { agent =>
+        agent.addMatches(newMatches)
+      }
     })
     result.map(_.flatten).flatMap(Future.sequence(_))
   }

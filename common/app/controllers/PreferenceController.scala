@@ -33,17 +33,16 @@ trait PreferenceController extends Results {
     if (allowedUrl(url)) {
       NoCache(
         Found(url)
-          .withCookies(cookies.map {
-            case (name, value) =>
-              // Expire after one year or if value is empty
-              val oneYearInSeconds = 31536000
-              Cookie(
-                name,
-                value,
-                maxAge = if (value.nonEmpty) Some(oneYearInSeconds) else Some(-1),
-                domain = getShortenedDomain(request.domain),
-                httpOnly = false,
-              )
+          .withCookies(cookies.map { case (name, value) =>
+            // Expire after one year or if value is empty
+            val oneYearInSeconds = 31536000
+            Cookie(
+              name,
+              value,
+              maxAge = if (value.nonEmpty) Some(oneYearInSeconds) else Some(-1),
+              domain = getShortenedDomain(request.domain),
+              httpOnly = false,
+            )
           }: _*),
       )
     } else Forbidden("will not redirect there")

@@ -87,10 +87,9 @@ private[conf] trait HealthCheckFetcher extends GuLogging {
         }
         HealthCheckResult(healthCheck.path, result, DateTime.now, healthCheck.expires)
       }
-      .recover {
-        case NonFatal(t) =>
-          log.error(s"HealthCheck request to ${healthCheck.path} failed", t)
-          HealthCheckResult(healthCheck.path, HealthCheckResultTypes.Exception(t), DateTime.now, healthCheck.expires)
+      .recover { case NonFatal(t) =>
+        log.error(s"HealthCheck request to ${healthCheck.path} failed", t)
+        HealthCheckResult(healthCheck.path, HealthCheckResultTypes.Exception(t), DateTime.now, healthCheck.expires)
       }
 
   }

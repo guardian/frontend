@@ -50,10 +50,9 @@ trait FrontJsonFapi extends GuLogging {
   def get(path: String, pageType: PressedPageType): Future[Option[PressedPage]] =
     errorLoggingF(s"FrontJsonFapi.get $path") {
       val objectId = s3ObjectIdFor(path, pageType.suffix)
-      pressedPageCache.get(objectId).map(Some(_)).recover {
-        case s3Exception: S3Exception =>
-          logS3ExceptionWithDevHint(objectId, s3Exception)
-          None
+      pressedPageCache.get(objectId).map(Some(_)).recover { case s3Exception: S3Exception =>
+        logS3ExceptionWithDevHint(objectId, s3Exception)
+        None
       }
     }
 }
