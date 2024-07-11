@@ -100,7 +100,6 @@
 		"listr2": "^8.2.1",
 		"lodash-es": "^4.17.21",
 		"lodash.uniq": "^4.5.0",
-		"madge": "^5.0.1",
 		"mkdirp": "^1.0.4",
 		"mockdate": "^3.0.5",
 		"object-fit-videos": "^1.0.3",
