@@ -371,9 +371,8 @@ class EmailSignupController(
               result <- submitFormFooter(form)
             } yield {
               result
-            }) recover {
-              case _ =>
-                respondFooter(OtherError)
+            }) recover { case _ =>
+              respondFooter(OtherError)
             }
           },
         )
@@ -436,10 +435,9 @@ class EmailSignupController(
             RecaptchaMissingTokenError.increment()
             Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
         }
-        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith {
-          case e =>
-            RecaptchaAPIUnavailableError.increment()
-            Future.failed(e)
+        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith { case e =>
+          RecaptchaAPIUnavailableError.increment()
+          Future.failed(e)
         }
         googleResponse = wsResponse.json.as[GoogleResponse]
         _ <- {
@@ -485,9 +483,8 @@ class EmailSignupController(
               result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
             } yield {
               result
-            }) recover {
-              case _ =>
-                respond(OtherError)
+            }) recover { case _ =>
+              respond(OtherError)
             }
           },
         )
@@ -521,9 +518,8 @@ class EmailSignupController(
               result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
             } yield {
               result
-            }) recover {
-              case _ =>
-                respond(OtherError)
+            }) recover { case _ =>
+              respond(OtherError)
             }
           },
         )

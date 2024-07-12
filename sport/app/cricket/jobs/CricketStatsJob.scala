@@ -31,43 +31,42 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   def run(fromDate: LocalDate, matchesToFetch: Int)(implicit executionContext: ExecutionContext): Unit = {
 
-    cricketStatsAgents.foreach {
-      case (team, agent) =>
-        // Find new ids which are not in the stats agent. Caveat: always include live matches to update.
-        val loadedMatches = agent().values
-          .filter(cricketMatch =>
-            // Omit any recent match within the last 5 days, to account for test matches.
-            Duration.between(cricketMatch.gameDate, LocalDateTime.now).toDays() > 5,
-          )
-          .map(_.matchId)
-          .toSeq
+    cricketStatsAgents.foreach { case (team, agent) =>
+      // Find new ids which are not in the stats agent. Caveat: always include live matches to update.
+      val loadedMatches = agent().values
+        .filter(cricketMatch =>
+          // Omit any recent match within the last 5 days, to account for test matches.
+          Duration.between(cricketMatch.gameDate, LocalDateTime.now).toDays() > 5,
+        )
+        .map(_.matchId)
+        .toSeq
 
-        paFeed
-          .getMatchIds(team, fromDate)
-          .map { matchIds =>
-            // never fetch more than 10 matches
-            val matches = matchIds.diff(loadedMatches).take(Math.min(matchesToFetch, 10))
+      paFeed
+        .getMatchIds(team, fromDate)
+        .map { matchIds =>
+          // never fetch more than 10 matches
+          val matches = matchIds.diff(loadedMatches).take(Math.min(matchesToFetch, 10))
 
-            matches.map { matchId =>
-              paFeed
-                .getMatch(matchId)
-                .map { matchData =>
-                  val date = PaFeed.dateFormat.format(matchData.gameDate)
-                  log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")
-                  agent.send(_ + (date -> matchData))
-                }
-                .recover {
-                  case paFeedError: CricketFeedException =>
-                    log.warn(s"CricketStatsJob encountered errors: ${paFeedError.message}")
-                  case error: Exception => log.warn(error.getMessage)
-                }
-            }
+          matches.map { matchId =>
+            paFeed
+              .getMatch(matchId)
+              .map { matchData =>
+                val date = PaFeed.dateFormat.format(matchData.gameDate)
+                log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")
+                agent.send(_ + (date -> matchData))
+              }
+              .recover {
+                case paFeedError: CricketFeedException =>
+                  log.warn(s"CricketStatsJob encountered errors: ${paFeedError.message}")
+                case error: Exception => log.warn(error.getMessage)
+              }
           }
-          .recover {
-            case paFeedError: CricketFeedException =>
-              log.warn(s"CricketStatsJob couldn't find matches: ${paFeedError.message}")
-            case error: Exception => log.warn(error.getMessage)
-          }
+        }
+        .recover {
+          case paFeedError: CricketFeedException =>
+            log.warn(s"CricketStatsJob couldn't find matches: ${paFeedError.message}")
+          case error: Exception => log.warn(error.getMessage)
+        }
     }
   }
 }

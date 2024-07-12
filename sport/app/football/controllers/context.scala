@@ -10,9 +10,8 @@ trait CompetitionFixtureFilters {
     competitionsService.competitionsWithTodaysMatchesAndFutureFixtures.competitions
       .filter(_.matches.nonEmpty)
       .groupBy(_.nation)
-      .map {
-        case (nation, comps) =>
-          nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/fixtures"))
+      .map { case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/fixtures"))
       }
 }
 
@@ -22,9 +21,8 @@ trait CompetitionResultFilters {
     competitionsService.competitionsWithTodaysMatchesAndPastResults.competitions
       .filter(_.matches.nonEmpty)
       .groupBy(_.nation)
-      .map {
-        case (nation, comps) =>
-          nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/results"))
+      .map { case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/results"))
       }
 }
 
@@ -34,9 +32,8 @@ trait CompetitionLiveFilters {
     competitionsService.withTodaysMatches.competitions
       .filter(_.matches.nonEmpty)
       .groupBy(_.nation)
-      .map {
-        case (nation, comps) =>
-          nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/live"))
+      .map { case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/live"))
       }
 }
 
@@ -46,9 +43,8 @@ trait CompetitionListFilters {
     competitionsService.competitions
       .filter(_.matches.nonEmpty)
       .groupBy(_.nation)
-      .map {
-        case (nation, comps) =>
-          nation -> comps.map(c => CompetitionFilter(c.fullName, c.url))
+      .map { case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, c.url))
       }
 }
 
@@ -59,8 +55,7 @@ trait CompetitionTableFilters {
       .filter(_.hasLeagueTable)
       .filter(competition => tableOrder.contains(competition.fullName))
       .groupBy(_.nation)
-      .map {
-        case (nation, comps) =>
-          nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/table"))
+      .map { case (nation, comps) =>
+        nation -> comps.map(c => CompetitionFilter(c.fullName, s"${c.url}/table"))
       }
 }

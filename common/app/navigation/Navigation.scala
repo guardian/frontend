@@ -99,7 +99,7 @@ object NavMenu {
    * Useful when looking for a link, which may not exist in current edition, but
    * does in another.
    *
-  * For example, if you are in the US edition, but go to `/cricket`, we still
+   * For example, if you are in the US edition, but go to `/cricket`, we still
    * want the Sports Pillar to be highlighted, even though cricket isn't in the
    * UsSportsPillar
    */

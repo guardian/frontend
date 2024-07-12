@@ -48,8 +48,8 @@ object Cached extends implicits.Dates {
   object RevalidatableResult {
     def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
       // hashing function from Arrays.java
-      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L) {
-        case (accu, nextByte) => 31 * accu + nextByte
+      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L) { case (accu, nextByte) =>
+        31 * accu + nextByte
       }
       new RevalidatableResult(result, Hash(hashLong.toString))
     }

@@ -46,8 +46,7 @@ object Environment extends GuLogging {
   )
 }
 
-/**
-  * Main configuration
+/** Main configuration
   *
   * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
   * or `~/.gu/frontend.conf` file under a `devOverrides` key. E.g:
@@ -76,8 +75,8 @@ object GuardianConfiguration extends GuLogging {
 
   private def configFromParameterStore(path: String): Config = {
     val params = parameterStore.getPath(path)
-    val configMap = params.map {
-      case (key, value) => key.replaceFirst(s"$path/", "") -> value
+    val configMap = params.map { case (key, value) =>
+      key.replaceFirst(s"$path/", "") -> value
     }
     ConfigFactory.parseMap(configMap.asJava)
   }
@@ -566,8 +565,8 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
-      keys.foldLeft(Map.empty[String, String]) {
-        case (map, key) => map + (key -> configuration.getMandatoryStringProperty(key))
+      keys.foldLeft(Map.empty[String, String]) { case (map, key) =>
+        map + (key -> configuration.getMandatoryStringProperty(key))
       }
     }
   }

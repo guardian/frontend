@@ -4,8 +4,7 @@ import conf.Configuration
 import controllers.editprofile._
 import play.api.mvc.{Action, AnyContent}
 
-/**
-  * DigiPack, Mebership, Contributions tabs
+/** DigiPack, Mebership, Contributions tabs
   */
 trait SupporterTabs extends EditProfileControllerComponents {
 

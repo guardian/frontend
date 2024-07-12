@@ -14,8 +14,8 @@ case class WidthsByBreakpoint(
   private val allBreakpoints: List[Breakpoint] = List(Wide, LeftCol, Desktop, Tablet, Phablet, MobileLandscape, Mobile)
   private val allWidths: List[Option[BrowserWidth]] =
     List(wide, leftCol, desktop, tablet, phablet, mobileLandscape, mobile)
-  val breakpoints: Seq[BreakpointWidth] = allBreakpoints zip allWidths collect {
-    case (breakpoint, Some(width)) => BreakpointWidth(breakpoint, width)
+  val breakpoints: Seq[BreakpointWidth] = allBreakpoints zip allWidths collect { case (breakpoint, Some(width)) =>
+    BreakpointWidth(breakpoint, width)
   }
 
   def sizes: String =

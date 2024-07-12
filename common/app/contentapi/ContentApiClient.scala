@@ -81,7 +81,7 @@ trait ApiQueryDefaults extends GuLogging {
   //Strip unnecessary leading slash in path, as this affects signing of IAM requests
   def item(id: String, edition: String): ItemQuery =
     item(id.stripPrefix("/"))
-    //common fields that we use across most queries.
+      //common fields that we use across most queries.
       .edition(edition)
       .showSection(true)
       .showTags("all")

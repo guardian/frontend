@@ -63,13 +63,12 @@ class AuthenticationService(
         hasRecentlyAuthenticated = hasRecentlyAuthenticate(user.id, request),
       )
     }).redeem(
-        err => {
-          logger.error("unable to authenticate user using SC_GU_U cookie", err)
-          None
-        },
-        user => Some(user),
-      )
-      .unsafeRunSync()
+      err => {
+        logger.error("unable to authenticate user using SC_GU_U cookie", err)
+        None
+      },
+      user => Some(user),
+    ).unsafeRunSync()
   }
 
   def consentCookieAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] =

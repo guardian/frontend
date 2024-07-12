@@ -11,14 +11,11 @@ import conf.switches.Switches.DCRVideoPages
 
 object MediaPicker extends GuLogging {
 
-  /**
-    *
-    * Add to this function any logic for including/excluding
+  /** Add to this function any logic for including/excluding
     * an audio/video article from being rendered with DCR
     *
     * Currently defaulting to false until we implement in DCR
-    *
-    * */
+    */
   private def dcrCouldRender(mediaPage: MediaPage): Boolean = {
     mediaPage.media match {
       case Video(content, source, mediaAtom) => true

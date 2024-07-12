@@ -11,8 +11,7 @@ case class Data()
 
 class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionContext) extends LifecycleComponent {
 
-  /**
-    * Pushes Navigation data from NavLinks.scala into S3
+  /** Pushes Navigation data from NavLinks.scala into S3
     */
   override def start(): Unit = {
 

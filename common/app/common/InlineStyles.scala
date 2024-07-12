@@ -65,8 +65,7 @@ object CSSRule {
 
 object InlineStyles extends GuLogging {
 
-  /**
-    * Attempt to inline the rules from the <style> tags in a page.
+  /** Attempt to inline the rules from the <style> tags in a page.
     *
     * Each <style> tag is split into rules that can be inlined and those that can't (pseudo-selectors and
     * media queries).
@@ -98,8 +97,7 @@ object InlineStyles extends GuLogging {
     Html(document.toString)
   }
 
-  /**
-    * Convert the styles in a document's <style> tags to a pair.
+  /** Convert the styles in a document's <style> tags to a pair.
     * The first item is the styles that should stay in the head, the second is everything that should be inlined.
     */
   def styles(document: Document): (Seq[CSSRule], Seq[String]) = {
@@ -120,8 +118,7 @@ object InlineStyles extends GuLogging {
     }
   }
 
-  /**
-    * I found drawing this table helpful in understanding the logic of this function.
+  /** I found drawing this table helpful in understanding the logic of this function.
     * As you add styles from left to right:
     *
     * Existing Style | New Style    | Which should win?
@@ -139,15 +136,13 @@ object InlineStyles extends GuLogging {
     })
   }
 
-  /**
-    * Ensure !important styles appear last
+  /** Ensure !important styles appear last
     */
   def sortStyles(styles: String): String = {
     val stylesMap = CSSRule.styleMapFromString(styles)
-    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith {
-      case ((_, v1), (_, v2)) =>
-        if (v1.contains("!important") || !v2.contains("!important")) false
-        else true
+    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith { case ((_, v1), (_, v2)) =>
+      if (v1.contains("!important") || !v2.contains("!important")) false
+      else true
     }: _*)
 
     CSSRule.styleStringFromMap(importantStylesLast)

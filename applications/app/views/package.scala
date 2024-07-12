@@ -49,8 +49,8 @@ object GalleryCaptionCleaners {
       ),
     )
 
-    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) {
-      case (html, cleaner) => cleaner.clean(html)
+    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) =>
+      cleaner.clean(html)
     }
     cleanedHtml.outputSettings().prettyPrint(false)
     Html(cleanedHtml.body.html)

@@ -98,11 +98,10 @@ trait PaFootballClient {
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
       competitionTeams <- Future.traverse(competitions) { comp =>
-        client.teams(comp.competitionId, comp.startDate, comp.endDate).recover {
-          case e: PaClientErrorsException =>
-            // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
-            log.error(s"PA Client error when fetching teams for competition $comp: ", e)
-            List()
+        client.teams(comp.competitionId, comp.startDate, comp.endDate).recover { case e: PaClientErrorsException =>
+          // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
+          log.error(s"PA Client error when fetching teams for competition $comp: ", e)
+          List()
         }
       }
       allTeams = competitionTeams.flatten.distinct

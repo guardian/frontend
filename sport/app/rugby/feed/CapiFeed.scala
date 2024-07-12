@@ -66,10 +66,9 @@ class CapiFeed(contentApiClient: ContentApiClient) extends GuLogging {
           Future.successful(None)
         }
       }
-      .recoverWith {
-        case error: Throwable =>
-          log.warn(s"Rugby capi query failed: ${error.getMessage}")
-          Future.successful(None)
+      .recoverWith { case error: Throwable =>
+        log.warn(s"Rugby capi query failed: ${error.getMessage}")
+        Future.successful(None)
       }
   }
 }

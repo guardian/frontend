@@ -126,65 +126,63 @@ object IndexPage {
       ),
     )
 
-    val headers = grouped.map(_.dateHeadline).zipWithIndex map {
-      case (headline, index) =>
-        if (index == 0) {
-          indexPage.page match {
-            case tag: Tag         => FaciaContainerHeader.fromTagPage(tag, headline)
-            case section: Section => FaciaContainerHeader.fromSection(section, headline)
-            case page: Page       => FaciaContainerHeader.fromPage(page, headline)
-            case _                =>
-              // should never happen
-              LoneDateHeadline(headline)
-          }
-        } else {
-          LoneDateHeadline(headline)
+    val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
+      if (index == 0) {
+        indexPage.page match {
+          case tag: Tag         => FaciaContainerHeader.fromTagPage(tag, headline)
+          case section: Section => FaciaContainerHeader.fromSection(section, headline)
+          case page: Page       => FaciaContainerHeader.fromPage(page, headline)
+          case _                =>
+            // should never happen
+            LoneDateHeadline(headline)
         }
+      } else {
+        LoneDateHeadline(headline)
+      }
     }
 
     front.copy(containers =
       front.containers
         .zip(headers)
-        .map({
-          case (container, header) =>
-            val timeStampDisplay = header match {
-              case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
-              case LoneDateHeadline(dateHeadline)           => Some(cardTimestampDisplay(dateHeadline))
-              case DescriptionMetaHeader(_)                 => None
-            }
-            container
-              .copy(
-                customHeader = Some(header),
-                customClasses = Some(
-                  Seq(
-                    Some("fc-container--tag"),
-                    if (
-                      container.index == 0 &&
-                      indexPage.isFootballTeam &&
-                      Switches.FixturesAndResultsContainerSwitch.isSwitchedOn
-                    ) Some("js-insert-team-stats-after")
-                    else None,
-                  ).flatten,
-                ),
-                hideToggle = true,
-                showTimestamps = true,
-                useShowMore = false,
-                dateLinkPath = Some(s"/${indexPage.idWithoutEdition}"),
-              )
-              .transformCards({ card =>
-                card
-                  .copy(
-                    timeStampDisplay = timeStampDisplay,
-                    byline = if (indexPage.tags.isContributorPage) None else card.byline,
-                    useShortByline = true,
-                  )
-                  .setKicker(card.header.kicker flatMap {
-                    case ReviewKicker if isReviewPage                        => None
-                    case CartoonKicker if isCartoonPage                      => None
-                    case TagKicker(_, _, _, id) if indexPage.isTagWithId(id) => None
-                    case otherKicker                                         => Some(otherKicker)
-                  })
-              })
+        .map({ case (container, header) =>
+          val timeStampDisplay = header match {
+            case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
+            case LoneDateHeadline(dateHeadline)           => Some(cardTimestampDisplay(dateHeadline))
+            case DescriptionMetaHeader(_)                 => None
+          }
+          container
+            .copy(
+              customHeader = Some(header),
+              customClasses = Some(
+                Seq(
+                  Some("fc-container--tag"),
+                  if (
+                    container.index == 0 &&
+                    indexPage.isFootballTeam &&
+                    Switches.FixturesAndResultsContainerSwitch.isSwitchedOn
+                  ) Some("js-insert-team-stats-after")
+                  else None,
+                ).flatten,
+              ),
+              hideToggle = true,
+              showTimestamps = true,
+              useShowMore = false,
+              dateLinkPath = Some(s"/${indexPage.idWithoutEdition}"),
+            )
+            .transformCards({ card =>
+              card
+                .copy(
+                  timeStampDisplay = timeStampDisplay,
+                  byline = if (indexPage.tags.isContributorPage) None else card.byline,
+                  useShortByline = true,
+                )
+                .setKicker(card.header.kicker flatMap {
+                  case ReviewKicker if isReviewPage                        => None
+                  case CartoonKicker if isCartoonPage                      => None
+                  case TagKicker(_, _, _, id) if indexPage.isTagWithId(id) => None
+                  case otherKicker                                         => Some(otherKicker)
+                })
+            })
         }),
     )
   }
@@ -192,9 +190,8 @@ object IndexPage {
   def makeLinkedData(indexPage: IndexPage)(implicit request: RequestHeader): ItemList = {
     ItemList(
       url = LinkTo(indexPage.page.metadata.url),
-      itemListElement = indexPage.trails.zipWithIndex.map {
-        case (trail, index) =>
-          ListItem(position = index, url = Some(LinkTo(trail.metadata.url)))
+      itemListElement = indexPage.trails.zipWithIndex.map { case (trail, index) =>
+        ListItem(position = index, url = Some(LinkTo(trail.metadata.url)))
       },
     )
   }

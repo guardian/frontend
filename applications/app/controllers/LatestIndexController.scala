@@ -99,10 +99,9 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
           )
       }
 
-    result recover {
-      case e: Exception =>
-        log.error(e.getMessage, e)
-        None
+    result recover { case e: Exception =>
+      log.error(e.getMessage, e)
+      None
     }
   }
 }

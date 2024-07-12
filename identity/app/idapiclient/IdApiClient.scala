@@ -278,10 +278,9 @@ class HttpClient(wsClient: WSClient)(implicit val executionContext: ExecutionCon
       .withMethod(method)
       .execute()
       .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
-      .recover {
-        case e: Throwable =>
-          logger.error(s"Network error while communicating with $uri:", e)
-          Left(List(Error(e.getClass.getName, e.toString)))
+      .recover { case e: Throwable =>
+        logger.error(s"Network error while communicating with $uri:", e)
+        Left(List(Error(e.getClass.getName, e.toString)))
       }
   }
 }

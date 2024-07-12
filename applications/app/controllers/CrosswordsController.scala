@@ -54,10 +54,9 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         crossword <- content.crossword
       } yield f(crossword, content)
       maybeCrossword getOrElse Future.successful(noResults())
-    } recover {
-      case t: Throwable =>
-        log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
-        noResults()
+    } recover { case t: Throwable =>
+      log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
+      noResults()
     }
   }
 
@@ -236,31 +235,30 @@ class CrosswordSearchController(
               withoutSetter.stringParam("tag", s"profile/${setter.toLowerCase}")
             }
 
-            contentApiClient.getResponse(maybeSetter.showFields("all")).map {
-              response =>
-                response.results.getOrElse(Seq.empty).toList match {
-                  case Nil => noResults()
+            contentApiClient.getResponse(maybeSetter.showFields("all")).map { response =>
+              response.results.getOrElse(Seq.empty).toList match {
+                case Nil => noResults()
 
-                  case results =>
-                    val section = Section.make(
-                      ApiSection(
-                        "crosswords",
-                        "Crosswords search results",
-                        "http://www.theguardian.com/crosswords/search",
-                        "",
-                        Nil,
-                      ),
-                    )
-                    val page = IndexPage(
-                      page = section,
-                      contents = results.map(IndexPageItem(_)),
-                      tags = Tags(Nil),
-                      date = DateTime.now,
-                      tzOverride = None,
-                    )
+                case results =>
+                  val section = Section.make(
+                    ApiSection(
+                      "crosswords",
+                      "Crosswords search results",
+                      "http://www.theguardian.com/crosswords/search",
+                      "",
+                      Nil,
+                    ),
+                  )
+                  val page = IndexPage(
+                    page = section,
+                    contents = results.map(IndexPageItem(_)),
+                    tags = Tags(Nil),
+                    date = DateTime.now,
+                    tzOverride = None,
+                  )
 
-                    Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
-                }
+                  Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
+              }
             }
           },
         )

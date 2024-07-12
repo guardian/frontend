@@ -25,9 +25,8 @@ import java.time.format.DateTimeFormatter
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("7", "8", "9", "10", "32", "33", "34"))
       }
@@ -42,9 +41,8 @@ import java.time.format.DateTimeFormatter
       "should only contain matches happening on one of next 3 days that have fixtures (includes today)" in {
         val allowedDates = List(today, today.plusDays(1), today.plusDays(3)) // look at the test data to see why
 
-        fixtures.relevantMatches.foreach {
-          case (fMatch, _) =>
-            allowedDates should contain(fMatch.date.toLocalDate)
+        fixtures.relevantMatches.foreach { case (fMatch, _) =>
+          allowedDates should contain(fMatch.date.toLocalDate)
         }
       }
 
@@ -58,10 +56,9 @@ import java.time.format.DateTimeFormatter
       }
 
       "matches should have the correct, populated, competition alongside" in {
-        fixtures.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            if (fMatch.id.toInt < 30) comp.id should equal("500")
-            else comp.id should equal("100")
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          if (fMatch.id.toInt < 30) comp.id should equal("500")
+          else comp.id should equal("100")
         }
       }
     }
@@ -72,9 +69,8 @@ import java.time.format.DateTimeFormatter
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("10", "11", "12", "35", "36"))
       }
@@ -83,9 +79,8 @@ import java.time.format.DateTimeFormatter
         val allowedDates =
           List(targetDate, targetDate.plusDays(1), targetDate.plusDays(7)) // look at the test data to see why
 
-        fixtures.relevantMatches.foreach {
-          case (fMatch, _) =>
-            allowedDates should contain(fMatch.date.toLocalDate)
+        fixtures.relevantMatches.foreach { case (fMatch, _) =>
+          allowedDates should contain(fMatch.date.toLocalDate)
         }
       }
 
@@ -99,10 +94,9 @@ import java.time.format.DateTimeFormatter
       }
 
       "matches should have the correct, populated, competition alongside" in {
-        fixtures.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            if (fMatch.id.toInt < 30) comp.id should equal("500")
-            else comp.id should equal("100")
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          if (fMatch.id.toInt < 30) comp.id should equal("500")
+          else comp.id should equal("100")
         }
       }
     }
@@ -160,9 +154,8 @@ import java.time.format.DateTimeFormatter
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("7", "8", "9", "10", "11", "12", "13"))
       }
@@ -177,9 +170,8 @@ import java.time.format.DateTimeFormatter
       }
 
       "matches should only come from the specified competition" in {
-        fixtures.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            comp.id should equal("500")
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          comp.id should equal("500")
         }
       }
     }
@@ -189,17 +181,15 @@ import java.time.format.DateTimeFormatter
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("32", "33", "34", "35", "36"))
       }
 
       "matches should only come from the specified competition" in {
-        fixtures.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            comp.id should equal("100")
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          comp.id should equal("100")
         }
       }
     }
@@ -211,9 +201,8 @@ import java.time.format.DateTimeFormatter
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("7", "11", "12", "36"))
       }
@@ -228,9 +217,8 @@ import java.time.format.DateTimeFormatter
       }
 
       "matches should only come from the specified team" in {
-        fixtures.relevantMatches.foreach {
-          case (fMatch, _) =>
-            fMatch.hasTeam(spurs.id) should equal(true)
+        fixtures.relevantMatches.foreach { case (fMatch, _) =>
+          fMatch.hasTeam(spurs.id) should equal(true)
         }
       }
     }

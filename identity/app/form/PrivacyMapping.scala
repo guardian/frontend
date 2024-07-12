@@ -32,15 +32,13 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
 }
 
-/**
-  * Form specific DTO representing marketing consent subset of User model
+/** Form specific DTO representing marketing consent subset of User model
   */
 case class PrivacyFormData(consents: List[Consent]) extends UserFormData
 
 object PrivacyFormData extends SafeLogging {
 
-  /**
-    * Converts User DO from IDAPI to form processing DTO PrivacyFromData
+  /** Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
     * @param userDO Identity User domain model from IDAPI defiend in identity-model library
     * @return form processing DTO PrivacyFromData
@@ -51,8 +49,7 @@ object PrivacyFormData extends SafeLogging {
     )
   }
 
-  /**
-    * FIXME: Once GDPR goes live, clean Mongo DB of old consents, and remove this method.
+  /** FIXME: Once GDPR goes live, clean Mongo DB of old consents, and remove this method.
     *
     * Filter out any invalid consents that are still lingering in Mongo DB.
     *

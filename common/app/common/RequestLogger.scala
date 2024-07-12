@@ -36,9 +36,8 @@ case class RequestLoggerFields(request: RequestHeader, response: Option[Result],
 
     val guardianSpecificHeaders = allHeadersFields.view.filterKeys(_.toUpperCase.startsWith("X-GU-")).toMap
 
-    (allowListedHeaders ++ guardianSpecificHeaders).toList.map {
-      case (headerName, headerValue) =>
-        LogFieldString(s"req.header.$headerName", headerValue)
+    (allowListedHeaders ++ guardianSpecificHeaders).toList.map { case (headerName, headerValue) =>
+      LogFieldString(s"req.header.$headerName", headerValue)
     }
   }
   private lazy val customFields: List[LogField] = {

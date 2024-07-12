@@ -48,18 +48,17 @@ class ElementsTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
     FixtureTemplates.emptyElement.copy(
       `type` = ElementType.Image,
       relation = "thumbnail",
-      assets = crops.toList map {
-        case (width, height) =>
-          FixtureTemplates.emptyAsset.copy(
-            `type` = AssetType.Image,
-            mimeType = Some("image/jpeg"),
-            typeData = Some(
-              AssetFields(
-                width = Some(width),
-                height = Some(height),
-              ),
+      assets = crops.toList map { case (width, height) =>
+        FixtureTemplates.emptyAsset.copy(
+          `type` = AssetType.Image,
+          mimeType = Some("image/jpeg"),
+          typeData = Some(
+            AssetFields(
+              width = Some(width),
+              height = Some(height),
             ),
-          )
+          ),
+        )
       },
     )
 

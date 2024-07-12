@@ -47,10 +47,9 @@ class CapiAgent(contentApiClient: ContentApiClient) extends GuLogging {
     } else {
       lookup.contentByShortUrls(shortUrlIds) flatMap {
         addToCache
-      } recoverWith {
-        case NonFatal(e) =>
-          log.error(s"Lookup failed: ${e.getMessage}")
-          Future.successful(cache)
+      } recoverWith { case NonFatal(e) =>
+        log.error(s"Lookup failed: ${e.getMessage}")
+        Future.successful(cache)
       }
     }
 

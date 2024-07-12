@@ -9,8 +9,7 @@ import org.scalatest.Suites
 import play.api._
 import play.api.test.Helpers._
 
-/**
-  * Executes a block of code in a FakeApplication.
+/** Executes a block of code in a FakeApplication.
   */
 trait FakeApp {
   def app: Application = {

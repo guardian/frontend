@@ -62,8 +62,7 @@ object ImageMedia {
   implicit val imageMediaWrites: Writes[ImageMedia] = Json.writes[ImageMedia]
 }
 
-/**
-  * ImageMedia is a collection of ImageAssets with some helper methods.
+/** ImageMedia is a collection of ImageAssets with some helper methods.
   */
 final case class ImageMedia(allImages: Seq[ImageAsset]) {
 
@@ -104,8 +103,8 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
 
   val encodings: Seq[Encoding] = {
     videoAssets
-      .collect {
-        case video: VideoAsset => video.encoding
+      .collect { case video: VideoAsset =>
+        video.encoding
       }
       .flatten
       .sorted
@@ -140,8 +139,8 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
 
   val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
   val encodings: Seq[Encoding] = {
-    audioAssets.collect {
-      case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
+    audioAssets.collect { case audio: AudioAsset =>
+      Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
     }.sorted
   }
 }

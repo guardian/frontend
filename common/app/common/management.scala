@@ -10,14 +10,12 @@ trait Switchable {
   def isSwitchedOn: Boolean
   def isSwitchedOff: Boolean = !isSwitchedOn
 
-  /**
-    * @return a single url-safe word that can be used to construct urls
+  /** @return a single url-safe word that can be used to construct urls
     * for this switch.
     */
   def name: String
 
-  /**
-    * @return a sentence that describes, in websys understandable terms, the
+  /** @return a sentence that describes, in websys understandable terms, the
     * effect of switching this switch
     */
   def description: String

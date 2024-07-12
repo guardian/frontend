@@ -22,10 +22,9 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
 
     val re = TagLinker.keywordRegex("Champions League")
 
-    examples.foreach({
-      case (example, want) =>
-        val got = re.findFirstMatchIn(example).map(_.group("tag"))
-        got shouldBe want
+    examples.foreach({ case (example, want) =>
+      val got = re.findFirstMatchIn(example).map(_.group("tag"))
+      got shouldBe want
     })
   }
 
@@ -54,17 +53,16 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
       None,
     )
 
-    examples.foreach({
-      case (example, want) =>
-        val got = TagLinker.addLink(
-          tags = Tags(List(tag)),
-          showInRelated = true,
-          el = example,
-          terms = Set.empty,
-          edition = editions.Uk,
-        )
+    examples.foreach({ case (example, want) =>
+      val got = TagLinker.addLink(
+        tags = Tags(List(tag)),
+        showInRelated = true,
+        el = example,
+        terms = Set.empty,
+        edition = editions.Uk,
+      )
 
-        got shouldBe want
+      got shouldBe want
     })
   }
 

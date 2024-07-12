@@ -458,8 +458,7 @@ trait FaciaController
       )
   }
 
-  /**
-    * Note, the way this method works is a bit circuitous. Firstly, it finds a
+  /** Note, the way this method works is a bit circuitous. Firstly, it finds a
     * front that contains the collection (via the ConfigAgent, which is
     * basically a cache of configuration for Guardian Fronts). It then looks up
     * that front in Frontend's S3 and extracts the full collection from it (with
