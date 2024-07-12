@@ -67,9 +67,9 @@ object EmailHelpers {
         card.header.url match {
           case EditionalisedLink(urlMatcher(baseUrl)) => {
             s"""<a ${card.header.url.hrefWithRel}>${img(width)(
-              url,
-              Some(altTextOverride.getOrElse(card.header.headline)),
-            )}</a>"""
+                url,
+                Some(altTextOverride.getOrElse(card.header.headline)),
+              )}</a>"""
           }
           case _ => {
             s"""${img(width)(url, Some(altTextOverride.getOrElse(card.header.headline)))}"""

@@ -97,7 +97,7 @@ object InlineMerchandisingTargetedTagsReportParser extends GuLogging {
     val json = Json.parse(jsonString)
     json.validate[InlineMerchandisingTargetedTagsReport] match {
       case s: JsSuccess[InlineMerchandisingTargetedTagsReport] => Some(s.get)
-      case e: JsError                                          => log.error("Errors: " + JsError.toJson(e).toString()); None
+      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }
 }
@@ -156,7 +156,7 @@ object HighMerchandisingTargetedTagsReportParser extends GuLogging {
     val json = Json.parse(jsonString)
     json.validate[HighMerchandisingTargetedTagsReport] match {
       case s: JsSuccess[HighMerchandisingTargetedTagsReport] => Some(s.get)
-      case e: JsError                                        => log.error("Errors: " + JsError.toJson(e).toString()); None
+      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }
 }

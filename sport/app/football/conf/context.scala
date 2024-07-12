@@ -31,7 +31,7 @@ class FootballLifecycle(
 
   private def scheduleJobs(): Unit = {
     competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
-      //stagger fixtures and results refreshes to avoid timeouts
+      // stagger fixtures and results refreshes to avoid timeouts
       val seconds = index * 5 % 60
       val minutes = index * 5 / 60 % 5
       val cron = s"$seconds $minutes/5 * * * ?"
@@ -103,8 +103,8 @@ class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
     val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2.second).get()
 
     promiseOfResponse.map { r =>
-      //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
-      //I have reported to PA, but just trimming here so we can carry on development
+      // this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
+      // I have reported to PA, but just trimming here so we can carry on development
       pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
     }
   }

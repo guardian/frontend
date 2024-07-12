@@ -8,8 +8,8 @@ import play.api.libs.json.{Json, OFormat}
 case class SeoDataJson(
     id: String,
     navSection: Option[String],
-    webTitle: Option[String], //Always short, eg, "Reviews" for "tone/reviews" id
-    title: Option[String], //Long custom title entered by editors
+    webTitle: Option[String], // Always short, eg, "Reviews" for "tone/reviews" id
+    title: Option[String], // Long custom title entered by editors
     description: Option[String],
 )
 
@@ -22,7 +22,7 @@ object SeoData extends GuLogging {
 
   def fromPath(path: String): SeoData =
     (path.split('/').toList: @unchecked) match { // split() never gives the empty list
-      //This case is only to handle the nonevent of uk/technology/games
+      // This case is only to handle the nonevent of uk/technology/games
       case edition :: section :: name :: tail if editions.contains(edition.toLowerCase) =>
         val webTitle: String = webTitleFromTail(name :: tail)
         SeoData(path, section, webTitle, None, descriptionFromWebTitle(webTitle))

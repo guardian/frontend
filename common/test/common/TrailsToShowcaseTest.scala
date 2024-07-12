@@ -1077,7 +1077,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
     val outcome = TrailsToShowcase.asSingleStoryPanel(withLongByline)
 
     outcome.value.author should be(None)
-    //outcome.left.get.contains("Author was too long and was dropped") shouldBe(true)
+    // outcome.left.get.contains("Author was too long and was dropped") shouldBe(true)
   }
 
   "TrailToShowcase validation" should "reject single panels with no image" in {

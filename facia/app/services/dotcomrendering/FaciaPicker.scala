@@ -16,7 +16,8 @@ object FrontChecks {
     *
     * **It must be kept in sync manually.**
     *
-    * @see https://github.com/guardian/dotcom-rendering/blob/07b8f29decc1/dotcom-rendering/src/types/front.ts#L61-L83
+    * @see
+    *   https://github.com/guardian/dotcom-rendering/blob/07b8f29decc1/dotcom-rendering/src/types/front.ts#L61-L83
     */
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(

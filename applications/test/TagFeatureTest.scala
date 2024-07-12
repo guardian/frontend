@@ -111,7 +111,7 @@ import org.scalatest.matchers.should.Matchers
     }
   }
 
-  //I'm not having a happy time with the selectors on links...
+  // I'm not having a happy time with the selectors on links...
   private def findByRel(elements: FluentList[FluentWebElement], rel: String) =
     elements.asScala.find(_.attribute("rel") == rel)
 }

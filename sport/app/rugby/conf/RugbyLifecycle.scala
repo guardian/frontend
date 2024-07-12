@@ -38,7 +38,7 @@ class RugbyLifecycle(
       rugbyStatsJob.fetchFixturesAndResults()
     }
 
-    //delay to allow previous jobs to complete
+    // delay to allow previous jobs to complete
     pekkoAsync.after(initializationTimeout) {
       val refreshedNavContent = capiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)

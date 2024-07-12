@@ -44,7 +44,7 @@ object QueryDefaults {
 
   val trailFields = trailFieldsList.mkString(",")
 
-  //main field is needed for Main Media Atom data required by InlineYouTubeDisplayElement
+  // main field is needed for Main Media Atom data required by InlineYouTubeDisplayElement
   val trailFieldsWithMain: String = (trailFieldsList ::: mainField).mkString(",")
 
   val references = List(
@@ -78,10 +78,10 @@ trait ApiQueryDefaults extends GuLogging {
 
   def item(id: String, edition: Edition): ItemQuery = item(id, EditionIdCAPIMapper.mapEditionId(edition))
 
-  //Strip unnecessary leading slash in path, as this affects signing of IAM requests
+  // Strip unnecessary leading slash in path, as this affects signing of IAM requests
   def item(id: String, edition: String): ItemQuery =
     item(id.stripPrefix("/"))
-      //common fields that we use across most queries.
+      // common fields that we use across most queries.
       .edition(edition)
       .showSection(true)
       .showTags("all")
@@ -92,7 +92,7 @@ trait ApiQueryDefaults extends GuLogging {
       .showRights("syndicatable")
       .showAtoms("media")
 
-  //common fields that we use across most queries.
+  // common fields that we use across most queries.
   def search(): SearchQuery =
     CapiContentApiClient.search
       .showTags("all")

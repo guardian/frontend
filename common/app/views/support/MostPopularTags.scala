@@ -7,8 +7,8 @@ import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 object MostPopularTags {
 
-  /** A descending list of the tags that occur most frequently within the given items of content and how frequently
-    * they occur
+  /** A descending list of the tags that occur most frequently within the given items of content and how frequently they
+    * occur
     */
   def apply(items: Seq[PressedContent]): Seq[(Tag, Int)] =
     items

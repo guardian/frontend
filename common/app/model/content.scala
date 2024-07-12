@@ -164,12 +164,12 @@ final case class Content(
       case paid if isPaidContent => Paid
       case oldcommentObserver if isOldOpinion && isFromTheObserver =>
         CommentObserverOldContent(trail.webPublicationDate.getYear)
-      case oldComment if isOldOpinion                                  => CommentGuardianOldContent(trail.webPublicationDate.getYear)
-      case commentObserver if tags.isComment && isFromTheObserver      => ObserverOpinion
-      case comment if tags.isComment                                   => GuardianOpinion
-      case live if tags.isLiveBlog                                     => Live
-      case oldObserver if isOldNews && isFromTheObserver               => ObserverOldContent(trail.webPublicationDate.getYear)
-      case old if isOldNews                                            => GuardianOldContent(trail.webPublicationDate.getYear)
+      case oldComment if isOldOpinion => CommentGuardianOldContent(trail.webPublicationDate.getYear)
+      case commentObserver if tags.isComment && isFromTheObserver => ObserverOpinion
+      case comment if tags.isComment                              => GuardianOpinion
+      case live if tags.isLiveBlog                                => Live
+      case oldObserver if isOldNews && isFromTheObserver => ObserverOldContent(trail.webPublicationDate.getYear)
+      case old if isOldNews                              => GuardianOldContent(trail.webPublicationDate.getYear)
       case ratingObserver if starRating.isDefined && isFromTheObserver => ObserverStarRating(starRating.get)
       case rating if starRating.isDefined                              => GuardianStarRating(starRating.get)
       case observerDefault if isFromTheObserver                        => ObserverDefault
@@ -397,7 +397,7 @@ final case class Content(
 
   val twitterProperties: Map[String, String] = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl
-      .replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
+      .replaceFirst("^[a-zA-Z]*://", "guardian://"), // replace current scheme with guardian mobile app scheme
     "twitter:image" -> twitterCardImage,
     "twitter:card" -> "summary_large_image",
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
@@ -962,7 +962,7 @@ case class GenericLightbox(
           "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
           "role" -> JsString(img.role.toString),
           "parentContentId" -> JsString(properties.id),
-          "id" -> JsString(properties.id), //duplicated to simplify lightbox logic
+          "id" -> JsString(properties.id), // duplicated to simplify lightbox logic
         ),
       )
     }

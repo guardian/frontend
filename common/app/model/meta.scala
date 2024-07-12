@@ -423,7 +423,7 @@ case class MetaData(
         "al:ios:url" -> s"gnmguardian://$iosId",
         "al:ios:app_store_id" -> "409128287",
         "al:ios:app_name" -> "The Guardian",
-      ),
+      )
     ) getOrElse Nil)
   }
 
@@ -438,7 +438,7 @@ case class MetaData(
         "twitter:app:url:ipad" -> s"gnmguardian://$iosId",
         "twitter:app:name:googleplay" -> "The Guardian",
         "twitter:app:id:googleplay" -> "com.guardian",
-      ),
+      )
     ) getOrElse Nil)
 
   def linkedData: List[LinkedData] =
@@ -571,7 +571,7 @@ case class TagCombiner(
     pagination = pagination,
     description = Some(DotcomContentType.TagIndex.name),
     commercial = Some(
-      //We only use the left tag for CommercialProperties
+      // We only use the left tag for CommercialProperties
       CommercialProperties(
         editionBrandings = leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Set.empty),
         editionAdTargetings = leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Set.empty),
@@ -857,7 +857,7 @@ final case class Tags(tags: List[Tag]) {
   lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id == "environment/series/keep-it-in-the-ground")
   lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/guardian-print-shop")
   lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
-  //this is for the immersive header to access this info
+  // this is for the immersive header to access this info
   lazy val isPaidContent: Boolean = tags.exists(t => t.id == "tone/advertisement-features")
 
   lazy val isPolitics: Boolean = tags.exists(t => t.id == "politics/politics")

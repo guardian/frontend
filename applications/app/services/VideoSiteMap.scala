@@ -45,7 +45,9 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
           {description.map(desc => <video:description>{desc}</video:description>).getOrElse(Nil)}
           {content_loc.map(content => <video:content_loc>{content}</video:content_loc>).getOrElse(Nil)}
           <video:duration>{duration}</video:duration>
-          <video:publication_date>{publication.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</video:publication_date>
+          <video:publication_date>{
+        publication.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString
+      }</video:publication_date>
           {tags.map(tag => <video:tag>{tag}</video:tag>)}
           <video:category>{category}</video:category>
           <video:family_friendly>yes</video:family_friendly>

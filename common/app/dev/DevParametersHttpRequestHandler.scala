@@ -35,7 +35,7 @@ class DevParametersHttpRequestHandler(
    */
   val insignificantParams = Seq(
     "view",
-    "_edition", //allows us to spoof edition in tests
+    "_edition", // allows us to spoof edition in tests
     "c", // used for counts in the Diagnostics server
     "shortUrl", // Used by series component in onwards journeys
     "switchesOn", // turn switches on for non-prod, http requests
@@ -54,7 +54,7 @@ class DevParametersHttpRequestHandler(
     "amp_latest_update_time", // used by amp-live-list to check for latest updates
     "heatmap", // used by ophan javascript to enable the heatmap
     "format", // used to determine whether HTML should be served in email-friendly format or not
-    "timestamp", //used to get specific builds for inteactive serviceworkers
+    "timestamp", // used to get specific builds for inteactive serviceworkers
     "pbjs_debug", // set to `true` to enable prebid debugging,
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze

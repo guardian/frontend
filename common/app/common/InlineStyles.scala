@@ -67,8 +67,8 @@ object InlineStyles extends GuLogging {
 
   /** Attempt to inline the rules from the <style> tags in a page.
     *
-    * Each <style> tag is split into rules that can be inlined and those that can't (pseudo-selectors and
-    * media queries).
+    * Each <style> tag is split into rules that can be inlined and those that can't (pseudo-selectors and media
+    * queries).
     *
     * Everything that can be inlined gets added to the corresponding elements and whatever's left stays in the head.
     *
@@ -97,8 +97,8 @@ object InlineStyles extends GuLogging {
     Html(document.toString)
   }
 
-  /** Convert the styles in a document's <style> tags to a pair.
-    * The first item is the styles that should stay in the head, the second is everything that should be inlined.
+  /** Convert the styles in a document's <style> tags to a pair. The first item is the styles that should stay in the
+    * head, the second is everything that should be inlined.
     */
   def styles(document: Document): (Seq[CSSRule], Seq[String]) = {
     document.getElementsByTag("style").asScala.foldLeft((Seq.empty[CSSRule], Seq.empty[String])) {
@@ -118,15 +118,14 @@ object InlineStyles extends GuLogging {
     }
   }
 
-  /** I found drawing this table helpful in understanding the logic of this function.
-    * As you add styles from left to right:
+  /** I found drawing this table helpful in understanding the logic of this function. As you add styles from left to
+    * right:
     *
-    * Existing Style | New Style    | Which should win?
-    * ---------------------------------------------------
-    *  !important    |      -       | existing
-    *      -         |  !important  | new
-    *  !important    |  !important  | new
-    *      -         |      -       | new
+    * Existing Style | New Style | Which should win? --------------------------------------------------- !important | -
+    * \| existing
+    *   - \| !important | new
+    * !important | !important | new
+    *   - \| - | new
     */
   def mergeStyles(rule: CSSRule, existing: String): String = {
     CSSRule.styleStringFromMap(rule.styles.foldLeft(CSSRule.styleMapFromString(existing)) {

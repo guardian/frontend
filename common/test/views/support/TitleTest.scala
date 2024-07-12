@@ -19,7 +19,7 @@ class TitleTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
   it should "should create a 'default' title" in {
     val page = SimplePage(MetaData.make("", None, "The title", None))
-    //without pagination
+    // without pagination
     Title(page).body should be("The title | The Guardian")
 
     val withPagination = SimplePage(
@@ -31,7 +31,7 @@ class TitleTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
       ),
     )
 
-    //with pagination
+    // with pagination
     Title(withPagination).body should be("The title | Page 7 of 50 | The Guardian")
   }
 

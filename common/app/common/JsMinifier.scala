@@ -24,8 +24,8 @@ object JsMinifier {
     options.setWarningLevel(DiagnosticGroups.MISSING_PROVIDE, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.GLOBAL_THIS, CheckLevel.WARNING)
 
-    //Aggressive, you need all JS variable defined somewhere for it not to throw (Such as window or navigator)
-    //options.setCheckSymbols(true)
+    // Aggressive, you need all JS variable defined somewhere for it not to throw (Such as window or navigator)
+    // options.setCheckSymbols(true)
 
     /* Diagnostic checks */
     options.setWarningLevel(DiagnosticGroups.ACCESS_CONTROLS, CheckLevel.WARNING)
@@ -35,9 +35,9 @@ object JsMinifier {
     options.setWarningLevel(DiagnosticGroups.INVALID_CASTS, CheckLevel.WARNING)
     options.setWarningLevel(DiagnosticGroups.CHECK_USELESS_CODE, CheckLevel.WARNING)
 
-    //Aggressive
-    //options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
-    //options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)
+    // Aggressive
+    // options.setWarningLevel(DiagnosticGroups.DUPLICATE_VARS, CheckLevel.WARNING)
+    // options.setWarningLevel(DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.WARNING)
 
     options.setLanguageIn(CompilerOptions.LanguageMode.ECMASCRIPT_2015)
     options.setLanguageOut(CompilerOptions.LanguageMode.ECMASCRIPT3)
@@ -82,7 +82,7 @@ object JsMinifier {
       .filter(_.nonEmpty)
       .get
 
-  //Default is to compile with Advanced Optimisations
+  // Default is to compile with Advanced Optimisations
   val unsafeCompile: (String, String) => String = unsafeCompileWithStandardOptimisation
 
 }

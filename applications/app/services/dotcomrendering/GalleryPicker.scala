@@ -8,8 +8,7 @@ import utils.DotcomponentsLogger
 
 object GalleryPicker extends GuLogging {
 
-  /** Add to this function any logic for including/excluding
-    * a gallery article from being rendered with DCR
+  /** Add to this function any logic for including/excluding a gallery article from being rendered with DCR
     *
     * Currently defaulting to false until we implement image articles in DCR
     */

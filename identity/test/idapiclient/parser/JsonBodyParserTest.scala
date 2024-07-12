@@ -40,7 +40,7 @@ class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
 
     "extracts the provided type from the JSON body of a successful response" in {
       TestJsonBodyParser.extract[TestType]()(Right(validJSONResponse)) match {
-        case Left(result)                => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
+        case Left(result) => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
         case Right(testObject: TestType) => testObject should have(Symbol("test")("value"))
         case Right(result) =>
           fail("extract did not return a Right of the required type, got a %s".format(result.getClass.getName))
@@ -57,7 +57,7 @@ class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
     "extracts the provided type from the JSON body of a successful unit response" in {
       TestJsonBodyParser.extract[Unit]()(Right(emptyResponse)) match {
         case Left(result)            => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
-        case Right(testObject: Unit) => //good
+        case Right(testObject: Unit) => // good
       }
     }
 

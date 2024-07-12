@@ -50,7 +50,7 @@ trait LinkTo extends GuLogging {
 
   private def clean(path: String) =
     path match {
-      case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
+      case TagPattern(left, right) if left == right => left // clean section tags e.g. /books/books
       case _                                        => path
     }
 

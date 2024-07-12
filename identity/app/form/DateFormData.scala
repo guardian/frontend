@@ -15,7 +15,7 @@ trait DateMapping {
       "day" -> optional(number(min = 1, max = 31)),
     )(DateFormData.apply)(DateFormData.unapply) verifying (
       Messages("error.date"),
-      dateData => dateData.isValid
+      dateData => dateData.isValid,
     )
 
 }

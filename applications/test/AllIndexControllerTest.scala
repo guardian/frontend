@@ -115,7 +115,7 @@ import play.api.test.Helpers._
   }
 
   it should "correctly parse the date" in {
-    //this would only error in UTC
+    // this would only error in UTC
     val oldTimezone = DateTimeZone.getDefault
     DateTimeZone.setDefault(DateTimeZone.UTC)
     try {

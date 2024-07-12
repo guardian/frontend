@@ -5,7 +5,7 @@ import conf.Configuration
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
-  //TODO: Temporary vals for content until we refactor
+  // TODO: Temporary vals for content until we refactor
   val fixedSmallSlowI = slices(FullMedia75)
   val fixedSmallSlowII = slices(HalfHalf)
   val fixedSmallSlowIV = slices(QuarterQuarterQuarterQuarter)

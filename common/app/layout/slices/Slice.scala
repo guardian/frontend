@@ -304,8 +304,8 @@ case object HalfQuarterQl2Ql4 extends Slice {
   )
 }
 
-/** Basically the same as above but for when there is another slice above that has already degraded from a standard to
-  * a media list item. Editorial have asked that the first item in this slice then gets the media list behaviour as
+/** Basically the same as above but for when there is another slice above that has already degraded from a standard to a
+  * media list item. Editorial have asked that the first item in this slice then gets the media list behaviour as
   * opposed to being a standard item at mobile.
   */
 case object HalfQuarterQl2Ql4B extends Slice {

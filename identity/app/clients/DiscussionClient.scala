@@ -95,9 +95,9 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
     }
   }
 
-  /** Check if the user has at least one comment.
-    * This method simply requests a single comment, and checks if the response is non-empty.
-    * If it is, the user has at least one publicly visible comment, and their profile can be shown.
+  /** Check if the user has at least one comment. This method simply requests a single comment, and checks if the
+    * response is non-empty. If it is, the user has at least one publicly visible comment, and their profile can be
+    * shown.
     */
   def profileHasAtLeastOneComment(userId: String): Future[Boolean] = {
 

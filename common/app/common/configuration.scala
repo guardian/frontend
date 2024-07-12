@@ -48,13 +48,10 @@ object Environment extends GuLogging {
 
 /** Main configuration
   *
-  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
-  * or `~/.gu/frontend.conf` file under a `devOverrides` key. E.g:
+  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf` or `~/.gu/frontend.conf` file under a
+  * `devOverrides` key. E.g:
   *
-  *   devOverrides {
-  *     switches.key=DEV/config/switches-yournamehere.properties
-  *     facia.stage=CODE
-  *   }
+  * devOverrides { switches.key=DEV/config/switches-yournamehere.properties facia.stage=CODE }
   */
 object GuardianConfiguration extends GuLogging {
 
@@ -235,7 +232,7 @@ class GuardianConfiguration extends GuLogging {
         MILLISECONDS,
       )
 
-    //Cross account credentials for capi preview
+    // Cross account credentials for capi preview
     lazy val capiPreviewRoleToAssume: Option[String] =
       configuration.getStringProperty("content.api.preview.roleToAssume")
 

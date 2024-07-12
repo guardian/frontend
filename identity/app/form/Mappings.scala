@@ -24,7 +24,8 @@ trait Mappings {
 
   def idPassword(implicit messagesProvider: MessagesProvider): Mapping[String] =
     text verifying (
-      Messages("error.passwordLength"), { value => 6 <= value.length && value.length <= 72 }
+      Messages("error.passwordLength"),
+      { value => 6 <= value.length && value.length <= 72 },
     )
 
   val idCountry: Mapping[String] = comboList("" :: Countries.all)

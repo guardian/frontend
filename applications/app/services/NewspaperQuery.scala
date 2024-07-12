@@ -65,13 +65,13 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
       .toDate(jodaToJavaInstant(newspaperDate))
 
     contentApiClient.getResponse(itemQuery).map { resp =>
-      //filter out the first page results to make a Front Page container
+      // filter out the first page results to make a Front Page container
       val (firstPageContent, otherContent) =
         resp.results.getOrElse(Nil).partition(content => getNewspaperPageNumber(content).contains(1))
 
       val firstPageContainer = {
         val content = firstPageContent.map(c => FaciaContentConvert.contentToFaciaContent(c))
-        //for /theguardian fetch date links either side of date requested, for /theobserver, fetch each sunday around the date and the day before
+        // for /theguardian fetch date links either side of date requested, for /theobserver, fetch each sunday around the date and the day before
         val snaps = createSnap(newspaperDate, publication)
         bookSectionContainer(
           None,
@@ -107,7 +107,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
       content.tags.find(_.`type`.name == "NewspaperBookSection").map(t => TagWithContent(t, content))
     }
 
-    //group content by booksection tag type
+    // group content by booksection tag type
     tagWithContent
       .groupBy(_.tag)
       .map(bookSectionContent => BookSectionContent(bookSectionContent._1, bookSectionContent._2.map(_.content)))
@@ -116,12 +116,12 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
 
   private def orderByPageNumber(unorderedBookSections: List[BookSectionContent]): List[BookSectionContent] = {
 
-    //order content for each book section
+    // order content for each book section
     val orderedContentForBookSection: List[BookSectionContent] = unorderedBookSections.map { bookSection =>
       bookSection.copy(content = orderContentByPageNumber(bookSection.content))
     }
 
-    //order booksections by first content item in each booksection
+    // order booksections by first content item in each booksection
     val pageNumberToFaciaContainer: List[BookSectionContentByPage] = orderedContentForBookSection.flatMap {
       bookSection =>
         val pageNumberOpt = bookSection.content.headOption.flatMap(content => getNewspaperPageNumber(content))
@@ -180,9 +180,9 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
     if (date.getDayOfWeek == DateTimeConstants.SUNDAY) date.minusDays(1) else date
 
   private def createSnap(date: DateTime, publication: String) = {
-    //if /theguardian get links for date either side of the date requests
+    // if /theguardian get links for date either side of the date requests
     // else for theobserver get dates either sunday around the date and the previous Saturday.
-    //filter out any dates in the future
+    // filter out any dates in the future
     val daysAroundDateToFetchLinksFor = if (publication == "theguardian") List(1, -1) else List(7, -1, -7)
     val datesAroundNewspaperDate = daysAroundDateToFetchLinksFor.map(date.plusDays)
     datesAroundNewspaperDate.filter(d => d.isBeforeNow).map { d =>

@@ -19,7 +19,7 @@ abstract class HtmlCleaner extends GuLogging {
     removeAds(document)
     removeByClass(document, "top-search-box")
     removeByClass(document, "share-links")
-    //removeRelatedComponent(document) This removes the byline on datablog pieces, but may be needed elsewhere
+    // removeRelatedComponent(document) This removes the byline on datablog pieces, but may be needed elsewhere
     removeByClass(document, "user-details")
     removeByClass(document, "initially-off")
     removeByClass(document, "comment-count")

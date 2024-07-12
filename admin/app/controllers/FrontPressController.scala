@@ -20,7 +20,7 @@ class FrontPressController(pekkoAsync: PekkoAsync, val controllerComponents: Con
     Action { implicit request =>
       RefreshFrontsJob.runAll(pekkoAsync) match {
         case Some(l) => Ok(s"Pushed ${l.length} fronts to the SQS queue")
-        case None    => InternalServerError("Could not push to the SQS queue, is there an SNS topic set? (frontPressSns)")
+        case None => InternalServerError("Could not push to the SQS queue, is there an SNS topic set? (frontPressSns)")
       }
     }
 

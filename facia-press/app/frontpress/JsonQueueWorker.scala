@@ -58,7 +58,8 @@ object JsonQueueWorker {
   *
   * Provides two
   *
-  * @tparam A The job
+  * @tparam A
+  *   The job
   */
 abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends GuLogging {
   import JsonQueueWorker._
@@ -119,7 +120,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
       case error: ContentApiError =>
         log.error(
           s"Encountered content api error receiving message from queue: httpMessage: ${error.httpMessage}; status: ${error.httpStatus}; response: ${error.errorResponse
-            .getOrElse("")}.",
+              .getOrElse("")}.",
           error,
         )
       case error: Throwable => log.error("Encountered error receiving message from queue", error)
