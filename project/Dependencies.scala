@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.25"
   val awsVersion = "1.12.758"
-  val capiVersion = "27.0.0"
-  val faciaVersion = "7.0.0"
+  val capiVersion = "31.0.3"
+  val faciaVersion = "8.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -18,7 +18,7 @@ object Dependencies {
   val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "1.0.38"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "3.0.12"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
@@ -51,13 +51,13 @@ object Dependencies {
 
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.12.7"
-  val jodaConvert = "org.joda" % "joda-convert" % "1.9.2"
-  val jSoup = "org.jsoup" % "jsoup" % "1.15.4"
+  val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.18.1"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.9"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "3.1.0"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "4.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "2.15"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
@@ -66,7 +66,7 @@ object Dependencies {
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.18.0" % Test
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.32.0"
-  val scalaTest = "org.scalatest" %% "scalatest" % "3.2.18" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.18.0" % Test
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
@@ -76,7 +76,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.10.23"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.40"
   val pekkoVersion = "1.0.3"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -90,7 +90,7 @@ object Dependencies {
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.4"
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.0"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.1"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.3"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
@@ -99,10 +99,10 @@ object Dependencies {
 
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
-  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.109.Final"
+  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.111.Final"
 
   // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "3.4.1"
+  val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
