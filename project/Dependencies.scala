@@ -87,7 +87,7 @@ object Dependencies {
   val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "4.11"
   // logback2  to prevent "error: reference to logback is ambiguous;"
 
-  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.4"
+  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "2.1.3"
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.1"
