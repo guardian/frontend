@@ -56,7 +56,7 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "7.0.9"
+  val paClient = "com.gu" %% "pa-client" % "7.0.10"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "4.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "2.15"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
@@ -76,7 +76,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.40"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.41"
   val pekkoVersion = "1.0.3"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
