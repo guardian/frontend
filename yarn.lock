@@ -3924,7 +3924,7 @@ __metadata:
     "@guardian/identity-auth": "npm:2.1.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
     "@guardian/libs": "npm:17.0.1"
-    "@guardian/prettier": "npm:^3.0.0"
+    "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:14.2.2"
     "@guardian/source-react-components": "npm:22.1.0"
@@ -4141,13 +4141,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/prettier@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@guardian/prettier@npm:3.0.0"
+"@guardian/prettier@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@guardian/prettier@npm:8.0.1"
   peerDependencies:
-    prettier: ^2.4.0
-    tslib: ^2.4.1
-  checksum: 10c0/782bc4d2521962f2ca78c81516ec0e8060366f19e8b160421fa17eb1f7de8d72cdf46c644257d816a35f645e645b5bc631a8576a5093a3155bca9c77205646e1
+    prettier: ^3.2.2
+    tslib: ^2.6.2
+  checksum: 10c0/c33a358807b60e516559183b67dd533b00a35b3d8e1a4a05423008f31cc751a48deec44b9354856c3f1adb0cba90c5e3d3b067789965ac8a47434c73b93304ca
   languageName: node
   linkType: hard
 
