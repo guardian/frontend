@@ -11,7 +11,7 @@
 	"dependencies": {
 		"@aws-sdk/client-cloudwatch": "3.441.0",
 		"@babel/cli": "^7.24.8",
-		"@babel/core": "^7.24.8",
+		"@babel/core": "^7.24.9",
 		"@babel/eslint-parser": "7.24.8",
 		"@babel/plugin-proposal-class-properties": "^7.10.4",
 		"@babel/plugin-proposal-object-rest-spread": "^7.11.0",
