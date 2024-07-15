@@ -100,27 +100,25 @@ class ImageContentController(
     Action.async { implicit request =>
       val direction = Direction.forPathSegment(rawDirection)
 
-      /**
-        * unfortunately we have to infer the date from the path,
-        * because getting the real publication date would require
+      /** unfortunately we have to infer the date from the path, because getting the real publication date would require
         * another call to the content API…
         */
       val maybeDate = path match {
         case dateExtractor(rawYear, rawMonth, rawDate) => {
           (Try(rawYear.toInt).toOption, rawMonth, Try(rawDate.toInt).toOption) match {
-            case (Some(year), "jan", Some(date)) => Some(LocalDate.of(year, 1, date))
-            case (Some(year), "feb", Some(date)) => Some(LocalDate.of(year, 2, date))
-            case (Some(year), "mar", Some(date)) => Some(LocalDate.of(year, 3, date))
-            case (Some(year), "apr", Some(date)) => Some(LocalDate.of(year, 4, date))
-            case (Some(year), "may", Some(date)) => Some(LocalDate.of(year, 5, date))
-            case (Some(year), "jun", Some(date)) => Some(LocalDate.of(year, 6, date))
-            case (Some(year), "jul", Some(date)) => Some(LocalDate.of(year, 7, date))
-            case (Some(year), "aug", Some(date)) => Some(LocalDate.of(year, 8, date))
-            case (Some(year), "sep", Some(date)) => Some(LocalDate.of(year, 9, date))
-            case (Some(year), "oct", Some(date)) => Some(LocalDate.of(year, 10, date))
-            case (Some(year), "nov", Some(date)) => Some(LocalDate.of(year, 11, date))
-            case (Some(year), "dec", Some(date)) => Some(LocalDate.of(year, 12, date))
-            case _                               => None
+            case (Some(year), "jan", Some(day)) => Some(LocalDate.of(year, 1, day))
+            case (Some(year), "feb", Some(day)) => Some(LocalDate.of(year, 2, day))
+            case (Some(year), "mar", Some(day)) => Some(LocalDate.of(year, 3, day))
+            case (Some(year), "apr", Some(day)) => Some(LocalDate.of(year, 4, day))
+            case (Some(year), "may", Some(day)) => Some(LocalDate.of(year, 5, day))
+            case (Some(year), "jun", Some(day)) => Some(LocalDate.of(year, 6, day))
+            case (Some(year), "jul", Some(day)) => Some(LocalDate.of(year, 7, day))
+            case (Some(year), "aug", Some(day)) => Some(LocalDate.of(year, 8, day))
+            case (Some(year), "sep", Some(day)) => Some(LocalDate.of(year, 9, day))
+            case (Some(year), "oct", Some(day)) => Some(LocalDate.of(year, 10, day))
+            case (Some(year), "nov", Some(day)) => Some(LocalDate.of(year, 11, day))
+            case (Some(year), "dec", Some(day)) => Some(LocalDate.of(year, 12, day))
+            case _                              => None
           }
         }
         case _ => None
