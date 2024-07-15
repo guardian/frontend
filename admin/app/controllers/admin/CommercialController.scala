@@ -78,6 +78,12 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(report)))
     }
 
+  def renderLiveBlogTopSponsorships: Action[AnyContent] =
+    Action { implicit request =>
+      val report = Store.getDfpLiveBlogTagsReport()
+      NoCache(Ok(views.html.commercial.liveBlogTopSponsorships(report)))
+    }
+
   def renderCreativeTemplates: Action[AnyContent] =
     Action { implicit request =>
       val emptyTemplates = createTemplateAgent.get
@@ -106,11 +112,10 @@ class CommercialController(
         .groupBy(_.targeting.adTestValue.get)
 
       val (hasNumericTestValue, hasStringTestValue) =
-        lineItemsByAdTest partition {
-          case (testValue, _) =>
-            def isNumber(s: String) = s forall Character.isDigit
+        lineItemsByAdTest partition { case (testValue, _) =>
+          def isNumber(s: String) = s forall Character.isDigit
 
-            isNumber(testValue)
+          isNumber(testValue)
         }
 
       val sortedGroups = {

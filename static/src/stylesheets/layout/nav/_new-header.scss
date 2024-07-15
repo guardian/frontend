@@ -66,12 +66,12 @@ from scrolling */
 
     @include mq($until: desktop) {
         position: absolute;
-        right: $gs-gutter / 4;
+        right: $gs-gutter * 0.25;
         bottom: 58px;
 
         @include mq(mobileMedium) {
-            right: $gs-gutter / 4;
-            bottom: -$gs-baseline / 4;
+            right: $gs-gutter * 0.25;
+            bottom: -$gs-baseline * 0.25;
         }
 
         @include mq(mobileLandscape) {
@@ -79,11 +79,11 @@ from scrolling */
         }
 
         @include mq(tablet) {
-            bottom: $gs-baseline / 4;
+            bottom: $gs-baseline * 0.25;
         }
 
         .new-header--slim & {
-            top: $gs-baseline / 4;
+            top: $gs-baseline * 0.25;
             bottom: auto;
         }
     }
@@ -100,7 +100,7 @@ from scrolling */
     margin-bottom: $gs-baseline * 2;
 
     @include mq(mobileMedium) {
-        margin-right: $gs-gutter / 2;
+        margin-right: $gs-gutter * 0.5;
     }
 
     @include mq(mobileLandscape) {
@@ -109,7 +109,7 @@ from scrolling */
 
     @include mq(desktop) {
         margin-top: 5px;
-        margin-bottom: $gs-baseline + ($gs-baseline / 2);
+        margin-bottom: $gs-baseline + ($gs-baseline * 0.5);
         position: relative;
         z-index: $zindex-main-menu + 1;
     }
@@ -124,13 +124,13 @@ from scrolling */
         position: absolute;
         margin: 0;
         right: $veggie-burger;
-        top: $gs-baseline / 4;
+        top: $gs-baseline * 0.25;
         z-index: $zindex-main-menu;
 
         body:not(.has-page-skin) & {
             @include mq(mobileLandscape) {
                 margin-right: 0;
-                right: $veggie-burger + ($gs-gutter / 2);
+                right: $veggie-burger + ($gs-gutter * 0.5);
             }
 
             @include mq(desktop) {
@@ -203,5 +203,5 @@ from scrolling */
 }
 
 .new-header--slim {
-    height: $pillar-height + $gs-baseline / 2;
+    height: $pillar-height + $gs-baseline * 0.5;
 }

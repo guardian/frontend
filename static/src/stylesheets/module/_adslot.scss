@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
@@ -52,7 +54,7 @@
     border-bottom: 1px solid $brightness-86;
 
     min-height: 90px + 24px; // https://github.com/guardian/commercial-core/blob/6736d3930be3989a63e5bc0240a4d5bb1c1d9164/src/constants/topAboveNavHeight.ts -- topAboveNavHeight.ts
-    padding-bottom: $gs-row-height / 2;
+    padding-bottom: $gs-row-height * 0.5;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -153,8 +155,8 @@
             box-sizing: content-box;
             // Copying stuff from _mixins.scss because I don't want to
             // use @extend and no, I am not modifying the markup
-            margin-left: $gs-gutter / 2;
-            margin-right: $gs-gutter / 2;
+            margin-left: $gs-gutter * 0.5;
+            margin-right: $gs-gutter * 0.5;
 
             @include mq(mobileLandscape) {
                 margin-left: $gs-gutter;
@@ -217,7 +219,7 @@
         margin-top: 0;
     }
     @include mq(tablet) {
-        margin: 0 $gs-gutter/2;
+        margin: 0 $gs-gutter*0.5;
     }
 }
 
@@ -251,7 +253,7 @@
 .ad-slot--inline {
     @include mq(tablet) {
         float: right;
-        margin-top: $gs-baseline/3;
+        margin-top: math.div($gs-baseline, 3);
         margin-left: $gs-gutter;
     }
 
@@ -380,7 +382,7 @@
     }
 
     &.ad-slot--rendered {
-        margin: 5px $gs-gutter / 2 $gs-baseline / 2 0;
+        margin: 5px $gs-gutter * 0.5 $gs-baseline * 0.5 0;
         @include mq(mobileLandscape) {
             margin-bottom: $gs-baseline;
             margin-right: $gs-gutter;
@@ -435,8 +437,8 @@
 
     &.ad-slot--liveblog-inline {
         @include mq(mobile, $until: mobileLandscape) {
-            margin-left: $gs-gutter / -2;
-            margin-right: $gs-gutter / -2;
+            margin-left: math.div($gs-gutter, -2);
+            margin-right: math.div($gs-gutter, -2);
         }
         @include mq(mobileLandscape, $until: tablet) {
             margin-left: -$gs-gutter;
@@ -462,8 +464,8 @@
 
     @include mq($until: mobileLandscape) {
         width: $gs-gutter * 6.5;
-        margin-bottom: $gs-baseline / 2;
-        margin-right: $gs-gutter / 2;
+        margin-bottom: $gs-baseline * 0.5;
+        margin-right: $gs-gutter * 0.5;
     }
 
     @include mq(mobileLandscape) {
@@ -563,8 +565,8 @@
 }
 
 .ad-slot__close-button svg {
-    height: $mpu-ad-label-height / 2;
-    width: $mpu-ad-label-height / 2;
+    height: $mpu-ad-label-height * 0.5;
+    width: $mpu-ad-label-height * 0.5;
     stroke: $brightness-7;
     fill: $brightness-7;
     stroke-linecap: round;
@@ -623,7 +625,7 @@
     position: relative;
     height: $mpu-ad-label-height;
     background-color: $brightness-97;
-    padding: 0 ($gs-baseline/3)*2;
+    padding: 0 math.div($gs-baseline, 3)*2;
     border-top: 1px solid $brightness-86;
     color: $brightness-46;
     text-align: left;
@@ -639,7 +641,7 @@
     position: relative;
     height: $mpu-ad-label-height;
     background-color: transparent;
-    padding: 0 ($gs-baseline/3)*2;
+    padding: 0 math.div($gs-baseline, 3)*2;
     border-top: 1px solid $brightness-20;
     color: $brightness-86;
     text-align: left;
@@ -653,7 +655,7 @@
     visibility: visible;
     height: $mpu-ad-label-height;
     background-color: transparent;
-    padding: 0 ($gs-baseline/3)*2;
+    padding: 0 math.div($gs-baseline, 3)*2;
     border: 0;
     border-top: 1px solid $brightness-20;
     color: $brightness-86;

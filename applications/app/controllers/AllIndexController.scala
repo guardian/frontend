@@ -53,8 +53,8 @@ class AllIndexController(
             .map(date => Found(s"/$path/${urlFormat(date)}/all"))
             .getOrElse(fallbackToAll)
         }
-        .recover {
-          case _ => fallbackToAll
+        .recover { case _ =>
+          fallbackToAll
         }
     }
 
@@ -118,8 +118,8 @@ class AllIndexController(
             }
             .getOrElse(notFound)
         }
-        .recover {
-          case _ => notFound
+        .recover { case _ =>
+          notFound
         }
     }
 

@@ -20,7 +20,7 @@ const task = {
 				}
 				const info = stats.toJson();
 				if (stats.hasErrors()) {
-					throw new Error(chalk.red(info.errors));
+					throw new Error(chalk.red(JSON.stringify(info.errors)));
 				}
 				observer.complete();
 			});

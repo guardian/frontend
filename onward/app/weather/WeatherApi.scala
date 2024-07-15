@@ -129,10 +129,9 @@ object WeatherApi extends GuLogging {
       attempts: Int,
   )(implicit ec: ExecutionContext): Future[JsValue] = {
     def loop(attemptsRemaining: Int): Future[JsValue] = {
-      request().recoverWith {
-        case NonFatal(error) =>
-          if (attemptsRemaining <= 1) Future.failed(error)
-          else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
+      request().recoverWith { case NonFatal(error) =>
+        if (attemptsRemaining <= 1) Future.failed(error)
+        else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
       }
     }
     loop(attempts)

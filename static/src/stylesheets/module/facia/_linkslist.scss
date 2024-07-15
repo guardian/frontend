@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .linkslist-container {
     position: relative;
     margin: 0 !important;
@@ -53,7 +55,7 @@
         }
 
         @include mq(desktop) {
-            width: (100% / 3);
+            width: math.div(100%, 3);
 
             &:nth-child(3n+1) {
                 clear: both;
@@ -84,7 +86,7 @@
         }
 
         @include mq(desktop) {
-            flex-basis: (100% / 3);
+            flex-basis: math.div(100%, 3);
         }
     }
 

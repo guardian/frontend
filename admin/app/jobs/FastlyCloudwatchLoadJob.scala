@@ -63,9 +63,8 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
 
       val groups = fresh groupBy { _.key }
       val timestampsSent = groups mapV { _ map { _.timestamp } }
-      timestampsSent mapV { _.max } foreach {
-        case (key, value) =>
-          latestTimestampsSent.update(key, value)
+      timestampsSent mapV { _.max } foreach { case (key, value) =>
+        latestTimestampsSent.update(key, value)
       }
     }
   }

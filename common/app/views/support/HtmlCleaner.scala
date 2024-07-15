@@ -164,12 +164,11 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader)
           lightboxIndex = lightboxInfo.map(_._1),
           widthsByBreakpoint = widths,
           image_figureClasses = Some(image, figureClasses),
-          shareInfo = lightboxInfo.map {
-            case (index, crop) =>
-              (
-                article.sharelinks.elementShares(s"img-$index", crop.url),
-                article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
-              )
+          shareInfo = lightboxInfo.map { case (index, crop) =>
+            (
+              article.sharelinks.elementShares(s"img-$index", crop.url),
+              article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
+            )
           },
         )
         .toString()
@@ -382,17 +381,16 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
           val paragraphsWithMatchers =
             candidateParagraphs.map(p => (regex.pattern.matcher(p.html), p)).find(_._1.matches())
 
-          paragraphsWithMatchers.foreach {
-            case (matcher, p) =>
-              val tagLink = doc.createElement("a")
-              tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
-              tagLink.text(keyword.name)
-              tagLink.attr("data-link-name", "auto-linked-tag")
-              tagLink.attr("data-component", "auto-linked-tag")
-              tagLink.addClass("u-underline")
-              val tagLinkHtml = tagLink.toString
-              val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
-              p.html(newHtml)
+          paragraphsWithMatchers.foreach { case (matcher, p) =>
+            val tagLink = doc.createElement("a")
+            tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
+            tagLink.text(keyword.name)
+            tagLink.attr("data-link-name", "auto-linked-tag")
+            tagLink.attr("data-component", "auto-linked-tag")
+            tagLink.addClass("u-underline")
+            val tagLinkHtml = tagLink.toString
+            val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
+            p.html(newHtml)
           }
         }
       }
@@ -680,9 +678,8 @@ object MembershipEventCleaner extends HtmlCleaner {
       .attr("data-component", "membership-events")
       .asScala
       .zipWithIndex
-      .map {
-        case (el, index) =>
-          el.attr("data-link-name", s"membership-event-${membershipEvents.asScala.length} | ${index + 1}")
+      .map { case (el, index) =>
+        el.attr("data-link-name", s"membership-event-${membershipEvents.asScala.length} | ${index + 1}")
       }
 
     document

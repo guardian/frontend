@@ -531,7 +531,6 @@ HostedGallery.prototype.states = {
 				if (this.index < this.$images.length) {
 					// last img
 					this.index += 1;
-					this.trackNavBetweenImages(e);
 				}
 				this.reloadState = true;
 			},
@@ -539,12 +538,10 @@ HostedGallery.prototype.states = {
 				if (this.index > 1) {
 					// first img
 					this.index -= 1;
-					this.trackNavBetweenImages(e);
 				}
 				this.reloadState = true;
 			},
 			reload(e) {
-				this.trackNavBetweenImages(e);
 				this.reloadState = true;
 			},
 			'toggle-info': function () {

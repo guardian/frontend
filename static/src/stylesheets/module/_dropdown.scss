@@ -1,6 +1,8 @@
 // Apply this if you would like to use the standard dropdown style
 // If you have other styles, but would like to maintain the functionality,
 // just apply .dropdown
+@use "sass:math";
+
 .dropdown-styled {
     border-top: 1px solid $brightness-86;
     position: relative;
@@ -8,7 +10,7 @@
     .dropdown__toggle,
     .dropdown__toggle-label {
         @include fs-textSans(1);
-        top: ($gs-baseline/3)*2;
+        top: math.div($gs-baseline, 3)*2;
         cursor: pointer;
         position: absolute;
     }
@@ -23,7 +25,7 @@
     }
 
     .dropdown__button {
-        padding: $gs-baseline/2 0;
+        padding: $gs-baseline*0.5 0;
         color: $brightness-7;
         text-align: left;
 

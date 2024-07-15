@@ -54,7 +54,7 @@
         @include fs-textSans(5);
         font-weight: 700;
         color: $brightness-100;
-        margin: ($gs-baseline / 2) 0;
+        margin: ($gs-baseline * 0.5) 0;
     }
 
     .email-sub__description {

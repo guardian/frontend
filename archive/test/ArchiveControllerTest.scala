@@ -42,8 +42,8 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
       "/books/review/story/0,034,908973,00.html" -> "/books/review/story/0,,908973,.html",
       "/books/reviews/travel/foo" -> "/books/reviews/travel/foo",
     )
-    tests foreach {
-      case (k, v) => archiveController.normalise(k) should be(v)
+    tests foreach { case (k, v) =>
+      archiveController.normalise(k) should be(v)
     }
   }
 
@@ -59,8 +59,8 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
       "/p/dfas/stw" -> "/p/dfas",
       "/p/dfas" -> "/p/dfas",
     )
-    tests foreach {
-      case (k, v) => archiveController.normalise(k) should be(v)
+    tests foreach { case (k, v) =>
+      archiveController.normalise(k) should be(v)
     }
   }
 

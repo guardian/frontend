@@ -46,7 +46,7 @@
     margin-right: auto;
     max-width: gs-span(6);
     padding-bottom: $gs-gutter * 2;
-    padding-top: $gs-gutter / 4;
+    padding-top: $gs-gutter * 0.25;
 
     @include mq(desktop) {
         max-width: gs-span(10);

@@ -12,12 +12,12 @@ import layout.slices.EmailLayouts
 
 object FrontChecks {
 
-  /**
-    * This is the list that DCR will accept, otherwise the validation fails, resulting in an error.
+  /** This is the list that DCR will accept, otherwise the validation fails, resulting in an error.
     *
     * **It must be kept in sync manually.**
     *
-    * @see https://github.com/guardian/dotcom-rendering/blob/07b8f29decc1/dotcom-rendering/src/types/front.ts#L61-L83 */
+    * @see https://github.com/guardian/dotcom-rendering/blob/07b8f29decc1/dotcom-rendering/src/types/front.ts#L61-L83
+    */
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
       "dynamic/fast",
@@ -42,6 +42,7 @@ object FrontChecks {
       "nav/list",
       "nav/media-list",
       "news/most-popular",
+      "fixed/highlights",
     )
 
   def hasOnlySupportedCollections(faciaPage: PressedPage) =
@@ -148,9 +149,8 @@ object FaciaPicker extends GuLogging {
       tier: RenderType,
   )(implicit request: RequestHeader): Unit = {
     val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web"
-    val checksToString = checks.map {
-      case (key, value) =>
-        (key, value.toString)
+    val checksToString = checks.map { case (key, value) =>
+      (key, value.toString)
     }
     val properties =
       Map(

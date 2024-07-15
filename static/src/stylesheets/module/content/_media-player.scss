@@ -1,10 +1,12 @@
+@use "sass:math";
+
 @import '../../icons/video-icons-svg';
 
 // parameterising these as they're used in a few places
 $vjs-control-colour: $brightness-20;
 $vjs-control-height: $gs-baseline*4;
 $vjs-progress-hitbox-height: $gs-baseline;
-$vjs-progress-visual-height-resting: $gs-baseline/2;
+$vjs-progress-visual-height-resting: $gs-baseline*0.5;
 $vjs-progress-inset-bottom: 4px;
 $ima-controls-height: 70px;
 
@@ -31,8 +33,8 @@ $ima-controls-height: 70px;
         width: 100%;
         height: 40px;
         box-sizing: border-box;
-        border-left: $gs-gutter/2 solid transparent;
-        border-right: $gs-gutter/2 solid transparent;
+        border-left: $gs-gutter*0.5 solid transparent;
+        border-right: $gs-gutter*0.5 solid transparent;
     }
 }
 
@@ -259,7 +261,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-time-divider {
-    padding: 0 $gs-gutter/4;
+    padding: 0 $gs-gutter*0.25;
 }
 
 .vjs-duration {
@@ -373,8 +375,8 @@ $ima-controls-height: 70px;
 
 .vjs-volume-bar:before,
 .vjs-volume-level {
-    height: $gs-baseline/6;
-    top: $gs-baseline/2;
+    height: math.div($gs-baseline, 6);
+    top: $gs-baseline*0.5;
     position: absolute;
 }
 
@@ -386,7 +388,7 @@ $ima-controls-height: 70px;
         background-color: $highlight-main;
         height: 11px;
         width: 2px;
-        top: -$gs-baseline/3;
+        top: math.div(-$gs-baseline, 3);
         right: 0;
         content: '';
     }
@@ -396,7 +398,7 @@ $ima-controls-height: 70px;
 
     > .vjs-control-text {
         float: left;
-        margin-right: $gs-gutter/3;
+        margin-right: math.div($gs-gutter, 3);
         width: $gs-gutter;
         height: $gs-baseline*1.5;
 
@@ -478,7 +480,7 @@ $ima-controls-height: 70px;
             display: block;
             position: absolute;
             top: 50%;
-            left: $gs-gutter/2;
+            left: $gs-gutter*0.5;
             margin-top: -18px; // half icon height for centering;
         }
     }
@@ -497,7 +499,7 @@ $ima-controls-height: 70px;
     position: absolute;
     top: 50%;
     margin-top: -16px; // half icon height for centering;
-    right: $gs-gutter/2;
+    right: $gs-gutter*0.5;
     text-indent: -9999px;
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
@@ -518,7 +520,7 @@ $ima-controls-height: 70px;
     .vjs-overlay__title {
         @include fs-headline(4);
         text-align: left;
-        padding: $gs-gutter/2;
+        padding: $gs-gutter*0.5;
         @include mq(tablet) {
             @include fs-headline(5);
         }
@@ -528,7 +530,7 @@ $ima-controls-height: 70px;
         &:before {
             @include icon(video-camera--tone-media);
             content: '';
-            margin-right: $gs-gutter/2;
+            margin-right: $gs-gutter*0.5;
         }
     }
 
@@ -536,7 +538,7 @@ $ima-controls-height: 70px;
         @include fs-headline(3);
         text-align: left;
         color: $highlight-main;
-        padding: 0 $gs-gutter/2 $gs-baseline*2;
+        padding: 0 $gs-gutter*0.5 $gs-baseline*2;
     }
 }
 
@@ -547,7 +549,7 @@ $ima-controls-height: 70px;
     position: absolute;
     $height: get-line-height(headline, 2);
     height: $height;
-    padding: $gs-baseline/2;
+    padding: $gs-baseline*0.5;
     top: ($height + $gs-baseline) * -1;
     left: 0;
     transition: top .8s;
@@ -606,7 +608,7 @@ $ima-controls-height: 70px;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
     color: $brightness-7;
-    padding: $gs-baseline/3 $gs-gutter/2 0;
+    padding: math.div($gs-baseline, 3) $gs-gutter*0.5 0;
     border: 1px solid $brightness-86;
     outline: none;
 
@@ -623,7 +625,7 @@ $ima-controls-height: 70px;
     float: right;
     box-sizing: border-box;
     height: $vjs-control-height;
-    padding-right: $gs-gutter/2;
+    padding-right: $gs-gutter*0.5;
     position: relative;
 
     .vjs-control-content {
@@ -669,7 +671,7 @@ $ima-controls-height: 70px;
     height: $gs-baseline*4;
     box-sizing: border-box;
     background-color: rgba(25, 25, 25, .8);
-    padding: $gs-baseline/2 $gs-gutter/2;
+    padding: $gs-baseline*0.5 $gs-gutter*0.5;
     font-weight: bold;
     transition: top .8s;
     transition-delay: 1s;
@@ -687,13 +689,13 @@ $ima-controls-height: 70px;
 
     .vjs-control-content {
         position: absolute;
-        top: $gs-baseline/3;
+        top: math.div($gs-baseline, 3);
         right: $gs-baseline*4;
     }
 
     .vjs-title {
         @include ellipsis();
-        margin-top: $gs-baseline*2/3;
+        margin-top: math.div($gs-baseline*2, 3);
         font-size: 14px;
         color: #ffffff;
         display: inline-block;
@@ -737,7 +739,7 @@ $ima-controls-height: 70px;
 .vjs-ads-skip__countdown,
 .vjs-ads-skip__button {
     display: block;
-    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4;
+    padding: $gs-baseline*0.5 $gs-gutter*0.5 $gs-baseline*0.25;
 }
 .vjs-ads-skip__button {
     width: 100%;
@@ -763,7 +765,7 @@ $ima-controls-height: 70px;
         }
     }
     .skip-icon {
-        margin-right: $gs-gutter/4;
+        margin-right: $gs-gutter*0.25;
     }
 }
 
@@ -781,7 +783,7 @@ $ima-controls-height: 70px;
     background-color: rgba(25, 25, 25, .8);
     color: $brightness-97;
     top: $gs-baseline*4;
-    padding-top: $gs-gutter/4;
+    padding-top: $gs-gutter*0.25;
     max-width: gs-span(7);
     cursor: initial;
 
@@ -816,7 +818,7 @@ $ima-controls-height: 70px;
 
         .fc-item {
             box-sizing: border-box;
-            padding: 0 $gs-gutter/2;
+            padding: 0 $gs-gutter*0.5;
             width: 25%;
             float: left;
             list-style: none;
@@ -838,7 +840,7 @@ $ima-controls-height: 70px;
                 overflow: hidden;
                 max-height: $gs-baseline*6;
                 height: $gs-baseline*6;
-                margin-top: $gs-baseline/2;
+                margin-top: $gs-baseline*0.5;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 4;
@@ -865,7 +867,7 @@ $ima-controls-height: 70px;
 }
 .end-slate-container__header {
     height: gs-height(1);
-    padding-left: $gs-gutter/2;
+    padding-left: $gs-gutter*0.5;
     margin-bottom: $gs-baseline;
 
     .gu-video-embed & {
@@ -874,7 +876,7 @@ $ima-controls-height: 70px;
 }
 .end-slate-container__heading {
     @include fs-header(2);
-    padding-top: $gs-baseline/3;
+    padding-top: math.div($gs-baseline, 3);
     font-weight: bold;
     text-align: left;
 
@@ -909,11 +911,11 @@ $ima-controls-height: 70px;
 .podcast-meta {
     text-align: left;
     border-top: 1px solid $brightness-7;
-    margin-top: $gs-baseline/2;
-    padding: $gs-baseline/2 $gs-gutter/2;
+    margin-top: $gs-baseline*0.5;
+    padding: $gs-baseline*0.5 $gs-gutter*0.5;
 }
 .podcast-meta__item {
-    margin-right: $gs-gutter/2;
+    margin-right: $gs-gutter*0.5;
 
     @include mq(phablet) {
         display: inline-block;
@@ -986,15 +988,15 @@ $ima-controls-height: 70px;
     position: relative;
     box-sizing: border-box;
     margin-bottom: $gs-baseline*2;
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+    padding-left: $gs-gutter*0.5;
+    padding-right: $gs-gutter*0.5;
 
     &.fc-item {
         max-width: 25%;
         background-color: transparent;
         margin-left: 0;
         margin-right: 0;
-        padding: 0 $gs-gutter/2;
+        padding: 0 $gs-gutter*0.5;
     }
 
     + .fc-item {

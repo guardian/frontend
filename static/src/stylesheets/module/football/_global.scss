@@ -1,10 +1,12 @@
+@use "sass:math";
+
 .page-heading--football {
     border-top: 0 !important;
 
     @include mq(leftCol) {
         float: left;
         margin-left: -1 * (gs-span(2) + $gs-gutter);
-        margin-top: $gs-baseline/-4;
+        margin-top: math.div($gs-baseline, -4);
     }
     @include mq(wide) {
         margin-left: -1 * (gs-span(3) + $gs-gutter);
@@ -16,7 +18,7 @@
 
     @include mq(leftCol) {
         margin-left: -1 * (gs-span(2) + $gs-gutter);
-        margin-top: $gs-baseline/-4;
+        margin-top: math.div($gs-baseline, -4);
     }
     @include mq(wide) {
         margin-left: -1 * (gs-span(3) + $gs-gutter);
@@ -29,7 +31,7 @@
     @include mq(leftCol) {
         float: left;
         margin-left: -1 * (gs-span(2) + $gs-gutter);
-        margin-top: $gs-baseline/-4 + 50;
+        margin-top: math.div($gs-baseline, -4) + 50;
     }
     @include mq(wide) {
         margin-left: -1 * (gs-span(3) + $gs-gutter);
@@ -45,7 +47,7 @@
 .date-divider {
     @include fs-textSans(2);
     margin-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline*0.5;
     border-top: 1px solid $brightness-86;
     color: $brightness-7;
     font-weight: 900;

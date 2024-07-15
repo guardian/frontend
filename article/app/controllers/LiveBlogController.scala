@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
-import services.{CAPILookup, NewsletterService, MessageUsService}
+import services.{CAPILookup, NewsletterService}
 import topics.TopicService
 import utils.DotcomponentsLogger
 import views.support.RenderOtherStatus
@@ -33,7 +33,6 @@ class LiveBlogController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     topicService: TopicService,
-    messageUsService: MessageUsService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -67,7 +66,6 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val topicResult = if (filter) None else getTopicResult(path, topics)
       val availableTopics = topicService.getAvailableTopics(path)
-      val messageUs = messageUsService.getBlogMessageUsData(path)
 
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
@@ -77,7 +75,6 @@ class LiveBlogController(
             filter,
             topicResult,
             availableTopics,
-            messageUs,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -92,7 +89,6 @@ class LiveBlogController(
                 filter,
                 Some(value),
                 availableTopics,
-                messageUs,
               ) // no page param
             case None =>
               renderWithRange(
@@ -101,7 +97,6 @@ class LiveBlogController(
                 filter,
                 None,
                 availableTopics,
-                messageUs,
               ) // no page param
           }
         }
@@ -123,18 +118,16 @@ class LiveBlogController(
       val topicResult = getTopicResult(path, topics)
       val range = getRange(lastUpdate, page, topicResult)
       val availableTopics = topicService.getAvailableTopics(path)
-      val messageUs = messageUsService.getBlogMessageUsData(path)
 
       mapModel(path, range, filter, topicResult) {
         case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
 
-        /**
-          * When DCR requests new blocks from the client, it will add a `lastUpdate` parameter.
+        /** When DCR requests new blocks from the client, it will add a `lastUpdate` parameter.
           * If no such parameter is present, we should return a JSON representation of the whole
           * payload that would be sent to DCR when initially server side rendering the LiveBlog page.
           */
         case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderDCRJson(blog, blocks, filter, availableTopics, topicResult, messageUs))
+          Future.successful(renderDCRJson(blog, blocks, filter, availableTopics, topicResult))
         case (blog: LiveBlogPage, blocks) =>
           getJson(
             blog,
@@ -160,7 +153,6 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       topicResult: Option[TopicResult],
       availableTopics: Option[Seq[Topic]],
-      messageUs: Option[MessageUsData],
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
@@ -203,7 +195,6 @@ class LiveBlogController(
                 request.forceLive,
                 availableTopics,
                 topicResult,
-                messageUs,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page.article)
@@ -368,8 +359,7 @@ class LiveBlogController(
     }
   }
 
-  /**
-    * Returns a JSON representation of the payload that's sent to DCR when rendering the whole LiveBlog page.
+  /** Returns a JSON representation of the payload that's sent to DCR when rendering the whole LiveBlog page.
     */
   private[this] def renderDCRJson(
       blog: LiveBlogPage,
@@ -377,7 +367,6 @@ class LiveBlogController(
       filterKeyEvents: Boolean,
       availableTopics: Option[Seq[Topic]],
       topicResult: Option[TopicResult],
-      messageUs: Option[MessageUsData],
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
     val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
@@ -393,7 +382,6 @@ class LiveBlogController(
         availableTopics,
         newsletter,
         topicResult,
-        messageUs,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
@@ -440,8 +428,7 @@ class LiveBlogController(
           topicResult,
         ).map(_ -> blocks)
       case nonLiveBlogArticle: Article =>
-        /**
-          * If `isLiveBlog` is false, it must be because the article has no blocks, or lacks
+        /** If `isLiveBlog` is false, it must be because the article has no blocks, or lacks
           * the `tone/minutebyminute` tag, or both.
           * Logging these values will help us to identify which is causing the issue.
           */

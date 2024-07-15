@@ -87,8 +87,7 @@ object LinkTo extends LinkTo {
 
 }
 
-/**
-  * represents the link rel=canonical for any page on the site
+/** represents the link rel=canonical for any page on the site
   */
 class CanonicalLink {
 

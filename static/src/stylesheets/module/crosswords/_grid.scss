@@ -1,4 +1,4 @@
-$stickyClueVerticalPadding: ($gs-baseline / 2);
+$stickyClueVerticalPadding: ($gs-baseline * 0.5);
 $stickyClueLineHeight: 20;
 $stickyClueLines: 2;
 $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $stickyClueLines);

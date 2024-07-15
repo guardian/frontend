@@ -38,7 +38,7 @@
     font-weight: bold;
     -webkit-font-smoothing: initial;
     width: $gs-gutter;
-    padding-right: $gs-gutter / 2;
+    padding-right: $gs-gutter * 0.5;
 
     .has-grouped-clues & {
         width: $gs-gutter * 2;

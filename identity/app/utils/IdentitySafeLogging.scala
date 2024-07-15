@@ -39,9 +39,8 @@ class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname: String)
         )
 
         def cleanString(msg: String): String = {
-          patterns.foldLeft(msg) {
-            case (filteredMsg, pattern) =>
-              pattern.replaceAllIn(filteredMsg, "***")
+          patterns.foldLeft(msg) { case (filteredMsg, pattern) =>
+            pattern.replaceAllIn(filteredMsg, "***")
           }
         }
 

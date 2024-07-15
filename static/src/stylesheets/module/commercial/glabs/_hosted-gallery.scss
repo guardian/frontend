@@ -1,12 +1,14 @@
 
+@use "sass:math";
+
 $headerHeight: 58px;
 $footerHeight: 46px;
-$approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
+$approxGalleryWidth: calc(167vh - #{math.div(5, 3) * ($headerHeight + $footerHeight)});
 
-$tabletHeight: #{map-get($mq-breakpoints, tablet) * 3/5 + $headerHeight + $footerHeight};
-$desktopHeight: #{map-get($mq-breakpoints, desktop) * 3/5 + $headerHeight + $footerHeight};
-$leftColHeight: #{map-get($mq-breakpoints, leftCol) * 3/5 + $headerHeight + $footerHeight};
-$wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHeight};
+$tabletHeight: #{map-get($mq-breakpoints, tablet) * 3*0.2 + $headerHeight + $footerHeight};
+$desktopHeight: #{map-get($mq-breakpoints, desktop) * 3*0.2 + $headerHeight + $footerHeight};
+$leftColHeight: #{map-get($mq-breakpoints, leftCol) * 3*0.2 + $headerHeight + $footerHeight};
+$wideHeight: #{map-get($mq-breakpoints, wide) * 3*0.2 + $headerHeight + $footerHeight};
 
 
 .hosted-gallery__scroll-container {
@@ -547,7 +549,7 @@ $progressColor: #ffffff;
     display: none;
     position: absolute;
     top: 50%;
-    margin-top: $progressHeight / -2;
+    margin-top: math.div($progressHeight, -2);
     right: 0;
     height: $progressHeight;
     width: $progressHeight;
@@ -619,7 +621,7 @@ $progressColor: #ffffff;
         height: $progressHeight;
         width: $progressHeight;
         position: absolute;
-        left: $progressHeight / -2;
+        left: math.div($progressHeight, -2);
         transform: rotate(45deg);
     }
 

@@ -201,10 +201,9 @@ object LiveBlogCurrentPage {
       topicResult: Option[TopicResult],
   ): Seq[PageReference] = {
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, applyFilters(blocks, filterKeyEvents, topicResult))
-    FirstPage(mainPageBlocks, filterKeyEvents, topicResult) :: restPagesBlocks.zipWithIndex.map {
-      case (page, index) =>
-        // page number is index + 2 to account for first page and 0-based index of `zipWithIndex`
-        BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
+    FirstPage(mainPageBlocks, filterKeyEvents, topicResult) :: restPagesBlocks.zipWithIndex.map { case (page, index) =>
+      // page number is index + 2 to account for first page and 0-based index of `zipWithIndex`
+      BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
     }
   }
 

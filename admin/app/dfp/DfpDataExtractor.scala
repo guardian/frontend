@@ -33,6 +33,21 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
     }
   }
 
+  val liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = {
+    lineItems
+      .filter(lineItem => lineItem.targetsLiveBlogTop && lineItem.isCurrent)
+      .foldLeft(Seq.empty[LiveBlogTopSponsorship]) { (soFar, lineItem) =>
+        soFar :+ LiveBlogTopSponsorship(
+          lineItemName = lineItem.name,
+          lineItemId = lineItem.id,
+          adTest = lineItem.targeting.adTestValue,
+          editions = editionsTargeted(lineItem),
+          sections = lineItem.liveBlogTopTargetedSections,
+          targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+        )
+      }
+  }
+
   val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
     val highMerchLineItems = lineItems
       .filter(_.targetsHighMerchandising)

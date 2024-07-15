@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .gu-image {
     width: 100%;
 }
@@ -84,7 +86,7 @@
             width: 14px;
             height: 10px;
             float: left;
-            margin-top: -$gs-baseline / 2;
+            margin-top: -$gs-baseline * 0.5;
         }
 
         p {
@@ -141,8 +143,8 @@
     }
 
     .inline-information {
-        margin-right: $gs-gutter/10;
-        margin-top: -$gs-baseline/4;
+        margin-right: $gs-gutter*0.1;
+        margin-top: -$gs-baseline*0.25;
         width: 14px;
         height: 14px;
         background-color: $brightness-86;
@@ -172,7 +174,7 @@ figure {
         display: block;
     }
     &.element {
-        margin-top: ($gs-baseline/3)*4;
+        margin-top: math.div($gs-baseline, 3)*4;
         margin-bottom: $gs-baseline;
         position: relative;
     }
@@ -181,7 +183,7 @@ figure {
     {
         position: relative;
         figcaption {
-            padding-top: ($gs-baseline/6)*4;
+            padding-top: math.div($gs-baseline, 6)*4;
         }
     }
     &.img--inline {
@@ -191,7 +193,7 @@ figure {
 
 p + figure,
 p + video {
-    margin-top: $gs-baseline/3;
+    margin-top: math.div($gs-baseline, 3);
 }
 
 figure.element--thumbnail {
@@ -249,14 +251,14 @@ figure.element-table {
 
 .from-content-api {
     table {
-        margin-bottom: ($gs-baseline/3)*4;
+        margin-bottom: math.div($gs-baseline, 3)*4;
     }
 
     // This is a weird xml output from the api
     table caption {
         font-size: 20px;
         line-height: 24px;
-        padding: ($gs-baseline/3)*2 0;
+        padding: math.div($gs-baseline, 3)*2 0;
         text-align: left;
         border-top: 1px solid #b3b3b4;
     }
@@ -264,7 +266,7 @@ figure.element-table {
     td {
         font-size: 13px;
         line-height: 16px;
-        padding: ($gs-baseline/3)*2;
+        padding: math.div($gs-baseline, 3)*2;
     }
     th {
         font-weight: 600;
@@ -302,7 +304,7 @@ figure.element-table {
     background-color: $brightness-97;
     width: 100%;
     box-sizing: border-box;
-    padding: ($gs-baseline / 2) ($gs-gutter / 2) $gs-baseline;
+    padding: ($gs-baseline * 0.5) ($gs-gutter * 0.5) $gs-baseline;
     margin-bottom: $gs-baseline;
 
     blockquote {

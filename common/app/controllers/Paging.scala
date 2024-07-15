@@ -13,17 +13,15 @@ trait Paging extends implicits.Numbers {
     "page-size" -> 5,
   )
 
-  /**
-    * Pull out 'paging' query string params
+  /** Pull out 'paging' query string params
     */
   protected def extractPaging(request: RequestHeader): Map[String, Int] = {
-    val paging = pagingParams.map {
-      case (name, default) =>
-        try {
-          (name, request.getQueryString(name).map(_.toInt).getOrElse(default))
-        } catch {
-          case _: NumberFormatException => (name, default)
-        }
+    val paging = pagingParams.map { case (name, default) =>
+      try {
+        (name, request.getQueryString(name).map(_.toInt).getOrElse(default))
+      } catch {
+        case _: NumberFormatException => (name, default)
+      }
     }
     // also compute actual offset, i.e. offset plus current page position
     val actualOffset = paging("offset") + (paging("page-size") * (paging("page") - 1))

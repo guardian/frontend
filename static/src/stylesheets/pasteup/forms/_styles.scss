@@ -1,5 +1,7 @@
 // Fix a bug Internet Explorer 8 where text in password fields
 // would become invisible when `font-family` references a webfont.
+@use "sass:math";
+
 [type=password] {
     font-family: sans-serif !important;
 }
@@ -26,7 +28,7 @@
     border: 0;
     border-top: 1px solid $brightness-97;
     display: table;
-    padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
+    padding: (math.div($gs-baseline, 3)*4 - 1) 0 ($gs-baseline*2);
     margin: 0;
 }
 
@@ -93,7 +95,7 @@
     border-top: 1px solid lighten($news-main, 35%);
     color: $news-main;
     margin-top: 6px;
-    padding: 7px ($gs-baseline/3)*2;
+    padding: 7px math.div($gs-baseline, 3)*2;
 }
 
 .form__success {
@@ -102,18 +104,18 @@
     border-bottom: 1px solid lighten($green-bold, 35%);
     border-top: 1px solid lighten($green-bold, 35%);
     color: $green-bold;
-    margin-top: $gs-baseline/2;
-    padding: 7px ($gs-baseline/3)*2;
+    margin-top: $gs-baseline*0.5;
+    padding: 7px math.div($gs-baseline, 3)*2;
 }
 
 .form-field__error {
     color: $news-main;
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline*0.5;
 }
 
 .form-field__note--below {
     margin-bottom: 0;
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline*0.5;
 }
 
 .form-field__note--left {
@@ -186,7 +188,7 @@
 }
 
 .textarea--no-resize {
-    min-height: ($gs-baseline/3)*20;
+    min-height: math.div($gs-baseline, 3)*20;
     resize: none;
 }
 
@@ -195,7 +197,7 @@
 }
 
 .textarea--long {
-    min-height: ($gs-baseline/3)*40;
+    min-height: math.div($gs-baseline, 3)*40;
 }
 
 .submit-input, .submit-input--behaviour {
@@ -221,7 +223,7 @@
 }
 
 .submit-input {
-    padding: 11px $gs-gutter/2;
+    padding: 11px $gs-gutter*0.5;
 }
 
 .submit-input[disabled] {
@@ -233,7 +235,7 @@
     display: block;
     font-family: $f-sans-serif-text;
     font-size: 14px;
-    margin-bottom: $gs-baseline/3;
+    margin-bottom: math.div($gs-baseline, 3);
     padding-left: $gs-gutter;
 }
 

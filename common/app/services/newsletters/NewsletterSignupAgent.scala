@@ -56,10 +56,9 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   def getV2Newsletters(): Either[String, List[NewsletterResponseV2]] = newslettersV2Agent.get()
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
-    refreshNewsletters() recover {
-      case e =>
-        val errMessage = s"Call to Newsletter API failed: ${e.getMessage}"
-        log.error(errMessage)
+    refreshNewsletters() recover { case e =>
+      val errMessage = s"Call to Newsletter API failed: ${e.getMessage}"
+      log.error(errMessage)
     }
   }
 

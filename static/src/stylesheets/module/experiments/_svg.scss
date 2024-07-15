@@ -1,7 +1,8 @@
+@use "sass:math";
+
 //
 //  Function to create an optimized svg url
 //  See: http://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-//
 //
 @function svg-url($svg) {
     //
@@ -11,7 +12,7 @@
     $encoded: '';
     $slice: 2000;
     $index: 0;
-    $loops: ceil(str-length($svg)/$slice);
+    $loops: ceil(math.div(str-length($svg), $slice));
     @for $i from 1 through $loops {
         $chunk: str-slice($svg, $index, $index + $slice - 1);
         //

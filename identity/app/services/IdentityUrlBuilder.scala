@@ -20,9 +20,8 @@ class IdentityUrlBuilder(conf: IdConfig) {
   // Utility function to map Play's modelling of query parameters,
   // to how query parameters are modelled in this class.
   def flattenQueryParams(params: Map[String, Seq[String]]): List[(String, String)] =
-    params.foldLeft(List.empty[(String, String)]) {
-      case (acc, (key, values)) =>
-        acc ++ values.map(key -> _)
+    params.foldLeft(List.empty[(String, String)]) { case (acc, (key, values)) =>
+      acc ++ values.map(key -> _)
     }
 
   def appendQueryParams(url: String, params: List[(String, String)]): String = {
@@ -31,8 +30,8 @@ class IdentityUrlBuilder(conf: IdConfig) {
       if (params.isEmpty) ""
       else
         params
-          .map {
-            case (k, v) => URLEncoder.encode(k, "UTF-8") + "=" + URLEncoder.encode(v, "UTF-8")
+          .map { case (k, v) =>
+            URLEncoder.encode(k, "UTF-8") + "=" + URLEncoder.encode(v, "UTF-8")
           }
           .mkString(separator, "&", "")
     }

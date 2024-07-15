@@ -26,7 +26,7 @@
 
     .content__labels {
         @include mq(leftCol) {
-            margin-bottom: $gs-baseline / 2;
+            margin-bottom: $gs-baseline * 0.5;
             padding-left: 3px;
         }
     }

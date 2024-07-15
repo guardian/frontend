@@ -1,6 +1,6 @@
 .element-pullquote {
     .inline-quote {
-        margin-bottom: $gs-baseline / 2;
+        margin-bottom: $gs-baseline * 0.5;
         display: block;
         width: 34px;
         height: 30px;
@@ -66,7 +66,7 @@
         @include fs-textSans(6);
         font-weight: bold;
         letter-spacing: -1px;
-        padding-top: $gs-baseline/5;
+        padding-top: $gs-baseline*0.2;
         display: block;
     }
 
@@ -100,11 +100,11 @@
     text-align: right;
     float: left;
     min-width: 15px; // Min width is the width of the icons
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
 }
 
 .meta__number + .meta__number {
     border-left: 1px solid $brightness-86;
-    padding-left: $gs-gutter / 4;
-    margin-left: $gs-gutter / 4;
+    padding-left: $gs-gutter * 0.25;
+    margin-left: $gs-gutter * 0.25;
 }

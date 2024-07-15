@@ -1,6 +1,6 @@
 .subnav {
     background-color: #ffffff;
-    height: $veggie-burger - $gs-baseline / 2;
+    height: $veggie-burger - $gs-baseline * 0.5;
     overflow: hidden;
     position: relative;
 
@@ -40,11 +40,11 @@
     margin: 0;
     // Width of the container minus the rough width of the more toggle
     max-width: calc(100% - 60px);
-    padding: 0 ($gs-gutter / 4);
+    padding: 0 ($gs-gutter * 0.25);
 
     @include mq(mobileLandscape) {
         max-width: calc(100% - 70px);
-        padding: 0 ($gs-gutter / 2 + $gs-gutter / 4);
+        padding: 0 ($gs-gutter * 0.5 + $gs-gutter * 0.25);
     }
 
     .subnav--expanded & {

@@ -61,7 +61,7 @@ import test.ConfiguredTestSuite
       slicesFor(
         Story(1, isBoosted = true) +:
           (Seq.fill(m)(Story.unboosted(1)) ++
-          Seq.fill(n)(Story.unboosted(0))),
+            Seq.fill(n)(Story.unboosted(0))),
       ).value shouldEqual Seq(HalfQuarterQl2Ql4)
     }
   }
@@ -82,16 +82,16 @@ import test.ConfiguredTestSuite
 
   it should "for one very big boosted, one very big unboosted, one big boosted, n >= 1 big, and m standards, " +
     "return ThreeQuarterQuarter, HalfQuarterQl2Ql4B" in {
-    forAll(Gen.choose(1, 20), Gen.choose(1, 20)) { (m: Int, n: Int) =>
-      slicesFor(
-        Seq(
-          Story(2, isBoosted = true),
-          Story(2, isBoosted = false),
-          Story(1, isBoosted = true),
-        ) ++
-          (Seq.fill(m)(Story.unboosted(1)) ++
-            Seq.fill(n)(Story.unboosted(0))),
-      ).value shouldEqual Seq(ThreeQuarterQuarter, HalfQuarterQl2Ql4B)
+      forAll(Gen.choose(1, 20), Gen.choose(1, 20)) { (m: Int, n: Int) =>
+        slicesFor(
+          Seq(
+            Story(2, isBoosted = true),
+            Story(2, isBoosted = false),
+            Story(1, isBoosted = true),
+          ) ++
+            (Seq.fill(m)(Story.unboosted(1)) ++
+              Seq.fill(n)(Story.unboosted(0))),
+        ).value shouldEqual Seq(ThreeQuarterQuarter, HalfQuarterQl2Ql4B)
+      }
     }
-  }
 }

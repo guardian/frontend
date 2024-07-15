@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .identity-consent-journey {
     margin: auto;
     fieldset {
@@ -35,7 +37,7 @@
 
 .identity-consent-journey-step {
     @include clearfix;
-    padding-top: $gs-gutter / 6;
+    padding-top: math.div($gs-gutter, 6);
     &.identity-consent-journey-step--intro {
         margin-top: $gs-gutter * 2;
     }
@@ -65,7 +67,7 @@
             grid-column-start: 2;
         }
         .identity-consent-journey-step__fields {
-            margin-top: $gs-gutter / 4;
+            margin-top: $gs-gutter * 0.25;
         }
     }
 }
@@ -75,7 +77,7 @@
     font-weight: 500;
     .identity-consent-journey-step--intro & {
         @include fs-headline(5, true);
-        margin-top: ($gs-gutter /4) * -1;
+        margin-top: ($gs-gutter *0.25) * -1;
     }
 }
 
@@ -87,7 +89,7 @@
     overflow: visible;
     margin-bottom: $multiline-height;
     position: relative;
-    padding: ($gs-row-height / 1.5) 0;
+    padding: math.div($gs-row-height, 1.5) 0;
     box-shadow: 0 ($slim-nav-height * -2) 0 0 #1e8dcd;
 
     .identity-wrapper {
@@ -113,7 +115,7 @@
         bottom: ($multiline-height - 1) * -1;
         height: $multiline-height;
         margin-bottom: -1px;
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline*0.5;
         width: 100%;
     }
 }

@@ -34,12 +34,12 @@ from scrolling */
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: $gs-baseline * 2 + $gs-baseline / 2;
+    top: $gs-baseline * 2 + $gs-baseline * 0.5;
     right: 0;
     width: $gs-column-width * 3 + $gs-gutter * 2;
     background-color: $brightness-100;
-    border-radius: $gs-baseline / 4;
-    padding: $gs-baseline / 2 0;
+    border-radius: $gs-baseline * 0.25;
+    padding: $gs-baseline * 0.5 0;
     margin: 0;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
     z-index: $zindex-main-menu + 3;
@@ -64,7 +64,7 @@ from scrolling */
         overflow: auto;
 
         > hr {
-            margin-left: $gs-gutter / 2;
+            margin-left: $gs-gutter * 0.5;
         }
 
         @include mq(mobileMedium) {
@@ -90,7 +90,7 @@ from scrolling */
     display: block;
     letter-spacing: .01rem;
     outline: none;
-    padding: ($gs-baseline / 2 + 1) $gs-gutter ($gs-baseline + $gs-baseline / 4) ($gs-gutter / 2);
+    padding: ($gs-baseline * 0.5 + 1) $gs-gutter ($gs-baseline + $gs-baseline * 0.25) ($gs-gutter * 0.5);
     position: relative;
     box-sizing: border-box;
     // Hides border on hover

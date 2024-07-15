@@ -165,7 +165,7 @@ body {
     .email-sub__form--plaindark,
     .email-sub__form--plaintone {
         .email-sub__submit-button {
-            padding-left: $gs-gutter / 2;
+            padding-left: $gs-gutter * 0.5;
         }
     }
 }
@@ -176,7 +176,7 @@ body {
     .email-sub__form--plain,
     .email-sub__form--plaindark,
     .email-sub__form--plaintone {
-        padding-right: $gs-gutter / 2;
+        padding-right: $gs-gutter * 0.5;
 
         .email-sub__text-input {
             border-radius: 1000px;
@@ -231,7 +231,7 @@ body {
 
 .email-sub--article {
     @include mq($until: tablet) {
-        padding: $gs-gutter / 2;
+        padding: $gs-gutter * 0.5;
     }
 
     .email-sub__heading {

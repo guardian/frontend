@@ -50,9 +50,8 @@ final case class MetricUploader(namespace: String) {
   private val datapoints: Box[List[SimpleMetric]] = Box(List.empty)
 
   def put(metrics: Map[String, Double]): Unit = {
-    val timedMetrics = metrics.map {
-      case (key, value) =>
-        SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
+    val timedMetrics = metrics.map { case (key, value) =>
+      SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
     }
     datapoints.send(_ ++ timedMetrics)
   }

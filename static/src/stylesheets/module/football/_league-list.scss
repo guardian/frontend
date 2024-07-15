@@ -1,16 +1,18 @@
+@use "sass:math";
+
 .football-leagues {
     @include fs-textSans(4);
     margin: $gs-baseline 0 $gs-baseline*2;
 
     @include mq(tablet) {
         @include fs-textSans(4);
-        margin-top: ($gs-baseline/3)*2;
+        margin-top: math.div($gs-baseline, 3)*2;
     }
 }
 
 .football-leagues__label {
     display: none;
-    margin-right: $gs-gutter/3;
+    margin-right: math.div($gs-gutter, 3);
 
     @include mq(tablet) {
         display: inline-block;
@@ -19,7 +21,7 @@
 
 .football-leagues__list,
 .football-leagues__submit {
-    padding: $gs-baseline/2 $gs-gutter/4;
+    padding: $gs-baseline*0.5 $gs-gutter*0.25;
 }
 
 
@@ -35,5 +37,5 @@
     display: inline-block;
     vertical-align: top;
     width: 50%;
-    margin-bottom: $gs-baseline/2;
+    margin-bottom: $gs-baseline*0.5;
 }

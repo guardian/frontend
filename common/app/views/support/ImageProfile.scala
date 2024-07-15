@@ -13,8 +13,7 @@ import play.api.libs.json.{Json, Writes}
 
 import Function.const
 
-/**
-  * ElementProfile is configuration for displaying an image, and is used to generate custom URLs (with parameters) for
+/** ElementProfile is configuration for displaying an image, and is used to generate custom URLs (with parameters) for
   * calls to our Fastly image service.
   */
 sealed trait ElementProfile {
@@ -72,8 +71,7 @@ sealed trait ElementProfile {
 
 }
 
-/**
-  * ImageProfile is an ElementProfile that provides sensible defaults. It is used as the base class for lots of more
+/** ImageProfile is an ElementProfile that provides sensible defaults. It is used as the base class for lots of more
   * specific profiles.
   */
 case class ImageProfile(
@@ -98,8 +96,7 @@ case class VideoProfile(
     override val autoFormat: Boolean = true,
 ) extends ElementProfile {}
 
-/**
-  * SrcSet relates to the HTML `srcSet` attribute but only represents a single image source-width combo. For information
+/** SrcSet relates to the HTML `srcSet` attribute but only represents a single image source-width combo. For information
   * on the HTML attribute, see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset.
   */
 case class SrcSet(src: String, width: Int) {

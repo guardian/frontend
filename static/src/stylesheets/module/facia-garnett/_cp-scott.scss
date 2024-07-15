@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $cp-scott-width-mobile: 70px;
 $cp-scott-width-tablet: 80px;
 
@@ -40,8 +42,8 @@ $cp-scott-width-tablet: 80px;
     }
 
     @include mq(tablet) {
-        margin-top: -$gs-baseline / 2;
-        margin-bottom: $gs-baseline / 2;
+        margin-top: -$gs-baseline * 0.5;
+        margin-bottom: $gs-baseline * 0.5;
         width: $cp-scott-width-tablet - 10;
         height: $cp-scott-width-tablet - 10;
         margin-left: -1px;
@@ -56,8 +58,8 @@ $cp-scott-width-tablet: 80px;
     @include mq(wide) {
         .has-page-skin & {
             float: right;
-            margin-top: -$gs-baseline / 2;
-            margin-bottom: $gs-baseline / 2;
+            margin-top: -$gs-baseline * 0.5;
+            margin-bottom: $gs-baseline * 0.5;
         }
     }
 }
@@ -65,11 +67,11 @@ $cp-scott-width-tablet: 80px;
 .fc-cp-scott__text {
     @include fs-headline(1);
     clear: left;
-    margin-right: $cp-scott-width-mobile + $gs-gutter / 2;
-    line-height: $gs-baseline * 4 / 3;
+    margin-right: $cp-scott-width-mobile + $gs-gutter * 0.5;
+    line-height: math.div($gs-baseline * 4, 3);
 
     .inline-quote svg {
-        width: $gs-gutter/2 + $gs-baseline/2;
+        width: $gs-gutter*0.5 + $gs-baseline*0.5;
         height: auto;
         fill: $brightness-46;
     }
@@ -77,7 +79,7 @@ $cp-scott-width-tablet: 80px;
     @include mq(mobileLandscape) {
         clear: none;
         float: right;
-        margin-right: $gs-gutter / 2;
+        margin-right: $gs-gutter * 0.5;
         margin-top: 2px;
     }
 
@@ -93,7 +95,7 @@ $cp-scott-width-tablet: 80px;
     @include mq(wide) {
         .has-page-skin & {
             float: right;
-            margin-right: $gs-gutter / 2;
+            margin-right: $gs-gutter * 0.5;
         }
     }
 }

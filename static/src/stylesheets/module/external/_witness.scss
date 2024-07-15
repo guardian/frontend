@@ -8,20 +8,22 @@
 // - text: /technology/guardianwitness-blog/2014/apr/14/the-10-tech-commandments-to-avoid-digital-shame
 // - "Contribute with…" cta: /lifeandstyle/the-running-blog/2013/aug/05/competition-win-gps-running-watch
 
+@use "sass:math";
+
 .element-witness {
     border: 1px solid $brightness-86;
-    margin-bottom: ($gs-baseline/3)*5;
+    margin-bottom: math.div($gs-baseline, 3)*5;
 }
 .element-witness--title {
-    margin-bottom: ($gs-baseline/3)*2;
+    margin-bottom: math.div($gs-baseline, 3)*2;
 }
 .element-witness--main {
-    padding: $gs-baseline $gs-gutter/2 ($gs-baseline/3)*4;
+    padding: $gs-baseline $gs-gutter*0.5 math.div($gs-baseline, 3)*4;
 }
 .element-witness figcaption {
     // Make it look like the body copy
     @include fs-bodyCopy(2);
-    margin: ($gs-baseline/3)*4 0 0;
+    margin: math.div($gs-baseline, 3)*4 0 0;
     color: $brightness-7;
 
     &:before {
@@ -38,7 +40,7 @@
 .element-witness--metadata {
     @include fs-textSans(3);
     border-top: 1px solid $brightness-86;
-    padding: $gs-baseline $gs-gutter/2;
+    padding: $gs-baseline $gs-gutter*0.5;
     background: $brightness-97;
     color: $brightness-46 !important;
 
@@ -48,7 +50,7 @@
 }
 .element-witness--source {
     @include fs-textSans(3);
-    padding-left: $gs-gutter/2;
+    padding-left: $gs-gutter*0.5;
     color: $brightness-46;
 }
 .element-witness--author-name {
@@ -62,7 +64,7 @@
 }
 .witness-avatar {
     float: left;
-    padding: 0 $gs-gutter/2 0 0;
+    padding: 0 $gs-gutter*0.5 0 0;
 }
 .element-witness--author,
 .element-witness--date {
@@ -71,9 +73,9 @@
 
 .witness-cta {
     overflow: hidden;
-    padding: $gs-baseline / 3 0;
+    padding: math.div($gs-baseline, 3) 0;
     border-top: 1px dotted $brightness-86;
-    margin-top: $gs-baseline / 3;
+    margin-top: math.div($gs-baseline, 3);
 
     @include mq(leftCol) {
         border-bottom: 1px dotted $brightness-86;
@@ -102,7 +104,7 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        left: $gs-gutter / 2;
+        left: $gs-gutter * 0.5;
         margin: auto;
         height: 18px;
         width: 18px;

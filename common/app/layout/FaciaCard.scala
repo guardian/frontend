@@ -230,8 +230,8 @@ object ContentCard {
         cardTypes = cardTypesForRecommendations,
         showSeriesAndBlogKickers = false,
       ),
-    ) {
-      case content: ContentCard => content
+    ) { case content: ContentCard =>
+      content
     }
 
   }

@@ -8,8 +8,7 @@ object PhoneNumbers {
 
   val phoneNumberUtil = PhoneNumberUtil.getInstance()
 
-  /**
-    * Unfortunately the country code map is not accessible in PhoneNumberUtil. This code uses reflection to obtain access
+  /** Unfortunately the country code map is not accessible in PhoneNumberUtil. This code uses reflection to obtain access
     * then transform it to the correct structure.
     */
   val countryCodes = {

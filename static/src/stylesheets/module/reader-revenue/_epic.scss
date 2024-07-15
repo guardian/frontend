@@ -15,7 +15,7 @@
     border-radius: 1000px;
 
     text-align: center;
-    margin-left: $gs-gutter / 4;
+    margin-left: $gs-gutter * 0.25;
     margin-right: 0;
     //This combines with the default height of the button to result in a
     //total button height of gs-gutter * 3
@@ -39,7 +39,7 @@
     font-weight: bold;
     margin-top: $gs-baseline;
     text-align: left;
-    padding-left: $gs-gutter * (3 / 4);;
+    padding-left: $gs-gutter * (3 * 0.25);
     padding-right: 0;
     margin-left: 0;
 
@@ -64,7 +64,7 @@
 .contributions__adblock {
     position: absolute;
     top: 6px;
-    padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline*0.5;
     width: 93%;
 
     .contributions__adblock-image {

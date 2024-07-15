@@ -5,8 +5,10 @@
     of the Guardian styles.
    ========================================================================== */
 
+@use "sass:math";
+
 .element-tweet {
-    margin: $gs-baseline 0 ($gs-baseline/3)*4;
+    margin: $gs-baseline 0 math.div($gs-baseline, 3)*4;
 }
 
 .tweet,
@@ -25,7 +27,7 @@
     font-style: normal;
 
     &:first-child {
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline*0.5;
     }
 
     @include mq(tablet) {

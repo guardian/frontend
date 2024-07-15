@@ -135,8 +135,8 @@ object BlockElement {
                 element.assets
                   .filter(_.mimeType.exists(_.startsWith("image")))
                   .zipWithIndex
-                  .map {
-                    case (a, i) => ImageAsset.make(a, i)
+                  .map { case (a, i) =>
+                    ImageAsset.make(a, i)
                   }
                   .toSeq,
               ),

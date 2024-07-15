@@ -53,30 +53,30 @@ trait DynamicContainerTest extends AnyFlatSpec with Matchers with ScalaCheckDriv
   it should "for any stories, respecting overflow, follow the same rules for the original slice, except for " +
     "that pesky HalfQuarterQl2Ql4B thing" in {
 
-    forAll { stories: Seq[Story] =>
-      val byGroup = Story.segmentByGroup(stories)
-      val largerStories = byGroup.getOrElse(3, Seq.empty) ++ byGroup.getOrElse(2, Seq.empty)
+      forAll { stories: Seq[Story] =>
+        val byGroup = Story.segmentByGroup(stories)
+        val largerStories = byGroup.getOrElse(3, Seq.empty) ++ byGroup.getOrElse(2, Seq.empty)
 
-      whenever(largerStories.nonEmpty) {
-        val smallerStories = stories.dropWhile(_.group >= 2)
+        whenever(largerStories.nonEmpty) {
+          val smallerStories = stories.dropWhile(_.group >= 2)
 
-        val overFlows = (if (byGroup.contains(3)) {
-                           byGroup(3).drop(1) ++ byGroup.getOrElse(2, Seq.empty)
-                         } else {
-                           byGroup.getOrElse(2, Seq.empty).drop(2)
-                         }).map(_.copy(group = 1))
+          val overFlows = (if (byGroup.contains(3)) {
+                             byGroup(3).drop(1) ++ byGroup.getOrElse(2, Seq.empty)
+                           } else {
+                             byGroup.getOrElse(2, Seq.empty).drop(2)
+                           }).map(_.copy(group = 1))
 
-        slicesFor(stories).value
-          .lift(1)
-          .map(xs =>
-            Seq(xs match {
-              case HalfQuarterQl2Ql4B => HalfQuarterQl2Ql4
-              case other              => other
-            }),
-          ) shouldEqual slicesFor(overFlows ++ smallerStories)
+          slicesFor(stories).value
+            .lift(1)
+            .map(xs =>
+              Seq(xs match {
+                case HalfQuarterQl2Ql4B => HalfQuarterQl2Ql4
+                case other              => other
+              }),
+            ) shouldEqual slicesFor(overFlows ++ smallerStories)
+        }
       }
     }
-  }
 
   it should "for 0 huge and n >= 2 very big, with 1st boosted, return ThreeQuarterQuarter as the optional 1st slice" in {
     forAll(storySeqGen(2)) { stories: Seq[Story] =>

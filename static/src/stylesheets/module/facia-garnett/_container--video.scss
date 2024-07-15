@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $video-width-desktop: 700px;
 
 .fc-container--video {
@@ -94,7 +96,7 @@ $video-width-desktop: 700px;
         }
 
         .fc-item__video-container .vjs-big-play-button {
-            top: (gs-height(3) - (get-line-height(textSans, 3) + 4px)) / 2;
+            top: (gs-height(3) - (get-line-height(textSans, 3) + 4px)) * 0.5;
         }
 
         .fc-item__video-fallback {
@@ -156,7 +158,7 @@ $video-width-desktop: 700px;
     margin: 0;
     font-size: 0; // to remove spacing between inline-blocked children
     white-space: nowrap;
-    padding-right: $gs-gutter / 2;
+    padding-right: $gs-gutter * 0.5;
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
     }
@@ -421,7 +423,7 @@ $video-width-desktop: 700px;
     vertical-align: top;
     width: 70%;
     background-color: $brightness-7;
-    margin-left: $gs-gutter / 2;
+    margin-left: $gs-gutter * 0.5;
     margin-bottom: $gs-baseline;
 
     @include mq(mobileLandscape) {
@@ -525,10 +527,10 @@ $video-width-desktop: 700px;
     display: none;
     @include mq(leftCol) {
         position: relative;
-        height: $video-width-desktop / 16 * 9;
+        height: math.div($video-width-desktop, 16) * 9;
         display: inline-block;
         width: gs-span(2) + $gs-gutter * 2;
-        padding: ($gs-baseline / 2) $gs-gutter;
+        padding: ($gs-baseline * 0.5) $gs-gutter;
         box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
@@ -569,10 +571,10 @@ $video-width-desktop: 700px;
 
     @include mq(leftCol) {
         position: relative;
-        height: $video-width-desktop / 16 * 9;
+        height: math.div($video-width-desktop, 16) * 9;
         display: inline-block;
         width: gs-span(2) + $gs-gutter * 2;
-        padding: ($gs-baseline / 2) $gs-gutter;
+        padding: ($gs-baseline * 0.5) $gs-gutter;
         box-sizing: border-box;
         margin-bottom: 0;
         white-space: normal;
@@ -616,7 +618,7 @@ $video-width-desktop: 700px;
     position: absolute;
     z-index: 2;
     white-space: normal;
-    padding: 0 $gs-gutter/4 $gs-baseline * 2;
+    padding: 0 $gs-gutter*0.25 $gs-baseline * 2;
     box-sizing: border-box;
     border-top: 1px solid $highlight-main;
     color: #ffffff;

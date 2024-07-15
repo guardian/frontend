@@ -6,11 +6,13 @@ x x x x x x x x x x x x x x x x x x x x x x x
 
  */
 
+@use "sass:math";
+
 @mixin fc-item--list-compact--media {
     @include fc-item--list-compact;
 
     // calculate image width
-    $media-ratio: 5 / 3;
+    $media-ratio: math.div(5, 3);
     $item-min-height: get-line-height(bodyHeading, 2) * 3;
     $image-width: $item-min-height * $media-ratio;
 

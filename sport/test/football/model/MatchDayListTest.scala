@@ -37,9 +37,8 @@ import play.api.test.FakeRequest
       }
 
       "should show all matches happening today" in {
-        matches.relevantMatches.foreach {
-          case (fMatch, _) =>
-            fMatch.date.toLocalDate should equal(today)
+        matches.relevantMatches.foreach { case (fMatch, _) =>
+          fMatch.date.toLocalDate should equal(today)
         }
       }
 
@@ -52,10 +51,9 @@ import play.api.test.FakeRequest
       }
 
       "matches should have the correct, populated, competition alongside" in {
-        matches.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            if (fMatch.id.toInt < 30) comp.id should equal("500")
-            else comp.id should equal("100")
+        matches.relevantMatches.foreach { case (fMatch, comp) =>
+          if (fMatch.id.toInt < 30) comp.id should equal("500")
+          else comp.id should equal("100")
         }
       }
     }

@@ -1,4 +1,4 @@
-import compile from '../../../compile-css.mjs';
+import { compileSass as compile } from '../../../compile-css.mjs';
 
 /** @type {import('listr2').ListrTask} */
 const task = {

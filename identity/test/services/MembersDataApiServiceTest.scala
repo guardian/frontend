@@ -75,14 +75,14 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
 
   "getUserContentAccess" should
     "return ContentAccess data for user with valid cookies" in {
-    when(wsResponseMock.json).thenReturn(Json.parse(validMdapiResponseJsonString))
-    when(wsResponseMock.status).thenReturn(200)
-    when(wsResponseMock.statusText).thenReturn("OK")
+      when(wsResponseMock.json).thenReturn(Json.parse(validMdapiResponseJsonString))
+      when(wsResponseMock.status).thenReturn(200)
+      when(wsResponseMock.statusText).thenReturn("OK")
 
-    val futureEither = MdapiService.getUserContentAccess(cookies)
-    futureEither map { either => either.isRight shouldBe true }
-    futureEither map { either => either.value shouldEqual ContentAccess(true, true, false, true, false, true) }
-  }
+      val futureEither = MdapiService.getUserContentAccess(cookies)
+      futureEither map { either => either.isRight shouldBe true }
+      futureEither map { either => either.value shouldEqual ContentAccess(true, true, false, true, false, true) }
+    }
 
   it should "return MdapiServiceException if unable to extract ContentAccess from json response" in {
     when(wsResponseMock.json).thenReturn(Json.parse(invalidMdapiResponseJsonString))
@@ -105,8 +105,8 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
 
   "ContentAccess.canProceedWithAutoDeletion" should
     "return true when all cases are false" in {
-    ContentAccess(false, false, false, false, false, false).canProceedWithAutoDeletion shouldBe true
-  }
+      ContentAccess(false, false, false, false, false, false).canProceedWithAutoDeletion shouldBe true
+    }
   it should "return false if any cases are true" in {
     ContentAccess(true, false, false, false, false, false).canProceedWithAutoDeletion shouldBe false
     ContentAccess(false, false, false, false, false, true).canProceedWithAutoDeletion shouldBe false
@@ -116,8 +116,8 @@ class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with Moc
 
   "ContentAccess.hasSubscription" should
     "return false when all cases are false" in {
-    ContentAccess(false, false, false, false, false, false).hasSubscription shouldBe false
-  }
+      ContentAccess(false, false, false, false, false, false).hasSubscription shouldBe false
+    }
   it should "return true if any cases are true" in {
     ContentAccess(false, false, false, true, true, true).hasSubscription shouldBe true
     ContentAccess(false, false, false, false, false, true).hasSubscription shouldBe true

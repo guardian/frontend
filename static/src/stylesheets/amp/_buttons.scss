@@ -11,7 +11,7 @@
 
 .cta--medium {
     height: $gs-row-height;
-    padding: 0 $gs-gutter / 2;
+    padding: 0 $gs-gutter * 0.5;
     line-height: $gs-row-height;
 }
 
@@ -98,7 +98,7 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        left: $gs-gutter / 2;
+        left: $gs-gutter * 0.5;
         margin: auto;
     }
 }

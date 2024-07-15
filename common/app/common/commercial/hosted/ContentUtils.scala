@@ -27,8 +27,8 @@ object ContentUtils {
 
   private def imageMedia(item: Content): ImageMedia =
     item.elements map { elements =>
-      val assets = elements.zipWithIndex flatMap {
-        case (element, i) => ModelElement(element, i).images.allImages
+      val assets = elements.zipWithIndex flatMap { case (element, i) =>
+        ModelElement(element, i).images.allImages
       }
       ImageMedia(assets.toSeq)
     } getOrElse ImageMedia(Nil)

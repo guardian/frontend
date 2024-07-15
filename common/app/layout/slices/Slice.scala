@@ -521,7 +521,8 @@ object HalfHl4 extends Slice {
   )
 }
 
-/*** VOLUME SLICES ***/
+/** * VOLUME SLICES **
+  */
 
 /* .__________________________.________.
  * |        ##################|########|
@@ -876,7 +877,8 @@ case object Fluid extends Slice {
   )
 }
 
-/*** LIST SLICES ***/
+/** * LIST SLICES **
+  */
 
 /* .___________.___________.___________.
  * |___________|___________|           |

@@ -39,8 +39,8 @@ trait FeedFetcher {
       } else {
         throw FetchException(response.status, response.statusText)
       }
-    } recoverWith {
-      case NonFatal(e) => Future.failed(e)
+    } recoverWith { case NonFatal(e) =>
+      Future.failed(e)
     }
   }
 }

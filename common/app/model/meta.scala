@@ -27,6 +27,7 @@ import scala.util.matching.Regex
 import utils.ShortUrls
 
 import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
+import model.ApiContent2Is
 
 object Commercial {
 
@@ -50,8 +51,7 @@ object Commercial {
 
 final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean)
 
-/**
-  * MetaData represents a page on the site, whether facia or content
+/** MetaData represents a page on the site, whether facia or content
   */
 object Fields {
   // This is the time from which journalists start using the reader revenue flag in Composer.
@@ -355,6 +355,9 @@ case class MetaData(
   def hasPageSkin(request: RequestHeader): Boolean =
     DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
 
+  def hasLiveBlogTopAd(request: RequestHeader): Boolean =
+    DfpAgent.hasLiveBlogTopAd(this, request)
+
   def omitMPUsFromContainers(edition: Edition): Boolean =
     if (isPressedPage) {
       DfpAgent.omitMPUsFromContainers(id, edition)
@@ -452,8 +455,7 @@ case class MetaData(
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
-  /**
-    * Content type, lowercased and with spaces removed.
+  /** Content type, lowercased and with spaces removed.
     */
   def normalisedContentType: String = StringUtils.remove(contentType.map(_.name.toLowerCase).getOrElse(""), ' ')
 }
@@ -590,8 +592,7 @@ object IsRatio {
 
 }
 
-/**
-  * ways to access/filter the elements that make up an entity on a facia page
+/** ways to access/filter the elements that make up an entity on a facia page
   *
   * designed to add some structure to the data that comes from CAPI
   */
@@ -765,8 +766,7 @@ object SubMetaLinks {
   }
 }
 
-/**
-  * Tags lets you extract meaning from tags on a page.
+/** Tags lets you extract meaning from tags on a page.
   */
 final case class Tags(tags: List[Tag]) {
 

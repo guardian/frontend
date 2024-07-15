@@ -93,9 +93,8 @@ object AssetMetricsCache extends GuLogging {
         log.info("Successfully refreshed Asset Metrics data")
         cache.send(cache.get() + (ReportTypes.sizeOfFiles -> metrics))
       }
-      .recover {
-        case NonFatal(e) =>
-          log.error("Error refreshing Asset Metrics data", e)
+      .recover { case NonFatal(e) =>
+        log.error("Error refreshing Asset Metrics data", e)
       }
   }
 

@@ -35,8 +35,8 @@ class DeeplyReadLifecycle(
     descheduleAll()
 
     jobs.scheduleEveryNMinutes("DeeplyReadAgentsHighFrequencyRefreshJob", 5) {
-      deeplyReadAgent.refresh().recover {
-        case e => log.error(s"Failed to refresh with, ${e.getMessage()}")
+      deeplyReadAgent.refresh().recover { case e =>
+        log.error(s"Failed to refresh with, ${e.getMessage()}")
       }
 
     }

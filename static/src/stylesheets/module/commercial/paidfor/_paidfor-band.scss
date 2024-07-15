@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .paidfor-band {
     background: $labs-main;
     width: 100%;
@@ -34,7 +36,7 @@
 
     .paidfor-meta__label,
     .paidfor-meta__more > .popup__toggle {
-        padding: $gs-baseline / 3 $gs-gutter / 2;
+        padding: math.div($gs-baseline, 3) $gs-gutter * 0.5;
     }
 
     .paidfor-meta__label {
@@ -55,7 +57,7 @@
     }
 
     .inline-glabs-logo__svg {
-        margin-top: $gs-baseline / 4;
+        margin-top: $gs-baseline * 0.25;
         margin-right: $gs-column-width * 2;
 
         @include mq(desktop) {

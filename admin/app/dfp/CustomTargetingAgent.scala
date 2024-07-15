@@ -25,24 +25,23 @@ class CustomTargetingAgent(val blockingOperations: BlockingOperations)
         val valuesByKey: Map[Long, Seq[CustomTargetingValue]] =
           session.customTargetingValues(statementWithIds).groupBy { _.getCustomTargetingKeyId.longValue }
 
-        valuesByKey flatMap {
-          case (keyId: Long, values: Seq[CustomTargetingValue]) =>
-            keys.get(keyId) map { key =>
-              val guValues: Seq[GuCustomTargetingValue] = values map { value =>
-                GuCustomTargetingValue(
-                  id = value.getId.longValue,
-                  name = value.getName,
-                  displayName = value.getDisplayName,
-                )
-              }
-
-              keyId -> GuCustomTargeting(
-                keyId = keyId,
-                name = key.getName,
-                displayName = key.getDisplayName,
-                values = guValues,
+        valuesByKey flatMap { case (keyId: Long, values: Seq[CustomTargetingValue]) =>
+          keys.get(keyId) map { key =>
+            val guValues: Seq[GuCustomTargetingValue] = values map { value =>
+              GuCustomTargetingValue(
+                id = value.getId.longValue,
+                name = value.getName,
+                displayName = value.getDisplayName,
               )
             }
+
+            keyId -> GuCustomTargeting(
+              keyId = keyId,
+              name = key.getName,
+              displayName = key.getDisplayName,
+              values = guValues,
+            )
+          }
         }
       }
 

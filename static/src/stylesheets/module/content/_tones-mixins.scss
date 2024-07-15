@@ -84,7 +84,7 @@
         .tonal__standfirst {
             color: $tonal__standfirst-text;
             background-color: $tonal__standfirst-background;
-            padding-top: $gs-baseline / 2;
+            padding-top: $gs-baseline * 0.5;
 
             .content__standfirst {
                 color: $tonal__standfirst-text;
