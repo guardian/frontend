@@ -795,9 +795,9 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
 
     for (container <- containersForCommercialMPUs) {
       container.after(s"""<section class="fc-container__mpu--mobile">${sliceSlot(
-        containersForCommercialMPUs.indexOf(container),
-        isMobile = true,
-      )}</section>""")
+          containersForCommercialMPUs.indexOf(container),
+          isMobile = true,
+        )}</section>""")
     }
 
     // On desktop, a MPU slot is simply inserted when there is a slice available

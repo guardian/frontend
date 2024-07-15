@@ -47,7 +47,7 @@ trait Football {
     def isOn(date: LocalDate): Boolean =
       m.date.toLocalDate.isAfter(date) && m.date.toLocalDate.isBefore(date.plusDays(1))
 
-    //results and fixtures do not actually have a status field in the API
+    // results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
       case f: Fixture   => "Fixture"
       case l: LiveMatch => l.status
@@ -141,7 +141,7 @@ trait Football {
       "64643",
       "64644",
       "64645",
-      "64646", //semi final
+      "64646", // semi final
       "64647",
       "64648", // 3rd place playoff
       "64649",

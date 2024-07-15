@@ -55,7 +55,7 @@ class ContentTest
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      //mediaAssets = media,
+      // mediaAssets = media,
       tags = List(tag("type/article")),
       elements = Some(elements),
     )

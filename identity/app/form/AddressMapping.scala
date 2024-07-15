@@ -14,7 +14,8 @@ trait AddressMapping extends Mappings {
 
   private def idAddressLine(implicit messagesProvider: MessagesProvider): Mapping[String] =
     textField verifying (
-      Messages("error.address"), { value => value.isEmpty || value.forall(isValidAddressChar) }
+      Messages("error.address"),
+      { value => value.isEmpty || value.forall(isValidAddressChar) },
     )
 
   def idAddress(implicit messagesProvider: MessagesProvider): Mapping[AddressFormData] =

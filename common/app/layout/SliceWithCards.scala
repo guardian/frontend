@@ -65,8 +65,8 @@ object SliceWithCards {
     )
   }
 
-  /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new
-    * context for creating further cards.
+  /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new context for
+    * creating further cards.
     */
   def fromItems(
       items: Seq[IndexedTrail],

@@ -429,7 +429,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = bodyBlocks,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
-      storyPackage = getStoryPackage(page.related.faciaItems, request), //todo
+      storyPackage = getStoryPackage(page.related.faciaItems, request), // todo
       pinnedPost = pinnedPost,
       keyEvents = timelineBlocks,
       filterKeyEvents = filterKeyEvents,

@@ -15,11 +15,8 @@ import scala.util.{Failure, Success, Try}
   *
   * This class pull the assets map regularly and translates a generic name into a full URL
   *
-  * The map is a JSON object looking like
-  * {
-  *   "name": "js/name.min.hash.js"
-  * }
-  * The path in the object value is relative to the assets map
+  * The map is a JSON object looking like { "name": "js/name.min.hash.js" } The path in the object value is relative to
+  * the assets map
   */
 class DiscussionExternalAssetsLifecycle(
     config: GuardianConfiguration,

@@ -246,10 +246,10 @@ object DotcomRenderingUtils {
     val contentHtml = Jsoup.parse(content.fields.body)
     val bodyElements = contentHtml.select("body").first().children()
 
-    /** On smaller devices, the disclaimer is inserted before paragraph 2 of the article body and floats left.
-      * This logic ensures there are two clear paragraphs of text at the top of the article.
-      * We don't support inserting the disclaimer next to other element types.
-      * It also ensures the second paragraph is long enough to accommodate the disclaimer appearing alongside it.
+    /** On smaller devices, the disclaimer is inserted before paragraph 2 of the article body and floats left. This
+      * logic ensures there are two clear paragraphs of text at the top of the article. We don't support inserting the
+      * disclaimer next to other element types. It also ensures the second paragraph is long enough to accommodate the
+      * disclaimer appearing alongside it.
       */
     if (bodyElements.size >= 2) {
       val firstEl = bodyElements.get(0)

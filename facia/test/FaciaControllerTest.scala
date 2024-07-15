@@ -96,7 +96,7 @@ import scala.concurrent.{Await, Future}
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
-    val result = faciaController.renderFront("does-not-exist")(TestRequest()) //Film is actually a facia front ON PROD
+    val result = faciaController.renderFront("does-not-exist")(TestRequest()) // Film is actually a facia front ON PROD
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be(Some("/applications/does-not-exist"))
   }

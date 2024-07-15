@@ -6,8 +6,8 @@ import com.gu.facia.api.utils.{TagKicker => FapiTagKicker}
 
 object FlagshipEmailContainer extends FlagshipContainer {
   override val containerIds = Seq(
-    "97f86ba7-4f14-43ec-bfb2-e149019b70f6", //PROD
-    "7050d39f-7e84-4894-a69d-449c359b9d54", //CODE
+    "97f86ba7-4f14-43ec-bfb2-e149019b70f6", // PROD
+    "7050d39f-7e84-4894-a69d-449c359b9d54", // CODE
   )
 
   override val switch = FlagshipEmailContainerSwitch

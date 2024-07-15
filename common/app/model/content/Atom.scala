@@ -183,7 +183,7 @@ final case class MediaAtom(
       val oneHour = new Duration(Duration.standardHours(1))
       val durationPattern = if (jodaDuration.isShorterThan(oneHour)) "mm:ss" else "HH:mm:ss"
       val formattedDuration = DurationFormatUtils.formatDuration(jodaDuration.getMillis, durationPattern, true)
-      "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
+      "^0".r.replaceFirstIn(formattedDuration, "") // strip leading zero
     }
   }
 }

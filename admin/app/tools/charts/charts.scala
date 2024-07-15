@@ -53,7 +53,7 @@ class ChartTable(private val labels: Seq[String]) {
 
 trait Chart[K] {
 
-  //used in html as element id
+  // used in html as element id
   lazy val id = UUID.randomUUID().toString
 
   def name: String

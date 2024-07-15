@@ -64,7 +64,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
       form.refViewId.map("refViewId" -> _).toList ++
       form.listName.map("listName" -> _).toList
 
-    //FIXME: this should go via the identity api client / app
+    // FIXME: this should go via the identity api client / app
     wsClient
       .url(consentMailerUrl)
       .withQueryStringParameters(queryStringParameters: _*)

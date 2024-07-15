@@ -385,7 +385,7 @@ object NavLinks {
     ),
   )
 
-  //Sport Pillar
+  // Sport Pillar
   val ukSportPillar = NavLink(
     "Sport",
     "/sport",

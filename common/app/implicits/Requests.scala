@@ -95,7 +95,7 @@ trait Requests {
 
     lazy val rawQueryStringOption: Option[String] = if (r.rawQueryString.nonEmpty) Some(r.rawQueryString) else None
 
-    //This is a header reliably set by jQuery for AJAX requests used in facia-tool
+    // This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
 
     lazy val isCrosswordFront: Boolean = r.path.endsWith("/crosswords")

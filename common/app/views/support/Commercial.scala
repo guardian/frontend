@@ -163,16 +163,18 @@ object Commercial {
     def numberOfItems(container: FaciaContainer): Int =
       container.containerLayout
         .map {
-          _.slices.flatMap {
-            _.columns.flatMap { case ColumnAndCards(_, cards) =>
-              cards.flatMap {
-                _.item match {
-                  case card: ContentCard => Some(card)
-                  case _                 => None
+          _.slices
+            .flatMap {
+              _.columns.flatMap { case ColumnAndCards(_, cards) =>
+                cards.flatMap {
+                  _.item match {
+                    case card: ContentCard => Some(card)
+                    case _                 => None
+                  }
                 }
               }
             }
-          }.length
+            .length
         }
         .getOrElse(0)
 
