@@ -3930,7 +3930,7 @@ __metadata:
     "@guardian/source-react-components": "npm:22.1.0"
     "@guardian/source-react-components-development-kitchen": "npm:19.0.0"
     "@guardian/support-dotcom-components": "npm:1.1.3"
-    "@types/googletag": "npm:^1.1.3"
+    "@types/googletag": "npm:^3.1.3"
     "@types/jest": "npm:29.5.12"
     "@types/lodash-es": "npm:^4.17.4"
     "@types/webpack-env": "npm:^1.16.2"
@@ -5480,10 +5480,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/googletag@npm:^1.1.3":
-  version: 1.2.3
-  resolution: "@types/googletag@npm:1.2.3"
-  checksum: 10c0/90acd51e382b8a04da6829aad340dd966687ee8cd6209f0210867d94d4c087f43ce8c7512358045f91a968093c8313461cb3e0aa5834c00a0207f9ca640596ee
+"@types/googletag@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "@types/googletag@npm:3.1.3"
+  checksum: 10c0/56a64143b71503a06ea7ab9308ea6f70e0c4ad7162cc2a0794c66426f767463e83f1b21b0a8cae28f0be6a678335e18320ae24fba41a8f0a352cb99516e70ff6
   languageName: node
   linkType: hard
 
