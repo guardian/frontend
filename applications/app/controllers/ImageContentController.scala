@@ -23,6 +23,7 @@ import com.gu.contentapi.client.model.Direction.Previous
 import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import scala.concurrent.Future
 import scala.util.Try
+import java.time.format.DateTimeFormatter
 
 class ImageContentController(
     val contentApiClient: ContentApiClient,
@@ -103,7 +104,7 @@ class ImageContentController(
       /** unfortunately we have to infer the date from the path, because getting the real publication date would require
         * another call to the content API…
         */
-      val maybeDate = path match {
+      val date = (path match {
         case dateExtractor(rawYear, rawMonth, rawDate) => {
           (Try(rawYear.toInt).toOption, rawMonth, Try(rawDate.toInt).toOption) match {
             case (Some(year), "jan", Some(day)) => Some(LocalDate.of(year, 1, day))
@@ -122,16 +123,15 @@ class ImageContentController(
           }
         }
         case _ => None
-      }
+      })
+      val instant = date.map(LocalDateTime.of(_, LocalTime.MIDNIGHT).toInstant(ZoneOffset.UTC))
       val query =
         SearchQuery().tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize);
 
       val capiQuery = FollowingSearchQuery(
-        (direction, maybeDate) match {
-          case (Previous, Some(date)) =>
-            query.fromDate(LocalDateTime.of(date, LocalTime.MIDNIGHT).toInstant(ZoneOffset.UTC))
-          case (Next, Some(date)) => query.toDate(LocalDateTime.of(date, LocalTime.MIDNIGHT).toInstant(ZoneOffset.UTC))
-          case _                  => query
+        direction match {
+          case Previous => query.fromDate(instant)
+          case Next     => query.toDate(instant)
         },
         path,
         direction,
@@ -156,7 +156,7 @@ class ImageContentController(
               Json.obj(
                 "total" -> response.total,
                 "direction" -> timeDirection,
-                "date" -> maybeDate,
+                "date" -> date,
                 "images" -> JsArray(lightboxJson),
               ),
             ),
