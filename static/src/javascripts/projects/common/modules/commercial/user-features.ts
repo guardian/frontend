@@ -1,5 +1,4 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
-import type { HeaderPayload } from '@guardian/support-dotcom-components/dist/dotcom/src/types';
 import { noop } from 'lib/noop';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
@@ -378,25 +377,6 @@ const extendContribsCookieExpiry = (): void => {
 	}
 };
 
-type PurchaseInfo = HeaderPayload['targeting']['purchaseInfo'];
-const getPurchaseInfo = (): PurchaseInfo => {
-	const purchaseInfoRaw = getCookie({ name: 'GU_CO_COMPLETE' });
-
-	if (!purchaseInfoRaw) {
-		return undefined;
-	}
-
-	let purchaseInfo: PurchaseInfo = undefined;
-
-	try {
-		purchaseInfo = JSON.parse(
-			decodeURIComponent(purchaseInfoRaw),
-		) as PurchaseInfo;
-	} catch {} // eslint-disable-line no-empty -- silently handle error
-
-	return purchaseInfo;
-};
-
 const _ = {
 	isRecentOneOffContributor,
 	isDigitalSubscriber,
@@ -417,7 +397,6 @@ export {
 	getLastOneOffContributionTimestamp,
 	getLastOneOffContributionDate,
 	getLastRecurringContributionDate,
-	getPurchaseInfo,
 	readerRevenueRelevantCookies,
 	fakeOneOffContributor,
 	extendContribsCookieExpiry,
