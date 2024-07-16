@@ -34,7 +34,7 @@
 		"@guardian/identity-auth": "2.1.0",
 		"@guardian/identity-auth-frontend": "4.0.0",
 		"@guardian/libs": "17.0.1",
-		"@guardian/prettier": "^3.0.0",
+		"@guardian/prettier": "^8.0.1",
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "14.2.2",
 		"@guardian/source-react-components": "22.1.0",
