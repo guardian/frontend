@@ -4021,7 +4021,7 @@ __metadata:
     fsevents: "npm:^2.3.2"
     glob: "npm:^7.2.0"
     gzip-size: "npm:^3.0.0"
-    hasha: "npm:^3.0.0"
+    hasha: "npm:^6.0.0"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
     jest-environment-jsdom-global: "npm:4.0.0"
@@ -10725,12 +10725,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hasha@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "hasha@npm:3.0.0"
+"hasha@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "hasha@npm:6.0.0"
   dependencies:
-    is-stream: "npm:^1.0.1"
-  checksum: 10c0/6412d08e8bb165b0616a27dbe34476162af8469de3a0d75b02aa2f2f78634b92650fcc31c6dcf6d9b76df71323df8c37befb4c1e42a367f08fbd1f0c04ae5a26
+    is-stream: "npm:^3.0.0"
+    type-fest: "npm:^4.7.1"
+  checksum: 10c0/af6f324c60b65bc3b293ac27e2719a29d0c996b0f443a202e6fadf0497e7e28c30b5a61740b9e40af6d386cdd9660ee2b242090954506c3abd140476abf890d0
   languageName: node
   linkType: hard
 
@@ -11512,7 +11513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-stream@npm:^1.0.1, is-stream@npm:^1.1.0":
+"is-stream@npm:^1.1.0":
   version: 1.1.0
   resolution: "is-stream@npm:1.1.0"
   checksum: 10c0/b8ae7971e78d2e8488d15f804229c6eed7ed36a28f8807a1815938771f4adff0e705218b7dab968270433f67103e4fef98062a0beea55d64835f705ee72c7002
@@ -11523,6 +11524,13 @@ __metadata:
   version: 2.0.1
   resolution: "is-stream@npm:2.0.1"
   checksum: 10c0/7c284241313fc6efc329b8d7f08e16c0efeb6baab1b4cd0ba579eb78e5af1aa5da11e68559896a2067cd6c526bd29241dda4eb1225e627d5aa1a89a76d4635a5
+  languageName: node
+  linkType: hard
+
+"is-stream@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "is-stream@npm:3.0.0"
+  checksum: 10c0/eb2f7127af02ee9aa2a0237b730e47ac2de0d4e76a4a905a50a11557f2339df5765eaea4ceb8029f1efa978586abe776908720bfcb1900c20c6ec5145f6f29d8
   languageName: node
   linkType: hard
 
@@ -16740,6 +16748,13 @@ __metadata:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: 10c0/dffbb99329da2aa840f506d376c863bd55f5636f4741ad6e65e82f5ce47e6914108f44f340a0b74009b0cb5d09d6752ae83203e53e98b1192cf80ecee5651636
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.7.1":
+  version: 4.21.0
+  resolution: "type-fest@npm:4.21.0"
+  checksum: 10c0/60c09995336ea15a405caa76a9ad9238e7ea324d945519880c560e4ee0845479889c45a51810ca81b0f37abd46229a06d2e17ab9b12d1a5cbe335af56819c92b
   languageName: node
   linkType: hard
 
