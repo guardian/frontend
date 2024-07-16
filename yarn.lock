@@ -3809,16 +3809,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/ab-core@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@guardian/ab-core@npm:7.0.1"
+"@guardian/ab-core@npm:8.0.0":
+  version: 8.0.0
+  resolution: "@guardian/ab-core@npm:8.0.0"
   peerDependencies:
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/803ac0098237db30a65bdbc99e0417e2accefb8b114d2a5ace1d8103a2f98c1ec049355e54fcfe9e3e9176ec107517aa2ee59e4aea3a99ae568bc4f03b2698ac
+  checksum: 10c0/3eed4590aec371ad93fe45450d8cc0dd0ad6ab298c2d64afff05ab5d8f2cbbb949ac43343a895e83656bdbf529f31bc6ef6935c7719849fd3209094168535547
   languageName: node
   linkType: hard
 
@@ -3917,7 +3917,7 @@ __metadata:
     "@emotion/core": "npm:^10.0.27"
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
-    "@guardian/ab-core": "npm:7.0.1"
+    "@guardian/ab-core": "npm:8.0.0"
     "@guardian/commercial": "npm:19.12.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"

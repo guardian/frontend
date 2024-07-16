@@ -27,7 +27,7 @@
 		"@emotion/core": "^10.0.27",
 		"@emotion/react": "11.11.1",
 		"@emotion/styled": "^10.0.27",
-		"@guardian/ab-core": "7.0.1",
+		"@guardian/ab-core": "8.0.0",
 		"@guardian/commercial": "19.12.0",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/eslint-config-typescript": "9.0.1",
