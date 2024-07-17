@@ -355,8 +355,8 @@ case class MetaData(
   def hasPageSkin(request: RequestHeader): Boolean =
     DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
 
-  def hasLiveBlogTopAd(request: RequestHeader): Boolean =
-    DfpAgent.hasLiveBlogTopAd(this, request)
+  def hasLiveBlogTopAd(request: RequestHeader, content: Option[Content]): Boolean =
+    DfpAgent.hasLiveBlogTopAd(this, content.map(_.tags.tags).getOrElse(Seq.empty), request)
 
   def omitMPUsFromContainers(edition: Edition): Boolean =
     if (isPressedPage) {
