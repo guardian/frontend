@@ -20,7 +20,7 @@ object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
   val usElections2024 = NavLink("US elections 2024", "/us-news/us-elections-2024")
-  val trumpTrials = NavLink("Donald Trump trials", "/us-news/donald-trump-trials")
+  val RNCConvention = NavLink("RNC Convention", "/us-news/republican-national-convention-2024")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -109,7 +109,9 @@ object NavLinks {
   val letters = NavLink("Letters", "/tone/letters")
 
   /* SPORT */
+
   private val euro2024 = NavLink("Euro 2024", "/football/euro-2024")
+  private val olympics2024 = NavLink("Olympics 2024", "/sport/olympic-games-2024")
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -315,7 +317,7 @@ object NavLinks {
     List(
       usNews,
       usElections2024,
-      trumpTrials,
+      RNCConvention,
       world,
       usEnvironment,
       ukraine,
@@ -392,7 +394,7 @@ object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
-      euro2024,
+      olympics2024,
       football,
       cricket,
       rugbyUnion,
@@ -408,7 +410,7 @@ object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      euro2024,
+      olympics2024,
       football,
       AFL,
       NRL,
@@ -422,7 +424,7 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      euro2024,
+      olympics2024,
       usSoccer,
       NFL,
       tennis,
@@ -436,7 +438,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      euro2024,
+      olympics2024,
       football,
       cricket,
       rugbyUnion,
