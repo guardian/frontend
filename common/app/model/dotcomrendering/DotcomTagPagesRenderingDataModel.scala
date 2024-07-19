@@ -63,6 +63,7 @@ object DotcomTagPagesRenderingDataModel {
         "pageFooter" -> model.pageFooter,
         "isAdFreeUser" -> model.isAdFreeUser,
         "canonicalUrl" -> model.canonicalUrl,
+        "contributionsServiceUrl" -> model.contributionsServiceUrl,
       )
     }
   }
