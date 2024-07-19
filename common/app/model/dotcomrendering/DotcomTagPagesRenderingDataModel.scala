@@ -35,6 +35,7 @@ case class DotcomTagPagesRenderingDataModel(
     pageFooter: PageFooter,
     isAdFreeUser: Boolean,
     canonicalUrl: String,
+    contributionsServiceUrl: String,
 )
 
 object DotcomTagPagesRenderingDataModel {
@@ -126,6 +127,7 @@ object DotcomTagPagesRenderingDataModel {
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      contributionsServiceUrl = Configuration.contributionsService.url,
     )
   }
 
