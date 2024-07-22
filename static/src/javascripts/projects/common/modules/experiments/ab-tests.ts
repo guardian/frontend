@@ -1,5 +1,6 @@
 import type { ABTest } from '@guardian/ab-core';
 import { mpuWhenNoEpic } from './tests/mpu-when-no-epic';
+import { prebidMagnite } from './tests/prebid-magnite';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
 import { signInGateMainVariant } from './tests/sign-in-gate-main-variant';
@@ -13,4 +14,5 @@ export const concurrentTests: readonly ABTest[] = [
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
 	stickyLiveBlogAskTest,
+	prebidMagnite
 ];

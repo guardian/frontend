@@ -3860,30 +3860,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:19.13.0":
-  version: 19.13.0
-  resolution: "@guardian/commercial@npm:19.13.0"
+"@guardian/commercial@npm:0.0.0-beta-20240723112208":
+  version: 0.0.0-beta-20240723112208
+  resolution: "@guardian/commercial@npm:0.0.0-beta-20240723112208"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/ophan-tracker-js": "npm:2.1.1"
-    "@guardian/prebid.js": "npm:8.52.0"
+    "@guardian/prebid.js": "npm:8.52.0-1"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
     process: "npm:^0.11.10"
     raven-js: "npm:^3.27.2"
     tslib: "npm:^2.6.2"
-    web-vitals: "npm:^3.3.2"
+    web-vitals: "npm:^4.2.1"
     wolfy87-eventemitter: "npm:^5.2.9"
   peerDependencies:
-    "@guardian/ab-core": ^7.0.1
-    "@guardian/core-web-vitals": ^6.0.0
-    "@guardian/identity-auth": ^2.1.0
-    "@guardian/identity-auth-frontend": ^4.0.0
-    "@guardian/libs": ^17.0.0
-    "@guardian/source-foundations": ^14.1.2
-    typescript: ~5.3.3
-  checksum: 10c0/836739ff046e679c8dd44fded6428a54fc928721e9e1c5395fe8a4274cd5e0331f5a10634f9235f9e3c8109bf14b806955bd1b6ff835c250127b6477ab87a042
+    "@guardian/ab-core": ^8.0.0
+    "@guardian/core-web-vitals": ^7.0.0
+    "@guardian/identity-auth": ^3.0.0
+    "@guardian/identity-auth-frontend": ^5.0.0
+    "@guardian/libs": ^18.0.0
+    "@guardian/source": ^6.0.0
+    typescript: ~5.5.3
+  checksum: 10c0/7ccce59a8d73843931def3be67f0180cb6e819e7afde34a7f670003fda7674b2b28a4497d1f50892da2054c69c561bb058c834f19a6562d8ac5535d19a61170c
   languageName: node
   linkType: hard
 
@@ -3956,7 +3956,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:19.13.0"
+    "@guardian/commercial": "npm:0.0.0-beta-20240723112208"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:2.1.0"
@@ -4151,9 +4151,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/prebid.js@npm:8.52.0":
-  version: 8.52.0
-  resolution: "@guardian/prebid.js@npm:8.52.0"
+"@guardian/prebid.js@npm:8.52.0-1":
+  version: 8.52.0-1
+  resolution: "@guardian/prebid.js@npm:8.52.0-1"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
@@ -4175,7 +4175,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/c2a06714287addabec1605c065db44b8255799a0f2a562efbb201e566bea99a624ffdd948c7a9db090df45d8bbc8a109a5dc28762a045ef149b2e385982a6ae9
+  checksum: 10c0/dd9baf7ecc2743b3948a631a474953be027abd8a436c52ad6a952545baeab159667fb9fdea512ad475a607324f481123f9a81a1065bea44350931d1f6037d70a
   languageName: node
   linkType: hard
 
@@ -17429,10 +17429,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:3.5.1, web-vitals@npm:^3.3.2":
+"web-vitals@npm:3.5.1":
   version: 3.5.1
   resolution: "web-vitals@npm:3.5.1"
   checksum: 10c0/2b0239241b40e491aa048fac67191ba50cbc5b9d4a859166455d751d12c33399b70579dd3bf5639c37d32421459ce0f64de69307f4f2adae43c0f6b23010849c
+  languageName: node
+  linkType: hard
+
+"web-vitals@npm:^4.2.1":
+  version: 4.2.2
+  resolution: "web-vitals@npm:4.2.2"
+  checksum: 10c0/0e41d016a80d8f48e00c95f3d8405a4cb8c6a12a83ac6677ce49447c85ca6fb2325f40915ae5460bb59f07d1b7d65b66b8b42ea50135594ae7dc892453775004
   languageName: node
   linkType: hard
 
