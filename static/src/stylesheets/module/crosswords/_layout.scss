@@ -4,10 +4,10 @@
     @return $cells * ($xword-cell-width + $xword-border-width) + $xword-border-width;
 }
 
-@each $xword, $cells in $xword-grid-sizes {
+@each $cells in $xword-cell-sizes {
     $size: xword-grid-dimensions($cells);
 
-    .crossword__container--#{$xword} {
+    .crossword__container--#{$cells}cell {
         @include mq(tablet) {
             padding-left: $size;
 
