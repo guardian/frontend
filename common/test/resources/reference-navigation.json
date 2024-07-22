@@ -1019,12 +1019,6 @@
 					"classList": []
 				},
 				{
-					"title": "RNC Convention",
-					"url": "/us-news/republican-national-convention-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "World",
 					"url": "/world",
 					"longTitle": "World news",
@@ -1128,6 +1122,12 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
