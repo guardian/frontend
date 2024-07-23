@@ -472,6 +472,11 @@ case object HeadlinesEurope extends FrontEmailMetadata {
   override val banner = Some("headlines-eur.png")
 }
 
+case object OlympicAndParalympicBriefing extends FrontEmailMetadata {
+  val name = "Olympic and Paralympic briefing"
+  override val banner = Some("paris-2024-olympics.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -561,6 +566,7 @@ object EmailAddons {
     Documentaries,
     AustraliasModernOutback,
     HeadlinesEurope,
+    OlympicAndParalympicBriefing,
   )
 
   implicit class EmailContentType(p: Page) {
