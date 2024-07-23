@@ -108,12 +108,14 @@ import play.api.test.Helpers._
 
   it should "correctly serve all pages for `default editionalised sections` in the International edition" in {
     val result =
-      allIndexController.all("commentisfree")(TestRequest("/commentisfree/all").withHeaders("X-Gu-Edition" -> "INT"))
+      allIndexController.all("commentisfree")(
+        TestRequest("/commentisfree/all?dcr=false").withHeaders("X-Gu-Edition" -> "INT"),
+      )
     status(result) should be(OK)
   }
 
   it should "correctly parse the date" in {
-    //this would only error in UTC
+    // this would only error in UTC
     val oldTimezone = DateTimeZone.getDefault
     DateTimeZone.setDefault(DateTimeZone.UTC)
     try {

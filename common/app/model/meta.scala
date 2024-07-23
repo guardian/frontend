@@ -27,6 +27,7 @@ import scala.util.matching.Regex
 import utils.ShortUrls
 
 import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
+import model.ApiContent2Is
 
 object Commercial {
 
@@ -50,8 +51,7 @@ object Commercial {
 
 final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean)
 
-/**
-  * MetaData represents a page on the site, whether facia or content
+/** MetaData represents a page on the site, whether facia or content
   */
 object Fields {
   // This is the time from which journalists start using the reader revenue flag in Composer.
@@ -355,6 +355,9 @@ case class MetaData(
   def hasPageSkin(request: RequestHeader): Boolean =
     DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
 
+  def hasLiveBlogTopAd(request: RequestHeader, content: Option[Content]): Boolean =
+    DfpAgent.hasLiveBlogTopAd(this, content.map(_.tags.tags).getOrElse(Seq.empty), request)
+
   def omitMPUsFromContainers(edition: Edition): Boolean =
     if (isPressedPage) {
       DfpAgent.omitMPUsFromContainers(id, edition)
@@ -420,7 +423,7 @@ case class MetaData(
         "al:ios:url" -> s"gnmguardian://$iosId",
         "al:ios:app_store_id" -> "409128287",
         "al:ios:app_name" -> "The Guardian",
-      ),
+      )
     ) getOrElse Nil)
   }
 
@@ -435,7 +438,7 @@ case class MetaData(
         "twitter:app:url:ipad" -> s"gnmguardian://$iosId",
         "twitter:app:name:googleplay" -> "The Guardian",
         "twitter:app:id:googleplay" -> "com.guardian",
-      ),
+      )
     ) getOrElse Nil)
 
   def linkedData: List[LinkedData] =
@@ -452,9 +455,7 @@ case class MetaData(
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
-  /**
-    * Content type, lowercased and with spaces removed.
-    * This is used for Google Analytics, to be consistent with what the mobile apps do.
+  /** Content type, lowercased and with spaces removed.
     */
   def normalisedContentType: String = StringUtils.remove(contentType.map(_.name.toLowerCase).getOrElse(""), ' ')
 }
@@ -570,7 +571,7 @@ case class TagCombiner(
     pagination = pagination,
     description = Some(DotcomContentType.TagIndex.name),
     commercial = Some(
-      //We only use the left tag for CommercialProperties
+      // We only use the left tag for CommercialProperties
       CommercialProperties(
         editionBrandings = leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Set.empty),
         editionAdTargetings = leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Set.empty),
@@ -591,8 +592,7 @@ object IsRatio {
 
 }
 
-/**
-  * ways to access/filter the elements that make up an entity on a facia page
+/** ways to access/filter the elements that make up an entity on a facia page
   *
   * designed to add some structure to the data that comes from CAPI
   */
@@ -766,8 +766,7 @@ object SubMetaLinks {
   }
 }
 
-/**
-  * Tags lets you extract meaning from tags on a page.
+/** Tags lets you extract meaning from tags on a page.
   */
 final case class Tags(tags: List[Tag]) {
 
@@ -858,7 +857,7 @@ final case class Tags(tags: List[Tag]) {
   lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id == "environment/series/keep-it-in-the-ground")
   lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/guardian-print-shop")
   lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
-  //this is for the immersive header to access this info
+  // this is for the immersive header to access this info
   lazy val isPaidContent: Boolean = tags.exists(t => t.id == "tone/advertisement-features")
 
   lazy val isPolitics: Boolean = tags.exists(t => t.id == "politics/politics")

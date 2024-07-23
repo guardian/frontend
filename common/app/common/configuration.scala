@@ -46,16 +46,12 @@ object Environment extends GuLogging {
   )
 }
 
-/**
-  * Main configuration
+/** Main configuration
   *
-  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
-  * or `~/.gu/frontend.conf` file under a `devOverrides` key. E.g:
+  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf` or `~/.gu/frontend.conf` file under a
+  * `devOverrides` key. E.g:
   *
-  *   devOverrides {
-  *     switches.key=DEV/config/switches-yournamehere.properties
-  *     facia.stage=CODE
-  *   }
+  * devOverrides { switches.key=DEV/config/switches-yournamehere.properties facia.stage=CODE }
   */
 object GuardianConfiguration extends GuLogging {
 
@@ -76,8 +72,8 @@ object GuardianConfiguration extends GuLogging {
 
   private def configFromParameterStore(path: String): Config = {
     val params = parameterStore.getPath(path)
-    val configMap = params.map {
-      case (key, value) => key.replaceFirst(s"$path/", "") -> value
+    val configMap = params.map { case (key, value) =>
+      key.replaceFirst(s"$path/", "") -> value
     }
     ConfigFactory.parseMap(configMap.asJava)
   }
@@ -236,7 +232,7 @@ class GuardianConfiguration extends GuLogging {
         MILLISECONDS,
       )
 
-    //Cross account credentials for capi preview
+    // Cross account credentials for capi preview
     lazy val capiPreviewRoleToAssume: Option[String] =
       configuration.getStringProperty("content.api.preview.roleToAssume")
 
@@ -500,6 +496,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
+    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
     lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
@@ -565,8 +562,8 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
-      keys.foldLeft(Map.empty[String, String]) {
-        case (map, key) => map + (key -> configuration.getMandatoryStringProperty(key))
+      keys.foldLeft(Map.empty[String, String]) { case (map, key) =>
+        map + (key -> configuration.getMandatoryStringProperty(key))
       }
     }
   }
@@ -657,8 +654,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val frontendStoreBucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val topMentionsStoreBucket =
       configuration.getStringProperty("aws.topMentions.bucket")
-    lazy val messageUsStoreBucket =
-      configuration.getStringProperty("aws.messageUs.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val videoEncodingsSns: String =
       configuration.getMandatoryStringProperty("sns.missing_video_encodings.topic.arn")

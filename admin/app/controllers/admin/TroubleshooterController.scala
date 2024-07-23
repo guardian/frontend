@@ -112,8 +112,8 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
         "Stack" -> "frontend",
         "App" -> "router",
         "Stage" -> "PROD",
-      ).map {
-        case (name, value) => new Filter("tag:" + name).withValues(value)
+      ).map { case (name, value) =>
+        new Filter("tag:" + name).withValues(value)
       }.asJavaCollection
       val instancesDnsName: Seq[String] = awsEc2Client
         .map(
@@ -158,8 +158,8 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
           TestFailed(testName, request.toString)
         }
       }
-      .recoverWith {
-        case t: Throwable => Future.successful(TestFailed("Direct to content api", t.getMessage, request.toString))
+      .recoverWith { case t: Throwable =>
+        Future.successful(TestFailed("Direct to content api", t.getMessage, request.toString))
       }
   }
 
@@ -175,9 +175,8 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
           TestFailed(testName, request.toString)
         }
       }
-      .recoverWith {
-        case t: Throwable =>
-          Future.successful(TestFailed("Direct to Preview Content API", t.getMessage, request.toString))
+      .recoverWith { case t: Throwable =>
+        Future.successful(TestFailed("Direct to Preview Content API", t.getMessage, request.toString))
       }
   }
 
@@ -206,8 +205,8 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
           TestFailed(testName, s"Status: ${response.status}", url)
         }
       }
-      .recoverWith {
-        case t: Throwable => Future.successful(TestFailed(testName, t.getMessage, url))
+      .recoverWith { case t: Throwable =>
+        Future.successful(TestFailed(testName, t.getMessage, url))
       }
   }
 }

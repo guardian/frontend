@@ -78,23 +78,21 @@ class Application(
   def pressDraftForAll(): Action[AnyContent] =
     Action.async {
       ConfigAgent.getPathIds
-        .foldLeft(Future.successful(List[(String, Result)]())) {
-          case (lastFuture, path) =>
-            lastFuture
-              .flatMap(resultList =>
-                handlePressRequest(path, "draft")(draftFapiFrontPress.pressByPathId)
-                  .map(path -> _)
-                  .map(resultList :+ _),
-              )
+        .foldLeft(Future.successful(List[(String, Result)]())) { case (lastFuture, path) =>
+          lastFuture
+            .flatMap(resultList =>
+              handlePressRequest(path, "draft")(draftFapiFrontPress.pressByPathId)
+                .map(path -> _)
+                .map(resultList :+ _),
+            )
         }
         .map { pressedPaths =>
           Ok(
             s"Pressed ${pressedPaths.length} paths on DRAFT: ${pressedPaths.map { case (a, b) => (a, b.header.status) }}",
           )
         }
-        .recover {
-          case t: Throwable =>
-            InternalServerError(s"Error pressing all paths on draft: $t")
+        .recover { case t: Throwable =>
+          InternalServerError(s"Error pressing all paths on draft: $t")
         }
     }
 }

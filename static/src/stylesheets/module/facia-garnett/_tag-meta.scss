@@ -1,13 +1,15 @@
 //TODO This and the corresponding templates in discussion must be refactored to new fc-containers
 
+@use "sass:math";
+
 .container__meta {
-    padding-top: $gs-baseline/2;
+    padding-top: $gs-baseline*0.5;
 
     @include mq(tablet) {
         margin-bottom: $gs-baseline;
     }
     @include mq(desktop) {
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline*0.5;
     }
     @include mq(desktop, leftCol) {
         max-width: 50%;
@@ -24,12 +26,12 @@
     }
     .container__meta__title {
         @include fs-header(3);
-        padding-bottom: $gs-baseline/3;
+        padding-bottom: math.div($gs-baseline, 3);
         line-height: get-line-height(header, 2);
         color: $brightness-7;
 
         @include mq($until: tablet) {
-            padding: 0 0 $gs-baseline/3;
+            padding: 0 0 math.div($gs-baseline, 3);
         }
         a {
             color: inherit;

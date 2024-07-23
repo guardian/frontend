@@ -55,7 +55,7 @@
 }
 
 .hosted-gallery__heading {
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
     font-size: 26px;
     line-height: 28px;
     font-weight: 500;
@@ -110,7 +110,7 @@
     text-align: right;
     flex: 1;
     align-self: center;
-    padding: $gs-baseline / 2;
+    padding: $gs-baseline * 0.5;
 }
 
 .hosted-gallery__caption-text {
@@ -118,7 +118,7 @@
     background: linear-gradient(to top, rgba(51, 51, 51, .5) 0%, rgba(51, 51, 51, .5) 70%, transparent 100%);
     .social {
         text-align: left;
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline*0.5;
     }
     a {
         color: #ffffff;

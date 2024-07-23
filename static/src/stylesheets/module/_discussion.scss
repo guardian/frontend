@@ -1,7 +1,9 @@
+@use "sass:math";
+
 $comment-meta-breakpoint: leftCol;
 $avatarSize-big: 48px;
 $avatarSize-small: 36px;
-$avatarPadding: $gs-gutter / 2;
+$avatarPadding: $gs-gutter * 0.5;
 
 /* ==========================================================================
    Discussion
@@ -103,7 +105,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 .discussion__disabled-msg {
     @include fs-headline(3);
-    padding-top: $gs-baseline / 1.5;
+    padding-top: math.div($gs-baseline, 1.5);
     color: $brightness-46;
 }
 
@@ -119,7 +121,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-discussion__size-message,
 .d-discussion__message {
     @include fs-textSans(2);
-    margin-bottom: $gs-baseline * 2 / 3;
+    margin-bottom: math.div($gs-baseline * 2, 3);
     border-top: 1px solid $brightness-86;
     padding-top: $gs-baseline;
     color: $brightness-46;
@@ -283,12 +285,12 @@ $avatarPadding: $gs-gutter / 2;
     span {
         font-weight: bold;
         text-transform: capitalize;
-        margin: 0 $gs-gutter / 6 0 $gs-gutter / 4;
+        margin: 0 math.div($gs-gutter, 6) 0 $gs-gutter * 0.25;
     }
 
     &:not(:first-child) {
-        padding-left: $gs-gutter / 2;
-        margin-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
+        margin-left: $gs-gutter * 0.5;
         border-left: 1px solid $brightness-86;
     }
 }
@@ -319,7 +321,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment__inner {
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
     position: relative;
 }
 
@@ -362,7 +364,7 @@ $avatarPadding: $gs-gutter / 2;
     position: relative;
 
     @include mq(tablet) {
-        margin-top: $gs-baseline / 2;
+        margin-top: $gs-baseline * 0.5;
     }
     @include mq(leftCol) {
         position: absolute;
@@ -391,8 +393,8 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__avatar-wrapper,
 .d-comment-box__avatar-wrapper {
-    margin-right: ($gs-gutter / 5) * 2;
-    margin-top: $gs-baseline / 6;
+    margin-right: ($gs-gutter * 0.2) * 2;
+    margin-top: math.div($gs-baseline, 6);
 }
 
 .d-comment-box__avatar-wrapper {
@@ -424,7 +426,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-comment-box__author {
     @include fs-textSans(4);
     overflow: hidden;
-    padding-right: $gs-gutter / 4;
+    padding-right: $gs-gutter * 0.25;
     font-weight: bold;
     text-overflow: ellipsis;
 
@@ -456,7 +458,7 @@ $avatarPadding: $gs-gutter / 2;
 
 .d-comment__pick {
     @include fs-textSans(1);
-    margin-bottom: $gs-baseline / 6;
+    margin-bottom: math.div($gs-baseline, 6);
     white-space: nowrap;
     font-weight: bold;
 
@@ -507,7 +509,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
     @include fs-textSans(4);
-    padding-right: $gs-gutter / 4;
+    padding-right: $gs-gutter * 0.25;
     display: inline;
 }
 
@@ -543,7 +545,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-comment__content {
-    margin-top: $gs-baseline / 2;
+    margin-top: $gs-baseline * 0.5;
     @include mq($until: tablet) {
         clear: both;
     }
@@ -561,10 +563,10 @@ $avatarPadding: $gs-gutter / 2;
     position: relative;
     z-index: 2;
     font-family: $f-sans-serif-text;
-    margin-bottom: $gs-baseline * 2 / 3;
+    margin-bottom: math.div($gs-baseline * 2, 3);
 
     p {
-        margin-top: $gs-baseline * 2 / 3;
+        margin-top: math.div($gs-baseline * 2, 3);
         word-wrap: break-word;
 
         @include mq($comment-meta-breakpoint) {
@@ -576,7 +578,7 @@ $avatarPadding: $gs-gutter / 2;
 
     blockquote {
         margin: $gs-baseline $gs-gutter;
-        padding-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
         color: $brightness-46;
 
         .d-comment__inner--top-level &:first-child {
@@ -591,7 +593,7 @@ $avatarPadding: $gs-gutter / 2;
 
         @include mq($until: tablet) {
             margin: 0;
-            padding-left: $avatarSize-small / 2;
+            padding-left: $avatarSize-small * 0.5;
         }
     }
 }
@@ -685,7 +687,7 @@ $avatarPadding: $gs-gutter / 2;
         fill: $brand-main;
         height: 14px;
         width: 14px;
-        left: $gs-gutter / 2;
+        left: $gs-gutter * 0.5;
     }
 }
 
@@ -695,7 +697,7 @@ $avatarPadding: $gs-gutter / 2;
 .d-comment__comment-removed {
     @include fs-textSans(1);
     color: $brightness-46;
-    margin-top: $gs-baseline / 1.5;
+    margin-top: math.div($gs-baseline, 1.5);
 
     a {
         color: $brand-pastel;
@@ -711,7 +713,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    top: $gs-baseline / 2;
+    top: $gs-baseline * 0.5;
     height: $comment-recommend-button-size;
 
     @include mq(desktop) {
@@ -733,8 +735,8 @@ $comment-recommend-button-size: 19px;
     .inline-arrow-up-white svg {
         position: relative;
         height: $gs-baseline;
-        padding-top: $gs-baseline/4;
-        padding-left: $gs-baseline/6;
+        padding-top: $gs-baseline*0.25;
+        padding-left: math.div($gs-baseline, 6);
         fill: $brightness-46;
     }
     .id--signed-in .d-discussion--recommendations-open & {
@@ -768,7 +770,7 @@ $comment-recommend-button-size: 19px;
     text-align: right;
     line-height: $comment-recommend-button-size;
     height: $comment-recommend-button-size;
-    margin-right: $gs-gutter / 4;
+    margin-right: $gs-gutter * 0.25;
 }
 
 .d-comment__recommend-count--old {
@@ -853,7 +855,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment__action--reply {
     cursor: pointer;
-    margin-right: $gs-gutter / 4;
+    margin-right: $gs-gutter * 0.25;
 
     &:hover {
         text-decoration: underline;
@@ -867,7 +869,7 @@ $comment-recommend-button-size: 19px;
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
-    right: $gs-baseline / 3;
+    right: math.div($gs-baseline, 3);
     bottom: $gs-baseline;
     font-size: 11px;
 
@@ -889,7 +891,7 @@ $comment-recommend-button-size: 19px;
     display: inline-block;
     position: relative;
     bottom: 1px;
-    margin: 0 ($gs-gutter / 5) * 2;
+    margin: 0 ($gs-gutter * 0.2) * 2;
     color: $brightness-46;
     vertical-align: bottom;
 }
@@ -941,14 +943,14 @@ $comment-recommend-button-size: 19px;
 }
 .d-report-comment__field {
     @include fs-textSans(3);
-    padding: $gs-baseline / 2 $gs-gutter / 4;
+    padding: $gs-baseline * 0.5 $gs-gutter * 0.25;
 }
 .d-report-comment__submit {
     margin-top: $gs-baseline;
 }
 .d-report-comment__close {
     float: right;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
     width: auto;
 }
 
@@ -973,11 +975,11 @@ $comment-recommend-button-size: 19px;
     }
 
     .d-top-comment-container--left {
-        padding-right: $gs-gutter / 2;
+        padding-right: $gs-gutter * 0.5;
     }
 
     .d-top-comment-container--right {
-        padding-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
     }
 }
 
@@ -1002,14 +1004,14 @@ $comment-recommend-button-size: 19px;
 
 .d-top-comment__pick {
     font-weight: bold;
-    margin-bottom: $gs-baseline * 2 / 3;
+    margin-bottom: math.div($gs-baseline * 2, 3);
 }
 
 .d-top-comment__bubble {
     @include fs-textSans(4);
     color: $brightness-7;
     box-sizing: border-box;
-    padding: $gs-baseline ($gs-baseline * 4 / 3);
+    padding: $gs-baseline math.div($gs-baseline * 4, 3);
     position: relative;
     background-color: $brightness-93;
     border-radius: 15px;
@@ -1018,19 +1020,19 @@ $comment-recommend-button-size: 19px;
 .d-top-comment__bubble-spout {
     width: 24px;
     height: 24px;
-    margin-left: $avatarSize-big / 2;
+    margin-left: $avatarSize-big * 0.5;
     fill: $brightness-93;
 }
 
 .d-top-comment__body {
     $line-height: get-line-height(textSans, 4);
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
     @include mq(tablet) {
         min-height: 5 * $line-height;
     }
 
     blockquote {
-        padding-left: $gs-gutter / 2;
+        padding-left: $gs-gutter * 0.5;
         color: $brightness-46;
     }
 }
@@ -1038,7 +1040,7 @@ $comment-recommend-button-size: 19px;
 .d-top-comment__meta {
     position: relative;
     .d-comment__meta-text {
-        margin-top: $gs-baseline / 2;
+        margin-top: $gs-baseline * 0.5;
     }
     .d-comment__timestamp {
         display: block;
@@ -1062,13 +1064,13 @@ $comment-recommend-button-size: 19px;
 }
 .comment--speechy {
     border: 0;
-    padding: 0 0 ($gs-baseline / 3) * 10;
+    padding: 0 0 math.div($gs-baseline, 3) * 10;
 
     .comment__inner {
         box-sizing: border-box;
         background-color: $brightness-97;
         display: inline-block;
-        padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
+        padding: math.div($gs-baseline, 3) * 2 $gs-gutter * 0.5 $gs-baseline;
         max-width: $right-column;
         position: relative;
         width: 100%;
@@ -1106,7 +1108,7 @@ $comment-recommend-button-size: 19px;
     @include fs-textSans(1, true);
     display: block;
     float: right;
-    margin-top: -(1 + ($gs-baseline / 3) * 4);
+    margin-top: -(1 + math.div($gs-baseline, 3) * 4);
 
     .i {
         position: relative;
@@ -1168,7 +1170,7 @@ $comment-recommend-button-size: 19px;
 
 .d-discussion__error {
     @include fs-textSans(4);
-    margin-top: ($gs-baseline / 3) * 2;
+    margin-top: math.div($gs-baseline, 3) * 2;
     color: $news-main;
 
     .d-discussion__error-text {
@@ -1190,7 +1192,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box--response {
     border-top: 1px solid $brightness-86;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
 
     .d-comment-box__author-label {
         display: none;
@@ -1215,15 +1217,15 @@ $comment-recommend-button-size: 19px;
 
 .d-bar {
     @include fs-textSans(4);
-    margin-bottom: ($gs-baseline / 3) * 4;
+    margin-bottom: math.div($gs-baseline, 3) * 4;
     color: $brightness-46;
 }
 .d-comment-box__body {
     box-sizing: border-box;
     border: 1px solid $brightness-86;
     height: 50px;
-    margin: ($gs-baseline / 3) * 2 0;
-    padding: ($gs-baseline / 3) * 2 $gs-gutter / 2;
+    margin: math.div($gs-baseline, 3) * 2 0;
+    padding: math.div($gs-baseline, 3) * 2 $gs-gutter * 0.5;
     width: 100%;
     resize: vertical;
     word-break: break-word;
@@ -1266,7 +1268,7 @@ $comment-recommend-button-size: 19px;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
-    margin-top: $gs-baseline / 6;
+    margin-top: math.div($gs-baseline, 6);
     height: gs-height(3);
 }
 .d-comment-box__add-comment {
@@ -1309,7 +1311,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box--response {
 
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 0.5;
 
     .d-comment-box {
         padding-left: none;
@@ -1355,7 +1357,7 @@ $comment-recommend-button-size: 19px;
     display: none;
 }
 .open-cta {
-    margin-top: ($gs-baseline / 3) * 8;
+    margin-top: math.div($gs-baseline, 3) * 8;
 
     .clamp-fade {
         @include simple-gradient(transparent, $brightness-97);
@@ -1388,13 +1390,13 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__parent-comment-author {
     display: inline-block;
     font-weight: bold;
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline * 0.5;
 }
 .d-comment-box__parent-comment-body {
     position: relative;
 }
 .d-comment-box__parent-comment-wrapper {
-    margin-top: $gs-baseline / 2;
+    margin-top: $gs-baseline * 0.5;
     display: none;
 }
 .d-comment-box--parent-visible {
@@ -1425,7 +1427,7 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__formatting-controls {
     display: none;
     float: right;
-    margin-top: - ($gs-gutter / 2);
+    margin-top: - ($gs-gutter * 0.5);
 
     @include mq(tablet) {
         .d-comment-box--expanded &,
@@ -1451,7 +1453,7 @@ $comment-recommend-button-size: 19px;
     color: $brightness-46;
     text-align: center;
     cursor: pointer;
-    margin-left: $gs-gutter / 5;
+    margin-left: $gs-gutter * 0.2;
     padding: 2px 5px 0px;
     min-width: 11px;
     line-height: 17px;
@@ -1469,8 +1471,8 @@ $comment-recommend-button-size: 19px;
     @include fs-textSans(1);
     display: block;
     background-color: $brightness-97;
-    padding: ($gs-baseline / 3) * 2 ($gs-gutter / 2);
-    margin-top: $gs-baseline / 2;
+    padding: math.div($gs-baseline, 3) * 2 ($gs-gutter * 0.5);
+    margin-top: $gs-baseline * 0.5;
 }
 
 .d-comment-box__onboarding {
@@ -1509,10 +1511,10 @@ $comment-recommend-button-size: 19px;
     background-color: transparent;
     border: 1px solid $brightness-86;
     color: $brightness-7;
-    padding: $gs-baseline/2 $gs-gutter;
+    padding: $gs-baseline*0.5 $gs-gutter;
     border-radius: 18px;
     margin: $gs-baseline 0;
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline*0.5;
     width: 70%;
 
     &:focus {

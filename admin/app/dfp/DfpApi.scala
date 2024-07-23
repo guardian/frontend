@@ -2,8 +2,8 @@ package dfp
 
 // StatementBuilder query language is PQL defined here:
 // https://developers.google.com/ad-manager/api/pqlreference
-import com.google.api.ads.admanager.axis.utils.v202308.StatementBuilder
-import com.google.api.ads.admanager.axis.v202308._
+import com.google.api.ads.admanager.axis.utils.v202405.StatementBuilder
+import com.google.api.ads.admanager.axis.v202405._
 import com.madgag.scala.collection.decorators.MapDecorator
 import common.GuLogging
 import common.dfp._
@@ -123,8 +123,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
       .withBindVariableValue("threshold", threshold.getMillis)
 
     withDfpSession {
-      _.creatives.get(stmtBuilder) collect {
-        case creative: TemplateCreative => creative
+      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative =>
+        creative
       } map dataMapper.toGuTemplateCreative
     }
   }

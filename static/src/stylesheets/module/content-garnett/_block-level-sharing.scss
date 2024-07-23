@@ -1,11 +1,13 @@
 // Default
 
+@use "sass:math";
+
 .block-share__item {
     display: block;
     float: left;
     cursor: pointer;
     border: 1px solid $brightness-86;
-    margin-right: $gs-gutter / 4;
+    margin-right: $gs-gutter * 0.25;
     width: $gs-baseline * 2;
     height: $gs-baseline * 2;
     box-sizing: border-box;
@@ -66,8 +68,8 @@
 }
 
 .block-share--liveblog-mobile {
-    margin-left: $gs-gutter / 2;
-    margin-top: $gs-baseline / 2;
+    margin-left: $gs-gutter * 0.5;
+    margin-top: $gs-baseline * 0.5;
     cursor: pointer;
     clear: both;
 }
@@ -123,7 +125,7 @@
 .block-share--gallery-mobile {
     cursor: pointer;
     opacity: .8;
-    margin-top: $gs-baseline / 2;
+    margin-top: $gs-baseline * 0.5;
 }
 
 // Inline embeds
@@ -133,8 +135,8 @@
     .block-share--article,
     .block-share--article-mobile {
         position: absolute;
-        right: -$gs-gutter/4;
-        margin-top: ($gs-baseline/3)*2;
+        right: -$gs-gutter*0.25;
+        margin-top: math.div($gs-baseline, 3)*2;
     }
 
     .element--thumbnail {

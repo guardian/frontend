@@ -96,10 +96,9 @@ class AccountDeletionController(
       fullAuthWithIdapiUserAction.async { implicit request =>
         mdapiService.getUserContentAccess(request.cookies) flatMap { response =>
           handleMdapiServiceResponse(response)(request)
-        } recoverWith {
-          case t: Throwable =>
-            logger.error(s"Future failed when calling MDAPI", t)
-            Future(NoCache(Ok(IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context))))
+        } recoverWith { case t: Throwable =>
+          logger.error(s"Future failed when calling MDAPI", t)
+          Future(NoCache(Ok(IdentityHtmlPage.html(views.html.profile.deletion.error(page))(page, request, context))))
         }
       }
     }
@@ -115,13 +114,12 @@ class AccountDeletionController(
               SeeOther(routes.AccountDeletionController.renderAccountDeletionForm.url)
                 .flashing(formWithErrors.toFlash),
             ),
-          {
-            case (password, reasonOpt) =>
-              deleteAccount(
-                boundForm,
-                EmailPassword(request.user.user.primaryEmailAddress, password, None),
-                idRequestParser(request),
-              )
+          { case (password, reasonOpt) =>
+            deleteAccount(
+              boundForm,
+              EmailPassword(request.user.user.primaryEmailAddress, password, None),
+              idRequestParser(request),
+            )
           },
         )
       }

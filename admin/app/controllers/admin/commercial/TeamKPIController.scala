@@ -55,12 +55,11 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
         val name = "Number of winning bids per day"
         val dataset = dataPoints
           .groupBy(_.date)
-          .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
-            case (acc, (date, points)) =>
-              val impressionCounts = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
-                soFar :+ points.find(_.bidderName == label).map(_.impressionCount.toDouble).getOrElse(0d)
-              }
-              acc :+ ChartRow(date, impressionCounts)
+          .foldLeft(Seq.empty[ChartRow[LocalDate]]) { case (acc, (date, points)) =>
+            val impressionCounts = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
+              soFar :+ points.find(_.bidderName == label).map(_.impressionCount.toDouble).getOrElse(0d)
+            }
+            acc :+ ChartRow(date, impressionCounts)
           }
           .sortBy(_.rowKey.toEpochDay)
       }
@@ -70,12 +69,11 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
         override val vAxisTitle = Some("GBP")
         val dataset = dataPoints
           .groupBy(_.date)
-          .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
-            case (acc, (date, points)) =>
-              val cpms = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
-                soFar :+ points.find(_.bidderName == label).map(_.eCpm).getOrElse(0d)
-              }
-              acc :+ ChartRow(date, cpms)
+          .foldLeft(Seq.empty[ChartRow[LocalDate]]) { case (acc, (date, points)) =>
+            val cpms = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
+              soFar :+ points.find(_.bidderName == label).map(_.eCpm).getOrElse(0d)
+            }
+            acc :+ ChartRow(date, cpms)
           }
           .sortBy(_.rowKey.toEpochDay)
       }
@@ -85,17 +83,16 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
         override val vAxisTitle = Some("GBP")
         val dataset = dataPoints
           .groupBy(_.date)
-          .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
-            case (acc, (date, points)) =>
-              val revenues = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
-                soFar :+ points
-                  .find(_.bidderName == label)
-                  .map { point =>
-                    point.impressionCount * point.eCpm / 1000
-                  }
-                  .getOrElse(0d)
-              }
-              acc :+ ChartRow(date, revenues)
+          .foldLeft(Seq.empty[ChartRow[LocalDate]]) { case (acc, (date, points)) =>
+            val revenues = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
+              soFar :+ points
+                .find(_.bidderName == label)
+                .map { point =>
+                  point.impressionCount * point.eCpm / 1000
+                }
+                .getOrElse(0d)
+            }
+            acc :+ ChartRow(date, revenues)
           }
           .sortBy(_.rowKey.toEpochDay)
       }

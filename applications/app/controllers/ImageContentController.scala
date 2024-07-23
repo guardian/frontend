@@ -18,7 +18,12 @@ import services.ImageQuery
 import services.dotcomrendering.{ImageContentPicker, RemoteRender}
 import views.support.RenderOtherStatus
 
+import com.gu.contentapi.client.model.Direction.Next
+import com.gu.contentapi.client.model.Direction.Previous
+import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import scala.concurrent.Future
+import scala.util.Try
+import java.time.format.DateTimeFormatter
 
 class ImageContentController(
     val contentApiClient: ContentApiClient,
@@ -90,12 +95,46 @@ class ImageContentController(
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
-  def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] =
+  private lazy val dateExtractor = """.+/(\d{4})/(\w{3})/(\d{2})/.+""".r
+
+  def getNextLightboxJson(path: String, tag: String, rawDirection: String): Action[AnyContent] =
     Action.async { implicit request =>
+      val direction = Direction.forPathSegment(rawDirection)
+
+      /** unfortunately we have to infer the date from the path, because getting the real publication date would require
+        * another call to the content API…
+        */
+      val date = (path match {
+        case dateExtractor(rawYear, rawMonth, rawDate) => {
+          (Try(rawYear.toInt).toOption, rawMonth, Try(rawDate.toInt).toOption) match {
+            case (Some(year), "jan", Some(day)) => Some(LocalDate.of(year, 1, day))
+            case (Some(year), "feb", Some(day)) => Some(LocalDate.of(year, 2, day))
+            case (Some(year), "mar", Some(day)) => Some(LocalDate.of(year, 3, day))
+            case (Some(year), "apr", Some(day)) => Some(LocalDate.of(year, 4, day))
+            case (Some(year), "may", Some(day)) => Some(LocalDate.of(year, 5, day))
+            case (Some(year), "jun", Some(day)) => Some(LocalDate.of(year, 6, day))
+            case (Some(year), "jul", Some(day)) => Some(LocalDate.of(year, 7, day))
+            case (Some(year), "aug", Some(day)) => Some(LocalDate.of(year, 8, day))
+            case (Some(year), "sep", Some(day)) => Some(LocalDate.of(year, 9, day))
+            case (Some(year), "oct", Some(day)) => Some(LocalDate.of(year, 10, day))
+            case (Some(year), "nov", Some(day)) => Some(LocalDate.of(year, 11, day))
+            case (Some(year), "dec", Some(day)) => Some(LocalDate.of(year, 12, day))
+            case _                              => None
+          }
+        }
+        case _ => None
+      })
+      val instant = date.map(LocalDateTime.of(_, LocalTime.MIDNIGHT).toInstant(ZoneOffset.UTC))
+      val query =
+        SearchQuery().tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize);
+
       val capiQuery = FollowingSearchQuery(
-        SearchQuery().tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize),
+        direction match {
+          case Previous => query.fromDate(instant)
+          case Next     => query.toDate(instant)
+        },
         path,
-        Direction.forPathSegment(direction),
+        direction,
       )
 
       contentApiClient.thriftClient.getResponse(capiQuery).map { response =>
@@ -105,7 +144,26 @@ class ImageContentController(
             case _                     => None
           },
         )
-        Cached(CacheTime.Default)(JsonComponent.fromWritable(JsArray(lightboxJson)))
+
+        if (request.forceDCR) {
+          val timeDirection = direction match {
+            case Next     => "past"
+            case Previous => "future"
+          }
+
+          Cached(CacheTime.Default)(
+            JsonComponent.fromWritable(
+              Json.obj(
+                "total" -> response.total,
+                "direction" -> timeDirection,
+                "date" -> date,
+                "images" -> JsArray(lightboxJson),
+              ),
+            ),
+          )
+        } else
+          Cached(CacheTime.Default)(JsonComponent.fromWritable(JsArray(lightboxJson)))
+
       }
     }
 }

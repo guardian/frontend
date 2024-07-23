@@ -11,7 +11,7 @@ $disc-avatar-size: 44px;
 
 .disc-comment {
     @include fs-textSans(4);
-    padding-bottom: $gs-baseline/2;
+    padding-bottom: $gs-baseline*0.5;
 
     @include mq(activityLeftCol) {
         &:first-of-type {
@@ -37,14 +37,14 @@ $disc-avatar-size: 44px;
 }
 .disc-comment__recommend {
     position: absolute;
-    top: $gs-baseline/2;
+    top: $gs-baseline*0.5;
     right: 0;
     width: auto;
     cursor: default;
 }
 .disc-comment__recommend-count {
     display: inline-block;
-    margin-right: $gs-gutter/4;
+    margin-right: $gs-gutter*0.25;
 
     .disc-comment__recommend--active & {
         color: $opinion-main;
@@ -76,7 +76,7 @@ $disc-avatar-size: 44px;
 
     blockquote {
         margin: $gs-baseline $gs-gutter;
-        padding-left: $gs-gutter/2;
+        padding-left: $gs-gutter*0.5;
         border-left: 3px solid transparentize($brightness-7, .75);
     }
 }
@@ -104,7 +104,7 @@ $disc-avatar-size: 44px;
     width: 100%;
 }
 .disc-profile__user-info {
-    padding-left: $disc-avatar-size + ($gs-gutter/2);
+    padding-left: $disc-avatar-size + ($gs-gutter*0.5);
 }
 .disc-profile__badges {
     @include fs-textSans(1);

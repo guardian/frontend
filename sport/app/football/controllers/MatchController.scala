@@ -45,7 +45,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
     id = id,
     section = Some(SectionId.fromId("football")),
     webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score
-      .getOrElse("")} ${theMatch.awayTeam.name}",
+        .getOrElse("")} ${theMatch.awayTeam.name}",
     javascriptConfigOverrides = javascriptConfig,
   )
 }

@@ -29,10 +29,9 @@ import test.ConfiguredTestSuite
       }
 
       "matches should have the correct, populated, competition alongside" in {
-        results.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            if (fMatch.id.toInt < 30) comp.id should equal("500")
-            else comp.id should equal("100")
+        results.relevantMatches.foreach { case (fMatch, comp) =>
+          if (fMatch.id.toInt < 30) comp.id should equal("500")
+          else comp.id should equal("100")
         }
       }
 
@@ -56,9 +55,8 @@ import test.ConfiguredTestSuite
 
       "should be showing the correct matches from the test data" in {
         results.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("1", "2", "3", "4"))
       }
@@ -73,9 +71,8 @@ import test.ConfiguredTestSuite
       }
 
       "matches should only come from the specified competition" in {
-        results.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            comp.id should equal("500")
+        results.relevantMatches.foreach { case (fMatch, comp) =>
+          comp.id should equal("500")
         }
       }
     }
@@ -85,17 +82,15 @@ import test.ConfiguredTestSuite
 
       "should be showing the correct matches from the test data" in {
         results.relevantMatches
-          .map {
-            case (fmatch, _) =>
-              fmatch.id
+          .map { case (fmatch, _) =>
+            fmatch.id
           }
           .sortBy(_.toInt) should equal(List("30"))
       }
 
       "matches should only come from the specified competition" in {
-        results.relevantMatches.foreach {
-          case (fMatch, comp) =>
-            comp.id should equal("100")
+        results.relevantMatches.foreach { case (fMatch, comp) =>
+          comp.id should equal("100")
         }
       }
     }
@@ -106,9 +101,8 @@ import test.ConfiguredTestSuite
 
     "should be showing the correct matches from the test data" in {
       results.relevantMatches
-        .map {
-          case (fmatch, _) =>
-            fmatch.id
+        .map { case (fmatch, _) =>
+          fmatch.id
         }
         .sortBy(_.toInt) should equal(List("1", "4"))
     }
@@ -123,9 +117,8 @@ import test.ConfiguredTestSuite
     }
 
     "matches should only come from the specified team" in {
-      results.relevantMatches.foreach {
-        case (fMatch, _) =>
-          fMatch.hasTeam(spurs.id) should equal(true)
+      results.relevantMatches.foreach { case (fMatch, _) =>
+        fMatch.hasTeam(spurs.id) should equal(true)
       }
     }
   }

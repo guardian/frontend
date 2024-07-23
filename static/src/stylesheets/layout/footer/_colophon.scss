@@ -9,7 +9,7 @@
     }
 
     @include mq(tablet) {
-        padding-bottom: $gs-baseline / 2;
+        padding-bottom: $gs-baseline * 0.5;
         border: 1px solid $brand-pastel;
         border-top: 0;
     }
@@ -66,7 +66,7 @@
     margin: 0;
 
     @include mq($until: tablet) {
-        width: calc(50% - #{$gs-gutter / 2});
+        width: calc(50% - #{$gs-gutter * 0.5});
 
         &:first-child,
         &:nth-child(3) {
@@ -124,13 +124,13 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        left: -$gs-gutter / 2;
+        left: -$gs-gutter * 0.5;
         width: 1px;
         display: block;
         background-color: $brand-pastel;
 
         @include mq(tablet) {
-            bottom: $gs-baseline / 2;
+            bottom: $gs-baseline * 0.5;
         }
     }
 }
@@ -140,7 +140,7 @@
         &:nth-child(1) {
             flex: none;
             width: 100%;
-            margin: ($gs-baseline / 2) 0 $gs-baseline;
+            margin: ($gs-baseline * 0.5) 0 $gs-baseline;
 
             @include mq(tablet) {
                 flex: 1;
@@ -161,7 +161,7 @@
                 flex: 1;
                 margin: 0;
                 border-top: 1px solid $brand-pastel;
-                padding-left: ($gs-baseline / 2);
+                padding-left: ($gs-baseline * 0.5);
             }
 
             &:nth-child(2) {
@@ -182,7 +182,7 @@
 .colophon__item a {
     color: $brightness-100;
     display: inline-block;
-    padding: ($gs-baseline / 2) 0;
+    padding: ($gs-baseline * 0.5) 0;
 
     &:hover,
     &:focus {

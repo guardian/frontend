@@ -112,13 +112,12 @@ object TagPages extends GuLogging {
   def toPages[A: Ordering](
       tagsByKey: Map[String, Set[Tag]],
   )(titleFromKey: String => String, sortKey: Tag => A): Seq[TagIndex] =
-    tagsByKey.toSeq.sortBy(_._1) map {
-      case (id, tagSet) =>
-        TagIndex(
-          id,
-          titleFromKey(id),
-          tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag),
-        )
+    tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
+      TagIndex(
+        id,
+        titleFromKey(id),
+        tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag),
+      )
     }
 
   def invalidSectionsFilter(tag: Tag): Boolean = tag.sectionId.exists(TagPages.validSections.contains)

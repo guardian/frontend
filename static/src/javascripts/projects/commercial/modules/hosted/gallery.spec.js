@@ -4,7 +4,6 @@
  * This file should be considered deprecated and only exists for legacy 'hosted' pages
  */
 
-import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 import { noop } from '../../../../lib/noop';
 import { init } from './gallery';
 import { galleryHtml } from './gallery-html';
@@ -18,9 +17,6 @@ jest.mock('../../../../lib/detect', () => ({
 	hasPushStateSupport: jest.fn(),
 	getBreakpoint: jest.fn(),
 	hasTouchScreen: jest.fn(),
-}));
-jest.mock('../../../common/modules/analytics/interaction-tracking', () => ({
-	trackNonClickInteraction: jest.fn(() => Promise.resolve()),
 }));
 jest.mock('../../../../lib/load-css-promise', () => ({
 	loadCssPromise: Promise.resolve(),
@@ -98,51 +94,5 @@ describe('Hosted Gallery', () => {
 		expect(classListFor('js-hosted-gallery-oj')).not.toEqual(
 			expect.stringContaining('minimise-oj'),
 		);
-	});
-
-	it('should log navigation in GA when using arrow key navigation', () => {
-		gallery.handleKeyEvents({ keyCode: 40, preventDefault: noop });
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('KeyPress:down - image 2');
-		gallery.handleKeyEvents({ keyCode: 39, preventDefault: noop });
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('KeyPress:right - image 3');
-		gallery.handleKeyEvents({ keyCode: 38, preventDefault: noop });
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('KeyPress:up - image 2');
-		gallery.handleKeyEvents({ keyCode: 37, preventDefault: noop });
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('KeyPress:left - image 1');
-	});
-
-	it('should log navigation in GA when clicking through images', () => {
-		gallery.initScroll.call(gallery);
-		document.querySelector('.inline-arrow-down').click();
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('Click - image 2');
-		document.querySelector('.inline-arrow-up').click();
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('Click - image 1');
-	});
-
-	it('should log navigation in GA when scrolling through images', () => {
-		const nativeHTMLElement = window.HTMLElement;
-		window.HTMLElement = function () {
-			this.scrollTop = 20;
-			this.scrollHeight = 30;
-		};
-		gallery.fadeContent({
-			target: new window.HTMLElement(),
-		});
-		expect(
-			interactionTracking.trackNonClickInteraction,
-		).toHaveBeenCalledWith('Scroll - image 3');
-		window.HTMLElement = nativeHTMLElement;
 	});
 });

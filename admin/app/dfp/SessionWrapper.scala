@@ -2,8 +2,8 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.admanager.axis.utils.v202308.{ReportDownloader, StatementBuilder}
-import com.google.api.ads.admanager.axis.v202308._
+import com.google.api.ads.admanager.axis.utils.v202405.{ReportDownloader, StatementBuilder}
+import com.google.api.ads.admanager.axis.v202405._
 import com.google.api.ads.admanager.lib.client.AdManagerSession
 import com.google.common.io.CharSource
 import common.GuLogging
@@ -206,15 +206,12 @@ object SessionWrapper extends GuLogging {
     val dfpSession =
       try {
         for {
-          clientId <- AdminConfiguration.dfpApi.clientId
-          clientSecret <- AdminConfiguration.dfpApi.clientSecret
-          refreshToken <- AdminConfiguration.dfpApi.refreshToken
+          serviceAccountKeyFile <- AdminConfiguration.dfpApi.serviceAccountKeyFile
           appName <- AdminConfiguration.dfpApi.appName
         } yield {
           val credential = new OfflineCredentials.Builder()
             .forApi(Api.AD_MANAGER)
-            .withClientSecrets(clientId, clientSecret)
-            .withRefreshToken(refreshToken)
+            .withJsonKeyFilePath(serviceAccountKeyFile.toString())
             .build()
             .generateCredential()
           new AdManagerSession.Builder()

@@ -46,13 +46,12 @@ object SliceWithCards {
 
           val columnAndCards = ColumnAndCards(
             column,
-            itemsForColumn.zipWithIndex map {
-              case (HtmlAndClasses(index, html, classes), positionInColumn) =>
-                FaciaCardAndIndex(
-                  index,
-                  HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
-                  None,
-                )
+            itemsForColumn.zipWithIndex map { case (HtmlAndClasses(index, html, classes), positionInColumn) =>
+              FaciaCardAndIndex(
+                index,
+                HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
+                None,
+              )
             },
           )
           columnsWithCards(remainingColumns, itemsNotConsumed, accumulation :+ columnAndCards)
@@ -66,8 +65,8 @@ object SliceWithCards {
     )
   }
 
-  /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new
-    * context for creating further cards.
+  /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new context for
+    * creating further cards.
     */
   def fromItems(
       items: Seq[IndexedTrail],

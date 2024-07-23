@@ -63,7 +63,7 @@ class ContentFooterContainersLayoutTest extends AnyFlatSpec with Matchers {
     val html = buildHtml(contentItem())
     html.toString shouldBe
       "storyPackageHtml onwardHtml commentsHtml mostPopularHtml " +
-        "standardCommercialHtml "
+      "standardCommercialHtml "
   }
 
   it should "omit commercial containers on sensitive content" in {
@@ -86,13 +86,13 @@ class ContentFooterContainersLayoutTest extends AnyFlatSpec with Matchers {
     val html = buildHtml(contentItem(showInRelatedContent = false), emptyRelatedContent)
     html.toString shouldBe
       "storyPackageHtml onwardHtml commentsHtml mostPopularHtml " +
-        "standardCommercialHtml "
+      "standardCommercialHtml "
   }
 
   it should "show containers in correct order when article doesn't have story package but has related content" in {
     val html = buildHtml(contentItem(), emptyRelatedContent)
     html.toString shouldBe
       "storyPackageHtml onwardHtml commentsHtml mostPopularHtml " +
-        "standardCommercialHtml "
+      "standardCommercialHtml "
   }
 }

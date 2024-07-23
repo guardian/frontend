@@ -9,9 +9,9 @@ const target = path.resolve(__dirname, '..', '.git', 'hooks');
 
 // always try and remove any old ones
 try {
-    rimraf.sync(target);
+	rimraf.sync(target);
 } catch (e) {
-    /* do nothing */
+	/* do nothing */
 }
 
 // TC doesn't want them, but everyone else does

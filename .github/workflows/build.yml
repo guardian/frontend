@@ -1,7 +1,10 @@
 name: "Build"
 
 on:
-  push:
+  pull_request:
+  push: # Do not rely on `push` for PR CI - see https://github.com/guardian/mobile-apps-api/pull/2760
+    branches:
+      - main # Optimal for GHA workflow caching - see https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
 
 permissions:
   id-token: write
@@ -34,13 +37,11 @@ jobs:
 
       - run: make reinstall
 
-      - name: assets test
-        run: ./tools/task-runner/runner validate test
+      - run: make validate
 
-      - name: assets compile
-        run: ./tools/task-runner/runner compile
-        env:
-          NODE_ENV: production
+      - run: make test
+
+      - run: make compile
 
       - name: Test, compile
         # Australia/Sydney  -because it is too easy for devs to forget about timezones

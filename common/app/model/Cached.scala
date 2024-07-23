@@ -1,6 +1,8 @@
 package model
 
 import conf.switches.Switches.LongCacheSwitch
+import conf.switches.Switches.ShorterSurrogateCacheForOlderArticles
+import conf.switches.Switches.ShorterSurrogateCacheForRecentArticles
 import org.joda.time.DateTime
 import play.api.http.Writeable
 import play.api.mvc._
@@ -17,7 +19,7 @@ object CacheTime {
 
   object Default extends CacheTime(60)
   object LiveBlogActive extends CacheTime(5, Some(60))
-  object RecentlyUpdated extends CacheTime(60)
+  def RecentlyUpdated = CacheTime(60, if (ShorterSurrogateCacheForRecentArticles.isSwitchedOn) Some(30) else None)
   // There is lambda which invalidates the cache on press events, so the facia cache time can be high.
   object Facia extends CacheTime(60, Some(900))
   object ArchiveRedirect extends CacheTime(60, Some(300))
@@ -25,9 +27,9 @@ object CacheTime {
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
   object DiscussionDefault extends CacheTime(60)
   object DiscussionClosed extends CacheTime(60, Some(longCacheTime))
-
-  def LastDayUpdated: CacheTime = CacheTime(60, Some(longCacheTime))
-  def NotRecentlyUpdated: CacheTime = CacheTime(60, Some(longCacheTime))
+  private def oldArticleCacheTime = if (ShorterSurrogateCacheForOlderArticles.isSwitchedOn) 60 else longCacheTime
+  def LastDayUpdated = CacheTime(60, Some(oldArticleCacheTime))
+  def NotRecentlyUpdated = CacheTime(60, Some(oldArticleCacheTime))
 }
 
 object Cached extends implicits.Dates {
@@ -46,8 +48,8 @@ object Cached extends implicits.Dates {
   object RevalidatableResult {
     def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
       // hashing function from Arrays.java
-      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L) {
-        case (accu, nextByte) => 31 * accu + nextByte
+      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L) { case (accu, nextByte) =>
+        31 * accu + nextByte
       }
       new RevalidatableResult(result, Hash(hashLong.toString))
     }
@@ -59,7 +61,7 @@ object Cached extends implicits.Dates {
   }
 
   def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
-    apply(CacheTime(seconds), result, request.headers.get("If-None-Match")) //FIXME could be comma separated
+    apply(CacheTime(seconds), result, request.headers.get("If-None-Match")) // FIXME could be comma separated
   }
 
   def apply(cacheTime: CacheTime)(result: CacheableResult)(implicit request: RequestHeader): Result = {
@@ -111,12 +113,14 @@ object Cached extends implicits.Dates {
   private def cacheHeaders(cacheTime: CacheTime, result: Result, maybeEtag: Option[String]): Result = {
     val now = DateTime.now
 
-    val surrogateMaxAge =
-      cacheTime.surrogateSeconds.filter(_ => LongCacheSwitch.isSwitchedOn).getOrElse(cacheTime.cacheSeconds)
+    val surrogateMaxAge = cacheTime.surrogateSeconds match {
+      case Some(age) if LongCacheSwitch.isSwitchedOn => age
+      case _                                         => cacheTime.cacheSeconds
+    }
 
     val etagHeaderString: String = maybeEtag.getOrElse(
       s""""guRandomEtag${scala.util.Random.nextInt()}${scala.util.Random
-        .nextInt()}"""", // setting a random tag still helps
+          .nextInt()}"""", // setting a random tag still helps
     )
 
     result.withHeaders(

@@ -52,12 +52,11 @@ class Multi(
 
       if (offerTypes.size == contents.size) {
         Cached(componentMaxAge) {
-          JsonComponent.fromWritable(JsArray((offerTypes zip contents).map {
-            case (contentType, content) =>
-              Json.obj(
-                "type" -> contentType,
-                "value" -> Json.toJson(content)(Merchandise.merchandiseWrites),
-              )
+          JsonComponent.fromWritable(JsArray((offerTypes zip contents).map { case (contentType, content) =>
+            Json.obj(
+              "type" -> contentType,
+              "value" -> Json.toJson(content)(Merchandise.merchandiseWrites),
+            )
           }))
         }
       } else {

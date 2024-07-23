@@ -6,8 +6,8 @@
         @include font-size(14, 10);
 
         position: absolute;
-        top: $gs-baseline / 2;
-        right: $gs-baseline / 2;
+        top: $gs-baseline * 0.5;
+        right: $gs-baseline * 0.5;
         width: 33px;
         padding: 9px 7px 1px;
         border-radius: 100%;

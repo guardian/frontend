@@ -96,7 +96,6 @@ const initPlayer = () => {
 
             events.addContentEvents(player, mediaId, mediaType);
             events.bindContentEvents(player);
-            events.bindGoogleAnalyticsEvents(player, gaEventLabel);
         });
 
         const mouseMoveIdle = debounce(() => {

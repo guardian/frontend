@@ -35,32 +35,32 @@ import play.api.test.Helpers._
   )
 
   it should "Include organisation metadata" in {
-    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
     MetaDataMatcher.ensureOrganisation(result)
   }
 
   it should "Include webpage metadata" in {
-    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
     MetaDataMatcher.ensureWebPage(result, articleUrl)
   }
 
   it should "Include app deep link" in {
-    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
     MetaDataMatcher.ensureDeepLink(result)
   }
 
   it should "Not include app deep link on the crosswords index" in {
-    val result = indexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
+    val result = indexController.render(crosswordsUrl)(TestRequest(s"$crosswordsUrl?dcr=false"))
     MetaDataMatcher.ensureNoDeepLink(result)
   }
 
   it should "not include webpage metadata on the crossword index" in {
-    val result = indexController.render(crosswordsUrl)(TestRequest(crosswordsUrl))
+    val result = indexController.render(crosswordsUrl)(TestRequest(s"$crosswordsUrl?dcr=false"))
     MetaDataMatcher.ensureNoIosUrl(result)
   }
 
   it should "Include item list metadata" in {
-    val result = indexController.render(articleUrl)(TestRequest(articleUrl))
+    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 

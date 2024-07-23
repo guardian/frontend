@@ -203,9 +203,7 @@ object MatchMetadata extends Football {
     }
 
     val minByMin = related.find { c =>
-      val webPublicationDate =
-        DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-      DateHelpers.sameDay(webPublicationDate, matchDate) && c.minByMin && !c.preview
+      c.minByMin && !c.preview
     }
     val preview = related.find { c =>
       val webPublicationDate =
@@ -460,7 +458,7 @@ class MoreOnMatchController(
       }
   }
 
-  //for our purposes we expect exactly 2 football teams
+  // for our purposes we expect exactly 2 football teams
   private def hasExactlyTwoTeams(content: ContentType): Boolean = content.tags.tags.count(_.isFootballTeam) == 2
 
   private def populateNavModel(theMatch: FootballMatch, related: Seq[ContentType])(implicit

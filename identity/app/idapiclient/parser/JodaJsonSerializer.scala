@@ -5,8 +5,7 @@ import net.liftweb.json.{MappingException, TypeInfo, Formats, Serializer}
 import org.joda.time.format.ISODateTimeFormat
 import net.liftweb.json.JsonAST.JString
 
-/**
-  * ISO 8601 date and time format: 2017-10-16T16:14:23Z
+/** ISO 8601 date and time format: 2017-10-16T16:14:23Z
   */
 object JodaJsonSerializer extends Serializer[DateTime] {
   private val DateTimeClass = classOf[DateTime]
@@ -20,7 +19,7 @@ object JodaJsonSerializer extends Serializer[DateTime] {
       }
   }
 
-  def serialize(implicit format: Formats): PartialFunction[Any, _root_.net.liftweb.json.JValue] = {
-    case dt: DateTime => JString(dateTimeFormatISO8601.print(dt))
+  def serialize(implicit format: Formats): PartialFunction[Any, _root_.net.liftweb.json.JValue] = { case dt: DateTime =>
+    JString(dateTimeFormatISO8601.print(dt))
   }
 }

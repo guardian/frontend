@@ -37,8 +37,8 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
           log.info(s"Message sent successfully with ID: ${result.getMessageId}")
         }
 
-        eventualResult.failed.foreach {
-          case NonFatal(e) => log.error(s"Message failed: ${e.getMessage}")
+        eventualResult.failed.foreach { case NonFatal(e) =>
+          log.error(s"Message failed: ${e.getMessage}")
         }
 
         eventualResult.map(_ => ())

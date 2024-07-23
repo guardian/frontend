@@ -60,10 +60,9 @@ class FeedReader(wsClient: WSClient) extends GuLogging {
         }
       }
 
-      contents.failed.foreach {
-        case NonFatal(e) =>
-          log.error(s"Failed to fetch feed contents.", e)
-          recordLoad(-1)
+      contents.failed.foreach { case NonFatal(e) =>
+        log.error(s"Failed to fetch feed contents.", e)
+        recordLoad(-1)
       }
 
       contents

@@ -1,6 +1,7 @@
 package model
 
 import java.util.TimeZone
+import java.nio.file.Files.deleteIfExists
 
 import app.LifecycleComponent
 import common._
@@ -13,6 +14,7 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
+import conf.AdminConfiguration
 
 class AdminLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -32,6 +34,7 @@ class AdminLifecycle(
       descheduleJobs()
       CloudWatch.shutdown()
       emailService.shutdown()
+      deleteTmpFiles()
     }
   }
 
@@ -43,17 +46,17 @@ class AdminLifecycle(
 
   private def scheduleJobs(): Unit = {
 
-    //every 0, 30 seconds past the minute
+    // every 0, 30 seconds past the minute
     jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
       model.abtests.AbTestJob.run()
     }
 
-    //every 4, 19, 34, 49 minutes past the hour, on the 2nd second past the minute (e.g 13:04:02, 13:19:02)
+    // every 4, 19, 34, 49 minutes past the hour, on the 2nd second past the minute (e.g 13:04:02, 13:19:02)
     jobs.schedule("LoadBalancerLoadJob", "2 4/15 * * * ?") {
       LoadBalancer.refresh()
     }
 
-    //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
+    // every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
     jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
       fastlyCloudwatchLoadJob.run()
     }
@@ -62,7 +65,7 @@ class AdminLifecycle(
       r2PagePressJob.run()
     }
 
-    //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
+    // every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
     jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
       analyticsSanityCheckJob.run()
     }
@@ -82,7 +85,7 @@ class AdminLifecycle(
       if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(pekkoAsync)(LowFrequency)
       Future.successful(())
     }
-    //every 2, 17, 32, 47 minutes past the hour, on the 9th second past the minute (e.g 13:02:09, 13:17:09)
+    // every 2, 17, 32, 47 minutes past the hour, on the 9th second past the minute (e.g 13:02:09, 13:17:09)
     jobs.schedule("RebuildIndexJob", s"9 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
       rebuildIndexJob.run()
     }
@@ -118,6 +121,8 @@ class AdminLifecycle(
     jobs.deschedule("ExpiringSwitchesAfternoonEmailJob")
     jobs.deschedule("AssetMetricsCache")
   }
+
+  private def deleteTmpFiles(): Unit = AdminConfiguration.dfpApi.serviceAccountKeyFile.map(deleteIfExists)
 
   override def start(): Unit = {
     descheduleJobs()

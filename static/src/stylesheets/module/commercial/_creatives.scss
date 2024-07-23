@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .creative__tracking-pixel {
     position: absolute;
     width: 1px;
@@ -107,7 +109,7 @@
     .expandable_video {
         position: absolute;
         z-index: 10;
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline*0.5;
 
         &.expandable_video--horiz-pos-left {
             left: 0;
@@ -132,7 +134,7 @@
         background: $brightness-7;
         color: #ffffff;
         opacity: .75;
-        padding: $gs-baseline/2 0 0;
+        padding: $gs-baseline*0.5 0 0;
         width: gs-span(1);
         margin-left: $gs-gutter*-1.5;
         text-align: center;
@@ -255,7 +257,7 @@
         background: $brightness-7;
         color: #ffffff;
         opacity: .75;
-        padding: $gs-baseline/2 0 0;
+        padding: $gs-baseline*0.5 0 0;
         width: gs-span(1);
         margin-left: $gs-gutter*-1.5;
         text-align: center;
@@ -584,7 +586,7 @@
     @include mq($until: tablet) {
         // Smaller video should not flush to container bottom
         .expandable_video {
-            bottom: $gs-row-height / 2;
+            bottom: $gs-row-height * 0.5;
         }
     }
 }
@@ -727,7 +729,7 @@
     @include font-size(12, 20);
     height: $mpu-ad-label-height;
     background-color: $brightness-97;
-    padding: 0 ($gs-baseline/3)*2;
+    padding: 0 math.div($gs-baseline, 3)*2;
     border-top: 1px solid $brightness-86;
     color: $brightness-46;
     text-align: left;

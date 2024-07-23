@@ -35,7 +35,7 @@ object AssetMetrics {
         new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusDays(timePeriodInDays).toDate)
           .withEndTime(new DateTime().toDate)
-          .withPeriod(86400) //One day
+          .withPeriod(86400) // One day
           .withStatistics("Average")
           .withNamespace("Assets")
           .withMetricName(metric.getMetricName)
@@ -93,9 +93,8 @@ object AssetMetricsCache extends GuLogging {
         log.info("Successfully refreshed Asset Metrics data")
         cache.send(cache.get() + (ReportTypes.sizeOfFiles -> metrics))
       }
-      .recover {
-        case NonFatal(e) =>
-          log.error("Error refreshing Asset Metrics data", e)
+      .recover { case NonFatal(e) =>
+        log.error("Error refreshing Asset Metrics data", e)
       }
   }
 

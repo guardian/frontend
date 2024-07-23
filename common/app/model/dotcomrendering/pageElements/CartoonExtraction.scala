@@ -34,8 +34,8 @@ object CartoonExtraction {
   }
 
   private def getImageAssets(images: List[CartoonImage]): List[ImageAsset] = {
-    images.zipWithIndex.map {
-      case (a, i) => ImageAsset.make(a, i)
+    images.zipWithIndex.map { case (a, i) =>
+      ImageAsset.make(a, i)
     }
   }
 

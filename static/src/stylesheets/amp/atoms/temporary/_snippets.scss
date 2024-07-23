@@ -3,7 +3,7 @@
 
 .explainer-snippet__image {
     float: left;
-    margin-right: $gs-gutter / 2;
+    margin-right: $gs-gutter * 0.5;
 
     display: inline-block;
     position: relative;
@@ -99,7 +99,7 @@
         height: 16px;
         align-items: center;
         justify-content: center;
-        margin-right: $gs-gutter / 4;
+        margin-right: $gs-gutter * 0.25;
 
         > svg {
             height: 12px;

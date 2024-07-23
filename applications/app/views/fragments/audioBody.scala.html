@@ -63,17 +63,6 @@
                             </a>
                         </li>
                     }
-                    @audio.googlePodcastsUrl.map { googlePodcastsUrl =>
-                        <li class="podcast__meta-item podcast__meta-item--googlePodcasts">
-                            <a class="podcast__meta__item-link podcast__section-link"
-                                href="@googlePodcastsUrl"
-                                data-link-name="@trackingCode("googlePodcasts")"
-                                >
-                                @fragments.inlineSvg("google-podcasts", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
-                                Google Podcasts
-                            </a>
-                        </li>
-                    }
                     @audio.spotifyUrl.map { spotifyUrl =>
                         <li class="podcast__meta-item podcast__meta-item--spotify">
                             <a class="podcast__meta__item-link podcast__section-link"

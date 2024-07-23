@@ -13,8 +13,8 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
-import jobs.{MessageUsLifecycle, StoreNavigationLifecycleComponent, TopicLifecycle}
-import model.{ApplicationIdentity, MessageUsConfigData, TopicsApiResponse}
+import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
+import model.{ApplicationIdentity, TopicsApiResponse}
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
@@ -24,14 +24,7 @@ import router.Routes
 import services.fronts.FrontJsonFapiLive
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import services.{
-  MessageUsService,
-  NewspaperBooksAndSectionsAutoRefresh,
-  OphanApi,
-  S3Client,
-  S3ClientImpl,
-  SkimLinksCacheLifeCycle,
-}
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, S3Client, S3ClientImpl, SkimLinksCacheLifeCycle}
 import topics.TopicService
 
 class AppLoader extends FrontendApplicationLoader {
@@ -44,12 +37,7 @@ trait TopicServices {
   lazy val topicService = wire[TopicService]
 }
 
-trait MessageUsServices {
-  lazy val messageUsS3Client: S3Client[MessageUsConfigData] = new S3ClientImpl(Configuration.aws.messageUsStoreBucket)
-  lazy val messageUsService = wire[MessageUsService]
-}
-
-trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices with MessageUsServices {
+trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices {
 
   lazy val newsletterApi = wire[NewsletterApi]
   lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
@@ -77,7 +65,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[StoreNavigationLifecycleComponent],
     wire[TopicLifecycle],
     wire[NewsletterSignupLifecycle],
-    wire[MessageUsLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

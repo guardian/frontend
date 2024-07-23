@@ -28,9 +28,8 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
 
   def playerIndex: Action[AnyContent] =
     Action.async { implicit request =>
-      fetchCompetitionsAndTeams.map {
-        case (competitions, teams) =>
-          Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
+      fetchCompetitionsAndTeams.map { case (competitions, teams) =>
+        Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
       }
     }
 

@@ -63,14 +63,14 @@ trait FaciaController
     )
   }
 
-  //ApplePay MerchantId
+  // ApplePay MerchantId
   def appleDeveloperMerchantId(): Action[AnyContent] =
     if (Configuration.environment.isProd)
       assets.at(path = "/public", file = "apple-developer-merchantid-domain-association-prod.txt")
     else
       assets.at(path = "/public", file = "apple-developer-merchantid-domain-association-code.txt")
 
-  //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
+  // Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
   def renderFrontPressSpecial(path: String): Action[AnyContent] =
     Action.async { implicit request => renderFrontPressResult(path) }
 
@@ -253,7 +253,7 @@ trait FaciaController
         val pageType = PageType(faciaPage, request, context)
         log.info(
           s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap
-            .getOrElse("X-GU-GeoLocation", "country:row")}",
+              .getOrElse("X-GU-GeoLocation", "country:row")}",
         )
         withVaryHeader(
           remoteRenderer.getFront(
@@ -278,7 +278,7 @@ trait FaciaController
         val result = if (request.forceDCR) {
           log.info(
             s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
-              .getOrElse("X-GU-GeoLocation", "country:row")}",
+                .getOrElse("X-GU-GeoLocation", "country:row")}",
           )
           JsonComponent.fromWritable(
             DotcomFrontsRenderingDataModel(
@@ -458,13 +458,10 @@ trait FaciaController
       )
   }
 
-  /**
-    * Note, the way this method works is a bit circuitous. Firstly, it finds a
-    * front that contains the collection (via the ConfigAgent, which is
-    * basically a cache of configuration for Guardian Fronts). It then looks up
-    * that front in Frontend's S3 and extracts the full collection from it (with
-    * curated and backfill content etc.). It would be easier if collections were
-    * stored somewhere independently of Fronts.
+  /** Note, the way this method works is a bit circuitous. Firstly, it finds a front that contains the collection (via
+    * the ConfigAgent, which is basically a cache of configuration for Guardian Fronts). It then looks up that front in
+    * Frontend's S3 and extracts the full collection from it (with curated and backfill content etc.). It would be
+    * easier if collections were stored somewhere independently of Fronts.
     */
   private def getPressedCollection(
       collectionId: String,

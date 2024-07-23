@@ -1,4 +1,6 @@
 
+@use "sass:math";
+
 .signin-gate {
     clear: left;
     margin-bottom: $gs-baseline * 2;
@@ -127,7 +129,7 @@
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0);
     cursor: pointer;
-    transition: .3s ease-in-out;;
+    transition: .3s ease-in-out;
     justify-content: space-between;
     position: relative;
     white-space: nowrap;
@@ -191,7 +193,7 @@
 }
 
 .signin-gate__benefits--text {
-    padding-top: $gs-baseline / 3;
+    padding-top: math.div($gs-baseline, 3);
     font-weight: bold;
     color: $sport-main;
     font-size: 17px;
@@ -235,7 +237,7 @@
     font-size: 20px;
     font-weight: bold;
     color: $brightness-7;
-    padding-top: $gs-baseline / 3;
+    padding-top: math.div($gs-baseline, 3);
     @include mq(tablet) {
         font-size: 20px;
     }
@@ -329,7 +331,7 @@
 }
 
 .overlay--comment--var {
-    height: 70% !important;;
+    height: 70% !important;
     background-image: linear-gradient(to top, $opinion-faded , $opinion-faded 40%, rgba(255, 255, 255, 0)) !important;
 }
 

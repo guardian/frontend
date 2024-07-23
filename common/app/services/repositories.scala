@@ -23,12 +23,11 @@ trait Index extends ConciergeRepository {
     val conversions: Map[String, String] =
       Map("content" -> "type")
 
-    val convertedTag = conversions.foldLeft(tag) {
-      case (newTag, (from, to)) =>
-        if (newTag.startsWith(s"$from/"))
-          newTag.replace(from, to)
-        else
-          newTag
+    val convertedTag = conversions.foldLeft(tag) { case (newTag, (from, to)) =>
+      if (newTag.startsWith(s"$from/"))
+        newTag.replace(from, to)
+      else
+        newTag
     }
 
     convertedTag match {
@@ -90,7 +89,7 @@ trait Index extends ConciergeRepository {
 
     promiseOfResponse
       .recover({
-        //this is the best handle we have on a wrong 'page' number
+        // this is the best handle we have on a wrong 'page' number
         case ContentApiError(400, _, _) => Left(Found(s"/$leftSide+$rightSide"))
       })
       .recover(convertApiExceptions)
@@ -100,7 +99,7 @@ trait Index extends ConciergeRepository {
   private def findTag(trail: ContentType, tagId: String) =
     trail.content.tags.tags
       .filter(tag => tagId.contains(tag.id))
-      .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
+      .sortBy(tag => tagId.replace(tag.id, "")) // effectively sorts by best match
       .headOption
 
   private def pagination(response: ItemResponse) =
@@ -134,8 +133,8 @@ trait Index extends ConciergeRepository {
       *
       * As items can only have one section, but can have multiple section tags, this is how we get content of what are
       * essentially 'subsections' in the nav. e.g., if you looked up 'culture' as a section, you would only get the
-      * items that directly belong to that section, which would exclude items in the 'books' section. If you look up
-      * the 'culture/culture' tag, however, you'll get all of the things in 'culture', but also all of the things in
+      * items that directly belong to that section, which would exclude items in the 'books' section. If you look up the
+      * 'culture/culture' tag, however, you'll get all of the things in 'culture', but also all of the things in
       * 'books', as everything in 'books' is also tagged 'culture/culture'.
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
@@ -177,7 +176,7 @@ trait Index extends ConciergeRepository {
 
     promiseOfResponse
       .recover({
-        //this is the best handle we have on a wrong 'page' number
+        // this is the best handle we have on a wrong 'page' number
         case ContentApiError(400, _, _) if pageNum != 1 => Left(Found(s"/$path"))
       })
       .recover(convertApiExceptions)
@@ -205,7 +204,7 @@ trait Index extends ConciergeRepository {
     val leadContentCutOff = DateTime.now - QueryDefaults.leadContentMaxAge
     val editorsPicks = response.editorsPicks.getOrElse(Nil).map(IndexPageItem(_))
     val leadContent =
-      if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
+      if (editorsPicks.isEmpty && page == 1) // only promote lead content on first page
         response.leadContent
           .getOrElse(Nil)
           .take(1)

@@ -20,10 +20,9 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
       }
     response map {
       _.content map (Content(_))
-    } recover {
-      case e: Exception =>
-        log.info(s"CAPI search for item '$contentId' failed: ${e.getMessage}")
-        None
+    } recover { case e: Exception =>
+      log.info(s"CAPI search for item '$contentId' failed: ${e.getMessage}")
+      None
     }
   }
 
@@ -67,10 +66,9 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
     val baseQuery = contentApiClient.tags.q(term).tagType("keyword").pageSize(50)
     val query = section.foldLeft(baseQuery)((acc, sectionName) => acc section sectionName)
 
-    val result = contentApiClient.getResponse(query).map(_.results.toSeq) recover {
-      case e =>
-        log.warn(s"Failed to look up [$term]: ${e.getMessage}")
-        Nil
+    val result = contentApiClient.getResponse(query).map(_.results.toSeq) recover { case e =>
+      log.warn(s"Failed to look up [$term]: ${e.getMessage}")
+      Nil
     }
 
     result

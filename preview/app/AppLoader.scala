@@ -20,7 +20,7 @@ import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
 import http.{Filters, GuardianAuthWithExemptions, PreviewContentSecurityPolicyFilter, PreviewNoCacheFilter, routes}
-import jobs.{MessageUsLifecycle, TopicLifecycle}
+import jobs.TopicLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
@@ -42,11 +42,10 @@ trait PreviewLifecycleComponents
     with FapiServices
     with OnwardServices
     with ApplicationsServices
-    with TopicServices
-    with MessageUsServices {
+    with TopicServices {
   self: FrontendComponents =>
 
-  //Override conflicting members
+  // Override conflicting members
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val ophanApi = wire[OphanApi]
@@ -68,7 +67,6 @@ trait PreviewLifecycleComponents
       wire[CloudWatchMetricsLifecycle],
       wire[NewsletterSignupLifecycle],
       wire[TopicLifecycle],
-      wire[MessageUsLifecycle],
     )
 
   def pekkoActorSystem: PekkoActorSystem

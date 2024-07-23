@@ -92,8 +92,8 @@ class GalleryController(
       .map { response =>
         val gallery = response.content.map(Content(_))
         val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-        val model = gallery collect {
-          case g: Gallery => GalleryPage(g, StoryPackages(g.metadata.id, response), index, isTrail)
+        val model = gallery collect { case g: Gallery =>
+          GalleryPage(g, StoryPackages(g.metadata.id, response), index, isTrail)
         }
 
         ModelOrResult(model.map((_, blocks)), response)

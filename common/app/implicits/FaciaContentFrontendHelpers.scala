@@ -22,7 +22,7 @@ object FaciaContentFrontendHelpers {
       imageOverride.orElse(defaultTrailPicture)
     }
 
-    //TODO: Use the blocks field of CAPI to derive this in a more structured way
+    // TODO: Use the blocks field of CAPI to derive this in a more structured way
     def mainYouTubeMediaAtom: Option[MediaAtom] =
       for {
         main <- faciaContent.properties.maybeContent.map(_.fields.main)

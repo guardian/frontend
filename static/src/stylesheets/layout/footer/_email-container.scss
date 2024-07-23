@@ -6,7 +6,7 @@
 
     @include mq(leftCol) {
         float: left;
-        padding-top: $gs-baseline / 4;
+        padding-top: $gs-baseline * 0.25;
         border: 0;
         width: gs-span(4);
     }

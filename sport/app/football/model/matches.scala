@@ -42,8 +42,8 @@ trait MatchesList extends Football with RichList {
           .filter(fMatch => filterMatches(fMatch, competition))
       fMatch <- matches
     } yield (fMatch, competition)
-    matchesWithCompetition.sortWith {
-      case ((fMatch1, _), (fMatch2, _)) => timeComesFirstInList(fMatch1.date, fMatch2.date)
+    matchesWithCompetition.sortWith { case ((fMatch1, _), (fMatch2, _)) =>
+      timeComesFirstInList(fMatch1.date, fMatch2.date)
     }
   }
   lazy val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
@@ -52,9 +52,8 @@ trait MatchesList extends Football with RichList {
     val startDate = date
     val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
     val eligibleDates = matchDates.dropWhile(dateComesFirstInList(_, startDate)).take(daysToDisplay)
-    allRelevantMatches.filter {
-      case (fMatch, _) =>
-        eligibleDates.contains(fMatch.date.toLocalDate)
+    allRelevantMatches.filter { case (fMatch, _) =>
+      eligibleDates.contains(fMatch.date.toLocalDate)
     }
   }
   def matchesGroupedByDate(implicit request: RequestHeader) = {
@@ -63,22 +62,20 @@ trait MatchesList extends Football with RichList {
   def matchesGroupedByDateAndCompetition(implicit
       request: RequestHeader,
   ): Seq[(LocalDate, List[(Competition, List[FootballMatch])])] =
-    matchesGroupedByDate.map {
-      case (d, ms) =>
-        val competitionsWithMatches = ms
-          .groupBy(_._2)
-          .mapV(_.map {
-            case (matches, _) => matches
-          })
-          .toList
-          .sortWith {
-            case ((comp1, matches1), (comp2, matches2)) =>
-              val competitionOrder = competitions.map(_.id).toList
-              competitionOrder.indexOfOpt(comp1.id).getOrElse(competitionOrder.size) < competitionOrder
-                .indexOfOpt(comp2.id)
-                .getOrElse(competitionOrder.size)
-          }
-        (d, competitionsWithMatches)
+    matchesGroupedByDate.map { case (d, ms) =>
+      val competitionsWithMatches = ms
+        .groupBy(_._2)
+        .mapV(_.map { case (matches, _) =>
+          matches
+        })
+        .toList
+        .sortWith { case ((comp1, matches1), (comp2, matches2)) =>
+          val competitionOrder = competitions.map(_.id).toList
+          competitionOrder.indexOfOpt(comp1.id).getOrElse(competitionOrder.size) < competitionOrder
+            .indexOfOpt(comp2.id)
+            .getOrElse(competitionOrder.size)
+        }
+      (d, competitionsWithMatches)
     }
 
   lazy val nextPage: Option[String] = {

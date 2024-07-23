@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin colorPalatte($kickerColor, $pillarColor, $mediaColor) {
     &.content--type-analysis {
         .content__headline {
@@ -107,7 +109,7 @@
 
     .content__label-interview {
         background-color: $pillarColor;
-        box-shadow: $gs-baseline / 3 0 0 $pillarColor, -$gs-baseline / 2 0 0 $pillarColor;
+        box-shadow: math.div($gs-baseline, 3) 0 0 $pillarColor, -$gs-baseline * 0.5 0 0 $pillarColor;
     }
 
     .meta__extras--crossword {
@@ -159,7 +161,7 @@
     .d-show-more-replies__button.button--show-more svg,
     .inline-reply.blue {
         fill: $brightness-46;
-        left: $gs-gutter/3;
+        left: math.div($gs-gutter, 3);
     }
 
     .discussion__top-border {
@@ -195,7 +197,7 @@
     }
 
     .button--show-more svg {
-        left: $gs-gutter/2;
+        left: $gs-gutter*0.5;
     }
 
     .block-share__item,
@@ -265,7 +267,7 @@
     }
 
     .rich-link__header {
-        padding-top: $gs-baseline / 6;
+        padding-top: math.div($gs-baseline, 6);
     }
 
     .rich-link__byline,

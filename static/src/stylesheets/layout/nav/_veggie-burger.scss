@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .veggie-burger {
     background-color: $highlight-main;
     cursor: pointer;
@@ -26,7 +28,7 @@
 .veggie-burger__icon {
     top: 50%;
     display: block;
-    margin-top: -($gs-baseline / 6) / 2;
+    margin-top: -(math.div($gs-baseline, 6)) * 0.5;
     left: 0;
     right: 0;
     margin-left: auto;
@@ -37,18 +39,18 @@
     &:after {
         background-color: currentColor;
         content: '';
-        height: $gs-baseline / 6;
+        height: math.div($gs-baseline, 6);
         left: 0;
         position: absolute;
         width: 20px;
     }
 
     &:before {
-        top: -$gs-baseline / 2;
+        top: -$gs-baseline * 0.5;
     }
 
     &:after {
-        bottom: -$gs-baseline / 2;
+        bottom: -$gs-baseline * 0.5;
     }
 
     // transform burger into cross

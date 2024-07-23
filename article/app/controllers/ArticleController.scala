@@ -89,8 +89,7 @@ class ArticleController(
     List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
   }
 
-  /**
-    * Returns a JSON representation of the payload that's sent to DCR when rendering the Article.
+  /** Returns a JSON representation of the payload that's sent to DCR when rendering the Article.
     */
   private def getDCRJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
@@ -129,7 +128,6 @@ class ArticleController(
           blocks,
           pageType,
           newsletter,
-          messageUs = None,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))

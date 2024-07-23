@@ -9,6 +9,6 @@
     padding-top: $gs-baseline * 2;
 
     @include mq(tablet) {
-        padding-top: ($gs-baseline / 2);
+        padding-top: ($gs-baseline * 0.5);
     }
 }

@@ -13,7 +13,7 @@ object LowFrequency extends FrontType
 object StandardFrequency extends FrontType
 object HighFrequency extends FrontType {
   def highFrequencyPaths: List[String] =
-    List("uk", "us", "au", "uk/sport", "us/sport", "au/sport")
+    List("uk", "us", "au", "europe", "international", "uk/sport", "us/sport", "au/sport")
 }
 
 case class CronUpdate(path: String, frontType: FrontType)
@@ -52,8 +52,8 @@ object RefreshFrontsJob extends GuLogging {
     }
   }
 
-  //This is used by a route in admin to push ALL paths to the facia-press SQS queue.
-  //The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
+  // This is used by a route in admin to push ALL paths to the facia-press SQS queue.
+  // The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
   def runAll(pekkoAsync: PekkoAsync)(implicit executionContext: ExecutionContext): Option[Seq[Unit]] = {
     Configuration.aws.frontPressSns.map(Function.const {
       log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")

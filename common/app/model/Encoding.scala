@@ -36,6 +36,6 @@ object EncodingOrdering extends Ordering[Encoding] {
     if (p < 0) precedence.length else p
   }
 
-  //Returns a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
+  // Returns a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second.
   def compare(x: Encoding, y: Encoding): Int = precedenceOf(x) - precedenceOf(y)
 }

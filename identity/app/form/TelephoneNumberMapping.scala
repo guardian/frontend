@@ -19,7 +19,7 @@ trait TelephoneNumberMapping {
       "localNumber" -> optional(text),
     )(TelephoneNumberFormData.apply)(TelephoneNumberFormData.unapply) verifying (
       Messages("error.telephoneNumber"),
-      data => data.isValid
+      data => data.isValid,
     )
 
 }

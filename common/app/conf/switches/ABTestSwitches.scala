@@ -27,21 +27,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-alternative-wording",
-    "Test different messages on the sign in gate",
-    owners = Seq(Owner.withGithub("raphaelkabo")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 12, 1)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-mpu-when-no-epic",
     "Test MPU when there is no epic at the end of Article on the page.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 5, 31)),
+    sellByDate = Some(LocalDate.of(2024, 7, 31)),
     exposeClientSide = true,
   )
 
@@ -51,15 +41,15 @@ trait ABTestSwitches {
     "Show new ad block ask component in ad slots when we detect ad blocker usage",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 5, 31)),
+    sellByDate = Some(LocalDate.of(2024, 7, 31)),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-deeply-read-right-column",
-    "Add deeply read component to the right hand column",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    "ab-sticky-live-blog-ask-test",
+    "A sticky reader revenue ask on the left column of a liveblog",
+    owners = Seq(Owner.withEmail("growth@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 7, 31)),
     exposeClientSide = true,

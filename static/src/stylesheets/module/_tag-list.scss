@@ -1,7 +1,9 @@
+@use "sass:math";
+
 .button--tag {
     @include ellipsis();
-    margin-right: $gs-gutter / 5;
-    margin-bottom: $gs-row-height / 4.5;
+    margin-right: $gs-gutter * 0.2;
+    margin-bottom: math.div($gs-row-height, 4.5);
     max-width: gs-span(4);
 
     @include mq(leftCol) {
@@ -27,9 +29,9 @@
             darken($brightness-86, 10%)
         );
         border: 0;
-        padding: 0 $gs-baseline / 2;
-        margin-left: $gs-gutter / -4;
-        border-radius: $gs-gutter * 2 / 5;
+        padding: 0 $gs-baseline * 0.5;
+        margin-left: math.div($gs-gutter, -4);
+        border-radius: $gs-gutter * 2 * 0.2;
     }
 }
 

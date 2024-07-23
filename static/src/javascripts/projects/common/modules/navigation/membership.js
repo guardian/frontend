@@ -44,16 +44,6 @@ const storeBannerCanBeLoadedAgainAfter = () => {
     );
 };
 
-const gaTrackMMA = (category, action) => label => {
-    window.ga(
-        `${config.get('googleAnalytics.trackers.editorial')}.send`,
-        'event',
-        category,
-        action,
-        label
-    );
-};
-
 const updateLink = accountDataUpdateWarning();
 
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {

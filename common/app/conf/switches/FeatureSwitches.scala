@@ -493,34 +493,22 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val DarkModeInApps = Switch(
-    SwitchGroup.Feature,
-    "dark-mode-in-apps",
-    "If this switch is on, we will allow dark mode in apps articles",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-    safeState = Off,
-    // This is a random date in the future but this switch should be removed far before then
-    sellByDate = Some(LocalDate.of(2024, 6, 5)),
-    exposeClientSide = true,
-  )
-
-  val DiscussionInApps = Switch(
-    SwitchGroup.Feature,
-    "discussion-in-apps",
-    "If this switch is on, we will render discussion in apps articles",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-    safeState = Off,
-    // This is a random date in the future but this switch should be removed far before then
-    sellByDate = Some(LocalDate.of(2024, 6, 5)),
-    exposeClientSide = true,
-  )
-
   val DCRVideoPages = Switch(
     SwitchGroup.Feature,
     "dcr-video-pages",
     "If this switch is on, we will render video pages with DCR",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com"), Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
+  val DCRTagPages = Switch(
+    group = SwitchGroup.Feature,
+    name = "dcr-tag-pages",
+    description = "Render tag pages with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false,
   )

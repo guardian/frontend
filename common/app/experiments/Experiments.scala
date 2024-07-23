@@ -11,15 +11,23 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      UseSourcepointPropertyId,
       DarkModeWeb,
-      DCRTagPages,
       UpdatedHeaderDesign,
-      UpdateLogoAdPartner,
       MastheadWithHighlights,
       TagLinkDesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object UseSourcepointPropertyId
+    extends Experiment(
+      name = "use-sourcepoint-property-id",
+      description = "Use Sourcepoint propertyId instead of propertyHref",
+      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 7, 30),
+      participationGroup = Perc5A,
+    )
 
 object UpdatedHeaderDesign
     extends Experiment(
@@ -49,29 +57,11 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object UpdateLogoAdPartner
-    extends Experiment(
-      name = "update-logo-ad-partner",
-      description = "Update logo for advertising partner and exclusive advertising partner US",
-      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 30),
-      participationGroup = Perc0A,
-    )
-
-object DCRTagPages
-    extends Experiment(
-      name = "dcr-tag-pages",
-      description = "Render tag pages with DCR",
-      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 5, 31),
-      participationGroup = Perc20A,
-    )
-
 object TagLinkDesign
     extends Experiment(
       name = "tag-link-design",
       description = "Render an updated sticky design for tag links",
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 31),
-      participationGroup = Perc0E,
+      sellByDate = LocalDate.of(2024, 7, 25),
+      participationGroup = Perc20A,
     )

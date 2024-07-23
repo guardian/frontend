@@ -63,20 +63,6 @@ class TopicServiceTest
     results should be(None)
   }
 
-  "refreshMessageUsData" should "return successful future given one of the S3 object calls fails" in {
-    when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1", "key2"))
-    when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)
-    when(fakeClient.getObject("key2")) thenReturn Future.failed(new Throwable("error happend"))
-
-    val topicService = new TopicService(fakeClient)
-
-    val refreshJob = Await.result(topicService.refreshTopics(), 1.second)
-    val results = topicService.getAllTopics
-
-    refreshJob shouldBe a[Unit]
-    results should be(None)
-  }
-
   "refreshTopics" should "update in memory topics and return successful future given one of the S3 object calls fails" in {
     when(fakeClient.getListOfKeys()) thenReturn Future.successful(List("key1"))
     when(fakeClient.getObject("key1")) thenReturn Future.successful(successResponse)

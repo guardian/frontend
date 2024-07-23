@@ -20,7 +20,6 @@ object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
   val usElections2024 = NavLink("US elections 2024", "/us-news/us-elections-2024")
-  val trumpTrials = NavLink("Donald Trump trials", "/us-news/donald-trump-trials")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -110,6 +109,7 @@ object NavLinks {
 
   /* SPORT */
 
+  private val olympics2024 = NavLink("Olympics 2024", "/sport/olympic-games-2024")
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -313,10 +313,10 @@ object NavLinks {
     List(
       usNews,
       usElections2024,
-      trumpTrials,
       world,
       usEnvironment,
       ukraine,
+      olympics2024,
       usSoccer,
       usBusiness,
       usTech,
@@ -383,13 +383,14 @@ object NavLinks {
     ),
   )
 
-  //Sport Pillar
+  // Sport Pillar
   val ukSportPillar = NavLink(
     "Sport",
     "/sport",
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
+      olympics2024,
       football,
       cricket,
       rugbyUnion,
@@ -405,6 +406,7 @@ object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      olympics2024,
       football,
       AFL,
       NRL,
@@ -418,6 +420,7 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      olympics2024,
       usSoccer,
       NFL,
       tennis,
@@ -431,6 +434,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
+      olympics2024,
       football,
       cricket,
       rugbyUnion,

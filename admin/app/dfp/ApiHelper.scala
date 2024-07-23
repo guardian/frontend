@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.v202308._
+import com.google.api.ads.admanager.axis.v202405._
 import common.GuLogging
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
@@ -36,6 +36,6 @@ private[dfp] object ApiHelper extends GuLogging {
 
   def toSeq[A](as: Array[A]): Seq[A] = Option(as) map (_.toSeq) getOrElse Nil
 
-  //noinspection IfElseToOption
+  // noinspection IfElseToOption
   def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }

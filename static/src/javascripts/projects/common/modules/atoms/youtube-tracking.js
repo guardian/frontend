@@ -1,13 +1,11 @@
 import { mediator } from 'lib/mediator';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
-import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
 
 const buildEventId = (event, videoId) =>
     `${event}:${videoId}`;
 
 const initYoutubeEvents = (videoId) => {
-    const gaTracker = config.get('googleAnalytics.trackers.editorial');
     const eventAction = 'video content';
     const events = {
         metricMap: {
@@ -45,18 +43,6 @@ const initYoutubeEvents = (videoId) => {
                 isPreroll: false,
             };
             ophanRecord(mediaEvent);
-            window.ga(
-                `${gaTracker}.send`,
-                'event',
-                buildGoogleAnalyticsEvent(
-                    mediaEvent,
-                    events.metricMap,
-                    id,
-                    'gu-video-youtube',
-                    () => eventAction,
-                    videoId
-                )
-            );
         });
     });
 

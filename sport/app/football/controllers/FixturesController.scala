@@ -1,19 +1,26 @@
 package football.controllers
 
 import common.Edition
+import common.ImplicitControllerExecutionContext
 import feed.CompetitionsService
 import football.model._
 import model._
+import model.content.InteractiveAtom
+import contentapi.ContentApiClient
 import java.time.LocalDate
 import pa.FootballTeam
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import scala.concurrent.Future
+import conf.switches.Switches
 
 class FixturesController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
-    with CompetitionFixtureFilters {
+    with CompetitionFixtureFilters
+    with ImplicitControllerExecutionContext {
 
   private def fixtures(date: LocalDate): FixturesList = FixturesList(date, competitionsService.competitions)
   private val page = new FootballPage("football/fixtures", "football", "All fixtures")
@@ -80,14 +87,21 @@ class FixturesController(
 
   private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] =
     getTagFixtures(date, tag)
-      .map(result =>
-        Action { implicit request =>
-          renderMatchList(
-            result._1,
-            result._2,
-            filters,
-          )
-        },
-      )
+      .map { case (page, fixtures) =>
+        Action.async { implicit request =>
+          tag match {
+            case "euro-2024" if Switches.Euro2024Header.isSwitchedOn =>
+              val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
+              val edition = Edition(request)
+              contentApiClient
+                .getResponse(contentApiClient.item(id, edition))
+                .map(_.interactive.map(InteractiveAtom.make(_)))
+                .recover { case _ => None }
+                .map(renderMatchList(page, fixtures, filters, _))
+            case _ =>
+              Future.successful(renderMatchList(page, fixtures, filters, None))
+          }
+        }
+      }
       .getOrElse(Action(NotFound))
 }

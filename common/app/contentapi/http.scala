@@ -15,9 +15,8 @@ import scala.util.{Failure, Success, Try}
 
 case class Response(body: Array[Byte], status: Int, statusText: String)
 
-/**
-  * CAPI preview uses IAM authorization.
-  * The signer generates AWS sig4v signed headers based on the request and the capi credentials
+/** CAPI preview uses IAM authorization. The signer generates AWS sig4v signed headers based on the request and the capi
+  * credentials
   */
 object PreviewSigner {
   def apply() = new IAMSigner(capiPreviewCredentials, common.Environment.awsRegion)
@@ -39,7 +38,7 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
     signer.fold(headers)(_.addIAMHeaders(headers.toMap, URI.create(url)))
 
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
-    //append with a & as there are always params in there already
+    // append with a & as there are always params in there already
     val urlWithDebugInfo = s"$url&${RequestDebugInfo.debugParams}"
 
     val contentApiTimeout = Configuration.contentApi.timeout

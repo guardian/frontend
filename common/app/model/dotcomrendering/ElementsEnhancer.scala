@@ -2,11 +2,10 @@ package model.dotcomrendering
 
 import play.api.libs.json.{Json, _}
 
-/**
-  * The `ElementsEnhancer` object provides functions to enhance JSON representations of elements used in Dotcom Rendering.
-  * It adds unique identifiers to elements, as expected by the DCR schemas. More information on the decision for this can be found in PageElement-Identifiers.md or by searching for "03feb394-a17d-4430-8384-edd1891e0d01"
-  *
- */
+/** The `ElementsEnhancer` object provides functions to enhance JSON representations of elements used in Dotcom
+  * Rendering. It adds unique identifiers to elements, as expected by the DCR schemas. More information on the decision
+  * for this can be found in PageElement-Identifiers.md or by searching for "03feb394-a17d-4430-8384-edd1891e0d01"
+  */
 
 object ElementsEnhancer {
 

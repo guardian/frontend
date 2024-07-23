@@ -145,7 +145,7 @@ object Editionalise {
 
   import Edition.defaultEdition
 
-  //TODO - understand RSS
+  // TODO - understand RSS
 
   def apply(id: String, edition: Edition): String = {
     if (edition.isEditionalised(id)) id match {

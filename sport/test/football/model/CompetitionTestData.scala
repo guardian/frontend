@@ -274,19 +274,18 @@ trait CompetitionTestData {
   }
 
   def makeLeagueTable(stage: Stage, round: Int => Round): Seq[LeagueTableEntry] =
-    teams.zipWithIndex.map {
-      case (matchDayTeam, index) =>
-        val leagueTeam = LeagueTeam(
-          matchDayTeam.id,
-          matchDayTeam.name,
-          index,
-          LeagueStats(4, 5, 2, 1, 5, 5),
-          LeagueStats(4, 5, 2, 1, 5, 5),
-          LeagueStats(4, 5, 2, 1, 5, 5),
-          0,
-          20 - index,
-        )
-        LeagueTableEntry(stage.stageNumber, round(index), leagueTeam)
+    teams.zipWithIndex.map { case (matchDayTeam, index) =>
+      val leagueTeam = LeagueTeam(
+        matchDayTeam.id,
+        matchDayTeam.name,
+        index,
+        LeagueStats(4, 5, 2, 1, 5, 5),
+        LeagueStats(4, 5, 2, 1, 5, 5),
+        LeagueStats(4, 5, 2, 1, 5, 5),
+        0,
+        20 - index,
+      )
+      LeagueTableEntry(stage.stageNumber, round(index), leagueTeam)
     }
   def leagueTable(stage: Stage, round: Round): Seq[LeagueTableEntry] = makeLeagueTable(stage, _ => round)
   def groupTables(stage: Stage): Seq[LeagueTableEntry] = {

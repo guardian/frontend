@@ -445,6 +445,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -1013,12 +1019,6 @@
 					"classList": []
 				},
 				{
-					"title": "Donald Trump trials",
-					"url": "/us-news/donald-trump-trials",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "World",
 					"url": "/world",
 					"longTitle": "World news",
@@ -1122,6 +1122,12 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -1277,6 +1283,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Soccer",
 					"url": "/us/soccer",
@@ -1995,6 +2007,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -2798,6 +2816,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -3790,6 +3814,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",

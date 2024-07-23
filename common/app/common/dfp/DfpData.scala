@@ -80,12 +80,18 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   val isHighMerchandisingSlot = isSlot("merchandising-high")
 
+  val isLiveblogTopSlot = isSlot("liveblog-top")
+
   val isAdTest = isPositive("at")
 
   val isKeywordTag = isPositive("k")
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
   val isEditionTag = isPositive("edition")
+  val isSectionTag = isPositive("s")
+
+  val isLiveBlogTopTargetedSection =
+    isSectionTag && (values.contains("culture") || values.contains("sport") || values.contains("football"))
 }
 
 object CustomTarget {
@@ -108,6 +114,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
   val highMerchandisingTargets =
     filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
+
+  val liveblogTopTargetedSections = filterTags(_.isLiveBlogTopTargetedSection)(_.isLiveblogTopSlot)
 }
 
 object CustomTargetSet {
@@ -252,6 +260,9 @@ case class GuLineItem(
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
+  val liveBlogTopTargetedSections: Seq[String] =
+    targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct
+
   val targetsHighMerchandising: Boolean = {
     val targetSlotIsHighMerch = for {
       targetSet <- targeting.customTargetSets
@@ -270,6 +281,38 @@ case class GuLineItem(
     targetSlotIsInlineMerch.nonEmpty
   }
 
+  val targetsLiveBlogTop: Boolean = {
+    val matchingLiveblogTargeting = for {
+      targetSet <- targeting.customTargetSets
+      target <- targetSet.targets
+      if target.name == "slot" || target.name == "ct" || target.name == "s" || target.name == "bp"
+    } yield target
+
+    val isLiveblogTopSlot = matchingLiveblogTargeting.exists { target =>
+      target.name == "slot" && target.values.contains("liveblog-top")
+    }
+
+    val isLiveblogContentType = matchingLiveblogTargeting.exists { target =>
+      target.name == "ct" && target.values.contains("liveblog")
+    }
+
+    val allowedSections = Set("culture", "sport", "football")
+
+    val targetsOnlyAllowedSections = matchingLiveblogTargeting.exists { target =>
+      target.name == "s" && target.values.forall(allowedSections.contains)
+    }
+
+    val isMobileBreakpoint = matchingLiveblogTargeting.exists { target =>
+      target.name == "bp" && target.values.contains("mobile")
+    }
+
+    val isSponsorship = lineItemType == Sponsorship
+
+    val hasEditionTargeting = targeting.editions.nonEmpty
+
+    isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship && hasEditionTargeting
+  }
+
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnitsIncluded.exists { adUnit =>
       val path = adUnit.path
@@ -286,7 +329,7 @@ case class GuLineItem(
     costType == "CPD" &&
     placeholder.nonEmpty && (
       targeting.targetsSectionFrontDirectly("business") ||
-      placeholder.exists(_.targetsSectionFrontDirectly("business"))
+        placeholder.exists(_.targetsSectionFrontDirectly("business"))
     ) &&
     targeting.geoTargetsIncluded.exists { geoTarget =>
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia

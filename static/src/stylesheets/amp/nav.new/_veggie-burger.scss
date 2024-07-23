@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .veggie-burger {
     background-color: $highlight-main;
     bottom: 50px;
@@ -8,12 +10,12 @@
     border: 0;
     border-radius: 50%;
     outline: none;
-    right: $gs-gutter / 4;
+    right: $gs-gutter * 0.25;
     z-index: 1;
 
     @include mq(mobileMedium) {
-        bottom: -$gs-baseline / 4;
-        right: $gs-gutter / 2;
+        bottom: -$gs-baseline * 0.25;
+        right: $gs-gutter * 0.5;
         top: auto;
     }
 
@@ -33,17 +35,17 @@
     &:after {
         background-color: currentColor;
         content: '';
-        height: $gs-baseline / 6;
+        height: math.div($gs-baseline, 6);
         left: 0;
         position: absolute;
         width: $gs-gutter;
     }
 
     &:before {
-        top: -$gs-baseline / 2;
+        top: -$gs-baseline * 0.5;
     }
 
     &:after {
-        bottom: -$gs-baseline / 2;
+        bottom: -$gs-baseline * 0.5;
     }
 }

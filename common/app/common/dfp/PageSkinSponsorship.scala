@@ -3,9 +3,8 @@ package common.dfp
 import common.{Edition, GuLogging}
 import play.api.libs.json._
 
-/** A PageSkinSponsorship
-  *   is a special decoration of a DFP LineItem that we need to scan for ourselves,
-  *   because DFP doesn't have this concept.
+/** A PageSkinSponsorship is a special decoration of a DFP LineItem that we need to scan for ourselves, because DFP
+  * doesn't have this concept.
   */
 case class PageSkinSponsorship(
     lineItemName: String,

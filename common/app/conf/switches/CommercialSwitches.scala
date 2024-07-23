@@ -7,6 +7,16 @@ import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 
 trait CommercialSwitches {
 
+  val LiveBlogTopSponsorshipSwitch = Switch(
+    Commercial,
+    "live-blog-top-sponsorship",
+    "When on allows a sposorship ad to be displayed on live blogs",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val ShouldLoadGoogleTagSwitch = Switch(
     Commercial,
     "should-load-googletag",
@@ -129,16 +139,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val redplanetForAUSSwitch: Switch = Switch(
-    group = CommercialPrebid,
-    name = "redplanet-for-aus",
-    description = "Turn on Redplanet in AUS",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val commercialMetrics: Switch = Switch(
     group = Commercial,
     name = "commercial-metrics",
@@ -157,6 +157,17 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val updateLogoAdPartner: Switch = Switch(
+    group = Commercial,
+    name = "update-logo-ad-partner",
+    description =
+      "Enable the updated logo styling for advertising partner and exclusive advertising partner US labels.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = LocalDate.of(2024, 7, 31),
     exposeClientSide = true,
   )
 }
@@ -397,6 +408,16 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-kargo",
     description = "Include the Kargo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val prebidMagnite: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-magnite",
+    description = "Include the Magnite adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

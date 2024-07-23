@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.v202308._
+import com.google.api.ads.admanager.axis.v202405._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 
@@ -22,11 +22,11 @@ class DataMapper(
 
     def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
-      //noinspection MapFlatten
+      // noinspection MapFlatten
       val directAdUnits =
         toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnitService.activeAdUnit).flatten
 
-      //noinspection MapFlatten
+      // noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
         toSeq(inventoryTargeting.getTargetedPlacementIds).map(placementService.placementAdUnitIds(session)).flatten
       }
@@ -47,19 +47,19 @@ class DataMapper(
             customTargetingService.targetingKey(session)(criterion.getKeyId),
             criterion.getOperator.getValue,
             criterion.getValueIds.toSeq map (valueId =>
-              customTargetingService.targetingValue(session)(criterion.getKeyId, valueId),
+              customTargetingService.targetingValue(session)(criterion.getKeyId, valueId)
             ),
           )
 
-        val targets = criteria.getChildren collect {
-          case criterion: CustomCriteria => criterion
+        val targets = criteria.getChildren collect { case criterion: CustomCriteria =>
+          criterion
         } map toCustomTarget
         CustomTargetSet(criteria.getLogicalOperator.getValue, targets.toIndexedSeq)
       }
 
       criteriaSets.getChildren
-        .collect {
-          case criteria: CustomCriteriaSet => criteria
+        .collect { case criteria: CustomCriteriaSet =>
+          criteria
         }
         .map(toCustomTargetSet)
         .toSeq

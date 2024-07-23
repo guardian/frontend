@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .l-list {
     width: 100%;
 
@@ -20,7 +22,7 @@
         .l-row--cols-#{$column} {
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
-                    width: (100% / $column) * $span;
+                    width: math.div(100%, $column) * $span;
                     float: left;
 
                     flex: $span 1 auto;
@@ -34,7 +36,7 @@
     .l-list--columns-#{$column} {
         .l-list__item {
             @include mq(tablet) {
-                width: 100% / $column;
+                width: math.div(100%, $column);
 
                 &:nth-child(#{$column + 'n+1'}) {
                     clear: both;
@@ -50,7 +52,7 @@
                 }
 
 
-                flex-basis: (100% / $column);
+                flex-basis: math.div(100%, $column);
 
             }
         }

@@ -1,7 +1,7 @@
 package services.dotcomrendering
 
 import common.GuLogging
-import experiments.{ActiveExperiments, DCRTagPages}
+import conf.switches.Switches.DCRTagPages
 import implicits.Requests._
 import model.TagCombiner
 import play.api.mvc.RequestHeader
@@ -10,7 +10,7 @@ import services.IndexPage
 object TagPagePicker extends GuLogging {
 
   def getTier(tagPage: IndexPage)(implicit request: RequestHeader): RenderType = {
-    lazy val participatingInTest = ActiveExperiments.isParticipating(DCRTagPages)
+    lazy val isSwitchedOn = DCRTagPages.isSwitchedOn;
 
     val checks = dcrChecks(tagPage)
 
@@ -19,11 +19,11 @@ object TagPagePicker extends GuLogging {
       request.isJson,
       request.forceDCROff,
       request.forceDCR,
-      participatingInTest,
+      isSwitchedOn,
       dcrCouldRender(checks),
     )
 
-    logTier(tagPage, participatingInTest, dcrCouldRender(checks), checks, tier)
+    logTier(tagPage, isSwitchedOn, dcrCouldRender(checks), checks, tier)
 
     tier
   }
@@ -34,8 +34,6 @@ object TagPagePicker extends GuLogging {
 
   private def dcrChecks(tagPage: IndexPage): Map[String, Boolean] = {
     Map(
-      // until we complete https://github.com/guardian/dotcom-rendering/issues/5755
-      ("isNotAccessibilityPage", tagPage.page.metadata.id != "help/accessibility-help"),
       ("isNotTagCombiner", !tagPage.page.isInstanceOf[TagCombiner]),
     )
   }
@@ -45,7 +43,7 @@ object TagPagePicker extends GuLogging {
       isJson: Boolean,
       forceDCROff: Boolean,
       forceDCR: Boolean,
-      participatingInTest: Boolean,
+      isSwitchedOn: Boolean,
       dcrCouldRender: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
@@ -55,26 +53,24 @@ object TagPagePicker extends GuLogging {
       else LocalRender
     } else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
-    else if (dcrCouldRender && participatingInTest) RemoteRender
+    else if (dcrCouldRender && isSwitchedOn) RemoteRender
     else LocalRender
   }
 
   private def logTier(
       tagPage: IndexPage,
-      participatingInTest: Boolean,
+      isSwitchedOn: Boolean,
       dcrCouldRender: Boolean,
       checks: Map[String, Boolean],
       tier: RenderType,
   )(implicit request: RequestHeader): Unit = {
     val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web"
-    val checksToString = checks.map {
-      case (key, value) =>
-        (key, value.toString)
+    val checksToString = checks.map { case (key, value) =>
+      (key, value.toString)
     }
     val properties =
       Map(
-        "participatingInTest" -> participatingInTest.toString,
-        "testPercentage" -> DCRTagPages.participationGroup.percentage,
+        "isSwitchedOn" -> isSwitchedOn.toString,
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isTagPage" -> "true",
         "tier" -> tierReadable,

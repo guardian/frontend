@@ -1,13 +1,15 @@
+@use "sass:math";
+
 .headline-list__item {
     position: relative;
     box-sizing: border-box;
-    padding-top: $gs-baseline / 3;
+    padding-top: math.div($gs-baseline, 3);
     padding-bottom: $gs-baseline * 2;
 
     &:before {
         position: absolute;
         top: 0;
-        right: $gs-gutter / 2;
+        right: $gs-gutter * 0.5;
         left: 0;
         content: '';
         display: block;
@@ -27,7 +29,7 @@
     }
 
     @include mq(tablet) {
-        padding-top: $gs-baseline / 4;
+        padding-top: $gs-baseline * 0.25;
         padding-bottom: 0;
         min-height: gs-height(2) - $gs-baseline;
     }
@@ -42,7 +44,7 @@
     font-variant-numeric: lining-nums;
 
     @include mq(mobile) {
-        width: gs-span(1) - $gs-gutter / 2;
+        width: gs-span(1) - $gs-gutter * 0.5;
     }
 }
 
@@ -54,17 +56,17 @@
     font-weight: 400;
 
     .headline-list__text {
-        margin-top: -1 * ($gs-baseline / 3);
+        margin-top: -1 * math.div($gs-baseline, 3);
         margin-left: gs-span(1);
 
         @include mq(mobile) {
-            margin-left: gs-span(1) + $gs-gutter / 2;
+            margin-left: gs-span(1) + $gs-gutter * 0.5;
         }
     }
 
     .inline-numbers {
         float: left;
-        margin-top: $gs-baseline / 4;
+        margin-top: $gs-baseline * 0.25;
         fill: $brightness-7;
     }
 

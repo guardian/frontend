@@ -28,7 +28,7 @@ trait DiscussionApiLike extends Http with GuLogging {
   protected val defaultParams = List("api-key" -> Some("dotcom"))
   protected val pageSize: String = "10"
 
-  def endpointUrl(relativePath: String, params: List[(String, Option[String])] = List()): String = { //Using List for params because order is important for caching reason
+  def endpointUrl(relativePath: String, params: List[(String, Option[String])] = List()): String = { // Using List for params because order is important for caching reason
     implicit val config: UriConfig = UriConfig(renderQuery = ExcludeNones)
     Url.parse(apiRoot + relativePath).addParams(params ++ defaultParams).toString()
   }

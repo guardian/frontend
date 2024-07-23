@@ -24,7 +24,6 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   MediaPage,
-  MessageUsData,
   PageWithStoryPackage,
   Topic,
   TopicResult,
@@ -48,7 +47,6 @@ case class DotcomRenderingDataModel(
     main: String,
     availableTopics: Option[Seq[Topic]],
     selectedTopics: Option[Seq[Topic]],
-    messageUs: Option[MessageUsData],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -121,7 +119,6 @@ object DotcomRenderingDataModel {
       val obj = Json.obj(
         "availableTopics" -> model.availableTopics,
         "selectedTopics" -> model.selectedTopics,
-        "messageUs" -> model.messageUs,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -228,7 +225,6 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = None,
       topicResult = None,
-      messageUs = None,
     )
   }
 
@@ -262,7 +258,6 @@ object DotcomRenderingDataModel {
       availableTopics = None,
       newsletter = newsletter,
       topicResult = None,
-      messageUs = None,
     )
   }
 
@@ -385,7 +380,6 @@ object DotcomRenderingDataModel {
       availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
       topicResult: Option[TopicResult],
-      messageUs: Option[MessageUsData],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -435,7 +429,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = bodyBlocks,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
-      storyPackage = getStoryPackage(page.related.faciaItems, request), //todo
+      storyPackage = getStoryPackage(page.related.faciaItems, request), // todo
       pinnedPost = pinnedPost,
       keyEvents = timelineBlocks,
       filterKeyEvents = filterKeyEvents,
@@ -444,7 +438,6 @@ object DotcomRenderingDataModel {
       availableTopics = availableTopics,
       newsletter = newsletter,
       topicResult = topicResult,
-      messageUs = messageUs,
     )
   }
 
@@ -463,7 +456,6 @@ object DotcomRenderingDataModel {
       pinnedPost: Option[APIBlock] = None,
       availableTopics: Option[Seq[Topic]] = None,
       topicResult: Option[TopicResult] = None,
-      messageUs: Option[MessageUsData] = None,
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
@@ -623,7 +615,6 @@ object DotcomRenderingDataModel {
       mainMediaElements = mainMediaElements,
       matchUrl = matchData.map(_.matchUrl),
       matchType = matchData.map(_.matchType),
-      messageUs = messageUs,
       nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),

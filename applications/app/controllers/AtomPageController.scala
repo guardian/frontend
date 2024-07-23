@@ -87,10 +87,9 @@ class AtomPageController(
                   Cors(NoCache(InternalServerError("Internal error")))
 
               })
-              .recover {
-                case e: Exception =>
-                  log.error(s"Error posting to ExactTarget: ${e.getMessage}")
-                  Cors(NoCache(InternalServerError("Internal error")))
+              .recover { case e: Exception =>
+                log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+                Cors(NoCache(InternalServerError("Internal error")))
               }
           },
         )

@@ -42,7 +42,7 @@ class AuthenticatedActions(
         "clientId",
         "encryptedEmail",
         "autoSignInToken",
-      ) //only forward these if they exist in original query string
+      ) // only forward these if they exist in original query string
         .flatMap(name =>
           request.getQueryString(name).map(value => name -> value),
         ) :+ createAuthenticationComponentEventTuple(SigninRedirect)

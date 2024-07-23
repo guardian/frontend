@@ -94,7 +94,7 @@
 
     .content__label__link {
         background-color: $highlight-main;
-        padding: ($gs-baseline / 4) ($gs-gutter / 4);
+        padding: ($gs-baseline * 0.25) ($gs-gutter * 0.25);
     }
 
     .content__meta-container .byline-img {

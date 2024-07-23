@@ -23,7 +23,7 @@ import scala.util.Random
     with WithMaterializer
     with WithTestWsClient {
 
-  //Helper method to construct mock Results
+  // Helper method to construct mock Results
   def mockResult(
       statusCode: Int,
       date: DateTime = DateTime.now,

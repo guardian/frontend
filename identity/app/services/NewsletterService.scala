@@ -6,8 +6,7 @@ import utils.SafeLogging
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * This is the old EmailController converted *as is* to a service to be consumed by EditProfileController
+/** This is the old EmailController converted *as is* to a service to be consumed by EditProfileController
   */
 class NewsletterService(api: IdApiClient)(implicit
     executionContext: ExecutionContext,

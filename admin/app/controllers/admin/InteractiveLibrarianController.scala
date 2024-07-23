@@ -23,11 +23,11 @@ class InteractiveLibrarianController(
       Ok(views.html.pressContent(services.S3Archive.bucket))
     }
 
-  /**
-    * This function combines both pressing and cleaning
+  /** This function combines both pressing and cleaning
     *
     * @param path
-    * @return success or failure, including message
+    * @return
+    *   success or failure, including message
     */
   def press(path: String): Action[AnyContent] =
     Action.async { implicit request =>

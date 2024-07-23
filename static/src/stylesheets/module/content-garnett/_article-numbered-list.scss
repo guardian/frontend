@@ -30,8 +30,8 @@
         ul.article-link {
             display: block;
             position: relative;
-            margin-left: -$gs-gutter / 2;
-            margin-right: -$gs-gutter / 2;
+            margin-left: -$gs-gutter * 0.5;
+            margin-right: -$gs-gutter * 0.5;
             margin-top: $gs-baseline * 2;
             margin-bottom: $gs-baseline * 3;
 
@@ -45,7 +45,7 @@
             }
 
             @include mq(leftCol) {
-                margin-left: -$gs-gutter / 2;
+                margin-left: -$gs-gutter * 0.5;
             }
 
             &:after {
@@ -59,9 +59,9 @@
 
             li {
                 border: 1px solid $brightness-86;
-                padding: $gs-baseline ($gs-gutter / 2) ($gs-baseline + $gs-baseline / 2) !important;
-                margin: 0 ($gs-gutter / 2);
-                max-width: gs-span(6) - $gs-gutter / 2;
+                padding: $gs-baseline ($gs-gutter * 0.5) ($gs-baseline + $gs-baseline * 0.5) !important;
+                margin: 0 ($gs-gutter * 0.5);
+                max-width: gs-span(6) - $gs-gutter * 0.5;
 
                 @include mq(mobileLandscape) {
                     margin: 0 $gs-gutter;
@@ -102,15 +102,15 @@
             color: $brightness-7;
             min-height: $small-number + $gs-baseline;
             position: relative;
-            margin-left: -$gs-gutter / 2;
-            margin-right: -$gs-gutter / 2;
+            margin-left: -$gs-gutter * 0.5;
+            margin-right: -$gs-gutter * 0.5;
             margin-top: $gs-baseline * 4;
-            padding: ($gs-baseline / 4) ($gs-gutter / 2) $gs-baseline ($small-number + $gs-gutter);
+            padding: ($gs-baseline * 0.25) ($gs-gutter * 0.5) $gs-baseline ($small-number + $gs-gutter);
 
             @include mq(mobileLandscape) {
                 margin-left: -$gs-gutter;
                 margin-right: -$gs-gutter;
-                padding: ($gs-baseline / 4) $gs-gutter $gs-baseline 98px;
+                padding: ($gs-baseline * 0.25) $gs-gutter $gs-baseline 98px;
             }
 
             @include mq(tablet) {
@@ -119,13 +119,13 @@
                 margin-right: 0;
                 margin-top: $gs-baseline * 8;
                 min-height: $large-number + $gs-baseline;
-                padding: ($gs-baseline / 2) ($gs-gutter / 2) $gs-baseline ($large-number + $gs-gutter + $gs-gutter / 2);
+                padding: ($gs-baseline * 0.5) ($gs-gutter * 0.5) $gs-baseline ($large-number + $gs-gutter + $gs-gutter * 0.5);
             }
 
             @include mq(leftCol) {
                 min-height: auto;
-                margin-left: -$gs-gutter / 2;
-                padding: ($gs-baseline / 2) ($gs-gutter / 2) $gs-baseline;
+                margin-left: -$gs-gutter * 0.5;
+                padding: ($gs-baseline * 0.5) ($gs-gutter * 0.5) $gs-baseline;
             }
 
             // Optional way of forcing text onto seperate lines, with different colours
@@ -153,7 +153,7 @@
                 text-align: center;
                 position: absolute;
                 top: -4px;
-                left: $gs-gutter / 2;
+                left: $gs-gutter * 0.5;
 
                 @include mq(tablet) {
                     line-height: 88px;
@@ -181,10 +181,10 @@
         margin-bottom: 3px;
         margin-left: -10px;
         margin-right: -10px;
-        padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 2);
+        padding: ($gs-baseline * 0.25) ($gs-gutter * 0.5) ($gs-baseline * 0.5);
 
         @include mq(mobileLandscape) {
-            padding: ($gs-baseline / 4) $gs-gutter ($gs-baseline / 2);
+            padding: ($gs-baseline * 0.25) $gs-gutter ($gs-baseline * 0.5);
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
         }
@@ -198,8 +198,8 @@
         }
 
         @include mq(leftCol) {
-            margin-left: -$gs-gutter / 2;
-            padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 2);
+            margin-left: -$gs-gutter * 0.5;
+            padding: ($gs-baseline * 0.25) ($gs-gutter * 0.5) ($gs-baseline * 0.5);
         }
     }
 
@@ -210,7 +210,7 @@
         line-height: 1;
         height: 30px;
         letter-spacing: 2px;
-        margin: 0 0 $gs-baseline (-$gs-gutter / 2);
+        margin: 0 0 $gs-baseline (-$gs-gutter * 0.5);
         position: relative;
         z-index: $zindex-ui;
 
@@ -223,7 +223,7 @@
         }
 
         @include mq(leftCol) {
-            margin-left: -$gs-gutter / 2;
+            margin-left: -$gs-gutter * 0.5;
         }
 
         & + .element-image {

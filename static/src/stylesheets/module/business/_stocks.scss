@@ -16,7 +16,7 @@ $stocks-icon-height: 10px;
     }
 
     @include mq(tablet) {
-        margin-bottom: $gs-baseline / 2;
+        margin-bottom: $gs-baseline * 0.5;
     }
 }
 

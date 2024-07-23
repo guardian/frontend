@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import java.time.LocalDate
 
 trait JournalismSwitches {
 
@@ -71,6 +72,16 @@ trait JournalismSwitches {
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val Euro2024Header = Switch(
+    SwitchGroup.Journalism,
+    name = "euro-2024-header",
+    description = "Show the Euro 2024 interactive atom header on football pages",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = LocalDate.of(2024, 7, 31),
     exposeClientSide = true,
   )
 }

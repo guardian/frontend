@@ -93,7 +93,7 @@ section.fc-container--special-report-alt-palette {
         flex: 1 1 100%;
 
         & + * {
-            margin-left: $gs-gutter / 2;
+            margin-left: $gs-gutter * 0.5;
         }
     }
 }

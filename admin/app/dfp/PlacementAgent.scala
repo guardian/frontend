@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v202308.StatementBuilder
+import com.google.api.ads.admanager.axis.utils.v202405.StatementBuilder
 import common.dfp.GuAdUnit
 import concurrent.BlockingOperations
 
