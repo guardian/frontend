@@ -239,13 +239,6 @@ case object TechScape extends ArticleEmailMetadata {
     c.item.tags.series.exists(_.id == "technology/series/techscape")
 }
 
-case object Tokyo2020DailyBriefing extends ArticleEmailMetadata {
-  val name = "Tokyo2020DailyBriefing"
-  override val banner = Some("tokyo2020-daily-briefing.png")
-  def test(c: ContentPage): Boolean =
-    c.item.tags.series.exists(_.id == "sport/series/tokyo-2020-daily-briefing")
-}
-
 case object Beijing2022DailyBriefing extends ArticleEmailMetadata {
   val name = "Beijing 2022 daily briefing"
   override val banner = Some("winter-olympics-2022.png")
@@ -479,6 +472,11 @@ case object HeadlinesEurope extends FrontEmailMetadata {
   override val banner = Some("headlines-eur.png")
 }
 
+case object OlympicAndParalympicBriefing extends FrontEmailMetadata {
+  val name = "Olympics And Paralympics Briefing"
+  override val banner = Some("paris-2024-olympics.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -519,7 +517,6 @@ object EmailAddons {
     CoronavirusinThePacific,
     USElectionBriefingForAustralia,
     TechScape,
-    Tokyo2020DailyBriefing,
     TheGuide,
     FiveGreatReads,
     Beijing2022DailyBriefing,
@@ -569,6 +566,7 @@ object EmailAddons {
     Documentaries,
     AustraliasModernOutback,
     HeadlinesEurope,
+    OlympicAndParalympicBriefing,
   )
 
   implicit class EmailContentType(p: Page) {
