@@ -474,7 +474,7 @@ case object HeadlinesEurope extends FrontEmailMetadata {
 
 case object OlympicAndParalympicBriefing extends FrontEmailMetadata {
   val name = "Olympics And Paralympics Briefing"
-  override val banner = Some("paris-2024-olympics.png")
+  override val banner = Some("paris-2024-olympics.jpg")
 }
 
 object EmailAddons {
