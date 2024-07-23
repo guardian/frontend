@@ -1102,3 +1102,51 @@ case object TTMpu extends Slice {
     ),
   )
 }
+
+/*
+ * The Highlights layout is used to display select features in the header for apps and web
+ * 
+ * Desktop:
+ * .____________.____________.____________.
+ * |       #####|       #####|       #####|
+ * |       #####|       #####|       #####|
+ * |       #####|       #####|       #####|
+ * '--------------------------------------'
+ * 
+ * Mobile:
+ * .___________.___________.___________.
+ * |           |           |           |
+ * |           |           |           |
+ * |_#########_|_#########_|_#########_|
+ * |_#########_|_#########_|_#########_|
+ * |_#########_|_#########_|_#########_|
+ * `-----------------------------------'
+ */
+case object Highlights extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "t-t-t",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList
+        )
+      )
+    )
+  )
+}
