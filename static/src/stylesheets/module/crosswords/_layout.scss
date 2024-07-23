@@ -5,7 +5,8 @@
 }
 
 @each $cells in $xword-cell-sizes {
-    $size: xword-grid-dimensions($cells);
+    $max-size: 481px; // width of 15-cell grid
+    $size: min($max-size, xword-grid-dimensions($cells));
 
     .crossword__container--#{$cells}cell {
         @include mq(tablet) {
