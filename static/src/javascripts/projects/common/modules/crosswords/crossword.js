@@ -749,7 +749,7 @@ class Crossword extends Component {
 
 		return (
 			<div
-				className={`crossword__container crossword__container--${this.props.data.crosswordType} crossword__container--react`}
+				className={`crossword__container crossword__container--${this.props.data.dimensions.cols}cell crossword__container--react`}
 				data-link-name="Crosswords"
 			>
 				<div
