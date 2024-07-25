@@ -1589,6 +1589,8 @@ object PageElement {
         )
       }.toSeq,
       title = item.title,
+      bio = item.bio,
+      endNote = item.endNote
     )
   }
 
