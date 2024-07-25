@@ -365,6 +365,8 @@ object InstagramBlockElement {
 case class ListItem(
     elements: Seq[PageElement],
     title: Option[String],
+    bio: Option[String],
+    endNote: Option[String]
 ) extends PageElement
 object ListItem {
   implicit val listItemWrites: Writes[ListItem] = Json.writes[ListItem]
