@@ -20,15 +20,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object UseSourcepointPropertyId
-    extends Experiment(
-      name = "use-sourcepoint-property-id",
-      description = "Use Sourcepoint propertyId instead of propertyHref",
-      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 30),
-      participationGroup = Perc5A,
-    )
-
 object UpdatedHeaderDesign
     extends Experiment(
       name = "updated-header-design",
@@ -57,11 +48,20 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
+object UseSourcepointPropertyId
+    extends Experiment(
+      name = "use-sourcepoint-property-id",
+      description = "Use Sourcepoint propertyId instead of propertyHref",
+      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 7, 30),
+      participationGroup = Perc5A,
+    )
+
 object TagLinkDesign
     extends Experiment(
       name = "tag-link-design",
-      description = "Render an updated sticky design for tag links",
+      description = "Render an updated sticky design for tag links on Olympics articles and liveblogs",
       owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 7, 25),
-      participationGroup = Perc20A,
+      sellByDate = LocalDate.of(2024, 8, 12),
+      participationGroup = Perc10A,
     )
