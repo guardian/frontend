@@ -28,7 +28,6 @@ jobs:
         with:
           cache: yarn
           node-version-file: .nvmrc
-
       - uses: actions/setup-java@v4
         with:
           distribution: corretto
@@ -36,26 +35,26 @@ jobs:
           java-version: 11
 
       - run: make reinstall
-
       - run: make validate
-
       - run: make test
-
       - run: make compile
 
       - name: Test, compile
         # Australia/Sydney  -because it is too easy for devs to forget about timezones
         run: |
-          sbt \
-          -J-Xmx6144M \
-          -J-XX:ReservedCodeCacheSize=128m \
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
           -Dsbt.log.noformat=true \
-          -J-XX:+UseParallelGC \
+          -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          clean compile assets scalafmtCheckAll test Universal/packageBin
+          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
 
       - uses: guardian/actions-riff-raff@v4
+        env:
+          GU_RIFF_RAFF_ROLE_ARN: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+        if: ${{ env.GU_RIFF_RAFF_ROLE_ARN }}
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}

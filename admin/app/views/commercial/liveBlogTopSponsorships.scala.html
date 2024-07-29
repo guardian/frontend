@@ -20,15 +20,19 @@
 
     <p>Last updated: @if(report.updatedTimeStamp) { @{report.updatedTimeStamp} } else { never }</p>
 
-    <p>Pages will show a liveblog top slot if you set up a LineItem in GAM with the following parameters:</p>
+    <p>Pages will show a live blog top slot if you set up a line item in GAM with the following parameters:</p>
     <ol>
         <li>Is a Sponsorship</li>
         <li>Targets the <pre>liveblog-top</pre> slot</li>
         <li>Targets the <pre>culture</pre>,<pre>sport</pre> or <pre>football</pre> section</li>
         <li>Targets the <pre>liveblog</pre> content type</li>
         <li>Targets the <pre>mobile</pre> breakpoint</li>
-        <li>Targets an edition</li>
+        <li>[Optional] Targets an edition</li>
+        <li>[Optional] Targets a keyword</li>
     </ol>
+
+    <strong>ANY OTHER TARGETING WILL CAUSE THE SLOT TO APPEAR UNINTENTIONALLY</strong>
+    <p>If you are unsure please contact the <a href="mailto:commercial.dev@@theguardian.com">commercial dev team</a> first.</p>
 
     <h2>Sponsorships</h2>
     <p>Line items that match the above targeting:</p>
@@ -42,6 +46,8 @@
             @for(section <- sponsorship.sections) {
                 <pre>@section</pre>@if(section != sponsorship.sections.last) {, }
             }
+            <br />
+            @if(sponsorship.keywords.nonEmpty) {<small>Keywords:</small> @for(keyword <- sponsorship.keywords) {<pre>@keyword</pre>@if(keyword != sponsorship.keywords.last) {, }}}
             @if(sponsorship.targetsAdTest) {<br /><small>Adtest:</small> <pre>@sponsorship.adTest</pre>}
             @if(!sponsorship.editions.isEmpty) {<br /><small>Editions:</small> @for(edition <- sponsorship.editions.map(_.id)) {<pre>@edition</pre>@if(edition != sponsorship.editions.last.id) {, }}}
   </li>

@@ -43,6 +43,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
           adTest = lineItem.targeting.adTestValue,
           editions = editionsTargeted(lineItem),
           sections = lineItem.liveBlogTopTargetedSections,
+          keywords = lineItem.targeting.keywordValues,
           targetsAdTest = lineItem.targeting.hasAdTestTargetting,
         )
       }
