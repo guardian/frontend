@@ -43,8 +43,8 @@ object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
       description = "Enable dark mode on web",
-      owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2024, 7, 30),
+      owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 10, 30),
       participationGroup = Perc0D,
     )
 
@@ -52,7 +52,7 @@ object UseSourcepointPropertyId
     extends Experiment(
       name = "use-sourcepoint-property-id",
       description = "Use Sourcepoint propertyId instead of propertyHref",
-      owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2024, 7, 30),
       participationGroup = Perc5A,
     )
@@ -61,7 +61,7 @@ object TagLinkDesign
     extends Experiment(
       name = "tag-link-design",
       description = "Render an updated sticky design for tag links on Olympics articles and liveblogs",
-      owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 8, 12),
       participationGroup = Perc10A,
     )
