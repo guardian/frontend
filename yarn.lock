@@ -3964,7 +3964,7 @@ __metadata:
     "@guardian/libs": "npm:17.0.1"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
-    "@guardian/source-foundations": "npm:14.2.2"
+    "@guardian/source-foundations": "npm:16.0.0"
     "@guardian/source-react-components": "npm:22.1.0"
     "@guardian/source-react-components-development-kitchen": "npm:19.0.0"
     "@types/googletag": "npm:^3.1.3"
@@ -4198,9 +4198,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/source-foundations@npm:14.2.2":
-  version: 14.2.2
-  resolution: "@guardian/source-foundations@npm:14.2.2"
+"@guardian/source-foundations@npm:16.0.0":
+  version: 16.0.0
+  resolution: "@guardian/source-foundations@npm:16.0.0"
   dependencies:
     mini-svg-data-uri: "npm:1.4.4"
   peerDependencies:
@@ -4209,7 +4209,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/e0fc075359f9c953a02571f612f26a60009e526e1e4715ccfb1ce5b5e2fd91f246214d687266d72c45b542509bf70f29c7ee4aafc1e646ba04fe18fffd4d3d5d
+  checksum: 10c0/16fa40b87b743d50cd3b85d5bb72120b85d670614fdfd40e4e5594134813fd79bd1afb966615727145ea455a2c658ca78bf9442828fc680a405ea241f08fb07f
   languageName: node
   linkType: hard
 
