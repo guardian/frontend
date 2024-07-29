@@ -43,8 +43,8 @@ object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
       description = "Enable dark mode on web",
-      owners = Seq(Owner.withGithub("jakeii"), Owner.withGithub("mxdvl")),
-      sellByDate = LocalDate.of(2024, 7, 30),
+      owners = Seq(Owner.withGithub("jakeii")),
+      sellByDate = LocalDate.of(2024, 10, 30),
       participationGroup = Perc0D,
     )
 
