@@ -653,7 +653,7 @@ object NavLinks {
   // the navigation. The workaround for this is to add the section to this list,as has been done with CiF and education
   val tagPages = List(
     "us/soccer",
-    "us-news/us-politics",
+    "us-news/us-elections-2024",
     "australia-news/australian-politics",
     "australia-news/australian-immigration-and-asylum",
     "australia-news/indigenous-australians",
