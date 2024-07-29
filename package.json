@@ -45,7 +45,7 @@
 		"@types/webpack-env": "^1.16.2",
 		"@types/youtube": "^0.0.44",
 		"@typescript-eslint/eslint-plugin": "5.61.0",
-		"@typescript-eslint/parser": "5.61.0",
+		"@typescript-eslint/parser": "7.18.0",
 		"amphtml-validator": "^1.0.21",
 		"any-observable": "^0.2.0",
 		"autoprefixer": "^10.3.7",
