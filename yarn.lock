@@ -3964,9 +3964,9 @@ __metadata:
     "@guardian/libs": "npm:17.0.1"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
-    "@guardian/source-foundations": "npm:14.2.2"
-    "@guardian/source-react-components": "npm:22.1.0"
-    "@guardian/source-react-components-development-kitchen": "npm:19.0.0"
+    "@guardian/source-foundations": "npm:16.0.0"
+    "@guardian/source-react-components": "npm:25.0.0"
+    "@guardian/source-react-components-development-kitchen": "npm:21.0.0"
     "@types/googletag": "npm:^3.1.3"
     "@types/jest": "npm:29.5.12"
     "@types/lodash-es": "npm:^4.17.4"
@@ -4198,9 +4198,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/source-foundations@npm:14.2.2":
-  version: 14.2.2
-  resolution: "@guardian/source-foundations@npm:14.2.2"
+"@guardian/source-foundations@npm:16.0.0":
+  version: 16.0.0
+  resolution: "@guardian/source-foundations@npm:16.0.0"
   dependencies:
     mini-svg-data-uri: "npm:1.4.4"
   peerDependencies:
@@ -4209,41 +4209,47 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/e0fc075359f9c953a02571f612f26a60009e526e1e4715ccfb1ce5b5e2fd91f246214d687266d72c45b542509bf70f29c7ee4aafc1e646ba04fe18fffd4d3d5d
+  checksum: 10c0/16fa40b87b743d50cd3b85d5bb72120b85d670614fdfd40e4e5594134813fd79bd1afb966615727145ea455a2c658ca78bf9442828fc680a405ea241f08fb07f
   languageName: node
   linkType: hard
 
-"@guardian/source-react-components-development-kitchen@npm:19.0.0":
-  version: 19.0.0
-  resolution: "@guardian/source-react-components-development-kitchen@npm:19.0.0"
+"@guardian/source-react-components-development-kitchen@npm:21.0.0":
+  version: 21.0.0
+  resolution: "@guardian/source-react-components-development-kitchen@npm:21.0.0"
   peerDependencies:
     "@emotion/react": ^11.11.1
     "@guardian/libs": ^16.0.0
-    "@guardian/source-foundations": ^14.1.4
-    "@guardian/source-react-components": ^22.0.1
+    "@guardian/source-foundations": ^16.0.0
+    "@guardian/source-react-components": ^25.0.0
+    "@types/react": ^18.2.11
     react: ^18.2.0
     tslib: ^2.6.2
     typescript: ~5.3.3
   peerDependenciesMeta:
+    "@types/react":
+      optional: true
     typescript:
       optional: true
-  checksum: 10c0/b47be04ae6c58acc4fb1610cc1c0490db629355db2aad42f7a7b6bb03cddd8faf03be7322e238304f768f3d2d837946719d393e626eed22daf12e456c830b25c
+  checksum: 10c0/38eabc4c757ecedbc95642a8934c3b5698cfb29f28a69185bc522e00535c62374095850003fc8086e2f6cc429cdc7fd28be7caecde750d0cc6c139e8edc0f3f8
   languageName: node
   linkType: hard
 
-"@guardian/source-react-components@npm:22.1.0":
-  version: 22.1.0
-  resolution: "@guardian/source-react-components@npm:22.1.0"
+"@guardian/source-react-components@npm:25.0.0":
+  version: 25.0.0
+  resolution: "@guardian/source-react-components@npm:25.0.0"
   peerDependencies:
     "@emotion/react": ^11.11.1
-    "@guardian/source-foundations": ^14.1.4
+    "@guardian/source-foundations": ^16.0.0
+    "@types/react": ^18.2.11
     react: ^18.2.0
     tslib: ^2.6.2
     typescript: ~5.3.3
   peerDependenciesMeta:
+    "@types/react":
+      optional: true
     typescript:
       optional: true
-  checksum: 10c0/ceeffbea73b27f63b1d23a6167de6978dfad4708967f82c50d86bc2b8e003995287946b072d13c2b2761c16457a7c5b0825d73cb3e362d0b46ade7bd2f5eb566
+  checksum: 10c0/00daddb850869cd2dbe3bf769076e089e2d3774eea19f0e472475c8cf6c72121e3bf30ecc4ef6c33795c04ad54940be110ecf5201c858dcc28810f72130e4abc
   languageName: node
   linkType: hard
 
