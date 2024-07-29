@@ -3959,7 +3959,7 @@ __metadata:
     "@guardian/commercial": "npm:20.1.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
-    "@guardian/identity-auth": "npm:2.1.0"
+    "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
     "@guardian/libs": "npm:17.0.1"
     "@guardian/prettier": "npm:^8.0.1"
@@ -4104,17 +4104,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/identity-auth@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@guardian/identity-auth@npm:2.1.0"
+"@guardian/identity-auth@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@guardian/identity-auth@npm:3.0.0"
   peerDependencies:
-    "@guardian/libs": ^16.0.0
+    "@guardian/libs": ^18.0.0
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/2cf85b39361822a766c806f5670e2f51858b1dc8baa70ede67c0cc365ebc92b240e473612bb9bebd3337701f1920de43aa71cd16d2a19fb047f26fc791b99f9d
+  checksum: 10c0/3523c2bb51bcf27bbed548f421d046486465166d2bfda8ea4bdf2bc3de643284b66db981f3512a55cd1f5e04cb6852d44c4b085ff0c7cd21ee5756496150d514
   languageName: node
   linkType: hard
 
