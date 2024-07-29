@@ -104,7 +104,7 @@
 				@for(bowler <- innings.bowlers) {
 				<tr>
 					<td>@bowler.name</td>
-					<td>@bowler.balls / 6</td>
+					<td>@(f"${bowler.balls.toFloat / 6}%.1f")</td>
 					<td>@bowler.maidens</td>
 					<td>@bowler.runs</td>
 					<td>@bowler.wickets</td>
