@@ -27,8 +27,8 @@ case class PreviousAndNext(prev: Option[String], next: Option[String]) {
 }
 
 object JSON {
-  //we wrap the result in an Html so that play does not escape it as html
-  //after we have gone to the trouble of escaping it as Javascript
+  // we wrap the result in an Html so that play does not escape it as html
+  // after we have gone to the trouble of escaping it as Javascript
   def apply[T](json: T)(implicit tjs: Writes[T]): Html = Html(stringify(toJson(json)))
 }
 
@@ -206,7 +206,7 @@ object StripHtmlTagsAndUnescapeEntities {
     val doc = new Cleaner(Safelist.none()).clean(Jsoup.parse(html))
     val stripped = doc.body.html
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
-    unescaped.replace("\"", "&#34;") //double quotes will break HTML attributes
+    unescaped.replace("\"", "&#34;") // double quotes will break HTML attributes
   }
 }
 

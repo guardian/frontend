@@ -12,7 +12,6 @@ import {
 	accountDataUpdateWarning,
 	getLastOneOffContributionTimestamp,
 	getLastRecurringContributionDate,
-	getPurchaseInfo,
 	isAdFreeUser,
 	isPayingMember,
 	isRecurringContributor,
@@ -650,31 +649,5 @@ describe('isPostAskPauseOneOffContributor', () => {
 		global.Date.now = jest.fn(() => Date.parse('2019-02-01T13:00:30'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(isPostAskPauseOneOffContributor()).toBe(true);
-	});
-});
-
-describe('getPurchaseInfo', () => {
-	afterEach(() => {
-		removeCookie('GU_CO_COMPLETE');
-	});
-
-	it('returns decoded cookie data', () => {
-		addCookie(
-			'GU_CO_COMPLETE',
-			'%7B%22userType%22%3A%22guest%22%2C%22product%22%3A%22DigitalPack%22%7D',
-		);
-		expect(getPurchaseInfo()).toEqual({
-			userType: 'guest',
-			product: 'DigitalPack',
-		});
-	});
-
-	it('returns undefined if cookie unset', () => {
-		expect(getPurchaseInfo()).toBeUndefined();
-	});
-
-	it('returns undefined if cookie data invalid', () => {
-		addCookie('GU_CO_COMPLETE', 'utter-nonsense');
-		expect(getPurchaseInfo()).toBeUndefined();
 	});
 });

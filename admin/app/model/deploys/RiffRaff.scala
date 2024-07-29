@@ -47,7 +47,7 @@ class RiffRaffService(httpClient: HttpLike) {
           case 200 =>
             (response.json \ "response" \ "results").validate[List[RiffRaffDeploy]] match {
               case JsSuccess(listOfDeploys, _) => Right(listOfDeploys)
-              case JsError(error)              => Left(ApiErrors(List(ApiError(s"Invalid JSON from RiffRaff API: $error", 500))))
+              case JsError(error) => Left(ApiErrors(List(ApiError(s"Invalid JSON from RiffRaff API: $error", 500))))
             }
           case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from RiffRaff: $statusCode", 500))))
         }

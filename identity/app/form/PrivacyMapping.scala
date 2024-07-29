@@ -40,8 +40,10 @@ object PrivacyFormData extends SafeLogging {
 
   /** Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
-    * @param userDO Identity User domain model from IDAPI defiend in identity-model library
-    * @return form processing DTO PrivacyFromData
+    * @param userDO
+    *   Identity User domain model from IDAPI defiend in identity-model library
+    * @return
+    *   form processing DTO PrivacyFromData
     */
   def apply(userDO: User): PrivacyFormData = {
     PrivacyFormData(
@@ -55,8 +57,10 @@ object PrivacyFormData extends SafeLogging {
     *
     * For example, if consent id is renamed, then some users might still have the old consent.
     *
-    * @param userDO Identity User domain model from IDAPI defiend that might contain some old invalid consents
-    * @return list of valid consents
+    * @param userDO
+    *   Identity User domain model from IDAPI defiend that might contain some old invalid consents
+    * @return
+    *   list of valid consents
     */
   private def onlyValidConsents(userDO: User): List[Consent] = {
     def consentExistsInModel(consent: Consent): Boolean =

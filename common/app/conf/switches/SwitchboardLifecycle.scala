@@ -23,7 +23,7 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
     Switches.all.foreach(_.failInitializationAfter(2.minutes)(pekkoAsync))
 
     jobs.deschedule("SwitchBoardRefreshJob")
-    //run every minute, 47 seconds after the minute
+    // run every minute, 47 seconds after the minute
     jobs.schedule("SwitchBoardRefreshJob", "47 * * * * ?") {
       refresh()
     }

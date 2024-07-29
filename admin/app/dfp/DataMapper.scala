@@ -22,11 +22,11 @@ class DataMapper(
 
     def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
-      //noinspection MapFlatten
+      // noinspection MapFlatten
       val directAdUnits =
         toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnitService.activeAdUnit).flatten
 
-      //noinspection MapFlatten
+      // noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
         toSeq(inventoryTargeting.getTargetedPlacementIds).map(placementService.placementAdUnitIds(session)).flatten
       }
@@ -47,7 +47,7 @@ class DataMapper(
             customTargetingService.targetingKey(session)(criterion.getKeyId),
             criterion.getOperator.getValue,
             criterion.getValueIds.toSeq map (valueId =>
-              customTargetingService.targetingValue(session)(criterion.getKeyId, valueId),
+              customTargetingService.targetingValue(session)(criterion.getKeyId, valueId)
             ),
           )
 

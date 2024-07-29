@@ -46,7 +46,7 @@ object JavaScriptPage {
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(request)),
-      "hasLiveBlogTopAd" -> JsBoolean(metaData.hasLiveBlogTopAd(request)),
+      "hasLiveBlogTopAd" -> JsBoolean(metaData.hasLiveBlogTopAd(request, content)),
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case _: CommercialExpiryPage                            => true

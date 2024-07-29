@@ -36,6 +36,6 @@ private[dfp] object ApiHelper extends GuLogging {
 
   def toSeq[A](as: Array[A]): Seq[A] = Option(as) map (_.toSeq) getOrElse Nil
 
-  //noinspection IfElseToOption
+  // noinspection IfElseToOption
   def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }

@@ -46,7 +46,9 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
             <news:language>en</news:language>
           </news:publication>
           <news:genres>{genres}</news:genres>
-          <news:publication_date>{webPublicationDate.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</news:publication_date>
+          <news:publication_date>{
+        webPublicationDate.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString
+      }</news:publication_date>
           <news:title>{title}</news:title>
           <news:keywords>{keywords}</news:keywords>
         </news:news>

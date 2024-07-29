@@ -8,8 +8,7 @@ import utils.DotcomponentsLogger
 
 object CrosswordsPicker extends GuLogging {
 
-  /** Add to this function any logic for including/excluding
-    * a crossword page from being rendered with DCR
+  /** Add to this function any logic for including/excluding a crossword page from being rendered with DCR
     *
     * Currently defaulting to false until we implement crosswords in DCR
     */

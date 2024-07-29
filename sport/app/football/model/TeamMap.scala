@@ -109,7 +109,7 @@ object TeamMap extends GuLogging {
   def findUrlNameFor(teamId: String): Option[String] =
     teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
 
-  def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient, executionContext: ExecutionContext): Unit = { //pages are 1 based
+  def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient, executionContext: ExecutionContext): Unit = { // pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
     contentApiClient
       .getResponse(
@@ -149,8 +149,8 @@ object MatchUrl {
       if homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/")
     } yield {
       s"/football/match/${theMatch.date.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")).toLowerCase}/${homeTeam
-        .replace("/football/", "")}-v-${awayTeam
-        .replace("/football/", "")}"
+          .replace("/football/", "")}-v-${awayTeam
+          .replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")
   }
 

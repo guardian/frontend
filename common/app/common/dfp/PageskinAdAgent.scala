@@ -67,7 +67,7 @@ trait PageskinAdAgent {
           sponsorship.adTestValue == adTestParam
         } else {
           true
-        },
+        }
       )
     } else false
   }

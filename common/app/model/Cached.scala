@@ -61,7 +61,7 @@ object Cached extends implicits.Dates {
   }
 
   def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
-    apply(CacheTime(seconds), result, request.headers.get("If-None-Match")) //FIXME could be comma separated
+    apply(CacheTime(seconds), result, request.headers.get("If-None-Match")) // FIXME could be comma separated
   }
 
   def apply(cacheTime: CacheTime)(result: CacheableResult)(implicit request: RequestHeader): Result = {
@@ -120,7 +120,7 @@ object Cached extends implicits.Dates {
 
     val etagHeaderString: String = maybeEtag.getOrElse(
       s""""guRandomEtag${scala.util.Random.nextInt()}${scala.util.Random
-        .nextInt()}"""", // setting a random tag still helps
+          .nextInt()}"""", // setting a random tag still helps
     )
 
     result.withHeaders(

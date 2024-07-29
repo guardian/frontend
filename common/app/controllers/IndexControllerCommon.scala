@@ -73,7 +73,7 @@ trait IndexControllerCommon
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     path match {
-      //if this is a section tag e.g. football/football
+      // if this is a section tag e.g. football/football
       case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
       case _ =>
         logGoogleBot(request)

@@ -45,7 +45,7 @@ trait PreviewLifecycleComponents
     with TopicServices {
   self: FrontendComponents =>
 
-  //Override conflicting members
+  // Override conflicting members
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val ophanApi = wire[OphanApi]

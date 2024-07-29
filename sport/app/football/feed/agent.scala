@@ -97,8 +97,8 @@ trait Results extends GuLogging {
       executionContext: ExecutionContext,
   ): Future[List[Result]] = {
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
-    //it is possible that we do not know the startdate of the competition yet (concurrency)
-    //in that case just get the last 30 days results, the start date will catch up soon enough
+    // it is possible that we do not know the startdate of the competition yet (concurrency)
+    // in that case just get the last 30 days results, the start date will catch up soon enough
     val startDate = competition.startDate.getOrElse(LocalDate.now(clock).minusDays(30))
     footballClient
       .results(competition.id, startDate)
@@ -145,7 +145,7 @@ class CompetitionAgent(
 
   def addMatches(newMatches: Seq[FootballMatch]): Future[Competition] =
     agent.alter { comp =>
-      //log any changes to the status of the match
+      // log any changes to the status of the match
       newMatches.foreach { newMatch =>
         comp.matches.find(_.id == newMatch.id).foreach { oldMatch =>
           val newSummary = newMatch.statusSummary

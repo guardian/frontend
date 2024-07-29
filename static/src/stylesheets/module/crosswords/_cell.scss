@@ -32,16 +32,6 @@
     opacity: 1;
     -webkit-font-smoothing: subpixel-antialiased;
     transition: opacity .15s ease-in;
-
-    @each $xword, $cells in $xword-grid-sizes {
-        .crossword__container--#{$xword} & {
-            font-size: ceil(1.2px * $cells);
-
-            @include mq(tablet) {
-                font-size: 1.1px * $cells;
-            }
-        }
-    }
 }
 
 .crossword__cell-text--focussed {

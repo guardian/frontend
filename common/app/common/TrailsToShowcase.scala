@@ -544,7 +544,7 @@ object TrailsToShowcase {
     feed.setLanguage("en-gb")
     feed.setCopyright(
       s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${RssDates
-        .getYear(new Date())}",
+          .getYear(new Date())}",
     )
     feed.setImage(image)
     feed.setPublishedDate(new Date())

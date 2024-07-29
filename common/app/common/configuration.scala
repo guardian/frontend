@@ -48,13 +48,10 @@ object Environment extends GuLogging {
 
 /** Main configuration
   *
-  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
-  * or `~/.gu/frontend.conf` file under a `devOverrides` key. E.g:
+  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf` or `~/.gu/frontend.conf` file under a
+  * `devOverrides` key. E.g:
   *
-  *   devOverrides {
-  *     switches.key=DEV/config/switches-yournamehere.properties
-  *     facia.stage=CODE
-  *   }
+  * devOverrides { switches.key=DEV/config/switches-yournamehere.properties facia.stage=CODE }
   */
 object GuardianConfiguration extends GuLogging {
 
@@ -235,7 +232,7 @@ class GuardianConfiguration extends GuLogging {
         MILLISECONDS,
       )
 
-    //Cross account credentials for capi preview
+    // Cross account credentials for capi preview
     lazy val capiPreviewRoleToAssume: Option[String] =
       configuration.getStringProperty("content.api.preview.roleToAssume")
 
@@ -499,7 +496,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
-    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v2.json"
+    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
     lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"

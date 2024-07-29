@@ -103,7 +103,7 @@ private[conf] trait HealthCheckFetcher extends GuLogging {
     val precondition =
       preconditionMaybe.getOrElse(
         HealthCheckPrecondition(() => true, "Precondition is always true"),
-      ) //No precondition is equivalent to a precondition that's always true
+      ) // No precondition is equivalent to a precondition that's always true
 
     val baseUrl = s"http://localhost:$port"
 

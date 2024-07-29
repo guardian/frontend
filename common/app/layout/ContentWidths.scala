@@ -109,8 +109,7 @@ object ContentWidths {
       wide = Some(1300.px),
     )
 
-    /** Used when the main image is an immersive image
-      * like on galleries and immersive articles
+    /** Used when the main image is an immersive image like on galleries and immersive articles
       */
     override val immersive = WidthsByBreakpoint(
       mobile = Some(480.px),

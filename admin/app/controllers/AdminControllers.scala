@@ -60,8 +60,8 @@ trait AdminControllers {
     s3Client,
     system = "frontend-admin",
     extraDoNotAuthenticatePathPrefixes = Seq(
-      "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
-      "/deploy", //not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
+      "/deploys", // not authenticated so it can be accessed by Prout to determine which builds have been deployed
+      "/deploy", // not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
       // Date: 06 July 2021
       // Author: Pascal
       // Added as part of posing the ground for the interactive migration.

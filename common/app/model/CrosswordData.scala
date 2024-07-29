@@ -17,9 +17,9 @@ object Entry {
 
   def formatHumanNumber(numbers: String): Option[String] = {
 
-    //Adding space between number and direction
-    //as well as after comma
-    //ex: "2,24across,16" => "2, 24 across, 16"
+    // Adding space between number and direction
+    // as well as after comma
+    // ex: "2,24across,16" => "2, 24 across, 16"
     val clues: Seq[Option[String]] = numbers.split(',').toIndexedSeq.map { singleClue =>
       // Acceptable clue is a number followed by an optional direction
       "([0-9]+)([a-z]+)?".r.findFirstMatchIn(singleClue).map { m =>

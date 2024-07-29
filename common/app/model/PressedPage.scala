@@ -46,8 +46,8 @@ object PressedPage {
       id = id,
       section = Some(SectionId.fromId(seoData.navSection)),
       webTitle = seoData.webTitle,
-      //For network fronts we want the string "Network Front"
-      //This allows us to change webTitle in tool easily on fronts
+      // For network fronts we want the string "Network Front"
+      // This allows us to change webTitle in tool easily on fronts
       description = seoData.description,
       isFront = true,
       isPressedPage = true,
@@ -125,8 +125,8 @@ case class PressedPage(
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.
     *
-    * There are fronts that exist in Facia but have no equivalent tag or section page, which is why we need to make
-    * this check.
+    * There are fronts that exist in Facia but have no equivalent tag or section page, which is why we need to make this
+    * check.
     */
   def allPath: Option[String] = {
     val tagAndSectionIds = for {

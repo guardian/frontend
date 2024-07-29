@@ -31,9 +31,12 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
   "Add link" should "link tags in a text block element and return linked terms" in {
     val examples = List(
       TextBlockElement("the Champions League is great!") ->
-        (TextBlockElement(
-          s"""the <a href="${host}/championsleague" data-component="auto-linked-tag">Champions League</a> is great!""",
-        ), Set("Champions League")),
+        (
+          TextBlockElement(
+            s"""the <a href="${host}/championsleague" data-component="auto-linked-tag">Champions League</a> is great!""",
+          ),
+          Set("Champions League"),
+        ),
       TextBlockElement("What do you think about the Champions?") ->
         (TextBlockElement("What do you think about the Champions?"), Set.empty),
     )

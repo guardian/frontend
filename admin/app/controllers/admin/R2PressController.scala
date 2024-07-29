@@ -61,7 +61,7 @@ class R2PressController(
         .getLines()
         .map { line =>
           if (line.nonEmpty) {
-            //TODO: other validation?
+            // TODO: other validation?
             if (isTakedown) {
               normaliseAndEnqueueTakedown(line)
             } else {
@@ -84,7 +84,7 @@ class R2PressController(
       val path = url.getPath
       val normalisedPath = RedirectService.normalisePath(path)
       List(s"https://$host$path", s"http://$host$path", s"https://$host$normalisedPath", s"http://$host$normalisedPath")
-    //An http version of the redirect may exist so preemptively delete it.
+      // An http version of the redirect may exist so preemptively delete it.
     }
   }
 

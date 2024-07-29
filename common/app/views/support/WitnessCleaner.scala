@@ -7,7 +7,7 @@ object WitnessCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     document.getElementsByClass("element-witness-video").asScala.foreach { embed: Element =>
-      //remove height from video iframe
+      // remove height from video iframe
       embed.getElementsByClass("element-witness--main").asScala.foreach { main =>
         main.getElementsByTag("iframe").asScala.foreach(_.attr("height", ""))
       }

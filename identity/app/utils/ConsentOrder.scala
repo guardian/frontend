@@ -22,9 +22,12 @@ object ConsentOrder {
 
   /** Ordered + optionally hintend consents
     *
-    * @param userDO user object from identity-model which has consents field
-    * @param consentHint optional hint which would move that particular consent to the front
-    * @return copy of user with reordered consents
+    * @param userDO
+    *   user object from identity-model which has consents field
+    * @param consentHint
+    *   optional hint which would move that particular consent to the front
+    * @return
+    *   copy of user with reordered consents
     */
   def userWithOrderedConsents(userDO: User, consentHint: Option[String]): User = {
     val consentsToReorder =

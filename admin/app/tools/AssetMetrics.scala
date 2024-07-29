@@ -35,7 +35,7 @@ object AssetMetrics {
         new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusDays(timePeriodInDays).toDate)
           .withEndTime(new DateTime().toDate)
-          .withPeriod(86400) //One day
+          .withPeriod(86400) // One day
           .withStatistics("Average")
           .withNamespace("Assets")
           .withMetricName(metric.getMetricName)

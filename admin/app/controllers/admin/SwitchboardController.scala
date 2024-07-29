@@ -61,7 +61,8 @@ class SwitchboardController(
         log.info("saving switchboard")
 
         val requester: String =
-          auth.readAuthenticatedUser(request) map (authed => s"${authed.user.firstName} ${authed.user.lastName}",
+          auth.readAuthenticatedUser(request) map (authed =>
+            s"${authed.user.firstName} ${authed.user.lastName}"
           ) getOrElse "unknown user (dev-build?)"
         val updates: Seq[String] = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
