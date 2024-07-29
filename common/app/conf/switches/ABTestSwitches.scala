@@ -47,16 +47,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-magnite",
-    "Integrate Magnite as a new prebid bidder",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 30)),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-sticky-live-blog-ask-test",
     "A sticky reader revenue ask on the left column of a liveblog",
     owners = Seq(Owner.withEmail("growth@theguardian.com")),
