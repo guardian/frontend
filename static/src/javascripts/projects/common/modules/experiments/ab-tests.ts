@@ -12,5 +12,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMainControl,
 	remoteRRHeaderLinksTest,
 	mpuWhenNoEpic,
-	stickyLiveBlogAskTest,
+	stickyLiveBlogAskTest
 ];

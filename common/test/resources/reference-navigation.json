@@ -168,12 +168,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -451,8 +445,8 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Euro 2024",
-					"url": "/football/euro-2024",
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -460,12 +454,6 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
-						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -1031,12 +1019,6 @@
 					"classList": []
 				},
 				{
-					"title": "Donald Trump trials",
-					"url": "/us-news/donald-trump-trials",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "World",
 					"url": "/world",
 					"longTitle": "World news",
@@ -1144,15 +1126,15 @@
 					"classList": []
 				},
 				{
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
-						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -1302,8 +1284,8 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Euro 2024",
-					"url": "/football/euro-2024",
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -1311,12 +1293,6 @@
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
-						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -2032,8 +2008,8 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Euro 2024",
-					"url": "/football/euro-2024",
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -2041,12 +2017,6 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
-						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -2662,12 +2632,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2853,8 +2817,8 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Euro 2024",
-					"url": "/football/euro-2024",
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -2862,12 +2826,6 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
-						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -3366,7 +3324,7 @@
 	},
 	"tagPages": [
 		"us/soccer",
-		"us-news/us-politics",
+		"us-news/us-elections-2024",
 		"australia-news/australian-politics",
 		"australia-news/australian-immigration-and-asylum",
 		"australia-news/indigenous-australians",
@@ -3672,12 +3630,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3863,8 +3815,8 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Euro 2024",
-					"url": "/football/euro-2024",
+					"title": "Olympics 2024",
+					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -3872,12 +3824,6 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
-						{
-							"title": "Euro 2024",
-							"url": "/football/euro-2024",
-							"children": [],
-							"classList": []
-						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",

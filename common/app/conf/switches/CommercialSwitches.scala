@@ -414,6 +414,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidMagnite: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-magnite",
+    description = "Include the Magnite adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val sentinelLogger: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
