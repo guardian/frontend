@@ -130,6 +130,7 @@ object Parser {
           getStatistic(bowler, "maidens") toInt,
           getStatistic(bowler, "runs-conceded") toInt,
           getStatistic(bowler, "wickets-taken") toInt,
+          getStatistic(bowler, "balls") toInt,
         )
       }
       .toList

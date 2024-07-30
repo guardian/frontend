@@ -28,7 +28,7 @@ object InningsBatter {
   implicit val writes: OWrites[InningsBatter] = Json.writes[InningsBatter]
 }
 
-case class InningsBowler(name: String, order: Int, overs: Int, maidens: Int, runs: Int, wickets: Int)
+case class InningsBowler(name: String, order: Int, overs: Int, maidens: Int, runs: Int, wickets: Int, balls: Int)
 
 object InningsBowler {
   implicit val writes: OWrites[InningsBowler] = Json.writes[InningsBowler]
