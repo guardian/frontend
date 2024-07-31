@@ -6,20 +6,13 @@ import java.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, JsonComponent}
-import contentapi.ContentApiClient
-import model.content.InteractiveAtom
-import common.ImplicitControllerExecutionContext
-import scala.concurrent.Future
-import conf.switches.Switches
 
 class MatchDayController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
-    val contentApiClient: ContentApiClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
-    with CompetitionLiveFilters
-    with ImplicitControllerExecutionContext {
+    with CompetitionLiveFilters {
 
   def liveMatchesJson(): Action[AnyContent] = liveMatches()
   def liveMatches(): Action[AnyContent] =
@@ -48,7 +41,7 @@ class MatchDayController(
     competitionMatchesFor(competitionTag, year, month, day)
 
   private def renderCompetitionMatches(competitionTag: String, date: LocalDate): Action[AnyContent] =
-    Action.async { implicit request =>
+    Action { implicit request =>
       lookupCompetition(competitionTag)
         .map { competition =>
           val webTitle =
@@ -56,18 +49,10 @@ class MatchDayController(
             else s" ${competition.fullName} matches"
           val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
-          if (Switches.Euro2024Header.isSwitchedOn) {
-            val id = "/atom/interactive/interactives/2023/01/euros-2024/match-centre-euros-2024-header"
-            val edition = Edition(request)
-            contentApiClient
-              .getResponse(contentApiClient.item(id, edition))
-              .map(_.interactive.map(InteractiveAtom.make(_)))
-              .recover { case _ => None }
-              .map(renderMatchList(page, matches, filters, _))
-          } else Future.successful(renderMatchList(page, matches, filters))
+          renderMatchList(page, matches, filters)
         }
         .getOrElse {
-          Future.successful(NotFound)
+          NotFound
         }
     }
 
