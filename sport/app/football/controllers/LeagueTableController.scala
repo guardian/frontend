@@ -134,7 +134,7 @@ class LeagueTableController(
             s"${table.competition.fullName} table",
           )
 
-          val futureAtom = if (Switches.Euro2024Header.isSwitchedOn && competition == "euro-2024") {
+          val futureAtom = if (competition == "euro-2024") {
             val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
             val edition = Edition(request)
             contentApiClient
