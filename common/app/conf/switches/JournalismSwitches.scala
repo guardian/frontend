@@ -81,7 +81,7 @@ trait JournalismSwitches {
     description = "Show the Euro 2024 interactive atom header on football pages",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
-    sellByDate = LocalDate.of(2024, 7, 31),
+    sellByDate = LocalDate.of(2024, 8, 30),
     exposeClientSide = true,
   )
 }

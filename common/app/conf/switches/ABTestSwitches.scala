@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Test MPU when there is no epic at the end of Article on the page.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 7, 31)),
+    sellByDate = Some(LocalDate.of(2024, 8, 30)),
     exposeClientSide = true,
   )
 
@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Show new ad block ask component in ad slots when we detect ad blocker usage",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 7, 31)),
+    sellByDate = Some(LocalDate.of(2024, 8, 30)),
     exposeClientSide = true,
   )
 
@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "A sticky reader revenue ask on the left column of a liveblog",
     owners = Seq(Owner.withEmail("growth@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 7, 31)),
+    sellByDate = Some(LocalDate.of(2024, 8, 30)),
     exposeClientSide = true,
   )
 }
