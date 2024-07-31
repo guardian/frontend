@@ -159,6 +159,17 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val updateLogoAdPartner: Switch = Switch(
+    group = Commercial,
+    name = "update-logo-ad-partner",
+    description =
+      "Enable the updated logo styling for advertising partner and exclusive advertising partner US labels.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = LocalDate.of(2024, 8, 7),
+    exposeClientSide = true,
+  )
 }
 
 trait PrebidSwitches {
