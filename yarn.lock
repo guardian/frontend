@@ -61,7 +61,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-cloudwatch@npm:^3.621.0":
+"@aws-sdk/client-cloudwatch@npm:3.621.0":
   version: 3.621.0
   resolution: "@aws-sdk/client-cloudwatch@npm:3.621.0"
   dependencies:
@@ -3946,7 +3946,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@guardian/frontend@workspace:."
   dependencies:
-    "@aws-sdk/client-cloudwatch": "npm:^3.621.0"
+    "@aws-sdk/client-cloudwatch": "npm:3.621.0"
     "@babel/cli": "npm:^7.24.8"
     "@babel/core": "npm:^7.24.9"
     "@babel/eslint-parser": "npm:7.24.8"
