@@ -322,7 +322,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield {
-      val doNotTrimContainerOfTypes = Seq("nav/list")
+
+      val doNotTrimContainerOfTypes = Seq("nav/list", "fixed/highlights")
       val storyCountTotal = curated.length + backfill.length
       val storyCountMax: Int = doNotTrimContainerOfTypes
         .contains(collection.collectionConfig.collectionType)
@@ -334,7 +335,16 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
           curated ++ backfill,
         )
         .getOrElse(storyCountMax)
-
+      if (collectionId == "cb4cc3b5-b5fc-466a-aa47-9dc6b9847967") {
+        println(
+          "storyCountTotal",
+          storyCountTotal,
+          "storyCountMax",
+          storyCountMax,
+          "storyCountVisible",
+          storyCountVisible,
+        )
+      }
       val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
       PressedCollectionVisibility(pressedCollection, storyCountVisible)
     }
