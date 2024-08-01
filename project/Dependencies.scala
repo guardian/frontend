@@ -5,6 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.25"
   val awsVersion = "1.12.758"
+  val awsSdk2Version = "2.26.27"
   val capiVersion = "31.1.0"
   val faciaVersion = "8.0.0"
   val dispatchVersion = "0.13.1"
@@ -14,7 +15,7 @@ object Dependencies {
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.14.0"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
-  val awsDynamodb = "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion
+  val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
@@ -89,7 +90,7 @@ object Dependencies {
 
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.4"
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
-  val scanamo = "org.scanamo" %% "scanamo" % "1.0.0-M11"
+  val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.1"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.3"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
