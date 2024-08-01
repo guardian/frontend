@@ -26,7 +26,6 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
-import play.api.Logger
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -323,8 +322,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield {
-
-      val doNotTrimContainerOfTypes = Seq("nav/list", "fixed/highlights")
+      val doNotTrimContainerOfTypes = Seq("nav/list")
       val storyCountTotal = curated.length + backfill.length
       val storyCountMax: Int = doNotTrimContainerOfTypes
         .contains(collection.collectionConfig.collectionType)
@@ -336,15 +334,6 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
           curated ++ backfill,
         )
         .getOrElse(storyCountMax)
-      log.info(
-        "collection " + collectionId + " of type " + collection.collectionConfig.collectionType +
-          "storyCountTotal " +
-          storyCountTotal +
-          "storyCountMax " +
-          storyCountMax +
-          "storyCountVisible " +
-          storyCountVisible,
-      )
 
       val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
       PressedCollectionVisibility(pressedCollection, storyCountVisible)
