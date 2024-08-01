@@ -9,7 +9,7 @@
 		"static/src/**/*"
 	],
 	"dependencies": {
-		"@aws-sdk/client-cloudwatch": "3.441.0",
+		"@aws-sdk/client-cloudwatch": "3.621.0",
 		"@babel/cli": "^7.24.8",
 		"@babel/core": "^7.25.2",
 		"@babel/eslint-parser": "7.25.1",
