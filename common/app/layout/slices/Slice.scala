@@ -1104,28 +1104,52 @@ case object TTMpu extends Slice {
 }
 
 /*
- * The Highlights layout is used to display select features in the header for apps and web
+ * The Highlights layout is used to display select features in the header for apps and web, notably via a carousel.
+ * The implementation on platforms effectively limits the display to 2-4 cards, with a peeking card.
+ * We don't limit the slice definition here to 4, because of how fronts are pressed in facia-press.
+ * This ensures the full number of cards get loaded by default, and can then be appropriately displayed by the carousel.
  *
  * Desktop:
- * .____________.____________.____________.
- * |       #####|       #####|       #####|
- * |       #####|       #####|       #####|
- * |       #####|       #####|       #####|
- * '--------------------------------------'
+ * .____________.____________.____________.____________.____________.____________.
+ * |       #####|       #####|       #####|       #####|       #####|       #####|
+ * |       #####|       #####|       #####|       #####|       #####|       #####|
+ * |       #####|       #####|       #####|       #####|       #####|       #####|
+ * '-----------------------------------------------------------------------------'
  *
  * Mobile:
- * .___________.___________.___________.
- * |           |           |           |
- * |           |           |           |
- * |_#########_|_#########_|_#########_|
- * |_#########_|_#########_|_#########_|
- * |_#########_|_#########_|_#########_|
- * `-----------------------------------'
+ * .___________.___________.___________.___________.___________.___________.
+ * |           |           |           |           |           |           |
+ * |           |           |           |           |           |           |
+ * |_#########_|_#########_|_#########_|_#########_|_#########_|_#########_|
+ * |_#########_|_#########_|_#########_|_#########_|_#########_|_#########_|
+ * |_#########_|_#########_|_#########_|_#########_|_#########_|_#########_|
+ * `-----------------------------------------------------------------------'
  */
 case object Highlights extends Slice {
   val layout = SliceLayout(
-    cssClassName = "t-t-t",
+    cssClassName = "t-t-t-t-t-t",
     columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList,
+        ),
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList,
+        ),
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList,
+        ),
+      ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
