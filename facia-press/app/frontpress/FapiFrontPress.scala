@@ -26,6 +26,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
+import play.api.Logger
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -336,13 +337,13 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         )
         .getOrElse(storyCountMax)
       if (collectionId == "cb4cc3b5-b5fc-466a-aa47-9dc6b9847967") {
-        println(
-          "storyCountTotal",
-          storyCountTotal,
-          "storyCountMax",
-          storyCountMax,
-          "storyCountVisible",
-          storyCountVisible,
+        log.info(
+          "storyCountTotal" +
+            storyCountTotal +
+            "storyCountMax" +
+            storyCountMax +
+            "storyCountVisible" +
+            storyCountVisible,
         )
       }
       val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
