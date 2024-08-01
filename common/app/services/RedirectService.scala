@@ -1,9 +1,8 @@
 package services
 
 import java.net.URL
-import org.scanamo.error.MissingProperty
 import org.scanamo.syntax._
-import org.scanamo.{DynamoFormat, Scanamo, ScanamoAsync, Table}
+import org.scanamo.{DynamoFormat, MissingProperty, Scanamo, ScanamoAsync, Table}
 import common.GuLogging
 import conf.Configuration
 
