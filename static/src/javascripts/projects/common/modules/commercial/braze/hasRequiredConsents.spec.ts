@@ -68,9 +68,10 @@ describe('hasRequiredConsents', () => {
 			mockOnConsentChangeResult = {
 				ccpa: {
 					doNotSell: false,
+					signalStatus: 'ready'
 				},
 				canTarget: true,
-				framework: 'ccpa',
+				framework: 'usnat',
 			};
 
 			await expect(hasRequiredConsents()).resolves.toBe(true);
@@ -82,6 +83,7 @@ describe('hasRequiredConsents', () => {
 			mockOnConsentChangeResult = {
 				ccpa: {
 					doNotSell: true,
+					signalStatus: 'ready'
 				},
 				canTarget: false,
 				framework: 'ccpa',
