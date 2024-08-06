@@ -4153,7 +4153,7 @@ __metadata:
     "@types/youtube": "npm:^0.0.44"
     "@typescript-eslint/eslint-plugin": "npm:5.61.0"
     "@typescript-eslint/parser": "npm:5.61.0"
-    amphtml-validator: "npm:^1.0.21"
+    amphtml-validator: "npm:^1.0.38"
     any-observable: "npm:^0.2.0"
     autoprefixer: "npm:^10.3.7"
     babel-core: "npm:^7.0.0-bridge.0"
@@ -6686,16 +6686,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"amphtml-validator@npm:^1.0.21":
-  version: 1.0.35
-  resolution: "amphtml-validator@npm:1.0.35"
+"amphtml-validator@npm:^1.0.38":
+  version: 1.0.38
+  resolution: "amphtml-validator@npm:1.0.38"
   dependencies:
     colors: "npm:1.4.0"
-    commander: "npm:7.2.0"
-    promise: "npm:8.1.0"
+    commander: "npm:12.0.0"
+    promise: "npm:8.3.0"
   bin:
     amphtml-validator: cli.js
-  checksum: 10c0/0b914b3267dd0c9210d712d2ef3b949c3bd47662d5357559e45726ae3ce36ba91f163147f74003054ac6e4683ff5b618f50fab4bc21a2343eceeae9a54bd83ee
+  checksum: 10c0/6afc07d5de72b69136565b9c76477793ce558b2d096729d198fb349b76ba5d7dc88efd649a4dbc1306967d1164882dc07c327209c4ef2aaa15e06e01a46c6424
   languageName: node
   linkType: hard
 
@@ -8062,10 +8062,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:7.2.0, commander@npm:^7.2.0":
-  version: 7.2.0
-  resolution: "commander@npm:7.2.0"
-  checksum: 10c0/8d690ff13b0356df7e0ebbe6c59b4712f754f4b724d4f473d3cc5b3fdcf978e3a5dc3078717858a2ceb50b0f84d0660a7f22a96cdc50fb877d0c9bb31593d23a
+"commander@npm:12.0.0":
+  version: 12.0.0
+  resolution: "commander@npm:12.0.0"
+  checksum: 10c0/e51cac1d1d0aa1f76581981d2256a9249497e08f5a370bf63b0dfc7e76a647fc8cbc3ddd507928f2bdca6c514c83834e87e2687ace2fe2fc7cc7e631bf80f83d
   languageName: node
   linkType: hard
 
@@ -8080,6 +8080,13 @@ __metadata:
   version: 6.2.1
   resolution: "commander@npm:6.2.1"
   checksum: 10c0/85748abd9d18c8bc88febed58b98f66b7c591d9b5017cad459565761d7b29ca13b7783ea2ee5ce84bf235897333706c4ce29adf1ce15c8252780e7000e2ce9ea
+  languageName: node
+  linkType: hard
+
+"commander@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "commander@npm:7.2.0"
+  checksum: 10c0/8d690ff13b0356df7e0ebbe6c59b4712f754f4b724d4f473d3cc5b3fdcf978e3a5dc3078717858a2ceb50b0f84d0660a7f22a96cdc50fb877d0c9bb31593d23a
   languageName: node
   linkType: hard
 
@@ -14740,12 +14747,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"promise@npm:8.1.0":
-  version: 8.1.0
-  resolution: "promise@npm:8.1.0"
+"promise@npm:8.3.0":
+  version: 8.3.0
+  resolution: "promise@npm:8.3.0"
   dependencies:
     asap: "npm:~2.0.6"
-  checksum: 10c0/bd6594e66b200a0c5aa18b46502e859d5abe7daeae2f9edaaf4e440628e6f960158ca0b9a12763d845ea7532e832566eee6fcceaa52b6862cc90908a51c4eca8
+  checksum: 10c0/6fccae27a10bcce7442daf090279968086edd2e3f6cebe054b71816403e2526553edf510d13088a4d0f14d7dfa9b9dfb188cab72d6f942e186a4353b6a29c8bf
   languageName: node
   linkType: hard
 
