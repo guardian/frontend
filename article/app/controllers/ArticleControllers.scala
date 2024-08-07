@@ -2,21 +2,18 @@ package controllers
 
 import com.softwaremill.macwire._
 import contentapi.ContentApiClient
-import model.{ApplicationContext, TopicsApiResponse}
+import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
 import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, S3Client}
 import services.newsletters.NewsletterSignupAgent
-import topics.TopicService
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient
   def controllerComponents: ControllerComponents
   def wsClient: WSClient
   def remoteRender: DotcomRenderingService
-  def topicS3Client: S3Client[TopicsApiResponse]
-  def topicService: TopicService
   def newsletterSignupAgent: NewsletterSignupAgent
 
   implicit def appContext: ApplicationContext
