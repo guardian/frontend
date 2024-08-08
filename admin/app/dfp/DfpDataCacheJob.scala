@@ -29,7 +29,6 @@ class DfpDataCacheJob(
       log.info(s"Loading DFP data took $duration ms")
       write(data)
       Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
-      writeInlineMerchandisingTargetedTags(currentLineItems)
       writeLiveBlogTopSponsorships(currentLineItems)
     }
 
@@ -159,19 +158,6 @@ class DfpDataCacheJob(
 
       Store.putTopAboveNavSlotTakeovers(
         stringify(toJson(LineItemReport(now, data.topAboveNavSlotTakeovers, Seq.empty))),
-      )
-    }
-  }
-
-  private def writeInlineMerchandisingTargetedTags(data: DfpDataExtractor): Unit = {
-
-    if (data.hasValidLineItems) {
-      val now = printLondonTime(DateTime.now())
-
-      val lineItems = data.inlineMerchandisingTargetedLineItems
-      val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
-      Store.putInlineMerchandisingSponsorships(
-        stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags, lineItems))),
       )
     }
   }
