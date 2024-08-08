@@ -193,7 +193,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   def getLiveblogPageWithBlockIds(pageBlokIds: Seq[Int]) = {
     val liveblogBlocks = pageBlokIds.map(id => getBodyBlockWithId(id))
     val liveblogCurrentPage = LiveBlogCurrentPage(
-      currentPage = FirstPage(liveblogBlocks, filterKeyEvents = true, topicResult = None),
+      currentPage = FirstPage(liveblogBlocks, filterKeyEvents = true),
       pagination = None,
       pinnedBlock = None,
     )

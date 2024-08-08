@@ -18,13 +18,12 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       range: BlockRange,
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog | TopicsLiveBlog => firstPage(pageSize, blocks, filterKeyEvents, topicResult)
+      case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents)
       case PageWithBlock(isRequestedBlock) =>
-        findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents, topicResult)
-      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents, topicResult)
+        findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents)
+      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)
       case ArticleBlocks         => None
       case GenericFallback       => None
       case _                     => None
@@ -36,15 +35,14 @@ object LiveBlogCurrentPage {
       blocks: Blocks,
       sinceBlockId: SinceBlockId,
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
 
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
       val onlyBlocksAfterLastUpdated = bodyBlocks.takeWhile(_.id != sinceBlockId.lastUpdate)
-      applyFilters(onlyBlocksAfterLastUpdated, filterKeyEvents, topicResult)
+      applyFilters(onlyBlocksAfterLastUpdated, filterKeyEvents)
     }
     Some(
-      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents, topicResult), None, None),
+      LiveBlogCurrentPage(FirstPage(bodyBlocks, filterKeyEvents), None, None),
     ) // just pretend to be the first page, it'll be ignored
   }
 
@@ -53,10 +51,9 @@ object LiveBlogCurrentPage {
       pageSize: Int,
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
     val (maybeRequestedBodyBlocks, blockCount, oldestPageBlockId) =
-      extractFirstPageBlocks(blocks, filterKeyEvents, topicResult)
+      extractFirstPageBlocks(blocks, filterKeyEvents)
 
     val remainder = blockCount % pageSize
     val numPages = blockCount / pageSize
@@ -65,11 +62,11 @@ object LiveBlogCurrentPage {
       val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
 
       val olderPage = startOfSecondPageBlocks.headOption.map { block =>
-        BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2, filterKeyEvents, topicResult)
+        BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2, filterKeyEvents)
       }
 
       val oldestPage = oldestPageBlockId map { blockId =>
-        BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents, topicResult)
+        BlockPage(blocks = Nil, blockId = blockId, pageNumber = numPages, filterKeyEvents)
       }
 
       val pinnedBlocks = blocks.requestedBodyBlocks.get(CanonicalLiveBlog.pinned)
@@ -91,41 +88,19 @@ object LiveBlogCurrentPage {
         else None
       }
 
-      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents, topicResult), pagination, pinnedBlockRenamed)
+      LiveBlogCurrentPage(FirstPage(blocksToDisplay, filterKeyEvents), pagination, pinnedBlockRenamed)
     }
   }
 
   private def extractFirstPageBlocks(
       blocks: Blocks,
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ) = {
     if (filterKeyEvents) {
       getKeyEventsBlocks(blocks)
-    } else if (topicResult.isDefined) {
-      getTopicBlocks(blocks, topicResult.get)
     } else {
       getStandardBlocks(blocks)
     }
-  }
-
-  private def isTopicBlock(topic: TopicResult)(bodyBlock: BodyBlock): Boolean = {
-    topic.blocks.contains(bodyBlock.id)
-  }
-
-  private def filterBlocksByTopic(blocks: Seq[BodyBlock], topic: TopicResult) = {
-    blocks.filter(isTopicBlock(topic)).sortBy(_.publishedCreatedTimestamp()).reverse
-  }
-
-  private def getTopicBlocks(
-      blocks: Blocks,
-      topic: TopicResult,
-  ): (Option[Seq[BodyBlock]], Int, Option[String]) = {
-    val bodyBlocks = blocks.body
-
-    val filteredBodyBlocks = filterBlocksByTopic(bodyBlocks, topic)
-
-    (Some(filteredBodyBlocks), filteredBodyBlocks.length, filteredBodyBlocks.lastOption.map(_.id))
   }
 
   private def getStandardBlocks(blocks: Blocks): (Option[Seq[BodyBlock]], Int, Option[String]) = {
@@ -164,9 +139,8 @@ object LiveBlogCurrentPage {
       blocks: Seq[BodyBlock],
       requestedBlockId: String,
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ): Option[LiveBlogCurrentPage] = {
-    val pages: Seq[PageReference] = pagesFromBodyBlocks(pageSize, blocks, filterKeyEvents, topicResult)
+    val pages: Seq[PageReference] = pagesFromBodyBlocks(pageSize, blocks, filterKeyEvents)
 
     val indexOfPageWithRequestedBlock = pages.indexWhere(_.blocks.exists(_.id == requestedBlockId))
     if (indexOfPageWithRequestedBlock < 0) None
@@ -198,12 +172,11 @@ object LiveBlogCurrentPage {
       pageSize: Int,
       blocks: Seq[BodyBlock],
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ): Seq[PageReference] = {
-    val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, applyFilters(blocks, filterKeyEvents, topicResult))
-    FirstPage(mainPageBlocks, filterKeyEvents, topicResult) :: restPagesBlocks.zipWithIndex.map { case (page, index) =>
+    val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, applyFilters(blocks, filterKeyEvents))
+    FirstPage(mainPageBlocks, filterKeyEvents) :: restPagesBlocks.zipWithIndex.map { case (page, index) =>
       // page number is index + 2 to account for first page and 0-based index of `zipWithIndex`
-      BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents, topicResult)
+      BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2, filterKeyEvents)
     }
   }
 
@@ -214,12 +187,9 @@ object LiveBlogCurrentPage {
   private def applyFilters(
       blocks: Seq[BodyBlock],
       filterKeyEvents: Boolean,
-      topicResult: Option[TopicResult],
   ) = {
     if (filterKeyEvents) {
       blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    } else if (topicResult.isDefined) {
-      filterBlocksByTopic(blocks, topicResult.get)
     } else {
       blocks
     }
@@ -243,13 +213,6 @@ sealed trait PageReference {
   def pageNumber: Int
 
   def isArchivePage: Boolean
-
-  def buildQueryParam(topicResult: Option[TopicResult]) = {
-    topicResult match {
-      case Some(value) => s"&topics=${value.`type`}:${value.name}"
-      case None        => ""
-    }
-  }
 }
 
 case class N1Pagination(
@@ -260,9 +223,8 @@ case class N1Pagination(
     numberOfPages: Int,
 )
 
-case class FirstPage(blocks: Seq[BodyBlock], filterKeyEvents: Boolean, topicResult: Option[TopicResult])
-    extends PageReference {
-  val suffix = s"?filterKeyEvents=$filterKeyEvents${buildQueryParam(topicResult)}"
+case class FirstPage(blocks: Seq[BodyBlock], filterKeyEvents: Boolean) extends PageReference {
+  val suffix = s"?filterKeyEvents=$filterKeyEvents"
   val pageNumber = 1
   val isArchivePage = false
 }
@@ -272,9 +234,8 @@ case class BlockPage(
     blockId: String,
     pageNumber: Int,
     filterKeyEvents: Boolean,
-    topicResult: Option[TopicResult],
 ) extends PageReference {
-  val suffix = s"?page=with:block-$blockId&filterKeyEvents=$filterKeyEvents${buildQueryParam(topicResult)}"
+  val suffix = s"?page=with:block-$blockId&filterKeyEvents=$filterKeyEvents"
   val isArchivePage = true
 }
 

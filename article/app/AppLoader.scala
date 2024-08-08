@@ -13,8 +13,8 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
-import jobs.{StoreNavigationLifecycleComponent, TopicLifecycle}
-import model.{ApplicationIdentity, TopicsApiResponse}
+import jobs.StoreNavigationLifecycleComponent
+import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
@@ -25,19 +25,13 @@ import services.fronts.FrontJsonFapiLive
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, S3Client, S3ClientImpl, SkimLinksCacheLifeCycle}
-import topics.TopicService
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
     new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait TopicServices {
-  lazy val topicS3Client: S3Client[TopicsApiResponse] = new S3ClientImpl(Configuration.aws.topMentionsStoreBucket)
-  lazy val topicService = wire[TopicService]
-}
-
-trait AppComponents extends FrontendComponents with ArticleControllers with TopicServices {
+trait AppComponents extends FrontendComponents with ArticleControllers {
 
   lazy val newsletterApi = wire[NewsletterApi]
   lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
@@ -63,7 +57,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers with Topi
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
-    wire[TopicLifecycle],
     wire[NewsletterSignupLifecycle],
   )
 

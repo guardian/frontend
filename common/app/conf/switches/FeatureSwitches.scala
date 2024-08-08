@@ -443,16 +443,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val AutomaticFilters = Switch(
-    SwitchGroup.Feature,
-    "automatic-filters",
-    "When ON, displays automatic filters (Topics) on live blogs",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val KeyEventsCarousel = Switch(
     SwitchGroup.Feature,
     "key-events-carousel",
