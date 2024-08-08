@@ -66,12 +66,6 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.surgingpages(surging)))
     }
 
-  def renderInlineMerchandisingTargetedTags: Action[AnyContent] =
-    Action { implicit request =>
-      val report = Store.getDfpInlineMerchandisingTargetedTagsReport()
-      NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(report)))
-    }
-
   def renderHighMerchandisingTargetedTags: Action[AnyContent] =
     Action { implicit request =>
       val report = Store.getDfpHighMerchandisingTargetedTagsReport()

@@ -11,14 +11,12 @@ import scala.io.Codec.UTF8
 
 object DfpAgent
     extends PageskinAdAgent
-    with InlineMerchandiseComponentAgent
     with LiveBlogTopSponsorshipAgent
     with HighMerchandiseComponentAgent
     with AdSlotAgent {
 
   override protected val environmentIsProd: Boolean = environment.isProd
 
-  private lazy val inlineMerchandisingTagsAgent = Box[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val targetedHighMerchandisingLineItemsAgent = Box[Seq[HighMerchandisingLineItem]](Seq.empty)
   private lazy val liveblogTopSponsorshipAgent = Box[Seq[LiveBlogTopSponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
@@ -26,7 +24,6 @@ object DfpAgent
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
 
-  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent.get()
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
     targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
@@ -65,14 +62,6 @@ object DfpAgent
       reportOption.fold(Seq[LiveBlogTopSponsorship]())(_.sponsorships)
     }
 
-    def grabInlineMerchandisingTargetedTagsFromStore(): InlineMerchandisingTagSet = {
-      val maybeTagSet = for {
-        jsonString <- stringFromS3(dfpInlineMerchandisingTagsDataKey)
-        report <- InlineMerchandisingTargetedTagsReportParser(jsonString)
-      } yield report.targetedTags
-      maybeTagSet getOrElse InlineMerchandisingTagSet()
-    }
-
     def grabNonRefreshableLineItemIdsFromStore() = {
       (for {
         jsonString <- stringFromS3(dfpNonRefreshableLineItemIdsKey)
@@ -88,12 +77,6 @@ object DfpAgent
       } yield lineItems
     }
 
-    def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet): Unit = {
-      inlineMerchandisingTagsAgent send { oldData =>
-        if (freshData.nonEmpty) freshData else oldData
-      }
-    }
-
     def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit = {
       targetedHighMerchandisingLineItemsAgent send { oldData =>
         if (freshData.nonEmpty) freshData else oldData
@@ -105,8 +88,6 @@ object DfpAgent
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
 
     update(liveblogTopSponsorshipAgent)(grabLiveBlogTopSponsorshipsFromStore())
-
-    updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 
     updateTargetedHighMerchandisingLineItems(grabTargetedHighMerchandisingLineItemFromStore())
 
