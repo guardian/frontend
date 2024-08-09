@@ -5,13 +5,13 @@ import conf.AdminConfiguration.fastly
 import conf.Configuration.environment
 import implicits.Dates
 import play.api.libs.ws.{WSClient, WSResponse}
-import conf.AdminConfiguration.fastly
 
 import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait FastlyService { def serviceId: String }
 case object GuardianHost extends FastlyService { val serviceId = fastly.serviceId }
 case object AjaxHost extends FastlyService { val serviceId = fastly.ajaxServiceId }
+case object LabsHost extends FastlyService { val serviceId = fastly.labsServiceId }
 
 object CdnPurge extends Dates with GuLogging {
 

@@ -38,6 +38,9 @@ object AdminConfiguration {
     lazy val ajaxServiceId = configuration
       .getStringProperty("fastly.ajax.serviceId")
       .getOrElse(throw new RuntimeException("Fastly ajax service id not configured"))
+    lazy val labsServiceId = configuration
+      .getStringProperty("fastly.labs.serviceId")
+      .getOrElse(throw new RuntimeException("Fastly Labs service id not configured"))
   }
 
   object dfpApi {

@@ -6,7 +6,7 @@ import model.{ApplicationContext, NoCache}
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import purge.{AjaxHost, CdnPurge, GuardianHost}
+import purge.{AjaxHost, CdnPurge, GuardianHost, LabsHost}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -30,6 +30,11 @@ class PageDecacheController(
       Future(NoCache(Ok(views.html.cache.ajaxDecache())))
     }
 
+  def renderLabsPageDecache(): Action[AnyContent] =
+    Action.async { implicit request =>
+      Future(NoCache(Ok(views.html.cache.labsPageDecache())))
+    }
+
   def decacheAjax(): Action[AnyContent] =
     Action.async { implicit request =>
       getSubmittedUrlPathMd5(request) match {
@@ -46,6 +51,17 @@ class PageDecacheController(
           CdnPurge
             .soft(wsClient, md5Path, GuardianHost)
             .map(message => NoCache(Ok(views.html.cache.pageDecache(message))))
+        case None => successful(BadRequest("No page submitted"))
+      }
+    }
+
+  def decacheLabsPage(): Action[AnyContent] =
+    Action.async { implicit request =>
+      getSubmittedUrlPathMd5(request) match {
+        case Some(md5Path) =>
+          CdnPurge
+            .soft(wsClient, md5Path, LabsHost)
+            .map(message => NoCache(Ok(views.html.cache.labsPageDecache(message))))
         case None => successful(BadRequest("No page submitted"))
       }
     }
