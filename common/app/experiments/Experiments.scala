@@ -52,6 +52,6 @@ object TagLinkDesign
       name = "tag-link-design",
       description = "Render an updated sticky design for tag links on Olympics articles and liveblogs",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 8, 12),
+      sellByDate = LocalDate.of(2024, 10, 30),
       participationGroup = Perc10A,
     )
