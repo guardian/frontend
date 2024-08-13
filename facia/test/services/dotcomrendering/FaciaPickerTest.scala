@@ -249,6 +249,7 @@ import layout.slices.EmailLayouts
         PressedCollectionBuilder.mkPressedCollection("nav/media-list"),
         PressedCollectionBuilder.mkPressedCollection("news/most-popular"),
         PressedCollectionBuilder.mkPressedCollection("fixed/highlights"),
+        PressedCollectionBuilder.mkPressedCollection("flexible/special"),
       ),
     )
 
