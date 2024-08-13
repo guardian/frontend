@@ -33,7 +33,7 @@
 		"@guardian/eslint-config-typescript": "9.0.1",
 		"@guardian/identity-auth": "2.1.0",
 		"@guardian/identity-auth-frontend": "4.0.0",
-		"@guardian/libs": "0.0.0-canary-20240729085532",
+		"@guardian/libs": "0.0.0-canary-20240813083420",
 		"@guardian/prettier": "^8.0.1",
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "14.2.2",
