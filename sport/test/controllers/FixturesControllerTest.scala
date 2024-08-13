@@ -17,19 +17,14 @@ import org.scalatest.matchers.should.Matchers
     with WithMaterializer
     with BeforeAndAfterAll
     with WithTestApplicationContext
-    with WithTestWsClient
-    with WithTestContentApiClient {
+    with WithTestWsClient {
 
   val fixturesUrl = "/football/fixtures"
   val fixtureForUrl = "/football/fixtures/2012/oct/20"
   val tag = "premierleague"
 
   lazy val fixturesController =
-    new FixturesController(
-      testCompetitionsService,
-      play.api.test.Helpers.stubControllerComponents(),
-      testContentApiClient,
-    )
+    new FixturesController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "can load the all fixtures page" in {
     val result = fixturesController.allFixtures()(TestRequest())

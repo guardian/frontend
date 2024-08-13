@@ -20,7 +20,6 @@ import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
 import http.{Filters, GuardianAuthWithExemptions, PreviewContentSecurityPolicyFilter, PreviewNoCacheFilter, routes}
-import jobs.TopicLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
@@ -41,8 +40,7 @@ trait PreviewLifecycleComponents
     with CommercialServices
     with FapiServices
     with OnwardServices
-    with ApplicationsServices
-    with TopicServices {
+    with ApplicationsServices {
   self: FrontendComponents =>
 
   // Override conflicting members
@@ -66,7 +64,6 @@ trait PreviewLifecycleComponents
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
       wire[NewsletterSignupLifecycle],
-      wire[TopicLifecycle],
     )
 
   def pekkoActorSystem: PekkoActorSystem

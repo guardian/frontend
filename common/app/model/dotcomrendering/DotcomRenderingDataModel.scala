@@ -25,8 +25,6 @@ import model.{
   LiveBlogPage,
   MediaPage,
   PageWithStoryPackage,
-  Topic,
-  TopicResult,
 }
 import navigation._
 import play.api.libs.json._
@@ -45,8 +43,6 @@ case class DotcomRenderingDataModel(
     affiliateLinksDisclaimer: Option[String],
     mainMediaElements: List[PageElement],
     main: String,
-    availableTopics: Option[Seq[Topic]],
-    selectedTopics: Option[Seq[Topic]],
     filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
@@ -117,8 +113,6 @@ object DotcomRenderingDataModel {
   implicit val writes: Writes[DotcomRenderingDataModel] = new Writes[DotcomRenderingDataModel] {
     def writes(model: DotcomRenderingDataModel) = {
       val obj = Json.obj(
-        "availableTopics" -> model.availableTopics,
-        "selectedTopics" -> model.selectedTopics,
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -222,9 +216,7 @@ object DotcomRenderingDataModel {
       storyPackage = getStoryPackage(page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
-      availableTopics = None,
       newsletter = None,
-      topicResult = None,
     )
   }
 
@@ -255,9 +247,7 @@ object DotcomRenderingDataModel {
       storyPackage = getStoryPackage(page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
-      availableTopics = None,
       newsletter = newsletter,
-      topicResult = None,
     )
   }
 
@@ -377,9 +367,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
-      availableTopics: Option[Seq[Topic]] = None,
       newsletter: Option[NewsletterData],
-      topicResult: Option[TopicResult],
   ): DotcomRenderingDataModel = {
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
@@ -435,9 +423,7 @@ object DotcomRenderingDataModel {
       filterKeyEvents = filterKeyEvents,
       mostRecentBlockId = mostRecentBlockId,
       forceLive = forceLive,
-      availableTopics = availableTopics,
       newsletter = newsletter,
-      topicResult = topicResult,
     )
   }
 
@@ -454,8 +440,6 @@ object DotcomRenderingDataModel {
       keyEvents: Seq[APIBlock] = Seq.empty,
       pagination: Option[Pagination] = None,
       pinnedPost: Option[APIBlock] = None,
-      availableTopics: Option[Seq[Topic]] = None,
-      topicResult: Option[TopicResult] = None,
       filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
@@ -571,8 +555,6 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page)
 
-    val selectedTopics = topicResult.map(topic => Seq(Topic(topic.`type`, topic.name)))
-
     def addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks: Boolean, shouldAddDisclaimer: Boolean) = {
       if (shouldAddAffiliateLinks && shouldAddDisclaimer) {
         Some("true")
@@ -627,8 +609,6 @@ object DotcomRenderingDataModel {
       sectionLabel = Localisation(content.content.sectionLabelName.getOrElse(""))(request),
       sectionName = content.metadata.section.map(_.value),
       sectionUrl = content.content.sectionLabelLink.getOrElse(""),
-      availableTopics = availableTopics,
-      selectedTopics = selectedTopics,
       shouldHideAds = content.content.shouldHideAdverts,
       shouldHideReaderRevenue = content.fields.shouldHideReaderRevenue.getOrElse(isPaidContent),
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(content),

@@ -2,14 +2,13 @@ import app.FrontendComponents
 import services.S3Client
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
-import model.{TopicsApiResponse}
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import renderers.DotcomRenderingService
 import test.WithTestContentApiClient
 import test.DCRFake
 
-trait TestComponents extends WithTestContentApiClient with WithTestTopicService {
+trait TestComponents extends WithTestContentApiClient {
   self: AppComponents =>
 
   override lazy val contentApiClient = testContentApiClient
@@ -19,10 +18,6 @@ trait TestComponents extends WithTestContentApiClient with WithTestTopicService 
 
   // Do not run lifecycle components in tests
   override lazy val lifecycleComponents = List()
-}
-
-trait WithTestTopicService extends TopicServices with MockitoSugar {
-  override lazy val topicS3Client: S3Client[TopicsApiResponse] = mock[S3Client[TopicsApiResponse]]
 }
 
 class TestAppLoader extends AppLoader {
