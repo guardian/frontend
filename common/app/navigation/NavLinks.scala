@@ -99,6 +99,9 @@ object NavLinks {
 
   val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
 
+  val democraticNationalConvention =
+    NavLink("Democratic national convention", "/us-news/democratic-national-convention-2024")
+
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
@@ -313,10 +316,10 @@ object NavLinks {
     List(
       usNews,
       usElections2024,
+      democraticNationalConvention,
       world,
       usEnvironment,
       ukraine,
-      olympics2024,
       usSoccer,
       usBusiness,
       usTech,
@@ -420,7 +423,6 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      olympics2024,
       usSoccer,
       NFL,
       tennis,

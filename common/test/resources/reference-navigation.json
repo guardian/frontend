@@ -1019,6 +1019,12 @@
 					"classList": []
 				},
 				{
+					"title": "Democratic national convention",
+					"url": "/us-news/democratic-national-convention-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "World",
 					"url": "/world",
 					"longTitle": "World news",
@@ -1122,12 +1128,6 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Olympics 2024",
-					"url": "/sport/olympic-games-2024",
 					"children": [],
 					"classList": []
 				},
@@ -1283,12 +1283,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Olympics 2024",
-					"url": "/sport/olympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Soccer",
 					"url": "/us/soccer",
