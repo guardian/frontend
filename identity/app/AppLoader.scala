@@ -3,7 +3,7 @@ import http.IdentityHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common.CloudWatchMetricsLifecycle
-import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
+import common.Logback.LogstashLifecycle
 import conf._
 import conf.switches.SwitchboardLifecycle
 import controllers.{HealthCheck, IdentityControllers}
@@ -34,8 +34,6 @@ trait Controllers extends IdentityControllers {
 
 trait AppLifecycleComponents {
   self: FrontendComponents with Controllers =>
-
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

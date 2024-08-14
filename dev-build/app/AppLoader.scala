@@ -7,7 +7,7 @@ import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
 import common.Assets.DiscussionExternalAssetsLifecycle
-import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
+import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.FootballLifecycle
@@ -78,8 +78,6 @@ trait AppComponents
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   override lazy val mostViewedAgent = wire[MostViewedAgent]
-
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)

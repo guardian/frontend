@@ -19,15 +19,15 @@ case class LogStashConf(
     customFields: Map[String, String],
 )
 
-class LogstashLifecycle(playConfig: PlayConfiguration, logbackOperationsPool: LogbackOperationsPool)(implicit
+class LogstashLifecycle(playConfig: PlayConfiguration)(implicit
     executionContext: ExecutionContext,
 ) extends LifecycleComponent {
   override def start(): Unit = {
-    new Logstash(logbackOperationsPool).init(playConfig)
+    new Logstash().init(playConfig)
   }
 }
 
-class Logstash(logbackOperationsPool: LogbackOperationsPool) {
+class Logstash {
 
   lazy val log = PlayLogger(getClass)
 
@@ -61,7 +61,7 @@ class Logstash(logbackOperationsPool: LogbackOperationsPool) {
       case Success(isOn) =>
         if (isOn) {
           config(playConfig).fold(log.info("Logstash config is missing"))(
-            new LogbackConfig(logbackOperationsPool).init,
+            new LogbackConfig().init,
           )
         } else {
           log.info("Logstash logging switch is Off")
