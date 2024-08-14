@@ -504,10 +504,6 @@ object ArticleSchemas {
 
 object Article {
 
-  private def copyCommercial(content: Content) = {
-    content.commercial.copy(hasInlineMerchandise = content.isbn.isDefined || content.commercial.hasInlineMerchandise)
-  }
-
   private def copyMetaData(
       content: Content,
       commercial: Commercial,
@@ -532,7 +528,6 @@ object Article {
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
       ("inBodyExternalLinkCount", JsNumber(content.linkCounts.external)),
       ("shouldHideAdverts", JsBoolean(content.shouldHideAdverts)),
-      ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
@@ -581,7 +576,7 @@ object Article {
     val elements = content.elements
     val tags = content.tags
     val trail = content.trail
-    val commercial = copyCommercial(content)
+    val commercial = content.commercial
     val lightboxProperties = GenericLightboxProperties(
       lightboxableCutoffWidth = 620,
       includeBodyImages = !tags.isLiveBlog,

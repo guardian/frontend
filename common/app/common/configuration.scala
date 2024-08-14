@@ -493,7 +493,6 @@ class GuardianConfiguration extends GuLogging {
     }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
-    lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"

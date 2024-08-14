@@ -37,19 +37,17 @@ object Commercial {
 
     model.Commercial(
       isInappropriateForSponsorship,
-      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags),
     )
   }
 
   val empty: model.Commercial = {
     model.Commercial(
       isInappropriateForSponsorship = false,
-      hasInlineMerchandise = false,
     )
   }
 }
 
-final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean)
+final case class Commercial(isInappropriateForSponsorship: Boolean)
 
 /** MetaData represents a page on the site, whether facia or content
   */
