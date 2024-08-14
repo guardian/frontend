@@ -2,6 +2,7 @@ import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import common._
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi._
@@ -34,8 +35,10 @@ trait AppComponents extends FrontendComponents {
   // Controllers
   lazy val healthCheck = wire[HealthCheck]
   lazy val rssController = wire[RssController]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
+    wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],

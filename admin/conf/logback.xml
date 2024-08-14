@@ -15,10 +15,6 @@
         </encoder>
     </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
-    </appender>
-
     <!-- DFP API logging -->
     <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="WARN"/>
     <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
@@ -26,7 +22,6 @@
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
-        <appender-ref ref="STDOUT"/>
     </root>
 
 </configuration>

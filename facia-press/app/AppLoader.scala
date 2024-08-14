@@ -1,6 +1,7 @@
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{Application, HealthCheck}
@@ -33,8 +34,10 @@ trait AppComponents extends FrontendComponents {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val applicationController: Application = wire[Application]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
+    wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
