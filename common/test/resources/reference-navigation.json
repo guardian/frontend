@@ -445,6 +445,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Paralympics 2024",
+					"url": "/sport/paralympic-games-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -1126,6 +1132,12 @@
 					"classList": []
 				},
 				{
+					"title": "Paralympics 2024",
+					"url": "/sport/paralympic-games-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
@@ -1277,6 +1289,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Paralympics 2024",
+					"url": "/sport/paralympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Soccer",
 					"url": "/us/soccer",
@@ -1995,6 +2013,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Paralympics 2024",
+					"url": "/sport/paralympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -2798,6 +2822,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Paralympics 2024",
+					"url": "/sport/paralympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -3790,6 +3820,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Paralympics 2024",
+					"url": "/sport/paralympic-games-2024",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
