@@ -15,11 +15,16 @@
         </encoder>
     </appender>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
     <logger name="exactTarget" level="DEBUG" />
     <logger name="org.apache.http.wire" level="WARN" />
     <logger name="org.apache.http.headers" level="WARN" />
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
