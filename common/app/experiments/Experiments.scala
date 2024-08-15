@@ -14,7 +14,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
-      TagLinkDesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -45,13 +44,4 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 10, 30),
       participationGroup = Perc0D,
-    )
-
-object TagLinkDesign
-    extends Experiment(
-      name = "tag-link-design",
-      description = "Render an updated sticky design for tag links on Olympics articles and liveblogs",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 10, 30),
-      participationGroup = Perc10A,
     )
