@@ -19,6 +19,10 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
     </appender>
 
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT" />
+    </appender>
+
     <!-- DFP API logging -->
     <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="WARN"/>
     <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
@@ -26,7 +30,7 @@
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNCSTDOUT"/>
     </root>
 
 </configuration>

@@ -19,12 +19,16 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
     </appender>
 
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT" />
+    </appender>
+
     <logger name="exactTarget" level="DEBUG" />
     <logger name="org.apache.http.wire" level="WARN" />
     <logger name="org.apache.http.headers" level="WARN" />
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNCSTDOUT"/>
     </root>
 </configuration>
