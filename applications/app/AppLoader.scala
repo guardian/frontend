@@ -5,7 +5,6 @@ import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics, EmailSubsciptionMetrics}
 import _root_.commercial.targeting.TargetingLifecycle
 import common.Assets.DiscussionExternalAssetsLifecycle
-import common.Logback.LogstashLifecycle
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
@@ -53,7 +52,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   lazy val signupPageController = wire[SignupPageController]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[DfpAgentLifecycle],

@@ -3,7 +3,6 @@ import http.IdentityHttpErrorHandler
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common.CloudWatchMetricsLifecycle
-import common.Logback.LogstashLifecycle
 import conf._
 import conf.switches.SwitchboardLifecycle
 import controllers.{HealthCheck, IdentityControllers}
@@ -36,7 +35,6 @@ trait AppLifecycleComponents {
   self: FrontendComponents with Controllers =>
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[IdentityLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],

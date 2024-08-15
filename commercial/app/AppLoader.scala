@@ -8,7 +8,6 @@ import commercial.model.feeds.{FeedsFetcher, FeedsParser}
 import commercial.model.merchandise.jobs.{Industries, JobsAgent}
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
-import common.Logback.LogstashLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
@@ -54,7 +53,6 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
   lazy val healthCheck = wire[HealthCheck]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[CommercialLifecycle],
     wire[DfpAgentLifecycle],
     wire[SwitchboardLifecycle],

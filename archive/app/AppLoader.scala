@@ -3,7 +3,6 @@ import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{ArchiveController, HealthCheck}
@@ -33,7 +32,6 @@ trait AppComponents extends FrontendComponents {
   lazy val archiveController = wire[ArchiveController]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[ArchiveMetrics],
     wire[SwitchboardLifecycle],

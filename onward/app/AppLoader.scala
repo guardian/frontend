@@ -4,7 +4,6 @@ import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -62,7 +61,6 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   lazy val devAssetsController = wire[DevAssetsController]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[OnwardJourneyLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[StocksDataLifecycle],

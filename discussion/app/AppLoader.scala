@@ -4,7 +4,6 @@ import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{DiscussionControllers, HealthCheck}
@@ -35,7 +34,6 @@ trait AppComponents extends FrontendComponents with DiscussionControllers with D
   lazy val devAssetsController = wire[DevAssetsController]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],

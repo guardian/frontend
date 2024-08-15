@@ -1,7 +1,6 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
-import common.Logback.LogstashLifecycle
 import common._
 import conf.cricketPa.PaFeed
 import conf.switches.SwitchboardLifecycle
@@ -70,7 +69,6 @@ trait AppComponents
   lazy val devAssetsController = wire[DevAssetsController]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[SwitchboardLifecycle],

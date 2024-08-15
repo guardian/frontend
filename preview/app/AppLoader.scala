@@ -7,7 +7,6 @@ import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
-import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics}
 import conf.switches.SwitchboardLifecycle
@@ -50,7 +49,6 @@ trait PreviewLifecycleComponents
 
   def standaloneLifecycleComponents: List[LifecycleComponent] =
     List(
-      wire[LogstashLifecycle],
       wire[CommercialLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
