@@ -44,6 +44,7 @@ object FrontChecks {
       "nav/media-list",
       "news/most-popular",
       "fixed/highlights",
+      "flexible/special",
     )
 
   def hasOnlySupportedCollections(faciaPage: PressedPage) =
