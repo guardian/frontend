@@ -445,12 +445,6 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Olympics 2024",
-					"url": "/sport/olympic-games-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -2002,12 +1996,6 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Olympics 2024",
-					"url": "/sport/olympic-games-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -2810,12 +2798,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Olympics 2024",
-					"url": "/sport/olympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -3808,12 +3790,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Olympics 2024",
-					"url": "/sport/olympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
