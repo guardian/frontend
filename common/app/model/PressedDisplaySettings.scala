@@ -1,10 +1,11 @@
 package model.pressed
 
-import com.gu.facia.api.utils.FaciaContentUtils
+import com.gu.facia.api.utils.{BoostLevel, FaciaContentUtils}
 import com.gu.facia.api.{models => fapi}
 
 final case class PressedDisplaySettings(
     isBoosted: Boolean,
+    boostLevel: BoostLevel,
     showBoostedHeadline: Boolean,
     showQuotedHeadline: Boolean,
     imageHide: Boolean,
@@ -17,6 +18,7 @@ object PressedDisplaySettings {
     PressedDisplaySettings(
       imageHide = contentProperties.imageHide,
       isBoosted = FaciaContentUtils.isBoosted(content),
+      boostLevel = FaciaContentUtils.boostLevel(content),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
       showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
       showLivePlayable = FaciaContentUtils.showLivePlayable(content),
