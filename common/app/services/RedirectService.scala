@@ -1,9 +1,8 @@
 package services
 
 import java.net.URL
-import org.scanamo.error.MissingProperty
 import org.scanamo.syntax._
-import org.scanamo.{DynamoFormat, Scanamo, ScanamoAsync, Table}
+import org.scanamo.{DynamoFormat, MissingProperty, Scanamo, ScanamoAsync, Table}
 import common.GuLogging
 import conf.Configuration
 
@@ -41,16 +40,19 @@ object RedirectService {
   }
 
   implicit val destinationFormat: AnyRef with DynamoFormat[Destination] =
-    DynamoFormat.xmap[Destination, Map[String, String]] {
-      // map -> destination (i.e. reads)
-      case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
-      case m if m.contains("archive")     => Right(ArchiveRedirect(m("source"), m("archive")))
-      case _                              => Left(MissingProperty)
-    } {
-      // destination -> map (i.e. writes)
-      case PermanentRedirect(source, destination) => Map("source" -> source, "destination" -> destination)
-      case ArchiveRedirect(source, archive)       => Map("source" -> source, "archive" -> archive)
-    }
+    DynamoFormat.xmap[Destination, Map[String, String]](
+      {
+        // map -> destination (i.e. reads)
+        case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
+        case m if m.contains("archive")     => Right(ArchiveRedirect(m("source"), m("archive")))
+        case _                              => Left(MissingProperty)
+      },
+      {
+        // destination -> map (i.e. writes)
+        case PermanentRedirect(source, destination) => Map("source" -> source, "destination" -> destination)
+        case ArchiveRedirect(source, archive)       => Map("source" -> source, "archive" -> archive)
+      },
+    )
 
   // This is a permanent 3XX redirect - it could be guardian/non-guardian address
   case class PermanentRedirect(source: String, location: String) extends Destination
@@ -120,7 +122,7 @@ class RedirectService(implicit executionContext: ExecutionContext) extends GuLog
   def lookupRedirectDestination(source: String): Future[Option[Destination]] = {
     val fullUrl = if (source.head == '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
     ScanamoAsync(DynamoDB.asyncClient)
-      .exec(table.get("source" -> fullUrl))
+      .exec(table.get("source" === fullUrl))
       .map({
         case Some(Right(destination)) => Some(destination)
         case _                        => None
@@ -155,7 +157,7 @@ class RedirectService(implicit executionContext: ExecutionContext) extends GuLog
   def remove(source: String): Boolean =
     normaliseSource(source).exists { src =>
       log.info(s"Removing redirect in: $tableName to: $src")
-      Scanamo(DynamoDB.syncClient).exec(table.delete("source" -> src))
+      Scanamo(DynamoDB.syncClient).exec(table.delete("source" === src))
       true
     }
 }
