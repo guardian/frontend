@@ -4,11 +4,6 @@
 
 @(content: Content, isCommentable: Boolean, discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
 
-@sectionHeading = {
-
-    <div class="discussion__heading js-discussion-external-frontend"></div>
-}
-
 @toolbar = {
     <div class="discussion__toolbar js-discussion-toolbar u-cf">
 
@@ -104,7 +99,6 @@
                     </div>
 
                     <div class="modern-visible">
-                        @sectionHeading
 
                         <div class="discussion__comment-box js-discussion-comment-box--top"></div>
 
