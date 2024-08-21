@@ -171,14 +171,16 @@
     }
 }
 
-.crossword__links-related {
+.crossword__standfirst, .crossword__links-related {
     @include mq(leftCol) {
         top: $gs-baseline * -2;
         padding-bottom: math.div($gs-baseline, 3);
     }
-
     position: relative;
     top: $gs-baseline * -1;
+}
+
+.crossword__links-related {
     font-family: $f-sans-serif-text;
     font-size: 15px;
 }

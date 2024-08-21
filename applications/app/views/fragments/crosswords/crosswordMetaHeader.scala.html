@@ -14,6 +14,12 @@
 
             <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.item.trail.headline)</h1>
 
+            @if(crosswordPage.item.fields.standfirst.isDefined) {
+                <div class="crossword__standfirst">
+                    @fragments.standfirst(crosswordPage.item)
+                </div>
+            }
+
             @if( gridVisable ) {
                 <div class="crossword__links">
                     <div class="crossword__links-related">
@@ -28,7 +34,7 @@
                     @crosswordMeta(crosswordPage)
                 </div>
             }
-            
+
             <div class="hide-from-leftcol crossword__clues-header">
                 <a href="https://app.adjust.com/16xt6hai" data-link-name="crossword-mobile-link">Download the Guardian app</a> for a better puzzles experience
             </div>
