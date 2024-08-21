@@ -12,8 +12,8 @@
                 @crosswordMeta(crosswordPage)
             </div>
 
+            <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.item.trail.headline)</h1>
 
-            <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
             @if( gridVisable ) {
                 <div class="crossword__links">
                     <div class="crossword__links-related">

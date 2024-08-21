@@ -123,15 +123,23 @@ class CrosswordPageController(
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, content) =>
+        val retitledFields = for {
+          fields <- content.fields
+          headline <- fields.headline
+        } yield fields.copy(headline = Some(s"Accessible version of $headline"))
+
+        val retitledContent = content.copy(
+          fields = retitledFields,
+          webTitle = s"Accessible version of ${content.webTitle}",
+        )
         Future.successful(
           Cached(60.seconds)(
             RevalidatableResult.Ok(
               CrosswordHtmlPage.html(
                 AccessibleCrosswordPage(
                   CrosswordContent.make(
-                    CrosswordData
-                      .fromCrossword(crossword.copy(name = s"Accessible version of ${crossword.name}"), content),
-                    content,
+                    CrosswordData.fromCrossword(crossword, retitledContent),
+                    retitledContent,
                   ),
                   AccessibleCrosswordRows(crossword),
                 ),

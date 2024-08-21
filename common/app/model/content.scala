@@ -1054,7 +1054,6 @@ object CrosswordContent {
     val metadata = content.metadata.copy(
       id = crossword.id,
       section = Some(SectionId.fromId("crosswords")),
-      webTitle = crossword.name,
       contentType = Some(contentType),
       iosType = None,
     )
