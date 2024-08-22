@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.utils.DesignType
+import com.gu.facia.api.utils.BoostLevel
 import common.Pagination
 import json.ObjectDeduplication.deduplicate
 import model.content._
@@ -49,7 +50,27 @@ object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.t
   def writes(timeline: com.gu.contentatom.thrift.atom.timeline.TimelineAtom): JsObject = JsObject(Seq.empty)
 }
 
-object CardStyleFormat extends Format[CardStyle] {
+object BoostLevelFormat extends Format[BoostLevel] {
+    def reads(json: JsValue): JsResult[BoostLevel] = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("default"), _)   => JsSuccess(BoostLevel.Default)
+        case JsSuccess(JsString("boost"), _) => JsSuccess(BoostLevel.Boost)
+        case JsSuccess(JsString("megaboost"), _)   => JsSuccess(BoostLevel.MegaBoost)
+        case JsSuccess(JsString("gigaboost"), _)   => JsSuccess(BoostLevel.GigaBoost)
+        case _                                 => JsError("Could not convert boostLevel")
+      }
+    }
+
+    def writes(boostLevel: BoostLevel): JsObject =
+      boostLevel match {
+        case BoostLevel.Default   => JsObject(Seq("type" -> JsString("default")))
+        case BoostLevel.Boost => JsObject(Seq("type" -> JsString("boost")))
+        case BoostLevel.MegaBoost   => JsObject(Seq("type" -> JsString("megaboost")))
+        case BoostLevel.GigaBoost   => JsObject(Seq("type" -> JsString("gigaboost")))
+      }
+  }
+
+  object CardStyleFormat extends Format[CardStyle] {
   def reads(json: JsValue): JsResult[CardStyle] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
       case JsSuccess(JsString("SpecialReport"), _)    => JsSuccess(SpecialReport)
@@ -240,6 +261,7 @@ object PressedContentFormat {
   implicit val itemKickerFormat: ItemKickerFormat.format.type = ItemKickerFormat.format
   implicit val tagKickerFormat: OFormat[TagKicker] = ItemKickerFormat.tagKickerFormat
   implicit val pressedCardHeader: OFormat[PressedCardHeader] = Json.format[PressedCardHeader]
+  implicit val boostLevel: BoostLevelFormat.type = BoostLevelFormat
   implicit val pressedDisplaySettings: OFormat[PressedDisplaySettings] = Json.format[PressedDisplaySettings]
   implicit val pressedDiscussionSettings: OFormat[PressedDiscussionSettings] = Json.format[PressedDiscussionSettings]
   implicit val pressedCard: OFormat[PressedCard] = Json.format[PressedCard]
