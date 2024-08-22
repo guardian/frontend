@@ -136,7 +136,7 @@ trait FaciaController
         FrontHeadline.headlineNotFound
       }
 
-      val requestType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) liteRequestType else fullRequestType
+      val requestType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) fullRequestType else liteRequestType
 
       if (!ConfigAgent.frontExistsInConfig(path)) {
         successful(Cached(CacheTime.Facia)(notFound()))
@@ -183,7 +183,7 @@ trait FaciaController
           Cached(CacheTime.Facia)(JsonComponent.fromWritable(JsObject(Nil))),
         )
       } else {
-        val requestType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) liteRequestType else fullRequestType
+        val requestType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) fullRequestType else liteRequestType
 
         frontJsonFapi.get(path, requestType).map { resp =>
           Cached(CacheTime.Facia)(JsonComponent.fromWritable(resp match {
@@ -225,8 +225,8 @@ trait FaciaController
 
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    val requestType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) liteRequestType else fullRequestType
-    val NonAdFreeType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) LiteType else FullType
+    val requestType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) fullRequestType else liteRequestType
+    val NonAdFreeType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) FullType else LiteType
 
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, requestType).flatMap {
       case Some(faciaPage: PressedPage) =>
