@@ -531,7 +531,7 @@ trait FaciaController
   def liteRequestType(implicit request: RequestHeader): PressedPageType =
     if (request.isAdFree) LiteAdFreeType else LiteType
   def requestType(implicit request: RequestHeader): PressedPageType =
-    if (ActiveExperiments.isParticipating(RemoveLiteFronts)) fullRequestType else fullRequestType
+    if (ActiveExperiments.isParticipating(RemoveLiteFronts)) fullRequestType else liteRequestType
 
   def ampRsaPublicKey: Action[AnyContent] = {
     Action {
