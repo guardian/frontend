@@ -335,7 +335,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
     // Showcase specifies no markup in text elements; out trail texts often contains strong tags and others.
     // Strip them to provide the least friction to editors
     val bulletItemsWithHtml =
-    """
+      """
       |-<p>Bullet 1</p>
       |- <strong>Bullet 2</strong>
       |-<b>Unclosed
@@ -1306,16 +1306,16 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
   }
 
   private def makePressedContent(
-                                  webPublicationDate: DateTime = DateTime.now,
-                                  lastModified: Option[DateTime] = None,
-                                  trailPicture: Option[ImageMedia] = None,
-                                  replacedImage: Option[Image] = None,
-                                  headline: String = "A headline",
-                                  byline: Option[String] = None,
-                                  kickerText: Option[String] = None,
-                                  trailText: Option[String] = Some("Some trail text"),
-                                  supportingContent: Seq[PressedContent] = Seq.empty,
-                                ) = {
+      webPublicationDate: DateTime = DateTime.now,
+      lastModified: Option[DateTime] = None,
+      trailPicture: Option[ImageMedia] = None,
+      replacedImage: Option[Image] = None,
+      headline: String = "A headline",
+      byline: Option[String] = None,
+      kickerText: Option[String] = None,
+      trailText: Option[String] = Some("Some trail text"),
+      supportingContent: Seq[PressedContent] = Seq.empty,
+  ) = {
     val url = "/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"
     val webUrl =
       "https://www.theguardian.com/sport/2016/apr/12/andy-murray-pierre-hugues-herbert-monte-carlo-masters-match-report"

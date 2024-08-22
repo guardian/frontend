@@ -4,7 +4,15 @@ import com.gu.commercial.branding._
 import com.gu.facia.api.utils.BoostLevel
 import common.commercial._
 import layout.cards.Half
-import layout.{ContentCard, DiscussionSettings, DisplaySettings, EditionalisedLink, FaciaCardHeader, ItemClasses, PaidCard}
+import layout.{
+  ContentCard,
+  DiscussionSettings,
+  DisplaySettings,
+  EditionalisedLink,
+  FaciaCardHeader,
+  ItemClasses,
+  PaidCard,
+}
 import model.pressed
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.BeforeAndAfterEach

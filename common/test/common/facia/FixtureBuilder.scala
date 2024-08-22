@@ -6,7 +6,6 @@ import model.pressed._
 import model.ContentFormat
 import com.gu.facia.api.utils.BoostLevel
 
-
 object FixtureBuilder {
 
   def mkContent(id: Int): PressedContent = FixtureBuilder.mkPressedCuratedContent(id)
