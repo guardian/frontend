@@ -12,7 +12,7 @@ trait SurveySponsorshipAgent {
 
   private[dfp] def findSponsorships(
       adUnitPath: String,
-      mtaData: MetaData,
+      metaData: MetaData,
       adtest: Option[String],
   ): Seq[SurveySponsorship] = {
     surveySponsorships.filter { sponsorship =>

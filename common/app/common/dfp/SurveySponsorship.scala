@@ -3,7 +3,6 @@ package common.dfp
 import common.{GuLogging}
 import play.api.libs.json._
 
-
 case class SurveySponsorship(
     lineItemName: String,
     lineItemId: Long,
@@ -21,7 +20,10 @@ object SurveySponsorship {
   implicit val surveySponsorshipFormat: Format[SurveySponsorship] = Json.format[SurveySponsorship]
 }
 
-case class SurveySponsorshipReport(updatedTimeStamp: Option[String], sponsorships: Seq[SurveySponsorship]) {
+case class SurveySponsorshipReport(
+    updatedTimeStamp: Option[String],
+    sponsorships: Seq[SurveySponsorship]
+) {
   val (testSponsorships, deliverableSponsorships) = sponsorships partition (_.targetsAdTest)
 }
 
