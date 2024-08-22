@@ -4,6 +4,8 @@ import model.facia.PressedCollection
 import model.{FrontProperties, PressedPage, SeoData}
 import model.pressed._
 import model.ContentFormat
+import com.gu.facia.api.utils.BoostLevel
+
 
 object FixtureBuilder {
 
@@ -110,6 +112,7 @@ object FixtureBuilder {
   def mkDisplay(): PressedDisplaySettings =
     PressedDisplaySettings(
       isBoosted = false,
+      boostLevel = BoostLevel.Default,
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       imageHide = false,
