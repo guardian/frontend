@@ -24,7 +24,7 @@ object UpdatedHeaderDesign
       description = "Shows updated design of Header and Nav components",
       owners = Seq(Owner.withGithub("cemms1")),
       sellByDate = LocalDate.of(2024, 9, 30),
-      participationGroup = Perc0B,
+      participationGroup = Perc50,
     )
 
 object MastheadWithHighlights
