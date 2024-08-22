@@ -5,7 +5,7 @@ export const optimiseSpacefinderInline: ABTest = {
 	author: '@commercial-dev',
 	start: '2024-08-08',
 	expiry: '2024-09-13',
-	audience: 0 / 100,
+	audience: 5 / 100,
 	audienceOffset: 0 / 100,
 	audienceCriteria: '',
 	successMeasure: '',
