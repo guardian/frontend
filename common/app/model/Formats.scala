@@ -51,26 +51,26 @@ object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.t
 }
 
 object BoostLevelFormat extends Format[BoostLevel] {
-    def reads(json: JsValue): JsResult[BoostLevel] = {
-      (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("default"), _)   => JsSuccess(BoostLevel.Default)
-        case JsSuccess(JsString("boost"), _) => JsSuccess(BoostLevel.Boost)
-        case JsSuccess(JsString("megaboost"), _)   => JsSuccess(BoostLevel.MegaBoost)
-        case JsSuccess(JsString("gigaboost"), _)   => JsSuccess(BoostLevel.GigaBoost)
-        case _                                 => JsError("Could not convert boostLevel")
-      }
+  def reads(json: JsValue): JsResult[BoostLevel] = {
+    (json \ "type").transform[JsString](Reads.JsStringReads) match {
+      case JsSuccess(JsString("default"), _)   => JsSuccess(BoostLevel.Default)
+      case JsSuccess(JsString("boost"), _)     => JsSuccess(BoostLevel.Boost)
+      case JsSuccess(JsString("megaboost"), _) => JsSuccess(BoostLevel.MegaBoost)
+      case JsSuccess(JsString("gigaboost"), _) => JsSuccess(BoostLevel.GigaBoost)
+      case _                                   => JsError("Could not convert boostLevel")
     }
-
-    def writes(boostLevel: BoostLevel): JsObject =
-      boostLevel match {
-        case BoostLevel.Default   => JsObject(Seq("type" -> JsString("default")))
-        case BoostLevel.Boost => JsObject(Seq("type" -> JsString("boost")))
-        case BoostLevel.MegaBoost   => JsObject(Seq("type" -> JsString("megaboost")))
-        case BoostLevel.GigaBoost   => JsObject(Seq("type" -> JsString("gigaboost")))
-      }
   }
 
-  object CardStyleFormat extends Format[CardStyle] {
+  def writes(boostLevel: BoostLevel): JsObject =
+    boostLevel match {
+      case BoostLevel.Default   => JsObject(Seq("type" -> JsString("default")))
+      case BoostLevel.Boost     => JsObject(Seq("type" -> JsString("boost")))
+      case BoostLevel.MegaBoost => JsObject(Seq("type" -> JsString("megaboost")))
+      case BoostLevel.GigaBoost => JsObject(Seq("type" -> JsString("gigaboost")))
+    }
+}
+
+object CardStyleFormat extends Format[CardStyle] {
   def reads(json: JsValue): JsResult[CardStyle] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
       case JsSuccess(JsString("SpecialReport"), _)    => JsSuccess(SpecialReport)
