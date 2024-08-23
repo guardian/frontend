@@ -99,7 +99,7 @@ object Dependencies {
 
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
-  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.111.Final"
+  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.112.Final"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
