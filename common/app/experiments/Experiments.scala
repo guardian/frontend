@@ -11,12 +11,22 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      DarkModeWeb,
+      RemoveLiteFronts,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
+      DarkModeWeb,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object RemoveLiteFronts
+    extends Experiment(
+      name = "remove-lite-fronts",
+      description = "Get the full pressed page of a front instead of the lite version",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2024, 10, 30),
+      participationGroup = Perc0A,
+    )
 
 object UpdatedHeaderDesign
     extends Experiment(
