@@ -22,7 +22,9 @@ object FrontHeadline extends Results with GuLogging {
   }
 
   def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
-    val headlineOpt = faciaPage.collections.view
+    val headlineOpt = faciaPage.collections
+      .filter(_.collectionType != "fixed/highlights")
+      .view
       .map(headline)
       .find(_.isDefined)
       .flatten
