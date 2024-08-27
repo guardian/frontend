@@ -1219,7 +1219,7 @@ object PageElement {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             val altText = overrideImage.flatMap(_.images.allImages.headOption.flatMap(_.altText))
             mediaAtom match {
-              case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
+              case youtube if mediaAtom.activeAssets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
                   YoutubeBlockElement(
                     id = mediaAtom.id, // CAPI ID

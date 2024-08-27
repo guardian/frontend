@@ -24,9 +24,6 @@ trait Store extends GuLogging with Dates {
   def getTopStories: Option[String] = S3.get(topStoriesKey)
   def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putInlineMerchandisingSponsorships(keywordsJson: String): Unit = {
-    S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
-  }
   def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
     S3.putPublic(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
   }
@@ -62,10 +59,6 @@ trait Store extends GuLogging with Dates {
       now,
       Nil,
     )
-
-  def getDfpInlineMerchandisingTargetedTagsReport(): InlineMerchandisingTargetedTagsReport = {
-    S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
-  } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet(), InlineMerchandisingLineItems())
 
   def getDfpLiveBlogTagsReport(): LiveBlogTopSponsorshipReport = {
     S3.get(dfpLiveBlogTopSponsorshipDataKey) flatMap (LiveBlogTopSponsorshipReportParser(

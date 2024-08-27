@@ -3,7 +3,6 @@ import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
@@ -48,12 +47,10 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
-  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   lazy val mostViewedAgent = wire[MostViewedAgent]
   lazy val deeplyReadAgent = wire[DeeplyReadAgent]
 
   override lazy val lifecycleComponents = List(
-    wire[LogstashLifecycle],
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[FaciaDfpAgentLifecycle],

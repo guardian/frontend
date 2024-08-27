@@ -11,10 +11,10 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      DarkModeWeb,
+      RemoveLiteFronts,
       UpdatedHeaderDesign,
       MastheadWithHighlights,
-      TagLinkDesign,
+      DarkModeWeb,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -25,7 +25,7 @@ object UpdatedHeaderDesign
       description = "Shows updated design of Header and Nav components",
       owners = Seq(Owner.withGithub("cemms1")),
       sellByDate = LocalDate.of(2024, 9, 30),
-      participationGroup = Perc0B,
+      participationGroup = Perc50,
     )
 
 object MastheadWithHighlights
@@ -47,11 +47,11 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object TagLinkDesign
+object RemoveLiteFronts
     extends Experiment(
-      name = "tag-link-design",
-      description = "Render an updated sticky design for tag links on Olympics articles and liveblogs",
+      name = "remove-lite-fronts",
+      description = "Get the full pressed page of a front instead of the lite version",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 10, 30),
-      participationGroup = Perc10A,
+      participationGroup = Perc1A,
     )

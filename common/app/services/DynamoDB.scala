@@ -1,25 +1,20 @@
 package services
 
-import com.amazonaws.services.dynamodbv2.{
-  AmazonDynamoDB,
-  AmazonDynamoDBAsync,
-  AmazonDynamoDBAsyncClient,
-  AmazonDynamoDBClient,
-}
-import conf.Configuration
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.dynamodb.{DynamoDbAsyncClient, DynamoDbClient}
+import utils.AWSv2
 
 object DynamoDB {
-  private lazy val credentials = Configuration.aws.mandatoryCredentials
 
-  lazy val asyncClient: AmazonDynamoDBAsync = AmazonDynamoDBAsyncClient
-    .asyncBuilder()
-    .withCredentials(credentials)
-    .withRegion(conf.Configuration.aws.region)
+  lazy val asyncClient: DynamoDbAsyncClient = DynamoDbAsyncClient
+    .builder()
+    .credentialsProvider(AWSv2.credentials)
+    .region(Region.of(conf.Configuration.aws.region))
     .build()
 
-  lazy val syncClient: AmazonDynamoDB = AmazonDynamoDBClient
+  lazy val syncClient: DynamoDbClient = DynamoDbClient
     .builder()
-    .withCredentials(credentials)
-    .withRegion(conf.Configuration.aws.region)
+    .credentialsProvider(AWSv2.credentials)
+    .region(Region.of(conf.Configuration.aws.region))
     .build()
 }

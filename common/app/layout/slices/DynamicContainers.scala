@@ -8,6 +8,7 @@ object DynamicContainers {
     ("dynamic/slow", DynamicSlow),
     ("dynamic/package", DynamicPackage),
     ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false, adFree = false)),
+    ("flexible/special", FlexibleSpecial),
   )
 
   def apply(collectionType: Option[String], items: Seq[PressedContent]): Option[ContainerDefinition] = {

@@ -76,8 +76,6 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   def isPlatform(value: String): Boolean = isPositive("p") && values.contains(value)
   def isNotPlatform(value: String): Boolean = isNegative("p") && values.contains(value)
 
-  val isInlineMerchandisingSlot = isSlot("im")
-
   val isHighMerchandisingSlot = isSlot("merchandising-high")
 
   val isLiveblogTopSlot = isSlot("liveblog-top")
@@ -107,10 +105,6 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
       targets.filter(tagCriteria).flatMap(_.values).distinct
     } else Nil
   }
-
-  val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
-  val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
-  val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
   val highMerchandisingTargets =
     filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
@@ -251,13 +245,6 @@ case class GuLineItem(
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
-  val inlineMerchandisingTargetedKeywords: Seq[String] =
-    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
-  val inlineMerchandisingTargetedSeries: Seq[String] =
-    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
-  val inlineMerchandisingTargetedContributors: Seq[String] =
-    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
-
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
   val liveBlogTopTargetedSections: Seq[String] =
@@ -270,15 +257,6 @@ case class GuLineItem(
       if target.name == "slot" && target.values.contains("merchandising-high")
     } yield target
     targetSlotIsHighMerch.nonEmpty
-  }
-
-  val targetsInlineMerchandising: Boolean = {
-    val targetSlotIsInlineMerch = for {
-      targetSet <- targeting.customTargetSets
-      target <- targetSet.targets
-      if target.name == "slot" && target.values.contains("im")
-    } yield target
-    targetSlotIsInlineMerch.nonEmpty
   }
 
   val targetsLiveBlogTop: Boolean = {
