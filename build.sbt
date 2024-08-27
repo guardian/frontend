@@ -54,7 +54,7 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback2, // logback2: to prevent "error: reference to logback is ambiguous;"
+      logstash,
       targetingClient,
       scanamo,
       scalaUri,
@@ -69,8 +69,6 @@ val common = library("common")
       pekkoSlf4j,
       pekkoSerializationJackson,
       pekkoActorTyped,
-      jacksonModule,
-      jacksonDatabind
     ),
     TestAssets / mappings ~= filterAssets,
   )
