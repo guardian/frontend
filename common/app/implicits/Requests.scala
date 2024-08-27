@@ -23,6 +23,8 @@ case class TerritoryHeader(territory: TargetedTerritory, headerString: String)
 
 object GUHeaders {
   val TERRITORY_HEADER = "X-GU-Territory"
+  val UPDATED_MASTHEAD_HEADER = "X-GU-Experiment-0perc-B"
+  val HIGHLIGHTS_AB_TEST_HEADER = "X-GU-Experiment-0perc-C"
 }
 
 trait Requests {

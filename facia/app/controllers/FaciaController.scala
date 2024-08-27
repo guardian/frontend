@@ -6,7 +6,7 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import experiments.{ActiveExperiments, RemoveLiteFronts}
+import experiments.{ActiveExperiments, RemoveLiteFronts, MastheadWithHighlights, UpdatedHeaderDesign}
 import http.HttpPreconnections
 import implicits.GUHeaders
 import layout.slices._
@@ -200,6 +200,14 @@ trait FaciaController
       result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
     } else result
 
+  private def withHighlightsABHeader(result: Future[Result]) =
+    result.map(
+      _.withHeaders(
+        ("Masthead-header", GUHeaders.UPDATED_MASTHEAD_HEADER),
+        ("Highlights-header", GUHeaders.HIGHLIGHTS_AB_TEST_HEADER),
+      ),
+    )
+
   private def resultWithVaryHeader(result: CacheableResult, targetedTerritories: Boolean)(implicit
       request: RequestHeader,
   ) =
@@ -248,6 +256,27 @@ trait FaciaController
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
     val futureResult = futureFaciaPage.flatMap {
+
+      case Some((faciaPage: PressedPage, _))
+          if ActiveExperiments.isParticipating(UpdatedHeaderDesign) && ActiveExperiments.isParticipating(
+            MastheadWithHighlights,
+          ) && FaciaPicker.getTier(faciaPage) == RemoteRender && !request.isJson =>
+        val pageType = PageType(faciaPage, request, context)
+        log.info(
+          s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap
+              .getOrElse("X-GU-GeoLocation", "country:row")}",
+        )
+        withHighlightsABHeader(
+          remoteRenderer.getFront(
+            ws = ws,
+            page = faciaPage,
+            pageType = pageType,
+            mostViewed = mostViewedAgent.mostViewed(Edition(request)),
+            mostCommented = mostViewedAgent.mostCommented,
+            mostShared = mostViewedAgent.mostShared,
+            deeplyRead = deeplyRead,
+          )(request),
+        )
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, targetedTerritories))
