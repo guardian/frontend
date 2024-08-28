@@ -1,7 +1,6 @@
 package views.support
 
 import com.gu.commercial.branding._
-import com.gu.facia.api.utils.BoostLevel
 import common.commercial._
 import layout.cards.Half
 import layout.{
@@ -152,7 +151,7 @@ class TrackingCodeBuilderTest extends AnyFlatSpec with Matchers with BeforeAndAf
         mediaType = None,
         displaySettings = DisplaySettings(
           isBoosted = false,
-          boostLevel = BoostLevel.Default,
+          boostLevel = None,
           showBoostedHeadline = false,
           showQuotedHeadline = false,
           imageHide = false,

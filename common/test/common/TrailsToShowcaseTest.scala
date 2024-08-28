@@ -2,7 +2,7 @@ package common
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
-import com.gu.facia.api.utils.{BoostLevel, Editorial}
+import com.gu.facia.api.utils.{Editorial}
 import com.sun.syndication.feed.module.mediarss.MediaEntryModule
 import com.sun.syndication.feed.synd.SyndPerson
 import implicits.Dates.jodaToJavaInstant
@@ -1404,7 +1404,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
 
     val displaySettings = PressedDisplaySettings(
       isBoosted = false,
-      boostLevel = BoostLevel.Default,
+      boostLevel = None,
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       showLivePlayable = false,
