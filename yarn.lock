@@ -4242,7 +4242,7 @@ __metadata:
     ts-loader: "npm:^8.0.12"
     tslib: "npm:2.6.2"
     typescript: "npm:5.3.3"
-    uglify-js: "npm:^3.17.4"
+    uglify-js: "npm:^3.19.2"
     video.js: "npm:~5.3"
     videojs-contrib-ads: "npm:3.1.3"
     videojs-embed: "guardian/videojs-embed#v0.3.3"
@@ -17394,12 +17394,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uglify-js@npm:^3.17.4":
-  version: 3.17.4
-  resolution: "uglify-js@npm:3.17.4"
+"uglify-js@npm:^3.19.2":
+  version: 3.19.2
+  resolution: "uglify-js@npm:3.19.2"
   bin:
     uglifyjs: bin/uglifyjs
-  checksum: 10c0/8b7fcdca69deb284fed7d2025b73eb747ce37f9aca6af53422844f46427152d5440601b6e2a033e77856a2f0591e4167153d5a21b68674ad11f662034ec13ced
+  checksum: 10c0/51dbe1304a91cac5daa01f6a2d4ecd545fab7b7d0625e11590b923e95a6d2263b3481dcea974abfc0282b33d2c76f74f1196a992df07eae0847175bc39ea45bb
   languageName: node
   linkType: hard
 
