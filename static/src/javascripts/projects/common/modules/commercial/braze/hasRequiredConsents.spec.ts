@@ -86,7 +86,7 @@ describe('hasRequiredConsents', () => {
 					signalStatus: 'ready'
 				},
 				canTarget: false,
-				framework: 'ccpa',
+				framework: 'usnat',
 			};
 
 			await expect(hasRequiredConsents()).resolves.toBe(false);

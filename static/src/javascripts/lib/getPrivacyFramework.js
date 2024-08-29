@@ -8,6 +8,7 @@ export const getPrivacyFramework = () => {
 
 		frameworks = {
 			ccpa: isInUS,
+			usnat: isInUS,
 			tcfv2: !isInUS,
 		};
 	}

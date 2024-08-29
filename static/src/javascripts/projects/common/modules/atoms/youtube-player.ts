@@ -178,7 +178,7 @@ const createAdsConfigEnabled = (
 		return adsConfigTCFv2;
 	}
 
-	if (consentState.ccpa || consentState.aus) {
+	if (consentState.usnat || consentState.aus) {
 		const adsConfigCCPA: AdsConfigCCPAorAus = {
 			...adsConfigBasic,
 			restrictedDataProcessor: !consentState.canTarget,
