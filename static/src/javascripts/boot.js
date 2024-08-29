@@ -60,68 +60,6 @@ const go = () => {
             }
 
             // ------------------------------------------------------
-            // Sending Consent Data to Ophan through ComponentEvent
-
-            /*
-
-                Date: March 2022
-                Author: Pascal
-
-                We reproduce here the same code that we had developed for DCR.
-                See this for details: https://github.com/guardian/dotcom-rendering/blob/4cb96485401398fdd88698493bdb75f56fcd8c96/dotcom-rendering/src/web/browser/bootCmp/init.ts#L69
-                The mapping: documentation also exists at https://github.com/guardian/transparency-consent-docs/blob/main/docs/capturing-consent-from-client-side.md
-
-            */
-
-            if (!consentState) return;
-
-            const decideConsentCarrierLabels = () => {
-                if (consentState.tcfv2) {
-                    const consentUUID = getCookie('consentUUID') || '';
-                    const consentString = consentState.tcfv2?.tcString;
-                    return [
-                        '01:TCF.v2',
-                        `02:${consentUUID}`,
-                        `03:${consentString}`,
-                    ];
-                }
-                if (consentState.ccpa) {
-                    const ccpaUUID = getCookie('ccpaUUID') || '';
-                    const flag = consentState.ccpa?.doNotSell ? 'true' : 'false';
-                    return ['01:CCPA', `04:${ccpaUUID}`, `05:${flag}`];
-                }
-                if (consentState.aus) {
-                    const ccpaUUID = getCookie('ccpaUUID') || '';
-                    const consentStatus = getCookie('consentStatus') || '';
-                    const personalisedAdvertising = consentState.aus?.personalisedAdvertising ? 'true' : 'false';
-                    return [
-                        '01:AUS',
-                        `06:${ccpaUUID}`,
-                        `07:${consentStatus}`,
-                        `08:${personalisedAdvertising}`,
-                    ];
-                }
-                return [];
-            };
-
-            const componentType = 'CONSENT';
-
-            const action = 'MANAGE_CONSENT';
-
-            const event = {
-                component: {
-                    componentType,
-                    products: [],
-                    labels: decideConsentCarrierLabels(),
-                },
-                action,
-            };
-
-            ophan.record({
-                componentEvent: event
-            });
-
-            // ------------------------------------------------------
 
             // ------------------------------------------------------
             // Sending Consent Data to Ophan as its own record
