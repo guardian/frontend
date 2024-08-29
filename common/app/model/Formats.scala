@@ -61,12 +61,12 @@ object BoostLevelFormat extends Format[BoostLevel] {
     }
   }
 
-  def writes(boostLevel: BoostLevel): JsObject =
+  def writes(boostLevel: BoostLevel): JsString =
     boostLevel match {
-      case BoostLevel.Default   => JsObject(Seq("type" -> JsString("default")))
-      case BoostLevel.Boost     => JsObject(Seq("type" -> JsString("boost")))
-      case BoostLevel.MegaBoost => JsObject(Seq("type" -> JsString("megaboost")))
-      case BoostLevel.GigaBoost => JsObject(Seq("type" -> JsString("gigaboost")))
+      case BoostLevel.Default   => JsString("default")
+      case BoostLevel.Boost     => JsString("boost")
+      case BoostLevel.MegaBoost => JsString("megaboost")
+      case BoostLevel.GigaBoost => JsString("gigaboost")
     }
 }
 
