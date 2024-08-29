@@ -732,7 +732,7 @@
     padding: 0 math.div($gs-baseline, 3)*2;
     border-top: 1px solid $brightness-86;
     color: $brightness-46;
-    text-align: left;
+    text-align: center;
     box-sizing: border-box;
     font-family: $f-sans-serif-text;
     display: block;
@@ -741,3 +741,8 @@
     width: 100%;
 }
 
+.ad-slot__scroll.ad-slot--dark {
+    background-color: $brightness-7;
+    border-top: 1px solid $brightness-20;
+    color: $brightness-86;
+}
