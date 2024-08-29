@@ -631,7 +631,7 @@
     font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
 
-.ad-slot--dark[data-label-show='true']::before {
+.ad-slot--dark[data-label-show='true']:not(.ad-slot--interscroller)::before {
     @include font-size(12, 20);
     content: attr(ad-label-text);
     display: block;
@@ -647,6 +647,7 @@
 }
 
 .ad-slot--interscroller[data-label-show='true']::before {
+    @include font-size(12, 20);
     content: 'Advertisement';
     display: block;
     visibility: visible;
@@ -662,6 +663,12 @@
     top: 0px;
     left: 0px;
     right: 0px;
+}
+
+.ad-slot--interscroller[data-label-show='true'].ad-slot--dark::before {
+    background-color: $brightness-7;
+    border-top: 1px solid $brightness-20;
+    color: $brightness-86;
 }
 
 .ad-slot__adtest-cookie-clear-link {
