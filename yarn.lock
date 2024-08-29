@@ -4039,9 +4039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:0.0.0-beta-20240828125924":
-  version: 0.0.0-beta-20240828125924
-  resolution: "@guardian/commercial@npm:0.0.0-beta-20240828125924"
+"@guardian/commercial@npm:0.0.0-beta-20240829080618":
+  version: 0.0.0-beta-20240829080618
+  resolution: "@guardian/commercial@npm:0.0.0-beta-20240829080618"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-1"
@@ -4061,7 +4061,7 @@ __metadata:
     "@guardian/libs": ^18.0.0
     "@guardian/source": ^6.0.0
     typescript: ~5.5.3
-  checksum: 10c0/8b074e1c38f4da8fae49a586aa938eafe8a43cb56f5b08a795c660dafd78c440159c55f36b353f57da2d1f6c0f31caa42e72b68c639fe932cc81f9b5f0487f50
+  checksum: 10c0/38984cc8ad25f0464f95e27655ca8cde7ed64b9aa982fe18c5d2a14b92876d7746c9efd1398103aef070c89f5c5e5d6ea85d7dd169c0979e9bd1224fc981478c
   languageName: node
   linkType: hard
 
@@ -4134,12 +4134,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:0.0.0-beta-20240828125924"
+    "@guardian/commercial": "npm:0.0.0-beta-20240829080618"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
-    "@guardian/libs": "npm:0.0.0-canary-20240827084710"
+    "@guardian/libs": "npm:0.0.0-canary-20240829071655"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -4296,16 +4296,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:0.0.0-canary-20240827084710":
-  version: 0.0.0-canary-20240827084710
-  resolution: "@guardian/libs@npm:0.0.0-canary-20240827084710"
+"@guardian/libs@npm:0.0.0-canary-20240829071655":
+  version: 0.0.0-canary-20240829071655
+  resolution: "@guardian/libs@npm:0.0.0-canary-20240829071655"
   peerDependencies:
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/b89a7d6d6865f6f7e3085a699b2850823fb0a386e9d7cb734861e638f9271a8a9c560c90f4e9dfbefe314c4a37ca629796f652cde4dea26d5e8bbf4278d0fe3c
+  checksum: 10c0/c7aab625a61843b5cd52c18c980b409479dc05534bf7eb8f400c25bbc8dab19bf5f81f04a3991054486c758e4941c137d022377bc3d52a5280d5723ae74f5e66
   languageName: node
   linkType: hard
 
