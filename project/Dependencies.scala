@@ -109,4 +109,31 @@ object Dependencies {
   val react = "org.webjars" % "react" % "16.5.2"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "7.9.0"
+
+  /*
+    The versions are currently set as they are because of:
+    https://github.com/orgs/playframework/discussions/11222
+   */
+  val jacksonVersion = "2.17.2"
+  val jacksonDatabindVersion = "2.17.2"
+  val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
+  val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
+  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
+  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonParameterName = "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion
+  val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
+  val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
+
+  val jackson =
+    Seq(
+      jacksonCore,
+      jacksonAnnotations,
+      jacksonDataTypeJdk8,
+      jacksonDataType,
+      jacksonDataFormat,
+      jacksonParameterName,
+      jackModule,
+      jacksonDatabind,
+    )
 }
