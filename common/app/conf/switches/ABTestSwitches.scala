@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Test the Opt Out frequency capping feature",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 8, 30)),
+    sellByDate = Some(LocalDate.of(2024, 9, 13)),
     exposeClientSide = true,
   )
 
