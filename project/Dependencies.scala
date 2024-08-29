@@ -85,8 +85,8 @@ object Dependencies {
   val pekkoSerializationJackson = "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion
   val pekkoActorTyped = "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion
 
-  val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "4.11"
-  // logback2  to prevent "error: reference to logback is ambiguous;"
+  val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
+    .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
 
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"

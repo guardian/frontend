@@ -4039,9 +4039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:0.0.0-beta-20240829130956":
-  version: 0.0.0-beta-20240829130956
-  resolution: "@guardian/commercial@npm:0.0.0-beta-20240829130956"
+"@guardian/commercial@npm:20.6.4":
+  version: 20.6.4
+  resolution: "@guardian/commercial@npm:20.6.4"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-1"
@@ -4061,7 +4061,7 @@ __metadata:
     "@guardian/libs": ^18.0.0
     "@guardian/source": ^6.0.0
     typescript: ~5.5.3
-  checksum: 10c0/a6ce54eafcded3d81b4996367a6f34a649f047c4e45e571975830efd19056ae47d94b757ed54b121bb499045bbdb3a71a3face4ec31dd4faa5f436fcf29fcf03
+  checksum: 10c0/0d427a94cb7718fcc610fd2f9ceb7f61684d0c9e21a4721741aa0a17bbd90e509591bf277393911c3c249ac41447b4e5af4ef55cf37d314fb792f330162f7f20
   languageName: node
   linkType: hard
 
@@ -4134,7 +4134,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:0.0.0-beta-20240829130956"
+    "@guardian/commercial": "npm:20.6.4"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
@@ -4242,7 +4242,7 @@ __metadata:
     ts-loader: "npm:^8.0.12"
     tslib: "npm:2.6.2"
     typescript: "npm:5.3.3"
-    uglify-js: "npm:^3.17.4"
+    uglify-js: "npm:^3.19.2"
     video.js: "npm:~5.3"
     videojs-contrib-ads: "npm:3.1.3"
     videojs-embed: "guardian/videojs-embed#v0.3.3"
@@ -17394,12 +17394,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uglify-js@npm:^3.17.4":
-  version: 3.17.4
-  resolution: "uglify-js@npm:3.17.4"
+"uglify-js@npm:^3.19.2":
+  version: 3.19.2
+  resolution: "uglify-js@npm:3.19.2"
   bin:
     uglifyjs: bin/uglifyjs
-  checksum: 10c0/8b7fcdca69deb284fed7d2025b73eb747ce37f9aca6af53422844f46427152d5440601b6e2a033e77856a2f0591e4167153d5a21b68674ad11f662034ec13ced
+  checksum: 10c0/51dbe1304a91cac5daa01f6a2d4ecd545fab7b7d0625e11590b923e95a6d2263b3481dcea974abfc0282b33d2c76f74f1196a992df07eae0847175bc39ea45bb
   languageName: node
   linkType: hard
 
