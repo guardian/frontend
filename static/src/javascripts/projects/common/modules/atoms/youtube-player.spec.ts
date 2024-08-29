@@ -83,6 +83,10 @@ const canTargetCCPA = (canTarget: boolean): ConsentState => ({
 		doNotSell: !canTarget,
 		signalStatus: 'ready'
 	},
+	usnat: {
+		doNotSell: !canTarget,
+		signalStatus: 'ready'
+	},
 	canTarget,
 	framework: 'usnat',
 });
