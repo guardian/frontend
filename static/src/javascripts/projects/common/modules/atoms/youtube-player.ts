@@ -2,9 +2,9 @@ import type { AdsConfigDisabled } from '@guardian/commercial';
 import { getPermutivePFPSegments } from '@guardian/commercial';
 import type {
 	AdsConfigBasic,
-	AdsConfigCCPAorAus,
 	AdsConfigEnabled,
 	AdsConfigTCFV2,
+	AdsConfigUSNATorAus,
 } from '@guardian/commercial/dist/cjs/core/types';
 import type { ConsentState } from '@guardian/libs';
 import { loadScript, log, onConsentChange } from '@guardian/libs';
@@ -179,7 +179,7 @@ const createAdsConfigEnabled = (
 	}
 
 	if (consentState.usnat || consentState.aus) {
-		const adsConfigCCPA: AdsConfigCCPAorAus = {
+		const adsConfigCCPA: AdsConfigUSNATorAus = {
 			...adsConfigBasic,
 			restrictedDataProcessor: !consentState.canTarget,
 		};

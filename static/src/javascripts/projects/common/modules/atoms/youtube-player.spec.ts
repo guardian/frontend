@@ -1,6 +1,6 @@
 import type {
-	AdsConfigCCPAorAus,
 	AdsConfigTCFV2,
+	AdsConfigUSNATorAus,
 } from '@guardian/commercial/dist/cjs/core/types';
 import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
@@ -133,7 +133,7 @@ describe('create ads config', () => {
 	it('in non ad-free, returns adsConfig without consent in CCPA', () => {
 		const result = youtubePlayer.createAdsConfig(
 			canTargetCCPA(false),
-		) as AdsConfigCCPAorAus;
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(true);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
@@ -142,7 +142,7 @@ describe('create ads config', () => {
 	it('in non ad-free, returns adsConfig with consent in CCPA', () => {
 		const result = youtubePlayer.createAdsConfig(
 			canTargetCCPA(true),
-		) as AdsConfigCCPAorAus;
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(false);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
@@ -151,7 +151,7 @@ describe('create ads config', () => {
 	it('in non ad-free, returns adsConfig without consent in aus', () => {
 		const result = youtubePlayer.createAdsConfig(
 			canTargetAUS(false),
-		) as AdsConfigCCPAorAus;
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(true);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
@@ -160,7 +160,7 @@ describe('create ads config', () => {
 	it('in non ad-free, returns adsConfig with consent in aus', () => {
 		const result = youtubePlayer.createAdsConfig(
 			canTargetAUS(true),
-		) as AdsConfigCCPAorAus;
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(false);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
