@@ -55,7 +55,6 @@ object FixedContainers {
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher),
     ("fixed/showcase", showcaseSingleStories),
-    ("fixed/highlights", highlights),
     ("scrollable/highlights", highlights),
   ) ++ (if (Configuration.faciatool.showTestContainers)
           Map(
