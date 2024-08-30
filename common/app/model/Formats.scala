@@ -52,22 +52,28 @@ object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.t
 
 object BoostLevelFormat extends Format[BoostLevel] {
   def reads(json: JsValue): JsResult[BoostLevel] = {
-    (json \ "type").transform[JsString](Reads.JsStringReads) match {
+    println("BoostLevelFormat reads", json)
+    val x = (json \ "type").transform[JsString](Reads.JsStringReads) match {
       case JsSuccess(JsString("default"), _)   => JsSuccess(BoostLevel.Default)
       case JsSuccess(JsString("boost"), _)     => JsSuccess(BoostLevel.Boost)
       case JsSuccess(JsString("megaboost"), _) => JsSuccess(BoostLevel.MegaBoost)
       case JsSuccess(JsString("gigaboost"), _) => JsSuccess(BoostLevel.GigaBoost)
       case _                                   => JsError("Could not convert boostLevel")
     }
+    println("BoostLevelFormat reads result", x)
+    x
   }
 
-  def writes(boostLevel: BoostLevel): JsString =
-    boostLevel match {
+  def writes(boostLevel: BoostLevel): JsValue = {
+    val y = boostLevel match {
       case BoostLevel.Default   => JsString("default")
       case BoostLevel.Boost     => JsString("boost")
       case BoostLevel.MegaBoost => JsString("megaboost")
       case BoostLevel.GigaBoost => JsString("gigaboost")
     }
+    println("BoostLevelFormat writes", y)
+    y
+  }
 }
 
 object CardStyleFormat extends Format[CardStyle] {
