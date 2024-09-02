@@ -3,23 +3,23 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.25"
+  val identityLibVersion = "4.31"
   val awsVersion = "1.12.758"
   val awsSdk2Version = "2.26.27"
   val capiVersion = "31.1.0"
-  val faciaVersion = "8.0.0"
+  val faciaVersion = "8.0.1"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.4"
-  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.14.0"
+  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "4.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "4.0.1"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
@@ -32,7 +32,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.16.1"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.5.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.6.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -57,8 +57,8 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "7.0.10"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "4.0.0"
+  val paClient = "com.gu" %% "pa-client" % "7.0.12"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "5.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "3.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
@@ -73,11 +73,11 @@ object Dependencies {
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
-  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.13"
+  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.16"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.41"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.44"
   val pekkoVersion = "1.0.3"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -99,7 +99,7 @@ object Dependencies {
 
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
-  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.111.Final"
+  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.112.Final"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
