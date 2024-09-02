@@ -54,10 +54,10 @@ object BoostLevelFormat extends Format[BoostLevel] {
   def reads(json: JsValue): JsResult[BoostLevel] = {
     json match {
       case JsString("default")   => JsSuccess(BoostLevel.Default)
-      case JsString("boost")    => JsSuccess(BoostLevel.Boost)
+      case JsString("boost")     => JsSuccess(BoostLevel.Boost)
       case JsString("megaboost") => JsSuccess(BoostLevel.MegaBoost)
       case JsString("gigaboost") => JsSuccess(BoostLevel.GigaBoost)
-      case _ => JsError("Could not convert boostLevel")
+      case _                     => JsError("Could not convert boostLevel")
     }
   }
 
