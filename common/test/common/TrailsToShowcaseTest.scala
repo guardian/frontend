@@ -1404,7 +1404,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
 
     val displaySettings = PressedDisplaySettings(
       isBoosted = false,
-      boostLevel = BoostLevel.Default,
+      boostLevel = Some(BoostLevel.Default),
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       showLivePlayable = false,

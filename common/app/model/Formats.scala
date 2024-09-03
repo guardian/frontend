@@ -57,7 +57,7 @@ object BoostLevelFormat extends Format[BoostLevel] {
       case JsString("boost")     => JsSuccess(BoostLevel.Boost)
       case JsString("megaboost") => JsSuccess(BoostLevel.MegaBoost)
       case JsString("gigaboost") => JsSuccess(BoostLevel.GigaBoost)
-      case _                     => JsError("Could not convert boostLevel")
+      case _                     => JsError("Could not convert BoostLevel")
     }
   }
 

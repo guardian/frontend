@@ -111,7 +111,7 @@ object FixtureBuilder {
   def mkDisplay(): PressedDisplaySettings =
     PressedDisplaySettings(
       isBoosted = false,
-      boostLevel = BoostLevel.Default,
+      boostLevel = Some(BoostLevel.Default),
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       imageHide = false,

@@ -5,7 +5,7 @@ import model.pressed._
 
 case class DisplaySettings(
     isBoosted: Boolean,
-    boostLevel: BoostLevel,
+    boostLevel: Option[BoostLevel],
     showBoostedHeadline: Boolean,
     showQuotedHeadline: Boolean,
     imageHide: Boolean,
