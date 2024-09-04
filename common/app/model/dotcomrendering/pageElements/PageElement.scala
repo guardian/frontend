@@ -17,7 +17,7 @@ import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
 import model.dotcomrendering.pageElements.CartoonExtraction._
-import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
@@ -120,8 +120,7 @@ object AudioAtomBlockElement {
 
 // We are currently using AudioBlockElement as a catch all for audio errors, skipping the first definition
 // See comment: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
-// case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
-case class AudioBlockElement(message: String) extends PageElement
+case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 object AudioBlockElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
 }
@@ -1820,7 +1819,7 @@ object PageElement {
   private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
-      html <- d.html
+      html = d.html.getOrElse("")
       mandatory = true
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
@@ -1858,12 +1857,7 @@ object PageElement {
             ).getOrElse {
               extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
                 .getOrElse {
-                  // This version of AudioBlockElement is not currently supported in DCR
-                  // AudioBlockElement(element.assets.map(AudioAsset.make))
-
-                  // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
-                  // incorrect payload.
-                  AudioBlockElement("This audio element cannot be displayed at this time")
+                  AudioBlockElement(element.assets.toList.map(AudioAsset.make))
                 }
             }
           }
