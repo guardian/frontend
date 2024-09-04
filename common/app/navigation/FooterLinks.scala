@@ -113,7 +113,7 @@ object FooterLinks {
     allWriters("uk"),
     FooterLink(
       "Modern Slavery Act",
-      "https://uploads.guim.co.uk/2023/07/25/Modern_Slavery_Statement_GMG_and_Scott_Trust_2023.docx.pdf",
+      "https://uploads.guim.co.uk/2024/09/04/Modern_Slavery_Statement_2024_.pdf",
       "uk : footer : modern slavery act statement",
     ),
     taxStrategy("uk"),
