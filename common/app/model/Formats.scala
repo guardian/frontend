@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.utils.DesignType
+import com.gu.facia.api.utils.BoostLevel
 import common.Pagination
 import json.ObjectDeduplication.deduplicate
 import model.content._
@@ -47,6 +48,27 @@ object ProfilesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.pr
 object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.timeline.TimelineAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(timeline: com.gu.contentatom.thrift.atom.timeline.TimelineAtom): JsObject = JsObject(Seq.empty)
+}
+
+object BoostLevelFormat extends Format[BoostLevel] {
+  def reads(json: JsValue): JsResult[BoostLevel] = {
+    json match {
+      case JsString("default")   => JsSuccess(BoostLevel.Default)
+      case JsString("boost")     => JsSuccess(BoostLevel.Boost)
+      case JsString("megaboost") => JsSuccess(BoostLevel.MegaBoost)
+      case JsString("gigaboost") => JsSuccess(BoostLevel.GigaBoost)
+      case _                     => JsError("Could not convert BoostLevel")
+    }
+  }
+
+  def writes(boostLevel: BoostLevel): JsValue = {
+    boostLevel match {
+      case BoostLevel.Default   => JsString("default")
+      case BoostLevel.Boost     => JsString("boost")
+      case BoostLevel.MegaBoost => JsString("megaboost")
+      case BoostLevel.GigaBoost => JsString("gigaboost")
+    }
+  }
 }
 
 object CardStyleFormat extends Format[CardStyle] {
@@ -240,6 +262,7 @@ object PressedContentFormat {
   implicit val itemKickerFormat: ItemKickerFormat.format.type = ItemKickerFormat.format
   implicit val tagKickerFormat: OFormat[TagKicker] = ItemKickerFormat.tagKickerFormat
   implicit val pressedCardHeader: OFormat[PressedCardHeader] = Json.format[PressedCardHeader]
+  implicit val boostLevel: BoostLevelFormat.type = BoostLevelFormat
   implicit val pressedDisplaySettings: OFormat[PressedDisplaySettings] = Json.format[PressedDisplaySettings]
   implicit val pressedDiscussionSettings: OFormat[PressedDiscussionSettings] = Json.format[PressedDiscussionSettings]
   implicit val pressedCard: OFormat[PressedCard] = Json.format[PressedCard]

@@ -1,10 +1,11 @@
 package layout
 
+import com.gu.facia.api.utils.BoostLevel
 import model.pressed._
 
 case class DisplaySettings(
-    /** TODO check if this should actually be used to determine anything at an item level; if not, remove it */
     isBoosted: Boolean,
+    boostLevel: Option[BoostLevel],
     showBoostedHeadline: Boolean,
     showQuotedHeadline: Boolean,
     imageHide: Boolean,
@@ -15,6 +16,7 @@ object DisplaySettings {
   def fromTrail(faciaContent: PressedContent): DisplaySettings =
     DisplaySettings(
       faciaContent.display.isBoosted,
+      faciaContent.display.boostLevel,
       faciaContent.display.showBoostedHeadline,
       faciaContent.display.showQuotedHeadline,
       faciaContent.display.imageHide,
