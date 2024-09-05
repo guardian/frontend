@@ -100,6 +100,15 @@
 
                     <div class="modern-visible">
 
+                        <div class="discussion__heading">
+                            <div class="container__meta">
+                                @if(discussionClosed) {
+                                    <p class="container__meta__item">
+                                    This discussion is closed for comments.
+                                </p>}
+                            </div>
+                        </div>
+
                         <div class="discussion__comment-box js-discussion-comment-box--top"></div>
 
                         <div class="discussion__top-comments js-discussion-top-comments"></div>
