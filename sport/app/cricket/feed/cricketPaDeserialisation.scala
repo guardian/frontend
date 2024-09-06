@@ -64,12 +64,21 @@ object Parser {
 
   private def parseTeams(teams: NodeSeq): List[Team] =
     teams.map { team =>
-      Team((team \ "name").text, (team \ "@id").text, (team \ "home").text == "true", parseTeamLineup(team \ "player"))
+      val players = parseTeamLineup(team \ "player")
+      Team((team \ "name").text, (team \ "@id").text, (team \ "home").text == "true", players.map(_.name), players)
 
     }.toList
 
-  private def parseTeamLineup(lineup: NodeSeq): List[String] =
-    lineup.map { player => (player \ "name").text }.toList
+  private def parseTeamLineup(lineup: NodeSeq): List[Player] =
+    lineup.map { player =>
+      Player(
+        id = (player \ "id").text,
+        name = (player \ "name").text,
+        firstName = (player \ "firstName").text,
+        lastName = (player \ "lastName").text,
+        initials = (player \ "initials").text,
+      )
+    }.toList
 
   private def getStatistic(statistics: NodeSeq, statistic: String): String =
     (statistics \ "statistic").find(node => (node \ "@type").text == statistic).map(_.text).getOrElse("")

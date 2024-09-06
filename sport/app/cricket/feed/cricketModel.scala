@@ -3,7 +3,12 @@ package cricketModel
 import play.api.libs.json._
 import java.time.LocalDateTime
 
-case class Team(name: String, id: String, home: Boolean, lineup: List[String])
+case class Player(id: String, name: String, firstName: String, lastName: String, initials: String)
+
+object Player {
+  implicit val writes: OWrites[Player] = Json.writes[Player]
+}
+case class Team(name: String, id: String, home: Boolean, lineup: List[String], players: List[Player])
 
 object Team {
   implicit val writes: OWrites[Team] = Json.writes[Team]
