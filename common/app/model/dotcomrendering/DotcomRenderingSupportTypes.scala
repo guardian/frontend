@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.format.ImmersiveDisplay
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
 import model.liveblog.{MembershipPlaceholder, BlockAttributes}
-import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
+import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew, Podcast}
 import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
@@ -19,12 +19,13 @@ import views.support.{ImgSrc, Item300}
 // Exceptions: we do reuse the existing Nav & BlockElement classes right now
 
 case class Tag(
-    id: String,
-    `type`: String,
-    title: String,
-    twitterHandle: Option[String],
-    bylineImageUrl: Option[String],
-    bylineLargeImageUrl: Option[String],
+                id: String,
+                `type`: String,
+                title: String,
+                twitterHandle: Option[String],
+                bylineImageUrl: Option[String],
+                bylineLargeImageUrl: Option[String],
+                podcast: Option[Podcast],
 )
 
 object Tag {
@@ -38,6 +39,7 @@ object Tag {
       t.properties.twitterHandle,
       t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
       t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
+      t.properties.podcast
     )
   }
 }
