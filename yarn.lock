@@ -4039,12 +4039,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:20.6.4":
-  version: 20.6.4
-  resolution: "@guardian/commercial@npm:20.6.4"
+"@guardian/commercial@npm:20.8.0":
+  version: 20.8.0
+  resolution: "@guardian/commercial@npm:20.8.0"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
-    "@guardian/prebid.js": "npm:8.52.0-1"
+    "@guardian/prebid.js": "npm:8.52.0-2"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
@@ -4052,7 +4052,6 @@ __metadata:
     raven-js: "npm:^3.27.2"
     tslib: "npm:^2.6.2"
     web-vitals: "npm:^4.2.1"
-    wolfy87-eventemitter: "npm:^5.2.9"
   peerDependencies:
     "@guardian/ab-core": ^8.0.0
     "@guardian/core-web-vitals": ^7.0.0
@@ -4061,7 +4060,7 @@ __metadata:
     "@guardian/libs": ^18.0.0
     "@guardian/source": ^6.0.0
     typescript: ~5.5.3
-  checksum: 10c0/0d427a94cb7718fcc610fd2f9ceb7f61684d0c9e21a4721741aa0a17bbd90e509591bf277393911c3c249ac41447b4e5af4ef55cf37d314fb792f330162f7f20
+  checksum: 10c0/b10a1f1531c162088e5321cee7de4c5916cd37b1013ffaad5a882221e86901312d15f0dcea632be774aa2cf34418077f10a33c9299854f50d16940944ec0cb98
   languageName: node
   linkType: hard
 
@@ -4134,7 +4133,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:20.6.4"
+    "@guardian/commercial": "npm:20.8.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
@@ -4309,28 +4308,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:^16.0.0":
-  version: 16.1.0
-  resolution: "@guardian/libs@npm:16.1.0"
+"@guardian/libs@npm:^18.0.0":
+  version: 18.0.1
+  resolution: "@guardian/libs@npm:18.0.1"
   peerDependencies:
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/992bfb9d72527ba36900376350c0df7969f91e4c21c6548df99373d677ad6c4a92f778e8bb437df5ede56ec8804a08a76015fd76937b062abc9613767acaa628
+  checksum: 10c0/19f90e8948dded1345c21908888e0cdc6f461f6b66662dc0d9a194be54a959954ecf0e0d4b79213cda8191b4336c6a1bd814f23945b96849d2b18c7d6c5ab3f0
   languageName: node
   linkType: hard
 
-"@guardian/prebid.js@npm:8.52.0-1":
-  version: 8.52.0-1
-  resolution: "@guardian/prebid.js@npm:8.52.0-1"
+"@guardian/prebid.js@npm:8.52.0-2":
+  version: 8.52.0-2
+  resolution: "@guardian/prebid.js@npm:8.52.0-2"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
     "@babel/preset-env": "npm:^7.16.8"
+    "@babel/register": "npm:^7.24.6"
     "@babel/runtime": "npm:^7.18.9"
-    "@guardian/libs": "npm:^16.0.0"
+    "@guardian/libs": "npm:^18.0.0"
     core-js: "npm:^3.13.0"
     core-js-pure: "npm:^3.13.0"
     criteo-direct-rsa-validate: "npm:^1.1.0"
@@ -4346,7 +4346,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/dd9baf7ecc2743b3948a631a474953be027abd8a436c52ad6a952545baeab159667fb9fdea512ad475a607324f481123f9a81a1065bea44350931d1f6037d70a
+  checksum: 10c0/1223d9d5d66f16b917b3e78e2138e34ac1c92d961b7b6b2c71e73839c225f673ce48a236d599190537fd0af1dd2227ceff7adb1577ec14dd2ffabf1fec71f1bd
   languageName: node
   linkType: hard
 
@@ -18140,7 +18140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wolfy87-eventemitter@npm:^5.2.9, wolfy87-eventemitter@npm:~5.2.4":
+"wolfy87-eventemitter@npm:~5.2.4":
   version: 5.2.9
   resolution: "wolfy87-eventemitter@npm:5.2.9"
   checksum: 10c0/dd218e3eb5fe2bbb7894d19b857ee7df1b711cadb6dfa177392d42b71522979d1883489057d13cf7af6785835b9807ab1f821d3dbf79ee9691ba27e72ad91c4d

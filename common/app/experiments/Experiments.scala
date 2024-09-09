@@ -12,21 +12,11 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       RemoveLiteFronts,
-      UpdatedHeaderDesign,
       MastheadWithHighlights,
       DarkModeWeb,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object UpdatedHeaderDesign
-    extends Experiment(
-      name = "updated-header-design",
-      description = "Shows updated design of Header and Nav components",
-      owners = Seq(Owner.withGithub("cemms1")),
-      sellByDate = LocalDate.of(2024, 9, 30),
-      participationGroup = Perc50,
-    )
 
 object MastheadWithHighlights
     extends Experiment(

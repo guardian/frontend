@@ -44,8 +44,6 @@ object FrontChecks {
       "nav/list",
       "nav/media-list",
       "news/most-popular",
-      // TODO - 28/08/24 remove fixed/highlights once migrated to scrollable/highlights
-      "fixed/highlights",
       "scrollable/highlights",
       "flexible/special",
     )
