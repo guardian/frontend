@@ -19,13 +19,13 @@ import views.support.{ImgSrc, Item300}
 // Exceptions: we do reuse the existing Nav & BlockElement classes right now
 
 case class Tag(
-                id: String,
-                `type`: String,
-                title: String,
-                twitterHandle: Option[String],
-                bylineImageUrl: Option[String],
-                bylineLargeImageUrl: Option[String],
-                podcast: Option[Podcast],
+    id: String,
+    `type`: String,
+    title: String,
+    twitterHandle: Option[String],
+    bylineImageUrl: Option[String],
+    bylineLargeImageUrl: Option[String],
+    podcast: Option[Podcast],
 )
 
 object Tag {
@@ -39,7 +39,7 @@ object Tag {
       t.properties.twitterHandle,
       t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
       t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
-      t.properties.podcast
+      t.properties.podcast,
     )
   }
 }
