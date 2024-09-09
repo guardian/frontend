@@ -41,18 +41,7 @@ trait ABTestSwitches {
     "Test the Opt Out frequency capping feature",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 13)),
+    sellByDate = Some(LocalDate.of(2024, 9, 30)),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-optimise-spacefinder-inline",
-    "Test new Spacefinder margins for inline1",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 13)),
-    exposeClientSide = true,
-  )
-
 }
