@@ -1857,7 +1857,7 @@ object PageElement {
             ).getOrElse {
               extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
                 .getOrElse {
-                  AudioBlockElement(element.assets.toList.map(AudioAsset.make))
+                  AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
                 }
             }
           }
