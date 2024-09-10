@@ -8,6 +8,6 @@ object PlayerNames {
     playersGroupedByName <- players.groupBy(_.lastName).values
     player <- playersGroupedByName
   } yield {
-    player.id -> { if (playersGroupedByName.size > 1) s"${player.name} ${player.lastName}" else player.lastName }
+    player.id -> { if (playersGroupedByName.size > 1) s"${player.firstName} ${player.lastName}" else player.lastName }
   }).toMap
 }
