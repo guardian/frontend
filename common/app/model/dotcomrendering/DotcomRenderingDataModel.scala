@@ -5,12 +5,6 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
-import conf.Configuration
-import crosswords.CrosswordPageWithContent
-import experiments.ActiveExperiments
-import model.dotcomrendering.DotcomRenderingUtils._
-import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import model.{
   ArticleDateTimes,
   Badges,
@@ -21,11 +15,19 @@ import model.{
   GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
+  ImageMedia,
   InteractivePage,
   LiveBlogPage,
   MediaPage,
   PageWithStoryPackage,
+  Trail,
 }
+import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
+import conf.Configuration
+import crosswords.CrosswordPageWithContent
+import experiments.ActiveExperiments
+import model.dotcomrendering.DotcomRenderingUtils._
+import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -87,6 +89,7 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
+    trailImage: Option[ImageMedia],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -164,6 +167,7 @@ object DotcomRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
+        "trailImage" -> model.trailImage,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -619,6 +623,7 @@ object DotcomRenderingDataModel {
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
       tags = dcrTags,
+      trailImage = Trail.findTrailImages(content.elements),
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
