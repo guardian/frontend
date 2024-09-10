@@ -123,7 +123,7 @@ object IpsosTags {
     "documentaries" -> "documentaries",
     "type/podcast" -> "podcasts",
     "podcasts" -> "podcasts",
-    "australia-podcasts" -> "podcasts",
+    "au/podcasts" -> "podcasts",
     "inpictures" -> "inpictures",
     "type/gallery" -> "inpictures",
     "publication/guardianweekly" -> "weekly",

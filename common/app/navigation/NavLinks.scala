@@ -245,7 +245,7 @@ object NavLinks {
   val corrections = NavLink("Corrections", "/theguardian/series/corrections-and-clarifications")
   val video = NavLink("Video", "/video")
   val podcasts = NavLink("Podcasts", "/podcasts")
-  val podcastsAU = NavLink("Podcasts", "/australia-podcasts")
+  val podcastsAU = NavLink("Podcasts", "/au/podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
