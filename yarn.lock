@@ -4039,9 +4039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:21.0.1":
-  version: 21.0.1
-  resolution: "@guardian/commercial@npm:21.0.1"
+"@guardian/commercial@npm:21.0.2":
+  version: 21.0.2
+  resolution: "@guardian/commercial@npm:21.0.2"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-2"
@@ -4060,7 +4060,7 @@ __metadata:
     "@guardian/libs": ^18.0.0
     "@guardian/source": ^6.0.0
     typescript: ~5.5.3
-  checksum: 10c0/f1b8f9ae90e51fa741ccd108fa423713a6f0c0303c44e24bdaf55d530235c41973b662d387004d10145e8549068617520b619f40df441c4f6c61f6bf10604e83
+  checksum: 10c0/9e976537dec9649ef2caac0eb21ac91ee745468f0d32c768d0d2d72d90db61f6a0bdc317a51c4b8281893a6c673df24785f24d8967c488484f0efe0d969a3efc
   languageName: node
   linkType: hard
 
@@ -4133,7 +4133,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:21.0.1"
+    "@guardian/commercial": "npm:21.0.2"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
