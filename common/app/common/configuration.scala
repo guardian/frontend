@@ -145,7 +145,6 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object rendering {
-    lazy val baseURL = configuration.getMandatoryStringProperty("rendering.baseURL")
     lazy val articleBaseURL = configuration.getMandatoryStringProperty("article-rendering.baseURL")
     lazy val faciaBaseURL = configuration.getMandatoryStringProperty("facia-rendering.baseURL")
     lazy val tagPageBaseURL = configuration.getMandatoryStringProperty("tag-page-rendering.baseURL")

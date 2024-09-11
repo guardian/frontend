@@ -15,7 +15,6 @@ import { Component } from 'common/modules/component';
 import { getUser } from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { Comments } from 'common/modules/discussion/comments';
-import { loadDiscussionFrontend } from 'common/modules/discussion/discussion-frontend';
 import {
 	handle as upvoteHandle,
 	closeTooltip as upvoteCloseTooltip,
@@ -127,7 +126,6 @@ class Loader extends Component {
 		this.initTopComments();
 		this.initMainComments();
 		this.initToolbar();
-		this.renderCommentCount();
 		this.initPagination();
 		this.initRecommend();
 
@@ -615,24 +613,6 @@ class Loader extends Component {
 				qwery('.js-discussion-comment-box--bottom')[0],
 			);
 		}
-	}
-
-	renderCommentCount() {
-		loadDiscussionFrontend(this, {
-			apiHost: config.get('page.discussionApiUrl'),
-			avatarImagesHost: config.get('page.avatarImagesUrl'),
-			closed: this.getDiscussionClosed(),
-			discussionId: this.getDiscussionId(),
-			element: document.getElementsByClassName(
-				'js-discussion-external-frontend',
-			)[0],
-			userFromCookie: !!getUserFromCookie(),
-			profileUrl: config.get('page.idUrl'),
-			profileClientId: config.get('switches.registerWithPhone')
-				? 'comments'
-				: '',
-			Promise,
-		});
 	}
 }
 
