@@ -115,9 +115,32 @@ object Parser {
       .toList
       .sortBy(_.order)
 
-  private def parseInningsBatters(batters: NodeSeq, bowlingTeam: Option[Team]): List[InningsBatter] =
+//  def descriptionWithUniqueNames(
+//      bowlingTeam: Option[Team],
+//      catcherId: String,
+//      bowlerId: String,
+//      description: String,
+//  ): String = {
+//    val players = bowlingTeam.map(team => PlayerNames.uniqueNames(team.players)).get
+//
+//    description
+//      .replaceFirst("c\\s+\\w+\\s?", s"c ${players.getOrElse(catcherId, "")} ")
+//      .replaceFirst("st\\s+\\w+\\s?", s"st ${players.getOrElse(catcherId, "")} ")
+//      .replaceFirst("b\\s+\\w+\\s?", s"b ${players.getOrElse(bowlerId, "")}")
+//  }
+
+  private def parseInningsBatters(batters: NodeSeq, bowlingTeam: Option[Team]): List[InningsBatter] = {
+
     batters
       .map { batter =>
+        val dismissalDescription = (batter \ "dismissal" \ "description").text
+        val catcherId =
+          if (dismissalDescription.contains("c") || dismissalDescription.contains("st"))
+            (batter \ "dismissal" \ "caughtBy" \ "player" \ "@id").text
+          else ""
+        val bowlerId =
+          if (dismissalDescription.contains("b")) (batter \ "dismissal" \ "bowledBy" \ "player" \ "@id").text else ""
+
         InningsBatter(
           (batter \ "player" \ "name").text,
           (batter \ "@order").text.toInt,
@@ -127,12 +150,14 @@ object Parser {
           getStatistic(batter, "sixes") toInt,
           (batter \ "status").text == "batted",
           (batter \ "dismissal" \ "description").text,
+//          descriptionWithUniqueNames(bowlingTeam, dismissalDescription, catcherId, bowlerId),
           getStatistic(batter, "on-strike").toInt > 0,
           getStatistic(batter, "runs-scored").toInt > 0,
         )
       }
       .toList
       .sortBy(_.order)
+  }
 
   private def parseInningsBowlers(bowlers: NodeSeq): List[InningsBowler] =
     bowlers
