@@ -16,7 +16,7 @@ trait SurveySponsorshipAgent {
       adtest: Option[String],
   ): Seq[SurveySponsorship] = {
     surveySponsorships.filter { sponsorship =>
-      sponsorship.adUnits.contains(adUnitPath) && sponsorship.matchesTargetedAdTest(adtest)
+      sponsorship.adUnits.exists(adUnit => adUnitPath.contains(adUnit)) && sponsorship.matchesTargetedAdTest(adtest)
     }
   }
 

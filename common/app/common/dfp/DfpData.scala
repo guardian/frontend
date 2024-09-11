@@ -297,18 +297,14 @@ case class GuLineItem(
     val matchingSurveyTargeting = for {
       targetSet <- targeting.customTargetSets
       target <- targetSet.targets
-      if target.name == "slot" || target.name == "ct" || target.values.contains("survey")
+      if target.name == "slot" || target.values.contains("survey")
     } yield target
 
     val isSurveySlot = matchingSurveyTargeting.exists { target =>
       target.name == "slot" && target.values.contains("survey")
     }
 
-    val isSurveyContentType = matchingSurveyTargeting.exists { target =>
-      target.name == "ct" && target.values.contains("survey")
-    }
-
-    isSurveySlot && isSurveyContentType
+    isSurveySlot
   }
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
