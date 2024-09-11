@@ -22,7 +22,7 @@ object SurveySponsorship {
 
 case class SurveySponsorshipReport(
     updatedTimeStamp: Option[String],
-    sponsorships: Seq[SurveySponsorship]
+    sponsorships: Seq[SurveySponsorship],
 ) {
   val (testSponsorships, deliverableSponsorships) = sponsorships partition (_.targetsAdTest)
 }
