@@ -149,8 +149,7 @@ object Parser {
           getStatistic(batter, "fours") toInt,
           getStatistic(batter, "sixes") toInt,
           (batter \ "status").text == "batted",
-          (batter \ "dismissal" \ "description").text,
-//          descriptionWithUniqueNames(bowlingTeam, dismissalDescription, catcherId, bowlerId),
+          descriptionWithUniqueNames(bowlingTeam, dismissalDescription, catcherId, bowlerId),
           getStatistic(batter, "on-strike").toInt > 0,
           getStatistic(batter, "runs-scored").toInt > 0,
         )
