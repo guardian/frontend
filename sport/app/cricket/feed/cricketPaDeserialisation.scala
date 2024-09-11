@@ -115,19 +115,19 @@ object Parser {
       .toList
       .sortBy(_.order)
 
-//  def descriptionWithUniqueNames(
-//      bowlingTeam: Option[Team],
-//      catcherId: String,
-//      bowlerId: String,
-//      description: String,
-//  ): String = {
-//    val players = bowlingTeam.map(team => PlayerNames.uniqueNames(team.players)).get
-//
-//    description
-//      .replaceFirst("c\\s+\\w+\\s?", s"c ${players.getOrElse(catcherId, "")} ")
-//      .replaceFirst("st\\s+\\w+\\s?", s"st ${players.getOrElse(catcherId, "")} ")
-//      .replaceFirst("b\\s+\\w+\\s?", s"b ${players.getOrElse(bowlerId, "")}")
-//  }
+  def descriptionWithUniqueNames(
+      bowlingTeam: Option[Team],
+      catcherId: String,
+      bowlerId: String,
+      description: String,
+  ): String = {
+    val players = bowlingTeam.map(team => PlayerNames.uniqueNames(team.players)).get
+
+    description
+      .replaceFirst("c\\s+\\w+\\s?", s"c ${players.getOrElse(catcherId, "")} ")
+      .replaceFirst("st\\s+\\w+\\s?", s"st ${players.getOrElse(catcherId, "")} ")
+      .replaceFirst("b\\s+\\w+\\s?", s"b ${players.getOrElse(bowlerId, "")}")
+  }
 
   private def parseInningsBatters(batters: NodeSeq, bowlingTeam: Option[Team]): List[InningsBatter] = {
 
