@@ -332,13 +332,16 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         .contains(collection.collectionConfig.collectionType)
         .toOption(storyCountTotal)
         .getOrElse(Math.min(Configuration.facia.collectionCap, storyCountTotal))
-      val storyCountVisible = Container
-        .storiesCount(
-          CollectionConfig.make(collection.collectionConfig),
-          curated ++ backfill,
-        )
-        .getOrElse(storyCountMax)
-
+      val storyCountVisible = if (collection.collectionConfig.collectionType == "highlights") {
+        6
+      } else {
+        Container
+          .storiesCount(
+            CollectionConfig.make(collection.collectionConfig),
+            curated ++ backfill,
+          )
+          .getOrElse(storyCountMax)
+      }
       val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
       PressedCollectionVisibility(pressedCollection, storyCountVisible)
     }
