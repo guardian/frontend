@@ -1,6 +1,7 @@
 package conf.cricketPa
 
 import common.Chronos
+import cricket.feed.PlayerNames
 
 import xml.{NodeSeq, XML}
 import scala.language.postfixOps
@@ -17,10 +18,11 @@ object Parser {
     val matchDetail = parseMatchDetail(matchData)
     val lineupData = XML.loadString(lineups)
     val scorecardData = XML.loadString(scorecard)
+    val teams = parseTeams(lineupData \ "match" \ "team")
 
     Match(
-      parseTeams(lineupData \ "match" \ "team"),
-      parseInnings(scorecardData \ "match" \ "innings"),
+      teams,
+      parseInnings(scorecardData \ "match" \ "innings", teams),
       matchDetail.competitionName,
       matchDetail.venueName,
       matchDetail.result,
@@ -83,11 +85,14 @@ object Parser {
   private def getStatistic(statistics: NodeSeq, statistic: String): String =
     (statistics \ "statistic").find(node => (node \ "@type").text == statistic).map(_.text).getOrElse("")
 
-  private def parseInnings(innings: NodeSeq): List[Innings] =
+  private def parseInnings(innings: NodeSeq, teams: List[Team]): List[Innings] =
     innings
       .map { singleInnings =>
         val inningsOrder = (singleInnings \ "@order").text.toInt
         val battingTeam = (singleInnings \ "batting" \ "team" \ "name").text
+
+        val bowlingTeam = teams.find(_.name == (singleInnings \ "bowling" \ "team" \ "name)").text)
+
         Innings(
           inningsOrder,
           battingTeam,
@@ -96,7 +101,7 @@ object Parser {
           getStatistic(singleInnings, "declared") == "true",
           getStatistic(singleInnings, "forefeited") == "true",
           inningsDescription(inningsOrder, battingTeam),
-          parseInningsBatters(singleInnings \ "batting" \ "batter"),
+          parseInningsBatters(singleInnings \ "batting" \ "batter", bowlingTeam),
           parseInningsBowlers(singleInnings \ "bowling" \ "bowler"),
           parseInningsWickets(singleInnings \ "fallenWicket"),
           getStatistic(singleInnings, "extra-byes").toInt,
@@ -110,7 +115,7 @@ object Parser {
       .toList
       .sortBy(_.order)
 
-  private def parseInningsBatters(batters: NodeSeq): List[InningsBatter] =
+  private def parseInningsBatters(batters: NodeSeq, bowlingTeam: Option[Team]): List[InningsBatter] =
     batters
       .map { batter =>
         InningsBatter(
