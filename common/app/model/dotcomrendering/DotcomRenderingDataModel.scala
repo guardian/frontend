@@ -89,7 +89,6 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
-    trailImage: Option[ImageMedia],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -167,7 +166,6 @@ object DotcomRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
-        "trailImage" -> model.trailImage,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -623,7 +621,6 @@ object DotcomRenderingDataModel {
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
       tags = dcrTags,
-      trailImage = Trail.findTrailImages(content.elements),
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
