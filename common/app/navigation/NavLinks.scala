@@ -185,6 +185,7 @@ object NavLinks {
   val home = NavLink("Home & garden", "/lifeandstyle/home-and-garden")
   val health = NavLink("Health & fitness", "/lifeandstyle/health-and-wellbeing")
   val healthAu = NavLink("Health & fitness", "/au/lifeandstyle/health-and-wellbeing")
+  val healthNewsAu = NavLink("Health", "/australia-news/health")
   val women = NavLink("Women", "/lifeandstyle/women")
   val men = NavLink("Men", "/lifeandstyle/men")
   val recipes = NavLink("Recipes", "/tone/recipes")
@@ -303,6 +304,7 @@ object NavLinks {
       auImmigration,
       media,
       auBusiness,
+      healthNewsAu,
       science,
       tech,
       podcastsAU,
