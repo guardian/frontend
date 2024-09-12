@@ -85,6 +85,12 @@ object FooterLinks {
     FooterLink("All writers", "/index/contributors", s"${edition} : footer : all contributors")
   val digitalNewspaperArchive: FooterLink =
     FooterLink("Digital newspaper archive", "https://theguardian.newspapers.com", "digital newspaper archive")
+  def taxStrategy(edition: String): FooterLink =
+    FooterLink(
+      "Tax strategy",
+      "https://uploads.guim.co.uk/2024/08/27/TAX_STRATEGY_FOR_THE_YEAR_ENDED_31_MARCH_2025.pdf",
+      s"${edition} : footer : tax strategy",
+    )
   def facebook(edition: String): FooterLink =
     FooterLink("Facebook", "https://www.facebook.com/theguardian", s"${edition} : footer : facebook")
   def youtube(edition: String): FooterLink =
@@ -107,9 +113,10 @@ object FooterLinks {
     allWriters("uk"),
     FooterLink(
       "Modern Slavery Act",
-      "https://uploads.guim.co.uk/2023/07/25/Modern_Slavery_Statement_GMG_and_Scott_Trust_2023.docx.pdf",
+      "https://uploads.guim.co.uk/2024/09/04/Modern_Slavery_Statement_2024_.pdf",
       "uk : footer : modern slavery act statement",
     ),
+    taxStrategy("uk"),
     digitalNewspaperArchive,
     facebook("uk"),
     youtube("uk"),
@@ -123,6 +130,7 @@ object FooterLinks {
     allTopics("us"),
     allWriters("us"),
     digitalNewspaperArchive,
+    taxStrategy("us"),
     facebook("us"),
     youtube("us"),
     instagram("us"),
@@ -136,6 +144,7 @@ object FooterLinks {
     allWriters("au"),
     FooterLink("Events", "/guardian-masterclasses/guardian-masterclasses-australia", "au : footer : masterclasses"),
     digitalNewspaperArchive,
+    taxStrategy("au"),
     facebook("au"),
     youtube("au"),
     instagram("au"),
@@ -148,6 +157,7 @@ object FooterLinks {
     allTopics("international"),
     allWriters("international"),
     digitalNewspaperArchive,
+    taxStrategy("international"),
     facebook("international"),
     youtube("international"),
     instagram("international"),

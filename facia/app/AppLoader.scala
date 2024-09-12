@@ -16,7 +16,7 @@ import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.HttpRequestHandler
+import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
@@ -73,6 +73,8 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     DCRMetrics.DCRLatencyMetric,
     DCRMetrics.DCRRequestCountMetric,
   )
+
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FaciaErrorHandler]
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.facia.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
