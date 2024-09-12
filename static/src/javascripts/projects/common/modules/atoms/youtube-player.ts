@@ -179,12 +179,12 @@ const createAdsConfigEnabled = (
 	}
 
 	if (consentState.usnat || consentState.aus) {
-		const adsConfigCCPA: AdsConfigUSNATorAus = {
+		const adsConfigUSNAT: AdsConfigUSNATorAus = {
 			...adsConfigBasic,
 			restrictedDataProcessor: !consentState.canTarget,
 		};
-		log('commercial', 'YouTube Ads Config CCPA/AUS', adsConfigCCPA);
-		return adsConfigCCPA;
+		log('commercial', 'YouTube Ads Config USNAT/AUS', adsConfigUSNAT);
+		return adsConfigUSNAT;
 	}
 
 	return adsConfigBasic;

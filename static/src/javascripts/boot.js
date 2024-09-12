@@ -41,7 +41,7 @@ const go = () => {
          *
          */
 
-        // CCPA and TCFv2
+        // USNAT and TCFv2
         const browserId = getCookie('bwid') || undefined;
         const pageViewId = config.get('ophan.pageViewId');
         const pubData = {
@@ -83,11 +83,11 @@ const go = () => {
                             consent: consentState.tcfv2.tcString,
                         };
                     }
-                    if (consentState.ccpa) {
+                    if (consentState.usnat) {
                         return {
                             consentJurisdiction: 'USNAT',
                             consentUUID: getCookie({ name: 'usnatUUID' }) ?? '',
-                            consent: consentState.ccpa.doNotSell ? 'false' : 'true',
+                            consent: consentState.usnat.doNotSell ? 'false' : 'true',
                         };
                     }
                     if (consentState.aus) {
