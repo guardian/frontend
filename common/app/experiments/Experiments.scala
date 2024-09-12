@@ -12,21 +12,11 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       RemoveLiteFronts,
-      UpdatedHeaderDesign,
       MastheadWithHighlights,
       DarkModeWeb,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object UpdatedHeaderDesign
-    extends Experiment(
-      name = "updated-header-design",
-      description = "Shows updated design of Header and Nav components",
-      owners = Seq(Owner.withGithub("cemms1")),
-      sellByDate = LocalDate.of(2024, 9, 30),
-      participationGroup = Perc50,
-    )
 
 object MastheadWithHighlights
     extends Experiment(
@@ -35,7 +25,7 @@ object MastheadWithHighlights
         "Shows new masthead component, with highlights container, in place of current header/navigation and top bar",
       owners = Seq(Owner.withGithub("cemms1")),
       sellByDate = LocalDate.of(2024, 9, 30),
-      participationGroup = Perc0C,
+      participationGroup = Perc50,
     )
 
 object DarkModeWeb
@@ -53,5 +43,5 @@ object RemoveLiteFronts
       description = "Get the full pressed page of a front instead of the lite version",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2024, 10, 30),
-      participationGroup = Perc1A,
+      participationGroup = Perc10A,
     )

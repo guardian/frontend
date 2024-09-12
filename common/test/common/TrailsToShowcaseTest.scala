@@ -2,7 +2,7 @@ package common
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
-import com.gu.facia.api.utils.Editorial
+import com.gu.facia.api.utils.{BoostLevel, Editorial}
 import com.sun.syndication.feed.module.mediarss.MediaEntryModule
 import com.sun.syndication.feed.synd.SyndPerson
 import implicits.Dates.jodaToJavaInstant
@@ -336,10 +336,10 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
     // Strip them to provide the least friction to editors
     val bulletItemsWithHtml =
       """
-        |-<p>Bullet 1</p>
-        |- <strong>Bullet 2</strong>
-        |-<b>Unclosed
-        |""".stripMargin
+      |-<p>Bullet 1</p>
+      |- <strong>Bullet 2</strong>
+      |-<b>Unclosed
+      |""".stripMargin
 
     val curatedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
@@ -584,8 +584,8 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
     // Showcase specifies 2 or 3 items
     val bulletEncodedTrailText =
       """
-          | - 1 bullet item is not going to be enough
-          |""".stripMargin
+        | - 1 bullet item is not going to be enough
+        |""".stripMargin
 
     val bulletedContent = makePressedContent(
       webPublicationDate = wayBackWhen,
@@ -1404,6 +1404,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
 
     val displaySettings = PressedDisplaySettings(
       isBoosted = false,
+      boostLevel = Some(BoostLevel.Default),
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       showLivePlayable = false,

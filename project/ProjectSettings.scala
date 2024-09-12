@@ -93,6 +93,7 @@ object ProjectSettings {
       .disablePlugins(PlayPekkoHttpServer)
       .settings(frontendCompilationSettings)
       .settings(frontendRootSettings)
+      .settings(libraryDependencies ++= jackson)
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))

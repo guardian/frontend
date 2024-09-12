@@ -69,7 +69,7 @@ trait AppComponents
     with FapiServices
     with ApplicationsServices {
 
-  //Overriding conflicting members
+  // Overriding conflicting members
   override lazy val ophanApi = wire[OphanApi]
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]

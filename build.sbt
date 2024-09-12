@@ -69,7 +69,7 @@ val common = library("common")
       pekkoSlf4j,
       pekkoSerializationJackson,
       pekkoActorTyped,
-    ),
+    ) ++ jackson,
     TestAssets / mappings ~= filterAssets,
   )
 

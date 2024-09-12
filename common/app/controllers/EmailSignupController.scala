@@ -84,8 +84,13 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
         .fields,
     )
 
+    val queryStringParameters = form.ref.map("ref" -> _).toList ++
+      form.refViewId.map("refViewId" -> _).toList ++
+      form.listNames.map("listName" -> _).toList
+
     wsClient
       .url(s"${Configuration.id.apiRoot}/consent-email")
+      .withQueryStringParameters(queryStringParameters: _*)
       .addHttpHeaders(getHeaders(request): _*)
       .post(consentMailerPayload)
   }
