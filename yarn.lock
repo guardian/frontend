@@ -3046,9 +3046,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:21.0.1":
-  version: 21.0.1
-  resolution: "@guardian/commercial@npm:21.0.1"
+"@guardian/commercial@npm:0.0.0-beta-20240912082044":
+  version: 0.0.0-beta-20240912082044
+  resolution: "@guardian/commercial@npm:0.0.0-beta-20240912082044"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-2"
@@ -3067,7 +3067,7 @@ __metadata:
     "@guardian/libs": ^18.0.0
     "@guardian/source": ^6.0.0
     typescript: ~5.5.3
-  checksum: 10c0/f1b8f9ae90e51fa741ccd108fa423713a6f0c0303c44e24bdaf55d530235c41973b662d387004d10145e8549068617520b619f40df441c4f6c61f6bf10604e83
+  checksum: 10c0/aa0c5d453b1124b3680d4e786f2a717b3a8bfa4882f1b81b12c95a98c7ad9571eb7d85f25c6e078fa4e3979fbe81f5feebc662742322497fe79b16a6b79cf139
   languageName: node
   linkType: hard
 
@@ -3140,12 +3140,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:21.0.1"
+    "@guardian/commercial": "npm:0.0.0-beta-20240912082044"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
-    "@guardian/libs": "npm:0.0.0-canary-20240829110247"
+    "@guardian/libs": "npm:0.0.0-canary-20240911151236"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3302,16 +3302,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:0.0.0-canary-20240829110247":
-  version: 0.0.0-canary-20240829110247
-  resolution: "@guardian/libs@npm:0.0.0-canary-20240829110247"
+"@guardian/libs@npm:0.0.0-canary-20240911151236":
+  version: 0.0.0-canary-20240911151236
+  resolution: "@guardian/libs@npm:0.0.0-canary-20240911151236"
   peerDependencies:
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/6eb82bdac128c24f9c3c9506d7005321658dcffddf1473f4c2a67ec0b4f276494971375ec28f1dece6d337f4b5d8f7900ad6f7aeb079d6f3c67dacf99b226be1
+  checksum: 10c0/1e7702210bb62959802bf7d4f516ac065fa03d823c22bd07dc6d58ce104d1f81db6f52680820755bea5a0cd9d597ccb43acafd4840d659fa352a62c1ed60be3c
   languageName: node
   linkType: hard
 
