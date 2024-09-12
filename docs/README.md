@@ -42,6 +42,7 @@
 - [Testing Reader Revenue Components](03-dev-howtos/21-test-reader-revenue-components.md)
 - [Access Preview Locally](03-dev-howtos/22-access-preview-locally.md)
 - [Sport Tournaments](03-dev-howtos/23-sport-tournaments.md)
+- [Pointing to CODE CAPI](03-dev-howtos/24-pointing-to-CODE-CAPI.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
