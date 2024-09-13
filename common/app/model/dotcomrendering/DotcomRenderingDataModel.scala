@@ -169,7 +169,7 @@ object DotcomRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
-        "thumbnailImageBlock" -> model.thumbnailImage,
+        "thumbnailImage" -> model.thumbnailImage,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
