@@ -69,7 +69,7 @@ table {
     }
 }
 
-@-moz-document url-prefix() {
+@document url-prefix() {
     td {
         -moz-osx-font-smoothing: grayscale;
     }
