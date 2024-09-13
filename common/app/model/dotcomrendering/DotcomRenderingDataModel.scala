@@ -12,6 +12,7 @@ import model.{
   ContentFormat,
   ContentPage,
   CrosswordData,
+  DotcomContentType,
   GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
@@ -27,7 +28,8 @@ import conf.Configuration
 import crosswords.CrosswordPageWithContent
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
-import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
+import model.dotcomrendering.pageElements.{ImageBlockElement, PageElement, Role, TextCleaner}
+import model.liveblog.BlockAttributes
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -89,7 +91,7 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
-    trailImage: Option[ImageMedia],
+    thumbnailImage: Option[Block],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -167,7 +169,7 @@ object DotcomRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
-        "trailImage" -> model.trailImage,
+        "thumbnailImageBlock" -> model.thumbnailImage,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -504,6 +506,46 @@ object DotcomRenderingDataModel {
 
     val dcrTags = content.tags.tags.map(Tag.apply)
 
+    val audioImageBlock: Option[Block] =
+      if (page.metadata.contentType.contains(DotcomContentType.Audio)) {
+        for {
+          thumbnail <- page.item.elements.thumbnail
+        } yield {
+          val articleDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(contentDateTimes, request)
+          new Block(
+            id = thumbnail.properties.id,
+            elements = List(
+              ImageBlockElement(
+                thumbnail.images,
+                Map.empty,
+                Some(true),
+                Role(Some("thumbnail")),
+                Seq.empty,
+              ),
+            ),
+            attributes = BlockAttributes(
+              pinned = false,
+              keyEvent = false,
+              summary = false,
+              None,
+            ),
+            blockCreatedOn = None,
+            blockCreatedOnDisplay = None,
+            blockLastUpdated = None,
+            blockLastUpdatedDisplay = None,
+            blockFirstPublished = None,
+            blockFirstPublishedDisplay = None,
+            blockFirstPublishedDisplayNoTimezone = None,
+            title = None,
+            contributors = Seq.empty[Contributor],
+            primaryDateLine = articleDateTimes.primaryDateLine,
+            secondaryDateLine = articleDateTimes.secondaryDateLine,
+          )
+        }
+      } else {
+        None
+      }
+
     def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
       Block(
         block = block,
@@ -623,7 +665,7 @@ object DotcomRenderingDataModel {
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
       tags = dcrTags,
-      trailImage = Trail.findTrailImages(content.elements),
+      thumbnailImage = audioImageBlock,
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
