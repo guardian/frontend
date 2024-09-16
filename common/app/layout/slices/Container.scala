@@ -34,6 +34,7 @@ object Container extends GuLogging {
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
       ("flexible/special", Dynamic(FlexibleSpecial)),
+      ("flexible/general", Dynamic(FlexibleGeneral)),
     ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply)
 
   /** So that we don't blow up at runtime, which would SUCK */
