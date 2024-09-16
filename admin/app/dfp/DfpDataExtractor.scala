@@ -23,6 +23,21 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
       }
   }
 
+  val surveySponsorships: Seq[SurveySponsorship] = {
+    lineItems
+      .filter(lineItem => lineItem.targetsSurvey && lineItem.isCurrent)
+      .foldLeft(Seq.empty[SurveySponsorship]) { (soFar, lineItem) =>
+        soFar :+ SurveySponsorship(
+          lineItemName = lineItem.name,
+          lineItemId = lineItem.id,
+          adUnits = lineItem.targeting.adUnitsIncluded map (_.path mkString "/"),
+          countries = countriesTargeted(lineItem),
+          adTest = lineItem.targeting.adTestValue,
+          targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+        )
+      }
+  }
+
   val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
     val highMerchLineItems = lineItems
       .filter(_.targetsHighMerchandising)
