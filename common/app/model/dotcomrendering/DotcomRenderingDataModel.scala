@@ -89,7 +89,7 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
-    audioArticleImage: Option[Block],
+    audioArticleImage: Option[ImageBlockElement],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -504,12 +504,11 @@ object DotcomRenderingDataModel {
 
     val dcrTags = content.tags.tags.map(Tag.apply)
 
-    val audioImageBlock: Option[Block] =
+    val audioImageBlock: Option[ImageBlockElement] =
       if (page.metadata.contentType.contains(DotcomContentType.Audio)) {
         for {
           thumbnail <- page.item.elements.thumbnail
         } yield {
-          val articleDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(contentDateTimes, request)
           val imageData = thumbnail.images.allImages.headOption
             .map { d =>
               Map(
@@ -520,35 +519,12 @@ object DotcomRenderingDataModel {
               )
             }
             .getOrElse(Map.empty)
-
-          new Block(
-            id = thumbnail.properties.id,
-            elements = List(
-              ImageBlockElement(
-                thumbnail.images,
-                imageData,
-                Some(true),
-                Role(Some("inline")),
-                Seq.empty,
-              ),
-            ),
-            attributes = BlockAttributes(
-              pinned = false,
-              keyEvent = false,
-              summary = false,
-              membershipPlaceholder = None,
-            ),
-            blockCreatedOn = None,
-            blockCreatedOnDisplay = None,
-            blockLastUpdated = None,
-            blockLastUpdatedDisplay = None,
-            blockFirstPublished = None,
-            blockFirstPublishedDisplay = None,
-            blockFirstPublishedDisplayNoTimezone = None,
-            title = None,
-            contributors = Seq.empty[Contributor],
-            primaryDateLine = articleDateTimes.primaryDateLine,
-            secondaryDateLine = articleDateTimes.secondaryDateLine,
+          ImageBlockElement(
+            thumbnail.images,
+            imageData,
+            Some(true),
+            Role(Some("inline")),
+            Seq.empty,
           )
         }
       } else {
