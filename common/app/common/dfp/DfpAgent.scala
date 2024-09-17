@@ -12,6 +12,7 @@ import scala.io.Codec.UTF8
 object DfpAgent
     extends PageskinAdAgent
     with LiveBlogTopSponsorshipAgent
+    with SurveySponsorshipAgent
     with HighMerchandiseComponentAgent
     with AdSlotAgent {
 
@@ -19,6 +20,7 @@ object DfpAgent
 
   private lazy val targetedHighMerchandisingLineItemsAgent = Box[Seq[HighMerchandisingLineItem]](Seq.empty)
   private lazy val liveblogTopSponsorshipAgent = Box[Seq[LiveBlogTopSponsorship]](Nil)
+  private lazy val surveyAdUnitAgent = Box[Seq[SurveySponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = Box[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
@@ -28,6 +30,7 @@ object DfpAgent
     targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopSponsorshipAgent.get()
+  protected def surveySponsorships: Seq[SurveySponsorship] = surveyAdUnitAgent.get()
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
     takeoverWithEmptyMPUsAgent.get()
@@ -62,6 +65,15 @@ object DfpAgent
       reportOption.fold(Seq[LiveBlogTopSponsorship]())(_.sponsorships)
     }
 
+    def grabSurveySponsorshipsFromStore(): Seq[SurveySponsorship] = {
+      val reportOption: Option[SurveySponsorshipReport] = for {
+        jsonString <- stringFromS3(dfpSurveySponsorshipDataKey)
+        report <- SurveySponsorshipReportParser(jsonString)
+      } yield report
+
+      reportOption.fold(Seq[SurveySponsorship]())(_.sponsorships)
+    }
+
     def grabNonRefreshableLineItemIdsFromStore() = {
       (for {
         jsonString <- stringFromS3(dfpNonRefreshableLineItemIdsKey)
@@ -88,6 +100,8 @@ object DfpAgent
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
 
     update(liveblogTopSponsorshipAgent)(grabLiveBlogTopSponsorshipsFromStore())
+
+    update(surveyAdUnitAgent)(grabSurveySponsorshipsFromStore())
 
     updateTargetedHighMerchandisingLineItems(grabTargetedHighMerchandisingLineItemFromStore())
 

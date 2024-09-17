@@ -27,6 +27,9 @@ trait Store extends GuLogging with Dates {
   def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
     S3.putPublic(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
   }
+  def putSurveySponsorships(adUnitJson: String): Unit = {
+    S3.putPublic(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
+  }
   def putHighMerchandisingSponsorships(keywordsJson: String): Unit = {
     S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
@@ -64,6 +67,14 @@ trait Store extends GuLogging with Dates {
     S3.get(dfpLiveBlogTopSponsorshipDataKey) flatMap (LiveBlogTopSponsorshipReportParser(
       _,
     )) getOrElse LiveBlogTopSponsorshipReport(
+      None,
+      Nil,
+    )
+  }
+  def getDfpSurveyAdUnits(): SurveySponsorshipReport = {
+    S3.get(dfpSurveySponsorshipDataKey) flatMap (SurveySponsorshipReportParser(
+      _,
+    )) getOrElse SurveySponsorshipReport(
       None,
       Nil,
     )

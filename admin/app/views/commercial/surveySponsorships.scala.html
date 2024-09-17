@@ -1,0 +1,54 @@
+@import common.dfp.SurveySponsorshipReport
+@import tools.{CapiLink, SiteLink, DfpLink}
+
+@(report: SurveySponsorshipReport)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main("Commercial Survey Sponsorships", isAuthed = true, hasCharts = false) {
+
+    <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
+    <style>
+        pre {
+            display: inline;
+            padding: 0.1rem;
+            font-size: 0.8rem;
+            margin: 0;
+            border-radius: 4px;
+        }
+    </style>
+
+    <h1>Survey Sponsorships</h1>
+
+    <p>Last updated: @if(report.updatedTimeStamp) { @{report.updatedTimeStamp} } else { never }</p>
+
+    <p>Pages will show a survey slot if you set up a line item in GAM with the following parameters:</p>
+    <ol>
+        <li>Is a Sponsorship</li>
+        <li>Targets the <pre>survey</pre> slot</li>
+        <li>Targets the <pre>theguardian.com</pre> except <pre>front</pre> adUnit</li>
+        <li>Targets the <pre>theguardian.com</pre> except <pre>front</pre> content type</li>
+        <li>Targets the <pre>desktop</pre> breakpoint</li>
+        <li>Targets the <pre>connected TV</pre> device category in GAM</li>
+    </ol>
+
+    <strong>ANY OTHER TARGETING WILL CAUSE THE SLOT TO APPEAR UNINTENTIONALLY</strong>
+    <p>If you are unsure please contact the <a href="mailto:commercial.dev@@theguardian.com">commercial dev team</a> first.</p>
+
+    <h2>Sponsorships</h2>
+    <p>Line items that match the above targeting:</p>
+    @if(report.sponsorships.isEmpty) {<p>None</p>} else {
+        @for(sponsorship <- report.sponsorships) {
+
+        <li class="lineItem">
+            @sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+            <br />
+            <small>AdUnits:</small>
+            @for(survey <- sponsorship.adUnits) {
+                <pre>@survey</pre>@if(survey != sponsorship.adUnits.last) {, }
+            }
+            <br />
+            @if(sponsorship.countries.nonEmpty) {<small>Countries:</small> @for(country <- sponsorship.countries) {<pre>@country</pre>@if(country != sponsorship.countries.last) {, }}}
+            @if(sponsorship.targetsAdTest) {<br /><small>Adtest:</small> <pre>@sponsorship.adTest</pre>}
+  </li>
+        }
+    }
+}
