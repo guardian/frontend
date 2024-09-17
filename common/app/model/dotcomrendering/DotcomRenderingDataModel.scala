@@ -5,7 +5,23 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import model.{ArticleDateTimes, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, CrosswordData, DotcomContentType, GUDateTimeFormatNew, GalleryPage, ImageContentPage, ImageElement, InteractivePage, LiveBlogPage, MediaPage, PageWithStoryPackage}
+import model.{
+  ArticleDateTimes,
+  Badges,
+  CanonicalLiveBlog,
+  ContentFormat,
+  ContentPage,
+  CrosswordData,
+  DotcomContentType,
+  GUDateTimeFormatNew,
+  GalleryPage,
+  ImageContentPage,
+  ImageElement,
+  InteractivePage,
+  LiveBlogPage,
+  MediaPage,
+  PageWithStoryPackage,
+}
 import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import crosswords.CrosswordPageWithContent
