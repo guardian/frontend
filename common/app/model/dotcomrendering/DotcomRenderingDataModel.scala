@@ -536,7 +536,7 @@ object DotcomRenderingDataModel {
               pinned = false,
               keyEvent = false,
               summary = false,
-              None,
+              membershipPlaceholder = None,
             ),
             blockCreatedOn = None,
             blockCreatedOnDisplay = None,
