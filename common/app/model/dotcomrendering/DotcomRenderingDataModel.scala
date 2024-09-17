@@ -89,7 +89,7 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
-    thumbnailImage: Option[Block],
+    audioArticleImage: Option[Block],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -167,7 +167,7 @@ object DotcomRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
-        "thumbnailImage" -> model.thumbnailImage,
+        "audioArticleImage" -> model.audioArticleImage,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -620,6 +620,7 @@ object DotcomRenderingDataModel {
 
     DotcomRenderingDataModel(
       affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
+      audioArticleImage = audioImageBlock,
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
@@ -674,7 +675,6 @@ object DotcomRenderingDataModel {
       subMetaSectionLinks =
         content.content.submetaLinks.sectionLabels.map(SubMetaLink.apply).filter(_.title.trim.nonEmpty),
       tags = dcrTags,
-      thumbnailImage = audioImageBlock,
       trailText = TextCleaner.sanitiseLinks(edition)(content.trail.fields.trailText.getOrElse("")),
       twitterData = page.getTwitterProperties,
       version = 3,
