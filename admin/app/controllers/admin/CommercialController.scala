@@ -78,6 +78,12 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.liveBlogTopSponsorships(report)))
     }
 
+  def renderSurveySponsorships: Action[AnyContent] =
+    Action { implicit request =>
+      val surveyAdUnits = Store.getDfpSurveyAdUnits()
+      NoCache(Ok(views.html.commercial.surveySponsorships(surveyAdUnits)))
+    }
+
   def renderCreativeTemplates: Action[AnyContent] =
     Action { implicit request =>
       val emptyTemplates = createTemplateAgent.get

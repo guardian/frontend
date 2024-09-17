@@ -80,6 +80,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   val isLiveblogTopSlot = isSlot("liveblog-top")
 
+  val isSurveySlot = isSlot("survey")
+
   val isAdTest = isPositive("at")
 
   val isKeywordTag = isPositive("k")
@@ -289,6 +291,20 @@ case class GuLineItem(
     val hasEditionTargeting = targeting.editions.nonEmpty
 
     isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship && hasEditionTargeting
+  }
+
+  val targetsSurvey: Boolean = {
+    val matchingSurveyTargeting = for {
+      targetSet <- targeting.customTargetSets
+      target <- targetSet.targets
+      if target.name == "slot" || target.values.contains("survey")
+    } yield target
+
+    val isSurveySlot = matchingSurveyTargeting.exists { target =>
+      target.name == "slot" && target.values.contains("survey")
+    }
+
+    isSurveySlot
   }
 
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {

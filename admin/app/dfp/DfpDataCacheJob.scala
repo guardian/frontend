@@ -30,6 +30,7 @@ class DfpDataCacheJob(
       write(data)
       Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
       writeLiveBlogTopSponsorships(currentLineItems)
+      writeSurveySponsorships(currentLineItems)
     }
 
   /*
@@ -172,4 +173,16 @@ class DfpDataCacheJob(
       )
     }
   }
+
+  private def writeSurveySponsorships(data: DfpDataExtractor): Unit = {
+    if (data.hasValidLineItems) {
+      val now = printLondonTime(DateTime.now())
+
+      val sponsorships = data.surveySponsorships
+      Store.putSurveySponsorships(
+        stringify(toJson(SurveySponsorshipReport(Some(now), sponsorships))),
+      )
+    }
+  }
+
 }

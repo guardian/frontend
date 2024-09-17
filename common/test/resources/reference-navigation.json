@@ -445,12 +445,6 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -1284,12 +1278,6 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
@@ -1936,6 +1924,12 @@
 					"classList": []
 				},
 				{
+					"title": "Health",
+					"url": "/australia-news/health",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Science",
 					"url": "/science",
 					"children": [],
@@ -2007,12 +2001,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -2816,12 +2804,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -3814,12 +3796,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
