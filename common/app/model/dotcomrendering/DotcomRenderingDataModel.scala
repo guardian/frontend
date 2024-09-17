@@ -5,6 +5,13 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
+import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
+import conf.Configuration
+import crosswords.CrosswordPageWithContent
+import experiments.ActiveExperiments
+import model.dotcomrendering.DotcomRenderingUtils._
+import model.dotcomrendering.pageElements.{ImageBlockElement, PageElement, Role, TextCleaner}
+import model.liveblog.BlockAttributes
 import model.{
   ArticleDateTimes,
   Badges,
@@ -16,19 +23,11 @@ import model.{
   GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
-  ImageElement,
   InteractivePage,
   LiveBlogPage,
   MediaPage,
   PageWithStoryPackage,
 }
-import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
-import conf.Configuration
-import crosswords.CrosswordPageWithContent
-import experiments.ActiveExperiments
-import model.dotcomrendering.DotcomRenderingUtils._
-import model.dotcomrendering.pageElements.{ImageBlockElement, PageElement, Role, TextCleaner}
-import model.liveblog.BlockAttributes
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
