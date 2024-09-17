@@ -197,16 +197,6 @@ object DotcomRenderingDataModel {
     Json.stringify(withoutNull(jsValue))
   }
 
-  private def imageDataFor(element: ImageElement): Map[String, String] = {
-    element.images.allImages.flatMap { d =>
-      Map(
-        "copyright" -> "",
-        "alt" -> d.altText.getOrElse(""),
-        "caption" -> d.caption.getOrElse(""),
-        "credit" -> d.credit.getOrElse(""),
-      )
-    }.toMap
-  }
   def forInteractive(
       page: InteractivePage,
       blocks: APIBlocks,
@@ -521,12 +511,23 @@ object DotcomRenderingDataModel {
           thumbnail <- page.item.elements.thumbnail
         } yield {
           val articleDateTimes = ArticleDateTimes.makeDisplayedDateTimesDCR(contentDateTimes, request)
+          val imageData = thumbnail.images.allImages.headOption
+            .map { d =>
+              Map(
+                "copyright" -> "",
+                "alt" -> d.altText.getOrElse(""),
+                "caption" -> d.caption.getOrElse(""),
+                "credit" -> d.credit.getOrElse(""),
+              )
+            }
+            .getOrElse(Map.empty)
+
           new Block(
             id = thumbnail.properties.id,
             elements = List(
               ImageBlockElement(
                 thumbnail.images,
-                imageDataFor(thumbnail),
+                imageData,
                 Some(true),
                 Role(Some("inline")),
                 Seq.empty,
