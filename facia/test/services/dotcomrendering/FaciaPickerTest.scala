@@ -250,6 +250,7 @@ import layout.slices.EmailLayouts
         PressedCollectionBuilder.mkPressedCollection("news/most-popular"),
         PressedCollectionBuilder.mkPressedCollection("scrollable/highlights"),
         PressedCollectionBuilder.mkPressedCollection("flexible/special"),
+        PressedCollectionBuilder.mkPressedCollection("flexible/general"),
       ),
     )
 
