@@ -1,5 +1,4 @@
 @import common.LinkTo
-@import conf.switches.Switches.SurveySwitch
 @import model.{MediaPage, Video, VideoPlayer}
 @import views.support.Commercial.{isAdFree, isPaidContent}
 @import views.support.TrailCssClasses.toneClass
@@ -22,7 +21,7 @@
             )"
             itemscope itemtype="@media.metadata.schemaType" role="main">
 
-                @if(!page.metadata.isFront && SurveySwitch.isSwitchedOn) {
+                @if(!page.metadata.isFront && page.metadata.hasSurveyAd(request)) {
                     @fragments.commercial.survey()
                 }
 
