@@ -208,7 +208,7 @@
 	"prettier": "@guardian/prettier",
 	"packageManager": "yarn@4.1.1",
 	"resolutions": {
-		"micromatch": "4.0.7",
+		"micromatch": "4.0.8",
 		"unset-value": "^2.0.1"
 	}
 }
