@@ -3,7 +3,6 @@ package common.dfp
 import play.api.mvc.RequestHeader
 import model.{MetaData}
 import model.DotcomContentType
-import conf.switches.Switches.{SurveySwitch}
 import net.liftweb.json.Meta
 
 trait SurveySponsorshipAgent {
@@ -21,7 +20,7 @@ trait SurveySponsorshipAgent {
   }
 
   def hasSurveyAd(fullAdUnitPath: String, metadata: MetaData, request: RequestHeader): Boolean = {
-    if (metadata.contentType == Some(DotcomContentType.Article) && SurveySwitch.isSwitchedOn) {
+    if (metadata.contentType == Some(DotcomContentType.Article) && metadata.hasSurveyAd(request)) {
       val adTest = request.getQueryString("adtest")
 
       findSponsorships(fullAdUnitPath, metadata, adTest).nonEmpty

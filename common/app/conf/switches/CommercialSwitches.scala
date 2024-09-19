@@ -27,16 +27,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val SurveySwitch = Switch(
-    Commercial,
-    "surveys",
-    "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts. Switch OFF if there are no surveys active in GAM",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val ImrWorldwideSwitch = Switch(
     Commercial,
     "imr-worldwide",
