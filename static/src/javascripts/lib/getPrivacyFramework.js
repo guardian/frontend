@@ -7,7 +7,7 @@ export const getPrivacyFramework = () => {
 		const isInUS = isInUsa();
 
 		frameworks = {
-			ccpa: isInUS,
+			usnat: isInUS,
 			tcfv2: !isInUS,
 		};
 	}
