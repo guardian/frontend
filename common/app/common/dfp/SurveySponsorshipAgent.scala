@@ -20,7 +20,7 @@ trait SurveySponsorshipAgent {
   }
 
   def hasSurveyAd(fullAdUnitPath: String, metadata: MetaData, request: RequestHeader): Boolean = {
-    if (metadata.contentType == Some(DotcomContentType.Article) && metadata.hasSurveyAd(request)) {
+    if (metadata.contentType == Some(DotcomContentType.Article)) {
       val adTest = request.getQueryString("adtest")
 
       findSponsorships(fullAdUnitPath, metadata, adTest).nonEmpty
