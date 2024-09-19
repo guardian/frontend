@@ -89,7 +89,6 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
-    audioArticleImage: Option[ImageBlockElement],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -167,7 +166,6 @@ object DotcomRenderingDataModel {
         "commercialProperties" -> model.commercialProperties,
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
-        "audioArticleImage" -> model.audioArticleImage,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -504,33 +502,6 @@ object DotcomRenderingDataModel {
 
     val dcrTags = content.tags.tags.map(Tag.apply)
 
-    val audioImageBlock: Option[ImageBlockElement] =
-      if (page.metadata.contentType.contains(DotcomContentType.Audio)) {
-        for {
-          thumbnail <- page.item.elements.thumbnail
-        } yield {
-          val imageData = thumbnail.images.allImages.headOption
-            .map { d =>
-              Map(
-                "copyright" -> "",
-                "alt" -> d.altText.getOrElse(""),
-                "caption" -> d.caption.getOrElse(""),
-                "credit" -> d.credit.getOrElse(""),
-              )
-            }
-            .getOrElse(Map.empty)
-          ImageBlockElement(
-            thumbnail.images,
-            imageData,
-            Some(true),
-            Role(Some("inline")),
-            Seq.empty,
-          )
-        }
-      } else {
-        None
-      }
-
     def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
       Block(
         block = block,
@@ -596,7 +567,6 @@ object DotcomRenderingDataModel {
 
     DotcomRenderingDataModel(
       affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
-      audioArticleImage = audioImageBlock,
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,

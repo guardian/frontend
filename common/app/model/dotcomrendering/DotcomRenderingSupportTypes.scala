@@ -3,9 +3,9 @@ package model.dotcomrendering
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import com.gu.contentapi.client.utils.format.ImmersiveDisplay
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
-import model.dotcomrendering.pageElements.PageElement
-import model.liveblog.{MembershipPlaceholder, BlockAttributes}
-import model.{ArticleDateTimes, ContentPage, GUDateTimeFormatNew}
+import model.dotcomrendering.pageElements.{ImageBlockElement, PageElement, Role}
+import model.liveblog.{BlockAttributes, MembershipPlaceholder}
+import model.{ArticleDateTimes, ContentPage, DotcomContentType, GUDateTimeFormatNew}
 import navigation._
 import org.joda.time.DateTime
 import play.api.libs.json._
@@ -113,6 +113,33 @@ object Block {
       membershipPlaceholder,
     )
 
+    val audioImageBlockElement: Option[ImageBlockElement] =
+      if (page.metadata.contentType.contains(DotcomContentType.Audio) && !isMainBlock) {
+        for {
+          thumbnail <- page.item.elements.thumbnail
+        } yield {
+          val imageData = thumbnail.images.allImages.headOption
+            .map { d =>
+              Map(
+                "copyright" -> "",
+                "alt" -> d.altText.getOrElse(""),
+                "caption" -> d.caption.getOrElse(""),
+                "credit" -> d.credit.getOrElse(""),
+              )
+            }
+            .getOrElse(Map.empty)
+          ImageBlockElement(
+            thumbnail.images,
+            imageData,
+            Some(true),
+            Role(Some("inline")),
+            Seq.empty,
+          )
+        }
+      } else {
+        None
+      }
+
     Block(
       id = block.id,
       attributes = attributes,
@@ -125,7 +152,7 @@ object Block {
         content.metadata.format.exists(_.display == ImmersiveDisplay),
         campaigns,
         calloutsUrl,
-      ),
+      ) ++ audioImageBlockElement.toList,
       blockCreatedOn = blockCreatedOn,
       blockCreatedOnDisplay = blockCreatedOnDisplay,
       blockLastUpdated = blockLastUpdated,
