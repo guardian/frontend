@@ -8,7 +8,6 @@ private[slices] trait FlexibleContainer {
 
   protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])]
 
-
   final def slicesFor(stories: Seq[Story]): Option[Seq[Slice]] = {
     if (stories.nonEmpty && stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
       optionalFirstSlice(stories) map { case (firstSlice, remaining) =>
