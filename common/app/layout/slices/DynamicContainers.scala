@@ -8,7 +8,6 @@ object DynamicContainers {
     ("dynamic/slow", DynamicSlow),
     ("dynamic/package", DynamicPackage),
     ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false, adFree = false)),
-    ("flexible/special", FlexibleSpecial),
     ("flexible/general", FlexibleGeneral),
   )
 

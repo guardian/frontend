@@ -2,7 +2,7 @@ package layout.slices
 
 import layout.slices.Story._
 
-object FlexibleSpecial extends DynamicContainer {
+object FlexibleSpecial extends FlexibleContainer {
   override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
     val byGroup = segmentByGroup(stories)
     val snap = byGroup.getOrElse(1, Seq.empty)
