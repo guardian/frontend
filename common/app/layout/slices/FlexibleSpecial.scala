@@ -22,8 +22,8 @@ object FlexibleSpecial extends FlexibleContainer {
       case 3 => Seq(ThreeQuarterTallQuarter2)
       case 4 => Seq(ThreeQuarterTallQuarter1Ql2)
       case 5 => Seq(FullMedia100, QuarterQuarterQuarterQuarter)
-      /* We dont support more than 5 slices in a flexible special so if there are more than 5 we fail and return nil. */
-      case _ => Nil
+      /* We dont support more than 5 slices in a flexible special so if there are more than 5 we only render the 5 layout*/
+      case _ => Seq(FullMedia100, QuarterQuarterQuarterQuarter)
     }
   }
 }

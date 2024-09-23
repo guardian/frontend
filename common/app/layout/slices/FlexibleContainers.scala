@@ -5,6 +5,8 @@ import model.pressed.PressedContent
 object FlexibleContainers {
   val all: Map[String, FlexibleContainer] = Map(
     ("flexible/special", FlexibleSpecial),
+    ("flexible/general", FlexibleGeneral),
+
   )
 
   def apply(collectionType: Option[String], items: Seq[PressedContent]): Option[ContainerDefinition] = {
