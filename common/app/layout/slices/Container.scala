@@ -11,6 +11,7 @@ import scala.collection.immutable.Iterable
 sealed trait Container
 
 case class Dynamic(get: DynamicContainer) extends Container
+case class Flexible(get: FlexibleContainer) extends Container
 case class Fixed(get: ContainerDefinition) extends Container
 case class Email(get: EmailLayout) extends Container
 case object NavList extends Container
@@ -33,8 +34,8 @@ object Container extends GuLogging {
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
-      ("flexible/special", Dynamic(FlexibleSpecial)),
-      ("flexible/general", Dynamic(FlexibleGeneral)),
+      ("flexible/special", Flexible(FlexibleSpecial)),
+      ("flexible/general", Flexible(FlexibleSpecial)),
     ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply)
 
   /** So that we don't blow up at runtime, which would SUCK */
