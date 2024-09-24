@@ -25,6 +25,8 @@ object ContainerDefinition {
     container match {
       case Dynamic(dynamicContainer) =>
         dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
+      case Flexible(flexibleContainer) =>
+        flexibleContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
       case Fixed(containerDefinition) =>
         Some(containerDefinition)
       case _ =>
