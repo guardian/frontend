@@ -1,9 +1,10 @@
 package conf.cricketPa
 
+import com.madgag.scala.collection.decorators.MapDecorator
 import common.Chronos
 import cricket.feed.PlayerNames
 
-import xml.{NodeSeq, XML}
+import xml.{Node, NodeSeq, XML}
 import scala.language.postfixOps
 import cricketModel._
 
@@ -71,16 +72,15 @@ object Parser {
 
     }.toList
 
-  private def parseTeamLineup(lineup: NodeSeq): List[Player] =
-    lineup.map { player =>
-      Player(
-        id = (player \ "id").text,
-        name = (player \ "name").text,
-        firstName = (player \ "firstName").text,
-        lastName = (player \ "lastName").text,
-        initials = (player \ "initials").text,
-      )
-    }.toList
+  private def parsePlayer(player: Node): Player = Player(
+    id = (player \ "id").text,
+    name = (player \ "name").text,
+    firstName = (player \ "firstName").text,
+    lastName = (player \ "lastName").text,
+    initials = (player \ "initials").text,
+  )
+
+  private def parseTeamLineup(lineup: NodeSeq): List[Player] = lineup.map(parsePlayer).toList
 
   private def getStatistic(statistics: NodeSeq, statistic: String): String =
     (statistics \ "statistic").find(node => (node \ "@type").text == statistic).map(_.text).getOrElse("")
@@ -91,7 +91,8 @@ object Parser {
         val inningsOrder = (singleInnings \ "@order").text.toInt
         val battingTeam = (singleInnings \ "batting" \ "team" \ "name").text
 
-        val bowlingTeam = teams.find(_.name == (singleInnings \ "bowling" \ "team" \ "name)").text)
+        val bowlingTeamName = (singleInnings \ "bowling" \ "team" \ "name").text
+        val bowlingTeam = teams.find(_.name == bowlingTeamName)
 
         Innings(
           inningsOrder,
@@ -115,32 +116,48 @@ object Parser {
       .toList
       .sortBy(_.order)
 
-  def descriptionWithUniqueNames(
-      bowlingTeam: Option[Team],
-      catcherId: String,
-      bowlerId: String,
-      description: String,
-  ): String = {
-    val players = bowlingTeam.map(team => PlayerNames.uniqueNames(team.players)).get
+  case class Dismissal(items: Seq[(String, String)]) {
 
-    description
-      .replaceFirst("c\\s+\\w+\\s?", s"c ${players.getOrElse(catcherId, "")} ")
-      .replaceFirst("st\\s+\\w+\\s?", s"st ${players.getOrElse(catcherId, "")} ")
-      .replaceFirst("b\\s+\\w+\\s?", s"b ${players.getOrElse(bowlerId, "")}")
+    def description(dismissal: NodeSeq, f: Player => String): String = {
+      for {
+        (nodeName, prefix) <- items
+      } yield {
+        s"$prefix ${f(parsePlayer((dismissal \ nodeName \ "player").head))}"
+      }
+    }.mkString(" ")
+
+  }
+
+  val dismissalTypes: Map[String, Dismissal] = Map(
+    "caught" -> Seq("caughtBy" -> "st", "bowledBy" -> "b"), // c Rathnayake b de Silva
+    "caught-sub" -> Seq("bowledBy" -> "c Sub b"), // c Sub b Kumara
+    "caught-and-bowled" -> Seq("caughtBy" -> "c & b"), // c &amp; b Woakes
+    "stumped" -> Seq("caughtBy" -> "st", "bowledBy" -> "b"), // st Ambrose b Patel
+    "run-out" -> Seq("caughtBy" -> "Run Out"), // Run Out Stone
+    "lbw" -> Seq("bowledBy" -> "lbw b"), // lbw b Stone
+    "bowled" -> Seq("bowledBy" -> "b"), // b Kumara
+  ).mapV(Dismissal)
+
+  def parseDismissal(dismissal: NodeSeq, bowlingTeamOpt: Option[Team]): String = {
+    val description = (dismissal \ "description").text
+    (
+      for {
+        bowlingTeam <- bowlingTeamOpt
+        dismissalDescriber <- dismissalTypes.get(dismissal \@ "type")
+        if description == dismissalDescriber.description(dismissal, _.lastName)
+      } yield {
+        dismissalDescriber.description(
+          dismissal,
+          player => bowlingTeam.uniquePlayerNames.getOrElse(player.id, player.name),
+        )
+      }
+    ).getOrElse(description)
   }
 
   private def parseInningsBatters(batters: NodeSeq, bowlingTeam: Option[Team]): List[InningsBatter] = {
 
     batters
       .map { batter =>
-        val dismissalDescription = (batter \ "dismissal" \ "description").text
-        val catcherId =
-          if (dismissalDescription.contains("c") || dismissalDescription.contains("st"))
-            (batter \ "dismissal" \ "caughtBy" \ "player" \ "@id").text
-          else ""
-        val bowlerId =
-          if (dismissalDescription.contains("b")) (batter \ "dismissal" \ "bowledBy" \ "player" \ "@id").text else ""
-
         InningsBatter(
           (batter \ "player" \ "name").text,
           (batter \ "@order").text.toInt,
@@ -149,7 +166,7 @@ object Parser {
           getStatistic(batter, "fours") toInt,
           getStatistic(batter, "sixes") toInt,
           (batter \ "status").text == "batted",
-          descriptionWithUniqueNames(bowlingTeam, dismissalDescription, catcherId, bowlerId),
+          parseDismissal(batter \ "dismissal", bowlingTeam),
           getStatistic(batter, "on-strike").toInt > 0,
           getStatistic(batter, "runs-scored").toInt > 0,
         )
