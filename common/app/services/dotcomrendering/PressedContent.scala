@@ -63,6 +63,7 @@ object PressedContent {
     "/environment/2015/oct/13/agriculture-farming-food-addiction-meat-harvest-hungry-world",
     "/us-news/2015/nov/05/police-tasers-deaths-the-counted",
     "/environment/ng-interactive/2015/nov/26/the-mekong-river-stories-from-the-heart-of-the-climate-crisis-interactive",
+    "/books/ng-interactive/2015/nov/28/best-books-of-2015-part-one",
     "/us-news/2015/dec/01/the-county-kern-county-deadliest-police-killings",
     "/music/ng-interactive/2015/dec/02/best-albums-of-2015",
     "/us-news/2015/dec/04/the-county-kern-county-california-deputies-tactics",
