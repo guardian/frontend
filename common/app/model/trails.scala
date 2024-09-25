@@ -15,7 +15,7 @@ object Trail {
   private val trailPicMinDesiredSize = 460
 
   // if you change these rules make sure you update IMAGES.md (in this project)
-  def findTrailImages(elements: Elements): Option[ImageMedia] = {
+  private def findTrailImages(elements: Elements): Option[ImageMedia] = {
     // Try to pick a thumbnail element which contains an image with at least 460 width.
     val trailImageMedia = elements.thumbnail
       .find(_.images.imageCrops.exists(_.width >= trailPicMinDesiredSize))

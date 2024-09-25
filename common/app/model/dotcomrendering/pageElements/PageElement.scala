@@ -1015,23 +1015,7 @@ object PageElement {
           ),
         )
 
-      case Audio => {
-        val audioElement = audioToPageElement(element).toList
-        val imageElement = overrideImage.toSeq.map(_.images).headOption match {
-          case Some(image) =>
-            List(
-              ImageBlockElement(
-                image,
-                imageDataFor(element),
-                element.imageTypeData.flatMap(_.displayCredit),
-                Role(element.imageTypeData.flatMap(_.role)),
-                Seq.empty,
-              ),
-            )
-          case None => List.empty
-        }
-        audioElement ++ imageElement
-      }
+      case Audio => audioToPageElement(element).toList
 
       case Video => {
         def secureVideoHtmlUrls(html: String, element: ApiBlockElement): String = {
