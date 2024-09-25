@@ -46,3 +46,8 @@
 .crossword__accessible-solutions-disclosure > button[aria-expanded="true"] > svg {
     transform: rotate(90deg);
 }
+
+.button--show-more:focus {
+    outline: 5px solid #0077B6;
+    outline-offset: 3px;
+}
