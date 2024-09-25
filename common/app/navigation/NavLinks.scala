@@ -109,7 +109,6 @@ object NavLinks {
 
   /* SPORT */
 
-  private val paralympics2024 = NavLink("Paralympics 2024", "/sport/paralympic-games-2024")
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -318,7 +317,6 @@ object NavLinks {
       world,
       usEnvironment,
       ukraine,
-      paralympics2024,
       usSoccer,
       usBusiness,
       usTech,

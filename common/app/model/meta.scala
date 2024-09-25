@@ -271,7 +271,6 @@ object ContentFormat {
       case "FullPageInteractiveDesign" => FullPageInteractiveDesign
       case "InteractiveDesign"         => InteractiveDesign
       case "PhotoEssayDesign"          => PhotoEssayDesign
-      case "PrintShopDesign"           => PrintShopDesign
       case "ObituaryDesign"            => ObituaryDesign
       case _                           => ArticleDesign
     }

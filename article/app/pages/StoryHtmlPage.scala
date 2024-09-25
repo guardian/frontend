@@ -68,7 +68,7 @@ object StoryHtmlPage {
       bodyTag(classes = bodyClasses)(
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
-        survey() when SurveySwitch.isSwitchedOn,
+        survey() when page.metadata.hasSurveyAd(request),
         header,
         mainContent(),
         content,
