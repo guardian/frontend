@@ -1823,7 +1823,10 @@ object PageElement {
       mandatory = true
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
-      /*
+      if (html.isEmpty) {
+        AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
+      } else {
+        /*
         comment id: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
 
         Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
@@ -1843,25 +1846,26 @@ object PageElement {
         Note: AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an incorrect
         payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
         and not part of the original DCR migration.
-       */
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
-        .getOrElse {
-          extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
-            extractChartDatawrapperEmbedBlockElement(
-              html,
-              d.role,
-              thirdPartyTracking,
-              d.source,
-              d.sourceDomain,
-              d.caption,
-            ).getOrElse {
-              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
-                .getOrElse {
-                  AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
-                }
+         */
+        extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
+          .getOrElse {
+            extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
+              extractChartDatawrapperEmbedBlockElement(
+                html,
+                d.role,
+                thirdPartyTracking,
+                d.source,
+                d.sourceDomain,
+                d.caption,
+              ).getOrElse {
+                extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
+                  .getOrElse {
+                    AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
+                  }
+              }
             }
           }
-        }
+      }
     }
   }
 
