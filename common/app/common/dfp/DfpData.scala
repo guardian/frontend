@@ -76,6 +76,11 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   def isPlatform(value: String): Boolean = isPositive("p") && values.contains(value)
   def isNotPlatform(value: String): Boolean = isNegative("p") && values.contains(value)
 
+  def matchesLiveBlogTopTargeting: Boolean = {
+    val liveBlogTopSectionTargets = List("culture", "football", "sport", "tv-and-radio")
+    values.intersect(liveBlogTopSectionTargets).nonEmpty
+  }
+
   val isHighMerchandisingSlot = isSlot("merchandising-high")
 
   val isLiveblogTopSlot = isSlot("liveblog-top")
@@ -91,7 +96,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSectionTag = isPositive("s")
 
   val isLiveBlogTopTargetedSection =
-    isSectionTag && (values.contains("culture") || values.contains("sport") || values.contains("football"))
+    isSectionTag && matchesLiveBlogTopTargeting
 }
 
 object CustomTarget {
