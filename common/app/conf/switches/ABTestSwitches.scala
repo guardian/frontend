@@ -44,4 +44,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 9, 30)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-prebid-shared-id",
+    "Test revenue impact of using shared id in prebid",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 10, 30)),
+    exposeClientSide = true,
+  )
 }
