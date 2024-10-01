@@ -73,6 +73,8 @@ object ElementsEnhancer {
       Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
       Json.obj("keyEvents" -> enhanceObjectsWithElements(obj.value("keyEvents"))) ++
       Json.obj("pinnedPost" -> enhanceObjectWithElements(obj.value("pinnedPost"))) ++
-      Json.obj("promotedNewsletter" -> obj.value("promotedNewsletter"))
+      Json.obj("promotedNewsletter" -> obj.value("promotedNewsletter")) ++
+      Json.obj("audioArticleImage" -> enhanceElement(obj.value("audioArticleImage")))
+
   }
 }
