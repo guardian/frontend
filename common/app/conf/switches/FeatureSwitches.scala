@@ -502,4 +502,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false,
   )
+
+  val DisableFrontContainerShowHide = Switch(
+    group = SwitchGroup.Feature,
+    name = "disable-front-container-show-hide",
+    description = "For users with no currently hidden containers on a front, removes the ability to hide containers",
+    owners = Seq(Owner.withGithub("cemms1")),
+    safeState = On,
+    sellByDate = LocalDate.of(2024, 11, 29),
+    exposeClientSide = true,
+  )
 }

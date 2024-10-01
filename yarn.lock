@@ -4044,7 +4044,7 @@ __metadata:
   resolution: "@guardian/commercial@npm:0.0.0-beta-20240919093048"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
-    "@guardian/prebid.js": "npm:8.52.0-3"
+    "@guardian/prebid.js": "npm:8.52.0-4"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
@@ -4321,9 +4321,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/prebid.js@npm:8.52.0-3":
-  version: 8.52.0-3
-  resolution: "@guardian/prebid.js@npm:8.52.0-3"
+"@guardian/prebid.js@npm:8.52.0-4":
+  version: 8.52.0-4
+  resolution: "@guardian/prebid.js@npm:8.52.0-4"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
@@ -4346,7 +4346,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/3274a1718213ae2ebedd2082ecee916fcc3b2e99c93b4624459c56be56c8322c16b32f06333a11f7f33f42a9a7fe0058687dcaa83358bfdc598121f881517ecd
+  checksum: 10c0/8c9b54322586c350b4b2f2c246d680368725fb44bd463fa5d0bacd1806573fe74b06838c27699c3d4bcc0001351ad84cd477a7d32f5aa69d1cdec0e1cf0daffb
   languageName: node
   linkType: hard
 

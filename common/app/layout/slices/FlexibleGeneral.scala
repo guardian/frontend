@@ -2,12 +2,12 @@ package layout.slices
 
 import layout.slices.Story._
 
-object FlexibleGeneral extends DynamicContainer {
+object FlexibleGeneral extends FlexibleContainer {
   override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
     val byGroup = segmentByGroup(stories)
-    val snap = byGroup.getOrElse(1, Seq.empty)
+    val splash = byGroup.getOrElse(1, Seq.empty)
 
-    if (snap.nonEmpty) {
+    if (splash.nonEmpty) {
       Some((FullMedia50, stories.drop(1)))
     } else {
       None

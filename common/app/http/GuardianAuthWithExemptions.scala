@@ -4,7 +4,7 @@ import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
-import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher}
+import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
 import conf.Configuration.aws.mandatoryCredentials
@@ -54,14 +54,11 @@ class GuardianAuthWithExemptions(
       case _      => s"local.dev-gutools.co.uk" // covers DEV, LOCAL, tests etc.
     }
 
-  override lazy val panDomainSettings =
-    new PanDomainAuthSettingsRefresher(
-      domain = toolsDomainSuffix,
-      system,
-      bucketName = "pan-domain-auth-settings",
-      settingsFileKey = s"$toolsDomainSuffix.settings",
-      s3Client,
-    )
+  override lazy val panDomainSettings = PanDomainAuthSettingsRefresher(
+    domain = toolsDomainSuffix,
+    system,
+    S3BucketLoader.forAwsSdkV1(s3Client, "pan-domain-auth-settings"),
+  )
 
   override def authCallbackUrl = s"https://$toolsDomainPrefix.$toolsDomainSuffix$oauthCallbackPath"
 
