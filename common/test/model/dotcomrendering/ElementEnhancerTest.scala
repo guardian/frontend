@@ -10,9 +10,9 @@ class ElementEnhancerTest extends AnyFlatSpec with Matchers {
   "enhanceElement" should "add elementId and enhance ListBlockElement" in {
     val mockElement: JsObject = Json.obj(
       "_type" -> "model.dotcomrendering.pageElements.ListBlockElement",
-      "items" -> Json.arr(Json.obj(
-        "elements" -> Json.arr(Json.obj("_type" -> "model.dotcomrendering.pageElements.TextElement")))
-      )
+      "items" -> Json.arr(
+        Json.obj("elements" -> Json.arr(Json.obj("_type" -> "model.dotcomrendering.pageElements.TextElement"))),
+      ),
     )
 
     val result = ElementsEnhancer.enhanceElement(mockElement)
@@ -31,10 +31,10 @@ class ElementEnhancerTest extends AnyFlatSpec with Matchers {
       "sections" -> Json.arr(
         Json.obj(
           "events" -> Json.arr(
-            Json.obj("body" -> Json.arr(Json.obj("_type" -> "model.dotcomrendering.pageElements.TextElement")))
-          )
-        )
-      )
+            Json.obj("body" -> Json.arr(Json.obj("_type" -> "model.dotcomrendering.pageElements.TextElement"))),
+          ),
+        ),
+      ),
     )
 
     val result = ElementsEnhancer.enhanceElement(mockElement)
@@ -51,7 +51,7 @@ class ElementEnhancerTest extends AnyFlatSpec with Matchers {
   "enhanceElement" should "return the original element with elementId for unknown types" in {
     val mockElement: JsObject = Json.obj(
       "_type" -> "model.dotcomrendering.pageElements.TextElement",
-      "someField" -> "someValue"
+      "someField" -> "someValue",
     )
 
     val result = ElementsEnhancer.enhanceElement(mockElement)
