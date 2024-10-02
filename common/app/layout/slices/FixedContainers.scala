@@ -37,8 +37,6 @@ object FixedContainers {
 
   val showcaseSingleStories = slices(ShowcaseSingleStories)
 
-  val highlights = slices(Highlights)
-
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),
     ("fixed/small/slow-III", slices(HalfQQ)),
@@ -55,7 +53,6 @@ object FixedContainers {
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher),
     ("fixed/showcase", showcaseSingleStories),
-    ("scrollable/highlights", highlights),
   ) ++ (if (Configuration.faciatool.showTestContainers)
           Map(
             (
