@@ -4039,9 +4039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:0.0.0-beta-20240919093048":
-  version: 0.0.0-beta-20240919093048
-  resolution: "@guardian/commercial@npm:0.0.0-beta-20240919093048"
+"@guardian/commercial@npm:0.0.0-beta-20241002085822":
+  version: 0.0.0-beta-20241002085822
+  resolution: "@guardian/commercial@npm:0.0.0-beta-20241002085822"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-4"
@@ -4057,10 +4057,10 @@ __metadata:
     "@guardian/core-web-vitals": ^7.0.0
     "@guardian/identity-auth": ^3.0.0
     "@guardian/identity-auth-frontend": ^5.0.0
-    "@guardian/libs": ^19.0.0
-    "@guardian/source": ^6.0.0
+    "@guardian/libs": ^19.1.0
+    "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/324c2ebe544c2e0a29760cb6990274baadfaa28871e75fbd515f95f68a08813240c8cf184609c93a96a502c6497975781f0e5642ced90a7fa8c5a69a9c79a56d
+  checksum: 10c0/3f6a89e95c6dc644670c10a2ae69cce946f1ab8cde0114a6364d2a135dc4d9c017886951e17cfb7a38aaf71f6bd497136a208815f91cfae5d5a128beacb6ef2e
   languageName: node
   linkType: hard
 
@@ -4133,7 +4133,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:0.0.0-beta-20240919093048"
+    "@guardian/commercial": "npm:0.0.0-beta-20241002085822"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
