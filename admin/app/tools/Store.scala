@@ -92,12 +92,6 @@ trait Store extends GuLogging with Dates {
     maybeLineItems getOrElse LineItemReport("Empty Report", Nil, Nil)
   }
 
-  def getSlotTakeoversReport(slotName: String): Option[String] =
-    slotName match {
-      case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
-      case _               => None
-    }
-
   def getDfpTemplateCreatives: Seq[GuCreative] = {
     val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
       Json.parse(doc).as[Seq[GuCreative]]
