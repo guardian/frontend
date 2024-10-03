@@ -209,7 +209,7 @@ object CompetitionsProvider {
       "Champions League",
       "Champions League",
       "European",
-      tableDividers = List(2, 6, 21),
+      tableDividers = List(8, 24),
     ),
     Competition(
       "750", // This ID was also used for the 2020 Euros
