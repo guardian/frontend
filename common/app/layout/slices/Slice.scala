@@ -1140,12 +1140,12 @@ case object Highlights extends Slice {
   )
 }
 
-/** Scrollable slice definitions for thumbnails only! These layouts are implemented via carousels on all platforms On
-  * smaller screens there is a partial card visible to indicate horizontal scrolling On larger screens these become
-  * chevrons.
-  *
-  * These thumbnails indicate what the container looks like when viewed on desktop on first load
-  */
+/*
+ * Scrollable slice definitions
+ * These layouts are implemented via a carousel in DCR.
+ * But due to how fronts are pressed in facia-press, we need to provide a slice definition here.
+ * This ensures the intended number of cards get pressed in a collection.
+ */
 
 case object ScrollableSmall extends Slice {
   val layout = SliceLayout(
@@ -1161,6 +1161,7 @@ case object ScrollableSmall extends Slice {
     ),
   )
 }
+
 case object ScrollableMedium extends Slice {
   val layout = SliceLayout(
     cssClassName = "scrollable-medium",
