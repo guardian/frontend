@@ -4039,9 +4039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:22.1.0":
-  version: 22.1.0
-  resolution: "@guardian/commercial@npm:22.1.0"
+"@guardian/commercial@npm:0.0.0-beta-20241002085822":
+  version: 0.0.0-beta-20241002085822
+  resolution: "@guardian/commercial@npm:0.0.0-beta-20241002085822"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-4"
@@ -4057,10 +4057,10 @@ __metadata:
     "@guardian/core-web-vitals": ^7.0.0
     "@guardian/identity-auth": ^3.0.0
     "@guardian/identity-auth-frontend": ^5.0.0
-    "@guardian/libs": ^18.0.0
+    "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/df5234a3dad3a867c40a19e085431cda0497a73971e526ac88dfbaef654e223914173b5c6702cbc742b6e0df33d9ed31ce448792b9ab5d8d734bae36091a5f0a
+  checksum: 10c0/3f6a89e95c6dc644670c10a2ae69cce946f1ab8cde0114a6364d2a135dc4d9c017886951e17cfb7a38aaf71f6bd497136a208815f91cfae5d5a128beacb6ef2e
   languageName: node
   linkType: hard
 
@@ -4133,12 +4133,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:22.1.0"
+    "@guardian/commercial": "npm:0.0.0-beta-20241002085822"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
-    "@guardian/libs": "npm:17.0.1"
+    "@guardian/libs": "npm:19.1.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -4295,16 +4295,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:17.0.1":
-  version: 17.0.1
-  resolution: "@guardian/libs@npm:17.0.1"
+"@guardian/libs@npm:19.1.0":
+  version: 19.1.0
+  resolution: "@guardian/libs@npm:19.1.0"
   peerDependencies:
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/f375ed48602bcfd779b995df14ac465e718e29a38f7e5525bf7f6227a00d7091020dfc95103cf5913a8316670ed9890dcaaefe1ca664c9d9ed1251f8da7e691e
+  checksum: 10c0/0c0450a65980cc8be740565aea104d384570f996264d5388cbeba4ebda5a5b9dee7345286df80d48c1e08ce56692a3e8b82c2a2fe646c749f49fb131b31f68b9
   languageName: node
   linkType: hard
 

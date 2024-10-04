@@ -1,6 +1,6 @@
 import type {
-	AdsConfigCCPAorAus,
 	AdsConfigTCFV2,
+	AdsConfigUSNATorAus,
 } from '@guardian/commercial/dist/cjs/core/types';
 import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
@@ -78,12 +78,13 @@ const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 	framework: 'tcfv2',
 });
 
-const canTargetCCPA = (canTarget: boolean): ConsentState => ({
-	ccpa: {
+const canTargetUSNAT = (canTarget: boolean): ConsentState => ({
+	usnat: {
 		doNotSell: !canTarget,
+		signalStatus: 'ready'
 	},
 	canTarget,
-	framework: 'ccpa',
+	framework: 'usnat',
 });
 
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
@@ -125,19 +126,19 @@ describe('create ads config', () => {
 		expect(result.nonPersonalizedAd).toBe(false);
 	});
 
-	it('in non ad-free, returns adsConfig without consent in CCPA', () => {
+	it('in non ad-free, returns adsConfig without consent in USNAT', () => {
 		const result = youtubePlayer.createAdsConfig(
-			canTargetCCPA(false),
-		) as AdsConfigCCPAorAus;
+			canTargetUSNAT(false),
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(true);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
 	});
 
-	it('in non ad-free, returns adsConfig with consent in CCPA', () => {
+	it('in non ad-free, returns adsConfig with consent in USNAT', () => {
 		const result = youtubePlayer.createAdsConfig(
-			canTargetCCPA(true),
-		) as AdsConfigCCPAorAus;
+			canTargetUSNAT(true),
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(false);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
@@ -146,7 +147,7 @@ describe('create ads config', () => {
 	it('in non ad-free, returns adsConfig without consent in aus', () => {
 		const result = youtubePlayer.createAdsConfig(
 			canTargetAUS(false),
-		) as AdsConfigCCPAorAus;
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(true);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
@@ -155,14 +156,14 @@ describe('create ads config', () => {
 	it('in non ad-free, returns adsConfig with consent in aus', () => {
 		const result = youtubePlayer.createAdsConfig(
 			canTargetAUS(true),
-		) as AdsConfigCCPAorAus;
+		) as AdsConfigUSNATorAus;
 		expect(result.restrictedDataProcessor).toBe(false);
 		//@ts-expect-error -- we’re testing TS’s safety, here!
 		expect(result.nonPersonalizedAd).toBeUndefined();
 	});
 
 	it('in non ad-free includes adUnit', () => {
-		const result = youtubePlayer.createAdsConfig(canTargetCCPA(true));
+		const result = youtubePlayer.createAdsConfig(canTargetUSNAT(true));
 
 		expect(result.adTagParameters).toBeDefined();
 		expect(result.adTagParameters.iu).toEqual('adunit');
