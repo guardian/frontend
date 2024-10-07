@@ -196,14 +196,13 @@ class CommercialController(
       val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
       val unidentifiedLineItems =
-        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(
+        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- highMerch.map(
           _.id,
         ) -- sonobiItems.map(_.id)
 
       Ok(
         views.html.commercial.invalidLineItems(
           pageskins,
-          topAboveNav,
           highMerch,
           sonobiItems,
           unidentifiedLineItems.toSeq.map(invalidItemsMap),

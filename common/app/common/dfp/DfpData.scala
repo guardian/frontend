@@ -319,24 +319,6 @@ case class GuLineItem(
     }
   }
 
-  lazy val isSuitableForTopAboveNavSlot: Boolean = {
-
-    val placeholder = creativePlaceholders find { placeholder =>
-      placeholder.size == leaderboardSize || placeholder.size == responsiveSize
-    }
-
-    costType == "CPD" &&
-    placeholder.nonEmpty && (
-      targeting.targetsSectionFrontDirectly("business") ||
-        placeholder.exists(_.targetsSectionFrontDirectly("business"))
-    ) &&
-    targeting.geoTargetsIncluded.exists { geoTarget =>
-      geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
-    } &&
-    startTime.isBefore(now.plusDays(1)) &&
-    (endTime.isEmpty || endTime.exists(_.isAfterNow))
-  }
-
   lazy val creativeSizes = creativePlaceholders map (_.size)
 }
 
