@@ -37,7 +37,9 @@ object FixedContainers {
 
   val showcaseSingleStories = slices(ShowcaseSingleStories)
 
-  val highlights = slices(Highlights)
+  val staticFeature2 = slices(StaticFeature)
+
+  val staticMedium4 = slices(QuarterQuarterQuarterQuarter)
 
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),
@@ -55,7 +57,8 @@ object FixedContainers {
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher),
     ("fixed/showcase", showcaseSingleStories),
-    ("scrollable/highlights", highlights),
+    ("static/feature/2", staticFeature2),
+    ("static/medium/4", staticMedium4),
   ) ++ (if (Configuration.faciatool.showTestContainers)
           Map(
             (

@@ -213,7 +213,7 @@ trait PerformanceSwitches {
     "Shorten the surrogate cache time for recent articles for load testing",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
-    sellByDate = LocalDate.of(2024, 10, 1),
+    sellByDate = LocalDate.of(2024, 11, 19),
     exposeClientSide = false,
   )
 
@@ -223,7 +223,7 @@ trait PerformanceSwitches {
     "Shorten the surrogate cache time for older articles for load testing",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
-    sellByDate = LocalDate.of(2024, 10, 1),
+    sellByDate = LocalDate.of(2024, 11, 19),
     exposeClientSide = false,
   )
 }

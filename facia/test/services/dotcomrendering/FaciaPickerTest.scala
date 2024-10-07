@@ -251,6 +251,11 @@ import layout.slices.EmailLayouts
         PressedCollectionBuilder.mkPressedCollection("scrollable/highlights"),
         PressedCollectionBuilder.mkPressedCollection("flexible/special"),
         PressedCollectionBuilder.mkPressedCollection("flexible/general"),
+        PressedCollectionBuilder.mkPressedCollection("scrollable/small"),
+        PressedCollectionBuilder.mkPressedCollection("scrollable/medium"),
+        PressedCollectionBuilder.mkPressedCollection("scrollable/feature"),
+        PressedCollectionBuilder.mkPressedCollection("static/feature/2"),
+        PressedCollectionBuilder.mkPressedCollection("static/medium/4"),
       ),
     )
 
