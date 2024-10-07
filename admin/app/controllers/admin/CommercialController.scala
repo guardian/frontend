@@ -185,7 +185,6 @@ class CommercialController(
 
       // Sort line items into groups where possible, and bucket everything else.
       val pageskins = invalidItemsExtractor.pageSkinSponsorships
-      val topAboveNav = invalidItemsExtractor.topAboveNavSlotTakeovers
       val highMerch = invalidItemsExtractor.targetedHighMerchandisingLineItems.items
 
       val groupedItems = invalidLineItems.groupBy {
