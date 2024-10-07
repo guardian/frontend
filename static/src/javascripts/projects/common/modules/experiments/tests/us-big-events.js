@@ -16,7 +16,11 @@ export const usBigEvents = {
 			test: () => {},
 		},
 		{
-			id: 'variant',
+			id: 'variant-free',
+			test: () => {},
+		},
+		{
+			id: 'variant-bubble',
 			test: () => {},
 		},
 	],
