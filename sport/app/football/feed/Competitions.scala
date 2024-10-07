@@ -244,7 +244,7 @@ object CompetitionsProvider {
       "Europa League",
       "European",
       showInTeamsList = true,
-      tableDividers = List(2),
+      tableDividers = List(8,24),
     ),
     Competition(
       "995",
