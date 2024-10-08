@@ -403,7 +403,8 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
         .sortBy(_.startDate.atStartOfDay().toLocalDate)
         .reverse
 
-      val relevantSeasons = if (compDef.id == "750") {
+      // Champions league format has changes in 2024/2025 so data from the last season vs this season is inconsistent
+      val relevantSeasons = if (compDef.id == "500") {
         filteredCompetitions.take(1)
       } else {
         filteredCompetitions.take(2)
