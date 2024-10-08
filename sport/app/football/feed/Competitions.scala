@@ -403,7 +403,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
         .sortBy(_.startDate.atStartOfDay().toLocalDate)
         .reverse
 
-      val relevantSeasons = if (compDef.id == "/football/championsleague") {
+      val relevantSeasons = if (compDef.id == "750") {
         filteredCompetitions.take(1)
       } else {
         filteredCompetitions.take(2)

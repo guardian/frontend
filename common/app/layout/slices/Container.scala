@@ -13,6 +13,7 @@ sealed trait Container
 case class Dynamic(get: DynamicContainer) extends Container
 case class Flexible(get: FlexibleContainer) extends Container
 case class Fixed(get: ContainerDefinition) extends Container
+case class Scrollable(get: ContainerDefinition) extends Container
 case class Email(get: EmailLayout) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
@@ -36,7 +37,9 @@ object Container extends GuLogging {
       ("news/most-popular", MostPopular),
       ("flexible/special", Flexible(FlexibleSpecial)),
       ("flexible/general", Flexible(FlexibleGeneral)),
-    ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply)
+    ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply) ++ ScrollableContainers.all.mapV(
+      Scrollable.apply,
+    )
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)

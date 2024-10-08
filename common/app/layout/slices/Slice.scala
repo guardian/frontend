@@ -1127,48 +1127,113 @@ case object TTMpu extends Slice {
  */
 case object Highlights extends Slice {
   val layout = SliceLayout(
-    cssClassName = "t-t-t-t-t-t",
+    cssClassName = "scrollable-highlights",
+    columns = Seq.fill(6)(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = MediaList,
+        ),
+      ),
+    ),
+  )
+}
+
+/*
+ * Scrollable slice definitions
+ * These layouts are implemented via a carousel in DCR.
+ * But due to how fronts are pressed in facia-press, we need to provide a slice definition here.
+ * This ensures the intended number of cards get pressed in a collection.
+ */
+
+case object ScrollableSmall extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "scrollable-small",
+    columns = Seq.fill(8)(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = MediaList,
+        ),
+      ),
+    ),
+  )
+}
+
+case object ScrollableMedium extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "scrollable-medium",
+    columns = Seq.fill(6)(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = Standard,
+        ),
+      ),
+    ),
+  )
+}
+case object ScrollableFeature extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "scrollable-feature",
+    columns = Seq.fill(3)(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = cards.FullMedia100,
+          tablet = cards.FullMedia100,
+        ),
+      ),
+    ),
+  )
+}
+
+/*
+ * The Static Feature container layout has two immersive style cards (full media)
+ *
+ * Desktop:
+ * .____________._____________.
+ * | ########## | ##########  |
+ * | ########## | ##########  |
+ * | ########## | ##########  |
+ * | ########## | ##########  |
+ * | ########## | ##########  |
+ * '------------'-------------'
+ *
+ * Mobile:
+ * .____________.
+ * | ########## |
+ * | ########## |
+ * | ########## |
+ * | ########## |
+ * | ########## |
+ * '------------'
+ * | ########## |
+ * | ########## |
+ * | ########## |
+ * | ########## |
+ * | ########## |
+ * '------------'
+ */
+case object StaticFeature extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "static-feature",
     columns = Seq(
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = Standard,
-          tablet = MediaList,
+          mobile = cards.FullMedia100,
+          tablet = cards.FullMedia100,
         ),
       ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
-          mobile = Standard,
-          tablet = MediaList,
-        ),
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = Standard,
-          tablet = MediaList,
-        ),
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = Standard,
-          tablet = MediaList,
-        ),
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = Standard,
-          tablet = MediaList,
-        ),
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = Standard,
-          tablet = MediaList,
+          mobile = cards.FullMedia100,
+          tablet = cards.FullMedia100,
         ),
       ),
     ),
