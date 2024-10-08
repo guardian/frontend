@@ -395,22 +395,14 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]],
   )
 
-  // Avoid fetching very old results from PA by restricting to most recent 2 seasons
+  // Avoid fetching very old results from PA by restricting to most recent season
   private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =
     competitionDefinitions.flatMap { compDef =>
-      val filteredCompetitions = competitions
+      competitions
         .filter(_.competitionId == compDef.id)
         .sortBy(_.startDate.atStartOfDay().toLocalDate)
         .reverse
-
-      // If Champions League, only get current season as format has changed in 24/25 leading to data inconsistencies
-      val relevantSeasons = if (compDef.id == "500") {
-        filteredCompetitions.take(1)
-      } else {
-        filteredCompetitions.take(2)
-      }
-
-      relevantSeasons.lastOption
+        .headOption // get most recent season only
     }
 
   override val teamNameBuilder = new TeamNameBuilder(this)
