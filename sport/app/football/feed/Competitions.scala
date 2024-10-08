@@ -398,12 +398,18 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   // Avoid fetching very old results from PA by restricting to most recent 2 seasons
   private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =
     competitionDefinitions.flatMap { compDef =>
-      competitions
+      val filteredCompetitions = competitions
         .filter(_.competitionId == compDef.id)
         .sortBy(_.startDate.atStartOfDay().toLocalDate)
         .reverse
-        .take(2) // Take most recent 2 seasons
-        .lastOption // Use the older of these for the start date
+
+      val relevantSeasons = if (compDef.id == "/football/championsleague") {
+        filteredCompetitions.take(1)
+      } else {
+        filteredCompetitions.take(2)
+      }
+
+      relevantSeasons.lastOption
     }
 
   override val teamNameBuilder = new TeamNameBuilder(this)
