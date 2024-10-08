@@ -24,7 +24,7 @@ object MastheadWithHighlights
       description =
         "Shows new masthead component, with highlights container, in place of current header/navigation and top bar",
       owners = Seq(Owner.withGithub("cemms1")),
-      sellByDate = LocalDate.of(2024, 10, 8),
+      sellByDate = LocalDate.of(2024, 10, 15),
       participationGroup = Perc50,
     )
 
