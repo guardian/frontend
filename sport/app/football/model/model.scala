@@ -86,7 +86,7 @@ object Table {
         case other         => 0
       })
 
-    // Champions league format has changed for 24/25 season - this is to remove last years groups which are no longer relevant
+    // If Champions League, ignore rest of groups as format has changed in 24/25
     if (competition.id == "500") {
       Table(competition, Seq(groups(0)))
     } else {
