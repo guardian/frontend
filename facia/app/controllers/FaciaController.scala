@@ -6,7 +6,7 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import experiments.{ActiveExperiments, RemoveLiteFronts}
+import experiments.{ActiveExperiments, EuropeBetaTest, RemoveLiteFronts}
 import http.HttpPreconnections
 import implicits.GUHeaders
 import layout.slices._
@@ -223,28 +223,37 @@ trait FaciaController
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val NonAdFreeType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) FullType else LiteType
 
-    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, requestType).flatMap {
-      case Some(faciaPage: PressedPage) =>
-        val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
-        val regionalFaciaPage = TargetedCollections.processTargetedCollections(
-          faciaPage,
-          request.territories,
-          context.isPreview,
-          pageContainsTargetedCollections,
-        )
-        if (conf.Configuration.environment.stage == "CODE") {
-          logInfoWithCustomFields(
-            s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}",
-            List(),
-          )
-        }
-        if (faciaPage.collections.isEmpty && (requestType == FullAdFreeType || requestType == LiteAdFreeType)) {
-          frontJsonFapi.get(path, NonAdFreeType).map(_.map(f => (f, false)))
-        } else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
-      case None => Future.successful(None)
+    val pathWithRedirect = path match {
+      case "europe" || "europe-beta" =>
+        if (ActiveExperiments.isParticipating(EuropeBetaTest)) "europe-beta" else "europe"
+      case _ => path
     }
 
-    val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
+    val pathWithoutRedirect = if (path == "europe-beta") "europe" else path
+
+    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] =
+      frontJsonFapi.get(pathWithRedirect, requestType).flatMap {
+        case Some(faciaPage: PressedPage) =>
+          val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
+          val regionalFaciaPage = TargetedCollections.processTargetedCollections(
+            faciaPage,
+            request.territories,
+            context.isPreview,
+            pageContainsTargetedCollections,
+          )
+          if (conf.Configuration.environment.stage == "CODE") {
+            logInfoWithCustomFields(
+              s"Rendering front $pathWithRedirect, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}",
+              List(),
+            )
+          }
+          if (faciaPage.collections.isEmpty && (requestType == FullAdFreeType || requestType == LiteAdFreeType)) {
+            frontJsonFapi.get(pathWithRedirect, NonAdFreeType).map(_.map(f => (f, false)))
+          } else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
+        case None => Future.successful(None)
+      }
+
+    val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == pathWithoutRedirect)
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
     val futureResult = futureFaciaPage.flatMap {

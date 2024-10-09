@@ -45,3 +45,12 @@ object RemoveLiteFronts
       sellByDate = LocalDate.of(2024, 10, 30),
       participationGroup = Perc10A,
     )
+
+object EuropeBetaTest
+    extends Experiment(
+      name = "europe-beta-test",
+      description = "View the beta version of the Europe front with new containers",
+      owners = Seq(Owner.withGithub("cemms1"), Owner.withEmail("project.fairground@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 3, 4),
+      participationGroup = Perc0A,
+    )
