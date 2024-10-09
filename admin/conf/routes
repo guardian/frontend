@@ -65,7 +65,6 @@ GET         /commercial                                                         
 GET         /commercial/specialadunits                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
 GET         /commercial/pageskins                                                                   controllers.admin.CommercialController.renderPageskins()
 GET         /commercial/surging                                                                     controllers.admin.CommercialController.renderSurgingContent()
-GET         /commercial/high-merchandising                                                          controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
 GET         /commercial/liveblog-top                                                                controllers.admin.CommercialController.renderLiveBlogTopSponsorships()
 GET         /commercial/survey                                                                      controllers.admin.CommercialController.renderSurveySponsorships()
 GET         /commercial/templates                                                                   controllers.admin.CommercialController.renderCreativeTemplates()
