@@ -1,5 +1,5 @@
-export const usBigEvents = {
-	id: 'UsBigEvents',
+export const UsaExpandableMarketingCard = {
+	id: 'UsaExpandableMarketingCard',
 	start: '2024-10-02',
 	expiry: '2024-12-18',
 	author: 'dotcom.platform@guardian.co.uk',
@@ -16,7 +16,11 @@ export const usBigEvents = {
 			test: () => {},
 		},
 		{
-			id: 'variant',
+			id: 'variant-free',
+			test: () => {},
+		},
+		{
+			id: 'variant-bubble',
 			test: () => {},
 		},
 	],
