@@ -131,7 +131,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
 object AudioMedia {
   def make(capiElement: ApiElement): AudioMedia =
     AudioMedia(
-      audioAssets = capiElement.assets.filter(_.`type`.name == "Audio").map(AudioAsset.make).toList,
+      audioAssets = capiElement.assets.filter(_.`type`.name == "Audio").map(asset => AudioAsset.make(asset)).toList,
     )
 }
 final case class AudioMedia(audioAssets: List[AudioAsset]) {

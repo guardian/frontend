@@ -124,7 +124,7 @@ object BlockElement {
           ),
         )
 
-      case Audio => Some(AudioBlockElement(element, element.assets.map(AudioAsset.make).toSeq))
+      case Audio => Some(AudioBlockElement(element, element.assets.map(asset => AudioAsset.make(asset)).toSeq))
 
       case Video =>
         if (element.assets.nonEmpty) {
