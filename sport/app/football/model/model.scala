@@ -85,7 +85,13 @@ object Table {
         case IsNumber(num) => num.toInt
         case other         => 0
       })
-    Table(competition, groups)
+
+    // If Champions League, ignore rest of groups as format has changed in 24/25
+    if (competition.id == "500") {
+      Table(competition, Seq(groups(0)))
+    } else {
+      Table(competition, groups)
+    }
   }
 }
 
