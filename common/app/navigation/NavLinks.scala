@@ -504,8 +504,8 @@ object NavLinks {
     longTitle = Some("Lifestyle home"),
     iconName = Some("home"),
     List(
-      fashion,
       theFilterUk,
+      fashion,
       food,
       recipes,
       ukTravel,
