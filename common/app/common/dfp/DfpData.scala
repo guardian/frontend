@@ -81,8 +81,6 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
     values.intersect(liveBlogTopSectionTargets).nonEmpty
   }
 
-  val isHighMerchandisingSlot = isSlot("merchandising-high")
-
   val isLiveblogTopSlot = isSlot("liveblog-top")
 
   val isSurveySlot = isSlot("survey")
@@ -112,9 +110,6 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
       targets.filter(tagCriteria).flatMap(_.values).distinct
     } else Nil
   }
-
-  val highMerchandisingTargets =
-    filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 
   val liveblogTopTargetedSections = filterTags(_.isLiveBlogTopTargetedSection)(_.isLiveblogTopSlot)
 }
@@ -252,19 +247,8 @@ case class GuLineItem(
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
-  val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
-
   val liveBlogTopTargetedSections: Seq[String] =
     targeting.customTargetSets.flatMap(_.liveblogTopTargetedSections).distinct
-
-  val targetsHighMerchandising: Boolean = {
-    val targetSlotIsHighMerch = for {
-      targetSet <- targeting.customTargetSets
-      target <- targetSet.targets
-      if target.name == "slot" && target.values.contains("merchandising-high")
-    } yield target
-    targetSlotIsHighMerch.nonEmpty
-  }
 
   val targetsLiveBlogTop: Boolean = {
     val matchingLiveblogTargeting = for {

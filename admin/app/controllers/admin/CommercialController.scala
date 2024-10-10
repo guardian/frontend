@@ -66,12 +66,6 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.surgingpages(surging)))
     }
 
-  def renderHighMerchandisingTargetedTags: Action[AnyContent] =
-    Action { implicit request =>
-      val report = Store.getDfpHighMerchandisingTargetedTagsReport()
-      NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(report)))
-    }
-
   def renderLiveBlogTopSponsorships: Action[AnyContent] =
     Action { implicit request =>
       val report = Store.getDfpLiveBlogTagsReport()
@@ -185,7 +179,6 @@ class CommercialController(
 
       // Sort line items into groups where possible, and bucket everything else.
       val pageskins = invalidItemsExtractor.pageSkinSponsorships
-      val highMerch = invalidItemsExtractor.targetedHighMerchandisingLineItems.items
 
       val groupedItems = invalidLineItems.groupBy {
         case item if sonobiOrderIds.contains(item.orderId) => "sonobi"
@@ -196,14 +189,11 @@ class CommercialController(
       val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
       val unidentifiedLineItems =
-        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- highMerch.map(
-          _.id,
-        ) -- sonobiItems.map(_.id)
+        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- sonobiItems.map(_.id)
 
       Ok(
         views.html.commercial.invalidLineItems(
           pageskins,
-          highMerch,
           sonobiItems,
           unidentifiedLineItems.toSeq.map(invalidItemsMap),
         ),
