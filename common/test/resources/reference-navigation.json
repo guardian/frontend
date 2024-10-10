@@ -620,6 +620,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "The Filter",
+					"url": "/uk/thefilter",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Fashion",
 					"url": "/fashion",
 					"children": [],

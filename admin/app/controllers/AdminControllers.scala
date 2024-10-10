@@ -101,5 +101,4 @@ trait AdminControllers {
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
   lazy val adsDotTextController = wire[AdsDotTextEditController]
-  lazy val commercialKPIController = wire[TeamKPIController]
 }
