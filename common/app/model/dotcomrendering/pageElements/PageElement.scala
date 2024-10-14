@@ -1817,39 +1817,31 @@ object PageElement {
   }
 
   private def audioToPageElement(element: ApiBlockElement) = {
-    for {
-      d <- element.audioTypeData
-      html = d.html.getOrElse("")
-      mandatory = true
-      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
-    } yield {
-      if (html.isEmpty) {
-        AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
-      } else {
-        /*
+
+    element.audioTypeData.map { d =>
+      val mandatory = true
+      val thirdPartyTracking = containsThirdPartyTracking(element.tracking)
+      /*
         comment id: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
-
         Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
-
         The audioToPageElement function performs the transformation of an Audio element to the appropriate
         PageElement.
-
         The function returns either:
-           1. SoundcloudBlockElement
-           2. SpotifyBlockElement
-           3. EmbedBlockElement
-           4. AudioBlockElement (currently: an error message)
-
+         1. SoundcloudBlockElement
+         2. SpotifyBlockElement
+         3. EmbedBlockElement
+         4. AudioBlockElement
         Note: EmbedBlockElement is returned by both extractChartDatawrapperEmbedBlockElement and extractGenericEmbedBlockElement
         The former catches charts from charts-datawrapper.s3.amazonaws.com while the latter captures any iframe.
 
-        Note: AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an incorrect
-        payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
-        and not part of the original DCR migration.
-         */
-        extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
-          .getOrElse {
-            extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
+       */
+      d.html
+        .flatMap { html =>
+          extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
+            .orElse {
+              extractSpotifyBlockElement(element, thirdPartyTracking)
+            }
+            .orElse {
               extractChartDatawrapperEmbedBlockElement(
                 html,
                 d.role,
@@ -1857,15 +1849,22 @@ object PageElement {
                 d.source,
                 d.sourceDomain,
                 d.caption,
-              ).getOrElse {
-                extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
-                  .getOrElse {
-                    AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
-                  }
-              }
+              )
             }
-          }
-      }
+            .orElse {
+              extractGenericEmbedBlockElement(
+                html,
+                d.role,
+                thirdPartyTracking,
+                d.source,
+                d.sourceDomain,
+                d.caption,
+              )
+            }
+        }
+        .getOrElse {
+          AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
+        }
     }
   }
 
