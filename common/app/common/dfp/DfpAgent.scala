@@ -9,16 +9,10 @@ import services.S3
 import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
 
-object DfpAgent
-    extends PageskinAdAgent
-    with LiveBlogTopSponsorshipAgent
-    with SurveySponsorshipAgent
-    with HighMerchandiseComponentAgent
-    with AdSlotAgent {
+object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with SurveySponsorshipAgent with AdSlotAgent {
 
   override protected val environmentIsProd: Boolean = environment.isProd
 
-  private lazy val targetedHighMerchandisingLineItemsAgent = Box[Seq[HighMerchandisingLineItem]](Seq.empty)
   private lazy val liveblogTopSponsorshipAgent = Box[Seq[LiveBlogTopSponsorship]](Nil)
   private lazy val surveyAdUnitAgent = Box[Seq[SurveySponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
@@ -26,8 +20,6 @@ object DfpAgent
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
 
-  protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
-    targetedHighMerchandisingLineItemsAgent.get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopSponsorshipAgent.get()
   protected def surveySponsorships: Seq[SurveySponsorship] = surveyAdUnitAgent.get()
@@ -81,20 +73,6 @@ object DfpAgent
       } yield lineItemIds) getOrElse Nil
     }
 
-    def grabTargetedHighMerchandisingLineItemFromStore(): Seq[HighMerchandisingLineItem] = {
-      for {
-        jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
-        report <- HighMerchandisingTargetedTagsReportParser(jsonString).toSeq
-        lineItems <- report.lineItems.items
-      } yield lineItems
-    }
-
-    def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit = {
-      targetedHighMerchandisingLineItemsAgent send { oldData =>
-        if (freshData.nonEmpty) freshData else oldData
-      }
-    }
-
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
 
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
@@ -102,8 +80,6 @@ object DfpAgent
     update(liveblogTopSponsorshipAgent)(grabLiveBlogTopSponsorshipsFromStore())
 
     update(surveyAdUnitAgent)(grabSurveySponsorshipsFromStore())
-
-    updateTargetedHighMerchandisingLineItems(grabTargetedHighMerchandisingLineItemFromStore())
 
   }
 
