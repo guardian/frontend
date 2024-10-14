@@ -1373,6 +1373,12 @@
 					"url": "/sport/golf",
 					"children": [],
 					"classList": []
+				},
+				{
+					"title": "WNBA",
+					"url": "/sport/wnba",
+					"children": [],
+					"classList": []
 				}
 			],
 			"classList": []
