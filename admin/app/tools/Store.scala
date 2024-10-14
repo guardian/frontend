@@ -30,9 +30,6 @@ trait Store extends GuLogging with Dates {
   def putSurveySponsorships(adUnitJson: String): Unit = {
     S3.putPublic(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
   }
-  def putHighMerchandisingSponsorships(keywordsJson: String): Unit = {
-    S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
-  }
   def putDfpPageSkinAdUnits(adUnitJson: String): Unit = {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
   }
@@ -76,9 +73,6 @@ trait Store extends GuLogging with Dates {
       Nil,
     )
   }
-  def getDfpHighMerchandisingTargetedTagsReport(): HighMerchandisingTargetedTagsReport = {
-    S3.get(dfpHighMerchandisingTagsDataKey) flatMap (HighMerchandisingTargetedTagsReportParser(_))
-  } getOrElse HighMerchandisingTargetedTagsReport(now, HighMerchandisingLineItems(items = List.empty))
 
   def getDfpLineItemsReport(): LineItemReport = {
     val maybeLineItems = for {

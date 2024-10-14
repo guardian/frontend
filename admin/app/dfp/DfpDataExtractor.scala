@@ -38,23 +38,6 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
       }
   }
 
-  val targetedHighMerchandisingLineItems: HighMerchandisingLineItems = {
-    val highMerchLineItems = lineItems
-      .filter(_.targetsHighMerchandising)
-      .foldLeft(Seq.empty[HighMerchandisingLineItem]) { (soFar, lineItem) =>
-        soFar :+ HighMerchandisingLineItem(
-          name = lineItem.name,
-          id = lineItem.id,
-          tags = lineItem.highMerchandisingTargets,
-          adUnitsIncluded = lineItem.targeting.adUnitsIncluded,
-          adUnitsExcluded = lineItem.targeting.adUnitsExcluded,
-          customTargetSet = lineItem.targeting.customTargetSets,
-        )
-      }
-
-    HighMerchandisingLineItems(items = highMerchLineItems)
-  }
-
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
     lineItems withFilter { lineItem =>
       lineItem.isPageSkin && lineItem.isCurrent
