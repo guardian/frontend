@@ -1,14 +1,25 @@
 @(crosswordPage: crosswords.AccessibleCrosswordPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.html.fragments.crosswords._
+@import model.GUDateTimeFormatNew
 
 <div class="l-side-margins">
     <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
-        @crosswordMetaHeader(crosswordPage, false)
+        @crosswordMetaHeader(crosswordPage, gridVisible = false)
 
         <div class="content__main tonal__main tonal__main--tone-news">
             <div class="gs-container">
-                <div class="js-content-main-column">
+                <div class="js-content-main-column content__main-column">
+                    <section>
+                        <h2>Puzzle description</h2>
+                        <p>Note: We've recently added solutions to this page below.</p>
+                        <p>This page provides a text-only description of the puzzle:</p>
+                        <ul class="crossword__accessible-instructions-list">
+                            <li>'Blanks' specifies the location of cells which separate the clues.</li>
+                            <li>'Across' and 'Down' list the clues in the format: "(starting square) clue text (answer length)".</li>
+                            <li>Cells are specified via row number (top to bottom) and column letter (left to right).</li>
+                            <li>Solutions are available via the 'Reveal solutions' button below.</li>
+                        </ul>
                     <div class="crossword__container crossword__container--accessible">
                         <div class="crossword__accessible-row-data-wrapper">
                             <div class="crossword__accessible-data">
@@ -28,6 +39,61 @@
                             </div>
                         </div>
                     </div>
+                    </section>
+                    <section>
+                        <h2>Solutions</h2>
+                        @if(crosswordPage.crossword.solutionAvailable) {
+                            <div class="crossword__accessible-solutions-disclosure" data-component="crossword-solutions-disclosure">
+                                <button data-component="crossword-solutions-disclosure-trigger" aria-expanded="false" aria-controls="solution-panel" class="button button--medium button--primary button--show-more collection__show-more modern-visible">
+                                    <svg width="12" height="8" aria-hidden="true" viewBox="-2 -2 14 12">
+                                        <g fill="none" transform="rotate(-90 6 4)">
+                                            <path fill="currentColor" d="M1.41.59l4.59 4.58 4.59-4.58 1.41 1.41-6 6-6-6z" />
+                                            <path d="M-6-8h24v24h-24z" />
+                                        </g>
+                                    </svg>
+                                    <span data-component="crossword-solutions-disclosure-trigger-label">Reveal solutions</span>
+                                </button>
+                                <div id="solution-panel" data-component="crossword-solutions-disclosure-panel" hidden>
+                                    <h3 class="crossword__clues-header">Across solutions</h3>
+                                    <table aria-label="Across solutions">
+                                        <thead>
+                                            <tr>
+                                                <th>Starting position</th>
+                                                <th>Clue</th>
+                                                <th>Solution</th>
+                                            </tr>
+                                        </thead>
+                                        @for(entry <- crosswordPage.crossword.acrossEntries) {
+                                            <tr>
+                                                <td>@entry.startPosition</td><td>@Html(entry.clue)</td><td>@Html(entry.solution)</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                    <h3 class="crossword__clues-header">Down solutions</h3>
+                                    <table aria-label="Down solutions">
+                                        <thead>
+                                            <tr>
+                                                <th>Starting position</th>
+                                                <th>Clue</th>
+                                                <th>Solution</th>
+                                            </tr>
+                                        </thead>
+                                        @for(entry <- crosswordPage.crossword.downEntries) {
+                                            <tr>
+                                                <td>@entry.startPosition</td><td>@Html(entry.clue)</td><td>@Html(entry.solution)</td>
+                                            </tr>
+                                        }
+                                    </table>
+
+                                </div>
+                            </div>
+                        } else {
+                            <p>
+                                Sorry, solutions are not available for this puzzle yet.
+                                @crosswordPage.crossword.dateSolutionAvailable.map(solutionDate => s" They should be available from ${GUDateTimeFormatNew.formatDateForDisplay(solutionDate, request)}.")
+                            </p>
+                        }
+                    </section>
                 </div>
             </div>
         </div>
