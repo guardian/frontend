@@ -28,6 +28,10 @@
     }
 }
 
+.crossword__accessible-instructions-list li {
+    list-style-position: outside;
+}
+
 .crossword__accessible-data--header {
     @include fs-header(2);
     border-top: 1px solid $highlight-main;
