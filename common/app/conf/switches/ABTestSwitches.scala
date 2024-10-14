@@ -47,11 +47,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-shared-id",
+    "ab-us-big-events",
     "Test revenue impact of using shared id in prebid",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 10, 30)),
+    sellByDate = Some(LocalDate.of(2024, 12, 18)),
     exposeClientSide = true,
   )
 }

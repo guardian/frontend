@@ -209,7 +209,7 @@ object CompetitionsProvider {
       "Champions League",
       "Champions League",
       "European",
-      tableDividers = List(2, 6, 21),
+      tableDividers = List(8, 24),
     ),
     Competition(
       "750", // This ID was also used for the 2020 Euros
@@ -244,7 +244,7 @@ object CompetitionsProvider {
       "Europa League",
       "European",
       showInTeamsList = true,
-      tableDividers = List(2),
+      tableDividers = List(8, 24),
     ),
     Competition(
       "995",
@@ -395,15 +395,14 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]],
   )
 
-  // Avoid fetching very old results from PA by restricting to most recent 2 seasons
+  // Avoid fetching very old results from PA by restricting to most recent season
   private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =
     competitionDefinitions.flatMap { compDef =>
       competitions
         .filter(_.competitionId == compDef.id)
         .sortBy(_.startDate.atStartOfDay().toLocalDate)
         .reverse
-        .take(2) // Take most recent 2 seasons
-        .lastOption // Use the older of these for the start date
+        .headOption // get most recent season only
     }
 
   override val teamNameBuilder = new TeamNameBuilder(this)

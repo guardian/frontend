@@ -274,8 +274,6 @@ GET            /commercial/non-refreshable-line-items.json                      
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
-GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
-POST           /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
 GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
 
 # Commercial Admin
@@ -291,7 +289,6 @@ GET         /commercial/keyvalues                                               
 GET         /commercial/keyvalues/csv/*key                                                                                       controllers.admin.CommercialController.renderKeyValuesCsv(key)
 GET         /commercial/dfp/flush/view                                                                                           controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /commercial/dfp/flush                                                                                                controllers.admin.commercial.DfpDataController.flushCache()
-GET         /commercial/slot/:slotName                                                                                           controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /commercial/adops/takeovers-empty-mpus                                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /commercial/adops/takeovers-empty-mpus/create                                                                        controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST        /commercial/adops/takeovers-empty-mpus/create                                                                        controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()

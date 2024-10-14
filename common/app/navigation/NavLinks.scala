@@ -174,6 +174,7 @@ object NavLinks {
   /* LIFE */
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
+  val theFilterUk = NavLink("The Filter", "/uk/thefilter")
   val food = NavLink("Food", "/food")
   val foodAu = NavLink("Food", "/au/food")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")
@@ -503,6 +504,7 @@ object NavLinks {
     longTitle = Some("Lifestyle home"),
     iconName = Some("home"),
     List(
+      theFilterUk,
       fashion,
       food,
       recipes,
