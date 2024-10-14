@@ -702,7 +702,6 @@ object NavLinks {
     "sport/mlb",
     "football/mls",
     "sport/nba",
-    "sport/wnba",
     "sport/nhl",
     "sport/afl",
     "football/a-league",
