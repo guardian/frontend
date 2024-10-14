@@ -10,18 +10,19 @@ import play.api.libs.json.{Json, _}
 object ElementsEnhancer {
 
   def enhanceElement(element: JsValue): JsValue = {
-    // Add an elementId to the element
-    val elementWithId = element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
-    // Extract element type
-    val elementType = elementWithId.value("_type").as[String]
+    // Check if the element is a JsObject before proceeding
+    element match {
+      case obj: JsObject =>
+        val elementWithId = obj ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
+        val elementType = elementWithId.value("_type").as[String]
 
-    // If element has further nesting, continue to enhance. otherwise, return the enhanced element
-    elementType match {
-      case "model.dotcomrendering.pageElements.ListBlockElement"     => enhanceListBlockElement(elementWithId)
-      case "model.dotcomrendering.pageElements.TimelineBlockElement" => enhanceTimelineBlockElement(elementWithId)
-      case _                                                         => elementWithId;
+        elementType match {
+          case "model.dotcomrendering.pageElements.ListBlockElement"     => enhanceListBlockElement(elementWithId)
+          case "model.dotcomrendering.pageElements.TimelineBlockElement" => enhanceTimelineBlockElement(elementWithId)
+          case _                                                         => elementWithId;
+        }
+      case _ => element
     }
-
   }
   def enhanceListBlockElement(elementWithId: JsObject): JsObject = {
     val listItems = elementWithId.value("items").as[JsArray]
@@ -73,6 +74,7 @@ object ElementsEnhancer {
       Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
       Json.obj("keyEvents" -> enhanceObjectsWithElements(obj.value("keyEvents"))) ++
       Json.obj("pinnedPost" -> enhanceObjectWithElements(obj.value("pinnedPost"))) ++
-      Json.obj("promotedNewsletter" -> obj.value("promotedNewsletter"))
+      Json.obj("promotedNewsletter" -> obj.value("promotedNewsletter")) ++
+      Json.obj("audioArticleImage" -> enhanceElement(obj.value("audioArticleImage")))
   }
 }

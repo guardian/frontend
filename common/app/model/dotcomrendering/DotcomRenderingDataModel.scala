@@ -89,7 +89,7 @@ case class DotcomRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     pageType: PageType,
     starRating: Option[Int],
-    audioArticleImage: Option[ImageBlockElement],
+    audioArticleImage: Option[PageElement],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,

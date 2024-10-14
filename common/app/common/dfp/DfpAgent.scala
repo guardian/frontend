@@ -109,25 +109,6 @@ object DfpAgent
 
   def refreshFaciaSpecificData()(implicit executionContext: ExecutionContext): Unit = {
 
-    def updateLineItems(slot: AdSlot, key: String): Unit = {
-
-      def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
-        val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
-          Json.parse(jsonString).as[LineItemReport].lineItems
-        }
-        maybeLineItems getOrElse Nil
-      }
-
-      lineItemAgent send { oldData =>
-        val takeovers = grabCurrentLineItemsFromStore(key)
-        if (takeovers.nonEmpty) oldData + (slot -> takeovers)
-        else oldData
-      }
-
-    }
-
-    updateLineItems(TopAboveNavSlot, topAboveNavSlotTakeoversKey)
-
     update(takeoverWithEmptyMPUsAgent)(TakeoverWithEmptyMPUs.fetch())
   }
 }

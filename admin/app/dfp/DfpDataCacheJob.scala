@@ -156,10 +156,6 @@ class DfpDataCacheJob(
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
-
-      Store.putTopAboveNavSlotTakeovers(
-        stringify(toJson(LineItemReport(now, data.topAboveNavSlotTakeovers, Seq.empty))),
-      )
     }
   }
 
