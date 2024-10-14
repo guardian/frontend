@@ -145,7 +145,6 @@ class GuardianConfiguration extends GuLogging {
   }
 
   object rendering {
-    lazy val baseURL = configuration.getMandatoryStringProperty("rendering.baseURL")
     lazy val articleBaseURL = configuration.getMandatoryStringProperty("article-rendering.baseURL")
     lazy val faciaBaseURL = configuration.getMandatoryStringProperty("facia-rendering.baseURL")
     lazy val tagPageBaseURL = configuration.getMandatoryStringProperty("tag-page-rendering.baseURL")
@@ -496,6 +495,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
+    lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
     lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
@@ -503,7 +503,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
-    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v2.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"

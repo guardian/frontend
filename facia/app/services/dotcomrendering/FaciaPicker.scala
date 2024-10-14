@@ -46,6 +46,12 @@ object FrontChecks {
       "news/most-popular",
       "scrollable/highlights",
       "flexible/special",
+      "flexible/general",
+      "scrollable/small",
+      "scrollable/medium",
+      "scrollable/feature",
+      "static/feature/2",
+      "static/medium/4",
     )
 
   def hasOnlySupportedCollections(faciaPage: PressedPage) =

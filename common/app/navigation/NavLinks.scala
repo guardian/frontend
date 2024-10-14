@@ -109,7 +109,6 @@ object NavLinks {
 
   /* SPORT */
 
-  private val paralympics2024 = NavLink("Paralympics 2024", "/sport/paralympic-games-2024")
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -175,6 +174,7 @@ object NavLinks {
   /* LIFE */
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
+  val theFilterUk = NavLink("The Filter", "/uk/thefilter")
   val food = NavLink("Food", "/food")
   val foodAu = NavLink("Food", "/au/food")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")
@@ -185,6 +185,7 @@ object NavLinks {
   val home = NavLink("Home & garden", "/lifeandstyle/home-and-garden")
   val health = NavLink("Health & fitness", "/lifeandstyle/health-and-wellbeing")
   val healthAu = NavLink("Health & fitness", "/au/lifeandstyle/health-and-wellbeing")
+  val healthNewsAu = NavLink("Health", "/australia-news/health")
   val women = NavLink("Women", "/lifeandstyle/women")
   val men = NavLink("Men", "/lifeandstyle/men")
   val recipes = NavLink("Recipes", "/tone/recipes")
@@ -245,7 +246,7 @@ object NavLinks {
   val corrections = NavLink("Corrections", "/theguardian/series/corrections-and-clarifications")
   val video = NavLink("Video", "/video")
   val podcasts = NavLink("Podcasts", "/podcasts")
-  val podcastsAU = NavLink("Podcasts", "/australia-podcasts")
+  val podcastsAU = NavLink("Podcasts", "/au/podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
@@ -303,6 +304,7 @@ object NavLinks {
       auImmigration,
       media,
       auBusiness,
+      healthNewsAu,
       science,
       tech,
       podcastsAU,
@@ -316,7 +318,6 @@ object NavLinks {
       world,
       usEnvironment,
       ukraine,
-      paralympics2024,
       usSoccer,
       usBusiness,
       usTech,
@@ -390,7 +391,6 @@ object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
-      paralympics2024,
       football,
       cricket,
       rugbyUnion,
@@ -406,7 +406,6 @@ object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      paralympics2024,
       football,
       AFL,
       NRL,
@@ -420,7 +419,6 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      paralympics2024,
       usSoccer,
       NFL,
       tennis,
@@ -434,7 +432,6 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      paralympics2024,
       football,
       cricket,
       rugbyUnion,
@@ -507,6 +504,7 @@ object NavLinks {
     longTitle = Some("Lifestyle home"),
     iconName = Some("home"),
     List(
+      theFilterUk,
       fashion,
       food,
       recipes,

@@ -76,9 +76,16 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   def isPlatform(value: String): Boolean = isPositive("p") && values.contains(value)
   def isNotPlatform(value: String): Boolean = isNegative("p") && values.contains(value)
 
+  def matchesLiveBlogTopTargeting: Boolean = {
+    val liveBlogTopSectionTargets = List("culture", "football", "sport", "tv-and-radio")
+    values.intersect(liveBlogTopSectionTargets).nonEmpty
+  }
+
   val isHighMerchandisingSlot = isSlot("merchandising-high")
 
   val isLiveblogTopSlot = isSlot("liveblog-top")
+
+  val isSurveySlot = isSlot("survey")
 
   val isAdTest = isPositive("at")
 
@@ -89,7 +96,7 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSectionTag = isPositive("s")
 
   val isLiveBlogTopTargetedSection =
-    isSectionTag && (values.contains("culture") || values.contains("sport") || values.contains("football"))
+    isSectionTag && matchesLiveBlogTopTargeting
 }
 
 object CustomTarget {
@@ -291,29 +298,25 @@ case class GuLineItem(
     isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship && hasEditionTargeting
   }
 
+  val targetsSurvey: Boolean = {
+    val matchingSurveyTargeting = for {
+      targetSet <- targeting.customTargetSets
+      target <- targetSet.targets
+      if target.name == "slot" || target.values.contains("survey")
+    } yield target
+
+    val isSurveySlot = matchingSurveyTargeting.exists { target =>
+      target.name == "slot" && target.values.contains("survey")
+    }
+
+    isSurveySlot
+  }
+
   lazy val targetsNetworkOrSectionFrontDirectly: Boolean = {
     targeting.adUnitsIncluded.exists { adUnit =>
       val path = adUnit.path
       (path.length == 3 || path.length == 4) && path(2) == "front"
     }
-  }
-
-  lazy val isSuitableForTopAboveNavSlot: Boolean = {
-
-    val placeholder = creativePlaceholders find { placeholder =>
-      placeholder.size == leaderboardSize || placeholder.size == responsiveSize
-    }
-
-    costType == "CPD" &&
-    placeholder.nonEmpty && (
-      targeting.targetsSectionFrontDirectly("business") ||
-        placeholder.exists(_.targetsSectionFrontDirectly("business"))
-    ) &&
-    targeting.geoTargetsIncluded.exists { geoTarget =>
-      geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
-    } &&
-    startTime.isBefore(now.plusDays(1)) &&
-    (endTime.isEmpty || endTime.exists(_.isAfterNow))
   }
 
   lazy val creativeSizes = creativePlaceholders map (_.size)

@@ -445,12 +445,6 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -625,6 +619,12 @@
 			"longTitle": "Lifestyle home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "The Filter",
+					"url": "/uk/thefilter",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Fashion",
 					"url": "/fashion",
@@ -1126,12 +1126,6 @@
 					"classList": []
 				},
 				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Soccer",
 					"url": "/us/soccer",
 					"children": [
@@ -1283,12 +1277,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Soccer",
 					"url": "/us/soccer",
@@ -1936,6 +1924,12 @@
 					"classList": []
 				},
 				{
+					"title": "Health",
+					"url": "/australia-news/health",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Science",
 					"url": "/science",
 					"children": [],
@@ -1949,7 +1943,7 @@
 				},
 				{
 					"title": "Podcasts",
-					"url": "/australia-podcasts",
+					"url": "/au/podcasts",
 					"children": [],
 					"classList": []
 				},
@@ -2007,12 +2001,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -2273,7 +2261,7 @@
 			},
 			{
 				"title": "Podcasts",
-				"url": "/australia-podcasts",
+				"url": "/au/podcasts",
 				"children": [],
 				"classList": []
 			},
@@ -2816,12 +2804,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",
@@ -3814,12 +3796,6 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
-				{
-					"title": "Paralympics 2024",
-					"url": "/sport/paralympic-games-2024",
-					"children": [],
-					"classList": []
-				},
 				{
 					"title": "Football",
 					"url": "/football",

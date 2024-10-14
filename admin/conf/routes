@@ -67,6 +67,7 @@ GET         /commercial/pageskins                                               
 GET         /commercial/surging                                                                     controllers.admin.CommercialController.renderSurgingContent()
 GET         /commercial/high-merchandising                                                          controllers.admin.CommercialController.renderHighMerchandisingTargetedTags()
 GET         /commercial/liveblog-top                                                                controllers.admin.CommercialController.renderLiveBlogTopSponsorships()
+GET         /commercial/survey                                                                      controllers.admin.CommercialController.renderSurveySponsorships()
 GET         /commercial/templates                                                                   controllers.admin.CommercialController.renderCreativeTemplates()
 GET         /commercial/fluid250                                                                    controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/adtests                                                                     controllers.admin.CommercialController.renderAdTests()
@@ -74,7 +75,6 @@ GET         /commercial/keyvalues                                               
 GET         /commercial/keyvalues/csv/*key                                                          controllers.admin.CommercialController.renderKeyValuesCsv(key)
 GET         /commercial/dfp/flush/view                                                              controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /commercial/dfp/flush                                                                   controllers.admin.commercial.DfpDataController.flushCache()
-GET         /commercial/slot/:slotName                                                              controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /commercial/adops/takeovers-empty-mpus                                                  controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST        /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
@@ -87,7 +87,6 @@ GET         /commercial/adops/ads-txt                                           
 POST        /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
 GET         /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
-GET         /commercial/prebid/revenue                                                              controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 
 # Config
 

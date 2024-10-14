@@ -27,6 +27,9 @@ trait Store extends GuLogging with Dates {
   def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
     S3.putPublic(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
   }
+  def putSurveySponsorships(adUnitJson: String): Unit = {
+    S3.putPublic(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
+  }
   def putHighMerchandisingSponsorships(keywordsJson: String): Unit = {
     S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
@@ -38,9 +41,6 @@ trait Store extends GuLogging with Dates {
   }
   def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
     S3.putPublic(filename, adUnits, "text/plain")
-  }
-  def putTopAboveNavSlotTakeovers(takeovers: String): Unit = {
-    S3.putPublic(topAboveNavSlotTakeoversKey, takeovers, defaultJsonEncoding)
   }
   def putDfpTemplateCreatives(creatives: String): Unit = {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
@@ -68,6 +68,14 @@ trait Store extends GuLogging with Dates {
       Nil,
     )
   }
+  def getDfpSurveyAdUnits(): SurveySponsorshipReport = {
+    S3.get(dfpSurveySponsorshipDataKey) flatMap (SurveySponsorshipReportParser(
+      _,
+    )) getOrElse SurveySponsorshipReport(
+      None,
+      Nil,
+    )
+  }
   def getDfpHighMerchandisingTargetedTagsReport(): HighMerchandisingTargetedTagsReport = {
     S3.get(dfpHighMerchandisingTagsDataKey) flatMap (HighMerchandisingTargetedTagsReportParser(_))
   } getOrElse HighMerchandisingTargetedTagsReport(now, HighMerchandisingLineItems(items = List.empty))
@@ -80,12 +88,6 @@ trait Store extends GuLogging with Dates {
 
     maybeLineItems getOrElse LineItemReport("Empty Report", Nil, Nil)
   }
-
-  def getSlotTakeoversReport(slotName: String): Option[String] =
-    slotName match {
-      case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
-      case _               => None
-    }
 
   def getDfpTemplateCreatives: Seq[GuCreative] = {
     val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {

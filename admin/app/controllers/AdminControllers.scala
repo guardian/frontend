@@ -89,7 +89,6 @@ trait AdminControllers {
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
   lazy val dfpDataController = wire[DfpDataController]
-  lazy val slotController = wire[SlotController]
   lazy val takeoverWithEmptyMPUsController = wire[TakeoverWithEmptyMPUsController]
   lazy val fastlyController = wire[FastlyController]
   lazy val deploysController = wire[DeploysControllerImpl]
@@ -102,5 +101,4 @@ trait AdminControllers {
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
   lazy val adsDotTextController = wire[AdsDotTextEditController]
-  lazy val commercialKPIController = wire[TeamKPIController]
 }

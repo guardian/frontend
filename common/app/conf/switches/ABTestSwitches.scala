@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Show new ad block ask component in ad slots when we detect ad blocker usage",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 30)),
+    sellByDate = Some(LocalDate.of(2025, 2, 24)),
     exposeClientSide = true,
   )
 
@@ -41,18 +41,17 @@ trait ABTestSwitches {
     "Test the Opt Out frequency capping feature",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 13)),
+    sellByDate = Some(LocalDate.of(2024, 12, 2)),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-optimise-spacefinder-inline",
-    "Test new Spacefinder margins for inline1",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    "ab-us-big-events",
+    "Test revenue impact of using shared id in prebid",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 9, 13)),
+    sellByDate = Some(LocalDate.of(2024, 12, 18)),
     exposeClientSide = true,
   )
-
 }

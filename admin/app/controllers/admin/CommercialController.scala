@@ -78,6 +78,12 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.liveBlogTopSponsorships(report)))
     }
 
+  def renderSurveySponsorships: Action[AnyContent] =
+    Action { implicit request =>
+      val surveyAdUnits = Store.getDfpSurveyAdUnits()
+      NoCache(Ok(views.html.commercial.surveySponsorships(surveyAdUnits)))
+    }
+
   def renderCreativeTemplates: Action[AnyContent] =
     Action { implicit request =>
       val emptyTemplates = createTemplateAgent.get
@@ -179,7 +185,6 @@ class CommercialController(
 
       // Sort line items into groups where possible, and bucket everything else.
       val pageskins = invalidItemsExtractor.pageSkinSponsorships
-      val topAboveNav = invalidItemsExtractor.topAboveNavSlotTakeovers
       val highMerch = invalidItemsExtractor.targetedHighMerchandisingLineItems.items
 
       val groupedItems = invalidLineItems.groupBy {
@@ -191,14 +196,13 @@ class CommercialController(
       val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
       val unidentifiedLineItems =
-        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(
+        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- highMerch.map(
           _.id,
         ) -- sonobiItems.map(_.id)
 
       Ok(
         views.html.commercial.invalidLineItems(
           pageskins,
-          topAboveNav,
           highMerch,
           sonobiItems,
           unidentifiedLineItems.toSeq.map(invalidItemsMap),
