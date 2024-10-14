@@ -5,7 +5,7 @@
 
 <div class="l-side-margins">
     <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
-        @crosswordMetaHeader(crosswordPage, false)
+        @crosswordMetaHeader(crosswordPage, gridVisible = false)
 
         <div class="content__main tonal__main tonal__main--tone-news">
             <div class="gs-container">
@@ -13,8 +13,13 @@
                     <section>
                         <h2>Puzzle description</h2>
                         <p>Note: We've recently added solutions to this page below.</p>
-                        <p>This page provides a text-only description of the puzzle, via three lists. 'Blanks' specifies the location of cells which aren't in any clue. 'Across' and 'Down' list the clues in the format: "(starting square) clue text (answer length)".</p>
-                        <p>Cells are specified via row number (top to bottom) and column letter (left to right)</p>
+                        <p>This page provides a text-only description of the puzzle:</p>
+                        <ul class="crossword__accessible-instructions-list">
+                            <li>'Blanks' specifies the location of cells which separate the clues.</li>
+                            <li>'Across' and 'Down' list the clues in the format: "(starting square) clue text (answer length)".</li>
+                            <li>Cells are specified via row number (top to bottom) and column letter (left to right).</li>
+                            <li>Solutions are available via the 'Reveal solutions' button below.</li>
+                        </ul>
                     <div class="crossword__container crossword__container--accessible">
                         <div class="crossword__accessible-row-data-wrapper">
                             <div class="crossword__accessible-data">

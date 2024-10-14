@@ -1,5 +1,5 @@
 @import views.html.fragments.crosswords.crosswordMeta
-@(crosswordPage: crosswords.CrosswordPageWithContent, gridVisable: Boolean = true)(implicit requestHeader: RequestHeader)
+@(crosswordPage: crosswords.CrosswordPageWithContent, gridVisible: Boolean = true)(implicit requestHeader: RequestHeader)
 @import common.LinkTo
 
 <header class="content__head content__head--crossword tonal__head tonal__head--tone-news">
@@ -20,7 +20,7 @@
                 </div>
             }
 
-            @if( gridVisable ) {
+            @if( gridVisible ) {
                 <div class="crossword__links">
                     <div class="crossword__links-related">
                         <a target="_blank" href="@LinkTo(s"/crosswords/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}/print")">Print</a>
@@ -32,6 +32,14 @@
                         | <a class="crossword__link" href="@LinkTo(s"/crosswords/accessible/${crosswordPage.crossword.crosswordType}/${crosswordPage.crossword.number}")">Accessible version</a>
                     </div>
                     @crosswordMeta(crosswordPage)
+                </div>
+
+                <div class="hide-from-leftcol crossword__clues-header">
+                    <a href="https://app.adjust.com/16xt6hai" data-link-name="crossword-mobile-link">Download the Guardian app</a> for a better puzzles experience
+                </div>
+
+                <div class="hide-until-leftcol crossword__clues-header">
+                    <a href="https://app.adjust.com/16xt6hai" data-link-name="crossword-desktop-link">Download the Guardian app</a> for a better puzzles experience
                 </div>
             }
 
