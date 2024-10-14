@@ -29,7 +29,8 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
                 case _ => ""
               }
           }
-        if (rh.method != "POST") {
+        // don't log uncacheable /commercial/api/hb POST requests due to the volume of them
+        if (rh.method != "POST" || rh.path != "/commercial/api/hb") {
           requestLogger.withResponse(response).info(s"${rh.method} ${rh.uri}$additionalInfo")
         }
       case Failure(error) =>

@@ -275,6 +275,7 @@ GET            /commercial/non-refreshable-line-items.json                      
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
+POST           /commercial/api/hb commercial.controllers.PrebidAnalyticsController.insert()
 
 # Commercial Admin
 GET         /commercial                                                                                                          controllers.admin.CommercialController.renderCommercialMenu()

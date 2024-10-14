@@ -41,6 +41,9 @@ GET         /commercial/cmp/shortvendorlist.json                                
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET         /app-ads.txt                                                    commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 
+# Analytics
+POST        /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
+
 # Passbacks
 GET         /commercial/ias-passback/:size                                  commercial.controllers.PassbackController.renderIasPassback(size)
 
