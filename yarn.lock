@@ -4039,17 +4039,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:0.0.0-beta-20241002085822":
-  version: 0.0.0-beta-20241002085822
-  resolution: "@guardian/commercial@npm:0.0.0-beta-20241002085822"
+"@guardian/commercial@npm:23.0.0":
+  version: 23.0.0
+  resolution: "@guardian/commercial@npm:23.0.0"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
-    "@guardian/prebid.js": "npm:8.52.0-4"
+    "@guardian/prebid.js": "npm:8.52.0-6"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
     process: "npm:^0.11.10"
-    raven-js: "npm:^3.27.2"
     tslib: "npm:^2.6.2"
     web-vitals: "npm:^4.2.1"
   peerDependencies:
@@ -4060,7 +4059,7 @@ __metadata:
     "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/3f6a89e95c6dc644670c10a2ae69cce946f1ab8cde0114a6364d2a135dc4d9c017886951e17cfb7a38aaf71f6bd497136a208815f91cfae5d5a128beacb6ef2e
+  checksum: 10c0/bffbd458eccc1c126c9c9ad126fc826d7caab6870e9b55202e3218e8b74c209ea253ec921c3f97c48db56b54d507a9c04c7bb4573ec1150140cf277ec1ac20e1
   languageName: node
   linkType: hard
 
@@ -4133,7 +4132,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:0.0.0-beta-20241002085822"
+    "@guardian/commercial": "npm:23.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
@@ -4321,9 +4320,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/prebid.js@npm:8.52.0-4":
-  version: 8.52.0-4
-  resolution: "@guardian/prebid.js@npm:8.52.0-4"
+"@guardian/prebid.js@npm:8.52.0-6":
+  version: 8.52.0-6
+  resolution: "@guardian/prebid.js@npm:8.52.0-6"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
@@ -4346,7 +4345,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/8c9b54322586c350b4b2f2c246d680368725fb44bd463fa5d0bacd1806573fe74b06838c27699c3d4bcc0001351ad84cd477a7d32f5aa69d1cdec0e1cf0daffb
+  checksum: 10c0/4c155d7754c3e5288f498ef16a77f13d58083d8199fb4ab5441a86ee5799c94ed611d3352fb9658c9edf05100129fffd254c48f4f83f3511afeab89da06739d9
   languageName: node
   linkType: hard
 
@@ -14956,7 +14955,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"raven-js@npm:^3.19.1, raven-js@npm:^3.27.2":
+"raven-js@npm:^3.19.1":
   version: 3.27.2
   resolution: "raven-js@npm:3.27.2"
   checksum: 10c0/a0fc187d6bfb7bae90e689580ffcaee45b877475e6cd26f48986cc7cb4b4df7f0da8ad7bd406b839f1b75c963b00edbc2d00ff27710bdbfa82a02bf85e8ca915
