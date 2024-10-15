@@ -1357,6 +1357,12 @@
 					"classList": []
 				},
 				{
+					"title": "WNBA",
+					"url": "/sport/wnba",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "NHL",
 					"url": "/sport/nhl",
 					"children": [],
@@ -1371,12 +1377,6 @@
 				{
 					"title": "Golf",
 					"url": "/sport/golf",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "WNBA",
-					"url": "/sport/wnba",
 					"children": [],
 					"classList": []
 				}
