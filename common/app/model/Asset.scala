@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage}
+import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage, AudioElementFields}
 import play.api.libs.json.{Json, Writes}
 import views.support.{ImgSrc, Naked, Orientation}
 
@@ -28,6 +28,14 @@ object Helpers {
       "scriptName" -> asset.typeData.flatMap(_.scriptName),
       "html" -> asset.typeData.flatMap(_.html),
       "embedType" -> asset.typeData.flatMap(_.embedType),
+    ).collect { case (k, Some(v)) => (k, v) }
+
+  def audioElementFieldsToMap(audioElementFields: AudioElementFields): Map[String, String] =
+    Map(
+      "durationMinutes" -> audioElementFields.durationMinutes.map(_.toString),
+      "durationSeconds" -> audioElementFields.durationSeconds.map(_.toString),
+      "explicit" -> audioElementFields.explicit.map(_.toString),
+      "source" -> audioElementFields.source,
     ).collect { case (k, Some(v)) => (k, v) }
 }
 
@@ -138,9 +146,14 @@ case class VideoAsset(fields: Map[String, String], url: Option[String], mimeType
 }
 
 object AudioAsset {
-  def make(asset: Asset): AudioAsset = {
+  def make(asset: Asset, audioElementFields: Option[AudioElementFields] = None): AudioAsset = {
+    val fields = if (asset.typeData.isEmpty) {
+      Helpers.assetFieldsToMap(asset)
+    } else {
+      audioElementFields.map(Helpers.audioElementFieldsToMap).getOrElse(Map.empty)
+    }
     AudioAsset(
-      fields = Helpers.assetFieldsToMap(asset),
+      fields = fields,
       mimeType = asset.mimeType,
       url = asset.typeData.flatMap(_.secureFile).orElse(asset.file),
     )

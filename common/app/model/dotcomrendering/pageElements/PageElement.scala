@@ -17,7 +17,7 @@ import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
 import model.dotcomrendering.pageElements.CartoonExtraction._
-import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
@@ -120,8 +120,7 @@ object AudioAtomBlockElement {
 
 // We are currently using AudioBlockElement as a catch all for audio errors, skipping the first definition
 // See comment: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
-// case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
-case class AudioBlockElement(message: String) extends PageElement
+case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 object AudioBlockElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
 }
@@ -1818,55 +1817,53 @@ object PageElement {
   }
 
   private def audioToPageElement(element: ApiBlockElement) = {
-    for {
-      d <- element.audioTypeData
-      html <- d.html
-      mandatory = true
-      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
-    } yield {
+
+    element.audioTypeData.map { d =>
+      val mandatory = true
+      val thirdPartyTracking = containsThirdPartyTracking(element.tracking)
       /*
         comment id: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
-
         Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
-
         The audioToPageElement function performs the transformation of an Audio element to the appropriate
         PageElement.
-
         The function returns either:
-           1. SoundcloudBlockElement
-           2. SpotifyBlockElement
-           3. EmbedBlockElement
-           4. AudioBlockElement (currently: an error message)
-
+         1. SoundcloudBlockElement
+         2. SpotifyBlockElement
+         3. EmbedBlockElement
+         4. AudioBlockElement
         Note: EmbedBlockElement is returned by both extractChartDatawrapperEmbedBlockElement and extractGenericEmbedBlockElement
         The former catches charts from charts-datawrapper.s3.amazonaws.com while the latter captures any iframe.
 
-        Note: AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an incorrect
-        payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
-        and not part of the original DCR migration.
        */
-      extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
-        .getOrElse {
-          extractSpotifyBlockElement(element, thirdPartyTracking).getOrElse {
-            extractChartDatawrapperEmbedBlockElement(
-              html,
-              d.role,
-              thirdPartyTracking,
-              d.source,
-              d.sourceDomain,
-              d.caption,
-            ).getOrElse {
-              extractGenericEmbedBlockElement(html, d.role, thirdPartyTracking, d.source, d.sourceDomain, d.caption)
-                .getOrElse {
-                  // This version of AudioBlockElement is not currently supported in DCR
-                  // AudioBlockElement(element.assets.map(AudioAsset.make))
-
-                  // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
-                  // incorrect payload.
-                  AudioBlockElement("This audio element cannot be displayed at this time")
-                }
+      d.html
+        .flatMap { html =>
+          extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking, d.source, d.sourceDomain)
+            .orElse {
+              extractSpotifyBlockElement(element, thirdPartyTracking)
             }
-          }
+            .orElse {
+              extractChartDatawrapperEmbedBlockElement(
+                html,
+                d.role,
+                thirdPartyTracking,
+                d.source,
+                d.sourceDomain,
+                d.caption,
+              )
+            }
+            .orElse {
+              extractGenericEmbedBlockElement(
+                html,
+                d.role,
+                thirdPartyTracking,
+                d.source,
+                d.sourceDomain,
+                d.caption,
+              )
+            }
+        }
+        .getOrElse {
+          AudioBlockElement(element.assets.toList.map(asset => AudioAsset.make(asset, Some(d))))
         }
     }
   }
