@@ -426,10 +426,10 @@ object NavLinks {
       MLB,
       MLS,
       NBA,
+      WNBA,
       NHL,
       formulaOne,
       golf,
-      WNBA,
     ),
   )
   val intSportPillar = ukSportPillar.copy(
@@ -702,6 +702,7 @@ object NavLinks {
     "sport/mlb",
     "football/mls",
     "sport/nba",
+    "sport/wnba",
     "sport/nhl",
     "sport/afl",
     "football/a-league",
