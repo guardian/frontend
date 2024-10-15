@@ -4039,9 +4039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:22.3.0":
-  version: 22.3.0
-  resolution: "@guardian/commercial@npm:22.3.0"
+"@guardian/commercial@npm:23.0.0":
+  version: 23.0.0
+  resolution: "@guardian/commercial@npm:23.0.0"
   dependencies:
     "@changesets/cli": "npm:^2.26.2"
     "@guardian/prebid.js": "npm:8.52.0-6"
@@ -4056,10 +4056,10 @@ __metadata:
     "@guardian/core-web-vitals": ^7.0.0
     "@guardian/identity-auth": ^3.0.0
     "@guardian/identity-auth-frontend": ^5.0.0
-    "@guardian/libs": ^18.0.0
+    "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/cb5273903cda3db0e76dc97a40e1474a20c5ef5d87cc0ba8c4c520c71369f2de17037b7aca5f182184e96a538a58ffb946c914e0e217e2fb063476fcd15adf89
+  checksum: 10c0/bffbd458eccc1c126c9c9ad126fc826d7caab6870e9b55202e3218e8b74c209ea253ec921c3f97c48db56b54d507a9c04c7bb4573ec1150140cf277ec1ac20e1
   languageName: node
   linkType: hard
 
@@ -4132,12 +4132,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:22.3.0"
+    "@guardian/commercial": "npm:23.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
-    "@guardian/libs": "npm:17.0.1"
+    "@guardian/libs": "npm:19.1.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -4294,16 +4294,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:17.0.1":
-  version: 17.0.1
-  resolution: "@guardian/libs@npm:17.0.1"
+"@guardian/libs@npm:19.1.0":
+  version: 19.1.0
+  resolution: "@guardian/libs@npm:19.1.0"
   peerDependencies:
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/f375ed48602bcfd779b995df14ac465e718e29a38f7e5525bf7f6227a00d7091020dfc95103cf5913a8316670ed9890dcaaefe1ca664c9d9ed1251f8da7e691e
+  checksum: 10c0/0c0450a65980cc8be740565aea104d384570f996264d5388cbeba4ebda5a5b9dee7345286df80d48c1e08ce56692a3e8b82c2a2fe646c749f49fb131b31f68b9
   languageName: node
   linkType: hard
 
