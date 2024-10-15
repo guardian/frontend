@@ -6,7 +6,7 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import experiments.{ActiveExperiments, RemoveLiteFronts}
+import experiments.{ActiveExperiments, EuropeBetaFront, RemoveLiteFronts}
 import http.HttpPreconnections
 import implicits.GUHeaders
 import layout.slices._
@@ -222,6 +222,13 @@ trait FaciaController
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val NonAdFreeType = if (ActiveExperiments.isParticipating(RemoveLiteFronts)) FullType else LiteType
+
+    // Europe beta experiment
+    // Phase 1 prevents users from being able to view the europe-beta front unless opted into the test
+    val inEuropeBetaTest = ActiveExperiments.isParticipating(EuropeBetaFront)
+    if (path == "europe-beta" && !inEuropeBetaTest) {
+      return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+    }
 
     val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, requestType).flatMap {
       case Some(faciaPage: PressedPage) =>
