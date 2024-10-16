@@ -160,7 +160,6 @@ object NavLinks {
   val MLB = NavLink("MLB", "/sport/mlb")
   val NBA = NavLink("NBA", "/sport/nba")
   val NHL = NavLink("NHL", "/sport/nhl")
-  val WNBA = NavLink("WNBA", "/sport/wnba")
 
   /* CULTURE */
   val film = NavLink("Film", "/film")
@@ -426,7 +425,6 @@ object NavLinks {
       MLB,
       MLS,
       NBA,
-      WNBA,
       NHL,
       formulaOne,
       golf,
@@ -702,7 +700,6 @@ object NavLinks {
     "sport/mlb",
     "football/mls",
     "sport/nba",
-    "sport/wnba",
     "sport/nhl",
     "sport/afl",
     "football/a-league",
