@@ -81,6 +81,11 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
       case Right(allNewsletters) =>
         newslettersV2Agent.alter(Right(allNewsletters))
         log.info("Successfully refreshed v2 Newsletters cache.")
+
+        log.info(allNewsletters.map(
+          newsletter => newsletter.name
+        ).toString())
+
       case Left(err) =>
         log.error(s"Failed to refresh v2  Newsletters cache: $err")
     }
