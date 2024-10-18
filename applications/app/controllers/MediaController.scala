@@ -5,6 +5,7 @@ import common.JsonComponent.withRefreshStatus
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
+import implicits.{AppsFormat, JsonFormat}
 import model._
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import pages.ContentHtmlPage
@@ -104,17 +105,25 @@ class MediaController(
   ): Future[Result] = {
     val pageType = PageType(content, request, context)
 
-    if (request.isJson) {
-      Future.successful(
-        common.renderJson(getDCRJson(content, pageType, blocks), content).as("application/json"),
-      )
-    } else {
-      remoteRenderer.getMedia(
-        wsClient,
-        content,
-        pageType,
-        blocks,
-      )
+    request.getRequestFormat match {
+      case JsonFormat =>
+        Future.successful(
+          common.renderJson(getDCRJson(content, pageType, blocks), content).as("application/json"),
+        )
+      case AppsFormat =>
+        remoteRenderer.getAppsMedia(
+          wsClient,
+          content,
+          pageType,
+          blocks,
+        )
+      case _ =>
+        remoteRenderer.getMedia(
+          wsClient,
+          content,
+          pageType,
+          blocks,
+        )
     }
   }
 }
