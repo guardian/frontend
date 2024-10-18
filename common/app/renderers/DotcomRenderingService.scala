@@ -363,6 +363,18 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
   }
 
+  def getAppsMedia(
+      ws: WSClient,
+      mediaPage: MediaPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
+
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", CacheTime.Facia)
+  }
+
   def getGallery(
       ws: WSClient,
       gallery: GalleryPage,
