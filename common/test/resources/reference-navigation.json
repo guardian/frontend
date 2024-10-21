@@ -924,6 +924,12 @@
 						"url": "/crosswords/series/weekend-crossword",
 						"children": [],
 						"classList": []
+					},
+					{
+						"title": "Special",
+						"url": "/crosswords/series/special",
+						"children": [],
+						"classList": []
 					}
 				],
 				"classList": []
@@ -1665,6 +1671,12 @@
 						"url": "/crosswords/series/weekend-crossword",
 						"children": [],
 						"classList": []
+					},
+					{
+						"title": "Special",
+						"url": "/crosswords/series/special",
+						"children": [],
+						"classList": []
 					}
 				],
 				"classList": []
@@ -2362,6 +2374,12 @@
 					{
 						"title": "Weekend",
 						"url": "/crosswords/series/weekend-crossword",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Special",
+						"url": "/crosswords/series/special",
 						"children": [],
 						"classList": []
 					}
@@ -3260,6 +3278,12 @@
 						"url": "/crosswords/series/weekend-crossword",
 						"children": [],
 						"classList": []
+					},
+					{
+						"title": "Special",
+						"url": "/crosswords/series/special",
+						"children": [],
+						"classList": []
 					}
 				],
 				"classList": []
@@ -3401,6 +3425,7 @@
 		"crosswords/series/genius",
 		"crosswords/series/speedy",
 		"crosswords/series/everyman",
+		"crosswords/series/special",
 		"crosswords/series/azed",
 		"fashion/beauty",
 		"technology/motoring",
@@ -4251,6 +4276,12 @@
 					{
 						"title": "Weekend",
 						"url": "/crosswords/series/weekend-crossword",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Special",
+						"url": "/crosswords/series/special",
 						"children": [],
 						"classList": []
 					}
