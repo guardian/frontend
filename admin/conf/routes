@@ -86,6 +86,7 @@ GET         /commercial/adops/ads-txt                                           
 POST        /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
 GET         /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
+GET         /commercial/prebid/revenue                                                              controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 
 # Config
 
