@@ -238,6 +238,7 @@ object NavLinks {
       NavLink("Azed", "/crosswords/series/azed"),
       NavLink("Genius", "/crosswords/series/genius"),
       NavLink("Weekend", "/crosswords/series/weekend-crossword"),
+      NavLink("Special", "/crosswords/series/special"),
     ),
   )
   val wordiply = NavLink(
@@ -742,6 +743,7 @@ object NavLinks {
     "crosswords/series/genius",
     "crosswords/series/speedy",
     "crosswords/series/everyman",
+    "crosswords/series/special",
     "crosswords/series/azed",
     "fashion/beauty",
     "technology/motoring",

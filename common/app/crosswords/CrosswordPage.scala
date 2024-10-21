@@ -63,6 +63,7 @@ class CrosswordSearchPage extends StandalonePage {
     "everyman",
     "azed",
     "weekend",
+    "special",
   )
 
   def queryParameter(crossType: String): String = {
