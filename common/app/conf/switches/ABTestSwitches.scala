@@ -47,8 +47,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-us-big-events",
-    "Test revenue impact of using shared id in prebid",
+    "ab-usa-expandable-marketing-card",
+    "Test the impact of showing the user a component that highlights the Guardians journalism",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 12, 18)),
