@@ -32,6 +32,7 @@ abstract class Edition(
       "lifeandstyle",
       "travel",
       "tv-and-radio",
+      "thefilter",
     ),
     val navigationLinks: EditionNavLinks,
 ) {
