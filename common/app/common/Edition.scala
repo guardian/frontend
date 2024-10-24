@@ -6,7 +6,6 @@ import java.util.Locale
 import org.joda.time.DateTimeZone
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import experiments.ActiveExperiments
 
 import java.time.ZoneId
 
@@ -17,22 +16,7 @@ abstract class Edition(
     val timezone: DateTimeZone,
     val locale: Option[Locale],
     val networkFrontId: String,
-    val editionalisedSections: Seq[String] = Seq(
-      "", // network front
-      "business",
-      "business-to-business",
-      "commentisfree",
-      "culture",
-      "money",
-      "sport",
-      "technology",
-      "media",
-      "environment",
-      "film",
-      "lifeandstyle",
-      "travel",
-      "tv-and-radio",
-    ),
+    val editionalisedSections: Seq[String] = Edition.commonEditionalisedSections,
     val navigationLinks: EditionNavLinks,
 ) {
   val homePagePath: String = s"/$networkFrontId"
@@ -62,6 +46,23 @@ object Edition {
       edition <- allEditions
       locale <- edition.locale
     } yield edition -> locale).toMap
+
+  lazy val commonEditionalisedSections: Seq[String] = Seq(
+    "", // network front
+    "business",
+    "business-to-business",
+    "commentisfree",
+    "culture",
+    "money",
+    "sport",
+    "technology",
+    "media",
+    "environment",
+    "film",
+    "lifeandstyle",
+    "travel",
+    "tv-and-radio",
+  )
 
   private def editionFromRequest(request: RequestHeader): String = {
     // override for Ajax calls
@@ -161,29 +162,3 @@ object Editionalise {
 }
 
 case class EditionLink(edition: Edition, path: String, locale: Locale)
-
-object InternationalEdition {
-
-  private val variants = Seq("control", "international")
-
-  def apply(request: RequestHeader): Option[String] = {
-
-    // This is all a bit hacky.
-    // we can get rid of it once we are done with the opt-in message.
-    val editionIsIntl = request.headers.get("X-GU-Edition").map(_.toLowerCase).contains("intl")
-    val editionSetByCookie = request.headers.get("X-GU-Edition-From-Cookie").contains("true")
-    val fromInternationalHeader = request.headers.get("X-GU-International").map(_.toLowerCase)
-    val setByCookie = request.cookies.get("GU_EDITION").map(_.value.toLowerCase).contains("intl")
-
-    // environments NOT behind the CDN will not have these. In this case assume they are in the
-    // "international" bucket
-    val noInternationalHeader = request.headers.get("X-GU-International").isEmpty
-
-    if (setByCookie || (editionIsIntl && (editionSetByCookie || noInternationalHeader))) {
-      Some("international")
-    } else {
-      fromInternationalHeader
-        .filter(variants.contains(_) && editionIsIntl)
-    }
-  }
-}

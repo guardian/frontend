@@ -12,6 +12,7 @@ object Uk
       timezone = DateTimeZone.forID("Europe/London"),
       locale = Some(Locale.forLanguageTag("en-gb")),
       networkFrontId = "uk",
+      editionalisedSections = Edition.commonEditionalisedSections :+ "thefilter",
       navigationLinks = EditionNavLinks(
         NavLinks.ukNewsPillar,
         NavLinks.ukOpinionPillar,
