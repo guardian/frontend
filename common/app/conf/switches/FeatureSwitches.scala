@@ -512,4 +512,14 @@ trait FeatureSwitches {
     sellByDate = LocalDate.of(2024, 11, 29),
     exposeClientSide = true,
   )
+
+  val DCARGalleryPages = Switch(
+    SwitchGroup.Feature,
+    "dcar-gallery-pages",
+    "If this switch is on, we will render gallery pages with DCAR",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
 }

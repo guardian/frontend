@@ -5,6 +5,7 @@ import model.Cors.RichRequestHeader
 import model.GalleryPage
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
+import conf.switches.Switches.DCARGalleryPages
 
 object GalleryPicker extends GuLogging {
 
@@ -22,13 +23,12 @@ object GalleryPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    val participatingInTest = false // until we create a test for this content type
     val dcrCanRender = dcrCouldRender(galleryPage)
 
     val tier = {
       if (request.forceDCROff) LocalRender
-      else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && participatingInTest) RemoteRender
+      else if (request.forceDCR && DCARGalleryPages.isSwitchedOn()) RemoteRender
+      else if (dcrCanRender && DCARGalleryPages.isSwitchedOn()) RemoteRender
       else LocalRender
     }
 
