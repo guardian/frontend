@@ -483,6 +483,16 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
+  val DCRAudioPages = Switch(
+    SwitchGroup.Feature,
+    "dcr-audio-pages",
+    "If this switch is on, we will render audio pages with DCR",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com"), Owner.withEmail("devx.e2e@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+  )
+
   val DCRVideoPages = Switch(
     SwitchGroup.Feature,
     "dcr-video-pages",
