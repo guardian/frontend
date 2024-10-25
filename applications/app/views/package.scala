@@ -42,7 +42,6 @@ object GalleryCaptionCleaners {
       GalleryCaptionCleaner,
       AffiliateLinksCleaner(
         request.uri,
-        page.gallery.content.metadata.sectionId,
         page.gallery.content.fields.showAffiliateLinks,
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
