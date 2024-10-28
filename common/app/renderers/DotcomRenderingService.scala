@@ -236,6 +236,27 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       })
   }
 
+  def getAppsBlocks(
+      ws: WSClient,
+      page: LiveBlogPage,
+      blocks: Seq[Block],
+  )(implicit request: RequestHeader): Future[String] = {
+    val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
+    val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
+
+    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks")
+      .flatMap(response => {
+        if (response.status == 200)
+          Future.successful(response.body)
+        else
+          Future.failed(
+            DCRRenderingException(
+              s"getBlocks request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}",
+            ),
+          )
+      })
+  }
+
   def getFront(
       ws: WSClient,
       page: PressedPage,
