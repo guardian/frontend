@@ -2,7 +2,6 @@ package services.dotcomrendering
 
 import common.{Edition, GuLogging}
 import conf.switches.Switches.{DCRFronts, DCRNetworkFronts}
-import experiments.{ActiveExperiments, RemoveLiteFronts}
 import implicits.Requests._
 import model.PressedPage
 import model.facia.PressedCollection
@@ -113,7 +112,6 @@ object FaciaPicker extends GuLogging {
     lazy val dcrCouldRender = checks.values.forall(checkValue => checkValue)
     lazy val isNetworkFront = faciaPage.isNetworkFront
     lazy val dcrNetworkFrontsSwitchEnabled = DCRNetworkFronts.isSwitchedOn
-    lazy val isFullFrontRequest = ActiveExperiments.isParticipating(RemoveLiteFronts)
 
     val tier =
       decideTier(
@@ -126,7 +124,7 @@ object FaciaPicker extends GuLogging {
         dcrNetworkFrontsSwitchEnabled,
       )
 
-    logTier(faciaPage, dcrCouldRender, checks, tier, isFullFrontRequest)
+    logTier(faciaPage, dcrCouldRender, checks, tier)
 
     tier
   }
@@ -157,7 +155,6 @@ object FaciaPicker extends GuLogging {
       dcrCouldRender: Boolean,
       checks: Map[String, Boolean],
       tier: RenderType,
-      isFullFrontRequest: Boolean,
   )(implicit request: RequestHeader): Unit = {
     val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web"
     val checksToString = checks.map { case (key, value) =>
@@ -170,7 +167,6 @@ object FaciaPicker extends GuLogging {
         "dcrCouldRender" -> dcrCouldRender.toString,
         "isFront" -> "true",
         "tier" -> tierReadable,
-        "isFullFrontRequest" -> isFullFrontRequest.toString,
       ) ++ checksToString
 
     DotcomFrontsLogger.logger.logRequest(s"front executing in $tierReadable", properties, faciaPage)

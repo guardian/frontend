@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      RemoveLiteFronts,
       EuropeBetaFront,
       DarkModeWeb,
     )
@@ -38,13 +37,4 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 1, 30),
       participationGroup = Perc0D,
-    )
-
-object RemoveLiteFronts
-    extends Experiment(
-      name = "remove-lite-fronts",
-      description = "Get the full pressed page of a front instead of the lite version",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 10, 30),
-      participationGroup = Perc10A,
     )
