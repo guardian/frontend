@@ -36,7 +36,7 @@ object DarkModeWeb
       name = "dark-mode-web",
       description = "Enable dark mode on web",
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2024, 10, 30),
+      sellByDate = LocalDate.of(2025, 1, 30),
       participationGroup = Perc0D,
     )
 
