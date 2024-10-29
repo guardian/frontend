@@ -278,6 +278,14 @@ class LiveBlogController(
     }
   }
 
+  private def getAppsBlocksHTML(page: LiveBlogPage, blocks: Seq[Block])(implicit
+      request: RequestHeader,
+  ): Future[Html] = {
+    remoteRenderer.getAppsBlocks(ws, page, blocks) map { result =>
+      new Html(result)
+    }
+  }
+
   private[this] def renderNewerUpdatesJson(
       page: LiveBlogPage,
       lastUpdateBlockId: SinceBlockId,
@@ -297,7 +305,9 @@ class LiveBlogController(
 
     for {
       blocksHtml <-
-        if (remoteRender) {
+        if (remoteRender && request.getRequestFormat == AppsFormat) {
+          getAppsBlocksHTML(page, newCapiBlocks)
+        } else if (remoteRender) {
           getDCRBlocksHTML(page, newCapiBlocks)
         } else {
           Future.successful(views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone))
