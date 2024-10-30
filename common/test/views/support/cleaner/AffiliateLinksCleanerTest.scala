@@ -21,55 +21,35 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
       switchedOn = false,
       None,
       Set.empty,
-      Set.empty,
       List.empty,
     ) should be(false)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      None,
-      Set.empty,
-      Set.empty,
-      List.empty,
-    ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       Some(false),
       Set.empty,
-      Set.empty,
       List.empty,
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       Some(true),
       Set.empty,
-      Set.empty,
       List.empty,
     ) should be(true)
     shouldAddAffiliateLinks(
       switchedOn = true,
       None,
-      Set("bereavement"),
-      Set.empty,
-      List("bereavement"),
-    ) should be(false)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      None,
-      Set("bereavement"),
       Set.empty,
       List("tech"),
-    ) should be(true)
+    ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       Some(true),
-      Set.empty,
       Set("bereavement"),
       List("bereavement"),
     ) should be(false)
     shouldAddAffiliateLinks(
       switchedOn = true,
       Some(true),
-      Set.empty,
       Set("bereavement"),
       List("tech"),
     ) should be(true)

@@ -934,7 +934,7 @@ object AffiliateLinksCleaner {
     if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && switchedOn) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
-      }
+      } else false
     } else false
   }
 
