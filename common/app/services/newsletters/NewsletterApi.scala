@@ -4,7 +4,7 @@ import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
 import play.api.libs.ws.WSClient
-import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, NewslettersGetResponseV2Body}
+import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, NewslettersGetResponseV2Body, NewsletterLayoutsResponseBody, NewsletterLayoutGroup}
 
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,6 +34,16 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
     getBody("api/newsletters").map { json =>
       json.validate[NewslettersGetResponseV2Body] match {
         case succ: JsSuccess[NewslettersGetResponseV2Body] =>
+          Right(succ.get.data)
+        case err: JsError => Left(err.toString)
+      }
+    }
+  }
+
+  def getNewsletterLayouts(): Future[Either[String, Map[String, List[NewsletterLayoutGroup]]]] = {
+    getBody("api/layouts").map { json =>
+      json.validate[NewsletterLayoutsResponseBody] match {
+        case succ: JsSuccess[NewsletterLayoutsResponseBody] =>
           Right(succ.get.data)
         case err: JsError => Left(err.toString)
       }
