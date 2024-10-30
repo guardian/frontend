@@ -73,3 +73,29 @@ object NewslettersGetResponseV2Body {
   implicit val newslettersGetResponseV2BodyWrites: OWrites[NewslettersGetResponseV2Body] =
     Json.writes[NewslettersGetResponseV2Body]
 }
+
+case class NewsletterLayoutGroup (
+  title: String,
+  subtitle: Option[String],
+  newsletters: List[String],
+)
+
+object NewsletterLayoutGroup {
+    implicit val newsletterLayoutGroupReads: Reads[NewsletterLayoutGroup] =
+    Json.reads[NewsletterLayoutGroup]
+  implicit val newsletterLayoutGroupWrites: OWrites[NewsletterLayoutGroup] =
+    Json.writes[NewsletterLayoutGroup]
+}
+
+case class NewsletterLayoutsResponseBody(
+    ok: Boolean,
+    total: Int,
+    data: Map[String, List[NewsletterLayoutGroup]]
+)
+
+object NewsletterLayoutsResponseBody {
+    implicit val newsletterLayoutsResponseBodyReads: Reads[NewsletterLayoutsResponseBody] =
+    Json.reads[NewsletterLayoutsResponseBody]
+  implicit val newsletterLayoutsResponseBodyWrites: OWrites[NewsletterLayoutsResponseBody] =
+    Json.writes[NewsletterLayoutsResponseBody]
+}
