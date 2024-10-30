@@ -258,7 +258,6 @@ object DotcomRenderingUtils {
         AffiliateLinksCleaner.shouldAddAffiliateLinks(
           switchedOn = Switches.AffiliateLinks.isSwitchedOn,
           showAffiliateLinks = content.content.fields.showAffiliateLinks,
-          defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
           alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
           tagPaths = content.content.tags.tags.map(_.id),
         )

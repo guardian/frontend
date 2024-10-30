@@ -289,8 +289,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val bucket: Option[String] = configuration.getStringProperty("skimlinks.bucket")
     lazy val domainsKey = "skimlinks/skimlinks-domains.csv"
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
-    lazy val defaultOffTags: Set[String] =
-      configuration.getStringProperty("affiliatelinks.default.off.tags").getOrElse("").split(",").toSet
     lazy val alwaysOffTags: Set[String] =
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
   }

@@ -875,7 +875,6 @@ case class AffiliateLinksCleaner(
       AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(
         AffiliateLinks.isSwitchedOn,
         showAffiliateLinks,
-        defaultOffTags,
         alwaysOffTags,
         tags,
       )
@@ -927,7 +926,6 @@ object AffiliateLinksCleaner {
   def shouldAddAffiliateLinks(
       switchedOn: Boolean,
       showAffiliateLinks: Option[Boolean],
-      defaultOffTags: Set[String],
       alwaysOffTags: Set[String],
       tagPaths: List[String],
   ): Boolean = {
@@ -936,8 +934,6 @@ object AffiliateLinksCleaner {
     if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && switchedOn) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
-      } else {
-        !tagPaths.exists(path => defaultOffTags.contains(path))
       }
     } else false
   }
