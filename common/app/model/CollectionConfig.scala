@@ -1,7 +1,7 @@
 package model.pressed
 
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform, Primary, Secondary}
 
 final case class CollectionConfig(
     displayName: Option[String],
@@ -29,11 +29,15 @@ object CollectionConfig {
 
   def make(config: fapi.CollectionConfig): CollectionConfig = {
 
+
     /** Extract `primary` or `secondary` collection level tag from metadata if present. Collection level is a concept
-      * that allows the platforms to style containers differently based on their "level"
-      */
+     * that allows the platforms to style containers differently based on their "level"
+     */
     val collectionLevel: Option[Metadata] = config.metadata.flatMap { metadataList =>
-      metadataList.find(tag => tag == "primary" || tag == "secondary")
+      metadataList.collectFirst {
+        case Primary => Primary
+        case Secondary => Secondary
+      }
     }
 
     CollectionConfig(
