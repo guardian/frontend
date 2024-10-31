@@ -8,6 +8,7 @@ final case class CollectionConfig(
     backfill: Option[Backfill],
     metadata: Option[Seq[Metadata]],
     collectionType: String,
+    collectionLevel: Option[Metadata],
     href: Option[String],
     description: Option[String],
     groups: Option[List[String]],
@@ -25,12 +26,22 @@ final case class CollectionConfig(
 )
 
 object CollectionConfig {
+
   def make(config: fapi.CollectionConfig): CollectionConfig = {
+
+    /** Extract `primary` or `secondary` collection level tag from metadata if present. Collection level is a concept
+      * that allows the platforms to style containers differently based on their "level"
+      */
+    val collectionLevel: Option[Metadata] = config.metadata.flatMap { metadataList =>
+      metadataList.find(tag => tag == "primary" || tag == "secondary")
+    }
+
     CollectionConfig(
       displayName = config.displayName,
       backfill = config.backfill,
       metadata = config.metadata,
       collectionType = config.collectionType,
+      collectionLevel = collectionLevel,
       href = config.href,
       description = config.description,
       groups = config.groups.map(_.groups),
