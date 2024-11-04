@@ -23,6 +23,7 @@ final case class CollectionConfig(
     hideShowMore: Boolean,
     displayHints: Option[DisplayHints],
     platform: Option[CollectionPlatform] = None,
+    suppressImages: Option[Boolean],
 )
 
 object CollectionConfig {
@@ -59,6 +60,7 @@ object CollectionConfig {
       hideShowMore = config.hideShowMore,
       displayHints = config.displayHints.map(DisplayHints.make),
       platform = Some(config.platform),
+      suppressImages = Some(config.suppressImages),
     )
   }
 
