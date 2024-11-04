@@ -8,7 +8,7 @@ final case class CollectionConfig(
     backfill: Option[Backfill],
     metadata: Option[Seq[Metadata]],
     collectionType: String,
-    collectionLevel: Option[Metadata],
+    collectionLevel: Option[String],
     href: Option[String],
     description: Option[String],
     groups: Option[List[String]],
@@ -32,10 +32,10 @@ object CollectionConfig {
     /** Extract `primary` or `secondary` collection level tag from metadata if present. Collection level is a concept
       * that allows the platforms to style containers differently based on their "level"
       */
-    val collectionLevel: Option[Metadata] = config.metadata.flatMap { metadataList =>
+    val collectionLevel: Option[String] = config.metadata.flatMap { metadataList =>
       metadataList.collectFirst {
-        case Primary   => Primary
-        case Secondary => Secondary
+        case Primary   => "Primary"
+        case Secondary => "Secondary"
       }
     }
 
