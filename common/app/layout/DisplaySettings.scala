@@ -2,6 +2,7 @@ package layout
 
 import com.gu.facia.api.utils.BoostLevel
 import model.pressed._
+import play.twirl.api.TwirlFeatureImports.twirlOptionToBoolean
 
 case class DisplaySettings(
     isBoosted: Boolean,
@@ -13,13 +14,13 @@ case class DisplaySettings(
 )
 
 object DisplaySettings {
-  def fromTrail(faciaContent: PressedContent): DisplaySettings =
+  def fromTrail(faciaContent: PressedContent, config: CollectionConfig): DisplaySettings =
     DisplaySettings(
       faciaContent.display.isBoosted,
       faciaContent.display.boostLevel,
       faciaContent.display.showBoostedHeadline,
       faciaContent.display.showQuotedHeadline,
-      faciaContent.display.imageHide,
+      Some(config.suppressImages) || faciaContent.display.imageHide,
       faciaContent.display.showLivePlayable,
     )
 }
