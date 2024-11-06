@@ -995,11 +995,21 @@ object Interactive {
     val fields = content.fields
     val section = content.metadata.sectionId
 
+    val opengraphProperties: Map[String, String] = Map(
+      ("og:type", "article"),
+      ("article:published_time", content.trail.webPublicationDate.toString()),
+      ("article:modified_time", content.fields.lastModified.toString()),
+      ("article:tag", content.tags.keywords.map(_.name).mkString(",")),
+      ("article:section", content.trail.sectionName),
+      ("article:publisher", "https://www.facebook.com/theguardian"),
+    )
+
     val metadata = content.metadata.copy(
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map("twitter:title" -> fields.linkText),
       contentWithSlimHeader = InteractiveHeaderSwitch.isSwitchedOff,
+      opengraphPropertiesOverrides = opengraphProperties,
     )
     val contentOverrides = content.copy(
       metadata = metadata,
