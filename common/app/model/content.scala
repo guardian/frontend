@@ -1009,7 +1009,7 @@ object Interactive {
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map("twitter:title" -> fields.linkText),
       contentWithSlimHeader = InteractiveHeaderSwitch.isSwitchedOff,
-      opengraphPropertiesOverrides = opengraphProperties
+      opengraphPropertiesOverrides = opengraphProperties,
     )
     val contentOverrides = content.copy(
       metadata = metadata,
