@@ -20,6 +20,7 @@ abstract case class Experiment(
     conf.switches.Off,
     sellByDate,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   sealed abstract class ExperimentValue(val value: String)

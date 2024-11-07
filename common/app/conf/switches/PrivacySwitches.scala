@@ -14,5 +14,6 @@ trait PrivacySwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = true,
   )
 }

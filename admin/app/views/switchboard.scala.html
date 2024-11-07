@@ -51,6 +51,9 @@
                                                 checked="checked" }/>
                                             <strong>@switch.name</strong>
                                         </label>
+                                        @if(switch.highImpact) {
+                                            <span>!!!</span>
+                                        }
                                         <span> - @switch.description
                                             @expiry.daysToExpiry.map{ days => <strong> @days</strong> days left}</span>
                                     </div>

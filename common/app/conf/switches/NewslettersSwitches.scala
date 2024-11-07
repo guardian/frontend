@@ -13,6 +13,7 @@ trait NewslettersSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val NewslettersRemoveConfirmationStep = Switch(
@@ -23,6 +24,7 @@ trait NewslettersSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val ShowNewPrivacyWordingOnEmailSignupEmbeds = Switch(
@@ -33,6 +35,7 @@ trait NewslettersSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ValidateEmailSignupRecaptchaTokens = Switch(
@@ -43,6 +46,7 @@ trait NewslettersSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val UseDcrNewslettersPage = Switch(
@@ -53,5 +57,6 @@ trait NewslettersSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 }
