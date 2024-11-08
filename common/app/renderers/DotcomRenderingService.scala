@@ -28,7 +28,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import services.newsletters.model.NewsletterResponseV2
+import services.newsletters.model.{NewsletterResponseV2, NewsletterLayoutGroup}
 import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
@@ -342,10 +342,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getEmailNewsletters(
       ws: WSClient,
       newsletters: List[NewsletterResponseV2],
+      layout: List[NewsletterLayoutGroup],
       page: SimplePage,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
+    val dataModel = DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, layout, request)
     val json = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.faciaBaseURL + "/EmailNewsletters", CacheTime.Facia)
   }

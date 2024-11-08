@@ -1,6 +1,6 @@
 package controllers
 
-import common.{GuLogging, ImplicitControllerExecutionContext}
+import common.{GuLogging, ImplicitControllerExecutionContext, Edition}
 import conf.switches.Switches.UseDcrNewslettersPage
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
@@ -11,7 +11,7 @@ import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
-import services.newsletters.model.NewsletterResponseV2
+import services.newsletters.model.{NewsletterResponseV2, NewsletterLayoutGroup}
 import staticpages.StaticPages
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -62,15 +62,23 @@ class SignupPageController(
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
 
-    newsletters match {
-      case Right(newsletters) =>
-        remoteRenderer.getEmailNewsletters(
-          ws = wsClient,
-          newsletters = newsletters,
-          page = StaticPages.dcrSimpleNewsletterPage(request.path),
-        )
+    val newsletterLayout = getRightLayout(Edition.edition(request), getLayouts())
+
+    newsletterLayout match {
+      case Right(layout) => newsletters match {
+        case Right(newsletters) =>
+          remoteRenderer.getEmailNewsletters(
+            ws = wsClient,
+            newsletters = newsletters,
+            layout = layout,
+            page = StaticPages.dcrSimpleNewsletterPage(request.path),
+          )
+        case Left(e) =>
+          log.error(s"API call to get newsletters failed: $e")
+          Future(NoCache(InternalServerError))
+      }
       case Left(e) =>
-        log.error(s"API call to get newsletters failed: $e")
+        log.error(s"API call to get newsletters layouts failed: $e")
         Future(NoCache(InternalServerError))
     }
   }
@@ -81,19 +89,49 @@ class SignupPageController(
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
 
-    newsletters match {
-      case Right(newsletters) => {
-        val page = StaticPages.dcrSimpleNewsletterPage(request.path)
-        val dataModel =
-          DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
-        val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
-        Future.successful(common.renderJson(dataJson, page).as("application/json"))
+    val newsletterLayout = getRightLayout(Edition.edition(request), getLayouts())
+
+    newsletterLayout match {
+      case Right(layout) => newsletters match {
+        case Right(newsletters) => {
+          val page = StaticPages.dcrSimpleNewsletterPage(request.path)
+          val dataModel =
+            DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, layout, request)
+          val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
+          Future.successful(common.renderJson(dataJson, page).as("application/json"))
+        }
+        case Left(e) =>
+          log.error(s"API call to get newsletters failed: $e")
+          throw new RuntimeException()
       }
       case Left(e) =>
-        log.error(s"API call to get newsletters failed: $e")
-        throw new RuntimeException()
+        log.error(s"API call to get newsletters layouts failed: $e")
+        Future(NoCache(InternalServerError))
     }
   }
+
+  private def getLayouts():Map[String, List[NewsletterLayoutGroup]] = {
+    newsletterSignupAgent.getNewsletterLayouts() match {
+      case Right(layoutsMap) => layoutsMap
+      case Left(_) => Map.empty
+    }
+  }
+
+  private def getRightLayout(edition: Edition, layouts: Map[String, List[NewsletterLayoutGroup]]): Either[String, List[NewsletterLayoutGroup]] = {
+    val layoutForEdition = layouts.get(edition.id);
+    val fallbackLayout = layouts.get("UK");
+
+    layoutForEdition match {
+      case Some(layout) => Right(layout)
+      case None => {
+        fallbackLayout match {
+          case Some(layout) => Right(layout)
+          case None => Left("No UK layout to fallback to")
+        }
+      }
+    }
+  }
+
 
   private def notFoundPage()(implicit
       request: RequestHeader,
