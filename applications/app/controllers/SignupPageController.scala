@@ -99,11 +99,11 @@ class SignupPageController(
   }
 
   private def getLayout()(implicit
-    request: RequestHeader,
+      request: RequestHeader,
   ): Option[List[NewsletterLayoutGroup]] = {
-    val layouts:Map[String, List[NewsletterLayoutGroup]] = newsletterSignupAgent.getNewsletterLayouts() match {
+    val layouts: Map[String, List[NewsletterLayoutGroup]] = newsletterSignupAgent.getNewsletterLayouts() match {
       case Right(layoutsMap) => layoutsMap
-      case Left(_) => Map.empty
+      case Left(_)           => Map.empty
     }
     layouts.get(Edition.edition(request).id)
   }

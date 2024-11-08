@@ -4,7 +4,13 @@ import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
 import play.api.libs.ws.WSClient
-import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, NewslettersGetResponseV2Body, NewsletterLayoutsResponseBody, NewsletterLayoutGroup}
+import services.newsletters.model.{
+  NewsletterResponse,
+  NewsletterResponseV2,
+  NewslettersGetResponseV2Body,
+  NewsletterLayoutsResponseBody,
+  NewsletterLayoutGroup,
+}
 
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
