@@ -26,7 +26,9 @@ trait CommercialSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
-    highImpact = false,
+    highImpact = true,
+    impactShortMessage = Some("Critical for advertising!"),
+    impactFullMessage = Some("Warning: Requires director-level sign-off + notification of global commerical stakeholders. Disabling this switch will cost £160k/day in ad-revenue"),
   )
 
   val ImrWorldwideSwitch = Switch(
@@ -104,7 +106,9 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
-    highImpact = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter'"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
   )
 
   val AffiliateLinkSections: Switch = Switch(
@@ -138,7 +142,9 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
-    highImpact = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for Amazon A9 (TAM) header bidding"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent Amazon A9 (TAM) from running"),
   )
 
   val commercialMetrics: Switch = Switch(

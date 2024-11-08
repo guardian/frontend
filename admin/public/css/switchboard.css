@@ -24,9 +24,10 @@ input[type=text] {
 }
 
 .switch__high-impact-warning {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     border: 2px solid rgb(243, 193, 0);
     border-radius: 16px;
     background-color: rgba(243, 193, 0, 0.25);
     padding: 4px 8px;
+    margin-left: 4px;
 }
