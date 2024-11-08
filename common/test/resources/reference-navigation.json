@@ -88,6 +88,12 @@
 					"classList": []
 				},
 				{
+					"title": "US elections 2024",
+					"url": "/us-news/us-elections-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "World",
 					"url": "/world",
 					"longTitle": "World news",
@@ -2504,6 +2510,12 @@
 					"classList": []
 				},
 				{
+					"title": "US elections 2024",
+					"url": "/us-news/us-elections-2024",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "UK",
 					"url": "/uk-news",
 					"longTitle": "UK news",
@@ -3501,6 +3513,12 @@
 							"classList": []
 						}
 					],
+					"classList": []
+				},
+				{
+					"title": "US elections 2024",
+					"url": "/us-news/us-elections-2024",
+					"children": [],
 					"classList": []
 				},
 				{

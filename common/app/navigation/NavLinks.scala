@@ -279,6 +279,7 @@ object NavLinks {
     iconName = Some("home"),
     List(
       ukNews,
+      usElections2024,
       world,
       climateCrisis,
       ukraine,
@@ -331,6 +332,7 @@ object NavLinks {
   val intNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
+      usElections2024,
       ukNews,
       climateCrisis,
       ukraine,
