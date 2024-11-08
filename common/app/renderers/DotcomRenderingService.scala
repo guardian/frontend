@@ -342,7 +342,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getEmailNewsletters(
       ws: WSClient,
       newsletters: List[NewsletterResponseV2],
-      layout: List[NewsletterLayoutGroup],
+      layout: Option[List[NewsletterLayoutGroup]],
       page: SimplePage,
   )(implicit request: RequestHeader): Future[Result] = {
 

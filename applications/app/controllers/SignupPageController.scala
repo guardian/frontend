@@ -61,24 +61,18 @@ class SignupPageController(
 
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
+    val layout = getLayout()
 
-    val newsletterLayout = getRightLayout(Edition.edition(request), getLayouts())
-
-    newsletterLayout match {
-      case Right(layout) => newsletters match {
-        case Right(newsletters) =>
-          remoteRenderer.getEmailNewsletters(
-            ws = wsClient,
-            newsletters = newsletters,
-            layout = layout,
-            page = StaticPages.dcrSimpleNewsletterPage(request.path),
-          )
-        case Left(e) =>
-          log.error(s"API call to get newsletters failed: $e")
-          Future(NoCache(InternalServerError))
-      }
+    newsletters match {
+      case Right(newsletters) =>
+        remoteRenderer.getEmailNewsletters(
+          ws = wsClient,
+          newsletters = newsletters,
+          layout = layout,
+          page = StaticPages.dcrSimpleNewsletterPage(request.path),
+        )
       case Left(e) =>
-        log.error(s"API call to get newsletters layouts failed: $e")
+        log.error(s"API call to get newsletters failed: $e")
         Future(NoCache(InternalServerError))
     }
   }
@@ -89,49 +83,30 @@ class SignupPageController(
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
 
-    val newsletterLayout = getRightLayout(Edition.edition(request), getLayouts())
-
-    newsletterLayout match {
-      case Right(layout) => newsletters match {
-        case Right(newsletters) => {
-          val page = StaticPages.dcrSimpleNewsletterPage(request.path)
-          val dataModel =
-            DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, layout, request)
-          val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
-          Future.successful(common.renderJson(dataJson, page).as("application/json"))
-        }
-        case Left(e) =>
-          log.error(s"API call to get newsletters failed: $e")
-          throw new RuntimeException()
+    newsletters match {
+      case Right(newsletters) => {
+        val page = StaticPages.dcrSimpleNewsletterPage(request.path)
+        val layout = getLayout()
+        val dataModel =
+          DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, layout, request)
+        val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
+        Future.successful(common.renderJson(dataJson, page).as("application/json"))
       }
       case Left(e) =>
-        log.error(s"API call to get newsletters layouts failed: $e")
-        Future(NoCache(InternalServerError))
+        log.error(s"API call to get newsletters failed: $e")
+        throw new RuntimeException()
     }
   }
 
-  private def getLayouts():Map[String, List[NewsletterLayoutGroup]] = {
-    newsletterSignupAgent.getNewsletterLayouts() match {
+  private def getLayout()(implicit
+    request: RequestHeader,
+  ): Option[List[NewsletterLayoutGroup]] = {
+    val layouts:Map[String, List[NewsletterLayoutGroup]] = newsletterSignupAgent.getNewsletterLayouts() match {
       case Right(layoutsMap) => layoutsMap
       case Left(_) => Map.empty
     }
+    layouts.get(Edition.edition(request).id)
   }
-
-  private def getRightLayout(edition: Edition, layouts: Map[String, List[NewsletterLayoutGroup]]): Either[String, List[NewsletterLayoutGroup]] = {
-    val layoutForEdition = layouts.get(edition.id);
-    val fallbackLayout = layouts.get("UK");
-
-    layoutForEdition match {
-      case Some(layout) => Right(layout)
-      case None => {
-        fallbackLayout match {
-          case Some(layout) => Right(layout)
-          case None => Left("No UK layout to fallback to")
-        }
-      }
-    }
-  }
-
 
   private def notFoundPage()(implicit
       request: RequestHeader,

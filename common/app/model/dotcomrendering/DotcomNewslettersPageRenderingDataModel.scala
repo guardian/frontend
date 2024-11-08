@@ -17,7 +17,7 @@ import services.NewsletterData
 
 case class DotcomNewslettersPageRenderingDataModel(
     newsletters: List[NewsletterData],
-    layout: List[NewsletterLayoutGroup],
+    layout: Option[List[NewsletterLayoutGroup]],
     id: String,
     editionId: String,
     editionLongForm: String,
@@ -43,7 +43,7 @@ object DotcomNewslettersPageRenderingDataModel {
   def apply(
       page: SimplePage,
       newsletters: List[NewsletterResponseV2],
-      layout: List[NewsletterLayoutGroup],
+      layout: Option[List[NewsletterLayoutGroup]],
       request: RequestHeader,
   ): DotcomNewslettersPageRenderingDataModel = {
     val edition = Edition.edition(request)
