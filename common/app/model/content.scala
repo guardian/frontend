@@ -88,23 +88,20 @@ final case class Content(
   lazy val isImmersive =
     fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists { tag => tag.id == "tone/advertisement-features" }
-  lazy val isUsNews: Boolean = tags.tags.exists { tag => tag.id == "us-news/us-news" }
-  lazy val isUsElectionNews: Boolean = tags.tags.exists { tag => tag.id == "us-news/us-elections-2024" }
   lazy val isTheFilter: Boolean = tags.tags.exists { tag => tag.id == "thefilter/series/the-filter" }
-
   lazy val campaigns: List[Campaign] =
     _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val shouldAmplify: Boolean = {
     val shouldAmplifyContent = {
       if (tags.isLiveBlog) {
-        AmpLiveBlogSwitch.isSwitchedOn && !isUsNews && !isUsElectionNews
+        AmpLiveBlogSwitch.isSwitchedOn
       } else if (tags.isArticle) {
         val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
         // Some Labs pages have quiz atoms but are not tagged as quizzes
         val hasQuizAtoms: Boolean = atoms.exists(a => a.quizzes.nonEmpty)
 
-        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz && !hasQuizAtoms && !isUsNews && !isUsElectionNews && !isTheFilter
+        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz && !hasQuizAtoms && !isTheFilter
       } else {
         false
       }
