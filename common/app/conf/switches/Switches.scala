@@ -78,6 +78,8 @@ case class Switch(
     sellByDate: Option[LocalDate],
     exposeClientSide: Boolean,
     highImpact: Boolean,
+    impactShortMessage: Option[String] = None,
+    impactFullMessage: Option[String] = None,
 ) extends Switchable
     with Initializable[Switch] {
 
