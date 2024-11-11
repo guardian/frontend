@@ -6,7 +6,7 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.{Configuration, DiscussionAsset}
+import conf.Configuration
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag

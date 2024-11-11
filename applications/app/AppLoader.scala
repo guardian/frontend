@@ -4,7 +4,6 @@ import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics, EmailSubsciptionMetrics}
 import _root_.commercial.targeting.TargetingLifecycle
-import common.Assets.DiscussionExternalAssetsLifecycle
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
@@ -62,7 +61,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[SiteMapLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[TargetingLifecycle],
-    wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[NewsletterSignupLifecycle],
   )
