@@ -54,4 +54,14 @@ trait ABTestSwitches {
     sellByDate = Some(LocalDate.of(2024, 12, 18)),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-new-header-bidding-endpoint",
+    "Test new header bidding (prebid) analytics endpoint",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 12, 2)),
+    exposeClientSide = true,
+  )
 }
