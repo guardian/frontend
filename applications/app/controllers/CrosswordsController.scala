@@ -289,3 +289,18 @@ class CrosswordSearchController(
 
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
+
+class CrosswordEditionsController(val controllerComponents: ControllerComponents)
+    extends BaseController
+    with GuLogging
+    with ImplicitControllerExecutionContext {
+
+  def digitalEdition: Action[AnyContent] =
+    Action.async { implicit request =>
+      Future.successful(
+        Cached(CacheTime.Default)(
+          RevalidatableResult.Ok("Digital Edition Crossword Entry Point"),
+        ),
+      )
+    }
+}
