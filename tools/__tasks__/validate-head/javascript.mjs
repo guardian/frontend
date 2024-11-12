@@ -27,9 +27,8 @@ const task = {
 								proc.then(() =>
 									Promise.all(
 										batchedFiles.map((filePath) =>
-											execa
-												.shell(
-													`git show HEAD:${filePath} | eslint --stdin --stdin-filename ${filePath}`,
+											execa(
+													`git show HEAD:${filePath} | eslint --stdin --stdin-filename ${filePath}`, {shell: true}
 												)
 												.catch((e) => {
 													errors.push(e);
