@@ -178,7 +178,7 @@ object FooterLinks {
   val usListThree = List(
     FooterLink(
       "Advertise with us",
-      "https://advertising.theguardian.com/us/advertising",
+      "https://usadvertising.theguardian.com",
       "us : footer : advertise with us",
     ),
     FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
@@ -189,7 +189,7 @@ object FooterLinks {
     FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
     FooterLink(
       "Advertise with us",
-      "https://advertising.theguardian.com/au/advertising",
+      "https://ausadvertising.theguardian.com/",
       "au : footer : advertise with us",
     ),
     cookiePolicy,
