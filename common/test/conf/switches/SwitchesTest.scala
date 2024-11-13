@@ -41,6 +41,7 @@ class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
       safeState = Off,
       sellByDate = Some(switchExpiryDate),
       exposeClientSide = true,
+      highImpact = false,
     )
 
   def foreverSwitch: Switch =
@@ -52,6 +53,7 @@ class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
       safeState = Off,
       sellByDate = None,
       exposeClientSide = true,
+      highImpact = false,
     )
 
   "Switches" should "not be near expiry over a week in advance" in {
