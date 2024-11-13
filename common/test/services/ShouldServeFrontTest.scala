@@ -77,6 +77,7 @@ class ShouldServeFrontTest
         frontsToolSettings = None,
         userVisibility = None,
         targetedTerritory = None,
+        suppressImages = None,
       ),
     ),
   )
