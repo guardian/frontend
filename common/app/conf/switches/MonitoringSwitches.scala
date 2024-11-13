@@ -13,6 +13,7 @@ trait MonitoringSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val SentryReporting = Switch(
@@ -23,6 +24,7 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ComscoreSwitch = Switch(
@@ -33,6 +35,7 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ThirdPartyEmbedTracking = Switch(
@@ -43,6 +46,7 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val LogstashLogging = Switch(
@@ -53,6 +57,7 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val LogRemovedAmpElements = Switch(
@@ -63,6 +68,7 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val CompareVariantDecisions = Switch(
@@ -73,6 +79,7 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
 }

@@ -77,6 +77,9 @@ case class Switch(
     safeState: SwitchState,
     sellByDate: Option[LocalDate],
     exposeClientSide: Boolean,
+    highImpact: Boolean,
+    impactShortMessage: Option[String] = None,
+    impactFullMessage: Option[String] = None,
 ) extends Switchable
     with Initializable[Switch] {
 
@@ -125,6 +128,7 @@ object Switch {
       safeState: SwitchState,
       sellByDate: LocalDate,
       exposeClientSide: Boolean,
+      highImpact: Boolean,
   ): Switch =
     Switch(
       group,
@@ -134,6 +138,7 @@ object Switch {
       safeState,
       Some(sellByDate),
       exposeClientSide,
+      highImpact,
     )
 
   val switches = Box[List[Switch]](Nil)

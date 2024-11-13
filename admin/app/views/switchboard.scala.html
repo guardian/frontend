@@ -48,11 +48,17 @@
                                             }
                                         >
                                             <input id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) {
-                                                checked="checked" }/>
+                                                checked="checked" } @if(switch.highImpact) {
+                                                    data-high-impact="true"
+                                                    data-impact-warning="@switch.impactFullMessage"
+                                                }/>
                                             <strong>@switch.name</strong>
                                         </label>
                                         <span> - @switch.description
                                             @expiry.daysToExpiry.map{ days => <strong> @days</strong> days left}</span>
+                                        @if(switch.highImpact) {
+                                            <span class="switch__high-impact-warning">⚠️ @switch.impactShortMessage</span>
+                                        }
                                     </div>
                                 }
                             }

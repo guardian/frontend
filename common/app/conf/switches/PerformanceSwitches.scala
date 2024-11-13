@@ -13,6 +13,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   // Performance
@@ -24,6 +25,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val LongCacheSwitch = Switch(
@@ -34,6 +36,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val PanicShedding = Switch(
@@ -44,6 +47,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val interactivePressing = Switch(
@@ -54,6 +58,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val CircuitBreakerSwitch = Switch(
@@ -64,6 +69,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val CircuitBreakerDcrSwitch = Switch(
@@ -74,6 +80,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val AutoRefreshSwitch = Switch(
@@ -84,6 +91,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val RelatedContentSwitch = Switch(
@@ -94,6 +102,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val RichLinkSwitch = Switch(
@@ -104,6 +113,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val InlineCriticalCss = Switch(
@@ -114,6 +124,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val AsyncCss = Switch(
@@ -125,6 +136,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val PolyfillIO = Switch(
@@ -135,6 +147,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val PolyfillIOFallbackMin = Switch(
@@ -145,6 +158,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val ShowAllArticleEmbedsSwitch = Switch(
@@ -155,6 +169,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val ExternalVideoEmbeds = Switch(
@@ -165,6 +180,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val DiscussionPageSizeSwitch = Switch(
@@ -175,6 +191,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ImageServerSwitch = Switch(
@@ -185,6 +202,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val LazyLoadImages = Switch(
@@ -195,6 +213,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val AdaptiveSite = Switch(
@@ -205,6 +224,7 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ShorterSurrogateCacheForRecentArticles = Switch(
@@ -215,6 +235,7 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = LocalDate.of(2024, 11, 19),
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val ShorterSurrogateCacheForOlderArticles = Switch(
@@ -225,5 +246,6 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = LocalDate.of(2024, 11, 19),
     exposeClientSide = false,
+    highImpact = false,
   )
 }

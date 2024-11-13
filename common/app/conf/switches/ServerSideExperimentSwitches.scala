@@ -20,6 +20,7 @@ trait ServerSideExperimentSwitches {
       safeState = Off,
       sellByDate = never,
       exposeClientSide = false,
+      highImpact = false,
     )
   }
 
@@ -31,6 +32,7 @@ trait ServerSideExperimentSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
 }
