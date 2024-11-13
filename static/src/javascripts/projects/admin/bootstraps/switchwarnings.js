@@ -3,7 +3,7 @@ const init = () => {
 	if (!$switchboard) return;
 
 	const $highImpactSwitches = Array.from(
-		$switchboard.querySelectorAll('[data-high-impact="true"]'),
+		$switchboard.querySelectorAll('input[data-high-impact="true"]'),
 	);
 	const $saveButton = document.querySelector('input[value="Save"]');
 
@@ -20,10 +20,10 @@ const init = () => {
 				event.currentTarget.checked = !event.currentTarget.checked;
 			}
 
-			const makeButtonScary = $highImpactSwitches.some(
-				(highImpactSwitch) => !highImpactSwitch.checked,
+			const $makeButtonScary = $highImpactSwitches.some(
+				($hiSwitch) => !$hiSwitch.checked,
 			);
-			if (makeButtonScary) {
+			if ($makeButtonScary) {
 				$saveButton.classList.add('btn-danger');
 			} else {
 				$saveButton.classList.remove('btn-danger');
