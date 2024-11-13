@@ -68,5 +68,6 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 12, 2)),
     exposeClientSide = true,
+    highImpact = false,
   )
 }
