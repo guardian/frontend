@@ -28,7 +28,9 @@ trait CommercialSwitches {
     exposeClientSide = true,
     highImpact = true,
     impactShortMessage = Some("Critical for advertising!"),
-    impactFullMessage = Some("Warning: Requires director-level sign-off + notification of global commerical stakeholders. Disabling this switch will cost £160k/day in ad-revenue"),
+    impactFullMessage = Some(
+      "Warning: Requires director-level sign-off + notification of global commerical stakeholders. Disabling this switch will cost £160k/day in ad-revenue",
+    ),
   )
 
   val ImrWorldwideSwitch = Switch(
