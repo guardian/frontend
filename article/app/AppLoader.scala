@@ -2,7 +2,6 @@ import _root_.commercial.targeting.TargetingLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
-import common.Assets.DiscussionExternalAssetsLifecycle
 import common._
 import common.dfp.DfpAgentLifecycle
 import concurrent.BlockingOperations
@@ -51,7 +50,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[TargetingLifecycle],
-    wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
     wire[NewsletterSignupLifecycle],
