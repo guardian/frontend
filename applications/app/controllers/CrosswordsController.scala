@@ -1,19 +1,13 @@
 package controllers
 
+import com.gu.contentapi.client.model.v1.Content.unsafeEmpty.crossword
+import com.gu.contentapi.client.model.v1.CrosswordType.{Cryptic, Quick}
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
-import crosswords.{
-  AccessibleCrosswordPage,
-  AccessibleCrosswordRows,
-  CrosswordPageWithContent,
-  CrosswordPageWithSvg,
-  CrosswordSearchPageNoResult,
-  CrosswordSearchPageWithResults,
-  CrosswordSvg,
-}
+import crosswords.{AccessibleCrosswordPage, AccessibleCrosswordRows, CrosswordPageWithContent, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults, CrosswordSvg}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
@@ -22,6 +16,8 @@ import play.api.data._
 import play.api.mvc.{Action, RequestHeader, Result, _}
 import services.{IndexPage, IndexPageItem}
 import html.HtmlPageHelpers.ContentCSSFile
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
@@ -290,11 +286,12 @@ class CrosswordSearchController(
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
 
-class CrosswordEditionsController(val controllerComponents: ControllerComponents)
-    extends BaseController
+class CrosswordEditionsController(
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
-
   def digitalEdition: Action[AnyContent] =
     Action.async { implicit request =>
       Future.successful(
@@ -303,4 +300,29 @@ class CrosswordEditionsController(val controllerComponents: ControllerComponents
         ),
       )
     }
+
+  def getCrosswords: Action[AnyContent] = Action.async { implicit request =>
+    contentApiClient
+      .getResponse(
+        contentApiClient.item(s"crosswords"),
+      )
+      .flatMap { response =>
+        val crosswords = for {
+          results <- response.results
+          quick <- results.find(_.crossword.exists(_.`type` == Quick)).flatMap(_.crossword)
+          cryptic <- results.find(_.crossword.exists(_.`type` == Cryptic)).flatMap(_.crossword)
+        } yield (quick, cryptic)
+
+        crosswords match {
+          case Some((quick, cryptic)) =>
+            val crosswordPage = EditionsCrosswordRenderingDataModel(quick, cryptic)
+            Future.successful(
+              Cached(CacheTime.Default)(
+                RevalidatableResult.Ok(toJson(crosswordPage)),
+              ).as("application/json"),
+            )
+          case None => Future.successful(NotFound)
+        }
+      }
+  }
 }
