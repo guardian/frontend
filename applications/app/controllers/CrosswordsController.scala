@@ -7,7 +7,15 @@ import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
-import crosswords.{AccessibleCrosswordPage, AccessibleCrosswordRows, CrosswordPageWithContent, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults, CrosswordSvg}
+import crosswords.{
+  AccessibleCrosswordPage,
+  AccessibleCrosswordRows,
+  CrosswordPageWithContent,
+  CrosswordPageWithSvg,
+  CrosswordSearchPageNoResult,
+  CrosswordSearchPageWithResults,
+  CrosswordSvg,
+}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
@@ -289,6 +297,8 @@ class CrosswordSearchController(
 class CrosswordEditionsController(
     val contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
+    val remoteRenderer: DotcomRenderingService = DotcomRenderingService(),
+    val wsClient: WSClient,
 ) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
@@ -316,6 +326,7 @@ class CrosswordEditionsController(
         crosswords match {
           case Some((quick, cryptic)) =>
             val crosswordPage = EditionsCrosswordRenderingDataModel(quick, cryptic)
+            remoteRenderer.getEditionsCrossword(wsClient, quick, cryptic)
             Future.successful(
               Cached(CacheTime.Default)(
                 RevalidatableResult.Ok(toJson(crosswordPage)),

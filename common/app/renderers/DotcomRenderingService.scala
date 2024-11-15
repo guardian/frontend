@@ -1,7 +1,7 @@
 package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
+import com.gu.contentapi.client.model.v1.{Block, Blocks, Content, Crossword}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -10,6 +10,7 @@ import crosswords.CrosswordPageWithContent
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.{
   CacheTime,
   Cached,
@@ -416,6 +417,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getEditionsCrossword(
+      ws: WSClient,
+      quickCrossword: Crossword,
+      crypticCrossword: Crossword,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = EditionsCrosswordRenderingDataModel(quickCrossword, crypticCrossword)
+    val json = EditionsCrosswordRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Facia)
   }
 }
 
