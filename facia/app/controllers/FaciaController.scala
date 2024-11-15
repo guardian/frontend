@@ -33,7 +33,6 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-
 trait FaciaController
     extends BaseController
     with GuLogging

@@ -55,20 +55,45 @@ object SnapStuff {
     }
 
     faciaContent.properties.embedType match {
-      case Some("latest") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml, newsletterId = None))
-      case Some("link")   => newsletterId match {
-        case Some(id)     => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendNewsletterSnap, embedHtml, newsletterId = Some(id)))
-        case None         => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml, newsletterId = None))
-      }
+      case Some("latest") =>
+        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml, newsletterId = None))
+      case Some("link") =>
+        newsletterId match {
+          case Some(id) =>
+            Some(
+              SnapStuff(
+                snapData,
+                faciaContent.properties.embedCss,
+                FrontendNewsletterSnap,
+                embedHtml,
+                newsletterId = Some(id),
+              ),
+            )
+          case None =>
+            Some(
+              SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml, newsletterId = None),
+            )
+        }
       case Some("interactive") =>
-        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml, embedCss, embedJs, newsletterId = None))
-      case Some(_) => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml, newsletterId = None))
-      case None    => None
+        Some(
+          SnapStuff(
+            snapData,
+            faciaContent.properties.embedCss,
+            FrontendLinkSnap,
+            embedHtml,
+            embedCss,
+            embedJs,
+            newsletterId = None,
+          ),
+        )
+      case Some(_) =>
+        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml, newsletterId = None))
+      case None => None
     }
   }
 
-  private def isNewsletterApiUri(href:String):Boolean = {
-   val prefix:Option[String] =  for {
+  private def isNewsletterApiUri(href: String): Boolean = {
+    val prefix: Option[String] = for {
       host <- newsletterApi.host
       origin <- newsletterApi.origin
     } yield {
@@ -85,10 +110,10 @@ object SnapStuff {
     }
   }
 
-  private def extractNewsletterId(newsleterApiUri:String):Option[String] = {
+  private def extractNewsletterId(newsleterApiUri: String): Option[String] = {
     isNewsletterApiUri(newsleterApiUri) match {
       case true => {
-        val lastPartofPath:String = new URI(newsleterApiUri).getPath.tail
+        val lastPartofPath: String = new URI(newsleterApiUri).getPath.tail
         Some(lastPartofPath)
       }
       case _ => None
