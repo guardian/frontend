@@ -227,7 +227,7 @@ trait FaciaController
     // Europe beta experiment
     // Phase 1 prevents users from being able to view the europe-beta front unless opted into the test
     val inEuropeBetaTest = ActiveExperiments.isParticipating(EuropeBetaFront)
-    if (path == "europe-beta" && !inEuropeBetaTest) {
+    if (path == "europe-beta" && !inEuropeBetaTest && !context.isPreview) {
       return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
     }
 

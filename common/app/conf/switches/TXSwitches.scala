@@ -11,6 +11,7 @@ trait TXSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val contentCardsSwitch = Switch(
@@ -21,6 +22,7 @@ trait TXSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val brazeTaylorReport = Switch(
@@ -31,5 +33,6 @@ trait TXSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 }

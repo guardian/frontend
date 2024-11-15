@@ -11,6 +11,7 @@ trait DiscussionSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val DiscussionAllowAnonymousRecommendsSwitch = Switch(
@@ -21,6 +22,7 @@ trait DiscussionSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val DiscussionFetchExternalAssets = Switch(
@@ -31,6 +33,7 @@ trait DiscussionSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val RegisterWithPhoneNumber = Switch(
@@ -41,6 +44,7 @@ trait DiscussionSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val EnableDiscussionSwitch = Switch(
@@ -51,6 +55,7 @@ trait DiscussionSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
 }

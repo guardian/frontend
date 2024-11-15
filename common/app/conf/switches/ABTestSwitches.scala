@@ -13,6 +13,7 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2025, 12, 1)),
     exposeClientSide = true,
+    highImpact = false,
   )
 
   Switch(
@@ -23,6 +24,7 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2025, 12, 1)),
     exposeClientSide = true,
+    highImpact = false,
   )
 
   Switch(
@@ -33,6 +35,7 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2025, 2, 24)),
     exposeClientSide = true,
+    highImpact = false,
   )
 
   Switch(
@@ -43,6 +46,7 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 12, 2)),
     exposeClientSide = true,
+    highImpact = false,
   )
 
   Switch(
@@ -53,6 +57,7 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 12, 18)),
     exposeClientSide = true,
+    highImpact = false,
   )
 
   Switch(
@@ -63,5 +68,6 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = Some(LocalDate.of(2024, 12, 2)),
     exposeClientSide = true,
+    highImpact = false,
   )
 }

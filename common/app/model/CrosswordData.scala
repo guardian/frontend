@@ -155,7 +155,7 @@ object CrosswordData {
       crossword.date.toJoda,
       content.webPublicationDate.fold(crossword.date.toJoda)(_.toJoda),
       sortedNewEntries.toSeq,
-      crossword.solutionAvailable,
+      solutionAvailable = shipSolutions,
       crossword.dateSolutionAvailable.map(_.toJoda),
       CrosswordDimensions(crossword.dimensions.cols, crossword.dimensions.rows),
       crosswordType,

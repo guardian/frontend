@@ -41,6 +41,6 @@ object FaciaContentConvert {
         .toMap,
     )
 
-    PressedContent.make(curated)
+    PressedContent.make(curated, false)
   }
 }

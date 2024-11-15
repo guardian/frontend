@@ -50,9 +50,9 @@ sealed trait PressedContent {
 }
 
 object PressedContent {
-  def make(content: fapi.FaciaContent): PressedContent =
+  def make(content: fapi.FaciaContent, suppressImages: Boolean): PressedContent =
     content match {
-      case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
+      case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent, suppressImages)
       case supportingCuratedContent: fapi.SupportingCuratedContent =>
         SupportingCuratedContent.make(supportingCuratedContent)
       case linkSnap: fapi.LinkSnap     => LinkSnap.make(linkSnap)
@@ -78,15 +78,15 @@ final case class CuratedContent(
 }
 
 object CuratedContent {
-  def make(content: fapi.CuratedContent): CuratedContent = {
+  def make(content: fapi.CuratedContent, suppressImages: Boolean): CuratedContent = {
     CuratedContent(
       properties = PressedProperties.make(content),
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
+      display = PressedDisplaySettings.make(content, Some(suppressImages)),
       format = ContentFormat.fromFapiContentFormat(content.format),
-      supportingContent = content.supportingContent.map(PressedContent.make),
+      supportingContent = content.supportingContent.map((sc) => PressedContent.make(sc, false)),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
     )
@@ -112,7 +112,7 @@ object SupportingCuratedContent {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
+      display = PressedDisplaySettings.make(content, None),
       format = ContentFormat.fromFapiContentFormat(content.format),
       cardStyle = CardStyle.make(content.cardStyle),
     )
@@ -140,7 +140,7 @@ object LinkSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
+      display = PressedDisplaySettings.make(content, None),
       enriched = Some(EnrichedContent.empty),
       format = ContentFormat.defaultContentFormat,
     )
@@ -166,7 +166,7 @@ object LatestSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content),
+      display = PressedDisplaySettings.make(content, None),
       format = ContentFormat.fromFapiContentFormat(content.format),
     )
   }
