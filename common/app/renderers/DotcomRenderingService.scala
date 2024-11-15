@@ -265,6 +265,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostCommented: Option[Content],
       mostShared: Option[Content],
       deeplyRead: Option[Seq[Trail]],
+      newsletters: List[NewsletterResponseV2],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomFrontsRenderingDataModel(
       page,
@@ -274,6 +275,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mostCommented,
       mostShared,
       deeplyRead,
+      newsletters,
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)

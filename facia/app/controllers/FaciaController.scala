@@ -24,6 +24,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
+import services.newsletters.NewsletterSignupAgent
 import services.{CollectionConfigWithId, ConfigAgent}
 import utils.TargetedCollections
 import views.html.fragments.containers.facia_cards.container
@@ -31,6 +32,8 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
+
+// TO DO - need to wire the NewsletterSignupAgent into this controller
 
 trait FaciaController
     extends BaseController
@@ -272,6 +275,7 @@ trait FaciaController
             mostCommented = mostViewedAgent.mostCommented,
             mostShared = mostViewedAgent.mostShared,
             deeplyRead = deeplyRead,
+            newsletters = List.empty,
           )(request),
           targetedTerritories,
         )
@@ -297,6 +301,7 @@ trait FaciaController
               mostCommented = mostViewedAgent.mostCommented,
               mostShared = mostViewedAgent.mostShared,
               deeplyRead = deeplyRead,
+              newsletters = List.empty
             ),
           )
         } else JsonFront(faciaPage)

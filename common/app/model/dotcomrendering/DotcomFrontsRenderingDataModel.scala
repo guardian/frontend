@@ -8,6 +8,8 @@ import com.gu.contentapi.client.model.v1.Content
 import experiments.ActiveExperiments
 import layout.ContentCard
 import model.{PressedPage, RelatedContentItem}
+import services.NewsletterData
+import services.newsletters.model.NewsletterResponseV2
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
@@ -33,6 +35,7 @@ case class DotcomFrontsRenderingDataModel(
     deeplyRead: Option[Seq[Trail]],
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    newsletters: List[NewsletterData],
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -46,6 +49,7 @@ object DotcomFrontsRenderingDataModel {
       mostCommented: Option[Content],
       mostShared: Option[Content],
       deeplyRead: Option[Seq[Trail]],
+      newsletters: List[NewsletterResponseV2],
   ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
@@ -75,6 +79,14 @@ object DotcomFrontsRenderingDataModel {
       .map { _.perEdition.mapKeys(_.id) }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
+    // TO DO - could reduce payload size to DCR by only including the
+    // live newsletters for which there is some some item in some collection
+    // in the page which has a FrontendNewsletterSnap for which the
+    // newsletterId is the identityName of the newsletter
+    val newsletterData = newsletters
+      .filter((newsletter) => newsletter.status.equalsIgnoreCase(("live")))
+      .map((newsletter) => convertNewsletterResponseToData(newsletter))
+
     DotcomFrontsRenderingDataModel(
       pressedPage = page,
       nav = nav,
@@ -95,11 +107,28 @@ object DotcomFrontsRenderingDataModel {
       deeplyRead = deeplyRead,
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      newsletters = newsletterData,
     )
   }
 
   def toJson(model: DotcomFrontsRenderingDataModel): String = {
     val jsValue = Json.toJson(model)
     Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
+  }
+
+  // TO DO - refactor. this function is repeated in 3 places now
+  private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
+    NewsletterData(
+      response.identityName,
+      response.name,
+      response.theme,
+      response.signUpDescription,
+      response.frequency,
+      response.listId,
+      response.group,
+      response.mailSuccessDescription.getOrElse("You are subscribed"),
+      response.regionFocus,
+      response.illustrationCard,
+    )
   }
 }
