@@ -302,38 +302,25 @@ class CrosswordEditionsController(
 ) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
-  def digitalEdition: Action[AnyContent] =
-    Action.async { implicit request =>
-      Future.successful(
-        Cached(CacheTime.Default)(
-          RevalidatableResult.Ok("Digital Edition Crossword Entry Point"),
-        ),
-      )
-    }
 
-  def getCrosswords: Action[AnyContent] = Action.async { implicit request =>
-    contentApiClient
-      .getResponse(
-        contentApiClient.item(s"crosswords"),
-      )
-      .flatMap { response =>
-        val crosswords = for {
-          results <- response.results
-          quick <- results.find(_.crossword.exists(_.`type` == Quick)).flatMap(_.crossword)
-          cryptic <- results.find(_.crossword.exists(_.`type` == Cryptic)).flatMap(_.crossword)
-        } yield (quick, cryptic)
-
-        crosswords match {
-          case Some((quick, cryptic)) =>
-            val crosswordPage = EditionsCrosswordRenderingDataModel(quick, cryptic)
-            remoteRenderer.getEditionsCrossword(wsClient, quick, cryptic)
-            Future.successful(
-              Cached(CacheTime.Default)(
-                RevalidatableResult.Ok(toJson(crosswordPage)),
-              ).as("application/json"),
-            )
-          case None => Future.successful(NotFound)
-        }
+  def digitalEdition: Action[AnyContent] = Action.async { implicit request =>
+    getCrosswords
+      .map(parseCrosswords)
+      .flatMap {
+        case Some(crosswordPage) =>
+          remoteRenderer.getEditionsCrossword(wsClient, crosswordPage)
+        case None => Future.successful(NotFound)
       }
   }
+
+  private lazy val crosswordsQuery = contentApiClient.item("crosswords")
+
+  private def getCrosswords: Future[ItemResponse] = contentApiClient.getResponse(crosswordsQuery)
+
+  private def parseCrosswords(response: ItemResponse): Option[EditionsCrosswordRenderingDataModel] =
+    for {
+      results <- response.results
+      quick <- results.find(_.crossword.exists(_.`type` == Quick)).flatMap(_.crossword)
+      cryptic <- results.find(_.crossword.exists(_.`type` == Cryptic)).flatMap(_.crossword)
+    } yield EditionsCrosswordRenderingDataModel(quick, cryptic)
 }
