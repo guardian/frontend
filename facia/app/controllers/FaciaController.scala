@@ -33,7 +33,6 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-// TO DO - need to wire the NewsletterSignupAgent into this controller
 
 trait FaciaController
     extends BaseController
@@ -44,6 +43,7 @@ trait FaciaController
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
   val mostViewedAgent: MostViewedAgent
+  val newsletterSignupAgent: NewsletterSignupAgent
   val deeplyReadAgent: DeeplyReadAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val assets: Assets
@@ -275,7 +275,10 @@ trait FaciaController
             mostCommented = mostViewedAgent.mostCommented,
             mostShared = mostViewedAgent.mostShared,
             deeplyRead = deeplyRead,
-            newsletters = List.empty,
+            newsletters = newsletterSignupAgent.getV2Newsletters() match {
+              case Right(newsletters) => newsletters
+              case Left(_)            => List.empty
+            },
           )(request),
           targetedTerritories,
         )
@@ -301,7 +304,10 @@ trait FaciaController
               mostCommented = mostViewedAgent.mostCommented,
               mostShared = mostViewedAgent.mostShared,
               deeplyRead = deeplyRead,
-              newsletters = List.empty
+              newsletters = newsletterSignupAgent.getV2Newsletters() match {
+                case Right(newsletters) => newsletters
+                case Left(_)            => List.empty
+              },
             ),
           )
         } else JsonFront(faciaPage)
@@ -556,5 +562,6 @@ class FaciaControllerImpl(
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
     val assets: Assets,
+    val newsletterSignupAgent: NewsletterSignupAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController

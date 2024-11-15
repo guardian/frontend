@@ -33,6 +33,7 @@ import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 import conf.Configuration.aws.mandatoryCredentials
+import services.newsletters.{NewsletterSignupAgent, NewsletterApi}
 
 trait PreviewLifecycleComponents
     extends SportServices
@@ -141,6 +142,9 @@ trait AppComponents
     )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[PreviewErrorHandler]
+
+  override lazy val newsletterApi = wire[NewsletterApi]
+  override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
 }
 
 class AppLoader extends FrontendApplicationLoader {
