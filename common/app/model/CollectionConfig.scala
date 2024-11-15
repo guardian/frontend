@@ -29,13 +29,14 @@ object CollectionConfig {
 
   def make(config: fapi.CollectionConfig): CollectionConfig = {
 
-    /** Extract `primary` or `secondary` collection level tag from metadata if present. Collection level is a concept
-      * that allows the platforms to style containers differently based on their "level"
+    /** Collection level is a concept that allows the platforms to style containers differently based on their "level"
+      * All containers will have a `primary` or `secondary` collection level based on the tags in the metadata. If there
+      * is a SecondaryLevel tag, we set collectionLevel to "Secondary". Otherwise, we default to "Primary".
       */
     val collectionLevel: Option[String] = config.metadata.flatMap { metadataList =>
       metadataList.collectFirst {
-        case Primary   => "Primary"
-        case Secondary => "Secondary"
+        case SecondaryLevel => "Secondary"
+        case _              => "Primary"
       }
     }
 
