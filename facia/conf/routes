@@ -18,6 +18,8 @@ GET        /.well-known/security.txt.asc                                        
 
 GET        /.well-known/amphtml/apikey.pub                                          controllers.FaciaController.ampRsaPublicKey()
 
+GET        /.well-known/atproto-did                                             controllers.Assets.at(path="/public", file="atproto-did.txt")
+
 # AMP
 GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "")
 GET        /container/count/:count/offset/:offset/section/:section/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section)
