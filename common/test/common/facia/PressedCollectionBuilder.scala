@@ -22,7 +22,6 @@ object PressedCollectionBuilder {
       backfill = None,
       metadata = None,
       collectionType = "",
-      collectionLevel = None,
       href = None,
       description = None,
       groups = None,
