@@ -1,7 +1,7 @@
 export const UsaExpandableMarketingCard = {
 	id: 'UsaExpandableMarketingCard',
-	start: '2024-10-02',
-	expiry: '2024-12-18',
+	start: '2024-11-18',
+	expiry: '2024-01-29',
 	author: 'dotcom.platform@guardian.co.uk',
 	description:
 		'Test the impact of showing the user a component that highlights the Guardians journalism.',
@@ -21,6 +21,10 @@ export const UsaExpandableMarketingCard = {
 		},
 		{
 			id: 'variant-bubble',
+			test: () => {},
+		},
+		{
+			id: 'variant-billionaire',
 			test: () => {},
 		},
 	],
