@@ -3611,10 +3611,10 @@ __metadata:
   version: 23.7.4
   resolution: "@guardian/commercial@npm:23.7.4"
   dependencies:
-    "@guardian/prebid.js": "npm:8.52.0-8"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
+    prebid.js: "github:guardian/prebid.js#4d50ccf7d3f74561ef9d11a091fde5dd434d9810"
     process: "npm:^0.11.10"
     tslib: "npm:^2.6.2"
     web-vitals: "npm:^4.2.1"
@@ -3884,35 +3884,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/19f90e8948dded1345c21908888e0cdc6f461f6b66662dc0d9a194be54a959954ecf0e0d4b79213cda8191b4336c6a1bd814f23945b96849d2b18c7d6c5ab3f0
-  languageName: node
-  linkType: hard
-
-"@guardian/prebid.js@npm:8.52.0-8":
-  version: 8.52.0-8
-  resolution: "@guardian/prebid.js@npm:8.52.0-8"
-  dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/plugin-transform-runtime": "npm:^7.18.9"
-    "@babel/preset-env": "npm:^7.16.8"
-    "@babel/register": "npm:^7.24.6"
-    "@babel/runtime": "npm:^7.18.9"
-    "@guardian/libs": "npm:^18.0.0"
-    core-js: "npm:^3.13.0"
-    core-js-pure: "npm:^3.13.0"
-    criteo-direct-rsa-validate: "npm:^1.1.0"
-    crypto-js: "npm:^4.2.0"
-    dlv: "npm:1.1.3"
-    dset: "npm:3.1.4"
-    express: "npm:^4.15.4"
-    fsevents: "npm:^2.3.2"
-    fun-hooks: "npm:^0.9.9"
-    gulp-wrap: "npm:^0.15.0"
-    klona: "npm:^2.0.6"
-    live-connect-js: "npm:^6.7.3"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  checksum: 10c0/14f8afbc90f6738999898184b698611296e3d657c74a2467d9045b0129a582b9e7b4670343609f6645e69003504d80587b0d2e1c982ecc45d53a626eb2532260
   languageName: node
   linkType: hard
 
@@ -13867,6 +13838,35 @@ __metadata:
   version: 10.13.2
   resolution: "preact@npm:10.13.2"
   checksum: 10c0/58f0938c8d2682570079107d07bce2fe8201742d34d3d1e8837f4e521a5727b96faa1b67bd317efe8df67503e71e1c57f03792e0c63e3103e5334f5dbf11f84e
+  languageName: node
+  linkType: hard
+
+"prebid.js@github:guardian/prebid.js#4d50ccf7d3f74561ef9d11a091fde5dd434d9810":
+  version: 8.52.0-8
+  resolution: "prebid.js@https://github.com/guardian/prebid.js.git#commit=4d50ccf7d3f74561ef9d11a091fde5dd434d9810"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@babel/plugin-transform-runtime": "npm:^7.18.9"
+    "@babel/preset-env": "npm:^7.16.8"
+    "@babel/register": "npm:^7.24.6"
+    "@babel/runtime": "npm:^7.18.9"
+    "@guardian/libs": "npm:^18.0.0"
+    core-js: "npm:^3.13.0"
+    core-js-pure: "npm:^3.13.0"
+    criteo-direct-rsa-validate: "npm:^1.1.0"
+    crypto-js: "npm:^4.2.0"
+    dlv: "npm:1.1.3"
+    dset: "npm:3.1.4"
+    express: "npm:^4.15.4"
+    fsevents: "npm:^2.3.2"
+    fun-hooks: "npm:^0.9.9"
+    gulp-wrap: "npm:^0.15.0"
+    klona: "npm:^2.0.6"
+    live-connect-js: "npm:^6.7.3"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: 10c0/36d03517190e99d31a1f92154e6806db5b7cbdf6bf83d8cbc553a2cd1a1f73bdc4532c6b45d43cc1d781e5bef18258ff9b70ab67d2a502b78e2c582e7fed89f6
   languageName: node
   linkType: hard
 
