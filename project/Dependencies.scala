@@ -33,7 +33,7 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.6.0"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % "12.2.0-PREVIEW.glaspect-ratio.2024-11-19T1531.f7f1aaba"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
   /** There can only be one version of `scala-xml`. We will evict all v1.x
