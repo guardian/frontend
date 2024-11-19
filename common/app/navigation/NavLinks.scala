@@ -345,6 +345,22 @@ object NavLinks {
       obituaries,
     ),
   )
+  val eurNewsPillar = ukNewsPillar.copy(
+    children = List(
+      world,
+      usElections2024,
+      ukNews,
+      climateCrisis,
+      ukraine,
+      ukEnvironment,
+      science,
+      globalDevelopment,
+      football,
+      tech,
+      ukBusiness,
+      obituaries,
+    ),
+  )
 
   // Opinion Pillar
   val ukOpinionPillar = NavLink(
@@ -379,6 +395,15 @@ object NavLinks {
     ),
   )
   val intOpinionPillar = ukOpinionPillar.copy(
+    children = List(
+      theGuardianView,
+      columnists,
+      cartoons,
+      opinionVideos,
+      letters,
+    ),
+  )
+  val eurOpinionPillar = ukOpinionPillar.copy(
     children = List(
       theGuardianView,
       columnists,
@@ -447,6 +472,18 @@ object NavLinks {
       usSports,
     ),
   )
+  val eurSportPillar = ukSportPillar.copy(
+    children = List(
+      football,
+      cricket,
+      rugbyUnion,
+      tennis,
+      cycling,
+      formulaOne,
+      golf,
+      usSports,
+    ),
+  )
 
   // Culture Pillar
   val ukCulturePillar = NavLink(
@@ -490,6 +527,18 @@ object NavLinks {
     ),
   )
   val intCulturePillar = ukCulturePillar.copy(
+    children = List(
+      books,
+      music,
+      tvAndRadio,
+      artAndDesign,
+      film,
+      games,
+      classical,
+      stage,
+    ),
+  )
+  val eurCulturePillar = ukCulturePillar.copy(
     children = List(
       books,
       music,
@@ -565,6 +614,21 @@ object NavLinks {
       money,
     ),
   )
+  val eurLifestylePillar = ukLifestylePillar.copy(
+    children = List(
+      fashion,
+      food,
+      recipes,
+      loveAndSex,
+      health,
+      home,
+      women,
+      men,
+      family,
+      ukTravel,
+      money,
+    ),
+  )
 
   val ukOtherLinks = List(
     apps,
@@ -617,6 +681,20 @@ object NavLinks {
     wordiply,
     corrections,
   )
+  val eurOtherLinks = List(
+    apps,
+    video,
+    podcasts,
+    pictures,
+    newsletters,
+    todaysPaper,
+    insideTheGuardian,
+    observer,
+    weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
+    crosswords,
+    wordiply,
+    corrections,
+  )
 
   val ukBrandExtensions = List(
     jobs,
@@ -643,6 +721,13 @@ object NavLinks {
     aboutUs,
   )
   val intBrandExtensions = List(
+    jobs,
+    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
+    digitalNewspaperArchive,
+    guardianLicensing,
+    aboutUs,
+  )
+  val eurBrandExtensions = List(
     jobs,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
