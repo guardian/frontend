@@ -1,7 +1,7 @@
 package model.pressed
 
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform, Primary, Secondary}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform, Secondary}
 
 final case class CollectionConfig(
     displayName: Option[String],
