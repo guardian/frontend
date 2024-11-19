@@ -864,7 +864,6 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 
 case class AffiliateLinksCleaner(
     pageUrl: String,
-    sectionId: String,
     showAffiliateLinks: Option[Boolean],
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
@@ -875,10 +874,7 @@ case class AffiliateLinksCleaner(
     if (
       AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(
         AffiliateLinks.isSwitchedOn,
-        sectionId,
         showAffiliateLinks,
-        affiliateLinkSections,
-        defaultOffTags,
         alwaysOffTags,
         tags,
       )
@@ -929,10 +925,7 @@ object AffiliateLinksCleaner {
 
   def shouldAddAffiliateLinks(
       switchedOn: Boolean,
-      section: String,
       showAffiliateLinks: Option[Boolean],
-      supportedSections: Set[String],
-      defaultOffTags: Set[String],
       alwaysOffTags: Set[String],
       tagPaths: List[String],
   ): Boolean = {
@@ -941,9 +934,7 @@ object AffiliateLinksCleaner {
     if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && switchedOn) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
-      } else {
-        supportedSections.contains(section) && !tagPaths.exists(path => defaultOffTags.contains(path))
-      }
+      } else false
     } else false
   }
 

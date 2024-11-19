@@ -16,86 +16,45 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
   }
 
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
-    val supportedSections = Set("film", "books", "fashion")
-
+    // the switch is respected
     shouldAddAffiliateLinks(
       switchedOn = false,
-      "film",
       None,
-      supportedSections,
-      Set.empty,
       Set.empty,
       List.empty,
     ) should be(false)
+    // affiliate links are not added when showAffiliateLinks is false
     shouldAddAffiliateLinks(
       switchedOn = true,
-      "film",
-      None,
-      supportedSections,
-      Set.empty,
-      Set.empty,
-      List.empty,
-    ) should be(true)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      "film",
       Some(false),
-      supportedSections,
-      Set.empty,
       Set.empty,
       List.empty,
     ) should be(false)
+    // affiliate links are added when showAffiliateLinks is true and there are no alwaysOff tags present
     shouldAddAffiliateLinks(
       switchedOn = true,
-      "news",
       Some(true),
-      supportedSections,
-      Set.empty,
       Set.empty,
       List.empty,
     ) should be(true)
+    // affiliate links are not added when showAffiliateLinks is not defined
     shouldAddAffiliateLinks(
       switchedOn = true,
-      "news",
       None,
-      supportedSections,
-      Set("bereavement"),
-      Set.empty,
-      List("bereavement"),
-    ) should be(false)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      "news",
-      None,
-      supportedSections,
-      Set("bereavement"),
       Set.empty,
       List("tech"),
     ) should be(false)
+    // affiliate links are not added when an always off tag is present on the article
     shouldAddAffiliateLinks(
       switchedOn = true,
-      "fashion",
-      None,
-      supportedSections,
-      Set("bereavement"),
-      Set.empty,
-      List("tech"),
-    ) should be(true)
-    shouldAddAffiliateLinks(
-      switchedOn = true,
-      "fashion",
       Some(true),
-      supportedSections,
-      Set.empty,
       Set("bereavement"),
       List("bereavement"),
     ) should be(false)
+    // affiliate links are added when the tags are considered safe
     shouldAddAffiliateLinks(
       switchedOn = true,
-      "fashion",
       Some(true),
-      supportedSections,
-      Set.empty,
       Set("bereavement"),
       List("tech"),
     ) should be(true)

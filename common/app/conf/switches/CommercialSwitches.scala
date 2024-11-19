@@ -113,18 +113,6 @@ trait CommercialSwitches {
     impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
   )
 
-  val AffiliateLinkSections: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links-sections",
-    description =
-      "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-    highImpact = false,
-  )
-
   val confiantAdVerification: Switch = Switch(
     group = Commercial,
     name = "confiant-ad-verification",
