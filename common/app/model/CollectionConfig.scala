@@ -41,12 +41,12 @@ object CollectionConfig {
     )
 
     /** Collection level is a concept that allows the platforms to style containers differently based on their "level"
-      * If there is a SecondaryLevel tag in the metadata, we set collectionLevel to "Secondary". Otherwise we default it
-      * to "Primary" for beta collections or leave as None for non beta (legacy) collections
+      * If there is a Secondary tag in the metadata, we set collectionLevel to "Secondary". Otherwise we default it to
+      * "Primary" for beta collections or leave as None for non beta (legacy) collections
       */
     val collectionLevel: Option[String] = config.metadata.flatMap { metadataList =>
       metadataList.collectFirst {
-        case SecondaryLevel                                       => "Secondary"
+        case Secondary                                            => "Secondary"
         case _ if betaCollections.contains(config.collectionType) => "Primary"
       }
     }
