@@ -1,12 +1,10 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.Content.unsafeEmpty.crossword
 import com.gu.contentapi.client.model.v1.CrosswordType.{Cryptic, Quick}
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
-import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
@@ -16,20 +14,20 @@ import crosswords.{
   CrosswordSearchPageWithResults,
   CrosswordSvg,
 }
+import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.joda.time.{DateTime, LocalDate}
+import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.mvc.{Action, RequestHeader, Result, _}
-import services.{IndexPage, IndexPageItem}
-import html.HtmlPageHelpers.ContentCSSFile
-import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
-import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import play.api.libs.ws.WSClient
+import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{CrosswordsPicker, RemoteRender}
+import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
