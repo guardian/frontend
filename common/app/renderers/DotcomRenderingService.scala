@@ -424,7 +424,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       crosswords: EditionsCrosswordRenderingDataModel,
   )(implicit request: RequestHeader): Future[Result] = {
     val json = EditionsCrosswordRenderingDataModel.toJson(crosswords)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Default)
   }
 }
 
