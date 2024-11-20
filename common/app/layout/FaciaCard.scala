@@ -62,7 +62,7 @@ object FaciaCard {
       faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
       faciaContent.card.trailText,
       faciaContent.card.mediaType,
-      DisplaySettings.fromTrail(faciaContent),
+      DisplaySettings.fromTrail(faciaContent, config),
       faciaContent.card.isLive,
       if (config.showTimestamps) Option(DateTimestamp) else None,
       faciaContent.card.shortUrlPath,
