@@ -37,6 +37,12 @@ class GalleryController(
     lookup(path, index, isTrail) flatMap {
       case Right((model, _)) if model.gallery.content.isExpired =>
         Future.successful(RenderOtherStatus(Gone)) // TODO - delete this line after switching to new content api
+      case Right((model, blocks)) if request.isJson && request.forceDCR =>
+        val pageType = PageType(model, request, context)
+
+        Future.successful(
+          common.renderJson(getDCRJson(model, pageType, blocks), model).as("application/json"),
+        )
       case Right((model, blocks)) if GalleryPicker.getTier(model) == RemoteRender =>
         remoteRender(model, blocks)
       case Right((model, _)) => Future.successful(renderGallery(model))
@@ -48,18 +54,13 @@ class GalleryController(
       request: RequestHeader,
   ) = {
     val pageType = PageType(model, request, context)
-    if (request.isJson) {
-      Future.successful(
-        common.renderJson(getDCRJson(model, pageType, blocks), model).as("application/json"),
-      )
-    } else {
-      remoteRenderer.getGallery(
-        wsClient,
-        model,
-        pageType,
-        blocks,
-      )
-    }
+
+    remoteRenderer.getGallery(
+      wsClient,
+      model,
+      pageType,
+      blocks,
+    )
   }
 
   def lightboxJson(path: String): Action[AnyContent] =

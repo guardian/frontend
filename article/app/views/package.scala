@@ -80,7 +80,6 @@ object BodyProcessor {
       GarnettQuoteCleaner,
       AffiliateLinksCleaner(
         pageUrl = request.uri,
-        sectionId = article.content.metadata.sectionId,
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         tags = article.content.tags.tags.map(_.id),
       ),

@@ -1,10 +1,10 @@
 package controllers
 
+import com.gu.contentapi.client.model.v1.CrosswordType.{Cryptic, Quick}
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
-import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
@@ -14,18 +14,20 @@ import crosswords.{
   CrosswordSearchPageWithResults,
   CrosswordSvg,
 }
+import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.joda.time.{DateTime, LocalDate}
+import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.mvc.{Action, RequestHeader, Result, _}
-import services.{IndexPage, IndexPageItem}
-import html.HtmlPageHelpers.ContentCSSFile
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import play.api.libs.ws.WSClient
+import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{CrosswordsPicker, RemoteRender}
+import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -290,17 +292,33 @@ class CrosswordSearchController(
   case class CrosswordLookup(crosswordType: String, id: Int)
 }
 
-class CrosswordEditionsController(val controllerComponents: ControllerComponents)
-    extends BaseController
+class CrosswordEditionsController(
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val remoteRenderer: DotcomRenderingService = DotcomRenderingService(),
+    val wsClient: WSClient,
+) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  def digitalEdition: Action[AnyContent] =
-    Action.async { implicit request =>
-      Future.successful(
-        Cached(CacheTime.Default)(
-          RevalidatableResult.Ok("Digital Edition Crossword Entry Point"),
-        ),
-      )
-    }
+  def digitalEdition: Action[AnyContent] = Action.async { implicit request =>
+    getCrosswords
+      .map(parseCrosswords)
+      .flatMap {
+        case Some(crosswordPage) =>
+          remoteRenderer.getEditionsCrossword(wsClient, crosswordPage)
+        case None => Future.successful(NotFound)
+      }
+  }
+
+  private lazy val crosswordsQuery = contentApiClient.item("crosswords")
+
+  private def getCrosswords: Future[ItemResponse] = contentApiClient.getResponse(crosswordsQuery)
+
+  private def parseCrosswords(response: ItemResponse): Option[EditionsCrosswordRenderingDataModel] =
+    for {
+      results <- response.results
+      quick <- results.find(_.crossword.exists(_.`type` == Quick)).flatMap(_.crossword)
+      cryptic <- results.find(_.crossword.exists(_.`type` == Cryptic)).flatMap(_.crossword)
+    } yield EditionsCrosswordRenderingDataModel(quick, cryptic)
 }

@@ -257,10 +257,7 @@ object DotcomRenderingUtils {
       if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 150) {
         AffiliateLinksCleaner.shouldAddAffiliateLinks(
           switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-          section = content.metadata.sectionId,
           showAffiliateLinks = content.content.fields.showAffiliateLinks,
-          supportedSections = Configuration.affiliateLinks.affiliateLinkSections,
-          defaultOffTags = Configuration.affiliateLinks.defaultOffTags,
           alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
           tagPaths = content.content.tags.tags.map(_.id),
         )

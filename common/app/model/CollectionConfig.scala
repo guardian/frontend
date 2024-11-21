@@ -1,7 +1,7 @@
 package model.pressed
 
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform, Primary, Secondary}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform, Secondary}
 
 final case class CollectionConfig(
     displayName: Option[String],
@@ -29,14 +29,28 @@ object CollectionConfig {
 
   def make(config: fapi.CollectionConfig): CollectionConfig = {
 
-    /** Extract `primary` or `secondary` collection level tag from metadata if present. Collection level is a concept
-      * that allows the platforms to style containers differently based on their "level"
+    val betaCollections = List(
+      "flexible/special",
+      "flexible/general",
+      "scrollable/highlights",
+      "scrollable/small",
+      "scrollable/medium",
+      "scrollable/feature",
+      "static/medium/4",
+      "static/feature/2",
+    )
+
+    /** Collection level is a concept that allows the platforms to style containers differently based on their "level".
+      * Beta collections are "Secondary" if tagged as such or "Primary" otherwise. Legacy containers have no container
+      * level set.
       */
-    val collectionLevel: Option[String] = config.metadata.flatMap { metadataList =>
-      metadataList.collectFirst {
-        case Primary   => "Primary"
-        case Secondary => "Secondary"
+    val collectionLevel: Option[String] = if (betaCollections.contains(config.collectionType)) {
+      config.metadata.getOrElse(List.empty).find(_ == Secondary) match {
+        case Some(_) => Some("Secondary")
+        case None    => Some("Primary")
       }
+    } else {
+      None
     }
 
     CollectionConfig(
