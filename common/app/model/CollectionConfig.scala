@@ -54,7 +54,7 @@ object CollectionConfig {
       None
     }
 
-    val aspectRatio: String = fapi.CollectionConfig.AspectRatio.getAspectRatio(config.collectionType).label
+    val aspectRatio: String = fapi.CollectionConfig.getAspectRatio(config).label
 
     CollectionConfig(
       displayName = config.displayName,
