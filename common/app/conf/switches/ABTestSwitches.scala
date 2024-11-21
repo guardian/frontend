@@ -70,4 +70,14 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+  Switch(
+    ABTests,
+    "ab-gpid-prebid-ad-units",
+    "Test new GPID prebid ad units",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 12, 18)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

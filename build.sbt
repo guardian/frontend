@@ -31,6 +31,7 @@ val common = library("common")
       eTagCachingS3,
       nettyCodecHttp2,
       contentApiClient,
+      contentApiModelsJson,
       enumeratumPlayJson,
       filters,
       commonsLang,
