@@ -23,7 +23,7 @@ final case class CollectionConfig(
     hideShowMore: Boolean,
     displayHints: Option[DisplayHints],
     platform: Option[CollectionPlatform] = None,
-    aspectRatio: String,
+    aspectRatio: Option[String],
 )
 
 object CollectionConfig {
@@ -76,7 +76,7 @@ object CollectionConfig {
       hideShowMore = config.hideShowMore,
       displayHints = config.displayHints.map(DisplayHints.make),
       platform = Some(config.platform),
-      aspectRatio = aspectRatio,
+      aspectRatio = Some(aspectRatio),
     )
   }
 
