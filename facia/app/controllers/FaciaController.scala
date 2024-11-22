@@ -151,9 +151,9 @@ trait FaciaController
     Action.async { implicit request =>
       if (shouldEditionRedirect(path))
         redirectTo(Editionalise(path, Edition(request)))
-      else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
+      else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined) {
         applicationsRedirect(path)
-      else
+      } else
         renderFrontPressResult(path)
     }
 
@@ -220,33 +220,55 @@ trait FaciaController
     )
 
   import PressedPage.pressedPageFormat
-  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    // Europe beta experiment
-    // Phase 1 prevents users from being able to view the europe-beta front unless opted into the test
-    val inEuropeBetaTest = ActiveExperiments.isParticipating(EuropeBetaFront)
-    if (path == "europe-beta" && !inEuropeBetaTest && !context.isPreview) {
-      return successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-    }
-
-    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
-      case Some(faciaPage: PressedPage) =>
-        val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
-        val regionalFaciaPage = TargetedCollections.processTargetedCollections(
-          faciaPage,
-          request.territories,
-          context.isPreview,
-          pageContainsTargetedCollections,
+  private[controllers] def getFaciaPage(path: String)(implicit
+      request: RequestHeader,
+  ): Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+    case Some(faciaPage: PressedPage) =>
+      val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
+      val regionalFaciaPage = TargetedCollections.processTargetedCollections(
+        faciaPage,
+        request.territories,
+        context.isPreview,
+        pageContainsTargetedCollections,
+      )
+      if (conf.Configuration.environment.stage == "CODE") {
+        logInfoWithCustomFields(
+          s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}",
+          List(),
         )
-        if (conf.Configuration.environment.stage == "CODE") {
-          logInfoWithCustomFields(
-            s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}",
-            List(),
+      }
+      if (faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
+        frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
+      } else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
+    case None => Future.successful(None)
+  }
+
+  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
+    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = {
+      // Europe beta test
+      // Phase 2 swaps the collections on the Europe network front with those on the hidden europe-beta front
+      // for users participating in the test
+      if (path == "europe" && ActiveExperiments.isParticipating(EuropeBetaFront)) {
+        for (
+          faciaPage <- getFaciaPage(path);
+          europeBetaPage <- getFaciaPage("europe-beta")
+        )
+          yield for (
+            (pressedPage, _) <- faciaPage;
+            (pressedEuropeBetaPage, hasTargetedCollections) <- europeBetaPage
           )
-        }
-        if (faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
-          frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
-        } else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
-      case None => Future.successful(None)
+            yield (
+              PressedPage(
+                id = pressedPage.id,
+                seoData = pressedPage.seoData,
+                frontProperties = pressedPage.frontProperties,
+                collections = pressedEuropeBetaPage.collections,
+              ),
+              hasTargetedCollections,
+            )
+      } else {
+        getFaciaPage(path)
+      }
     }
 
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
