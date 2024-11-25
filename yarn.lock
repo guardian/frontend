@@ -3614,7 +3614,7 @@ __metadata:
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
-    prebid.js: "github:guardian/prebid.js#4d50ccf7d3f74561ef9d11a091fde5dd434d9810"
+    prebid.js: "github:guardian/prebid.js#6354bd62cdc350a34c77427f2e207c464b4cac51"
     process: "npm:^0.11.10"
     tslib: "npm:^2.6.2"
     web-vitals: "npm:^4.2.1"
@@ -13841,9 +13841,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prebid.js@github:guardian/prebid.js#4d50ccf7d3f74561ef9d11a091fde5dd434d9810":
+"prebid.js@github:guardian/prebid.js#6354bd62cdc350a34c77427f2e207c464b4cac51":
   version: 8.52.0-8
-  resolution: "prebid.js@https://github.com/guardian/prebid.js.git#commit=4d50ccf7d3f74561ef9d11a091fde5dd434d9810"
+  resolution: "prebid.js@https://github.com/guardian/prebid.js.git#commit=6354bd62cdc350a34c77427f2e207c464b4cac51"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
@@ -13866,7 +13866,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/36d03517190e99d31a1f92154e6806db5b7cbdf6bf83d8cbc553a2cd1a1f73bdc4532c6b45d43cc1d781e5bef18258ff9b70ab67d2a502b78e2c582e7fed89f6
+  checksum: 10c0/739e451921f502aea4c45fb40c70f0b1a45196d4027f179d094b1a7fa5391a27c753dcf53f1ac46ca5436f79660a52cf918bf4a90654fde001208c5d64059860
   languageName: node
   linkType: hard
 
