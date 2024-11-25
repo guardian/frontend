@@ -219,62 +219,28 @@ trait FaciaController
       targetedTerritories,
     )
 
-  import PressedPage.pressedPageFormat
-  private[controllers] def getFaciaPage(path: String)(implicit
-      request: RequestHeader,
-  ): Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
-    case Some(faciaPage: PressedPage) =>
-      val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
-      val regionalFaciaPage = TargetedCollections.processTargetedCollections(
-        faciaPage,
-        request.territories,
-        context.isPreview,
-        pageContainsTargetedCollections,
-      )
-      if (conf.Configuration.environment.stage == "CODE") {
-        logInfoWithCustomFields(
-          s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}",
-          List(),
-        )
-      }
-      if (faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
-        frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
-      } else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
-    case None => Future.successful(None)
-  }
-
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = {
-      // Europe beta test
-      // Phase 2 swaps the collections on the Europe network front with those on the hidden europe-beta front
-      // for users participating in the test
+    val fFaciaPage = getFaciaPage(path)
+
+    /** Europe Beta test: swaps the collections on the Europe network front with those on the hidden europe-beta front
+      * for users participating in the test
+      */
+    val futureFaciaPageWithEuropeBetaTest: Future[Option[(PressedPage, Boolean)]] = {
       if (path == "europe" && ActiveExperiments.isParticipating(EuropeBetaFront)) {
-        for (
-          faciaPage <- getFaciaPage(path);
-          europeBetaPage <- getFaciaPage("europe-beta")
-        )
-          yield for (
-            (pressedPage, _) <- faciaPage;
-            (pressedEuropeBetaPage, hasTargetedCollections) <- europeBetaPage
-          )
-            yield (
-              PressedPage(
-                id = pressedPage.id,
-                seoData = pressedPage.seoData,
-                frontProperties = pressedPage.frontProperties,
-                collections = pressedEuropeBetaPage.collections,
-              ),
-              hasTargetedCollections,
-            )
+        val fEuropeBetaPage = getFaciaPage("europe-beta")
+        for {
+          europePage <- fFaciaPage
+          europeBetaPage <- fEuropeBetaPage
+        } yield swapFaciaPageCollections(europePage, europeBetaPage)
       } else {
-        getFaciaPage(path)
+        fFaciaPage
       }
     }
 
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
-    val futureResult = futureFaciaPage.flatMap {
+    val futureResult = futureFaciaPageWithEuropeBetaTest.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, targetedTerritories))
@@ -336,6 +302,53 @@ trait FaciaController
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
     futureResult
+  }
+
+  import PressedPage.pressedPageFormat
+
+  /** Fetches facia page for path */
+  private[controllers] def getFaciaPage(path: String)(implicit
+      request: RequestHeader,
+  ): Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+    case Some(faciaPage: PressedPage) if faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType =>
+      frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
+    case Some(faciaPage: PressedPage) =>
+      val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
+      val regionalFaciaPage = TargetedCollections.processTargetedCollections(
+        faciaPage,
+        request.territories,
+        context.isPreview,
+        pageContainsTargetedCollections,
+      )
+      if (conf.Configuration.environment.stage == "CODE") {
+        logInfoWithCustomFields(
+          s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}",
+          List(),
+        )
+      }
+      Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
+    case None => Future.successful(None)
+  }
+
+  /** Swaps collections on a facia page with those on a hidden facia page. Originally set up for the Europe beta test
+    * where we return europe-beta collections on the europe front if participating
+    */
+  private def swapFaciaPageCollections(
+      faciaPage: Option[(PressedPage, Boolean)],
+      hiddenFaciaPage: Option[(PressedPage, Boolean)],
+  ): Option[(PressedPage, Boolean)] = {
+    for {
+      (pressedPage, _) <- faciaPage
+      (pressedHiddenPage, hasTargetedCollections) <- hiddenFaciaPage
+    } yield (
+      PressedPage(
+        id = pressedPage.id,
+        seoData = pressedPage.seoData,
+        frontProperties = pressedPage.frontProperties,
+        collections = pressedHiddenPage.collections,
+      ),
+      hasTargetedCollections,
+    )
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
