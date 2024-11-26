@@ -14,6 +14,7 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
+import conf.Configuration.newsletterApi
 
 case class DotcomFrontsRenderingDataModel(
     pressedPage: PressedPage,
@@ -36,6 +37,7 @@ case class DotcomFrontsRenderingDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     newsletters: List[NewsletterData],
+    newsletterApiUri: Option[String],
 )
 
 object DotcomFrontsRenderingDataModel {
@@ -108,6 +110,7 @@ object DotcomFrontsRenderingDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       newsletters = newsletterData,
+      newsletterApiUri = getNewsletterApiUri(),
     )
   }
 
@@ -130,5 +133,13 @@ object DotcomFrontsRenderingDataModel {
       response.regionFocus,
       response.illustrationCard,
     )
+  }
+
+  private def getNewsletterApiUri(): Option[String] = {
+    for {
+      host <- newsletterApi.host
+    } yield {
+      s"$host/api/newsletters"
+    }
   }
 }
