@@ -23,6 +23,7 @@ final case class CollectionConfig(
     hideShowMore: Boolean,
     displayHints: Option[DisplayHints],
     platform: Option[CollectionPlatform] = None,
+    aspectRatio: Option[String],
 )
 
 object CollectionConfig {
@@ -53,6 +54,8 @@ object CollectionConfig {
       None
     }
 
+    val aspectRatio: String = fapi.CollectionConfig.getAspectRatio(config).label
+
     CollectionConfig(
       displayName = config.displayName,
       backfill = config.backfill,
@@ -73,6 +76,7 @@ object CollectionConfig {
       hideShowMore = config.hideShowMore,
       displayHints = config.displayHints.map(DisplayHints.make),
       platform = Some(config.platform),
+      aspectRatio = Some(aspectRatio),
     )
   }
 
