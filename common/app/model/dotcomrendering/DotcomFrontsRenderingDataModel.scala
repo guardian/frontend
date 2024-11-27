@@ -98,8 +98,8 @@ object DotcomFrontsRenderingDataModel {
     )
   }
 
-  def toJson(model: DotcomFrontsRenderingDataModel): String = {
+  def toJson(model: DotcomFrontsRenderingDataModel): JsValue = {
     val jsValue = Json.toJson(model)
-    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
+    DotcomRenderingUtils.withoutNull(jsValue)
   }
 }
