@@ -220,20 +220,20 @@ trait FaciaController
     )
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
-    val fFaciaPage = getFaciaPage(path)
+    val futureFaciaPage = getFaciaPage(path)
 
     /** Europe Beta test: swaps the collections on the Europe network front with those on the hidden europe-beta front
       * for users participating in the test
       */
     val futureFaciaPageWithEuropeBetaTest: Future[Option[(PressedPage, Boolean)]] = {
       if (path == "europe" && ActiveExperiments.isParticipating(EuropeBetaFront)) {
-        val fEuropeBetaPage = getFaciaPage("europe-beta")
+        val futureEuropeBetaPage = getFaciaPage("europe-beta")
         for {
-          europePage <- fFaciaPage
-          europeBetaPage <- fEuropeBetaPage
-        } yield swapFaciaPageCollections(europePage, europeBetaPage)
+          europePage <- futureFaciaPage
+          europeBetaPage <- futureEuropeBetaPage
+        } yield replaceFaciaPageCollections(europePage, europeBetaPage)
       } else {
-        fFaciaPage
+        futureFaciaPage
       }
     }
 
@@ -330,24 +330,24 @@ trait FaciaController
     case None => Future.successful(None)
   }
 
-  /** Swaps collections on a facia page with those on a hidden facia page. Originally set up for the Europe beta test
-    * where we return europe-beta collections on the europe front if participating
+  /** Swaps collections on a given facia page with those on another facia page. Set up for the Europe beta test where we
+    * return europe-beta collections on the europe front if participating in the test
     */
-  private def swapFaciaPageCollections(
-      faciaPage: Option[(PressedPage, Boolean)],
-      hiddenFaciaPage: Option[(PressedPage, Boolean)],
+  private[controllers] def replaceFaciaPageCollections(
+      baseFaciaPage: Option[(PressedPage, Boolean)],
+      replacementFaciaPage: Option[(PressedPage, Boolean)],
   ): Option[(PressedPage, Boolean)] = {
     for {
-      (pressedPage, _) <- faciaPage
-      (pressedHiddenPage, hasTargetedCollections) <- hiddenFaciaPage
+      (basePage, _) <- baseFaciaPage
+      (replacementPage, replacementTargetedTerritories) <- replacementFaciaPage
     } yield (
       PressedPage(
-        id = pressedPage.id,
-        seoData = pressedPage.seoData,
-        frontProperties = pressedPage.frontProperties,
-        collections = pressedHiddenPage.collections,
+        id = basePage.id,
+        seoData = basePage.seoData,
+        frontProperties = basePage.frontProperties,
+        collections = replacementPage.collections,
       ),
-      hasTargetedCollections,
+      replacementTargetedTerritories,
     )
   }
 
