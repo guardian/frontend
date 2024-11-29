@@ -277,12 +277,12 @@ import scala.concurrent.{Await, Future}
     val result = faciaController invokePrivate replaceFaciaPageCollections(europePage, europeBetaPage)
     val (resultPressedPage, targetedTerritories) = result.get
     // The page metadata should remain unchanged
+    resultPressedPage.id should be("europe")
     resultPressedPage.id should not be "europe-beta"
     // The collections should come from the replacement page not the original page
     resultPressedPage.collections.exists(_ == europeBetaFaciaPageWithTargetedTerritory.collections(0)) should be(true)
     resultPressedPage.collections.exists(_ == europeFaciaPage.collections(0)) should be(false)
     // The value for targetedTerritories should come from the page with replacement collections
     targetedTerritories should be(true)
-
   }
 }
