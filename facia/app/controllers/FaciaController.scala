@@ -32,6 +32,8 @@ import views.support.FaciaToMicroFormat2Helpers.getCollection
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
+case class FaciaPage(pressedPage: PressedPage, hasTargetedCollections: Boolean)
+
 trait FaciaController
     extends BaseController
     with GuLogging
@@ -225,7 +227,7 @@ trait FaciaController
     /** Europe Beta test: swaps the collections on the Europe network front with those on the hidden europe-beta front
       * for users participating in the test
       */
-    val futureFaciaPageWithEuropeBetaTest: Future[Option[(PressedPage, Boolean)]] = {
+    val futureFaciaPageWithEuropeBetaTest: Future[Option[FaciaPage]] = {
       if (path == "europe" && ActiveExperiments.isParticipating(EuropeBetaFront)) {
         val futureEuropeBetaPage = getFaciaPage("europe-beta")
         for {
@@ -241,9 +243,9 @@ trait FaciaController
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
     val futureResult = futureFaciaPageWithEuropeBetaTest.flatMap {
-      case Some((faciaPage, _)) if nonHtmlEmail(request) =>
+      case Some(FaciaPage(faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
-      case Some((faciaPage: PressedPage, targetedTerritories))
+      case Some(FaciaPage(faciaPage, hasTargetedCollections))
           if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
@@ -261,16 +263,16 @@ trait FaciaController
             mostShared = mostViewedAgent.mostShared,
             deeplyRead = deeplyRead,
           )(request),
-          targetedTerritories,
+          hasTargetedCollections,
         )
-      case Some((faciaPage: PressedPage, targetedTerritories)) if request.isRss =>
+      case Some(FaciaPage(faciaPage, hasTargetedCollections)) if request.isRss =>
         val body = TrailsToRss.fromPressedPage(faciaPage)
 
         withVaryHeader(
           successful(Cached(CacheTime.Facia)(RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body))),
-          targetedTerritories,
+          hasTargetedCollections,
         )
-      case Some((faciaPage: PressedPage, targetedTerritories)) if request.isJson =>
+      case Some(FaciaPage(faciaPage, hasTargetedCollections)) if request.isJson =>
         val result = if (request.forceDCR) {
           log.info(
             s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
@@ -288,13 +290,13 @@ trait FaciaController
             ),
           )
         } else JsonFront(faciaPage)
-        resultWithVaryHeader(result, targetedTerritories)
-      case Some((faciaPage: PressedPage, targetedTerritories)) if request.isEmail || ConfigAgent.isEmailFront(path) =>
-        resultWithVaryHeader(renderEmail(faciaPage), targetedTerritories)
-      case Some((faciaPage: PressedPage, targetedTerritories)) if TrailsToShowcase.isShowcaseFront(faciaPage) =>
-        resultWithVaryHeader(renderShowcaseFront(faciaPage), targetedTerritories)
-      case Some((faciaPage: PressedPage, targetedTerritories)) =>
-        resultWithVaryAndPreloadHeader(RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage)), targetedTerritories)
+        resultWithVaryHeader(result, hasTargetedCollections)
+      case Some(FaciaPage(faciaPage, hasTargetedCollections)) if request.isEmail || ConfigAgent.isEmailFront(path) =>
+        resultWithVaryHeader(renderEmail(faciaPage), hasTargetedCollections)
+      case Some(FaciaPage(faciaPage, hasTargetedCollections)) if TrailsToShowcase.isShowcaseFront(faciaPage) =>
+        resultWithVaryHeader(renderShowcaseFront(faciaPage), hasTargetedCollections)
+      case Some(FaciaPage(faciaPage, hasTargetedCollections)) =>
+        resultWithVaryAndPreloadHeader(RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage)), hasTargetedCollections)
       case None => {
         successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       }
@@ -309,16 +311,16 @@ trait FaciaController
   /** Fetches facia page for path */
   private[controllers] def getFaciaPage(path: String)(implicit
       request: RequestHeader,
-  ): Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+  ): Future[Option[FaciaPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
     case Some(faciaPage: PressedPage) if faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType =>
-      frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
+      frontJsonFapi.get(path, LiteType).map(_.map(f => FaciaPage(f, hasTargetedCollections = false)))
     case Some(faciaPage: PressedPage) =>
-      val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
+      val hasTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
       val regionalFaciaPage = TargetedCollections.processTargetedCollections(
         faciaPage,
         request.territories,
         context.isPreview,
-        pageContainsTargetedCollections,
+        hasTargetedCollections,
       )
       if (conf.Configuration.environment.stage == "CODE") {
         logInfoWithCustomFields(
@@ -326,7 +328,7 @@ trait FaciaController
           List(),
         )
       }
-      Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
+      Future.successful(Some(FaciaPage(regionalFaciaPage, hasTargetedCollections)))
     case None => Future.successful(None)
   }
 
@@ -334,21 +336,21 @@ trait FaciaController
     * return europe-beta collections on the europe front if participating in the test
     */
   private[controllers] def replaceFaciaPageCollections(
-      baseFaciaPage: Option[(PressedPage, Boolean)],
-      replacementFaciaPage: Option[(PressedPage, Boolean)],
-  ): Option[(PressedPage, Boolean)] = {
+      baseFaciaPage: Option[FaciaPage],
+      replacementFaciaPage: Option[FaciaPage],
+  ): Option[FaciaPage] = {
     for {
-      (basePage, _) <- baseFaciaPage
-      (replacementPage, replacementTargetedTerritories) <- replacementFaciaPage
-    } yield (
-      PressedPage(
+      FaciaPage(basePage, _) <- baseFaciaPage
+      FaciaPage(replacementPage, replacementHasTargetedCollections) <- replacementFaciaPage
+    } yield (FaciaPage(
+      pressedPage = PressedPage(
         id = basePage.id,
         seoData = basePage.seoData,
         frontProperties = basePage.frontProperties,
         collections = replacementPage.collections,
       ),
-      replacementTargetedTerritories,
-    )
+      hasTargetedCollections = replacementHasTargetedCollections,
+    ))
   }
 
   private def renderEmail(faciaPage: PressedPage)(implicit request: RequestHeader) = {
