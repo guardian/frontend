@@ -23,6 +23,7 @@ import org.joda.time.{DateTime, LocalDate}
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
 import play.api.data._
+import play.api.libs.json.JsValue
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
@@ -117,7 +118,7 @@ class CrosswordPageController(
   }
   private def getDCRJson(crosswordPage: CrosswordPageWithContent, pageType: PageType)(implicit
       request: RequestHeader,
-  ): String =
+  ): JsValue =
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType),
     )

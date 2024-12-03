@@ -25,6 +25,7 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
+import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -56,7 +57,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   private[this] def postWithoutHandler(
       ws: WSClient,
-      payload: String,
+      payload: JsValue,
       endpoint: String,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[WSResponse] = {
@@ -93,7 +94,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   private[this] def post(
       ws: WSClient,
-      payload: String,
+      payload: JsValue,
       endpoint: String,
       cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
