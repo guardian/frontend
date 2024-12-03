@@ -1069,41 +1069,10 @@
 					],
 					"classList": []
 				},
-				{
-					"title": "Environment",
-					"url": "/us/environment",
-					"children": [
-						{
-							"title": "Climate crisis",
-							"url": "/environment/climate-crisis",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Wildlife",
-							"url": "/environment/wildlife",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Energy",
-							"url": "/environment/energy",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Pollution",
-							"url": "/environment/pollution",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Green light",
-							"url": "/environment/series/green-light",
-							"children": [],
-							"classList": []
-						}
-					],
+                {
+					"title": "Climate crisis",
+					"url": "/environment/climate-crisis",
+					"children": [],
 					"classList": []
 				},
 				{
@@ -1192,6 +1161,43 @@
 						{
 							"title": "Retail",
 							"url": "/business/retail",
+							"children": [],
+							"classList": []
+						}
+					],
+					"classList": []
+				},
+                {
+					"title": "Environment",
+					"url": "/us/environment",
+					"children": [
+						{
+							"title": "Climate crisis",
+							"url": "/environment/climate-crisis",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Wildlife",
+							"url": "/environment/wildlife",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Energy",
+							"url": "/environment/energy",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Pollution",
+							"url": "/environment/pollution",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Green light",
+							"url": "/environment/series/green-light",
 							"children": [],
 							"classList": []
 						}
