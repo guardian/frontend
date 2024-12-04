@@ -12,6 +12,7 @@ import common.Environment.{app, awsRegion, stage}
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
+import model.dotcomrendering.DotcomRenderingUtils.assetURL
 
 import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
@@ -520,9 +521,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val prebidServerUrl =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
 
-    lazy val overrideCommercialBundleUrl: Option[String] =
-      if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
-      else None
+    def getBundlePath = configuration.getMandatoryStringProperty("commercial.bundlePath")
   }
 
   object journalism {
