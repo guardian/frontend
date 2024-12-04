@@ -521,6 +521,10 @@ class GuardianConfiguration extends GuLogging {
     lazy val prebidServerUrl =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
 
+    lazy val overrideCommercialBundleUrl: Option[String] =
+      if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
+      else None
+
     def getBundlePath = configuration.getMandatoryStringProperty("commercial.bundlePath")
   }
 
