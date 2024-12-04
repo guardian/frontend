@@ -24,6 +24,7 @@ import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.joda.time.{DateTime, LocalDate}
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
@@ -312,6 +313,14 @@ class CrosswordEditionsController(
       .map(parseCrosswords)
       .flatMap { crosswords =>
         remoteRenderer.getEditionsCrossword(wsClient, crosswords)
+      }
+  }
+
+  def digitalEditionJson: Action[AnyContent] = Action.async { implicit request =>
+    getCrosswords
+      .map(parseCrosswords)
+      .map { crosswords =>
+        Cached(CacheTime.Default)(RevalidatableResult.Ok(toJson(crosswords))).as("application/json")
       }
   }
 
