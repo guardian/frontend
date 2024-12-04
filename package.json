@@ -120,7 +120,7 @@
 		"rxjs": "^6.6.7",
 		"sass": "1.77.8",
 		"sass-graph": "4.0.1",
-		"sass-loader": "14.2.1",
+		"sass-loader": "16.0.4",
 		"sass-mq": "5.0.1",
 		"semver": "^5.4.1",
 		"split": "^1.0.0",
