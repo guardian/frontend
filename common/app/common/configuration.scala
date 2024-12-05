@@ -525,7 +525,6 @@ class GuardianConfiguration extends GuLogging {
       if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
       else None
 
-    def getBundlePath = configuration.getMandatoryStringProperty("commercial.bundlePath")
   }
 
   object journalism {

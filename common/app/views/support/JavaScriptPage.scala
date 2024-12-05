@@ -74,12 +74,11 @@ object JavaScriptPage {
 
     val commercialBundleUrl =
       if (ActiveExperiments.isParticipating(CommercialBundleUpdater)(request))
-        JsString(CommercialBundle.bundleUrl)
+        Configuration.commercial.overrideCommercialBundleUrl
+          .getOrElse(CommercialBundle.bundleUrl)
       else
-        JsString(
-          Configuration.commercial.overrideCommercialBundleUrl
-            .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js")),
-        )
+        Configuration.commercial.overrideCommercialBundleUrl
+          .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js"))
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
@@ -101,7 +100,7 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
-      ("commercialBundleUrl", commercialBundleUrl),
+      ("commercialBundleUrl", JsString(commercialBundleUrl)),
       ("stage", JsString(Configuration.environment.stage)),
     )
   }.toMap
