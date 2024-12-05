@@ -15,8 +15,7 @@ const confirmIfMainMessage = `${chalk.red(
         'You are about to push main!'
     )}\nIs that what you intended?`
 )} [y/N]`;
-const confirmIfMain = execa
-    .shell(
+const confirmIfMain = execa(
         `
         protected_branch='main'
         current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\\(.*\\),\\1,')
@@ -34,9 +33,9 @@ const confirmIfMain = execa
             exit 0 # push will execute
         fi
         `,
-        {
+        {   shell: true,
             stdio: 'inherit',
-        }
+        },
     )
     .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
 const validate = () =>
