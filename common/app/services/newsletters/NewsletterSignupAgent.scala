@@ -2,7 +2,7 @@ package services.newsletters
 
 import common.{Box, GuLogging}
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
-import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2}
+import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, NewsletterLayoutGroup}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -14,6 +14,8 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   private val groupedNewslettersAgent = Box[Either[String, GroupedNewslettersResponse]](Right(List.empty))
   // Newsletters version 2
   private val newslettersV2Agent = Box[Either[String, List[NewsletterResponseV2]]](Right(Nil))
+  // Newsletter layouts
+  private val newsletterLayoutsAgent = Box[Either[String, Map[String, List[NewsletterLayoutGroup]]]](Right(Map.empty))
 
   def getNewsletterByName(listName: String): Either[String, Option[NewsletterResponse]] = {
     newslettersAgent.get() match {
@@ -55,6 +57,8 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   def getV2Newsletters(): Either[String, List[NewsletterResponseV2]] = newslettersV2Agent.get()
 
+  def getNewsletterLayouts(): Either[String, Map[String, List[NewsletterLayoutGroup]]] = newsletterLayoutsAgent.get()
+
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     refreshNewsletters() recover { case e =>
       val errMessage = s"Call to Newsletter API failed: ${e.getMessage}"
@@ -83,6 +87,14 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
         log.info("Successfully refreshed v2 Newsletters cache.")
       case Left(err) =>
         log.error(s"Failed to refresh v2  Newsletters cache: $err")
+    }
+
+    newsletterApi.getNewsletterLayouts() map {
+      case Right(layoutsMap) =>
+        newsletterLayoutsAgent.alter(Right(layoutsMap))
+        log.info("Successfully refreshed newsletters layouts cache.")
+      case Left(err) =>
+        log.error(s"Failed to refresh newsletters layouts cache: $err")
     }
   }
 
