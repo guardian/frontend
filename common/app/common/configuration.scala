@@ -12,7 +12,6 @@ import common.Environment.{app, awsRegion, stage}
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
-import model.dotcomrendering.DotcomRenderingUtils.assetURL
 
 import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
@@ -524,7 +523,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val overrideCommercialBundleUrl: Option[String] =
       if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
       else None
-
   }
 
   object journalism {
