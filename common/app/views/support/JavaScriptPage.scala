@@ -74,7 +74,7 @@ object JavaScriptPage {
 
     val commercialBundleUrl =
       if (ActiveExperiments.isParticipating(CommercialBundleUpdater)(request))
-        JsString(CommercialBundle.getBundleUrl)
+        JsString(CommercialBundle.bundleUrl)
       else
         JsString(
           Configuration.commercial.overrideCommercialBundleUrl

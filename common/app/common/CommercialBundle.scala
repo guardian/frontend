@@ -10,30 +10,32 @@ object CommercialBundle {
 
   private lazy val parameterStore = new ParameterStore(Environment.awsRegion)
 
-  private var cachedBundlePath: String =
-    "test_commercial_bundles/" + bundlePathParameterValue
-  private var cachedTimestamp: Instant = Instant.now()
   private val cacheDuration: FiniteDuration = 1.minute
+  private val stage = Environment.stage
 
-  private val assetHost = Configuration.assets.path
+  private var cachedBundlePath: String = bundlePathFromParameterStore
+  private var cachedTimestamp: Instant = Instant.now()
 
-  private def bundlePathParameterValue: String = {
-    if (Environment.stage == "CODE")
+  // when running locally Configuration.assets.path is set to "assets/" to serve local assets, but the commercial bundle no longer lives there, so we need to override it
+  private val basePath =
+    if (stage.equalsIgnoreCase("dev")) "https://assets-code.guim.co.uk/" else Configuration.assets.path
+
+  private def bundlePathFromParameterStore: String = {
+    if (stage == "CODE")
       parameterStore.get("/frontend/CODE/commercial.bundlePath")
     else
+      // for PROD and DEV to use the same bundle path
       parameterStore.get("/frontend/commercial.bundlePath")
   }
 
-  private def updateBundlePath(): Unit = {
-    cachedBundlePath = "test_commercial_bundles/" + bundlePathParameterValue
-    cachedTimestamp = Instant.now()
-  }
-
   private def bundlePath: String = {
-    if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) updateBundlePath()
+    if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) {
+      cachedBundlePath = bundlePathFromParameterStore
+      cachedTimestamp = Instant.now()
+    }
 
     cachedBundlePath
   }
 
-  def getBundleUrl: String = s"$assetHost$bundlePath"
+  def bundleUrl: String = s"$basePath$bundlePath"
 }
