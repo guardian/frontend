@@ -2,10 +2,10 @@ package football.controllers
 
 import common.{Edition, JsonComponent}
 import feed.Competitions
-import football.model.MatchesList
+import football.model.{CompetitionMatches, DateCompetitionMatches, MatchesList, LiveScores}
 import implicits.Requests
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, Competition, TeamMap}
+import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
 
 import java.time.LocalDate
 import pa.FootballTeam
@@ -28,17 +28,31 @@ trait MatchListController extends BaseController with Requests {
       filters: Map[String, Seq[CompetitionFilter]],
       atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
-    Cached(10) {
-      if (request.isJson)
-        JsonComponent(
-          "html" -> football.views.html.matchList.matchesComponent(matchesList),
-          "next" -> Html(matchesList.nextPage.getOrElse("")),
-          "previous" -> Html(matchesList.previousPage.getOrElse("")),
-          "atom" -> atom.isDefined,
-        )
-      else
-        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+
+    if (request.isJson && request.forceDCR) {
+      val model = LiveScores(
+        pageTitle = matchesList.getPageTitle(Edition(request)),
+        pageType = matchesList.pageType,
+        matchesGroupedByDateAndCompetition = matchesList.matchesGroupedByDateAndCompetition.map { item =>
+          DateCompetitionMatches(date = item._1, competitions = item._2.map(a => CompetitionMatches(a._1, a._2)))
+        },
+        nextPage = None,
+      )
+      Cached(CacheTime.Default)(RevalidatableResult.Ok(LiveScores.toJson(model))).as("application/json")
+    } else {
+      Cached(10) {
+        if (request.isJson)
+          JsonComponent(
+            "html" -> football.views.html.matchList.matchesComponent(matchesList),
+            "next" -> Html(matchesList.nextPage.getOrElse("")),
+            "previous" -> Html(matchesList.previousPage.getOrElse("")),
+            "atom" -> atom.isDefined,
+          )
+        else
+          RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+      }
     }
+
   }
 
   protected def renderMoreMatches(
