@@ -81,4 +81,14 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+  Switch(
+    ABTests,
+    "ab-region-specific-prebid",
+    "Test impact of splitting the Prebid bundle by region",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2024, 12, 20)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
