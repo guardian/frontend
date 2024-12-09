@@ -1,10 +1,16 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.CrosswordType.{Cryptic, Quick}
-import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{
+  Crossword,
+  ItemResponse,
+  SearchResponse,
+  Content => ApiContent,
+  Section => ApiSection,
+}
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
+import com.gu.contentapi.client.model.SearchQuery
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
@@ -18,6 +24,7 @@ import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.joda.time.{DateTime, LocalDate}
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
@@ -304,21 +311,44 @@ class CrosswordEditionsController(
   def digitalEdition: Action[AnyContent] = Action.async { implicit request =>
     getCrosswords
       .map(parseCrosswords)
-      .flatMap {
-        case Some(crosswordPage) =>
-          remoteRenderer.getEditionsCrossword(wsClient, crosswordPage)
-        case None => Future.successful(NotFound)
+      .flatMap { crosswords =>
+        remoteRenderer.getEditionsCrossword(wsClient, crosswords)
       }
   }
 
-  private lazy val crosswordsQuery = contentApiClient.item("crosswords")
+  def digitalEditionJson: Action[AnyContent] = Action.async { implicit request =>
+    getCrosswords
+      .map(parseCrosswords)
+      .map { crosswords =>
+        Cached(CacheTime.Default)(RevalidatableResult.Ok(toJson(crosswords))).as("application/json")
+      }
+  }
 
-  private def getCrosswords: Future[ItemResponse] = contentApiClient.getResponse(crosswordsQuery)
+  private def getCrosswords: Future[SearchResponse] =
+    contentApiClient.getResponse(crosswordsQuery)
 
-  private def parseCrosswords(response: ItemResponse): Option[EditionsCrosswordRenderingDataModel] =
-    for {
-      results <- response.results
-      quick <- results.find(_.crossword.exists(_.`type` == Quick)).flatMap(_.crossword)
-      cryptic <- results.find(_.crossword.exists(_.`type` == Cryptic)).flatMap(_.crossword)
-    } yield EditionsCrosswordRenderingDataModel(quick, cryptic)
+  /** Search for playable crosswords sorted by print publication date. This will exclude older, originally print-only
+    * crosswords that happen to have been re-published in a digital format recently.
+    */
+  private lazy val crosswordsQuery =
+    SearchQuery()
+      .contentType("crossword")
+      .tag(crosswordTags)
+      .useDate("newspaper-edition")
+      .pageSize(25)
+
+  private lazy val crosswordTags = Seq(
+    "crosswords/series/quick",
+    "crosswords/series/cryptic",
+    "crosswords/series/prize",
+    "crosswords/series/weekend-crossword",
+    "crosswords/series/quick-cryptic",
+    "crosswords/series/everyman",
+    "crosswords/series/speedy",
+    "crosswords/series/quiptic",
+  ).mkString("|")
+
+  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel =
+    EditionsCrosswordRenderingDataModel(response.results.flatMap(_.crossword))
+
 }

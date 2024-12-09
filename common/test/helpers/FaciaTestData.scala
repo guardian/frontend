@@ -70,6 +70,22 @@ trait FaciaTestData extends ModelHelper {
       "/commentisfree/2013/oct/07/feminism-rebranding-man-hater",
     )
 
+  val europeFrontTrailIds: Seq[String] = Seq(
+    "/world/2024/nov/27/plan-to-cut-berlin-arts-budget-will-destroy-citys-culture-directors-warn",
+    "/stage/2024/nov/27/afd-threats-to-german-democracy-on-stage-maximilian-steinbeis-a-citizen-of-the-people",
+    "/commentisfree/2024/nov/27/france-cannabis-consumption-europe-tax-decriminalisation-crime",
+    "/football/2024/nov/27/bodo-glimt-manchester-united-europa-league",
+    "/books/2024/nov/26/freedom-by-angela-merkel-review-settling-scores-with-silence",
+  )
+
+  val europeBetaFrontTrailIds: Seq[String] = Seq(
+    "/business/2024/nov/27/just-eat-to-delist-from-london-stock-exchange-to-cut-complexity-and-costs",
+    "/world/2024/nov/26/uk-labour-cabinet-ministers-sanctions-russia-storm-shadow-missiles",
+    "/business/2024/nov/27/fining-budget-airlines-will-make-flying-more-expensive-says-easyjet-boss",
+    "/world/2024/nov/26/irish-pm-simon-harris-slump-drops-points-polls-election-fine-gael",
+    "/commentisfree/2024/nov/25/the-guardian-view-on-romanias-presidential-election-a-stable-ukrainian-ally-wobblese",
+  )
+
   val cultureTrailIds: Seq[String] =
     Seq(
       "/film/2013/oct/08/gravity-science-astrophysicist",
@@ -82,6 +98,8 @@ trait FaciaTestData extends ModelHelper {
   val ukFrontTrails: Seq[PressedContent] = ukFrontTrailIds map TestContent.newFaciaContent
   val usFrontTrails: Seq[PressedContent] = usFrontTrailIds map TestContent.newFaciaContent
   val auFrontTrails: Seq[PressedContent] = auFrontTrailIds map TestContent.newFaciaContent
+  val europeFrontTrails: Seq[PressedContent] = europeFrontTrailIds map TestContent.newFaciaContent
+  val europeBetaFrontTrails: Seq[PressedContent] = europeBetaFrontTrailIds map TestContent.newFaciaContent
 
   val cultureFrontTrails: Seq[PressedContent] = cultureTrailIds map TestContent.newFaciaContent
 
@@ -168,6 +186,64 @@ trait FaciaTestData extends ModelHelper {
         config = CollectionConfig.empty,
         hasMore = false,
         targetedTerritory = None,
+      ),
+    ),
+  )
+
+  val europeFaciaPage: PressedPage = PressedPage(
+    id = "europe",
+    SeoData.fromPath("europe"),
+    FrontProperties.empty,
+    collections = List(
+      PressedCollection(
+        id = "europe/news/regular-stories",
+        displayName = "",
+        curated = europeFrontTrails.toList,
+        backfill = Nil,
+        treats = Nil,
+        lastUpdated = None,
+        href = None,
+        description = None,
+        collectionType = "",
+        groups = None,
+        uneditable = false,
+        showTags = false,
+        showSections = false,
+        hideKickers = false,
+        showDateHeader = false,
+        showLatestUpdate = false,
+        config = CollectionConfig.empty,
+        hasMore = false,
+        targetedTerritory = None,
+      ),
+    ),
+  )
+
+  val europeBetaFaciaPageWithTargetedTerritory: PressedPage = PressedPage(
+    id = "europe-beta",
+    SeoData.fromPath("europe-beta"),
+    FrontProperties.empty,
+    collections = List(
+      PressedCollection(
+        id = "europe-beta/news/regular-stories",
+        displayName = "",
+        curated = europeBetaFrontTrails.toList,
+        backfill = Nil,
+        treats = Nil,
+        lastUpdated = None,
+        href = None,
+        description = None,
+        collectionType = "",
+        groups = None,
+        uneditable = false,
+        showTags = false,
+        showSections = false,
+        hideKickers = false,
+        showDateHeader = false,
+        showLatestUpdate = false,
+        config = CollectionConfig.empty,
+        hasMore = false,
+        targetedTerritory = Some(EU27Territory),
       ),
     ),
   )
@@ -334,6 +410,8 @@ trait FaciaTestData extends ModelHelper {
     ("uk", new TestPageFront("uk", Uk, ukFaciaPage)),
     ("us", new TestPageFront("us", Us, usFaciaPage)),
     ("au", new TestPageFront("au", Au, auFaciaPage)),
+    ("europe", new TestPageFront("europe", Au, europeFaciaPage)),
+    ("europe-beta", new TestPageFront("europe-beta", Au, europeBetaFaciaPageWithTargetedTerritory)),
     ("uk/culture", new TestPageFront("uk/culture", Uk, ukCultureFaciaPage)),
     ("us/culture", new TestPageFront("us/culture", Us, usCultureFaciaPage)),
     ("au/culture", new TestPageFront("au/culture", Au, auCultureFaciaPage)),
