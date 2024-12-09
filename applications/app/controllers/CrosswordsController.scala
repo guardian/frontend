@@ -332,6 +332,7 @@ class CrosswordEditionsController(
     */
   private lazy val crosswordsQuery =
     SearchQuery()
+      .contentType("crossword")
       .tag(crosswordTags)
       .useDate("newspaper-edition")
       .pageSize(25)
