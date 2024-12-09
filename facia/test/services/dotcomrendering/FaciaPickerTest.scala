@@ -8,7 +8,6 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import helpers.FaciaTestData
-import test.FaciaControllerTest
 import model.facia.PressedCollection
 import layout.slices.EmailLayouts
 
