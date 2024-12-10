@@ -151,7 +151,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val interactiveBaseURL = configuration.getMandatoryStringProperty("interactive-rendering.baseURL")
     lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
     lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
-    lazy val timeout = 2.seconds
+    lazy val timeout = 9.seconds
     lazy val circuitBreakerMaxFailures = 10 // we should increase this as DCR sees increasing usage
   }
 
