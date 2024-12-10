@@ -96,7 +96,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       payload: String,
       endpoint: String,
       cacheTime: CacheTime,
-      timeout: Duration = Configuration.rendering.timeout,
+      timeout: Duration = Configuration.rendering.timeout * 5,
   )(implicit request: RequestHeader): Future[Result] = {
     def handler(response: WSResponse): Result = {
       response.status match {
