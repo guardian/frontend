@@ -12,6 +12,7 @@
         Seq("gallery-inline", "dark") ++ (if(isMobile) Some("mobile") else None),
         Map(),
         optId = if(isMobile) Some(s"$slotName--mobile") else None,
-        optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
+        optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet"),
+        useFlexContainer = true
     ){ }
 }
