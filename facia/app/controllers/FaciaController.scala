@@ -24,6 +24,7 @@ import play.twirl.api.Html
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
+import services.newsletters.NewsletterSignupAgent
 import services.{CollectionConfigWithId, ConfigAgent}
 import utils.TargetedCollections
 import views.html.fragments.containers.facia_cards.container
@@ -41,6 +42,7 @@ trait FaciaController
   val frontJsonFapi: FrontJsonFapi
   val ws: WSClient
   val mostViewedAgent: MostViewedAgent
+  val newsletterSignupAgent: NewsletterSignupAgent
   val deeplyReadAgent: DeeplyReadAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val assets: Assets
@@ -260,6 +262,10 @@ trait FaciaController
             mostCommented = mostViewedAgent.mostCommented,
             mostShared = mostViewedAgent.mostShared,
             deeplyRead = deeplyRead,
+            newsletters = newsletterSignupAgent.getV2Newsletters() match {
+              case Right(newsletters) => newsletters
+              case Left(_)            => List.empty
+            },
           )(request),
           targetedTerritories,
         )
@@ -285,6 +291,10 @@ trait FaciaController
               mostCommented = mostViewedAgent.mostCommented,
               mostShared = mostViewedAgent.mostShared,
               deeplyRead = deeplyRead,
+              newsletters = newsletterSignupAgent.getV2Newsletters() match {
+                case Right(newsletters) => newsletters
+                case Left(_)            => List.empty
+              },
             ),
           )
         } else JsonFront(faciaPage)
@@ -586,5 +596,6 @@ class FaciaControllerImpl(
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
     val assets: Assets,
+    val newsletterSignupAgent: NewsletterSignupAgent,
 )(implicit val context: ApplicationContext)
     extends FaciaController

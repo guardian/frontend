@@ -23,6 +23,7 @@ import play.api.libs.ws.WSClient
 import services._
 import services.fronts.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import router.Routes
+import services.newsletters.{NewsletterSignupAgent, NewsletterApi}
 
 import scala.concurrent.ExecutionContext
 
@@ -44,11 +45,13 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
+  lazy val newsletterApi = wire[NewsletterApi]
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
   lazy val mostViewedAgent = wire[MostViewedAgent]
   lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
 
   override lazy val lifecycleComponents = List(
     wire[ConfigAgentLifecycle],
