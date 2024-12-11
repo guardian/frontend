@@ -7,6 +7,7 @@ import contentapi.ContentApiClient
 import model._
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import pages.GalleryHtmlPage
+import play.api.libs.json.JsValue
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
@@ -74,7 +75,7 @@ class GalleryController(
 
   private def getDCRJson(galleryPage: GalleryPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
-  ): String = {
+  ): JsValue = {
     DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forGallery(galleryPage, request, pageType, blocks))
   }
 

@@ -97,9 +97,9 @@ object DotcomNewslettersPageRenderingDataModel {
     )
   }
 
-  def toJson(model: DotcomNewslettersPageRenderingDataModel): String = {
+  def toJson(model: DotcomNewslettersPageRenderingDataModel): JsValue = {
     val jsValue = Json.toJson(model)
-    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
+    DotcomRenderingUtils.withoutNull(jsValue)
   }
 
   private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {

@@ -2,9 +2,10 @@ package model.dotcomrendering.pageElements
 
 import com.gu.contentapi.client.model.v1.Crossword
 import com.gu.contentapi.json.CirceEncoders._
-import io.circe.JsonObject
 import io.circe.syntax._
 import implicits.Dates.CapiRichDateTime
+import model.dotcomrendering.DotcomRenderingUtils
+import play.api.libs.json.{JsObject, Json, JsValue}
 
 case class EditionsCrosswordRenderingDataModel(
     crosswords: Iterable[Crossword],
@@ -25,9 +26,10 @@ object EditionsCrosswordRenderingDataModel {
       }
     }))
 
-  def toJson(model: EditionsCrosswordRenderingDataModel): String = {
-    JsonObject(
-      "crosswords" -> model.crosswords.asJson.deepDropNullValues,
-    ).asJson.noSpaces
-  }
+  def toJson(model: EditionsCrosswordRenderingDataModel): JsValue =
+    DotcomRenderingUtils.withoutNull(
+      Json.obj(
+        "crosswords" -> Json.parse(model.crosswords.asJson.toString()),
+      ),
+    )
 }

@@ -8,7 +8,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model._
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, JsValue}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
@@ -91,7 +91,7 @@ class ArticleController(
 
   /** Returns a JSON representation of the payload that's sent to DCR when rendering the Article.
     */
-  private def getDCRJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
+  private def getDCRJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): JsValue = {
     val pageType: PageType = PageType(article, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(article)
 

@@ -191,9 +191,9 @@ object DotcomRenderingDataModel {
     }
   }
 
-  def toJson(model: DotcomRenderingDataModel): String = {
+  def toJson(model: DotcomRenderingDataModel): JsValue = {
     val jsValue = Json.toJson(model)
-    Json.stringify(withoutNull(jsValue))
+    withoutNull(jsValue)
   }
 
   def forInteractive(

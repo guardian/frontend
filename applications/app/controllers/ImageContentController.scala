@@ -61,7 +61,7 @@ class ImageContentController(
 
   private def getDCRJson(content: ImageContentPage, pageType: PageType, mainBlock: Option[Block])(implicit
       request: RequestHeader,
-  ): String = {
+  ): JsValue = {
     DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forImageContent(content, request, pageType, mainBlock))
   }
 
