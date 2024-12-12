@@ -13,7 +13,15 @@ object Europe
       locale = None,
       networkFrontId = "europe",
       editionalisedSections = Seq(""), // only the home page
-      navigationLinks = International.navigationLinks,
+      navigationLinks = EditionNavLinks(
+        NavLinks.eurNewsPillar,
+        NavLinks.eurOpinionPillar,
+        NavLinks.eurSportPillar,
+        NavLinks.eurCulturePillar,
+        NavLinks.eurLifestylePillar,
+        NavLinks.eurOtherLinks,
+        NavLinks.eurBrandExtensions,
+      ),
     ) {
 
   implicit val EUR: Europe.type = Europe
