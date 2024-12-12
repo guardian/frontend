@@ -3704,7 +3704,7 @@ __metadata:
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:4.0.0"
-    "@guardian/libs": "npm:19.1.0"
+    "@guardian/libs": "npm:^19.2.2"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3861,19 +3861,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:19.1.0":
-  version: 19.1.0
-  resolution: "@guardian/libs@npm:19.1.0"
-  peerDependencies:
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/0c0450a65980cc8be740565aea104d384570f996264d5388cbeba4ebda5a5b9dee7345286df80d48c1e08ce56692a3e8b82c2a2fe646c749f49fb131b31f68b9
-  languageName: node
-  linkType: hard
-
 "@guardian/libs@npm:^18.0.0":
   version: 18.0.1
   resolution: "@guardian/libs@npm:18.0.1"
@@ -3884,6 +3871,19 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/19f90e8948dded1345c21908888e0cdc6f461f6b66662dc0d9a194be54a959954ecf0e0d4b79213cda8191b4336c6a1bd814f23945b96849d2b18c7d6c5ab3f0
+  languageName: node
+  linkType: hard
+
+"@guardian/libs@npm:^19.2.2":
+  version: 19.2.2
+  resolution: "@guardian/libs@npm:19.2.2"
+  peerDependencies:
+    tslib: ^2.6.2
+    typescript: ~5.5.2
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/4654ee9d9fdb6123724581bc8775249ff9c5dc0b88213acb290d11dd19dcde537aa39d110f53f29c0137636a92130490176ef7f875f8bdf2e7d431ed11ba2923
   languageName: node
   linkType: hard
 
