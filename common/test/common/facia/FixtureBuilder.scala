@@ -99,6 +99,7 @@ object FixtureBuilder {
       shortUrl = "",
       group = "0",
       isLive = false,
+      galleryCount = None,
     )
 
   def mkDiscussion(): PressedDiscussionSettings =
