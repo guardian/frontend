@@ -29,5 +29,6 @@ object SupportedUrl {
           .map(content => s"/${content.metadata.id}")
           .orElse(latestSnap.properties.href)
           .getOrElse(s"/${latestSnap.card.id}")
+      case referenceSnap: ReferenceSnap => referenceSnap.properties.href.getOrElse(referenceSnap.card.id)
     }
 }

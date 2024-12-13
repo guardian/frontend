@@ -71,6 +71,7 @@ object PressedProperties {
       case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.properties
       case linkSnap: fapi.LinkSnap                                 => linkSnap.properties
       case latestSnap: fapi.LatestSnap                             => latestSnap.properties
+      case referenceSnap: fapi.ReferenceSnap                       => referenceSnap.properties
     }
   }
 }

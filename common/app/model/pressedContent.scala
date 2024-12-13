@@ -55,8 +55,9 @@ object PressedContent {
       case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent, suppressImages)
       case supportingCuratedContent: fapi.SupportingCuratedContent =>
         SupportingCuratedContent.make(supportingCuratedContent)
-      case linkSnap: fapi.LinkSnap     => LinkSnap.make(linkSnap)
-      case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
+      case linkSnap: fapi.LinkSnap           => LinkSnap.make(linkSnap)
+      case latestSnap: fapi.LatestSnap       => LatestSnap.make(latestSnap)
+      case referenceSnap: fapi.ReferenceSnap => ReferenceSnap.make(referenceSnap)
     }
 }
 
@@ -168,6 +169,39 @@ object LatestSnap {
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content, None),
       format = ContentFormat.fromFapiContentFormat(content.format),
+    )
+  }
+}
+
+
+final case class ReferenceSnap(
+    override val properties: PressedProperties,
+    override val header: PressedCardHeader,
+    override val card: PressedCard,
+    override val discussion: PressedDiscussionSettings,
+    override val display: PressedDisplaySettings,
+    override val format: ContentFormat,
+    val snapReferenceType: String,
+    val snapReferenceId: String,
+    enriched: Option[
+      EnrichedContent,
+    ], // This is currently an option, as we introduce the new field. It can then become a value type.
+) extends PressedContent {
+  override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+}
+
+object ReferenceSnap {
+  def make(content: fapi.ReferenceSnap): ReferenceSnap = {
+    ReferenceSnap(
+      properties = PressedProperties.make(content),
+      header = PressedCardHeader.make(content),
+      card = PressedCard.make(content),
+      discussion = PressedDiscussionSettings.make(content),
+      display = PressedDisplaySettings.make(content, None),
+      enriched = Some(EnrichedContent.empty),
+      format = ContentFormat.defaultContentFormat,
+      snapReferenceType = content.snapReferenceType,
+      snapReferenceId = content.snapReferenceId,
     )
   }
 }
