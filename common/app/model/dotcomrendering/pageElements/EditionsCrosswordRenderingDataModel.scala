@@ -27,9 +27,7 @@ object EditionsCrosswordRenderingDataModel {
     }))
 
   def toJson(model: EditionsCrosswordRenderingDataModel): JsValue =
-    DotcomRenderingUtils.withoutNull(
-      Json.obj(
-        "crosswords" -> Json.parse(model.crosswords.asJson.toString()),
-      ),
+    Json.obj(
+      "crosswords" -> Json.parse(model.crosswords.asJson.deepDropNullValues.toString()),
     )
 }
