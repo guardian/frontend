@@ -5,4 +5,4 @@ sealed trait SnapType
 case object FrontendLatestSnap extends SnapType
 case object FrontendLinkSnap extends SnapType
 case object FrontendOtherSnap extends SnapType
-case object FrontendNewsletterSnap extends SnapType
+case object FrontendReferenceSnap extends SnapType

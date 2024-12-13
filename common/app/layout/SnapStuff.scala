@@ -3,8 +3,7 @@ package layout
 import java.net.URI
 import model.pressed._
 import views.support._
-import services.NewsletterService
-import conf.Configuration.newsletterApi
+
 
 case class SnapStuff(
     dataAttributes: String,
@@ -13,7 +12,8 @@ case class SnapStuff(
     embedHtml: Option[String],
     embedCss: Option[String] = None,
     embedJs: Option[String] = None,
-    newsletterId: Option[String] = None,
+    snapReferenceType: Option[String] = None,
+    snapReferenceId: Option[String] = None,
 ) {
   def cssClasses: Seq[String] =
     Seq(
@@ -47,33 +47,36 @@ object SnapStuff {
       case _                       => None
     }
 
-    val newsletterId = faciaContent.properties.href match {
-      case Some(href) => {
-        extractNewsletterId(href)
-      }
-      case None => None
+    val snapReferenceType = faciaContent match {
+      case reference: ReferenceSnap => Some(reference.snapReferenceType)
+      case _ => None
+    }
+
+    val snapReferenceId = faciaContent match {
+      case reference: ReferenceSnap => Some(reference.snapReferenceId)
+      case _ => None
     }
 
     faciaContent.properties.embedType match {
       case Some("latest") =>
-        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml, newsletterId = None))
-      case Some("link") =>
-        newsletterId match {
-          case Some(id) =>
-            Some(
-              SnapStuff(
-                snapData,
-                faciaContent.properties.embedCss,
-                FrontendNewsletterSnap,
-                embedHtml,
-                newsletterId = Some(id),
-              ),
-            )
-          case None =>
-            Some(
-              SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml, newsletterId = None),
-            )
-        }
+        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml))
+
+      case Some("reference") =>
+        Some(SnapStuff(
+            snapData, 
+            faciaContent.properties.embedCss, 
+            FrontendReferenceSnap, 
+            embedHtml,
+            snapReferenceType = snapReferenceType,
+            snapReferenceId = snapReferenceId,
+          )
+        )
+      
+      case Some("link") =>  
+        Some(
+          SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml),
+        )
+        
       case Some("interactive") =>
         Some(
           SnapStuff(
@@ -82,41 +85,12 @@ object SnapStuff {
             FrontendLinkSnap,
             embedHtml,
             embedCss,
-            embedJs,
-            newsletterId = None,
+            embedJs
           ),
         )
       case Some(_) =>
-        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml, newsletterId = None))
+        Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml))
       case None => None
-    }
-  }
-
-  private def isNewsletterApiUri(href: String): Boolean = {
-    val prefix: Option[String] = for {
-      host <- newsletterApi.host
-      origin <- newsletterApi.origin
-    } yield {
-      s"$host/api/newsletters"
-    }
-    prefix match {
-      case Some(url) => {
-        href.startsWith(prefix)
-      }
-      case None => {
-        println("newsletters API not configured!")
-        false
-      }
-    }
-  }
-
-  private def extractNewsletterId(newsleterApiUri: String): Option[String] = {
-    isNewsletterApiUri(newsleterApiUri) match {
-      case true => {
-        val lastPartofPath: String = new URI(newsleterApiUri).getPath.tail
-        Some(lastPartofPath)
-      }
-      case _ => None
     }
   }
 }

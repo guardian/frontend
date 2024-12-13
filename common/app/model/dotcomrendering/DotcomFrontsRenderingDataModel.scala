@@ -83,7 +83,7 @@ object DotcomFrontsRenderingDataModel {
 
     // TO DO - could reduce payload size to DCR by only including the
     // live newsletters for which there is some some item in some collection
-    // in the page which has a FrontendNewsletterSnap for which the
+    // in the page which has a FrontendReferenceSnap with type=newsletter for which the
     // newsletterId is the identityName of the newsletter
     val newsletterData = newsletters
       .filter((newsletter) => newsletter.status.equalsIgnoreCase(("live")))
