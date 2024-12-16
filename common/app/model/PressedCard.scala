@@ -9,6 +9,11 @@ import model.CardStylePicker
 import org.joda.time.DateTime
 import com.gu.contentapi.client.model.v1.{Content, ElementType}
 
+//case class AudioDuration(
+//    audioDurationMinutes: Option[collection.Seq[Int]],
+//    audioDurationSeconds: Option[collection.Seq[Int]],
+//)
+
 final case class PressedCard(
     id: String,
     cardStyle: CardStyle,
@@ -22,6 +27,9 @@ final case class PressedCard(
     group: String,
     isLive: Boolean,
     galleryCount: Option[Int],
+//    audioDuration: AudioDuration,
+    audioDurationMinutes: Option[collection.Seq[Int]],
+    audioDurationSeconds: Option[collection.Seq[Int]],
 ) {
   def withoutTrailText: PressedCard = copy(trailText = None)
 }
@@ -50,6 +58,47 @@ object PressedCard {
       )
     }
 
+//    def getAudioDuration(fc: FaciaContent): AudioDuration = {
+//      def getAudioDurationMinutes(content: Content) =
+//        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationMinutes)))
+//
+//      def getAudioDurationSeconds(content: Content) =
+//        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationSeconds)))
+//      val audioDurationMinutes = fold(fc)(
+//        curatedContent => getAudioDurationMinutes(curatedContent.content),
+//        supportingCuratedContent => getAudioDurationMinutes(supportingCuratedContent.content),
+//        _ => None,
+//        latestSnap => latestSnap.latestContent.flatMap(getAudioDurationMinutes),
+//      )
+//      val audioDurationSeconds = fold(fc)(
+//        curatedContent => getAudioDurationSeconds(curatedContent.content),
+//        supportingCuratedContent => getAudioDurationSeconds(supportingCuratedContent.content),
+//        _ => None,
+//        latestSnap => latestSnap.latestContent.flatMap(getAudioDurationSeconds),
+//      )
+//      val audioDuration = AudioDuration(audioDurationMinutes, audioDurationSeconds)
+//      audioDuration
+//
+//    }
+
+    def getAudioDurationMinutes(content: Content) =
+      content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationMinutes)))
+
+    def getAudioDurationSeconds(content: Content) =
+      content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationSeconds)))
+    def audioDurationMinutes(fc: FaciaContent) = fold(fc)(
+      curatedContent => getAudioDurationMinutes(curatedContent.content),
+      supportingCuratedContent => getAudioDurationMinutes(supportingCuratedContent.content),
+      _ => None,
+      latestSnap => latestSnap.latestContent.flatMap(getAudioDurationMinutes),
+    )
+    def audioDurationSeconds(fc: FaciaContent) = fold(fc)(
+      curatedContent => getAudioDurationSeconds(curatedContent.content),
+      supportingCuratedContent => getAudioDurationSeconds(supportingCuratedContent.content),
+      _ => None,
+      latestSnap => latestSnap.latestContent.flatMap(getAudioDurationSeconds),
+    )
+
     PressedCard(
       id = FaciaContentUtils.id(content),
       cardStyle = CardStyle.make(CardStylePicker(content)),
@@ -63,6 +112,9 @@ object PressedCard {
       trailText = FaciaContentUtils.trailText(content),
       starRating = FaciaContentUtils.starRating(content),
       galleryCount = extractGalleryCount(content),
+//      audioDuration = getAudioDuration(content),
+      audioDurationMinutes = audioDurationMinutes(content),
+      audioDurationSeconds = audioDurationSeconds(content),
     )
   }
 }
