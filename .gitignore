@@ -94,3 +94,4 @@ static/src/stylesheets/pasteup/.npmrc
 metals.sbt
 
 .java-version
+test-results/

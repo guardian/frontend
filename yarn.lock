@@ -3607,9 +3607,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:23.7.3":
-  version: 23.7.3
-  resolution: "@guardian/commercial@npm:23.7.3"
+"@guardian/commercial@npm:23.7.5":
+  version: 23.7.5
+  resolution: "@guardian/commercial@npm:23.7.5"
   dependencies:
     "@guardian/prebid.js": "npm:8.52.0-8"
     "@octokit/core": "npm:^6.1.2"
@@ -3626,7 +3626,7 @@ __metadata:
     "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/96d76b6ebb1479a48d574ebd22f062875d00832252e21ba6aa1edc5f4f7df458dfe220898907dc73c4a4839dfdce2c73b0d83860239ebd5086d43880fe0b204f
+  checksum: 10c0/1f6dddf3b6539d0c7d275804e0429fa2dd4b301e162131c2b0a112f5b8dd4b37770343c916dfd57bb2c77570a5c730d5fd66dcc6d30d893386665fcb7b2423a9
   languageName: node
   linkType: hard
 
@@ -3699,11 +3699,11 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:23.7.3"
+    "@guardian/commercial": "npm:23.7.5"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
-    "@guardian/identity-auth-frontend": "npm:4.0.0"
+    "@guardian/identity-auth-frontend": "npm:6.0.3"
     "@guardian/libs": "npm:19.1.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
@@ -3832,18 +3832,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@guardian/identity-auth-frontend@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@guardian/identity-auth-frontend@npm:4.0.0"
+"@guardian/identity-auth-frontend@npm:6.0.3":
+  version: 6.0.3
+  resolution: "@guardian/identity-auth-frontend@npm:6.0.3"
   peerDependencies:
-    "@guardian/identity-auth": ^2.1.0
-    "@guardian/libs": ^16.0.0
+    "@guardian/identity-auth": ^4.0.1
+    "@guardian/libs": ^19.0.0
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/b56e78e9a0477534e074936e4c93ae55c219e56fd0ded1c26a063c20ad5dbef09210fd404776f0ad96ef7ca34f209568eb61f3a296695afc3ea9329d8f61b8bc
+  checksum: 10c0/cf39465b55f07dd02a99cbdf10937f0a74797042430b9a50d1259c0f655e272aa1d6a086efece26ace22cde4fa45aab502c16fb155a125f08419b7756084cb1d
   languageName: node
   linkType: hard
 

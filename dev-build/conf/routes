@@ -31,6 +31,7 @@ GET            /crosswords/lookup                                               
 
 # Crosswords digital edition
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
+GET        /crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
