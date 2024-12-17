@@ -6,6 +6,13 @@ import pa.MatchDayTeam
 import java.awt.Color
 import java.time.LocalDate
 
+trait CompetitionSummary {
+  def id: String
+  def url: String
+  def fullName: String
+  def shortName: String
+}
+
 /** @param tableDividers
   *   divides the league table into zones for promotion/relegation, or for qualification to another competition. Only
   *   add a table divider where the boundaries for progression are clear, e.g do not add a divider in Euro group stages
@@ -23,7 +30,8 @@ case class Competition(
     showInTeamsList: Boolean = false,
     tableDividers: List[Int] = Nil,
     finalMatchSVG: Option[String] = None,
-) extends implicits.Football {
+) extends implicits.Football
+    with CompetitionSummary {
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)
