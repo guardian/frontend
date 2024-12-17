@@ -29,7 +29,11 @@
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
-        <appender-ref ref="STDOUT"/>
+        <if condition='!property("STAGE").contains("dev")'>
+            <then>
+                <appender-ref ref="ASYNCSTDOUT"/>
+            </then>
+        </if>
     </root>
 
 </configuration>
