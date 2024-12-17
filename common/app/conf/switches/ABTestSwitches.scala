@@ -77,7 +77,7 @@ trait ABTestSwitches {
     "Test new GPID prebid ad units",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2024, 12, 18)),
+    sellByDate = Some(LocalDate.of(2025, 1, 17)),
     exposeClientSide = true,
     highImpact = false,
   )
