@@ -1,6 +1,6 @@
 package football.model
 
-import model.Competition
+import model.{Competition, CompetitionSummary}
 import model.dotcomrendering.DotcomRenderingUtils.withoutNull
 import pa.{
   Fixture,
@@ -18,22 +18,39 @@ import pa.{
   Venue,
   Competition => PaCompetition,
 }
-import play.api.libs.json.{JsObject, JsString, Json, Writes}
+import play.api.libs.json.{JsObject, JsString, JsValue, Json, Writes}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-case class CompetitionMatches(competition: Competition, matches: List[FootballMatch])
-case class DateCompetitionMatches(date: LocalDate, competitions: List[CompetitionMatches])
+case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: List[FootballMatch])
+case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List[CompetitionMatches])
 
-case class LiveScores(
+case class DotcomRenderingFootballDataModel(
     pageTitle: String,
     pageType: String,
-    matchesGroupedByDateAndCompetition: Seq[DateCompetitionMatches],
-    nextPage: Option[String],
+    matchesList: Seq[MatchesByDateAndCompetition],
 )
 
-object LiveScores {
+object DotcomRenderingFootballDataModel {
+  def getMatchesList(
+      matches: Seq[(LocalDate, List[(Competition, List[FootballMatch])])],
+  ): Seq[MatchesByDateAndCompetition] = {
+    matches.map { case (date, competitionMatches) =>
+      MatchesByDateAndCompetition(
+        date = date,
+        competitionMatches = competitionMatches.map { case (competition, matches) =>
+          CompetitionMatches(
+            competitionSummary = competition,
+            matches = matches,
+          )
+        },
+      )
+    }
+  }
+}
+
+object DotcomRenderingFootballDataModelImplicits {
   implicit val localDateWrites: Writes[LocalDate] = Writes[LocalDate] { date =>
     JsString(date.format(DateTimeFormatter.ISO_LOCAL_DATE))
   }
@@ -78,12 +95,21 @@ object LiveScores {
   implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
   implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
 
-  implicit val competitionFormat: Writes[Competition] = Json.writes[Competition]
+  implicit val competitionFormat: Writes[CompetitionSummary] = new Writes[CompetitionSummary] {
+    def writes(competition: CompetitionSummary): JsValue = Json.obj(
+      "id" -> competition.id,
+      "url" -> competition.url,
+      "fullName" -> competition.fullName,
+      "shortName" -> competition.shortName,
+    )
+  }
   implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
-  implicit val dateCompetitionMatchesFormat: Writes[DateCompetitionMatches] = Json.writes[DateCompetitionMatches]
-  implicit val SportsFormat: Writes[LiveScores] = Json.writes[LiveScores]
+  implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
+    Json.writes[MatchesByDateAndCompetition]
 
-  def toJson(model: LiveScores): String = {
+  implicit val SportsFormat: Writes[DotcomRenderingFootballDataModel] = Json.writes[DotcomRenderingFootballDataModel]
+
+  def toJson(model: DotcomRenderingFootballDataModel): String = {
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
   }
