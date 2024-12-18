@@ -6,6 +6,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
 import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestWsClient}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
+import play.api.libs.json.{JsString}
 import play.api.mvc.{Result}
 import conf.Configuration
 import org.mockito.Matchers.any
@@ -35,7 +36,7 @@ import org.scalatest.flatspec.AnyFlatSpec
   private val wsRequestMock = mock[WSRequest]
 
   "post" should "return a 404 for DCR 415 errors" in {
-    val payload = "payload"
+    val payload = JsString("payload")
     when(wsMock.url(any[String])).thenReturn(wsRequestMock)
     when(wsRequestMock.withRequestTimeout(any())).thenReturn(wsRequestMock)
     when(wsRequestMock.addHttpHeaders(any())).thenReturn(wsRequestMock)

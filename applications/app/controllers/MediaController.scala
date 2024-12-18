@@ -9,7 +9,7 @@ import implicits.{AppsFormat, JsonFormat}
 import model._
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import pages.ContentHtmlPage
-import play.api.libs.json.{Format, JsObject, Json}
+import play.api.libs.json.{Format, JsObject, Json, JsValue}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
@@ -96,7 +96,7 @@ class MediaController(
 
   private def getDCRJson(content: MediaPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
-  ): String = {
+  ): JsValue = {
     DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, blocks))
   }
 

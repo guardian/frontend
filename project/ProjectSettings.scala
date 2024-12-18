@@ -32,7 +32,7 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.14",
+    scalaVersion := "2.13.15",
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
@@ -55,8 +55,7 @@ object ProjectSettings {
   def testStage = if (isCi) "DEVINFRA" else "LOCALTEST"
 
   val frontendTestSettings = Seq(
-    // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
-    Test / testOptions := Nil,
+    Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o"),
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     Test / unmanagedClasspath += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
