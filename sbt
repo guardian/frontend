@@ -59,4 +59,5 @@ export APP_SECRET="this_is_not_a_real_secret_just_for_tests"
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
   -Duser.timezone=Australia/Sydney \
+  -DSTAGE=DEV \
   -jar `dirname $0`/bin/sbt-launch.jar "$@"
