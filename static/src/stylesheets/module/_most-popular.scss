@@ -208,11 +208,12 @@
 }
 
 .most-popular__second-tier {
+    display: none;
     margin-top: $gs-baseline * 2;
 
     @include mq(tablet) {
         border-top: 1px solid $brightness-86;
-        display: flex !important;
+        display: none;
     }
 }
 
