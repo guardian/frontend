@@ -19,7 +19,6 @@ import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
 import services.{OphanApi, PopularInTagService}
-import weather.WeatherApi
 import _root_.commercial.targeting.TargetingLifecycle
 
 import scala.concurrent.ExecutionContext
@@ -41,7 +40,6 @@ trait OnwardServices {
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
   lazy val stocksData = wire[StocksData]
-  lazy val weatherApi = wire[WeatherApi]
   lazy val geoMostPopularAgent = wire[GeoMostPopularAgent]
   lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
   lazy val mostPopularAgent = wire[MostPopularAgent]
