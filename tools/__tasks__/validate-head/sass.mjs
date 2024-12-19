@@ -23,9 +23,8 @@ const task = {
 								proc.then(() =>
 									Promise.all(
 										batchedFiles.map((filePath) =>
-											execa
-												.shell(
-													`git show HEAD:${filePath} | yarn stylelint --max-warnings 0 '${filePath}'`,
+											execa(
+													`git show HEAD:${filePath} | yarn stylelint --max-warnings 0 '${filePath}'`, {shell: true}
 												)
 												.catch((e) => {
 													errors.push(e);
