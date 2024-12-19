@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.31"
+  val identityLibVersion = "4.33"
   val awsVersion = "1.12.758"
   val awsSdk2Version = "2.26.27"
   val capiVersion = "32.0.0"
@@ -12,7 +12,7 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.4"
-  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
+  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.17.0"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
@@ -29,7 +29,7 @@ object Dependencies {
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20240317"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
-  val commonsIo = "commons-io" % "commons-io" % "2.16.1"
+  val commonsIo = "commons-io" % "commons-io" % "2.17.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "25.1.0"
@@ -52,11 +52,11 @@ object Dependencies {
     .excludeAll(excludeDirectScalaXMLDependency)
 
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
-  val jodaTime = "joda-time" % "joda-time" % "2.12.7"
+  val jodaTime = "joda-time" % "joda-time" % "2.13.0"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.18.1"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
-  val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
+  val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.2" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "7.0.0"
@@ -65,7 +65,7 @@ object Dependencies {
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
-  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.18.0" % Test
+  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.18.1" % Test
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.32.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19" % Test
@@ -78,8 +78,8 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.44"
-  val pekkoVersion = "1.0.3"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.46"
+  val pekkoVersion = "1.1.1"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
   val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
@@ -97,16 +97,16 @@ object Dependencies {
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.4"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.5"
 
   // Forcing a version of this to fix an issue with the dependency.
   // This is a transitive dependency of the AWS SDK used by etag-caching library
-  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.112.Final"
+  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.113.Final"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
-  val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
+  val jqueryui = "org.webjars" % "jquery-ui" % "1.14.0"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
   val react = "org.webjars" % "react" % "16.5.2"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
