@@ -36,17 +36,18 @@ trait MatchListController extends BaseController with Requests {
           pageType = matchesList.pageType,
           matchesList = DotcomRenderingFootballDataModel.getMatchesList(matchesList.matchesGroupedByDateAndCompetition),
           nextPage = matchesList.nextPage,
+          previousPage = matchesList.previousPage,
         )
 
         JsonComponent.fromWritable(model)
-      } else if (request.isJson) {
+      } else if (request.isJson)
         JsonComponent(
           "html" -> football.views.html.matchList.matchesComponent(matchesList),
           "next" -> Html(matchesList.nextPage.getOrElse("")),
           "previous" -> Html(matchesList.previousPage.getOrElse("")),
           "atom" -> atom.isDefined,
         )
-      } else
+      else
         RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
     }
   }
