@@ -31,6 +31,7 @@ case class DotcomRenderingFootballDataModel(
     pageType: String,
     matchesList: Seq[MatchesByDateAndCompetition],
     nextPage: Option[String],
+    previousPage: Option[String],
 )
 
 object DotcomRenderingFootballDataModel {
@@ -96,14 +97,14 @@ object DotcomRenderingFootballDataModelImplicits {
   implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
   implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
 
-  implicit val competitionFormat: Writes[CompetitionSummary] = new Writes[CompetitionSummary] {
-    def writes(competition: CompetitionSummary): JsValue = Json.obj(
+  implicit val competitionFormat: Writes[CompetitionSummary] = (competition: CompetitionSummary) =>
+    Json.obj(
       "id" -> competition.id,
       "url" -> competition.url,
       "fullName" -> competition.fullName,
       "shortName" -> competition.shortName,
+      "nation" -> competition.nation,
     )
-  }
   implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
   implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
     Json.writes[MatchesByDateAndCompetition]
