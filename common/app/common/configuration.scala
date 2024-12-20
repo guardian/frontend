@@ -515,8 +515,6 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
 
-    lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
-
     lazy val prebidServerUrl =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
 

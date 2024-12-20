@@ -3607,11 +3607,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:23.7.4":
-  version: 23.7.4
-  resolution: "@guardian/commercial@npm:23.7.4"
+"@guardian/commercial@npm:23.8.0":
+  version: 23.8.0
+  resolution: "@guardian/commercial@npm:23.8.0"
   dependencies:
-    "@guardian/prebid.js": "npm:8.52.0-8"
+    "@guardian/prebid.js": "npm:8.52.0-10"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
@@ -3626,7 +3626,7 @@ __metadata:
     "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/09fa6f6f237ff0a2bd81d4e9bf4203f4fe37bff33c963401217f5f5e513da505ccc9fab1284e8d732f8d77cff0927141fb7a67dfd60986f5fa91d27b47d5fd0a
+  checksum: 10c0/b5b0d5520561c383af135f1db98f8102fa5ee39c5a9ac630b86aaa2dd83c7808c183a369418a6e1ba48e51c1960c54c35fdac2a5aff3b5cfb633187f079e1232
   languageName: node
   linkType: hard
 
@@ -3699,11 +3699,11 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:23.7.4"
+    "@guardian/commercial": "npm:23.8.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
-    "@guardian/identity-auth-frontend": "npm:4.0.0"
+    "@guardian/identity-auth-frontend": "npm:6.0.3"
     "@guardian/libs": "npm:19.1.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
@@ -3832,18 +3832,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@guardian/identity-auth-frontend@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@guardian/identity-auth-frontend@npm:4.0.0"
+"@guardian/identity-auth-frontend@npm:6.0.3":
+  version: 6.0.3
+  resolution: "@guardian/identity-auth-frontend@npm:6.0.3"
   peerDependencies:
-    "@guardian/identity-auth": ^2.1.0
-    "@guardian/libs": ^16.0.0
+    "@guardian/identity-auth": ^4.0.1
+    "@guardian/libs": ^19.0.0
     tslib: ^2.6.2
-    typescript: ~5.3.3
+    typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/b56e78e9a0477534e074936e4c93ae55c219e56fd0ded1c26a063c20ad5dbef09210fd404776f0ad96ef7ca34f209568eb61f3a296695afc3ea9329d8f61b8bc
+  checksum: 10c0/cf39465b55f07dd02a99cbdf10937f0a74797042430b9a50d1259c0f655e272aa1d6a086efece26ace22cde4fa45aab502c16fb155a125f08419b7756084cb1d
   languageName: node
   linkType: hard
 
@@ -3887,9 +3887,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/prebid.js@npm:8.52.0-8":
-  version: 8.52.0-8
-  resolution: "@guardian/prebid.js@npm:8.52.0-8"
+"@guardian/prebid.js@npm:8.52.0-10":
+  version: 8.52.0-10
+  resolution: "@guardian/prebid.js@npm:8.52.0-10"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
@@ -3912,7 +3912,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/14f8afbc90f6738999898184b698611296e3d657c74a2467d9045b0129a582b9e7b4670343609f6645e69003504d80587b0d2e1c982ecc45d53a626eb2532260
+  checksum: 10c0/10076e408bf7b867cdd39819231e3716d3b3f77d1bb2d3528a321755ab542a68742f8a2af15af482df50a8c78b955d022f7e903be71378a245ef2dc092a60b34
   languageName: node
   linkType: hard
 

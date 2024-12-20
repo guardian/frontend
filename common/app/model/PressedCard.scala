@@ -7,6 +7,7 @@ import com.gu.facia.api.utils.FaciaContentUtils.fold
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import model.CardStylePicker
 import org.joda.time.DateTime
+import com.gu.contentapi.client.model.v1.{Content, ElementType}
 
 final case class PressedCard(
     id: String,
@@ -20,6 +21,7 @@ final case class PressedCard(
     shortUrl: String,
     group: String,
     isLive: Boolean,
+    galleryCount: Option[Int],
 ) {
   def withoutTrailText: PressedCard = copy(trailText = None)
 }
@@ -36,6 +38,18 @@ object PressedCard {
       ).map(_.toJodaDateTime)
     }
 
+    def extractGalleryCount(fc: FaciaContent): Option[Int] = {
+      def countImagesInGallery(content: Content): Option[Int] =
+        content.elements.map(_.count(el => el.`type` == ElementType.Image && el.relation == "gallery")).filter(_ > 0)
+
+      fold(fc)(
+        curatedContent => countImagesInGallery(curatedContent.content),
+        supportingCuratedContent => countImagesInGallery(supportingCuratedContent.content),
+        _ => None,
+        latestSnap => latestSnap.latestContent.flatMap(countImagesInGallery),
+      )
+    }
+
     PressedCard(
       id = FaciaContentUtils.id(content),
       cardStyle = CardStyle.make(CardStylePicker(content)),
@@ -48,6 +62,7 @@ object PressedCard {
       group = FaciaContentUtils.group(content),
       trailText = FaciaContentUtils.trailText(content),
       starRating = FaciaContentUtils.starRating(content),
+      galleryCount = extractGalleryCount(content),
     )
   }
 }

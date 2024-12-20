@@ -5,8 +5,8 @@ export const onwardsContentArticle = {
 	author: 'dotcom.platform@guardian.co.uk',
 	description:
 		'Test the impact of showing the galleries onwards content component on article pages.',
-	audience: 0 / 100,
-	audienceOffset: 0 / 100,
+	audience: 50 / 100,
+	audienceOffset: 50 / 100,
 	audienceCriteria: 'Article pages',
 	successMeasure:
 		'Users are more likely to click a link in the onward content component.',
