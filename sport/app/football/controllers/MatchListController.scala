@@ -35,6 +35,7 @@ trait MatchListController extends BaseController with Requests {
           pageTitle = matchesList.getPageTitle(Edition(request)),
           pageType = matchesList.pageType,
           matchesList = DotcomRenderingFootballDataModel.getMatchesList(matchesList.matchesGroupedByDateAndCompetition),
+          nextPage = matchesList.nextPage,
         )
 
         JsonComponent.fromWritable(model)
