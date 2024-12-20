@@ -1,7 +1,7 @@
 package football.model
 
-import model.{Competition, CompetitionSummary}
 import model.dotcomrendering.DotcomRenderingUtils.withoutNull
+import model.{Competition, CompetitionSummary}
 import pa.{
   Fixture,
   FootballMatch,
@@ -18,7 +18,7 @@ import pa.{
   Venue,
   Competition => PaCompetition,
 }
-import play.api.libs.json.{JsObject, JsString, JsValue, Json, Writes}
+import play.api.libs.json._
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -30,6 +30,7 @@ case class DotcomRenderingFootballDataModel(
     pageTitle: String,
     pageType: String,
     matchesList: Seq[MatchesByDateAndCompetition],
+    nextPage: Option[String],
 )
 
 object DotcomRenderingFootballDataModel {
