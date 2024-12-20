@@ -39,6 +39,8 @@ class ArticleController(
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
+      println("HELLO MY NAME IS PHIL")
+      log.info("HELLO MY NAME IS PHIL")
       mapModel(path, ArticleBlocks) { (article, blocks) =>
         render(path, article, blocks)
       }

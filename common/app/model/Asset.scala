@@ -106,6 +106,12 @@ case class ImageAsset(
   } yield caption.endsWith(credit)).getOrElse(false)
 }
 
+object CartoonAsset {
+  def make(asset: Asset): CartoonAsset = {
+
+  }
+}
+
 object VideoAsset {
   def make(asset: Asset): VideoAsset = {
     VideoAsset(

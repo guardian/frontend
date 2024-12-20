@@ -1,7 +1,7 @@
 package model
 
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.v1.{AssetType, ElementType, Element => ApiElement}
+import com.gu.contentapi.client.model.v1.{AssetType, BlockElement, CartoonElementFields, CartoonImage, ElementType, Element => ApiElement}
 import org.apache.commons.lang3.math.Fraction
 import play.api.libs.json.{Json, Writes}
 
@@ -32,11 +32,12 @@ object Element {
     val images = ImageMedia.make(capiElement, properties)
 
     capiElement.`type` match {
-      case ElementType.Image => ImageElement(properties, images)
-      case ElementType.Video => VideoElement(properties, images, VideoMedia.make(capiElement))
-      case ElementType.Audio => AudioElement(properties, images, AudioMedia.make(capiElement))
-      case ElementType.Embed => EmbedElement(properties, images, EmbedMedia.make(capiElement))
-      case _                 => DefaultElement(properties, images)
+      case ElementType.Image   => ImageElement(properties, images)
+      case ElementType.Video   => VideoElement(properties, images, VideoMedia.make(capiElement))
+      case ElementType.Audio   => AudioElement(properties, images, AudioMedia.make(capiElement))
+      case ElementType.Embed   => EmbedElement(properties, images, EmbedMedia.make(capiElement))
+      case ElementType.Cartoon => CartoonElement(properties, images, CartoonMedia.make(capiElement))
+      case _                   => DefaultElement(properties, images)
     }
   }
 }
@@ -87,6 +88,18 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
     } else {
       largestImage
     }
+  }
+}
+
+object CartoonMedia {
+  def make(capiElement: BlockElement): ImageMedia = {
+    val assets = capiElement.assets.filter(_.`type` == AssetType.Cartoon).map(CartoonAsset.make)
+    ImageMedia(
+      allImages = List(ImageAsset(
+
+      ))
+    )
+
   }
 }
 
@@ -159,6 +172,12 @@ final case class EmbedMedia(embedAssets: Seq[EmbedAsset])
 
 final case class ImageElement(override val properties: ElementProperties, override val images: ImageMedia)
     extends Element
+
+//final case class CartoonElement(
+//    override val properties: ElementProperties,
+//    override val images: ImageMedia,
+//    cartoons: CartoonMedia,
+//) extends Element
 
 final case class VideoElement(
     override val properties: ElementProperties,

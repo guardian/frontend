@@ -643,6 +643,10 @@ final case class Elements(elements: Seq[Element]) {
     showcasePicture.getOrElse(false) || showcaseEmbed.getOrElse(false)
   }
 
+  lazy val hasCartoonMainElement = {
+    elements
+  }
+
   def mainVideo: Option[VideoElement] = videos.find(_.properties.isMain)
 
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videos.videoAssets.headOption).isDefined
@@ -680,6 +684,11 @@ final case class Elements(elements: Seq[Element]) {
   lazy val videos: Seq[VideoElement] = elements.flatMap {
     case video: VideoElement => Some(video)
     case _                   => None
+  }
+
+  lazy val cartoons: Seq[CartoonElement] = elements.flatMap {
+    case cartoon: CartoonElement => Some(cartoon)
+    case _                        => None
   }
 
   protected lazy val audios: Seq[AudioElement] = elements.flatMap {

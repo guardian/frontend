@@ -126,7 +126,7 @@ class ImageContentController(
       })
       val instant = date.map(LocalDateTime.of(_, LocalTime.MIDNIGHT).toInstant(ZoneOffset.UTC))
       val query =
-        SearchQuery().tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize);
+        SearchQuery().tag(tag).showTags("all").showElements("image,cartoon").pageSize(contentApi.nextPreviousPageSize);
 
       val capiQuery = FollowingSearchQuery(
         direction match {
@@ -138,12 +138,15 @@ class ImageContentController(
       )
 
       contentApiClient.thriftClient.getResponse(capiQuery).map { response =>
-        val lightboxJson = response.results.flatMap(result =>
+        val lightboxJson = response.results.flatMap { result =>
+          println("TAGS****")
+          println(result.tags.map(t => t.id))
+          println(result.elements)
           Content(result) match {
             case content: ImageContent => Some(content.lightBox.javascriptConfig)
             case _                     => None
-          },
-        )
+          }
+        }
 
         if (request.forceDCR) {
           val timeDirection = direction match {
