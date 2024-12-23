@@ -25,7 +25,13 @@
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
-        <appender-ref ref="STDOUT"/>
     </root>
+    <if condition='!property("STAGE").contains("DEV")'>
+        <then>
+            <root level="INFO">
+                <appender-ref ref="STDOUT"/>
+            </root>
+        </then>
+    </if>
 
 </configuration>

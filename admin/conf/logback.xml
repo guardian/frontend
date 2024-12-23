@@ -30,7 +30,13 @@
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
-        <appender-ref ref="ASYNCSTDOUT"/>
     </root>
+    <if condition='!property("STAGE").contains("DEV")'>
+        <then>
+            <root level="INFO">
+                <appender-ref ref="ASYNCSTDOUT"/>
+            </root>
+        </then>
+    </if>
 
 </configuration>

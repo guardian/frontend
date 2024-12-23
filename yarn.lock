@@ -3607,11 +3607,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:23.7.5":
-  version: 23.7.5
-  resolution: "@guardian/commercial@npm:23.7.5"
+"@guardian/commercial@npm:23.8.1":
+  version: 23.8.1
+  resolution: "@guardian/commercial@npm:23.8.1"
   dependencies:
-    "@guardian/prebid.js": "npm:8.52.0-8"
+    "@guardian/prebid.js": "npm:8.52.0-10"
     "@octokit/core": "npm:^6.1.2"
     fastdom: "npm:^1.0.11"
     lodash-es: "npm:^4.17.21"
@@ -3626,7 +3626,7 @@ __metadata:
     "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
     typescript: ~5.5.3
-  checksum: 10c0/1f6dddf3b6539d0c7d275804e0429fa2dd4b301e162131c2b0a112f5b8dd4b37770343c916dfd57bb2c77570a5c730d5fd66dcc6d30d893386665fcb7b2423a9
+  checksum: 10c0/4488418264f613473852804e3b4b592e6a708c64147e0e978abc3672596404630af537fcdad0fa5b388ac0e3f9526abbf1a4d5cd69ab7debf7c708abc4f73ad6
   languageName: node
   linkType: hard
 
@@ -3699,7 +3699,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:23.7.5"
+    "@guardian/commercial": "npm:23.8.1"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
@@ -3887,9 +3887,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/prebid.js@npm:8.52.0-8":
-  version: 8.52.0-8
-  resolution: "@guardian/prebid.js@npm:8.52.0-8"
+"@guardian/prebid.js@npm:8.52.0-10":
+  version: 8.52.0-10
+  resolution: "@guardian/prebid.js@npm:8.52.0-10"
   dependencies:
     "@babel/core": "npm:^7.23.2"
     "@babel/plugin-transform-runtime": "npm:^7.18.9"
@@ -3912,7 +3912,7 @@ __metadata:
   dependenciesMeta:
     fsevents:
       optional: true
-  checksum: 10c0/14f8afbc90f6738999898184b698611296e3d657c74a2467d9045b0129a582b9e7b4670343609f6645e69003504d80587b0d2e1c982ecc45d53a626eb2532260
+  checksum: 10c0/10076e408bf7b867cdd39819231e3716d3b3f77d1bb2d3528a321755ab542a68742f8a2af15af482df50a8c78b955d022f7e903be71378a245ef2dc092a60b34
   languageName: node
   linkType: hard
 

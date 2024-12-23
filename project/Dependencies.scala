@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "1.12.758"
   val awsSdk2Version = "2.26.27"
-  val capiVersion = "32.0.0"
+  val capiVersion = "32.0.1"
   val faciaVersion = "13.1.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -88,6 +88,7 @@ object Dependencies {
 
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
+  val janino = "org.codehaus.janino" % "janino" % "3.1.12"
 
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
