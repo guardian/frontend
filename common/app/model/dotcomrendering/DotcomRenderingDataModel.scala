@@ -10,7 +10,7 @@ import conf.Configuration
 import crosswords.CrosswordPageWithContent
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
-import model.dotcomrendering.pageElements.{ImageBlockElement, PageElement, Role, TextCleaner}
+import model.dotcomrendering.pageElements.{AudioBlockElement, ImageBlockElement, PageElement, Role, TextCleaner}
 import model.liveblog.BlockAttributes
 import model.{
   ArticleDateTimes,
@@ -544,11 +544,23 @@ object DotcomRenderingDataModel {
       )
     }
 
-    val mainMediaElements =
-      mainBlock
+    val mainMediaElements = {
+      val pageElements = mainBlock
         .map(toDCRBlock(isMainBlock = true))
         .toList
         .flatMap(_.elements)
+
+      page.metadata.contentType match {
+        case Some(DotcomContentType.Audio) =>
+          pageElements
+            .map {
+              case AudioBlockElement(assets, _) =>
+                AudioBlockElement(assets, Option(content.elements.mainAudio.head.properties.id))
+              case pageElement => pageElement
+            }
+        case _ => pageElements
+      }
+    }
 
     val bodyBlocksDCR =
       bodyBlocks
