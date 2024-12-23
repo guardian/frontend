@@ -71,11 +71,11 @@ object PressedCard {
         latestSnap => latestSnap.latestContent.flatMap(getSeconds),
       )
 
-      val minutes = audioDurationMinutes(fc).get.headOption
-      val seconds = audioDurationSeconds(fc).get.headOption
+      val minutes = audioDurationMinutes(fc)
+      val seconds = audioDurationSeconds(fc)
 
       if (minutes.isDefined || seconds.isDefined) {
-        val duration = minutes.toString + ":" + seconds.toString
+        val duration = minutes.get.headOption.toString + ":" + seconds.get.headOption.toString
         Some(duration)
       } else None
     }
