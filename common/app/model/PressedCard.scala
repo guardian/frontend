@@ -9,11 +9,6 @@ import model.CardStylePicker
 import org.joda.time.DateTime
 import com.gu.contentapi.client.model.v1.{Content, ElementType}
 
-//case class AudioDuration(
-//    audioDurationMinutes: Option[collection.Seq[Int]],
-//    audioDurationSeconds: Option[collection.Seq[Int]],
-//)
-
 final case class PressedCard(
     id: String,
     cardStyle: CardStyle,
@@ -27,9 +22,7 @@ final case class PressedCard(
     group: String,
     isLive: Boolean,
     galleryCount: Option[Int],
-//    audioDuration: AudioDuration,
-    audioDurationMinutes: Option[collection.Seq[Int]],
-    audioDurationSeconds: Option[collection.Seq[Int]],
+    audioDuration: Option[String],
 ) {
   def withoutTrailText: PressedCard = copy(trailText = None)
 }
@@ -58,46 +51,34 @@ object PressedCard {
       )
     }
 
-//    def getAudioDuration(fc: FaciaContent): AudioDuration = {
-//      def getAudioDurationMinutes(content: Content) =
-//        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationMinutes)))
-//
-//      def getAudioDurationSeconds(content: Content) =
-//        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationSeconds)))
-//      val audioDurationMinutes = fold(fc)(
-//        curatedContent => getAudioDurationMinutes(curatedContent.content),
-//        supportingCuratedContent => getAudioDurationMinutes(supportingCuratedContent.content),
-//        _ => None,
-//        latestSnap => latestSnap.latestContent.flatMap(getAudioDurationMinutes),
-//      )
-//      val audioDurationSeconds = fold(fc)(
-//        curatedContent => getAudioDurationSeconds(curatedContent.content),
-//        supportingCuratedContent => getAudioDurationSeconds(supportingCuratedContent.content),
-//        _ => None,
-//        latestSnap => latestSnap.latestContent.flatMap(getAudioDurationSeconds),
-//      )
-//      val audioDuration = AudioDuration(audioDurationMinutes, audioDurationSeconds)
-//      audioDuration
-//
-//    }
+    def getAudioDuration(fc: FaciaContent): Option[String] = {
+      def getMinutes(content: Content) =
+        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationMinutes)))
+      def getSeconds(content: Content) =
+        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationSeconds)))
 
-    def getAudioDurationMinutes(content: Content) =
-      content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationMinutes)))
+      def audioDurationMinutes(fc: FaciaContent) = fold(fc)(
+        curatedContent => getMinutes(curatedContent.content),
+        supportingCuratedContent => getMinutes(supportingCuratedContent.content),
+        _ => None,
+        latestSnap => latestSnap.latestContent.flatMap(getMinutes),
+      )
 
-    def getAudioDurationSeconds(content: Content) =
-      content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationSeconds)))
-    def audioDurationMinutes(fc: FaciaContent) = fold(fc)(
-      curatedContent => getAudioDurationMinutes(curatedContent.content),
-      supportingCuratedContent => getAudioDurationMinutes(supportingCuratedContent.content),
-      _ => None,
-      latestSnap => latestSnap.latestContent.flatMap(getAudioDurationMinutes),
-    )
-    def audioDurationSeconds(fc: FaciaContent) = fold(fc)(
-      curatedContent => getAudioDurationSeconds(curatedContent.content),
-      supportingCuratedContent => getAudioDurationSeconds(supportingCuratedContent.content),
-      _ => None,
-      latestSnap => latestSnap.latestContent.flatMap(getAudioDurationSeconds),
-    )
+      def audioDurationSeconds(fc: FaciaContent) = fold(fc)(
+        curatedContent => getSeconds(curatedContent.content),
+        supportingCuratedContent => getSeconds(supportingCuratedContent.content),
+        _ => None,
+        latestSnap => latestSnap.latestContent.flatMap(getSeconds),
+      )
+
+      val minutes = audioDurationMinutes(fc).get.headOption
+      val seconds = audioDurationSeconds(fc).get.headOption
+
+      if (minutes.isDefined || seconds.isDefined) {
+        val duration = minutes.toString + ":" + seconds.toString
+        Some(duration)
+      } else None
+    }
 
     PressedCard(
       id = FaciaContentUtils.id(content),
@@ -112,9 +93,7 @@ object PressedCard {
       trailText = FaciaContentUtils.trailText(content),
       starRating = FaciaContentUtils.starRating(content),
       galleryCount = extractGalleryCount(content),
-//      audioDuration = getAudioDuration(content),
-      audioDurationMinutes = audioDurationMinutes(content),
-      audioDurationSeconds = audioDurationSeconds(content),
+      audioDuration = getAudioDuration(content),
     )
   }
 }
