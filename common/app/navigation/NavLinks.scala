@@ -351,7 +351,6 @@ object NavLinks {
   val eurNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
-      usElections2024,
       ukNews,
       climateCrisis,
       ukraine,
