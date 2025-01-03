@@ -6,7 +6,6 @@ import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
-import common.Assets.DiscussionExternalAssetsLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.FootballLifecycle
@@ -101,7 +100,6 @@ trait AppComponents
       wire[CricketLifecycle],
       wire[RugbyLifecycle],
       wire[TargetingLifecycle],
-      wire[DiscussionExternalAssetsLifecycle],
       wire[StocksDataLifecycle],
       wire[NewsletterSignupLifecycle],
       wire[MostViewedLifecycle],

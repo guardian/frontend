@@ -13,6 +13,7 @@ trait JournalismSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val AudioOnwardJourneySwitch = Switch(
@@ -23,6 +24,7 @@ trait JournalismSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val FlagshipEmailContainerSwitch = Switch(
@@ -33,6 +35,7 @@ trait JournalismSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FlagshipEmailContainerDynamicImageSwitch = Switch(
@@ -43,6 +46,7 @@ trait JournalismSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FlagshipFrontContainerSwitch = Switch(
@@ -53,6 +57,7 @@ trait JournalismSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val Lightbox = Switch(
@@ -63,6 +68,7 @@ trait JournalismSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val AbsoluteServerTimes = Switch(
@@ -73,5 +79,6 @@ trait JournalismSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 }

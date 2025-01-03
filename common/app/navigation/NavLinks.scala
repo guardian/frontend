@@ -19,7 +19,7 @@ object NavLinks {
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
-  val usElections2024 = NavLink("US elections 2024", "/us-news/us-elections-2024")
+  val usPolitics = NavLink("US politics", "/us-news/us-politics")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -279,16 +279,16 @@ object NavLinks {
     iconName = Some("home"),
     List(
       ukNews,
-      usElections2024,
+      usPolitics,
       world,
       climateCrisis,
+      middleEast,
       ukraine,
       football,
       newsletters,
       ukBusiness,
       ukEnvironment,
       politics,
-      education,
       society,
       science,
       tech,
@@ -317,12 +317,14 @@ object NavLinks {
   val usNewsPillar = ukNewsPillar.copy(children =
     List(
       usNews,
-      usElections2024,
+      usPolitics,
       world,
-      usEnvironment,
+      climateCrisis,
+      middleEast,
       ukraine,
       usSoccer,
       usBusiness,
+      usEnvironment,
       usTech,
       science,
       newsletters,
@@ -332,9 +334,10 @@ object NavLinks {
   val intNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
-      usElections2024,
+      usPolitics,
       ukNews,
       climateCrisis,
+      middleEast,
       ukraine,
       ukEnvironment,
       science,

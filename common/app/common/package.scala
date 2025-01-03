@@ -10,7 +10,7 @@ import model.CacheTime.RecentlyUpdated
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
 import play.api.Logger
-import play.api.libs.json.{JsObject, JsString}
+import play.api.libs.json.{JsObject, JsString, JsValue}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import model.ApplicationContext
@@ -162,7 +162,10 @@ object `package`
       JsonComponent(page, json)
     }
 
-  def renderJson(json: String, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result =
+  def renderJson(json: JsValue, page: model.Page)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result =
     Cached(page) {
       RevalidatableResult.Ok(json)
     }

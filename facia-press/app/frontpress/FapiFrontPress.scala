@@ -53,7 +53,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
   ): Response[List[PressedContent]] =
     FAPI
       .liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
-      .map(_.map(PressedContent.make))
+      .map(_.map((item) => PressedContent.make(item, collection.collectionConfig.suppressImages)))
 }
 
 class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit
@@ -81,7 +81,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
   ): Response[List[PressedContent]] =
     FAPI
       .draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
-      .map(_.map(PressedContent.make))
+      .map(_.map((item) => PressedContent.make(item, collection.collectionConfig.suppressImages)))
 }
 
 // This is the json structure we expect for an embed (know as a snap at render-time).
@@ -403,7 +403,9 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   private def getTreats(
       collection: Collection,
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
-    FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery).map(_.map(PressedContent.make))
+    FAPI
+      .getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
+      .map(_.map((item) => PressedContent.make(item, false)))
   }
 
   private def getBackfill(
@@ -411,7 +413,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
     FAPI
       .backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
-      .map(_.map(PressedContent.make))
+      .map(_.map(((item) => PressedContent.make(item, false))))
   }
 
   def generatePressedVersions(

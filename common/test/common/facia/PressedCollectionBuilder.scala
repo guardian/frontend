@@ -22,6 +22,7 @@ object PressedCollectionBuilder {
       backfill = None,
       metadata = None,
       collectionType = "",
+      collectionLevel = None,
       href = None,
       description = None,
       groups = None,
@@ -35,6 +36,7 @@ object PressedCollectionBuilder {
       showTimestamps = false,
       hideShowMore,
       displayHints = None,
+      aspectRatio = Some(""),
     )
 
     PressedCollection(

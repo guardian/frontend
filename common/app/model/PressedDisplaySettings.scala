@@ -13,10 +13,11 @@ final case class PressedDisplaySettings(
 )
 
 object PressedDisplaySettings {
-  def make(content: fapi.FaciaContent): PressedDisplaySettings = {
+  def make(content: fapi.FaciaContent, suppressImages: Option[Boolean]): PressedDisplaySettings = {
+    val shouldSuppressImages = suppressImages.getOrElse(false)
     val contentProperties = PressedProperties.getProperties(content)
     PressedDisplaySettings(
-      imageHide = contentProperties.imageHide,
+      imageHide = shouldSuppressImages || contentProperties.imageHide,
       isBoosted = FaciaContentUtils.isBoosted(content),
       boostLevel = Some(FaciaContentUtils.boostLevel(content)),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),

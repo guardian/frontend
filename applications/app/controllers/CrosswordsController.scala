@@ -1,10 +1,16 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{
+  Crossword,
+  ItemResponse,
+  SearchResponse,
+  Content => ApiContent,
+  Section => ApiSection,
+}
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
-import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
+import com.gu.contentapi.client.model.SearchQuery
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
@@ -14,18 +20,22 @@ import crosswords.{
   CrosswordSearchPageWithResults,
   CrosswordSvg,
 }
+import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.joda.time.{DateTime, LocalDate}
+import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.mvc.{Action, RequestHeader, Result, _}
-import services.{IndexPage, IndexPageItem}
-import html.HtmlPageHelpers.ContentCSSFile
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import play.api.libs.json.JsValue
 import play.api.libs.ws.WSClient
+import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{CrosswordsPicker, RemoteRender}
+import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -115,7 +125,7 @@ class CrosswordPageController(
   }
   private def getDCRJson(crosswordPage: CrosswordPageWithContent, pageType: PageType)(implicit
       request: RequestHeader,
-  ): String =
+  ): JsValue =
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType),
     )
@@ -288,4 +298,58 @@ class CrosswordSearchController(
   }
 
   case class CrosswordLookup(crosswordType: String, id: Int)
+}
+
+class CrosswordEditionsController(
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val remoteRenderer: DotcomRenderingService = DotcomRenderingService(),
+    val wsClient: WSClient,
+) extends BaseController
+    with GuLogging
+    with ImplicitControllerExecutionContext {
+
+  def digitalEdition: Action[AnyContent] = Action.async { implicit request =>
+    getCrosswords
+      .map(parseCrosswords)
+      .flatMap { crosswords =>
+        remoteRenderer.getEditionsCrossword(wsClient, crosswords)
+      }
+  }
+
+  def digitalEditionJson: Action[AnyContent] = Action.async { implicit request =>
+    getCrosswords
+      .map(parseCrosswords)
+      .map { crosswords =>
+        Cached(CacheTime.Default)(RevalidatableResult.Ok(toJson(crosswords))).as("application/json")
+      }
+  }
+
+  private def getCrosswords: Future[SearchResponse] =
+    contentApiClient.getResponse(crosswordsQuery)
+
+  /** Search for playable crosswords sorted by print publication date. This will exclude older, originally print-only
+    * crosswords that happen to have been re-published in a digital format recently.
+    */
+  private lazy val crosswordsQuery =
+    SearchQuery()
+      .contentType("crossword")
+      .tag(crosswordTags)
+      .useDate("newspaper-edition")
+      .pageSize(25)
+
+  private lazy val crosswordTags = Seq(
+    "crosswords/series/quick",
+    "crosswords/series/cryptic",
+    "crosswords/series/prize",
+    "crosswords/series/weekend-crossword",
+    "crosswords/series/quick-cryptic",
+    "crosswords/series/everyman",
+    "crosswords/series/speedy",
+    "crosswords/series/quiptic",
+  ).mkString("|")
+
+  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel =
+    EditionsCrosswordRenderingDataModel(response.results.flatMap(_.crossword))
+
 }

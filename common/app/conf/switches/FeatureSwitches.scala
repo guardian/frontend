@@ -15,6 +15,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
@@ -25,6 +26,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FacebookShareImageLogoOverlay = Switch(
@@ -35,6 +37,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val TwitterShareImageLogoOverlay = Switch(
@@ -45,6 +48,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val GeoMostPopular = Switch(
@@ -55,6 +59,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ExtendedMostPopular = Switch(
@@ -65,6 +70,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ExtendedMostPopularFronts = Switch(
@@ -75,6 +81,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val MostViewedFronts = Switch(
@@ -85,6 +92,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val FontSwitch = Switch(
@@ -95,6 +103,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val FontKerningSwitch = Switch(
@@ -105,6 +114,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val SearchSwitch = Switch(
@@ -115,6 +125,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val IdentityProfileNavigationSwitch = Switch(
@@ -125,6 +136,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val FacebookShareUseTrailPicFirstSwitch = Switch(
@@ -136,6 +148,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val IdentityAvatarUploadSwitch = Switch(
@@ -146,6 +159,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val EnhanceTweetsSwitch = Switch(
@@ -156,6 +170,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val WeatherSwitch = Switch(
@@ -166,6 +181,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val HistoryTags = Switch(
@@ -176,6 +192,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val IdentityBlockSpamEmails = Switch(
@@ -186,6 +203,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val IdentityLogRegistrationsFromTor = Switch(
@@ -196,6 +214,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val CrosswordSvgThumbnailsSwitch = Switch(
@@ -206,6 +225,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val SudokuSwitch = Switch(
@@ -216,6 +236,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val CricketScoresSwitch = Switch(
@@ -226,6 +247,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val RugbyScoresSwitch = Switch(
@@ -236,6 +258,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   // Decommissioned, see marker: 7dde429f00b1
@@ -247,6 +270,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val MissingVideoEndcodingsJobSwitch = Switch(
@@ -257,6 +281,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val EmailInlineInFooterSwitch = Switch(
@@ -267,6 +292,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val UseAtomsSwitch = Switch(
@@ -277,6 +303,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val AmpArticleSwitch = Switch(
@@ -287,6 +314,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val AmpLiveBlogSwitch = Switch(
@@ -297,6 +325,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val R2PagePressServiceSwitch = Switch(
@@ -307,6 +336,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   // Owner: Maria Livia Chiorean
@@ -318,6 +348,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   // Owner: Sam Cutler / Editorial Tools
@@ -329,6 +360,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val InlineEmailStyles = Switch(
@@ -339,6 +371,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val WeAreHiring = Switch(
@@ -349,6 +382,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val Acast = Switch(
@@ -359,6 +393,7 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   // Simple & Coherent
@@ -370,6 +405,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   // Election interactive header switch
@@ -381,6 +417,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val slotBodyEnd = Switch(
@@ -391,6 +428,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val remoteBanner = Switch(
@@ -401,6 +439,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val remoteHeader = Switch(
@@ -411,6 +450,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val InteractivePickerFeature = Switch(
@@ -421,6 +461,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val StickyVideos = Switch(
@@ -431,6 +472,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val NewsletterOnwards = Switch(
@@ -441,6 +483,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val KeyEventsCarousel = Switch(
@@ -451,6 +494,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val AusRegionSelector = Switch(
@@ -461,6 +505,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val Callout = Switch(
@@ -471,6 +516,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val PersonaliseSignInGateAfterCheckout = Switch(
@@ -481,6 +527,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val DCRAudioPages = Switch(
@@ -491,6 +538,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val DCRVideoPages = Switch(
@@ -501,6 +549,7 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val DCRTagPages = Switch(
@@ -511,15 +560,17 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val DisableFrontContainerShowHide = Switch(
     group = SwitchGroup.Feature,
     name = "disable-front-container-show-hide",
     description = "For users with no currently hidden containers on a front, removes the ability to hide containers",
-    owners = Seq(Owner.withGithub("cemms1")),
+    owners = Seq(Owner.withEmail("project.fairground@theguardian.com")),
     safeState = On,
-    sellByDate = LocalDate.of(2024, 11, 29),
+    sellByDate = LocalDate.of(2025, 2, 4),
     exposeClientSide = true,
+    highImpact = false,
   )
 }

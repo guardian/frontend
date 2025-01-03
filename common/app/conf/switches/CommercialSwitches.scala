@@ -15,6 +15,7 @@ trait CommercialSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ShouldLoadGoogleTagSwitch = Switch(
@@ -25,6 +26,11 @@ trait CommercialSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = true,
+    impactShortMessage = Some("Critical for advertising!"),
+    impactFullMessage = Some(
+      "Warning: Requires director-level sign-off + notification of global commerical stakeholders. Disabling this switch will cost £160k/day in ad-revenue",
+    ),
   )
 
   val ImrWorldwideSwitch = Switch(
@@ -35,6 +41,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val InizioSwitch = Switch(
@@ -45,6 +52,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val TwitterUwtSwitch = Switch(
@@ -55,6 +63,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val PermutiveSwitch = Switch(
@@ -65,6 +74,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ampAmazon = Switch(
@@ -75,6 +85,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val RemarketingSwitch = Switch(
@@ -85,6 +96,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val AffiliateLinks: Switch = Switch(
@@ -96,17 +108,9 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
-  )
-
-  val AffiliateLinkSections: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links-sections",
-    description =
-      "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter'"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
   )
 
   val confiantAdVerification: Switch = Switch(
@@ -117,6 +121,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val a9HeaderBidding: Switch = Switch(
@@ -127,6 +132,9 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = true,
+    impactShortMessage = Some("Required for Amazon A9 (TAM) header bidding"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent Amazon A9 (TAM) from running"),
   )
 
   val commercialMetrics: Switch = Switch(
@@ -137,6 +145,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val articleEndSlot: Switch = Switch(
@@ -148,6 +157,7 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 }
 
@@ -161,6 +171,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidAnalytics: Switch = Switch(
@@ -171,6 +182,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ampPrebidPubmatic: Switch = Switch(
@@ -181,6 +193,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ampPrebidCriteo: Switch = Switch(
@@ -191,6 +204,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ampPrebidOzone: Switch = Switch(
@@ -201,6 +215,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidUserSync: Switch = Switch(
@@ -211,6 +226,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val PrebidPermutiveAudience = Switch(
@@ -221,6 +237,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidSonobi: Switch = Switch(
@@ -231,6 +248,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidAppNexus: Switch = Switch(
@@ -241,6 +259,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidAppNexusUKROW: Switch = Switch(
@@ -251,6 +270,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidAppNexusInvcode: Switch = Switch(
@@ -261,6 +281,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidIndexExchange: Switch = Switch(
@@ -271,6 +292,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidOpenx: Switch = Switch(
@@ -281,6 +303,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidOzone: Switch = Switch(
@@ -291,6 +314,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidPubmatic: Switch = Switch(
@@ -301,6 +325,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidTrustx: Switch = Switch(
@@ -311,6 +336,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidTripleLift: Switch = Switch(
@@ -321,6 +347,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidImproveDigital: Switch = Switch(
@@ -331,6 +358,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidImproveDigitalSkins: Switch = Switch(
@@ -341,6 +369,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidXaxis: Switch = Switch(
@@ -351,6 +380,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidAdYouLike: Switch = Switch(
@@ -361,6 +391,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidCriteo: Switch = Switch(
@@ -371,6 +402,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidSmart: Switch = Switch(
@@ -381,6 +413,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidKargo: Switch = Switch(
@@ -391,6 +424,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val prebidMagnite: Switch = Switch(
@@ -401,6 +435,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val sentinelLogger: Switch = Switch(
@@ -411,6 +446,7 @@ trait PrebidSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val ampContentABTesting: Switch = Switch(
@@ -421,6 +457,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val optOutAdvertising: Switch = Switch(
@@ -431,6 +468,7 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val youtubeIma: Switch = Switch(
@@ -441,5 +479,6 @@ trait PrebidSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 }

@@ -6,13 +6,15 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.{Configuration, DiscussionAsset}
+import conf.Configuration
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
+import common.CommercialBundle
+import experiments.{ActiveExperiments, CommercialBundleUpdater}
 
 object JavaScriptPage {
 
@@ -70,10 +72,13 @@ object JavaScriptPage {
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
-    val commercialBundleUrl = JsString(
-      Configuration.commercial.overrideCommercialBundleUrl
-        .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js")),
-    )
+    val commercialBundleUrl =
+      if (ActiveExperiments.isParticipating(CommercialBundleUpdater)(request))
+        Configuration.commercial.overrideCommercialBundleUrl
+          .getOrElse(CommercialBundle.bundleUrl)
+      else
+        Configuration.commercial.overrideCommercialBundleUrl
+          .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js"))
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
@@ -95,7 +100,7 @@ object JavaScriptPage {
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
       ("ipsosTag", JsString(ipsos)),
       ("isAdFree", JsBoolean(isAdFree(request))),
-      ("commercialBundleUrl", commercialBundleUrl),
+      ("commercialBundleUrl", JsString(commercialBundleUrl)),
       ("stage", JsString(Configuration.environment.stage)),
     )
   }.toMap

@@ -13,6 +13,7 @@ trait FaciaSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FrontPressJobSwitch = Switch(
@@ -23,6 +24,7 @@ trait FaciaSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FrontPressJobSwitchStandardFrequency = Switch(
@@ -33,6 +35,7 @@ trait FaciaSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FaciaPressOnDemand = Switch(
@@ -43,6 +46,7 @@ trait FaciaSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FaciaInlineEmbeds = Switch(
@@ -53,6 +57,7 @@ trait FaciaSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val FaciaPressStatusNotifications = Switch(
@@ -63,6 +68,7 @@ trait FaciaSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val DCRFronts = Switch(
@@ -73,6 +79,7 @@ trait FaciaSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 
   val DCRNetworkFronts = Switch(
@@ -83,5 +90,6 @@ trait FaciaSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
   )
 }

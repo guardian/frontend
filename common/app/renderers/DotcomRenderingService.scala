@@ -1,7 +1,7 @@
 package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
+import com.gu.contentapi.client.model.v1.{Block, Blocks, Content, Crossword}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -10,6 +10,7 @@ import crosswords.CrosswordPageWithContent
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
+import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.{
   CacheTime,
   Cached,
@@ -24,6 +25,7 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
+import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -55,7 +57,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   private[this] def postWithoutHandler(
       ws: WSClient,
-      payload: String,
+      payload: JsValue,
       endpoint: String,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[WSResponse] = {
@@ -92,7 +94,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   private[this] def post(
       ws: WSClient,
-      payload: String,
+      payload: JsValue,
       endpoint: String,
       cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
@@ -257,6 +259,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       })
   }
 
+  private def getTimeout: Duration = {
+    if (Configuration.environment.stage == "DEV")
+      Configuration.rendering.timeout * 5
+    else
+      Configuration.rendering.timeout
+  }
+
   def getFront(
       ws: WSClient,
       page: PressedPage,
@@ -277,7 +286,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia)
+    val timeout = getTimeout
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia, timeout)
   }
 
   def getTagPage(
@@ -417,6 +427,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+  }
+
+  def getEditionsCrossword(
+      ws: WSClient,
+      crosswords: EditionsCrosswordRenderingDataModel,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val json = EditionsCrosswordRenderingDataModel.toJson(crosswords)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Default)
   }
 }
 

@@ -12,6 +12,7 @@ trait IdentitySwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 
   val Okta = Switch(
@@ -22,5 +23,6 @@ trait IdentitySwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+    highImpact = false,
   )
 }

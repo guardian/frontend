@@ -289,10 +289,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val bucket: Option[String] = configuration.getStringProperty("skimlinks.bucket")
     lazy val domainsKey = "skimlinks/skimlinks-domains.csv"
     lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
-    lazy val affiliateLinkSections: Set[String] =
-      configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
-    lazy val defaultOffTags: Set[String] =
-      configuration.getStringProperty("affiliatelinks.default.off.tags").getOrElse("").split(",").toSet
     lazy val alwaysOffTags: Set[String] =
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
   }
@@ -518,8 +514,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
-
-    lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
 
     lazy val prebidServerUrl =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"

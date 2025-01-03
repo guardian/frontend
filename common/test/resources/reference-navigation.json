@@ -88,8 +88,8 @@
 					"classList": []
 				},
 				{
-					"title": "US elections 2024",
-					"url": "/us-news/us-elections-2024",
+					"title": "US politics",
+					"url": "/us-news/us-politics",
 					"children": [],
 					"classList": []
 				},
@@ -160,6 +160,12 @@
 				{
 					"title": "Climate crisis",
 					"url": "/environment/climate-crisis",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Middle East",
+					"url": "/world/middleeast",
 					"children": [],
 					"classList": []
 				},
@@ -339,37 +345,6 @@
 					"title": "UK politics",
 					"url": "/politics",
 					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Education",
-					"url": "/education",
-					"children": [
-						{
-							"title": "Schools",
-							"url": "/education/schools",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Teachers",
-							"url": "/teacher-network",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Universities",
-							"url": "/education/universities",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Students",
-							"url": "/education/students",
-							"children": [],
-							"classList": []
-						}
-					],
 					"classList": []
 				},
 				{
@@ -1025,8 +1000,8 @@
 					"classList": []
 				},
 				{
-					"title": "US elections 2024",
-					"url": "/us-news/us-elections-2024",
+					"title": "US politics",
+					"url": "/us-news/us-politics",
 					"children": [],
 					"classList": []
 				},
@@ -1095,40 +1070,15 @@
 					"classList": []
 				},
 				{
-					"title": "Environment",
-					"url": "/us/environment",
-					"children": [
-						{
-							"title": "Climate crisis",
-							"url": "/environment/climate-crisis",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Wildlife",
-							"url": "/environment/wildlife",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Energy",
-							"url": "/environment/energy",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Pollution",
-							"url": "/environment/pollution",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Green light",
-							"url": "/environment/series/green-light",
-							"children": [],
-							"classList": []
-						}
-					],
+					"title": "Climate crisis",
+					"url": "/environment/climate-crisis",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Middle East",
+					"url": "/world/middleeast",
+					"children": [],
 					"classList": []
 				},
 				{
@@ -1211,6 +1161,43 @@
 						{
 							"title": "Retail",
 							"url": "/business/retail",
+							"children": [],
+							"classList": []
+						}
+					],
+					"classList": []
+				},
+				{
+					"title": "Environment",
+					"url": "/us/environment",
+					"children": [
+						{
+							"title": "Climate crisis",
+							"url": "/environment/climate-crisis",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Wildlife",
+							"url": "/environment/wildlife",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Energy",
+							"url": "/environment/energy",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Pollution",
+							"url": "/environment/pollution",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Green light",
+							"url": "/environment/series/green-light",
 							"children": [],
 							"classList": []
 						}
@@ -2510,8 +2497,8 @@
 					"classList": []
 				},
 				{
-					"title": "US elections 2024",
-					"url": "/us-news/us-elections-2024",
+					"title": "US politics",
+					"url": "/us-news/us-politics",
 					"children": [],
 					"classList": []
 				},
@@ -2599,6 +2586,12 @@
 				{
 					"title": "Climate crisis",
 					"url": "/environment/climate-crisis",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Middle East",
+					"url": "/world/middleeast",
 					"children": [],
 					"classList": []
 				},
@@ -3516,8 +3509,8 @@
 					"classList": []
 				},
 				{
-					"title": "US elections 2024",
-					"url": "/us-news/us-elections-2024",
+					"title": "US politics",
+					"url": "/us-news/us-politics",
 					"children": [],
 					"classList": []
 				},
@@ -3605,6 +3598,12 @@
 				{
 					"title": "Climate crisis",
 					"url": "/environment/climate-crisis",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Middle East",
+					"url": "/world/middleeast",
 					"children": [],
 					"classList": []
 				},
