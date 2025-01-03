@@ -316,6 +316,18 @@
     }
 }
 
+.email-sub__form--thrasher-the-filter {
+    .email-sub__thrasher-embed-label {
+        color: #121212;
+    }
+
+    .email-sub__thrasher-embed-button {
+        background-color: $news-dark;
+        color: $brightness-100;
+        fill: $brightness-100;
+    }
+}
+
 .email-sub__thrasher-embed-icon {
     display: inline-flex;
     height: 100%;

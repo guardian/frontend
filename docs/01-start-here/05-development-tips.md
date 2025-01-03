@@ -26,7 +26,7 @@ make validate
 ```
 These will fix the linting issues to make sure you won't have any issue trying to push or with the simple parts of the build.
 
-If you have already committed you can use `make fix-commits` to verify & fix your commited code. It's
+If you have already committed you can use `make fix-commits` to verify & fix your committed code. It's
 faster than `make fix` but you will need to amend your previous commits to get a clean history.
 
 If you are wondering what other options make has, you can simply type `make` at the comment line.
@@ -68,4 +68,4 @@ without having to configure the debugger yourself:
 
 ### Viewing AMP Pages
 
-[Use DCR](https://github.com/guardian/dotcom-rendering/blob/main/docs/architecture/amp/000-structure-for-initial-milestone.md)
+[Use DCR](https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/docs/architecture/amp/000-structure-for-initial-milestone.md)

@@ -132,8 +132,8 @@ object DotcomTagPagesRenderingDataModel {
     )
   }
 
-  def toJson(model: DotcomTagPagesRenderingDataModel): String = {
+  def toJson(model: DotcomTagPagesRenderingDataModel): JsValue = {
     val jsValue = Json.toJson(model)
-    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
+    DotcomRenderingUtils.withoutNull(jsValue)
   }
 }

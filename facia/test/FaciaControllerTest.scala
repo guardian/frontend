@@ -4,9 +4,12 @@ import agents.{DeeplyReadAgent, MostViewedAgent}
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
+import common.facia.FixtureBuilder
 import controllers.{Assets, FaciaControllerImpl}
+import experiments.{ActiveExperiments, EuropeBetaFront, ParticipationGroups}
 import helpers.FaciaTestData
 import implicits.FakeRequests
+import model.{FrontProperties, PressedPage, SeoData}
 import org.mockito.Matchers.{any, anyString}
 import org.mockito.Mockito.when
 import org.scalatest._
@@ -35,7 +38,8 @@ import scala.concurrent.{Await, Future}
     with MockitoSugar
     with WithTestFrontJsonFapi
     with WithTestContentApiClient
-    with WithAssets {
+    with WithAssets
+    with PrivateMethodTester {
 
   lazy val wsClient = mockWsResponse()
 
@@ -87,6 +91,7 @@ import scala.concurrent.{Await, Future}
           "uk" -> frontJson,
           "au/media" -> frontJson,
           "email/uk/daily" -> frontJson,
+          "europe" -> frontJson,
         ),
         collections = Map.empty,
       ),
@@ -256,5 +261,28 @@ import scala.concurrent.{Await, Future}
     val result = faciaController.renderFront("uk")(fakeRequest)
     status(result) should be(200)
     header("X-GU-Dotcomponents", result) should be(None)
+  }
+
+  "FaciaController.replaceFaciaPageCollections" should "replace the collections of a pressed page with those on another pressed page" in {
+    val europePage: Option[(PressedPage, Boolean)] = Some(
+      europeFaciaPage,
+      false,
+    )
+    val europeBetaPage: Option[(PressedPage, Boolean)] = Some(
+      europeBetaFaciaPageWithTargetedTerritory,
+      true,
+    )
+    val replaceFaciaPageCollections =
+      PrivateMethod[Option[(PressedPage, Boolean)]](Symbol("replaceFaciaPageCollections"))
+    val result = faciaController invokePrivate replaceFaciaPageCollections(europePage, europeBetaPage)
+    val (resultPressedPage, targetedTerritories) = result.get
+    // The page metadata should remain unchanged
+    resultPressedPage.id should be("europe")
+    resultPressedPage.id should not be "europe-beta"
+    // The collections should come from the replacement page not the original page
+    resultPressedPage.collections.exists(_ == europeBetaFaciaPageWithTargetedTerritory.collections(0)) should be(true)
+    resultPressedPage.collections.exists(_ == europeFaciaPage.collections(0)) should be(false)
+    // The value for targetedTerritories should come from the page with replacement collections
+    targetedTerritories should be(true)
   }
 }

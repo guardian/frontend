@@ -36,6 +36,7 @@ object PressedCollectionBuilder {
       showTimestamps = false,
       hideShowMore,
       displayHints = None,
+      aspectRatio = Some(""),
     )
 
     PressedCollection(

@@ -98,6 +98,7 @@ object IpsosTags {
     "uk/technology" -> "technology", /* There is no US technology tag - should these map to technology? */
     "au/technology" -> "technology",
     "technology" -> "technology", /* Default for technology (including motoring) articles */
+    "the-filter" -> "thefilter",
     "the-guardian-foundation" -> "foundation",
     "theguardian" -> "theguardian",
     "theobserver" -> "theobserver",

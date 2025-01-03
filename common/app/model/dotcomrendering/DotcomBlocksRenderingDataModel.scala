@@ -58,9 +58,9 @@ object DotcomBlocksRenderingDataModel {
     }
   }
 
-  def toJson(model: DotcomBlocksRenderingDataModel): String = {
+  def toJson(model: DotcomBlocksRenderingDataModel): JsValue = {
     val jsValue = Json.toJson(model)
-    Json.stringify(DotcomRenderingUtils.withoutNull(jsValue))
+    DotcomRenderingUtils.withoutNull(jsValue)
   }
 
   def apply(
