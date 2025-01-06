@@ -1,5 +1,3 @@
-import { success } from "@guardian/source-foundations";
-
 export const consentOrPayBannerTest = {
     id: 'ConsentOrPayBannerTest',
     start: '2025-01-01',
