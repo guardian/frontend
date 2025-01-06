@@ -1,4 +1,5 @@
 import type { ABTest } from '@guardian/ab-core';
+import { consentOrPayBannerTest } from './tests/consent-or-pay-banner';
 import { onwardsContentArticle } from './tests/onwards-content-article';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -13,4 +14,5 @@ export const concurrentTests: readonly ABTest[] = [
 	remoteRRHeaderLinksTest,
 	UsaExpandableMarketingCard,
 	onwardsContentArticle,
+	consentOrPayBannerTest
 ];

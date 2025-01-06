@@ -92,4 +92,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-consent-or-pay-banner",
+    "Test impact of adding consent or pay banner",
+    owners = Seq(Owner.withEmail("transparencyandconsent@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 24)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
