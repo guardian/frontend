@@ -7,7 +7,7 @@ export const consentOrPayBannerTest = {
     author: 'Akinsola Lawanson',
     description:
         'Test the consent or pay banner',
-    audience: 0,
+    audience: 0.1,
     audienceOffset: 0,
     successMeasure: 'TBC',
     audienceCriteria:
@@ -21,7 +21,7 @@ export const consentOrPayBannerTest = {
             test: () => {},
         },
         {
-            id: 'remote',
+            id: 'variant',
             test: () => {},
         },
     ],
