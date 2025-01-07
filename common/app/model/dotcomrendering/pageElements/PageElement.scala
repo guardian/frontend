@@ -366,6 +366,10 @@ case class ListItem(
     title: Option[String],
     bio: Option[String],
     endNote: Option[String],
+    contributorIds: Option[scala.collection.Seq[String]],
+    byline: Option[String],
+    bylineHtml: Option[String],
+    contributorImageOverrideUrl: Option[String],
 ) extends PageElement
 object ListItem {
   implicit val listItemWrites: Writes[ListItem] = Json.writes[ListItem]
@@ -1590,6 +1594,10 @@ object PageElement {
       title = item.title,
       bio = item.bio,
       endNote = item.endNote,
+      contributorIds = item.contributorIds,
+      byline = item.byline,
+      bylineHtml = item.bylineHtml,
+      contributorImageOverrideUrl = item.contributorImageOverrideUrl,
     )
   }
 
