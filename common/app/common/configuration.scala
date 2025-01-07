@@ -159,10 +159,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
   }
 
-  object weather {
-    lazy val apiKey = configuration.getStringProperty("weather.api.key")
-  }
-
   object indexes {
     lazy val tagIndexesBucket =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")

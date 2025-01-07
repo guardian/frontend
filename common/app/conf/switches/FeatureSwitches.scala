@@ -173,17 +173,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val WeatherSwitch = Switch(
-    SwitchGroup.Feature,
-    "weather",
-    "If this is switched on then the weather component is displayed",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val HistoryTags = Switch(
     SwitchGroup.Feature,
     "history-tags",
