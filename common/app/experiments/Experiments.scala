@@ -14,7 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeBetaFront,
       CommercialBundleUpdater,
       DarkModeWeb,
-      ConsentOrPayBanner,
+      // ConsentOrPayBanner,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -50,11 +50,11 @@ object CommercialBundleUpdater
       participationGroup = Perc0B,
     )
 
-object ConsentOrPayBanner
-    extends Experiment(
-      name = "consent-or-pay-banner",
-      description = "Consent or pay banner",
-      owners = Seq(Owner.withGithub("Transparency.and.consent@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 30),
-      participationGroup = Perc0C,
-    )
+// object ConsentOrPayBanner
+//     extends Experiment(
+//       name = "consent-or-pay-banner",
+//       description = "Consent or pay banner",
+//       owners = Seq(Owner.withGithub("Transparency.and.consent@guardian.co.uk")),
+//       sellByDate = LocalDate.of(2025, 12, 30),
+//       participationGroup = Perc0C,
+//     )
