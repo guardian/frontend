@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       EuropeBetaFront,
       CommercialBundleUpdater,
+      DCRCrosswords,
       DarkModeWeb,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -31,15 +32,6 @@ object EuropeBetaFront
       participationGroup = Perc0A,
     )
 
-object DarkModeWeb
-    extends Experiment(
-      name = "dark-mode-web",
-      description = "Enable dark mode on web",
-      owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 1, 30),
-      participationGroup = Perc0D,
-    )
-
 object CommercialBundleUpdater
     extends Experiment(
       name = "commercial-bundle-updater",
@@ -47,4 +39,22 @@ object CommercialBundleUpdater
       owners = Seq(Owner.withGithub("jakeii")),
       sellByDate = LocalDate.of(2025, 1, 30),
       participationGroup = Perc5A,
+    )
+
+object DCRCrosswords
+    extends Experiment(
+      name = "dcr-crosswords",
+      description = "Render crosswords in DCR",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 2, 26),
+      participationGroup = Perc0C,
+    )
+
+object DarkModeWeb
+    extends Experiment(
+      name = "dark-mode-web",
+      description = "Enable dark mode on web",
+      owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 1, 30),
+      participationGroup = Perc0D,
     )
