@@ -1,5 +1,5 @@
 export const consentOrPayBannerTest = {
-    id: 'ConsentOrPayBannerTest',
+    id: 'ConsentOrPayBanner',
     start: '2025-01-01',
     expiry: '2025-12-31',
     author: 'Akinsola Lawanson',
@@ -12,6 +12,7 @@ export const consentOrPayBannerTest = {
         'all pageviews in UK',
     dataLinkNames: 'consent-or-pay-banner',
     idealOutcome: 'TBC',
+    showForSensitive: false,
     canRun : () => true,
     variants: [
         {
