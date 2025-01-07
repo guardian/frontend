@@ -51,17 +51,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-onwards-content-article",
-    "Test the impact of showing the galleries onwards content component on article pages",
-    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 1, 29)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
     "ab-gpid-prebid-ad-units",
     "Test new GPID prebid ad units",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
