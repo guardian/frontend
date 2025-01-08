@@ -1395,6 +1395,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       isLive = true,
       group = "",
       galleryCount = None,
+      audioDuration = None,
     )
 
     val discussionSettings = PressedDiscussionSettings(

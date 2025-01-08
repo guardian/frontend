@@ -22,6 +22,7 @@ final case class PressedCard(
     group: String,
     isLive: Boolean,
     galleryCount: Option[Int],
+    audioDuration: Option[String],
 ) {
   def withoutTrailText: PressedCard = copy(trailText = None)
 }
@@ -50,6 +51,38 @@ object PressedCard {
       )
     }
 
+    def getAudioDuration(fc: FaciaContent): Option[String] = {
+      def getMinutes(content: Content) =
+        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationMinutes)))
+      def getSeconds(content: Content) =
+        content.elements.map(_.flatMap(_.assets).flatMap(_.typeData.flatMap(_.durationSeconds)))
+
+      def audioDurationMinutes(fc: FaciaContent) = fold(fc)(
+        curatedContent => getMinutes(curatedContent.content),
+        supportingCuratedContent => getMinutes(supportingCuratedContent.content),
+        _ => None,
+        latestSnap => latestSnap.latestContent.flatMap(getMinutes),
+      )
+
+      def audioDurationSeconds(fc: FaciaContent) = fold(fc)(
+        curatedContent => getSeconds(curatedContent.content),
+        supportingCuratedContent => getSeconds(supportingCuratedContent.content),
+        _ => None,
+        latestSnap => latestSnap.latestContent.flatMap(getSeconds),
+      )
+
+      val minutes: Option[Int] = if (audioDurationMinutes(fc).isDefined) {
+        audioDurationMinutes(fc).get.headOption
+      } else None
+      val seconds: Option[Int] = if (audioDurationSeconds(fc).isDefined) {
+        audioDurationSeconds(fc).get.headOption
+      } else None
+      if (minutes.isDefined && seconds.isDefined) {
+        val duration = minutes.get.toString + ":" + seconds.get.toString
+        Some(duration)
+      } else None
+    }
+
     PressedCard(
       id = FaciaContentUtils.id(content),
       cardStyle = CardStyle.make(CardStylePicker(content)),
@@ -63,6 +96,7 @@ object PressedCard {
       trailText = FaciaContentUtils.trailText(content),
       starRating = FaciaContentUtils.starRating(content),
       galleryCount = extractGalleryCount(content),
+      audioDuration = getAudioDuration(content),
     )
   }
 }
