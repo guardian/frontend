@@ -70,4 +70,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-gumgum-interscroller-fronts",
+    "Reintroduce GumGum interscroller ads on front pages",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 1, 31)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
