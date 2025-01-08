@@ -88,11 +88,11 @@ object NewsletterLayoutGroup {
 }
 
 case class NewsletterLayout(
-  groups: List[NewsletterLayoutGroup]
+    groups: List[NewsletterLayoutGroup],
 )
 
 object NewsletterLayout {
-    implicit val newsletterLayoutReads: Reads[NewsletterLayout] =
+  implicit val newsletterLayoutReads: Reads[NewsletterLayout] =
     Json.reads[NewsletterLayout]
   implicit val newsletterLayoutWrites: OWrites[NewsletterLayout] =
     Json.writes[NewsletterLayout]
