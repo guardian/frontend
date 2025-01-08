@@ -46,5 +46,5 @@ object CommercialBundleUpdater
       description = "Enable the commercial bundle updater",
       owners = Seq(Owner.withGithub("jakeii")),
       sellByDate = LocalDate.of(2025, 1, 30),
-      participationGroup = Perc5A,
+      participationGroup = Perc20A,
     )
