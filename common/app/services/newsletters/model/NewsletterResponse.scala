@@ -87,10 +87,21 @@ object NewsletterLayoutGroup {
     Json.writes[NewsletterLayoutGroup]
 }
 
+case class NewsletterLayout(
+  groups: List[NewsletterLayoutGroup]
+)
+
+object NewsletterLayout {
+    implicit val newsletterLayoutReads: Reads[NewsletterLayout] =
+    Json.reads[NewsletterLayout]
+  implicit val newsletterLayoutWrites: OWrites[NewsletterLayout] =
+    Json.writes[NewsletterLayout]
+}
+
 case class NewsletterLayoutsResponseBody(
     ok: Boolean,
     total: Int,
-    data: Map[String, List[NewsletterLayoutGroup]],
+    data: Map[String, NewsletterLayout],
 )
 
 object NewsletterLayoutsResponseBody {

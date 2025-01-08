@@ -11,7 +11,7 @@ import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
-import services.newsletters.model.{NewsletterResponseV2, NewsletterLayoutGroup}
+import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
 import staticpages.StaticPages
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -100,8 +100,8 @@ class SignupPageController(
 
   private def getLayout()(implicit
       request: RequestHeader,
-  ): Option[List[NewsletterLayoutGroup]] = {
-    val layouts: Map[String, List[NewsletterLayoutGroup]] = newsletterSignupAgent.getNewsletterLayouts() match {
+  ): Option[NewsletterLayout] = {
+    val layouts: Map[String, NewsletterLayout] = newsletterSignupAgent.getNewsletterLayouts() match {
       case Right(layoutsMap) => layoutsMap
       case Left(_)           => Map.empty
     }

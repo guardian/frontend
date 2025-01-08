@@ -12,12 +12,12 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
-import services.newsletters.model.{NewsletterResponseV2, NewsletterLayoutGroup}
+import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
 import services.NewsletterData
 
 case class DotcomNewslettersPageRenderingDataModel(
     newsletters: List[NewsletterData],
-    layout: Option[List[NewsletterLayoutGroup]],
+    layout: Option[NewsletterLayout],
     id: String,
     editionId: String,
     editionLongForm: String,
@@ -43,7 +43,7 @@ object DotcomNewslettersPageRenderingDataModel {
   def apply(
       page: SimplePage,
       newsletters: List[NewsletterResponseV2],
-      layout: Option[List[NewsletterLayoutGroup]],
+      layout: Option[NewsletterLayout],
       request: RequestHeader,
   ): DotcomNewslettersPageRenderingDataModel = {
     val edition = Edition.edition(request)

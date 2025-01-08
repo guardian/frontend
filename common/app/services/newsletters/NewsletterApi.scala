@@ -9,7 +9,7 @@ import services.newsletters.model.{
   NewsletterResponseV2,
   NewslettersGetResponseV2Body,
   NewsletterLayoutsResponseBody,
-  NewsletterLayoutGroup,
+  NewsletterLayout,
 }
 
 import scala.concurrent.duration.DurationInt
@@ -46,7 +46,7 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
     }
   }
 
-  def getNewsletterLayouts(): Future[Either[String, Map[String, List[NewsletterLayoutGroup]]]] = {
+  def getNewsletterLayouts(): Future[Either[String, Map[String, NewsletterLayout]]] = {
     getBody("api/layouts").map { json =>
       json.validate[NewsletterLayoutsResponseBody] match {
         case succ: JsSuccess[NewsletterLayoutsResponseBody] =>

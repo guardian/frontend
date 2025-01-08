@@ -2,7 +2,7 @@ package services.newsletters
 
 import common.{Box, GuLogging}
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
-import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, NewsletterLayoutGroup}
+import services.newsletters.model.{NewsletterResponse, NewsletterResponseV2, NewsletterLayout}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -15,7 +15,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   // Newsletters version 2
   private val newslettersV2Agent = Box[Either[String, List[NewsletterResponseV2]]](Right(Nil))
   // Newsletter layouts
-  private val newsletterLayoutsAgent = Box[Either[String, Map[String, List[NewsletterLayoutGroup]]]](Right(Map.empty))
+  private val newsletterLayoutsAgent = Box[Either[String, Map[String, NewsletterLayout]]](Right(Map.empty))
 
   def getNewsletterByName(listName: String): Either[String, Option[NewsletterResponse]] = {
     newslettersAgent.get() match {
@@ -57,7 +57,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   def getV2Newsletters(): Either[String, List[NewsletterResponseV2]] = newslettersV2Agent.get()
 
-  def getNewsletterLayouts(): Either[String, Map[String, List[NewsletterLayoutGroup]]] = newsletterLayoutsAgent.get()
+  def getNewsletterLayouts(): Either[String, Map[String, NewsletterLayout]] = newsletterLayoutsAgent.get()
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     refreshNewsletters() recover { case e =>
