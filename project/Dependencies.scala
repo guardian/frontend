@@ -7,7 +7,7 @@ object Dependencies {
   val awsVersion = "1.12.758"
   val awsSdk2Version = "2.26.27"
   val capiVersion = "33.0.0"
-  val faciaVersion = "14.0.0"
+  val faciaVersion = "14.0.1"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -19,7 +19,7 @@ object Dependencies {
   val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "4.0.1"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
