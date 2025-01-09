@@ -51,8 +51,13 @@ object ProjectSettings {
       .withWarnScalaVersionEviction(false),
   )
 
-  def isCi = sys.env.get("CI").getOrElse("false") == "true"
-  def testStage = if (isCi) "DEVINFRA" else "LOCALTEST"
+  val testStage = {
+    // 'CI' is a default variable in GitHub Runners - https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
+    if (sys.env.get("CI").contains("true")) {
+      println(s"Tests are running in CI")
+      "DEVINFRA"
+    } else "LOCALTEST"
+  }
 
   val frontendTestSettings = Seq(
     Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o"),
