@@ -1,5 +1,6 @@
 package layout.slices
 
+import layout.ContainerDisplayConfig
 import model.pressed.PressedContent
 
 object ContainerDefinition {
@@ -21,17 +22,18 @@ object ContainerDefinition {
       customCssClasses = Set.empty,
     )
 
-  def fromContainer(container: Container, items: Seq[PressedContent]): Option[ContainerDefinition] =
+  def fromContainer(container: Container, items: Seq[PressedContent], config: ContainerDisplayConfig): Option[ContainerDefinition] = {
     container match {
       case Dynamic(dynamicContainer) =>
         dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
       case Flexible(flexibleContainer) =>
-        flexibleContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
+        flexibleContainer.containerDefinitionFor(items.map(Story.fromFaciaContent), config)
       case Fixed(containerDefinition) =>
         Some(containerDefinition)
       case _ =>
         None
     }
+  }
 
   /** Fast container that looks good for the number of items provided */
   def fastForNumberOfItems(n: Int): ContainerDefinition =

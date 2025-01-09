@@ -100,10 +100,12 @@ object ContainerLayout {
       config: ContainerDisplayConfig,
       items: Seq[PressedContent],
       hasMore: Boolean,
-  ): Option[(ContainerLayout, ContainerLayoutContext)] =
-    ContainerDefinition.fromContainer(container, items) map { definition: ContainerDefinition =>
+  ): Option[(ContainerLayout, ContainerLayoutContext)] = {
+
+    ContainerDefinition.fromContainer(container, items, config) map { definition: ContainerDefinition =>
       fromContainerDefinition(definition, containerLayoutContext, config, items, hasMore)
     }
+  }
 
   def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]): ContainerLayout = {
     val slicesWithItemsCount = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum)).toList
