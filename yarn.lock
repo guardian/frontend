@@ -3607,26 +3607,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:23.8.1":
-  version: 23.8.1
-  resolution: "@guardian/commercial@npm:23.8.1"
+"@guardian/commercial@npm:24.1.0":
+  version: 24.1.0
+  resolution: "@guardian/commercial@npm:24.1.0"
   dependencies:
     "@guardian/prebid.js": "npm:8.52.0-10"
     "@octokit/core": "npm:^6.1.2"
-    fastdom: "npm:^1.0.11"
+    fastdom: "npm:^1.0.12"
     lodash-es: "npm:^4.17.21"
     process: "npm:^0.11.10"
-    tslib: "npm:^2.6.2"
-    web-vitals: "npm:^4.2.1"
+    tslib: "npm:^2.7.0"
+    web-vitals: "npm:^4.2.4"
   peerDependencies:
     "@guardian/ab-core": ^8.0.0
-    "@guardian/core-web-vitals": ^7.0.0
-    "@guardian/identity-auth": ^3.0.0
-    "@guardian/identity-auth-frontend": ^5.0.0
+    "@guardian/core-web-vitals": ^8.0.1
+    "@guardian/identity-auth": ^4.0.0
+    "@guardian/identity-auth-frontend": ^6.0.0
     "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
-    typescript: ~5.5.3
-  checksum: 10c0/4488418264f613473852804e3b4b592e6a708c64147e0e978abc3672596404630af537fcdad0fa5b388ac0e3f9526abbf1a4d5cd69ab7debf7c708abc4f73ad6
+    typescript: ~5.5.2
+  checksum: 10c0/03c168eb7e68ebbad41256737f40c353591df659bd988bd8da45f906c9294e7850ce9523db72c48ef1a3167c52d05e3d3b9bf6bd12b6a3c11fe239d02217998b
   languageName: node
   linkType: hard
 
@@ -3699,7 +3699,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:23.8.1"
+    "@guardian/commercial": "npm:24.1.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
@@ -9602,12 +9602,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastdom@npm:^1.0.11":
-  version: 1.0.11
-  resolution: "fastdom@npm:1.0.11"
+"fastdom@npm:^1.0.12":
+  version: 1.0.12
+  resolution: "fastdom@npm:1.0.12"
   dependencies:
     strictdom: "npm:^1.0.1"
-  checksum: 10c0/4ff808197efe23917770f4868aebf1fd293fa3b202e28152879dd889a39152fbce505dff7e5c5611d8697227ccea5c92cb44875bcacf6740e7c6c91d7bf3d845
+  checksum: 10c0/d1727eb5d803aa0e1dc9a98b2eef1f138bad3776fa7471145216dba34f435f86e8e514658d0b1717fa83a987f44a8d26f2353a515f2bf782f32d3c9ead6d1994
   languageName: node
   linkType: hard
 
@@ -16218,6 +16218,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.7.0":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
 "tsml@npm:1.0.1":
   version: 1.0.1
   resolution: "tsml@npm:1.0.1"
@@ -16786,10 +16793,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^4.2.1":
-  version: 4.2.2
-  resolution: "web-vitals@npm:4.2.2"
-  checksum: 10c0/0e41d016a80d8f48e00c95f3d8405a4cb8c6a12a83ac6677ce49447c85ca6fb2325f40915ae5460bb59f07d1b7d65b66b8b42ea50135594ae7dc892453775004
+"web-vitals@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "web-vitals@npm:4.2.4"
+  checksum: 10c0/383c9281d5b556bcd190fde3c823aeb005bb8cf82e62c75b47beb411014a4ed13fa5c5e0489ed0f1b8d501cd66b0bebcb8624c1a75750bd5df13e2a3b1b2d194
   languageName: node
   linkType: hard
 
