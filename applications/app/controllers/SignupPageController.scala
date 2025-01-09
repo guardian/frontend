@@ -1,6 +1,6 @@
 package controllers
 
-import common.{GuLogging, ImplicitControllerExecutionContext}
+import common.{GuLogging, ImplicitControllerExecutionContext, Edition}
 import conf.switches.Switches.UseDcrNewslettersPage
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
@@ -11,7 +11,7 @@ import play.filters.csrf.CSRFAddToken
 import renderers.DotcomRenderingService
 import services.newsletters.GroupedNewslettersResponse.GroupedNewslettersResponse
 import services.newsletters.NewsletterSignupAgent
-import services.newsletters.model.NewsletterResponseV2
+import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
 import staticpages.StaticPages
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -61,12 +61,14 @@ class SignupPageController(
 
     val newsletters: Either[String, List[NewsletterResponseV2]] =
       newsletterSignupAgent.getV2Newsletters()
+    val layout = getLayout()
 
     newsletters match {
       case Right(newsletters) =>
         remoteRenderer.getEmailNewsletters(
           ws = wsClient,
           newsletters = newsletters,
+          layout = layout,
           page = StaticPages.dcrSimpleNewsletterPage(request.path),
         )
       case Left(e) =>
@@ -84,8 +86,9 @@ class SignupPageController(
     newsletters match {
       case Right(newsletters) => {
         val page = StaticPages.dcrSimpleNewsletterPage(request.path)
+        val layout = getLayout()
         val dataModel =
-          DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, request)
+          DotcomNewslettersPageRenderingDataModel.apply(page, newsletters, layout, request)
         val dataJson = DotcomNewslettersPageRenderingDataModel.toJson(dataModel)
         Future.successful(common.renderJson(dataJson, page).as("application/json"))
       }
@@ -93,6 +96,16 @@ class SignupPageController(
         log.error(s"API call to get newsletters failed: $e")
         throw new RuntimeException()
     }
+  }
+
+  private def getLayout()(implicit
+      request: RequestHeader,
+  ): Option[NewsletterLayout] = {
+    val layouts: Map[String, NewsletterLayout] = newsletterSignupAgent.getNewsletterLayouts() match {
+      case Right(layoutsMap) => layoutsMap
+      case Left(_)           => Map.empty
+    }
+    layouts.get(Edition.edition(request).id)
   }
 
   private def notFoundPage()(implicit
