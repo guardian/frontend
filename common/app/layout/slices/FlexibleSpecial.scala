@@ -13,7 +13,11 @@ object FlexibleSpecial extends FlexibleContainer {
     }
   }
 
-  override protected def standardSlices(storiesIncludingBackfill: Seq[Story], firstSlice: Option[Slice], flexGenMaxItems: Int): Seq[Slice] = {
+  override protected def standardSlices(
+      storiesIncludingBackfill: Seq[Story],
+      firstSlice: Option[Slice],
+      flexGenMaxItems: Int,
+  ): Seq[Slice] = {
 
     storiesIncludingBackfill.length match {
       case 0 => Nil
