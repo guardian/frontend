@@ -2,14 +2,12 @@ package controllers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.softwaremill.macwire._
-import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData
 import contentapi.ContentApiClient
 import feed._
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import weather.WeatherApi
 import agents.DeeplyReadAgent
 import renderers.DotcomRenderingService
 import services.PopularInTagService
@@ -20,7 +18,6 @@ trait OnwardControllers {
   def wsClient: WSClient
   def contentApiClient: ContentApiClient
   def stocksData: StocksData
-  def weatherApi: WeatherApi
   def geoMostPopularAgent: GeoMostPopularAgent
   def dayMostPopularAgent: DayMostPopularAgent
   def mostPopularAgent: MostPopularAgent
@@ -36,8 +33,6 @@ trait OnwardControllers {
   def popularInTagService: PopularInTagService
 
   lazy val navigationController = wire[NavigationController]
-  lazy val weatherController = wire[WeatherController]
-  lazy val locationsController = wire[LocationsController]
   lazy val mostViewedSocialController = wire[MostViewedSocialController]
   lazy val mostPopularController = wire[MostPopularController]
   lazy val topStoriesController = wire[TopStoriesController]
