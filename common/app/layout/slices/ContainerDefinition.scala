@@ -22,7 +22,11 @@ object ContainerDefinition {
       customCssClasses = Set.empty,
     )
 
-  def fromContainer(container: Container, items: Seq[PressedContent], config: ContainerDisplayConfig): Option[ContainerDefinition] = {
+  def fromContainer(
+      container: Container,
+      items: Seq[PressedContent],
+      config: ContainerDisplayConfig,
+  ): Option[ContainerDefinition] = {
     container match {
       case Dynamic(dynamicContainer) =>
         dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
