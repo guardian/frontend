@@ -2,19 +2,12 @@ package services.dotcomrendering
 
 import common.GuLogging
 import crosswords.CrosswordPageWithContent
+import experiments.{ActiveExperiments, DCRCrosswords}
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
 
 object CrosswordsPicker extends GuLogging {
-
-  /** Add to this function any logic for including/excluding a crossword page from being rendered with DCR
-    *
-    * Currently defaulting to false until we implement crosswords in DCR
-    */
-  private def dcrCouldRender(crosswordPageWithContent: CrosswordPageWithContent): Boolean = {
-    false
-  }
 
   def getTier(
       crosswordPageWithContent: CrosswordPageWithContent,
@@ -22,13 +15,12 @@ object CrosswordsPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    val participatingInTest = false // until we create a test for this content type
-    val dcrCanRender = dcrCouldRender(crosswordPageWithContent)
+    val participatingInTest = ActiveExperiments.isParticipating(DCRCrosswords)
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && participatingInTest) RemoteRender
+      else if (participatingInTest) RemoteRender
       else LocalRender
     }
 
