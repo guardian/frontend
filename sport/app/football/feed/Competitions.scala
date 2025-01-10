@@ -26,7 +26,7 @@ trait Competitions extends implicits.Football {
       competitions.filter(_.url == path),
     )
 
-  def competitionsWithTag(tag: String): Option[Competition] = competitions.find(_.url.endsWith(tag))
+  def competitionsWithTag(tag: String): Option[Competition] = competitions.find(_.url.endsWith(s"/$tag"))
 
   def competitionsWithId(compId: String): Option[Competition] = competitions.find(_.id == compId)
 
