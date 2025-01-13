@@ -5,7 +5,7 @@ import layout.ContainerDisplayConfig
 import layout.slices.Story._
 
 private[slices] trait FlexibleContainer {
-  protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice], flexGenMaxItems: Int): Seq[Slice]
+  protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice]
 
   protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])]
 
@@ -13,9 +13,11 @@ private[slices] trait FlexibleContainer {
     val flexGenMaxItems = config.collectionConfigWithId.config.displayHints.get.maxItemsToDisplay.getOrElse(8)
     if (stories.nonEmpty && stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
       optionalFirstSlice(stories) map { case (firstSlice, remaining) =>
-        Some(firstSlice +: standardSlices(remaining, Some(firstSlice), flexGenMaxItems))
+        val slices = firstSlice +: standardSlices(remaining, Some(firstSlice))
+        Some(slices.take(flexGenMaxItems + 1)) // +1 to include the optional first slice, i.e. the splash
       } getOrElse {
-        Some(standardSlices(stories, None, flexGenMaxItems))
+        val slices = standardSlices(stories, None)
+        Some(slices.take(flexGenMaxItems))
       }
     } else {
       None
