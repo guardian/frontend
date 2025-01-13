@@ -21,11 +21,13 @@ object CommercialBundle {
   private var cachedBundlePath: String = bundlePathFromParameterStore
   private var cachedTimestamp: Instant = Instant.now()
 
-  private def bundlePathFromParameterStore: String = parameterStore.get(bundlePathKey)
+  private def bundlePathFromParameterStore: String = {
+    if (stage == "DEVINFRA" || stage == "LOCALTEST") return "commercial"
+
+    parameterStore.get(bundlePathKey)
+  }
 
   private def bundlePath: String = {
-    if (stage == "DEVINFRA" || stage == "LOCALTEST") return "commercial.js"
-
     if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) {
       cachedBundlePath = bundlePathFromParameterStore
       cachedTimestamp = Instant.now()
