@@ -25,9 +25,9 @@ object CommercialBundle {
     if (stage == "devinfra" || stage == "localtest") {
       // don't read from parameter store in these environments as there may not be any credentials
       "commercial"
+    } else {
+      parameterStore.get(bundlePathKey)
     }
-
-    parameterStore.get(bundlePathKey)
   }
 
   private def bundlePath: String = {
