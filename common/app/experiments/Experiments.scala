@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
-      CommercialBundleUpdater,
       DarkModeWeb,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -38,13 +37,4 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 1, 30),
       participationGroup = Perc0D,
-    )
-
-object CommercialBundleUpdater
-    extends Experiment(
-      name = "commercial-bundle-updater",
-      description = "Enable the commercial bundle updater",
-      owners = Seq(Owner.withGithub("jakeii")),
-      sellByDate = LocalDate.of(2025, 1, 30),
-      participationGroup = Perc20A,
     )

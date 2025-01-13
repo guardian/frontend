@@ -14,7 +14,6 @@ import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
 import common.CommercialBundle
-import experiments.{ActiveExperiments, CommercialBundleUpdater}
 
 object JavaScriptPage {
 
@@ -72,13 +71,8 @@ object JavaScriptPage {
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
 
-    val commercialBundleUrl =
-      if (ActiveExperiments.isParticipating(CommercialBundleUpdater)(request))
-        Configuration.commercial.overrideCommercialBundleUrl
-          .getOrElse(CommercialBundle.bundleUrl)
-      else
-        Configuration.commercial.overrideCommercialBundleUrl
-          .getOrElse(assetURL("javascripts/commercial/graun.standalone.commercial.js"))
+    val commercialBundleUrl = Configuration.commercial.overrideCommercialBundleUrl
+      .getOrElse(CommercialBundle.bundleUrl)
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
