@@ -555,7 +555,7 @@ object DotcomRenderingDataModel {
           pageElements
             .map {
               case AudioBlockElement(assets, _) =>
-                AudioBlockElement(assets, Option(content.elements.mainAudio.head.properties.id))
+                AudioBlockElement(assets, content.elements.mainAudio.map(_.properties.id))
               case pageElement => pageElement
             }
         case _ => pageElements
