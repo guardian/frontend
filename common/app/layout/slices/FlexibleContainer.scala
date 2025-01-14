@@ -1,7 +1,6 @@
 package layout.slices
 
 import common.Seqs._
-import layout.ContainerDisplayConfig
 import layout.slices.Story._
 
 private[slices] trait FlexibleContainer {

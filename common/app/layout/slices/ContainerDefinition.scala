@@ -1,6 +1,5 @@
 package layout.slices
 
-import layout.ContainerDisplayConfig
 import model.pressed.PressedContent
 
 object ContainerDefinition {
