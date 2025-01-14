@@ -49,7 +49,7 @@
 
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
-            <span class="review-stars-bg">
+            <span class="review-stars-bg" role="img" aria-label="Rating: @numberOfStars out of 5 stars" >
                 @for(i <- 0 to 4) {
                     @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
                         @icon("star-" + positiveOrNegative, isLarge)
