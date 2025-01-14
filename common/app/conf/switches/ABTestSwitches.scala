@@ -70,4 +70,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-prebid-keywords",
+    "Test impact of adding keywords to Prebid config",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 1, 31)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
