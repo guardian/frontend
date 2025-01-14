@@ -9,14 +9,26 @@ import model.pressed.CollectionConfig
 import services.CollectionConfigWithId
 import model.pressed.DisplayHints
 
-
 class FlexibleGeneralTest extends AnyFlatSpec with Matchers with ScalaCheckDrivenPropertyChecks {
 
   // return the appropriate number of slices depending on different maxItemsToDisplay values
 
-  val exampleStories = Seq(Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false), Story(2, false))
+  val exampleStories = Seq(
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+    Story(2, false),
+  )
 
-  val slicesFor: (Seq[Story], ContainerDisplayConfig)  => Option[Seq[Slice]] = FlexibleGeneral.slicesFor
+  val slicesFor: (Seq[Story], ContainerDisplayConfig) => Option[Seq[Slice]] = FlexibleGeneral.slicesFor
 
   val displayHints = DisplayHints(maxItemsToDisplay = Some(3))
 
@@ -47,20 +59,15 @@ class FlexibleGeneralTest extends AnyFlatSpec with Matchers with ScalaCheckDrive
   val testStories = storySeqGen(2)
   val testConfig = ContainerDisplayConfig.withDefaults(collectionConfigWithId)
 
-
-
-
   it should "Return 3 slices when config specifies max items display is 3" in {
 
-      val slices = slicesFor(exampleStories, testConfig)
+    val slices = slicesFor(exampleStories, testConfig)
     println("slices ", slices)
 
-      val sliceSeq = slices.get
-
+    val sliceSeq = slices.get
 
     sliceSeq should have length 3
 
-
-}
+  }
 
 }
