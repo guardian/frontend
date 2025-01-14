@@ -104,31 +104,31 @@ object ContainerLayout {
     ContainerDefinition.fromContainer(container, items) map { definition: ContainerDefinition =>
       fromContainerDefinition(definition, containerLayoutContext, config, items, hasMore)
     }
-}
 
-def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]): ContainerLayout = {
-  val slicesWithItemsCount = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum)).toList
+  def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]): ContainerLayout = {
+    val slicesWithItemsCount = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum)).toList
 
-  @tailrec
-  def slicesWithCards(
-      slices: List[(Slice, Int)],
-      blobs: Seq[HtmlAndClasses],
-      accumulation: Vector[SliceWithCards] = Vector.empty,
-  ): Seq[SliceWithCards] = {
-    slices match {
-      case Nil => accumulation
-      case (slice, numToConsume) :: remainingSlices =>
-        val (blobsConsumed, blobsUnconsumed) = blobs.splitAt(numToConsume)
-        slicesWithCards(
-          remainingSlices,
-          blobsUnconsumed,
-          accumulation :+ SliceWithCards.fromBlobs(slice.layout, blobsConsumed),
-        )
+    @tailrec
+    def slicesWithCards(
+        slices: List[(Slice, Int)],
+        blobs: Seq[HtmlAndClasses],
+        accumulation: Vector[SliceWithCards] = Vector.empty,
+    ): Seq[SliceWithCards] = {
+      slices match {
+        case Nil => accumulation
+        case (slice, numToConsume) :: remainingSlices =>
+          val (blobsConsumed, blobsUnconsumed) = blobs.splitAt(numToConsume)
+          slicesWithCards(
+            remainingSlices,
+            blobsUnconsumed,
+            accumulation :+ SliceWithCards.fromBlobs(slice.layout, blobsConsumed),
+          )
+      }
     }
-  }
 
-  ContainerLayout(
-    slicesWithCards(slicesWithItemsCount, blobs),
-    Nil,
-  )
+    ContainerLayout(
+      slicesWithCards(slicesWithItemsCount, blobs),
+      Nil,
+    )
+  }
 }
