@@ -336,7 +336,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         case "flexible/general" =>
           collection.collectionConfig.displayHints match {
             case Some(displayHints) => displayHints.maxItemsToDisplay.getOrElse(8)
-            case None                  => 8
+            case None               => 8
           }
         case _ => Math.min(Configuration.facia.collectionCap, storyCountTotal)
       }
