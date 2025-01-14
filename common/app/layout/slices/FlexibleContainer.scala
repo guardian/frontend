@@ -9,26 +9,20 @@ private[slices] trait FlexibleContainer {
 
   protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])]
 
-  final def slicesFor(stories: Seq[Story], config: ContainerDisplayConfig): Option[Seq[Slice]] = {
-    println("slices for stories ", stories)
-    println("slices for config", config)
-    val flexGenMaxItems = config.collectionConfigWithId.config.displayHints.get.maxItemsToDisplay.getOrElse(20)
-    println(s"flexGenMaxItems: $flexGenMaxItems")
+  final def slicesFor(stories: Seq[Story]): Option[Seq[Slice]] = {
     if (stories.nonEmpty && stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
       optionalFirstSlice(stories) map { case (firstSlice, remaining) =>
-        val standardSliceSeq = standardSlices(remaining, Some(firstSlice))
-        Some(firstSlice +: standardSliceSeq.take(flexGenMaxItems))
+        Some(firstSlice +: standardSlices(remaining, Some(firstSlice)))
       } getOrElse {
-        val standardSliceSeq = standardSlices(stories, None)
-        Some(standardSliceSeq.take(flexGenMaxItems))
+        Some(standardSlices(stories, None))
       }
     } else {
       None
     }
   }
 
-  final def containerDefinitionFor(stories: Seq[Story], config: ContainerDisplayConfig): Option[ContainerDefinition] = {
-    slicesFor(stories, config) map { slices =>
+  final def containerDefinitionFor(stories: Seq[Story]): Option[ContainerDefinition] = {
+    slicesFor(stories) map { slices =>
       ContainerDefinition(
         slices,
         slicesWithoutMPU = slices,

@@ -100,9 +100,8 @@ object ContainerLayout {
       config: ContainerDisplayConfig,
       items: Seq[PressedContent],
       hasMore: Boolean,
-  ): Option[(ContainerLayout, ContainerLayoutContext)] = {
-
-    ContainerDefinition.fromContainer(container, items, config) map { definition: ContainerDefinition =>
+     ): Option[(ContainerLayout, ContainerLayoutContext)] =
+    ContainerDefinition.fromContainer(container, items) map { definition: ContainerDefinition =>
       fromContainerDefinition(definition, containerLayoutContext, config, items, hasMore)
     }
   }

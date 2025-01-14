@@ -29,7 +29,6 @@ object FlexibleGeneral extends FlexibleContainer {
       // This case doesn't look _quite_ right. We end up with a row of four
       // and then a row of three, slightly stretched. There isn't a layout
       // which caters for this currently, we'll follow up on this separately.
-      case 9 => Nil
       case _ => Seq(FullMedia100, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
 
     }

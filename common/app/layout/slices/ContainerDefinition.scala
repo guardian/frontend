@@ -25,13 +25,12 @@ object ContainerDefinition {
   def fromContainer(
       container: Container,
       items: Seq[PressedContent],
-      config: ContainerDisplayConfig,
   ): Option[ContainerDefinition] = {
     container match {
       case Dynamic(dynamicContainer) =>
         dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
       case Flexible(flexibleContainer) =>
-        flexibleContainer.containerDefinitionFor(items.map(Story.fromFaciaContent), config)
+        flexibleContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
       case Fixed(containerDefinition) =>
         Some(containerDefinition)
       case _ =>
