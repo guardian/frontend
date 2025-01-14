@@ -333,7 +333,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         // scrollable small and medium containers are capped at 8 stories
         case "scrollable/small" | "scrollable/medium" => 8
         // other container types should be capped at a maximum number of stories set in the app config
-        case _ => Math.min(Configuration.facia.collectionCap, storyCountTotal)
+        case "flexible/general" => collection.collectionConfig.displayHints.get.maxItemsToDisplay.getOrElse(8)
+        case _                  => Math.min(Configuration.facia.collectionCap, storyCountTotal)
       }
       val storyCountVisible = Container
         .storiesCount(
