@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
-      CommercialBundleUpdater,
       DCRCrosswords,
       DarkModeWeb,
     )
@@ -30,15 +29,6 @@ object EuropeBetaFront
       ),
       sellByDate = LocalDate.of(2025, 4, 2),
       participationGroup = Perc0A,
-    )
-
-object CommercialBundleUpdater
-    extends Experiment(
-      name = "commercial-bundle-updater",
-      description = "Enable the commercial bundle updater",
-      owners = Seq(Owner.withGithub("jakeii")),
-      sellByDate = LocalDate.of(2025, 1, 30),
-      participationGroup = Perc20A,
     )
 
 object DCRCrosswords

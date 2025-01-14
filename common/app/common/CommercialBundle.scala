@@ -21,7 +21,14 @@ object CommercialBundle {
   private var cachedBundlePath: String = bundlePathFromParameterStore
   private var cachedTimestamp: Instant = Instant.now()
 
-  private def bundlePathFromParameterStore: String = parameterStore.get(bundlePathKey)
+  private def bundlePathFromParameterStore: String = {
+    if (stage == "devinfra" || stage == "localtest") {
+      // don't read from parameter store in these environments as there may not be any credentials
+      "commercial"
+    } else {
+      parameterStore.get(bundlePathKey)
+    }
+  }
 
   private def bundlePath: String = {
     if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) {
