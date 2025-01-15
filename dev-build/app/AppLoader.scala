@@ -1,4 +1,3 @@
-import _root_.commercial.CommercialLifecycle
 import _root_.commercial.controllers.CommercialControllers
 import _root_.commercial.targeting.TargetingLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
@@ -88,7 +87,6 @@ trait AppComponents
     List(
       wire[AdminLifecycle],
       wire[OnwardJourneyLifecycle],
-      wire[CommercialLifecycle],
       wire[DfpDataCacheLifecycle],
       wire[FaciaDfpAgentLifecycle],
       wire[ConfigAgentLifecycle],
