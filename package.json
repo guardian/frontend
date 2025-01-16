@@ -118,7 +118,7 @@
 		"requireindex": "^1.1.0",
 		"rimraf": "^2.6.1",
 		"rxjs": "^6.6.7",
-		"sass": "1.77.8",
+		"sass": "^1.83.4",
 		"sass-graph": "4.0.1",
 		"sass-loader": "14.2.1",
 		"sass-mq": "5.0.1",

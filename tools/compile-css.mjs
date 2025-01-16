@@ -29,6 +29,13 @@ const SASS_SETTINGS = {
 	sourceMap: true,
 	precision: 5,
 	quietDeps: true,
+	silenceDeprecations: [
+		'legacy-js-api',
+		'mixed-decls',
+		'color-functions',
+		'global-builtin',
+		'import',
+	],
 };
 
 const BROWSERS_LIST = [
@@ -63,7 +70,10 @@ const getFiles = (sassGlob) => glob.sync(path.resolve(sassDir, sassGlob));
  * @param {boolean} options.remify
  * @param {string[]} options.browsers
  */
-export const compileSass = (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) => {
+export const compileSass = (
+	sassGlob,
+	{ remify = true, browsers = BROWSERS_LIST } = {},
+) => {
 	if (typeof sassGlob !== 'string') {
 		return Promise.reject(new Error('No glob provided.'));
 	}
@@ -114,4 +124,4 @@ export const compileSass = (sassGlob, { remify = true, browsers = BROWSERS_LIST 
 	);
 };
 
-export default compileSass
+export default compileSass;
