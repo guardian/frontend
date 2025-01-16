@@ -33,6 +33,7 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
     email: String,
     listName: Option[String],
+    marketing: Option[String],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -44,6 +45,7 @@ case class EmailForm(
 case class EmailFormManyNewsletters(
     email: String,
     listNames: Seq[String],
+    marketing: Option[String],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -58,7 +60,15 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
 
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
-    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+    val consentMailerPayload = JsObject(
+      Json
+        .obj(
+          "email" -> form.email,
+          "set-lists" -> List(form.listName),
+          "set-consents" -> form.marketing.map(_ => List("similar_guardian_products")),
+        )
+        .fields,
+    )
 
     val queryStringParameters = form.ref.map("ref" -> _).toList ++
       form.refViewId.map("refViewId" -> _).toList ++
@@ -80,6 +90,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "set-lists" -> form.listNames,
           "refViewId" -> form.refViewId,
           "ref" -> form.ref,
+          "set-consents" -> form.marketing.map(_ => List("similar_guardian_products")),
         )
         .fields,
     )
@@ -131,6 +142,7 @@ class EmailSignupController(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
+      "marketing" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
@@ -144,6 +156,7 @@ class EmailSignupController(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listNames" -> seq(of[String]),
+      "marketing" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
