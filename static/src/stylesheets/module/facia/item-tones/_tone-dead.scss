@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-dead--item {
     &.fc-item,
     &.rich-link {
@@ -6,7 +8,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($brightness-93, 2%);
+        background-color: color.adjust($brightness-93, $lightness: -2%);
     }
 
     .fc-item__container:before,

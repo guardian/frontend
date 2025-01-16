@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-special-report--item {
     &.fc-item,
     &.rich-link {
@@ -6,7 +8,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($brightness-46, 5%);
+        background-color: color.adjust($brightness-46, $lightness: -5%);
     }
 
     .inline-quote {

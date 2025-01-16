@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @import 'container--video';
 
 .fc-container--first#palette-styles-new-do-not-delete + .fc-container,
@@ -54,7 +56,7 @@
             #ffffff
         );
         @include button-hover-colour(
-            darken($brightness-7,  10%)
+            color.adjust($brightness-7,  $lightness: -10%)
         );
     }
 }

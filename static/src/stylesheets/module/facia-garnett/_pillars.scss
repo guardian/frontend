@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $pillars: (
     news: (
         cardBackground: $brightness-97,
@@ -101,7 +103,7 @@ $pillars: (
 
 @mixin colours($palette) {
     $cardBackground: map-get($palette, cardBackground);
-    $darkerCardBackground: darken($cardBackground, 3%);
+    $darkerCardBackground: color.adjust($cardBackground, $lightness: -3%);
     $headline: map-get($palette, headline);
     $lines: map-get($palette, lines);
 
@@ -113,7 +115,7 @@ $pillars: (
 
     &.fc-item--type-comment {
         .fc-item__avatar {
-            background-color: darken(map-get($palette, cutoutBackground), 3%);
+            background-color: color.adjust(map-get($palette, cutoutBackground), $lightness: -3%);
         }
 
         .fc-item__timestamp,
@@ -161,7 +163,7 @@ $pillars: (
 
         &:hover {
             .fc-item__content {
-                background-color: darken(map-get($palette, kicker), 5%);
+                background-color: color.adjust(map-get($palette, kicker), $lightness: -5%);
             }
         }
     }
@@ -299,7 +301,7 @@ $pillars: (
         background-color: $opinion-faded;
 
         .fc-item__container.u-faux-block-link--hover {
-            background-color: darken($opinion-faded, 2%);
+            background-color: color.adjust($opinion-faded, $lightness: -2%);
         }
 
         .fc-item__avatar {
@@ -318,12 +320,12 @@ $pillars: (
 
         &:hover {
             .fc-item__avatar {
-                background-color: darken(map-get($palette, cutoutBackground), 3%);
+                background-color: color.adjust(map-get($palette, cutoutBackground), $lightness: -3%);
             }
 
             .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: darken($opinion-faded, 2%);
+                background-color: color.adjust($opinion-faded, $lightness: -2%);
             }
         }
     }
@@ -378,7 +380,7 @@ section.fc-container--has-palette.fc-container--special-report-alt-palette {
     .fc-item.fc-item--type-comment.fc-item--pillar-news {
         &.fc-item--type-comment {
             .fc-item__container.u-faux-block-link--hover {
-                background-color: darken($special-report-alt-pastel, 5%);
+                background-color: color.adjust($special-report-alt-pastel, $lightness: -5%);
             }
         }
     }
@@ -393,7 +395,7 @@ section.fc-container--has-palette.fc-container--special-report-alt-palette {
         }
         &:hover {
             .fc-item__content {
-                background-color: darken($special-report-dark, 5%);
+                background-color: color.adjust($special-report-dark, $lightness: -5%);
             }
         }
     }
@@ -411,7 +413,7 @@ section.fc-container--has-palette.fc-container--special-report-alt-palette {
     }
 
     &.fc-item--type-media {
-        background-color: darken($special-report-dark, 8%);
+        background-color: color.adjust($special-report-dark, $lightness: -8%);
 
         .youtube-media-atom__play-button.vjs-control-text {
             .inline-play svg {
@@ -421,7 +423,7 @@ section.fc-container--has-palette.fc-container--special-report-alt-palette {
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($special-report-dark, 2%);
+        background-color: color.adjust($special-report-dark, $lightness: -2%);
     }
 
     .fc-sublink__kicker {
@@ -451,7 +453,7 @@ section.fc-container--has-palette.fc-container--special-report-alt-palette {
     background-color: $special-report-alt-faded;
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($special-report-alt-pastel, 5%);
+        background-color: color.adjust($special-report-alt-pastel, $lightness: -5%);
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {

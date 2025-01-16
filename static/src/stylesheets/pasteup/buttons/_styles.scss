@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @import 'src';
 
 .button {
@@ -41,7 +43,7 @@
     );
 
     @include button-hover-colour(
-        darken($brand-main, 10%)
+        color.adjust($brand-main, $lightness: -10%)
     );
 }
 
@@ -67,7 +69,7 @@
     );
 
     @include button-hover-colour(
-        darken($brightness-97, 10%)
+        color.adjust($brightness-97, $lightness: -10%)
     );
 }
 
@@ -80,7 +82,7 @@
 
     @include button-hover-colour(
         transparent,
-        darken($brightness-86, 10%)
+        color.adjust($brightness-86, $lightness: -10%)
     );
 }
 
@@ -91,7 +93,7 @@
     );
 
     @include button-hover-colour(
-        darken($brightness-20, 5%)
+        color.adjust($brightness-20, $lightness: -5%)
     );
 }
 
@@ -115,7 +117,7 @@
     );
 
     @include button-hover-colour(
-        darken($brightness-97, 10%)
+        color.adjust($brightness-97, $lightness: -10%)
     );
 }
 
@@ -128,7 +130,7 @@
 
     @include button-hover-colour(
         #ffffff,
-        darken($brightness-86, 10%)
+        color.adjust($brightness-86, $lightness: -10%)
     );
 }
 
@@ -139,7 +141,7 @@
     );
 
     @include button-hover-colour(
-        darken($brightness-97, 10%)
+        color.adjust($brightness-97, $lightness: -0%)
     );
 }
 
@@ -152,7 +154,7 @@
 
     @include button-hover-colour(
         #ffffff,
-        darken($brightness-86, 10%)
+        color.adjust($brightness-86, $lightness: -10%)
     );
 }
 
@@ -163,7 +165,7 @@
     );
 
     @include button-hover-colour(
-        darken($brightness-97, 10%)
+        color.adjust($brightness-97, $lightness: -10%)
     );
 }
 
@@ -176,7 +178,7 @@
 
     @include button-hover-colour(
         #ffffff,
-        darken($brightness-86, 10%)
+        color.adjust($brightness-86, $lightness: -10%)
     );
 }
 
@@ -187,7 +189,7 @@
     );
 
     @include button-hover-colour(
-        darken($brightness-93, 10%)
+        color.adjust($brightness-93, $lightness: -10%)
     );
 }
 
@@ -200,7 +202,7 @@
 
     @include button-hover-colour(
         $brightness-97,
-        darken($brightness-86, 10%)
+        color.adjust($brightness-86, $lightness: -10%)
     );
 }
 
@@ -269,6 +271,6 @@ $show-more-icon-spacing: $base-size + 1;
 
     @include button-hover-colour(
         transparent,
-        darken($brightness-46, 10%)
+        color.adjust($brightness-46, $lightness: -10%)
     );
 }

@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 .content {
     padding-top: 0;
@@ -1106,7 +1107,7 @@
 
             &:hover {
                 color: $brightness-86;
-                background-color: darken($brightness-20, 5%);
+                background-color: color.adjust($brightness-20, $lightness: -5%);
             }
         }
 

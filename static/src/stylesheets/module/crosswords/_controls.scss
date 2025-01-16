@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .crossword__controls {
     display: block;
     margin-bottom: $gs-baseline * 0.5;
@@ -13,8 +15,8 @@
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($lifestyle-main, 10%);
-            border-color: darken($lifestyle-main, 10%);
+            background-color: color.adjust($lifestyle-main, $lightness: -10%);
+            border-color: color.adjust($lifestyle-main, $lightness: -10%);
         }
     }
 
@@ -25,8 +27,8 @@
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($brightness-93, 10%);
-            border-color: darken($brightness-93, 10%);
+            background-color: color.adjust($brightness-93, $lightness: -10%);
+            border-color: color.adjust($brightness-93, $lightness: -10%);
         }
     }
 

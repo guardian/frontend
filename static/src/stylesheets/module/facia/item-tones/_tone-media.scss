@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-media--item {
     $c-headline: #ffffff;
     background-color: $brightness-20;
@@ -9,7 +11,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($brightness-20, 7.5%);
+        background-color: color.adjust($brightness-20, $lightness: -7.5%);
     }
 
     .fc-item__link,

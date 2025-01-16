@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .vergadain--branded {
     padding-bottom: $gs-baseline * 8;
 }
@@ -149,7 +151,7 @@
         &:hover,
         &:focus,
         &:active {
-            @include button-colour(darken($labs-main, 5%), null);
+            @include button-colour(color.adjust($labs-main, $lightness: -5%), null);
         }
     }
 }
@@ -297,7 +299,7 @@
 
     &:hover,
     &:focus {
-        background: darken($brightness-86, 7%);
+        background: color.adjust($brightness-86, $lightness: -7%);
     }
 
     .advert__title {
@@ -338,7 +340,7 @@
 
         &:hover,
         &:focus {
-            background: darken($brightness-7, 7.5%);
+            background: color.adjust($brightness-7, $lightness: -7.5%);
         }
 
         .advert__title {

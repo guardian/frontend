@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $table-baseline: 8px;
 $table-gutter: 8px;
 $table-breakpoint-importance-1: tablet;
@@ -61,7 +63,7 @@ td {
     }
 
     td {
-        border-top: 1px solid darken($brightness-97, 4%);
+        border-top: 1px solid color.adjust($brightness-97, $lightness: -4%);
     }
 
     abbr {
@@ -91,7 +93,7 @@ td {
     }
 
     tr:nth-child(odd) > td {
-        background-color: darken($brightness-97, 4%);
+        background-color: color.adjust($brightness-97, $lightness: -4%);
     }
 }
 
@@ -123,7 +125,7 @@ td {
 .table__caption {
     padding: $table-baseline*2;
     background: $brightness-97;
-    border-bottom: 1px solid darken($brightness-97, 4%);
+    border-bottom: 1px solid color.adjust($brightness-97, $lightness: -4%);
     border-top: 1px solid $sport-bright;
     font-weight: bold;
     margin-bottom: -2px;
@@ -134,7 +136,7 @@ td {
 .table__caption--bottom {
     font-weight: normal;
     border-bottom: 0;
-    border-top: 1px solid darken($brightness-97, 4%);
+    border-top: 1px solid color.adjust($brightness-97, $lightness: -4%);
     caption-side: bottom;
     text-align: center;
 }

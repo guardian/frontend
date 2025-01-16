@@ -1,8 +1,10 @@
+@use "sass:color";
+
 .football-match {
     position: relative;
 
     &:hover {
-        background: darken($brightness-97, 4%);
+        background: color.adjust($brightness-97, $lightness: -4%);
 
         @include mq(desktop) {
             .football-match__report {
@@ -10,7 +12,7 @@
 
                 a {
                     padding-left: $gs-gutter*0.5;
-                    background: darken($brightness-97, 4%);
+                    background: color.adjust($brightness-97, $lightness: -4%);
                 }
             }
         }

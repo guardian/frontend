@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 @mixin colorPalatte($kickerColor, $pillarColor, $mediaColor) {
     &.content--type-analysis {
@@ -176,8 +177,8 @@
     .button--primary:active,
     .button--primary:focus,
     .button--primary:hover {
-        background-color: darken($kickerColor, 10%);
-        border-color: darken($kickerColor, 10%);
+        background-color: color.adjust($kickerColor, $lightness: -10%);
+        border-color: color.adjust($kickerColor, $lightness: -10%);
     }
 
     .button--tertiary:active,
@@ -191,7 +192,7 @@
 
         &:focus,
         &:hover {
-            border: 1px solid darken($brightness-86, 20%);
+            border: 1px solid color.adjust($brightness-86, $lightness: -20%);
             background: $brightness-100;
         }
     }
@@ -239,7 +240,7 @@
     background-color: $cardBackground;
 
     .u-faux-block-link--hover {
-        background-color: darken($cardBackground, 5%);
+        background-color: color.adjust($cardBackground, $lightness: -5%);
     }
 
     a {
@@ -491,7 +492,7 @@
         background: $brightness-20;
 
         .u-faux-block-link--hover {
-            background-color: darken($brightness-20, 5%);
+            background-color: color.adjust($brightness-20, $lightness: -5%);
         }
 
         &,

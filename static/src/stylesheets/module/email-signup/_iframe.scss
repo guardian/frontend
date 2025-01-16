@@ -1,3 +1,5 @@
+@use "sass:color";
+
 body {
     background-color: transparent;
     margin: 0;
@@ -325,7 +327,7 @@ body {
             &:hover,
             &:focus {
                 cursor: pointer;
-                fill: darken($tone-colour-accent, 10%);
+                fill: color.adjust($tone-colour-accent, $lightness: -10%);
             }
         }
 
@@ -349,8 +351,8 @@ body {
 
             &:hover,
             &:focus {
-                border-color: darken($tone-colour-accent, 10%);
-                background-color: darken($tone-colour-accent, 10%);
+                border-color: color.adjust($tone-colour-accent, $lightness: -10%);
+                background-color: color.adjust($tone-colour-accent, $lightness: -10%);
             }
         }
 

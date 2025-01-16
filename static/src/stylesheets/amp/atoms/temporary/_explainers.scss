@@ -2,6 +2,7 @@
 // the rendering of all snippet atoms
 
 @use "sass:math";
+@use "sass:color";
 
 @mixin clean($element) {
     #{$element}.clean {
@@ -125,7 +126,7 @@
 
         &:hover,
         &:focus {
-            background-color: darken($sport-main, 10%);
+            background-color: color.adjust($sport-main, $lightness: -10%);
         }
     }
 
@@ -141,7 +142,7 @@
 
         &:hover,
         &:focus {
-            background: darken($sport-dark, 10%);
+            background: color.adjust($sport-dark, $lightness: -10%);
         }
     }
 

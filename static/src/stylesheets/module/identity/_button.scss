@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin identity-button($bg, $bg-hover, $font: $brightness-7) {
     background-color: $bg;
     &, &:hover, &:active, &:focus {
@@ -167,11 +169,11 @@
 }
 
 .manage-account__button--main {
-    @include identity-button($highlight-main, darken($highlight-main, 5%));
+    @include identity-button($highlight-main, color.adjust($highlight-main, $lightness: -5%));
 }
 
 .manage-account__button--danger {
-    @include identity-button($news-main, darken($news-main, 5%));
+    @include identity-button($news-main, color.adjust($news-main, $lightness: -5%));
 }
 
 .manage-account__button--secondary {
@@ -185,7 +187,7 @@
 }
 
 .manage-account__button--green {
-    @include identity-button($green-dark, darken($green-dark, 5%));
+    @include identity-button($green-dark, color.adjust($green-dark, $lightness: -5%));
     font-weight: 600;
 }
 

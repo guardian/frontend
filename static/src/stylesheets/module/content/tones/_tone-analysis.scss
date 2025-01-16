@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @include tone-content-icons(analysis, 'analysis');
 
 @include tone-content(
@@ -12,5 +14,5 @@
     $brightness-46, // $tonal__standfirst-text
     $sport-dark, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    darken($sport-bright, 15%) // $tonal__article-link
+    color.adjust($sport-bright, $lightness: -15%) // $tonal__article-link
 );

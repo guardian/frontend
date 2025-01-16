@@ -1,7 +1,9 @@
+@use "sass:color";
+
 @mixin social-icon($platform) {
     background-color: $platform;
     &:hover {
-        background-color: darken($platform, 10%);
+        background-color: color.adjust($platform, $lightness: -10%);
     }
 }
 

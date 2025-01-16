@@ -1,8 +1,10 @@
+@use "sass:color";
+
 @include tone-content-icons(review, 'white');
 
 @include tone-content(
     review, // $tone
-    darken($brightness-46, 10%), // $tonal__header-background
+    color.adjust($brightness-46, $lightness: -10%), // $tonal__header-background
     $brightness-93, // $tonal__header-text
     $highlight-main, // $tonal__header-link
     200, // $tonal__headline-weight
@@ -12,7 +14,7 @@
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    darken($brightness-46, 10%) // $tonal__article-link
+    color.adjust($brightness-46, $lightness: -10%) // $tonal__article-link
 );
 
 .tonal--tone-review {

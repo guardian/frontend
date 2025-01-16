@@ -1,6 +1,7 @@
 // Fix a bug Internet Explorer 8 where text in password fields
 // would become invisible when `font-family` references a webfont.
 @use "sass:math";
+@use "sass:color";
 
 [type=password] {
     font-family: sans-serif !important;
@@ -214,7 +215,7 @@
 
     &:hover,
     &:focus {
-        background: darken($sport-dark, 5%);
+        background: color.adjust($sport-dark, $lightness: -5%);
     }
 
     &:active {
@@ -257,7 +258,7 @@
     background-color: $news-dark;
     &:hover,
     &:focus {
-        background-color: darken($news-dark, 5%);
+        background-color: color.adjust($news-dark, $lightness: -5%);
     }
 }
 

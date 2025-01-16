@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-analysis--item {
     &.fc-item,
     &.rich-link {
@@ -7,7 +9,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($brightness-93, 5%);
+        background-color: color.adjust($brightness-93, $lightness: -5%);
     }
 
     .fc-item__container:before,

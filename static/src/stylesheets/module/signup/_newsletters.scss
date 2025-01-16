@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .newsletters-heading__container {
     display: flex;
     justify-content: space-between;
@@ -112,8 +114,8 @@
 
     &:hover,
     &:focus {
-        border-color: darken($sport-dark, 10%);
-        background-color: darken($sport-dark, 10%);
+        border-color: color.adjust($sport-dark, $lightness: -10%);
+        background-color: color.adjust($sport-dark, $lightness: -10%);
     }
 }
 
@@ -212,8 +214,8 @@
 
         &:hover,
         &:focus {
-            border-color: darken($sport-dark, 10%);
-            background-color: darken($sport-dark, 10%);
+            border-color: color.adjust($sport-dark, $lightness: -10%);
+            background-color: color.adjust($sport-dark, $lightness: -10%);
         }
     }
 

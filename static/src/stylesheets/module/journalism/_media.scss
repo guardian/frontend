@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 .podcast {
     @include mq(leftCol) {
@@ -310,7 +311,7 @@
 
         &:hover,
         &:focus {
-            background: darken($highlight-main, 5);
+            background: color.adjust($highlight-main, $lightness: -5%);
         }
 
         .inline-icon {

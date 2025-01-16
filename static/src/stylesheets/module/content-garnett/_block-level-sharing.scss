@@ -1,6 +1,7 @@
 // Default
 
 @use "sass:math";
+@use "sass:color";
 
 .block-share__item {
     display: block;
@@ -30,9 +31,9 @@
     }
 
     &:hover {
-        border-color: darken($social-facebook, 15%);
+        border-color: color.adjust($social-facebook, $lightness: -15%);
         .inline-icon {
-            fill: darken($social-facebook, 15%);
+            fill: color.adjust($social-facebook, $lightness: -15%);
         }
     }
 }
@@ -45,9 +46,9 @@
     }
 
     &:hover {
-        border-color: darken($social-twitter, 15%);
+        border-color: color.adjust($social-twitter, $lightness: -15%);
         .inline-icon {
-            fill: darken($social-twitter, 15%);
+            fill: color.adjust($social-twitter, $lightness: -15%);
         }
     }
 }
@@ -60,9 +61,9 @@
     }
 
     &:hover {
-        border-color: darken($social-linkedin, 15%);
+        border-color: color.adjust($social-linkedin, $lightness: -15%);
         .inline-icon {
-            fill: darken($social-linkedin, 15%);
+            fill: color.adjust($social-linkedin, $lightness: -15%);
         }
     }
 }

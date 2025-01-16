@@ -10,6 +10,7 @@
    ========================================================================== */
 
 @use "sass:math";
+@use "sass:color";
 
 .gu-image {
     width: 100%;
@@ -119,7 +120,7 @@
     word-wrap: normal;
     $x: lighten($brand-pastel, 30%);
     background-color: $x;
-    border: 1px solid darken($x, 10%);
+    border: 1px solid color.adjust($x, $lightness: -10%);
     padding: $gs-baseline*.75 $gs-gutter*.75;
     border-radius: 4px;
 }
@@ -297,7 +298,7 @@ figure.element--thumbnail + h2 {
         font-weight: 600;
     }
     tbody tr:nth-child(odd) td {
-        background-color: darken($brightness-97, 4%);
+        background-color: color.adjust($brightness-97, $lightness: -4%);
     }
 }
 

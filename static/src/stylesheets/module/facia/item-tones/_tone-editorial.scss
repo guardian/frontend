@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-editorial--item {
     $c-headline: #ffffff;
 
@@ -12,7 +14,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($sport-dark, 5%);
+        background-color: color.adjust($sport-dark, $lightness: -5%);
     }
 
     .fc-item__link,

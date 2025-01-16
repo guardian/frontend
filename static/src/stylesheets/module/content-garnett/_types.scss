@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 $quote-tail: 25px;
 $quote-mark: 35px;
@@ -789,7 +790,7 @@ $quote-mark: 35px;
         .element-pullquote,
         .element-pullquote:after
         {
-            background-color: darken($opinion-faded, 7%);
+            background-color: color.adjust($opinion-faded, $lightness: -7%);
         }
 
         .element-pullquote blockquote p.pullquote-paragraph {

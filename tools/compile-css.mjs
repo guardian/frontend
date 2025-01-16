@@ -32,7 +32,6 @@ const SASS_SETTINGS = {
 	silenceDeprecations: [
 		'legacy-js-api',
 		'mixed-decls',
-		'color-functions',
 		'global-builtin',
 		'import',
 	],

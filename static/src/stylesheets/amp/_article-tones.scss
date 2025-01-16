@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin PillarColourOne ($bright, $dark) { // Sport / Culture / Lifestyle
     .content__headline,
     .drop-cap,
@@ -14,7 +16,7 @@
         background-color: $dark;
 
         .tonal__standfirst {
-            background-color: darken($dark, 5%);
+            background-color: color.adjust($dark, $lightness: -5%);
         }
     }
 
@@ -45,7 +47,7 @@
         background-color: $dark;
 
         .tonal__standfirst {
-            background-color: darken($dark, 5%);
+            background-color: color.adjust($dark, $lightness: -5%);
         }
     }
 

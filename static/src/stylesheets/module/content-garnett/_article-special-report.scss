@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .content--pillar-special-report:not(.content--type-immersive):not(.content--media):not(.content--type-splash) {
     background-color: #eff1f2;
 
@@ -48,5 +50,5 @@
 }
 
 .content--pillar-special-report.content--media:not(.paid-content) {
-    background-color: darken($special-report-dark, 7%);
+    background-color: color.adjust($special-report-dark, $lightness: -7%);
 }

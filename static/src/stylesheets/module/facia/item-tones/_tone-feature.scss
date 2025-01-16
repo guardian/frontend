@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-feature--item {
     $c-headline: #ffffff;
 
@@ -11,7 +13,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($lifestyle-main, 4%);
+        background-color: color.adjust($lifestyle-main, $lightness: -4%);
     }
 
     .fc-item__link,

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $breaking-news-icon-width: 36px;
 $breaking-news-close-icon-width: 32px;
 
@@ -50,7 +52,7 @@ $breaking-news-close-icon-width: 32px;
     transition: background-color .25s ease;
 
     &:hover {
-        background-color: darken($news-dark, 2%);
+        background-color: color.adjust($news-dark, $lightness: -2%);
     }
 
     & + & {

@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 .email-sub {
     @include clearfix();
@@ -195,7 +196,7 @@
 }
 
 .email-sub__close-icon svg {
-    fill: darken($brightness-46, 10%);
+    fill: color.adjust($brightness-46, $lightness: -10%);
 
     &:hover,
     &:focus {
@@ -532,7 +533,7 @@
             &:hover,
             &:focus {
                 cursor: pointer;
-                fill: darken($tone-colour-accent, 10%);
+                fill: color.adjust($tone-colour-accent, $lightness: -10%);
             }
         }
 
@@ -549,7 +550,7 @@
 
             &:hover,
             &:focus {
-                background-color: darken($tone-colour-accent, 10%);
+                background-color: color.adjust($tone-colour-accent, $lightness: -10%);
             }
         }
 

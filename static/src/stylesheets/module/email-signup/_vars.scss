@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $form-elements-height: $gs-baseline * 3;
 $form-primary-colour: #ffffff;
 $form-secondary-colour: $sport-pastel;
@@ -13,7 +15,7 @@ $tones: (
     (live, $news-dark, $news-main),
     (media, $brightness-7,  $brightness-7),
     (news, $sport-dark, $sport-dark),
-    (review, $highlight-main, darken($highlight-main, 10%), $brightness-46, $brightness-46),
+    (review, $highlight-main, color.adjust($highlight-main, $lightness: -10%), $brightness-46, $brightness-46),
     (special-feature, $brightness-46, $brightness-46),
     (plaindark, $brightness-86, $brightness-86, $brightness-86, $brightness-20)
 );

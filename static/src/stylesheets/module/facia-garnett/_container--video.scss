@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 $video-width-desktop: 700px;
 
@@ -128,7 +129,7 @@ $video-width-desktop: 700px;
     position: relative;
     overflow: hidden;
     @include mq(desktop, leftCol) {
-        background-color: darken($brightness-7,  5%);
+        background-color: color.adjust($brightness-7, $lightness: -5%);
 
         .has-page-skin & {
             background-color: transparent;

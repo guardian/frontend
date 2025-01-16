@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 $block-padding-left: gs-span(1) + $gs-gutter;
 
@@ -358,7 +359,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 background: none;
             }
             tr {
-                border-bottom: 1px solid darken($brightness-97, 4%);
+                border-bottom: 1px solid color.adjust($brightness-97, $lightness: -4%);
 
                 th:first-child,
                 td:first-child {
@@ -370,7 +371,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 }
             }
             thead {
-                border-top: 1px solid darken($brightness-97, 4%);
+                border-top: 1px solid color.adjust($brightness-97, $lightness: -4%);
             }
         }
 
@@ -663,12 +664,12 @@ $timeline-width: 15px;
 
     .tone-news--item {
         .fc-item__content {
-            background-color: darken($brightness-97, 3%);
+            background-color: color.adjust($brightness-97, $lightness: -3%);
         }
 
         .u-faux-block-link--hover {
             .fc-item__content {
-                background-color: darken($brightness-97, 8%);
+                background-color: color.adjust($brightness-97, $lightness: -8%);
             }
         }
     }
@@ -704,7 +705,7 @@ $timeline-width: 15px;
             margin: $gs-baseline*0.5 $gs-gutter*0.5 0;
 
             @include mq(mobileLandscape) {
-                border-left: 1px solid darken($brightness-97, 4%);
+                border-left: 1px solid color.adjust($brightness-97, $lightness: -4%);
                 margin-left: $gs-gutter;
                 margin-right: $gs-gutter;
                 padding-left: $gs-gutter;

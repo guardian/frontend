@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .crossword__cell {
     cursor: pointer;
     fill: #ffffff;
@@ -39,6 +41,6 @@
 }
 
 .crossword__cell-text--error {
-    fill: darken($news-main, 20%);
+    fill: color.adjust($news-main, $lightness: -20%);
     opacity: 0;
 }

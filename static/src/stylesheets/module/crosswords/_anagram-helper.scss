@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .crossword__anagram-helper-outer {
     position: fixed;
     box-sizing: border-box;
@@ -19,8 +21,8 @@
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($lifestyle-main, 10%);
-            border-color: darken($lifestyle-main, 10%);
+            background-color: color.adjust($lifestyle-main, $lightness: -10%);
+            border-color: color.adjust($lifestyle-main, $lightness: -10%);
         }
     }
 
@@ -31,7 +33,7 @@
         &:visited,
         &:focus {
             background-color: transparent;
-            border-color: darken($brightness-86, 15%);
+            border-color: color.adjust($brightness-86, $lightness: -15%);
         }
     }
 

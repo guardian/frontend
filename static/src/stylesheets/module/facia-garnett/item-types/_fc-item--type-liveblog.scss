@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin overide-live-blog-colours($pillar, $color1, $color2) {
     //when live blog is tagged match report
     .fc-item--live.fc-item--type-matchreport.fc-item--pillar-#{$pillar},
@@ -61,9 +63,9 @@
         // darken on hover
         .u-faux-block-link--hover {
             @if $pillar == special-report-alt {
-                background-color: darken($special-report-alt-pastel, 5%);
+                background-color: color.adjust($special-report-alt-pastel, $lightness: -5%);
             } @else {
-                background-color: darken($color1, 5%);
+                background-color: color.adjust($color1, $lightness: -5%);
             }
         }
 

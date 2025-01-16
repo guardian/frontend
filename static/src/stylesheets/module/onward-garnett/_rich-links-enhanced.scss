@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 .element-rich-link--not-upgraded.element-rich-link--tag {
     // only display tag based rich links when they are fully upgraded (as we have no link text)
@@ -131,7 +132,7 @@
             background-color: $brightness-97;
             &:hover,
             &.u-faux-block-link--hover {
-                background: darken($brightness-86, 7%);
+                background: color.adjust($brightness-86, $lightness: -7%);
             }
             &:before {
                 background-color: $labs-main;

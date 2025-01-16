@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 @mixin comment-avatar($size) {
     .fc-item__avatar {
@@ -298,11 +299,11 @@
             }
 
             .fc-item__container.u-faux-block-link--hover {
-                background-color: darken($special-report-alt-pastel, 5%);
+                background-color: color.adjust($special-report-alt-pastel, $lightness: -5%);
 
                 .fc-item__timestamp,
                 .fc-trail__count--commentcount {
-                    background-color: darken($special-report-alt-pastel, 5%);
+                    background-color: color.adjust($special-report-alt-pastel, $lightness: -5%);
 
                 }
             }

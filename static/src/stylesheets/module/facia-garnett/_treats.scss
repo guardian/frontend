@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 .treats__container {
     list-style-type: none;
@@ -35,7 +36,7 @@
     );
     @include button-hover-colour(
         #ffffff,
-        darken($brightness-86, 10%)
+        color.adjust($brightness-86, $lightness: -10%)
     );
     box-sizing: border-box;
     display: inline-block;
@@ -87,7 +88,7 @@
     &:active {
         .treats__treat {
             color: $brightness-7;
-            border-color: darken($brightness-86, 10%);
+            border-color: color.adjust($brightness-86,$lightness: -10%);
         }
     }
 }

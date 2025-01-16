@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 /* Variables
    ========================================================================== */
@@ -354,7 +355,7 @@ $identity-header-height: 48px;
     }
     &[data-dropdown-label=#{$pillar}]:hover .dropdown__button,
     &[data-dropdown-label=#{$pillar}] .dropdown__button:focus {
-        color: darken($colour, 15%);
+        color: color.adjust($colour, $lightness: -15%);
     }
 }
 
@@ -399,7 +400,7 @@ $identity-header-height: 48px;
         }
         &:hover .dropdown__button,
         .dropdown__button:focus {
-            color: darken($brightness-7, 15%);
+            color: color.adjust($brightness-7, $lightness: -15%);
             &:hover, &:focus {
                 text-decoration: underline;
             }

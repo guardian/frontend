@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 /* ==========================================================================
    World Cup 2018
@@ -294,7 +295,7 @@
 
     .football-matches {
         .table__caption--top {
-            border-top: 1px solid darken($brightness-97, 4%);
+            border-top: 1px solid color.adjust($brightness-97, $lightness: -4%);
         }
     }
 
@@ -304,7 +305,7 @@
         }
 
         .football-matches__date {
-            border-top: 1px solid darken($brightness-97, 4%);
+            border-top: 1px solid color.adjust($brightness-97, $lightness: -4%);
             display: block;
             margin-top: $gs-baseline*0.5;
             padding-top: $gs-baseline*0.5;

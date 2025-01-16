@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 @import 'sass-mq/_mq';
 @import 'pasteup/src';
@@ -189,7 +190,7 @@
 }
 
 @function colour-hover($colour) {
-    @return darken($colour, 10%)
+    @return color.adjust($colour, $lightness: -10%)
 }
 
 @mixin absolute-center {

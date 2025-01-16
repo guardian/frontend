@@ -1,3 +1,4 @@
+@use "sass:color";
 
 .campaign--snippet {
     border-top: 1px $brightness-86 solid;
@@ -31,14 +32,14 @@
     color: $brightness-7;
     background-color: $highlight-main;
     &:hover, :active {
-        background-color: darken($highlight-main, 5%);
+        background-color: color.adjust($highlight-main, $lightness: -5%);
     }
 
     .content--pillar-news & {
         color: $brightness-100;
         background-color: $news-main;
         &:hover, :active {
-            background-color: darken($news-main, 5%);
+            background-color: color.adjust($news-main, $lightness: -5%);
         }
     }
 
@@ -46,7 +47,7 @@
         color: $brightness-100;
         background-color: $sport-dark;
         &:hover, :active {
-            background-color: darken($sport-dark, 5%);
+            background-color: color.adjust($sport-dark, $lightness: -5%);
         }
     }
 
@@ -54,7 +55,7 @@
         color: $brightness-100;
         background-color: $opinion-dark;
         &:hover, :active {
-            background-color: darken($opinion-dark, 5%);
+            background-color: color.adjust($opinion-dark, $lightness: -5%);
         }
     }
 
@@ -62,7 +63,7 @@
         color: $brightness-100;
         background-color: $culture-dark;
         &:hover, :active {
-            background-color: darken($culture-dark, 5%);
+            background-color: color.adjust($culture-dark, $lightness: -5%);
         }
     }
 
@@ -70,7 +71,7 @@
         color: $brightness-100;
         background-color: $lifestyle-main;
         &:hover, :active {
-            background-color: darken($lifestyle-main, 5%);
+            background-color: color.adjust($lifestyle-main, $lightness: -5%);
         }
     }
 }

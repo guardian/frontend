@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .tone-external--item {
     background-color: $brightness-93;
 
@@ -12,7 +14,7 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($brightness-93, 3%);
+        background-color: color.adjust($brightness-93, $lightness: -3%);
     }
 
     .fc-item__container:before,

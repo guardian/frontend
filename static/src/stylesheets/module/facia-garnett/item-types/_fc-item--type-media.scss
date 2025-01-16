@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Styles shared by media and interview (video) types
 .fc-item--type-interview.fc-item--video,
 .fc-item--type-media {
@@ -28,7 +30,7 @@
     // darken on hover
     &:hover,
     .u-faux-block-link--hover {
-        background-color: darken($brightness-20, 5%);
+        background-color: color.adjust($brightness-20, $lightness: -5%);
     }
 
     .fc-sublink__link {
@@ -87,7 +89,7 @@
     // darken on hover
     &:hover,
     .u-faux-block-link--hover {
-        background-color: darken($brightness-20, 5%);
+        background-color: color.adjust($brightness-20, $lightness: -5%);
     }
 
     .fc-sublink__link {
@@ -121,7 +123,7 @@
 
     &:hover,
     .u-faux-block-link--hover {
-        background-color: darken($special-report-alt-pastel, 5%);
+        background-color: color.adjust($special-report-alt-pastel, $lightness: -5%);
     }
 
     .fc-sublink__link {
