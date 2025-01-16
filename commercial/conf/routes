@@ -4,10 +4,16 @@
 
 # For dev machines
 GET         /assets/*path                                                   dev.DevAssetsController.at(path)
+GET         /commercial/test-page                                           commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 GET         /_healthcheck                                                   commercial.controllers.HealthCheck.healthCheck()
 
+# Travel offer merchandising components
+GET         /commercial/travel/api/offers.json                              commercial.controllers.TravelOffersController.getTravel
+
+# Job merchandising components
+GET         /commercial/jobs/api/jobs.json                                  commercial.controllers.JobsController.getJobs
+
 # Multiple offer merchandising components
-# TODO: Investigate if this is still in use
 GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti()
 
 # Content API merchandising components
