@@ -244,8 +244,6 @@ GET            /admin/football/api/squad/:teamId                                
 
 
 # Commercial
-GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
-GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
 GET            /commercial/api/capi-single.json                                                                                  commercial.controllers.ContentApiOffersController.nativeJson
 GET            /commercial/api/capi-multiple.json                                                                                commercial.controllers.ContentApiOffersController.nativeJsonMulti
 GET            /commercial/api/traffic-driver.json                                                                               commercial.controllers.TrafficDriverController.renderJson()
