@@ -6,18 +6,12 @@
 GET         /assets/*path                                                   dev.DevAssetsController.at(path)
 GET         /_healthcheck                                                   commercial.controllers.HealthCheck.healthCheck()
 
-# Multiple offer merchandising components
-# TODO: Investigate if this is still in use
-GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti()
-
 # Content API merchandising components
 # Attempting to remove ContentApiOffersController, discovered
 # https://github.com/guardian/commercial-templates/blob/dba808f89127d4405f4f4f087208e6135400e61c/src/capi-single-paidfor/web/index.js#L30
 # https://api.nextgen.guardianapps.co.uk/commercial/api/capi-single.json?k=qantas-insurance-rewarding-loyalty/qantas-insurance-rewarding-loyalty
 GET         /commercial/api/capi-single.json                                commercial.controllers.ContentApiOffersController.nativeJson
 GET         /commercial/api/capi-multiple.json                              commercial.controllers.ContentApiOffersController.nativeJsonMulti
-
-GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson()
 
 # Piggyback pixel from AppNexus, used for resizing mpus
 GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize()

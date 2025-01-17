@@ -9,7 +9,7 @@ import scala.concurrent.ExecutionContext
 class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     executionContext: ExecutionContext,
 ) extends AnyGoodCachedHealthCheck(
-      NeverExpiresSingleHealthCheck("/commercial/travel/api/capi-single.json"),
-      NeverExpiresSingleHealthCheck("/commercial/jobs/api/capi-multiple.json"),
-      NeverExpiresSingleHealthCheck("/commercial/books/api/non-refreshable-line-items.json"),
+      NeverExpiresSingleHealthCheck("/commercial/api/capi-single.json"),
+      NeverExpiresSingleHealthCheck("/commercial/api/capi-multiple.json"),
+      NeverExpiresSingleHealthCheck("/commercial/non-refreshable-line-items.json"),
     )(wsClient, executionContext)
