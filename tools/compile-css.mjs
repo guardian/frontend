@@ -28,6 +28,7 @@ const SASS_SETTINGS = {
 	outputStyle: 'compressed',
 	sourceMap: true,
 	precision: 5,
+    quietDeps: true,
 };
 
 const BROWSERS_LIST = [
