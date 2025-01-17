@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeBetaFront,
       DCRCrosswords,
       DarkModeWeb,
+      UseUserBenefitsApi,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -47,4 +48,13 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 1, 30),
       participationGroup = Perc0D,
+    )
+
+object UseUserBenefitsApi
+    extends Experiment(
+      name = "use-user-benefits-api",
+      description = "Enable the switch from members-data-api to the new user-benefits API",
+      owners = Seq(Owner.withGithub("rupertbates")),
+      sellByDate = LocalDate.of(2025, 6, 30),
+      participationGroup = Perc0C,
     )
