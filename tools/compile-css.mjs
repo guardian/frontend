@@ -29,6 +29,7 @@ const SASS_SETTINGS = {
 	sourceMap: true,
 	precision: 5,
     quietDeps: true,
+    silenceDeprecations: ['mixed-decls'],
 };
 
 const BROWSERS_LIST = [
