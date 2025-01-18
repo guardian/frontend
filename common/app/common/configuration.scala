@@ -1,9 +1,5 @@
 package common
 
-import java.io.{File, FileInputStream}
-import java.nio.charset.Charset
-import java.util.Map.Entry
-
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
@@ -12,9 +8,15 @@ import common.Environment.{app, awsRegion, stage}
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider
+import software.amazon.awssdk.core.exception.SdkClientException
+import utils.AWSv2
 
-import scala.jdk.CollectionConverters._
+import java.io.{File, FileInputStream}
+import java.nio.charset.Charset
+import java.util.Map.Entry
 import scala.concurrent.duration._
+import scala.jdk.CollectionConverters._
 import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
@@ -231,14 +233,10 @@ class GuardianConfiguration extends GuLogging {
     lazy val capiPreviewRoleToAssume: Option[String] =
       configuration.getStringProperty("content.api.preview.roleToAssume")
 
-    lazy val capiPreviewCredentials: AWSCredentialsProvider = {
-      new AWSCredentialsProviderChain(
-        List(
-          Some(new ProfileCredentialsProvider("capi")),
-          capiPreviewRoleToAssume.map(new STSAssumeRoleSessionCredentialsProvider.Builder(_, "capi").build()),
-        ).flatten: _*,
-      )
-    }
+    lazy val capiPreviewCredentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
+      Seq(new ProfileCredentialsProvider("capi")) ++
+        capiPreviewRoleToAssume.map(new STSAssumeRoleSessionCredentialsProvider.Builder(_, "capi").build()): _*,
+    )
 
     lazy val nextPreviousPageSize: Int =
       configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
@@ -597,24 +595,20 @@ class GuardianConfiguration extends GuLogging {
 
     lazy val stsRoleToAssume = configuration.getStringProperty("aws.cmsFronts.account.role")
 
-    def crossAccountMandatoryCredentials: AWSCredentialsProvider =
+    def crossAccountMandatoryCredentials: AwsCredentialsProvider =
       crossAccountCredentials.getOrElse(
         throw new BadConfigurationException("AWS credentials for cross account are not configured"),
       )
 
-    lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
-      val provider = new AWSCredentialsProviderChain(
-        new ProfileCredentialsProvider("cmsFronts"),
-        new STSAssumeRoleSessionCredentialsProvider.Builder(role, "frontend").build(),
-      )
+    lazy val crossAccountCredentials: Option[AwsCredentialsProvider] = faciatool.stsRoleToAssume.map { roleArn =>
+      val provider = AWSv2.stsCredentials("cmsFronts", roleArn)
 
-      // this is a bit of a convoluted way to check whether we actually have credentials.
-      // I guess in an ideal world there would be some sort of isConfigued() method...
+      // Check whether we actually have credentials!
       try {
-        provider.getCredentials
-        Some(provider)
+        provider.resolveCredentials()
+        provider
       } catch {
-        case ex: AmazonClientException =>
+        case ex: SdkClientException =>
           log.error("amazon client cross account exception", ex)
           throw ex
       }

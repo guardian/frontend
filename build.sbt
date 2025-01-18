@@ -25,7 +25,8 @@ val common = library("common")
       awsKinesis,
       awsS3,
       awsSns,
-      awsSts,
+      awsSts, // AWS SDK v1 still used for CAPI-preview related code for now
+      awsV2Sts, // AWS SDK v2 used for Fronts API access
       awsSqs,
       awsSsm,
       eTagCachingS3,
