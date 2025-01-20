@@ -328,10 +328,10 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         case "nav/list" => storyCountTotal
         // scrollable feature containers are capped at 3 stories
         case "scrollable/feature" => 3
-        // scrollable highlights and medium containers are capped at 6 stories
-        case "scrollable/highlights" | "scrollable/medium" => 6
-        // scrollable/small containers are capped at 8 stories
-        case "scrollable/small" => 8
+        // scrollable highlights  are capped at 6 stories
+        case "scrollable/highlights" => 6
+        // scrollable small and medium containers are capped at 8 stories
+        case "scrollable/small" | "scrollable/medium" => 8
         // other container types should be capped at a maximum number of stories set in the app config
         case _ => Math.min(Configuration.facia.collectionCap, storyCountTotal)
       }
