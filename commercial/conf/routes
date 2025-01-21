@@ -4,17 +4,7 @@
 
 # For dev machines
 GET         /assets/*path                                                   dev.DevAssetsController.at(path)
-GET         /commercial/test-page                                           commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 GET         /_healthcheck                                                   commercial.controllers.HealthCheck.healthCheck()
-
-# Travel offer merchandising components
-GET         /commercial/travel/api/offers.json                              commercial.controllers.TravelOffersController.getTravel
-
-# Job merchandising components
-GET         /commercial/jobs/api/jobs.json                                  commercial.controllers.JobsController.getJobs
-
-# Multiple offer merchandising components
-GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti()
 
 # Content API merchandising components
 # Attempting to remove ContentApiOffersController, discovered
@@ -22,8 +12,6 @@ GET         /commercial/api/multi.json                                      comm
 # https://api.nextgen.guardianapps.co.uk/commercial/api/capi-single.json?k=qantas-insurance-rewarding-loyalty/qantas-insurance-rewarding-loyalty
 GET         /commercial/api/capi-single.json                                commercial.controllers.ContentApiOffersController.nativeJson
 GET         /commercial/api/capi-multiple.json                              commercial.controllers.ContentApiOffersController.nativeJsonMulti
-
-GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson()
 
 # Piggyback pixel from AppNexus, used for resizing mpus
 GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize()
