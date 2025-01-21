@@ -47,8 +47,11 @@ class ArticleController(
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) { (article, blocks) =>
-        render(path, article, blocks)
+      {
+        log.info(s"Test headers: ${request.headers.keys}")
+        mapModel(path, ArticleBlocks) { (article, blocks) =>
+          render(path, article, blocks)
+        }
       }
     }
   }
