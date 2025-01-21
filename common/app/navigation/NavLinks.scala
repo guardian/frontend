@@ -270,7 +270,6 @@ object NavLinks {
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
   )
   val aboutUs = NavLink("About Us", "/about")
-  val inauguration = NavLink("Trump inauguration", "/us-news/donald-trump-inauguration")
 
   // News Pillar
   val ukNewsPillar = NavLink(
@@ -319,7 +318,6 @@ object NavLinks {
     List(
       usNews,
       usPolitics,
-      inauguration,
       world,
       climateCrisis,
       middleEast,
