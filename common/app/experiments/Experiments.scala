@@ -56,5 +56,5 @@ object UseUserBenefitsApi
       description = "Enable the switch from members-data-api to the new user-benefits API",
       owners = Seq(Owner.withGithub("rupertbates")),
       sellByDate = LocalDate.of(2025, 6, 30),
-      participationGroup = Perc5A,
+      participationGroup = Perc10A,
     )
