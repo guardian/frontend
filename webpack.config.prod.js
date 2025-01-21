@@ -16,16 +16,6 @@ module.exports = webpackMerge.smart(config, {
 	},
 	devtool: 'source-map',
 	plugins: [
-		// Copy the commercial bundle dist to Frontend's static output location:
-		// static/target/javascripts/commercial
-		new CopyPlugin({
-			patterns: [
-				{
-					from: 'node_modules/@guardian/commercial/dist/bundle/prod',
-					to: 'commercial',
-				},
-			],
-		}),
 		new webpack.optimize.AggressiveMergingPlugin({
 			// delicate number: stops enhanced-no-commercial and enhanced
 			// being merged into one
