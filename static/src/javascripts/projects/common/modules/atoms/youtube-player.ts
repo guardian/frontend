@@ -5,7 +5,7 @@ import type {
 	AdsConfigEnabled,
 	AdsConfigTCFV2,
 	AdsConfigUSNATorAus,
-} from '@guardian/commercial/dist/cjs/core/types';
+} from '@guardian/commercial/dist/core/cjs/lib/types';
 import type { ConsentState } from '@guardian/libs';
 import { loadScript, log, onConsentChange } from '@guardian/libs';
 import fastdom from 'fastdom';
