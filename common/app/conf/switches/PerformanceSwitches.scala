@@ -244,7 +244,7 @@ trait PerformanceSwitches {
     "Shorten the surrogate cache time for older articles for load testing",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
-    sellByDate = LocalDate.of(2025, 11, 1),
+    sellByDate = LocalDate.of(2025, 12, 1),
     exposeClientSide = false,
     highImpact = false,
   )
