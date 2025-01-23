@@ -47,10 +47,7 @@
             }
         },
         "libs": {
-            "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
-            "cmp": { "fullVendorDataUrl": "/commercial/cmp/vendorlist.json",
-                     "shortVendorDataUrl": "/commercial/cmp/shortvendorlist.json"
-            }
+            "googletag": "@{Configuration.javascript.config("googletagJsUrl")}"
         },
         "stage": "@Configuration.environment.stage"
     }

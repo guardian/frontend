@@ -21,10 +21,6 @@ GET         /advertiser-content/:campaignName/:pageName                     comm
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET         /advertiser-content/:campaignName/:pageName/autoplay.json       commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
-# AIB / CMP / TCF vendorlist.json
-GET         /commercial/cmp/vendorlist.json                                            commercial.controllers.CmpDataController.renderVendorlist()
-GET         /commercial/cmp/shortvendorlist.json                                      commercial.controllers.CmpDataController.renderShortVendorlist()
-
 # ADS.TXT + APP-ADS.txt Standard
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET         /app-ads.txt                                                    commercial.controllers.AdsDotTextViewController.renderAppTextFile()
