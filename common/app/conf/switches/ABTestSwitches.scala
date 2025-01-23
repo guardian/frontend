@@ -81,4 +81,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-auxia-sign-in-gate",
+    "Experimental use of Auxia to drive the client-side SignIn gate",
+    owners = Seq(Owner.withEmail("growth@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2026, 1, 30)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
