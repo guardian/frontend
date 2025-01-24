@@ -32,8 +32,6 @@ trait MatchListController extends BaseController with Requests {
     Cached(10) {
       if (request.isJson && request.forceDCR) {
         val model = DotcomRenderingFootballDataModel(
-          pageTitle = matchesList.getPageTitle(Edition(request)),
-          pageType = matchesList.pageType,
           matchesList = DotcomRenderingFootballDataModel.getMatchesList(matchesList.matchesGroupedByDateAndCompetition),
           nextPage = matchesList.nextPage,
           previousPage = matchesList.previousPage,

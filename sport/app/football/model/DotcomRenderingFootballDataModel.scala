@@ -27,8 +27,6 @@ case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: L
 case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List[CompetitionMatches])
 
 case class DotcomRenderingFootballDataModel(
-    pageTitle: String,
-    pageType: String,
     matchesList: Seq[MatchesByDateAndCompetition],
     nextPage: Option[String],
     previousPage: Option[String],
