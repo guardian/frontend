@@ -1,7 +1,7 @@
 import type {
 	AdsConfigTCFV2,
 	AdsConfigUSNATorAus,
-} from '@guardian/commercial/dist/cjs/core/types';
+} from '@guardian/commercial/dist/core/cjs/lib/types';
 import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 

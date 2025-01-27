@@ -173,17 +173,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val WeatherSwitch = Switch(
-    SwitchGroup.Feature,
-    "weather",
-    "If this is switched on then the weather component is displayed",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val HistoryTags = Switch(
     SwitchGroup.Feature,
     "history-tags",
@@ -563,14 +552,4 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val DisableFrontContainerShowHide = Switch(
-    group = SwitchGroup.Feature,
-    name = "disable-front-container-show-hide",
-    description = "For users with no currently hidden containers on a front, removes the ability to hide containers",
-    owners = Seq(Owner.withEmail("project.fairground@theguardian.com")),
-    safeState = On,
-    sellByDate = LocalDate.of(2025, 2, 4),
-    exposeClientSide = true,
-    highImpact = false,
-  )
 }

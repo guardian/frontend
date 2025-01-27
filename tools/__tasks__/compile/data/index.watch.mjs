@@ -1,5 +1,4 @@
 import clean from './clean.mjs';
-import download from './download.mjs';
 import amp from './amp.mjs';
 
 /** @type {import('listr2').ListrTask} */
@@ -10,7 +9,6 @@ const task = {
 			[
 				// prettier: multi-line
 				clean,
-				download,
 				amp,
 			],
 			{ concurrent: false },

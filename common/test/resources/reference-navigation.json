@@ -2497,12 +2497,6 @@
 					"classList": []
 				},
 				{
-					"title": "US politics",
-					"url": "/us-news/us-politics",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "UK",
 					"url": "/uk-news",
 					"longTitle": "UK news",
@@ -2586,12 +2580,6 @@
 				{
 					"title": "Climate crisis",
 					"url": "/environment/climate-crisis",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Middle East",
-					"url": "/world/middleeast",
 					"children": [],
 					"classList": []
 				},

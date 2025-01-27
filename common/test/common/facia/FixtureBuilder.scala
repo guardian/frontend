@@ -100,6 +100,7 @@ object FixtureBuilder {
       group = "0",
       isLive = false,
       galleryCount = None,
+      audioDuration = None,
     )
 
   def mkDiscussion(): PressedDiscussionSettings =

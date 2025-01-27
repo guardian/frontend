@@ -1,21 +1,17 @@
 package services.fronts
 
-import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
-import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
+import com.gu.etagcaching.aws.sdkv2.s3.S3ObjectFetching
+import com.gu.facia.client.{ApiClient, Environment}
 import conf.Configuration
+import utils.AWSv2.buildS3AsyncClient
+
 import scala.concurrent.ExecutionContext
 
 object FrontsApi {
 
-  def crossAccountClient(implicit ec: ExecutionContext): ApiClient = {
-    val client: AmazonS3 = AmazonS3Client.builder
-      .withCredentials(Configuration.faciatool.crossAccountMandatoryCredentials)
-      .withRegion(conf.Configuration.aws.region)
-      .build()
-    ApiClient(
-      Configuration.faciatool.crossAccountSourceBucket,
-      Configuration.facia.stage.toUpperCase,
-      AmazonSdkS3Client(client),
-    )
-  }
+  def crossAccountClient(implicit ec: ExecutionContext): ApiClient = ApiClient.withCaching(
+    Configuration.faciatool.crossAccountSourceBucket,
+    Environment(Configuration.facia.stage.toUpperCase),
+    S3ObjectFetching.byteArraysWith(buildS3AsyncClient(Configuration.faciatool.crossAccountMandatoryCredentials)),
+  )
 }

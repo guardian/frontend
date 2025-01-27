@@ -3607,26 +3607,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:23.8.1":
-  version: 23.8.1
-  resolution: "@guardian/commercial@npm:23.8.1"
+"@guardian/commercial@npm:25.0.0":
+  version: 25.0.0
+  resolution: "@guardian/commercial@npm:25.0.0"
   dependencies:
     "@guardian/prebid.js": "npm:8.52.0-10"
     "@octokit/core": "npm:^6.1.2"
-    fastdom: "npm:^1.0.11"
+    fastdom: "npm:^1.0.12"
     lodash-es: "npm:^4.17.21"
     process: "npm:^0.11.10"
-    tslib: "npm:^2.6.2"
-    web-vitals: "npm:^4.2.1"
+    tslib: "npm:^2.7.0"
+    web-vitals: "npm:^4.2.4"
   peerDependencies:
     "@guardian/ab-core": ^8.0.0
-    "@guardian/core-web-vitals": ^7.0.0
-    "@guardian/identity-auth": ^3.0.0
-    "@guardian/identity-auth-frontend": ^5.0.0
+    "@guardian/core-web-vitals": ^8.0.1
+    "@guardian/identity-auth": ^4.0.0
+    "@guardian/identity-auth-frontend": ^6.0.0
     "@guardian/libs": ^19.1.0
     "@guardian/source": ^8.0.0
-    typescript: ~5.5.3
-  checksum: 10c0/4488418264f613473852804e3b4b592e6a708c64147e0e978abc3672596404630af537fcdad0fa5b388ac0e3f9526abbf1a4d5cd69ab7debf7c708abc4f73ad6
+    typescript: ~5.5.2
+  checksum: 10c0/990e2fcb6a72a3a5b8236ad2328bf3cbca3c9286ae5f8c0a09938589ccd0c9e929f544458532ce1b4b39441a542c3cfbc7a826f49055ce27ec2277e5b20eb9b5
   languageName: node
   linkType: hard
 
@@ -3699,12 +3699,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^10.0.27"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:23.8.1"
+    "@guardian/commercial": "npm:25.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:6.0.3"
-    "@guardian/libs": "npm:19.1.0"
+    "@guardian/libs": "npm:20.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3792,7 +3792,7 @@ __metadata:
     requireindex: "npm:^1.1.0"
     rimraf: "npm:^2.6.1"
     rxjs: "npm:^6.6.7"
-    sass: "npm:1.77.8"
+    sass: "npm:1.78.0"
     sass-graph: "npm:4.0.1"
     sass-loader: "npm:14.2.1"
     sass-mq: "npm:5.0.1"
@@ -3861,16 +3861,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:19.1.0":
-  version: 19.1.0
-  resolution: "@guardian/libs@npm:19.1.0"
+"@guardian/libs@npm:20.0.0":
+  version: 20.0.0
+  resolution: "@guardian/libs@npm:20.0.0"
   peerDependencies:
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/0c0450a65980cc8be740565aea104d384570f996264d5388cbeba4ebda5a5b9dee7345286df80d48c1e08ce56692a3e8b82c2a2fe646c749f49fb131b31f68b9
+  checksum: 10c0/0ab14266f3de53da978a60dc0bcbf09cf9f5350fe070dbfd858d1bfa55bf8e802c18513c579674777e9a69efb2b1f672b815eb7c81b98c97b993ac68f73bda3c
   languageName: node
   linkType: hard
 
@@ -7277,17 +7277,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001587":
-  version: 1.0.30001615
-  resolution: "caniuse-lite@npm:1.0.30001615"
-  checksum: 10c0/49029ff6cdbb35cf84cc9d9d4782dff3a8fb6afb547a83f3e43f13addcb0c4ac6015dc528a42f0f78846dc06261b3fab16555e3979114ad20e15cf7a91e64c33
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001669":
-  version: 1.0.30001673
-  resolution: "caniuse-lite@npm:1.0.30001673"
-  checksum: 10c0/0e73a2b0f06973052e563dec9990a6fd440d510fa2ff54fa50310e736abb86e96c96b43c10e609fc22f2109f98fe76428b70441baf6b1a49f69ccf50c1879f6b
+"caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001587, caniuse-lite@npm:^1.0.30001669":
+  version: 1.0.30001692
+  resolution: "caniuse-lite@npm:1.0.30001692"
+  checksum: 10c0/fca5105561ea12f3de593f3b0f062af82f7d07519e8dbcb97f34e7fd23349bcef1b1622a9a6cd2164d98e3d2f20059ef7e271edae46567aef88caf4c16c7708a
   languageName: node
   linkType: hard
 
@@ -9602,12 +9595,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastdom@npm:^1.0.11":
-  version: 1.0.11
-  resolution: "fastdom@npm:1.0.11"
+"fastdom@npm:^1.0.12":
+  version: 1.0.12
+  resolution: "fastdom@npm:1.0.12"
   dependencies:
     strictdom: "npm:^1.0.1"
-  checksum: 10c0/4ff808197efe23917770f4868aebf1fd293fa3b202e28152879dd889a39152fbce505dff7e5c5611d8697227ccea5c92cb44875bcacf6740e7c6c91d7bf3d845
+  checksum: 10c0/d1727eb5d803aa0e1dc9a98b2eef1f138bad3776fa7471145216dba34f435f86e8e514658d0b1717fa83a987f44a8d26f2353a515f2bf782f32d3c9ead6d1994
   languageName: node
   linkType: hard
 
@@ -14768,16 +14761,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.77.8":
-  version: 1.77.8
-  resolution: "sass@npm:1.77.8"
+"sass@npm:1.78.0":
+  version: 1.78.0
+  resolution: "sass@npm:1.78.0"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 10c0/2bfd62794070352c804f949e69bd8bb5b4ec846deeb924251b2c3f7b503170fb1ae186f513f0166907749eb34e0277dee747edcb78c886fb471aac01be1e864c
+  checksum: 10c0/6577a87c00b03a5a50f3a11b4b6592f28abce34e61812e381535a3b712151bd94db3ca06467d20395431e0f38a23f99e616d6859d771fb6d4617c359f590c48c
   languageName: node
   linkType: hard
 
@@ -16218,6 +16211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.7.0":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
 "tsml@npm:1.0.1":
   version: 1.0.1
   resolution: "tsml@npm:1.0.1"
@@ -16786,10 +16786,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^4.2.1":
-  version: 4.2.2
-  resolution: "web-vitals@npm:4.2.2"
-  checksum: 10c0/0e41d016a80d8f48e00c95f3d8405a4cb8c6a12a83ac6677ce49447c85ca6fb2325f40915ae5460bb59f07d1b7d65b66b8b42ea50135594ae7dc892453775004
+"web-vitals@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "web-vitals@npm:4.2.4"
+  checksum: 10c0/383c9281d5b556bcd190fde3c823aeb005bb8cf82e62c75b47beb411014a4ed13fa5c5e0489ed0f1b8d501cd66b0bebcb8624c1a75750bd5df13e2a3b1b2d194
   languageName: node
   linkType: hard
 

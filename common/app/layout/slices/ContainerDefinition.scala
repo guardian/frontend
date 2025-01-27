@@ -21,7 +21,10 @@ object ContainerDefinition {
       customCssClasses = Set.empty,
     )
 
-  def fromContainer(container: Container, items: Seq[PressedContent]): Option[ContainerDefinition] =
+  def fromContainer(
+      container: Container,
+      items: Seq[PressedContent],
+  ): Option[ContainerDefinition] = {
     container match {
       case Dynamic(dynamicContainer) =>
         dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
@@ -32,6 +35,7 @@ object ContainerDefinition {
       case _ =>
         None
     }
+  }
 
   /** Fast container that looks good for the number of items provided */
   def fastForNumberOfItems(n: Int): ContainerDefinition =

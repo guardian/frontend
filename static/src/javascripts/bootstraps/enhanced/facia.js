@@ -13,7 +13,6 @@ import { lazyLoadContainers } from 'facia/modules/ui/lazy-load-containers';
 import { showUpdatesFromLiveBlog } from 'facia/modules/ui/live-blog-updates';
 import { init as initSnaps } from 'facia/modules/ui/snaps';
 import { init as initRegionSelector } from 'facia/modules/ui/au-region-selector'
-import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
 import { addContributionsBanner } from 'journalism/modules/audio-series-add-contributions';
@@ -57,14 +56,6 @@ const upgradeMostPopularToGeo = () => {
         } else {
             new GeoMostPopularFront().go();
         }
-    }
-};
-
-const showWeather = () => {
-    if (config.get('switches.weather')) {
-        mediator.on('page:front:ready', () => {
-            Weather.init();
-        });
     }
 };
 
@@ -147,7 +138,6 @@ const init = () => {
         ['f-geo-most-popular', upgradeMostPopularToGeo],
         ['f-lazy-load-containers', lazyLoadContainers],
         ['f-stocks', stocks],
-        ['f-weather', showWeather],
         ['f-live-blog-updates', showLiveblogUpdates],
         ['f-video-playlists', upgradeVideoPlaylists],
         ['f-audio-flagship-contributions', addContributionBannerToAudioSeries],

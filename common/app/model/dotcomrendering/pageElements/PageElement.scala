@@ -120,7 +120,7 @@ object AudioAtomBlockElement {
 
 // We are currently using AudioBlockElement as a catch all for audio errors, skipping the first definition
 // See comment: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
-case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
+case class AudioBlockElement(assets: Seq[AudioAsset], id: Option[String] = None) extends PageElement
 object AudioBlockElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
 }
@@ -366,6 +366,10 @@ case class ListItem(
     title: Option[String],
     bio: Option[String],
     endNote: Option[String],
+    contributorIds: Option[scala.collection.Seq[String]],
+    byline: Option[String],
+    bylineHtml: Option[String],
+    contributorImageOverrideUrl: Option[String],
 ) extends PageElement
 object ListItem {
   implicit val listItemWrites: Writes[ListItem] = Json.writes[ListItem]
@@ -1590,6 +1594,10 @@ object PageElement {
       title = item.title,
       bio = item.bio,
       endNote = item.endNote,
+      contributorIds = item.contributorIds,
+      byline = item.byline,
+      bylineHtml = item.bylineHtml,
+      contributorImageOverrideUrl = item.contributorImageOverrideUrl,
     )
   }
 

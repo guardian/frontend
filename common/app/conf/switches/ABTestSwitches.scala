@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "Test new GPID prebid ad units",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 1, 17)),
+    sellByDate = Some(LocalDate.of(2025, 1, 31)),
     exposeClientSide = true,
     highImpact = false,
   )
@@ -73,12 +73,34 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-prebid-keywords",
+    "Test impact of adding keywords to Prebid config",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 1, 31)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
+    "ab-auxia-sign-in-gate",
+    "Experimental use of Auxia to drive the client-side SignIn gate",
+    owners = Seq(Owner.withEmail("growth@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2026, 1, 30)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
     "ab-consent-or-pay-banner",
     "Test impact of adding consent or pay banner",
     owners = Seq(Owner.withEmail("transparencyandconsent@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2025, 12, 24)),
-    exposeClientSide = true,
-    highImpact = false,
   )
+
+
 }
