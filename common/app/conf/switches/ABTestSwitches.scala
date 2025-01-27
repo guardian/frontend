@@ -60,16 +60,16 @@ trait ABTestSwitches {
     highImpact = false,
   )
 
-  Switch(
-    ABTests,
-    "ab-region-specific-prebid",
-    "Test impact of splitting the Prebid bundle by region",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 1, 24)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
+  // Switch(
+  //   ABTests,
+  //   "ab-region-specific-prebid",
+  //   "Test impact of splitting the Prebid bundle by region",
+  //   owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+  //   safeState = Off,
+  //   sellByDate = Some(LocalDate.of(2025, 1, 24)),
+  //   exposeClientSide = true,
+  //   highImpact = false,
+  // )
 
   Switch(
     ABTests,
@@ -89,6 +89,17 @@ trait ABTestSwitches {
     owners = Seq(Owner.withEmail("growth@guardian.co.uk")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2026, 1, 30)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
+    "ab-consent-or-pay-banner",
+    "Test impact of adding consent or pay banner",
+    owners = Seq(Owner.withEmail("transparencyandconsent@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 24)),
     exposeClientSide = true,
     highImpact = false,
   )
