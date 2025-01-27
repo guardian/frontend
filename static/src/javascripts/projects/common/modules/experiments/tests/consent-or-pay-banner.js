@@ -16,11 +16,11 @@ export const consentOrPayBannerTest = {
     canRun : () => true,
     variants: [
         {
-            id: 'control',
+            id: 'activate',
             test: () => {},
         },
         {
-            id: 'variant',
+            id: 'deactivate',
             test: () => {},
         },
     ],
