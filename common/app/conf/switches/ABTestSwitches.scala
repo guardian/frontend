@@ -100,6 +100,8 @@ trait ABTestSwitches {
     owners = Seq(Owner.withEmail("transparencyandconsent@theguardian.com")),
     safeState = Off,
     sellByDate = Some(LocalDate.of(2025, 12, 24)),
+    exposeClientSide = true,
+    highImpact = false,
   )
 
 }
