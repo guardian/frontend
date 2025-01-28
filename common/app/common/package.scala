@@ -13,9 +13,10 @@ import play.api.Logger
 import play.api.libs.json.{JsObject, JsString, JsValue}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import model.ApplicationContext
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
+import net.logstash.logback.marker.LogstashMarker
+import net.logstash.logback.marker.Markers.append
 import org.apache.pekko.pattern.CircuitBreakerOpenException
 import renderers.{DCRLocalConnectException, DCRTimeoutException}
 
@@ -34,7 +35,6 @@ object `package`
       context: ApplicationContext,
       log: Logger,
   ): PartialFunction[Throwable, Either[Result, T]] = {
-
     convertApiExceptionsWithoutEither.andThen(Left(_))
   }
 
@@ -43,39 +43,59 @@ object `package`
       context: ApplicationContext,
       log: Logger,
   ): PartialFunction[Throwable, Result] = {
-    case _: CircuitBreakerOpenException =>
-      log.error(s"Got a circuit breaker open error while calling content api, path: ${request.path}")
-      NoCache(ServiceUnavailable)
-    case ContentApiError(404, message, _) =>
-      log.info(s"Got a 404 while calling content api: $message, path:${request.path}")
-      NoCache(NotFound)
-    case ContentApiError(410, message, errorResponse) =>
-      errorResponse match {
-        case Some(errorResponse) if isCommercialExpiry(errorResponse) =>
-          log.info(s"Got a 410 while calling content api: $message: ${errorResponse.message}, path: ${request.path}")
-          Cached(60)(RevalidatableResult.Ok(views.html.commercialExpired()))
-        case _ =>
-          log.info(s"Got a 410 while calling content api: $message, path: ${request.path}")
-          NoCache(Gone)
-      }
+    val fastlyRequestId = request.headers.get("x-gu-xid").getOrElse("fastly-id-not-provided")
+    val customFieldMarker: LogstashMarker = {
+      append("fastlyRequestId", fastlyRequestId)
+    }
+    {
+      case _: CircuitBreakerOpenException =>
+        log.logger.error(
+          customFieldMarker,
+          s"Got a circuit breaker open error while calling content api, path: ${request.path}",
+        )
+        NoCache(ServiceUnavailable)
+      case ContentApiError(404, message, _) =>
+        log.logger.info(customFieldMarker, s"Got a 404 while calling content api: $message, path:${request.path}")
+        NoCache(NotFound)
+      case ContentApiError(410, message, errorResponse) =>
+        errorResponse match {
+          case Some(errorResponse) if isCommercialExpiry(errorResponse) =>
+            log.logger.info(
+              customFieldMarker,
+              s"Got a 410 while calling content api: $message: ${errorResponse.message}, path: ${request.path}",
+            )
+            Cached(60)(RevalidatableResult.Ok(views.html.commercialExpired()))
+          case _ =>
+            log.logger.info(customFieldMarker, s"Got a 410 while calling content api: $message, path: ${request.path}")
+            NoCache(Gone)
+        }
 
-    // Custom DCR exceptions to distinguish from CAPI/other backend errors.
-    case error: DCRLocalConnectException =>
-      throw error
-    case timeout: DCRTimeoutException =>
-      log.error(s"Got a timeout while calling DCR: ${timeout.getMessage}, path: ${request.path}", timeout)
-      NoCache(GatewayTimeout(timeout.getMessage))
+      // Custom DCR exceptions to distinguish from CAPI/other backend errors.
+      case error: DCRLocalConnectException =>
+        throw error
+      case timeout: DCRTimeoutException =>
+        log.logger.error(
+          customFieldMarker,
+          s"Got a timeout while calling DCR: ${timeout.getMessage}, path: ${request.path}",
+          timeout,
+        )
+        NoCache(GatewayTimeout(timeout.getMessage))
 
-    case timeout: TimeoutException =>
-      log.error(s"Got a timeout while calling content api: ${timeout.getMessage}, path: ${request.path}", timeout)
-      NoCache(GatewayTimeout(timeout.getMessage))
+      case timeout: TimeoutException =>
+        log.logger.error(
+          customFieldMarker,
+          s"Got a timeout while calling content api: ${timeout.getMessage}, path: ${request.path}",
+          timeout,
+        )
+        NoCache(GatewayTimeout(timeout.getMessage))
 
-    case error =>
-      log.error(s"Content api exception: ${error.getMessage}", error)
-      Option(error.getCause).foreach { cause =>
-        log.error(s"Content api exception cause (path: ${request.path}: ", cause)
-      }
-      NoCache(InternalServerError)
+      case error =>
+        log.logger.error(customFieldMarker, s"Content api exception: ${error.getMessage}", error)
+        Option(error.getCause).foreach { cause =>
+          log.logger.error(customFieldMarker, s"Content api exception cause (path: ${request.path}: ", cause)
+        }
+        NoCache(InternalServerError)
+    }
   }
 
   /*
