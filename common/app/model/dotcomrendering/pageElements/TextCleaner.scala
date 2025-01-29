@@ -17,7 +17,7 @@ object TextCleaner {
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       links.foreach(el => {
         val id = affiliateLinksConfig.skimlinksId
-        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id))
+        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id)).attr("rel", "sponsored")
       })
 
       if (links.nonEmpty) {
