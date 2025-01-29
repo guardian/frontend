@@ -103,6 +103,7 @@ trait AppComponents
       wire[StocksDataLifecycle],
       wire[NewsletterSignupLifecycle],
       wire[MostViewedLifecycle],
+      wire[SkimLinksCacheLifeCycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
