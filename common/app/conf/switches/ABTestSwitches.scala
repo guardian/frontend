@@ -44,7 +44,7 @@ trait ABTestSwitches {
     "Test the Opt Out frequency capping feature",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 1, 29)),
+    sellByDate = Some(LocalDate.of(2025, 2, 28)),
     exposeClientSide = true,
     highImpact = false,
   )
@@ -66,7 +66,7 @@ trait ABTestSwitches {
     "Test impact of adding keywords to Prebid config",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 1, 31)),
+    sellByDate = Some(LocalDate.of(2025, 2, 28)),
     exposeClientSide = true,
     highImpact = false,
   )
