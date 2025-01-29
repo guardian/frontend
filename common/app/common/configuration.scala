@@ -23,7 +23,7 @@ class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
 object Environment extends GuLogging {
 
-  private[this] val installVars = {
+  private[this] val installVars: Map[String, String] = {
     val source = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f), Charset.defaultCharset())
       case _             => ""
@@ -34,7 +34,17 @@ object Environment extends GuLogging {
 
   // Prefer env vars over install vars over default
   private[this] def get(name: String, default: String): String = {
-    sys.env.get(name.toUpperCase).orElse(installVars.get(name)).getOrElse(default)
+    sys.env.get(name.toUpperCase) match {
+      case Some(env) =>
+        log.info(s"Environment lookup: resolved $name from environment variable")
+        env
+      case _ if installVars.contains(name) =>
+        log.info(s"Environment lookup: resolved $name from install_vars")
+        installVars(name)
+      case _ =>
+        log.info(s"Environment lookup: resolved $name from default value")
+        default
+    }
   }
 
   val stack = get("stack", "frontend")
