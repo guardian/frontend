@@ -895,14 +895,18 @@ object AffiliateLinksCleaner {
       skimlinksId: String,
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
-    linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
+    linksToReplace.foreach { el =>
+      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)).attr("rel", "sponsored")
+    }
     html
   }
 
   def replaceLinksInElement(html: String, pageUrl: String): TextBlockElement = {
     val doc = Jsoup.parseBodyFragment(html)
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
-    linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
+    linksToReplace.foreach { el =>
+      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)).attr("rel", "sponsored")
+    }
 
     if (linksToReplace.nonEmpty) {
       TextBlockElement(doc.body().html())
