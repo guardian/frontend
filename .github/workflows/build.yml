@@ -49,7 +49,7 @@ jobs:
           -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
+          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin Debian/packageBin
 
       - name: Test Summary
         uses: test-summary/action@v2

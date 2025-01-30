@@ -5,6 +5,7 @@ logLevel := Level.Warn
 libraryDependencies ++= Seq(
   "joda-time" % "joda-time" % "2.12.7",
   "org.joda" % "joda-convert" % "2.2.3",
+  "org.vafer" % "jdeb" % "1.13" artifacts Artifact("jdeb", "jar", "jar"),
 )
 
 resolvers ++= Resolver.sonatypeOssRepos("releases")

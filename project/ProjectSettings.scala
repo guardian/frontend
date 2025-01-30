@@ -2,12 +2,14 @@ package com.gu
 
 import com.gu.versioninfo.VersionInfo
 import com.typesafe.sbt.packager.universal.UniversalPlugin
-import sbt._
-import sbt.Keys._
-import com.gu.Dependencies._
-import play.sbt.{PlayPekkoHttpServer, PlayNettyServer, PlayScala}
+import sbt.*
+import sbt.Keys.*
+import com.gu.Dependencies.*
+import play.sbt.{PlayNettyServer, PlayPekkoHttpServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
+import com.typesafe.sbt.packager.archetypes.systemloader.SystemdPlugin
+import com.typesafe.sbt.packager.debian.JDebPackaging
 import sbtbuildinfo.{BuildInfoKey, BuildInfoOption, BuildInfoPlugin}
 import sbtbuildinfo.BuildInfoKeys.{buildInfoKeys, buildInfoOptions, buildInfoPackage}
 
@@ -60,7 +62,8 @@ object ProjectSettings {
   }
 
   val frontendTestSettings = Seq(
-    Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o"),
+    Test / testOptions += Tests
+      .Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o"),
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     Test / unmanagedClasspath += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
@@ -101,7 +104,7 @@ object ProjectSettings {
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
-      .enablePlugins(PlayScala, UniversalPlugin, BuildInfoPlugin)
+      .enablePlugins(PlayScala, UniversalPlugin, BuildInfoPlugin, JDebPackaging, SystemdPlugin)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
