@@ -70,4 +70,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-the-trade-desk",
+    "Enable The Trade Desk prebid bidder",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 2, 28)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
