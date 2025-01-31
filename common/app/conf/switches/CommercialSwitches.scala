@@ -438,6 +438,17 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
+  val prebidTheTradeDesk: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-the-trade-desk",
+    description = "Include The Trade Desk (ttd) adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val sentinelLogger: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
