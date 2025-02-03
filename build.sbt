@@ -117,7 +117,6 @@ val diagnostics = application("diagnostics")
 
 val admin = application("admin")
   .dependsOn(commonWithTests)
-  .aggregate(common)
   .settings(
     libraryDependencies ++= Seq(
       paClient,
