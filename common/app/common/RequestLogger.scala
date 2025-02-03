@@ -38,7 +38,7 @@ case class RequestLoggerFields(request: RequestHeader, response: Option[Result],
 
     (allowListedHeaders ++ guardianSpecificHeaders).toList.map { case (headerName, headerValue) =>
       if (headerName.toLowerCase == "x-gu-xid") {
-        LogFieldString(s"fastlyRequestId", headerValue)
+        LogFieldString(s"requestId", headerValue)
       } else {
         LogFieldString(s"req.header.$headerName", headerValue)
       }

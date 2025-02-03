@@ -43,9 +43,9 @@ object `package`
       context: ApplicationContext,
       log: Logger,
   ): PartialFunction[Throwable, Result] = {
-    val fastlyRequestId = request.headers.get("x-gu-xid").getOrElse("fastly-id-not-provided")
+    val requestId = request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")
     val customFieldMarker: LogstashMarker = {
-      append("fastlyRequestId", fastlyRequestId)
+      append("requestId", requestId)
     }
     {
       case _: CircuitBreakerOpenException =>
