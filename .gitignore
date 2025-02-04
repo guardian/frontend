@@ -57,6 +57,9 @@ static/riffraff
 
 static/src/stylesheets/icons/*
 
+# Generated CMP data
+cmp_vendorlist.json
+
 # emacs temp #
 **~
 

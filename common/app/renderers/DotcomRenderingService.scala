@@ -59,16 +59,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       payload: JsValue,
       endpoint: String,
+      fastlyRequestId: Option[String],
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[WSResponse] = {
 
     val start = currentTimeMillis()
 
-    val resp = ws
+    val request = ws
       .url(endpoint)
       .withRequestTimeout(timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
-      .post(payload)
+
+    val resp = fastlyRequestId match {
+      case Some(id) => request.addHttpHeaders("x-gu-xid" -> id).post(payload)
+      case None     => request.post(payload)
+    }
 
     resp.foreach(_ => {
       DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis() - start)
@@ -99,6 +104,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
+    val fastlyRequestId = request.headers.get("x-gu-xid")
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -133,9 +139,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerDcrSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, timeout)).map(handler)
+      circuitBreaker
+        .withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, fastlyRequestId, timeout))
+        .map(handler)
     } else {
-      postWithoutHandler(ws, payload, endpoint, timeout).map(handler)
+      postWithoutHandler(ws, payload, endpoint, fastlyRequestId, timeout).map(handler)
     }
   }
 
@@ -224,8 +232,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
+    val fastlyRequestId = request.headers.get("x-gu-xid")
 
-    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/Blocks")
+    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/Blocks", fastlyRequestId)
       .flatMap(response => {
         if (response.status == 200)
           Future.successful(response.body)
@@ -245,8 +254,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
+    val fastlyRequestId = request.headers.get("x-gu-xid")
 
-    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks")
+    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks", fastlyRequestId)
       .flatMap(response => {
         if (response.status == 200)
           Future.successful(response.body)

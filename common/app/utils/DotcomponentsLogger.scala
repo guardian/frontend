@@ -2,7 +2,7 @@ package utils
 
 import common.GuLogging
 import common.LoggingField._
-import model.{ContentPage, ContentType, PageWithStoryPackage}
+import model.ContentType
 import model.liveblog.InteractiveBlockElement
 import play.api.mvc.RequestHeader
 
@@ -18,6 +18,7 @@ case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
           "req.method" -> r.method,
           "req.url" -> r.uri,
           "req.id" -> Random.nextInt(Integer.MAX_VALUE).toString,
+          "fastlyRequestId" -> r.headers.get("x-gu-xid").getOrElse("fastly-id-not-provided"),
         )
       }
       .getOrElse(Nil)
@@ -89,18 +90,6 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
 
   def results(message: String, results: Map[String, String], page: ContentType): Unit = {
     logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromPage(page))
-  }
-
-  def info(message: String): Unit = {
-    logInfoWithCustomFields(message, customFields)
-  }
-
-  def warn(message: String, error: Throwable): Unit = {
-    logWarningWithCustomFields(message, error, customFields)
-  }
-
-  def error(message: String, error: Throwable): Unit = {
-    logErrorWithCustomFields(message, error, customFields)
   }
 
 }
