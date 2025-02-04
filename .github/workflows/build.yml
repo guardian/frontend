@@ -83,7 +83,7 @@ jobs:
               - static/hash
             admin:
               - admin/target/universal/admin.zip
-              - admin/target/admin.1.0-SNAPSHOT_all.deb
+              - admin/target/admin_0.1.0-SNAPSHOT_all.deb
             applications:
               - applications/target/universal/applications.zip
             archive:
