@@ -104,7 +104,7 @@ object ProjectSettings {
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
-      .enablePlugins(PlayScala, UniversalPlugin, BuildInfoPlugin, JDebPackaging, SystemdPlugin)
+      .enablePlugins(PlayScala, UniversalPlugin, BuildInfoPlugin)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)

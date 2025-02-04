@@ -116,6 +116,7 @@ val diagnostics = application("diagnostics")
   )
 
 val admin = application("admin")
+  .enablePlugins(JDebPackaging, SystemdPlugin)
   .dependsOn(commonWithTests)
   .aggregate(common)
   .settings(
