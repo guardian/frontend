@@ -60,25 +60,6 @@ trait Notification extends GuLogging {
     }
 }
 
-object SwitchNotification extends Notification {
-  lazy val topic: String = Configuration.aws.notificationSns
-
-  def onSwitchChanges(
-      pekkoAsync: PekkoAsync,
-  )(requester: String, stage: String, changes: Seq[String])(implicit executionContext: ExecutionContext): Unit = {
-    val subject = s"${stage.toUpperCase}: Switch changes by $requester"
-    val message =
-      s"""
-          |The following updates have been made to the ${stage.toUpperCase} switches by $requester.
-          |
-          |${changes mkString "\n"}
-          |
-        """.stripMargin
-
-    send(pekkoAsync)(subject, message)
-  }
-}
-
 object FrontPressNotification extends Notification {
   lazy val topic: String = Configuration.aws.frontPressSns.getOrElse("")
 }
