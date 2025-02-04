@@ -51,6 +51,18 @@ jobs:
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin Debian/packageBin
 
+
+      - name: Admin Debian Package
+        run:
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar admin/Debian/packageBin
+
       - name: Test Summary
         uses: test-summary/action@v2
         with:
@@ -74,37 +86,25 @@ jobs:
               - admin/target/admin.1.0-SNAPSHOT_all.deb
             applications:
               - applications/target/universal/applications.zip
-              - applications/target/applications.1.0-SNAPSHOT_all.deb
             archive:
               - archive/target/universal/archive.zip
-              - archive/target/archive.1.0-SNAPSHOT_all.deb
             article:
               - article/target/universal/article.zip
-              - article/target/article.1.0-SNAPSHOT_all.deb
             commercial:
               - commercial/target/universal/commercial.zip
-              - commercial/target/commercial.1.0-SNAPSHOT_all.deb
             discussion:
               - discussion/target/universal/discussion.zip
-              - discussion/target/discussion.1.0-SNAPSHOT_all.deb
             facia:
               - facia/target/universal/facia.zip
-              - facia/target/facia.1.0-SNAPSHOT_all.deb
             facia-press:
               - facia-press/target/universal/facia-press.zip
-              - facia-press/target/facia-press.1.0-SNAPSHOT_all.deb
             identity:
               - identity/target/universal/identity.zip
-              - identity/target/identity.1.0-SNAPSHOT_all.deb
             onward:
               - onward/target/universal/onward.zip
-              - onward/target/onward.1.0-SNAPSHOT_all.deb
             preview:
               - preview/target/universal/preview.zip
-              - preview/target/preview.1.0-SNAPSHOT_all.deb
             rss:
               - rss/target/universal/rss.zip
-              - rss/target/rss.1.0-SNAPSHOT_all.deb
             sport:
               - sport/target/universal/sport.zip
-              - sport/target/sport.1.0-SNAPSHOT_all.deb
