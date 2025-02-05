@@ -106,15 +106,6 @@ val sport = application("sport")
 
 val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
-val diagnostics = application("diagnostics")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-  .settings(
-    libraryDependencies ++= Seq(
-      redisClient,
-    ),
-  )
-
 val admin = application("admin")
   .enablePlugins(JDebPackaging, SystemdPlugin)
   .dependsOn(commonWithTests)
@@ -175,7 +166,6 @@ val dev = application("dev-build")
     archive,
     sport,
     discussion,
-    diagnostics,
     identity,
     admin,
     commercial,
@@ -210,7 +200,6 @@ val main = root()
     applications,
     sport,
     discussion,
-    diagnostics,
     admin,
     identity,
     commercial,

@@ -6,7 +6,6 @@ import conf.switches.Switches
 import http.GuardianAuthWithExemptions
 import model.{ApplicationContext, NoCache}
 import play.api.mvc._
-import services.SwitchNotification
 import tools.Store
 
 import scala.concurrent.Future
@@ -87,7 +86,6 @@ class SwitchboardController(
       log.info("switches successfully updated")
 
       val changes = updates filterNot { current contains _ }
-      SwitchNotification.onSwitchChanges(pekkoAsync)(requester, Configuration.environment.stage, changes)
       changes foreach { change =>
         log.info(s"Switch change by $requester: $change")
       }
