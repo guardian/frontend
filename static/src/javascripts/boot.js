@@ -118,7 +118,12 @@ const go = () => {
 
         });
 
-        cmp.init({ pubData, country: await getLocale() });
+        cmp.init({
+            pubData,
+            country: await getLocale(),
+            isUserSignedIn: window.location.search.includes('CMP_SIGNED_IN'),
+            useNonAdvertisedList: window.location.search.includes('CMP_MAIN'),
+        });
 
         /**
          * Handle Ad blockers
