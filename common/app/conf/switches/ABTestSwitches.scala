@@ -81,4 +81,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-prebid-v9",
+    "Test Prebid v9 ahead of full release",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 2, 28)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
