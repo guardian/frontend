@@ -22,7 +22,7 @@ trait PrivacySwitches {
   )
 
   val ConsentOrPay = Switch(
-    group = SwitchGroup.Feature,
+    group = SwitchGroup.Privacy,
     name = "consent-or-pay",
     description = "Enable consent or pay logic",
     owners =
