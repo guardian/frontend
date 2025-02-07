@@ -100,7 +100,6 @@ object DotcomRenderingFootballDataModelImplicits {
       "id" -> competition.id,
       "url" -> competition.url,
       "fullName" -> competition.fullName,
-      "shortName" -> competition.shortName,
       "nation" -> competition.nation,
     )
   implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
@@ -108,9 +107,4 @@ object DotcomRenderingFootballDataModelImplicits {
     Json.writes[MatchesByDateAndCompetition]
 
   implicit val SportsFormat: Writes[DotcomRenderingFootballDataModel] = Json.writes[DotcomRenderingFootballDataModel]
-
-  def toJson(model: DotcomRenderingFootballDataModel): String = {
-    val jsValue = Json.toJson(model)
-    Json.stringify(withoutNull(jsValue))
-  }
 }

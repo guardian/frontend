@@ -10,7 +10,6 @@ trait CompetitionSummary {
   def id: String
   def url: String
   def fullName: String
-  def shortName: String
   def nation: String
 }
 
