@@ -12,9 +12,9 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
+      LoopVideoTest,
       DCRCrosswords,
       DarkModeWeb,
-      UseUserBenefitsApi,
       ConsentOrPay,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -33,6 +33,15 @@ object EuropeBetaFront
       participationGroup = Perc0A,
     )
 
+object LoopVideoTest
+    extends Experiment(
+      name = "loop-video-test",
+      description = "Test looping videos effect on Core Web Vitals",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 5, 28),
+      participationGroup = Perc0B,
+    )
+
 object DCRCrosswords
     extends Experiment(
       name = "dcr-crosswords",
@@ -49,15 +58,6 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 30),
       participationGroup = Perc0D,
-    )
-
-object UseUserBenefitsApi
-    extends Experiment(
-      name = "use-user-benefits-api",
-      description = "Enable the switch from members-data-api to the new user-benefits API",
-      owners = Seq(Owner.withGithub("rupertbates")),
-      sellByDate = LocalDate.of(2025, 6, 30),
-      participationGroup = Perc50,
     )
 
 object ConsentOrPay

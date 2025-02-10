@@ -4,7 +4,6 @@ import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
@@ -49,7 +48,6 @@ trait PreviewLifecycleComponents
 
   def standaloneLifecycleComponents: List[LifecycleComponent] =
     List(
-      wire[CommercialLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
       wire[FaciaDfpAgentLifecycle],
