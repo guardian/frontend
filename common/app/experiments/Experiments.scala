@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRCrosswords,
       DarkModeWeb,
       UseUserBenefitsApi,
+      ConsentOrPay,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -57,4 +58,13 @@ object UseUserBenefitsApi
       owners = Seq(Owner.withGithub("rupertbates")),
       sellByDate = LocalDate.of(2025, 6, 30),
       participationGroup = Perc50,
+    )
+
+object ConsentOrPay
+    extends Experiment(
+      name = "consent-or-pay",
+      description = "Enable the switch for consent or paywall",
+      owners = Seq(Owner.withEmail("transparency.and.consent@guardian.co.uk ")),
+      sellByDate = LocalDate.of(2025, 12, 30),
+      participationGroup = Perc0B,
     )
