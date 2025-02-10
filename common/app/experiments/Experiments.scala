@@ -66,5 +66,5 @@ object ConsentOrPay
       description = "Enable the switch for consent or paywall",
       owners = Seq(Owner.withEmail("transparency.and.consent@guardian.co.uk ")),
       sellByDate = LocalDate.of(2025, 12, 30),
-      participationGroup = Perc0B,
+      participationGroup = Perc0E,
     )
