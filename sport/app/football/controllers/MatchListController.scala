@@ -2,7 +2,8 @@ package football.controllers
 
 import common.{Edition, JsonComponent}
 import feed.Competitions
-import football.model.MatchesList
+import football.model.{DotcomRenderingFootballDataModel, MatchesList}
+import football.model.DotcomRenderingFootballDataModelImplicits._
 import implicits.Requests
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, Competition, TeamMap}
@@ -29,7 +30,15 @@ trait MatchListController extends BaseController with Requests {
       atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
-      if (request.isJson)
+      if (request.isJson && request.forceDCR) {
+        val model = DotcomRenderingFootballDataModel(
+          matchesList = DotcomRenderingFootballDataModel.getMatchesList(matchesList.matchesGroupedByDateAndCompetition),
+          nextPage = matchesList.nextPage,
+          previousPage = matchesList.previousPage,
+        )
+
+        JsonComponent.fromWritable(model)
+      } else if (request.isJson)
         JsonComponent(
           "html" -> football.views.html.matchList.matchesComponent(matchesList),
           "next" -> Html(matchesList.nextPage.getOrElse("")),
