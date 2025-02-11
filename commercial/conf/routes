@@ -33,3 +33,6 @@ GET         /commercial/amp-iframe.html                                     comm
 
 # DFP Non refreshable line items
 GET         /commercial/non-refreshable-line-items.json                     commercial.controllers.nonRefreshableLineItemsController.getIds
+
+# Third party cookie test
+GET         /commercial/cookie                                              commercial.controllers.ThirdPartyCookieTestController.setCookie()
