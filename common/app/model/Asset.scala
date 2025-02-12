@@ -28,6 +28,7 @@ object Helpers {
       "scriptName" -> asset.typeData.flatMap(_.scriptName),
       "html" -> asset.typeData.flatMap(_.html),
       "embedType" -> asset.typeData.flatMap(_.embedType),
+      "aspectRatio" -> asset.typeData.flatMap(_.aspectRatio),
     ).collect { case (k, Some(v)) => (k, v) }
 
   def audioElementFieldsToMap(audioElementFields: AudioElementFields): Map[String, String] =
