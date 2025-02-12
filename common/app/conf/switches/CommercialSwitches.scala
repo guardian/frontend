@@ -240,17 +240,6 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
-  val prebidSonobi: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-sonobi",
-    description = "Include Sonobi adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val prebidAppNexus: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-appnexus",
@@ -345,28 +334,6 @@ trait PrebidSwitches {
     description = "Include Triple Lift adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidImproveDigital: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-improve-digital",
-    description = "Include Improve Digital adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidImproveDigitalSkins: Switch = Switch(
-    group = CommercialPrebid,
-    "prebid-improve-digital-skins",
-    "Include Collective page skins via Improve Digital adapter in Prebid auctions",
-    owners = Seq(Owner.withGithub("mxdvl")),
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
