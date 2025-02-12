@@ -8,7 +8,6 @@ export const fiveFourImages = {
     audienceOffset: 0,
     successMeasure: 'There is not any negative change to the metrics on the variant of the article pages',
     audienceCriteria: '',
-    ophanComponentId: 'five_four_images',
     dataLinkNames: 'FiveFourImages',
     idealOutcome: '',
     canRun: () => true,
