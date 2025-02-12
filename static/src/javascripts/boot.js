@@ -122,7 +122,7 @@ const go = () => {
             pubData,
             country: await getLocale(),
             isUserSignedIn: window.location.search.includes('CMP_SIGNED_IN'),
-            useNonAdvertisedList: window.location.search.includes('CMP_MAIN'),
+            useNonAdvertisedList: window.location.search.includes('CMP_NON_ADV'),
         });
 
         /**
