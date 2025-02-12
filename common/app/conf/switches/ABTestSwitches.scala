@@ -95,7 +95,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "five-four-images",
+    "ab-five-four-images",
     "Compare 5:4 vs 5:3 aspect ratio in article main media images",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
