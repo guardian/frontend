@@ -3758,7 +3758,7 @@ __metadata:
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:3.0.0"
     "@guardian/identity-auth-frontend": "npm:6.0.3"
-    "@guardian/libs": "npm:0.0.0-canary-20250212172814"
+    "@guardian/libs": "npm:0.0.0-canary-20250214125150"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3914,16 +3914,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:0.0.0-canary-20250212172814":
-  version: 0.0.0-canary-20250212172814
-  resolution: "@guardian/libs@npm:0.0.0-canary-20250212172814"
+"@guardian/libs@npm:0.0.0-canary-20250214125150":
+  version: 0.0.0-canary-20250214125150
+  resolution: "@guardian/libs@npm:0.0.0-canary-20250214125150"
   peerDependencies:
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/8dc8c8083d8c84a86b0d3f7d1421168e423724cfce23b3597d1e5e0774ae89861be8f735a38f0e9814809b229ff91a7e9af3e31461953c0542240150260ab16c
+  checksum: 10c0/e30fd7a24bc7fdd7f8c6d1070678c526649211875a45dadf8d1ec95faee779f62800ee8ffde617922328ac855b588b48181c2c8c93db6d5489c4cddb30818635
   languageName: node
   linkType: hard
 
