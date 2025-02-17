@@ -27,6 +27,7 @@ object CacheTime {
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
   object DiscussionDefault extends CacheTime(60)
   object DiscussionClosed extends CacheTime(60, Some(longCacheTime))
+  object Football extends CacheTime(10)
   private def oldArticleCacheTime = if (ShorterSurrogateCacheForOlderArticles.isSwitchedOn) 60 else longCacheTime
   def LastDayUpdated = CacheTime(60, Some(oldArticleCacheTime))
   def NotRecentlyUpdated = CacheTime(60, Some(oldArticleCacheTime))

@@ -6,7 +6,7 @@ import experiments.ActiveExperiments
 import football.controllers.FootballPage
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
-import model.{Competition, CompetitionSummary}
+import model.{ApplicationContext, Competition, CompetitionSummary}
 import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
@@ -50,13 +50,10 @@ case class DotcomRenderingFootballDataModel(
 
 object DotcomRenderingFootballDataModel {
   def apply(
-      request: RequestHeader,
       page: FootballPage,
-      pageType: PageType,
-      matchesList: Seq[MatchesByDateAndCompetition],
-      nextPage: Option[String],
-      previousPage: Option[String],
-  ): DotcomRenderingFootballDataModel = {
+      matchesList: MatchesList,
+  )(implicit request: RequestHeader, context: ApplicationContext): DotcomRenderingFootballDataModel = {
+    val pageType: PageType = PageType(page, request, context)
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -81,10 +78,13 @@ object DotcomRenderingFootballDataModel {
       Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
     }
 
+    val matches =
+      getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
+
     DotcomRenderingFootballDataModel(
-      matchesList,
-      nextPage,
-      previousPage,
+      matchesList = matches,
+      nextPage = matchesList.nextPage,
+      previousPage = matchesList.previousPage,
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -95,7 +95,7 @@ object DotcomRenderingFootballDataModel {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
     )
   }
-  def getMatchesList(
+  private def getMatchesList(
       matches: Seq[(LocalDate, List[(Competition, List[FootballMatch])])],
   ): Seq[MatchesByDateAndCompetition] = {
     matches.map { case (date, competitionMatches) =>
@@ -109,6 +109,12 @@ object DotcomRenderingFootballDataModel {
         },
       )
     }
+  }
+
+  import football.model.DotcomRenderingFootballDataModelImplicits._
+  def toJson(model: DotcomRenderingFootballDataModel): JsValue = {
+    val jsValue = Json.toJson(model)
+    withoutNull(jsValue)
   }
 }
 
