@@ -12,6 +12,8 @@ import { getCookie } from 'lib/cookies';
 import { init as detectAdBlockers } from 'commercial/detect-adblock';
 import ophan from 'ophan/ng';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import { allowRejectAll } from 'common/modules/userFeatures/cookies/allowRejectAll';
+import { refresh } from 'common/modules/userFeatures/user-features';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -50,6 +52,8 @@ const go = () => {
             browserId,
             pageViewId,
         };
+
+        await refresh();
 
         // keep this in sync with CONSENT_TIMING in src/client/bootCmp.ts in dotcom-rendering
         // mark: CONSENT_TIMING
@@ -119,11 +123,14 @@ const go = () => {
 
         });
 
+        const isUserSignedIn = await isUserLoggedIn();
+        const useNonAdvertisedList = allowRejectAll(isUserSignedIn);
+
         cmp.init({
             pubData,
             country: await getLocale(),
-            isUserSignedIn: await isUserLoggedIn(),
-            useNonAdvertisedList: window.location.search.includes('CMP_NON_ADV'),
+            isUserSignedIn,
+            useNonAdvertisedList,
         });
 
         /**
