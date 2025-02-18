@@ -11,6 +11,7 @@ import { cmp, getLocale, loadScript, onConsentChange } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { init as detectAdBlockers } from 'commercial/detect-adblock';
 import ophan from 'ophan/ng';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -118,7 +119,12 @@ const go = () => {
 
         });
 
-        cmp.init({ pubData, country: await getLocale() });
+        cmp.init({
+            pubData,
+            country: await getLocale(),
+            isUserSignedIn: await isUserLoggedIn(),
+            useNonAdvertisedList: window.location.search.includes('CMP_NON_ADV'),
+        });
 
         /**
          * Handle Ad blockers
