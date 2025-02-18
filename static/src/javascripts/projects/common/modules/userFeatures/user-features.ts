@@ -22,7 +22,7 @@ export type UserBenefits = {
 	allowRejectAll: boolean;
 };
 
-const refresh = async (): Promise<void> => {
+const refreshUserBenefits = async (): Promise<void> => {
 	if (
 		(await isUserLoggedIn()) &&
 		userBenefitsDataNeedsRefreshing()
@@ -55,4 +55,4 @@ const persistResponse = (userBenefitsResponse: UserBenefits) => {
 	}
 };
 
-export { refresh };
+export { refreshUserBenefits };
