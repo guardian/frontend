@@ -17,7 +17,14 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
-import http.{Filters, GuardianAuthWithExemptions, PreviewContentSecurityPolicyFilter, PreviewNoCacheFilter, routes}
+import http.{
+  Filters,
+  GuardianAuthWithExemptions,
+  PreviewContentSecurityPolicyFilter,
+  PreviewNoCacheFilter,
+  RequestIdFilter,
+  routes,
+}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
@@ -134,7 +141,7 @@ trait AppComponents
     standaloneLifecycleComponents :+ wire[CachedHealthCheckLifeCycle]
 
   override lazy val httpFilters: Seq[EssentialFilter] =
-    new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: Filters.common(
+    new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: new RequestIdFilter :: Filters.common(
       frontend.preview.BuildInfo,
     )
 

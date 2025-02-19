@@ -123,7 +123,6 @@ object Filters {
       executionContext: ExecutionContext,
   ): List[EssentialFilter] =
     List(
-      new RequestIdFilter(),
       new RequestLoggingFilter,
       new PanicSheddingFilter,
       new JsonVaryHeadersFilter,
