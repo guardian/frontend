@@ -305,11 +305,6 @@ const init = () => {
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
     ]);
 
-    /**
-    * User Benefits API
-    *
-    */
-    refreshUserBenefits();
 
     return refreshUserFeatures().catch((err) => {
         reportError(err, { module: 'c-user-features' });
