@@ -36,13 +36,20 @@ case class RequestLoggerFields(request: RequestHeader, response: Option[Result],
 
     val guardianSpecificHeaders = allHeadersFields.view.filterKeys(_.toUpperCase.startsWith("X-GU-")).toMap
 
-    (allowListedHeaders ++ guardianSpecificHeaders).toList.map { case (headerName, headerValue) =>
-      if (headerName.toLowerCase == "x-gu-xid") {
-        LogFieldString(s"requestId", headerValue)
-      } else {
-        LogFieldString(s"req.header.$headerName", headerValue)
+    // Extract x-gu-xid case-insensitively and assign default if missing
+    val requestId = allHeadersFields
+      .collectFirst {
+        case (key, value) if key.equalsIgnoreCase("x-gu-xid") => value
       }
+      .getOrElse("request-id-not-provided")
+
+    // Convert remaining headers to LogField format, ensuring x-gu-xid is not duplicated
+    val headerFields = (allowListedHeaders ++ guardianSpecificHeaders).toList.collect {
+      case (headerName, headerValue) if !headerName.equalsIgnoreCase("x-gu-xid") =>
+        LogFieldString(s"req.header.$headerName", headerValue)
     }
+
+    LogFieldString("requestId", requestId) :: headerFields
   }
   private lazy val customFields: List[LogField] = {
     val requestHeaders: List[LogField] = List[LogField](
