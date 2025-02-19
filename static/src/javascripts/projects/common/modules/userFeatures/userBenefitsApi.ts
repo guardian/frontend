@@ -1,14 +1,8 @@
 import { isObject } from '@guardian/libs';
-// import {
-// 	getOptionsHeadersWithOkta,
-// 	type SignedInWithCookies,
-// 	type SignedInWithOkta,
-// } from '../../lib/identity';
 import type { SignedInWithCookies, SignedInWithOkta } from '../identity/api';
 import { getOptionsHeadersWithOkta } from '../identity/api';
 import { fetchJson } from './fetchJson';
 import type { UserBenefits } from './user-features';
-// import type { UserBenefits } from './user-features';
 
 type UserBenefitsResponse = {
 	benefits: string[];
