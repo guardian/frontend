@@ -11,7 +11,6 @@ import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import {
-    refresh as refreshUserFeatures,
     extendContribsCookieExpiry,
 } from 'common/modules/commercial/user-features';
 import { reportError } from 'lib/report-error';
@@ -49,6 +48,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { handleBraze } from 'common/modules/commercial/braze/buildBrazeMessaging';
 import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
+import { refreshUserBenefits } from 'common/modules/userFeatures/user-features';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -305,9 +305,9 @@ const init = () => {
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
     ]);
 
-    return refreshUserFeatures().catch((err) => {
-        reportError(err, { module: 'c-user-features' })
-    })
+    return refreshUserBenefits().catch((err) => {
+        reportError(err, { module: 'c-user-features' });
+    });
 };
 
 export { init };

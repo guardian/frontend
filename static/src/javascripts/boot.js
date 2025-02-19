@@ -53,8 +53,6 @@ const go = () => {
             pageViewId,
         };
 
-        await refreshUserBenefits();
-
         // keep this in sync with CONSENT_TIMING in src/client/bootCmp.ts in dotcom-rendering
         // mark: CONSENT_TIMING
         let recordedConsentTime = false;
