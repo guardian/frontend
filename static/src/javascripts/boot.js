@@ -13,7 +13,7 @@ import { init as detectAdBlockers } from 'commercial/detect-adblock';
 import ophan from 'ophan/ng';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { allowRejectAll } from 'common/modules/userFeatures/cookies/allowRejectAll';
-import { refreshUserBenefits } from 'common/modules/userFeatures/user-features';
+// import { refreshUserBenefits } from 'common/modules/userFeatures/user-features';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -43,9 +43,9 @@ const go = () => {
 		 * User Benefits API
 		 *
 		 */
-        await refreshUserBenefits().catch((err) => {
-            reportError(err, { module: 'c-user-benefits' });
-        });
+        // await refreshUserBenefits().catch((err) => {
+        //     reportError(err, { module: 'c-user-benefits' });
+        // });
 
         /**
          * CMP

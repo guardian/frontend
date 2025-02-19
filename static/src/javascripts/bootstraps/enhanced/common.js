@@ -49,6 +49,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { handleBraze } from 'common/modules/commercial/braze/buildBrazeMessaging';
 import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
+import { refreshUserBenefits } from 'common/modules/userFeatures/user-features';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -304,6 +305,12 @@ const init = () => {
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
     ]);
+
+    setTimeout(() => {
+        refreshUserBenefits().catch((err) => {
+            reportError(err, { module: 'c-user-benefits' });
+        });
+    }, 10000)
 
 
     return refreshUserFeatures().catch((err) => {
