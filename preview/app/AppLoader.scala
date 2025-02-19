@@ -141,9 +141,10 @@ trait AppComponents
     standaloneLifecycleComponents :+ wire[CachedHealthCheckLifeCycle]
 
   override lazy val httpFilters: Seq[EssentialFilter] =
-    new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: new RequestIdFilter :: Filters.common(
-      frontend.preview.BuildInfo,
-    )
+    auth.filter :: new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: new RequestIdFilter :: Filters
+      .common(
+        frontend.preview.BuildInfo,
+      )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[PreviewErrorHandler]
 }

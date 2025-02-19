@@ -13,6 +13,7 @@ class RequestIdFilter(implicit val mat: Materializer, executionContext: Executio
 
   override def apply(next: RequestHeader => Future[Result])(rh: RequestHeader): Future[Result] = {
     val headerKey = "x-gu-xid"
+    // Play Framework's Headers.get(key) does a case-insensitive lookup
     val updatedRequest =
       if (rh.headers.get(headerKey).isEmpty) {
         rh.withHeaders(rh.headers.add(headerKey -> UUID.randomUUID().toString))

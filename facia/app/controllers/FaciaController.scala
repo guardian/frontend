@@ -238,8 +238,7 @@ trait FaciaController
       }
     }
 
-    val headers = request.headers.toSimpleMap
-    val customLogFieldMarker = append("requestId", headers.getOrElse("x-gu-xid", "request-id-not-provided"))
+    val customLogFieldMarker = append("requestId", request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))
 
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
@@ -254,7 +253,7 @@ trait FaciaController
 
         log.logger.info(
           customLogFieldMarker,
-          s"Front Geo Request (212): ${Edition(request).id} ${headers.getOrElse("X-GU-GeoLocation", "country:row")}",
+          s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
         )
         withVaryHeader(
           remoteRenderer.getFront(
@@ -279,7 +278,7 @@ trait FaciaController
         val result = if (request.forceDCR) {
           log.logger.info(
             customLogFieldMarker,
-            s"Front Geo Request (237): ${Edition(request).id} ${headers.getOrElse("X-GU-GeoLocation", "country:row")}",
+            s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
           )
           JsonComponent.fromWritable(
             DotcomFrontsRenderingDataModel(
