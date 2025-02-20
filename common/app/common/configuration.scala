@@ -672,11 +672,6 @@ class GuardianConfiguration extends GuLogging {
     }
   }
 
-  object riffraff {
-    lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
-    lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
-  }
-
   object standalone {
     lazy val oauthCredentials: Option[OAuthCredentials] = for {
       oauthClientId <- configuration.getStringProperty("standalone.oauth.clientid")

@@ -56,7 +56,6 @@
 		"bean": "~1.0.14",
 		"bonzo": "~2.0.0",
 		"bootstrap-sass": "3.4.1",
-		"browser-sync": "3.0.2",
 		"bs-fullscreen-message": "^1.1.0",
 		"btoa": "1.1.2",
 		"chalk": "^2.1.0",

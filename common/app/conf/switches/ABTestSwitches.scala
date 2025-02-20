@@ -81,4 +81,26 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-defer-permutive-load",
+    "Test the impact of deferring the Permutive script load",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 2, 28)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
+    "ab-move-permutive-segmentation",
+    "Test the impact of moving the call for the Permutive segmentation script.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 3, 21)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

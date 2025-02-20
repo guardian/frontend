@@ -10,6 +10,5 @@ class AdminTestSuite
       new indexes.TagPagesTest,
       new pagepresser.HtmlCleanerTest,
       new pagepresser.InteractiveHtmlCleanerTest,
-      new controllers.admin.DeploysControllerTest,
     )
     with SingleServerSuite {}
