@@ -2,7 +2,7 @@ import { getCookie } from '@guardian/libs';
 
 export const USER_BENEFITS_EXPIRY_COOKIE = 'gu_user_benefits_expiry';
 
-export const getUserBenefitsExpiryCookie = (): string | null =>
+const getUserBenefitsExpiryCookie = (): string | null =>
 	getCookie({ name: USER_BENEFITS_EXPIRY_COOKIE });
 
 export const userBenefitsDataNeedsRefreshing = (): boolean =>
