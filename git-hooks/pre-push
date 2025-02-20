@@ -39,14 +39,31 @@ const confirmIfMain = execa
         }
     )
     .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
-const validate = () =>
-    execa(
-        './tools/task-runner/runner.mjs',
-        ['validate-head/index.mjs'],
-        {
-            stdio: 'inherit',
-        }
-    );
+const validate = () => {
+    try {
+        const nvmrcVersion = fs.readFileSync('.nvmrc', 'utf8').trim();
+        const nodePath = `/.nvm/versions/node/v${nvmrcVersion}/bin/node`;
+
+        return execa(
+            nodePath, // Use dynamically constructed nodePath
+            ['./tools/task-runner/runner.mjs', 'validate-head/index.mjs'],
+            {
+                stdio: 'inherit',
+            }
+        );
+    } catch (error) {
+        console.error(chalk.red(`Error reading .nvmrc: ${error.message}`));
+        console.error(chalk.red(`Falling back to default node execution, which might fail.`));
+        // If .nvmrc reading fails, we fall back to the original execa call (without explicit node path)
+        return execa(
+            './tools/task-runner/runner.mjs',
+            ['validate-head/index.mjs'],
+            {
+                stdio: 'inherit',
+            }
+        );
+    }
+};
 const checkYarnLock = changed => {
     if (
         changed.some(file => file === 'package.json') &&
