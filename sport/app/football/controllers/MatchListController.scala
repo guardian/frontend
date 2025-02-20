@@ -15,6 +15,7 @@ import play.twirl.api.Html
 
 import java.time.format.DateTimeFormatter
 import model.content.InteractiveAtom
+import model.dotcomrendering.PageType
 
 trait MatchListController extends BaseController with Requests {
   def competitionsService: Competitions
@@ -31,10 +32,14 @@ trait MatchListController extends BaseController with Requests {
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson && request.forceDCR) {
+        val pageType: PageType = PageType(page, request, context)
         val model = DotcomRenderingFootballDataModel(
           matchesList = DotcomRenderingFootballDataModel.getMatchesList(matchesList.matchesGroupedByDateAndCompetition),
           nextPage = matchesList.nextPage,
           previousPage = matchesList.previousPage,
+          request = request,
+          page = page,
+          pageType = pageType,
         )
 
         JsonComponent.fromWritable(model)

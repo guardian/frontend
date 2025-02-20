@@ -92,6 +92,17 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+  
+  Switch(
+    ABTests,
+    "ab-move-permutive-segmentation",
+    "Test the impact of moving the call for the Permutive segmentation script.",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 3, 21)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 
   Switch(
     ABTests,

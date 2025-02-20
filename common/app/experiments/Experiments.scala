@@ -47,7 +47,7 @@ object DCRCrosswords
       description = "Render crosswords in DCR",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 2, 26),
-      participationGroup = Perc0C,
+      participationGroup = Perc10A,
     )
 
 object DarkModeWeb

@@ -1,7 +1,13 @@
 package football.model
 
-import model.dotcomrendering.DotcomRenderingUtils.withoutNull
+import common.{CanonicalLink, Edition}
+import conf.Configuration
+import experiments.ActiveExperiments
+import football.controllers.FootballPage
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
+import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
 import model.{Competition, CompetitionSummary}
+import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
   FootballMatch,
@@ -19,6 +25,8 @@ import pa.{
   Competition => PaCompetition,
 }
 import play.api.libs.json._
+import play.api.mvc.RequestHeader
+import views.support.{CamelCase, JavaScriptPage}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -30,9 +38,63 @@ case class DotcomRenderingFootballDataModel(
     matchesList: Seq[MatchesByDateAndCompetition],
     nextPage: Option[String],
     previousPage: Option[String],
+    nav: Nav,
+    editionId: String,
+    guardianBaseURL: String,
+    config: JsObject,
+    pageFooter: PageFooter,
+    isAdFreeUser: Boolean,
+    contributionsServiceUrl: String,
+    canonicalUrl: String,
 )
 
 object DotcomRenderingFootballDataModel {
+  def apply(
+      request: RequestHeader,
+      page: FootballPage,
+      pageType: PageType,
+      matchesList: Seq[MatchesByDateAndCompetition],
+      nextPage: Option[String],
+      previousPage: Option[String],
+  ): DotcomRenderingFootballDataModel = {
+    val edition = Edition.edition(request)
+    val nav = Nav(page, edition)
+
+    val switches: Map[String, Boolean] = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+
+    val config = Config(
+      switches = switches,
+      abTests = ActiveExperiments.getJsMap(request),
+      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
+      googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    )
+
+    val combinedConfig: JsObject = {
+      val jsPageConfig: Map[String, JsValue] =
+        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
+      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    }
+
+    DotcomRenderingFootballDataModel(
+      matchesList,
+      nextPage,
+      previousPage,
+      nav = nav,
+      editionId = edition.id,
+      guardianBaseURL = Configuration.site.host,
+      config = combinedConfig,
+      pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      contributionsServiceUrl = Configuration.contributionsService.url,
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+    )
+  }
   def getMatchesList(
       matches: Seq[(LocalDate, List[(Competition, List[FootballMatch])])],
   ): Seq[MatchesByDateAndCompetition] = {
