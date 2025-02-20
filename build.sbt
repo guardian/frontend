@@ -108,7 +108,6 @@ val discussion = application("discussion").dependsOn(commonWithTests).aggregate(
 
 val admin = application("admin")
   .dependsOn(commonWithTests)
-  .aggregate(common)
   .settings(
     libraryDependencies ++= Seq(
       paClient,
