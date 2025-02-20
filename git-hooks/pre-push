@@ -42,7 +42,7 @@ const confirmIfMain = execa
 const validate = () => {
     try {
         const nvmrcVersion = fs.readFileSync('.nvmrc', 'utf8').trim();
-        const nodePath = `/.nvm/versions/node/v${nvmrcVersion}/bin/node`;
+        const nodePath = `${process.env.HOME}/.nvm/versions/node/v${nvmrcVersion}/bin/node`;
 
         return execa(
             nodePath, // Use dynamically constructed nodePath
