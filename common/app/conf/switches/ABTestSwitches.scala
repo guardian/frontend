@@ -92,7 +92,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
-  
+
   Switch(
     ABTests,
     "ab-move-permutive-segmentation",
