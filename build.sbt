@@ -107,6 +107,7 @@ val sport = application("sport")
 val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
 val admin = application("admin")
+  .enablePlugins(JDebPackaging, SystemdPlugin)
   .dependsOn(commonWithTests)
   .aggregate(common)
   .settings(
