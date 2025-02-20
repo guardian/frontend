@@ -162,6 +162,7 @@ interface PageConfig extends CommercialPageConfig {
 	sponsorshipType: string;
 	toneIds: string;
 	tones: string;
+	userBenefitsApiUrl?: string;
 	videoDuration: number;
 	webPublicationDate: number;
 	userAttributesApiUrl?: string;
