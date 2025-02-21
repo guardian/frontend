@@ -81,15 +81,22 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
   def logRequest(msg: String, results: Map[String, String], page: ContentType)(implicit
       request: RequestHeader,
   ): Unit = {
-    withRequestHeaders(request).results(msg, results, page)
+    withRequestHeaders(request).results(msg, results, Some(page))
+  }
+
+  def logRequestForNonContentPage(msg: String, results: Map[String, String])(implicit
+      request: RequestHeader,
+  ): Unit = {
+    withRequestHeaders(request).results(msg, results, None)
   }
 
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))
   }
 
-  def results(message: String, results: Map[String, String], page: ContentType): Unit = {
-    logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromPage(page))
+  def results(message: String, results: Map[String, String], page: Option[ContentType]): Unit = {
+    val elementsLogFieldFromContent = page.map(elementsLogFieldFromPage).getOrElse(List.empty)
+    logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromContent)
   }
 
 }

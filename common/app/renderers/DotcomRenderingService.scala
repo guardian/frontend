@@ -446,6 +446,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val json = EditionsCrosswordRenderingDataModel.toJson(crosswords)
     post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Default)
   }
+
+  def getFootballPage(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballDataPage", CacheTime.Football)
+  }
 }
 
 object DotcomRenderingService {

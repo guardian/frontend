@@ -9,10 +9,14 @@ import football.model._
 import pa.FootballTeam
 import model.Competition
 import model.content.InteractiveAtom
+import play.api.libs.ws.WSClient
+
+import scala.concurrent.Future
 
 class ResultsController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
     with CompetitionResultFilters {
@@ -66,9 +70,26 @@ class ResultsController(
     result.getOrElse(NotFound("No results"))
   }
 
+  private def renderWithAsync(
+      renderFunction: (
+          FootballPage,
+          Results,
+          Map[String, Seq[CompetitionFilter]],
+          Option[InteractiveAtom],
+      ) => Future[Result],
+  )(date: LocalDate, tag: Option[String] = None): Future[Result] = {
+    val result = for {
+      p <- page(tag)
+      r <- results(date, tag)
+    } yield {
+      renderFunction(p, r, filters, None)
+    }
+    result.getOrElse(Future.successful(NotFound("No results")))
+  }
+
   private def renderForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] =
-    Action { implicit request =>
-      renderWith(renderMatchList)(date, tag)
+    Action.async { implicit request =>
+      renderWithAsync(renderMatchList)(date, tag)
     }
 
   private def renderMoreForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] =
