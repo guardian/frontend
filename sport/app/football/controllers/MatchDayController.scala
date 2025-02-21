@@ -5,14 +5,19 @@ import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import java.time.LocalDate
 import model._
 import football.model._
-import common.{Edition, JsonComponent}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
+import play.api.libs.ws.WSClient
+
+import scala.concurrent.Future
 
 class MatchDayController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
-    with CompetitionLiveFilters {
+    with CompetitionLiveFilters
+    with ImplicitControllerExecutionContext {
 
   def liveMatchesJson(): Action[AnyContent] = liveMatches()
   def liveMatches(): Action[AnyContent] =
@@ -24,7 +29,7 @@ class MatchDayController(
     matchesFor(year, month, day)
 
   private def renderLiveMatches(date: LocalDate): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       val matches = MatchDayList(competitionsService.competitions, date)
       val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezoneId)) "Live matches" else "Matches"
       val page = new FootballPage("football/live", "football", webTitle)
@@ -41,7 +46,7 @@ class MatchDayController(
     competitionMatchesFor(competitionTag, year, month, day)
 
   private def renderCompetitionMatches(competitionTag: String, date: LocalDate): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       lookupCompetition(competitionTag)
         .map { competition =>
           val webTitle =
@@ -52,7 +57,7 @@ class MatchDayController(
           renderMatchList(page, matches, filters)
         }
         .getOrElse {
-          NotFound
+          Future.successful(NotFound)
         }
     }
 
@@ -61,7 +66,7 @@ class MatchDayController(
     Action { implicit request =>
       val matches = MatchDayList(competitionsService.competitions, LocalDate.now(Edition.defaultEdition.timezoneId))
       val page = new FootballPage("football", "football", "Today's matches")
-      Cached(10) {
+      Cached(CacheTime.Football) {
         JsonComponent(page, football.views.html.matchList.matchesComponent(matches))
       }
     }

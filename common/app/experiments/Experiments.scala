@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       LoopVideoTest,
       DCRCrosswords,
       DarkModeWeb,
+      DCRFootballLive,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -47,7 +48,7 @@ object DCRCrosswords
       description = "Render crosswords in DCR",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 2, 26),
-      participationGroup = Perc0C,
+      participationGroup = Perc10A,
     )
 
 object DarkModeWeb
@@ -57,4 +58,13 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 30),
       participationGroup = Perc0D,
+    )
+
+object DCRFootballLive
+    extends Experiment(
+      name = "dcr-football-live",
+      description = "Render football/live in DCR",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 3, 10),
+      participationGroup = Perc0E,
     )

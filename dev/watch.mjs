@@ -3,10 +3,6 @@
 import path, { dirname } from 'path';
 import cpy from 'cpy';
 import chalk from 'chalk';
-import { create } from 'browser-sync';
-import bsConfig from './bs-config.mjs';
-
-const browserSync = create();
 
 // ********************************** JAVASCRIPT **********************************
 
@@ -41,19 +37,14 @@ const watchArguments = [
 			INITIAL_BUNDLE = false;
 			wpNotification.succeed();
 
-			// now have the initial bundles, we can start browsersync
-			return browserSync.init(bsConfig);
+			return undefined;
 		}
 
 		const info = stats.toJson();
 		// send editing errors to console and browser
 		if (stats.hasErrors()) {
 			console.log(chalk.red(info.errors));
-			return browserSync.sockets.emit('fullscreen:message', {
-				title: 'Webpack Error:',
-				body: info.errors,
-				timeout: 100_000,
-			});
+			return undefined;
 		}
 
 		if (stats.hasWarnings()) {
@@ -68,7 +59,7 @@ const watchArguments = [
 				colors: true,
 			}),
 		);
-		return browserSync.reload();
+		return undefined;
 	},
 ];
 
@@ -152,21 +143,10 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', (changedFile) => {
 			),
 		)
 		.then(() => {
-			// clear any previous error messages
-			browserSync.sockets.emit('fullscreen:message:clear');
-
-			// announce the changes
-			browserSync.reload(
-				filesToCompile.map((file) => file.replace('scss', 'css')),
-			);
+			console.log(chalk.green('✔️ Stylesheets compiled'));
 		})
 		.catch((e) => {
 			// send editing errors to console and browser
 			console.log(chalk.red(`\n${e.formatted}`));
-			browserSync.sockets.emit('fullscreen:message', {
-				title: 'CSS Error:',
-				body: e.formatted,
-				timeout: 100_000,
-			});
 		});
 });

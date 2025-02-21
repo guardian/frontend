@@ -293,8 +293,8 @@ const init = () => {
     ]);
 
     return refreshUserFeatures().catch((err) => {
-        reportError(err, { module: 'c-user-features' })
-    })
+        reportError(err, { module: 'c-user-features' });
+    });
 };
 
 export { init };
