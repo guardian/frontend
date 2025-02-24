@@ -40,14 +40,6 @@ const go = () => {
         bootStandard();
 
         /**
-		 * User Benefits API
-		 *
-		 */
-        await refreshUserBenefits().catch((err) => {
-            reportError(err, { module: 'c-user-benefits' });
-        });
-
-        /**
          * CMP
          *
          */
@@ -129,7 +121,12 @@ const go = () => {
 
         });
 
-        const isUserSignedIn = await isUserLoggedIn();
+        const [refresh, isUserSignedIn] = await Promise.all([
+            refreshUserBenefits().catch((err) => {
+                reportError(err, { module: 'c-user-benefits' });
+            }),
+            isUserLoggedIn(),
+        ]);
         const useNonAdvertisedList = allowRejectAll(isUserSignedIn);
 
         cmp.init({
