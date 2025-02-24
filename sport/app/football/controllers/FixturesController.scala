@@ -40,7 +40,7 @@ class FixturesController(
     }
 
   private def renderMoreFixtures(fixtures: Fixtures): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       renderMoreMatches(page, fixtures, filters)
     }
 
