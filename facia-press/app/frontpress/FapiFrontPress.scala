@@ -53,7 +53,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
   ): Response[List[PressedContent]] =
     FAPI
       .liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
-      .map(_.map((item) => PressedContent.make(item, collection.collectionConfig.suppressImages)))
+      .map(_.map((item) => PressedContent.make(item, collection.collectionConfig.displayHints.flatMap(_.suppressImages).getOrElse(false))))
 }
 
 class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit
@@ -81,7 +81,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
   ): Response[List[PressedContent]] =
     FAPI
       .draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
-      .map(_.map((item) => PressedContent.make(item, collection.collectionConfig.suppressImages)))
+      .map(_.map((item) => PressedContent.make(item, collection.collectionConfig.displayHints.flatMap(_.suppressImages).getOrElse(false))))
 }
 
 // This is the json structure we expect for an embed (know as a snap at render-time).
