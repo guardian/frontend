@@ -47,7 +47,7 @@ object DCRCrosswords
       name = "dcr-crosswords",
       description = "Render crosswords in DCR",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 2, 26),
+      sellByDate = LocalDate.of(2025, 3, 31),
       participationGroup = Perc10A,
     )
 
