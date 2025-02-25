@@ -35,7 +35,7 @@ object Dependencies {
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "27.0.0"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.6.0"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % "16.0.0-PREVIEW.fpadd-groups-config-field.2025-02-21T1227.15f48131",
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
   /** There can only be one version of `scala-xml`. We will evict all v1.x
