@@ -27,7 +27,6 @@ trait ABTestSwitches {
     highImpact = false,
   )
 
-
   Switch(
     ABTests,
     "ab-opt-out-frequency-cap",
