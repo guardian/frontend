@@ -29,17 +29,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ad-block-ask",
-    "Show new ad block ask component in ad slots when we detect ad blocker usage",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 2, 24)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
     "ab-opt-out-frequency-cap",
     "Test the Opt Out frequency capping feature",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
