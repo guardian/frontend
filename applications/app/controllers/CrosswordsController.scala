@@ -84,7 +84,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         remoteRenderer.getCrossword(wsClient, page, PageType(page, request, context))
       else
         Future.successful(
-          Cached(60.seconds)(
+          Cached(CacheTime.Crosswords)(
             RevalidatableResult.Ok(
               CrosswordHtmlPage.html(page),
             ),
