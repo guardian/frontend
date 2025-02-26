@@ -176,6 +176,12 @@
 					"classList": []
 				},
 				{
+					"title": "Oscars",
+					"url": "/film/oscars",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -344,12 +350,6 @@
 				{
 					"title": "UK politics",
 					"url": "/politics",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Society",
-					"url": "/society",
 					"children": [],
 					"classList": []
 				},
@@ -1084,6 +1084,12 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Oscars",
+					"url": "/film/oscars",
 					"children": [],
 					"classList": []
 				},
@@ -2590,6 +2596,12 @@
 					"classList": []
 				},
 				{
+					"title": "Oscars",
+					"url": "/film/oscars",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Environment",
 					"url": "/environment",
 					"children": [
@@ -3598,6 +3610,12 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Oscars",
+					"url": "/film/oscars",
 					"children": [],
 					"classList": []
 				},

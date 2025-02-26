@@ -45,6 +45,7 @@ object NavLinks {
   val retail = NavLink("Retail", "/business/retail")
   val markets = NavLink("Markets", "/business/stock-markets")
   val ukraine = NavLink("Ukraine", "/world/ukraine")
+  val oscars = NavLink("Oscars", "/film/oscars")
   val businessToBusiness = NavLink("B2B", "/business-to-business")
   val diversityEquality = NavLink("Diversity & equality in business", "/business/diversity-and-equality")
   val smallBusiness = NavLink("Small business", "/business/us-small-business")
@@ -284,12 +285,12 @@ object NavLinks {
       climateCrisis,
       middleEast,
       ukraine,
+      oscars,
       football,
       newsletters,
       ukBusiness,
       ukEnvironment,
       politics,
-      society,
       science,
       tech,
       globalDevelopment,
@@ -322,6 +323,7 @@ object NavLinks {
       climateCrisis,
       middleEast,
       ukraine,
+      oscars,
       usSoccer,
       usBusiness,
       usEnvironment,
@@ -339,6 +341,7 @@ object NavLinks {
       climateCrisis,
       middleEast,
       ukraine,
+      oscars,
       ukEnvironment,
       science,
       globalDevelopment,
@@ -354,6 +357,7 @@ object NavLinks {
       ukNews,
       climateCrisis,
       ukraine,
+      oscars,
       ukEnvironment,
       science,
       globalDevelopment,
