@@ -50,7 +50,7 @@ class SignupPageController(
           ),
         )
       case Left(e) =>
-        log.error(s"API call to get newsletters failed: $e")
+        logErrorWithRequestId(s"API call to get newsletters failed: $e")
         Future(NoCache(InternalServerError))
     }
   }
@@ -72,7 +72,7 @@ class SignupPageController(
           page = StaticPages.dcrSimpleNewsletterPage(request.path),
         )
       case Left(e) =>
-        log.error(s"API call to get newsletters failed: $e")
+        logErrorWithRequestId(s"API call to get newsletters failed: $e")
         Future(NoCache(InternalServerError))
     }
   }
@@ -93,7 +93,7 @@ class SignupPageController(
         Future.successful(common.renderJson(dataJson, page).as("application/json"))
       }
       case Left(e) =>
-        log.error(s"API call to get newsletters failed: $e")
+        logErrorWithRequestId(s"API call to get newsletters failed: $e")
         throw new RuntimeException()
     }
   }

@@ -395,12 +395,12 @@ class LiveBlogController(
           */
         val hasBlocks = nonLiveBlogArticle.fields.blocks.nonEmpty;
         val hasMinuteByMinuteTag = nonLiveBlogArticle.tags.isLiveBlog;
-        log.error(
+        logErrorWithRequestId(
           s"Requested non-liveblog article as liveblog: ${nonLiveBlogArticle.metadata.id}: { hasBlocks: ${hasBlocks}, hasMinuteByMinuteTag: ${hasMinuteByMinuteTag} }",
         )
         Left(InternalServerError)
       case unknown =>
-        log.error(s"Requested non-liveblog: ${unknown.metadata.id}")
+        logErrorWithRequestId(s"Requested non-liveblog: ${unknown.metadata.id}")
         Left(InternalServerError)
     }
 
