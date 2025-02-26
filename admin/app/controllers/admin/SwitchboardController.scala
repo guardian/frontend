@@ -24,7 +24,7 @@ class SwitchboardController(
 
   def renderSwitchboard(): Action[AnyContent] =
     Action.async { implicit request =>
-      log.info("loaded Switchboard")
+      logInfoWithRequestId("loaded Switchboard")
 
       Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
         val configuration = switchesWithLastModified.map(_._1)
@@ -57,7 +57,7 @@ class SwitchboardController(
           )
         }
       } else {
-        log.info("saving switchboard")
+        logInfoWithRequestId("saving switchboard")
 
         val requester: String =
           auth.readAuthenticatedUser(request) map (authed =>
@@ -75,7 +75,7 @@ class SwitchboardController(
       }
     }
 
-  private def saveSwitchesOrError(requester: String, updates: Seq[String]): Result =
+  private def saveSwitchesOrError(requester: String, updates: Seq[String])(implicit request: RequestHeader): Result =
     try {
       val current = Switches.all map { switch =>
         switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
@@ -83,11 +83,11 @@ class SwitchboardController(
 
       Store.putSwitches(updates mkString "\n")
 
-      log.info("switches successfully updated")
+      logInfoWithRequestId("switches successfully updated")
 
       val changes = updates filterNot { current contains _ }
       changes foreach { change =>
-        log.info(s"Switch change by $requester: $change")
+        logInfoWithRequestId(s"Switch change by $requester: $change")
       }
 
       Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
@@ -95,7 +95,7 @@ class SwitchboardController(
       )
     } catch {
       case e: Throwable =>
-        log.error("exception saving switches", e)
+        logErrorWithRequestId("exception saving switches", e)
 
         Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
           "error" -> ("Error saving switches '%s'" format e.getMessage),

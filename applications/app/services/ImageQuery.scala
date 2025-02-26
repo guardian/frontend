@@ -16,7 +16,7 @@ trait ImageQuery extends ConciergeRepository {
       request: RequestHeader,
       context: ApplicationContext,
   ): Future[Either[PlayResult, (ImageContentPage, Option[Block])]] = {
-    log.info(s"Fetching image content: $path for edition ${edition.id}")
+    logInfoWithRequestId(s"Fetching image content: $path for edition ${edition.id}")
     val response = contentApiClient.getResponse(
       contentApiClient
         .item(path, edition)

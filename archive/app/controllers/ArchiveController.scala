@@ -126,18 +126,8 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
     val endOfPath = if (pathSuffixes.isEmpty) "" else s"/${pathSuffixes.mkString("/")}"
     val redirect = LinkTo(path) + endOfPath
 
-    log.info(s"""Archive $redirectHttpStatus, redirect to $redirect""")
+    logInfoWithRequestId(s"""Archive $redirectHttpStatus, redirect to $redirect""")
     Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(redirect, redirectHttpStatus)))
-  }
-
-  private def log404(request: Request[AnyContent]) = {
-    log.warn(s"Archive returned 404 for path: ${request.path}")
-
-    val GoogleBot = """.*(Googlebot).*""".r
-    request.headers.get("User-Agent").getOrElse("no user agent") match {
-      case GoogleBot(_) => GoogleBotMetric.Googlebot404Count.increment()
-      case _            =>
-    }
   }
 
   private def lookupPath(path: String)(implicit request: RequestHeader): Future[Option[CacheableResult]] =
