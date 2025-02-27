@@ -13,7 +13,7 @@ final case class CollectionConfig(
     href: Option[String],
     description: Option[String],
     groups: Option[List[String]],
-    groupsConfig:  Option[List[GroupsConfig]],
+    groupsConfig: Option[List[GroupsConfig]],
     uneditable: Boolean,
     showTags: Boolean,
     showSections: Boolean,
