@@ -336,7 +336,7 @@ class CrosswordEditionsController(
       .contentType("crossword")
       .tag(crosswordTags)
       .useDate("newspaper-edition")
-      .pageSize(25)
+      .pageSize(75)
 
   private lazy val crosswordTags = Seq(
     "crosswords/series/quick",
