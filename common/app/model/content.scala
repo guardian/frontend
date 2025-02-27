@@ -290,8 +290,9 @@ final case class Content(
       ("references", JsArray(javascriptReferences)),
       (
         "showRelatedContent",
-        JsBoolean(if (tags.isTheMinuteArticle) { false }
-        else showInRelated && !legallySensitive),
+        JsBoolean(if (tags.isTheMinuteArticle) {
+          false
+        } else showInRelated && !legallySensitive),
       ),
       ("productionOffice", JsString(productionOffice.getOrElse(""))),
       ("isImmersive", JsBoolean(isImmersive)),
