@@ -4,6 +4,7 @@
 
 
 GET         /_healthcheck                                                                           controllers.HealthCheck.healthCheck()
+GET         /_tags                                                                                  controllers.HealthCheck.tags()
 
 # authentication endpoints
 GET         /oauthCallback                                                                          http.GuardianAuthWithExemptions.oauthCallback
