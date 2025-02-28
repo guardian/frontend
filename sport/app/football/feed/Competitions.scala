@@ -232,9 +232,9 @@ object CompetitionsProvider {
     ),
     Competition(
       "701",
-      "/football/world-cup-2022-qualifiers",
-      "World Cup 2022 qualifying",
-      "World Cup 2022 qual.",
+      "/football/world-cup-2026-qualifiers",
+      "World Cup 2026 qualifying",
+      "World Cup 2026 qual.",
       "Internationals",
     ),
     Competition(
