@@ -21,40 +21,23 @@ trait GuLogging {
   }
 
   def logInfoWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
-    log.logger.info(
-      customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))),
-      message,
-    )
+    log.logger.info(getRequestIdField, message)
   }
 
   def logWarnWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
-    log.logger.warn(
-      customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))),
-      message,
-    )
+    log.logger.warn(getRequestIdField, message)
   }
 
   def logWarnWithRequestId(message: String, error: Throwable)(implicit request: RequestHeader): Unit = {
-    log.logger.warn(
-      customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))),
-      message,
-      error,
-    )
+    log.logger.warn(getRequestIdField, message, error)
   }
 
   def logErrorWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
-    log.logger.error(
-      customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))),
-      message,
-    )
+    log.logger.error(getRequestIdField, message)
   }
 
   def logErrorWithRequestId(message: String, error: Throwable)(implicit request: RequestHeader): Unit = {
-    log.logger.error(
-      customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))),
-      message,
-      error,
-    )
+    log.logger.error(getRequestIdField, message, error)
   }
 
   def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {
@@ -80,6 +63,10 @@ trait GuLogging {
       case Success(result) => result
       case Failure(e)      => log.error(message, e); throw e
     }
+  }
+
+  private def getRequestIdField(implicit request: RequestHeader) = {
+    customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")))
   }
 }
 
