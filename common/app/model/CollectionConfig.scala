@@ -12,7 +12,6 @@ final case class CollectionConfig(
     collectionLevel: Option[String],
     href: Option[String],
     description: Option[String],
-    groups: Option[List[String]],
     groupsConfig: Option[GroupsConfig],
     uneditable: Boolean,
     showTags: Boolean,
