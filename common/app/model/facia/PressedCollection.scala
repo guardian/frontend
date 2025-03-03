@@ -107,6 +107,6 @@ object PressedCollection {
       collection.collectionConfig.showLatestUpdate,
       CollectionConfig.make(collection.collectionConfig),
       hasMore = false,
-      collection.collectionConfig.targetedTerritory
+      collection.collectionConfig.targetedTerritory,
     )
 }

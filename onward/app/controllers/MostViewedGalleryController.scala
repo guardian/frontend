@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.facia.api.models.{GroupsConfig,GroupConfig}
+import com.gu.facia.api.models.{GroupsConfig, GroupConfig}
 import common._
 import feed.MostViewedGalleryAgent
 import layout.{CollectionEssentials, FaciaContainer}
@@ -28,7 +28,6 @@ class MostViewedGalleryController(
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
     displayName = Some("More galleries"),
-
   )
 
   val featuredSeries = Seq(
