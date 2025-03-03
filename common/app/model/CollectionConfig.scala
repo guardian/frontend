@@ -1,7 +1,8 @@
 package model.pressed
 
+import com.gu.facia.api.models.GroupsConfig
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform, Secondary}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, CollectionPlatform, Metadata, Secondary}
 
 final case class CollectionConfig(
     displayName: Option[String],
@@ -12,6 +13,7 @@ final case class CollectionConfig(
     href: Option[String],
     description: Option[String],
     groups: Option[List[String]],
+    groupsConfig: Option[GroupsConfig],
     uneditable: Boolean,
     showTags: Boolean,
     showSections: Boolean,
@@ -64,7 +66,7 @@ object CollectionConfig {
       collectionLevel = collectionLevel,
       href = config.href,
       description = config.description,
-      groups = config.groups.map(_.groups),
+      groupsConfig = config.groupsConfig,
       uneditable = config.uneditable,
       showTags = config.showTags,
       showSections = config.showSections,
