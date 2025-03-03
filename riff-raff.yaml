@@ -19,6 +19,8 @@ templates:
 deployments:
   admin:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   applications:
     template: frontend
   archive:
