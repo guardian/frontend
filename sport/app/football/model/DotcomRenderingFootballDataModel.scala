@@ -3,7 +3,7 @@ package football.model
 import common.{CanonicalLink, Edition}
 import conf.Configuration
 import experiments.ActiveExperiments
-import football.controllers.FootballPage
+import football.controllers.{CompetitionFilter, FootballPage}
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
 import model.{ApplicationContext, Competition, CompetitionSummary}
@@ -37,6 +37,7 @@ case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List
 case class DotcomRenderingFootballDataModel(
     matchesList: Seq[MatchesByDateAndCompetition],
     nextPage: Option[String],
+    filters: Map[String, Seq[CompetitionFilter]],
     previousPage: Option[String],
     nav: Nav,
     editionId: String,
@@ -52,6 +53,7 @@ object DotcomRenderingFootballDataModel {
   def apply(
       page: FootballPage,
       matchesList: MatchesList,
+      filters: Map[String, Seq[CompetitionFilter]],
   )(implicit request: RequestHeader, context: ApplicationContext): DotcomRenderingFootballDataModel = {
     val pageType: PageType = PageType(page, request, context)
     val edition = Edition.edition(request)
@@ -83,6 +85,7 @@ object DotcomRenderingFootballDataModel {
 
     DotcomRenderingFootballDataModel(
       matchesList = matches,
+      filters = filters,
       nextPage = matchesList.nextPage,
       previousPage = matchesList.previousPage,
       nav = nav,
@@ -173,6 +176,8 @@ object DotcomRenderingFootballDataModelImplicits {
   implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
   implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
     Json.writes[MatchesByDateAndCompetition]
+
+  implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
 
   implicit val SportsFormat: Writes[DotcomRenderingFootballDataModel] = Json.writes[DotcomRenderingFootballDataModel]
 }

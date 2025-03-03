@@ -45,6 +45,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
         val model = DotcomRenderingFootballDataModel(
           page = page,
           matchesList = matchesList,
+          filters = filters,
         )
         if (request.isJson) {
           successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
@@ -72,15 +73,29 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
       filters: Map[String, Seq[CompetitionFilter]],
       atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
-    Cached(CacheTime.Football) {
-      if (request.isJson)
-        JsonComponent(
-          "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
-          "next" -> Html(matchesList.nextPage.getOrElse("")),
-          "previous" -> Html(matchesList.previousPage.getOrElse("")),
+    FootballPagePicker.getTier(page) match {
+      case RemoteRender =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
         )
-      else
-        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        if (request.isJson) {
+          successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+        } else
+          remoteRenderer.getFootballPage(wsClient, toJson(model))
+
+      case LocalRender =>
+        successful(Cached(CacheTime.Football) {
+          if (request.isJson) {
+            JsonComponent(
+              "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
+              "next" -> Html(matchesList.nextPage.getOrElse("")),
+              "previous" -> Html(matchesList.previousPage.getOrElse("")),
+            )
+          } else
+            RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        })
     }
   }
 
