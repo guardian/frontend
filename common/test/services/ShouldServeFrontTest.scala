@@ -62,6 +62,7 @@ class ShouldServeFrontTest
         `type` = Some("fixed/large/slow-XIV"),
         href = None,
         description = None,
+        groups = None,
         groupsConfig = None,
         uneditable = None,
         showTags = None,
