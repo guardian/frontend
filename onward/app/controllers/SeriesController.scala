@@ -88,7 +88,7 @@ class SeriesController(
       }
     }
     seriesResponse.recover { case ContentApiError(404, message, _) =>
-      log.info(s"Got a 404 calling content api: $message")
+      logInfoWithRequestId(s"Got a 404 calling content api: $message")
       None
     }
   }

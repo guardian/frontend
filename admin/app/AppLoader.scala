@@ -9,7 +9,7 @@ import _root_.dfp.DfpDataCacheLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import http.{AdminHttpErrorHandler, CommonGzipFilter, Filters}
+import http.{AdminHttpErrorHandler, CommonGzipFilter, Filters, RequestIdFilter}
 import dev.DevAssetsController
 import jobs._
 import model.{AdminLifecycle, ApplicationIdentity}
@@ -99,7 +99,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
   def pekkoActorSystem: PekkoActorSystem
 
   override lazy val httpFilters: Seq[EssentialFilter] =
-    auth.filter :: Filters.common(frontend.admin.BuildInfo) ++ wire[CommonGzipFilter].filters
+    auth.filter :: new RequestIdFilter :: Filters.common(frontend.admin.BuildInfo) ++ wire[CommonGzipFilter].filters
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
 }

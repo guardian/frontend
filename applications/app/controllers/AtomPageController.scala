@@ -72,7 +72,7 @@ class AtomPageController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             Future.successful(Cors(NoCache(BadRequest("Invalid email"))))
           },
           form => {
@@ -83,12 +83,12 @@ class AtomPageController(
                   Cors(NoCache(Created("Subscribed")))
 
                 case status =>
-                  log.error(s"Error posting to ExactTarget: HTTP $status")
+                  logErrorWithRequestId(s"Error posting to ExactTarget: HTTP $status")
                   Cors(NoCache(InternalServerError("Internal error")))
 
               })
               .recover { case e: Exception =>
-                log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+                logErrorWithRequestId(s"Error posting to ExactTarget: ${e.getMessage}")
                 Cors(NoCache(InternalServerError("Internal error")))
               }
           },

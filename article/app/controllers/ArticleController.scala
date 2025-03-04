@@ -67,7 +67,7 @@ class ArticleController(
         headline
           .map(s => Cached(CacheTime.Default)(RevalidatableResult.Ok(s)))
           .getOrElse {
-            log.warn(s"headline not found for $path")
+            logWarnWithRequestId(s"headline not found for $path")
             Cached(10)(WithoutRevalidationResult(NotFound))
           }
       }

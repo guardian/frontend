@@ -270,12 +270,12 @@ class EmailSignupController(
       }
     }
 
-  def logApiError(error: String): Unit = {
-    log.error(s"API call to get newsletters failed: $error")
+  def logApiError(error: String)(implicit request: RequestHeader): Unit = {
+    logErrorWithRequestId(s"API call to get newsletters failed: $error")
   }
 
-  def logNewsletterNotFoundError(newsletterName: String): Unit = {
-    log.error(s"Newsletter not found: Couldn't find $newsletterName")
+  def logNewsletterNotFoundError(newsletterName: String)(implicit request: RequestHeader): Unit = {
+    logErrorWithRequestId(s"Newsletter not found: Couldn't find $newsletterName")
   }
 
   def renderFormFromNameWithParentComponent(
@@ -370,12 +370,12 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respondFooter(InvalidEmail))
           },
           form => {
-            log.info(
+            logInfoWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -428,7 +428,7 @@ class EmailSignupController(
           respondFooter(Subscribed)
 
         case status =>
-          log.error(s"Error posting to Identity API: HTTP $status")
+          logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
           APIHTTPError.increment()
           respondFooter(OtherError)
 
@@ -436,7 +436,7 @@ class EmailSignupController(
       case _: IllegalAccessException =>
         respondFooter(Subscribed)
       case e: Exception =>
-        log.error(s"Error posting to Identity API: ${e.getMessage}")
+        logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
         respondFooter(OtherError)
     }
@@ -482,12 +482,12 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            log.info(
+            logInfoWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -516,12 +516,12 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            log.info(
+            logInfoWithRequestId(
               s"Post request received to /email/many/ - " +
                 s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +
@@ -552,7 +552,7 @@ class EmailSignupController(
         respond(Subscribed, listName)
 
       case status =>
-        log.error(s"Error posting to Identity API: HTTP $status")
+        logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
         APIHTTPError.increment()
         respond(OtherError)
 
@@ -560,7 +560,7 @@ class EmailSignupController(
       case _: IllegalAccessException =>
         respond(Subscribed)
       case e: Exception =>
-        log.error(s"Error posting to Identity API: ${e.getMessage}")
+        logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
         respond(OtherError)
     }
