@@ -26,7 +26,7 @@ object FixtureBuilder {
       href = None,
       description = None,
       collectionType = "unknown",
-      groups = None,
+      groupsConfig = None,
       uneditable = false,
       showTags = false,
       showSections = false,

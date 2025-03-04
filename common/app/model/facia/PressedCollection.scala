@@ -2,6 +2,7 @@ package model.facia
 
 import com.gu.commercial.branding.ContainerBranding
 import com.gu.facia.api.{models => fapi}
+import com.gu.facia.api.models.{GroupsConfig}
 import com.gu.facia.api.utils.ContainerBrandingFinder
 import com.gu.facia.client.models.{Branded, TargetedTerritory}
 import common.Edition
@@ -19,7 +20,7 @@ case class PressedCollection(
     href: Option[String],
     description: Option[String],
     collectionType: String,
-    groups: Option[List[String]],
+    groupsConfig: Option[GroupsConfig],
     uneditable: Boolean,
     showTags: Boolean,
     showSections: Boolean,
@@ -97,7 +98,7 @@ object PressedCollection {
       collection.href,
       collection.collectionConfig.description,
       collection.collectionConfig.collectionType,
-      collection.collectionConfig.groups.map(groups => fapi.Group.fromGroups(groups).map(_.toString)),
+      collection.collectionConfig.groupsConfig,
       collection.collectionConfig.uneditable,
       collection.collectionConfig.showTags,
       collection.collectionConfig.showSections,
