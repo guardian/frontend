@@ -54,7 +54,7 @@ class ResultsController(
         new FootballPage(s"${competition.url}/results", "football", s"${competition.fullName} results")
     def teamPage =
       (team: FootballTeam) =>
-        new FootballPage(s"/football/${tag.getOrElse("")}/results", "football", s"${team.name} results")
+        new FootballPage(s"football/${tag.getOrElse("")}/results", "football", s"${team.name} results")
     byType[FootballPage](allPage)(competitionPage)(teamPage)(tag)
   }
 
