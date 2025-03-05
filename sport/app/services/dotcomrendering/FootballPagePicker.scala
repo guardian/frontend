@@ -9,7 +9,8 @@ import utils.DotcomponentsLogger
 object FootballPagePicker {
 
   def isSupportedInDcr(page: FootballPage): Boolean = {
-    page.metadata.id == "football/live"
+    val liveMatchPattern = """^football(?:/[^/]+)?/live$""".r
+    liveMatchPattern.matches(page.metadata.id)
   }
 
   def getTier(
