@@ -65,7 +65,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       } yield f(crossword, content)
       maybeCrossword getOrElse Future.successful(noResults())
     } recover { case t: Throwable =>
-      log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
+      logErrorWithRequestId(s"Error retrieving $crosswordType crossword id $id from API", t)
       noResults()
     }
   }
