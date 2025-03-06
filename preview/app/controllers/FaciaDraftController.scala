@@ -29,7 +29,7 @@ class FaciaDraftController(
   private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents, ws)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    log.info(s"Serving Path: $path")
+    logInfoWithRequestId(s"Serving Path: $path")
     if (!ConfigAgent.getPathIds.contains(path))
       indexController.renderItem(path)
     else
