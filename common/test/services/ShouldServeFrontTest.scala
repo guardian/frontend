@@ -63,7 +63,6 @@ class ShouldServeFrontTest
         href = None,
         description = None,
         groups = None,
-        groupsConfig = None,
         uneditable = None,
         showTags = None,
         showSections = None,
