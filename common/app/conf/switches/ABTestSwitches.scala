@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "Test the impact of moving the call for the Permutive segmentation script.",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 3, 21)),
+    sellByDate = Some(LocalDate.of(2025, 3, 31)),
     exposeClientSide = true,
     highImpact = false,
   )
