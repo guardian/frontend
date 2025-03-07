@@ -28,10 +28,16 @@ class MostViewedGalleryController(
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
     displayName = Some("More galleries"),
-    groupsConfig =  Some(GroupsConfig(List(GroupConfig(
-      name = "multimedia/gallery",
-      maxItems = None
-    ))))
+    groupsConfig = Some(
+      GroupsConfig(
+        List(
+          GroupConfig(
+            name = "multimedia/gallery",
+            maxItems = None,
+          ),
+        ),
+      ),
+    ),
   )
 
   val featuredSeries = Seq(
