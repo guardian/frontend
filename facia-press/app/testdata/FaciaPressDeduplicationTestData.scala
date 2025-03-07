@@ -40,7 +40,7 @@ trait FaciaPressDeduplicationTestData {
       href = None,
       description = None,
       collectionType = "",
-      groups = None,
+      groupsConfig = None,
       uneditable = false,
       showTags = false,
       showSections = false,
