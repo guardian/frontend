@@ -66,7 +66,7 @@ object DCRFootballLive
       name = "dcr-football-live",
       description = "Render football/live in DCR",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 3, 10),
+      sellByDate = LocalDate.of(2025, 4, 10),
       participationGroup = Perc0E,
     )
 
