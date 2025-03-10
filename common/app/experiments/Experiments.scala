@@ -31,7 +31,7 @@ object EuropeBetaFront
         Owner.withEmail("dotcom.platform@theguardian.com"),
       ),
       sellByDate = LocalDate.of(2025, 4, 2),
-      participationGroup = Perc0A,
+      participationGroup = Perc10A,
     )
 
 object LoopVideoTest
