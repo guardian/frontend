@@ -344,8 +344,10 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         case "flexible/general" => {
 
           collection.collectionConfig.groupsConfig
-            .flatMap(_.config)
-            .map(_.maxItems).flatten // Removes None values as maxItems is optional
+            .map(_.config)
+            .getOrElse(Nil)
+            .map(_.maxItems)
+            .flatten // Removes None values as maxItems is optional
             .sum
 
         }
