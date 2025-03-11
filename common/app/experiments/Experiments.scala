@@ -76,5 +76,5 @@ object FiveFourImages
       description = "Compare 5:4 vs 5:3 aspect ratio in article images",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 3, 20),
-      participationGroup = Perc50,
+      participationGroup = Perc0C,
     )
