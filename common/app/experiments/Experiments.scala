@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
-      LoopVideoTest,
       DCRCrosswords,
       DarkModeWeb,
       DCRFootballLive,
@@ -32,15 +31,6 @@ object EuropeBetaFront
       ),
       sellByDate = LocalDate.of(2025, 4, 2),
       participationGroup = Perc50,
-    )
-
-object LoopVideoTest
-    extends Experiment(
-      name = "loop-video-test",
-      description = "Test looping videos effect on Core Web Vitals",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc0B,
     )
 
 object DCRCrosswords
