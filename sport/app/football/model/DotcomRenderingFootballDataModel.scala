@@ -6,7 +6,7 @@ import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage}
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
-import model.{ApplicationContext, Competition, CompetitionSummary}
+import model.{ApplicationContext, Competition, CompetitionSummary, Group, Table}
 import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
@@ -34,8 +34,8 @@ import java.time.format.DateTimeFormatter
 case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: List[FootballMatch])
 case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List[CompetitionMatches])
 
-case class DotcomRenderingFootballDataModel(
-    matchesList: Seq[MatchesByDateAndCompetition],
+case class DotcomRenderingFootballDataModel[T](
+    data: Seq[T],
     nextPage: Option[String],
     filters: Map[String, Seq[CompetitionFilter]],
     previousPage: Option[String],
@@ -50,14 +50,40 @@ case class DotcomRenderingFootballDataModel(
 )
 
 object DotcomRenderingFootballDataModel {
+
   def apply(
       page: FootballPage,
-      matchesList: MatchesList,
+      tables: Seq[Table],
       filters: Map[String, Seq[CompetitionFilter]],
-  )(implicit request: RequestHeader, context: ApplicationContext): DotcomRenderingFootballDataModel = {
-    val pageType: PageType = PageType(page, request, context)
+  )(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): DotcomRenderingFootballDataModel[Table] = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
+    val combinedConfig: JsObject = getConfig(page)
+
+    DotcomRenderingFootballDataModel[Table](
+      data = tables,
+      filters = filters,
+      nextPage = None,
+      previousPage = None,
+      nav = nav,
+      editionId = edition.id,
+      guardianBaseURL = Configuration.site.host,
+      config = combinedConfig,
+      pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      contributionsServiceUrl = Configuration.contributionsService.url,
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+    )
+  }
+
+  private def getConfig(page: FootballPage)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ) = {
+    val pageType: PageType = PageType(page, request, context)
 
     val switches: Map[String, Boolean] = conf.switches.Switches.all
       .filter(_.exposeClientSide)
@@ -79,12 +105,25 @@ object DotcomRenderingFootballDataModel {
         JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
       Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
     }
+    combinedConfig
+  }
+  def apply(
+      page: FootballPage,
+      matchesList: MatchesList,
+      filters: Map[String, Seq[CompetitionFilter]],
+  )(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): DotcomRenderingFootballDataModel[MatchesByDateAndCompetition] = {
+    val edition = Edition.edition(request)
+    val nav = Nav(page, edition)
+    val combinedConfig: JsObject = getConfig(page)
 
     val matches =
       getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
 
     DotcomRenderingFootballDataModel(
-      matchesList = matches,
+      data = matches,
       filters = filters,
       nextPage = matchesList.nextPage,
       previousPage = matchesList.previousPage,
@@ -115,7 +154,7 @@ object DotcomRenderingFootballDataModel {
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
-  def toJson(model: DotcomRenderingFootballDataModel): JsValue = {
+  def toJson[T: Writes](model: DotcomRenderingFootballDataModel[T]): JsValue = {
     val jsValue = Json.toJson(model)
     withoutNull(jsValue)
   }
@@ -179,5 +218,13 @@ object DotcomRenderingFootballDataModelImplicits {
 
   implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
 
-  implicit val SportsFormat: Writes[DotcomRenderingFootballDataModel] = Json.writes[DotcomRenderingFootballDataModel]
+  implicit val groupFormat: Writes[Group] = Json.writes[Group]
+  implicit val tableWrites: Writes[Table] = (table: Table) =>
+    Json.obj(
+      "competition" -> Json.toJson(table.competition: CompetitionSummary), // Explicitly cast
+      "groups" -> table.groups,
+      "hasGroups" -> table.hasGroups,
+    )
+  implicit def sportsFormat[T: Writes]: Writes[DotcomRenderingFootballDataModel[T]] =
+    Json.writes[DotcomRenderingFootballDataModel[T]]
 }
