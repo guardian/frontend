@@ -15,7 +15,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRCrosswords,
       DarkModeWeb,
       DCRFootballLive,
-      FiveFourImages,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
