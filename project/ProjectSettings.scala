@@ -93,11 +93,7 @@ object ProjectSettings {
 
   def root(): Project =
     Project("root", base = file("."))
-      .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayPekkoHttpServer)
-      .settings(frontendCompilationSettings)
       .settings(frontendRootSettings)
-      .settings(libraryDependencies ++= jackson)
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
