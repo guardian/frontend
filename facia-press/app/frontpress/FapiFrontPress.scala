@@ -340,13 +340,17 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         case "scrollable/highlights" => 6
         // scrollable small and medium containers are capped at 8 stories
         case "scrollable/small" | "scrollable/medium" => 8
-        // flexible general containers are capped at the maxItemsToDisplay value (set in the config tool)
-        // In the event the field isn't populated, the fallback cap is 9 stories
-        case "flexible/general" =>
-          collection.collectionConfig.displayHints match {
-            case Some(displayHints) => displayHints.maxItemsToDisplay.getOrElse(9)
-            case None               => 9
-          }
+        // flexible general containers have max items on each group. In order to know the total max items, we need to sum all of these together.
+        case "flexible/general" => {
+
+          collection.collectionConfig.groupsConfig
+            .map(_.config)
+            .getOrElse(Nil)
+            .map(_.maxItems)
+            .flatten // Removes None values as maxItems is optional
+            .sum
+
+        }
         // other container types should be capped at a maximum number of stories set in the app config
         case _ => Math.min(Configuration.facia.collectionCap, storyCountTotal)
       }
