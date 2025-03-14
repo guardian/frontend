@@ -30,7 +30,6 @@ val common = library("common")
       awsSqs,
       awsSsm,
       eTagCachingS3,
-      nettyCodecHttp2,
       contentApiClient,
       contentApiModelsJson,
       enumeratumPlayJson,
@@ -72,7 +71,7 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       janino,
-    ) ++ jackson,
+    ) ++ jackson ++ netty,
     TestAssets / mappings ~= filterAssets,
   )
 
@@ -206,6 +205,8 @@ val main = root()
     archive,
     preview,
     rss,
+  ).settings(
+    libraryDependencies ++= netty
   )
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {
