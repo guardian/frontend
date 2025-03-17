@@ -51,6 +51,9 @@ case class DotcomRenderingFootballDataModel[T](
 
 object DotcomRenderingFootballDataModel {
 
+  type DotcomRenderingFootballMatchesDataModel = DotcomRenderingFootballDataModel[MatchesByDateAndCompetition]
+  type DotcomRenderingFootballTablesDataModel = DotcomRenderingFootballDataModel[Table]
+
   def apply(
       page: FootballPage,
       tables: Seq[Table],
@@ -58,7 +61,7 @@ object DotcomRenderingFootballDataModel {
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
-  ): DotcomRenderingFootballDataModel[Table] = {
+  ): DotcomRenderingFootballTablesDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
     val combinedConfig: JsObject = getConfig(page)
@@ -114,7 +117,7 @@ object DotcomRenderingFootballDataModel {
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
-  ): DotcomRenderingFootballDataModel[MatchesByDateAndCompetition] = {
+  ): DotcomRenderingFootballMatchesDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
     val combinedConfig: JsObject = getConfig(page)
