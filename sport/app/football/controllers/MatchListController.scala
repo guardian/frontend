@@ -3,9 +3,7 @@ package football.controllers
 import common.{Edition, JsonComponent}
 import common._
 import feed.Competitions
-import football.model.DotcomRenderingFootballDataModel.toJson
-import football.model.{DotcomRenderingFootballDataModel, MatchesList}
-import football.model.DotcomRenderingFootballDataModelImplicits._
+import football.model.{DotcomRenderingFootballMatchListDataModel, MatchesList}
 import implicits.Requests
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
@@ -42,7 +40,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
   )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
     FootballPagePicker.getTier(page) match {
       case RemoteRender =>
-        val model = DotcomRenderingFootballDataModel(
+        val model = DotcomRenderingFootballMatchListDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
@@ -50,7 +48,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
         if (request.isJson) {
           successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
         } else
-          remoteRenderer.getFootballPage(wsClient, toJson(model))
+          remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
 
       case LocalRender =>
         successful(Cached(CacheTime.Football) {
@@ -75,7 +73,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     FootballPagePicker.getTier(page) match {
       case RemoteRender =>
-        val model = DotcomRenderingFootballDataModel(
+        val model = DotcomRenderingFootballMatchListDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
@@ -83,7 +81,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
         if (request.isJson) {
           successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
         } else
-          remoteRenderer.getFootballPage(wsClient, toJson(model))
+          remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
 
       case LocalRender =>
         successful(Cached(CacheTime.Football) {
