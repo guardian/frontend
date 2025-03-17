@@ -7,12 +7,11 @@ import model._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
-import football.model.DotcomRenderingFootballDataModel
+import football.model.DotcomRenderingFootballTablesDataModel
 import services.dotcomrendering.{FootballPagePicker, LocalRender, RemoteRender}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
-import football.model.DotcomRenderingFootballDataModelImplicits._
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 
@@ -96,7 +95,7 @@ class LeagueTableController(
 
       FootballPagePicker.getTier(page) match {
         case RemoteRender =>
-          val model = DotcomRenderingFootballDataModel(page, groups, filters(tableOrder))
+          val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
           successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
         case LocalRender =>
           val htmlResponse =

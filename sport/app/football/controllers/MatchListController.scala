@@ -3,9 +3,7 @@ package football.controllers
 import common.{Edition, JsonComponent}
 import common._
 import feed.Competitions
-import football.model.DotcomRenderingFootballDataModel.toJson
-import football.model.{DotcomRenderingFootballDataModel, MatchesList}
-import football.model.DotcomRenderingFootballDataModelImplicits._
+import football.model.{DotcomRenderingFootballMatchListDataModel, MatchesList}
 import implicits.{HtmlFormat, JsonFormat, Requests}
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
@@ -45,7 +43,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
 
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
-        val model = DotcomRenderingFootballDataModel(
+        val model = DotcomRenderingFootballMatchListDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
@@ -61,12 +59,12 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
           )
         })
       case HtmlFormat if tier == RemoteRender =>
-        val model = DotcomRenderingFootballDataModel(
+        val model = DotcomRenderingFootballMatchListDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
         )
-        remoteRenderer.getFootballPage(wsClient, toJson(model))
+        remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
       case _ =>
         successful(Cached(CacheTime.Football) {
           RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
@@ -84,7 +82,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
 
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
-        val model = DotcomRenderingFootballDataModel(
+        val model = DotcomRenderingFootballMatchListDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
@@ -101,12 +99,12 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
         })
 
       case HtmlFormat if tier == RemoteRender =>
-        val model = DotcomRenderingFootballDataModel(
+        val model = DotcomRenderingFootballMatchListDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
         )
-        remoteRenderer.getFootballPage(wsClient, toJson(model))
+        remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
 
       case _ =>
         successful(Cached(CacheTime.Football) {
