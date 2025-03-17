@@ -1,11 +1,11 @@
 package services.dotcomrendering
 
 import common.GuLogging
+import conf.switches.Switches.DCRCrosswords
 import crosswords.CrosswordPageWithContent
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
-import conf.switches.Switches.DCRCrosswords
 
 object CrosswordsPicker extends GuLogging {
 
