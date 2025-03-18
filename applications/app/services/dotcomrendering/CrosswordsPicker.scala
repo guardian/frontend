@@ -1,8 +1,8 @@
 package services.dotcomrendering
 
 import common.GuLogging
+import conf.switches.Switches.DCRCrosswords
 import crosswords.CrosswordPageWithContent
-import experiments.{ActiveExperiments, DCRCrosswords}
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
@@ -15,12 +15,12 @@ object CrosswordsPicker extends GuLogging {
       request: RequestHeader,
   ): RenderType = {
 
-    val participatingInTest = ActiveExperiments.isParticipating(DCRCrosswords)
+    val dcrShouldRender = DCRCrosswords.isSwitchedOn
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (participatingInTest) RemoteRender
+      else if (dcrShouldRender) RemoteRender
       else LocalRender
     }
 

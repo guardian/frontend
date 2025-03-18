@@ -1,6 +1,6 @@
 package services.dotcomrendering
 
-import experiments.{ActiveExperiments, DCRFootballLive}
+import experiments.{ActiveExperiments, DCRFootballMatches}
 import football.controllers.FootballPage
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
@@ -9,7 +9,9 @@ import utils.DotcomponentsLogger
 object FootballPagePicker {
 
   def isSupportedInDcr(page: FootballPage): Boolean = {
-    page.metadata.id == "football/live"
+    val footballMatchesPattern =
+      """^football(?:/[^/]+)?/(live|fixtures|results)(?:/more)?(?:/\d{4}/[A-Za-z]{3}/\d{1,2})?$""".r
+    footballMatchesPattern.matches(page.metadata.id)
   }
 
   def getTier(
@@ -20,7 +22,7 @@ object FootballPagePicker {
 
     val dcrCanRender = isSupportedInDcr(footballPage)
 
-    val participatingInTest = ActiveExperiments.isParticipating(DCRFootballLive)
+    val participatingInTest = ActiveExperiments.isParticipating(DCRFootballMatches)
 
     val tier = {
       if (request.forceDCROff) LocalRender
