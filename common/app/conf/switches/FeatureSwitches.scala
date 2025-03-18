@@ -552,4 +552,14 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
+  val DCRCrosswords = Switch(
+    SwitchGroup.Feature,
+    "dcr-crosswords",
+    "If this switch is on, crosswords will be rendered with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com"), Owner.withEmail("devx.e2e@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }
