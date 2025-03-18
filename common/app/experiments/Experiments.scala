@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
-      DCRCrosswords,
       DarkModeWeb,
       DCRFootballLive,
     )
@@ -30,15 +29,6 @@ object EuropeBetaFront
       ),
       sellByDate = LocalDate.of(2025, 4, 2),
       participationGroup = Perc50,
-    )
-
-object DCRCrosswords
-    extends Experiment(
-      name = "dcr-crosswords",
-      description = "Render crosswords in DCR",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 3, 31),
-      participationGroup = Perc20A,
     )
 
 object DarkModeWeb
