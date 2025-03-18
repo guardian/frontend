@@ -29,6 +29,8 @@ deployments:
     template: frontend
   discussion:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   facia:
     template: frontend
   facia-press:
