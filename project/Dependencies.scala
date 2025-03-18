@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "1.12.780"
-  val awsSdk2Version = "2.26.31"
+  val awsSdk2Version = "2.30.37"
   val capiVersion = "34.0.0"
   val faciaVersion = "16.1.2"
   val dispatchVersion = "0.13.1"
@@ -99,10 +99,6 @@ object Dependencies {
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.4"
-
-  // Forcing a version of this to fix an issue with the dependency.
-  // This is a transitive dependency of the AWS SDK used by etag-caching library
-  val nettyCodecHttp2 = "io.netty" % "netty-codec-http2" % "4.1.112.Final"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
