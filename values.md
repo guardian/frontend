@@ -1,3 +1,5 @@
+Small edit by Roberto, to demo what external contributors experience...
+
 # Knowledge Sharing
  - Being forthcoming and broadcasting our work
  - We strive to share what we work on with the wider department and communicate it’s value
