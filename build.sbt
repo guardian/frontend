@@ -71,7 +71,7 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       janino,
-    ) ++ jackson ++ netty,
+    ) ++ jackson,
     TestAssets / mappings ~= filterAssets,
   )
 
@@ -205,8 +205,6 @@ val main = root()
     archive,
     preview,
     rss,
-  ).settings(
-    libraryDependencies ++= netty
   )
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {

@@ -100,20 +100,6 @@ object Dependencies {
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.4"
 
-  // Forcing a version of this to fix an issue with the dependency.
-  // This is a transitive dependency of the play framework
-  val nettyVersion = "4.1.118.Final"
-  val netty = Seq(
-    "io.netty" % "netty-handler" % nettyVersion,
-    "io.netty" % "netty-codec-http" % nettyVersion,
-    "io.netty" % "netty-buffer" % nettyVersion,
-    "io.netty" % "netty-common" % nettyVersion,
-    "io.netty" % "netty-transport-classes-epoll" % nettyVersion,
-    "io.netty" % "netty-transport-native-unix-common" % nettyVersion,
-    "io.netty" % "netty-transport" % nettyVersion,
-    "io.netty" % "netty-transport-native-epoll" % nettyVersion,
-  )
-
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
