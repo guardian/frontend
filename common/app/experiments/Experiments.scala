@@ -46,5 +46,5 @@ object DCRFootballMatches
       description = "Render football matches lists in DCR",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 10),
-      participationGroup = Perc0E,
+      participationGroup = Perc10A,
     )
