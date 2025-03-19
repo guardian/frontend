@@ -272,6 +272,7 @@ private object DotcomRenderingFootballDataModelImplicits {
       "url" -> competition.url,
       "fullName" -> competition.fullName,
       "nation" -> competition.nation,
+      "tableDividers" -> competition.tableDividers,
     )
 
   implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]

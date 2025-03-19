@@ -11,6 +11,7 @@ trait CompetitionSummary {
   def url: String
   def fullName: String
   def nation: String
+  def tableDividers: List[Int]
 }
 
 /** @param tableDividers
