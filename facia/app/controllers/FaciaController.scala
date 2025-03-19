@@ -251,8 +251,7 @@ trait FaciaController
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
 
-        log.logger.info(
-          customLogFieldMarker,
+        logInfoWithRequestId(
           s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
         )
         withVaryHeader(
@@ -276,8 +275,7 @@ trait FaciaController
         )
       case Some((faciaPage: PressedPage, targetedTerritories)) if request.isJson =>
         val result = if (request.forceDCR) {
-          log.logger.info(
-            customLogFieldMarker,
+          logInfoWithRequestId(
             s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
           )
           JsonComponent.fromWritable(
@@ -304,7 +302,7 @@ trait FaciaController
       }
     }
 
-    futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
+    futureResult.failed.foreach { t: Throwable => logErrorWithRequestId(s"Failed rendering $path with $t", t) }
     futureResult
   }
 

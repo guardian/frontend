@@ -63,6 +63,7 @@ class ShouldServeFrontTest
         href = None,
         description = None,
         groups = None,
+        groupsConfig = None,
         uneditable = None,
         showTags = None,
         showSections = None,
@@ -77,7 +78,6 @@ class ShouldServeFrontTest
         frontsToolSettings = None,
         userVisibility = None,
         targetedTerritory = None,
-        suppressImages = None,
       ),
     ),
   )

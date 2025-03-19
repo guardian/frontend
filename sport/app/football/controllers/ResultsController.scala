@@ -51,23 +51,11 @@ class ResultsController(
     def allPage = new FootballPage("football/results", "football", "All results")
     def competitionPage =
       (competition: Competition) =>
-        new FootballPage(s"${competition.url}/results", "football", s"${competition.fullName} results")
+        new FootballPage(s"${competition.url.stripPrefix("/")}/results", "football", s"${competition.fullName} results")
     def teamPage =
       (team: FootballTeam) =>
-        new FootballPage(s"/football/${tag.getOrElse("")}/results", "football", s"${team.name} results")
+        new FootballPage(s"football/${tag.getOrElse("")}/results", "football", s"${team.name} results")
     byType[FootballPage](allPage)(competitionPage)(teamPage)(tag)
-  }
-
-  private def renderWith(
-      renderFunction: (FootballPage, Results, Map[String, Seq[CompetitionFilter]], Option[InteractiveAtom]) => Result,
-  )(date: LocalDate, tag: Option[String] = None): Result = {
-    val result = for {
-      p <- page(tag)
-      r <- results(date, tag)
-    } yield {
-      renderFunction(p, r, filters, None)
-    }
-    result.getOrElse(NotFound("No results"))
   }
 
   private def renderWithAsync(
@@ -93,8 +81,8 @@ class ResultsController(
     }
 
   private def renderMoreForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] =
-    Action { implicit request =>
-      renderWith(renderMoreMatches)(date, tag)
+    Action.async { implicit request =>
+      renderWithAsync(renderMoreMatches)(date, tag)
     }
 
   /* Public methods */

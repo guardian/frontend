@@ -65,7 +65,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       } yield f(crossword, content)
       maybeCrossword getOrElse Future.successful(noResults())
     } recover { case t: Throwable =>
-      log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
+      logErrorWithRequestId(s"Error retrieving $crosswordType crossword id $id from API", t)
       noResults()
     }
   }
@@ -84,7 +84,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         remoteRenderer.getCrossword(wsClient, page, PageType(page, request, context))
       else
         Future.successful(
-          Cached(60.seconds)(
+          Cached(CacheTime.Crosswords)(
             RevalidatableResult.Ok(
               CrosswordHtmlPage.html(page),
             ),
@@ -336,7 +336,7 @@ class CrosswordEditionsController(
       .contentType("crossword")
       .tag(crosswordTags)
       .useDate("newspaper-edition")
-      .pageSize(25)
+      .pageSize(75)
 
   private lazy val crosswordTags = Seq(
     "crosswords/series/quick",

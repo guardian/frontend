@@ -5,6 +5,8 @@ import play.api.Logger
 import org.apache.commons.lang.exception.ExceptionUtils
 import net.logstash.logback.marker.LogstashMarker
 import net.logstash.logback.marker.Markers._
+import play.api.mvc.RequestHeader
+
 import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.implicitConversions
@@ -16,6 +18,26 @@ trait GuLogging {
 
   protected def logException(e: Exception): Unit = {
     log.error(ExceptionUtils.getStackTrace(e))
+  }
+
+  def logInfoWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
+    log.logger.info(getRequestIdField, message)
+  }
+
+  def logWarnWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
+    log.logger.warn(getRequestIdField, message)
+  }
+
+  def logWarnWithRequestId(message: String, error: Throwable)(implicit request: RequestHeader): Unit = {
+    log.logger.warn(getRequestIdField, message, error)
+  }
+
+  def logErrorWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
+    log.logger.error(getRequestIdField, message)
+  }
+
+  def logErrorWithRequestId(message: String, error: Throwable)(implicit request: RequestHeader): Unit = {
+    log.logger.error(getRequestIdField, message, error)
   }
 
   def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {
@@ -41,6 +63,10 @@ trait GuLogging {
       case Success(result) => result
       case Failure(e)      => log.error(message, e); throw e
     }
+  }
+
+  private def getRequestIdField(implicit request: RequestHeader) = {
+    customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")))
   }
 }
 

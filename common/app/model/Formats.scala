@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.utils.DesignType
+import com.gu.facia.api.models.{GroupConfig, GroupsConfig}
 import com.gu.facia.api.utils.BoostLevel
 import common.Pagination
 import json.ObjectDeduplication.deduplicate
@@ -368,6 +369,8 @@ object PressedCollectionFormat {
   implicit val dateToTimestampWrites: libs.json.JodaWrites.JodaDateTimeNumberWrites.type =
     play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val displayHintsFormat: OFormat[DisplayHints] = Json.format[DisplayHints]
+  implicit val groupConfigFormat: OFormat[GroupConfig] = Json.format[GroupConfig]
+  implicit val groupsConfigFormat: OFormat[GroupsConfig] = Json.format[GroupsConfig]
   implicit val collectionConfigFormat: OFormat[CollectionConfig] = Json.format[CollectionConfig]
   implicit val pressedContentFormat: PressedContentFormat.format.type = PressedContentFormat.format
   val format: OFormat[PressedCollection] = Json.format[PressedCollection]

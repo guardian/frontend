@@ -12,10 +12,8 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
-      LoopVideoTest,
-      DCRCrosswords,
       DarkModeWeb,
-      DCRFootballLive,
+      DCRFootballMatches,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -30,25 +28,7 @@ object EuropeBetaFront
         Owner.withEmail("dotcom.platform@theguardian.com"),
       ),
       sellByDate = LocalDate.of(2025, 4, 2),
-      participationGroup = Perc0A,
-    )
-
-object LoopVideoTest
-    extends Experiment(
-      name = "loop-video-test",
-      description = "Test looping videos effect on Core Web Vitals",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc0B,
-    )
-
-object DCRCrosswords
-    extends Experiment(
-      name = "dcr-crosswords",
-      description = "Render crosswords in DCR",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 2, 26),
-      participationGroup = Perc10A,
+      participationGroup = Perc50,
     )
 
 object DarkModeWeb
@@ -60,11 +40,11 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object DCRFootballLive
+object DCRFootballMatches
     extends Experiment(
-      name = "dcr-football-live",
-      description = "Render football/live in DCR",
+      name = "dcr-football-matches",
+      description = "Render football matches lists in DCR",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 3, 10),
-      participationGroup = Perc0E,
+      sellByDate = LocalDate.of(2025, 4, 10),
+      participationGroup = Perc10A,
     )

@@ -5,15 +5,14 @@ import play.api.libs.ws.WSClient
 import play.api.{Environment, Mode}
 import org.joda.time.LocalDate
 import java.io.File
-
 import scala.util.{Failure, Success}
 import play.api.Logger
-
 import common.GuLogging
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA
 import model.ApplicationContext
+import play.api.mvc.RequestHeader
 
 trait Client extends PaClient with Http {
 
@@ -94,13 +93,13 @@ trait PaFootballClient {
   lazy val client: Client =
     if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
 
-  def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] =
+  def fetchCompetitionsAndTeams(implicit request: RequestHeader): Future[(List[Season], List[Team])] =
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
       competitionTeams <- Future.traverse(competitions) { comp =>
         client.teams(comp.competitionId, comp.startDate, comp.endDate).recover { case e: PaClientErrorsException =>
           // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
-          log.error(s"PA Client error when fetching teams for competition $comp: ", e)
+          logErrorWithRequestId(s"PA Client error when fetching teams for competition $comp: ", e)
           List()
         }
       }

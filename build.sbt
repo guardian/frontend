@@ -30,7 +30,6 @@ val common = library("common")
       awsSqs,
       awsSsm,
       eTagCachingS3,
-      nettyCodecHttp2,
       contentApiClient,
       contentApiModelsJson,
       enumeratumPlayJson,
