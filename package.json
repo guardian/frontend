@@ -88,7 +88,7 @@
 		"execa": "^1.0.0",
 		"fastdom": "1.0.9",
 		"fence": "guardian/fence#0.2.11",
-		"figures": "^2.0.0",
+		"figures": "^6.1.0",
 		"glob": "^7.2.0",
 		"gzip-size": "^3.0.0",
 		"hasha": "^3.0.0",
