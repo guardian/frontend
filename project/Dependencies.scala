@@ -80,7 +80,7 @@ object Dependencies {
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.55"
-  val pekkoVersion = "1.0.3"
+  val pekkoVersion = "1.1.3"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
   val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
