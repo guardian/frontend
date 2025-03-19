@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       EuropeBetaFront,
       DarkModeWeb,
-      DCRFootballMatches,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -38,13 +37,4 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 30),
       participationGroup = Perc0D,
-    )
-
-object DCRFootballMatches
-    extends Experiment(
-      name = "dcr-football-matches",
-      description = "Render football matches lists in DCR",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 4, 10),
-      participationGroup = Perc10A,
     )
