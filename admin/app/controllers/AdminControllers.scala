@@ -60,8 +60,6 @@ trait AdminControllers {
     s3Client,
     system = "frontend-admin",
     extraDoNotAuthenticatePathPrefixes = Seq(
-      "/deploys", // not authenticated so it can be accessed by Prout to determine which builds have been deployed
-      "/deploy", // not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
       // Date: 06 July 2021
       // Author: Pascal
       // Added as part of posing the ground for the interactive migration.
@@ -91,7 +89,6 @@ trait AdminControllers {
   lazy val dfpDataController = wire[DfpDataController]
   lazy val takeoverWithEmptyMPUsController = wire[TakeoverWithEmptyMPUsController]
   lazy val fastlyController = wire[FastlyController]
-  lazy val deploysController = wire[DeploysControllerImpl]
   lazy val redirectController = wire[RedirectController]
   lazy val sportTroubleShooterController = wire[SportTroubleshooterController]
   lazy val troubleshooterController = wire[TroubleshooterController]

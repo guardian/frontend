@@ -4,7 +4,6 @@ import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
@@ -18,7 +17,14 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
-import http.{Filters, GuardianAuthWithExemptions, PreviewContentSecurityPolicyFilter, PreviewNoCacheFilter, routes}
+import http.{
+  Filters,
+  GuardianAuthWithExemptions,
+  PreviewContentSecurityPolicyFilter,
+  PreviewNoCacheFilter,
+  RequestIdFilter,
+  routes,
+}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
@@ -49,7 +55,6 @@ trait PreviewLifecycleComponents
 
   def standaloneLifecycleComponents: List[LifecycleComponent] =
     List(
-      wire[CommercialLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
       wire[FaciaDfpAgentLifecycle],
@@ -136,9 +141,10 @@ trait AppComponents
     standaloneLifecycleComponents :+ wire[CachedHealthCheckLifeCycle]
 
   override lazy val httpFilters: Seq[EssentialFilter] =
-    auth.filter :: new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: Filters.common(
-      frontend.preview.BuildInfo,
-    )
+    auth.filter :: new PreviewNoCacheFilter :: new PreviewContentSecurityPolicyFilter :: new RequestIdFilter :: Filters
+      .common(
+        frontend.preview.BuildInfo,
+      )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[PreviewErrorHandler]
 }

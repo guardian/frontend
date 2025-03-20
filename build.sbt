@@ -30,7 +30,6 @@ val common = library("common")
       awsSqs,
       awsSsm,
       eTagCachingS3,
-      nettyCodecHttp2,
       contentApiClient,
       contentApiModelsJson,
       enumeratumPlayJson,
@@ -106,15 +105,6 @@ val sport = application("sport")
 
 val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
-val diagnostics = application("diagnostics")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-  .settings(
-    libraryDependencies ++= Seq(
-      redisClient,
-    ),
-  )
-
 val admin = application("admin")
   .dependsOn(commonWithTests)
   .aggregate(common)
@@ -174,7 +164,6 @@ val dev = application("dev-build")
     archive,
     sport,
     discussion,
-    diagnostics,
     identity,
     admin,
     commercial,
@@ -209,7 +198,6 @@ val main = root()
     applications,
     sport,
     discussion,
-    diagnostics,
     admin,
     identity,
     commercial,

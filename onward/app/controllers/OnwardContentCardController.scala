@@ -1,10 +1,11 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, GuLogging}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, NoCache}
+import net.logstash.logback.marker.Markers.append
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 
@@ -26,7 +27,11 @@ abstract class OnwardContentCardController(
 
   protected def lookup(path: String, fields: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
-    log.info(s"Fetching article: $path for edition: ${edition.id}:")
+
+    val requestId = request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")
+    val customFieldMarker = append("requestId", requestId)
+
+    log.logger.info(customFieldMarker, s"Fetching article: $path for edition: ${edition.id}:")
 
     contentApiClient.getResponse(
       contentApiClient

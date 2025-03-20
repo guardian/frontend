@@ -280,7 +280,7 @@ class FrontsController(
       val embedContent = (previewResponse.json \ "html").as[String]
       Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.viewEmbed(Html(embedContent), snapFields)))
     }).recover { case e =>
-      log.error(s"Failed to preview snap content from ${snapFields.uri}", e)
+      logErrorWithRequestId(s"Failed to preview snap content from ${snapFields.uri}", e)
       NoCache(Ok(views.html.football.fronts.failedEmbed(Html(e.getMessage), snapFields)))
     }
     result

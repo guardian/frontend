@@ -5,6 +5,7 @@ import conf.FootballClient
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import model.ApplicationContext
+import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 
 trait FootballControllers {
@@ -12,6 +13,7 @@ trait FootballControllers {
   def footballClient: FootballClient
   def contentApiClient: ContentApiClient
   def controllerComponents: ControllerComponents
+  def wsClient: WSClient
   implicit def appContext: ApplicationContext
   lazy val fixturesController = wire[FixturesController]
   lazy val resultsController = wire[ResultsController]

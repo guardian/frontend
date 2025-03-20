@@ -16,6 +16,7 @@ import model._
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
+import net.logstash.logback.marker.Markers.append
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
@@ -237,6 +238,8 @@ trait FaciaController
       }
     }
 
+    val customLogFieldMarker = append("requestId", request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))
+
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
@@ -247,9 +250,9 @@ trait FaciaController
           if FaciaPicker.getTier(faciaPage) == RemoteRender
             && !request.isJson =>
         val pageType = PageType(faciaPage, request, context)
-        log.info(
-          s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap
-              .getOrElse("X-GU-GeoLocation", "country:row")}",
+
+        logInfoWithRequestId(
+          s"Front Geo Request (212): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
         )
         withVaryHeader(
           remoteRenderer.getFront(
@@ -272,9 +275,8 @@ trait FaciaController
         )
       case Some((faciaPage: PressedPage, targetedTerritories)) if request.isJson =>
         val result = if (request.forceDCR) {
-          log.info(
-            s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap
-                .getOrElse("X-GU-GeoLocation", "country:row")}",
+          logInfoWithRequestId(
+            s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
           )
           JsonComponent.fromWritable(
             DotcomFrontsRenderingDataModel(
@@ -300,7 +302,7 @@ trait FaciaController
       }
     }
 
-    futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t) }
+    futureResult.failed.foreach { t: Throwable => logErrorWithRequestId(s"Failed rendering $path with $t", t) }
     futureResult
   }
 

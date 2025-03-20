@@ -1,12 +1,8 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
-import commercial.CommercialLifecycle
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
-import commercial.model.feeds.{FeedsFetcher, FeedsParser}
-import commercial.model.merchandise.jobs.{Industries, JobsAgent}
-import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
@@ -38,13 +34,7 @@ trait CommercialServices {
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
 
-  lazy val travelOffersAgent = wire[TravelOffersAgent]
-  lazy val jobsAgent = wire[JobsAgent]
   lazy val capiAgent = wire[CapiAgent]
-  lazy val industries = wire[Industries]
-
-  lazy val feedsFetcher = wire[FeedsFetcher]
-  lazy val feedsParser = wire[FeedsParser]
 }
 
 trait AppComponents extends FrontendComponents with CommercialControllers with CommercialServices {
@@ -53,7 +43,6 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
   lazy val healthCheck = wire[HealthCheck]
 
   override lazy val lifecycleComponents = List(
-    wire[CommercialLifecycle],
     wire[DfpAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],

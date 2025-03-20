@@ -240,17 +240,6 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
-  val prebidSonobi: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-sonobi",
-    description = "Include Sonobi adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val prebidAppNexus: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-appnexus",
@@ -350,28 +339,6 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
-  val prebidImproveDigital: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-improve-digital",
-    description = "Include Improve Digital adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidImproveDigitalSkins: Switch = Switch(
-    group = CommercialPrebid,
-    "prebid-improve-digital-skins",
-    "Include Collective page skins via Improve Digital adapter in Prebid auctions",
-    owners = Seq(Owner.withGithub("mxdvl")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val prebidXaxis: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-xaxis",
@@ -442,6 +409,17 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-the-trade-desk",
     description = "Include The Trade Desk (ttd) adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidBidCache: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-bid-cache",
+    description = "Enable the Prebid bid cache",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

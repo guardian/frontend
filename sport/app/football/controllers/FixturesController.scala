@@ -5,12 +5,13 @@ import feed.CompetitionsService
 import football.model._
 import model._
 import java.time.LocalDate
-import pa.FootballTeam
+import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 
 class FixturesController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
     with CompetitionFixtureFilters {
@@ -34,12 +35,12 @@ class FixturesController(
     moreFixturesFor(year, month, day)
 
   private def renderAllFixtures(date: LocalDate): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       renderMatchList(page, fixtures(date), filters)
     }
 
   private def renderMoreFixtures(fixtures: Fixtures): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       renderMoreMatches(page, fixtures, filters)
     }
 
@@ -81,7 +82,7 @@ class FixturesController(
   private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] =
     getTagFixtures(date, tag)
       .map(result =>
-        Action { implicit request =>
+        Action.async { implicit request =>
           renderMatchList(
             result._1,
             result._2,

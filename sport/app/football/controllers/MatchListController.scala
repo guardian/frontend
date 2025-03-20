@@ -1,22 +1,34 @@
 package football.controllers
 
 import common.{Edition, JsonComponent}
+import common._
 import feed.Competitions
-import football.model.MatchesList
-import implicits.Requests
+import football.model.DotcomRenderingFootballDataModel.toJson
+import football.model.{DotcomRenderingFootballDataModel, MatchesList}
+import football.model.DotcomRenderingFootballDataModelImplicits._
+import implicits.{HtmlFormat, JsonFormat, Requests}
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, Competition, TeamMap}
+import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
 
 import java.time.LocalDate
 import pa.FootballTeam
-import play.api.mvc.{BaseController, RequestHeader}
+import play.api.mvc.{BaseController, RequestHeader, Result}
 import play.twirl.api.Html
 
 import java.time.format.DateTimeFormatter
 import model.content.InteractiveAtom
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{FootballPagePicker, LocalRender, RemoteRender}
 
-trait MatchListController extends BaseController with Requests {
+import scala.concurrent.Future
+import scala.concurrent.Future.successful
+
+trait MatchListController extends BaseController with Requests with ImplicitControllerExecutionContext {
   def competitionsService: Competitions
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
+  val wsClient: WSClient
+
   protected val datePattern = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId)
   protected def createDate(year: String, month: String, day: String): LocalDate = {
     LocalDate.parse(s"$year${month.capitalize}$day", datePattern)
@@ -27,17 +39,38 @@ trait MatchListController extends BaseController with Requests {
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
       atom: Option[InteractiveAtom] = None,
-  )(implicit request: RequestHeader, context: ApplicationContext) = {
-    Cached(10) {
-      if (request.isJson)
-        JsonComponent(
-          "html" -> football.views.html.matchList.matchesComponent(matchesList),
-          "next" -> Html(matchesList.nextPage.getOrElse("")),
-          "previous" -> Html(matchesList.previousPage.getOrElse("")),
-          "atom" -> atom.isDefined,
+  )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
+
+    val tier = FootballPagePicker.getTier(page)
+
+    request.getRequestFormat match {
+      case JsonFormat if request.forceDCR =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
         )
-      else
-        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+      case JsonFormat =>
+        successful(Cached(CacheTime.Football) {
+          JsonComponent(
+            "html" -> football.views.html.matchList.matchesComponent(matchesList),
+            "next" -> Html(matchesList.nextPage.getOrElse("")),
+            "previous" -> Html(matchesList.previousPage.getOrElse("")),
+            "atom" -> atom.isDefined,
+          )
+        })
+      case HtmlFormat if tier == RemoteRender =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
+        )
+        remoteRenderer.getFootballPage(wsClient, toJson(model))
+      case _ =>
+        successful(Cached(CacheTime.Football) {
+          RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        })
     }
   }
 
@@ -47,15 +80,38 @@ trait MatchListController extends BaseController with Requests {
       filters: Map[String, Seq[CompetitionFilter]],
       atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
-    Cached(10) {
-      if (request.isJson)
-        JsonComponent(
-          "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
-          "next" -> Html(matchesList.nextPage.getOrElse("")),
-          "previous" -> Html(matchesList.previousPage.getOrElse("")),
+    val tier = FootballPagePicker.getTier(page)
+
+    request.getRequestFormat match {
+      case JsonFormat if request.forceDCR =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
         )
-      else
-        RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+
+      case JsonFormat =>
+        successful(Cached(CacheTime.Football) {
+          JsonComponent(
+            "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
+            "next" -> Html(matchesList.nextPage.getOrElse("")),
+            "previous" -> Html(matchesList.previousPage.getOrElse("")),
+          )
+        })
+
+      case HtmlFormat if tier == RemoteRender =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
+        )
+        remoteRenderer.getFootballPage(wsClient, toJson(model))
+
+      case _ =>
+        successful(Cached(CacheTime.Football) {
+          RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        })
     }
   }
 

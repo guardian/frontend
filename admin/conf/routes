@@ -4,6 +4,7 @@
 
 
 GET         /_healthcheck                                                                           controllers.HealthCheck.healthCheck()
+GET         /_tags                                                                                  controllers.HealthCheck.tags()
 
 # authentication endpoints
 GET         /oauthCallback                                                                          http.GuardianAuthWithExemptions.oauthCallback
@@ -102,10 +103,6 @@ GET         /metrics/googlebot/404                                              
 GET         /metrics/afg                                                                            controllers.admin.MetricsController.renderAfg()
 GET         /metrics/webpack-bundle-visualization                                                   controllers.admin.MetricsController.renderBundleVisualization()
 GET         /metrics/webpack-bundle-analyzer                                                        controllers.admin.MetricsController.renderBundleAnalyzer()
-
-# Used by Prout to know which builds/commits have been deployed in PROD
-GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
-POST        /deploy                                                                                 controllers.admin.DeploysController.deploy(stage: String, build: Int)
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()

@@ -96,7 +96,7 @@ Website: rhysmills.com
 From: Tonbridge, UK
 
 Editorial Systems: Luke Hoyland
-Twitter:@lukehoyland
+Bluesky: @hoy.la
 Location: London, UK
 
 Solutions Architect: Sakib Supple

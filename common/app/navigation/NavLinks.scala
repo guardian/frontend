@@ -289,7 +289,6 @@ object NavLinks {
       ukBusiness,
       ukEnvironment,
       politics,
-      society,
       science,
       tech,
       globalDevelopment,

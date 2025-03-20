@@ -59,7 +59,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       payload: JsValue,
       endpoint: String,
-      fastlyRequestId: Option[String],
+      requestId: Option[String],
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[WSResponse] = {
 
@@ -70,7 +70,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .withRequestTimeout(timeout)
       .addHttpHeaders("Content-Type" -> "application/json")
 
-    val resp = fastlyRequestId match {
+    val resp = requestId match {
       case Some(id) => request.addHttpHeaders("x-gu-xid" -> id).post(payload)
       case None     => request.post(payload)
     }
@@ -104,7 +104,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
-    val fastlyRequestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-gu-xid")
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -140,10 +140,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     if (CircuitBreakerDcrSwitch.isSwitchedOn) {
       circuitBreaker
-        .withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, fastlyRequestId, timeout))
+        .withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, requestId, timeout))
         .map(handler)
     } else {
-      postWithoutHandler(ws, payload, endpoint, fastlyRequestId, timeout).map(handler)
+      postWithoutHandler(ws, payload, endpoint, requestId, timeout).map(handler)
     }
   }
 
@@ -232,9 +232,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
-    val fastlyRequestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-gu-xid")
 
-    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/Blocks", fastlyRequestId)
+    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/Blocks", requestId)
       .flatMap(response => {
         if (response.status == 200)
           Future.successful(response.body)
@@ -254,9 +254,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
-    val fastlyRequestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-gu-xid")
 
-    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks", fastlyRequestId)
+    postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks", requestId)
       .flatMap(response => {
         if (response.status == 200)
           Future.successful(response.body)
@@ -436,7 +436,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Crosswords)
   }
 
   def getEditionsCrossword(
@@ -445,6 +445,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] = {
     val json = EditionsCrosswordRenderingDataModel.toJson(crosswords)
     post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Default)
+  }
+
+  def getFootballPage(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballDataPage", CacheTime.Football)
   }
 }
 

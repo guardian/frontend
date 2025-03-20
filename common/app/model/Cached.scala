@@ -22,11 +22,13 @@ object CacheTime {
   def RecentlyUpdated = CacheTime(60, if (ShorterSurrogateCacheForRecentArticles.isSwitchedOn) Some(30) else None)
   // There is lambda which invalidates the cache on press events, so the facia cache time can be high.
   object Facia extends CacheTime(60, Some(900))
+  object Crosswords extends CacheTime(60, Some(900))
   object ArchiveRedirect extends CacheTime(60, Some(300))
   object ShareCount extends CacheTime(60, Some(600))
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
   object DiscussionDefault extends CacheTime(60)
   object DiscussionClosed extends CacheTime(60, Some(longCacheTime))
+  object Football extends CacheTime(10)
   private def oldArticleCacheTime = if (ShorterSurrogateCacheForOlderArticles.isSwitchedOn) 60 else longCacheTime
   def LastDayUpdated = CacheTime(60, Some(oldArticleCacheTime))
   def NotRecentlyUpdated = CacheTime(60, Some(oldArticleCacheTime))

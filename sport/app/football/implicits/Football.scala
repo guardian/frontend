@@ -44,8 +44,7 @@ trait Football {
       m.awayTeam.score,
     )
 
-    def isOn(date: LocalDate): Boolean =
-      m.date.toLocalDate.isAfter(date) && m.date.toLocalDate.isBefore(date.plusDays(1))
+    def isOn(date: LocalDate): Boolean = m.date.toLocalDate == date
 
     // results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {

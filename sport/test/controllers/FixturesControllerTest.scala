@@ -24,7 +24,7 @@ import org.scalatest.matchers.should.Matchers
   val tag = "premierleague"
 
   lazy val fixturesController =
-    new FixturesController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+    new FixturesController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents(), wsClient)
 
   "can load the all fixtures page" in {
     val result = fixturesController.allFixtures()(TestRequest())
