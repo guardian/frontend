@@ -1,7 +1,7 @@
 import config from 'lib/config';
 import {
 	getAuthStatus,
-	getOptionsHeadersWithOkta,
+	getOptionsHeaders,
 } from '../../modules/identity/api';
 
 const apiUrl = `${config.get<string>(
@@ -23,9 +23,8 @@ const request = async (
 	const authStatus = await getAuthStatus();
 
 	const optionsHeaders =
-		authStatus.kind === 'SignedInWithCookies' ||
-		authStatus.kind === 'SignedInWithOkta'
-			? getOptionsHeadersWithOkta(authStatus)
+		authStatus.kind === 'SignedIn'
+			? getOptionsHeaders(authStatus)
 			: {};
 
 	if (method === 'POST') {

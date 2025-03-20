@@ -1,5 +1,6 @@
 package conf.switches
 
+<<<<<<< Updated upstream
 import conf.switches.Expiry.never
 
 trait IdentitySwitches {
@@ -26,3 +27,6 @@ trait IdentitySwitches {
     highImpact = false,
   )
 }
+=======
+trait IdentitySwitches {}
+>>>>>>> Stashed changes
