@@ -117,14 +117,9 @@ export const isUserLoggedIn = (): Promise<boolean> =>
 export const getOptionsHeaders = (
 	authStatus: SignedIn,
 ): RequestInit => {
-	if (authStatus.kind === 'SignedIn') {
-		return {
-			credentials: 'include',
-		};
-	}
-
 	return {
 		headers: {
+			credentials: 'include',
 			Authorization: `Bearer ${authStatus.accessToken.accessToken}`,
 			'X-GU-IS-OAUTH': 'true',
 		},
