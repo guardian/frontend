@@ -10,11 +10,12 @@ templates:
     type: autoscaling
     parameters:
       bucketSsmKey: /account/services/dotcom-artifact.bucket
-
       warmupGrace: 60
     dependencies:
     - frontend-static
-    - update-ami
+    - update-ami-for-legacy-stacks
+    - update-ami-for-admin
+    - update-ami-for-discussion
 
 deployments:
   admin:
@@ -29,6 +30,8 @@ deployments:
     template: frontend
   discussion:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   facia:
     template: frontend
   facia-press:
@@ -50,7 +53,7 @@ deployments:
       cacheControl: public, max-age=315360000, immutable
       prefixStack: false
       publicReadAcl: false
-  update-ami:
+  update-ami-for-legacy-stacks:
     type: ami-cloudformation-parameter
     parameters:
       cloudFormationStackByTags: false
@@ -58,5 +61,22 @@ deployments:
       cloudFormationStackName: frontend
       amiParametersToTags:
         AMI:
+          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  # Riff-Raff identifies the GuCDK stacks using tag-based lookups
+  update-ami-for-admin:
+    app: admin
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIAdmin:
+          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-discussion:
+    app: discussion
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIDiscussion:
           Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD

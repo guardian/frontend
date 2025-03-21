@@ -12,10 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
-      DCRCrosswords,
       DarkModeWeb,
-      DCRFootballLive,
-      FiveFourImages,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -33,15 +30,6 @@ object EuropeBetaFront
       participationGroup = Perc50,
     )
 
-object DCRCrosswords
-    extends Experiment(
-      name = "dcr-crosswords",
-      description = "Render crosswords in DCR",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 3, 31),
-      participationGroup = Perc20A,
-    )
-
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
@@ -49,22 +37,4 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 30),
       participationGroup = Perc0D,
-    )
-
-object DCRFootballLive
-    extends Experiment(
-      name = "dcr-football-live",
-      description = "Render football/live in DCR",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 4, 10),
-      participationGroup = Perc0E,
-    )
-
-object FiveFourImages
-    extends Experiment(
-      name = "ab-five-four-images",
-      description = "Compare 5:4 vs 5:3 aspect ratio in article images",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 3, 20),
-      participationGroup = Perc0C,
     )

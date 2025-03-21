@@ -77,10 +77,10 @@ object PressedCard {
       val seconds: Option[Int] = if (audioDurationSeconds(fc).isDefined) {
         audioDurationSeconds(fc).get.headOption
       } else None
-      if (minutes.isDefined && seconds.isDefined) {
+      if (minutes.isDefined || seconds.isDefined) {
         // adds a leading zero if the values are less than 10
-        val formattedMinutes = f"${minutes.get}%02d"
-        val formattedSeconds = f"${seconds.get}%02d"
+        val formattedMinutes = f"${minutes.getOrElse(0)}%02d"
+        val formattedSeconds = f"${seconds.getOrElse(0)}%02d"
         val duration = s"$formattedMinutes:$formattedSeconds"
         Some(duration)
       } else None
