@@ -1,5 +1,5 @@
 import { CommentBox } from 'common/modules/discussion/comment-box';
-import { getUserFromApiOrOkta as getUserFromApi_ } from 'common/modules/identity/api';
+import { getUserData as getUserFromApi_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
 
 jest.mock('lib/config', () => ({
@@ -22,7 +22,7 @@ jest.mock('common/modules/identity/api', () => ({
             userEmailValidated: false
         }
     }),
-    getUserFromApiOrOkta: jest.fn().mockResolvedValue({
+    getUserData: jest.fn().mockResolvedValue({
             statusFields: {
                 userEmailValidated: true,
         },

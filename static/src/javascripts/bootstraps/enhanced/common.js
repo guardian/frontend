@@ -16,7 +16,6 @@ import {
 } from 'common/modules/commercial/user-features';
 import { reportError } from 'lib/report-error';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
-import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
@@ -48,7 +47,6 @@ import {
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { handleBraze } from 'common/modules/commercial/braze/buildBrazeMessaging';
-import { eitherInOktaExperimentOrElse } from 'common/modules/identity/api';
 
 const initialiseTopNavItems = () => {
     const header = document.getElementById('header');
@@ -143,17 +141,6 @@ const showHistoryInMegaNav = () => {
             showInMegaNav();
         });
     }
-};
-
-const idCookieRefresh = () => {
-    /** We only want to call `initCookieRefresh` if the user is not in the Okta experiment
-     * and the switch is on.
-     */
-    eitherInOktaExperimentOrElse(() => undefined, () => {
-        if (config.get('switches.idCookieRefresh')) {
-            initCookieRefresh();
-        }
-    })
 };
 
 const windowEventListeners = () => {
@@ -288,7 +275,6 @@ const init = () => {
         ['c-dates', showRelativeDates],
         ['c-clickstream', initialiseClickstream],
         ['c-history', updateHistory],
-        ['c-id-cookie-refresh', idCookieRefresh],
         ['c-history-nav', showHistoryInMegaNav],
         ['c-start-register', startRegister],
         ['c-cookies', cleanupCookies],

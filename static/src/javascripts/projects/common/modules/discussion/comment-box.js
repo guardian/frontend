@@ -12,7 +12,7 @@ import {
     getUserFromCookie,
     reset,
     updateUsername,
-    getUserFromApiOrOkta,
+    getUserData,
 } from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import { urlify } from './urlify';
@@ -234,10 +234,10 @@ class CommentBox extends Component {
     postComment() {
         const commentBody = this.getElem('body');
         const { value } =
-            (commentBody &&
-                commentBody instanceof HTMLTextAreaElement &&
-                commentBody) ||
-            {};
+        (commentBody &&
+            commentBody instanceof HTMLTextAreaElement &&
+            commentBody) ||
+        {};
 
         const comment = {
             body: value,
@@ -336,7 +336,7 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().dates.accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                return getUserFromApiOrOkta().then(user => {
+                return getUserData().then(user => {
                     if (user.statusFields.userEmailValidated) {
                         return validEmailCommentSubmission();
                     }
