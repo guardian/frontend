@@ -84,37 +84,9 @@ export type AuthStatus =
 	| SignedOut
 	| SignedIn;
 
-const useOkta = !!window.guardian.config.switches.okta;
-
-/**
- * Runs `inOkta` if the user is enrolled in the Okta experiment, otherwise runs `notInOkta`
- * @param inOkta runs if the user is enrolled in the Okta experiment
- * @param notInOkta runs if the user is **not** enrolled in the Okta experiment
- */
-export const eitherInOktaExperimentOrElse = async <A, B>(
-	inOkta: (authStatus: SignedInWithOkta | SignedOutWithOkta) => A,
-	notInOkta: () => B,
-): Promise<void> => {
-	const authStatus = await getAuthStatus();
-	switch (authStatus.kind) {
-		case 'SignedInWithOkta':
-		case 'SignedOutWithOkta':
-			inOkta(authStatus);
-			break;
-		default:
-			notInOkta();
-	}
-};
-
 export const getAuthStatus = async (): Promise<AuthStatus> => {
-<<<<<<< Updated upstream
-	if (useOkta) {
-		const { isSignedInWithOktaAuthState } = await import('./okta');
-		const authState = await isSignedInWithOktaAuthState();
-=======
 		const { isSignedInAuthState } = await import('./okta');
 		const authState = await isSignedInAuthState();
->>>>>>> Stashed changes
 		if (authState.isAuthenticated) {
 			return {
 				kind: 'SignedIn',
@@ -126,18 +98,6 @@ export const getAuthStatus = async (): Promise<AuthStatus> => {
 				kind: 'SignedOut',
 			};
 		}
-	} else {
-		const isUserLoggedInWithCookie = getUserFromCookie() !== null;
-		if (isUserLoggedInWithCookie) {
-			return {
-				kind: 'SignedInWithCookies',
-			};
-		} else {
-			return {
-				kind: 'SignedOutWithCookies',
-			};
-		}
-	}
 };
 
 export const isUserLoggedIn = (): Promise<boolean> =>
