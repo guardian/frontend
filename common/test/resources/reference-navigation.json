@@ -847,6 +847,12 @@
 						"classList": []
 					},
 					{
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
+						"children": [],
+						"classList": []
+					},
+					{
 						"title": "Speedy",
 						"url": "/crosswords/series/speedy",
 						"children": [],
@@ -1606,6 +1612,12 @@
 						"classList": []
 					},
 					{
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
+						"children": [],
+						"classList": []
+					},
+					{
 						"title": "Speedy",
 						"url": "/crosswords/series/speedy",
 						"children": [],
@@ -2307,6 +2319,12 @@
 					{
 						"title": "Quick",
 						"url": "/crosswords/series/quick",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
@@ -3213,6 +3231,12 @@
 						"classList": []
 					},
 					{
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
+						"children": [],
+						"classList": []
+					},
+					{
 						"title": "Speedy",
 						"url": "/crosswords/series/speedy",
 						"children": [],
@@ -3411,6 +3435,7 @@
 		"crosswords/series/quiptic",
 		"crosswords/series/genius",
 		"crosswords/series/speedy",
+		"crosswords/series/sunday-quick",
 		"crosswords/series/everyman",
 		"crosswords/series/special",
 		"crosswords/series/azed",
@@ -4221,6 +4246,12 @@
 					{
 						"title": "Quick",
 						"url": "/crosswords/series/quick",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
