@@ -3756,8 +3756,8 @@ __metadata:
     "@guardian/commercial": "npm:25.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
-    "@guardian/identity-auth": "npm:3.0.0"
-    "@guardian/identity-auth-frontend": "npm:6.0.3"
+    "@guardian/identity-auth": "npm:6.0.1"
+    "@guardian/identity-auth-frontend": "npm:8.1.0"
     "@guardian/libs": "npm:22.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
@@ -3885,32 +3885,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@guardian/identity-auth-frontend@npm:6.0.3":
-  version: 6.0.3
-  resolution: "@guardian/identity-auth-frontend@npm:6.0.3"
+"@guardian/identity-auth-frontend@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@guardian/identity-auth-frontend@npm:8.1.0"
   peerDependencies:
-    "@guardian/identity-auth": ^4.0.1
-    "@guardian/libs": ^19.0.0
+    "@guardian/identity-auth": ^6.0.0
+    "@guardian/libs": ^21.0.0
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/cf39465b55f07dd02a99cbdf10937f0a74797042430b9a50d1259c0f655e272aa1d6a086efece26ace22cde4fa45aab502c16fb155a125f08419b7756084cb1d
+  checksum: 10c0/905dbe1bb547de79dba6a9a4462f31a9e804d71c7fedbbc87d557f6c7b4fcb20cafc63021f9b0cd254e4718f87f03c4d0cd529b872d62f548eb4ab1558913168
   languageName: node
   linkType: hard
 
-"@guardian/identity-auth@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@guardian/identity-auth@npm:3.0.0"
+"@guardian/identity-auth@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@guardian/identity-auth@npm:6.0.1"
   peerDependencies:
-    "@guardian/libs": ^18.0.0
+    "@guardian/libs": ^21.0.0
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/3523c2bb51bcf27bbed548f421d046486465166d2bfda8ea4bdf2bc3de643284b66db981f3512a55cd1f5e04cb6852d44c4b085ff0c7cd21ee5756496150d514
+  checksum: 10c0/c97408cc262ae3fe4cc8421e3bde26e81455047497618d607a636f64ea45578bda2685f4b503bdd1a383bc55422873b087009c84ced4fd7c9f5d9ed113c3b545
   languageName: node
   linkType: hard
 
