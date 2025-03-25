@@ -51,17 +51,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-bid-cache",
-    "Test the impact of enabling prebid bid caching",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 3, 28)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
     "ab-the-trade-desk",
     "Test the impact of disabling the trade desk for some of our users",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
