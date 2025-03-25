@@ -46,12 +46,16 @@ object HttpErrors {
 
   def global4XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
     v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric4XX, v1LoadBalancerNamespace)))
-    v2Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v2Metric4XX, v2LoadBalancerNamespace)))
+    v2Metric <- withErrorLogging(
+      euWestClient.getMetricStatisticsFuture(
+        loadBalancerMetric(v1Metric4XX, v2Metric4XX, LoadBalancer("frontend-discussion").get),
+      ),
+    )
   } yield {
-    new AwsDualYLineChart(
+    new AwsLineChart(
       "Global 4XX",
-      ("Time", "4XX/ min (v1 LBs)", "4XX/ min (v2 LBs)"),
-      ChartFormat.DoubleLineBlueRed,
+      Seq("Time", "4XX/ min"),
+      ChartFormat.SingleLineRed,
       v1Metric,
       v2Metric,
     )
@@ -59,11 +63,15 @@ object HttpErrors {
 
   def global5XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
     v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric5XX, v1LoadBalancerNamespace)))
-    v2Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v2Metric5XX, v2LoadBalancerNamespace)))
+    v2Metric <- withErrorLogging(
+      euWestClient.getMetricStatisticsFuture(
+        loadBalancerMetric(v1Metric5XX, v2Metric5XX, LoadBalancer("frontend-discussion").get),
+      ),
+    )
   } yield {
-    new AwsDualYLineChart(
+    new AwsLineChart(
       "Global 5XX",
-      ("Time", "5XX/ min (v1 LBs)", "5XX/ min (v2 LBs)"),
+      Seq("Time", "5XX/ min"),
       ChartFormat.DoubleLineBlueRed,
       v1Metric,
       v2Metric,
