@@ -105,22 +105,51 @@ object CloudWatch extends GuLogging {
     future
   }
 
+  def prepareV1LoadBalancerRequest(
+      baseRequest: GetMetricStatisticsRequest,
+      loadBalancerId: String,
+      v1MetricName: String,
+  ): GetMetricStatisticsRequest = baseRequest
+    .withNamespace("AWS/ELB")
+    .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancerId))
+    .withMetricName(v1MetricName)
+
+  def prepareV2LoadBalancerRequest(
+      baseRequest: GetMetricStatisticsRequest,
+      loadBalancerId: String,
+      v2MetricName: String,
+      // Most metrics that we're interested in don't need this dimension
+      targetGroupDimensionValue: Option[String] = None,
+  ): GetMetricStatisticsRequest = {
+    val loadBalancerDimension = new Dimension().withName("LoadBalancer").withValue(loadBalancerId)
+    val dimensions: List[Dimension] = targetGroupDimensionValue
+      .map(targetGroup => List(loadBalancerDimension, new Dimension().withName("TargetGroup").withValue(targetGroup)))
+      .getOrElse(List(loadBalancerDimension))
+    baseRequest
+      .withNamespace("AWS/ApplicationELB")
+      .withDimensions(dimensions.asJava)
+      .withMetricName(v2MetricName)
+  }
+
   def fetchLatencyMetric(
       loadBalancer: LoadBalancer,
-  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
+  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
+    val baseRequest = new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withUnit(StandardUnit.Seconds)
+      .withStatistics("Average")
+    val request = loadBalancer.targetGroup match {
+      case None =>
+        prepareV1LoadBalancerRequest(baseRequest, loadBalancer.id, "Latency")
+      case Some(_) =>
+        prepareV2LoadBalancerRequest(baseRequest, loadBalancer.id, "TargetResponseTime")
+    }
     withErrorLogging(
-      euWestClient.getMetricStatisticsFuture(
-        new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(2).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(60)
-          .withUnit(StandardUnit.Seconds)
-          .withStatistics("Average")
-          .withNamespace("AWS/ELB")
-          .withMetricName("Latency")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
-      ),
+      euWestClient.getMetricStatisticsFuture(request),
     )
+  }
 
   private def latency(
       loadBalancers: Seq[LoadBalancer],
@@ -142,19 +171,22 @@ object CloudWatch extends GuLogging {
 
   def fetchOkMetric(
       loadBalancer: LoadBalancer,
-  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
+  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
+    val baseRequest = new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withStatistics("Sum")
+    val fullRequest = loadBalancer.targetGroup match {
+      case None =>
+        prepareV1LoadBalancerRequest(baseRequest, loadBalancer.id, "HTTPCode_Backend_2XX")
+      case Some(_) =>
+        prepareV2LoadBalancerRequest(baseRequest, loadBalancer.id, "HTTPCode_Target_2XX_Count")
+    }
     withErrorLogging(
-      euWestClient.getMetricStatisticsFuture(
-        new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(2).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(60)
-          .withStatistics("Sum")
-          .withNamespace("AWS/ELB")
-          .withMetricName("HTTPCode_Backend_2XX")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
-      ),
+      euWestClient.getMetricStatisticsFuture(fullRequest),
     )
+  }
 
   def dualOkLatency(
       loadBalancers: Seq[LoadBalancer],
@@ -182,19 +214,27 @@ object CloudWatch extends GuLogging {
 
   def fetchHealthyHostMetric(
       loadBalancer: LoadBalancer,
-  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
+  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
+    val baseRequest = new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withStatistics("Maximum")
+    val fullRequest = loadBalancer.targetGroup match {
+      case None =>
+        prepareV1LoadBalancerRequest(baseRequest, loadBalancer.id, "HealthyHostCount")
+      case Some(targetGroup) =>
+        prepareV2LoadBalancerRequest(
+          baseRequest,
+          loadBalancer.id,
+          "HealthyHostCount",
+          targetGroupDimensionValue = Some(targetGroup),
+        )
+    }
     withErrorLogging(
-      euWestClient.getMetricStatisticsFuture(
-        new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(2).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(60)
-          .withStatistics("Maximum")
-          .withNamespace("AWS/ELB")
-          .withMetricName("HealthyHostCount")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
-      ),
+      euWestClient.getMetricStatisticsFuture(fullRequest),
     )
+  }
 
   def fastlyErrors()(implicit executionContext: ExecutionContext): Future[List[AwsLineChart]] =
     Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
