@@ -28,8 +28,8 @@ class MetricsController(
   def renderErrors(): Action[AnyContent] =
     Action.async { implicit request =>
       for {
-        errors4xx <- HttpErrors.global4XX()
-        errors5xx <- HttpErrors.global5XX()
+        errors4xx <- HttpErrors.firstTest()
+        errors5xx <- HttpErrors.secondTest()
       } yield NoCache(Ok(views.html.lineCharts(Seq(errors4xx, errors5xx))))
     }
 

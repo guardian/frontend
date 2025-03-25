@@ -44,26 +44,34 @@ object HttpErrors {
   val v1Metric5XX = "HTTPCode_Backend_5XX"
   val v2Metric5XX = "HTTPCode_Target_5XX_Count"
 
-  def global4XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
+  def firstTest()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
     v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric4XX, v1LoadBalancerNamespace)))
-    v2Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v2Metric4XX, v2LoadBalancerNamespace)))
+    v2Metric <- withErrorLogging(
+      euWestClient.getMetricStatisticsFuture(
+        loadBalancerMetric(v1Metric4XX, v2Metric4XX, LoadBalancer("frontend-discussion").get),
+      ),
+    )
   } yield {
-    new AwsDualYLineChart(
-      "Global 4XX",
-      ("Time", "4XX/ min (v1 LBs)", "4XX/ min (v2 LBs)"),
-      ChartFormat.DoubleLineBlueRed,
+    new AwsLineChart(
+      "Global 4XX (first test)",
+      Seq("Time", "4XX/ min"),
+      ChartFormat.SingleLineBlue,
       v1Metric,
       v2Metric,
     )
   }
 
-  def global5XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
-    v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric5XX, v1LoadBalancerNamespace)))
-    v2Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v2Metric5XX, v2LoadBalancerNamespace)))
+  def secondTest()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
+    v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric4XX, v1LoadBalancerNamespace)))
+    v2Metric <- withErrorLogging(
+      euWestClient.getMetricStatisticsFuture(
+        loadBalancerMetric(v1Metric4XX, v2Metric4XX, LoadBalancer("frontend-discussion").get),
+      ),
+    )
   } yield {
-    new AwsDualYLineChart(
-      "Global 5XX",
-      ("Time", "5XX/ min (v1 LBs)", "5XX/ min (v2 LBs)"),
+    new AwsLineChart(
+      "Global 4XX (second test)",
+      Seq("Time", "4XX/ min"),
       ChartFormat.DoubleLineBlueRed,
       v1Metric,
       v2Metric,
