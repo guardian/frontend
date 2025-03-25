@@ -11,6 +11,8 @@ case class LoadBalancer(
     project: String,
     url: Option[String] = None,
     testPath: Option[String] = None,
+    // Application load balancers (v2) have target groups, classic load balancers (v1) do not
+    targetGroup: Option[String] = None,
 )
 
 object LoadBalancer extends GuLogging {
@@ -27,7 +29,12 @@ object LoadBalancer extends GuLogging {
     ),
     LoadBalancer("frontend-PROD-facia-ELB", "Front", "frontend-facia", testPath = Some("/uk")),
     LoadBalancer("frontend-PROD-applications-ELB", "Applications", "frontend-applications", testPath = Some("/books")),
-    LoadBalancer("frontend-PROD-discussion-ELB", "Discussion", "frontend-discussion"),
+    LoadBalancer(
+      "app/fronte-LoadB-xmdWiUUHyRUS/122c59735e8374bb",
+      "Discussion",
+      "frontend-discussion",
+      targetGroup = Some("targetgroup/fronte-Targe-JGOOGIGPNWQJ/187642c8eda54a4a"),
+    ),
     LoadBalancer("frontend-PROD-identity-ELB", "Identity", "frontend-identity"),
     LoadBalancer("frontend-PROD-sport-ELB", "Sport", "frontend-sport"),
     LoadBalancer("frontend-PROD-commercial-ELB", "Commercial", "frontend-commercial"),
