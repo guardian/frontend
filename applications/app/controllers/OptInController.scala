@@ -25,7 +25,8 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
       case "delete" => optDelete(feature)
     }
   def optIn(cookieName: String): Result = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
-  def optOut(cookieName: String): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
+  def optOut(cookieName: String): Result =
+    SeeOther("/").withCookies(Cookie(cookieName, "false", maxAge = Some(lifetime)))
   def optDelete(cookieName: String): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
 
   def reset(): Action[AnyContent] =

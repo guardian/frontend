@@ -6,7 +6,7 @@ import feed.Competitions
 import football.model.DotcomRenderingFootballDataModel.toJson
 import football.model.{DotcomRenderingFootballDataModel, MatchesList}
 import football.model.DotcomRenderingFootballDataModelImplicits._
-import implicits.Requests
+import implicits.{HtmlFormat, JsonFormat, Requests}
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
 
@@ -40,29 +40,36 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
       filters: Map[String, Seq[CompetitionFilter]],
       atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
-    FootballPagePicker.getTier(page) match {
-      case RemoteRender =>
+
+    val tier = FootballPagePicker.getTier(page)
+
+    request.getRequestFormat match {
+      case JsonFormat if request.forceDCR =>
         val model = DotcomRenderingFootballDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
         )
-        if (request.isJson) {
-          successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
-        } else
-          remoteRenderer.getFootballPage(wsClient, toJson(model))
-
-      case LocalRender =>
+        successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+      case JsonFormat =>
         successful(Cached(CacheTime.Football) {
-          if (request.isJson)
-            JsonComponent(
-              "html" -> football.views.html.matchList.matchesComponent(matchesList),
-              "next" -> Html(matchesList.nextPage.getOrElse("")),
-              "previous" -> Html(matchesList.previousPage.getOrElse("")),
-              "atom" -> atom.isDefined,
-            )
-          else
-            RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+          JsonComponent(
+            "html" -> football.views.html.matchList.matchesComponent(matchesList),
+            "next" -> Html(matchesList.nextPage.getOrElse("")),
+            "previous" -> Html(matchesList.previousPage.getOrElse("")),
+            "atom" -> atom.isDefined,
+          )
+        })
+      case HtmlFormat if tier == RemoteRender =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
+        )
+        remoteRenderer.getFootballPage(wsClient, toJson(model))
+      case _ =>
+        successful(Cached(CacheTime.Football) {
+          RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
         })
     }
   }
@@ -73,28 +80,37 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
       filters: Map[String, Seq[CompetitionFilter]],
       atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext) = {
-    FootballPagePicker.getTier(page) match {
-      case RemoteRender =>
+    val tier = FootballPagePicker.getTier(page)
+
+    request.getRequestFormat match {
+      case JsonFormat if request.forceDCR =>
         val model = DotcomRenderingFootballDataModel(
           page = page,
           matchesList = matchesList,
           filters = filters,
         )
-        if (request.isJson) {
-          successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
-        } else
-          remoteRenderer.getFootballPage(wsClient, toJson(model))
+        successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
 
-      case LocalRender =>
+      case JsonFormat =>
         successful(Cached(CacheTime.Football) {
-          if (request.isJson) {
-            JsonComponent(
-              "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
-              "next" -> Html(matchesList.nextPage.getOrElse("")),
-              "previous" -> Html(matchesList.previousPage.getOrElse("")),
-            )
-          } else
-            RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+          JsonComponent(
+            "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
+            "next" -> Html(matchesList.nextPage.getOrElse("")),
+            "previous" -> Html(matchesList.previousPage.getOrElse("")),
+          )
+        })
+
+      case HtmlFormat if tier == RemoteRender =>
+        val model = DotcomRenderingFootballDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
+        )
+        remoteRenderer.getFootballPage(wsClient, toJson(model))
+
+      case _ =>
+        successful(Cached(CacheTime.Football) {
+          RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
         })
     }
   }
