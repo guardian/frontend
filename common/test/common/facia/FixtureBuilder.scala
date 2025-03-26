@@ -114,6 +114,7 @@ object FixtureBuilder {
     PressedDisplaySettings(
       isBoosted = false,
       boostLevel = Some(BoostLevel.Default),
+      isImmersive = false,
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       imageHide = false,
