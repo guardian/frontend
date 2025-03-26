@@ -119,7 +119,6 @@ export const getOptionsHeaders = (
 ): RequestInit => {
 	return {
 		headers: {
-			credentials: 'include',
 			Authorization: `Bearer ${authStatus.accessToken.accessToken}`,
 			'X-GU-IS-OAUTH': 'true',
 		},
