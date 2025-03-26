@@ -72,7 +72,6 @@ import org.scalatest.matchers.should.Matchers
           testCompetitionsService,
           play.api.test.Helpers.stubControllerComponents(),
           testContentApiClient,
-          wsClient,
         )
       val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
