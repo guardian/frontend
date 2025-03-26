@@ -1,6 +1,6 @@
 package services.dotcomrendering
 
-import experiments.{ActiveExperiments, DCRFootballMatches}
+import conf.switches.Switches.DCRFootballPages
 import football.controllers.FootballPage
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
@@ -21,13 +21,12 @@ object FootballPagePicker {
   ): RenderType = {
 
     val dcrCanRender = isSupportedInDcr(footballPage)
-
-    val participatingInTest = ActiveExperiments.isParticipating(DCRFootballMatches)
+    val dcrShouldRender = DCRFootballPages.isSwitchedOn
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && participatingInTest) RemoteRender
+      else if (dcrCanRender && dcrShouldRender) RemoteRender
       else LocalRender
     }
 

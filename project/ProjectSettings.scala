@@ -32,7 +32,7 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.15",
+    scalaVersion := "2.13.16",
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
@@ -93,11 +93,7 @@ object ProjectSettings {
 
   def root(): Project =
     Project("root", base = file("."))
-      .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayPekkoHttpServer)
-      .settings(frontendCompilationSettings)
       .settings(frontendRootSettings)
-      .settings(libraryDependencies ++= jackson)
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))

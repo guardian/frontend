@@ -9,15 +9,15 @@ libraryDependencies ++= Seq(
 
 resolvers ++= Resolver.sonatypeOssRepos("releases")
 
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.6")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.7")
 
-addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.10.4")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.11.1")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.6.4")
 
 addSbtPlugin("com.github.sbt" % "sbt-git" % "2.1.0")
 
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.4")
 
 addDependencyTreePlugin
 
