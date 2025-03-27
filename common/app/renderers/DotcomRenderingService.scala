@@ -379,7 +379,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", imageContent.metadata.cacheTime)
   }
 
   def getAppsImageContent(
@@ -390,7 +390,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", imageContent.metadata.cacheTime)
   }
 
   def getMedia(
@@ -402,7 +402,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", mediaPage.metadata.cacheTime)
   }
 
   def getAppsMedia(
@@ -414,7 +414,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", mediaPage.metadata.cacheTime)
   }
 
   def getGallery(
@@ -426,7 +426,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Facia)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/Article", gallery.metadata.cacheTime)
   }
 
   def getCrossword(
