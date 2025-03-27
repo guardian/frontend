@@ -51,7 +51,6 @@ object PressedCollectionBuilder {
       ),
       description = Some("desc"),
       collectionType,
-      groupsConfig = None,
       uneditable = false,
       showTags = false,
       showSections = false,
