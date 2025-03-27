@@ -6,6 +6,7 @@ import model.pressed._
 case class DisplaySettings(
     isBoosted: Boolean,
     boostLevel: Option[BoostLevel],
+    isImmersive: Option[Boolean],
     showBoostedHeadline: Boolean,
     showQuotedHeadline: Boolean,
     imageHide: Boolean,
@@ -17,6 +18,7 @@ object DisplaySettings {
     DisplaySettings(
       faciaContent.display.isBoosted,
       faciaContent.display.boostLevel,
+      faciaContent.display.isImmersive,
       faciaContent.display.showBoostedHeadline,
       faciaContent.display.showQuotedHeadline,
       faciaContent.display.imageHide,

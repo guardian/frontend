@@ -153,6 +153,7 @@ class TrackingCodeBuilderTest extends AnyFlatSpec with Matchers with BeforeAndAf
         displaySettings = DisplaySettings(
           isBoosted = false,
           boostLevel = Some(BoostLevel.Default),
+          isImmersive = Some(false),
           showBoostedHeadline = false,
           showQuotedHeadline = false,
           imageHide = false,
