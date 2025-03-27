@@ -18,6 +18,7 @@ import java.util.Map.Entry
 import scala.concurrent.duration._
 import scala.jdk.CollectionConverters._
 import scala.util.{Failure, Success, Try}
+import conf.switches.Switches.{LineItemsJobsStck}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
@@ -492,11 +493,16 @@ class GuardianConfiguration extends GuLogging {
     }
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
+    private lazy val gamRoot = s"$commercialRoot/gam"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
     lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
-    lazy val dfpNonRefreshableLineItemIdsKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v7.json"
+    lazy val dfpNonRefreshableLineItemIdsKey =
+      if (LineItemsJobsStck.isSwitchedOn) s"$gamRoot/non-refreshable-line-items.json"
+      else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
+    lazy val dfpLineItemsKey =
+      if (LineItemsJobsStck.isSwitchedOn) s"$gamRoot/line-items.json"
+      else s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
