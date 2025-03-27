@@ -16,7 +16,6 @@ import {
 } from 'common/modules/commercial/user-features';
 import { reportError } from 'lib/report-error';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
-import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
