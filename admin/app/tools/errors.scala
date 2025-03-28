@@ -44,31 +44,21 @@ object HttpErrors {
   val v1Metric5XX = "HTTPCode_Backend_5XX"
   val v2Metric5XX = "HTTPCode_Target_5XX_Count"
 
-  def global4XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
-    v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric4XX, v1LoadBalancerNamespace)))
-    v2Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v2Metric4XX, v2LoadBalancerNamespace)))
-  } yield {
-    new AwsDualYLineChart(
-      "Global 4XX",
-      ("Time", "4XX/ min (v1 LBs)", "4XX/ min (v2 LBs)"),
-      ChartFormat.DoubleLineBlueRed,
-      v1Metric,
-      v2Metric,
-    )
-  }
+  def legacyElb4XXs()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
+    withErrorLogging(
+      euWestClient.getMetricStatisticsFuture(metric("HTTPCode_Backend_4XX", v1LoadBalancerNamespace)),
+    ) map { metric =>
+      new AwsLineChart("Legacy ELB 4XXs", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, metric)
+    }
 
-  def global5XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
-    v1Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v1Metric5XX, v1LoadBalancerNamespace)))
-    v2Metric <- withErrorLogging(euWestClient.getMetricStatisticsFuture(metric(v2Metric5XX, v2LoadBalancerNamespace)))
-  } yield {
-    new AwsDualYLineChart(
-      "Global 5XX",
-      ("Time", "5XX/ min (v1 LBs)", "5XX/ min (v2 LBs)"),
-      ChartFormat.DoubleLineBlueRed,
-      v1Metric,
-      v2Metric,
+  def legacyElb5XXs()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
+    withErrorLogging(
+      euWestClient.getMetricStatisticsFuture(
+        metric("HTTPCode_Backend_5XX", v1LoadBalancerNamespace),
+      ) map { metric =>
+        new AwsLineChart("Legacy ELB 5XXs", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, metric)
+      },
     )
-  }
 
   def notFound()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] =
     withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
