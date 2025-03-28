@@ -51,7 +51,7 @@ object HttpErrors {
   def legacyElb5XXs()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
     withErrorLogging(
       euWestClient.getMetricStatisticsFuture(
-        metric(v2Metric5XX, v1LoadBalancerNamespace),
+        metric(v1Metric5XX, v1LoadBalancerNamespace),
       ) map { metric =>
         new AwsLineChart("Legacy ELB 5XXs", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, metric)
       },
