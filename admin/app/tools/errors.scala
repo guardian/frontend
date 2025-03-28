@@ -35,9 +35,6 @@ object HttpErrors {
       ),
     )
 
-  val v1LoadBalancerNamespace = "AWS/ELB"
-  val v2LoadBalancerNamespace = "AWS/ApplicationELB"
-
   val v1Metric4XX = "HTTPCode_Backend_4XX"
   val v2Metric4XX = "HTTPCode_Target_4XX_Count"
 
@@ -46,7 +43,7 @@ object HttpErrors {
 
   def legacyElb4XXs()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
     withErrorLogging(
-      euWestClient.getMetricStatisticsFuture(metric("HTTPCode_Backend_4XX", v1LoadBalancerNamespace)),
+      euWestClient.getMetricStatisticsFuture(metric(v1Metric4XX, v1LoadBalancerNamespace)),
     ) map { metric =>
       new AwsLineChart("Legacy ELB 4XXs", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, metric)
     }
@@ -54,7 +51,7 @@ object HttpErrors {
   def legacyElb5XXs()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
     withErrorLogging(
       euWestClient.getMetricStatisticsFuture(
-        metric("HTTPCode_Backend_5XX", v1LoadBalancerNamespace),
+        metric(v2Metric5XX, v1LoadBalancerNamespace),
       ) map { metric =>
         new AwsLineChart("Legacy ELB 5XXs", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, metric)
       },

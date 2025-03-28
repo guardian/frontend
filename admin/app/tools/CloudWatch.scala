@@ -39,6 +39,9 @@ object CloudWatch extends GuLogging {
   // some metrics are only available in the 'default' region
   lazy val defaultClient: AmazonCloudWatchAsync = defaultClientBuilder.build()
 
+  val v1LoadBalancerNamespace = "AWS/ELB"
+  val v2LoadBalancerNamespace = "AWS/ApplicationELB"
+
   val primaryLoadBalancers: Seq[LoadBalancer] = Seq(
     LoadBalancer("frontend-router"),
     LoadBalancer("frontend-article"),
@@ -110,7 +113,7 @@ object CloudWatch extends GuLogging {
       loadBalancerId: String,
       v1MetricName: String,
   ): GetMetricStatisticsRequest = baseRequest
-    .withNamespace("AWS/ELB")
+    .withNamespace(v1LoadBalancerNamespace)
     .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancerId))
     .withMetricName(v1MetricName)
 
@@ -126,7 +129,7 @@ object CloudWatch extends GuLogging {
       .map(targetGroup => List(loadBalancerDimension, new Dimension().withName("TargetGroup").withValue(targetGroup)))
       .getOrElse(List(loadBalancerDimension))
     baseRequest
-      .withNamespace("AWS/ApplicationELB")
+      .withNamespace(v2LoadBalancerNamespace)
       .withDimensions(dimensions.asJava)
       .withMetricName(v2MetricName)
   }
@@ -140,14 +143,14 @@ object CloudWatch extends GuLogging {
       .withPeriod(60)
       .withUnit(StandardUnit.Seconds)
       .withStatistics("Average")
-    val request = loadBalancer.targetGroup match {
+    val fullRequest = loadBalancer.targetGroup match {
       case None =>
         prepareV1LoadBalancerRequest(baseRequest, loadBalancer.id, "Latency")
       case Some(_) =>
         prepareV2LoadBalancerRequest(baseRequest, loadBalancer.id, "TargetResponseTime")
     }
     withErrorLogging(
-      euWestClient.getMetricStatisticsFuture(request),
+      euWestClient.getMetricStatisticsFuture(fullRequest),
     )
   }
 
@@ -325,7 +328,7 @@ object CloudWatch extends GuLogging {
             .withEndTime(new DateTime().toDate)
             .withPeriod(60)
             .withStatistics("Sum")
-            .withNamespace("AWS/ELB")
+            .withNamespace(v1LoadBalancerNamespace)
             .withMetricName("HTTPCode_Backend_5XX")
             .withDimensions(dimension),
         ),
