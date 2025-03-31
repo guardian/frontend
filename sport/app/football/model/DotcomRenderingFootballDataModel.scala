@@ -31,6 +31,10 @@ import views.support.{CamelCase, JavaScriptPage}
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+case class FormResultTeam(name: String, score: Option[Int])
+case class FormResult(matchId: String, self: FormResultTeam, foe: FormResultTeam)
+case class TeamResults(teamId: String, results: Seq[FormResult])
+
 case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: List[FootballMatch])
 case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List[CompetitionMatches])
 
@@ -201,14 +205,39 @@ object DotcomRenderingFootballTablesDataModel {
     )
   }
 
+  def getFormResults(competition: Competition, groups: Seq[Group]): Seq[TeamResults] = {
+    val entries = groups.flatMap(group => group.entries)
+
+    entries.map(entry =>
+      TeamResults(
+        teamId = entry.team.id,
+        results = competition
+          .teamResults(entry.team.id)
+          .takeRight(5)
+          .map(result =>
+            FormResult(
+              matchId = result.matchId,
+              self = FormResultTeam(result.self.name, result.self.score),
+              foe = FormResultTeam(result.foe.name, result.foe.score),
+            ),
+          ),
+      ),
+    )
+  }
+
   import football.model.DotcomRenderingFootballDataModelImplicits._
 
+  private implicit val formResultTeamFormat: Writes[FormResultTeam] = Json.writes[FormResultTeam]
+  private implicit val formResultFormat: Writes[FormResult] = Json.writes[FormResult]
+  private implicit val teamResultsFormat: Writes[TeamResults] = Json.writes[TeamResults]
   private implicit val groupFormat: Writes[Group] = Json.writes[Group]
+
   private implicit val tableWrites: Writes[Table] = (table: Table) =>
     Json.obj(
       "competition" -> Json.toJson(table.competition: CompetitionSummary), // Explicitly cast
       "groups" -> table.groups,
       "hasGroups" -> table.hasGroups,
+      "formResults" -> Json.toJson(getFormResults(table.competition, table.groups)),
     )
 
   implicit def dotcomRenderingFootballTablesDataModel: Writes[DotcomRenderingFootballTablesDataModel] =
