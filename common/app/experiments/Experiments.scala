@@ -22,7 +22,7 @@ object EuropeBetaFront
       name = "europe-beta-front",
       description = "Allows viewing the beta version of the Europe network front",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 4, 2),
+      sellByDate = LocalDate.of(2025, 5, 28),
       participationGroup = Perc50,
     )
 
