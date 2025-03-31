@@ -33,7 +33,6 @@ import java.time.format.DateTimeFormatter
 
 case class TeamScore(name: String, score: Option[Int])
 case class TeamResult(matchId: String, self: TeamScore, foe: TeamScore)
-case class TeamResults(teamId: String, results: Seq[TeamResult])
 
 case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: List[FootballMatch])
 case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List[CompetitionMatches])
@@ -205,39 +204,44 @@ object DotcomRenderingFootballTablesDataModel {
     )
   }
 
-  def getRecentResultsPerTeam(competition: Competition, groups: Seq[Group]): Seq[TeamResults] = {
-    val entries = groups.flatMap(group => group.entries)
-
-    entries.map(entry =>
-      TeamResults(
-        teamId = entry.team.id,
-        results = competition
-          .teamResults(entry.team.id)
-          .takeRight(5)
-          .map(result =>
-            TeamResult(
-              matchId = result.matchId,
-              self = TeamScore(result.self.name, result.self.score),
-              foe = TeamScore(result.foe.name, result.foe.score),
-            ),
-          ),
-      ),
-    )
-  }
-
   import football.model.DotcomRenderingFootballDataModelImplicits._
+
+  def getEntries(competition: Competition, group: Group): Seq[JsObject] = {
+    group.entries.map { entry =>
+      Json.obj(
+        "stageNumber" -> entry.stageNumber,
+        "round" -> Json.toJson(entry.round),
+        "team" -> Json.toJson(entry.team),
+        "results" -> Json.toJson(
+          competition
+            .teamResults(entry.team.id)
+            .takeRight(5)
+            .map(result =>
+              TeamResult(
+                matchId = result.matchId,
+                self = TeamScore(result.self.name, result.self.score),
+                foe = TeamScore(result.foe.name, result.foe.score),
+              ),
+            ),
+        ),
+      )
+    }
+  }
 
   private implicit val teamScoreFormat: Writes[TeamScore] = Json.writes[TeamScore]
   private implicit val teamResultFormat: Writes[TeamResult] = Json.writes[TeamResult]
-  private implicit val teamResultsFormat: Writes[TeamResults] = Json.writes[TeamResults]
   private implicit val groupFormat: Writes[Group] = Json.writes[Group]
 
   private implicit val tableWrites: Writes[Table] = (table: Table) =>
     Json.obj(
-      "competition" -> Json.toJson(table.competition: CompetitionSummary), // Explicitly cast
-      "groups" -> table.groups,
+      "competition" -> Json.toJson(table.competition: CompetitionSummary),
+      "groups" -> table.groups.map { group =>
+        Json.obj(
+          "round" -> Json.toJson(group.round),
+          "entries" -> getEntries(table.competition, group),
+        )
+      },
       "hasGroups" -> table.hasGroups,
-      "recentResultsPerTeam" -> Json.toJson(getRecentResultsPerTeam(table.competition, table.groups)),
     )
 
   implicit def dotcomRenderingFootballTablesDataModel: Writes[DotcomRenderingFootballTablesDataModel] =
