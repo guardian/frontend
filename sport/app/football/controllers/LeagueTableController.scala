@@ -8,12 +8,9 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
 import football.model.DotcomRenderingFootballTablesDataModel
-import services.dotcomrendering.{FootballPagePicker, LocalRender, RemoteRender}
+import implicits.JsonFormat
 
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
-import play.api.libs.ws.WSClient
-import renderers.DotcomRenderingService
 
 case class TablesPage(
     page: Page,
@@ -30,14 +27,11 @@ class LeagueTableController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
     val contentApiClient: ContentApiClient,
-    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with CompetitionTableFilters
     with ImplicitControllerExecutionContext {
-
-  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   // Competitions must be added to this list to show up at /football/tables
   val tableOrder: Seq[String] = Seq(
@@ -78,7 +72,7 @@ class LeagueTableController(
 
   def renderLeagueTablesJson(): Action[AnyContent] = renderLeagueTables()
   def renderLeagueTables(): Action[AnyContent] =
-    Action.async { implicit request =>
+    Action { implicit request =>
       val page = new FootballPage(
         "football/tables",
         "football",
@@ -93,11 +87,12 @@ class LeagueTableController(
         }
       }
 
-      FootballPagePicker.getTier(page) match {
-        case RemoteRender =>
+      request.getRequestFormat match {
+        case JsonFormat if request.forceDCR =>
           val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
-          successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
-        case LocalRender =>
+
+          Cached(CacheTime.Football)(JsonComponent.fromWritable(model))
+        case _ =>
           val htmlResponse =
             () =>
               football.views.html.tablesList
@@ -106,7 +101,8 @@ class LeagueTableController(
             () =>
               football.views.html.tablesList
                 .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
-          successful(renderFormat(htmlResponse, jsonResponse, page, Switches.all))
+
+          renderFormat(htmlResponse, jsonResponse, page, Switches.all)
       }
 
     }

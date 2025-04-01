@@ -25,7 +25,6 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
       testCompetitionsService,
       play.api.test.Helpers.stubControllerComponents(),
       testContentApiClient,
-      wsClient,
     )
 
   "League Table Controller" should "200 when content type is table" in {
