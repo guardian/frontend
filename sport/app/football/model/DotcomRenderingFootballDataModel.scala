@@ -49,6 +49,64 @@ trait DotcomRenderingFootballDataModel {
   def canonicalUrl: String
 }
 
+private object DotcomRenderingFootballDataModel {
+  def getConfig(page: FootballPage)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ) = {
+    val pageType: PageType = PageType(page, request, context)
+
+    val switches: Map[String, Boolean] = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
+
+    val config = Config(
+      switches = switches,
+      abTests = ActiveExperiments.getJsMap(request),
+      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
+      googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    )
+
+    val combinedConfig: JsObject = {
+      val jsPageConfig: Map[String, JsValue] =
+        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
+      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    }
+    combinedConfig
+  }
+}
+
+private object DotcomRenderingFootballDataModelImplicits {
+  implicit val localDateWrites: Writes[LocalDate] = Writes[LocalDate] { date =>
+    JsString(date.format(DateTimeFormatter.ISO_LOCAL_DATE))
+  }
+
+  implicit val stageFormat: Writes[Stage] = Json.writes[Stage]
+  implicit val roundFormat: Writes[Round] = Json.writes[Round]
+  implicit val venueFormat: Writes[Venue] = Json.writes[Venue]
+  implicit val paCompetitionFormat: Writes[PaCompetition] = Json.writes[PaCompetition]
+  implicit val officialFormat: Writes[Official] = Json.writes[Official]
+
+  implicit val leagueStatsWrites: Writes[LeagueStats] = Json.writes[LeagueStats]
+  implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
+  implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
+
+  implicit val competitionFormat: Writes[CompetitionSummary] = (competition: CompetitionSummary) =>
+    Json.obj(
+      "id" -> competition.id,
+      "url" -> competition.url,
+      "fullName" -> competition.fullName,
+      "nation" -> competition.nation,
+      "tableDividers" -> competition.tableDividers,
+    )
+
+  implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
+}
+
 case class DotcomRenderingFootballMatchListDataModel(
     matchesList: Seq[MatchesByDateAndCompetition],
     nextPage: Option[String],
@@ -245,62 +303,4 @@ object DotcomRenderingFootballTablesDataModel {
     val jsValue = Json.toJson(model)
     withoutNull(jsValue)
   }
-}
-
-private object DotcomRenderingFootballDataModel {
-  def getConfig(page: FootballPage)(implicit
-      request: RequestHeader,
-      context: ApplicationContext,
-  ) = {
-    val pageType: PageType = PageType(page, request, context)
-
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
-    )
-
-    val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] =
-        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
-    combinedConfig
-  }
-}
-
-private object DotcomRenderingFootballDataModelImplicits {
-  implicit val localDateWrites: Writes[LocalDate] = Writes[LocalDate] { date =>
-    JsString(date.format(DateTimeFormatter.ISO_LOCAL_DATE))
-  }
-
-  implicit val stageFormat: Writes[Stage] = Json.writes[Stage]
-  implicit val roundFormat: Writes[Round] = Json.writes[Round]
-  implicit val venueFormat: Writes[Venue] = Json.writes[Venue]
-  implicit val paCompetitionFormat: Writes[PaCompetition] = Json.writes[PaCompetition]
-  implicit val officialFormat: Writes[Official] = Json.writes[Official]
-
-  implicit val leagueStatsWrites: Writes[LeagueStats] = Json.writes[LeagueStats]
-  implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
-  implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
-
-  implicit val competitionFormat: Writes[CompetitionSummary] = (competition: CompetitionSummary) =>
-    Json.obj(
-      "id" -> competition.id,
-      "url" -> competition.url,
-      "fullName" -> competition.fullName,
-      "nation" -> competition.nation,
-      "tableDividers" -> competition.tableDividers,
-    )
-
-  implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
 }
