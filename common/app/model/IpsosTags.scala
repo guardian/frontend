@@ -30,7 +30,7 @@ object IpsosTags {
     "au/environment" -> "environment",
     "fashion" -> "fashion",
     "au/lifeandstyle/fashion" -> "fashion",
-    "fashion/beauty" -> "fashion",
+    "fashion/beauty" -> "beauty",
     "uk/film" -> "film", /* There is no US film tag - should these map to film? */
     "film" -> "film",
     "au/film" -> "film",
@@ -52,7 +52,7 @@ object IpsosTags {
     "lifeandstyle/love-and-sex" -> "lifeandstyle",
     "lifeandstyle/women" -> "lifeandstyle",
     "lifeandstyle/men" -> "lifeandstyle",
-    "lifeandstyle/home-and-garden" -> "lifeandstyle",
+    "lifeandstyle/home-and-garden" -> "homeandgarden",
     "us/lifeandstyle" -> "lifeandstyle",
     "lifeandstyle/home-and-garden" -> "lifeandstyle",
     "au/media" -> "media",
@@ -97,7 +97,8 @@ object IpsosTags {
     "teacher-network" -> "teachernetwork",
     "uk/technology" -> "technology", /* There is no US technology tag - should these map to technology? */
     "au/technology" -> "technology",
-    "technology" -> "technology", /* Default for technology (including motoring) articles */
+    "technology" -> "technology", /* Default for technology articles */
+    "technology/motoring" -> "cars",
     "thefilter" -> "thefilter",
     "uk/thefilter" -> "thefilter",
     "the-guardian-foundation" -> "foundation",
