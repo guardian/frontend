@@ -38,9 +38,7 @@ case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: L
 case class MatchesByDateAndCompetition(date: LocalDate, competitionMatches: List[CompetitionMatches])
 
 trait DotcomRenderingFootballDataModel {
-  def nextPage: Option[String]
   def filters: Map[String, Seq[CompetitionFilter]]
-  def previousPage: Option[String]
   def nav: Nav
   def editionId: String
   def guardianBaseURL: String
@@ -84,8 +82,8 @@ object DotcomRenderingFootballMatchListDataModel {
 
     DotcomRenderingFootballMatchListDataModel(
       matchesList = matches,
-      filters = filters,
       nextPage = matchesList.nextPage,
+      filters = filters,
       previousPage = matchesList.previousPage,
       nav = nav,
       editionId = edition.id,
@@ -162,9 +160,7 @@ object DotcomRenderingFootballMatchListDataModel {
 
 case class DotcomRenderingFootballTablesDataModel(
     tables: Seq[Table],
-    nextPage: Option[String],
     filters: Map[String, Seq[CompetitionFilter]],
-    previousPage: Option[String],
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -191,8 +187,6 @@ object DotcomRenderingFootballTablesDataModel {
     DotcomRenderingFootballTablesDataModel(
       tables = tables,
       filters = filters,
-      nextPage = None,
-      previousPage = None,
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
