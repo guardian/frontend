@@ -48,15 +48,4 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
-
-  Switch(
-    ABTests,
-    "ab-the-trade-desk",
-    "Test the impact of disabling the trade desk for some of our users",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 4, 30)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
 }
