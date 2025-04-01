@@ -262,9 +262,9 @@ object DotcomRenderingFootballTablesDataModel {
     group.entries.map { entry =>
       Json.obj(
         "stageNumber" -> entry.stageNumber,
-        "round" -> Json.toJson(entry.round),
-        "team" -> Json.toJson(entry.team),
-        "results" -> Json.toJson(
+        "round" -> entry.round,
+        "team" -> entry.team,
+        "results" ->
           competition
             .teamResults(entry.team.id)
             .takeRight(5)
@@ -275,7 +275,6 @@ object DotcomRenderingFootballTablesDataModel {
                 foe = TeamScore(result.foe.name, result.foe.score),
               ),
             ),
-        ),
       )
     }
   }
@@ -289,7 +288,7 @@ object DotcomRenderingFootballTablesDataModel {
       "competition" -> Json.toJson(table.competition: CompetitionSummary),
       "groups" -> table.groups.map { group =>
         Json.obj(
-          "round" -> Json.toJson(group.round),
+          "round" -> group.round,
           "entries" -> getEntries(table.competition, group),
         )
       },
