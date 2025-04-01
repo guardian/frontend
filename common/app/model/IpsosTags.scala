@@ -54,7 +54,6 @@ object IpsosTags {
     "lifeandstyle/men" -> "lifeandstyle",
     "lifeandstyle/home-and-garden" -> "homeandgarden",
     "us/lifeandstyle" -> "lifeandstyle",
-    "lifeandstyle/home-and-garden" -> "lifeandstyle",
     "au/media" -> "media",
     "uk/media" -> "media", /* There is no US media tag - should these map to media? */
     "membership" -> "membership",
