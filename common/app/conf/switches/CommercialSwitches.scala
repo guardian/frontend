@@ -470,4 +470,15 @@ trait PrebidSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val A9BidResponseWinner = Switch(
+    SwitchGroup.Feature,
+    "a9-bid-response-winner",
+    "If this switch is on, we will enable checking the A9 bid response",
+    owners = Seq(Owner.withGithub("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
