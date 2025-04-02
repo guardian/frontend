@@ -6,7 +6,7 @@ import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage}
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
-import model.{ApplicationContext, Competition, CompetitionSummary, Group, Table}
+import model.{ApplicationContext, Competition, CompetitionSummary, Group, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
@@ -264,6 +264,7 @@ object DotcomRenderingFootballTablesDataModel {
         "stageNumber" -> entry.stageNumber,
         "round" -> entry.round,
         "team" -> entry.team,
+        "teamUrl" -> TeamUrl(entry.team),
         "results" ->
           competition
             .teamResults(entry.team.id)
