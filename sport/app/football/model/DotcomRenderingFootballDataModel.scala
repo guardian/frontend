@@ -4,7 +4,7 @@ import common.{CanonicalLink, Edition}
 import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage}
-import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
 import model.{ApplicationContext, Competition, CompetitionSummary, Group, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
@@ -285,15 +285,17 @@ object DotcomRenderingFootballTablesDataModel {
   private implicit val groupFormat: Writes[Group] = Json.writes[Group]
 
   private implicit val tableWrites: Writes[Table] = (table: Table) =>
-    Json.obj(
-      "competition" -> Json.toJson(table.competition: CompetitionSummary),
-      "groups" -> table.groups.map { group =>
-        Json.obj(
-          "round" -> group.round,
-          "entries" -> getEntries(table.competition, group),
-        )
-      },
-      "hasGroups" -> table.hasGroups,
+    withoutDeepNull(
+      Json.obj(
+        "competition" -> Json.toJson(table.competition: CompetitionSummary),
+        "groups" -> table.groups.map { group =>
+          Json.obj(
+            "round" -> group.round,
+            "entries" -> getEntries(table.competition, group),
+          )
+        },
+        "hasGroups" -> table.hasGroups,
+      ),
     )
 
   implicit def dotcomRenderingFootballTablesDataModel: Writes[DotcomRenderingFootballTablesDataModel] =
