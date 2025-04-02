@@ -34,12 +34,12 @@ const maybeWipeUserData = async (
 
 	if (userHasLoggedOut || userHasRemovedConsent) {
 		try {
-			const { default: importedAppboy } = await import(
-				/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core'
+			const { default: importedBraze } = await import(
+				/* webpackChunkName: "braze-web-sdk" */ '@braze/web-sdk'
 			);
 			if (apiKey) {
-				importedAppboy.initialize(apiKey, SDK_OPTIONS);
-				importedAppboy.wipeData();
+				importedBraze.initialize(apiKey, SDK_OPTIONS);
+				importedBraze.wipeData();
 			}
 
 			clearLocalMessageCache();
