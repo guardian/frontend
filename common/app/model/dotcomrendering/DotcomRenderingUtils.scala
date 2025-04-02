@@ -242,6 +242,18 @@ object DotcomRenderingUtils {
     }
   }
 
+  def withoutDeepNull(json: JsValue): JsValue = {
+    json match {
+      case JsObject(fields) =>
+        JsObject(fields.collect {
+          case (key, value) if value != JsNull => key -> withoutDeepNull(value)
+        })
+      case JsArray(values) =>
+        JsArray(values.map(withoutDeepNull))
+      case other => other
+    }
+  }
+
   def shouldAddAffiliateLinks(content: ContentType): Boolean = {
     val contentHtml = Jsoup.parse(content.fields.body)
     val bodyElements = contentHtml.select("body").first().children()
