@@ -249,7 +249,9 @@ object DotcomRenderingUtils {
           case (key, value) if value != JsNull => key -> withoutDeepNull(value)
         })
       case JsArray(values) =>
-        JsArray(values.map(withoutDeepNull))
+        JsArray(values.collect {
+          case value if value != JsNull => withoutDeepNull(value)
+        })
       case other => other
     }
   }
