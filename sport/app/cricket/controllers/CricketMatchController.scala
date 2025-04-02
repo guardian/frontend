@@ -39,12 +39,7 @@ class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerCom
                 val model = DotcomRenderingCricketDataModel(page)
 
                 JsonComponent.fromWritable(model)
-              }
-//                JsonComponent(
-//                  "match" -> Json.toJson(page.theMatch),
-//                  "scorecardUrl" -> (Configuration.site.host + page.metadata.id),
-//                )
-              else if (request.isJson)
+              } else if (request.isJson)
                 JsonComponent(
                   "summary" -> cricket.views.html.fragments
                     .cricketMatchSummary(page.theMatch, page.metadata.id)

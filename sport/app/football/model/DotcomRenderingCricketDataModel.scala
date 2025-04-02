@@ -71,13 +71,6 @@ object DotcomRenderingCricketDataModel {
     )
   }
 
-  implicit val inningsWicketFormat: Writes[InningsWicket] = Json.writes[InningsWicket]
-  implicit val inningsBowlerFormat: Writes[InningsBowler] = Json.writes[InningsBowler]
-  implicit val inningsBatterFormat: Writes[InningsBatter] = Json.writes[InningsBatter]
-  implicit val inningsFormat: Writes[Innings] = Json.writes[Innings]
-  implicit val teamFormat: Writes[Team] = Json.writes[Team]
-  implicit val matchFormat: Writes[Match] = Json.writes[Match]
-
   implicit val dotcomRenderingCricketDataModelFormat: Writes[DotcomRenderingCricketDataModel] =
     Json.writes[DotcomRenderingCricketDataModel]
 }
