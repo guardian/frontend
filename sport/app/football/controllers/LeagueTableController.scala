@@ -7,6 +7,9 @@ import model._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
+import football.model.DotcomRenderingFootballTablesDataModel
+import implicits.JsonFormat
+
 import scala.concurrent.Future
 
 case class TablesPage(
@@ -84,15 +87,23 @@ class LeagueTableController(
         }
       }
 
-      val htmlResponse =
-        () =>
-          football.views.html.tablesList
-            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
-      val jsonResponse =
-        () =>
-          football.views.html.tablesList
-            .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
-      renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+      request.getRequestFormat match {
+        case JsonFormat if request.forceDCR =>
+          val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
+
+          Cached(CacheTime.Football)(JsonComponent.fromWritable(model))
+        case _ =>
+          val htmlResponse =
+            () =>
+              football.views.html.tablesList
+                .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
+          val jsonResponse =
+            () =>
+              football.views.html.tablesList
+                .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
+
+          renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+      }
 
     }
 
