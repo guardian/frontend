@@ -54,7 +54,7 @@ object DotcomRenderingUtils {
       case (Some(date), Some(team)) =>
         Some(
           DotcomRenderingMatchData(
-            s"${Configuration.ajax.url}/sport/cricket/match/$date/${team}.json?dcr=true",
+            s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
             CricketMatchType,
           ),
         )
