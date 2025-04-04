@@ -22,7 +22,7 @@
 		"@babel/preset-typescript": "^7.26.0",
 		"@babel/register": "^7.25.9",
 		"@babel/runtime": "^7.26.0",
-		"@braze/web-sdk-core": "3.5.1",
+		"@braze/web-sdk": "5.8.1",
 		"@emotion/cache": "^11.13.1",
 		"@emotion/core": "^10.0.27",
 		"@emotion/react": "11.11.1",
