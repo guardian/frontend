@@ -70,6 +70,7 @@ deployments:
         AMIAdmin:
           Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
+          amiEncrypted: true
   update-ami-for-discussion:
     app: discussion
     type: ami-cloudformation-parameter
@@ -78,3 +79,4 @@ deployments:
         AMIDiscussion:
           Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
+          amiEncrypted: true
