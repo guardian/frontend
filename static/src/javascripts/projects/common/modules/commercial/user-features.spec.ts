@@ -30,7 +30,7 @@ jest.mock('../../../../lib/raven');
 jest.mock('projects/common/modules/identity/api', () => ({
 	isUserLoggedIn: jest.fn(),
 	getAuthStatus: jest.fn(),
-	getOptionsHeadersWithOkta: jest.fn(),
+	getOptionsHeaders: jest.fn(),
 }));
 jest.mock('../../../../lib/fetch-json', () => ({
 	fetchJson: jest.fn(() => Promise.resolve()),
@@ -106,7 +106,7 @@ describe('Refreshing the features data', () => {
 			jest.resetAllMocks();
 			isUserLoggedIn.mockResolvedValue(true);
 			getAuthStatus.mockResolvedValue({
-				kind: 'SignedInWithOkta',
+				kind: 'SignedIn',
 			} as AuthStatus);
 			fetchJsonSpy.mockReturnValue(Promise.resolve());
 		});
@@ -164,7 +164,7 @@ describe('Refreshing the features data', () => {
 		beforeEach(() => {
 			jest.resetAllMocks();
 			isUserLoggedIn.mockResolvedValue(false);
-			getAuthStatus.mockResolvedValue({ kind: 'SignedOutWithOkta' });
+			getAuthStatus.mockResolvedValue({ kind: 'SignedOut' });
 			fetchJsonSpy.mockReturnValue(Promise.resolve());
 		});
 
@@ -375,7 +375,7 @@ describe('Storing new feature data', () => {
 		deleteAllFeaturesData();
 		isUserLoggedIn.mockResolvedValue(true);
 		getAuthStatus.mockResolvedValue({
-			kind: 'SignedInWithOkta',
+			kind: 'SignedIn',
 		} as AuthStatus);
 	});
 

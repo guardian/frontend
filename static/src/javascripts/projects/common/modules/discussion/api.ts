@@ -1,5 +1,5 @@
 import config from 'lib/config';
-import { getAuthStatus, getOptionsHeadersWithOkta } from '../identity/api';
+import { getAuthStatus, getOptionsHeaders } from '../identity/api';
 
 /**
  * This information is partly inspired by the API in discussion-rendering
@@ -73,8 +73,7 @@ const sendAuthenticated = <T extends Response = CommentResponse>(
 ): Promise<T> =>
 	getAuthStatus()
 		.then((authStatus) =>
-			authStatus.kind === 'SignedInWithCookies' ||
-			authStatus.kind === 'SignedInWithOkta'
+			authStatus.kind === 'SignedIn'
 				? authStatus
 				: Promise.reject('User is signed out'),
 		)
@@ -100,9 +99,8 @@ const send = <T extends Response = CommentResponse>(
 
 			const authStatus = await getAuthStatus();
 			const requestAuthOptions =
-				authStatus.kind === 'SignedInWithCookies' ||
-				authStatus.kind === 'SignedInWithOkta'
-					? getOptionsHeadersWithOkta(authStatus)
+				authStatus.kind === 'SignedIn'
+					? getOptionsHeaders(authStatus)
 					: {};
 
 			// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
