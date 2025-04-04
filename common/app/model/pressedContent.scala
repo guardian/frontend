@@ -94,7 +94,10 @@ final case class CuratedContent(
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
-  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+  override def withoutCommercial: PressedContent = copy(
+    properties = propertiesWithoutCommercial(properties),
+    supportingContent = supportingContent.map(_.withoutCommercial),
+  )
 }
 
 object CuratedContent {
