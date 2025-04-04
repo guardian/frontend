@@ -25,6 +25,24 @@ sealed trait PressedContent {
 
   def withoutTrailText: PressedContent
 
+  def withoutCommercial: PressedContent
+
+  protected def propertiesWithoutCommercial(properties: PressedProperties): PressedProperties =
+    properties.copy(
+      maybeContent = properties.maybeContent.map(storyWithoutCommercial),
+    )
+
+  private def storyWithoutCommercial(story: PressedStory): PressedStory =
+    story.copy(
+      tags = story.tags.copy(
+        tags = story.tags.tags.map(tag =>
+          tag.copy(
+            properties = tag.properties.copy(commercial = None),
+          ),
+        ),
+      ),
+    )
+
   def isPaidFor: Boolean = properties.isPaidFor
 
   def branding(edition: Edition): Option[Branding] =
@@ -75,6 +93,8 @@ final case class CuratedContent(
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
 }
 
 object CuratedContent {
@@ -103,6 +123,8 @@ final case class SupportingCuratedContent(
     cardStyle: CardStyle,
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
 }
 
 object SupportingCuratedContent {
@@ -131,6 +153,8 @@ final case class LinkSnap(
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
 }
 
 object LinkSnap {
@@ -157,6 +181,8 @@ final case class LatestSnap(
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
 }
 
 object LatestSnap {
