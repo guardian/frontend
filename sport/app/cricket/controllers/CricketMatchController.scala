@@ -26,6 +26,23 @@ class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerCom
 
   def renderMatchIdJson(date: String, teamId: String): Action[AnyContent] = renderMatchId(date, teamId)
 
+  def renderMatchScoreboardJson(date: String, teamId: String): Action[AnyContent] =
+    Action { implicit request =>
+      CricketTeams
+        .byWordsForUrl(teamId)
+        .flatMap { team =>
+          cricketStatsJob.findMatch(team, date).map { matchData =>
+            val page = CricketMatchPage(matchData, date, team)
+            Cached(60) {
+              JsonComponent(
+                "match" -> Json.toJson(page.theMatch),
+                "scorecardUrl" -> (Configuration.site.host + page.metadata.id),
+              )
+            }
+          }
+        }
+        .getOrElse(NoCache(NotFound))
+    }
   def renderMatchId(date: String, teamId: String): Action[AnyContent] =
     Action { implicit request =>
       CricketTeams
