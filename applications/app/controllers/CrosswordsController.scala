@@ -343,6 +343,7 @@ class CrosswordEditionsController(
     "crosswords/series/cryptic",
     "crosswords/series/prize",
     "crosswords/series/weekend-crossword",
+    "crosswords/series/sunday-quick",
     "crosswords/series/quick-cryptic",
     "crosswords/series/everyman",
     "crosswords/series/speedy",
