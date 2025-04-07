@@ -33,9 +33,6 @@ const cookieName = 'GU_U';
 const idApiRoot =
 	window.guardian.config.page.idApiUrl ?? '/ID_API_ROOT_URL_NOT_FOUND';
 
-const profileRoot =
-	window.guardian.config.page.idUrl ?? '/PROFILE_ROOT_ID_URL_NOT_FOUND';
-
 mediator.emit('module:identity:api:loaded');
 
 export const decodeBase64 = (str: string): string =>
@@ -177,11 +174,6 @@ export const reset = (): void => {
 };
 
 const getUserCookie = (): string | null => getCookie({ name: cookieName });
-
-export const refreshOktaSession = (returnUrl: string): void => {
-	const endpoint = `${profileRoot}/signin/refresh?returnUrl=${returnUrl}`;
-	window.location.replace(endpoint);
-};
 
 /**
  * Update the logged in user's username on IDAPI
