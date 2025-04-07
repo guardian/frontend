@@ -283,7 +283,7 @@ Recommended VSCode extensions are listed in `.vscode/extensions.json` and VSCode
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/main/nginx/README.md) in this project.
-This will allow you to access frontend via `https://m.thegulocal.com`
+This will allow you to access frontend via `https://m.thegulocal.com` and test signed in behaviour.
 
 ### Optional steps
 

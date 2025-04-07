@@ -21,13 +21,9 @@ object EuropeBetaFront
     extends Experiment(
       name = "europe-beta-front",
       description = "Allows viewing the beta version of the Europe network front",
-      owners = Seq(
-        Owner.withGithub("cemms1"),
-        Owner.withEmail("project.fairground@theguardian.com"),
-        Owner.withEmail("dotcom.platform@theguardian.com"),
-      ),
-      sellByDate = LocalDate.of(2025, 4, 2),
-      participationGroup = Perc50,
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 5, 28),
+      participationGroup = Perc0A,
     )
 
 object DarkModeWeb

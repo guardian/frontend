@@ -18,6 +18,7 @@ case class PrevResult(date: ZonedDateTime, self: MatchDayTeam, foe: MatchDayTeam
   val lost = scores.exists { case (selfScore, foeScore) => selfScore < foeScore }
 }
 
+// TODO: check if this class is used anywhere
 object PrevResult {
   def apply(result: Result, thisTeamId: String): PrevResult = {
     if (thisTeamId == result.homeTeam.id) PrevResult(result.date, result.homeTeam, result.awayTeam, wasHome = true)

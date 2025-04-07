@@ -26,7 +26,6 @@ object FixtureBuilder {
       href = None,
       description = None,
       collectionType = "unknown",
-      groupsConfig = None,
       uneditable = false,
       showTags = false,
       showSections = false,
@@ -114,6 +113,7 @@ object FixtureBuilder {
     PressedDisplaySettings(
       isBoosted = false,
       boostLevel = Some(BoostLevel.Default),
+      isImmersive = Some(false),
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       imageHide = false,
