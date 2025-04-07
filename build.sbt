@@ -206,6 +206,7 @@ val main = root()
     preview,
     rss,
   )
+
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {
   import java.math.BigInteger
