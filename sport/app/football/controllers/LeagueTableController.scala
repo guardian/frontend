@@ -157,28 +157,41 @@ class LeagueTableController(
 
           val smallTableGroup =
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
-          val htmlResponse = (atom: Option[InteractiveAtom]) =>
-            () =>
-              football.views.html.tablesList
-                .tablesPage(
-                  TablesPage(
-                    page,
-                    Seq(table),
-                    table.competition.url,
-                    filters(tableOrder),
-                    Some(table.competition),
-                    atom,
-                  ),
-                )
-          val jsonResponse = () =>
-            football.views.html.tablesList.tablesComponent(
-              table.competition,
-              smallTableGroup,
-              table.competition.fullName,
-              multiGroup = table.multiGroup,
-            )
 
-          futureAtom.map(maybeAtom => renderFormat(htmlResponse(maybeAtom), jsonResponse, page))
+          futureAtom.map { atom =>
+            {
+              request.getRequestFormat match {
+                case JsonFormat if request.forceDCR =>
+                  val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder), atom)
+
+                  Cached(60)(JsonComponent.fromWritable(model))
+
+                case _ =>
+                  val htmlResponse = (atom: Option[InteractiveAtom]) =>
+                    () =>
+                      football.views.html.tablesList
+                        .tablesPage(
+                          TablesPage(
+                            page,
+                            Seq(table),
+                            table.competition.url,
+                            filters(tableOrder),
+                            Some(table.competition),
+                            atom,
+                          ),
+                        )
+                  val jsonResponse = () =>
+                    football.views.html.tablesList.tablesComponent(
+                      table.competition,
+                      smallTableGroup,
+                      table.competition.fullName,
+                      multiGroup = table.multiGroup,
+                    )
+
+                  renderFormat(htmlResponse(atom), jsonResponse, page)
+              }
+            }
+          }
         }
         .getOrElse(
           if (request.isJson) {
@@ -213,26 +226,35 @@ class LeagueTableController(
           .getOrElse(table.competition.fullName)
 
         val groupTable = Table(table.competition, Seq(group), hasGroups = true)
-        val htmlResponse = () =>
-          football.views.html.tablesList
-            .tablesPage(
-              TablesPage(
-                page,
-                Seq(groupTable),
-                table.competition.url,
-                filters(tableOrder),
-                Some(table.competition),
-              ),
-            )
-        val jsonResponse = () =>
-          football.views.html.tablesList.tablesComponent(
-            table.competition,
-            group,
-            heading,
-            multiGroup = false,
-            linkToCompetition = true,
-          )
-        renderFormat(htmlResponse, jsonResponse, page)
+
+        request.getRequestFormat match {
+          case JsonFormat if request.forceDCR =>
+            val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
+
+            Cached(60)(JsonComponent.fromWritable(model))
+
+          case _ =>
+            val htmlResponse = () =>
+              football.views.html.tablesList
+                .tablesPage(
+                  TablesPage(
+                    page,
+                    Seq(groupTable),
+                    table.competition.url,
+                    filters(tableOrder),
+                    Some(table.competition),
+                  ),
+                )
+            val jsonResponse = () =>
+              football.views.html.tablesList.tablesComponent(
+                table.competition,
+                group,
+                heading,
+                multiGroup = false,
+                linkToCompetition = true,
+              )
+            renderFormat(htmlResponse, jsonResponse, page)
+        }
       }
       response.getOrElse {
         if (request.isJson) {
