@@ -1,4 +1,4 @@
-name: "Build"
+name: 'Build'
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ permissions:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
 jobs:
@@ -28,6 +28,7 @@ jobs:
         with:
           cache: yarn
           node-version-file: .nvmrc
+
       - uses: actions/setup-java@v4
         with:
           distribution: corretto
@@ -54,7 +55,7 @@ jobs:
       - name: Test Summary
         uses: test-summary/action@v2
         with:
-          paths: "test-results/**/TEST-*.xml"
+          paths: 'test-results/**/TEST-*.xml'
         if: always()
 
       - uses: guardian/actions-riff-raff@v4.1.2
