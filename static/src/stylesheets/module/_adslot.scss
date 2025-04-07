@@ -104,22 +104,6 @@
     margin: 0 auto;
 }
 
-
-.ad-slot-container .ad-slot--crossword-banner-mobile {
-    width: $crosswords-advert-width;
-    height: $crosswords-advert-height;
-    background-color: #ffffff;
-}
-
-.ad-slot-container--centre-slot.crossword-mobile-banner-ad {
-    display: flex;
-    margin: 8px auto;
-
-    @include mq($from: phablet) {
-        display: none;
-    }
-}
-
 .ad-slot-container .ad-slot--mobile {
     margin-left: auto;
     margin-right: auto;
@@ -136,7 +120,6 @@
     }
 }
 
-.ad-slot--crossword-banner,
 .ad-slot--top-banner-ad-desktop {
     margin: 0 auto;
     min-height: 90px;

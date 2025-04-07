@@ -807,13 +807,11 @@ class Crossword extends Component {
 						{anagramHelper}
 					</div>
 				</div>
-				<div class="crossword__container__above-controls"></div>
 				<Controls
 					hasSolutions={this.hasSolutions()}
 					clueInFocus={focused}
 					crossword={this}
 				/>
-				<div class="crossword__container__below-controls"></div>
 				<Clues
 					clues={this.cluesData()}
 					focussed={focused}
