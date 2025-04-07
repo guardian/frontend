@@ -28,7 +28,7 @@ class DfpDataCacheJob(
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
-      Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
+      // Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
       writeLiveBlogTopSponsorships(currentLineItems)
       writeSurveySponsorships(currentLineItems)
     }
@@ -150,7 +150,7 @@ class DfpDataCacheJob(
       val pageSkinSponsorships = data.pageSkinSponsorships
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 
-      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
+      // Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
     }
   }
 
