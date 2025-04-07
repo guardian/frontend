@@ -86,6 +86,6 @@ deployments:
     type: ami-cloudformation-parameter
     parameters:
       amiParametersToTags:
-        AMIDiscussion:
+        AMISport:
           Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
