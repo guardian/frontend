@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,16 +29,33 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
 
+      - run: make install
+      - run: make validate
+      - run: make test
+      - run: make compile
+      # zip compiled output in static/hash and upload so it can be used in the riff-raff deploy
+      - name: zip frontend-client
+        run: |
+          mkdir -p /tmp
+          zip -r /tmp/frontend-client.zip static/hash
+      # upload the zip file using the artifact upload action
+      - name: upload frontend-client
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-client-zip
+          path: /tmp/frontend-client.zip
+          if-no-files-found: error
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           distribution: corretto
           cache: sbt
           java-version: 11
-
-      - run: make reinstall
-      - run: make validate
-      - run: make test
-      - run: make compile
 
       - name: Test, compile
         # Australia/Sydney  -because it is too easy for devs to forget about timezones
@@ -57,6 +74,45 @@ jobs:
         with:
           paths: 'test-results/**/TEST-*.xml'
         if: always()
+
+  publish:
+    needs: [build-client, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+
+      - name: Prepare frontend-client output folder
+        run: |
+          mkdir -p /tmp
+          mkdir -p static/hash
+
+      - name: Download frontend-client
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-client-zip
+          path: /tmp
+
+      - name: Unzip frontend-client
+        run: |
+          unzip -o /tmp/frontend-client.zip -d static/hash
+
+      - name: Package
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar compile Universal/packageBin
 
       - uses: guardian/actions-riff-raff@v4.1.2
         env:
