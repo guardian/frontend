@@ -3193,10 +3193,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@braze/web-sdk-core@npm:3.5.1":
-  version: 3.5.1
-  resolution: "@braze/web-sdk-core@npm:3.5.1"
-  checksum: 10c0/fdaaa0174419d030207081bf68d852697856191744c4c9a5de9bbbd65b5eb7345c20688cb302a126eb0839f54d49575d32396e79dee80907ef7ff4f9288201db
+"@braze/web-sdk@npm:5.8.1":
+  version: 5.8.1
+  resolution: "@braze/web-sdk@npm:5.8.1"
+  checksum: 10c0/33d124228cb3f1561a938e2eac11bf0c28bc44730a778be4235f347524a1024844c78473a650a58244050e0f4f45c14bfc85027d5822d3e12b72d39e5dfb1f5f
   languageName: node
   linkType: hard
 
@@ -3747,7 +3747,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.26.0"
     "@babel/register": "npm:^7.25.9"
     "@babel/runtime": "npm:^7.26.0"
-    "@braze/web-sdk-core": "npm:3.5.1"
+    "@braze/web-sdk": "npm:5.8.1"
     "@emotion/cache": "npm:^11.13.1"
     "@emotion/core": "npm:^10.0.27"
     "@emotion/react": "npm:11.11.1"
