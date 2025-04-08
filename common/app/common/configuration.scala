@@ -18,7 +18,7 @@ import java.util.Map.Entry
 import scala.concurrent.duration._
 import scala.jdk.CollectionConverters._
 import scala.util.{Failure, Success, Try}
-import conf.switches.Switches.{LineItemsJobsStck}
+import conf.switches.Switches.{LineItemsJobs}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
@@ -492,7 +492,7 @@ class GuardianConfiguration extends GuLogging {
       configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
     }
 
-    lazy val shouldIncludeLineItemsJobsStack = LineItemsJobsStck.isSwitchedOn
+    lazy val shouldIncludeLineItemsJobs = LineItemsJobs.isSwitchedOn
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     private lazy val gamRoot = s"$commercialRoot/gam"
@@ -500,10 +500,10 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
     lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
     lazy val dfpNonRefreshableLineItemIdsKey =
-      if (shouldIncludeLineItemsJobsStack) s"$gamRoot/non-refreshable-line-items.json"
+      if (shouldIncludeLineItemsJobs) s"$gamRoot/non-refreshable-line-items.json"
       else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
     lazy val dfpLineItemsKey =
-      if (shouldIncludeLineItemsJobsStack) s"$gamRoot/line-items.json"
+      if (shouldIncludeLineItemsJobs) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
