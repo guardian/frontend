@@ -65,9 +65,10 @@ jobs:
           -XX:ReservedCodeCacheSize=128m \
           -Dsbt.log.noformat=true \
           -XX:+UseParallelGC \
+          -DSTAGE=DEV \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
+          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test
 
       - name: Test Summary
         uses: test-summary/action@v2
