@@ -34,7 +34,7 @@ trait Store extends GuLogging with Dates {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
   }
   def putDfpLineItemsReport(everything: String): Unit = {
-    S3.putPublic(dfpLineItemsWriteKey, everything, defaultJsonEncoding)
+    S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
   def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
     S3.putPublic(filename, adUnits, "text/plain")
@@ -46,7 +46,7 @@ trait Store extends GuLogging with Dates {
     S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
   }
   def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
-    S3.putPublic(dfpNonRefreshableLineItemIdsWriteKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
+    S3.putPublic(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
   }
 
   val now: String = DateTime.now().toHttpDateTimeString

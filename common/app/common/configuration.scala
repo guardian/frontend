@@ -499,12 +499,9 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
     lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
-    // I created the below just to be 100% sure I commented out the write to S3 code and if something went wrong it will create a new object with different name instead of overwriting the old one.
-    lazy val dfpNonRefreshableLineItemIdsWriteKey = s"$dfpRoot/non-refreshable-lineitem-ids-v1-test-1.json"
     lazy val dfpNonRefreshableLineItemIdsKey =
       if (shouldIncludeLineItemsJobsStack) s"$gamRoot/non-refreshable-line-items.json"
       else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
-    lazy val dfpLineItemsWriteKey = s"$dfpRoot/lineitems-v7-test-1.json"
     lazy val dfpLineItemsKey =
       if (shouldIncludeLineItemsJobsStack) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
