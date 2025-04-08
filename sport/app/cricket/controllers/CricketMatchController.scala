@@ -4,6 +4,7 @@ import common._
 import conf.Configuration
 import cricketModel.Match
 import conf.cricketPa.{CricketTeam, CricketTeams}
+import football.model.DotcomRenderingCricketDataModel
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
@@ -51,12 +52,11 @@ class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerCom
           cricketStatsJob.findMatch(team, date).map { matchData =>
             val page = CricketMatchPage(matchData, date, team)
             Cached(60) {
-              if (request.isJson && request.forceDCR)
-                JsonComponent(
-                  "match" -> Json.toJson(page.theMatch),
-                  "scorecardUrl" -> (Configuration.site.host + page.metadata.id),
-                )
-              else if (request.isJson)
+              if (request.isJson && request.forceDCR) {
+                val model = DotcomRenderingCricketDataModel(page)
+
+                JsonComponent.fromWritable(model)
+              } else if (request.isJson)
                 JsonComponent(
                   "summary" -> cricket.views.html.fragments
                     .cricketMatchSummary(page.theMatch, page.metadata.id)
