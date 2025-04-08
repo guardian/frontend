@@ -3783,15 +3783,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:26.0.1":
-  version: 26.0.1
-  resolution: "@guardian/commercial@npm:26.0.1"
+"@guardian/commercial@npm:26.0.0":
+  version: 26.0.0
+  resolution: "@guardian/commercial@npm:26.0.0"
   dependencies:
     "@guardian/ab-core": "npm:8.0.1"
     "@guardian/core-web-vitals": "npm:11.0.0"
     "@guardian/identity-auth": "npm:^7.0.0"
-    "@guardian/identity-auth-frontend": "npm:9.0.0"
-    "@guardian/libs": "npm:22.2.0"
+    "@guardian/identity-auth-frontend": "npm:^6.0.2"
+    "@guardian/libs": "npm:22.0.0"
     "@guardian/source": "npm:8.0.2"
     fastdom: "npm:^1.0.12"
     lodash-es: "npm:^4.17.21"
@@ -3802,11 +3802,11 @@ __metadata:
     "@guardian/ab-core": ^8.0.0
     "@guardian/core-web-vitals": ^11.0.0
     "@guardian/identity-auth": ^7.0.0
-    "@guardian/identity-auth-frontend": ^9.0.0
-    "@guardian/libs": ^22.2.0
+    "@guardian/identity-auth-frontend": ^6.0.2
+    "@guardian/libs": ^22.0.0
     "@guardian/source": ^8.0.2
     typescript: ~5.5.4
-  checksum: 10c0/72c0e71d2daa5b88845afdb3a5a32575d11af7a25afac56ea3d6a72c444dfdf627ffee6363aabc7ab25f9662ef88414e771d3514c54b971d2f244f313e7aca3b
+  checksum: 10c0/29e1099f3564cc279d0cc03ee68396c2b97ce39ef3e876c1a0eac5f24438e1069a9b405525d9f501326fafee2458abc19bad53154910d37e0450013881e5ee96
   languageName: node
   linkType: hard
 
@@ -3894,12 +3894,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:26.0.1"
+    "@guardian/commercial": "npm:26.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:22.2.0"
+    "@guardian/libs": "npm:22.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -4041,18 +4041,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/identity-auth-frontend@npm:9.0.0":
-  version: 9.0.0
-  resolution: "@guardian/identity-auth-frontend@npm:9.0.0"
+"@guardian/identity-auth-frontend@npm:^6.0.2":
+  version: 6.0.3
+  resolution: "@guardian/identity-auth-frontend@npm:6.0.3"
   peerDependencies:
-    "@guardian/identity-auth": ^7.0.0
-    "@guardian/libs": ^22.0.0
+    "@guardian/identity-auth": ^4.0.1
+    "@guardian/libs": ^19.0.0
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/766f49f03da137bf299bc707fe35e89106888a4965a5d9da694e8ca3f123979899d794ae433c72fb02fabede98206afb9b85bd797d76c64c29920137e1598e1e
+  checksum: 10c0/cf39465b55f07dd02a99cbdf10937f0a74797042430b9a50d1259c0f655e272aa1d6a086efece26ace22cde4fa45aab502c16fb155a125f08419b7756084cb1d
   languageName: node
   linkType: hard
 
@@ -4084,16 +4084,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:22.2.0":
-  version: 22.2.0
-  resolution: "@guardian/libs@npm:22.2.0"
+"@guardian/libs@npm:22.0.0":
+  version: 22.0.0
+  resolution: "@guardian/libs@npm:22.0.0"
   peerDependencies:
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/220bb6633bea6a6aa482889088b9c12fb25475ab6fdcfa9aa81b8ba7f47113d9dffbe193fdc9672bbce55b9c71f6b2d9dca0d970e8c4264f5b3542be0a0bc53a
+  checksum: 10c0/d9ca9cad51ef905d82a3d88e601430b9a194665d9d34c3bdba20056d0d98ea867c5b486dcf96ab460bab8991622490c7b1a5cea5bf547f8743ccd481e00f8afa
   languageName: node
   linkType: hard
 
