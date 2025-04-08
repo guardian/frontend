@@ -741,11 +741,6 @@ class Crossword extends Component {
 				this.grid = grid;
 			},
 		};
-		// Trigger the custom event when component has loaded for ad slot in commercial
-		useEffect(() => {
-			const customEvent = new CustomEvent('crossword-loaded');
-			window.dispatchEvent(customEvent);
-		});
 
 		return (
 			<div
