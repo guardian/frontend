@@ -5,6 +5,7 @@ import common.GuLogging
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
+import conf.switches.Switches.{LineItemsJobsStck}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,7 +29,7 @@ class DfpDataCacheJob(
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
-      // Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
+      if (LineItemsJobsStck.isSwitchedOff) Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
       writeLiveBlogTopSponsorships(currentLineItems)
       writeSurveySponsorships(currentLineItems)
     }
@@ -150,7 +151,8 @@ class DfpDataCacheJob(
       val pageSkinSponsorships = data.pageSkinSponsorships
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 
-      // Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
+      if (LineItemsJobsStck.isSwitchedOff)
+        Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
     }
   }
 
