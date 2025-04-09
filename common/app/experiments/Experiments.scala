@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       EuropeBetaFront,
       DarkModeWeb,
+      ReactBundle,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -31,6 +32,15 @@ object DarkModeWeb
       name = "dark-mode-web",
       description = "Enable dark mode on web",
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 4, 30),
+      participationGroup = Perc0D,
+    )
+
+object ReactBundle
+    extends Experiment(
+      name = "react-bundle",
+      description = "Use React for client-side rendering instead of Preact",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 30),
       participationGroup = Perc0D,
     )
