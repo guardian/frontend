@@ -14,7 +14,7 @@ GET        /geolocation                                                         
 GET         /oauthCallback                                                                    http.GuardianAuthWithExemptions.oauthCallback
 
 # Crossword
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 
 # Commercial
