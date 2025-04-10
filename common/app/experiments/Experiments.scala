@@ -13,7 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       EuropeBetaFront,
       DarkModeWeb,
-      ReactBundle,
+      DCRJavascriptBundle,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -36,11 +36,11 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object ReactBundle
+object DCRJavascriptBundle
     extends Experiment(
-      name = "react-bundle",
-      description = "Use React for client-side rendering instead of Preact",
+      name = "dcr-javascript-bundle",
+      description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 4, 30),
-      participationGroup = Perc0D,
+      participationGroup = Perc0A,
     )
