@@ -45,8 +45,6 @@ deployments:
     template: frontend
   sport:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   frontend-static:
     type: aws-s3
     parameters:
