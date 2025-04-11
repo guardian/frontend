@@ -22,7 +22,7 @@ object TagIndexesS3 extends S3 {
     s"${indexRoot(indexType)}/$pageName.json"
 
   private def putJson[A: Writes](key: String, a: A) =
-    putPublic(
+    putPrivate(
       key,
       Json.stringify(Json.toJson(a)),
       "application/json",
