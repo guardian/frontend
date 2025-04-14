@@ -573,4 +573,15 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val RemoveObserver = Switch(
+    SwitchGroup.Feature,
+    "remove-observer",
+    "If this switch is on, we will remove observer links from the site",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }

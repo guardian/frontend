@@ -2,6 +2,7 @@ package navigation
 
 import play.api.libs.json.{JsValue, Json, OWrites}
 import common.Edition
+import conf.switches.Switches.RemoveObserver
 import play.api.libs.json.Json.toJson
 
 object NavLinks {
@@ -211,16 +212,24 @@ object NavLinks {
     ),
   )
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/insidetheguardian")
-  val observer = NavLink(
-    "The Observer",
-    "/observer",
-    children = List(
-      NavLink("Comment", "/theobserver/news/comment"),
-      NavLink("The New Review", "/theobserver/new-review"),
-      NavLink("Observer Magazine", "/theobserver/magazine"),
-      NavLink("Observer Food Monthly", "/theobserver/foodmonthly"),
-    ),
-  )
+
+  val removeObserver = RemoveObserver.isSwitchedOn
+  val observer =
+    if (removeObserver) None
+    else
+      Some(
+        NavLink(
+          "The Observer",
+          "/observer",
+          children = List(
+            NavLink("Comment", "/theobserver/news/comment"),
+            NavLink("The New Review", "/theobserver/new-review"),
+            NavLink("Observer Magazine", "/theobserver/magazine"),
+            NavLink("Observer Food Monthly", "/theobserver/foodmonthly"),
+          ),
+        ),
+      )
+
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink(
