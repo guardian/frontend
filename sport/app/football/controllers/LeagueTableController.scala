@@ -134,7 +134,7 @@ class LeagueTableController(
 
   def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
   def renderCompetition(competition: String): Action[AnyContent] =
-    Action.async { implicit request =>
+    Action { implicit request =>
       val table = loadTables
         .find(_.competition.url.endsWith(s"/$competition"))
         .orElse(loadTables.find(_.competition.id == competition))
@@ -146,58 +146,43 @@ class LeagueTableController(
             s"${table.competition.fullName} table",
           )
 
-          val futureAtom = if (competition == "euro-2024") {
-            val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
-            val edition = Edition(request)
-            contentApiClient
-              .getResponse(contentApiClient.item(id, edition))
-              .map(_.interactive.map(InteractiveAtom.make(_)))
-              .recover { case _ => None }
-          } else Future.successful(None)
-
           val smallTableGroup =
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
 
-          futureAtom.map { atom =>
-            {
-              request.getRequestFormat match {
-                case JsonFormat if request.forceDCR =>
-                  val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder), atom)
+          request.getRequestFormat match {
+            case JsonFormat if request.forceDCR =>
+              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
 
-                  Cached(60)(JsonComponent.fromWritable(model))
+              Cached(60)(JsonComponent.fromWritable(model))
 
-                case _ =>
-                  val htmlResponse = (atom: Option[InteractiveAtom]) =>
-                    () =>
-                      football.views.html.tablesList
-                        .tablesPage(
-                          TablesPage(
-                            page,
-                            Seq(table),
-                            table.competition.url,
-                            filters(tableOrder),
-                            Some(table.competition),
-                            atom,
-                          ),
-                        )
-                  val jsonResponse = () =>
-                    football.views.html.tablesList.tablesComponent(
-                      table.competition,
-                      smallTableGroup,
-                      table.competition.fullName,
-                      multiGroup = table.multiGroup,
-                    )
+            case _ =>
+              val htmlResponse = () =>
+                football.views.html.tablesList
+                  .tablesPage(
+                    TablesPage(
+                      page,
+                      Seq(table),
+                      table.competition.url,
+                      filters(tableOrder),
+                      Some(table.competition),
+                    ),
+                  )
+              val jsonResponse = () =>
+                football.views.html.tablesList.tablesComponent(
+                  table.competition,
+                  smallTableGroup,
+                  table.competition.fullName,
+                  multiGroup = table.multiGroup,
+                )
 
-                  renderFormat(htmlResponse(atom), jsonResponse, page)
-              }
-            }
+              renderFormat(htmlResponse, jsonResponse, page)
           }
         }
         .getOrElse(
           if (request.isJson) {
-            Future.successful(Cached(60)(JsonNotFound()))
+            Cached(60)(JsonNotFound())
           } else {
-            Future.successful(Redirect("/football/tables"))
+            Redirect("/football/tables")
           },
         )
     }

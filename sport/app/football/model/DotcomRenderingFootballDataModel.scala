@@ -4,7 +4,6 @@ import common.{CanonicalLink, Edition}
 import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage}
-import model.content.InteractiveAtom
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
 import model.{ApplicationContext, Competition, CompetitionSummary, Group, Table, TeamUrl}
@@ -220,7 +219,6 @@ object DotcomRenderingFootballMatchListDataModel {
 case class DotcomRenderingFootballTablesDataModel(
     tables: Seq[Table],
     filters: Map[String, Seq[CompetitionFilter]],
-    atom: Option[InteractiveAtom],
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -236,7 +234,6 @@ object DotcomRenderingFootballTablesDataModel {
       page: FootballPage,
       tables: Seq[Table],
       filters: Map[String, Seq[CompetitionFilter]],
-      atom: Option[InteractiveAtom] = None,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -248,7 +245,6 @@ object DotcomRenderingFootballTablesDataModel {
     DotcomRenderingFootballTablesDataModel(
       tables = tables,
       filters = filters,
-      atom = atom,
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -284,7 +280,6 @@ object DotcomRenderingFootballTablesDataModel {
     }
   }
 
-  private implicit val interactiveAtomFormat: Writes[InteractiveAtom] = Json.writes[InteractiveAtom]
   private implicit val teamScoreFormat: Writes[TeamScore] = Json.writes[TeamScore]
   private implicit val teamResultFormat: Writes[TeamResult] = Json.writes[TeamResult]
   private implicit val groupFormat: Writes[Group] = Json.writes[Group]
