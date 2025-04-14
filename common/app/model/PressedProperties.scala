@@ -5,12 +5,17 @@ import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import common.{Edition}
 import common.commercial.EditionBranding
 
+case class MediaSelect(
+    showMainVideo: Boolean,
+    imageSlideshowReplace: Boolean,
+    videoReplace: Boolean,
+)
+
 final case class PressedProperties(
     isBreaking: Boolean,
-    showMainVideo: Boolean,
+    mediaSelect: MediaSelect,
     showKickerTag: Boolean,
     showByline: Boolean,
-    imageSlideshowReplace: Boolean,
     maybeContent: Option[PressedStory],
     maybeContentId: Option[String],
     isLiveBlog: Boolean,
@@ -27,6 +32,7 @@ final case class PressedProperties(
     webUrl: Option[String],
     editionBrandings: Option[Seq[EditionBranding]],
     atomId: Option[String],
+    replacementVideoAtomId: Option[String],
 ) {
   lazy val isPaidFor: Boolean = editionBrandings.exists(
     _.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition),
@@ -40,10 +46,13 @@ object PressedProperties {
 
     PressedProperties(
       isBreaking = contentProperties.isBreaking,
-      showMainVideo = contentProperties.showMainVideo,
+      mediaSelect = MediaSelect(
+        showMainVideo = contentProperties.showMainVideo,
+        imageSlideshowReplace = contentProperties.imageSlideshowReplace,
+        videoReplace = contentProperties.videoReplace,
+      ),
       showKickerTag = contentProperties.showKickerTag,
       showByline = contentProperties.showByline,
-      imageSlideshowReplace = contentProperties.imageSlideshowReplace,
       maybeContent = capiContent.map(PressedStory(_)),
       maybeContentId = FaciaContentUtils.maybeContentId(content),
       isLiveBlog = FaciaContentUtils.isLiveBlog(content),
@@ -62,6 +71,7 @@ object PressedProperties {
         Edition.byId(editionId) map (EditionBranding(_, branding))
       }.toSeq),
       atomId = FaciaContentUtils.atomId(content),
+      replacementVideoAtomId = FaciaContentUtils.replacementVideoAtomId(content),
     )
   }
 
