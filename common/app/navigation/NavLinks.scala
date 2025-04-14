@@ -215,9 +215,9 @@ object NavLinks {
 
   val removeObserver = RemoveObserver.isSwitchedOn
   val observer =
-    if (removeObserver) None
+    if (removeObserver) List.empty[NavLink]
     else
-      Some(
+      List(
         NavLink(
           "The Observer",
           "/observer",
@@ -647,12 +647,12 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
-    insideTheGuardian,
-    observer,
+    insideTheGuardian
+  ) ++ observer ++ List(
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     crosswords,
     wordiply,
-    corrections,
+    corrections
   )
   val auOtherLinks = List(
     apps,
@@ -684,8 +684,8 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
-    insideTheGuardian,
-    observer,
+    insideTheGuardian
+  ) ++ observer ++ List(
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
     wordiply,
@@ -698,8 +698,8 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
-    insideTheGuardian,
-    observer,
+    insideTheGuardian
+  ) ++ observer ++ List(
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
     wordiply,
