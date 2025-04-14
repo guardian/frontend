@@ -647,12 +647,12 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
-    insideTheGuardian
+    insideTheGuardian,
   ) ++ observer ++ List(
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     crosswords,
     wordiply,
-    corrections
+    corrections,
   )
   val auOtherLinks = List(
     apps,
@@ -684,7 +684,7 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
-    insideTheGuardian
+    insideTheGuardian,
   ) ++ observer ++ List(
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
@@ -698,7 +698,7 @@ object NavLinks {
     pictures,
     newsletters,
     todaysPaper,
-    insideTheGuardian
+    insideTheGuardian,
   ) ++ observer ++ List(
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
