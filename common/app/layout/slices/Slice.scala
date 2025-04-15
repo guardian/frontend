@@ -1165,7 +1165,7 @@ case object ScrollableSmall extends Slice {
 case object ScrollableMedium extends Slice {
   val layout = SliceLayout(
     cssClassName = "scrollable-medium",
-    columns = Seq.fill(6)(
+    columns = Seq.fill(4)(
       SingleItem(
         colSpan = 1,
         ItemClasses(
