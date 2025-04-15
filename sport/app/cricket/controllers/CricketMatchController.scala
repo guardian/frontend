@@ -27,9 +27,9 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
 }
 
 class CricketMatchController(
-                              cricketStatsJob: CricketStatsJob,
-                              val controllerComponents: ControllerComponents,
-                              val wsClient: WSClient,
+    cricketStatsJob: CricketStatsJob,
+    val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
 )(implicit
     context: ApplicationContext,
 ) extends BaseController
@@ -70,8 +70,9 @@ class CricketMatchController(
         .getOrElse(successful(NoCache(NotFound)))
     }
 
-  private def renderMatch(page: CricketMatchPage)
-  (implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
+  private def renderMatch(
+      page: CricketMatchPage,
+  )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
     val tier = CricketPagePicker.getTier(page)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
