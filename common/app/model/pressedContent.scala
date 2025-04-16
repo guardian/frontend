@@ -73,7 +73,7 @@ final case class CuratedContent(
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
     supportingContent: List[PressedContent],
     cardStyle: CardStyle,
-    mediaAtom: Option[MediaAtom],
+    enrichedMediaAtom: Option[MediaAtom],
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -91,7 +91,7 @@ object CuratedContent {
       supportingContent = content.supportingContent.map((sc) => PressedContent.make(sc, false)),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
-      mediaAtom = None,
+      enrichedMediaAtom = None,
     )
   }
 }

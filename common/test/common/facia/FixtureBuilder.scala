@@ -136,7 +136,7 @@ object FixtureBuilder {
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
-      mediaAtom = None,
+      enrichedMediaAtom = None,
     )
   }
 

@@ -399,14 +399,14 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
             curated.copy(enriched = Some(updatedFields))
           }
           getMediaAtom(curated).map { mediaAtom =>
-            curated.copy(mediaAtom = Some(mediaAtom))
+            curated.copy(enrichedMediaAtom = mediaAtom)
           }
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, link, link.enriched).map { updatedFields =>
             link.copy(enriched = Some(updatedFields))
           }
           getMediaAtom(link).map { mediaAtom =>
-            link.copy(mediaAtom = Some(mediaAtom))
+            link.copy(mediaAtom = mediaAtom)
           }
         case plain => Response.Right(plain)
       })
@@ -431,21 +431,31 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   private def getMediaAtom(
       content: PressedContent,
-  )(implicit executionContext: ExecutionContext): Response[MediaAtom] = {
+  )(implicit executionContext: ExecutionContext): Response[Option[MediaAtom]] = {
 
-    val maybeUpdate = content.properties match {
+    val maybeUpdate: Future[Option[MediaAtom]] = content.properties match {
       case properties if properties.mediaSelect.videoReplace && properties.replacementVideoAtomId.isDefined =>
         Enrichment.enrichVideo(properties.replacementVideoAtomId, capiClient)
       case properties if properties.mediaSelect.showMainVideo =>
-        Enrichment.asFut(
-          for {
-            content <- content.properties.maybeContent
-            elements = content.elements
-            atom = elements.mediaAtoms.head if elements.mainMediaAtom.isDefined && elements.mediaAtoms.nonEmpty
-          } yield atom,
-          "failed to extract main media atom",
-        )
-      case _ => Enrichment.asFut(None, "no media atom available")
+        val maybeAtom = for {
+          content <- content.properties.maybeContent
+          elements = content.elements
+          atom <- Either
+            .cond(
+              elements.mainMediaAtom.isDefined && elements.mediaAtoms.nonEmpty,
+              elements.mediaAtoms.head,
+              None,
+            )
+            .toOption
+        } yield atom
+
+        Enrichment.asFutOpt(maybeAtom)
+      case _ => Future.successful(None)
+    }
+
+    maybeUpdate.failed.foreach { error =>
+      val msg = s"Processing of a media atom failed, and it won't be pressed: $error"
+      log.warn(msg)
     }
 
     Response(maybeUpdate.map(scala.Right.apply))
@@ -631,7 +641,7 @@ object Enrichment extends GuLogging {
   def enrichVideo(
       atomId: Option[String],
       capiClient: CapiContentApiClient,
-  )(implicit executionContext: ExecutionContext): Future[MediaAtom] = {
+  )(implicit executionContext: ExecutionContext): Future[Option[MediaAtom]] = {
     def enrich(response: ItemResponse): Option[MediaAtom] = {
       for {
         video <- response.media
@@ -652,7 +662,7 @@ object Enrichment extends GuLogging {
     val result = for {
       atomId <- asFut(atomId, "atomId was undefined")
       itemResponse <- capiClient.getResponse(ItemQuery(atomId))
-      enriched <- asFut(enrich(itemResponse), s"failed to enrich media atom $atomId")
+      enriched <- asFutOpt(enrich(itemResponse))
     } yield enriched
 
     result.failed.foreach { error =>
@@ -699,6 +709,13 @@ object Enrichment extends GuLogging {
     }
 
     result
+  }
+
+  def asFutOpt[A](opt: Option[A]): Future[Option[A]] = {
+    opt match {
+      case Some(thing) => Future.successful(Some(thing))
+      case None        => Future.successful(None)
+    }
   }
 
   def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
