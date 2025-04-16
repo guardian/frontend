@@ -3,7 +3,6 @@ const webpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin =
 	require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const TerserPlugin = require('terser-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 const config = require('./webpack.config.js');
 
@@ -12,7 +11,7 @@ module.exports = webpackMerge.smart(config, {
 	output: {
 		filename: `[chunkhash]/graun.[name].js`,
 		chunkFilename: `[chunkhash]/graun.[name].js`,
-        clean: true,
+		clean: true,
 	},
 	devtool: 'source-map',
 	plugins: [
