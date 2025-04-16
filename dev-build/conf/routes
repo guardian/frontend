@@ -257,6 +257,9 @@ GET            /ads.txt                                                         
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
 
+# Ad-Lite opt in
+GET         /commercial/ad-lite/enable                                                                                           commercial.controllers.TemporaryAdLiteController.enable()
+GET         /commercial/ad-lite/disable                                                                                          commercial.controllers.TemporaryAdLiteController.disable()
 # Commercial Admin
 GET         /commercial                                                                                                          controllers.admin.CommercialController.renderCommercialMenu()
 GET         /commercial/specialadunits                                                                                           controllers.admin.CommercialController.renderSpecialAdUnits()
