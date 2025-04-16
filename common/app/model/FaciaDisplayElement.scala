@@ -13,7 +13,7 @@ object FaciaDisplayElement {
       itemClasses: ItemClasses,
   ): Option[FaciaDisplayElement] = {
     faciaContent.mainVideo match {
-      case Some(videoElement) if faciaContent.properties.showMainVideo =>
+      case Some(videoElement) if faciaContent.properties.mediaSelect.showMainVideo =>
         Some(
           InlineVideo(
             videoElement,
@@ -23,9 +23,9 @@ object FaciaDisplayElement {
         )
       case _ if faciaContent.properties.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         faciaContent.properties.maybeContentId map CrosswordSvg
-      case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
+      case _ if faciaContent.properties.mediaSelect.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
-      case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined =>
+      case _ if faciaContent.properties.mediaSelect.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined =>
         Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get, faciaContent.trailPicture))
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
