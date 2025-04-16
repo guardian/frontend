@@ -1346,7 +1346,11 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       isBreaking = false,
       showByline = false,
       showKickerTag = false,
-      imageSlideshowReplace = false,
+      mediaSelect = MediaSelect(
+        showMainVideo = false,
+        imageSlideshowReplace = false,
+        videoReplace = false,
+      ),
       maybeContent = mayBeContent,
       maybeContentId = None,
       isLiveBlog = false,
@@ -1363,7 +1367,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       webUrl = Some("an-article"),
       editionBrandings = None,
       atomId = None,
-      showMainVideo = false,
+      replacementVideoAtomId = None,
     )
 
     val kicker = kickerText.map { k =>
@@ -1424,6 +1428,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       enriched = None,
       supportingContent = supportingContent.toList,
       cardStyle = CardStyle.make(Editorial),
+      mediaAtom = None,
     )
   }
 }

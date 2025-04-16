@@ -4,6 +4,7 @@ import metrics.SamplerMetric
 import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
+import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
@@ -26,6 +27,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
+import model.content.MediaAtom
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -396,9 +398,15 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
           enrichContent(collection, curated, curated.enriched).map { updatedFields =>
             curated.copy(enriched = Some(updatedFields))
           }
+          getMediaAtom(curated).map { mediaAtom =>
+            curated.copy(mediaAtom = Some(mediaAtom))
+          }
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, link, link.enriched).map { updatedFields =>
             link.copy(enriched = Some(updatedFields))
+          }
+          getMediaAtom(link).map { mediaAtom =>
+            link.copy(mediaAtom = Some(mediaAtom))
           }
         case plain => Response.Right(plain)
       })
@@ -416,6 +424,28 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       case Some("interactive") =>
         Enrichment.enrichInteractive(content.properties.atomId, beforeEnrichment, collection, capiClient)
       case _ => Future.successful(beforeEnrichment)
+    }
+
+    Response(maybeUpdate.map(scala.Right.apply))
+  }
+
+  private def getMediaAtom(
+      content: PressedContent,
+  )(implicit executionContext: ExecutionContext): Response[MediaAtom] = {
+
+    val maybeUpdate = content.properties match {
+      case properties if properties.mediaSelect.videoReplace && properties.replacementVideoAtomId.isDefined =>
+        Enrichment.enrichVideo(properties.replacementVideoAtomId, capiClient)
+      case properties if properties.mediaSelect.showMainVideo =>
+        Enrichment.asFut(
+          for {
+            content <- content.properties.maybeContent
+            elements = content.elements
+            atom = elements.mediaAtoms.head if elements.mainMediaAtom.isDefined && elements.mediaAtoms.nonEmpty
+          } yield atom,
+          "failed to extract main media atom",
+        )
+      case _ => Enrichment.asFut(None, "no media atom available")
     }
 
     Response(maybeUpdate.map(scala.Right.apply))
@@ -598,6 +628,41 @@ object Enrichment extends GuLogging {
     }
   }
 
+  def enrichVideo(
+      atomId: Option[String],
+      capiClient: CapiContentApiClient,
+  )(implicit executionContext: ExecutionContext): Future[MediaAtom] = {
+    def enrich(response: ItemResponse): Option[MediaAtom] = {
+      for {
+        video <- response.media
+        enriched <- Some(video.data).flatMap {
+          case atom: com.gu.contentatom.thrift.AtomData.Media =>
+            Some(
+              MediaAtom.mediaAtomMake(
+                video.id,
+                video.defaultHtml,
+                video.data.asInstanceOf[AtomApiMediaAtom],
+              ),
+            )
+          case _ => None
+        }
+      } yield enriched
+    }
+
+    val result = for {
+      atomId <- asFut(atomId, "atomId was undefined")
+      itemResponse <- capiClient.getResponse(ItemQuery(atomId))
+      enriched <- asFut(enrich(itemResponse), s"failed to enrich media atom $atomId")
+    } yield enriched
+
+    result.failed.foreach { error =>
+      val msg = s"Processing of a video atom failed, and it won't be pressed: $error"
+      log.warn(msg)
+    }
+
+    result
+  }
+
   def enrichInteractive(
       atomId: Option[String],
       beforeEnrichment: EnrichedContent,
@@ -636,7 +701,7 @@ object Enrichment extends GuLogging {
     result
   }
 
-  private def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
+  def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
     opt match {
       case Some(thing) => Future.successful(thing)
       case None        => Future.failed(new Throwable(errMsg))
