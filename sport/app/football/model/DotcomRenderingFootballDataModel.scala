@@ -31,7 +31,7 @@ import views.support.{CamelCase, JavaScriptPage}
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-case class TeamScore(name: String, score: Option[Int])
+case class TeamScore(id: String, name: String, score: Option[Int])
 case class TeamResult(matchId: String, self: TeamScore, foe: TeamScore)
 
 case class CompetitionMatches(competitionSummary: CompetitionSummary, matches: List[FootballMatch])
@@ -272,8 +272,8 @@ object DotcomRenderingFootballTablesDataModel {
             .map(result =>
               TeamResult(
                 matchId = result.matchId,
-                self = TeamScore(result.self.name, result.self.score),
-                foe = TeamScore(result.foe.name, result.foe.score),
+                self = TeamScore(result.self.id, result.self.name, result.self.score),
+                foe = TeamScore(result.foe.id, result.foe.name, result.foe.score),
               ),
             ),
       )

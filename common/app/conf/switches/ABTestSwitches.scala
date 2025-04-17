@@ -48,4 +48,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-a9-bid-response-winner",
+    "The test will enable checking the A9 bid response and determining a winning ad",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 4, 30)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

@@ -16,6 +16,7 @@ templates:
     - update-ami-for-legacy-stacks
     - update-ami-for-admin
     - update-ami-for-discussion
+    - update-ami-for-sport
 
 deployments:
   admin:
@@ -76,5 +77,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIDiscussion:
+          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-sport:
+    app: sport
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMISport:
           Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
