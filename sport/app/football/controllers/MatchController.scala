@@ -11,6 +11,7 @@ import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
+import football.model.DotcomRenderingFootballMatchSummaryDataModel
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -78,7 +79,8 @@ case class TeamAnswer(
     crest: String,
 ) extends NsAnswer
 
-case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
+case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer, comments: Option[String])
+    extends NsAnswer
 
 object NsAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
@@ -125,6 +127,7 @@ object NsAnswer {
       theMatch.id,
       makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
       makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      theMatch.comments,
     )
   }
 
@@ -169,8 +172,13 @@ class MatchController(
         val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
         page map { page =>
           if (request.forceDCR) {
+            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
+            val model = DotcomRenderingFootballMatchSummaryDataModel(
+              page = page,
+              footballMatch = footballMatch,
+            )
             Cached(30) {
-              JsonComponent.fromWritable(NsAnswer.makeFromFootballMatch(theMatch, page.lineUp))
+              JsonComponent.fromWritable(model)
             }
           } else {
             val htmlResponse = () =>
