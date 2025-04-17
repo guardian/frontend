@@ -1,7 +1,7 @@
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
-import { getUserFromCookie, getUserFromApiOrOkta } from 'common/modules/identity/api';
+import { getUserFromCookie, getUserData } from 'common/modules/identity/api';
 import ophan from 'ophan/ng';
 
 const classes = {
@@ -308,7 +308,7 @@ const showSecondStageSignup = (buttonEl) => {
 const enhanceNewsletters = () => {
 	if (getUserFromCookie() !== null) {
 		// email address is not stored in the cookie, gotta go to the Api
-		getUserFromApiOrOkta().then((userFromId) => {
+		getUserData().then((userFromId) => {
 			if (userFromId && userFromId.primaryEmailAddress) {
 				updatePageForLoggedIn(userFromId.primaryEmailAddress);
 				$.forEachElement(

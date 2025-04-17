@@ -12,7 +12,7 @@ export type CustomIdTokenClaims = CustomClaims & {
 	braze_uuid: string;
 };
 
-export async function isSignedInWithOktaAuthState(): Promise<
+export async function isSignedInAuthState(): Promise<
 	IdentityAuthState<AccessTokenClaims, CustomIdTokenClaims>
 > {
 	return getIdentityAuth()

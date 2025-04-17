@@ -7,7 +7,7 @@ import type { LocalDate } from '../../../../types/dates';
 import type { UserFeaturesResponse } from '../../../../types/membership';
 import {
 	getAuthStatus,
-	getOptionsHeadersWithOkta,
+	getOptionsHeaders,
 	isUserLoggedIn,
 } from '../../modules/identity/api';
 import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
@@ -155,8 +155,7 @@ const deleteOldData = (): void => {
 const requestNewData = () => {
 	return getAuthStatus()
 		.then((authStatus) =>
-			authStatus.kind === 'SignedInWithCookies' ||
-			authStatus.kind === 'SignedInWithOkta'
+			authStatus.kind === 'SignedIn'
 				? authStatus
 				: Promise.reject('The user is not signed in'),
 		)
@@ -168,7 +167,7 @@ const requestNewData = () => {
 				}/me`,
 				{
 					mode: 'cors',
-					...getOptionsHeadersWithOkta(signedInAuthStatus),
+					...getOptionsHeaders(signedInAuthStatus),
 				},
 			)
 				.then((response) => {
