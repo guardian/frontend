@@ -6,7 +6,7 @@ import cricket.controllers.CricketMatchPage
 import cricketModel.{Innings, InningsBatter, InningsBowler, InningsWicket, Match, Team}
 import experiments.ActiveExperiments
 import model.ApplicationContext
-import model.dotcomrendering.DotcomRenderingUtils.assetURL
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
@@ -73,4 +73,9 @@ object DotcomRenderingCricketDataModel {
 
   implicit val dotcomRenderingCricketDataModelFormat: Writes[DotcomRenderingCricketDataModel] =
     Json.writes[DotcomRenderingCricketDataModel]
+
+  def toJson(model: DotcomRenderingCricketDataModel): JsValue = {
+    val jsValue = Json.toJson(model)
+    withoutNull(jsValue)
+  }
 }
