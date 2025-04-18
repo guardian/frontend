@@ -62,7 +62,7 @@ object Dependencies {
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "9.0.2"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "4.0.0"
-  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
+  val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.0"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
