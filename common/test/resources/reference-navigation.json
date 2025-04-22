@@ -794,37 +794,6 @@
 				"classList": []
 			},
 			{
-				"title": "The Observer",
-				"url": "/observer",
-				"children": [
-					{
-						"title": "Comment",
-						"url": "/theobserver/news/comment",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "The New Review",
-						"url": "/theobserver/new-review",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Magazine",
-						"url": "/theobserver/magazine",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Food Monthly",
-						"url": "/theobserver/foodmonthly",
-						"children": [],
-						"classList": []
-					}
-				],
-				"classList": []
-			},
-			{
 				"title": "Guardian Weekly",
 				"url": "https://www.theguardian.com/weekly?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK",
 				"children": [],
@@ -3160,37 +3129,6 @@
 				"classList": []
 			},
 			{
-				"title": "The Observer",
-				"url": "/observer",
-				"children": [
-					{
-						"title": "Comment",
-						"url": "/theobserver/news/comment",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "The New Review",
-						"url": "/theobserver/new-review",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Magazine",
-						"url": "/theobserver/magazine",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Food Monthly",
-						"url": "/theobserver/foodmonthly",
-						"children": [],
-						"classList": []
-					}
-				],
-				"classList": []
-			},
-			{
 				"title": "Guardian Weekly",
 				"url": "https://www.theguardian.com/weekly?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int",
 				"children": [],
@@ -4169,37 +4107,6 @@
 				"title": "Inside the Guardian",
 				"url": "https://www.theguardian.com/insidetheguardian",
 				"children": [],
-				"classList": []
-			},
-			{
-				"title": "The Observer",
-				"url": "/observer",
-				"children": [
-					{
-						"title": "Comment",
-						"url": "/theobserver/news/comment",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "The New Review",
-						"url": "/theobserver/new-review",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Magazine",
-						"url": "/theobserver/magazine",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Food Monthly",
-						"url": "/theobserver/foodmonthly",
-						"children": [],
-						"classList": []
-					}
-				],
 				"classList": []
 			},
 			{
