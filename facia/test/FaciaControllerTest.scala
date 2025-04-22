@@ -6,7 +6,7 @@ import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import common.facia.FixtureBuilder
 import controllers.{Assets, FaciaControllerImpl}
-import experiments.{ActiveExperiments, EuropeBetaFront, ParticipationGroups}
+import experiments.{ActiveExperiments, EuropeBetaFront, EuropeBetaFrontTest2, ParticipationGroups}
 import helpers.FaciaTestData
 import implicits.FakeRequests
 import model.{FrontProperties, PressedPage, SeoData}
