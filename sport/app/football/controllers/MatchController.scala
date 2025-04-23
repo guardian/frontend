@@ -205,9 +205,8 @@ class MatchController(
                 })
             }
           }
-        // Not sure if this is the correct way to handle this should it be cached ?
         case None =>
-          Future.successful(Cached(CacheTime.Football)(WithoutRevalidationResult(NotFound("Match not found"))))
+          Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results"))))
       }
     }
 }
