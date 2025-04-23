@@ -14,7 +14,7 @@ case class MediaSelect(
 
 final case class PressedProperties(
     isBreaking: Boolean,
-    mediaSelect: MediaSelect,
+    mediaSelect: Option[MediaSelect],
     showKickerTag: Boolean,
     showByline: Boolean,
     maybeContent: Option[PressedStory],
@@ -47,10 +47,12 @@ object PressedProperties {
 
     PressedProperties(
       isBreaking = contentProperties.isBreaking,
-      mediaSelect = MediaSelect(
-        showMainVideo = contentProperties.showMainVideo,
-        imageSlideshowReplace = contentProperties.imageSlideshowReplace,
-        videoReplace = contentProperties.videoReplace,
+      mediaSelect = Some(
+        MediaSelect(
+          showMainVideo = contentProperties.showMainVideo,
+          imageSlideshowReplace = contentProperties.imageSlideshowReplace,
+          videoReplace = contentProperties.videoReplace,
+        ),
       ),
       showKickerTag = contentProperties.showKickerTag,
       showByline = contentProperties.showByline,

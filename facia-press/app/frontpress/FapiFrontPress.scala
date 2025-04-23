@@ -434,9 +434,9 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   )(implicit executionContext: ExecutionContext): Response[Option[MediaAtom]] = {
 
     val maybeUpdate: Future[Option[MediaAtom]] = content.properties match {
-      case properties if properties.mediaSelect.videoReplace && properties.replacementVideoAtomId.isDefined =>
+      case properties if properties.mediaSelect.exists(_.videoReplace) && properties.replacementVideoAtomId.isDefined =>
         Enrichment.enrichVideo(properties.replacementVideoAtomId, capiClient)
-      case properties if properties.mediaSelect.showMainVideo =>
+      case properties if properties.mediaSelect.exists(_.showMainVideo) =>
         val maybeAtom = for {
           content <- content.properties.maybeContent
           elements = content.elements
