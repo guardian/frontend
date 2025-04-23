@@ -8,7 +8,10 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
 import football.model.DotcomRenderingFootballTablesDataModel
-import implicits.JsonFormat
+import implicits.{HtmlFormat, JsonFormat}
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{FootballTablesPagePicker, RemoteRender}
 
 import scala.concurrent.Future
 
@@ -27,11 +30,13 @@ class LeagueTableController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
     val contentApiClient: ContentApiClient,
+    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with CompetitionTableFilters
     with ImplicitControllerExecutionContext {
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   // Competitions must be added to this list to show up at /football/tables
   val tableOrder: Seq[String] = Seq(
@@ -135,6 +140,8 @@ class LeagueTableController(
   def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
   def renderCompetition(competition: String): Action[AnyContent] =
     Action { implicit request =>
+      val tier = FootballTablesPagePicker.getTier()
+
       val table = loadTables
         .find(_.competition.url.endsWith(s"/$competition"))
         .orElse(loadTables.find(_.competition.id == competition))
@@ -154,6 +161,10 @@ class LeagueTableController(
               val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
 
               Cached(60)(JsonComponent.fromWritable(model))
+
+            case HtmlFormat if tier == RemoteRender =>
+              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
+              remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
 
             case _ =>
               val htmlResponse = () =>
