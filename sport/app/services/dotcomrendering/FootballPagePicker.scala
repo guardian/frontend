@@ -15,7 +15,7 @@ object FootballPagePicker {
   }
 
   def getTier(
-      footballPage: Option[FootballPage],
+      footballPage: FootballPage,
   )(implicit
       request: RequestHeader,
   ): RenderType = {

@@ -182,7 +182,7 @@ class MatchController(
             MatchPage(theMatch, _)
           }
           val tier = FootballSummaryPagePicker.getTier()
-          page map { page =>
+          page.flatMap { page =>
             val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
             val model = DotcomRenderingFootballMatchSummaryDataModel(
               page = page,
@@ -190,19 +190,21 @@ class MatchController(
             )
             request.getRequestFormat match {
               case JsonFormat if request.forceDCR =>
-                successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+                Future.successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
               case JsonFormat =>
-                successful(football.views.html.matchStats.matchStatsComponent(page))
+                Future.successful(football.views.html.matchStats.matchStatsComponent(page))
               case HtmlFormat if tier == RemoteRender =>
                 remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchSummaryDataModel.toJson(model))
               case _ =>
-                successful(Cached(CacheTime.Football) {
-                  RevalidatableResult.Ok(football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id)))
+                Future.successful(Cached(CacheTime.Football) {
+                  RevalidatableResult.Ok(
+                    football.views.html.matchStats
+                      .matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id)),
+                  )
                 })
             }
           }
+        case None => Future.successful(Cached(CacheTime.Football)(WithoutRevalidationResult(NotFound)))
       }
-      // not sure if this is correct.
-      successful(Cached(CacheTime.Football)(WithoutRevalidationResult(NotFound)))
     }
 }
