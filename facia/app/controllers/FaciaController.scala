@@ -6,7 +6,7 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import experiments.{ActiveExperiments, EuropeBetaFront}
+import experiments.{ActiveExperiments, EuropeBetaFront, EuropeBetaFrontTest2}
 import http.HttpPreconnections
 import implicits.GUHeaders
 import layout.slices._
@@ -227,7 +227,10 @@ trait FaciaController
       * for users participating in the test
       */
     val futureFaciaPageWithEuropeBetaTest: Future[Option[(PressedPage, Boolean)]] = {
-      if (path == "europe" && ActiveExperiments.isParticipating(EuropeBetaFront)) {
+      if (
+        path == "europe" && (ActiveExperiments
+          .isParticipating(EuropeBetaFront) || ActiveExperiments.isParticipating(EuropeBetaFrontTest2))
+      ) {
         val futureEuropeBetaPage = getFaciaPage("europe-beta")
         for {
           europePage <- futureFaciaPage
