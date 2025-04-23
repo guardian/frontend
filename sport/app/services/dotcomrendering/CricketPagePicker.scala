@@ -8,7 +8,6 @@ import utils.DotcomponentsLogger
 
 object CricketPagePicker {
   def getTier(
-      page: CricketMatchPage,
   )(implicit
       request: RequestHeader,
   ): RenderType = {
