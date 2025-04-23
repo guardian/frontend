@@ -60,7 +60,7 @@ deployments:
       cloudFormationStackName: frontend
       amiParametersToTags:
         AMI:
-          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
   # Riff-Raff identifies the GuCDK stacks using tag-based lookups
   update-ami-for-admin:
@@ -69,7 +69,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIAdmin:
-          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
   update-ami-for-discussion:
     app: discussion
@@ -77,7 +77,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIDiscussion:
-          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
   update-ami-for-sport:
     app: sport
@@ -85,5 +85,5 @@ deployments:
     parameters:
       amiParametersToTags:
         AMISport:
-          Recipe: ubuntu-focal-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
