@@ -294,7 +294,7 @@ object DotcomRenderingFootballTablesDataModel {
             "entries" -> getEntries(table.competition, group),
           )
         },
-        "hasGroups" -> table.hasGroups,
+        "hasGroups" -> table.multiGroup,
       ),
     )
 
