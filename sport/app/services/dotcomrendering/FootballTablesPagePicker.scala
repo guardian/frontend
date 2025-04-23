@@ -18,7 +18,7 @@ object FootballTablesPagePicker {
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && dcrShouldRender) RemoteRender
+      else if (dcrShouldRender) RemoteRender
       else LocalRender
     }
 

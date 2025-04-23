@@ -14,6 +14,7 @@ import renderers.DotcomRenderingService
 import services.dotcomrendering.{FootballTablesPagePicker, RemoteRender}
 
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
 
 case class TablesPage(
     page: Page,
@@ -139,7 +140,7 @@ class LeagueTableController(
 
   def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
   def renderCompetition(competition: String): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
       val tier = FootballTablesPagePicker.getTier()
 
       val table = loadTables
@@ -160,7 +161,7 @@ class LeagueTableController(
             case JsonFormat if request.forceDCR =>
               val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
 
-              Cached(60)(JsonComponent.fromWritable(model))
+              successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
 
             case HtmlFormat if tier == RemoteRender =>
               val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
@@ -186,14 +187,14 @@ class LeagueTableController(
                   multiGroup = table.multiGroup,
                 )
 
-              renderFormat(htmlResponse, jsonResponse, page)
+              successful(renderFormat(htmlResponse, jsonResponse, page))
           }
         }
         .getOrElse(
           if (request.isJson) {
-            Cached(60)(JsonNotFound())
+            successful(Cached(CacheTime.FootballTables)(JsonNotFound()))
           } else {
-            Redirect("/football/tables")
+            successful(Redirect("/football/tables"))
           },
         )
     }
