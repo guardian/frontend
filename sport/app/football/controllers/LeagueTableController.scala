@@ -97,7 +97,7 @@ class LeagueTableController(
       request.getRequestFormat match {
         case JsonFormat if request.forceDCR =>
           val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
-          successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+          successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
 
         case HtmlFormat if tier == RemoteRender =>
           val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
