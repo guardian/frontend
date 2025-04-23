@@ -178,10 +178,9 @@ class MatchController(
       maybeMatch match {
         case Some(theMatch) =>
           val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
-          val page: Future[MatchPage] = lineup map {
-            MatchPage(theMatch, _)
-          }
+          val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
+
           page.flatMap { page =>
             val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
             val model = DotcomRenderingFootballMatchSummaryDataModel(
@@ -192,7 +191,9 @@ class MatchController(
               case JsonFormat if request.forceDCR =>
                 Future.successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
               case JsonFormat =>
-                Future.successful(football.views.html.matchStats.matchStatsComponent(page))
+                Future.successful(Cached(CacheTime.Football) {
+                  RevalidatableResult.Ok(football.views.html.matchStats.matchStatsComponent(page))
+                })
               case HtmlFormat if tier == RemoteRender =>
                 remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchSummaryDataModel.toJson(model))
               case _ =>
