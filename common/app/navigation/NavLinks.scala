@@ -211,16 +211,6 @@ object NavLinks {
     ),
   )
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/insidetheguardian")
-  val observer = NavLink(
-    "The Observer",
-    "/observer",
-    children = List(
-      NavLink("Comment", "/theobserver/news/comment"),
-      NavLink("The New Review", "/theobserver/new-review"),
-      NavLink("Observer Magazine", "/theobserver/magazine"),
-      NavLink("Observer Food Monthly", "/theobserver/foodmonthly"),
-    ),
-  )
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink(
@@ -639,7 +629,6 @@ object NavLinks {
     newsletters,
     todaysPaper,
     insideTheGuardian,
-    observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     crosswords,
     wordiply,
@@ -676,7 +665,6 @@ object NavLinks {
     newsletters,
     todaysPaper,
     insideTheGuardian,
-    observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
     wordiply,
@@ -690,7 +678,6 @@ object NavLinks {
     newsletters,
     todaysPaper,
     insideTheGuardian,
-    observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
     wordiply,

@@ -40,11 +40,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-defer-permutive-load",
-    "Test the impact of deferring the Permutive script load",
+    "ab-a9-bid-response-winner",
+    "The test will enable checking the A9 bid response and determining a winning ad",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 4, 18)),
+    sellByDate = Some(LocalDate.of(2025, 4, 30)),
     exposeClientSide = true,
     highImpact = false,
   )
