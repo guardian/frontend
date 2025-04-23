@@ -75,8 +75,17 @@ object DotcomFrontsRenderingDataModel {
       .map { _.perEdition.mapKeys(_.id) }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
+    val lighterPage = page.copy(collections =
+      page.collections.map(collection =>
+        collection.copy(
+          curated = collection.curated.map(content => content.withoutCommercial),
+          backfill = collection.backfill.map(content => content.withoutCommercial),
+        ),
+      ),
+    )
+
     DotcomFrontsRenderingDataModel(
-      pressedPage = page,
+      pressedPage = lighterPage,
       nav = nav,
       editionId = edition.id,
       editionLongForm = edition.displayName,
