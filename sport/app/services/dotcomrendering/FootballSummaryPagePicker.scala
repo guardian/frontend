@@ -6,27 +6,19 @@ import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
 
-object FootballPagePicker {
-
-  def isSupportedInDcr(page: FootballPage): Boolean = {
-    val footballMatchesPattern =
-      """^football(?:/[^/]+)?/(live|fixtures|results)(?:/more)?(?:/\d{4}/[A-Za-z]{3}/\d{1,2})?$""".r
-    footballMatchesPattern.matches(page.metadata.id)
-  }
+object FootballSummaryPagePicker {
 
   def getTier(
-      footballPage: Option[FootballPage],
   )(implicit
       request: RequestHeader,
   ): RenderType = {
 
-    val dcrCanRender = isSupportedInDcr(footballPage)
     val dcrShouldRender = DCRFootballPages.isSwitchedOn
 
     val tier = {
       if (request.forceDCROff) LocalRender
       else if (request.forceDCR) RemoteRender
-      else if (dcrCanRender && dcrShouldRender) RemoteRender
+      else if (dcrShouldRender) RemoteRender
       else LocalRender
     }
 

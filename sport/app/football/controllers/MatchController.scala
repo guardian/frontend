@@ -2,8 +2,8 @@ package football.controllers
 
 import common._
 import feed.CompetitionsService
-import implicits.{Football, Requests}
-import model.Cached.WithoutRevalidationResult
+import implicits.{Football, HtmlFormat, JsonFormat, Requests}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
@@ -12,10 +12,14 @@ import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
 import football.model.{DotcomRenderingFootballMatchSummaryDataModel, GuTeamCodes}
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{FootballPagePicker, FootballSummaryPagePicker, RemoteRender}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
@@ -143,6 +147,7 @@ object NsAnswer {
 
 class MatchController(
     competitionsService: CompetitionsService,
+    val wsClient: WSClient,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -150,6 +155,7 @@ class MatchController(
     with Requests
     with GuLogging
     with ImplicitControllerExecutionContext {
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   def renderMatchIdJson(matchId: String): Action[AnyContent] = renderMatchId(matchId)
   def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findMatch(matchId))
@@ -168,30 +174,32 @@ class MatchController(
     }
 
   private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] =
-    Action.async { implicit request =>
+    Action { implicit request =>
       val response = maybeMatch map { theMatch =>
         val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
-        val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
+        val page: Future[MatchPage] = lineup map {
+          MatchPage(theMatch, _)
+        }
+        val tier = FootballSummaryPagePicker.getTier()
         page map { page =>
-          if (request.forceDCR) {
-            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
-            val model = DotcomRenderingFootballMatchSummaryDataModel(
-              page = page,
-              footballMatch = footballMatch,
-            )
-            Cached(30) {
-              JsonComponent.fromWritable(model)
-            }
-          } else {
-            val htmlResponse = () =>
-              football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
-            val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
-            renderFormat(htmlResponse, jsonResponse, page)
+          val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
+          val model = DotcomRenderingFootballMatchSummaryDataModel(
+            page = page,
+            footballMatch = footballMatch,
+          )
+          request.getRequestFormat match {
+            case JsonFormat if request.forceDCR =>
+              successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+            case JsonFormat =>
+              successful(football.views.html.matchStats.matchStatsComponent(page))
+            case HtmlFormat if tier == RemoteRender =>
+              remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchSummaryDataModel.toJson(model))
+            case _ =>
+              successful(Cached(CacheTime.Football) {
+                RevalidatableResult.Ok(football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id)))
+              })
           }
         }
       }
-
-      // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-      response.getOrElse(Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results")))))
     }
 }

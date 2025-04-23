@@ -573,4 +573,15 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val DCRFootballMatchSummary = Switch(
+    SwitchGroup.Feature,
+    "dcr-football-match-summary",
+    "If this switch is on, football match summary pages will be rendered with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }
