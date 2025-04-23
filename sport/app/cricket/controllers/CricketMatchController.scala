@@ -73,7 +73,7 @@ class CricketMatchController(
   private def renderMatch(
       page: CricketMatchPage,
   )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
-    val tier = CricketPagePicker.getTier(page)
+    val tier = CricketPagePicker.getTier()
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
         val model = DotcomRenderingCricketDataModel(page)
