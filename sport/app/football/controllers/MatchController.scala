@@ -192,7 +192,7 @@ class MatchController(
                 Future.successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
               case JsonFormat =>
                 Future.successful(Cached(CacheTime.Football) {
-                  RevalidatableResult.Ok(football.views.html.matchStats.matchStatsComponent(page))
+                  JsonComponent(football.views.html.matchStats.matchStatsComponent(page))
                 })
               case HtmlFormat if tier == RemoteRender =>
                 remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchSummaryDataModel.toJson(model))
