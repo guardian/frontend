@@ -1,6 +1,6 @@
 package services.dotcomrendering
 
-import conf.switches.Switches.DCRFootballPages
+import conf.switches.Switches.DCRFootballMatchSummary
 import football.controllers.FootballPage
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
@@ -13,7 +13,7 @@ object FootballSummaryPagePicker {
       request: RequestHeader,
   ): RenderType = {
 
-    val dcrShouldRender = DCRFootballPages.isSwitchedOn
+    val dcrShouldRender = DCRFootballMatchSummary.isSwitchedOn
 
     val tier = {
       if (request.forceDCROff) LocalRender
