@@ -822,20 +822,8 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
-						"children": [],
-						"classList": []
-					},
-					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -854,12 +842,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -1587,20 +1569,8 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
-						"children": [],
-						"classList": []
-					},
-					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -1619,12 +1589,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -2298,20 +2262,8 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
-						"children": [],
-						"classList": []
-					},
-					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -2330,12 +2282,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -3175,20 +3121,8 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
-						"children": [],
-						"classList": []
-					},
-					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -3207,12 +3141,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -3372,11 +3300,8 @@
 		"crosswords/series/weekend-crossword",
 		"crosswords/series/quiptic",
 		"crosswords/series/genius",
-		"crosswords/series/speedy",
 		"crosswords/series/sunday-quick",
-		"crosswords/series/everyman",
 		"crosswords/series/special",
-		"crosswords/series/azed",
 		"fashion/beauty",
 		"technology/motoring",
 		"commentisfree/commentisfree",
@@ -4163,20 +4088,8 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
-						"children": [],
-						"classList": []
-					},
-					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -4195,12 +4108,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
