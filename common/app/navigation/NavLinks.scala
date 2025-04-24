@@ -219,6 +219,7 @@ object NavLinks {
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),
+      NavLink("Sunday quick", "/crosswords/series/sunday-quick"),
       NavLink("Speedy", "/crosswords/series/speedy"),
       NavLink("Quick cryptic", "/crosswords/series/quick-cryptic"),
       NavLink("Everyman", "/crosswords/series/everyman"),
@@ -817,6 +818,7 @@ object NavLinks {
     "crosswords/series/quiptic",
     "crosswords/series/genius",
     "crosswords/series/speedy",
+    "crosswords/series/sunday-quick",
     "crosswords/series/everyman",
     "crosswords/series/special",
     "crosswords/series/azed",
