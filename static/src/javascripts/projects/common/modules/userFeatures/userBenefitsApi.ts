@@ -1,6 +1,6 @@
 import { isObject } from '@guardian/libs';
-import type { SignedInWithCookies, SignedInWithOkta } from '../identity/api';
-import { getOptionsHeadersWithOkta } from '../identity/api';
+import type { SignedIn } from '../identity/api';
+import { getOptionsHeaders } from '../identity/api';
 import { fetchJson } from './fetchJson';
 import type { UserBenefits } from './user-features';
 
@@ -8,7 +8,7 @@ type UserBenefitsResponse = {
 	benefits: string[];
 };
 export const syncDataFromUserBenefitsApi = async (
-	signedInAuthStatus: SignedInWithOkta | SignedInWithCookies,
+	signedInAuthStatus: SignedIn,
 ): Promise<UserBenefits> => {
 	const url = window.guardian.config.page.userBenefitsApiUrl;
 	if (!url) {
@@ -16,7 +16,7 @@ export const syncDataFromUserBenefitsApi = async (
 	}
 	const response = await fetchJson(url, {
 		mode: 'cors',
-		...getOptionsHeadersWithOkta(signedInAuthStatus),
+		...getOptionsHeaders(signedInAuthStatus),
 	});
 	if (!validateResponse(response)) {
 		throw new Error('invalid response');
