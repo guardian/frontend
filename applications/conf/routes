@@ -17,11 +17,11 @@ GET        /survey/:formName/show                                               
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|special|genius|speedy|weekend>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
-GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
 GET        /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
@@ -73,7 +73,6 @@ GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                
 
 # Newspaper pages
 GET        /theguardian                                                                     controllers.NewspaperController.latestGuardianNewspaper()
-GET        /theobserver                                                                     controllers.NewspaperController.latestObserverNewspaper()
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>        controllers.NewspaperController.newspaperForDate(path, day, month, year)
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all    controllers.NewspaperController.allOn(path, day, month, year)
 

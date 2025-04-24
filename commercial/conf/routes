@@ -33,3 +33,7 @@ GET         /commercial/amp-iframe.html                                     comm
 
 # DFP Non refreshable line items
 GET         /commercial/non-refreshable-line-items.json                     commercial.controllers.nonRefreshableLineItemsController.getIds
+
+# Ad-Lite opt in
+GET         /commercial/ad-lite/enable                                      commercial.controllers.TemporaryAdLiteController.enable()
+GET         /commercial/ad-lite/disable                                     commercial.controllers.TemporaryAdLiteController.disable()

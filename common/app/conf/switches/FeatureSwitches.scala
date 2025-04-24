@@ -573,4 +573,26 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val DCRCricketPages = Switch(
+    SwitchGroup.Feature,
+    "dcr-cricket-pages",
+    "If this switch is on, cricket scorecard pages will be rendered with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
+
+  val DCRFootballTablesPages = Switch(
+    SwitchGroup.Feature,
+    "dcr-football-table-pages",
+    "If this switch is on, football table pages will be rendered with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }

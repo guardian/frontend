@@ -11,6 +11,7 @@ import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
+import football.model.{DotcomRenderingFootballMatchSummaryDataModel, GuTeamCodes}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -67,7 +68,7 @@ case class TeamAnswer(
     id: String,
     name: String,
     players: Seq[PlayerAnswer],
-    score: Int,
+    score: Option[Int],
     scorers: List[String],
     possession: Int,
     shotsOn: Int,
@@ -76,9 +77,11 @@ case class TeamAnswer(
     fouls: Int,
     colours: String,
     crest: String,
+    codename: String,
 ) extends NsAnswer
 
-case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
+case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer, comments: Option[String])
+    extends NsAnswer
 
 object NsAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
@@ -107,7 +110,7 @@ object NsAnswer {
       teamV1.id,
       teamV1.name,
       players = players,
-      score = teamV1.score.getOrElse(0),
+      score = teamV1.score,
       scorers = teamV1.scorers.fold(Nil: List[String])(_.split(",").toList),
       possession = teamPossession,
       shotsOn = teamV2.shotsOn,
@@ -116,6 +119,7 @@ object NsAnswer {
       fouls = teamV2.fouls,
       colours = teamColour,
       crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png",
+      codename = GuTeamCodes.codeFor(teamV1),
     )
   }
 
@@ -125,6 +129,7 @@ object NsAnswer {
       theMatch.id,
       makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
       makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      theMatch.comments,
     )
   }
 
@@ -169,8 +174,13 @@ class MatchController(
         val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
         page map { page =>
           if (request.forceDCR) {
+            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
+            val model = DotcomRenderingFootballMatchSummaryDataModel(
+              page = page,
+              footballMatch = footballMatch,
+            )
             Cached(30) {
-              JsonComponent.fromWritable(NsAnswer.makeFromFootballMatch(theMatch, page.lineUp))
+              JsonComponent.fromWritable(model)
             }
           } else {
             val htmlResponse = () =>

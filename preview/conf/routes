@@ -14,7 +14,7 @@ GET        /geolocation                                                         
 GET         /oauthCallback                                                                    http.GuardianAuthWithExemptions.oauthCallback
 
 # Crossword
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 
 # Commercial
@@ -136,7 +136,6 @@ GET        /container/*id.json                                                  
 
 # Newspaper pages
 GET        /theguardian                                                                        controllers.NewspaperController.latestGuardianNewspaper()
-GET        /theobserver                                                                        controllers.NewspaperController.latestObserverNewspaper()
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>           controllers.NewspaperController.newspaperForDate(path, day, month, year)
 GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all       controllers.NewspaperController.allOn(path, day, month, year)
 

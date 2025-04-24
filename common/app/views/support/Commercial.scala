@@ -68,67 +68,6 @@ object Commercial {
 
   def isFoundationFundedContent(page: Page): Boolean = page.metadata.commercial.exists(_.isFoundationFunded)
 
-  def isBrandedContent(page: Page)(implicit request: RequestHeader): Boolean = {
-    isPaidContent(page) || isSponsoredContent(page) || isFoundationFundedContent(page)
-  }
-
-  def listSponsorLogosOnPage(page: Page)(implicit request: RequestHeader): Option[Seq[String]] = {
-
-    val edition = Edition(request)
-    def sponsor(branding: Branding) = branding.sponsorName.toLowerCase
-
-    val pageSponsor = page.metadata.commercial.flatMap(_.branding(edition)).map(sponsor)
-
-    val allSponsors = page match {
-      case front: PressedPage =>
-        val containerSponsors = front.collections.flatMap { container =>
-          container.branding(edition) flatMap {
-            case b: Branding => Some(b.sponsorName.toLowerCase)
-            case _           => None
-          }
-        }
-
-        val cardSponsors = front.collections.flatMap { container =>
-          container.branding(edition) match {
-            case Some(PaidMultiSponsorBranding) =>
-              container.curatedPlusBackfillDeduplicated.flatMap(_.branding(edition).map(sponsor))
-            case _ => Nil
-          }
-        }
-
-        val allSponsorsOnPage = pageSponsor.toList ++ containerSponsors ++ cardSponsors
-        if (allSponsorsOnPage.isEmpty) None else Some(allSponsorsOnPage.distinct)
-
-      case _ => pageSponsor map (Seq(_))
-    }
-
-    allSponsors map (_ map escapeJavaScript)
-  }
-
-  def getSponsorForGA(page: Page, key: String)(implicit request: RequestHeader): Html =
-    Html {
-      if (isBrandedContent(page)) {
-        listSponsorLogosOnPage(page) match {
-          case Some(logos) => s"&$key=${logos.mkString("|")}"
-          case _           => ""
-        }
-      } else { "" }
-    }
-
-  def getBrandingTypeForGA(page: Page, key: String)(implicit request: RequestHeader): Html =
-    Html {
-      brandingType(page) match {
-        case Some(branding) => s"&$key=${branding.name}"
-        case _              => ""
-      }
-    }
-
-  def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] =
-    for {
-      commercial <- page.metadata.commercial
-      branding <- commercial.branding(Edition(request))
-    } yield branding.brandingType
-
   object topAboveNavSlot {
     // The sizesOverride parameter is for testing only.
     def cssClasses(metadata: model.MetaData): String = {
