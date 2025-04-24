@@ -461,6 +461,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.articleBaseURL + "/CricketMatchPage", CacheTime.Cricket)
   }
 
+  def getFootballTablesPage(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballTablesPage", CacheTime.FootballTables)
+  }
 }
 
 object DotcomRenderingService {
