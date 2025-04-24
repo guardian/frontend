@@ -14,12 +14,11 @@ import conf.Configuration
 import football.model.{DotcomRenderingFootballMatchSummaryDataModel, GuTeamCodes}
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
-import services.dotcomrendering.{FootballPagePicker, FootballSummaryPagePicker, RemoteRender}
+import services.dotcomrendering.{FootballSummaryPagePicker, RemoteRender}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
@@ -183,21 +182,32 @@ class MatchController(
 
           page.flatMap { page =>
             val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
-            val model = DotcomRenderingFootballMatchSummaryDataModel(
-              page = page,
-              footballMatch = footballMatch,
-            )
+
             request.getRequestFormat match {
               case JsonFormat if request.forceDCR =>
-                Future.successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+                val model = DotcomRenderingFootballMatchSummaryDataModel(
+                  page = page,
+                  footballMatch = footballMatch,
+                )
+                Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
+
               case JsonFormat =>
-                Future.successful(Cached(CacheTime.Football) {
+                Future.successful(Cached(CacheTime.FootballMatch) {
                   JsonComponent(football.views.html.matchStats.matchStatsComponent(page))
                 })
+
               case HtmlFormat if tier == RemoteRender =>
-                remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchSummaryDataModel.toJson(model))
+                val model = DotcomRenderingFootballMatchSummaryDataModel(
+                  page = page,
+                  footballMatch = footballMatch,
+                )
+                remoteRenderer.getFootballMatchSummaryPage(
+                  wsClient,
+                  DotcomRenderingFootballMatchSummaryDataModel.toJson(model),
+                )
+
               case _ =>
-                Future.successful(Cached(CacheTime.Football) {
+                Future.successful(Cached(CacheTime.FootballMatch) {
                   RevalidatableResult.Ok(
                     football.views.html.matchStats
                       .matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id)),
@@ -206,7 +216,7 @@ class MatchController(
             }
           }
         case None =>
-          Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results"))))
+          Future.successful(Cached(CacheTime.FootballMatch)(WithoutRevalidationResult(Found("/football/results"))))
       }
     }
 }
