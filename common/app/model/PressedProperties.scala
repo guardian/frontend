@@ -33,7 +33,6 @@ final case class PressedProperties(
     webUrl: Option[String],
     editionBrandings: Option[Seq[EditionBranding]],
     atomId: Option[String],
-    replacementVideoAtomId: Option[String],
 ) {
   lazy val isPaidFor: Boolean = editionBrandings.exists(
     _.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition),
@@ -74,7 +73,6 @@ object PressedProperties {
         Edition.byId(editionId) map (EditionBranding(_, branding))
       }.toSeq),
       atomId = FaciaContentUtils.atomId(content),
-      replacementVideoAtomId = FaciaContentUtils.replacementVideoAtomId(content),
     )
   }
 
