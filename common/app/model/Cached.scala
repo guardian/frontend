@@ -29,6 +29,7 @@ object CacheTime {
   object DiscussionDefault extends CacheTime(60)
   object DiscussionClosed extends CacheTime(60, Some(longCacheTime))
   object Football extends CacheTime(10)
+  object FootballMatch extends CacheTime(30)
   object Cricket extends CacheTime(60)
   object FootballTables extends CacheTime(60)
   private def oldArticleCacheTime = if (ShorterSurrogateCacheForOlderArticles.isSwitchedOn) 60 else longCacheTime
