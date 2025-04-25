@@ -434,8 +434,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   )(implicit executionContext: ExecutionContext): Response[Option[MediaAtom]] = {
 
     val maybeUpdate: Future[Option[MediaAtom]] = content.properties match {
-      case properties if properties.mediaSelect.exists(_.videoReplace) && properties.replacementVideoAtomId.isDefined =>
-        Enrichment.enrichVideo(properties.replacementVideoAtomId, capiClient)
+      case properties if properties.mediaSelect.exists(_.videoReplace) && properties.atomId.isDefined =>
+        Enrichment.enrichVideo(properties.atomId.get, capiClient)
       case properties if properties.mediaSelect.exists(_.showMainVideo) =>
         val maybeAtom = for {
           content <- content.properties.maybeContent
@@ -639,7 +639,7 @@ object Enrichment extends GuLogging {
   }
 
   def enrichVideo(
-      atomId: Option[String],
+      atomId: String,
       capiClient: CapiContentApiClient,
   )(implicit executionContext: ExecutionContext): Future[Option[MediaAtom]] = {
     def enrich(response: ItemResponse): Option[MediaAtom] = {
@@ -660,7 +660,6 @@ object Enrichment extends GuLogging {
     }
 
     val result = for {
-      atomId <- asFut(atomId, "atomId was undefined")
       itemResponse <- capiClient.getResponse(ItemQuery(atomId))
       enriched <- asFutOpt(enrich(itemResponse))
     } yield enriched
