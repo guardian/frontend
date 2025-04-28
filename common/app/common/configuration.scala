@@ -492,18 +492,17 @@ class GuardianConfiguration extends GuLogging {
       configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
     }
 
-    lazy val shouldIncludeLineItemJobs = LineItemJobs.isSwitchedOn
-
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     private lazy val gamRoot = s"$commercialRoot/gam"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
+    def dfpPageSkinnedAdUnitsKey =
+      if (LineItemJobs.isSwitchedOn) s"$gamRoot/pageskins.json" else s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
     lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
-    lazy val dfpNonRefreshableLineItemIdsKey =
-      if (shouldIncludeLineItemJobs) s"$gamRoot/non-refreshable-line-items.json"
+    def dfpNonRefreshableLineItemIdsKey =
+      if (LineItemJobs.isSwitchedOn) s"$gamRoot/non-refreshable-line-items.json"
       else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
-    lazy val dfpLineItemsKey =
-      if (shouldIncludeLineItemJobs) s"$gamRoot/line-items.json"
+    def dfpLineItemsKey =
+      if (LineItemJobs.isSwitchedOn) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
