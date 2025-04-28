@@ -23,6 +23,7 @@ case class DotcomRenderingCricketDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 )
 
 object DotcomRenderingCricketDataModel {
@@ -68,6 +69,7 @@ object DotcomRenderingCricketDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 

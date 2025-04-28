@@ -46,6 +46,7 @@ trait DotcomRenderingFootballDataModel {
   def isAdFreeUser: Boolean
   def contributionsServiceUrl: String
   def canonicalUrl: String
+  def pageId: String
 }
 
 private object DotcomRenderingFootballDataModel {
@@ -119,6 +120,7 @@ case class DotcomRenderingFootballMatchListDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballMatchListDataModel {
@@ -150,6 +152,7 @@ object DotcomRenderingFootballMatchListDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 
@@ -226,6 +229,7 @@ case class DotcomRenderingFootballTablesDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballTablesDataModel {
@@ -252,6 +256,7 @@ object DotcomRenderingFootballTablesDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 
@@ -316,6 +321,7 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballMatchSummaryDataModel {
@@ -339,6 +345,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 
