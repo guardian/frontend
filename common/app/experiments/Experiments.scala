@@ -33,7 +33,7 @@ object EuropeBetaFrontTest2
       description = "Allows viewing the beta version of the Europe network front",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc50,
+      participationGroup = Perc0B,
     )
 
 object DarkModeWeb
@@ -41,6 +41,6 @@ object DarkModeWeb
       name = "dark-mode-web",
       description = "Enable dark mode on web",
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 4, 30),
+      sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc0D,
     )
