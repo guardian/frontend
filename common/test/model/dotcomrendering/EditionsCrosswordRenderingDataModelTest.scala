@@ -1,7 +1,8 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordPosition => CapiCrosswordPosition}
-import model.dotcomrendering.pageElements.{CrosswordPosition, EditionsCrosswordEntry}
+import model.dotcomrendering.pageElements.CrosswordPosition
+import model.dotcomrendering.pageElements.EditionsCrosswordEntry
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -39,7 +40,7 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     resultEntry.solution shouldBe Some("ANSWER") // Solution included
   }
 
-  "EditionsCrosswordEntry.fromCrosswordEntry" should "correctly map all fields when solution is NOT provided (input has None)" in {
+  it should "correctly map all fields when solution is NOT provided (input has None)" in {
     val shipSolutions = true
     val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(mockCapiEntryWithoutSolution, shipSolutions)
 
@@ -50,9 +51,13 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     resultEntry.solution shouldBe None
   }
 
-  "EditionsCrosswordEntry.fromCrosswordEntry" should "correctly map fields and explicitly exclude solution when shipSolutions is false" in {
+  it should "correctly map fields and explicitly exclude solution when shipSolutions is false" in {
     val shipSolutions = false
-    val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(mockCapiEntryWithSolution, shipSolutions) // Use entry *with* solution
+    val resultEntry =
+      EditionsCrosswordEntry.fromCrosswordEntry(
+        mockCapiEntryWithSolution,
+        shipSolutions,
+      ) // Use entry *with* solution
 
     resultEntry.id shouldBe "seven-down"
     resultEntry.number shouldBe 7
@@ -61,7 +66,7 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     resultEntry.solution shouldBe None
   }
 
-  "EditionsCrosswordEntry.fromCrosswordEntry" should "handle missing optional CAPI fields gracefully" in {
+  it should "handle missing optional CAPI fields gracefully" in {
     val minimalCapiEntry = CrosswordEntry(id = "one-across")
     val shipSolutions = true
     val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(minimalCapiEntry, shipSolutions)
@@ -76,4 +81,5 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     resultEntry.position shouldBe CrosswordPosition(x = 0, y = 0)
     resultEntry.separatorLocations shouldBe None
     resultEntry.solution shouldBe None
-  }}
+  }
+}
