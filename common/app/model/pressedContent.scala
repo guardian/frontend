@@ -30,6 +30,8 @@ sealed trait PressedContent {
 
   def withBoostLevel(level: Option[BoostLevel]): PressedContent
 
+  def withCard(card: PressedCard): PressedContent
+
   protected def propertiesWithoutCommercial(properties: PressedProperties): PressedProperties =
     properties.copy(
       maybeContent = properties.maybeContent.map(storyWithoutCommercial),
@@ -105,6 +107,10 @@ final case class CuratedContent(
   override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
     display = display.copy(boostLevel = level),
   )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object CuratedContent {
@@ -138,6 +144,10 @@ final case class SupportingCuratedContent(
 
   override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
     display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
   )
 }
 
@@ -173,6 +183,10 @@ final case class LinkSnap(
   override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
     display = display.copy(boostLevel = level),
   )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LinkSnap {
@@ -204,6 +218,10 @@ final case class LatestSnap(
 
   override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
     display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
   )
 }
 

@@ -54,12 +54,13 @@ case class PressedCollection(
 
   lazy val withDefaultBoostLevels = {
     val (defaultBoostCurated, defaultBoostBackfill) = FAPI
-      .applyDefaultBoostLevels[PressedContent](
+      .applyDefaultBoostLevelsAndGroups[PressedContent](
         groupsConfig = config.groupsConfig,
         collectionType = config.collectionType,
         contents = curated ++ backfill,
         getBoostLevel = _.display.boostLevel.getOrElse(BoostLevel.Default),
         setBoostLevel = (content, level) => content.withBoostLevel(Some(level)),
+        setGroup = (content, group) => content.withCard(content.card.copy(group = group)),
       )
       .splitAt(curated.length)
 
