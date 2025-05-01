@@ -1,11 +1,25 @@
 package controllers
 
 import com.gu.contentapi.client.model.SearchQuery
-import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, SearchResponse, Content => ApiContent, Section => ApiSection}
+import com.gu.contentapi.client.model.v1.{
+  Crossword,
+  ItemResponse,
+  SearchResponse,
+  Content => ApiContent,
+  Section => ApiSection,
+}
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
-import crosswords.{AccessibleCrosswordPage, AccessibleCrosswordRows, CrosswordPageWithContent, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults, CrosswordSvg}
+import crosswords.{
+  AccessibleCrosswordPage,
+  AccessibleCrosswordRows,
+  CrosswordPageWithContent,
+  CrosswordPageWithSvg,
+  CrosswordSearchPageNoResult,
+  CrosswordSearchPageWithResults,
+  CrosswordSvg,
+}
 import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{CapiRichDateTime, RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -42,7 +56,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   }
 
   def withCrossword(crosswordType: String, id: Int)(
-    f: (Crossword, ApiContent) => Future[Result],
+      f: (Crossword, ApiContent) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     getCrossword(crosswordType, id).flatMap { response =>
       val maybeCrossword = for {
@@ -57,8 +71,8 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   }
 
   def renderCrosswordPage(crosswordType: String, id: Int)(implicit
-                                                          request: RequestHeader,
-                                                          context: ApplicationContext,
+      request: RequestHeader,
+      context: ApplicationContext,
   ): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
       val page = CrosswordPageWithSvg(
@@ -81,12 +95,12 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
 }
 
 class CrosswordPageController(
-                               val contentApiClient: ContentApiClient,
-                               val controllerComponents: ControllerComponents,
-                               val wsClient: WSClient,
-                             )(implicit
-                               context: ApplicationContext,
-                             ) extends CrosswordController {
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
+)(implicit
+    context: ApplicationContext,
+) extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader): Result =
     Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
@@ -110,7 +124,7 @@ class CrosswordPageController(
     }
   }
   private def getDCRJson(crosswordPage: CrosswordPageWithContent, pageType: PageType)(implicit
-                                                                                      request: RequestHeader,
+      request: RequestHeader,
   ): JsValue =
     DotcomRenderingDataModel.toJson(
       DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType),
@@ -187,11 +201,11 @@ class CrosswordPageController(
 }
 
 class CrosswordSearchController(
-                                 val contentApiClient: ContentApiClient,
-                                 val controllerComponents: ControllerComponents,
-                                 val wsClient: WSClient,
-                               )(implicit context: ApplicationContext)
-  extends CrosswordController {
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val wsClient: WSClient,
+)(implicit context: ApplicationContext)
+    extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
@@ -287,13 +301,13 @@ class CrosswordSearchController(
 }
 
 class CrosswordEditionsController(
-                                   val contentApiClient: ContentApiClient,
-                                   val controllerComponents: ControllerComponents,
-                                   val remoteRenderer: DotcomRenderingService = DotcomRenderingService(),
-                                   val wsClient: WSClient,
-                                 ) extends BaseController
-  with GuLogging
-  with ImplicitControllerExecutionContext {
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val remoteRenderer: DotcomRenderingService = DotcomRenderingService(),
+    val wsClient: WSClient,
+) extends BaseController
+    with GuLogging
+    with ImplicitControllerExecutionContext {
 
   def digitalEdition: Action[AnyContent] = Action.async { implicit request =>
     getCrosswords
@@ -319,8 +333,8 @@ class CrosswordEditionsController(
     contentApiClient.getResponse(crosswordsQuery)
 
   /** Search for playable crosswords sorted by print publication date. This will exclude older, originally print-only
-   * crosswords that happen to have been re-published in a digital format recently.
-   */
+    * crosswords that happen to have been re-published in a digital format recently.
+    */
   private lazy val crosswordsQuery =
     SearchQuery()
       .contentType("crossword")
@@ -342,7 +356,6 @@ class CrosswordEditionsController(
 
   private def parseCrosswords(response: SearchResponse): Seq[EditionsCrosswordRenderingDataModel] = {
     response.results.flatMap(_.crossword).map { crossword =>
-
       EditionsCrosswordRenderingDataModel(
         id = s"crosswords/${crossword.`type`.name}/${crossword.number}",
         number = crossword.number,
@@ -350,13 +363,14 @@ class CrosswordEditionsController(
         creator = crossword.creator,
         date = crossword.date.toJoda.getMillis,
         webPublicationDate = crossword.date.toJoda.getMillis,
-        entries = crossword.entries.map(entry => EditionsCrosswordEntry.fromCrosswordEntry(entry, crossword.solutionAvailable)),
+        entries =
+          crossword.entries.map(entry => EditionsCrosswordEntry.fromCrosswordEntry(entry, crossword.solutionAvailable)),
         solutionAvailable = crossword.solutionAvailable,
         dateSolutionAvailable = crossword.dateSolutionAvailable.map(_.toJoda.getMillis).getOrElse(0L),
         dimensions = crossword.dimensions,
         crosswordType = CamelCase.toHyphenated(crossword.`type`.name),
         pdf = crossword.pdf,
-        instructions = crossword.instructions
+        instructions = crossword.instructions,
       )
     }
   }.toList

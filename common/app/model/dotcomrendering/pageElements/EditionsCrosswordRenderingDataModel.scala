@@ -12,17 +12,17 @@ object CrosswordPosition {
 }
 
 case class EditionsCrosswordEntry(
-                                   id: String,
-                                   number: Int,
-                                   humanNumber: String,
-                                   clue: String,
-                                   direction: String,
-                                   length: Int,
-                                   group: Seq[String],
-                                   position: CrosswordPosition,
-                                   separatorLocations: Option[Map[String, Seq[Int]]],
-                                   solution: Option[String],
-                                 )
+    id: String,
+    number: Int,
+    humanNumber: String,
+    clue: String,
+    direction: String,
+    length: Int,
+    group: Seq[String],
+    position: CrosswordPosition,
+    separatorLocations: Option[Map[String, Seq[Int]]],
+    solution: Option[String],
+)
 
 object EditionsCrosswordEntry {
   implicit val jsonWrites: OWrites[EditionsCrosswordEntry] = Json.writes[EditionsCrosswordEntry]
@@ -44,25 +44,26 @@ object EditionsCrosswordEntry {
 }
 
 case class EditionsCrosswordRenderingDataModel(
-                                                id: String,
-                                                number: Int,
-                                                name: String,
-                                                creator: Option[CrosswordCreator],
-                                                date: Long,
-                                                webPublicationDate: Long,
-                                                entries: Seq[EditionsCrosswordEntry],
-                                                solutionAvailable: Boolean,
-                                                dateSolutionAvailable: Long,
-                                                dimensions: CrosswordDimensions,
-                                                crosswordType: String,
-                                                pdf: Option[String],
-                                                instructions: Option[String],
-                                              )
+    id: String,
+    number: Int,
+    name: String,
+    creator: Option[CrosswordCreator],
+    date: Long,
+    webPublicationDate: Long,
+    entries: Seq[EditionsCrosswordEntry],
+    solutionAvailable: Boolean,
+    dateSolutionAvailable: Long,
+    dimensions: CrosswordDimensions,
+    crosswordType: String,
+    pdf: Option[String],
+    instructions: Option[String],
+)
 
 object EditionsCrosswordRenderingDataModel {
   implicit val crosswordCreatorWrites: OWrites[CrosswordCreator] = Json.writes[CrosswordCreator]
   implicit val crosswordDimensionsWrites: OWrites[CrosswordDimensions] = Json.writes[CrosswordDimensions]
-  implicit val jsonWrites: OWrites[EditionsCrosswordRenderingDataModel] = Json.writes[EditionsCrosswordRenderingDataModel]
+  implicit val jsonWrites: OWrites[EditionsCrosswordRenderingDataModel] =
+    Json.writes[EditionsCrosswordRenderingDataModel]
 
   def toJson(model: EditionsCrosswordRenderingDataModel): JsValue = {
     Json.toJson(model)
