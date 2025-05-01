@@ -1,88 +1,79 @@
 package model.dotcomrendering
 
-import com.gu.contentapi.client.model.v1.{CapiDateTime, Crossword, CrosswordType, CrosswordDimensions, CrosswordEntry}
-import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
-import org.mockito.Mockito.when
+import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordPosition => CapiCrosswordPosition}
+import model.dotcomrendering.pageElements.{CrosswordPosition, EditionsCrosswordEntry}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
-import org.joda.time.DateTime
 
 class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers with MockitoSugar {
-  val mockEntry = CrosswordEntry(
-    id = "mockId",
-    solution = Some("Mock solution"),
+
+  val mockCapiEntryWithSolution = CrosswordEntry(
+    id = "seven-down",
+    number = Some(7),
+    humanNumber = Some("7"),
+    direction = Some("down"),
+    length = Some(4),
+    clue = Some("Mock clue"),
+    group = Some(Seq("seven-down")),
+    position = Some(CapiCrosswordPosition(x = 2, y = 0)),
+    separatorLocations = Some(Map("," -> Seq(2))),
+    solution = Some("ANSWER"),
   )
 
-  val mockCrossword = Crossword(
-    name = "Mock name",
-    `type` = CrosswordType.Quick,
-    number = 1,
-    date = CapiDateTime(DateTime.now().getMillis(), "date"),
-    dimensions = CrosswordDimensions(1, 1),
-    entries = Seq(mockEntry, mockEntry),
-    solutionAvailable = true,
-    hasNumbers = false,
-    randomCluesOrdering = false,
-  )
+  val mockCapiEntryWithoutSolution = mockCapiEntryWithSolution.copy(solution = None)
 
-  "apply" should "provide solutions when 'dateSolutionAvailable' is in the past" in {
-    val crossword = mockCrossword.copy(
-      solutionAvailable = true,
-      dateSolutionAvailable = Some(CapiDateTime(DateTime.now().minusDays(1).getMillis(), "date")),
-    )
+  "EditionsCrosswordEntry.fromCrosswordEntry" should "correctly map all fields when solution is provided" in {
+    val shipSolutions = true
+    val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(mockCapiEntryWithSolution, shipSolutions)
 
-    val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword)).crosswords.toSeq
-
-    crosswords(0).entries(0).solution shouldBe Some("Mock solution")
-    crosswords(0).entries(1).solution shouldBe Some("Mock solution")
-    crosswords(1).entries(0).solution shouldBe Some("Mock solution")
-    crosswords(1).entries(1).solution shouldBe Some("Mock solution")
+    resultEntry.id shouldBe "seven-down"
+    resultEntry.number shouldBe 7
+    resultEntry.humanNumber shouldBe "7"
+    resultEntry.direction shouldBe "down"
+    resultEntry.length shouldBe 4
+    resultEntry.clue shouldBe "Mock clue"
+    resultEntry.group shouldBe Seq("seven-down")
+    resultEntry.position shouldBe CrosswordPosition(x = 2, y = 0)
+    resultEntry.separatorLocations shouldBe Some(Map("," -> Seq(2)))
+    resultEntry.solution shouldBe Some("ANSWER") // Solution included
   }
 
-  "apply" should "provide solutions when 'dateSolutionAvailable' is 'None' and solutionAvailable is 'true'" in {
-    val crossword = mockCrossword.copy(
-      solutionAvailable = true,
-      dateSolutionAvailable = None,
-    )
+  "EditionsCrosswordEntry.fromCrosswordEntry" should "correctly map all fields when solution is NOT provided (input has None)" in {
+    val shipSolutions = true
+    val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(mockCapiEntryWithoutSolution, shipSolutions)
 
-    val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword)).crosswords.toSeq
-
-    crosswords(0).entries(0).solution shouldBe Some("Mock solution")
-    crosswords(0).entries(1).solution shouldBe Some("Mock solution")
-    crosswords(1).entries(0).solution shouldBe Some("Mock solution")
-    crosswords(1).entries(1).solution shouldBe Some("Mock solution")
+    resultEntry.id shouldBe "seven-down"
+    resultEntry.number shouldBe 7
+    resultEntry.position shouldBe CrosswordPosition(x = 2, y = 0)
+    resultEntry.separatorLocations shouldBe Some(Map("," -> Seq(2)))
+    resultEntry.solution shouldBe None
   }
 
-  "apply" should "not provide solutions when 'dateSolutionAvailable' is in the future" in {
-    val crossword = mockCrossword.copy(
-      solutionAvailable = true,
-      dateSolutionAvailable = Some(CapiDateTime(DateTime.now().plusDays(1).getMillis(), "date")),
-    )
+  "EditionsCrosswordEntry.fromCrosswordEntry" should "correctly map fields and explicitly exclude solution when shipSolutions is false" in {
+    val shipSolutions = false
+    val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(mockCapiEntryWithSolution, shipSolutions) // Use entry *with* solution
 
-    val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword)).crosswords.toSeq
-
-    crosswords(0).entries(0).solution shouldBe None
-    crosswords(0).entries(1).solution shouldBe None
-    crosswords(1).entries(0).solution shouldBe None
-    crosswords(1).entries(1).solution shouldBe None
+    resultEntry.id shouldBe "seven-down"
+    resultEntry.number shouldBe 7
+    resultEntry.position shouldBe CrosswordPosition(x = 2, y = 0)
+    resultEntry.separatorLocations shouldBe Some(Map("," -> Seq(2)))
+    resultEntry.solution shouldBe None
   }
 
-  "apply" should "not provide solutions when 'dateSolutionAvailable' is 'None' and solutionAvailable is 'false'" in {
-    val crossword = mockCrossword.copy(
-      solutionAvailable = false,
-      dateSolutionAvailable = None,
-    )
+  "EditionsCrosswordEntry.fromCrosswordEntry" should "handle missing optional CAPI fields gracefully" in {
+    val minimalCapiEntry = CrosswordEntry(id = "one-across")
+    val shipSolutions = true
+    val resultEntry = EditionsCrosswordEntry.fromCrosswordEntry(minimalCapiEntry, shipSolutions)
 
-    val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword)).crosswords.toSeq
-
-    crosswords(0).entries(0).solution shouldBe None
-    crosswords(0).entries(1).solution shouldBe None
-    crosswords(1).entries(0).solution shouldBe None
-    crosswords(1).entries(1).solution shouldBe None
-  }
-}
+    resultEntry.id shouldBe "one-across"
+    resultEntry.number shouldBe 0
+    resultEntry.humanNumber shouldBe ""
+    resultEntry.clue shouldBe ""
+    resultEntry.direction shouldBe ""
+    resultEntry.length shouldBe 0
+    resultEntry.group shouldBe Seq.empty
+    resultEntry.position shouldBe CrosswordPosition(x = 0, y = 0)
+    resultEntry.separatorLocations shouldBe None
+    resultEntry.solution shouldBe None
+  }}
