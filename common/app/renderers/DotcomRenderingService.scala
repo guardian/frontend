@@ -1,7 +1,6 @@
 package renderers
 
-import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import com.gu.contentapi.client.model.v1.{Block, Blocks, Content, Crossword}
+import com.gu.contentapi.client.model.v1.{Block, Blocks, Content}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -10,10 +9,10 @@ import crosswords.CrosswordPageWithContent
 import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
-import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.{
   CacheTime,
   Cached,
+  CrosswordData,
   GalleryPage,
   ImageContentPage,
   InteractivePage,
@@ -25,12 +24,13 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
-import play.api.libs.json.JsValue
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
+import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
+import services.newsletters.model.{NewsletterLayout, NewsletterResponseV2}
 import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
@@ -440,10 +440,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   }
 
   def getEditionsCrossword(
-      ws: WSClient,
-      crosswords: EditionsCrosswordRenderingDataModel,
-  )(implicit request: RequestHeader): Future[Result] = {
-    val json = EditionsCrosswordRenderingDataModel.toJson(crosswords)
+                            ws: WSClient,
+                            crosswords: Iterable[CrosswordData],
+                          )(implicit request: RequestHeader): Future[Result] = {
+    val json = Json.obj("crosswords" -> Json.toJson(crosswords))
     post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Default)
   }
 

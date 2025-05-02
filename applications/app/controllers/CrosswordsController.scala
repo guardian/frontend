@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.contentapi.client.model.SearchQuery
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -10,7 +11,6 @@ import com.gu.contentapi.client.model.v1.{
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
-import com.gu.contentapi.client.model.SearchQuery
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
@@ -23,14 +23,12 @@ import crosswords.{
 import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
-import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import org.joda.time.{DateTime, LocalDate}
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
@@ -312,16 +310,17 @@ class CrosswordEditionsController(
   def digitalEdition: Action[AnyContent] = Action.async { implicit request =>
     getCrosswords
       .map(parseCrosswords)
-      .flatMap { crosswords =>
-        remoteRenderer.getEditionsCrossword(wsClient, crosswords)
+      .flatMap { crosswordData =>
+        remoteRenderer.getEditionsCrossword(wsClient, crosswordData)
       }
   }
 
   def digitalEditionJson: Action[AnyContent] = Action.async { implicit request =>
     getCrosswords
       .map(parseCrosswords)
-      .map { crosswords =>
-        Cached(CacheTime.Default)(RevalidatableResult.Ok(toJson(crosswords))).as("application/json")
+      .map { crosswordData =>
+        val json: JsObject = Json.obj("crosswords" -> Json.toJson(crosswordData))
+        Cached(CacheTime.Default)(RevalidatableResult.Ok(json)).as("application/json")
       }
   }
 
@@ -350,7 +349,10 @@ class CrosswordEditionsController(
     "crosswords/series/quiptic",
   ).mkString("|")
 
-  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel =
-    EditionsCrosswordRenderingDataModel(response.results.flatMap(_.crossword))
+  private def parseCrosswords(response: SearchResponse): Iterable[CrosswordData] = {
+    response.results.flatMap(_.crossword).map { crossword =>
+      CrosswordData.fromCrossword(crossword, content = null)
+    }
+  }
 
 }
