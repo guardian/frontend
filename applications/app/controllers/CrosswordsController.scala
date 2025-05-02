@@ -37,6 +37,7 @@ import renderers.DotcomRenderingService
 import services.dotcomrendering.{CrosswordsPicker, RemoteRender}
 import services.{IndexPage, IndexPageItem}
 
+import scala.collection.immutable
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
@@ -350,7 +351,16 @@ class CrosswordEditionsController(
     "crosswords/series/quiptic",
   ).mkString("|")
 
-  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel =
-    EditionsCrosswordRenderingDataModel(response.results.flatMap(_.crossword))
-
+  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel = {
+    val originalCapiCrosswords: Seq[Crossword] = response.results.flatMap(_.crossword).toList
+    val collectedItems = response.results.collect {
+      case content if content.crossword.isDefined =>
+        CrosswordData.fromCrossword(content.crossword.get, content)
+    }
+    val crosswordDataItems: immutable.Seq[CrosswordData] = collectedItems.toList
+    EditionsCrosswordRenderingDataModel(
+      crosswords = originalCapiCrosswords,
+      newCrosswords = crosswordDataItems,
+    )
+  }
 }
