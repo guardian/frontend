@@ -350,7 +350,13 @@ class CrosswordEditionsController(
     "crosswords/series/quiptic",
   ).mkString("|")
 
-  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel =
-    EditionsCrosswordRenderingDataModel(response.results.flatMap(_.crossword))
+  private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel = {
+    val collectedItems = response.results.collect {
+      case content if content.crossword.isDefined =>
+        CrosswordData.fromCrossword(content.crossword.get, content)
+    }
+    val crosswordDataItems: scala.collection.immutable.Seq[CrosswordData] = collectedItems.toList
+    EditionsCrosswordRenderingDataModel(crosswordDataItems)
+  }
 
 }
