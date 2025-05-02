@@ -440,9 +440,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   }
 
   def getEditionsCrossword(
-                            ws: WSClient,
-                            crosswords: Iterable[CrosswordData],
-                          )(implicit request: RequestHeader): Future[Result] = {
+      ws: WSClient,
+      crosswords: Iterable[CrosswordData],
+  )(implicit request: RequestHeader): Future[Result] = {
     val json = Json.obj("crosswords" -> Json.toJson(crosswords))
     post(ws, json, Configuration.rendering.articleBaseURL + "/EditionsCrossword", CacheTime.Default)
   }
