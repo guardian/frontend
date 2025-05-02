@@ -2,6 +2,8 @@ GET        /_healthcheck        controllers.HealthCheck.healthCheck()
 GET        /                    controllers.Application.index
 GET        /debug/config        controllers.Application.showCurrentConfig
 
+# The GET paths below are debug endpoints that show what a pressed page would look like after being pressed.
+# They do not fetch the pressed page from S3.
 GET        /pressed/live/*path.lite     controllers.Application.generateLiteLivePressedFor(path)
 GET        /pressed/live/*path          controllers.Application.generateLivePressedFor(path)
 
