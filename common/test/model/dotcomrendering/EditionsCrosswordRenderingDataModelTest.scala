@@ -33,7 +33,7 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     )
 
     val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword),Nil).crosswords.toSeq
+      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword), Nil).crosswords.toSeq
 
     crosswords(0).entries(0).solution shouldBe Some("Mock solution")
     crosswords(0).entries(1).solution shouldBe Some("Mock solution")
@@ -48,7 +48,7 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     )
 
     val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword),Nil).crosswords.toSeq
+      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword), Nil).crosswords.toSeq
 
     crosswords(0).entries(0).solution shouldBe Some("Mock solution")
     crosswords(0).entries(1).solution shouldBe Some("Mock solution")
@@ -63,7 +63,7 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     )
 
     val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword),Nil).crosswords.toSeq
+      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword), Nil).crosswords.toSeq
 
     crosswords(0).entries(0).solution shouldBe None
     crosswords(0).entries(1).solution shouldBe None
@@ -78,7 +78,7 @@ class EditionsCrosswordRenderingDataModelTest extends AnyFlatSpec with Matchers 
     )
 
     val crosswords =
-      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword),Nil).crosswords.toSeq
+      EditionsCrosswordRenderingDataModel(Seq(crossword, crossword), Nil).crosswords.toSeq
 
     crosswords(0).entries(0).solution shouldBe None
     crosswords(0).entries(1).solution shouldBe None
