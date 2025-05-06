@@ -4,7 +4,7 @@ import common._
 import conf.Configuration
 import cricketModel.Match
 import conf.cricketPa.{CricketTeam, CricketTeams}
-import football.model.DotcomRenderingCricketDataModel
+import football.model.{CricketScoreBoardDataModel, DotcomRenderingCricketDataModel}
 import implicits.{HtmlFormat, JsonFormat}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
@@ -48,7 +48,7 @@ class CricketMatchController(
             val page = CricketMatchPage(matchData, date, team)
             Cached(60) {
               JsonComponent(
-                "match" -> Json.toJson(page.theMatch),
+                "match" -> CricketScoreBoardDataModel.toJson(page.theMatch),
                 "scorecardUrl" -> (Configuration.site.host + page.metadata.id),
               )
             }
