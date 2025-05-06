@@ -25,28 +25,28 @@ trait Store extends GuLogging with Dates {
   def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
 
   def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
-    S3.putPublic(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
+    S3.putPrivate(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
   }
   def putSurveySponsorships(adUnitJson: String): Unit = {
-    S3.putPublic(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
+    S3.putPrivate(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
   }
   def putDfpPageSkinAdUnits(adUnitJson: String): Unit = {
-    S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
+    S3.putPrivate(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
   }
   def putDfpLineItemsReport(everything: String): Unit = {
-    S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
+    S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
   def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
-    S3.putPublic(filename, adUnits, "text/plain")
+    S3.putPrivate(filename, adUnits, "text/plain")
   }
   def putDfpTemplateCreatives(creatives: String): Unit = {
-    S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
+    S3.putPrivate(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
-    S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
+    S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
   }
   def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
-    S3.putPublic(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
+    S3.putPrivate(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
