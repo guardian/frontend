@@ -1,6 +1,7 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
+import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
 import model.{ContentFormat, Pillar}
@@ -26,6 +27,10 @@ sealed trait PressedContent {
   def withoutTrailText: PressedContent
 
   def withoutCommercial: PressedContent
+
+  def withBoostLevel(level: Option[BoostLevel]): PressedContent
+
+  def withCard(card: PressedCard): PressedContent
 
   protected def propertiesWithoutCommercial(properties: PressedProperties): PressedProperties =
     properties.copy(
@@ -98,6 +103,14 @@ final case class CuratedContent(
     properties = propertiesWithoutCommercial(properties),
     supportingContent = supportingContent.map(_.withoutCommercial),
   )
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object CuratedContent {
@@ -128,6 +141,14 @@ final case class SupportingCuratedContent(
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object SupportingCuratedContent {
@@ -158,6 +179,14 @@ final case class LinkSnap(
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LinkSnap {
@@ -186,6 +215,14 @@ final case class LatestSnap(
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LatestSnap {
