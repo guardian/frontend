@@ -644,10 +644,10 @@ object Enrichment extends GuLogging {
         enriched <- Some(video.data).flatMap {
           case atom: com.gu.contentatom.thrift.AtomData.Media =>
             Some(
-              MediaAtom.mediaAtomMake(
+              MediaAtom.makeFromThrift(
                 video.id,
                 video.defaultHtml,
-                video.data.asInstanceOf[AtomApiMediaAtom],
+                atom,
               ),
             )
           case _ => None
@@ -656,7 +656,7 @@ object Enrichment extends GuLogging {
     }
 
     val result = for {
-      itemResponse <- capiClient.getResponse(ItemQuery(atomId))
+      itemResponse <- capiClient.getResponse(ItemQuery(s"atom/video/$atomId"))
       enriched <- asFutOpt(enrich(itemResponse))
     } yield enriched
 

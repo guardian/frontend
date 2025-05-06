@@ -206,6 +206,26 @@ object MediaAtom extends common.GuLogging {
     MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
   }
 
+  def makeFromThrift(id: String, defaultHtml: String, mediaAtom: AtomData.Media): MediaAtom = {
+    val expired: Option[Boolean] = for {
+      metadata <- mediaAtom.media.metadata
+      expiryDate <- metadata.expiryDate
+    } yield new DateTime(expiryDate).withZone(DateTimeZone.UTC).isBeforeNow
+
+    MediaAtom(
+      id = id,
+      defaultHtml = defaultHtml,
+      assets = mediaAtom.media.assets.map(mediaAssetMake).toSeq,
+      title = mediaAtom.media.title,
+      duration = mediaAtom.media.duration,
+      source = mediaAtom.media.source,
+      posterImage = mediaAtom.media.posterImage.map(imageMediaMake(_, mediaAtom.media.title)),
+      expired = expired,
+      activeVersion = mediaAtom.media.activeVersion,
+      channelId = mediaAtom.media.metadata.flatMap(_.channelId),
+    )
+  }
+
   def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom = {
     val expired: Option[Boolean] = for {
       metadata <- mediaAtom.metadata
