@@ -436,13 +436,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         val maybeAtom = for {
           content <- content.properties.maybeContent
           elements = content.elements
-          atom <- Either
-            .cond(
-              elements.mainMediaAtom.isDefined && elements.mediaAtoms.nonEmpty,
-              elements.mediaAtoms.head,
-              None,
-            )
-            .toOption
+          atom <- elements.mainMediaAtom.orElse(elements.mediaAtoms.headOption)
         } yield atom
 
         Enrichment.asFutOpt(maybeAtom)
