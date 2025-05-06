@@ -395,19 +395,15 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     initialContent.flatMap { content =>
       Response.traverse(content.map {
         case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn =>
-          enrichContent(collection, curated, curated.enriched).map { updatedFields =>
-            curated.copy(enriched = Some(updatedFields))
-          }
-          getMediaAtom(curated).map { mediaAtom =>
-            curated.copy(enrichedMediaAtom = mediaAtom)
-          }
+          for {
+            updatedFields <- enrichContent(collection, curated, curated.enriched)
+            maybeMediaAtom <- getMediaAtom(curated).recover(_ => None)
+          } yield curated.copy(enriched = Some(updatedFields), enrichedMediaAtom = maybeMediaAtom)
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
-          enrichContent(collection, link, link.enriched).map { updatedFields =>
-            link.copy(enriched = Some(updatedFields))
-          }
-          getMediaAtom(link).map { mediaAtom =>
-            link.copy(mediaAtom = mediaAtom)
-          }
+          for {
+            updatedFields <- enrichContent(collection, link, link.enriched)
+            maybeMediaAtom <- getMediaAtom(link).recover(_ => None)
+          } yield link.copy(enriched = Some(updatedFields), enrichedMediaAtom = maybeMediaAtom)
         case plain => Response.Right(plain)
       })
     }

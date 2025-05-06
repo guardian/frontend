@@ -132,7 +132,7 @@ final case class LinkSnap(
     enriched: Option[
       EnrichedContent,
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
-    mediaAtom: Option[MediaAtom],
+    enrichedMediaAtom: Option[MediaAtom],
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 }
@@ -147,7 +147,7 @@ object LinkSnap {
       display = PressedDisplaySettings.make(content, None),
       enriched = Some(EnrichedContent.empty),
       format = ContentFormat.defaultContentFormat,
-      mediaAtom = None,
+      enrichedMediaAtom = None,
     )
   }
 }
