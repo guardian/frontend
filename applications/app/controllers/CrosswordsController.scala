@@ -352,15 +352,13 @@ class CrosswordEditionsController(
   ).mkString("|")
 
   private def parseCrosswords(response: SearchResponse): EditionsCrosswordRenderingDataModel = {
-    val originalCapiCrosswords: Seq[Crossword] = response.results.flatMap(_.crossword).toList
     val collectedItems = response.results.collect {
       case content if content.crossword.isDefined =>
         CrosswordData.fromCrossword(content.crossword.get, content)
     }
     val crosswordDataItems: immutable.Seq[CrosswordData] = collectedItems.toList
     EditionsCrosswordRenderingDataModel(
-      crosswords = originalCapiCrosswords,
-      newCrosswords = crosswordDataItems,
+      crosswordDataItems,
     )
   }
 }
