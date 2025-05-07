@@ -80,7 +80,15 @@ trait Index extends ConciergeRepository {
             val tag2 = findTag(head.item, secondTag)
             if (tag1.isDefined && tag2.isDefined) {
               val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
-              Right(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+              Right(
+                IndexPage(
+                  page,
+                  contents = trails,
+                  tags = Tags(List(tag1.get, tag2.get)),
+                  date = DateTime.now,
+                  tzOverride = None,
+                ),
+              )
             } else {
               Left(NotFound)
             }
