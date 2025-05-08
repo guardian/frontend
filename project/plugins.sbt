@@ -3,8 +3,8 @@ logLevel := Level.Warn
 
 // Dependencies used by the VersionInfo plugin
 libraryDependencies ++= Seq(
-  "joda-time" % "joda-time" % "2.12.7",
-  "org.joda" % "joda-convert" % "2.2.3",
+  "joda-time" % "joda-time" % "2.14.0",
+  "org.joda" % "joda-convert" % "2.2.4",
 )
 
 resolvers ++= Resolver.sonatypeOssRepos("releases")
