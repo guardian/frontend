@@ -60,4 +60,15 @@ trait ABTestSwitches {
     highImpact = false,
   )
 
+  Switch(
+    ABTests,
+    "ab-prebid-id5",
+    "Test enabling the ID5 module in prebid.js",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 5, 30)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
 }
