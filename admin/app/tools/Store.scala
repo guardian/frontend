@@ -19,7 +19,7 @@ trait Store extends GuLogging with Dates {
   def getSwitches: Option[String] = S3.get(switchesKey)
   def getSwitchesWithLastModified: Option[(String, DateTime)] = S3.getWithLastModified(switchesKey)
   def getSwitchesLastModified: Option[DateTime] = S3.getLastModified(switchesKey)
-  def putSwitches(config: String): Unit = { S3.putPublic(switchesKey, config, "text/plain") }
+  def putSwitches(config: String): Unit = { S3.putPrivate(switchesKey, config, "text/plain") }
 
   def getTopStories: Option[String] = S3.get(topStoriesKey)
   def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
