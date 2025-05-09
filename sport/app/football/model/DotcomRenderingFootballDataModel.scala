@@ -110,6 +110,7 @@ private object DotcomRenderingFootballDataModelImplicits {
 case class DotcomRenderingFootballMatchListDataModel(
     matchesList: Seq[MatchesByDateAndCompetition],
     nextPage: Option[String],
+    nextPageNoJs: Option[String],
     filters: Map[String, Seq[CompetitionFilter]],
     previousPage: Option[String],
     nav: Nav,
@@ -142,6 +143,7 @@ object DotcomRenderingFootballMatchListDataModel {
     DotcomRenderingFootballMatchListDataModel(
       matchesList = matches,
       nextPage = matchesList.nextPage,
+      nextPageNoJs = matchesList.nextPageNoJs,
       filters = filters,
       previousPage = matchesList.previousPage,
       nav = nav,

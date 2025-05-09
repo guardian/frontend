@@ -82,6 +82,10 @@ trait MatchesList extends Football with RichList {
     val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
     nextMatchDate.map(s"$baseUrl/more/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
   }
+  lazy val nextPageNoJs: Option[String] = {
+    val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
+    nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
+  }
   lazy val previousPage: Option[String] = {
     val nextMatchDate = matchDates.takeWhile(dateComesFirstInList(_, date)).lastOption
     nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
