@@ -51,17 +51,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-multibid",
-    "Test multibid feature with useBicCache to allows configured bidders to pass more than one bid per AdUnit through to the ad server.",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 5, 12)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
     "ab-prebid-id5",
     "Test enabling the ID5 module in prebid.js",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
