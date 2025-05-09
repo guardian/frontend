@@ -7,7 +7,7 @@ object Dependencies {
   val awsVersion = "1.12.782"
   val awsSdk2Version = "2.30.38"
   val capiVersion = "34.1.0"
-  val faciaVersion = "19.0.0-PREVIEW.fpallow-media-atoms.2025-05-01T1033.4a4d2a24"
+  val faciaVersion = "19.0.0-PREVIEW.fpallow-media-atoms.2025-05-09T1007.0266482a"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
