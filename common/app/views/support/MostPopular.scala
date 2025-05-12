@@ -9,7 +9,6 @@ object MostPopular extends implicits.Requests {
   }
 
   def showMPU(maybeContainer: Option[FaciaContainer]): Boolean = {
-    !maybeContainer.exists(_.commercialOptions.omitMPU) &&
     !isAdFree(maybeContainer)
   }
 

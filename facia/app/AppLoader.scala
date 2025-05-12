@@ -3,7 +3,6 @@ import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
@@ -53,7 +52,6 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   override lazy val lifecycleComponents = List(
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[FaciaDfpAgentLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[IndexListingsLifecycle],
     wire[SwitchboardLifecycle],
