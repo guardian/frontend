@@ -51,6 +51,6 @@ object DCRJavascriptBundle
       name = "dcr-javascript-bundle",
       description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 4, 30),
+      sellByDate = LocalDate.of(2025, 6, 30),
       participationGroup = Perc0E,
     )
