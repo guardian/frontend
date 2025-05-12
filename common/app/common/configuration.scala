@@ -497,8 +497,7 @@ class GuardianConfiguration extends GuLogging {
     def dfpPageSkinnedAdUnitsKey =
       if (LineItemJobs.isSwitchedOn) s"$gamRoot/pageskins.json" else s"$dfpRoot/pageskinned-adunits-v9.json"
     lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
-    def dfpSurveySponsorshipDataKey =
-      if (LineItemJobs.isSwitchedOn) s"$gamRoot/survey-sponsorships.json" else s"$dfpRoot/survey-sponsorships.json"
+    lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
     def dfpNonRefreshableLineItemIdsKey =
       if (LineItemJobs.isSwitchedOn) s"$gamRoot/non-refreshable-line-items.json"
       else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
