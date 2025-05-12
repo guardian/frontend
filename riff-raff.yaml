@@ -87,3 +87,11 @@ deployments:
         AMISport:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
+  update-ami-for-archive:
+    app: archive
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIArchive:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
