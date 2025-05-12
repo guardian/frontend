@@ -166,7 +166,7 @@ class DfpDataCacheJob(
   }
 
   private def writeSurveySponsorships(data: DfpDataExtractor): Unit = {
-    if (data.hasValidLineItems) {
+    if (data.hasValidLineItems && LineItemJobs.isSwitchedOff) {
       val now = printLondonTime(DateTime.now())
 
       val sponsorships = data.surveySponsorships
