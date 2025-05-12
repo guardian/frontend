@@ -18,7 +18,6 @@ class DfpDataCacheLifecycle(
     placementAgent: PlacementAgent,
     customTargetingAgent: CustomTargetingAgent,
     dfpDataCacheJob: DfpDataCacheJob,
-    customTargetingKeyValueJob: CustomTargetingKeyValueJob,
     dfpAdUnitCacheJob: DfpAdUnitCacheJob,
     dfpMobileAppAdUnitCacheJob: DfpMobileAppAdUnitCacheJob,
     dfpFacebookIaAdUnitCacheJob: DfpFacebookIaAdUnitCacheJob,
@@ -56,11 +55,6 @@ class DfpDataCacheLifecycle(
       val name = "DFP-CustomTargeting-Update"
       val interval = 30
       def run() = customTargetingAgent.refresh()
-    },
-    new Job[Unit] {
-      val name: String = "DFP-CustomTargeting-Store"
-      val interval: Int = 15
-      def run() = customTargetingKeyValueJob.run()
     },
     new Job[DataCache[Long, Seq[String]]] {
       val name = "DFP-Placements-Update"
@@ -118,7 +112,6 @@ class DfpDataCacheLifecycle(
       dfpDataCacheJob.refreshAllDfpData()
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()
-      customTargetingKeyValueJob.run()
       advertiserAgent.refresh()
       orderAgent.refresh()
       customFieldAgent.refresh()

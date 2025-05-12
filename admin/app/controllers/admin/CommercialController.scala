@@ -147,24 +147,6 @@ class CommercialController(
       }
     }
 
-  def renderKeyValues(): Action[AnyContent] =
-    Action { implicit request =>
-      Ok(views.html.commercial.customTargetingKeyValues(Store.getDfpCustomTargetingKeyValues))
-    }
-
-  def renderKeyValuesCsv(key: String): Action[AnyContent] =
-    Action { implicit request =>
-      val csv: Option[String] = Store.getDfpCustomTargetingKeyValues.find(_.name == key).map { selectedKey =>
-        selectedKey.values
-          .map(targetValue => {
-            s"${targetValue.id}, ${targetValue.name}, ${targetValue.displayName}"
-          })
-          .mkString("\n")
-      }
-
-      Ok(csv.getOrElse(s"No targeting found for key: $key"))
-    }
-
   def renderInvalidItems(): Action[AnyContent] =
     Action { implicit request =>
       // If the invalid line items are run through the normal extractor, we can see if any of these

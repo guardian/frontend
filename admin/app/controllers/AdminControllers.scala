@@ -34,7 +34,6 @@ trait AdminControllers {
   def customFieldService: CustomFieldService
   def customTargetingAgent: CustomTargetingAgent
   def customTargetingService: CustomTargetingService
-  def customTargetingKeyValueJob: CustomTargetingKeyValueJob
   def dataMapper: DataMapper
   def dataValidation: DataValidation
   def dfpDataCacheJob: DfpDataCacheJob
