@@ -34,8 +34,6 @@ trait AdminControllers {
   def customTargetingService: CustomTargetingService
   def customTargetingKeyValueJob: CustomTargetingKeyValueJob
   def dataMapper: DataMapper
-  def dataValidation: DataValidation
-  def dfpDataCacheJob: DfpDataCacheJob
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
 
@@ -73,7 +71,6 @@ trait AdminControllers {
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
-  lazy val dfpDataController = wire[DfpDataController]
   lazy val fastlyController = wire[FastlyController]
   lazy val redirectController = wire[RedirectController]
   lazy val sportTroubleShooterController = wire[SportTroubleshooterController]
