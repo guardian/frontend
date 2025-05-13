@@ -69,7 +69,6 @@ class DfpDataCacheLifecycle(
       val interval: Int = 2
       def run() = dfpTemplateCreativeCacheJob.run()
     },
-
   )
 
   override def start(): Unit = {
