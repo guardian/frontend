@@ -36,9 +36,6 @@ trait Store extends GuLogging with Dates {
   def putDfpLineItemsReport(everything: String): Unit = {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
-  def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
-    S3.putPrivate(filename, adUnits, "text/plain")
-  }
   def putDfpTemplateCreatives(creatives: String): Unit = {
     S3.putPrivate(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
