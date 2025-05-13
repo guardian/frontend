@@ -13,7 +13,6 @@ class DfpDataCacheLifecycle(
     creativeTemplateAgent: CreativeTemplateAgent,
     customFieldAgent: CustomFieldAgent,
     customTargetingAgent: CustomTargetingAgent,
-    dfpDataCacheJob: DfpDataCacheJob,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
     dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
     pekkoAsync: PekkoAsync,
@@ -53,12 +52,6 @@ class DfpDataCacheLifecycle(
       val interval: Int = 15
       def run() = customTargetingKeyValueJob.run()
     },
-    // used for line items and slot sponsorships
-    new Job[Unit] {
-      val name: String = "DFP-Cache"
-      val interval: Int = 2
-      def run(): Future[Unit] = dfpDataCacheJob.run()
-    },
     // used for line items and creative templates admin page
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
@@ -83,7 +76,6 @@ class DfpDataCacheLifecycle(
     }
 
     pekkoAsync.after1s {
-      dfpDataCacheJob.refreshAllDfpData()
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()
       customTargetingKeyValueJob.run()
