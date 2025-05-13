@@ -45,15 +45,6 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuL
     withDfpSession(_.orders(stmtBuilder).map(dataMapper.toGuOrder))
   }
 
-  def getAllAdvertisers: Seq[GuAdvertiser] = {
-    val stmtBuilder = new StatementBuilder()
-      .where("type = :type")
-      .withBindVariableValue("type", CompanyType.ADVERTISER.toString)
-      .orderBy("id ASC")
-
-    withDfpSession(_.companies(stmtBuilder).map(dataMapper.toGuAdvertiser))
-  }
-
   def readCurrentLineItems: DfpLineItems = {
 
     val stmtBuilder = new StatementBuilder()
