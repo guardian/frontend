@@ -22,7 +22,6 @@ class DfpDataCacheJobTest
     mock[AdUnitAgent],
     mock[CustomFieldAgent],
     mock[CustomTargetingAgent],
-    mock[PlacementAgent],
     mock[DfpApi],
   )
 

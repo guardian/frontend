@@ -61,8 +61,6 @@ trait AdminServices extends I18nComponents {
   lazy val dataValidation: DataValidation = wire[DataValidation]
   lazy val dfpDataCacheJob: DfpDataCacheJob = wire[DfpDataCacheJob]
   lazy val orderAgent: OrderAgent = wire[OrderAgent]
-  lazy val placementAgent: PlacementAgent = wire[PlacementAgent]
-  lazy val placementService: PlacementService = wire[PlacementService]
   lazy val dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob = wire[DfpTemplateCreativeCacheJob]
   lazy val parameterStoreService: ParameterStoreService = wire[ParameterStoreService]
   lazy val parameterStoreProvider: ParameterStoreProvider = wire[ParameterStoreProvider]

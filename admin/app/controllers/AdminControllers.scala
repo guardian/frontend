@@ -37,8 +37,6 @@ trait AdminControllers {
   def dataValidation: DataValidation
   def dfpDataCacheJob: DfpDataCacheJob
   def orderAgent: OrderAgent
-  def placementAgent: PlacementAgent
-  def placementService: PlacementService
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
 
