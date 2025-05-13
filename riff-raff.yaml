@@ -17,6 +17,7 @@ templates:
     - update-ami-for-admin
     - update-ami-for-discussion
     - update-ami-for-sport
+    - update-ami-for-archive
 
 deployments:
   admin:
