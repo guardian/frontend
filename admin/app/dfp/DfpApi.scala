@@ -11,89 +11,9 @@ import org.joda.time.DateTime
 
 case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
-class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuLogging {
+class DfpApi(dataMapper: DataMapper) extends GuLogging {
   import dfp.DfpApi._
 
-  private def readLineItems(
-      stmtBuilder: StatementBuilder,
-      postFilter: LineItem => Boolean = _ => true,
-  ): DfpLineItems = {
-
-    val lineItems = withDfpSession(session => {
-      session
-        .lineItems(stmtBuilder)
-        .filter(postFilter)
-        .map(dfpLineItem => {
-          (dataMapper.toGuLineItem(session)(dfpLineItem), dfpLineItem)
-        })
-    })
-
-    // Note that this will call getTargeting on each
-    // item, potentially making one API call per lineitem.
-    val validatedLineItems = lineItems
-      .groupBy(Function.tupled(dataValidation.isGuLineItemValid))
-      .mapV(_.map(_._1))
-
-    DfpLineItems(
-      validItems = validatedLineItems.getOrElse(true, Nil),
-      invalidItems = validatedLineItems.getOrElse(false, Nil),
-    )
-  }
-
-  def getAllOrders: Seq[GuOrder] = {
-    val stmtBuilder = new StatementBuilder()
-    withDfpSession(_.orders(stmtBuilder).map(dataMapper.toGuOrder))
-  }
-
-  def readCurrentLineItems: DfpLineItems = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("status = :readyStatus OR status = :deliveringStatus")
-      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
-      .orderBy("id ASC")
-
-    readLineItems(stmtBuilder)
-  }
-
-  def readLineItemsModifiedSince(threshold: DateTime): DfpLineItems = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("lastModifiedDateTime > :threshold")
-      .withBindVariableValue("threshold", threshold.getMillis)
-
-    readLineItems(stmtBuilder)
-  }
-
-  def readSponsorshipLineItemIds(): Seq[Long] = {
-
-    // The advertiser ID for "Amazon Transparent Ad Marketplace"
-    val amazonAdvertiserId = 4751525411L
-
-    val stmtBuilder = new StatementBuilder()
-      .where(
-        "(status = :readyStatus OR status = :deliveringStatus) AND lineItemType = :sponsorshipType AND advertiserId != :amazonAdvertiserId",
-      )
-      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
-      .withBindVariableValue("sponsorshipType", LineItemType.SPONSORSHIP.toString)
-      .withBindVariableValue("amazonAdvertiserId", amazonAdvertiserId.toString)
-      .orderBy("id ASC")
-
-    // Lets avoid Prebid lineitems
-    val IsPrebid = "(?i).*?prebid.*".r
-
-    val lineItems = readLineItems(
-      stmtBuilder,
-      lineItem => {
-        lineItem.getName match {
-          case IsPrebid() => false
-          case _          => true
-        }
-      },
-    )
-    (lineItems.validItems.map(_.id) ++ lineItems.invalidItems.map(_.id)).sorted
-  }
 
   def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
 

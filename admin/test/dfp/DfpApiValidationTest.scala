@@ -54,20 +54,4 @@ class DfpApiValidationTest extends AnyFlatSpec with Matchers {
     dfpLineItem.setTargeting(targeting)
     dfpLineItem
   }
-
-  val dataValidation = new DataValidation(new AdUnitService(new AdUnitAgent(new BlockingOperations(ActorSystem()))))
-
-  "isGuLineItemValid" should "return false when the adunit targeting does not match the dfp line item" in {
-    val guLineItem = lineItem(List("1", "2", "3"))
-    val dfpLineItem = makeDfpLineItem(List("1", "2", "3", "4"))
-
-    dataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe false
-  }
-
-  "isGuLineItemValid" should "return true when the adunit targeting does match the dfp line item" in {
-    val guLineItem = lineItem(List("1", "2", "3"))
-    val dfpLineItem = makeDfpLineItem(List("1", "2", "3"))
-
-    dataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe true
-  }
 }
