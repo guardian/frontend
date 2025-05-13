@@ -49,7 +49,6 @@ trait AdminServices extends I18nComponents {
 
   lazy val dfpApi: DfpApi = wire[DfpApi]
   lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
-  lazy val adUnitAgent: AdUnitAgent = wire[AdUnitAgent]
   lazy val adUnitService: AdUnitService = wire[AdUnitService]
   lazy val advertiserAgent: AdvertiserAgent = wire[AdvertiserAgent]
   lazy val creativeTemplateAgent: CreativeTemplateAgent = wire[CreativeTemplateAgent]
