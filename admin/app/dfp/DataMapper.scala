@@ -7,7 +7,6 @@ import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(
     adUnitService: AdUnitService,
-    placementService: dfp.PlacementService,
     customTargetingService: dfp.CustomTargetingService,
     customFieldService: dfp.CustomFieldService,
 ) {
@@ -26,12 +25,7 @@ class DataMapper(
       val directAdUnits =
         toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnitService.activeAdUnit).flatten
 
-      // noinspection MapFlatten
-      val adUnitsDerivedFromPlacements = {
-        toSeq(inventoryTargeting.getTargetedPlacementIds).map(placementService.placementAdUnitIds(session)).flatten
-      }
-
-      (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
+      (directAdUnits).sortBy(_.path.mkString).distinct
     }
 
     def toExcludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
