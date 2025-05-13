@@ -1,6 +1,6 @@
 package controllers
 import com.amazonaws.regions.Regions
-import com.amazonaws.services.s3.AmazonS3ClientBuilder
+import software.amazon.awssdk.services.s3.S3Client
 import com.softwaremill.macwire._
 import common.PekkoAsync
 import controllers.admin._
@@ -15,6 +15,7 @@ import play.api.mvc.ControllerComponents
 import services.{OphanApi, ParameterStoreService, RedirectService}
 import conf.Configuration.aws.mandatoryCredentials
 import org.apache.pekko.stream.Materializer
+import utils.AWSv2
 
 trait AdminControllers {
   def pekkoAsync: PekkoAsync
@@ -44,20 +45,12 @@ trait AdminControllers {
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
 
-  private lazy val s3Client = AmazonS3ClientBuilder
-    .standard()
-    .withRegion(Regions.EU_WEST_1)
-    .withCredentials(
-      mandatoryCredentials,
-    )
-    .build()
-
   lazy val auth = new GuardianAuthWithExemptions(
     controllerComponents,
     wsClient,
     toolsDomainPrefix = "frontend",
     oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
-    s3Client,
+    AWSv2.S3Sync,
     system = "frontend-admin",
     extraDoNotAuthenticatePathPrefixes = Seq(
       // Date: 06 July 2021
