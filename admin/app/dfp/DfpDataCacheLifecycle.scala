@@ -12,7 +12,6 @@ class DfpDataCacheLifecycle(
     jobScheduler: JobScheduler,
     creativeTemplateAgent: CreativeTemplateAgent,
     customFieldAgent: CustomFieldAgent,
-    orderAgent: OrderAgent,
     customTargetingAgent: CustomTargetingAgent,
     dfpDataCacheJob: DfpDataCacheJob,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
@@ -88,7 +87,6 @@ class DfpDataCacheLifecycle(
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()
       customTargetingKeyValueJob.run()
-      orderAgent.refresh()
       customFieldAgent.refresh()
     }
   }

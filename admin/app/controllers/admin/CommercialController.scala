@@ -3,7 +3,7 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
-import dfp.{CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
+import dfp.{CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
@@ -28,7 +28,6 @@ case class CommercialPage() extends StandalonePage {
 class CommercialController(
     val controllerComponents: ControllerComponents,
     createTemplateAgent: CreativeTemplateAgent,
-    orderAgent: OrderAgent,
     customFieldAgent: CustomFieldAgent,
     dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
@@ -165,8 +164,6 @@ class CommercialController(
       // line items appear to be targeting Frontend.
       val invalidLineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().invalidLineItems
       val invalidItemsExtractor = DfpDataExtractor(invalidLineItems, Nil)
-
-      val orders = orderAgent.get
 
       // Sort line items into groups where possible, and bucket everything else.
       val pageskins = invalidItemsExtractor.pageSkinSponsorships
