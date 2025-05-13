@@ -39,7 +39,7 @@ class DfpDataCacheLifecycle(
   }
 
   val jobs = Set(
-    // used for line items and special ad units admin page
+    // used for line items
     new Job[DataCache[String, GuAdUnit]] {
       val name = "DFP-AdUnits-Update"
       val interval = 30
