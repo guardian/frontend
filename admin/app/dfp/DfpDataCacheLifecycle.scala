@@ -11,7 +11,6 @@ class DfpDataCacheLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobScheduler: JobScheduler,
     creativeTemplateAgent: CreativeTemplateAgent,
-    advertiserAgent: AdvertiserAgent,
     customFieldAgent: CustomFieldAgent,
     orderAgent: OrderAgent,
     customTargetingAgent: CustomTargetingAgent,
@@ -73,14 +72,7 @@ class DfpDataCacheLifecycle(
       val interval: Int = 2
       def run() = dfpTemplateCreativeCacheJob.run()
     },
-    // used for line items
-    new Job[Unit] {
-      val name = "DFP-Order-Advertiser-Update"
-      val interval: Int = 300
-      def run() = {
-        Future.sequence(Seq(advertiserAgent.refresh(), orderAgent.refresh())).map(_ => ())
-      }
-    },
+
   )
 
   override def start(): Unit = {
@@ -96,7 +88,6 @@ class DfpDataCacheLifecycle(
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()
       customTargetingKeyValueJob.run()
-      advertiserAgent.refresh()
       orderAgent.refresh()
       customFieldAgent.refresh()
     }
