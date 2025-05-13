@@ -12,7 +12,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class DfpDataCacheJob(
     customFieldAgent: CustomFieldAgent,
     customTargetingAgent: CustomTargetingAgent,
-    placementAgent: PlacementAgent,
     dfpApi: DfpApi,
 ) extends GuLogging {
 
@@ -39,7 +38,6 @@ class DfpDataCacheJob(
     for {
       _ <- customFieldAgent.refresh()
       _ <- customTargetingAgent.refresh()
-      _ <- placementAgent.refresh()
     } {
       loadLineItems()
     }

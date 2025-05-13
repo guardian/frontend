@@ -15,7 +15,6 @@ class DfpDataCacheLifecycle(
     advertiserAgent: AdvertiserAgent,
     customFieldAgent: CustomFieldAgent,
     orderAgent: OrderAgent,
-    placementAgent: PlacementAgent,
     customTargetingAgent: CustomTargetingAgent,
     dfpDataCacheJob: DfpDataCacheJob,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
@@ -56,12 +55,6 @@ class DfpDataCacheLifecycle(
       val name: String = "DFP-CustomTargeting-Store"
       val interval: Int = 15
       def run() = customTargetingKeyValueJob.run()
-    },
-    // used for line items
-    new Job[DataCache[Long, Seq[String]]] {
-      val name = "DFP-Placements-Update"
-      val interval = 30
-      def run() = placementAgent.refresh()
     },
     // used for line items and slot sponsorships
     new Job[Unit] {
