@@ -11,7 +11,6 @@ class DfpDataCacheLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobScheduler: JobScheduler,
     creativeTemplateAgent: CreativeTemplateAgent,
-    adUnitAgent: AdUnitAgent,
     advertiserAgent: AdvertiserAgent,
     customFieldAgent: CustomFieldAgent,
     orderAgent: OrderAgent,
@@ -39,12 +38,6 @@ class DfpDataCacheLifecycle(
   }
 
   val jobs = Set(
-    // used for line items
-    new Job[DataCache[String, GuAdUnit]] {
-      val name = "DFP-AdUnits-Update"
-      val interval = 30
-      def run() = adUnitAgent.refresh()
-    },
     // used for line items and custom fields admin page
     new Job[DataCache[String, GuCustomField]] {
       val name = "DFP-CustomFields-Update"

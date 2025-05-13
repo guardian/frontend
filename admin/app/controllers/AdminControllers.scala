@@ -26,8 +26,6 @@ trait AdminControllers {
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
   def assets: Assets
-  def adUnitAgent: AdUnitAgent
-  def adUnitService: AdUnitService
   def advertiserAgent: AdvertiserAgent
   def creativeTemplateAgent: CreativeTemplateAgent
   def customFieldAgent: CustomFieldAgent

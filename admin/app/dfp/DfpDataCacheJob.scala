@@ -10,7 +10,6 @@ import conf.switches.Switches.{LineItemJobs}
 import scala.concurrent.{ExecutionContext, Future}
 
 class DfpDataCacheJob(
-    adUnitAgent: AdUnitAgent,
     customFieldAgent: CustomFieldAgent,
     customTargetingAgent: CustomTargetingAgent,
     placementAgent: PlacementAgent,
@@ -41,7 +40,6 @@ class DfpDataCacheJob(
   def refreshAllDfpData()(implicit executionContext: ExecutionContext): Unit = {
 
     for {
-      _ <- adUnitAgent.refresh()
       _ <- customFieldAgent.refresh()
       _ <- customTargetingAgent.refresh()
       _ <- placementAgent.refresh()
