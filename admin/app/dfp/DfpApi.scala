@@ -14,7 +14,6 @@ case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineIte
 class DfpApi(dataMapper: DataMapper) extends GuLogging {
   import dfp.DfpApi._
 
-
   def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
 
     val stmtBuilder = new StatementBuilder()

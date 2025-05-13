@@ -2,14 +2,14 @@ package dfp
 
 import com.google.api.ads.admanager.axis.v202405._
 import common.dfp._
-import dfp.ApiHelper.{ toJodaTime, toSeq}
+import dfp.ApiHelper.{toJodaTime, toSeq}
 
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(
     customTargetingService: dfp.CustomTargetingService,
     customFieldService: dfp.CustomFieldService,
 ) {
-    def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
+  def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
     val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.tail.map(_.getName)
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
