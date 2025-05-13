@@ -19,7 +19,7 @@ trait S3 extends GuLogging {
 
   lazy val bucket = Configuration.aws.frontendStoreBucket
 
-  lazy val client: Option[AmazonS3] = Configuration.aws.credentials.map { credentials =>
+  lazy private val client: Option[AmazonS3] = Configuration.aws.credentials.map { credentials =>
     AmazonS3Client.builder
       .withCredentials(credentials)
       .withRegion(conf.Configuration.aws.region)
@@ -74,11 +74,6 @@ trait S3 extends GuLogging {
 
   def putPublic(key: String, value: String, contentType: String): Unit = {
     put(key: String, value: String, contentType: String, PublicRead)
-  }
-
-  def putPublic(key: String, file: File, contentType: String): Unit = {
-    val request = new PutObjectRequest(bucket, key, file).withCannedAcl(PublicRead)
-    client.foreach(_.putObject(request))
   }
 
   def putPrivate(key: String, value: String, contentType: String): Unit = {
@@ -169,7 +164,6 @@ object S3FrontsApi extends S3 {
 object S3Archive extends S3 {
   override lazy val bucket: String =
     if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"
-  def getHtml(path: String): Option[String] = get(path)
 }
 
 object S3ArchiveOriginals extends S3 {
