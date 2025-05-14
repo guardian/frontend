@@ -3,6 +3,7 @@ import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
+import common.dfp.DfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
