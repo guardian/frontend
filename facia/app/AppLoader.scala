@@ -58,6 +58,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
     wire[CachedHealthCheckLifeCycle],
     wire[MostViewedLifecycle],
     wire[DeeplyReadLifecycle],
+    wire[DfpAgentLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
