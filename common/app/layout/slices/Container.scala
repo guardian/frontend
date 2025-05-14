@@ -29,7 +29,7 @@ object Container extends GuLogging {
       ("dynamic/fast", Dynamic(DynamicFast)),
       ("dynamic/slow", Dynamic(DynamicSlow)),
       ("dynamic/package", Dynamic(DynamicPackage)),
-      ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(adFree = adFree))),
+      ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false, adFree = adFree))),
       ("fixed/video", Video),
       ("fixed/video/vertical", VerticalVideo),
       ("nav/list", NavList),
@@ -85,13 +85,13 @@ object Container extends GuLogging {
     }
   }
 
-  def fromPressedCollection(pressedCollection: PressedCollection, adFree: Boolean): Container = {
+  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
     val container = resolve(pressedCollection.collectionType, adFree)
     container match {
-      case Fixed(definition) if adFree =>
+      case Fixed(definition) if omitMPU || adFree =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))
-      case Dynamic(DynamicSlowMPU(_)) if adFree =>
-        Dynamic(DynamicSlowMPU(adFree))
+      case Dynamic(DynamicSlowMPU(_, _)) if omitMPU || adFree =>
+        Dynamic(DynamicSlowMPU(omitMPU, adFree))
       case _ => container
     }
   }

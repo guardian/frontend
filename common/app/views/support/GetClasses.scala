@@ -113,7 +113,8 @@ object GetClasses {
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
       lazyLoad = containerDefinition.shouldLazyLoad,
-      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(adFree = isAdFree(request))),
+      dynamicSlowMpu =
+        containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false, adFree = isAdFree(request))),
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -124,7 +125,7 @@ object GetClasses {
       hasTitle,
       isHeadlines = false,
       isVideo = false,
-      commercialOptions = ContainerCommercialOptions(adFree = adFree),
+      commercialOptions = ContainerCommercialOptions(omitMPU = false, adFree = adFree),
       hasDesktopShowMore = false,
       container = None,
       extraClasses = Nil,

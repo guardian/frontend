@@ -122,7 +122,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           containerLayout = Some(layout),
           showDateHeader = false,
           showLatestUpdate = false,
-          commercialOptions = ContainerCommercialOptions(adFree = request.isAdFree),
+          commercialOptions = ContainerCommercialOptions(omitMPU = false, adFree = request.isAdFree),
           customHeader = None,
           customClasses = Some(Seq("fc-container--tag")),
           hideToggle = true,

@@ -5,6 +5,7 @@ import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
+import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
@@ -87,6 +88,7 @@ trait AppComponents
       wire[AdminLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[DfpDataCacheLifecycle],
+      wire[FaciaDfpAgentLifecycle],
       wire[ConfigAgentLifecycle],
       wire[SurgingContentAgentLifecycle],
       wire[SectionsLookUpLifecycle],

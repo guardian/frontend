@@ -79,7 +79,8 @@ object Front {
       collections match {
         case Nil => accumulation
         case pressedCollection :: remainingPressedCollections =>
-          val container: Container = Container.fromPressedCollection(pressedCollection, adFree)
+          val omitMPU: Boolean = pressedPage.metadata.omitMPUsFromContainers(edition)
+          val container: Container = Container.fromPressedCollection(pressedCollection, omitMPU, adFree)
           val newItems = pressedCollection.distinct
 
           val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
@@ -100,6 +101,7 @@ object Front {
             collectionEssentials.copy(items = newItems),
             containerLayoutMaybe.map(_._1),
             None,
+            omitMPU = if (containerLayoutMaybe.isDefined) false else omitMPU,
             adFree = adFree,
             targetedTerritory = pressedCollection.targetedTerritory,
           )

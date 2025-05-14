@@ -1,3 +1,3 @@
 package layout
 
-case class ContainerCommercialOptions(adFree: Boolean)
+case class ContainerCommercialOptions(omitMPU: Boolean, adFree: Boolean)
