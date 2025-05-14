@@ -11,13 +11,8 @@ class DfpDataCacheLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobScheduler: JobScheduler,
     creativeTemplateAgent: CreativeTemplateAgent,
-    adUnitAgent: AdUnitAgent,
-    advertiserAgent: AdvertiserAgent,
     customFieldAgent: CustomFieldAgent,
-    orderAgent: OrderAgent,
-    placementAgent: PlacementAgent,
     customTargetingAgent: CustomTargetingAgent,
-    dfpDataCacheJob: DfpDataCacheJob,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
     dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
     pekkoAsync: PekkoAsync,
@@ -39,12 +34,6 @@ class DfpDataCacheLifecycle(
   }
 
   val jobs = Set(
-    // used for line items
-    new Job[DataCache[String, GuAdUnit]] {
-      val name = "DFP-AdUnits-Update"
-      val interval = 30
-      def run() = adUnitAgent.refresh()
-    },
     // used for line items and custom fields admin page
     new Job[DataCache[String, GuCustomField]] {
       val name = "DFP-CustomFields-Update"
@@ -63,18 +52,6 @@ class DfpDataCacheLifecycle(
       val interval: Int = 15
       def run() = customTargetingKeyValueJob.run()
     },
-    // used for line items
-    new Job[DataCache[Long, Seq[String]]] {
-      val name = "DFP-Placements-Update"
-      val interval = 30
-      def run() = placementAgent.refresh()
-    },
-    // used for line items and slot sponsorships
-    new Job[Unit] {
-      val name: String = "DFP-Cache"
-      val interval: Int = 2
-      def run(): Future[Unit] = dfpDataCacheJob.run()
-    },
     // used for line items and creative templates admin page
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
@@ -87,14 +64,6 @@ class DfpDataCacheLifecycle(
       val interval: Int = 2
       def run() = dfpTemplateCreativeCacheJob.run()
     },
-    // used for line items
-    new Job[Unit] {
-      val name = "DFP-Order-Advertiser-Update"
-      val interval: Int = 300
-      def run() = {
-        Future.sequence(Seq(advertiserAgent.refresh(), orderAgent.refresh())).map(_ => ())
-      }
-    },
   )
 
   override def start(): Unit = {
@@ -106,12 +75,9 @@ class DfpDataCacheLifecycle(
     }
 
     pekkoAsync.after1s {
-      dfpDataCacheJob.refreshAllDfpData()
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()
       customTargetingKeyValueJob.run()
-      advertiserAgent.refresh()
-      orderAgent.refresh()
       customFieldAgent.refresh()
     }
   }
