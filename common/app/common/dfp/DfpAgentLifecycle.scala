@@ -30,13 +30,3 @@ class DfpAgentLifecycle(appLifeCycle: ApplicationLifecycle, jobs: JobScheduler, 
     }
   }
 }
-
-class FaciaDfpAgentLifecycle(appLifeCycle: ApplicationLifecycle, jobs: JobScheduler, pekkoAsync: PekkoAsync)(implicit
-    ec: ExecutionContext,
-) extends DfpAgentLifecycle(appLifeCycle, jobs, pekkoAsync) {
-
-  override def refreshDfpAgent(): Unit = {
-    DfpAgent.refresh()
-    DfpAgent.refreshFaciaSpecificData()
-  }
-}

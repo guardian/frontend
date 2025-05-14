@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.softwaremill.macwire._
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
-import common.dfp.FaciaDfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics}
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
@@ -57,7 +56,6 @@ trait PreviewLifecycleComponents
     List(
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
-      wire[FaciaDfpAgentLifecycle],
       wire[SwitchboardLifecycle],
       wire[FootballLifecycle],
       wire[CricketLifecycle],
