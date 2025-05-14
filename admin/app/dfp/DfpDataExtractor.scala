@@ -18,7 +18,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
           editions = editionsTargeted(lineItem),
           sections = lineItem.liveBlogTopTargetedSections,
           keywords = lineItem.targeting.keywordValues,
-          targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+          targetsAdTest = lineItem.targeting.hasAdTestTargeting,
         )
       }
   }
@@ -33,7 +33,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
           adUnits = lineItem.targeting.adUnitsIncluded map (_.path mkString "/"),
           countries = countriesTargeted(lineItem),
           adTest = lineItem.targeting.adTestValue,
-          targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+          targetsAdTest = lineItem.targeting.hasAdTestTargeting,
         )
       }
   }
@@ -48,7 +48,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
         adUnits = lineItem.targeting.adUnitsIncluded map (_.path mkString "/"),
         editions = editionsTargeted(lineItem),
         countries = countriesTargeted(lineItem),
-        targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+        targetsAdTest = lineItem.targeting.hasAdTestTargeting,
         adTestValue = lineItem.targeting.adTestValue,
         keywords = lineItem.targeting.keywordValues,
         series = lineItem.targeting.serieValues,

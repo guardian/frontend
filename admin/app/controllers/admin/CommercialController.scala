@@ -97,7 +97,7 @@ class CommercialController(
       val report = Store.getDfpLineItemsReport()
 
       val lineItemsByAdTest = report.lineItems
-        .filter(_.targeting.hasAdTestTargetting)
+        .filter(_.targeting.hasAdTestTargeting)
         .groupBy(_.targeting.adTestValue.get)
 
       val (hasNumericTestValue, hasStringTestValue) =

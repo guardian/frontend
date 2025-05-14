@@ -210,7 +210,7 @@ case class GuTargeting(
     targets flatMap (_.values) flatMap Edition.byId
   }
 
-  val hasAdTestTargetting: Boolean = adTestValue.isDefined
+  val hasAdTestTargeting: Boolean = adTestValue.isDefined
 
   def targetsSectionFrontDirectly(sectionId: String): Boolean = {
     adUnitsIncluded.exists { adUnit =>
@@ -447,7 +447,7 @@ case class GuOrder(
 case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 
   lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
-    _.targeting.hasAdTestTargetting
+    _.targeting.hasAdTestTargeting
   }
 }
 
