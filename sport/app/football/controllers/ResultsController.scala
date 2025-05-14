@@ -1,17 +1,21 @@
 package football.controllers
 
-import common.Edition
+import common.{Edition, LinkTo}
 import feed.CompetitionsService
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader, Result}
+
 import java.time.LocalDate
 import model._
 import football.model._
+import implicits.HtmlFormat
+import model.Cached.WithoutRevalidationResult
 import pa.FootballTeam
 import model.Competition
 import model.content.InteractiveAtom
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
 
 class ResultsController(
     val competitionsService: CompetitionsService,
@@ -80,9 +84,22 @@ class ResultsController(
       renderWithAsync(renderMatchList)(date, tag)
     }
 
-  private def renderMoreForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] =
+  private def renderMoreForDate(
+      year: String,
+      month: String,
+      day: String,
+      tag: Option[String] = None,
+  ): Action[AnyContent] =
     Action.async { implicit request =>
-      renderWithAsync(renderMoreMatches)(date, tag)
+      request.getRequestFormat match {
+        case HtmlFormat => {
+          tag match {
+            case Some(t) => redirectTo(s"football/$tag/results/$year/$month/$day")
+            case None    => redirectTo(s"football/results/$year/$month/$day")
+          }
+        }
+        case _ => renderWithAsync(renderMoreMatches)(createDate(year, month, day), tag)
+      }
     }
 
   /* Public methods */
@@ -95,7 +112,7 @@ class ResultsController(
   def allResultsForJson(year: String, month: String, day: String): Action[AnyContent] = allResultsFor(year, month, day)
 
   def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] =
-    renderMoreForDate(createDate(year, month, day))
+    renderMoreForDate(year, month, day)
   def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] =
     moreResultsFor(year, month, day)
 
@@ -109,7 +126,13 @@ class ResultsController(
     tagResultsFor(year, month, day, tag)
 
   def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    renderMoreForDate(createDate(year, month, day), Some(tag))
+    renderMoreForDate(year, month, day, Some(tag))
   def moreTagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     moreTagResultsFor(year, month, day, tag)
+
+  def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] =
+    successful {
+      val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
+      Cached(CacheTime.Football)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
+    }
 }
