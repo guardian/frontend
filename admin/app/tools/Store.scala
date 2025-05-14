@@ -36,9 +36,6 @@ trait Store extends GuLogging with Dates {
   def putDfpLineItemsReport(everything: String): Unit = {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
-  def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
-    S3.putPrivate(filename, adUnits, "text/plain")
-  }
   def putDfpTemplateCreatives(creatives: String): Unit = {
     S3.putPrivate(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
@@ -99,20 +96,6 @@ trait Store extends GuLogging with Dates {
       }
     }
     targeting getOrElse Nil
-  }
-
-  object commercial {
-
-    def getTakeoversWithEmptyMPUs(): Seq[TakeoverWithEmptyMPUs] = {
-      S3.get(takeoversWithEmptyMPUsKey) map {
-        Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
-      } getOrElse Nil
-    }
-
-    def putTakeoversWithEmptyMPUs(takeovers: Seq[TakeoverWithEmptyMPUs]): Unit = {
-      val content = Json.stringify(toJson(takeovers))
-      S3.putPrivate(takeoversWithEmptyMPUsKey, content, "application/json")
-    }
   }
 }
 

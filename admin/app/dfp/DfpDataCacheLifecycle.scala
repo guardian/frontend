@@ -19,9 +19,6 @@ class DfpDataCacheLifecycle(
     customTargetingAgent: CustomTargetingAgent,
     dfpDataCacheJob: DfpDataCacheJob,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
-    dfpAdUnitCacheJob: DfpAdUnitCacheJob,
-    dfpMobileAppAdUnitCacheJob: DfpMobileAppAdUnitCacheJob,
-    dfpFacebookIaAdUnitCacheJob: DfpFacebookIaAdUnitCacheJob,
     dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
     pekkoAsync: PekkoAsync,
 )(implicit ec: ExecutionContext)
@@ -42,61 +39,55 @@ class DfpDataCacheLifecycle(
   }
 
   val jobs = Set(
+    // used for line items
     new Job[DataCache[String, GuAdUnit]] {
       val name = "DFP-AdUnits-Update"
       val interval = 30
       def run() = adUnitAgent.refresh()
     },
+    // used for line items and custom fields admin page
     new Job[DataCache[String, GuCustomField]] {
       val name = "DFP-CustomFields-Update"
       val interval = 30
       def run() = customFieldAgent.refresh()
     },
+    // used for line items and custom targeting admin page
     new Job[DataCache[Long, GuCustomTargeting]] {
       val name = "DFP-CustomTargeting-Update"
       val interval = 30
       def run() = customTargetingAgent.refresh()
     },
+    // used for custom targeting admin page
     new Job[Unit] {
       val name: String = "DFP-CustomTargeting-Store"
       val interval: Int = 15
       def run() = customTargetingKeyValueJob.run()
     },
+    // used for line items
     new Job[DataCache[Long, Seq[String]]] {
       val name = "DFP-Placements-Update"
       val interval = 30
       def run() = placementAgent.refresh()
     },
+    // used for line items and slot sponsorships
     new Job[Unit] {
       val name: String = "DFP-Cache"
       val interval: Int = 2
       def run(): Future[Unit] = dfpDataCacheJob.run()
     },
-    new Job[Unit] {
-      val name: String = "DFP-Ad-Units-Update"
-      val interval: Int = 60
-      def run(): Future[Unit] = dfpAdUnitCacheJob.run(pekkoAsync)
-    },
-    new Job[Unit] {
-      val name: String = "DFP-Mobile-Apps-Ad-Units-Update"
-      val interval: Int = 60
-      def run(): Future[Unit] = dfpMobileAppAdUnitCacheJob.run(pekkoAsync)
-    },
-    new Job[Unit] {
-      val name: String = "DFP-Facebook-IA-Ad-Units-Update"
-      val interval: Int = 60
-      def run(): Future[Unit] = dfpFacebookIaAdUnitCacheJob.run(pekkoAsync)
-    },
+    // used for line items and creative templates admin page
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
       val interval: Int = 15
       def run() = creativeTemplateAgent.refresh()
     },
+    // used for creative templates admin page
     new Job[Unit] {
       val name: String = "DFP-Template-Creatives-Cache"
       val interval: Int = 2
       def run() = dfpTemplateCreativeCacheJob.run()
     },
+    // used for line items
     new Job[Unit] {
       val name = "DFP-Order-Advertiser-Update"
       val interval: Int = 300

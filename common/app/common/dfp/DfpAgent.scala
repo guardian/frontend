@@ -9,23 +9,18 @@ import services.S3
 import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
 
-object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with SurveySponsorshipAgent with AdSlotAgent {
+object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with SurveySponsorshipAgent {
 
   override protected val environmentIsProd: Boolean = environment.isProd
 
   private lazy val liveblogTopSponsorshipAgent = Box[Seq[LiveBlogTopSponsorship]](Nil)
   private lazy val surveyAdUnitAgent = Box[Seq[SurveySponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
-  private lazy val lineItemAgent = Box[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
-  private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
 
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopSponsorshipAgent.get()
   protected def surveySponsorships: Seq[SurveySponsorship] = surveyAdUnitAgent.get()
-  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent.get()
-  protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
-    takeoverWithEmptyMPUsAgent.get()
 
   def nonRefreshableLineItemIds(): Seq[Long] = nonRefreshableLineItemsAgent.get()
 
@@ -81,10 +76,5 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
 
     update(surveyAdUnitAgent)(grabSurveySponsorshipsFromStore())
 
-  }
-
-  def refreshFaciaSpecificData()(implicit executionContext: ExecutionContext): Unit = {
-
-    update(takeoverWithEmptyMPUsAgent)(TakeoverWithEmptyMPUs.fetch())
   }
 }
