@@ -17,6 +17,7 @@ templates:
     - update-ami-for-admin
     - update-ami-for-discussion
     - update-ami-for-sport
+    - update-ami-for-archive
 
 deployments:
   admin:
@@ -25,6 +26,8 @@ deployments:
     template: frontend
   archive:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   article:
     template: frontend
   commercial:
@@ -85,5 +88,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMISport:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-archive:
+    app: archive
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIArchive:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD

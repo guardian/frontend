@@ -97,20 +97,6 @@ trait Store extends GuLogging with Dates {
     }
     targeting getOrElse Nil
   }
-
-  object commercial {
-
-    def getTakeoversWithEmptyMPUs(): Seq[TakeoverWithEmptyMPUs] = {
-      S3.get(takeoversWithEmptyMPUsKey) map {
-        Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
-      } getOrElse Nil
-    }
-
-    def putTakeoversWithEmptyMPUs(takeovers: Seq[TakeoverWithEmptyMPUs]): Unit = {
-      val content = Json.stringify(toJson(takeovers))
-      S3.putPrivate(takeoversWithEmptyMPUsKey, content, "application/json")
-    }
-  }
 }
 
 object Store extends Store
