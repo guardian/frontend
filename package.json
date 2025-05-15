@@ -28,7 +28,7 @@
 		"@emotion/react": "11.11.1",
 		"@emotion/styled": "^11.14.0",
 		"@guardian/ab-core": "8.0.0",
-		"@guardian/commercial": "0.0.0-beta-20250514084641",
+		"@guardian/commercial": "26.0.0",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/eslint-config-typescript": "9.0.1",
 		"@guardian/identity-auth": "6.0.1",
