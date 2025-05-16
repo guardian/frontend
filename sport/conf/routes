@@ -65,6 +65,7 @@ GET        /football/:competitionTag/groups/individual/embed/:groupIds        fo
 GET        /football/:competitionTag/spider/embed                             football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 GET        /football/:competitionTag/spider/:roundId/embed                   football.controllers.WallchartController.renderSpiderEmbedForRound(competitionTag, roundId)
 GET        /football/:competitionTag/overview                                 football.controllers.WallchartController.renderWallchart(competitionTag)
+GET        /football/:competitionTag/overview.json                            football.controllers.WallchartController.renderWallchart(competitionTag)
 GET        /football/:competitionTag/wallchart.json                           football.controllers.WallchartController.renderWallchartJson(competitionTag)
 
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json         football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
