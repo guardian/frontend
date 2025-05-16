@@ -18,6 +18,7 @@ templates:
     - update-ami-for-discussion
     - update-ami-for-sport
     - update-ami-for-archive
+    - update-ami-for-applications
 
 deployments:
   admin:
@@ -92,6 +93,14 @@ deployments:
           AmigoStage: PROD
   update-ami-for-archive:
     app: archive
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIArchive:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-applications:
+    app: applications
     type: ami-cloudformation-parameter
     parameters:
       amiParametersToTags:
