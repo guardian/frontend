@@ -21,6 +21,7 @@ import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
+import play.api.mvc.RequestHeader
 import views.support.cleaner.SoundcloudHelper
 import views.support.{ImgSrc, SrcSet, Video700}
 
@@ -903,7 +904,7 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
       webPublicationDate: DateTime,
-  ): List[PageElement] = {
+  )(implicit request: RequestHeader): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
       for {
@@ -1479,7 +1480,7 @@ object PageElement {
                 edition,
                 webPublicationDate,
                 item,
-              )
+              )(request)
             }.toSeq,
             listElementType = listTypeData.`type`.map(_.name),
           )
@@ -1498,7 +1499,7 @@ object PageElement {
               edition,
               webPublicationDate,
               timelineTypeData,
-            ),
+            )(request),
           )
         }.toList
 
@@ -1517,7 +1518,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       timelineTypeData: TimelineElementFields,
-  ) = {
+  )(implicit request: RequestHeader) = {
     timelineTypeData.sections.map { section =>
       TimelineSection(
         title = section.title,
@@ -1540,7 +1541,7 @@ object PageElement {
                   overrideImage = None,
                   edition,
                   webPublicationDate,
-                )
+                )(request)
                 .headOption
             },
             body = event.body.flatMap { bodyBlock =>
@@ -1556,7 +1557,7 @@ object PageElement {
                 overrideImage = None,
                 edition,
                 webPublicationDate,
-              )
+              )(request)
             }.toSeq,
           )
         }.toSeq,
@@ -1574,7 +1575,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       item: v1.ListItem,
-  ) = {
+  )(implicit request: RequestHeader) = {
     ListItem(
       elements = item.elements.flatMap { element =>
         PageElement.make(
@@ -1589,7 +1590,7 @@ object PageElement {
           overrideImage = None,
           edition,
           webPublicationDate,
-        )
+        )(request)
       }.toSeq,
       title = item.title,
       bio = item.bio,

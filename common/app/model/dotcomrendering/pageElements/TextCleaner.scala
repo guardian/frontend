@@ -4,6 +4,7 @@ import common.{Edition, LinkTo}
 import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
+import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
 
 import scala.jdk.CollectionConverters._
@@ -11,13 +12,16 @@ import scala.util.matching.Regex
 
 object TextCleaner {
 
-  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean)(html: String): String = {
+  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean)(
+      html: String,
+  )(implicit request: RequestHeader): String = {
     if (addAffiliateLinks) {
       val doc = Jsoup.parseBodyFragment(html)
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       links.foreach(el => {
         val id = affiliateLinksConfig.skimlinksId
-        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id)).attr("rel", "sponsored")
+        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id)(request))
+          .attr("rel", "sponsored")
       })
 
       if (links.nonEmpty) {

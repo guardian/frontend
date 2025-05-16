@@ -207,7 +207,7 @@ object DotcomRenderingUtils {
           article.elements.thumbnail,
           edition,
           article.trail.webPublicationDate,
-        ),
+        )(request),
       )
       .filter(PageElement.isSupported)
 

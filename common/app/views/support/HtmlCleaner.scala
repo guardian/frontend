@@ -867,7 +867,8 @@ case class AffiliateLinksCleaner(
     showAffiliateLinks: Option[Boolean],
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
-) extends HtmlCleaner
+)(implicit request: RequestHeader)
+    extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
@@ -893,19 +894,19 @@ object AffiliateLinksCleaner {
       html: Document,
       pageUrl: String,
       skimlinksId: String,
-  ): Document = {
+  )(implicit request: RequestHeader): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el =>
-      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)).attr("rel", "sponsored")
+      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)(request)).attr("rel", "sponsored")
     }
     html
   }
 
-  def replaceLinksInElement(html: String, pageUrl: String): TextBlockElement = {
+  def replaceLinksInElement(html: String, pageUrl: String)(implicit request: RequestHeader): TextBlockElement = {
     val doc = Jsoup.parseBodyFragment(html)
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
     linksToReplace.foreach { el =>
-      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)).attr("rel", "sponsored")
+      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)(request)).attr("rel", "sponsored")
     }
 
     if (linksToReplace.nonEmpty) {
@@ -918,9 +919,19 @@ object AffiliateLinksCleaner {
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
-  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
+  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String)(implicit request: RequestHeader): String = {
     val urlEncodedLink = URLEncode(link)
-    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
+    val referrer = request.headers.get("referer").getOrElse("unknown")
+
+    val referrerDomain = if (referrer == "unknown") {
+      "unknown"
+    } else {
+      new URI(referrer).getHost
+        .stripPrefix("www.")
+    }
+
+    val urlEncodedReferrer = URLEncode(referrerDomain)
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl&xcust=referrer%3A$urlEncodedReferrer"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {

@@ -3,15 +3,17 @@ import conf.Configuration
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.test.FakeRequest
 import views.support.AffiliateLinksCleaner._
 
 class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
 
   "linkToSkimLink" should "correctly convert a link to a skimlink" in {
+    val fakeTestRequest = FakeRequest().withHeaders("referer" -> "https://www.theguardian.com/uk")
     val link = "https://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
-    linkToSkimLink(link, pageUrl, "123") should equal(
-      s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
+    linkToSkimLink(link, pageUrl, "123")(fakeTestRequest) should equal(
+      s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates&xcust=referrer%3Atheguardian",
     )
   }
 
