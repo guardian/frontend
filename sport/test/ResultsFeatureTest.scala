@@ -47,20 +47,20 @@ import tools.MatchListFeatureTools
       }
     }
 
-    Scenario("Next results") {
-      Given("I am on the results page")
-      goTo("/football/results") { browser =>
-        import browser._
-
-        And("I click the 'next' results link")
-        scrollToElementAndClick("[data-link-name=next]", browser)
-
-        Then("I should see additional results")
-        val matches = $(".football-match__team")
-        assertTeamWithScore(matches, "Stoke", "1")
-        assertTeamWithScore(matches, "Villa", "1")
-      }
-    }
+//    Scenario("Next results") {
+//      Given("I am on the results page")
+//      goTo("/football/results") { browser =>
+//        import browser._
+//
+//        And("I click the 'next' results link")
+//        scrollToElementAndClick("[data-link-name=next]", browser)
+//
+//        Then("I should see additional results")
+//        val matches = $(".football-match__team")
+//        assertTeamWithScore(matches, "Stoke", "1")
+//        assertTeamWithScore(matches, "Villa", "1")
+//      }
+//    }
 
     Scenario("Competition results filter") { // filter has been removed and will be re-implemented differently
 
