@@ -20,18 +20,22 @@
 
     <p>Last updated: @if(report.updatedTimeStamp) { @{report.updatedTimeStamp} } else { never }</p>
 
-    <p>Pages will show a survey slot if you set up a line item in GAM with the following parameters:</p>
+    <p>Pages can show a survey slot if you set up a line item in GAM with the following parameters:</p>
     <ol>
         <li>Is a Sponsorship</li>
         <li>Targets the <pre>survey</pre> slot</li>
-        <li>Targets the <pre>theguardian.com</pre> except <pre>front</pre> adUnit</li>
-        <li>Targets the <pre>theguardian.com</pre> except <pre>front</pre> content type</li>
         <li>Targets the <pre>desktop</pre> breakpoint</li>
-        <li>Targets the <pre>connected TV</pre> device category in GAM</li>
     </ol>
 
     <strong>ANY OTHER TARGETING WILL CAUSE THE SLOT TO APPEAR UNINTENTIONALLY</strong>
     <p>If you are unsure please contact the <a href="mailto:commercial.dev@@theguardian.com">commercial dev team</a> first.</p>
+
+    <h3>Limitations</h3>
+    <p>Regardless of the targeting applied to the line item, survey slots:</p>
+    <ul>
+        <li>Will not appear on front pages, tag pages or the all newsletters page</li>
+        <li>Will only appear on desktop breakpoints and above</li>
+    </ul>
 
     <h2>Sponsorships</h2>
     <p>Line items that match the above targeting:</p>
