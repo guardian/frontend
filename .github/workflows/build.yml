@@ -5,6 +5,8 @@ on:
   push: # Do not rely on `push` for PR CI - see https://github.com/guardian/mobile-apps-api/pull/2760
     branches:
       - main # Optimal for GHA workflow caching - see https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+      - ravi/ci-speedup-ii
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -17,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-client:
+  client-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,10 +48,20 @@ jobs:
           path: /tmp/frontend-client.zip
           if-no-files-found: error
 
-  build:
+  scala-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          cache: yarn
+          node-version-file: .nvmrc
+
+      - run: make install
+      - run: make compile
 
       - uses: actions/setup-java@v4
         with:
@@ -68,7 +80,7 @@ jobs:
           -DSTAGE=DEV \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test
+          -jar ./bin/sbt-launch.jar compile assets scalafmtCheckAll test
 
       - name: Test Summary
         uses: test-summary/action@v2
@@ -77,7 +89,7 @@ jobs:
         if: always()
 
   publish:
-    needs: [build-client, build]
+    needs: [client-build, scala-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
