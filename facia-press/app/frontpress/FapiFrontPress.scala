@@ -388,22 +388,20 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   }
 
   private def getCurated(
-      collection: Collection,
-  )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+                          collection: Collection,
+                        )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
     initialContent.flatMap { content =>
       Response.traverse(content.map {
         case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn =>
-          for {
-            updatedFields <- enrichContent(collection, curated, curated.enriched)
-            maybeMediaAtom <- getMediaAtom(curated).recover(_ => None)
-          } yield curated.copy(enriched = Some(updatedFields), enrichedMediaAtom = maybeMediaAtom)
+          enrichContent(collection, curated, curated.enriched).map { updatedFields =>
+            curated.copy(enriched = Some(updatedFields))
+          }
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
-          for {
-            updatedFields <- enrichContent(collection, link, link.enriched)
-            maybeMediaAtom <- getMediaAtom(link).recover(_ => None)
-          } yield link.copy(enriched = Some(updatedFields), enrichedMediaAtom = maybeMediaAtom)
+          enrichContent(collection, link, link.enriched).map { updatedFields =>
+            link.copy(enriched = Some(updatedFields))
+          }
         case plain => Response.Right(plain)
       })
     }
@@ -420,32 +418,6 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       case Some("interactive") =>
         Enrichment.enrichInteractive(content.properties.atomId, beforeEnrichment, collection, capiClient)
       case _ => Future.successful(beforeEnrichment)
-    }
-
-    Response(maybeUpdate.map(scala.Right.apply))
-  }
-
-  private def getMediaAtom(
-      content: PressedContent,
-  )(implicit executionContext: ExecutionContext): Response[Option[MediaAtom]] = {
-
-    val maybeUpdate: Future[Option[MediaAtom]] = content.properties match {
-      case properties if properties.mediaSelect.exists(_.videoReplace) && properties.atomId.isDefined =>
-        Enrichment.enrichVideo(properties.atomId.get, capiClient)
-      case properties if properties.mediaSelect.exists(_.showMainVideo) =>
-        val maybeAtom = for {
-          content <- content.properties.maybeContent
-          elements = content.elements
-          atom <- elements.mainMediaAtom.orElse(elements.mediaAtoms.headOption)
-        } yield atom
-
-        Enrichment.asFutOpt(maybeAtom)
-      case _ => Future.successful(None)
-    }
-
-    maybeUpdate.failed.foreach { error =>
-      val msg = s"Processing of a media atom failed, and it won't be pressed: $error"
-      log.warn(msg)
     }
 
     Response(maybeUpdate.map(scala.Right.apply))
