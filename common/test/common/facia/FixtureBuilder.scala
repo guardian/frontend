@@ -73,7 +73,6 @@ object FixtureBuilder {
       webUrl = None,
       editionBrandings = None,
       atomId = None,
-      replacementVideoAtomId = None,
     )
 
   def mkHeader(id: Int, kicker: Option[ItemKicker] = None): PressedCardHeader =
@@ -136,7 +135,7 @@ object FixtureBuilder {
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
-      enrichedMediaAtom = None,
+      mediaAtom = None,
     )
   }
 

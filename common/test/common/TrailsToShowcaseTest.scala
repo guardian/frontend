@@ -1367,7 +1367,6 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       webUrl = Some("an-article"),
       editionBrandings = None,
       atomId = None,
-      replacementVideoAtomId = None,
     )
 
     val kicker = kickerText.map { k =>
