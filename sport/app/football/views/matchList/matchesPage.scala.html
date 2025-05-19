@@ -70,9 +70,9 @@
                         }
                     </div>
 
-                    @if( matchesList.nextPage.isDefined) {
+                    @if( matchesList.nextPageNoJs.isDefined) {
                         <div class="matches-nav" data-link-name="@matchesList.pageType nav">
-                            @matchesList.nextPage.map{url =>
+                            @matchesList.nextPageNoJs.map{url =>
                                 <a href="@url" class="football-matches__show-more js-show-more-football-matches button--show-more button button--medium button--primary"
                                    data-shows-more=".football-matches__day"
                                    data-puts-more-into="football-matches"

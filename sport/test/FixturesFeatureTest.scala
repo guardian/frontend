@@ -34,20 +34,20 @@ import tools.MatchListFeatureTools
       }
     }
 
-//    Scenario("Next fixtures") {
-//      Given("I am on the fixtures page")
-//      goTo("/football/fixtures") { browser =>
-//        import browser._
-//
-//        When("I click the 'Next' fixtures link")
-//
-//        scrollToElementAndClick("[data-link-name=next]", browser)
-//
-//        Then("I should see the next set of upcoming matches")
-//        val matches = $(".football-teams")
-//        assertFixture(matches, "Swansea", "Reading")
-//      }
-//    }
+    Scenario("Next fixtures") {
+      Given("I am on the fixtures page")
+      goTo("/football/fixtures") { browser =>
+        import browser._
+
+        When("I click the 'Next' fixtures link")
+
+        scrollToElementAndClick("[data-link-name=next]", browser)
+
+        Then("I should see the next set of upcoming matches")
+        val matches = $(".football-teams")
+        assertFixture(matches, "Swansea", "Reading")
+      }
+    }
 
     Scenario("Link tracking") {
       Given("I visit the fixtures page")
