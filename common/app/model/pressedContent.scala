@@ -92,8 +92,8 @@ object CuratedContent {
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
       mediaAtom = content.atomData.flatMap {
-        case mediaAtom: com.gu.contentatom.thrift.AtomData.Media =>
-          Some(MediaAtom.makeFromThrift("", "", mediaAtom))
+        case mediaAtom: com.gu.contentatom.thrift.AtomData.Media if (content.atomId.isDefined) =>
+          Some(MediaAtom.makeFromThrift(content.atomId.get, "", mediaAtom))
         case _ => None
       },
     )
