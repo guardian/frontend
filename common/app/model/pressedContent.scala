@@ -151,7 +151,7 @@ object LinkSnap {
       display = PressedDisplaySettings.make(content, None),
       enriched = Some(EnrichedContent.empty),
       format = ContentFormat.defaultContentFormat,
-      enrichedMediaAtom = None,
+      mediaAtom = None,
     )
   }
 }
