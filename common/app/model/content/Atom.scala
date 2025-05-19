@@ -206,10 +206,11 @@ object MediaAtom extends common.GuLogging {
     MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
   }
 
-  def makeFromThrift(id: String, defaultHtml: String, mediaAtom: AtomData.Media): MediaAtom = {
+  def makeFromThrift(id: String, mediaAtom: AtomData.Media): MediaAtom = {
     MediaAtom(
       id = id,
-      defaultHtml = defaultHtml,
+      // Default html is not being used by DCR - consider removing this field entirely.
+      defaultHtml = "",
       assets = mediaAtom.media.assets.map(mediaAssetMake).toSeq,
       title = mediaAtom.media.title,
       duration = mediaAtom.media.duration,

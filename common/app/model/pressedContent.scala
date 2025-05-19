@@ -93,7 +93,7 @@ object CuratedContent {
       enriched = Some(EnrichedContent.empty),
       mediaAtom = content.atomData.flatMap {
         case mediaAtom: com.gu.contentatom.thrift.AtomData.Media if (content.atomId.isDefined) =>
-          Some(MediaAtom.makeFromThrift(content.atomId.get, "", mediaAtom))
+          Some(MediaAtom.makeFromThrift(content.atomId.get, mediaAtom))
         case _ => None
       },
     )
