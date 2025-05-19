@@ -612,7 +612,6 @@ object Enrichment extends GuLogging {
             Some(
               MediaAtom.makeFromThrift(
                 video.id,
-                video.defaultHtml,
                 atom,
               ),
             )
