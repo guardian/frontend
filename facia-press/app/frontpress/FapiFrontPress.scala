@@ -388,8 +388,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   }
 
   private def getCurated(
-                          collection: Collection,
-                        )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+      collection: Collection,
+  )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
     initialContent.flatMap { content =>

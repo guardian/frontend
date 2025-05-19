@@ -95,7 +95,7 @@ object CuratedContent {
         case mediaAtom: com.gu.contentatom.thrift.AtomData.Media =>
           Some(MediaAtom.makeFromThrift("", "", mediaAtom))
         case _ => None
-      }
+      },
     )
   }
 }
