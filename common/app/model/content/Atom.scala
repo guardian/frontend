@@ -207,11 +207,6 @@ object MediaAtom extends common.GuLogging {
   }
 
   def makeFromThrift(id: String, defaultHtml: String, mediaAtom: AtomData.Media): MediaAtom = {
-    val expired: Option[Boolean] = for {
-      metadata <- mediaAtom.media.metadata
-      expiryDate <- metadata.expiryDate
-    } yield new DateTime(expiryDate).withZone(DateTimeZone.UTC).isBeforeNow
-
     MediaAtom(
       id = id,
       defaultHtml = defaultHtml,
@@ -220,7 +215,8 @@ object MediaAtom extends common.GuLogging {
       duration = mediaAtom.media.duration,
       source = mediaAtom.media.source,
       posterImage = mediaAtom.media.posterImage.map(imageMediaMake(_, mediaAtom.media.title)),
-      expired = expired,
+      // We filter out expired atoms in facia-scala-client so this is always false.
+      expired = Some(false),
       activeVersion = mediaAtom.media.activeVersion,
       channelId = mediaAtom.media.metadata.flatMap(_.channelId),
     )
