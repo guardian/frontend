@@ -40,6 +40,7 @@ object FaciaContentConvert {
         }
         .toMap,
       atomId = None,
+      atomData = None
     )
 
     PressedContent.make(curated, false)
