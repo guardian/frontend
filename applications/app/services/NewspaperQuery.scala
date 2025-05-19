@@ -207,6 +207,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
         byline = None,
         kicker = None,
         brandingByEdition = Map.empty,
+        mediaAtomData = None,
       )
       LinkSnap.make(fapiSnap)
     }
