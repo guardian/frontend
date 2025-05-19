@@ -3783,16 +3783,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial@npm:26.0.0":
-  version: 26.0.0
-  resolution: "@guardian/commercial@npm:26.0.0"
+"@guardian/commercial@npm:26.1.1":
+  version: 26.1.1
+  resolution: "@guardian/commercial@npm:26.1.1"
   dependencies:
     "@guardian/ab-core": "npm:8.0.1"
     "@guardian/core-web-vitals": "npm:11.0.0"
     "@guardian/identity-auth": "npm:^7.0.0"
-    "@guardian/identity-auth-frontend": "npm:^6.0.2"
-    "@guardian/libs": "npm:22.0.0"
-    "@guardian/source": "npm:8.0.2"
+    "@guardian/identity-auth-frontend": "npm:9.0.0"
+    "@guardian/libs": "npm:22.4.0"
+    "@guardian/source": "npm:10.0.0"
     fastdom: "npm:^1.0.12"
     lodash-es: "npm:^4.17.21"
     prebid.js: "npm:9.27.0"
@@ -3802,11 +3802,11 @@ __metadata:
     "@guardian/ab-core": ^8.0.0
     "@guardian/core-web-vitals": ^11.0.0
     "@guardian/identity-auth": ^7.0.0
-    "@guardian/identity-auth-frontend": ^6.0.2
-    "@guardian/libs": ^22.0.0
+    "@guardian/identity-auth-frontend": ^9.0.0
+    "@guardian/libs": ^22.4.0
     "@guardian/source": ^8.0.2
     typescript: ~5.5.4
-  checksum: 10c0/29e1099f3564cc279d0cc03ee68396c2b97ce39ef3e876c1a0eac5f24438e1069a9b405525d9f501326fafee2458abc19bad53154910d37e0450013881e5ee96
+  checksum: 10c0/79e55e5454462b9b2ae8184acb81b84309d17dfa7fcb631c647715ffecad3d79062683eac5f9c050777d62859c4e2154e5747bd6f0afae6f5f032a7421aa841b
   languageName: node
   linkType: hard
 
@@ -3894,7 +3894,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial": "npm:26.0.0"
+    "@guardian/commercial": "npm:26.1.1"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:6.0.1"
@@ -4041,18 +4041,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/identity-auth-frontend@npm:^6.0.2":
-  version: 6.0.3
-  resolution: "@guardian/identity-auth-frontend@npm:6.0.3"
+"@guardian/identity-auth-frontend@npm:9.0.0":
+  version: 9.0.0
+  resolution: "@guardian/identity-auth-frontend@npm:9.0.0"
   peerDependencies:
-    "@guardian/identity-auth": ^4.0.1
-    "@guardian/libs": ^19.0.0
+    "@guardian/identity-auth": ^7.0.0
+    "@guardian/libs": ^22.0.0
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/cf39465b55f07dd02a99cbdf10937f0a74797042430b9a50d1259c0f655e272aa1d6a086efece26ace22cde4fa45aab502c16fb155a125f08419b7756084cb1d
+  checksum: 10c0/766f49f03da137bf299bc707fe35e89106888a4965a5d9da694e8ca3f123979899d794ae433c72fb02fabede98206afb9b85bd797d76c64c29920137e1598e1e
   languageName: node
   linkType: hard
 
@@ -4081,19 +4081,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/a09e6f71946a8a904600fb4b7c2bae8e01a4fe4c7780c1036424d8b99902b8dfbe1be2494071cfeb8c73b74741f3929e99ae9c77e29728a8642d0e5b611d36f3
-  languageName: node
-  linkType: hard
-
-"@guardian/libs@npm:22.0.0":
-  version: 22.0.0
-  resolution: "@guardian/libs@npm:22.0.0"
-  peerDependencies:
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/d9ca9cad51ef905d82a3d88e601430b9a194665d9d34c3bdba20056d0d98ea867c5b486dcf96ab460bab8991622490c7b1a5cea5bf547f8743ccd481e00f8afa
   languageName: node
   linkType: hard
 
@@ -4184,13 +4171,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/source@npm:8.0.2":
-  version: 8.0.2
-  resolution: "@guardian/source@npm:8.0.2"
+"@guardian/source@npm:10.0.0":
+  version: 10.0.0
+  resolution: "@guardian/source@npm:10.0.0"
   dependencies:
     mini-svg-data-uri: "npm:1.4.4"
   peerDependencies:
-    "@emotion/react": ^11.11.3
+    "@emotion/react": ^11.11.4
     "@types/react": ^18.2.79
     react: ^18.2.0
     tslib: ^2.6.2
@@ -4204,7 +4191,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/2e0267db22bb2b074e3ce5b3d49ddef7fa7a09500dd22f1b5ee9ffca299f9c031876ab7c2df974612cb47a545a07ced40c1bfd31c216e82d68ad3d89262890d3
+  checksum: 10c0/f652c82bc7cb2f69ec50d0a3d0e1538f4ec71603bcccbd282ec52bbde6e462efd14d250cac4211ab82bcf5935de9b289bf1947312b5430d18493a35527d49d1d
   languageName: node
   linkType: hard
 
