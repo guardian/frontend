@@ -1428,7 +1428,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       enriched = None,
       supportingContent = supportingContent.toList,
       cardStyle = CardStyle.make(Editorial),
-      enrichedMediaAtom = None,
+      mediaAtom = None,
     )
   }
 }
