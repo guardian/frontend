@@ -1346,10 +1346,12 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       isBreaking = false,
       showByline = false,
       showKickerTag = false,
-      mediaSelect = MediaSelect(
-        showMainVideo = false,
-        imageSlideshowReplace = false,
-        videoReplace = false,
+      mediaSelect = Some(
+        MediaSelect(
+          showMainVideo = false,
+          imageSlideshowReplace = false,
+          videoReplace = false,
+        ),
       ),
       maybeContent = mayBeContent,
       maybeContentId = None,

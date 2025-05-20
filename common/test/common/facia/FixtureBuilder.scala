@@ -50,10 +50,12 @@ object FixtureBuilder {
   def mkProperties(id: Int): PressedProperties =
     PressedProperties(
       isBreaking = false,
-      mediaSelect = MediaSelect(
-        showMainVideo = false,
-        imageSlideshowReplace = false,
-        videoReplace = false,
+      mediaSelect = Some(
+        MediaSelect(
+          showMainVideo = false,
+          imageSlideshowReplace = false,
+          videoReplace = false,
+        ),
       ),
       showKickerTag = false,
       showByline = false,
