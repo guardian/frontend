@@ -1,8 +1,7 @@
 package services
 
-import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
-import com.amazonaws.services.s3.model._
-import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
+//import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
+//import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import com.gu.etagcaching.aws.s3.ObjectId
 import common.GuLogging
@@ -10,6 +9,8 @@ import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
 import services.S3.logS3ExceptionWithDevHint
+import software.amazon.awssdk.services.s3.model.{GetObjectRequest, NoSuchKeyException}
+import utils.AWSv2
 
 import java.io._
 import java.util.zip.GZIPOutputStream
@@ -19,17 +20,17 @@ trait S3 extends GuLogging {
 
   lazy val bucket = Configuration.aws.frontendStoreBucket
 
-  lazy private val client: AmazonS3 = AmazonS3Client.builder
-    .withCredentials(Configuration.aws.credentials.get)
-    .withRegion(conf.Configuration.aws.region)
-    .build()
+  lazy private val client = AWSv2.S3Sync
 
   private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = {
     val objectId = ObjectId(bucket, key)
     try {
-      val request = new GetObjectRequest(bucket, key)
+      val request = GetObjectRequest.builder().bucket(bucket).key(key).build()
       val result = client.getObject(request)
-      log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
+
+      val getObjectResponse = result.response()
+
+      log.info(s"S3 got ${getObjectResponse.contentLength} bytes from $key")
 
       // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
       try {
@@ -41,10 +42,10 @@ trait S3 extends GuLogging {
         result.close()
       }
     } catch {
-      case e: AmazonS3Exception if e.getStatusCode == 404 =>
+      case e: NoSuchKeyException if e.statusCode == 404 =>
         log.warn(s"not found at ${objectId.s3Uri}")
         None
-      case e: AmazonS3Exception =>
+      case e: software.amazon.awssdk.services.s3.model.S3Exception =>
         logS3ExceptionWithDevHint(objectId, e)
         None
       case e: Exception =>
