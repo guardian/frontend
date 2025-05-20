@@ -619,13 +619,6 @@ object Enrichment extends GuLogging {
     result
   }
 
-  def asFutOpt[A](opt: Option[A]): Future[Option[A]] = {
-    opt match {
-      case Some(thing) => Future.successful(Some(thing))
-      case None        => Future.successful(None)
-    }
-  }
-
   def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
     opt match {
       case Some(thing) => Future.successful(thing)
