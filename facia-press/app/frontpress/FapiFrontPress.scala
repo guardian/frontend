@@ -581,39 +581,6 @@ object Enrichment extends GuLogging {
     }
   }
 
-  def enrichVideo(
-      atomId: String,
-      capiClient: CapiContentApiClient,
-  )(implicit executionContext: ExecutionContext): Future[Option[MediaAtom]] = {
-    def enrich(response: ItemResponse): Option[MediaAtom] = {
-      for {
-        video <- response.media
-        enriched <- Some(video.data).flatMap {
-          case atom: com.gu.contentatom.thrift.AtomData.Media =>
-            Some(
-              MediaAtom.makeFromThrift(
-                video.id,
-                atom,
-              ),
-            )
-          case _ => None
-        }
-      } yield enriched
-    }
-
-    val result = for {
-      itemResponse <- capiClient.getResponse(ItemQuery(s"atom/video/$atomId"))
-      enriched <- asFutOpt(enrich(itemResponse))
-    } yield enriched
-
-    result.failed.foreach { error =>
-      val msg = s"Processing of a video atom failed, and it won't be pressed: $error"
-      log.warn(msg)
-    }
-
-    result
-  }
-
   def enrichInteractive(
       atomId: Option[String],
       beforeEnrichment: EnrichedContent,
