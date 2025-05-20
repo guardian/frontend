@@ -1,17 +1,19 @@
 package services
 
-import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
-import com.amazonaws.services.s3.model._
-import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
-import com.amazonaws.util.StringInputStream
 import com.gu.etagcaching.aws.s3.ObjectId
 import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
 import services.S3.logS3ExceptionWithDevHint
+import software.amazon.awssdk.core.sync.RequestBody
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL.{PRIVATE, PUBLIC_READ}
+import software.amazon.awssdk.services.s3.model._
+import utils.AWSv2
 
 import java.io._
+import java.nio.charset.StandardCharsets.UTF_8
+import java.time.Instant
 import java.util.zip.GZIPOutputStream
 import scala.io.{Codec, Source}
 
@@ -19,32 +21,17 @@ trait S3 extends GuLogging {
 
   lazy val bucket = Configuration.aws.frontendStoreBucket
 
-  lazy private val client: AmazonS3 = AmazonS3Client.builder
-    .withCredentials(Configuration.aws.credentials.get)
-    .withRegion(conf.Configuration.aws.region)
-    .build()
+  lazy private val client = AWSv2.S3Sync
 
-  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = {
+  def handleS3Errors[T](key: String)(thunk: => T): Option[T] = {
     val objectId = ObjectId(bucket, key)
     try {
-      val request = new GetObjectRequest(bucket, key)
-      val result = client.getObject(request)
-      log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
-
-      // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
-      try {
-        Some(action(result))
-      } catch {
-        case e: Exception =>
-          throw e
-      } finally {
-        result.close()
-      }
+      Some(thunk)
     } catch {
-      case e: AmazonS3Exception if e.getStatusCode == 404 =>
+      case e: NoSuchKeyException if e.statusCode == 404 =>
         log.warn(s"not found at ${objectId.s3Uri}")
         None
-      case e: AmazonS3Exception =>
+      case e: software.amazon.awssdk.services.s3.model.S3Exception =>
         logS3ExceptionWithDevHint(objectId, e)
         None
       case e: Exception =>
@@ -52,84 +39,73 @@ trait S3 extends GuLogging {
     }
   }
 
-  def get(key: String)(implicit codec: Codec): Option[String] =
-    withS3Result(key) { result =>
-      Source.fromInputStream(result.getObjectContent).mkString
-    }
+  def get(key: String)(implicit codec: Codec): Option[String] = handleS3Errors(key)(getResponseAndContent(key)._2)
 
-  def getWithLastModified(key: String): Option[(String, DateTime)] =
-    withS3Result(key) { result =>
-      val content = Source.fromInputStream(result.getObjectContent).mkString
-      val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
-      (content, lastModified)
-    }
+  private def toDateTime(instant: Instant): DateTime = new DateTime(instant.toEpochMilli)
 
-  def getLastModified(key: String): Option[DateTime] =
-    withS3Result(key) { result =>
-      new DateTime(result.getObjectMetadata.getLastModified)
+  def getWithLastModified(key: String): Option[(String, DateTime)] = handleS3Errors(key) {
+    val (resp, content) = getResponseAndContent(key)
+    val lastModified = toDateTime(resp.lastModified())
+    (content, lastModified)
+  }
+
+  private def getResponseAndContent(key: String)(implicit codec: Codec): (GetObjectResponse, String) = {
+    val request = GetObjectRequest.builder().bucket(bucket).key(key).build()
+    val resp = client.getObject(request)
+    val objectResponse = resp.response()
+    log.info(s"S3 got ${objectResponse.contentLength} bytes from $key")
+    try {
+      val content = Source.fromInputStream(resp).mkString
+      (objectResponse, content)
+    } finally {
+      resp.close()
     }
+  }
+
+  def getLastModified(key: String): Option[DateTime] = handleS3Errors(key) {
+    val request = HeadObjectRequest.builder().bucket(bucket).key(key).build()
+    toDateTime(client.headObject(request).lastModified())
+  }
 
   def putPublic(key: String, value: String, contentType: String): Unit = {
-    put(key: String, value: String, contentType: String, PublicRead)
+    put(key: String, value: String, contentType: String, PUBLIC_READ)
   }
 
   def putPrivate(key: String, value: String, contentType: String): Unit = {
-    put(key: String, value: String, contentType: String, Private)
+    put(key: String, value: String, contentType: String, PRIVATE)
   }
 
   def putPrivateGzipped(key: String, value: String, contentType: String): Unit = {
-    putGzipped(key, value, contentType, Private)
+    val os = new ByteArrayOutputStream()
+    val gzippedStream = new GZIPOutputStream(os)
+    gzippedStream.write(value.getBytes(UTF_8))
+    gzippedStream.flush()
+    gzippedStream.close()
+
+    val request = PutObjectRequest
+      .builder()
+      .bucket(bucket)
+      .key(key)
+      .acl(PRIVATE)
+      .cacheControl("no-cache,no-store")
+      .contentType(contentType)
+      .contentEncoding("gzip")
+      .build()
+
+    client.putObject(request, RequestBody.fromBytes(os.toByteArray))
   }
 
-  private def putGzipped(
-      key: String,
-      value: String,
-      contentType: String,
-      accessControlList: CannedAccessControlList,
-  ): Unit = {
-    lazy val request = {
-      val metadata = new ObjectMetadata()
+  private def put(key: String, value: String, contentType: String, accessControlList: ObjectCannedACL): Unit = {
+    val request = PutObjectRequest
+      .builder()
+      .bucket(bucket)
+      .key(key)
+      .acl(accessControlList)
+      .cacheControl("no-cache,no-store")
+      .contentType(contentType)
+      .build()
 
-      metadata.setCacheControl("no-cache,no-store")
-      metadata.setContentType(contentType)
-      metadata.setContentEncoding("gzip")
-
-      val valueAsBytes = value.getBytes("UTF-8")
-      val os = new ByteArrayOutputStream()
-      val gzippedStream = new GZIPOutputStream(os)
-      gzippedStream.write(valueAsBytes)
-      gzippedStream.flush()
-      gzippedStream.close()
-
-      metadata.setContentLength(os.size())
-
-      new PutObjectRequest(bucket, key, new ByteArrayInputStream(os.toByteArray), metadata)
-        .withCannedAcl(accessControlList)
-    }
-
-    try {
-      client.putObject(request)
-    } catch {
-      case e: Exception =>
-        throw e
-    }
-  }
-
-  private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList): Unit = {
-    val metadata = new ObjectMetadata()
-    metadata.setCacheControl("no-cache,no-store")
-    metadata.setContentType(contentType)
-    metadata.setContentLength(value.getBytes("UTF-8").length)
-
-    val request =
-      new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
-
-    try {
-      client.putObject(request)
-    } catch {
-      case e: Exception =>
-        throw e
-    }
+    client.putObject(request, RequestBody.fromString(value, UTF_8))
   }
 }
 
