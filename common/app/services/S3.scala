@@ -19,41 +19,38 @@ trait S3 extends GuLogging {
 
   lazy val bucket = Configuration.aws.frontendStoreBucket
 
-  lazy private val client: Option[AmazonS3] = Configuration.aws.credentials.map { credentials =>
-    AmazonS3Client.builder
-      .withCredentials(credentials)
-      .withRegion(conf.Configuration.aws.region)
-      .build()
-  }
+  lazy private val client: AmazonS3 = AmazonS3Client.builder
+    .withCredentials(Configuration.aws.credentials.get)
+    .withRegion(conf.Configuration.aws.region)
+    .build()
 
-  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] =
-    client.flatMap { client =>
-      val objectId = ObjectId(bucket, key)
+  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = {
+    val objectId = ObjectId(bucket, key)
+    try {
+      val request = new GetObjectRequest(bucket, key)
+      val result = client.getObject(request)
+      log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
+
+      // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
       try {
-        val request = new GetObjectRequest(bucket, key)
-        val result = client.getObject(request)
-        log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
-
-        // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
-        try {
-          Some(action(result))
-        } catch {
-          case e: Exception =>
-            throw e
-        } finally {
-          result.close()
-        }
+        Some(action(result))
       } catch {
-        case e: AmazonS3Exception if e.getStatusCode == 404 =>
-          log.warn(s"not found at ${objectId.s3Uri}")
-          None
-        case e: AmazonS3Exception =>
-          logS3ExceptionWithDevHint(objectId, e)
-          None
         case e: Exception =>
           throw e
+      } finally {
+        result.close()
       }
+    } catch {
+      case e: AmazonS3Exception if e.getStatusCode == 404 =>
+        log.warn(s"not found at ${objectId.s3Uri}")
+        None
+      case e: AmazonS3Exception =>
+        logS3ExceptionWithDevHint(objectId, e)
+        None
+      case e: Exception =>
+        throw e
     }
+  }
 
   def get(key: String)(implicit codec: Codec): Option[String] =
     withS3Result(key) { result =>
@@ -111,7 +108,7 @@ trait S3 extends GuLogging {
     }
 
     try {
-      client.foreach(_.putObject(request))
+      client.putObject(request)
     } catch {
       case e: Exception =>
         throw e
@@ -128,7 +125,7 @@ trait S3 extends GuLogging {
       new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
     try {
-      client.foreach(_.putObject(request))
+      client.putObject(request)
     } catch {
       case e: Exception =>
         throw e
