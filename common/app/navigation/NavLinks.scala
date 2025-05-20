@@ -211,16 +211,6 @@ object NavLinks {
     ),
   )
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/insidetheguardian")
-  val observer = NavLink(
-    "The Observer",
-    "/observer",
-    children = List(
-      NavLink("Comment", "/theobserver/news/comment"),
-      NavLink("The New Review", "/theobserver/new-review"),
-      NavLink("Observer Magazine", "/theobserver/magazine"),
-      NavLink("Observer Food Monthly", "/theobserver/foodmonthly"),
-    ),
-  )
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink(
@@ -229,13 +219,11 @@ object NavLinks {
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),
-      NavLink("Speedy", "/crosswords/series/speedy"),
+      NavLink("Sunday quick", "/crosswords/series/sunday-quick"),
       NavLink("Quick cryptic", "/crosswords/series/quick-cryptic"),
-      NavLink("Everyman", "/crosswords/series/everyman"),
       NavLink("Quiptic", "/crosswords/series/quiptic"),
       NavLink("Cryptic", "/crosswords/series/cryptic"),
       NavLink("Prize", "/crosswords/series/prize"),
-      NavLink("Azed", "/crosswords/series/azed"),
       NavLink("Genius", "/crosswords/series/genius"),
       NavLink("Weekend", "/crosswords/series/weekend-crossword"),
       NavLink("Special", "/crosswords/series/special"),
@@ -639,7 +627,6 @@ object NavLinks {
     newsletters,
     todaysPaper,
     insideTheGuardian,
-    observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     crosswords,
     wordiply,
@@ -676,7 +663,6 @@ object NavLinks {
     newsletters,
     todaysPaper,
     insideTheGuardian,
-    observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
     wordiply,
@@ -690,7 +676,6 @@ object NavLinks {
     newsletters,
     todaysPaper,
     insideTheGuardian,
-    observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     crosswords,
     wordiply,
@@ -829,10 +814,8 @@ object NavLinks {
     "crosswords/series/weekend-crossword",
     "crosswords/series/quiptic",
     "crosswords/series/genius",
-    "crosswords/series/speedy",
-    "crosswords/series/everyman",
+    "crosswords/series/sunday-quick",
     "crosswords/series/special",
-    "crosswords/series/azed",
     "fashion/beauty",
     "technology/motoring",
     // these last two are here to ensure that content in education and CiF always appear as such in the navigation

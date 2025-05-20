@@ -29,7 +29,7 @@ object Container extends GuLogging {
       ("dynamic/fast", Dynamic(DynamicFast)),
       ("dynamic/slow", Dynamic(DynamicSlow)),
       ("dynamic/package", Dynamic(DynamicPackage)),
-      ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false, adFree = adFree))),
+      ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(adFree = adFree))),
       ("fixed/video", Video),
       ("fixed/video/vertical", VerticalVideo),
       ("nav/list", NavList),
@@ -57,7 +57,14 @@ object Container extends GuLogging {
           .map(Front.itemsVisible)
       case Fixed(fixedContainer) => Some(Front.itemsVisible(fixedContainer.slices))
       case Email(_)              => Some(EmailContentContainer.storiesCount(collectionConfig))
-      case _                     => None
+      // scrollable feature containers are capped at 3 stories
+      case _ if collectionConfig.collectionType == "scrollable/feature" => Some(3)
+      // scrollable small and medium containers are capped at 4 stories
+      case _ if collectionConfig.collectionType == "scrollable/small"  => Some(4)
+      case _ if collectionConfig.collectionType == "scrollable/medium" => Some(4)
+      // scrollable highlights containers are capped at 6 stories
+      case _ if collectionConfig.collectionType == "scrollable/highlights" => Some(6)
+      case _                                                               => None
     }
   }
 
@@ -78,13 +85,13 @@ object Container extends GuLogging {
     }
   }
 
-  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
+  def fromPressedCollection(pressedCollection: PressedCollection, adFree: Boolean): Container = {
     val container = resolve(pressedCollection.collectionType, adFree)
     container match {
-      case Fixed(definition) if omitMPU || adFree =>
+      case Fixed(definition) if adFree =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))
-      case Dynamic(DynamicSlowMPU(_, _)) if omitMPU || adFree =>
-        Dynamic(DynamicSlowMPU(omitMPU, adFree))
+      case Dynamic(DynamicSlowMPU(_)) if adFree =>
+        Dynamic(DynamicSlowMPU(adFree))
       case _ => container
     }
   }

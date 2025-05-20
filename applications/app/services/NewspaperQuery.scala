@@ -31,11 +31,6 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
     bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(now), "theguardian")
   }
 
-  def fetchLatestObserverNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
-    val now = DateTime.now(DateTimeZone.UTC)
-    bookSectionContainers("theobserver/news", getPastSundayDateFor(now), "theobserver")
-  }
-
   def fetchNewspaperForDate(path: String, day: String, month: String, year: String)(implicit
       executionContext: ExecutionContext,
   ): Future[List[FaciaContainer]] = {

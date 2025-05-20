@@ -794,37 +794,6 @@
 				"classList": []
 			},
 			{
-				"title": "The Observer",
-				"url": "/observer",
-				"children": [
-					{
-						"title": "Comment",
-						"url": "/theobserver/news/comment",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "The New Review",
-						"url": "/theobserver/new-review",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Magazine",
-						"url": "/theobserver/magazine",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Food Monthly",
-						"url": "/theobserver/foodmonthly",
-						"children": [],
-						"classList": []
-					}
-				],
-				"classList": []
-			},
-			{
 				"title": "Guardian Weekly",
 				"url": "https://www.theguardian.com/weekly?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK",
 				"children": [],
@@ -847,20 +816,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -879,12 +842,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -1606,20 +1563,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -1638,12 +1589,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -2311,20 +2256,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -2343,12 +2282,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -3160,37 +3093,6 @@
 				"classList": []
 			},
 			{
-				"title": "The Observer",
-				"url": "/observer",
-				"children": [
-					{
-						"title": "Comment",
-						"url": "/theobserver/news/comment",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "The New Review",
-						"url": "/theobserver/new-review",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Magazine",
-						"url": "/theobserver/magazine",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Food Monthly",
-						"url": "/theobserver/foodmonthly",
-						"children": [],
-						"classList": []
-					}
-				],
-				"classList": []
-			},
-			{
 				"title": "Guardian Weekly",
 				"url": "https://www.theguardian.com/weekly?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int",
 				"children": [],
@@ -3213,20 +3115,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -3245,12 +3141,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -3410,10 +3300,8 @@
 		"crosswords/series/weekend-crossword",
 		"crosswords/series/quiptic",
 		"crosswords/series/genius",
-		"crosswords/series/speedy",
-		"crosswords/series/everyman",
+		"crosswords/series/sunday-quick",
 		"crosswords/series/special",
-		"crosswords/series/azed",
 		"fashion/beauty",
 		"technology/motoring",
 		"commentisfree/commentisfree",
@@ -4172,37 +4060,6 @@
 				"classList": []
 			},
 			{
-				"title": "The Observer",
-				"url": "/observer",
-				"children": [
-					{
-						"title": "Comment",
-						"url": "/theobserver/news/comment",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "The New Review",
-						"url": "/theobserver/new-review",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Magazine",
-						"url": "/theobserver/magazine",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Observer Food Monthly",
-						"url": "/theobserver/foodmonthly",
-						"children": [],
-						"classList": []
-					}
-				],
-				"classList": []
-			},
-			{
 				"title": "Guardian Weekly",
 				"url": "https://www.theguardian.com/weekly?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int",
 				"children": [],
@@ -4225,20 +4082,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -4257,12 +4108,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},

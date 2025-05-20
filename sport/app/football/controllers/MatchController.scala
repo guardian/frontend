@@ -2,8 +2,8 @@ package football.controllers
 
 import common._
 import feed.CompetitionsService
-import implicits.{Football, Requests}
-import model.Cached.WithoutRevalidationResult
+import implicits.{Football, HtmlFormat, JsonFormat, Requests}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
@@ -11,6 +11,10 @@ import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import conf.Configuration
+import football.model.{DotcomRenderingFootballMatchSummaryDataModel, GuTeamCodes}
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{FootballSummaryPagePicker, RemoteRender}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -67,7 +71,7 @@ case class TeamAnswer(
     id: String,
     name: String,
     players: Seq[PlayerAnswer],
-    score: Int,
+    score: Option[Int],
     scorers: List[String],
     possession: Int,
     shotsOn: Int,
@@ -76,9 +80,11 @@ case class TeamAnswer(
     fouls: Int,
     colours: String,
     crest: String,
+    codename: String,
 ) extends NsAnswer
 
-case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
+case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer, comments: Option[String])
+    extends NsAnswer
 
 object NsAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
@@ -107,7 +113,7 @@ object NsAnswer {
       teamV1.id,
       teamV1.name,
       players = players,
-      score = teamV1.score.getOrElse(0),
+      score = teamV1.score,
       scorers = teamV1.scorers.fold(Nil: List[String])(_.split(",").toList),
       possession = teamPossession,
       shotsOn = teamV2.shotsOn,
@@ -116,6 +122,7 @@ object NsAnswer {
       fouls = teamV2.fouls,
       colours = teamColour,
       crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png",
+      codename = GuTeamCodes.codeFor(teamV1),
     )
   }
 
@@ -125,6 +132,7 @@ object NsAnswer {
       theMatch.id,
       makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
       makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      theMatch.comments,
     )
   }
 
@@ -138,6 +146,7 @@ object NsAnswer {
 
 class MatchController(
     competitionsService: CompetitionsService,
+    val wsClient: WSClient,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -145,6 +154,7 @@ class MatchController(
     with Requests
     with GuLogging
     with ImplicitControllerExecutionContext {
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   def renderMatchIdJson(matchId: String): Action[AnyContent] = renderMatchId(matchId)
   def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findMatch(matchId))
@@ -164,24 +174,49 @@ class MatchController(
 
   private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] =
     Action.async { implicit request =>
-      val response = maybeMatch map { theMatch =>
-        val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
-        val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
-        page map { page =>
-          if (request.forceDCR) {
-            Cached(30) {
-              JsonComponent.fromWritable(NsAnswer.makeFromFootballMatch(theMatch, page.lineUp))
-            }
-          } else {
-            val htmlResponse = () =>
-              football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
-            val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
-            renderFormat(htmlResponse, jsonResponse, page)
-          }
-        }
-      }
+      maybeMatch match {
+        case Some(theMatch) =>
+          val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+          val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
+          val tier = FootballSummaryPagePicker.getTier()
 
-      // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-      response.getOrElse(Future.successful(Cached(30)(WithoutRevalidationResult(Found("/football/results")))))
+          page.flatMap { page =>
+            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
+
+            request.getRequestFormat match {
+              case JsonFormat if request.forceDCR =>
+                val model = DotcomRenderingFootballMatchSummaryDataModel(
+                  page = page,
+                  footballMatch = footballMatch,
+                )
+                Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
+
+              case JsonFormat =>
+                Future.successful(Cached(CacheTime.FootballMatch) {
+                  JsonComponent(football.views.html.matchStats.matchStatsComponent(page))
+                })
+
+              case HtmlFormat if tier == RemoteRender =>
+                val model = DotcomRenderingFootballMatchSummaryDataModel(
+                  page = page,
+                  footballMatch = footballMatch,
+                )
+                remoteRenderer.getFootballMatchSummaryPage(
+                  wsClient,
+                  DotcomRenderingFootballMatchSummaryDataModel.toJson(model),
+                )
+
+              case _ =>
+                Future.successful(Cached(CacheTime.FootballMatch) {
+                  RevalidatableResult.Ok(
+                    football.views.html.matchStats
+                      .matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id)),
+                  )
+                })
+            }
+          }
+        case None =>
+          Future.successful(Cached(CacheTime.FootballMatch)(WithoutRevalidationResult(Found("/football/results"))))
+      }
     }
 }

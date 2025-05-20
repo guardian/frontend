@@ -42,11 +42,6 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.commercialMenu()))
     }
 
-  def renderFluidAds: Action[AnyContent] =
-    Action { implicit request =>
-      NoCache(Ok(views.html.commercial.fluidAds()))
-    }
-
   def renderSpecialAdUnits: Action[AnyContent] =
     Action { implicit request =>
       val specialAdUnits = dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)

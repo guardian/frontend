@@ -145,14 +145,12 @@ class DfpDataCacheJob(
 
   private def write(data: DfpDataExtractor): Unit = {
 
-    if (data.hasValidLineItems) {
+    if (data.hasValidLineItems && LineItemJobs.isSwitchedOff) {
       val now = printLondonTime(DateTime.now())
 
       val pageSkinSponsorships = data.pageSkinSponsorships
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
-
-      if (LineItemJobs.isSwitchedOff)
-        Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
+      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
     }
   }
 
@@ -168,7 +166,7 @@ class DfpDataCacheJob(
   }
 
   private def writeSurveySponsorships(data: DfpDataExtractor): Unit = {
-    if (data.hasValidLineItems) {
+    if (data.hasValidLineItems && LineItemJobs.isSwitchedOff) {
       val now = printLondonTime(DateTime.now())
 
       val sponsorships = data.surveySponsorships

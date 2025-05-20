@@ -24,23 +24,23 @@ object Trail {
       .orElse(elements.videos.headOption.map(_.images))
       .orElse(elements.thumbnail.map(_.images))
 
-    // Try to take the master 5:3 image. At render-time, the image resizing service will size the image according to card width.
+    // Try to take the master image (5:4 or 5:3). At render-time, the image resizing service will size the image according to card width.
     // Filtering the list images here means that facia-press does not need to slim down the Trail object.
     trailImageMedia.flatMap { imageMedia =>
       val filteredTrailImages = imageMedia.allImages.filter { image =>
-        IsRatio(5, 3, image.width, image.height)
+        IsRatio(5, 4, image.width, image.height) || IsRatio(5, 3, image.width, image.height)
       }
 
       val masterTrailImage = filteredTrailImages.find(_.isMaster).map { master =>
         ImageMedia.make(List(master))
       }
 
-      // If there isn't a 5:3 image, no ImageMedia object will be created.
+      // If there isn't a 5:4 or 5:3 image, no ImageMedia object will be created.
       lazy val largestTrailImage = filteredTrailImages.sortBy(-_.width).headOption.map { bestImage =>
         ImageMedia.make(List(bestImage))
       }
 
-      // Choose the master 5:3 image, or the largest 5:3 image.
+      // Choose the master image (5:4 or 5:3), or the largest image (5:4 or 5:3).
       masterTrailImage.orElse(largestTrailImage)
     }
   }

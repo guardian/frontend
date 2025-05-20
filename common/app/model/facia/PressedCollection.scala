@@ -1,9 +1,10 @@
 package model.facia
 
 import com.gu.commercial.branding.ContainerBranding
-import com.gu.facia.api.{models => fapi}
-import com.gu.facia.api.models.{GroupsConfig}
-import com.gu.facia.api.utils.ContainerBrandingFinder
+import com.gu.facia.api.{FAPI, models => fapi}
+import com.gu.facia.api.models.GroupsConfig
+import com.gu.facia.api.utils.BoostLevel.Boost
+import com.gu.facia.api.utils.{BoostLevel, ContainerBrandingFinder}
 import com.gu.facia.client.models.{Branded, TargetedTerritory}
 import common.Edition
 import model.pressed._
@@ -50,6 +51,21 @@ case class PressedCollection(
     }
 
   def totalSize: Int = curated.size + backfill.size
+
+  lazy val withDefaultBoostLevels = {
+    val (defaultBoostCurated, defaultBoostBackfill) = FAPI
+      .applyDefaultBoostLevelsAndGroups[PressedContent](
+        groupsConfig = config.groupsConfig,
+        collectionType = config.collectionType,
+        contents = curated ++ backfill,
+        getBoostLevel = _.display.boostLevel.getOrElse(BoostLevel.Default),
+        setBoostLevel = (content, level) => content.withBoostLevel(Some(level)),
+        setGroup = (content, group) => content.withCard(content.card.copy(group = group)),
+      )
+      .splitAt(curated.length)
+
+    copy(curated = defaultBoostCurated, backfill = defaultBoostBackfill)
+  }
 
   def lite(visible: Int): PressedCollection = {
     val liteCurated = curated.take(visible)

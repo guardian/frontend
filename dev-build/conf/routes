@@ -257,22 +257,20 @@ GET            /ads.txt                                                         
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
 
+# Ad-Lite opt in
+GET         /commercial/ad-lite/enable                                                                                           commercial.controllers.TemporaryAdLiteController.enable()
+GET         /commercial/ad-lite/disable                                                                                          commercial.controllers.TemporaryAdLiteController.disable()
 # Commercial Admin
 GET         /commercial                                                                                                          controllers.admin.CommercialController.renderCommercialMenu()
 GET         /commercial/specialadunits                                                                                           controllers.admin.CommercialController.renderSpecialAdUnits()
 GET         /commercial/pageskins                                                                                                controllers.admin.CommercialController.renderPageskins()
 GET         /commercial/surging                                                                                                  controllers.admin.CommercialController.renderSurgingContent()
 GET         /commercial/templates                                                                                                controllers.admin.CommercialController.renderCreativeTemplates()
-GET         /commercial/fluid250                                                                                                 controllers.admin.CommercialController.renderFluidAds()
 GET         /commercial/adtests                                                                                                  controllers.admin.CommercialController.renderAdTests()
 GET         /commercial/keyvalues                                                                                                controllers.admin.CommercialController.renderKeyValues()
 GET         /commercial/keyvalues/csv/*key                                                                                       controllers.admin.CommercialController.renderKeyValuesCsv(key)
 GET         /commercial/dfp/flush/view                                                                                           controllers.admin.commercial.DfpDataController.renderCacheFlushPage()
 GET         /commercial/dfp/flush                                                                                                controllers.admin.commercial.DfpDataController.flushCache()
-GET         /commercial/adops/takeovers-empty-mpus                                                                               controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
-GET         /commercial/adops/takeovers-empty-mpus/create                                                                        controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
-POST        /commercial/adops/takeovers-empty-mpus/create                                                                        controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
-POST        /commercial/adops/takeovers-empty-mpus/remove                                                                        controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(t)
 GET         /commercial/invalid-lineitems                                                                                        controllers.admin.CommercialController.renderInvalidItems()
 GET         /commercial/custom-fields                                                                                            controllers.admin.CommercialController.renderCustomFields()
 GET         /commercial/adgrabber/order/:orderId                                                                                 controllers.admin.CommercialController.getLineItemsForOrder(orderId: String)
@@ -331,7 +329,6 @@ GET            /tests.json                                                      
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
-GET            /theobserver                                                                                                      controllers.NewspaperController.latestObserverNewspaper()
 GET            /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>                                         controllers.NewspaperController.newspaperForDate(path, day, month, year)
 GET            /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                     controllers.NewspaperController.allOn(path, day, month, year)
 

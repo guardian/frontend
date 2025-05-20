@@ -6,7 +6,7 @@ import cricket.controllers.CricketMatchPage
 import cricketModel.{Innings, InningsBatter, InningsBowler, InningsWicket, Match, Team}
 import experiments.ActiveExperiments
 import model.ApplicationContext
-import model.dotcomrendering.DotcomRenderingUtils.assetURL
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
@@ -23,6 +23,7 @@ case class DotcomRenderingCricketDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 )
 
 object DotcomRenderingCricketDataModel {
@@ -68,9 +69,58 @@ object DotcomRenderingCricketDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 
   implicit val dotcomRenderingCricketDataModelFormat: Writes[DotcomRenderingCricketDataModel] =
     Json.writes[DotcomRenderingCricketDataModel]
+
+  def toJson(model: DotcomRenderingCricketDataModel): JsValue = {
+    val jsValue = Json.toJson(model)
+    withoutNull(jsValue)
+  }
+}
+
+object CricketScoreBoardDataModel {
+  private def getTeam(team: Team) = {
+    Json.obj(
+      "name" -> team.name,
+      "home" -> team.home,
+    )
+  }
+
+  private def getFallOfWicket(inningsWicket: InningsWicket) = {
+    Json.obj(
+      "order" -> inningsWicket.order,
+    )
+  }
+
+  private def getInnings(innings: Innings) = {
+    Json.obj(
+      "order" -> innings.order,
+      "battingTeam" -> innings.battingTeam,
+      "runsScored" -> innings.runsScored,
+      "declared" -> innings.declared,
+      "forfeited" -> innings.forfeited,
+      "fallOfWicket" -> innings.fallOfWicket.map(getFallOfWicket),
+      "overs" -> innings.overs,
+    )
+  }
+
+  def getMatch(theMatch: Match): JsObject = {
+    Json.obj(
+      "matchId" -> theMatch.matchId,
+      "competitionName" -> theMatch.competitionName,
+      "venueName" -> theMatch.venueName,
+      "teams" -> theMatch.teams.map(getTeam),
+      "innings" -> theMatch.innings.map(getInnings),
+      "gameDate" -> theMatch.gameDate,
+    )
+  }
+
+  def toJson(theMatch: Match): JsValue = {
+    val jsValue = Json.toJson(getMatch(theMatch))
+    withoutNull(jsValue)
+  }
 }

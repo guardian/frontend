@@ -1,6 +1,7 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
+import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
 import model.content.MediaAtom
@@ -25,6 +26,28 @@ sealed trait PressedContent {
   def format: ContentFormat
 
   def withoutTrailText: PressedContent
+
+  def withoutCommercial: PressedContent
+
+  def withBoostLevel(level: Option[BoostLevel]): PressedContent
+
+  def withCard(card: PressedCard): PressedContent
+
+  protected def propertiesWithoutCommercial(properties: PressedProperties): PressedProperties =
+    properties.copy(
+      maybeContent = properties.maybeContent.map(storyWithoutCommercial),
+    )
+
+  private def storyWithoutCommercial(story: PressedStory): PressedStory =
+    story.copy(
+      tags = story.tags.copy(
+        tags = story.tags.tags.map(tag =>
+          tag.copy(
+            properties = tag.properties.copy(commercial = None),
+          ),
+        ),
+      ),
+    )
 
   def isPaidFor: Boolean = properties.isPaidFor
 
@@ -77,6 +100,19 @@ final case class CuratedContent(
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(
+    properties = propertiesWithoutCommercial(properties),
+    supportingContent = supportingContent.map(_.withoutCommercial),
+  )
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object CuratedContent {
@@ -110,6 +146,16 @@ final case class SupportingCuratedContent(
     cardStyle: CardStyle,
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object SupportingCuratedContent {
@@ -139,6 +185,16 @@ final case class LinkSnap(
     mediaAtom: Option[MediaAtom],
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LinkSnap {
@@ -166,6 +222,16 @@ final case class LatestSnap(
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LatestSnap {
