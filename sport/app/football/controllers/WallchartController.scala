@@ -53,6 +53,8 @@ class WallchartController(
             case JsonFormat if request.forceDCR =>
               val model = toJson(DotcomRenderingWallchartDataModel(page, competitionStages, competition))
               Future.successful(Cached(60) { RevalidatableResult.Ok(model) })
+            case JsonFormat =>
+              Future.successful(NotFound)
             case _ =>
               val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
               val futureAtom = if (competitionTag == "euro-2024") {
