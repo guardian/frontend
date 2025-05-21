@@ -434,9 +434,8 @@ Developer: Divya Bhatt
 From: Woodley, UK
 
 Developer: Alex Ware
-Twitter: @MostFoolhardy
 From: Truro, UK
-Location: Bristol, UK
+Location: Cymru, UK
 
 Developer: Oliver Abrahams
 GitHub: oliverabrahams
