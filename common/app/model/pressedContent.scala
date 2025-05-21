@@ -127,11 +127,10 @@ object CuratedContent {
       supportingContent = content.supportingContent.map((sc) => PressedContent.make(sc, false)),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
-      mediaAtom = content.mediaAtomData.flatMap {
-        case mediaAtom: com.gu.contentatom.thrift.AtomData.Media if (content.atomId.isDefined) =>
-          Some(MediaAtom.makeFromThrift(content.atomId.get, mediaAtom))
-        case _ => None
-      },
+      mediaAtom = for {
+        atomId <- content.atomId
+        mediaAtom <- content.mediaAtomData.headOption
+      } yield MediaAtom.makeFromThrift(atomId, mediaAtom),
     )
   }
 }

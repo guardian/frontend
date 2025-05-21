@@ -4,7 +4,6 @@ import metrics.SamplerMetric
 import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
-import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
@@ -25,9 +24,7 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
-import implicits.Booleans._
 import layout.slices.Container
-import model.content.MediaAtom
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
