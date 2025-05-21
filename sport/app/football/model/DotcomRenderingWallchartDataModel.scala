@@ -71,7 +71,7 @@ object DotcomRenderingWallchartDataModel {
         getGroups(groups, model.competition).+("type" -> JsString("groups"))
 
       case league: League =>
-        getLeague(league).+("type" -> JsString("League"))
+        getLeague(league).+("type" -> JsString("league"))
 
       case knockoutList: KnockoutList =>
         getKnockoutList(knockoutList, model.competition).+("type" -> JsString("knockoutList"))
@@ -81,6 +81,15 @@ object DotcomRenderingWallchartDataModel {
     val json = Json.obj(
       "competition" -> Json.toJson(model.competition: CompetitionSummary),
       "competitionStages" -> competitionStagesJson,
+      "nav" -> Json.toJson(model.nav),
+      "editionId" -> model.editionId,
+      "guardianBaseURL" -> model.guardianBaseURL,
+      "config" -> model.config,
+      "pageFooter" -> Json.toJson(model.pageFooter),
+      "isAdFreeUser" -> model.isAdFreeUser,
+      "contributionsServiceUrl" -> model.contributionsServiceUrl,
+      "canonicalUrl" -> model.canonicalUrl,
+      "pageId" -> model.pageId,
     )
     withoutNull(json)
   }

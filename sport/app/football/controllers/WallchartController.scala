@@ -50,7 +50,7 @@ class WallchartController(
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
 
           request.getRequestFormat match {
-            case JsonFormat =>
+            case JsonFormat if request.forceDCR =>
               val model = toJson(DotcomRenderingWallchartDataModel(page, competitionStages, competition))
               Future.successful(Cached(60) { RevalidatableResult.Ok(model) })
             case _ =>
