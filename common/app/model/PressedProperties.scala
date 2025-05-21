@@ -4,7 +4,6 @@ import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import common.Edition
 import common.commercial.EditionBranding
-import model.content.MediaAtom
 
 case class MediaSelect(
     showMainVideo: Boolean,
