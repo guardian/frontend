@@ -25,8 +25,8 @@ trait LiveBlogTopSponsorshipAgent {
       // Edition, keywords & adtest are optional matches
       // If specified on the line item, they must match
       sponsorship.matchesEditionTargeting(edition) &&
-        sponsorship.matchesKeywordTargeting(keywords) &&
-         sponsorship.matchesTargetedAdTest(adTest)
+      sponsorship.matchesKeywordTargeting(keywords) &&
+      sponsorship.matchesTargetedAdTest(adTest)
     }
   }
 
