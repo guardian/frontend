@@ -76,9 +76,9 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   def isPlatform(value: String): Boolean = isPositive("p") && values.contains(value)
   def isNotPlatform(value: String): Boolean = isNegative("p") && values.contains(value)
 
-  def matchesLiveBlogTopTargeting: Boolean = {
-    val liveBlogTopSectionTargets = List("culture", "football", "sport", "tv-and-radio")
-    values.intersect(liveBlogTopSectionTargets).nonEmpty
+  val allowedliveBlogTopSectionTargets = Seq("culture", "football", "sport", "tv-and-radio")
+  private def matchesLiveBlogTopTargeting: Boolean = {
+    values.intersect(allowedliveBlogTopSectionTargets).nonEmpty
   }
 
   val isLiveblogTopSlot = isSlot("liveblog-top")
@@ -265,10 +265,8 @@ case class GuLineItem(
       target.name == "ct" && target.values.contains("liveblog")
     }
 
-    val allowedSections = Set("culture", "sport", "football")
-
     val targetsOnlyAllowedSections = matchingLiveblogTargeting.exists { target =>
-      target.name == "s" && target.values.forall(allowedSections.contains)
+      target.name == "s" && target.values.forall(target.allowedliveBlogTopSectionTargets.contains(_))
     }
 
     val isMobileBreakpoint = matchingLiveblogTargeting.exists { target =>
