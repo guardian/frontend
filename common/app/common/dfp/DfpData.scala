@@ -266,7 +266,7 @@ case class GuLineItem(
     }
 
     val targetsOnlyAllowedSections = matchingLiveblogTargeting.exists { target =>
-      target.name == "s" && target.values.forall(target.allowedliveBlogTopSectionTargets.contains(_))
+      target.name == "s" && target.values.forall(target.allowedliveBlogTopSectionTargets.contains)
     }
 
     val isMobileBreakpoint = matchingLiveblogTargeting.exists { target =>
@@ -274,10 +274,8 @@ case class GuLineItem(
     }
 
     val isSponsorship = lineItemType == Sponsorship
-
-    val hasEditionTargeting = targeting.editions.nonEmpty
-
-    isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship && hasEditionTargeting
+    
+    isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship
   }
 
   val targetsSurvey: Boolean = {
