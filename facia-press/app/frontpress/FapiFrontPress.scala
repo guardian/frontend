@@ -24,7 +24,6 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
-import implicits.Booleans._
 import layout.slices.Container
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -617,7 +616,7 @@ object Enrichment extends GuLogging {
     result
   }
 
-  private def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
+  def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
     opt match {
       case Some(thing) => Future.successful(thing)
       case None        => Future.failed(new Throwable(errMsg))

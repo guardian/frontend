@@ -1,7 +1,6 @@
 package model
 
 import com.gu.commercial.branding.Branding
-import com.gu.facia.api.models._
 import common.Edition
 import conf.Configuration
 import contentapi.Paths

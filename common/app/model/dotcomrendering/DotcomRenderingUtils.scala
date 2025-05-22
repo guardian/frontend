@@ -1,7 +1,6 @@
 package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTime
-import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.format.LiveBlogDesign
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}

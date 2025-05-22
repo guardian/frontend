@@ -272,6 +272,7 @@ object PressedContentFormat {
   implicit val pressedMetadata: OFormat[PressedMetadata] = Json.format[PressedMetadata]
   implicit val pressedElements: OFormat[PressedElements] = Json.format[PressedElements]
   implicit val pressedStory: OFormat[PressedStory] = Json.format[PressedStory]
+  implicit val mediaSelectFormat: OFormat[MediaSelect] = Json.format[MediaSelect]
   implicit val pressedPropertiesFormat: OFormat[PressedProperties] = Json.format[PressedProperties]
   implicit val enrichedContentFormat: OFormat[EnrichedContent] = Json.format[EnrichedContent]
 

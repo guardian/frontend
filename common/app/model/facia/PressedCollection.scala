@@ -1,9 +1,7 @@
 package model.facia
 
 import com.gu.commercial.branding.ContainerBranding
-import com.gu.facia.api.{FAPI, models => fapi}
-import com.gu.facia.api.models.GroupsConfig
-import com.gu.facia.api.utils.BoostLevel.Boost
+import com.gu.facia.api.FAPI
 import com.gu.facia.api.utils.{BoostLevel, ContainerBrandingFinder}
 import com.gu.facia.client.models.{Branded, TargetedTerritory}
 import common.Edition
