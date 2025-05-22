@@ -149,12 +149,12 @@ import play.api.libs.ws.WSClient
 
   it should "resolve uk-news combiner pages" in {
     val result = indexController.renderCombiner("uk-news/series/writlarge", "law/trial-by-jury")(
-      TestRequest("/uk-news/series/writlarge+law/trial-by-jury"),
+      TestRequest("/uk-news/series/writlarge+law/trial-by-jury?dcr=false"),
     )
     status(result) should be(200)
 
     val result2 = indexController.renderCombiner("uk-news/the-northerner", "blackpool")(
-      TestRequest("/uk-news/the-northerner+blackpool"),
+      TestRequest("/uk-news/the-northerner+blackpool?dcr=false"),
     )
     status(result2) should be(200)
   }
