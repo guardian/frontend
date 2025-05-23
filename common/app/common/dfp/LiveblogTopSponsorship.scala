@@ -37,7 +37,7 @@ case class LiveBlogTopSponsorship(
     if (this.keywords.nonEmpty) {
       // If the sponsorship targets a keyword, check if it matches
       keywordTags exists { tag: Tag =>
-        matchesTag(this.keywords, tag.id)
+        tag.isKeyword && matchesTag(this.keywords, tag.id)
       }
     } else {
       // If no keyword targeting, return true

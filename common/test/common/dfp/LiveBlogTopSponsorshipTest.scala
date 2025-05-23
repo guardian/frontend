@@ -1,5 +1,6 @@
 package common.dfp
 
+import com.gu.contentapi.client.model.v1.TagType
 import common.Edition
 import common.editions.{Uk, Us}
 import model.{Tag, TagProperties}
@@ -22,7 +23,7 @@ class LiveBlogTopSponsorshipTest extends AnyFlatSpec with Matchers {
   def mkTag(
       tagId: String = "sport/cricket",
       tagSection: String = "sport",
-      tagType: String = "keyword",
+      tagType: String = "Keyword",
   ): Tag = {
     Tag(
       properties = TagProperties(
@@ -58,10 +59,6 @@ class LiveBlogTopSponsorshipTest extends AnyFlatSpec with Matchers {
   it should "be true if sponsorship keyword targeting matches article keyword tags" in {
     val cricketKeywordTag = mkTag()
     val liveBlogTopSponsorship = mkLiveBlogTopSponsorship(keywords = Seq("cricket"))
-
-    println(cricketKeywordTag.id)
-    println(liveBlogTopSponsorship.keywords)
-
     liveBlogTopSponsorship.matchesKeywordTargeting(Seq(cricketKeywordTag)) shouldBe true
   }
 
