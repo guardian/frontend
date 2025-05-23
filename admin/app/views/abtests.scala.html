@@ -9,11 +9,13 @@
     },
 }
 
-@admin_main("A/B Tests", isAuthed = true, hasCharts = true) {
+@admin_embed("A/B Tests", isAuthed = true, hasCharts = true) {
 
-    <link href="@controllers.admin.routes.UncachedAssets.at("css/abtests.css")" rel="stylesheet">
+    <!-- <link href="@controllers.admin.routes.UncachedAssets.at("css/abtests.css")" rel="stylesheet"> -->
 
-    <h1>A/B Tests</h1>
+    <iframe frameborder="0" style="width:100vw; height: 100vh;" src="https://commercial-ab-experiments.s3.eu-west-1.amazonaws.com/html/index-embed.html?response-content-disposition=inline&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDgaCWV1LXdlc3QtMSJHMEUCIQCLyx96axvl8wkygeoO3Nc0GOEIx7nRRL4alQO9f3HMegIgAp7b6WrzyfyIyOg0JY%2BBdVuM96WQJDPOQpG6fDY5gRgqmQYI8f%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw3MDI5NzI3NDk1NDUiDNBisUViqrzV%2BkFrlSrtBW7hF029iNDAWnHLi%2FQw%2BHqac3czfXjKqaCLDYkEuPL%2Bd4QF7ocduj7rC0SLKiSkdSoDwSYV4%2BKjhFTRL%2Bxn25uDuT%2BBDKQVUuSLPmKVES3DakVOokZG1vw9wnrEbQq7f13wh94MFrjP%2FrXkM8%2B1gqkh4GV6lTTmPVMLPuE8byzqlAyJtJ6iKKv9EQgqAzag%2BAUkN4p%2B9nfVHTpsGaZP9JpyD5M3sFgeD7AUa%2B5wARfzK5qNH0Xr%2FHaIKir32eKOquCYnwV9PCwdJr0u2WfNAR%2B0b2W3U2Op5aE5WM1SqZtUROCts0szl2L4A%2Bw7OIo7gB%2Fz1duEmWPcUcwuG5%2BTpaEGPSPQys53k7JEL8R8xJmFbhb1kcMZghjCAXWE7HiwaE38IZ1hkMgCLXXTrTB%2FhsWLbfWK9O3ONGNaEwlNw3dw%2FFOYC57qdWipdrml8iI7JMiedD%2Fz4NwzRpSBf3LczzDStpyDWVNj0PO0RVAZmdN93e4dh6ckltG%2FZkAeAlUJzg%2B2seAm%2Fg9vE9ZdV9wet0mjXJ8CF1GuA8RY4MzSEnKvVCThqS74gEoE7M3YX1QY%2FRO5EMM0dq5tl7iNUygodJVBD0xctWMUJP6QufhBkMedHuz5qPnYk8cncIB8Ez24G8yTZGVkPWPn221voJgXYAzSmtqDfiyDi6n40R3Y65MIBmtC3CUj7xGel45XWm1FTbGB%2B1JV7LjneZLD3Fstietg64ATIZUmCHeilMsVhj8J%2FPJuvWLdIZmHJbIA4r93hFVIUva99fkwW89ZC11LDOp81xZ08rDATb%2BEuvTl0Ac8rCJXQck2gLF09F%2BzgCsmTUSiP%2FTZYjKtuvh6AUpn7WqupCDlf91nElnmTpxOF0ja31Yb%2Fv%2F4k1b%2BPNYl3uXPEemoIEenULpmIDnRj7Nk5w1472OgIS5z2HwhvU2y%2BR%2FRGExejVQRzMPAJkrhL5IsJ0K7LUalUGd3I0MBpEftUnSsJ6aQCsZjRydkZAbHMN6WwsEGOrcCQn8oEepKS4Nrs4U6KCIc2vlM9aHiJpyghXJ2S3Sr9%2BZAc0c7GHE35fuIXAtV%2FlQV%2BSuRsZon7pr%2FG%2F54FZCxoQRMr%2FQgwxVoxcvW36XwPE5OC8YzxtlzwbAA%2BOwLZA2m2YJ7jXwf8TRqq%2BmlMKNd9Gy1GN52ilhEfFfjrdaW5%2F%2Fa8ROFR5c5AW9hGeKGrULTQbGiRxVRxeYCKvVQjWLjwc889X3cEZwSYNftqksrwS6gLr5ldggKR%2FD3BrF8FpTNB%2FZMTg7APipYRUFrzgazkz3fP8Kwy9H6g5xiFHH%2FI5G9HmRINXgTXpBT1NLT3FMfHaJl%2BYr0t6iJUSA0S3fJbOJsTLW4au1lAd%2FJ0qVDmPYqepoVkDMFeiTbz7sCtAfpD9zNKSHiWdFyDeMKRxYwX%2BAV3p6qfc4%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA2HLDQ43UUBSVBBOB%2F20250523%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20250523T152925Z&X-Amz-Expires=14400&X-Amz-SignedHeaders=host&X-Amz-Signature=1a4bdd83872e17142cacbf9f40855627bf9a13f6e2cf5fa170a946eb13b2cc17"></iframe>
+
+    <!-- <h1>A/B Tests</h1>
 
     <div class="abtests-audience"></div>
 
@@ -43,5 +45,5 @@
                 "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
             }
         };
-    </script>
+    </script> -->
 }
