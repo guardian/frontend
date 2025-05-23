@@ -274,7 +274,7 @@ case class GuLineItem(
     }
 
     val isSponsorship = lineItemType == Sponsorship
-    
+
     isLiveblogTopSlot && isLiveblogContentType && targetsOnlyAllowedSections && isMobileBreakpoint && isSponsorship
   }
 

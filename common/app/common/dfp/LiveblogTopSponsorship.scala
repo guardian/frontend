@@ -26,7 +26,7 @@ case class LiveBlogTopSponsorship(
   def matchesEditionTargeting(edition: Edition) = {
     if (this.editions.nonEmpty) {
       // If the sponsorship targets an edition, check if it matches
-      this.editions.contains(edition)
+      this.editions.exists(_.id == edition.id)
     } else {
       // If no edition targeting, return true
       true
