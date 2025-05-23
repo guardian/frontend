@@ -49,15 +49,19 @@ class LiveBlogTopSponsorshipTest extends AnyFlatSpec with Matchers {
     )
   }
 
-  "matchesKeywordTargeting" should "be false if there is no keyword targeting on the sponsorship" in {
+  "matchesKeywordTargeting" should "be true if there is no keyword targeting on the sponsorship" in {
     val cricketKeywordTag = mkTag()
     val liveBlogTopSponsorship = mkLiveBlogTopSponsorship(keywords = Seq.empty)
-    liveBlogTopSponsorship.matchesKeywordTargeting(Seq(cricketKeywordTag)) shouldBe false
+    liveBlogTopSponsorship.matchesKeywordTargeting(Seq(cricketKeywordTag)) shouldBe true
   }
 
   it should "be true if sponsorship keyword targeting matches article keyword tags" in {
     val cricketKeywordTag = mkTag()
     val liveBlogTopSponsorship = mkLiveBlogTopSponsorship(keywords = Seq("cricket"))
+
+    println(cricketKeywordTag.id)
+    println(liveBlogTopSponsorship.keywords)
+
     liveBlogTopSponsorship.matchesKeywordTargeting(Seq(cricketKeywordTag)) shouldBe true
   }
 

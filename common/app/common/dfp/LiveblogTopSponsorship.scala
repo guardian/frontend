@@ -36,8 +36,8 @@ case class LiveBlogTopSponsorship(
   def matchesKeywordTargeting(keywordTags: Seq[Tag]) = {
     if (this.keywords.nonEmpty) {
       // If the sponsorship targets a keyword, check if it matches
-      keywordTags contains { tag =>
-        matchesTag(this.keywords, tag)
+      keywordTags exists { tag: Tag =>
+        matchesTag(this.keywords, tag.id)
       }
     } else {
       // If no keyword targeting, return true
@@ -46,7 +46,7 @@ case class LiveBlogTopSponsorship(
   }
 
   private def matchesTag(tags: Seq[String], tagId: String): Boolean =
-    tagId.split('/').lastOption exists { endPart =>
+    tagId.split("/").lastOption exists { endPart =>
       tags contains endPart
     }
 }
