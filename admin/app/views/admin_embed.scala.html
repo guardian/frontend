@@ -1,0 +1,80 @@
+@(title: String,
+  isAuthed: Boolean = false,
+  hasCharts: Boolean = false,
+  autoRefresh: Boolean = false,
+  loadJquery: Boolean =  true,
+  container: Option[String] = None )(content: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import controllers.admin.routes.UncachedAssets
+@import controllers.admin.routes.UncachedWebAssets
+@import templates.inlineJS.blocking.js._
+@import play.api.Mode.Dev
+@import conf.Static
+@import conf.Configuration
+
+<!DOCTYPE html>
+
+<html ng-app>
+    <head>
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        @if(autoRefresh){
+            <meta http-equiv="refresh" content="60">
+        }
+
+        @if(context.environment.mode == Dev){
+            <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon-dev.ico")" />
+        } else {
+            <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon.ico")" />
+        }
+
+
+        <link rel="apple-touch-icon" sizes="144x144" href="@UncachedAssets.at("images/144x144.png")" />
+        <link rel="apple-touch-icon" sizes="114x114" href="@UncachedAssets.at("images/114x114.png")" />
+        <link rel="apple-touch-icon" sizes="72x72" href="@UncachedAssets.at("images/72x72.png")" />
+        <link rel="apple-touch-icon-precomposed" href="@UncachedAssets.at("images/57x57.png")" />
+
+        <meta name="apple-mobile-web-app-title" content="Guardian" />
+        <meta name="application-name" content="The Guardian" />
+        <meta name="msapplication-TileColor" content="#005689" />
+        <meta name="msapplication-TileImage" content="@UncachedAssets.at("images/windows_tile_144_b.png")" />
+
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.admin.css")" />
+        <link href="@UncachedAssets.at("css/admin.css")" rel="stylesheet">
+        <style>
+            .ajax-loading { background-image: url('@UncachedAssets.at("images/ajax-loader.gif")'); }
+            .ajax-failed { background-image: url('@UncachedAssets.at("images/ajax-failed.png")'); }
+        </style>
+
+        @if(hasCharts){
+            <script src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                google.charts.load('current', {packages: ['corechart']});
+            </script>
+        }
+
+    </head>
+    <body style="overflow: hidden;">
+        @admin_head()
+        <div style="position:absolute; left: 0; right: 0; bottom: 0; top: 0px;">
+
+            @content
+
+        </div>
+
+        <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Roboto+Mono:300,700' rel='stylesheet' type='text/css'>
+
+        <script type="text/javascript">
+            @Html(config(model.AdminPage(title)).body)
+        </script>
+        <script src="@Static("javascripts/graun.admin.js")"></script>
+        @if(loadJquery){
+            <script src="//code.jquery.com/jquery.js"></script>
+        }
+        <script type="text/javascript" src="@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")"></script>
+
+    </body>
+</html>
