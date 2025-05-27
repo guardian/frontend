@@ -12,6 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       EuropeBetaFront,
+      ServerTracking,
       DarkModeWeb,
       DCRJavascriptBundle,
     )
@@ -34,6 +35,15 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc0D,
+    )
+
+object ServerTracking
+    extends Experiment(
+      name = "server-tracking",
+      description = "Test server test tracking",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 5, 28),
+      participationGroup = Perc1A,
     )
 
 object DCRJavascriptBundle
