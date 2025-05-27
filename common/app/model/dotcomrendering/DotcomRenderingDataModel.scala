@@ -23,6 +23,7 @@ import model.{
   GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
+  ImageMedia,
   InteractivePage,
   LiveBlogPage,
   MediaPage,
@@ -90,6 +91,7 @@ case class DotcomRenderingDataModel(
     pageType: PageType,
     starRating: Option[Int],
     audioArticleImage: Option[PageElement],
+    trailPicture: Option[ImageMedia],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -168,6 +170,7 @@ object DotcomRenderingDataModel {
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
         "audioArticleImage" -> model.audioArticleImage,
+        "trailPicture" -> model.trailPicture,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -531,6 +534,13 @@ object DotcomRenderingDataModel {
         None
       }
 
+    val trailPicture: Option[ImageMedia] =
+      if (page.metadata.contentType.contains(DotcomContentType.Gallery)) {
+        page.item.trail.trailPicture
+      } else {
+        None
+      }
+
     def toDCRBlock(isMainBlock: Boolean = false) = { block: APIBlock =>
       Block(
         block = block,
@@ -609,6 +619,7 @@ object DotcomRenderingDataModel {
     DotcomRenderingDataModel(
       affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
       audioArticleImage = audioImageBlock,
+      trailPicture = trailPicture,
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
