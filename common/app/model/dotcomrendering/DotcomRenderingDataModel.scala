@@ -91,7 +91,7 @@ case class DotcomRenderingDataModel(
     pageType: PageType,
     starRating: Option[Int],
     audioArticleImage: Option[PageElement],
-    trailPicture: Option[ImageMedia],
+    trailPicture: Option[PageElement],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -507,36 +507,44 @@ object DotcomRenderingDataModel {
 
     val dcrTags = content.tags.tags.map(Tag.apply)
 
+    def getImageBlockElement(imageMedia: ImageMedia, role: Role) = {
+      val imageData = imageMedia.allImages.headOption
+        .map { d =>
+          Map(
+            "copyright" -> "",
+            "alt" -> d.altText.getOrElse(""),
+            "caption" -> d.caption.getOrElse(""),
+            "credit" -> d.credit.getOrElse(""),
+          )
+        }
+        .getOrElse(Map.empty)
+      ImageBlockElement(
+        imageMedia,
+        imageData,
+        Some(true),
+        role,
+        Seq.empty,
+      )
+    }
+
     val audioImageBlock: Option[ImageBlockElement] =
       if (page.metadata.contentType.contains(DotcomContentType.Audio)) {
         for {
           thumbnail <- page.item.elements.thumbnail
         } yield {
-          val imageData = thumbnail.images.allImages.headOption
-            .map { d =>
-              Map(
-                "copyright" -> "",
-                "alt" -> d.altText.getOrElse(""),
-                "caption" -> d.caption.getOrElse(""),
-                "credit" -> d.credit.getOrElse(""),
-              )
-            }
-            .getOrElse(Map.empty)
-          ImageBlockElement(
-            thumbnail.images,
-            imageData,
-            Some(true),
-            Role(Some("inline")),
-            Seq.empty,
-          )
+          getImageBlockElement(thumbnail.images, Role(Some("inline")))
         }
       } else {
         None
       }
 
-    val trailPicture: Option[ImageMedia] =
+    val trailPicture: Option[ImageBlockElement] =
       if (page.metadata.contentType.contains(DotcomContentType.Gallery)) {
-        page.item.trail.trailPicture
+        for {
+          imageMedia <- page.item.trail.trailPicture
+        } yield {
+          getImageBlockElement(imageMedia, Role(Some("immersive")))
+        }
       } else {
         None
       }
