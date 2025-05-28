@@ -6,7 +6,6 @@ import common._
 import conf.Configuration
 import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
-import experiments.{ActiveExperiments, EuropeBetaFront}
 import http.HttpPreconnections
 import implicits.GUHeaders
 import layout.slices._
@@ -223,30 +222,12 @@ trait FaciaController
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val futureFaciaPage = getFaciaPage(path)
 
-    /** Europe Beta test: swaps the collections on the Europe network front with those on the hidden europe-beta front
-      * for users participating in the test
-      */
-    val futureFaciaPageWithEuropeBetaTest: Future[Option[(PressedPage, Boolean)]] = {
-      if (
-        path == "europe" && ActiveExperiments
-          .isParticipating(EuropeBetaFront)
-      ) {
-        val futureEuropeBetaPage = getFaciaPage("europe-beta")
-        for {
-          europePage <- futureFaciaPage
-          europeBetaPage <- futureEuropeBetaPage
-        } yield replaceFaciaPageCollections(europePage, europeBetaPage)
-      } else {
-        futureFaciaPage
-      }
-    }
-
     val customLogFieldMarker = append("requestId", request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))
 
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
-    val futureResult = futureFaciaPageWithEuropeBetaTest.flatMap {
+    val futureResult = futureFaciaPage.flatMap {
       case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some((faciaPage: PressedPage, targetedTerritories))
