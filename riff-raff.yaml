@@ -104,6 +104,6 @@ deployments:
     type: ami-cloudformation-parameter
     parameters:
       amiParametersToTags:
-        AMIArchive:
+        AMIApplications:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
