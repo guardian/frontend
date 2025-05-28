@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       EuropeBetaFront,
       ServerTracking,
       DarkModeWeb,
+      HideMobileHighlights,
       DCRJavascriptBundle,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -44,6 +45,15 @@ object ServerTracking
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 5, 28),
       participationGroup = Perc1A,
+    )
+
+object HideMobileHighlights
+    extends Experiment(
+      name = "hide-mobile-highlights",
+      description = "Hide the highlights container on mobile web breakpoints.",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 6, 10),
+      participationGroup = Perc5A,
     )
 
 object DCRJavascriptBundle
