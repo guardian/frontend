@@ -5,6 +5,7 @@ on:
   push: # Do not rely on `push` for PR CI - see https://github.com/guardian/mobile-apps-api/pull/2760
     branches:
       - main # Optimal for GHA workflow caching - see https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+  workflow_dispatch:
 
 permissions:
   id-token: write
