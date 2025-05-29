@@ -1,0 +1,42 @@
+@(frameUrl: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import views.support.CamelCase
+
+@admin_embed("A/B Tests", isAuthed = true, hasCharts = true) {
+
+    <!-- <link href="@controllers.admin.routes.UncachedAssets.at("css/abtests.css")" rel="stylesheet"> -->
+
+    <iframe frameborder="0" style="width:100vw; height: 100vh;" src="@frameUrl"></iframe>
+
+    <!-- <h1>A/B Tests</h1>
+
+    <div class="abtests-audience"></div>
+
+    <div class="abtests-active">
+        <h3>Active tests</h3>
+        <p>Note: Our a/b tests have a <i>canRun()</i> method that checks if the test should run on the current pageview.</p>
+        <p>This is independent of whether you are in a test or not.</p>
+        <p>Tests that "can't Run", will not appear as an active test on a pageview!</p>
+        @fragments.abTestReport()
+    </div>
+
+    <h3 class="abtests-expired-title">Expired tests <a href="#">show</a></h3>
+
+    <div class="abtests-expired"></div>
+
+    @fragments.serverBasedExperiments()
+
+    <script type="text/template" id="tmpl-abtest-item-template">@fragments.abTestReportItem()</script>
+    <script type="text/template" id="tmpl-participation-template">@fragments.participation()</script>
+    <script type="text/template" id="tmpl-participation-item-template">@fragments.participationItem()</script>
+    <script type="text/template" id="tmpl-audience-template">@fragments.audience()</script>
+    <script type="text/template" id="tmpl-audience-item-template">@fragments.audienceItem()</script>
+
+    <script type="text/javascript">
+        window.abSwitches = {
+            @conf.switches.Switches.all.filter(_.group == conf.switches.SwitchGroup.ABTests).map{ s =>
+                "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
+            }
+        };
+    </script> -->
+}
