@@ -501,6 +501,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
+    lazy val abTestHtmlObjectKey = s"$commercialRoot/ab-tests.html"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
