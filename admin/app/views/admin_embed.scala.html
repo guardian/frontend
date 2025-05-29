@@ -47,17 +47,10 @@
             .ajax-failed { background-image: url('@UncachedAssets.at("images/ajax-failed.png")'); }
         </style>
 
-        @if(hasCharts){
-            <script src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
-                google.charts.load('current', {packages: ['corechart']});
-            </script>
-        }
-
     </head>
     <body style="overflow: hidden;">
         @admin_head()
-        <div style="position:absolute; left: 0; right: 0; bottom: 0; top: 0px;">
+        <div style="position:absolute; left: 0; right: 0; bottom: 0; top: 3.125rem;">
 
             @content
 
