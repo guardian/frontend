@@ -13,19 +13,41 @@ case class LiveBlogTopSponsorship(
     adTest: Option[String],
     targetsAdTest: Boolean,
 ) {
-  def matchesTargetedAdTest(adTest: Option[String]): Boolean =
-    if (this.targetsAdTest) { adTest == this.adTest }
-    else { true }
-
-  private def hasTagId(tags: Seq[String], tagId: String): Boolean =
-    tagId.split('/').lastOption exists { endPart =>
-      tags contains endPart
+  def matchesTargetedAdTest(adTest: Option[String]): Boolean = {
+    if (this.targetsAdTest) {
+      // If the sponsorship targets an adtest, check if it matches
+      adTest == this.adTest
+    } else {
+      // If no adtest targeting, return true
+      true
     }
+  }
 
-  def hasTag(tag: Tag): Boolean =
-    tag.properties.tagType match {
-      case "Keyword" => hasTagId(keywords, tag.id)
-      case _         => false
+  def matchesEditionTargeting(edition: Edition) = {
+    if (this.editions.nonEmpty) {
+      // If the sponsorship targets an edition, check if it matches
+      this.editions.exists(_.id == edition.id)
+    } else {
+      // If no edition targeting, return true
+      true
+    }
+  }
+
+  def matchesKeywordTargeting(keywordTags: Seq[Tag]) = {
+    if (this.keywords.nonEmpty) {
+      // If the sponsorship targets a keyword, check if it matches
+      keywordTags exists { tag: Tag =>
+        tag.isKeyword && matchesTag(this.keywords, tag.id)
+      }
+    } else {
+      // If no keyword targeting, return true
+      true
+    }
+  }
+
+  private def matchesTag(tags: Seq[String], tagId: String): Boolean =
+    tagId.split("/").lastOption exists { endPart =>
+      tags contains endPart
     }
 }
 
