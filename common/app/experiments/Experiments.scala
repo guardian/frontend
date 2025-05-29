@@ -33,7 +33,7 @@ object ServerTracking
       name = "server-tracking",
       description = "Test server test tracking",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 30),
+      sellByDate = LocalDate.of(2025, 6, 6),
       participationGroup = Perc1A,
     )
 
