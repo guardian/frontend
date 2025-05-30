@@ -2,15 +2,20 @@ package model.pressed
 
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import common.{Edition}
+import common.Edition
 import common.commercial.EditionBranding
+
+case class MediaSelect(
+    showMainVideo: Boolean,
+    imageSlideshowReplace: Boolean,
+    videoReplace: Boolean,
+)
 
 final case class PressedProperties(
     isBreaking: Boolean,
-    showMainVideo: Boolean,
+    mediaSelect: Option[MediaSelect],
     showKickerTag: Boolean,
     showByline: Boolean,
-    imageSlideshowReplace: Boolean,
     maybeContent: Option[PressedStory],
     maybeContentId: Option[String],
     isLiveBlog: Boolean,
@@ -40,10 +45,15 @@ object PressedProperties {
 
     PressedProperties(
       isBreaking = contentProperties.isBreaking,
-      showMainVideo = contentProperties.showMainVideo,
+      mediaSelect = Some(
+        MediaSelect(
+          showMainVideo = contentProperties.showMainVideo,
+          imageSlideshowReplace = contentProperties.imageSlideshowReplace,
+          videoReplace = contentProperties.videoReplace,
+        ),
+      ),
       showKickerTag = contentProperties.showKickerTag,
       showByline = contentProperties.showByline,
-      imageSlideshowReplace = contentProperties.imageSlideshowReplace,
       maybeContent = capiContent.map(PressedStory(_)),
       maybeContentId = FaciaContentUtils.maybeContentId(content),
       isLiveBlog = FaciaContentUtils.isLiveBlog(content),

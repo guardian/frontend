@@ -39,6 +39,8 @@ object FaciaContentConvert {
           editionBranding.edition.id -> editionBranding.branding
         }
         .toMap,
+      atomId = None,
+      mediaAtomData = None,
     )
 
     PressedContent.make(curated, false)
