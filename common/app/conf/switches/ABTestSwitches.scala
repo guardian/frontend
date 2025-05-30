@@ -70,4 +70,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-stacked-carousels",
+    "Test showing medium carousels as stacked cards",
+    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 8, 20)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
