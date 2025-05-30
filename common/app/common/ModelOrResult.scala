@@ -78,7 +78,7 @@ object InternalRedirect extends implicits.Requests with GuLogging {
       .orElse(response.section.map(s => internalRedirect("facia", s.id)))
 
   private def pathFromWebUrl(webUrl: String): String =
-    webUrl.replaceFirst("^https?://www.theguardian.com/", "")
+    webUrl.replaceFirst("^https?://www.(?:code.dev-)?theguardian.com/", "")
 
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
     response.content.map {
