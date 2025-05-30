@@ -11,31 +11,13 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      EuropeBetaFront,
-      EuropeBetaFrontTest2,
+      ServerTracking,
       DarkModeWeb,
+      HideMobileHighlights,
       DCRJavascriptBundle,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object EuropeBetaFront
-    extends Experiment(
-      name = "europe-beta-front",
-      description = "Allows viewing the beta version of the Europe network front",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc0A,
-    )
-
-object EuropeBetaFrontTest2
-    extends Experiment(
-      name = "europe-beta-front-test-2",
-      description = "Allows viewing the beta version of the Europe network front",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc0B,
-    )
 
 object DarkModeWeb
     extends Experiment(
@@ -46,11 +28,29 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
+object ServerTracking
+    extends Experiment(
+      name = "server-tracking",
+      description = "Test server test tracking",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 6, 6),
+      participationGroup = Perc1A,
+    )
+
+object HideMobileHighlights
+    extends Experiment(
+      name = "hide-mobile-highlights",
+      description = "Hide the highlights container on mobile web breakpoints.",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 6, 10),
+      participationGroup = Perc5A,
+    )
+
 object DCRJavascriptBundle
     extends Experiment(
       name = "dcr-javascript-bundle",
       description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 6, 30),
-      participationGroup = Perc10A,
+      participationGroup = Perc0E,
     )
