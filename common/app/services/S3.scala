@@ -1,8 +1,7 @@
 package services
 
-import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
-import com.amazonaws.services.s3.model._
-import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
+//import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
+//import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import com.gu.etagcaching.aws.s3.ObjectId
 import common.GuLogging
@@ -10,6 +9,8 @@ import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
 import services.S3.logS3ExceptionWithDevHint
+import software.amazon.awssdk.services.s3.model.{GetObjectRequest, NoSuchKeyException}
+import utils.AWSv2
 
 import java.io._
 import java.util.zip.GZIPOutputStream
@@ -19,41 +20,38 @@ trait S3 extends GuLogging {
 
   lazy val bucket = Configuration.aws.frontendStoreBucket
 
-  lazy val client: Option[AmazonS3] = Configuration.aws.credentials.map { credentials =>
-    AmazonS3Client.builder
-      .withCredentials(credentials)
-      .withRegion(conf.Configuration.aws.region)
-      .build()
-  }
+  lazy private val client = AWSv2.S3Sync
 
-  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] =
-    client.flatMap { client =>
-      val objectId = ObjectId(bucket, key)
+  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = {
+    val objectId = ObjectId(bucket, key)
+    try {
+      val request = GetObjectRequest.builder().bucket(bucket).key(key).build()
+      val result = client.getObject(request)
+
+      val getObjectResponse = result.response()
+
+      log.info(s"S3 got ${getObjectResponse.contentLength} bytes from $key")
+
+      // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
       try {
-        val request = new GetObjectRequest(bucket, key)
-        val result = client.getObject(request)
-        log.info(s"S3 got ${result.getObjectMetadata.getContentLength} bytes from ${result.getKey}")
-
-        // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
-        try {
-          Some(action(result))
-        } catch {
-          case e: Exception =>
-            throw e
-        } finally {
-          result.close()
-        }
+        Some(action(result))
       } catch {
-        case e: AmazonS3Exception if e.getStatusCode == 404 =>
-          log.warn(s"not found at ${objectId.s3Uri}")
-          None
-        case e: AmazonS3Exception =>
-          logS3ExceptionWithDevHint(objectId, e)
-          None
         case e: Exception =>
           throw e
+      } finally {
+        result.close()
       }
+    } catch {
+      case e: NoSuchKeyException if e.statusCode == 404 =>
+        log.warn(s"not found at ${objectId.s3Uri}")
+        None
+      case e: software.amazon.awssdk.services.s3.model.S3Exception =>
+        logS3ExceptionWithDevHint(objectId, e)
+        None
+      case e: Exception =>
+        throw e
     }
+  }
 
   def get(key: String)(implicit codec: Codec): Option[String] =
     withS3Result(key) { result =>
@@ -74,11 +72,6 @@ trait S3 extends GuLogging {
 
   def putPublic(key: String, value: String, contentType: String): Unit = {
     put(key: String, value: String, contentType: String, PublicRead)
-  }
-
-  def putPublic(key: String, file: File, contentType: String): Unit = {
-    val request = new PutObjectRequest(bucket, key, file).withCannedAcl(PublicRead)
-    client.foreach(_.putObject(request))
   }
 
   def putPrivate(key: String, value: String, contentType: String): Unit = {
@@ -116,7 +109,7 @@ trait S3 extends GuLogging {
     }
 
     try {
-      client.foreach(_.putObject(request))
+      client.putObject(request)
     } catch {
       case e: Exception =>
         throw e
@@ -133,7 +126,7 @@ trait S3 extends GuLogging {
       new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
     try {
-      client.foreach(_.putObject(request))
+      client.putObject(request)
     } catch {
       case e: Exception =>
         throw e
@@ -169,7 +162,6 @@ object S3FrontsApi extends S3 {
 object S3Archive extends S3 {
   override lazy val bucket: String =
     if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"
-  def getHtml(path: String): Option[String] = get(path)
 }
 
 object S3ArchiveOriginals extends S3 {
