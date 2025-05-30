@@ -12,6 +12,7 @@ class AnalyticsController(val controllerComponents: ControllerComponents)(implic
     with GuLogging
     with ImplicitControllerExecutionContext {
 
+  // IN PROGRESS: Part of A/B test overhaul work, not currently accessible via the landing page, may be non-functional in PROD
   def newabtests(): Action[AnyContent] =
     Action.async { implicit request =>
       val frameUrl = Store.getAbTestFrameUrl
