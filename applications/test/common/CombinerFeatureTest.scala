@@ -19,7 +19,7 @@ import scala.jdk.CollectionConverters._
 
       Given("I visit a combiner page")
 
-      goTo("/world/iraq+tone/comment") { browser =>
+      goTo("/world/iraq+tone/comment?dcr=false") { browser =>
         import browser._
         val trails = $(".fc-slice__item")
         Then("I should see content tagged with both tags")
@@ -31,7 +31,7 @@ import scala.jdk.CollectionConverters._
 
       Given("I visit a combiner page")
 
-      goTo("/science+technology/apple") { browser =>
+      goTo("/science+technology/apple?dcr=false") { browser =>
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
@@ -44,7 +44,7 @@ import scala.jdk.CollectionConverters._
 
       Given("I visit a combiner page with tags in the same section")
 
-      goTo("/books/jkrowling+harrypotter") { browser =>
+      goTo("/books/jkrowling+harrypotter?dcr=false") { browser =>
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
@@ -57,7 +57,7 @@ import scala.jdk.CollectionConverters._
       Given("I visit a combiner page with a series tag in the same seciton")
 
       goTo(
-        "/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches",
+        "/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches?dcr=false",
       ) { browser =>
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
