@@ -77,16 +77,18 @@ object InternalRedirect extends implicits.Requests with GuLogging {
       .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
       .orElse(response.section.map(s => internalRedirect("facia", s.id)))
 
+  private def pathFromWebUrl(webUrl: String): String =
+    webUrl.replaceFirst("^https?://www.theguardian.com/", "")
+
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
     response.content.map {
-      case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
-      case v if v.isVideo                   => internalRedirect("applications", v.id)
-      case g if g.isGallery                 => internalRedirect("applications", g.id)
-      case a if a.isAudio                   => internalRedirect("applications", a.id)
+      case a if a.isArticle || a.isLiveBlog =>
+        internalRedirect("type/article", pathFromWebUrl(a.webUrl))
+      case a if a.isVideo || a.isGallery || a.isAudio =>
+        internalRedirect("applications", pathFromWebUrl(a.webUrl))
       case unsupportedContent =>
         logInfoWithRequestId(s"unsupported content: ${unsupportedContent.id}")
         NotFound
-
     }
   }
 
