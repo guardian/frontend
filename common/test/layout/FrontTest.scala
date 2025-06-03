@@ -62,6 +62,8 @@ class FrontTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
       byline = None,
       kicker = None,
       brandingByEdition = Map.empty,
+      atomId = None,
+      mediaAtom = None,
     )
 
     LatestSnap.make(fapiLatestSnap)
