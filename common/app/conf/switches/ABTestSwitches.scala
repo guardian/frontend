@@ -40,6 +40,17 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-prebid-id5",
+    "Test enabling the ID5 module in prebid.js",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 6, 24)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
     "ab-prebid-multibid",
     "Test re-enabling the multibid feature in Prebid.js",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
