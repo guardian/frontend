@@ -28,8 +28,8 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
     sectionName = None,
     webPublicationDate = Some(offsetDate.toCapiDateTime),
     webTitle = "the title",
-    webUrl = "http://www.guardian.co.uk/canonical",
-    apiUrl = "http://foo.bar",
+    webUrl = "https://www.theguardian.com/the/id",
+    apiUrl = "https://foo.bar",
     elements = None,
   )
 
@@ -46,6 +46,7 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
   val audioTag = articleTag.copy(id = "type/audio")
 
   val testArticle = testContent.copy(tags = List(articleTag))
+  val testEvolvedArticle = testArticle.copy(webUrl = "https://www.theguardian.com/the-new-url")
   val testGallery = testContent.copy(tags = List(galleryTag))
   val testVideo = testContent.copy(tags = List(videoTag))
   val testAudio = testContent.copy(tags = List(audioTag))
@@ -100,6 +101,18 @@ class ModelOrResultTest extends AnyFlatSpec with Matchers with WithTestExecution
 
     status(notFound) should be(200)
     headers(notFound).apply("X-Accel-Redirect") should be("/type/article/the/id")
+  }
+
+  it should "internal redirect to an article with evolved url if it has shown up at the wrong server" in {
+    val notFound = Future {
+      ModelOrResult(
+        item = None,
+        response = stubResponse.copy(content = Some(testEvolvedArticle)),
+      ).left.value
+    }
+
+    status(notFound) should be(200)
+    headers(notFound).apply("X-Accel-Redirect") should be("/type/article/the-new-url")
   }
 
   it should "internal redirect to a video if it has shown up at the wrong server" in {
