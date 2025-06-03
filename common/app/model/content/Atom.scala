@@ -1,6 +1,7 @@
 package model.content
 
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{
   AtomData,
@@ -206,20 +207,20 @@ object MediaAtom extends common.GuLogging {
     MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
   }
 
-  def makeFromThrift(id: String, mediaAtom: AtomData.Media): MediaAtom = {
+  def makeFromThrift(id: String, mediaAtom: MediaAtomData): MediaAtom = {
     MediaAtom(
-      id = id,
+      id,
       // Default html is not being used by DCR - consider removing this field entirely.
       defaultHtml = "",
-      assets = mediaAtom.media.assets.map(mediaAssetMake).toSeq,
-      title = mediaAtom.media.title,
-      duration = mediaAtom.media.duration,
-      source = mediaAtom.media.source,
-      posterImage = mediaAtom.media.posterImage.map(imageMediaMake(_, mediaAtom.media.title)),
+      assets = mediaAtom.assets.map(mediaAssetMake).toSeq,
+      title = mediaAtom.title,
+      duration = mediaAtom.duration,
+      source = mediaAtom.source,
+      posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       // We filter out expired atoms in facia-scala-client so this is always false.
       expired = Some(false),
-      activeVersion = mediaAtom.media.activeVersion,
-      channelId = mediaAtom.media.metadata.flatMap(_.channelId),
+      activeVersion = mediaAtom.activeVersion,
+      channelId = mediaAtom.metadata.flatMap(_.channelId),
     )
   }
 
