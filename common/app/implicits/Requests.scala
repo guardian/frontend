@@ -62,6 +62,8 @@ trait Requests {
 
     lazy val isEmailJson: Boolean = r.path.endsWith(EMAIL_JSON_SUFFIX)
 
+    lazy val isInteractiveRedirect: Boolean = r.path.startsWith("/interactive/")
+
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 
     lazy val isLazyLoad: Boolean =
@@ -86,6 +88,7 @@ trait Requests {
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
+      else if (isInteractiveRedirect) r.path.stripPrefix("/interactive")
       else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
