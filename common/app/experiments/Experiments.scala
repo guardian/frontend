@@ -15,9 +15,19 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       HideMobileHighlights,
       DCRJavascriptBundle,
+      StackedCarousels,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object StackedCarousels
+    extends Experiment(
+      name = "stacked-carousels",
+      description = "Show stacked cards instead of medium carousels on UK front",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 7, 30),
+      participationGroup = Perc0A,
+    )
 
 object DarkModeWeb
     extends Experiment(
@@ -26,6 +36,15 @@ object DarkModeWeb
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc0D,
+    )
+
+object DCRJavascriptBundle
+    extends Experiment(
+      name = "dcr-javascript-bundle",
+      description = "DCAR JS bundle experiment to test replacing Preact with React",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 6, 30),
+      participationGroup = Perc0E,
     )
 
 object ServerTracking
@@ -44,13 +63,4 @@ object HideMobileHighlights
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 6, 10),
       participationGroup = Perc5A,
-    )
-
-object DCRJavascriptBundle
-    extends Experiment(
-      name = "dcr-javascript-bundle",
-      description = "DCAR JS bundle experiment to test replacing Preact with React",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 6, 30),
-      participationGroup = Perc0E,
     )
