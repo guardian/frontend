@@ -39,13 +39,13 @@
             @defining(page.item.elements.mainPicture.flatMap(_.images.masterImage)) {
                 case Some(masterImage) => {
                     <figcaption class="caption caption--gallery hide-until-desktop">
-                        @if(masterImage.caption.isDefined) {
+                        @if(masterImage.caption.isDefined || (masterImage.displayCredit && !masterImage.creditEndsWithCaption)) {
                             @fragments.inlineSvg("triangle", "icon")
                             @masterImage.caption.map(Html(_))
-                        }
 
-                        @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
-                            @masterImage.credit.map(Html(_))
+                            @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
+                                @masterImage.credit.map(Html(_))
+                            }
                         }
                     </figcaption>
                 }
