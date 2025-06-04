@@ -24,9 +24,6 @@ trait Store extends GuLogging with Dates {
   def getTopStories: Option[String] = S3.get(topStoriesKey)
   def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
-    S3.putPrivate(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
-  }
   def putSurveySponsorships(adUnitJson: String): Unit = {
     S3.putPrivate(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
   }
