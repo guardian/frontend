@@ -36,7 +36,6 @@ private object ItemOrRedirect extends ItemResponses with GuLogging {
         Left(Found(canonicalPath + paramString(request)))
       case _ => Right(item)
     }
-
   }
 
   private def redirectSection[T](item: T, request: RequestHeader, section: ApiSection): Either[Result, T] = {
@@ -81,12 +80,18 @@ object InternalRedirect extends implicits.Requests with GuLogging {
 
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
     response.content.map {
-      case a if a.isArticle || a.isLiveBlog =>
-        internalRedirect("type/article", ItemOrRedirect.canonicalPath(a))
-      case a if a.isInteractive =>
-        internalRedirect("applications/interactive", ItemOrRedirect.canonicalPath(a))
-      case a if a.isVideo || a.isGallery || a.isAudio =>
-        internalRedirect("applications", ItemOrRedirect.canonicalPath(a))
+      case content if content.isArticle || content.isLiveBlog =>
+        internalRedirect("type/article", ItemOrRedirect.canonicalPath(content))
+      case content if content.isInteractive =>
+        internalRedirect("applications/interactive", ItemOrRedirect.canonicalPath(content))
+      case content if content.isAudio =>
+        internalRedirect("applications/audio", ItemOrRedirect.canonicalPath(content))
+      case content if content.isGallery =>
+        internalRedirect("applications/gallery", ItemOrRedirect.canonicalPath(content))
+      case content if content.isImageContent =>
+        internalRedirect("applications/picture", ItemOrRedirect.canonicalPath(content))
+      case content if content.isVideo =>
+        internalRedirect("applications/video", ItemOrRedirect.canonicalPath(content))
       case unsupportedContent =>
         logInfoWithRequestId(s"unsupported content: ${unsupportedContent.id}")
         NotFound

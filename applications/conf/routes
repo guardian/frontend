@@ -100,17 +100,19 @@ GET        /$path<.+>/all                                                       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                controllers.GalleryController.lightboxJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                         controllers.GalleryController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                              controllers.GalleryController.render(path)
+GET        /gallery/$path<[\w\d-]+(/[\w\d-]*)*>                                 controllers.GalleryController.render(path)
 
 # Image Content paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       controllers.ImageContentController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
-
-
+GET        /picture/$path<[\w\d-]+(/[\w\d-]*)*>                                 controllers.ImageContentController.render(path)
 
 # Audio and Video paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
+GET        /audio/$path<[\w\d-]+(/[\w\d-]*)*>                                   controllers.MediaController.render(path)
+GET        /video/$path<[\w\d-]+(/[\w\d-]*)*>                                   controllers.MediaController.render(path)
 
 # Interactive service worker
 GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>           controllers.InteractiveController.proxyInteractiveWebWorker(path, file)

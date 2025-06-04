@@ -63,6 +63,10 @@ trait Requests {
     lazy val isEmailJson: Boolean = r.path.endsWith(EMAIL_JSON_SUFFIX)
 
     lazy val isInteractiveRedirect: Boolean = r.path.startsWith("/interactive/")
+    lazy val isAudioRedirect: Boolean = r.path.startsWith("/audio/")
+    lazy val isVideoRedirect: Boolean = r.path.startsWith("/video/")
+    lazy val isPictureRedirect: Boolean = r.path.startsWith("/picture/")
+    lazy val isGalleryRedirect: Boolean = r.path.startsWith("/gallery/")
 
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 
@@ -89,6 +93,10 @@ trait Requests {
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
       else if (isInteractiveRedirect) r.path.stripPrefix("/interactive")
+      else if (isAudioRedirect) r.path.stripPrefix("/audio")
+      else if (isVideoRedirect) r.path.stripPrefix("/video")
+      else if (isPictureRedirect) r.path.stripPrefix("/picture")
+      else if (isGalleryRedirect) r.path.stripPrefix("/gallery")
       else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
