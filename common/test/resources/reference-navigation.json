@@ -877,6 +877,12 @@
 				"url": "/theguardian/series/corrections-and-clarifications",
 				"children": [],
 				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
+				"children": [],
+				"classList": []
 			}
 		],
 		"brandExtensions": [
@@ -1624,6 +1630,12 @@
 				"url": "/theguardian/series/corrections-and-clarifications",
 				"children": [],
 				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
+				"children": [],
+				"classList": []
 			}
 		],
 		"brandExtensions": [
@@ -2309,6 +2321,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}
@@ -3168,6 +3186,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}
@@ -4135,6 +4159,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}

@@ -257,6 +257,7 @@ object NavLinks {
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
   )
   val aboutUs = NavLink("About Us", "/about")
+  val tips = NavLink("Tips", "https://www.theguardian.com/tips")
 
   // News Pillar
   val ukNewsPillar = NavLink(
@@ -629,6 +630,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val auOtherLinks = List(
     apps,
@@ -641,6 +643,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val usOtherLinks = List(
     apps,
@@ -652,6 +655,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val intOtherLinks = List(
     apps,
@@ -665,6 +669,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val eurOtherLinks = List(
     apps,
@@ -678,6 +683,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
 
   val ukBrandExtensions = List(
