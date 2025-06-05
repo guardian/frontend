@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v202405.StatementBuilder
-import com.google.api.ads.admanager.axis.v202405.{CustomTargetingKey, CustomTargetingValue}
+import com.google.api.ads.admanager.axis.utils.v202505.StatementBuilder
+import com.google.api.ads.admanager.axis.v202505.{CustomTargetingKey, CustomTargetingValue}
 import common.GuLogging
 import common.dfp.{GuCustomTargeting, GuCustomTargetingValue}
 import concurrent.BlockingOperations

@@ -1,7 +1,7 @@
 package dfp
 
 import com.google.api.ads.admanager.axis.factory.AdManagerServices
-import com.google.api.ads.admanager.axis.v202405._
+import com.google.api.ads.admanager.axis.v202505._
 import com.google.api.ads.admanager.lib.client.AdManagerSession
 
 private[dfp] class ServicesWrapper(session: AdManagerSession) {

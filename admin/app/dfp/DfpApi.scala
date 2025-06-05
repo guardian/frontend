@@ -2,8 +2,8 @@ package dfp
 
 // StatementBuilder query language is PQL defined here:
 // https://developers.google.com/ad-manager/api/pqlreference
-import com.google.api.ads.admanager.axis.utils.v202405.StatementBuilder
-import com.google.api.ads.admanager.axis.v202405._
+import com.google.api.ads.admanager.axis.utils.v202505.StatementBuilder
+import com.google.api.ads.admanager.axis.v202505._
 import com.madgag.scala.collection.decorators.MapDecorator
 import common.GuLogging
 import common.dfp._
