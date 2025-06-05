@@ -7,6 +7,7 @@ import common.Edition
 import play.api.mvc.RequestHeader
 import model.{MetaData}
 import model.DotcomContentType
+import conf.switches.Switches.{LiveBlogTopSponsorshipSwitch}
 
 trait LiveBlogTopSponsorshipAgent {
 
@@ -30,7 +31,7 @@ trait LiveBlogTopSponsorshipAgent {
   }
 
   def hasLiveBlogTopAd(metadata: MetaData, tags: Seq[Tag], request: RequestHeader): Boolean = {
-    if (metadata.contentType == Some(DotcomContentType.LiveBlog)) {
+    if (metadata.contentType == Some(DotcomContentType.LiveBlog) && LiveBlogTopSponsorshipSwitch.isSwitchedOn) {
       val adTest = request.getQueryString("adtest")
       val edition = Edition(request)
 

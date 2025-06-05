@@ -7,6 +7,17 @@ import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
 
 trait CommercialSwitches {
 
+  val LiveBlogTopSponsorshipSwitch = Switch(
+    Commercial,
+    "live-blog-top-sponsorship",
+    "When on allows a sposorship ad to be displayed on live blogs",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val ShouldLoadGoogleTagSwitch = Switch(
     Commercial,
     "should-load-googletag",
