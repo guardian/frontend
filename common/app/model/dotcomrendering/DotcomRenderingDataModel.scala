@@ -543,7 +543,7 @@ object DotcomRenderingDataModel {
         for {
           imageMedia <- page.item.trail.trailPicture
         } yield {
-          getImageBlockElement(imageMedia, Role(Some("immersive")))
+          getImageBlockElement(imageMedia, Role(Some("inline")))
         }
       } else {
         None
