@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v202505.StatementBuilder
-import com.google.api.ads.admanager.axis.v202505.{CustomFieldValue, LineItem, TextValue}
+import com.google.api.ads.admanager.axis.utils.v202502.StatementBuilder
+import com.google.api.ads.admanager.axis.v202502.{CustomFieldValue, LineItem, TextValue}
 import common.dfp.GuCustomField
 import concurrent.BlockingOperations
 

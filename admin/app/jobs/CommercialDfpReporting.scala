@@ -3,10 +3,10 @@ package jobs
 import java.time.{LocalDate, LocalDateTime}
 
 import app.LifecycleComponent
-import com.google.api.ads.admanager.axis.v202505.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
-import com.google.api.ads.admanager.axis.v202505.DateRangeType.CUSTOM_DATE
-import com.google.api.ads.admanager.axis.v202505.Dimension.{CUSTOM_CRITERIA, DATE}
-import com.google.api.ads.admanager.axis.v202505._
+import com.google.api.ads.admanager.axis.v202502.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
+import com.google.api.ads.admanager.axis.v202502.DateRangeType.CUSTOM_DATE
+import com.google.api.ads.admanager.axis.v202502.Dimension.{CUSTOM_CRITERIA, DATE}
+import com.google.api.ads.admanager.axis.v202502._
 import common.{PekkoAsync, Box, JobScheduler, GuLogging}
 import dfp.DfpApi
 import play.api.inject.ApplicationLifecycle
