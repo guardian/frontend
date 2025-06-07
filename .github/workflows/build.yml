@@ -48,8 +48,36 @@ jobs:
           path: /tmp/frontend-client.zip
           if-no-files-found: error
 
+  scala-format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+
+      - name: Format check
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DSTAGE=DEV \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar compile scalafmtCheckAll
+
   scala-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - uses: actions/checkout@v4
 
@@ -80,7 +108,7 @@ jobs:
           -DSTAGE=DEV \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar compile assets scalafmtCheckAll test
+          -jar ./bin/sbt-launch.jar compile assets runTestGroupIntegration${{ matrix.group }}
 
       - name: Test Summary
         uses: test-summary/action@v2

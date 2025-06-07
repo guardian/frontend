@@ -1,7 +1,8 @@
+import TestGroupsPlugin.autoImport.testGroups
 import play.sbt.routes.RoutesKeys
-import com.typesafe.sbt.web.SbtWeb.autoImport._
-import com.gu.Dependencies._
-import com.gu.ProjectSettings._
+import com.typesafe.sbt.web.SbtWeb.autoImport.*
+import com.gu.Dependencies.*
+import com.gu.ProjectSettings.*
 
 /*
 We need to set a wide width here because otherwise the output from
@@ -206,6 +207,39 @@ val main = root()
     preview,
     rss,
   )
+  .settings(
+    Test / testOnly / aggregate := true,
+    Test / aggregate := true,
+    // Make test tasks aggregate properly
+//    Test / sources := {
+//      val subProjectsSources = (Test / sources).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//      subProjectsSources.flatten
+//    },
+//    Test / definedTests := {
+//      val subProjectsTests = (Test / definedTests).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//      subProjectsTests.flatten
+//    }
+  )
+//  .settings(
+    // Make the test tasks from subprojects available
+//    Test / testOnly := {
+//        val subProjectsTests = (Test / definedTests).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//        subProjectsTests
+//      (Test / testOnly).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//    },
+//    Test / test := {
+//      val _ = (Test / test).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//    },
+//    // Required for test groups plugin to find the tests
+//    Test / sources := {
+//      val subProjectsSources = (Test / sources).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//      subProjectsSources.flatten
+//    },
+//    Test / definedTests := {
+//      val subProjectsTests = (Test / definedTests).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value
+//      subProjectsTests.flatten
+//    },
+//  )
 
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {
