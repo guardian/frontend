@@ -543,7 +543,14 @@ object DotcomRenderingDataModel {
         for {
           imageMedia <- page.item.trail.trailPicture
         } yield {
-          getImageBlockElement(imageMedia, Role(Some("inline")))
+          // DCAR only relies on 'height', 'width', and 'isMaster' fields,
+          // so we remove all other properties to reduce unnecessary data.
+          val filteredImageMedia = ImageMedia(imageMedia.allImages.map { image =>
+            image.copy(fields = image.fields.filter(f => {
+              f._1 == "height" || f._1 == "width" || f._1 == "isMaster"
+            }))
+          })
+          getImageBlockElement(filteredImageMedia, Role(Some("inline")))
         }
       } else {
         None
