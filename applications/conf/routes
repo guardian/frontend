@@ -118,6 +118,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js> 
 # Interactive paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
+GET        /interactive/$path<[\w\d-]+(/[\w\d-]*)*>                             controllers.InteractiveController.renderInteractive(path)
 
 # Interactive test (removing ng-interactive in the url)
 GET        /$path<info/2017/jul/26/interactive-test>                            controllers.InteractiveController.renderInteractive(path)
@@ -136,6 +137,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                        
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             controllers.IndexController.render(path)
 
 # Tag combiners
+GET        /$leftSide<[^+]+>+*rightSide.json                                    controllers.IndexController.renderCombiner(leftSide, rightSide)
 GET        /$leftSide<[^+]+>+*rightSide                                         controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Google site verification

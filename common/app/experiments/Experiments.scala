@@ -11,22 +11,12 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      EuropeBetaFront,
-      ServerTracking,
       DarkModeWeb,
       DCRJavascriptBundle,
+      StackedCarousels,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object EuropeBetaFront
-    extends Experiment(
-      name = "europe-beta-front",
-      description = "Allows viewing the beta version of the Europe network front",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc0A,
-    )
 
 object DarkModeWeb
     extends Experiment(
@@ -37,20 +27,20 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object ServerTracking
-    extends Experiment(
-      name = "server-tracking",
-      description = "Test server test tracking",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc1A,
-    )
-
 object DCRJavascriptBundle
     extends Experiment(
       name = "dcr-javascript-bundle",
       description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 6, 30),
-      participationGroup = Perc10A,
+      participationGroup = Perc0E,
+    )
+
+object StackedCarousels
+    extends Experiment(
+      name = "stacked-carousels",
+      description = "Show stacked cards instead of carousels on UK front on mobile",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 7, 30),
+      participationGroup = Perc5A,
     )

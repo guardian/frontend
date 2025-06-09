@@ -10,9 +10,7 @@ import services.IndexPage
 object TagPagePicker extends GuLogging {
 
   def getTier(tagPage: IndexPage)(implicit request: RequestHeader): RenderType = {
-    lazy val isSwitchedOn = DCRTagPages.isSwitchedOn;
-
-    val checks = dcrChecks(tagPage)
+    lazy val isSwitchedOn = DCRTagPages.isSwitchedOn
 
     val tier = decideTier(
       request.isRss,
@@ -20,22 +18,11 @@ object TagPagePicker extends GuLogging {
       request.forceDCROff,
       request.forceDCR,
       isSwitchedOn,
-      dcrCouldRender(checks),
     )
 
-    logTier(tagPage, isSwitchedOn, dcrCouldRender(checks), checks, tier)
+    logTier(tagPage, isSwitchedOn, tier)
 
     tier
-  }
-
-  private def dcrCouldRender(checks: Map[String, Boolean]): Boolean = {
-    checks.values.forall(identity)
-  }
-
-  private def dcrChecks(tagPage: IndexPage): Map[String, Boolean] = {
-    Map(
-      ("isNotTagCombiner", !tagPage.page.isInstanceOf[TagCombiner]),
-    )
   }
 
   private def decideTier(
@@ -44,7 +31,6 @@ object TagPagePicker extends GuLogging {
       forceDCROff: Boolean,
       forceDCR: Boolean,
       isSwitchedOn: Boolean,
-      dcrCouldRender: Boolean,
   ): RenderType = {
     if (isRss) LocalRender
     else if (isJson) {
@@ -53,28 +39,22 @@ object TagPagePicker extends GuLogging {
       else LocalRender
     } else if (forceDCROff) LocalRender
     else if (forceDCR) RemoteRender
-    else if (dcrCouldRender && isSwitchedOn) RemoteRender
+    else if (isSwitchedOn) RemoteRender
     else LocalRender
   }
 
   private def logTier(
       tagPage: IndexPage,
       isSwitchedOn: Boolean,
-      dcrCouldRender: Boolean,
-      checks: Map[String, Boolean],
       tier: RenderType,
   )(implicit request: RequestHeader): Unit = {
     val tierReadable = if (tier == RemoteRender) "dotcomcomponents" else "web"
-    val checksToString = checks.map { case (key, value) =>
-      (key, value.toString)
-    }
     val properties =
       Map(
         "isSwitchedOn" -> isSwitchedOn.toString,
-        "dcrCouldRender" -> dcrCouldRender.toString,
         "isTagPage" -> "true",
         "tier" -> tierReadable,
-      ) ++ checksToString
+      )
 
     DotcomFrontsLogger.logger.logRequest(s"tag front executing in $tierReadable", properties, tagPage)
   }
