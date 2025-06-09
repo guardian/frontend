@@ -151,21 +151,34 @@ object ProjectSettings {
       val testArgs = " " + filteredTests.map(_.name).mkString(" ")
       log.info(s"Running tests:$testArgs")
         //      (Test / testOnly).toTask(" common.Assets.AssetsTest common.BoxSpec")
-      (ThisProject / Test / testOnly).toTask(testArgs)
+//      ((Test / testOnly)
+//        .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))).value.toTask(testArgs).value
+      // The fixed part: use testOnly directly with the arguments
+      Def.task {
+        (Test / testOnly)
+          .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
+          .value
+
+        // Run the tests with the arguments in each project
+        val _ = (Test / testOnly)
+          .toTask(testArgs)
+          .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
+          .value
+      }
     }
   }
 
   def frontendRootSettings: Seq[Def.Setting[Task[Unit]]] =
-    List(
-      testAll := (Test / test)
-        .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
-        .value,
-      testGroup1 := createTestGroupTask(20, 2).value
+    Seq(
+      testGroup1 := createTestGroupTask(20, 2).value,
+//      testAll := (Test / test)
+//        .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
+//        .value,
     )
 
   def root(): Project =
     Project("root", base = file("."))
-      .settings(Test / aggregate := true, Test / testOnly / aggregate := true)
+//      .settings(Test / aggregate := true, Test / testOnly / aggregate := true)
       .settings(frontendRootSettings)
 //      .settings(testGroup1 := createTestGroupTask(20, 2).value)
 
@@ -208,7 +221,7 @@ object ProjectSettings {
   def filterAssets(testAssets: Seq[(File, String)]): Seq[(File, String)] =
     testAssets.filterNot { case (_, fileName) =>
       // built in sbt plugins did not like the bower files
-      fileName.endsWith("bower.json") || fileName.contains("TestAppLoader")
+      fileName.endsWith("bower.json")
     }
 
   def withTests(project: Project): ClasspathDep[ProjectReference] =
