@@ -25,8 +25,6 @@ deployments:
     template: frontend
   applications:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   archive:
     template: frontend
   article:
