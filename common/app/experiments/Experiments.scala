@@ -14,9 +14,19 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRJavascriptBundle,
       StackedCarousels,
+      LoopingVideo,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object LoopingVideo
+    extends Experiment(
+      name = "looping-video",
+      description = "Enable looping videos on DCR",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc0A,
+    )
 
 object DarkModeWeb
     extends Experiment(
