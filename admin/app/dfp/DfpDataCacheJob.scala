@@ -146,8 +146,6 @@ class DfpDataCacheJob(
     if (data.hasValidLineItems && LineItemJobs.isSwitchedOff) {
       val now = printLondonTime(DateTime.now())
 
-      val pageSkinSponsorships = data.pageSkinSponsorships
-      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
     }
   }
