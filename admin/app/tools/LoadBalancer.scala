@@ -28,7 +28,13 @@ object LoadBalancer extends GuLogging {
       testPath = Some("/uk-news/2014/jan/21/drax-protesters-convictions-quashed-police-spy-mark-kennedy"),
     ),
     LoadBalancer("frontend-PROD-facia-ELB", "Front", "frontend-facia", testPath = Some("/uk")),
-    LoadBalancer("frontend-PROD-applications-ELB", "Applications", "frontend-applications", testPath = Some("/books")),
+    LoadBalancer(
+      "app/fronte-LoadB-jjbgLSz4Ttk7/0e30c8ef528bd918",
+      "Applications",
+      "frontend-applications",
+      testPath = Some("/books"),
+      targetGroup = Some("targetgroup/fronte-Targe-J5GTY7IUW6U4/5fa6083486dbd785"),
+    ),
     LoadBalancer(
       "app/fronte-LoadB-xmdWiUUHyRUS/122c59735e8374bb",
       "Discussion",
