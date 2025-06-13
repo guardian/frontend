@@ -33,9 +33,6 @@ trait Store extends GuLogging with Dates {
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
     S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
   }
-  def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
-    S3.putPrivate(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
-  }
 
   val now: String = DateTime.now().toHttpDateTimeString
 
