@@ -31,6 +31,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
   private val NewspaperPage = "^(/theguardian|/theobserver)/(\\d{4}/\\w{3}/\\d{2})/(.+)".r
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
+  private val tempRedirectHttpStatus = HttpStatus.SC_TEMPORARY_REDIRECT
 
   def getLocal404Page(implicit request: RequestHeader): Future[Result] =
     Future {
@@ -122,6 +123,12 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
       }
   }
 
+  private def tempRedirectTo(path: String)(implicit request: RequestHeader): Result = {
+    val redirect = LinkTo(path)
+
+    logInfoWithRequestId(s"""Archive $tempRedirectHttpStatus, redirect to $redirect""")
+    Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(redirect, tempRedirectHttpStatus)))
+  }
   private def redirectTo(path: String, pathSuffixes: String*)(implicit request: RequestHeader): Result = {
     val endOfPath = if (pathSuffixes.isEmpty) "" else s"/${pathSuffixes.mkString("/")}"
     val redirect = LinkTo(path) + endOfPath
@@ -135,7 +142,9 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
 
   private def redirectForPath(path: String)(implicit request: RequestHeader): Option[Result] =
     path match {
-      case Gallery(gallery)   => Some(redirectTo(gallery))
+      // gallery has a temp redirect as the regex may catch people trying to open modern galleries
+      // before they are published, and store the incorrect redirect in their browser forevermore
+      case Gallery(gallery)   => Some(tempRedirectTo(gallery))
       case Century(century)   => Some(redirectTo(century))
       case Guardian(endOfUrl) => Some(redirectTo(endOfUrl))
       case Lowercase(lower)   => Some(redirectTo(lower))
