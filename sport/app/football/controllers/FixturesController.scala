@@ -28,11 +28,8 @@ class FixturesController(
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezoneId))
 
-  def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
-    renderMoreFixtures(fixtures(createDate(year, month, day)))
-
   def moreFixturesForJson(year: String, month: String, day: String): Action[AnyContent] =
-    moreFixturesFor(year, month, day)
+    renderMoreFixtures(fixtures(createDate(year, month, day)))
 
   private def renderAllFixtures(date: LocalDate): Action[AnyContent] =
     Action.async { implicit request =>
@@ -45,9 +42,6 @@ class FixturesController(
     }
 
   def moreTagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    moreTagFixturesFor(year, month, day, tag)
-
-  def moreTagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     getTagFixtures(createDate(year, month, day), tag)
       .map(result => renderMoreFixtures(result._2))
       .getOrElse(Action(NotFound))
