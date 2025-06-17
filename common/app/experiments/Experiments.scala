@@ -11,29 +11,30 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      EuropeBetaFront,
-      EuropeBetaFrontTest2,
       DarkModeWeb,
+      DCRJavascriptBundle,
+      HideTrails,
+      LoopingVideo,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object EuropeBetaFront
+object LoopingVideo
     extends Experiment(
-      name = "europe-beta-front",
-      description = "Allows viewing the beta version of the Europe network front",
+      name = "looping-video",
+      description = "Enable looping videos on DCR",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
+      sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc0A,
     )
 
-object EuropeBetaFrontTest2
+object HideTrails
     extends Experiment(
-      name = "europe-beta-front-test-2",
-      description = "Allows viewing the beta version of the Europe network front",
+      name = "hide-trails",
+      description = "Hide trails on UK front on mobile",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
-      participationGroup = Perc50,
+      sellByDate = LocalDate.of(2025, 7, 30),
+      participationGroup = Perc0B,
     )
 
 object DarkModeWeb
@@ -41,6 +42,15 @@ object DarkModeWeb
       name = "dark-mode-web",
       description = "Enable dark mode on web",
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 4, 30),
+      sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc0D,
+    )
+
+object DCRJavascriptBundle
+    extends Experiment(
+      name = "dcr-javascript-bundle",
+      description = "DCAR JS bundle experiment to test replacing Preact with React",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 6, 30),
+      participationGroup = Perc0E,
     )

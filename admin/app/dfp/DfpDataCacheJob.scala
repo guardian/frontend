@@ -29,9 +29,6 @@ class DfpDataCacheJob(
       val duration = System.currentTimeMillis - start
       log.info(s"Loading DFP data took $duration ms")
       write(data)
-      if (LineItemJobs.isSwitchedOff) Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
-      writeLiveBlogTopSponsorships(currentLineItems)
-      writeSurveySponsorships(currentLineItems)
     }
 
   /*
@@ -145,36 +142,10 @@ class DfpDataCacheJob(
 
   private def write(data: DfpDataExtractor): Unit = {
 
-    if (data.hasValidLineItems) {
+    if (data.hasValidLineItems && LineItemJobs.isSwitchedOff) {
       val now = printLondonTime(DateTime.now())
 
-      val pageSkinSponsorships = data.pageSkinSponsorships
-      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
-
-      if (LineItemJobs.isSwitchedOff)
-        Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
-    }
-  }
-
-  private def writeLiveBlogTopSponsorships(data: DfpDataExtractor): Unit = {
-    if (data.hasValidLineItems) {
-      val now = printLondonTime(DateTime.now())
-
-      val sponsorships = data.liveBlogTopSponsorships
-      Store.putLiveBlogTopSponsorships(
-        stringify(toJson(LiveBlogTopSponsorshipReport(Some(now), sponsorships))),
-      )
-    }
-  }
-
-  private def writeSurveySponsorships(data: DfpDataExtractor): Unit = {
-    if (data.hasValidLineItems) {
-      val now = printLondonTime(DateTime.now())
-
-      val sponsorships = data.surveySponsorships
-      Store.putSurveySponsorships(
-        stringify(toJson(SurveySponsorshipReport(Some(now), sponsorships))),
-      )
+      Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
     }
   }
 

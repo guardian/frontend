@@ -8,9 +8,13 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
 import football.model.DotcomRenderingFootballTablesDataModel
-import implicits.JsonFormat
+import implicits.{HtmlFormat, JsonFormat}
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.dotcomrendering.{FootballTablesPagePicker, RemoteRender}
 
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
 
 case class TablesPage(
     page: Page,
@@ -27,11 +31,13 @@ class LeagueTableController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
     val contentApiClient: ContentApiClient,
+    val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
     with CompetitionTableFilters
     with ImplicitControllerExecutionContext {
+  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   // Competitions must be added to this list to show up at /football/tables
   val tableOrder: Seq[String] = Seq(
@@ -72,7 +78,8 @@ class LeagueTableController(
 
   def renderLeagueTablesJson(): Action[AnyContent] = renderLeagueTables()
   def renderLeagueTables(): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
+      val tier = FootballTablesPagePicker.getTier()
       val page = new FootballPage(
         "football/tables",
         "football",
@@ -90,8 +97,12 @@ class LeagueTableController(
       request.getRequestFormat match {
         case JsonFormat if request.forceDCR =>
           val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
+          successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
 
-          Cached(CacheTime.Football)(JsonComponent.fromWritable(model))
+        case HtmlFormat if tier == RemoteRender =>
+          val model = DotcomRenderingFootballTablesDataModel(page, groups, filters(tableOrder))
+          remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
+
         case _ =>
           val htmlResponse =
             () =>
@@ -102,7 +113,7 @@ class LeagueTableController(
               football.views.html.tablesList
                 .tablesPage(TablesPage(page, groups, "/football", filters(tableOrder), None))
 
-          renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+          successful(renderFormat(htmlResponse, jsonResponse, page, Switches.all))
       }
 
     }
@@ -134,7 +145,9 @@ class LeagueTableController(
 
   def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
   def renderCompetition(competition: String): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
+      val tier = FootballTablesPagePicker.getTier()
+
       val table = loadTables
         .find(_.competition.url.endsWith(s"/$competition"))
         .orElse(loadTables.find(_.competition.id == competition))
@@ -153,7 +166,11 @@ class LeagueTableController(
             case JsonFormat if request.forceDCR =>
               val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
 
-              Cached(60)(JsonComponent.fromWritable(model))
+              successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
+
+            case HtmlFormat if tier == RemoteRender =>
+              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
+              remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
 
             case _ =>
               val htmlResponse = () =>
@@ -175,14 +192,14 @@ class LeagueTableController(
                   multiGroup = table.multiGroup,
                 )
 
-              renderFormat(htmlResponse, jsonResponse, page)
+              successful(renderFormat(htmlResponse, jsonResponse, page))
           }
         }
         .getOrElse(
           if (request.isJson) {
-            Cached(60)(JsonNotFound())
+            successful(Cached(CacheTime.FootballTables)(JsonNotFound()))
           } else {
-            Redirect("/football/tables")
+            successful(Redirect("/football/tables"))
           },
         )
     }
@@ -190,7 +207,8 @@ class LeagueTableController(
   def renderCompetitionGroupJson(competition: String, groupReference: String): Action[AnyContent] =
     renderCompetitionGroup(competition, groupReference)
   def renderCompetitionGroup(competition: String, groupReference: String): Action[AnyContent] =
-    Action { implicit request =>
+    Action.async { implicit request =>
+      val tier = FootballTablesPagePicker.getTier()
       val response = for {
         table <-
           loadTables
@@ -216,7 +234,11 @@ class LeagueTableController(
           case JsonFormat if request.forceDCR =>
             val model = DotcomRenderingFootballTablesDataModel(page, Seq(groupTable), filters(tableOrder))
 
-            Cached(60)(JsonComponent.fromWritable(model))
+            successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
+
+          case HtmlFormat if tier == RemoteRender =>
+            val model = DotcomRenderingFootballTablesDataModel(page, Seq(groupTable), filters(tableOrder))
+            remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
 
           case _ =>
             val htmlResponse = () =>
@@ -238,14 +260,14 @@ class LeagueTableController(
                 multiGroup = false,
                 linkToCompetition = true,
               )
-            renderFormat(htmlResponse, jsonResponse, page)
+            successful(renderFormat(htmlResponse, jsonResponse, page))
         }
       }
       response.getOrElse {
         if (request.isJson) {
-          Cached(60)(JsonNotFound())
+          successful(Cached(CacheTime.FootballTables)(JsonNotFound()))
         } else {
-          Redirect("/football/tables")
+          successful(Redirect("/football/tables"))
         }
       }
     }

@@ -46,9 +46,10 @@ trait DotcomRenderingFootballDataModel {
   def isAdFreeUser: Boolean
   def contributionsServiceUrl: String
   def canonicalUrl: String
+  def pageId: String
 }
 
-private object DotcomRenderingFootballDataModel {
+object DotcomRenderingFootballDataModel {
   def getConfig(page: StandalonePage)(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -94,67 +95,6 @@ private object DotcomRenderingFootballDataModelImplicits {
   implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
   implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
 
-  implicit val competitionFormat: Writes[CompetitionSummary] = (competition: CompetitionSummary) =>
-    Json.obj(
-      "id" -> competition.id,
-      "url" -> competition.url,
-      "fullName" -> competition.fullName,
-      "nation" -> competition.nation,
-      "tableDividers" -> competition.tableDividers,
-    )
-
-  implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
-}
-
-case class DotcomRenderingFootballMatchListDataModel(
-    matchesList: Seq[MatchesByDateAndCompetition],
-    nextPage: Option[String],
-    filters: Map[String, Seq[CompetitionFilter]],
-    previousPage: Option[String],
-    nav: Nav,
-    editionId: String,
-    guardianBaseURL: String,
-    config: JsObject,
-    pageFooter: PageFooter,
-    isAdFreeUser: Boolean,
-    contributionsServiceUrl: String,
-    canonicalUrl: String,
-) extends DotcomRenderingFootballDataModel
-
-object DotcomRenderingFootballMatchListDataModel {
-  def apply(
-      page: FootballPage,
-      matchesList: MatchesList,
-      filters: Map[String, Seq[CompetitionFilter]],
-  )(implicit
-      request: RequestHeader,
-      context: ApplicationContext,
-  ): DotcomRenderingFootballMatchListDataModel = {
-    val edition = Edition(request)
-    val nav = Nav(page, edition)
-    val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
-
-    val matches =
-      getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
-
-    DotcomRenderingFootballMatchListDataModel(
-      matchesList = matches,
-      nextPage = matchesList.nextPage,
-      filters = filters,
-      previousPage = matchesList.previousPage,
-      nav = nav,
-      editionId = edition.id,
-      guardianBaseURL = Configuration.site.host,
-      config = combinedConfig,
-      pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
-      isAdFreeUser = views.support.Commercial.isAdFree(request),
-      contributionsServiceUrl = Configuration.contributionsService.url,
-      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
-    )
-  }
-
-  import football.model.DotcomRenderingFootballDataModelImplicits._
-
   private implicit val matchDayTeamFormat: Writes[MatchDayTeam] = Json.writes[MatchDayTeam]
 
   // Writes for Fixture with a type discriminator
@@ -177,18 +117,81 @@ object DotcomRenderingFootballMatchListDataModel {
     Json.writes[LiveMatch].writes(liveMatch).as[JsObject] + ("type" -> JsString("LiveMatch"))
   }
 
-  private implicit val footballMatchWrites: Writes[FootballMatch] = Writes { matchInstance =>
-    matchInstance match {
-      case f: Fixture   => Json.toJson(f)(fixtureWrites)
-      case m: MatchDay  => Json.toJson(m)(matchDayWrites)
-      case r: Result    => Json.toJson(r)(resultWrites)
-      case l: LiveMatch => Json.toJson(l)(liveMatchWrites)
-    }
+  implicit val footballMatchWrites: Writes[FootballMatch] = Writes {
+    case f: Fixture   => Json.toJson(f)(fixtureWrites)
+    case m: MatchDay  => Json.toJson(m)(matchDayWrites)
+    case r: Result    => Json.toJson(r)(resultWrites)
+    case l: LiveMatch => Json.toJson(l)(liveMatchWrites)
   }
 
+  implicit val competitionFormat: Writes[CompetitionSummary] = (competition: CompetitionSummary) =>
+    Json.obj(
+      "id" -> competition.id,
+      "url" -> competition.url,
+      "fullName" -> competition.fullName,
+      "nation" -> competition.nation,
+      "tableDividers" -> competition.tableDividers,
+    )
+
   private implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
-  private implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
+  implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
     Json.writes[MatchesByDateAndCompetition]
+
+  implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
+}
+
+case class DotcomRenderingFootballMatchListDataModel(
+    matchesList: Seq[MatchesByDateAndCompetition],
+    nextPage: Option[String],
+    nextPageNoJs: Option[String],
+    filters: Map[String, Seq[CompetitionFilter]],
+    previousPage: Option[String],
+    nav: Nav,
+    editionId: String,
+    guardianBaseURL: String,
+    config: JsObject,
+    pageFooter: PageFooter,
+    isAdFreeUser: Boolean,
+    contributionsServiceUrl: String,
+    canonicalUrl: String,
+    pageId: String,
+) extends DotcomRenderingFootballDataModel
+
+object DotcomRenderingFootballMatchListDataModel {
+  def apply(
+      page: FootballPage,
+      matchesList: MatchesList,
+      filters: Map[String, Seq[CompetitionFilter]],
+  )(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): DotcomRenderingFootballMatchListDataModel = {
+    val edition = Edition(request)
+    val nav = Nav(page, edition)
+    val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
+
+    val matches =
+      getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
+
+    DotcomRenderingFootballMatchListDataModel(
+      matchesList = matches,
+      nextPage = matchesList.nextPage,
+      nextPageNoJs = matchesList.nextPageNoJs,
+      filters = filters,
+      previousPage = matchesList.previousPage,
+      nav = nav,
+      editionId = edition.id,
+      guardianBaseURL = Configuration.site.host,
+      config = combinedConfig,
+      pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      contributionsServiceUrl = Configuration.contributionsService.url,
+      canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
+    )
+  }
+
+  import football.model.DotcomRenderingFootballDataModelImplicits._
 
   implicit def dotcomRenderingFootballMatchListDataModel: Writes[DotcomRenderingFootballMatchListDataModel] =
     Json.writes[DotcomRenderingFootballMatchListDataModel]
@@ -226,6 +229,7 @@ case class DotcomRenderingFootballTablesDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballTablesDataModel {
@@ -252,6 +256,7 @@ object DotcomRenderingFootballTablesDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 
@@ -316,6 +321,7 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
     isAdFreeUser: Boolean,
     contributionsServiceUrl: String,
     canonicalUrl: String,
+    pageId: String,
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballMatchSummaryDataModel {
@@ -339,6 +345,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
+      pageId = page.metadata.id,
     )
   }
 

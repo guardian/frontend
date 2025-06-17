@@ -10,10 +10,10 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
     copy(pressedCollection = pressedCollection.withoutTrailTextOnTail)
   lazy val pressedCollectionVersions: PressedCollectionVersions = {
     PressedCollectionVersions(
-      pressedCollection.lite(visible),
-      pressedCollection.full(visible),
-      pressedCollection.adFree.lite(visible),
-      pressedCollection.adFree.full(visible),
+      pressedCollection.lite(visible).withDefaultBoostLevels,
+      pressedCollection.full(visible).withDefaultBoostLevels,
+      pressedCollection.adFree.lite(visible).withDefaultBoostLevels,
+      pressedCollection.adFree.full(visible).withDefaultBoostLevels,
     )
   }
 }

@@ -40,11 +40,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-a9-bid-response-winner",
-    "The test will enable checking the A9 bid response and determining a winning ad",
+    "ab-prebid-multibid",
+    "Test re-enabling the multibid feature in Prebid.js",
     owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 4, 30)),
+    sellByDate = Some(LocalDate.of(2025, 7, 15)),
     exposeClientSide = true,
     highImpact = false,
   )

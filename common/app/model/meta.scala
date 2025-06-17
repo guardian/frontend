@@ -358,11 +358,6 @@ case class MetaData(
   def hasSurveyAd(request: RequestHeader): Boolean =
     DfpAgent.hasSurveyAd(fullAdUnitPath, this, request)
 
-  def omitMPUsFromContainers(edition: Edition): Boolean =
-    if (isPressedPage) {
-      DfpAgent.omitMPUsFromContainers(id, edition)
-    } else false
-
   val isSecureContact: Boolean = Set(
     "help/ng-interactive/2017/mar/17/contact-the-guardian-securely",
     "help/2016/sep/19/how-to-contact-the-guardian-securely",
@@ -564,12 +559,25 @@ case class TagCombiner(
 
   private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
 
+  val javascriptConfigOverrides: Map[String, JsValue] = Map(
+    ("keywords", JsString(List(leftTag.properties.webTitle, rightTag.properties.webTitle).mkString(","))),
+    ("keywordIds", JsString(List(leftTag.id, rightTag.id).mkString(","))),
+    (
+      "references",
+      JsArray(
+        (leftTag.properties.references ++ rightTag.properties.references).map(ref => Reference.toJavaScript(ref.id)),
+      ),
+    ),
+  )
+
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
     webTitle = webTitle,
     pagination = pagination,
     description = Some(DotcomContentType.TagIndex.name),
+    javascriptConfigOverrides = javascriptConfigOverrides,
+    isFront = true,
     commercial = Some(
       // We only use the left tag for CommercialProperties
       CommercialProperties(

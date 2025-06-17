@@ -32,8 +32,11 @@
                 @defining(gallery.item.elements.mainPicture.flatMap(_.images.masterImage)) {
                     case Some(masterImage) => {
                         <figcaption class="caption caption--gallery hide-from-desktop">
-                            Main image:
-                            @masterImage.caption.map(Html(_))
+                            @if(masterImage.caption.isDefined) {
+                                Main image:
+                                @masterImage.caption.map(Html(_))
+                            }
+
                             @if(masterImage.displayCredit && !masterImage.creditEndsWithCaption) {
                                 @masterImage.credit.map(Html(_))
                             }

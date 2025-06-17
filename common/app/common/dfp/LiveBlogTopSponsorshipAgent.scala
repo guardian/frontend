@@ -20,10 +20,13 @@ trait LiveBlogTopSponsorshipAgent {
       adTest: Option[String],
   ): Seq[LiveBlogTopSponsorship] = {
     liveBlogTopSponsorships.filter { sponsorship =>
-      sponsorship.editions.contains(edition) && sponsorship.sections.contains(
-        sectionId,
-      ) && (keywords exists sponsorship.hasTag) && sponsorship
-        .matchesTargetedAdTest(adTest)
+      // Section must match
+      sponsorship.sections.contains(sectionId) &&
+      // Edition, keywords & adtest are optional matches
+      // If specified on the line item, they must match
+      sponsorship.matchesEditionTargeting(edition) &&
+      sponsorship.matchesKeywordTargeting(keywords) &&
+      sponsorship.matchesTargetedAdTest(adTest)
     }
   }
 
@@ -32,7 +35,7 @@ trait LiveBlogTopSponsorshipAgent {
       val adTest = request.getQueryString("adtest")
       val edition = Edition(request)
 
-      findSponsorships(edition, metadata.sectionId, tags, adTest).nonEmpty
+      findSponsorships(edition, metadata.sectionId, tags.filter(_.isKeyword), adTest).nonEmpty
     } else {
       false
     }

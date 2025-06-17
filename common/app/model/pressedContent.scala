@@ -1,8 +1,10 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
+import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
+import model.content.MediaAtom
 import model.{ContentFormat, Pillar}
 import views.support.ContentOldAgeDescriber
 
@@ -26,6 +28,10 @@ sealed trait PressedContent {
   def withoutTrailText: PressedContent
 
   def withoutCommercial: PressedContent
+
+  def withBoostLevel(level: Option[BoostLevel]): PressedContent
+
+  def withCard(card: PressedCard): PressedContent
 
   protected def propertiesWithoutCommercial(properties: PressedProperties): PressedProperties =
     properties.copy(
@@ -90,6 +96,7 @@ final case class CuratedContent(
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
     supportingContent: List[PressedContent],
     cardStyle: CardStyle,
+    mediaAtom: Option[MediaAtom],
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -97,6 +104,14 @@ final case class CuratedContent(
   override def withoutCommercial: PressedContent = copy(
     properties = propertiesWithoutCommercial(properties),
     supportingContent = supportingContent.map(_.withoutCommercial),
+  )
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
   )
 }
 
@@ -112,6 +127,13 @@ object CuratedContent {
       supportingContent = content.supportingContent.map((sc) => PressedContent.make(sc, false)),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
+      mediaAtom = content.mediaAtom.flatMap { atom =>
+        atom.data match {
+          case mediaAtom: com.gu.contentatom.thrift.AtomData.Media =>
+            Some(MediaAtom.makeFromThrift(atom.id, mediaAtom.media))
+          case _ => None
+        }
+      },
     )
   }
 }
@@ -128,6 +150,14 @@ final case class SupportingCuratedContent(
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object SupportingCuratedContent {
@@ -154,10 +184,19 @@ final case class LinkSnap(
     enriched: Option[
       EnrichedContent,
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
+    mediaAtom: Option[MediaAtom],
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LinkSnap {
@@ -170,6 +209,7 @@ object LinkSnap {
       display = PressedDisplaySettings.make(content, None),
       enriched = Some(EnrichedContent.empty),
       format = ContentFormat.defaultContentFormat,
+      mediaAtom = None,
     )
   }
 }
@@ -186,6 +226,14 @@ final case class LatestSnap(
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
 }
 
 object LatestSnap {

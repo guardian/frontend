@@ -24,7 +24,6 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
-import implicits.Booleans._
 import layout.slices.Container
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -334,23 +333,6 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       val storyCountMax: Int = collection.collectionConfig.collectionType match {
         // nav/list stories should never be capped
         case "nav/list" => storyCountTotal
-        // scrollable feature containers are capped at 3 stories
-        case "scrollable/feature" => 3
-        // scrollable small and medium containers are capped at 4 stories
-        case "scrollable/small" | "scrollable/medium" => 4
-        // scrollable highlights containers are capped at 6 stories
-        case "scrollable/highlights" => 6
-        // flexible general containers have max items on each group. In order to know the total max items, we need to sum all of these together.
-        case "flexible/general" => {
-
-          collection.collectionConfig.groupsConfig
-            .map(_.config)
-            .getOrElse(Nil)
-            .map(_.maxItems)
-            .flatten // Removes None values as maxItems is optional
-            .sum
-
-        }
         // other container types should be capped at a maximum number of stories set in the app config
         case _ => Math.min(Configuration.facia.collectionCap, storyCountTotal)
       }
@@ -634,7 +616,7 @@ object Enrichment extends GuLogging {
     result
   }
 
-  private def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
+  def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
     opt match {
       case Some(thing) => Future.successful(thing)
       case None        => Future.failed(new Throwable(errMsg))

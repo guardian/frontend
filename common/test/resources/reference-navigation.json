@@ -816,20 +816,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -848,12 +842,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -887,6 +875,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}
@@ -1575,20 +1569,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -1607,12 +1595,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -1646,6 +1628,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}
@@ -1945,12 +1933,6 @@
 				{
 					"title": "Cartoons",
 					"url": "/tone/cartoons",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Indigenous",
-					"url": "/commentisfree/series/indigenousx",
 					"children": [],
 					"classList": []
 				},
@@ -2280,20 +2262,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -2312,12 +2288,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -2351,6 +2321,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}
@@ -3151,20 +3127,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -3183,12 +3153,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -3222,6 +3186,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}
@@ -3348,10 +3318,8 @@
 		"crosswords/series/weekend-crossword",
 		"crosswords/series/quiptic",
 		"crosswords/series/genius",
-		"crosswords/series/speedy",
-		"crosswords/series/everyman",
+		"crosswords/series/sunday-quick",
 		"crosswords/series/special",
-		"crosswords/series/azed",
 		"fashion/beauty",
 		"technology/motoring",
 		"commentisfree/commentisfree",
@@ -4132,20 +4100,14 @@
 						"classList": []
 					},
 					{
-						"title": "Speedy",
-						"url": "/crosswords/series/speedy",
+						"title": "Sunday quick",
+						"url": "/crosswords/series/sunday-quick",
 						"children": [],
 						"classList": []
 					},
 					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Everyman",
-						"url": "/crosswords/series/everyman",
 						"children": [],
 						"classList": []
 					},
@@ -4164,12 +4126,6 @@
 					{
 						"title": "Prize",
 						"url": "/crosswords/series/prize",
-						"children": [],
-						"classList": []
-					},
-					{
-						"title": "Azed",
-						"url": "/crosswords/series/azed",
 						"children": [],
 						"classList": []
 					},
@@ -4203,6 +4159,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}

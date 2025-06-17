@@ -17,7 +17,6 @@ object NavLinks {
   val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", longTitle = Some("Politics"))
   val auImmigration = NavLink("Immigration", "/australia-news/australian-immigration-and-asylum")
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
-  val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
   val usPolitics = NavLink("US politics", "/us-news/us-politics")
 
@@ -219,13 +218,11 @@ object NavLinks {
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),
-      NavLink("Speedy", "/crosswords/series/speedy"),
+      NavLink("Sunday quick", "/crosswords/series/sunday-quick"),
       NavLink("Quick cryptic", "/crosswords/series/quick-cryptic"),
-      NavLink("Everyman", "/crosswords/series/everyman"),
       NavLink("Quiptic", "/crosswords/series/quiptic"),
       NavLink("Cryptic", "/crosswords/series/cryptic"),
       NavLink("Prize", "/crosswords/series/prize"),
-      NavLink("Azed", "/crosswords/series/azed"),
       NavLink("Genius", "/crosswords/series/genius"),
       NavLink("Weekend", "/crosswords/series/weekend-crossword"),
       NavLink("Special", "/crosswords/series/special"),
@@ -260,6 +257,7 @@ object NavLinks {
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
   )
   val aboutUs = NavLink("About Us", "/about")
+  val tips = NavLink("Tips", "https://www.theguardian.com/tips")
 
   // News Pillar
   val ukNewsPillar = NavLink(
@@ -371,7 +369,6 @@ object NavLinks {
     children = List(
       auColumnists,
       cartoons,
-      indigenousAustraliaOpinion,
       theGuardianView.copy(title = "Editorials"),
       letters,
     ),
@@ -633,6 +630,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val auOtherLinks = List(
     apps,
@@ -645,6 +643,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val usOtherLinks = List(
     apps,
@@ -656,6 +655,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val intOtherLinks = List(
     apps,
@@ -669,6 +669,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val eurOtherLinks = List(
     apps,
@@ -682,6 +683,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
 
   val ukBrandExtensions = List(
@@ -816,10 +818,8 @@ object NavLinks {
     "crosswords/series/weekend-crossword",
     "crosswords/series/quiptic",
     "crosswords/series/genius",
-    "crosswords/series/speedy",
-    "crosswords/series/everyman",
+    "crosswords/series/sunday-quick",
     "crosswords/series/special",
-    "crosswords/series/azed",
     "fashion/beauty",
     "technology/motoring",
     // these last two are here to ensure that content in education and CiF always appear as such in the navigation

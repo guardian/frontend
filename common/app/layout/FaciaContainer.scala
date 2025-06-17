@@ -163,7 +163,6 @@ object FaciaContainer {
       collectionEssentials: CollectionEssentials,
       containerLayout: Option[ContainerLayout],
       componentId: Option[String],
-      omitMPU: Boolean = false,
       adFree: Boolean = false,
       targetedTerritory: Option[TargetedTerritory] = None,
   ): FaciaContainer =
@@ -180,9 +179,9 @@ object FaciaContainer {
       config.config.showLatestUpdate,
       // popular containers should never be sponsored
       container match {
-        case MostPopular  => ContainerCommercialOptions(omitMPU = omitMPU, adFree = adFree)
-        case _ if !adFree => ContainerCommercialOptions(omitMPU = false, adFree = false)
-        case _            => ContainerCommercialOptions(omitMPU = false, adFree = adFree)
+        case MostPopular  => ContainerCommercialOptions(adFree = adFree)
+        case _ if !adFree => ContainerCommercialOptions(adFree = false)
+        case _            => ContainerCommercialOptions(adFree = adFree)
       },
       config.config.description.map(DescriptionMetaHeader),
       customClasses = config.config.metadata.flatMap(paletteClasses(container, _)),

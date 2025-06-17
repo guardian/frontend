@@ -19,34 +19,19 @@ trait Store extends GuLogging with Dates {
   def getSwitches: Option[String] = S3.get(switchesKey)
   def getSwitchesWithLastModified: Option[(String, DateTime)] = S3.getWithLastModified(switchesKey)
   def getSwitchesLastModified: Option[DateTime] = S3.getLastModified(switchesKey)
-  def putSwitches(config: String): Unit = { S3.putPublic(switchesKey, config, "text/plain") }
+  def putSwitches(config: String): Unit = { S3.putPrivate(switchesKey, config, "text/plain") }
 
   def getTopStories: Option[String] = S3.get(topStoriesKey)
   def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
-    S3.putPublic(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
-  }
-  def putSurveySponsorships(adUnitJson: String): Unit = {
-    S3.putPublic(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
-  }
-  def putDfpPageSkinAdUnits(adUnitJson: String): Unit = {
-    S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
-  }
   def putDfpLineItemsReport(everything: String): Unit = {
-    S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
-  }
-  def putDfpAdUnitList(filename: String, adUnits: String): Unit = {
-    S3.putPublic(filename, adUnits, "text/plain")
+    S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
   def putDfpTemplateCreatives(creatives: String): Unit = {
-    S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
+    S3.putPrivate(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
-    S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
-  }
-  def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
-    S3.putPublic(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
+    S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
@@ -99,20 +84,6 @@ trait Store extends GuLogging with Dates {
       }
     }
     targeting getOrElse Nil
-  }
-
-  object commercial {
-
-    def getTakeoversWithEmptyMPUs(): Seq[TakeoverWithEmptyMPUs] = {
-      S3.get(takeoversWithEmptyMPUsKey) map {
-        Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
-      } getOrElse Nil
-    }
-
-    def putTakeoversWithEmptyMPUs(takeovers: Seq[TakeoverWithEmptyMPUs]): Unit = {
-      val content = Json.stringify(toJson(takeovers))
-      S3.putPrivate(takeoversWithEmptyMPUsKey, content, "application/json")
-    }
   }
 }
 

@@ -479,10 +479,6 @@ class GuardianConfiguration extends GuLogging {
       else configuration.getStringProperty("guardian.page.host") getOrElse ""
 
     lazy val dfpAdUnitGuRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
-    lazy val dfpFacebookIaAdUnitRoot =
-      configuration.getMandatoryStringProperty("guardian.page.dfp.facebookIaAdUnitRoot")
-    lazy val dfpMobileAppsAdUnitRoot =
-      configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
 
     lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
@@ -492,27 +488,19 @@ class GuardianConfiguration extends GuLogging {
       configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
     }
 
-    lazy val shouldIncludeLineItemJobs = LineItemJobs.isSwitchedOn
-
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     private lazy val gamRoot = s"$commercialRoot/gam"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v9.json"
-    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
-    lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
-    lazy val dfpNonRefreshableLineItemIdsKey =
-      if (shouldIncludeLineItemJobs) s"$gamRoot/non-refreshable-line-items.json"
-      else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
-    lazy val dfpLineItemsKey =
-      if (shouldIncludeLineItemJobs) s"$gamRoot/line-items.json"
+    def dfpPageSkinnedAdUnitsKey = s"$gamRoot/pageskins.json"
+    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$gamRoot/liveblog-top-sponsorships.json"
+    def dfpSurveySponsorshipDataKey = s"$gamRoot/survey-sponsorships.json"
+    def dfpNonRefreshableLineItemIdsKey = s"$gamRoot/non-refreshable-line-items.json"
+    def dfpLineItemsKey =
+      if (LineItemJobs.isSwitchedOn) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
-    lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
-    lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
-    lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
-    lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"

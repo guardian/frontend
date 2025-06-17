@@ -94,10 +94,8 @@ class ResultsController(
     renderForDate(createDate(year, month, day))
   def allResultsForJson(year: String, month: String, day: String): Action[AnyContent] = allResultsFor(year, month, day)
 
-  def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] =
-    renderMoreForDate(createDate(year, month, day))
   def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] =
-    moreResultsFor(year, month, day)
+    renderMoreForDate(createDate(year, month, day))
 
   def tagResults(tag: String): Action[AnyContent] =
     renderForDate(LocalDate.now(Edition.defaultEdition.timezoneId), Some(tag))
@@ -108,8 +106,6 @@ class ResultsController(
   def tagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     tagResultsFor(year, month, day, tag)
 
-  def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    renderMoreForDate(createDate(year, month, day), Some(tag))
   def moreTagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    moreTagResultsFor(year, month, day, tag)
+    renderMoreForDate(createDate(year, month, day), Some(tag))
 }

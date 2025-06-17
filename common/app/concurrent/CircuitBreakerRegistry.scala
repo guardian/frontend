@@ -25,7 +25,9 @@ object CircuitBreakerRegistry extends GuLogging {
     )
 
     cb.onOpen(
-      log.error(s"Circuit breaker ($name) OPEN (exceeded $maxFailures failures)"),
+      log.error(
+        s"Circuit breaker ($name) OPEN (exceeded $maxFailures failures) with $callTimeout (${callTimeout}) and resetTimeout (${resetTimeout}).",
+      ),
     )
 
     cb.onHalfOpen(
