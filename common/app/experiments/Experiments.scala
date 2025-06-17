@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       DCRJavascriptBundle,
+      HideTrails,
       LoopingVideo,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -25,6 +26,15 @@ object LoopingVideo
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc0A,
+    )
+
+object HideTrails
+    extends Experiment(
+      name = "hide-trails",
+      description = "Hide trails on UK front on mobile",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 7, 30),
+      participationGroup = Perc0B,
     )
 
 object DarkModeWeb
