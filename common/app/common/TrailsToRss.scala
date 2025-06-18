@@ -11,7 +11,7 @@ import model.liveblog.{Blocks, TextBlockElement}
 import model.pressed.PressedStory
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
-import views.support.{ImageProfile, Item140, Item460}
+import views.support.{ImageProfile, Item140, Item460, Item700}
 
 import java.io.StringWriter
 import java.text.SimpleDateFormat
