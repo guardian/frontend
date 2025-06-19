@@ -11,7 +11,7 @@ import model.liveblog.{Blocks, TextBlockElement}
 import model.pressed.PressedStory
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
-import views.support.{ImageProfile, Item140, Item460}
+import views.support.{ImageProfile, Item140, Item460, Item700}
 
 import java.io.StringWriter
 import java.text.SimpleDateFormat
@@ -104,7 +104,7 @@ object TrailsToRss {
       val description = makeEntryDescriptionUsing(standfirst, intro, trail.metadata.webUrl)
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
-        profile: ImageProfile <- List(Item140, Item460)
+        profile: ImageProfile <- List(Item140, Item460, Item700)
         trailPicture: ImageMedia <- trail.trailPicture
         trailAsset: ImageAsset <- profile.bestFor(trailPicture)
         resizedImage <- profile.bestSrcFor(trailPicture)
