@@ -28,15 +28,6 @@ object LoopingVideo
       participationGroup = Perc0A,
     )
 
-object HideTrails
-    extends Experiment(
-      name = "hide-trails",
-      description = "Hide trails on UK front on mobile",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 7, 30),
-      participationGroup = Perc0B,
-    )
-
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
@@ -53,4 +44,13 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 6, 30),
       participationGroup = Perc0E,
+    )
+
+object HideTrails
+    extends Experiment(
+      name = "hide-trails",
+      description = "Hide trails on UK front on mobile",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 7, 30),
+      participationGroup = Perc5A,
     )
