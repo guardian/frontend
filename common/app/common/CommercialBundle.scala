@@ -22,29 +22,30 @@ object CommercialBundle {
   private var cachedTimestamp: Instant = Instant.now()
 
   private def bundlePathFromParameterStore(isVariant: Boolean): String = {
-  if (stage == "devinfra" || stage == "localtest") {
-    "commercial"
-  } else {
-    val pathKey = if (isVariant)
-      s"/frontend/$stage/commercial.bundlePath.variant"
-    else
-      s"/frontend/$stage/commercial.bundlePath"
+    if (stage == "devinfra" || stage == "localtest") {
+      "commercial"
+    } else {
+      val pathKey =
+        if (isVariant)
+          s"/frontend/$stage/commercial.bundlePath.variant"
+        else
+          s"/frontend/$stage/commercial.bundlePath"
 
-    parameterStore.get(pathKey)
-  }
-}
-
-def bundleUrl(isVariant: Boolean): String =
-  s"$basePath${bundlePath(isVariant)}"
-
-private def bundlePath(isVariant: Boolean): String = {
-  if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) {
-    cachedBundlePath = bundlePathFromParameterStore(isVariant)
-    cachedTimestamp = Instant.now()
+      parameterStore.get(pathKey)
+    }
   }
 
-  cachedBundlePath
-}
+  def bundleUrl(isVariant: Boolean): String =
+    s"$basePath${bundlePath(isVariant)}"
+
+  private def bundlePath(isVariant: Boolean): String = {
+    if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) {
+      cachedBundlePath = bundlePathFromParameterStore(isVariant)
+      cachedTimestamp = Instant.now()
+    }
+
+    cachedBundlePath
+  }
   @overload
   def bundleUrl(isVariant: Boolean): String =
     s"$basePath${bundlePath(isVariant)}"
