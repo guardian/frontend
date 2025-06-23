@@ -19,6 +19,7 @@ templates:
     - update-ami-for-sport
     - update-ami-for-archive
     - update-ami-for-applications
+    - update-ami-for-rss
 
 deployments:
   admin:
@@ -103,5 +104,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIApplications:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-rss:
+    app: rss
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIRss:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
