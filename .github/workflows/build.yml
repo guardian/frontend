@@ -1,4 +1,4 @@
-name: 'Build'
+name: "Build"
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ permissions:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
   cancel-in-progress: true
 
 jobs:
@@ -59,18 +59,68 @@ jobs:
             common/conf/assets
           if-no-files-found: error
 
-  build:
-    needs: [client-validate, client-build]
-    runs-on: 8core-ubuntu-latest-frontend
+  scala-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+      - name: Compile
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar compile pushRemoteCache
+
+      - name: Upload sbt cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-sbt-cache
+          path: sbt-cache/
+
+  scala-lint:
+    needs: [scala-compile]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 
-      - run: corepack enable
-
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-java@v4
         with:
-          cache: yarn
-          node-version-file: .nvmrc
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+
+      - name: Download frontend-sbt-cache
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-sbt-cache
+          path: sbt-cache/
+
+      - name: Scala Lint
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar pullRemoteCache scalafmtCheckAll
+
+  scala-test:
+    needs: [client-build, scala-compile]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-java@v5
         with:
@@ -85,7 +135,13 @@ jobs:
           name: frontend-client
           path: .
 
-      - name: Test, Compile, Package
+      - name: Download frontend-sbt-cache
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-sbt-cache
+          path: sbt-cache/
+
+      - name: Test
         # Australia/Sydney  -because it is too easy for devs to forget about timezones
         run: |
           java \
@@ -95,13 +151,47 @@ jobs:
           -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar compile assets scalafmtCheckAll test Universal/packageBin
+          -jar ./bin/sbt-launch.jar pullRemoteCache assets test
 
-      - name: Test Summary
-        uses: test-summary/action@v2
+  package:
+    needs:
+      [client-validate, client-build, scala-compile, scala-lint, scala-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-java@v4
         with:
-          paths: 'test-results/**/TEST-*.xml'
-        if: always()
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+
+      # Scala tests rely on client build assets
+      - name: Download frontend-client
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-client
+          path: .
+
+      - name: Download frontend-sbt-cache
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-sbt-cache
+          path: sbt-cache/
+
+      - name: Package
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar pullRemoteCache assets Universal/packageBin
 
       - uses: guardian/actions-riff-raff@v4.1.2
         env:
