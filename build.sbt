@@ -13,6 +13,8 @@ https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-proj
  */
 ThisBuild / asciiGraphWidth := 999999999
 
+ThisBuild / pushRemoteCacheTo := Some(MavenCache("local-cache", baseDirectory.value / "sbt-cache"))
+
 val common = library("common")
   .settings(
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
