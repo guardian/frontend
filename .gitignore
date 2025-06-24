@@ -94,3 +94,6 @@ metals.sbt
 
 .java-version
 test-results/
+
+# SBT compile cache
+sbt-cache/
