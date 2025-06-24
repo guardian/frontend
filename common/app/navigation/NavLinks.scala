@@ -108,6 +108,8 @@ object NavLinks {
 
   /* SPORT */
 
+  private val footballWomenEuro2025 =
+    NavLink("Euro 2025", "/football/women-s-euro-2025", Some("football/women-s-euro-2025"))
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -121,6 +123,7 @@ object NavLinks {
     "Football",
     "/football",
     children = List(
+      footballWomenEuro2025,
       footballScores,
       footballTables,
       footballFixtures,
