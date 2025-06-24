@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       HideTrails,
       LoopingVideo,
+      CommercialPrebidTest,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -53,4 +54,13 @@ object HideTrails
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc5A,
+    )
+
+object CommercialPrebidTest
+    extends Experiment(
+      name = "commercial-prebid-test",
+      description = "Test a newer prebid version",
+      owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+      sellByDate = new LocalDate(2025, 7, 30),
+      participationGroup = Perc1A,
     )
