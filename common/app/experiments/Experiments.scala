@@ -61,6 +61,6 @@ object CommercialPrebidTest
       name = "commercial-prebid-test",
       description = "Test a newer prebid version",
       owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
-      sellByDate = new LocalDate(2025, 7, 30),
+      sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc1A,
     )
