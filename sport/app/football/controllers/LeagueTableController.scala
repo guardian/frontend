@@ -69,6 +69,7 @@ class LeagueTableController(
     "Community Shield",
     "Scottish Cup",
     "Women's FA Cup",
+    "Women's Euro 2025",
   )
 
   def sortedCompetitions: Seq[Competition] =
