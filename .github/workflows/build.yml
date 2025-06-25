@@ -119,6 +119,10 @@ jobs:
   scala-test:
     needs: [client-build, scala-compile]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
 
@@ -151,7 +155,7 @@ jobs:
           -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar pullRemoteCache assets test
+          -jar ./bin/sbt-launch.jar pullRemoteCache assets testGroup${{ matrix.group }}
 
   package:
     needs:

@@ -208,6 +208,11 @@ val main = root()
     preview,
     rss,
   )
+  .settings(
+    Test / testOnly / aggregate := true,
+    Test / aggregate := true,
+  )
+
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {
   import java.math.BigInteger
