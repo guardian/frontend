@@ -208,6 +208,9 @@ object MediaAtom extends common.GuLogging {
   }
 
   def makeFromThrift(id: String, mediaAtom: MediaAtomData): MediaAtom = {
+    println("trailimage>>>", mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)))
+    println("posterimage>>>", mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)))
+
     MediaAtom(
       id,
       // Default html is not being used by DCR - consider removing this field entirely.
@@ -216,7 +219,7 @@ object MediaAtom extends common.GuLogging {
       title = mediaAtom.title,
       duration = mediaAtom.duration,
       source = mediaAtom.source,
-      posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
+      posterImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
       // We filter out expired atoms in facia-scala-client so this is always false.
       expired = Some(false),
       activeVersion = mediaAtom.activeVersion,
