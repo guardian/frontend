@@ -8,7 +8,6 @@ import model._
 import football.model._
 import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
 import contentapi.ContentApiClient
-import model.content.InteractiveAtom
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
@@ -59,14 +58,11 @@ class MatchDayController(
           val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
 
-          val futureAtom = if (competition.url.endsWith("women-s-euro-2025")) {
-            val id = "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-live-scores"
-            val edition = Edition(request)
-            contentApiClient
-              .getResponse(contentApiClient.item(id, edition))
-              .map(_.interactive.map(InteractiveAtom.make(_)))
-              .recover { case _ => None }
-          } else Future.successful(None)
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            competitionTag,
+            contentApiClient,
+            "atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-live-scores",
+          )
 
           futureAtom.flatMap(maybeAtom => renderMatchList(page, matches, filters, maybeAtom))
         }

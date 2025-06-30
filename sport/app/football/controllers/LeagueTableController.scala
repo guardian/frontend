@@ -7,13 +7,12 @@ import model._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
-import football.model.DotcomRenderingFootballTablesDataModel
+import football.model.{DotcomRenderingFootballTablesDataModel, FootballWomensEuro2025Atom}
 import implicits.{HtmlFormat, JsonFormat}
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{FootballTablesPagePicker, RemoteRender}
 
-import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 case class TablesPage(
@@ -160,14 +159,11 @@ class LeagueTableController(
             s"${table.competition.fullName} table",
           )
 
-          val futureAtom = if (competition == "women-s-euro-2025") {
-            val id = "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables"
-            val edition = Edition(request)
-            contentApiClient
-              .getResponse(contentApiClient.item(id, edition))
-              .map(_.interactive.map(InteractiveAtom.make(_)))
-              .recover { case _ => None }
-          } else Future.successful(None)
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            competition,
+            contentApiClient,
+            "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables",
+          )
 
           val smallTableGroup =
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
