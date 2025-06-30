@@ -160,18 +160,31 @@ class LeagueTableController(
             s"${table.competition.fullName} table",
           )
 
+          val futureAtom = if (competition == "women-s-euro-2025") {
+            val id = "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables"
+            val edition = Edition(request)
+            contentApiClient
+              .getResponse(contentApiClient.item(id, edition))
+              .map(_.interactive.map(InteractiveAtom.make(_)))
+              .recover { case _ => None }
+          } else Future.successful(None)
+
           val smallTableGroup =
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
 
           request.getRequestFormat match {
             case JsonFormat if request.forceDCR =>
-              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
+              futureAtom.flatMap(maybeAtom => {
+                val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder), maybeAtom)
 
-              successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
+                successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
+              })
 
             case HtmlFormat if tier == RemoteRender =>
-              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
-              remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
+              futureAtom.flatMap(maybeAtom => {
+                val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder), maybeAtom)
+                remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
+              })
 
             case _ =>
               val htmlResponse = () =>
