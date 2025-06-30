@@ -85,6 +85,10 @@ trait Store extends GuLogging with Dates {
     }
     targeting getOrElse Nil
   }
+
+  def getAbTestFrameUrl: Option[String] = {
+    S3.getPresignedUrl(abTestHtmlObjectKey)
+  }
 }
 
 object Store extends Store
