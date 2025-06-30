@@ -57,8 +57,8 @@ class WallchartController(
               Future.successful(NotFound)
             case _ =>
               val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
-              val futureAtom = if (competitionTag == "euro-2024") {
-                val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
+              val futureAtom = if (competitionTag == "women-s-euro-2025") {
+                val id = "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables"
                 val edition = Edition(request)
                 contentApiClient
                   .getResponse(contentApiClient.item(id, edition))
