@@ -37,5 +37,4 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
-
 }
