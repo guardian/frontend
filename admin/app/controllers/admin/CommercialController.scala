@@ -11,6 +11,7 @@ import play.api.mvc._
 import tools._
 import conf.switches.Switches.{LineItemJobs}
 
+import conf.switches.Switches.{LineItemJobs}
 import scala.concurrent.duration._
 import scala.util.Try
 
@@ -90,9 +91,9 @@ class CommercialController(
 
   def renderCustomFields: Action[AnyContent] =
     Action { implicit request =>
-      val fields: Seq[GuCustomField] = customFieldAgent.get.data.values.toSeq
+      val fields: Seq[GuCustomField] = if (LineItemJobs.isSwitchedOn) { Store.getDfpCustomFields }
+      else { customFieldAgent.get.data.values.toSeq }
       NoCache(Ok(views.html.commercial.customFields(fields)))
-
     }
 
   def renderAdTests: Action[AnyContent] =
