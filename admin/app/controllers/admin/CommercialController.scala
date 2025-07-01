@@ -9,6 +9,7 @@ import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
 import play.api.mvc._
 import tools._
+import conf.switches.Switches.{LineItemJobs}
 
 import scala.concurrent.duration._
 import scala.util.Try
@@ -44,7 +45,9 @@ class CommercialController(
 
   def renderSpecialAdUnits: Action[AnyContent] =
     Action { implicit request =>
-      val specialAdUnits = dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
+      val specialAdUnits =
+        if (LineItemJobs.isSwitchedOn) { Store.getDfpSpecialAdUnits }
+        else { dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot) }
       Ok(views.html.commercial.specialAdUnits(specialAdUnits))
     }
 
