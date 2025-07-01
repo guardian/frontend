@@ -38,14 +38,4 @@ trait ABTestSwitches {
     highImpact = false,
   )
 
-  Switch(
-    ABTests,
-    "ab-prebid-multibid",
-    "Test re-enabling the multibid feature in Prebid.js",
-    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 7, 15)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
 }
