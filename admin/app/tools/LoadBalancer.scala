@@ -61,7 +61,12 @@ object LoadBalancer extends GuLogging {
       "frontend-archive",
       targetGroup = Some("targetgroup/fronte-Targe-CVM11DC1XUEX/5980205ce24de6bf"),
     ),
-    LoadBalancer("frontend-PROD-rss-ELB", "Rss", "frontend-rss"),
+    LoadBalancer(
+      "app/fronte-LoadB-lVDfejahHxTX/5cfe31b29fa71749",
+      "Rss",
+      "frontend-rss",
+      targetGroup = Some("targetgroup/fronte-Targe-1UWQX08K530W/4da53e8e56d13ab8"),
+    ),
   )
 
   private val agent = Box(loadBalancers)
