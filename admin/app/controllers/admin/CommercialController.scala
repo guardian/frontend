@@ -48,7 +48,7 @@ class CommercialController(
       val specialAdUnits =
         if (LineItemJobs.isSwitchedOn) { Store.getDfpSpecialAdUnits }
         else { dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot) }
-      Ok(views.html.commercial.specialAdUnits(specialAdUnits))
+      NoCache(Ok(views.html.commercial.specialAdUnits(specialAdUnits)))
     }
 
   def renderPageskins: Action[AnyContent] =
