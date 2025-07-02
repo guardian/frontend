@@ -606,4 +606,15 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val WomensEuro2025Atom = Switch(
+    SwitchGroup.Feature,
+    "womens-euro-2025-atom",
+    "If this switch is on, the atom will be rendered on several football data pages",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }
