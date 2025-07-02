@@ -37,4 +37,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-prebid-grouped-slots",
+    "Test grouped slots to allow full benefits of bidCache in Prebid",
+    owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 7, 23)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
