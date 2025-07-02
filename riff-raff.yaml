@@ -49,8 +49,6 @@ deployments:
     template: frontend
   rss:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   sport:
     template: frontend
   frontend-static:
