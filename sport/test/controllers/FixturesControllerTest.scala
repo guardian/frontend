@@ -17,6 +17,7 @@ import org.scalatest.matchers.should.Matchers
     with WithMaterializer
     with BeforeAndAfterAll
     with WithTestApplicationContext
+    with WithTestContentApiClient
     with WithTestWsClient {
 
   val fixturesUrl = "/football/fixtures"
@@ -24,7 +25,12 @@ import org.scalatest.matchers.should.Matchers
   val tag = "premierleague"
 
   lazy val fixturesController =
-    new FixturesController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents(), wsClient)
+    new FixturesController(
+      testCompetitionsService,
+      play.api.test.Helpers.stubControllerComponents(),
+      testContentApiClient,
+      wsClient,
+    )
 
   "can load the all fixtures page" in {
     val result = fixturesController.allFixtures()(TestRequest())
