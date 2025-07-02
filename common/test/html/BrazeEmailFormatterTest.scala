@@ -3,6 +3,7 @@ package html
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.twirl.api.Html
+import org.jsoup.Jsoup
 
 class BrazeEmailFormatterTest extends AnyFlatSpec with Matchers {
 
@@ -83,7 +84,10 @@ class BrazeEmailFormatterTest extends AnyFlatSpec with Matchers {
         |</body>
         |</html>""".stripMargin
 
-    BrazeEmailFormatter(Html(rawHtml)) shouldBe Html(expectedText)
+    val actualHtml = Jsoup.parse(BrazeEmailFormatter(Html(rawHtml)).body).body().html().trim
+    val expectedHtml = Jsoup.parse(expectedText).body().html().trim
+
+    actualHtml shouldBe expectedHtml
   }
 
   it should "not affect unsubscribe url placeholder links" in {

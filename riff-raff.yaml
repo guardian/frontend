@@ -19,6 +19,8 @@ templates:
     - update-ami-for-sport
     - update-ami-for-archive
     - update-ami-for-applications
+    - update-ami-for-rss
+    - update-ami-for-onward
 
 deployments:
   admin:
@@ -41,10 +43,14 @@ deployments:
     template: frontend
   onward:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   preview:
     template: frontend
   rss:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   sport:
     template: frontend
   frontend-static:
@@ -103,5 +109,21 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIApplications:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-rss:
+    app: rss
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIRss:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-onward:
+    app: onward
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIOnward:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
