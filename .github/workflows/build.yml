@@ -60,7 +60,7 @@ jobs:
           if-no-files-found: error
 
   scala-compile:
-    runs-on: ubuntu-latest
+    runs-on: 8core-ubuntu-latest-frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
