@@ -88,10 +88,6 @@ object ProjectSettings {
   val testGroup2 = taskKey[Unit]("run test group 1")
   val testGroup3 = taskKey[Unit]("run test group 3")
   val testGroup4 = taskKey[Unit]("run test group 4")
-  val testGroup5 = taskKey[Unit]("run test group 5")
-  val testGroup6 = taskKey[Unit]("run test group 6")
-  val testGroup7 = taskKey[Unit]("run test group 7")
-  val testGroup8 = taskKey[Unit]("run test group 8")
 
   private def logTests(
                         log: ManagedLogger,
@@ -173,14 +169,10 @@ object ProjectSettings {
       testAll := (Test / test)
         .all(ScopeFilter(inAggregates(ThisProject, includeRoot = false)))
         .value,
-      testGroup1 := createTestGroupTask(8, 1).value,
-      testGroup2 := createTestGroupTask(8, 2).value,
-      testGroup3 := createTestGroupTask(8, 3).value,
-      testGroup4 := createTestGroupTask(8, 4).value,
-      testGroup5 := createTestGroupTask(8, 5).value,
-      testGroup6 := createTestGroupTask(8, 6).value,
-      testGroup7 := createTestGroupTask(8, 7).value,
-      testGroup8 := createTestGroupTask(8, 8).value,
+      testGroup1 := createTestGroupTask(4, 1).value,
+      testGroup2 := createTestGroupTask(4, 2).value,
+      testGroup3 := createTestGroupTask(4, 3).value,
+      testGroup4 := createTestGroupTask(4, 4).value,
     )
 
   def root(): Project =
