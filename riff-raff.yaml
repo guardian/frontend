@@ -43,14 +43,10 @@ deployments:
     template: frontend
   onward:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   preview:
     template: frontend
   rss:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   sport:
     template: frontend
   frontend-static:

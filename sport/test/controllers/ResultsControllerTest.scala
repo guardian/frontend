@@ -22,10 +22,16 @@ import scala.concurrent.Future
     with BeforeAndAfterAll
     with WithTestApplicationContext
     with WithTestExecutionContext
+    with WithTestContentApiClient
     with WithTestWsClient {
 
   val resultsController =
-    new ResultsController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents(), wsClient)
+    new ResultsController(
+      testCompetitionsService,
+      play.api.test.Helpers.stubControllerComponents(),
+      testContentApiClient,
+      wsClient,
+    )
 
   implicit lazy val mat: Materializer = app.materializer
 

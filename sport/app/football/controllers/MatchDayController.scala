@@ -2,10 +2,12 @@ package football.controllers
 
 import feed.CompetitionsService
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
+
 import java.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, ImplicitControllerExecutionContext, JsonComponent}
+import contentapi.ContentApiClient
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
@@ -13,6 +15,7 @@ import scala.concurrent.Future
 class MatchDayController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
     val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
@@ -54,7 +57,14 @@ class MatchDayController(
             else s" ${competition.fullName} matches"
           val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
-          renderMatchList(page, matches, filters)
+
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            competitionTag,
+            contentApiClient,
+            "atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-live-scores",
+          )
+
+          futureAtom.flatMap(maybeAtom => renderMatchList(page, matches, filters, maybeAtom))
         }
         .getOrElse {
           Future.successful(NotFound)

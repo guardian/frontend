@@ -4,6 +4,7 @@ import common.{CanonicalLink, Edition}
 import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchPage}
+import model.content.InteractiveAtom
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
 import model.{ApplicationContext, Competition, CompetitionSummary, Group, StandalonePage, Table, TeamUrl}
@@ -95,6 +96,8 @@ private object DotcomRenderingFootballDataModelImplicits {
   implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
   implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
 
+  implicit val atomFormat: Writes[InteractiveAtom] = Json.writes[InteractiveAtom]
+
   private implicit val matchDayTeamFormat: Writes[MatchDayTeam] = Json.writes[MatchDayTeam]
 
   // Writes for Fixture with a type discriminator
@@ -155,6 +158,7 @@ case class DotcomRenderingFootballMatchListDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     pageId: String,
+    atom: Option[InteractiveAtom],
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballMatchListDataModel {
@@ -162,6 +166,7 @@ object DotcomRenderingFootballMatchListDataModel {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom] = None,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -188,6 +193,7 @@ object DotcomRenderingFootballMatchListDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
+      atom = atom,
     )
   }
 
@@ -230,6 +236,7 @@ case class DotcomRenderingFootballTablesDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     pageId: String,
+    atom: Option[InteractiveAtom],
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballTablesDataModel {
@@ -237,6 +244,7 @@ object DotcomRenderingFootballTablesDataModel {
       page: FootballPage,
       tables: Seq[Table],
       filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom] = None,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -257,6 +265,7 @@ object DotcomRenderingFootballTablesDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
+      atom = atom,
     )
   }
 
