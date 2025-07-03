@@ -43,8 +43,6 @@ deployments:
     template: frontend
   onward:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   preview:
     template: frontend
   rss:
