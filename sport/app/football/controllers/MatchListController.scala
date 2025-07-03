@@ -47,6 +47,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
           page = page,
           matchesList = matchesList,
           filters = filters,
+          atom,
         )
         successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
       case JsonFormat =>
@@ -63,6 +64,7 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
           page = page,
           matchesList = matchesList,
           filters = filters,
+          atom,
         )
         remoteRenderer.getFootballPage(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
       case _ =>

@@ -14,6 +14,9 @@ import services.S3.logS3ExceptionWithDevHint
 import java.io._
 import java.util.zip.GZIPOutputStream
 import scala.io.{Codec, Source}
+import java.util.Date
+import java.time.Instant
+import java.util.concurrent.TimeUnit
 
 trait S3 extends GuLogging {
 
@@ -58,6 +61,24 @@ trait S3 extends GuLogging {
   def get(key: String)(implicit codec: Codec): Option[String] =
     withS3Result(key) { result =>
       Source.fromInputStream(result.getObjectContent).mkString
+    }
+
+  def getPresignedUrl(key: String): Option[String] =
+    client.flatMap { client =>
+      val objectId = ObjectId(bucket, key)
+      val futureInstant = Instant.now().plusMillis(TimeUnit.MINUTES.toMillis(10))
+      try {
+        Some(client.generatePresignedUrl(bucket, key, Date.from(futureInstant)).toExternalForm())
+      } catch {
+        case e: AmazonS3Exception if e.getStatusCode == 404 =>
+          log.warn(s"not found at ${objectId.s3Uri}")
+          None
+        case e: AmazonS3Exception =>
+          logS3ExceptionWithDevHint(objectId, e)
+          None
+        case e: Exception =>
+          throw e
+      }
     }
 
   def getWithLastModified(key: String): Option[(String, DateTime)] =

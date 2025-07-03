@@ -85,6 +85,17 @@ trait Store extends GuLogging with Dates {
     }
     targeting getOrElse Nil
   }
+
+  def getAbTestFrameUrl: Option[String] = {
+    S3.getPresignedUrl(abTestHtmlObjectKey)
+  }
+
+  def getDfpSpecialAdUnits: Seq[(String, String)] = {
+    val specialAdUnits = for (doc <- S3.get(dfpSpecialAdUnitsKey)) yield {
+      Json.parse(doc).as[Seq[(String, String)]]
+    }
+    specialAdUnits getOrElse Nil
+  }
 }
 
 object Store extends Store

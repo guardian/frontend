@@ -497,10 +497,12 @@ class GuardianConfiguration extends GuLogging {
     def dfpLineItemsKey =
       if (LineItemJobs.isSwitchedOn) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
+    lazy val dfpSpecialAdUnitsKey = s"$gamRoot/special-ad-units.json"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
+    lazy val abTestHtmlObjectKey = s"$commercialRoot/ab-tests.html"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"

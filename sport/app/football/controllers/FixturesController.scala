@@ -1,6 +1,7 @@
 package football.controllers
 
 import common.Edition
+import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.model._
 import model._
@@ -11,6 +12,7 @@ import play.api.mvc.{Action, AnyContent, ControllerComponents}
 class FixturesController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
     val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
@@ -77,10 +79,18 @@ class FixturesController(
     getTagFixtures(date, tag)
       .map(result =>
         Action.async { implicit request =>
-          renderMatchList(
-            result._1,
-            result._2,
-            filters,
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            tag,
+            contentApiClient,
+            "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-live-scores",
+          )
+          futureAtom.flatMap(maybeAtom =>
+            renderMatchList(
+              result._1,
+              result._2,
+              filters,
+              maybeAtom,
+            ),
           )
         },
       )
