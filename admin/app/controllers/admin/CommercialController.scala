@@ -90,9 +90,9 @@ class CommercialController(
 
   def renderCustomFields: Action[AnyContent] =
     Action { implicit request =>
-      val fields: Seq[GuCustomField] = customFieldAgent.get.data.values.toSeq
+      val fields: Seq[GuCustomField] = if (LineItemJobs.isSwitchedOn) { Store.getDfpCustomFields }
+      else { customFieldAgent.get.data.values.toSeq }
       NoCache(Ok(views.html.commercial.customFields(fields)))
-
     }
 
   def renderAdTests: Action[AnyContent] =
