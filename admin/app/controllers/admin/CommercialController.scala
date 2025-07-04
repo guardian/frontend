@@ -11,7 +11,6 @@ import play.api.mvc._
 import tools._
 import conf.switches.Switches.{LineItemJobs}
 
-import conf.switches.Switches.{LineItemJobs}
 import scala.concurrent.duration._
 import scala.util.Try
 
