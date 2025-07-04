@@ -105,7 +105,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -964,7 +964,7 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "US",
+					"title": "US news",
 					"url": "/us-news",
 					"longTitle": "US news",
 					"children": [],
@@ -988,7 +988,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -1055,6 +1055,12 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "US immigration",
+					"url": "/us-news/usimmigration",
 					"children": [],
 					"classList": []
 				},
@@ -1705,7 +1711,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -2404,7 +2410,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -3379,7 +3385,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
