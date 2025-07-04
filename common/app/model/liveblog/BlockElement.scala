@@ -182,6 +182,7 @@ object BlockElement {
       case Recipe                    => Some(UnsupportedBlockElement(None))
       case ElementType.List          => Some(UnsupportedBlockElement(None))
       case Timeline                  => Some(UnsupportedBlockElement(None))
+      case Link                  => Some(UnsupportedBlockElement(None))
     }
   }
 

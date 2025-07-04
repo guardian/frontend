@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuM
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   EmbedTracking,
+  LinkType,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
@@ -497,6 +498,15 @@ object PullquoteBlockElement {
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
 }
 
+case class LinkBlockElement(
+                             url: Option[String],
+                             label: Option[String],
+                             linkType: LinkType,
+                           ) extends PageElement
+object LinkBlockElement {
+  implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
+}
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -883,6 +893,7 @@ object PageElement {
       case _: VineBlockElement            => true
       case _: ListBlockElement            => true
       case _: TimelineBlockElement        => true
+      case _: LinkBlockElement            => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1387,6 +1398,17 @@ object PageElement {
             ),
           )
           .toList
+      case Link =>
+        element.linkTypeData
+          .map(d =>
+            LinkBlockElement(
+              d.url,
+              d.label,
+              d.linkType,
+            ),
+          )
+          .toList
+
       case Interactive =>
         element.interactiveTypeData
           .map(d =>
