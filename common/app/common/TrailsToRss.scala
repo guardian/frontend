@@ -211,7 +211,7 @@ object TrailsToRss {
       val description = makeEntryDescriptionUsing(standfirst, intro, webUrl)
 
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
-        profile: ImageProfile <- List(Item140, Item460)
+        profile: ImageProfile <- List(Item140, Item460, Item700)
         trailPicture: ImageMedia <- faciaContent.trail.trailPicture
         trailAsset: ImageAsset <- profile.bestFor(trailPicture)
         resizedImage <- profile.bestSrcFor(trailPicture)
