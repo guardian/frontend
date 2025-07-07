@@ -3,15 +3,7 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1
 import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
-import com.gu.contentapi.client.model.v1.{
-  EmbedTracking,
-  LinkType,
-  SponsorshipType,
-  TimelineElementFields,
-  WitnessElementFields,
-  BlockElement => ApiBlockElement,
-  Sponsorship => ApiSponsorship,
-}
+import com.gu.contentapi.client.model.v1.{EmbedTracking, LinkType, SponsorshipType, TimelineElementFields, WitnessElementFields, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import common.{Chronos, Edition}
 import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
@@ -504,6 +496,8 @@ case class LinkBlockElement(
                              linkType: LinkType,
                            ) extends PageElement
 object LinkBlockElement {
+  implicit val linkTypeWrites: Writes[LinkType] = Writes { linkType => JsString(linkType.name)
+  }
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
 
@@ -1398,13 +1392,14 @@ object PageElement {
             ),
           )
           .toList
+
       case Link =>
         element.linkTypeData
           .map(d =>
             LinkBlockElement(
               d.url,
               d.label,
-              d.linkType,
+              d.linkType.getOrElse(LinkType.ProductButton),
             ),
           )
           .toList
