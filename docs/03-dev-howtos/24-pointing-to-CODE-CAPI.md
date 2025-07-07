@@ -4,7 +4,7 @@ It can be useful when running frontend locally to point it to CODE CAPI. The eas
 
 To do this, follow the instructions in [14-override-default-configuration](./14-override-default-configuration.md), setting `content.api.host` to the url for concierge-CODE (currently `https://content.code.dev-guardianapis.com`), and `content.api.key` to a valid internal-tier key for concierge-CODE.
 
-If you have access to [bonobo-CODE](https://bonobo-code.capi.gutools.co.uk/), you can create yourself a key there. If not, send Content Pipeline a message and they can create a key for you.
+If you have access to [bonobo-CODE](https://bonobo-code.capi.gutools.co.uk/), you can create yourself a key there (Set the tier to Internal). If not, send Content Pipeline a message and they can create a key for you.
 
 To give a complete example, here’s a redacted version of my `~/.gu/frontend.conf` from the last time I did this:
 
