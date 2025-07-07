@@ -4,7 +4,7 @@ import app.LifecycleComponent
 import common._
 import contentapi.ContentApiClient
 import feed.CompetitionsService
-import model.TeamMap
+import model.{ApplicationContext, TeamMap}
 import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
@@ -18,7 +18,7 @@ class FootballLifecycle(
     pekkoAsync: PekkoAsync,
     competitionsService: CompetitionsService,
     contentApiClient: ContentApiClient,
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, context: ApplicationContext)
     extends LifecycleComponent {
 
   val defaultClock = Clock.systemDefaultZone()
@@ -31,10 +31,19 @@ class FootballLifecycle(
 
   private def scheduleJobs(): Unit = {
     competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
-      // stagger fixtures and results refreshes to avoid timeouts
-      val seconds = index * 5 % 60
-      val minutes = index * 5 / 60 % 5
-      val cron = s"$seconds $minutes/5 * * * ?"
+      val cron = if (context.isPreview) {
+        // In preview mode, stagger jobs more slowly (once per hour, spaced out by minute based on index)
+        val minute = index % 60 // Distribute jobs over the 60 minutes of the hour
+        s"0 $minute * * * ?"
+      } else {
+        // Normal mode: Stagger jobs once per 5 minutes spaced out by seconds based on index
+        // stagger fixtures and results refreshes to avoid timeouts
+        val seconds = index * 5 % 60
+        val minutes = index * 5 / 60 % 5
+        s"$seconds $minutes/5 * * * ?"
+      }
+
+      println(s"cron: ${cron}")
 
       jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
         competitionsService.refreshCompetitionAgent(id, defaultClock)
@@ -46,19 +55,24 @@ class FootballLifecycle(
     Ideally, we should combine the logic of these two jobs so we only call once. This is tricky to achieve with the current code.
     We intend to move to a stream model so we can achieve this.
      */
-    jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
+    // if preview "Every hour at 40 minutes" otherwise "Every 5 minutes"
+    // 40 minute was chosen for preview to run these jobs after the 35 CompetitionAgentRefreshJobs are finished
+    jobs.schedule("MatchDayAgentRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/5 * * * ?") {
       competitionsService.refreshMatchDay(defaultClock)
     }
 
-    jobs.schedule("MaybeMatchDayAgentRefreshJob", "0 0/1 * * * ?") {
+    // if preview "Every hour at 40 minutes" otherwise "Every minute"
+    jobs.schedule("MaybeMatchDayAgentRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/1 * * * ?") {
       competitionsService.maybeRefreshLiveMatches(defaultClock)
     }
 
-    jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
+    // if preview "Every hour at 40 minutes" otherwise "Every 10 minutes"
+    jobs.schedule("CompetitionRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/10 * * * ?") {
       competitionsService.refreshCompetitionData()
     }
 
-    jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
+    // if preview "Every hour at 40 minutes" otherwise "Every minute"
+    jobs.schedule("TeamMapRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/10 * * * ?") {
       TeamMap.refresh()(contentApiClient, ec)
     }
   }
