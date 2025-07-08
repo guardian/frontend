@@ -78,7 +78,8 @@ class CommercialController(
 
   def renderCreativeTemplates: Action[AnyContent] =
     Action { implicit request =>
-      val emptyTemplates = createTemplateAgent.get
+      val emptyTemplates = if (LineItemJobs.isSwitchedOn) { Store.getDfpCreativeTemplates }
+      else { createTemplateAgent.get }
       val creatives = Store.getDfpTemplateCreatives
       val templates = emptyTemplates
         .foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
