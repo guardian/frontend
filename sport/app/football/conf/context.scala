@@ -111,9 +111,16 @@ class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 
   lazy val apiKey = SportConfiguration.pa.footballKey
 
+  val nonCriticalErrors: List[String] = List(
+    "Access to season is denied by client configuration.",
+    "No data available",
+  )
   def logErrorsWithMessage[T](message: String): PartialFunction[Throwable, T] = { case e: PaClientErrorsException =>
-    log.error(s"Football Client errors: $message (${e.getMessage})")
+    if (nonCriticalErrors.contains(e.getMessage)) {
+      log.warn(s"$message (${e.getMessage})")
+    } else {
+      log.error(s"$message (${e.getMessage})")
+    }
     throw e
   }
-
 }
