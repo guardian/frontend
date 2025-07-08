@@ -61,7 +61,7 @@ jobs:
 
   build:
     needs: [client-validate, client-build]
-    runs-on: 8core-ubuntu-latest-frontend
+    runs-on: 8core-ubuntu-24.04-arm-frontend
     steps:
       - uses: actions/checkout@v4
 
