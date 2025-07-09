@@ -27,6 +27,15 @@ object LoopingVideo
       participationGroup = Perc0A,
     )
 
+object TopAboveNav250Reservation
+    extends Experiment(
+      name = "top-above-nav-250-reservation",
+      description = "Reserve 250px for top-above-nav instead of 90px",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 8, 29),
+      participationGroup = Perc0B,
+    )
+
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
