@@ -901,17 +901,11 @@ object AffiliateLinksCleaner {
     html
   }
 
-  def replaceLinksInElement(html: String, pageUrl: String): TextBlockElement = {
-    val doc = Jsoup.parseBodyFragment(html)
-    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
-    linksToReplace.foreach { el =>
-      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)).attr("rel", "sponsored")
-    }
-
-    if (linksToReplace.nonEmpty) {
-      TextBlockElement(doc.body().html())
-    } else {
-      TextBlockElement(html)
+  def replaceUrlInLink(url: Option[String], pageUrl: String, addAffiliateLinks: Boolean): Option[String] = {
+    url match {
+      case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
+        Some(linkToSkimLink(link, pageUrl, skimlinksId))
+      case _ => url
     }
   }
 

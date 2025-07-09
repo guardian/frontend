@@ -23,7 +23,7 @@ import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{ImgSrc, SrcSet, Video700}
+import views.support.{ImgSrc, SrcSet, Video700, AffiliateLinksCleaner}
 
 import java.net.URLEncoder
 import scala.jdk.CollectionConverters._
@@ -1406,7 +1406,7 @@ object PageElement {
         element.linkTypeData
           .map(d =>
             LinkBlockElement(
-              d.url,
+              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks),
               d.label,
               d.linkType.getOrElse(LinkType.ProductButton),
             ),
