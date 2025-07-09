@@ -3810,6 +3810,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@guardian/core-web-vitals@npm:0.0.0-canary-20250708135721":
+  version: 0.0.0-canary-20250708135721
+  resolution: "@guardian/core-web-vitals@npm:0.0.0-canary-20250708135721"
+  peerDependencies:
+    "@guardian/libs": 0.0.0-canary-20250708135721
+    tslib: ^2.6.2
+    typescript: ~5.5.2
+    web-vitals: ^4.2.1
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/4cb6b3d356097fd7bfcfd52d0b9d3b16cfe66b4f9357ed8a4b3833085b39765740b704d26577378c7d24c877297a92bc2911b6d2bdff7030519f422cde5c6c31
+  languageName: node
+  linkType: hard
+
 "@guardian/core-web-vitals@npm:11.0.0":
   version: 11.0.0
   resolution: "@guardian/core-web-vitals@npm:11.0.0"
@@ -3822,21 +3837,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/6f010f4e54aacd1d28e2b01423cbf64766bfdbeeb2c1966b3862bc86ed60a601824c67c82d91b44d2430842a81c1440c8f7a2458142ccc39ffa16eec8b1cee1c
-  languageName: node
-  linkType: hard
-
-"@guardian/core-web-vitals@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@guardian/core-web-vitals@npm:6.0.0"
-  peerDependencies:
-    "@guardian/libs": ^16.0.0
-    tslib: ^2.6.2
-    typescript: ~5.3.3
-    web-vitals: ^3.5.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/2352ab8e3f60d5519dc52bd1ce298e13f583e059b42ded51786d3c1325c5b39fae1d855c9792fdd5e7b30aa7bc166ebf9448267e847b522bf103d7929ab9520b
   languageName: node
   linkType: hard
 
@@ -3895,10 +3895,10 @@ __metadata:
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
     "@guardian/commercial": "npm:26.1.1"
-    "@guardian/core-web-vitals": "npm:6.0.0"
+    "@guardian/core-web-vitals": "npm:0.0.0-canary-20250708135721"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
-    "@guardian/identity-auth": "npm:6.0.1"
-    "@guardian/identity-auth-frontend": "npm:8.1.0"
+    "@guardian/identity-auth": "npm:0.0.0-canary-20250708135721"
+    "@guardian/identity-auth-frontend": "npm:0.0.0-canary-20250708135721"
     "@guardian/libs": "npm:0.0.0-canary-20250708135721"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
@@ -4026,18 +4026,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@guardian/identity-auth-frontend@npm:8.1.0":
-  version: 8.1.0
-  resolution: "@guardian/identity-auth-frontend@npm:8.1.0"
+"@guardian/identity-auth-frontend@npm:0.0.0-canary-20250708135721":
+  version: 0.0.0-canary-20250708135721
+  resolution: "@guardian/identity-auth-frontend@npm:0.0.0-canary-20250708135721"
   peerDependencies:
-    "@guardian/identity-auth": ^6.0.0
-    "@guardian/libs": ^21.0.0
+    "@guardian/identity-auth": 0.0.0-canary-20250708135721
+    "@guardian/libs": 0.0.0-canary-20250708135721
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/905dbe1bb547de79dba6a9a4462f31a9e804d71c7fedbbc87d557f6c7b4fcb20cafc63021f9b0cd254e4718f87f03c4d0cd529b872d62f548eb4ab1558913168
+  checksum: 10c0/8819d82782fcbe679153a3d9c63874fc2340d7323f712a8554be00152720eb8d575a6890cfe6120a96e9af1068e9a95b7929b0834d7a39dbb335e16737d306f9
   languageName: node
   linkType: hard
 
@@ -4056,17 +4056,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/identity-auth@npm:6.0.1":
-  version: 6.0.1
-  resolution: "@guardian/identity-auth@npm:6.0.1"
+"@guardian/identity-auth@npm:0.0.0-canary-20250708135721":
+  version: 0.0.0-canary-20250708135721
+  resolution: "@guardian/identity-auth@npm:0.0.0-canary-20250708135721"
   peerDependencies:
-    "@guardian/libs": ^21.0.0
+    "@guardian/libs": 0.0.0-canary-20250708135721
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/c97408cc262ae3fe4cc8421e3bde26e81455047497618d607a636f64ea45578bda2685f4b503bdd1a383bc55422873b087009c84ced4fd7c9f5d9ed113c3b545
+  checksum: 10c0/7bde1100bc3fd406407c073f2add9637ace49f7993438c3da6a4f4e39b4456bc8ec51de7ad064da9eb7df2eb2325b8c9bac704a9af5e4979f14416398f1b4fdd
   languageName: node
   linkType: hard
 
