@@ -58,7 +58,8 @@ class DevParametersHttpRequestHandler(
     "pbjs_debug", // set to `true` to enable prebid debugging,
     "amzn_debug_mode", // set to `1` to enable A9 debugging
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
-    "dcr", // force page to render in DCR
+    "dcr", // force page to render in DCR,
+    "_sp_env", // allow testing of Sourcepoint stage campaign
   )
 
   val commercialParams = Seq(
