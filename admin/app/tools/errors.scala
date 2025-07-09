@@ -12,29 +12,6 @@ object HttpErrors {
 
   private val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
-  def googlebot404s()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] =
-    withErrorLogging(
-      Future.sequence(
-        Seq(
-          euWestClient.getMetricStatisticsFuture(
-            metric("googlebot-404s", "ArchiveMetrics")
-              .withStartTime(new DateTime().minusHours(12).toDate)
-              .withDimensions(stage),
-          ) map { metric =>
-            new AwsLineChart("12 hours", Seq("Time", "404/min"), ChartFormat(Colour.`tone-live-1`), metric)
-          },
-          euWestClient.getMetricStatisticsFuture(
-            metric("googlebot-404s", "ArchiveMetrics")
-              .withDimensions(stage)
-              .withPeriod(900)
-              .withStartTime(new DateTime().minusDays(14).toDate),
-          ) map { metric =>
-            new AwsLineChart("2 weeks", Seq("Time", "404/15min"), ChartFormat(Colour.`tone-live-2`), metric)
-          },
-        ),
-      ),
-    )
-
   val v1Metric4XX = "HTTPCode_Backend_4XX"
   val v2Metric4XX = "HTTPCode_Target_4XX_Count"
 
