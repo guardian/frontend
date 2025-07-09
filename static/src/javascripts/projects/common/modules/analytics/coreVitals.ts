@@ -6,7 +6,7 @@ import { getCookie } from '@guardian/libs';
 import { shouldCaptureMetrics } from './shouldCaptureMetrics';
 
 const coreVitals = (): void => {
-	const browserId = getCookie({ name: 'bwid', shouldMemoize: true });
+	const browserId = getCookie({ name: 'bwid', shouldMemoize: true }) ?? undefined;
 	const pageViewId = window.guardian.config.ophan.pageViewId;
 	const { isDev } = window.guardian.config.page;
 	const sampling = 1 / 100;
