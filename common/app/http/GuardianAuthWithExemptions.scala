@@ -1,7 +1,8 @@
 package http
 
 import com.amazonaws.regions.Regions
-import com.amazonaws.services.s3.AmazonS3
+import software.amazon.awssdk.core.sync.ResponseTransformer
+import software.amazon.awssdk.services.s3.S3Client
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
@@ -22,7 +23,7 @@ class GuardianAuthWithExemptions(
     override val wsClient: WSClient,
     toolsDomainPrefix: String,
     oauthCallbackPath: String,
-    s3Client: AmazonS3,
+    s3Client: S3Client,
     system: String,
     extraDoNotAuthenticatePathPrefixes: Seq[String],
     requiredEditorialPermissionName: String,
@@ -57,7 +58,13 @@ class GuardianAuthWithExemptions(
   override lazy val panDomainSettings = PanDomainAuthSettingsRefresher(
     domain = toolsDomainSuffix,
     system,
-    S3BucketLoader.forAwsSdkV1(s3Client, "pan-domain-auth-settings"),
+    new S3BucketLoader {
+      def inputStreamFetching(key: String) =
+        s3Client.getObject(
+          _.bucket("pan-domain-auth-settings").key(key),
+          ResponseTransformer.toInputStream(),
+        )
+    },
   )
 
   override def authCallbackUrl = s"https://$toolsDomainPrefix.$toolsDomainSuffix$oauthCallbackPath"
