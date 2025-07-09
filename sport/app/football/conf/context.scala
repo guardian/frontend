@@ -32,18 +32,22 @@ class FootballLifecycle(
   private def scheduleJobs(): Unit = {
     competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
       val cron = if (context.isPreview) {
-        // In preview mode, stagger jobs more slowly (once per hour, spaced out by minute based on index)
+        // In preview mode, the jobs will run once every hour
+        // the jobs are spaced out by 1 minute from each other
+        // e.g. competition index 0, runs every hour at minute 0
+        // competition index 4, runs every hour at minute 5
         val minute = index % 60 // Distribute jobs over the 60 minutes of the hour
         s"0 $minute * * * ?"
       } else {
-        // Normal mode: Stagger jobs once per 5 minutes spaced out by seconds based on index
-        // stagger fixtures and results refreshes to avoid timeouts
+        // Jobs will run once every 5 minute at $seconds seconds past the minute
+        // starting at $minutes minutes past the hour
+        // The jobs are spaced out by 5 seconds from each other
+        // e.g. competition index 0, runs every 5 minutes at second 0
+        // competition index 4, runs every 5 minutes at second 20 past the minute
         val seconds = index * 5 % 60
         val minutes = index * 5 / 60 % 5
         s"$seconds $minutes/5 * * * ?"
       }
-
-      println(s"cron: ${cron}")
 
       jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
         competitionsService.refreshCompetitionAgent(id, defaultClock)
