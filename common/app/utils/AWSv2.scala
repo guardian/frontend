@@ -5,6 +5,7 @@ import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.regions.Region.EU_WEST_1
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.{S3AsyncClient, S3AsyncClientBuilder, S3Client, S3ClientBuilder}
 import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
@@ -30,6 +31,8 @@ object AWSv2 {
   val S3Async: S3AsyncClient = buildS3AsyncClient(credentials)
 
   val S3Sync: S3Client = build[S3Client, S3ClientBuilder](S3Client.builder())
+
+  val S3PresignerSync: S3Presigner = S3Presigner.builder().credentialsProvider(credentials).region(region).build()
 
   val STS: StsClient = build[StsClient, StsClientBuilder](StsClient.builder())
 
