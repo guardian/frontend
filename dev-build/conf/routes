@@ -187,7 +187,7 @@ GET            /metrics/loadbalancers                                           
 GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()
 GET            /metrics/errors                                                                                                   controllers.admin.MetricsController.renderErrors()
 GET            /metrics/errors/4xx                                                                                               controllers.admin.MetricsController.render4XX()
-GET            /metrics/errors/5xx                                                                                               controllers.admin.MetricsController.render5XX()                                                                                  controllers.admin.MetricsController.renderBundleAnalyzer()
+GET            /metrics/errors/5xx                                                                                               controllers.admin.MetricsController.render5XX()
 GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
 GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET            /troubleshoot/pages                                                                                               controllers.admin.TroubleshooterController.index()
