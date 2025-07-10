@@ -55,8 +55,6 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked nav-bleed">
-                        <li><a href="https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=OKR">OKR dashboard (requires AWS access)</a></li>
-                        <li><a href="@Configuration.Elk.kibanaUrl">Kibana (Server side logs)</a></li>
                         <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
                         <li>
@@ -64,12 +62,8 @@
                             <ul class="nav nav-pills nav-stacked nav-bleed">
                                 <li><a href="@controllers.admin.routes.MetricsController.render4XX()">4XX</a></li>
                                 <li><a href="@controllers.admin.routes.MetricsController.render5XX()">5XX</a></li>
-                                <li><a href="@controllers.admin.routes.MetricsController.renderGooglebot404s()">Googlebot 404s</a></li>
                             </ul>
                         </li>
-                        <li><a href="@controllers.admin.routes.MetricsController.renderAfg()">Assets frequency graph</a></li>
-                        <li><a href="@controllers.admin.routes.MetricsController.renderBundleVisualization()">Webpack bundles visualization</a></li>
-                        <li><a href="@controllers.admin.routes.MetricsController.renderBundleAnalyzer()">Webpack bundle analyzer report</a></li>
                     </ul>
                 </div>
             </div>
