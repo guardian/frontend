@@ -50,7 +50,7 @@ trait S3 extends GuLogging {
       .getObjectRequest(GetObjectRequest.builder.bucket(bucket).key(key).build)
       .build()
 
-    S3.presigner.presignGetObject(presignRequest).url.toExternalForm
+    AWSv2.S3PresignerSync.presignGetObject(presignRequest).url.toExternalForm
   }
 
   private def toDateTime(instant: Instant): DateTime = new DateTime(instant.toEpochMilli)
@@ -122,8 +122,6 @@ trait S3 extends GuLogging {
 }
 
 object S3 extends S3 {
-  val presigner = S3Presigner.create
-
   def logS3ExceptionWithDevHint(s3ObjectId: ObjectId, e: Exception): Unit = {
     val errorMsg = s"Unable to fetch S3 object (${s3ObjectId.s3Uri})"
     val hintMsg = "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."

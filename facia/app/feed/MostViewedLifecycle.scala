@@ -5,6 +5,7 @@ import agents.MostViewedAgent
 import java.util.concurrent.Executors
 import app.LifecycleComponent
 import common.{JobScheduler, PekkoAsync}
+import conf.Configuration
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
@@ -33,7 +34,10 @@ class MostViewedLifecycle(
 
     descheduleAll()
 
-    jobs.scheduleEveryNMinutes("MostViewedAgentsHighFrequencyRefreshJob", 5) {
+    jobs.scheduleEveryNMinutes(
+      "MostViewedAgentsHighFrequencyRefreshJob",
+      if (Configuration.environment.isProd) 5 else 60,
+    ) {
       mostViewedAgent.refresh()
     }
 

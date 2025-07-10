@@ -261,10 +261,10 @@ object KnockoutSpider {
     "423" -> List(
       // Group A Winner & Group B Runner Up
       ZonedDateTime.of(2025, 7, 16, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 1  // 4287725
-      // Group C Winner & Group D Runner up
-      ZonedDateTime.of(2025, 7, 18, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
       // Group B Winner & Group A Runner Up
       ZonedDateTime.of(2025, 7, 17, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 2  // 4287726
+      // Group C Winner & Group D Runner up
+      ZonedDateTime.of(2025, 7, 18, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
       // Group D Winner & Group C Runner up
       ZonedDateTime.of(2025, 7, 19, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
       // QF Winners 3 & 1
