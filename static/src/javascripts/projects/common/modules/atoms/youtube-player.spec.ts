@@ -90,6 +90,7 @@ const canTargetUSNAT = (canTarget: boolean): ConsentState => ({
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
 	aus: {
 		personalisedAdvertising: canTarget,
+		signalStatus: 'ready',
 	},
 	canTarget,
 	framework: 'aus',
@@ -200,7 +201,7 @@ describe('Get Host (no-cookie)', () => {
 	test('`youtube-nocookie.com` with an ad-free', () => {
 		const host = youtubePlayer.getHost({
 			consentState: {
-				aus: { personalisedAdvertising: true },
+				aus: { personalisedAdvertising: true, signalStatus: 'ready' },
 				canTarget: true,
 				framework: 'aus',
 			},
@@ -214,7 +215,7 @@ describe('Get Host (no-cookie)', () => {
 	test('`youtube-nocookie.com` with for other than youtube-media-atom__iframe', () => {
 		const host = youtubePlayer.getHost({
 			consentState: {
-				aus: { personalisedAdvertising: true },
+				aus: { personalisedAdvertising: true, signalStatus: 'ready' },
 				canTarget: true,
 				framework: 'aus',
 			},
@@ -228,7 +229,7 @@ describe('Get Host (no-cookie)', () => {
 	test('`youtube.com` when all three conditions met', () => {
 		const host = youtubePlayer.getHost({
 			consentState: {
-				aus: { personalisedAdvertising: true },
+				aus: { personalisedAdvertising: true, signalStatus: 'ready' },
 				canTarget: true,
 				framework: 'aus',
 			},
