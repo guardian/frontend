@@ -1,8 +1,9 @@
 package cricket.conf
 
 import app.LifecycleComponent
-import common.{PekkoAsync, JobScheduler}
+import common.{JobScheduler, PekkoAsync}
 import jobs.CricketStatsJob
+import model.ApplicationContext
 
 import java.time.LocalDate
 import play.api.inject.ApplicationLifecycle
@@ -15,7 +16,7 @@ class CricketLifecycle(
     jobs: JobScheduler,
     pekkoAsync: PekkoAsync,
     cricketStatsJob: CricketStatsJob,
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, context: ApplicationContext)
     extends LifecycleComponent {
 
   appLifeCycle.addStopHook { () =>
@@ -25,10 +26,12 @@ class CricketLifecycle(
   }
 
   private def scheduleJobs(): Unit = {
-    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 5.minutes) {
+    // if preview "Every hour" otherwise "Every 5 minutes"
+    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", if (context.isPreview) 1.hour else 5.minutes) {
       Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
     }
-    jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", 10.minutes) {
+    // if preview "Every hour" otherwise "Every 10 minutes"
+    jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", if (context.isPreview) 1.hour else 10.minutes) {
       Future(cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10))
     }
   }
