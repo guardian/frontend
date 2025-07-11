@@ -66,17 +66,17 @@ class FootballLifecycle(
     }
 
     // if preview "Every hour at 40 minutes" otherwise "Every minute"
-    jobs.schedule("MaybeMatchDayAgentRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/1 * * * ?") {
+    jobs.schedule("MaybeMatchDayAgentRefreshJob", if (context.isPreview) "0 41 * * * ?" else "0 0/1 * * * ?") {
       competitionsService.maybeRefreshLiveMatches(defaultClock)
     }
 
     // if preview "Every hour at 40 minutes" otherwise "Every 10 minutes"
-    jobs.schedule("CompetitionRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/10 * * * ?") {
+    jobs.schedule("CompetitionRefreshJob", if (context.isPreview) "0 42 * * * ?" else "0 0/10 * * * ?") {
       competitionsService.refreshCompetitionData()
     }
 
     // if preview "Every hour at 40 minutes" otherwise "Every 10 minutes"
-    jobs.schedule("TeamMapRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/10 * * * ?") {
+    jobs.schedule("TeamMapRefreshJob", if (context.isPreview) "0 43 * * * ?" else "0 0/10 * * * ?") {
       TeamMap.refresh()(contentApiClient, ec)
     }
   }
