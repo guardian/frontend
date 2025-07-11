@@ -45,17 +45,17 @@ class OnwardJourneyLifecycle(
     // Spreading the jobs in a way that they all run have 30 seconds apart from each others
     // Every 5 minutes
     jobs.schedule("MostPopularAgentRefreshJob", "0 0/5 * * * ?") { mostPopularAgent.refresh() }
-    jobs.schedule("GeoMostPopularAgentRefreshJob", "30 0/5 * * * ?") { geoMostPopularAgent.refresh() }
-    jobs.schedule("DeeplyReadAgentRefreshJob", "0 1/5 * * * ?") { deeplyReadAgent.refresh() }
+    jobs.schedule("GeoMostPopularAgentRefreshJob", "0 1/5 * * * ?") { geoMostPopularAgent.refresh() }
+    jobs.schedule("DeeplyReadAgentRefreshJob", "0 2/5 * * * ?") { deeplyReadAgent.refresh() }
 
     // Every 30 minutes
-    jobs.schedule("MostViewedVideoAgentRefreshJob", "30 1/30 * * * ?") { mostViewedVideoAgent.refresh() }
-    jobs.schedule("MostViewedAudioAgentRefreshJob", "0 2/30 * * * ?") { mostViewedAudioAgent.refresh() }
-    jobs.schedule("MostViewedGalleryAgentRefreshJob", "30 2/30 * * * ?") { mostViewedGalleryAgent.refresh() }
-    jobs.schedule("MostReadAgentRefreshJob", "0 3/30 * * * ?") { mostReadAgent.refresh() }
+    jobs.schedule("MostViewedVideoAgentRefreshJob", "0 3/30 * * * ?") { mostViewedVideoAgent.refresh() }
+    jobs.schedule("MostViewedAudioAgentRefreshJob", "0 4/30 * * * ?") { mostViewedAudioAgent.refresh() }
+    jobs.schedule("MostViewedGalleryAgentRefreshJob", "30 5/30 * * * ?") { mostViewedGalleryAgent.refresh() }
+    jobs.schedule("MostReadAgentRefreshJob", "30 6/30 * * * ?") { mostReadAgent.refresh() }
 
     // Every 60 minutes
-    jobs.schedule("DayMostPopularAgentRefreshJob", "30 3/60 * * * ?") { dayMostPopularAgent.refresh() }
+    jobs.schedule("DayMostPopularAgentRefreshJob", "30 7/60 * * * ?") { dayMostPopularAgent.refresh() }
 
     pekkoAsync.after1s {
       mostPopularAgent.refresh()
