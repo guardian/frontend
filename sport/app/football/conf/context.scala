@@ -75,7 +75,7 @@ class FootballLifecycle(
       competitionsService.refreshCompetitionData()
     }
 
-    // if preview "Every hour at 40 minutes" otherwise "Every minute"
+    // if preview "Every hour at 40 minutes" otherwise "Every 10 minutes"
     jobs.schedule("TeamMapRefreshJob", if (context.isPreview) "0 40 * * * ?" else "0 0/10 * * * ?") {
       TeamMap.refresh()(contentApiClient, ec)
     }
