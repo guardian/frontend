@@ -1,29 +1,19 @@
 package controllers
 
-import com.madgag.scala.collection.decorators.MapDecorator
-
-import java.time.Instant
-import java.time.temporal.ChronoUnit
+import agents.DeeplyReadAgent
 import common._
-import conf.switches.Switches
 import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
-import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import model.dotcomrendering.{
-  MostPopularGeoResponse,
-  MostPopularCollectionResponse,
-  OnwardCollectionResponse,
-  OnwardCollectionResponseDCR,
-  Trail,
-}
+import model.dotcomrendering.{Trail, _}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import scala.concurrent.Future
-import agents.DeeplyReadAgent
 
 class MostPopularController(
     contentApiClient: ContentApiClient,
@@ -71,7 +61,7 @@ class MostPopularController(
 
         mostPopular match {
           case Nil                         => NotFound
-          case popular if request.forceDCR => jsonResponse(popular, mostCards())
+          case popular if request.forceDCR => jsonResponse(popular)
           case popular if !request.isJson =>
             Cached(900) {
               RevalidatableResult.Ok(views.html.mostPopular(page, popular))
@@ -80,11 +70,7 @@ class MostPopularController(
             Cached(2) {
               JsonComponent(
                 "html" -> {
-                  if (Switches.ExtendedMostPopular.isSwitchedOn) {
-                    views.html.fragments.collections.popularExtended(popular, mostCards())
-                  } else {
-                    views.html.fragments.collections.popular(popular)
-                  }
+                  views.html.fragments.collections.popular(popular)
                 },
                 "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular),
               )
@@ -112,11 +98,7 @@ class MostPopularController(
         Cached(900) {
           JsonComponent(
             "html" -> {
-              if (Switches.ExtendedMostPopularFronts.isSwitchedOn) {
-                views.html.fragments.collections.popularExtended(Seq(countryPopular), mostCards())
-              } else {
-                views.html.fragments.collections.popular(Seq(countryPopular))
-              }
+              views.html.fragments.collections.popular(Seq(countryPopular))
             },
             "rightHtml" -> views.html.fragments
               .rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
@@ -126,7 +108,7 @@ class MostPopularController(
       }
     }
 
-  def jsonResponse(mostPopulars: Seq[MostPopular], mostCards: Map[String, Option[ContentCard]])(implicit
+  def jsonResponse(mostPopulars: Seq[MostPopular])(implicit
       request: RequestHeader,
   ): Result = {
     val tabs = mostPopulars.map { section =>
@@ -135,29 +117,17 @@ class MostPopularController(
         trails = section.trails.map(Trail.pressedContentToTrail).take(10),
       )
     }
-    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      Trail.contentCardToTrail(contentCard)
-    }
-    val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      Trail.contentCardToTrail(contentCard)
-    }
-    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs)
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
-  def jsonResponseTrails(mostPopulars: Seq[MostPopularCollectionResponse], mostCards: Map[String, Option[ContentCard]])(
-      implicit request: RequestHeader,
+  def jsonResponseTrails(mostPopulars: Seq[MostPopularCollectionResponse])(implicit
+      request: RequestHeader,
   ): Result = {
     val tabs = mostPopulars.map { tab =>
       OnwardCollectionResponse(tab.heading, tab.trails)
     }
-    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      Trail.contentCardToTrail(contentCard)
-    }
-    val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      Trail.contentCardToTrail(contentCard)
-    }
-    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs)
     Cached(900)(JsonComponent.fromWritable(response))
   }
 
@@ -247,17 +217,13 @@ class MostPopularController(
       }
 
       val response = (editionPopular, deeplyRead) match {
-        case (Some(p), Some(d)) =>
-          jsonResponseTrails(editionPopular.toSeq ++ deeplyRead.toSeq, mostCards())
+        case (Some(_), Some(_)) =>
+          jsonResponseTrails(editionPopular.toSeq ++ deeplyRead.toSeq)
         case (_, _) => NotFound
       }
 
       Future(response)
     }
-
-  // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
-  private def mostCards(): Map[String, Option[ContentCard]] =
-    mostPopularAgent.mostSingleCardsBox.get().mapV(ContentCard.fromApiContent)
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     logInfoWithRequestId(s"Fetching most popular: $path for edition $edition")

@@ -12,8 +12,6 @@ object OnwardCollectionResponse {
 
 case class OnwardCollectionResponseDCR(
     tabs: Seq[OnwardCollectionResponse],
-    mostCommented: Option[Trail],
-    mostShared: Option[Trail],
 )
 object OnwardCollectionResponseDCR {
   implicit val onwardCollectionResponseForDRCWrites: OWrites[OnwardCollectionResponseDCR] =

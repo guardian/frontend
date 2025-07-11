@@ -8,14 +8,13 @@ import conf.switches.Switches.InlineEmailStyles
 import controllers.front._
 import http.HttpPreconnections
 import implicits.GUHeaders
-import layout.slices._
 import layout._
+import layout.slices._
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.dotcomrendering.{DotcomFrontsRenderingDataModel, PageType}
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
-import net.logstash.logback.marker.Markers.append
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
@@ -222,8 +221,6 @@ trait FaciaController
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val futureFaciaPage = getFaciaPage(path)
 
-    val customLogFieldMarker = append("requestId", request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"))
-
     val networkFrontEdition = Edition.allEditions.find(_.networkFrontId == path)
     val deeplyRead = networkFrontEdition.map(deeplyReadAgent.getTrails)
 
@@ -244,8 +241,6 @@ trait FaciaController
             page = faciaPage,
             pageType = pageType,
             mostViewed = mostViewedAgent.mostViewed(Edition(request)),
-            mostCommented = mostViewedAgent.mostCommented,
-            mostShared = mostViewedAgent.mostShared,
             deeplyRead = deeplyRead,
           )(request),
           targetedTerritories,
@@ -268,8 +263,6 @@ trait FaciaController
               request = request,
               pageType = PageType(faciaPage, request, context),
               mostViewed = mostViewedAgent.mostViewed(Edition(request)),
-              mostCommented = mostViewedAgent.mostCommented,
-              mostShared = mostViewedAgent.mostShared,
               deeplyRead = deeplyRead,
             ),
           )
