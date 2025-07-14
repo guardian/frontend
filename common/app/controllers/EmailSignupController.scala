@@ -276,7 +276,7 @@ class EmailSignupController(
 
   def logNewsletterNotFoundError(newsletterName: String)(implicit request: RequestHeader): Unit = {
     logInfoWithRequestId(
-      s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. It may no longer exist.",
+      s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. It may no longer exist or $newsletterName may be an outdated reference number.",
     )
   }
 
