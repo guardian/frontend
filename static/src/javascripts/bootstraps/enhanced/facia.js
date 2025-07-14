@@ -51,11 +51,7 @@ const showContainerToggle = () => {
 
 const upgradeMostPopularToGeo = () => {
     if (config.get('switches.geoMostPopular')) {
-        if (config.get('switches.extendedMostPopularFronts')) {
-            new GeoMostPopularFrontExtended().go();
-        } else {
-            new GeoMostPopularFront().go();
-        }
+        new GeoMostPopularFront().go();
     }
 };
 

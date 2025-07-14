@@ -73,17 +73,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val ExtendedMostPopularFronts = Switch(
-    SwitchGroup.Feature,
-    "extended-most-popular-fronts",
-    "Extended 'If switched on shows 'Most Popular' component with space for DPMUs on fronts",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val MostViewedFronts = Switch(
     SwitchGroup.Feature,
     "most-viewed-fronts",
