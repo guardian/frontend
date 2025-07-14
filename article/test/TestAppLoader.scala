@@ -1,12 +1,8 @@
 import app.FrontendComponents
-import services.S3Client
-import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import renderers.DotcomRenderingService
-import test.WithTestContentApiClient
-import test.DCRFake
+import test.{DCRFake, WithTestContentApiClient}
 
 trait TestComponents extends WithTestContentApiClient {
   self: AppComponents =>

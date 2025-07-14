@@ -167,6 +167,7 @@ final case class MediaAtom(
     expired: Option[Boolean],
     activeVersion: Option[Long],
     channelId: Option[String],
+    trailImage: Option[ImageMedia],
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] =
@@ -221,6 +222,7 @@ object MediaAtom extends common.GuLogging {
       expired = Some(false),
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
+      trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
     )
   }
 
@@ -241,6 +243,7 @@ object MediaAtom extends common.GuLogging {
       expired = expired,
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
+      trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
     )
   }
 

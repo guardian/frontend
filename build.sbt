@@ -123,6 +123,8 @@ val admin = application("admin")
       awsSes,
       scalaUri,
     ),
+    // 08.07.2025: pinning commons-beanutils which is a transitive dependency of dfp-axis
+    dependencyOverrides += "commons-beanutils" % "commons-beanutils" % "1.11.0",
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
   )

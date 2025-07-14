@@ -6,19 +6,19 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "1.12.782"
   val awsSdk2Version = "2.30.38"
-  val capiVersion = "34.1.1"
-  val faciaVersion = "21.0.0"
+  val capiVersion = "35.0.0"
+  val faciaVersion = "22.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
-  val playJsonVersion = "3.0.4"
+  val playJsonVersion = "3.0.5"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsEc2 = "com.amazonaws" % "aws-java-sdk-ec2" % awsVersion
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
-  val awsS3 = "com.amazonaws" % "aws-java-sdk-s3" % awsVersion
+  val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
@@ -33,8 +33,8 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.16.1"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "27.1.0"
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.8.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "29.0.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.9.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 

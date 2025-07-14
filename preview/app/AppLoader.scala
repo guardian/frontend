@@ -1,8 +1,5 @@
 import agents.MostViewedAgent
-import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
-import com.amazonaws.regions.Regions
-import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.softwaremill.macwire._
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
@@ -16,15 +13,9 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import feed.OnwardJourneyLifecycle
 import football.controllers.FootballControllers
-import http.{
-  Filters,
-  GuardianAuthWithExemptions,
-  PreviewContentSecurityPolicyFilter,
-  PreviewNoCacheFilter,
-  RequestIdFilter,
-  routes,
-}
+import http.{routes, _}
 import model.ApplicationIdentity
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
@@ -37,7 +28,7 @@ import rugby.controllers.RugbyControllers
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
-import conf.Configuration.aws.mandatoryCredentials
+import utils.AWSv2
 
 trait PreviewLifecycleComponents
     extends SportServices
@@ -100,15 +91,12 @@ trait AppComponents
     with OnwardServices
     with ApplicationsServices {
 
-  private lazy val s3Client =
-    AmazonS3ClientBuilder.standard().withRegion(Regions.EU_WEST_1).withCredentials(mandatoryCredentials).build()
-
   private lazy val auth = new GuardianAuthWithExemptions(
     controllerComponents,
     wsClient,
     toolsDomainPrefix = "preview",
     oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
-    s3Client,
+    AWSv2.S3Sync,
     system = "preview",
     extraDoNotAuthenticatePathPrefixes = healthCheck.healthChecks.map(_.path),
     requiredEditorialPermissionName = "preview_access",

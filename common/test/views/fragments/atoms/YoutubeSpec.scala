@@ -28,6 +28,7 @@ class YoutubeSpec extends MixedPlaySpec {
         expired = None,
         activeVersion = None,
         channelId = None,
+        trailImage = None,
       )
       val displayCaption = false
       val view = views.html.fragments.atoms
