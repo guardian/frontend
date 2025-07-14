@@ -18,7 +18,7 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
     Action { implicit request =>
       TagIndexesS3.getIndex(keywordType, page) match {
         case Left(TagIndexNotFound) =>
-          logErrorWithRequestId(s"404 error serving tag index page for $keywordType $page")
+          logInfoWithRequestId(s"404 error serving tag index page for $keywordType $page")
           NotFound
 
         case Left(TagIndexReadError(error)) =>
