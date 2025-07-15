@@ -33,9 +33,16 @@ class OnwardJourneyLifecycle(
   }
 
   private def descheduleAll(): Unit = {
-    jobs.deschedule("OnwardJourneyAgentsHighFrequencyRefreshJob")
-    jobs.deschedule("OnwardJourneyAgentsMediumFrequencyRefreshJob")
-    jobs.deschedule("OnwardJourneyAgentsLowFrequencyRefreshJob")
+    jobs.deschedule("MostPopularAgentRefreshJob")
+    jobs.deschedule("GeoMostPopularAgentRefreshJob")
+    jobs.deschedule("DeeplyReadAgentRefreshJob")
+
+    jobs.deschedule("MostViewedVideoAgentRefreshJob")
+    jobs.deschedule("MostViewedAudioAgentRefreshJob")
+    jobs.deschedule("MostViewedGalleryAgentRefreshJob")
+    jobs.deschedule("MostReadAgentRefreshJob")
+
+    jobs.deschedule("DayMostPopularAgentRefreshJob")
   }
 
   override def start(): Unit = {
