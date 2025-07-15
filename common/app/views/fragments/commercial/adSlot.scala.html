@@ -13,7 +13,7 @@
 @import views.support.Commercial
 @import implicits.Requests._
 
-<div class="ad-slot-container" @if(useFlexContainer) { style="display: flex; justify-content: center;" }>
+<div data-ad-slot="true" class="ad-slot-container" @if(useFlexContainer) { style="display: flex; justify-content: center;" }>
     <div
         id="dfp-ad--@optId.getOrElse(name)"
         class="js-ad-slot ad-slot ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ") @optClassNames"
