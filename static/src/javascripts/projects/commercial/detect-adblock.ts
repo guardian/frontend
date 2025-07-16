@@ -4,7 +4,7 @@
  * This file should be considered deprecated and only exists for legacy 'hosted' pages
  */
 
-import { isAdBlockInUse } from '@guardian/commercial';
+import { isAdBlockInUse } from '@guardian/commercial-core';
 
 type Listener = { (active: boolean): void };
 
