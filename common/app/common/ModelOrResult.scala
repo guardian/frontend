@@ -79,7 +79,7 @@ object InternalRedirect extends implicits.Requests with GuLogging {
       .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
       .orElse(response.section.map(s => internalRedirect("facia", s.id)))
 
-  def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
+  private def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
     response.content.map {
       case a if a.isArticle || a.isLiveBlog =>
         internalRedirect("type/article", ItemOrRedirect.canonicalPath(a))
@@ -93,8 +93,8 @@ object InternalRedirect extends implicits.Requests with GuLogging {
     }
   }
 
-  def internalRedirect(base: String, id: String)(implicit request: RequestHeader): Result =
-    internalRedirect(base, id, None)
+  private def internalRedirect(base: String, id: String)(implicit request: RequestHeader): Result =
+    internalRedirect(base, id, request.rawQueryStringOption.map("?" + _))
 
   def internalRedirect(base: String, id: String, queryString: Option[String])(implicit
       request: RequestHeader,
