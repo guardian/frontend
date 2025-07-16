@@ -87,6 +87,10 @@ object Dependencies {
   val pekkoSerializationJackson = "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion
   val pekkoActorTyped = "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion
 
+  // 16.07.2025: pinning commons-beanutils which is a transitive dependency of dfp-axis version `5.9.0`
+  // We can remove this when a future version of dfp-axis includes a more up-to-date version of this library
+  val commonsBeanutils = "commons-beanutils" % "commons-beanutils" % "1.11.0"
+
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
   val janino = "org.codehaus.janino" % "janino" % "3.1.12"
