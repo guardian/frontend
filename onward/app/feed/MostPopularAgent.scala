@@ -1,80 +1,18 @@
 package feed
 
-import conf.Configuration
-import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.Content
 import common._
-import services.{OphanApi}
+import contentapi.ContentApiClient
 import model.RelatedContentItem
-import play.api.libs.json._
-import play.api.libs.ws.WSClient
+import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
 
 case class Country(code: String, edition: Edition)
 
-class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
+class MostPopularAgent(contentApiClient: ContentApiClient) extends GuLogging {
 
   private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
-
-  // Container for most_shared and most_commented
-  val mostSingleCardsBox = Box[Map[String, Content]](Map.empty)
-
-  // Helper case class to read from the most/comments discussion API call.
-  private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
-    def isLiveBlog: Boolean = url.contains("/live/")
-  }
-
-  private object MostDiscussedItem {
-    implicit val format: OFormat[MostDiscussedItem] = Json.format[MostDiscussedItem]
-  }
-
-  private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String, Content]] = {
-
-    log.info("Pulling most social media shared from Ophan")
-
-    val sinceHours = 3
-    val sinceTimestamp = System.currentTimeMillis - sinceHours * 60 * 60 * 1000
-
-    val futureMostFaceBook = ophanApi.getMostReadFacebook(sinceHours)
-    val futureMostCommented = mostCommented(wsClient, sinceTimestamp)
-
-    for {
-      mostFacebook <- futureMostFaceBook
-      oneFacebookMostRead = mostFacebook.headOption.get
-      oneFacebookContent <- contentFromUrl(oneFacebookMostRead.url, contentApiClient)
-      _ <- mostSingleCardsBox.alter(_ + ("most_shared" -> oneFacebookContent))
-
-      oneMostCommentedItem <- futureMostCommented
-      oneMostCommentedContent <- contentFromUrl(oneMostCommentedItem.url, contentApiClient)
-      newMap <- mostSingleCardsBox.alter(_ + ("most_commented" -> oneMostCommentedContent))
-    } yield newMap
-  }
-
-  private def mostCommented(wsClient: WSClient, since: Long)(implicit
-      ec: ExecutionContext,
-  ): Future[MostDiscussedItem] = {
-    val dapiURL = Configuration.discussion.apiRoot
-    val params = List("api-key" -> "dotcom", "pageSize" -> "10", "sinceTimestamp" -> since.toString)
-
-    val fResponse = wsClient
-      .url(dapiURL + "/most/comments")
-      .addQueryStringParameters(params: _*)
-      .get()
-
-    fResponse.map { r =>
-      val json = r.json
-      (json \ "discussions").as[List[MostDiscussedItem]].filterNot { _.isLiveBlog }.head
-    }
-  }
-
-  private def contentFromUrl(url: String, capi: ContentApiClient)(implicit ec: ExecutionContext): Future[Content] = {
-    capi
-      .getResponse(capi.item(MostViewed.urlToContentPath(url), ""))
-      .map { itemResponse =>
-        itemResponse.content.get
-      }
-  }
 
   private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
 
@@ -96,7 +34,6 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Unit = {
     MostViewed.refreshAll(Edition.allEditions)(refresh)
-    refreshGlobal()
   }
 }
 
