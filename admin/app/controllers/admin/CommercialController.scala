@@ -31,9 +31,7 @@ class CommercialController(
 
   def renderSpecialAdUnits: Action[AnyContent] =
     Action { implicit request =>
-      val specialAdUnits =
-        if (LineItemJobs.isSwitchedOn) { Store.getDfpSpecialAdUnits }
-        else { dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot) }
+      val specialAdUnits = Store.getDfpSpecialAdUnits
       NoCache(Ok(views.html.commercial.specialAdUnits(specialAdUnits)))
     }
 
