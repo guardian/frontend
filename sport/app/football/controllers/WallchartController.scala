@@ -5,15 +5,21 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import model.{ApplicationContext, Cached}
-import football.model.{CompetitionStage, Groups, KnockoutSpider}
-import pa.{FootballMatch}
+import football.model.{
+  CompetitionStage,
+  DotcomRenderingWallchartDataModel,
+  FootballWomensEuro2025Atom,
+  Groups,
+  KnockoutSpider,
+}
+import pa.FootballMatch
 
 import java.time.ZonedDateTime
 import scala.concurrent.Future
 import contentapi.ContentApiClient
-import conf.switches.Switches
-import common.Edition
-import model.content.InteractiveAtom
+import football.model.DotcomRenderingWallchartDataModel.toJson
+import implicits.JsonFormat
+import model.Cors.RichRequestHeader
 
 class WallchartController(
     competitionsService: CompetitionsService,
@@ -45,29 +51,35 @@ class WallchartController(
           )
           val competitionStages = new CompetitionStage(competitionsService.competitions)
             .stagesFromCompetition(competition, KnockoutSpider.orderings)
-          val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
-          val futureAtom = if (competitionTag == "euro-2024") {
-            val id = "/atom/interactive/interactives/2023/01/euros-2024/tables-euros-2024-header"
-            val edition = Edition(request)
-            contentApiClient
-              .getResponse(contentApiClient.item(id, edition))
-              .map(_.interactive.map(InteractiveAtom.make(_)))
-              .recover { case _ => None }
-          } else Future.successful(None)
 
-          futureAtom.map { maybeAtom =>
-            Cached(60) {
-              if (embed)
-                RevalidatableResult.Ok(
-                  football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
-                )
-              else
-                RevalidatableResult.Ok(
-                  football.views.html.wallchart.page(page, competition, competitionStages, nextMatch, maybeAtom),
-                )
-            }
+          request.getRequestFormat match {
+            case JsonFormat if request.forceDCR =>
+              val model = toJson(DotcomRenderingWallchartDataModel(page, competitionStages, competition))
+              Future.successful(Cached(60) { RevalidatableResult.Ok(model) })
+            case JsonFormat =>
+              Future.successful(NotFound)
+            case _ =>
+              val nextMatch = WallchartController.nextMatch(competition.matches, ZonedDateTime.now())
+
+              val futureAtom = FootballWomensEuro2025Atom.getAtom(
+                competitionTag,
+                contentApiClient,
+                "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables",
+              )
+
+              futureAtom.map { maybeAtom =>
+                Cached(60) {
+                  if (embed)
+                    RevalidatableResult.Ok(
+                      football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch),
+                    )
+                  else
+                    RevalidatableResult.Ok(
+                      football.views.html.wallchart.page(page, competition, competitionStages, nextMatch, maybeAtom),
+                    )
+                }
+              }
           }
-
         }
         .getOrElse(Future.successful(NotFound))
     }

@@ -50,10 +50,15 @@ object FixtureBuilder {
   def mkProperties(id: Int): PressedProperties =
     PressedProperties(
       isBreaking = false,
-      showMainVideo = false,
+      mediaSelect = Some(
+        MediaSelect(
+          showMainVideo = false,
+          imageSlideshowReplace = false,
+          videoReplace = false,
+        ),
+      ),
       showKickerTag = false,
       showByline = false,
-      imageSlideshowReplace = false,
       maybeContent = None,
       maybeContentId = Some(id.toString),
       isLiveBlog = false,
@@ -132,6 +137,7 @@ object FixtureBuilder {
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
+      mediaAtom = None,
     )
   }
 
@@ -145,6 +151,7 @@ object FixtureBuilder {
       display = mkDisplay(),
       enriched = None,
       format = ContentFormat.defaultContentFormat,
+      mediaAtom = None,
     )
   }
 }

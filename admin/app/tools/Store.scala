@@ -24,15 +24,6 @@ trait Store extends GuLogging with Dates {
   def getTopStories: Option[String] = S3.get(topStoriesKey)
   def putTopStories(config: String): Unit = { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putLiveBlogTopSponsorships(sponsorshipsJson: String): Unit = {
-    S3.putPrivate(dfpLiveBlogTopSponsorshipDataKey, sponsorshipsJson, defaultJsonEncoding)
-  }
-  def putSurveySponsorships(adUnitJson: String): Unit = {
-    S3.putPrivate(dfpSurveySponsorshipDataKey, adUnitJson, defaultJsonEncoding)
-  }
-  def putDfpPageSkinAdUnits(adUnitJson: String): Unit = {
-    S3.putPrivate(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
-  }
   def putDfpLineItemsReport(everything: String): Unit = {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
@@ -41,9 +32,6 @@ trait Store extends GuLogging with Dates {
   }
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
     S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
-  }
-  def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
-    S3.putPrivate(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
   }
 
   val now: String = DateTime.now().toHttpDateTimeString
@@ -96,6 +84,24 @@ trait Store extends GuLogging with Dates {
       }
     }
     targeting getOrElse Nil
+  }
+
+  def getDfpCustomFields: Seq[GuCustomField] = {
+    val customFields = for (doc <- S3.get(dfpCustomFieldsKey)) yield {
+      Json.parse(doc).as[Seq[GuCustomField]]
+    }
+    customFields getOrElse Nil
+  }
+
+  def getAbTestFrameUrl: Option[String] = {
+    S3.getPresignedUrl(abTestHtmlObjectKey)
+  }
+
+  def getDfpSpecialAdUnits: Seq[(String, String)] = {
+    val specialAdUnits = for (doc <- S3.get(dfpSpecialAdUnitsKey)) yield {
+      Json.parse(doc).as[Seq[(String, String)]]
+    }
+    specialAdUnits getOrElse Nil
   }
 }
 

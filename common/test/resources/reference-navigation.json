@@ -105,7 +105,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -179,6 +179,13 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -423,6 +430,13 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -877,6 +891,12 @@
 				"url": "/theguardian/series/corrections-and-clarifications",
 				"children": [],
 				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
+				"children": [],
+				"classList": []
 			}
 		],
 		"brandExtensions": [
@@ -944,7 +964,7 @@
 			"iconName": "home",
 			"children": [
 				{
-					"title": "US",
+					"title": "US news",
 					"url": "/us-news",
 					"longTitle": "US news",
 					"children": [],
@@ -968,7 +988,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -1035,6 +1055,12 @@
 				{
 					"title": "Ukraine",
 					"url": "/world/ukraine",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "US immigration",
+					"url": "/us-news/usimmigration",
 					"children": [],
 					"classList": []
 				},
@@ -1624,6 +1650,12 @@
 				"url": "/theguardian/series/corrections-and-clarifications",
 				"children": [],
 				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
+				"children": [],
+				"classList": []
 			}
 		],
 		"brandExtensions": [
@@ -1679,7 +1711,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -1925,12 +1957,6 @@
 					"classList": []
 				},
 				{
-					"title": "Indigenous",
-					"url": "/commentisfree/series/indigenousx",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Editorials",
 					"url": "/profile/editorial",
 					"children": [],
@@ -1955,6 +1981,13 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -2317,6 +2350,12 @@
 				"url": "/theguardian/series/corrections-and-clarifications",
 				"children": [],
 				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
+				"children": [],
+				"classList": []
 			}
 		],
 		"brandExtensions": [
@@ -2371,7 +2410,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -2564,6 +2603,13 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2752,6 +2798,13 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -3176,6 +3229,12 @@
 				"url": "/theguardian/series/corrections-and-clarifications",
 				"children": [],
 				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
+				"children": [],
+				"classList": []
 			}
 		],
 		"brandExtensions": [
@@ -3326,7 +3385,7 @@
 							"classList": []
 						},
 						{
-							"title": "US",
+							"title": "US news",
 							"url": "/us-news",
 							"longTitle": "US news",
 							"children": [],
@@ -3531,6 +3590,13 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3719,6 +3785,13 @@
 					"title": "Football",
 					"url": "/football",
 					"children": [
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
+							"children": [],
+							"classList": []
+						},
 						{
 							"title": "Live scores",
 							"url": "/football/live",
@@ -4141,6 +4214,12 @@
 			{
 				"title": "Corrections",
 				"url": "/theguardian/series/corrections-and-clarifications",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Tips",
+				"url": "https://www.theguardian.com/tips",
 				"children": [],
 				"classList": []
 			}

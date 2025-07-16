@@ -1,6 +1,7 @@
 package football.controllers
 
 import common.Edition
+import contentapi.ContentApiClient
 import feed.CompetitionsService
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import java.time.LocalDate
@@ -16,6 +17,7 @@ import scala.concurrent.Future
 class ResultsController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
     val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
@@ -65,24 +67,34 @@ class ResultsController(
           Map[String, Seq[CompetitionFilter]],
           Option[InteractiveAtom],
       ) => Future[Result],
-  )(date: LocalDate, tag: Option[String] = None): Future[Result] = {
+  )(date: LocalDate, tag: Option[String] = None, maybeAtom: Option[InteractiveAtom]): Future[Result] = {
     val result = for {
       p <- page(tag)
       r <- results(date, tag)
     } yield {
-      renderFunction(p, r, filters, None)
+      renderFunction(p, r, filters, maybeAtom)
     }
     result.getOrElse(Future.successful(NotFound("No results")))
   }
 
   private def renderForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] =
     Action.async { implicit request =>
-      renderWithAsync(renderMatchList)(date, tag)
+      tag match {
+        case Some(t) =>
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            t,
+            contentApiClient,
+            "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables",
+          )
+          futureAtom.flatMap(maybeAtom => renderWithAsync(renderMatchList)(date, tag, maybeAtom))
+
+        case None => renderWithAsync(renderMatchList)(date, tag, None)
+      }
     }
 
   private def renderMoreForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] =
     Action.async { implicit request =>
-      renderWithAsync(renderMoreMatches)(date, tag)
+      renderWithAsync(renderMoreMatches)(date, tag, None)
     }
 
   /* Public methods */
@@ -94,13 +106,13 @@ class ResultsController(
     renderForDate(createDate(year, month, day))
   def allResultsForJson(year: String, month: String, day: String): Action[AnyContent] = allResultsFor(year, month, day)
 
-  def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] =
-    renderMoreForDate(createDate(year, month, day))
   def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] =
-    moreResultsFor(year, month, day)
+    renderMoreForDate(createDate(year, month, day))
 
-  def tagResults(tag: String): Action[AnyContent] =
+  def tagResults(tag: String): Action[AnyContent] = {
     renderForDate(LocalDate.now(Edition.defaultEdition.timezoneId), Some(tag))
+  }
+
   def tagResultsJson(tag: String): Action[AnyContent] = tagResults(tag)
 
   def tagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
@@ -108,8 +120,6 @@ class ResultsController(
   def tagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     tagResultsFor(year, month, day, tag)
 
-  def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    renderMoreForDate(createDate(year, month, day), Some(tag))
   def moreTagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    moreTagResultsFor(year, month, day, tag)
+    renderMoreForDate(createDate(year, month, day), Some(tag))
 }

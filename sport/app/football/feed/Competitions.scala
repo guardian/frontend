@@ -137,14 +137,13 @@ object CompetitionsProvider {
     ),
     Competition(
       "423",
-      "/football/women-s-euro-2022",
-      "Women's Euro 2022",
-      "Women's Euro 2022",
+      "/football/women-s-euro-2025",
+      "Women's Euro 2025",
+      "Women's Euro 2025",
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
-      startDate = Some(LocalDate.of(2022, 7, 1)),
-      finalMatchSVG = Some("womens_euros_2022_badge"),
+      startDate = Some(LocalDate.of(2025, 7, 2)),
     ),
     Competition(
       "870",

@@ -11,29 +11,29 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      EuropeBetaFront,
-      EuropeBetaFrontTest2,
       DarkModeWeb,
       DCRJavascriptBundle,
+      LoopingVideo,
+      TopAboveNav250Reservation,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object EuropeBetaFront
+object LoopingVideo
     extends Experiment(
-      name = "europe-beta-front",
-      description = "Allows viewing the beta version of the Europe network front",
+      name = "looping-video",
+      description = "Enable looping videos on DCR",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
+      sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc0A,
     )
 
-object EuropeBetaFrontTest2
+object TopAboveNav250Reservation
     extends Experiment(
-      name = "europe-beta-front-test-2",
-      description = "Allows viewing the beta version of the Europe network front",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 5, 28),
+      name = "top-above-nav-250-reservation",
+      description = "Reserve 250px for top-above-nav instead of 90px",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0B,
     )
 
@@ -51,6 +51,6 @@ object DCRJavascriptBundle
       name = "dcr-javascript-bundle",
       description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 6, 30),
+      sellByDate = LocalDate.of(2025, 7, 30),
       participationGroup = Perc0E,
     )

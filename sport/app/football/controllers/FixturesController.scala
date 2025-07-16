@@ -1,6 +1,7 @@
 package football.controllers
 
 import common.Edition
+import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.model._
 import model._
@@ -11,6 +12,7 @@ import play.api.mvc.{Action, AnyContent, ControllerComponents}
 class FixturesController(
     val competitionsService: CompetitionsService,
     val controllerComponents: ControllerComponents,
+    val contentApiClient: ContentApiClient,
     val wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends MatchListController
@@ -28,11 +30,8 @@ class FixturesController(
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezoneId))
 
-  def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
-    renderMoreFixtures(fixtures(createDate(year, month, day)))
-
   def moreFixturesForJson(year: String, month: String, day: String): Action[AnyContent] =
-    moreFixturesFor(year, month, day)
+    renderMoreFixtures(fixtures(createDate(year, month, day)))
 
   private def renderAllFixtures(date: LocalDate): Action[AnyContent] =
     Action.async { implicit request =>
@@ -45,9 +44,6 @@ class FixturesController(
     }
 
   def moreTagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    moreTagFixturesFor(year, month, day, tag)
-
-  def moreTagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     getTagFixtures(createDate(year, month, day), tag)
       .map(result => renderMoreFixtures(result._2))
       .getOrElse(Action(NotFound))
@@ -83,10 +79,18 @@ class FixturesController(
     getTagFixtures(date, tag)
       .map(result =>
         Action.async { implicit request =>
-          renderMatchList(
-            result._1,
-            result._2,
-            filters,
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            tag,
+            contentApiClient,
+            "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-live-scores",
+          )
+          futureAtom.flatMap(maybeAtom =>
+            renderMatchList(
+              result._1,
+              result._2,
+              filters,
+              maybeAtom,
+            ),
           )
         },
       )

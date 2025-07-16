@@ -17,6 +17,10 @@ templates:
     - update-ami-for-admin
     - update-ami-for-discussion
     - update-ami-for-sport
+    - update-ami-for-archive
+    - update-ami-for-applications
+    - update-ami-for-rss
+    - update-ami-for-onward
 
 deployments:
   admin:
@@ -85,5 +89,37 @@ deployments:
     parameters:
       amiParametersToTags:
         AMISport:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-archive:
+    app: archive
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIArchive:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-applications:
+    app: applications
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIApplications:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-rss:
+    app: rss
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIRss:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-onward:
+    app: onward
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIOnward:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD

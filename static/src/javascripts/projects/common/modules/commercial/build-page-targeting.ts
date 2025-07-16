@@ -4,8 +4,8 @@
  * This file should be considered deprecated
  */
 
-import type { PageTargeting } from '@guardian/commercial';
-import { buildPageTargeting } from '@guardian/commercial';
+import type { PageTargeting } from '@guardian/commercial-core';
+import { buildPageTargeting } from '@guardian/commercial-core';
 import type { ConsentState } from '@guardian/libs';
 import { isString, log } from '@guardian/libs';
 import { once } from 'lodash-es';

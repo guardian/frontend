@@ -10,7 +10,7 @@ import com.gu.contentapi.client.model.v1.{
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import conf.Static
 import contentapi.ContentApiClient
-import com.gu.contentapi.client.model.SearchQuery
+import com.gu.contentapi.client.model.{ContentApiError, SearchQuery}
 import crosswords.{
   AccessibleCrosswordPage,
   AccessibleCrosswordRows,
@@ -65,9 +65,15 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         crossword <- content.crossword
       } yield f(crossword, content)
       maybeCrossword getOrElse Future.successful(noResults())
-    } recover { case t: Throwable =>
-      logErrorWithRequestId(s"Error retrieving $crosswordType crossword id $id from API", t)
-      noResults()
+    } recover {
+      case capiError: ContentApiError if capiError.httpStatus == 404 => {
+        logInfoWithRequestId(s"The $crosswordType crossword with id $id was not found in CAPI")
+        noResults()
+      }
+      case t: Throwable => {
+        logErrorWithRequestId(s"Error retrieving $crosswordType crossword id $id from API", t)
+        noResults()
+      }
     }
   }
 

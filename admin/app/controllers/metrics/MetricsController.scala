@@ -46,35 +46,4 @@ class MetricsController(
         httpErrors <- HttpErrors.errors()
       } yield NoCache(Ok(views.html.lineCharts(httpErrors)))
     }
-
-  def renderGooglebot404s(): Action[AnyContent] =
-    Action.async { implicit request =>
-      for {
-        googleBot404s <- HttpErrors.googlebot404s()
-      } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
-    }
-
-  def renderAfg(): Action[AnyContent] =
-    Action.async { implicit request =>
-      wsClient.url("https://s3-eu-west-1.amazonaws.com/aws-frontend-metrics/frequency/index.html").get() map {
-        response =>
-          NoCache(Ok(views.html.afg(response.body)))
-      }
-    }
-
-  def renderBundleVisualization(): Action[AnyContent] =
-    Action { implicit request =>
-      NoCache(SeeOther(Static("javascripts/webpack-stats.html")))
-    }
-
-  def renderBundleAnalyzer(): Action[AnyContent] =
-    Action { implicit request =>
-      NoCache(SeeOther(Static("javascripts/bundle-analyzer-report.html")))
-    }
-
-  private def toPercentage(graph: AwsLineChart) =
-    graph.dataset
-      .map(_.values)
-      .collect { case Seq(saw, clicked) => if (saw == 0) 0.0 else clicked / saw * 100 }
-
 }

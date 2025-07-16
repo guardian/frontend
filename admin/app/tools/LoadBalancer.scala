@@ -28,7 +28,13 @@ object LoadBalancer extends GuLogging {
       testPath = Some("/uk-news/2014/jan/21/drax-protesters-convictions-quashed-police-spy-mark-kennedy"),
     ),
     LoadBalancer("frontend-PROD-facia-ELB", "Front", "frontend-facia", testPath = Some("/uk")),
-    LoadBalancer("frontend-PROD-applications-ELB", "Applications", "frontend-applications", testPath = Some("/books")),
+    LoadBalancer(
+      "app/fronte-LoadB-jjbgLSz4Ttk7/0e30c8ef528bd918",
+      "Applications",
+      "frontend-applications",
+      testPath = Some("/books"),
+      targetGroup = Some("targetgroup/fronte-Targe-J5GTY7IUW6U4/5fa6083486dbd785"),
+    ),
     LoadBalancer(
       "app/fronte-LoadB-xmdWiUUHyRUS/122c59735e8374bb",
       "Discussion",
@@ -43,9 +49,24 @@ object LoadBalancer extends GuLogging {
       targetGroup = Some("targetgroup/fronte-Targe-LJMDWMGH5FPD/e777dd4276b0bf29"),
     ),
     LoadBalancer("frontend-PROD-commercial-ELB", "Commercial", "frontend-commercial"),
-    LoadBalancer("frontend-PROD-onward-ELB", "Onward", "frontend-onward"),
-    LoadBalancer("frontend-PROD-archive-ELB", "Archive", "frontend-archive"),
-    LoadBalancer("frontend-PROD-rss-ELB", "Rss", "frontend-rss"),
+    LoadBalancer(
+      "app/fronte-LoadB-NpLaks0rT7va/e5a6b5bea5119952",
+      "Onward",
+      "frontend-onward",
+      targetGroup = Some("targetgroup/fronte-Targe-N0YDVRHJB7IM/99164208e6758b4e"),
+    ),
+    LoadBalancer(
+      "app/fronte-LoadB-wSjta29AZxoG/32048dda4b467613",
+      "Archive",
+      "frontend-archive",
+      targetGroup = Some("targetgroup/fronte-Targe-CVM11DC1XUEX/5980205ce24de6bf"),
+    ),
+    LoadBalancer(
+      "app/fronte-LoadB-lVDfejahHxTX/5cfe31b29fa71749",
+      "Rss",
+      "frontend-rss",
+      targetGroup = Some("targetgroup/fronte-Targe-1UWQX08K530W/4da53e8e56d13ab8"),
+    ),
   )
 
   private val agent = Box(loadBalancers)

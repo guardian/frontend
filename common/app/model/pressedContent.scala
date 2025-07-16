@@ -4,6 +4,7 @@ import com.gu.commercial.branding.Branding
 import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
+import model.content.MediaAtom
 import model.{ContentFormat, Pillar}
 import views.support.ContentOldAgeDescriber
 
@@ -95,6 +96,7 @@ final case class CuratedContent(
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
     supportingContent: List[PressedContent],
     cardStyle: CardStyle,
+    mediaAtom: Option[MediaAtom],
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -125,6 +127,13 @@ object CuratedContent {
       supportingContent = content.supportingContent.map((sc) => PressedContent.make(sc, false)),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
+      mediaAtom = content.mediaAtom.flatMap { atom =>
+        atom.data match {
+          case mediaAtom: com.gu.contentatom.thrift.AtomData.Media =>
+            Some(MediaAtom.makeFromThrift(atom.id, mediaAtom.media))
+          case _ => None
+        }
+      },
     )
   }
 }
@@ -175,6 +184,7 @@ final case class LinkSnap(
     enriched: Option[
       EnrichedContent,
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
+    mediaAtom: Option[MediaAtom],
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
@@ -199,6 +209,7 @@ object LinkSnap {
       display = PressedDisplaySettings.make(content, None),
       enriched = Some(EnrichedContent.empty),
       format = ContentFormat.defaultContentFormat,
+      mediaAtom = None,
     )
   }
 }

@@ -6,7 +6,7 @@ import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import common.facia.FixtureBuilder
 import controllers.{Assets, FaciaControllerImpl}
-import experiments.{ActiveExperiments, EuropeBetaFront, EuropeBetaFrontTest2, ParticipationGroups}
+import experiments.{ActiveExperiments, ParticipationGroups}
 import helpers.FaciaTestData
 import implicits.FakeRequests
 import model.{FrontProperties, PressedPage, SeoData}
@@ -47,7 +47,7 @@ import scala.concurrent.{Await, Future}
     fapi,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
-    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
     assets = assets,
   )

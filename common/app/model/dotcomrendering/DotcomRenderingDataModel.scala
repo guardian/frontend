@@ -23,6 +23,7 @@ import model.{
   GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
+  ImageMedia,
   InteractivePage,
   LiveBlogPage,
   MediaPage,
@@ -90,6 +91,7 @@ case class DotcomRenderingDataModel(
     pageType: PageType,
     starRating: Option[Int],
     audioArticleImage: Option[PageElement],
+    trailPicture: Option[PageElement],
     trailText: String,
     nav: Nav,
     showBottomSocialButtons: Boolean,
@@ -168,6 +170,7 @@ object DotcomRenderingDataModel {
         "pageType" -> model.pageType,
         "starRating" -> model.starRating,
         "audioArticleImage" -> model.audioArticleImage,
+        "trailPicture" -> model.trailPicture,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
@@ -504,28 +507,50 @@ object DotcomRenderingDataModel {
 
     val dcrTags = content.tags.tags.map(Tag.apply)
 
+    def getImageBlockElement(imageMedia: ImageMedia, role: Role) = {
+      val imageData = imageMedia.allImages.headOption
+        .map { d =>
+          Map(
+            "copyright" -> "",
+            "alt" -> d.altText.getOrElse(""),
+            "caption" -> d.caption.getOrElse(""),
+            "credit" -> d.credit.getOrElse(""),
+          )
+        }
+        .getOrElse(Map.empty)
+      ImageBlockElement(
+        imageMedia,
+        imageData,
+        Some(true),
+        role,
+        Seq.empty,
+      )
+    }
+
     val audioImageBlock: Option[ImageBlockElement] =
       if (page.metadata.contentType.contains(DotcomContentType.Audio)) {
         for {
           thumbnail <- page.item.elements.thumbnail
         } yield {
-          val imageData = thumbnail.images.allImages.headOption
-            .map { d =>
-              Map(
-                "copyright" -> "",
-                "alt" -> d.altText.getOrElse(""),
-                "caption" -> d.caption.getOrElse(""),
-                "credit" -> d.credit.getOrElse(""),
-              )
-            }
-            .getOrElse(Map.empty)
-          ImageBlockElement(
-            thumbnail.images,
-            imageData,
-            Some(true),
-            Role(Some("inline")),
-            Seq.empty,
-          )
+          getImageBlockElement(thumbnail.images, Role(Some("inline")))
+        }
+      } else {
+        None
+      }
+
+    val trailPicture: Option[ImageBlockElement] =
+      if (page.metadata.contentType.contains(DotcomContentType.Gallery)) {
+        for {
+          imageMedia <- page.item.trail.trailPicture
+        } yield {
+          // DCAR only relies on 'height', 'width', and 'isMaster' fields,
+          // so we remove all other properties to reduce unnecessary data.
+          val filteredImageMedia = ImageMedia(imageMedia.allImages.map { image =>
+            image.copy(fields = image.fields.filter(f => {
+              f._1 == "height" || f._1 == "width" || f._1 == "isMaster"
+            }))
+          })
+          getImageBlockElement(filteredImageMedia, Role(Some("inline")))
         }
       } else {
         None
@@ -609,6 +634,7 @@ object DotcomRenderingDataModel {
     DotcomRenderingDataModel(
       affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
       audioArticleImage = audioImageBlock,
+      trailPicture = trailPicture,
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,

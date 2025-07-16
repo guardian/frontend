@@ -8,6 +8,7 @@ import services.S3
 
 import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
+import org.checkerframework.checker.units.qual.s
 
 object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with SurveySponsorshipAgent {
 
@@ -17,6 +18,8 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
   private lazy val surveyAdUnitAgent = Box[Seq[SurveySponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
+  private lazy val specialAdUnitsAgent = Box[Seq[(String, String)]](Nil)
+  private lazy val customFieldsAgent = Box[Seq[GuCustomField]](Nil)
 
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopSponsorshipAgent.get()
@@ -68,6 +71,19 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
       } yield lineItemIds) getOrElse Nil
     }
 
+    def grabSpecialAdUnitsFromStore(): Seq[(String, String)] = {
+      (for {
+        jsonString <- stringFromS3(dfpSpecialAdUnitsKey)
+        report <- Json.parse(jsonString).validate[Seq[(String, String)]].asOpt
+      } yield report) getOrElse Nil
+    }
+
+    def grabCustomFieldsFromStore() = {
+      (for {
+        jsonString <- stringFromS3(dfpCustomFieldsKey)
+        customFields <- Json.parse(jsonString).validate[Seq[GuCustomField]].asOpt
+      } yield customFields) getOrElse Nil
+    }
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
 
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
@@ -76,5 +92,8 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
 
     update(surveyAdUnitAgent)(grabSurveySponsorshipsFromStore())
 
+    update(specialAdUnitsAgent)(grabSpecialAdUnitsFromStore())
+
+    update(customFieldsAgent)(grabCustomFieldsFromStore())
   }
 }

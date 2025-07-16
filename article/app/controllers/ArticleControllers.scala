@@ -6,8 +6,8 @@ import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
-import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, S3Client}
 import services.newsletters.NewsletterSignupAgent
+import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient

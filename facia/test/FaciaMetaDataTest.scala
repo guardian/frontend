@@ -48,7 +48,7 @@ import scala.concurrent.duration._
     fapi,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
-    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient), wsClient),
+    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
     assets = assets,
   )

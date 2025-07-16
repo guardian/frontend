@@ -257,22 +257,22 @@ object KnockoutSpider {
       //   ━┛             ┗━
       ZonedDateTime.of(2024, 7, 14, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Match 51
     ),
-    // Womens Euro 2022
+    // Womens Euro 2025
     "423" -> List(
       // Group A Winner & Group B Runner Up
-      ZonedDateTime.of(2022, 7, 20, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 1  // 4287725
-      // Group C Winner & Group D Runner up
-      ZonedDateTime.of(2022, 7, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
+      ZonedDateTime.of(2025, 7, 16, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 1  // 4287725
       // Group B Winner & Group A Runner Up
-      ZonedDateTime.of(2022, 7, 21, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 2  // 4287726
+      ZonedDateTime.of(2025, 7, 17, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 2  // 4287726
+      // Group C Winner & Group D Runner up
+      ZonedDateTime.of(2025, 7, 18, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 3  // 4287727
       // Group D Winner & Group C Runner up
-      ZonedDateTime.of(2022, 7, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
+      ZonedDateTime.of(2025, 7, 19, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter-Final 4  // 4287728
       // QF Winners 3 & 1
-      ZonedDateTime.of(2022, 7, 26, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 1     // 4287730
+      ZonedDateTime.of(2025, 7, 22, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 1     // 4287730
       // QF Winners 4 & 2
-      ZonedDateTime.of(2022, 7, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 2     // 4287731
+      ZonedDateTime.of(2025, 7, 23, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi-Final 2     // 4287731
       // SM Winners 1 & 2
-      ZonedDateTime.of(2022, 7, 31, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final            // 4287732
+      ZonedDateTime.of(2025, 7, 27, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final            // 4287732
     ),
   )
 

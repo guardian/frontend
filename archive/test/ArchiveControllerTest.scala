@@ -80,7 +80,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
 
   it should "redirect old style galleries" in {
     val result = archiveController.lookup("/arts/gallery/0,")(TestRequest())
-    status(result) should be(301)
+    status(result) should be(307)
     location(result) should be(s"${Configuration.site.host}/arts/pictures/0,")
   }
 

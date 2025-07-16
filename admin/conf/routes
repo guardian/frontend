@@ -59,7 +59,8 @@ POST        /dev/switchboard                                                    
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
-GET         /analytics/confidence                                                                controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/abtestsnew                                                                   controllers.admin.AnalyticsController.alphaAbtests()
+GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
@@ -92,10 +93,6 @@ GET         /metrics/fastly                                                     
 GET         /metrics/errors                                                                         controllers.admin.MetricsController.renderErrors()
 GET         /metrics/errors/4xx                                                                     controllers.admin.MetricsController.render4XX()
 GET         /metrics/errors/5xx                                                                     controllers.admin.MetricsController.render5XX()
-GET         /metrics/googlebot/404                                                                  controllers.admin.MetricsController.renderGooglebot404s()
-GET         /metrics/afg                                                                            controllers.admin.MetricsController.renderAfg()
-GET         /metrics/webpack-bundle-visualization                                                   controllers.admin.MetricsController.renderBundleVisualization()
-GET         /metrics/webpack-bundle-analyzer                                                        controllers.admin.MetricsController.renderBundleAnalyzer()
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()

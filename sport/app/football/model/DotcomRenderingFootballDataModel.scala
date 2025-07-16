@@ -4,6 +4,7 @@ import common.{CanonicalLink, Edition}
 import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchPage}
+import model.content.InteractiveAtom
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
 import model.{ApplicationContext, Competition, CompetitionSummary, Group, StandalonePage, Table, TeamUrl}
@@ -49,7 +50,7 @@ trait DotcomRenderingFootballDataModel {
   def pageId: String
 }
 
-private object DotcomRenderingFootballDataModel {
+object DotcomRenderingFootballDataModel {
   def getConfig(page: StandalonePage)(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -95,6 +96,37 @@ private object DotcomRenderingFootballDataModelImplicits {
   implicit val leagueTeamWrites: Writes[LeagueTeam] = Json.writes[LeagueTeam]
   implicit val leagueTableEntryWrites: Writes[LeagueTableEntry] = Json.writes[LeagueTableEntry]
 
+  implicit val atomFormat: Writes[InteractiveAtom] = Json.writes[InteractiveAtom]
+
+  private implicit val matchDayTeamFormat: Writes[MatchDayTeam] = Json.writes[MatchDayTeam]
+
+  // Writes for Fixture with a type discriminator
+  private implicit val fixtureWrites: Writes[Fixture] = Writes { fixture =>
+    Json.writes[Fixture].writes(fixture).as[JsObject] + ("type" -> JsString("Fixture"))
+  }
+
+  // Writes for MatchDay with a type discriminator
+  private implicit val matchDayWrites: Writes[MatchDay] = Writes { matchDay =>
+    Json.writes[MatchDay].writes(matchDay).as[JsObject] + ("type" -> JsString("MatchDay"))
+  }
+
+  // Writes for Result with a type discriminator
+  private implicit val resultWrites: Writes[Result] = Writes { result =>
+    Json.writes[Result].writes(result).as[JsObject] + ("type" -> JsString("Result"))
+  }
+
+  // Writes for LiveMatch with a type discriminator
+  private implicit val liveMatchWrites: Writes[LiveMatch] = Writes { liveMatch =>
+    Json.writes[LiveMatch].writes(liveMatch).as[JsObject] + ("type" -> JsString("LiveMatch"))
+  }
+
+  implicit val footballMatchWrites: Writes[FootballMatch] = Writes {
+    case f: Fixture   => Json.toJson(f)(fixtureWrites)
+    case m: MatchDay  => Json.toJson(m)(matchDayWrites)
+    case r: Result    => Json.toJson(r)(resultWrites)
+    case l: LiveMatch => Json.toJson(l)(liveMatchWrites)
+  }
+
   implicit val competitionFormat: Writes[CompetitionSummary] = (competition: CompetitionSummary) =>
     Json.obj(
       "id" -> competition.id,
@@ -103,6 +135,10 @@ private object DotcomRenderingFootballDataModelImplicits {
       "nation" -> competition.nation,
       "tableDividers" -> competition.tableDividers,
     )
+
+  private implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
+  implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
+    Json.writes[MatchesByDateAndCompetition]
 
   implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
 }
@@ -122,6 +158,7 @@ case class DotcomRenderingFootballMatchListDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     pageId: String,
+    atom: Option[InteractiveAtom],
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballMatchListDataModel {
@@ -129,6 +166,7 @@ object DotcomRenderingFootballMatchListDataModel {
       page: FootballPage,
       matchesList: MatchesList,
       filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom] = None,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -155,45 +193,11 @@ object DotcomRenderingFootballMatchListDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
+      atom = atom,
     )
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
-
-  private implicit val matchDayTeamFormat: Writes[MatchDayTeam] = Json.writes[MatchDayTeam]
-
-  // Writes for Fixture with a type discriminator
-  private implicit val fixtureWrites: Writes[Fixture] = Writes { fixture =>
-    Json.writes[Fixture].writes(fixture).as[JsObject] + ("type" -> JsString("Fixture"))
-  }
-
-  // Writes for MatchDay with a type discriminator
-  private implicit val matchDayWrites: Writes[MatchDay] = Writes { matchDay =>
-    Json.writes[MatchDay].writes(matchDay).as[JsObject] + ("type" -> JsString("MatchDay"))
-  }
-
-  // Writes for Result with a type discriminator
-  private implicit val resultWrites: Writes[Result] = Writes { result =>
-    Json.writes[Result].writes(result).as[JsObject] + ("type" -> JsString("Result"))
-  }
-
-  // Writes for LiveMatch with a type discriminator
-  private implicit val liveMatchWrites: Writes[LiveMatch] = Writes { liveMatch =>
-    Json.writes[LiveMatch].writes(liveMatch).as[JsObject] + ("type" -> JsString("LiveMatch"))
-  }
-
-  private implicit val footballMatchWrites: Writes[FootballMatch] = Writes { matchInstance =>
-    matchInstance match {
-      case f: Fixture   => Json.toJson(f)(fixtureWrites)
-      case m: MatchDay  => Json.toJson(m)(matchDayWrites)
-      case r: Result    => Json.toJson(r)(resultWrites)
-      case l: LiveMatch => Json.toJson(l)(liveMatchWrites)
-    }
-  }
-
-  private implicit val competitionMatchesFormat: Writes[CompetitionMatches] = Json.writes[CompetitionMatches]
-  private implicit val dateCompetitionMatchesFormat: Writes[MatchesByDateAndCompetition] =
-    Json.writes[MatchesByDateAndCompetition]
 
   implicit def dotcomRenderingFootballMatchListDataModel: Writes[DotcomRenderingFootballMatchListDataModel] =
     Json.writes[DotcomRenderingFootballMatchListDataModel]
@@ -232,6 +236,7 @@ case class DotcomRenderingFootballTablesDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     pageId: String,
+    atom: Option[InteractiveAtom],
 ) extends DotcomRenderingFootballDataModel
 
 object DotcomRenderingFootballTablesDataModel {
@@ -239,6 +244,7 @@ object DotcomRenderingFootballTablesDataModel {
       page: FootballPage,
       tables: Seq[Table],
       filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom] = None,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -259,6 +265,7 @@ object DotcomRenderingFootballTablesDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
+      atom = atom,
     )
   }
 

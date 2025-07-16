@@ -57,7 +57,7 @@
 - [Non-refreshable line items](05-commercial/04-non-refreshable-line-items.md)
 
 ## [Features and components](06-features-and-components/)
-- [How are trail pictures picked in Frontend?](06-features-and-components/02-trail-images.md)
+- [How are trail pictures picked in Frontend?](06-features-and-components/01-trail-images.md)
 - [theguardian.com/font-loader](06-features-and-components/03-font-loader-route.md)
 
 ## [Performance](07-performance/)

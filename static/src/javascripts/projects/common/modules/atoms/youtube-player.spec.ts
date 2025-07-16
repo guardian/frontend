@@ -1,7 +1,7 @@
 import type {
 	AdsConfigTCFV2,
 	AdsConfigUSNATorAus,
-} from '@guardian/commercial/dist/core/cjs/lib/types';
+} from '@guardian/commercial-core/dist/cjs/types';
 import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 
@@ -10,10 +10,10 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock(
-	'@guardian/commercial',
+	'@guardian/commercial-core',
 	(): jest.Mock =>
 		({
-			...jest.requireActual('@guardian/commercial'),
+			...jest.requireActual('@guardian/commercial-core'),
 			getPermutivePFPSegments: jest.fn(() => [42]),
 		} as unknown as jest.Mock),
 );
@@ -81,7 +81,7 @@ const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 const canTargetUSNAT = (canTarget: boolean): ConsentState => ({
 	usnat: {
 		doNotSell: !canTarget,
-		signalStatus: 'ready'
+		signalStatus: 'ready',
 	},
 	canTarget,
 	framework: 'usnat',

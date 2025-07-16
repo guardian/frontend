@@ -7,13 +7,12 @@ import model._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.content.InteractiveAtom
 import contentapi.ContentApiClient
-import football.model.DotcomRenderingFootballTablesDataModel
+import football.model.{DotcomRenderingFootballTablesDataModel, FootballWomensEuro2025Atom}
 import implicits.{HtmlFormat, JsonFormat}
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{FootballTablesPagePicker, RemoteRender}
 
-import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 case class TablesPage(
@@ -69,6 +68,7 @@ class LeagueTableController(
     "Community Shield",
     "Scottish Cup",
     "Women's FA Cup",
+    "Women's Euro 2025",
   )
 
   def sortedCompetitions: Seq[Competition] =
@@ -159,18 +159,28 @@ class LeagueTableController(
             s"${table.competition.fullName} table",
           )
 
+          val futureAtom = FootballWomensEuro2025Atom.getAtom(
+            competition,
+            contentApiClient,
+            "/atom/interactive/interactives/2025/06/2025-women-euro/2025-women-euro-tables",
+          )
+
           val smallTableGroup =
             table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
 
           request.getRequestFormat match {
             case JsonFormat if request.forceDCR =>
-              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
+              futureAtom.flatMap(maybeAtom => {
+                val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder), maybeAtom)
 
-              successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
+                successful(Cached(CacheTime.FootballTables)(JsonComponent.fromWritable(model)))
+              })
 
             case HtmlFormat if tier == RemoteRender =>
-              val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder))
-              remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
+              futureAtom.flatMap(maybeAtom => {
+                val model = DotcomRenderingFootballTablesDataModel(page, Seq(table), filters(tableOrder), maybeAtom)
+                remoteRenderer.getFootballTablesPage(wsClient, DotcomRenderingFootballTablesDataModel.toJson(model))
+              })
 
             case _ =>
               val htmlResponse = () =>

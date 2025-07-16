@@ -17,9 +17,9 @@ object NavLinks {
   val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", longTitle = Some("Politics"))
   val auImmigration = NavLink("Immigration", "/australia-news/australian-immigration-and-asylum")
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
-  val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
-  val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
+  val usNews = NavLink("US news", "/us-news", longTitle = Some("US news"))
   val usPolitics = NavLink("US politics", "/us-news/us-politics")
+  val usImmigration = NavLink("US immigration", "/us-news/usimmigration")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -109,6 +109,8 @@ object NavLinks {
 
   /* SPORT */
 
+  private val footballWomenEuro2025 =
+    NavLink("Euro 2025", "/football/women-s-euro-2025", Some("football/women-s-euro-2025"))
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -122,6 +124,7 @@ object NavLinks {
     "Football",
     "/football",
     children = List(
+      footballWomenEuro2025,
       footballScores,
       footballTables,
       footballFixtures,
@@ -258,6 +261,7 @@ object NavLinks {
     "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
   )
   val aboutUs = NavLink("About Us", "/about")
+  val tips = NavLink("Tips", "https://www.theguardian.com/tips")
 
   // News Pillar
   val ukNewsPillar = NavLink(
@@ -309,6 +313,7 @@ object NavLinks {
       climateCrisis,
       middleEast,
       ukraine,
+      usImmigration,
       usSoccer,
       usBusiness,
       usEnvironment,
@@ -369,7 +374,6 @@ object NavLinks {
     children = List(
       auColumnists,
       cartoons,
-      indigenousAustraliaOpinion,
       theGuardianView.copy(title = "Editorials"),
       letters,
     ),
@@ -631,6 +635,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val auOtherLinks = List(
     apps,
@@ -643,6 +648,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val usOtherLinks = List(
     apps,
@@ -654,6 +660,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val intOtherLinks = List(
     apps,
@@ -667,6 +674,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
   val eurOtherLinks = List(
     apps,
@@ -680,6 +688,7 @@ object NavLinks {
     crosswords,
     wordiply,
     corrections,
+    tips,
   )
 
   val ukBrandExtensions = List(

@@ -73,17 +73,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val ExtendedMostPopularFronts = Switch(
-    SwitchGroup.Feature,
-    "extended-most-popular-fronts",
-    "Extended 'If switched on shows 'Most Popular' component with space for DPMUs on fronts",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val MostViewedFronts = Switch(
     SwitchGroup.Feature,
     "most-viewed-fronts",
@@ -600,6 +589,17 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "dcr-football-table-pages",
     "If this switch is on, football table pages will be rendered with DCR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
+
+  val WomensEuro2025Atom = Switch(
+    SwitchGroup.Feature,
+    "womens-euro-2025-atom",
+    "If this switch is on, the atom will be rendered on several football data pages",
     owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
     safeState = Off,
     sellByDate = never,

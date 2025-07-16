@@ -490,20 +490,22 @@ class GuardianConfiguration extends GuLogging {
 
     private lazy val dfpRoot = s"$commercialRoot/dfp"
     private lazy val gamRoot = s"$commercialRoot/gam"
-    def dfpPageSkinnedAdUnitsKey =
-      if (LineItemJobs.isSwitchedOn) s"$gamRoot/pageskins.json" else s"$dfpRoot/pageskinned-adunits-v9.json"
-    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$dfpRoot/liveblog-top-sponsorships-v3.json"
-    lazy val dfpSurveySponsorshipDataKey = s"$dfpRoot/survey-sponsorships.json"
-    def dfpNonRefreshableLineItemIdsKey =
-      if (LineItemJobs.isSwitchedOn) s"$gamRoot/non-refreshable-line-items.json"
-      else s"$dfpRoot/non-refreshable-lineitem-ids-v1.json"
+    def dfpPageSkinnedAdUnitsKey = s"$gamRoot/pageskins.json"
+    lazy val dfpLiveBlogTopSponsorshipDataKey = s"$gamRoot/liveblog-top-sponsorships.json"
+    def dfpSurveySponsorshipDataKey = s"$gamRoot/survey-sponsorships.json"
+    def dfpNonRefreshableLineItemIdsKey = s"$gamRoot/non-refreshable-line-items.json"
     def dfpLineItemsKey =
       if (LineItemJobs.isSwitchedOn) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
+    lazy val dfpSpecialAdUnitsKey = s"$gamRoot/special-ad-units.json"
+    lazy val dfpCustomFieldsKey = s"$gamRoot/custom-fields.json"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
-    lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
+    lazy val dfpCustomTargetingKey =
+      if (LineItemJobs.isSwitchedOn) s"$gamRoot/custom-targeting-key-values.json"
+      else s"$dfpRoot/custom-targeting-key-values.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
+    lazy val abTestHtmlObjectKey = s"$commercialRoot/ab-tests.html"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
