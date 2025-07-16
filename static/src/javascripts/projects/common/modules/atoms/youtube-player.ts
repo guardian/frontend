@@ -1,11 +1,11 @@
-import type { AdsConfigDisabled } from '@guardian/commercial';
-import { getPermutivePFPSegments } from '@guardian/commercial';
+import { getPermutivePFPSegments } from '@guardian/commercial-core';
 import type {
 	AdsConfigBasic,
+	AdsConfigDisabled,
 	AdsConfigEnabled,
 	AdsConfigTCFV2,
 	AdsConfigUSNATorAus,
-} from '@guardian/commercial/dist/core/cjs/lib/types';
+} from '@guardian/commercial-core/dist/cjs/types';
 import type { ConsentState } from '@guardian/libs';
 import { loadScript, log, onConsentChange } from '@guardian/libs';
 import fastdom from 'fastdom';
@@ -144,7 +144,7 @@ const createAdsConfigDisabled = (): AdsConfigDisabled => {
 };
 
 /**
- * TODO: Use buildAdsConfig from `@guardian/commercial`
+ * TODO: Use buildAdsConfig from `@guardian/commercial-core`
  * @param consentState
  * @returns A valid YouTube ads config
  */

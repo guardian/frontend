@@ -4,10 +4,10 @@
  * This file should be considered deprecated and only exists for legacy 'hosted' pages
  */
 
-import { postMessage } from '@guardian/commercial';
+import { postMessage } from '@guardian/commercial-core';
 import { send } from './send';
 
-jest.mock('@guardian/commercial', () => ({
+jest.mock('@guardian/commercial-core', () => ({
 	postMessage: jest.fn(),
 }));
 
