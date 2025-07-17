@@ -37,4 +37,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-admiral-adblock-recovery",
+    "Testing the Admiral integration for adblock recovery on theguardian.com",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 8, 29)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

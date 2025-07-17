@@ -150,6 +150,14 @@ class ShareImage(
   val overlayAlignParam = "overlay-align=bottom%2Cleft"
   val overlayWidthParam = "overlay-width=100p"
 
+  // If we only use "fit=crop", then fastly will crop to the centre of the image.
+  // This often means that we lose the tops of people's faces which looks bad,
+  // especially since the switch from 5:4 to 5:3 images means that they tend to be
+  // even taller than the social share image's ratios.
+  // Instead, tell fastly to crop to 40:21 (equivalent to 1200:630), anchoring to the top
+  // vertically, but the centre horizontally, BEFORE it resizes and fits the image to 1200x630.
+  val precropParam = "precrop=40:21,offset-x50,offset-y0"
+
   override def resizeString: String = {
     if (shouldIncludeOverlay) {
       val params = Seq(
@@ -158,6 +166,7 @@ class ShareImage(
         qualityparam,
         autoParam,
         fitParam,
+        precropParam,
         dprParam,
         overlayAlignParam,
         overlayWidthParam,
