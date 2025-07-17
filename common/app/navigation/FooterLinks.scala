@@ -19,6 +19,11 @@ object FooterLinks {
   val privacyPolicy = FooterLink("Privacy policy", "/info/privacy", "privacy")
   val cookiePolicy = FooterLink("Cookie policy", "/info/cookies", "cookie")
   val termsAndConditions = FooterLink("Terms & conditions", "/help/terms-of-service", "terms")
+  val accessibilitySettings = FooterLink(
+    "Accessibility settings",
+    "/help/accessibility-help",
+    "accessibility settings",
+  )
 
   def help(edition: String): FooterLink =
     FooterLink(
@@ -168,6 +173,7 @@ object FooterLinks {
     FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
     FooterLink("Tips", "https://www.theguardian.com/tips", "uk : footer : tips"),
+    accessibilitySettings,
   )
 
   val usListThree = List(
@@ -179,6 +185,7 @@ object FooterLinks {
     FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
     FooterLink("Tips", "https://www.theguardian.com/tips", "us : footer : tips"),
+    accessibilitySettings,
   )
 
   val auListThree = List(
@@ -190,6 +197,7 @@ object FooterLinks {
     ),
     cookiePolicy,
     FooterLink("Tips", "https://www.theguardian.com/tips", "au : footer : tips"),
+    accessibilitySettings,
   )
 
   val intListThree = List(
@@ -204,6 +212,7 @@ object FooterLinks {
       "international : footer : uk-jobs",
     ),
     FooterLink("Tips", "https://www.theguardian.com/tips", "int : footer : tips"),
+    accessibilitySettings,
   )
 
   def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
