@@ -5,6 +5,7 @@ import agents.DeeplyReadAgent
 import java.util.concurrent.Executors
 import app.LifecycleComponent
 import common.{JobScheduler, PekkoAsync}
+import model.ApplicationContext
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
@@ -21,7 +22,8 @@ class OnwardJourneyLifecycle(
     mostViewedGalleryAgent: MostViewedGalleryAgent,
     mostViewedVideoAgent: MostViewedVideoAgent,
     deeplyReadAgent: DeeplyReadAgent,
-) extends LifecycleComponent {
+)(context: ApplicationContext)
+    extends LifecycleComponent {
 
   implicit val capiClientExecutionContext: ExecutionContextExecutorService =
     ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
@@ -50,25 +52,44 @@ class OnwardJourneyLifecycle(
     descheduleAll()
 
     // Spreading the jobs to avoid running them all simultaneously
-    // Every 5 minutes
-    // 00m:00s, 05m:00s, 10m:00s, etc
-    jobs.schedule("MostPopularAgentRefreshJob", "0 0/5 * * * ?") { mostPopularAgent.refresh() }
-    // 01m:00s, 06m:00s, 11m:00s, etc
-    jobs.schedule("GeoMostPopularAgentRefreshJob", "0 1/5 * * * ?") { geoMostPopularAgent.refresh() }
-    // 01m:00s, 06m:00s, 11m:00s, etc
-    jobs.schedule("DeeplyReadAgentRefreshJob", "0 2/5 * * * ?") { deeplyReadAgent.refresh() }
+    // If Preview? every hour at 00m:00s
+    // Otherwise every 5 minutes 00m:00s, 05m:00s, 10m:00s, etc
+    jobs.schedule("MostPopularAgentRefreshJob", if (context.isPreview) "0 0 * * * ?" else "0 0/5 * * * ?") {
+      mostPopularAgent.refresh()
+    }
+    // If Preview? every hour at 01m:00s
+    // Otherwise every 5 minutes 01m:00s, 06m:00s, 11m:00s, etc
+    jobs.schedule("GeoMostPopularAgentRefreshJob", if (context.isPreview) "0 1 * * * ?" else "0 1/5 * * * ?") {
+      geoMostPopularAgent.refresh()
+    }
+    // If Preview? every hour at 02m:00s
+    // Otherwise every 5 minutes 02m:00s, 07m:00s, 12m:00s, etc
+    jobs.schedule("DeeplyReadAgentRefreshJob", if (context.isPreview) "0 2 * * * ?" else "0 2/5 * * * ?") {
+      deeplyReadAgent.refresh()
+    }
 
-    // Every 30 minutes
-    // 03m:00s, 33m:00s, 03m:00s, etc
-    jobs.schedule("MostViewedVideoAgentRefreshJob", "0 3/30 * * * ?") { mostViewedVideoAgent.refresh() }
+    // If Preview? every hour at 03m:00s
+    // Otherwise every 30 minutes 03m:00s, 33m:00s, 03m:00s, etc
+    jobs.schedule("MostViewedVideoAgentRefreshJob", if (context.isPreview) "0 3 * * * ?" else "0 3/30 * * * ?") {
+      mostViewedVideoAgent.refresh()
+    }
+    // If Preview? every hour at 04m:00s
     // 04m:00s, 34m:00s, 04m:00s, etc
-    jobs.schedule("MostViewedAudioAgentRefreshJob", "0 4/30 * * * ?") { mostViewedAudioAgent.refresh() }
+    jobs.schedule("MostViewedAudioAgentRefreshJob", if (context.isPreview) "0 4 * * * ?" else "0 4/30 * * * ?") {
+      mostViewedAudioAgent.refresh()
+    }
+    // If Preview? every hour at 05m:30s
     // Added 30 second offset to avoid conflicting with the jobs that run every 5 minutes
-    // 05m:30s, 35m:30s, 05m:30s, etc
-    jobs.schedule("MostViewedGalleryAgentRefreshJob", "30 5/30 * * * ?") { mostViewedGalleryAgent.refresh() }
+    // Otherwise every 30 minutes 05m:30s, 35m:30s, 05m:30s, etc
+    jobs.schedule("MostViewedGalleryAgentRefreshJob", if (context.isPreview) "30 5 * * * ?" else "30 5/30 * * * ?") {
+      mostViewedGalleryAgent.refresh()
+    }
     // Added 30 second offset to avoid conflicting with the jobs that run every 5 minutes
-    // 06m:30s, 36m:30s, 06m:30s, etc
-    jobs.schedule("MostReadAgentRefreshJob", "30 6/30 * * * ?") { mostReadAgent.refresh() }
+    // If Preview? every hour at 06m:30s
+    // Otherwise every 30 minutes 06m:30s, 36m:30s, 06m:30s, etc
+    jobs.schedule("MostReadAgentRefreshJob", if (context.isPreview) "30 6 * * * ?" else "30 6/30 * * * ?") {
+      mostReadAgent.refresh()
+    }
 
     // Every 60 minutes
     // Added 30 second offset to avoid conflicting with the jobs that run every 5 minutes
