@@ -2,6 +2,7 @@ package experiments
 
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
+import ab.ABTests
 
 class CanCheckExperiment(e: ExperimentsDefinition)
 
@@ -25,7 +26,7 @@ trait ExperimentsDefinition {
         val nameWithValue = s"${e.name}-${value}" // Each experiment variant needs to have a unique name for Ophan
         CamelCase.fromHyphenated(nameWithValue) -> value
       }
-      .toMap
+      .toMap ++ ABTests.allTests
   }
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {

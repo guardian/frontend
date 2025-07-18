@@ -12,6 +12,7 @@ import play.filters.gzip.{GzipFilter, GzipFilterConfig}
 import experiments.LookedAtExperiments
 import model.Cached.PanicReuseExistingResult
 import org.apache.commons.codec.digest.DigestUtils
+import ab.ABTests
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -105,6 +106,19 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
       .map { case (k, v) => k -> v.map(_._2).mkString(",") }
 }
 
+/** AB Testing filter that adds "x-server-ab-tests" header to the Vary header and sets up AB tests from the request
+  * header.
+  */
+class ABTestingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    ABTests.setupTests(request)
+    nextFilter(request).map { result =>
+      val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(ABTests.abTestHeader)
+      result.withHeaders("Vary" -> varyHeaderValues.mkString(","))
+    }
+  }
+}
+
 class PanicSheddingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (Switches.PanicShedding.isSwitchedOn && request.headers.hasHeader("If-None-Match")) {
@@ -126,6 +140,7 @@ object Filters {
       new RequestLoggingFilter,
       new PanicSheddingFilter,
       new JsonVaryHeadersFilter,
+      new ABTestingFilter,
       new ExperimentsFilter,
       new Gzipper,
       new BackendHeaderFilter(frontendBuildInfo),
