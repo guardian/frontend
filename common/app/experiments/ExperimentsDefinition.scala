@@ -26,7 +26,7 @@ trait ExperimentsDefinition {
         val nameWithValue = s"${e.name}-${value}" // Each experiment variant needs to have a unique name for Ophan
         CamelCase.fromHyphenated(nameWithValue) -> value
       }
-      .toMap ++ ABTests.allTests
+      .toMap
   }
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {

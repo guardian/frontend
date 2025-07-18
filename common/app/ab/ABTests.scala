@@ -36,7 +36,6 @@ object ABTests {
   }
 
   def getJavascriptConfig(): String = {
-    println(abTests)
     abTests.toList
       .map({ case (key, value) => s""""${key}":"${value}"""" })
       .mkString(",")
