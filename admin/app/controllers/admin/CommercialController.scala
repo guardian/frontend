@@ -3,7 +3,7 @@ package controllers.admin
 import common.dfp.{GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
-import dfp.{CustomFieldAgent, DfpApi, DfpDataExtractor}
+import dfp.{DfpApi, DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
@@ -16,8 +16,6 @@ import scala.util.Try
 
 class CommercialController(
     val controllerComponents: ControllerComponents,
-    // createTemplateAgent: CreativeTemplateAgent,
-    customFieldAgent: CustomFieldAgent,
     dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -62,8 +60,7 @@ class CommercialController(
 
   def renderCustomFields: Action[AnyContent] =
     Action { implicit request =>
-      val fields: Seq[GuCustomField] = if (LineItemJobs.isSwitchedOn) { Store.getDfpCustomFields }
-      else { customFieldAgent.get.data.values.toSeq }
+      val fields: Seq[GuCustomField] = Store.getDfpCustomFields
       NoCache(Ok(views.html.commercial.customFields(fields)))
     }
 
