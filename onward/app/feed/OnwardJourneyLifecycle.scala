@@ -63,7 +63,7 @@ class OnwardJourneyLifecycle(
       geoMostPopularAgent.refresh()
     }
     // If Preview? every hour at 02m:00s
-    // Otherwise every 5 minutes 01m:00s, 06m:00s, 11m:00s, etc
+    // Otherwise every 5 minutes 02m:00s, 07m:00s, 12m:00s, etc
     jobs.schedule("DeeplyReadAgentRefreshJob", if (context.isPreview) "0 2 * * * ?" else "0 2/5 * * * ?") {
       deeplyReadAgent.refresh()
     }
