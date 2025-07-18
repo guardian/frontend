@@ -4,6 +4,7 @@ import app.LifecycleComponent
 import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomField, GuCustomTargeting}
 import common._
 import play.api.inject.ApplicationLifecycle
+import conf.switches.Switches.{LineItemJobs}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -79,7 +80,11 @@ class DfpDataCacheLifecycle(
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
       val interval: Int = 15
-      def run() = creativeTemplateAgent.refresh()
+      def run(): Future[Seq[GuCreativeTemplate]] = if (LineItemJobs.isSwitchedOff) {
+        creativeTemplateAgent.refresh()
+      } else {
+        Future.successful(Seq.empty)
+      }
     },
     // used for creative templates admin page
     new Job[Unit] {

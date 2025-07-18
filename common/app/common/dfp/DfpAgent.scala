@@ -20,6 +20,7 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
   private lazy val specialAdUnitsAgent = Box[Seq[(String, String)]](Nil)
   private lazy val customFieldsAgent = Box[Seq[GuCustomField]](Nil)
+  private lazy val creativeTemplatesAgent = Box[Seq[GuCreativeTemplate]](Nil)
 
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent.get()
   protected def liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = liveblogTopSponsorshipAgent.get()
@@ -84,6 +85,13 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
         customFields <- Json.parse(jsonString).validate[Seq[GuCustomField]].asOpt
       } yield customFields) getOrElse Nil
     }
+
+    def grabCreativeTemplatesFromStore() = {
+      (for {
+        jsonString <- stringFromS3(dfpCreativeTemplatesKey)
+        creativeTemplates <- Json.parse(jsonString).validate[Seq[GuCreativeTemplate]].asOpt
+      } yield creativeTemplates) getOrElse Nil
+    }
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
 
     update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
@@ -95,5 +103,7 @@ object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with Su
     update(specialAdUnitsAgent)(grabSpecialAdUnitsFromStore())
 
     update(customFieldsAgent)(grabCustomFieldsFromStore())
+
+    update(creativeTemplatesAgent)(grabCreativeTemplatesFromStore())
   }
 }
