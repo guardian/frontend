@@ -46,15 +46,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  def customFields(stmtBuilder: StatementBuilder): Seq[CustomField] = {
-    logAroundRead("custom fields", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.customFieldsService.getCustomFieldsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
   def customTargetingKeys(stmtBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
     logAroundRead("custom targeting keys", stmtBuilder) {
       read(stmtBuilder) { statement =>
