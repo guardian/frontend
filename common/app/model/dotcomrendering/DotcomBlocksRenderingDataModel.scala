@@ -11,6 +11,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
 import experiments.ActiveExperiments
+import ab.ABTests
 
 // -----------------------------------------------------------------
 // DCR Blocks DataModel
@@ -30,6 +31,7 @@ case class DotcomBlocksRenderingDataModel(
     adUnit: String,
     switches: Map[String, Boolean],
     abTests: Map[String, String],
+    serverSideABTests: Map[String, String],
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -52,6 +54,7 @@ object DotcomBlocksRenderingDataModel {
         "adUnit" -> model.adUnit,
         "switches" -> model.switches,
         "abTests" -> model.abTests,
+        "serverSideABTests" -> model.serverSideABTests,
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -115,6 +118,7 @@ object DotcomBlocksRenderingDataModel {
       adUnit = content.metadata.adUnitSuffix,
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
+      serverSideABTests = ABTests.allTests,
     )
   }
 }
