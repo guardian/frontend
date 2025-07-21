@@ -386,18 +386,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  // Election interactive header switch
-  val InteractiveHeaderSwitch = Switch(
-    SwitchGroup.Feature,
-    "interactive-full-header-switch",
-    "If switched on, the header on all interactives will display in full.",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val slotBodyEnd = Switch(
     SwitchGroup.Feature,
     "slot-body-end",
