@@ -114,7 +114,15 @@ class ABTestingFilter(implicit val mat: Materializer, executionContext: Executio
     ABTests.setupTests(request)
     nextFilter(request).map { result =>
       val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(ABTests.abTestHeader)
-      result.withHeaders("Vary" -> varyHeaderValues.mkString(","))
+      val abTestHeaderValue = request.headers.get(ABTests.abTestHeader).getOrElse("")
+      val responseHeaders =
+        Map(ABTests.abTestHeader -> abTestHeaderValue, "Vary" -> varyHeaderValues.mkString(",")).filterNot {
+          case (_, v) =>
+            v.isEmpty
+        }.toSeq
+
+      result.withHeaders(responseHeaders: _*)
+
     }
   }
 }
