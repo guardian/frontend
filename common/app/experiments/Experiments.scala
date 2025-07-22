@@ -52,5 +52,5 @@ object LoopingVideo
       description = "Enable looping videos on DCR",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc5A,
+      participationGroup = Perc50,
     )
