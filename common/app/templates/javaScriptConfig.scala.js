@@ -16,7 +16,7 @@
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
         "tests": { @JavaScript(experiments.ActiveExperiments.getJavascriptConfig) },
-        "serverSideABTests": { @JavaScript(ab.ABTests.getJavascriptConfig()) },
+        "serverSideABTests": { @JavaScript(ab.ABTests.getJavascriptConfig) },
         "modules": {
             "tracking": {
                 "ready": null

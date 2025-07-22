@@ -118,7 +118,7 @@ object DotcomBlocksRenderingDataModel {
       adUnit = content.metadata.adUnitSuffix,
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.allTests,
+      serverSideABTests = ABTests.allTests(request),
     )
   }
 }
