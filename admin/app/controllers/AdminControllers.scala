@@ -27,9 +27,6 @@ trait AdminControllers {
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
   def assets: Assets
-  def adUnitAgent: AdUnitAgent
-  def adUnitService: AdUnitService
-  def advertiserAgent: AdvertiserAgent
   def creativeTemplateAgent: CreativeTemplateAgent
   def customFieldAgent: CustomFieldAgent
   def customFieldService: CustomFieldService
@@ -37,11 +34,6 @@ trait AdminControllers {
   def customTargetingService: CustomTargetingService
   def customTargetingKeyValueJob: CustomTargetingKeyValueJob
   def dataMapper: DataMapper
-  def dataValidation: DataValidation
-  def dfpDataCacheJob: DfpDataCacheJob
-  def orderAgent: OrderAgent
-  def placementAgent: PlacementAgent
-  def placementService: PlacementService
   def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
 
@@ -79,7 +71,6 @@ trait AdminControllers {
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
-  lazy val dfpDataController = wire[DfpDataController]
   lazy val fastlyController = wire[FastlyController]
   lazy val redirectController = wire[RedirectController]
   lazy val sportTroubleShooterController = wire[SportTroubleshooterController]
