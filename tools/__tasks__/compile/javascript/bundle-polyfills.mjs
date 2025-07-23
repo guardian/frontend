@@ -4,11 +4,9 @@ import fs from 'node:fs';
 import mkdirp from 'mkdirp';
 import pify from 'pify';
 import uglify from 'uglify-js';
-import request from 'request';
 
 const readFileP = pify(fs.readFile);
 const writeFileP = pify(fs.writeFile);
-const requestP = pify(request, { multiArgs: true });
 
 import { paths } from '../../config.mjs';
 
@@ -26,9 +24,9 @@ const task = {
 		// gobbledegook UA means it will return *all* polyfills, so this
 		// strictly a worst-case fallback
 		return (
-			requestP(`${polyfillURL}&ua=qwerty&unknown=polyfill`)
-				.then((result) => {
-					const [, body] = result;
+			fetch(`${polyfillURL}&ua=qwerty&unknown=polyfill`)
+				.then((res) => res.text())
+				.then((body) => {
 					// make sure the response looks about right
 					if (body.endsWith('guardianPolyfilled();')) {
 						return body;
