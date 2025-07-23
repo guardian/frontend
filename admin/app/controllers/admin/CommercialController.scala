@@ -3,7 +3,7 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
-import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
+import dfp.{CreativeTemplateAgent, DfpApi, DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
@@ -29,9 +29,6 @@ case class CommercialPage() extends StandalonePage {
 class CommercialController(
     val controllerComponents: ControllerComponents,
     createTemplateAgent: CreativeTemplateAgent,
-    advertiserAgent: AdvertiserAgent,
-    orderAgent: OrderAgent,
-    customFieldAgent: CustomFieldAgent,
     dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -45,9 +42,7 @@ class CommercialController(
 
   def renderSpecialAdUnits: Action[AnyContent] =
     Action { implicit request =>
-      val specialAdUnits =
-        if (LineItemJobs.isSwitchedOn) { Store.getDfpSpecialAdUnits }
-        else { dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot) }
+      val specialAdUnits = Store.getDfpSpecialAdUnits
       NoCache(Ok(views.html.commercial.specialAdUnits(specialAdUnits)))
     }
 
@@ -91,8 +86,7 @@ class CommercialController(
 
   def renderCustomFields: Action[AnyContent] =
     Action { implicit request =>
-      val fields: Seq[GuCustomField] = if (LineItemJobs.isSwitchedOn) { Store.getDfpCustomFields }
-      else { customFieldAgent.get.data.values.toSeq }
+      val fields: Seq[GuCustomField] = Store.getDfpCustomFields
       NoCache(Ok(views.html.commercial.customFields(fields)))
     }
 
@@ -171,29 +165,17 @@ class CommercialController(
       val invalidLineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().invalidLineItems
       val invalidItemsExtractor = DfpDataExtractor(invalidLineItems, Nil)
 
-      val advertisers = advertiserAgent.get
-      val orders = orderAgent.get
-      val sonobiAdvertiserId = advertisers.find(_.name.toLowerCase == "sonobi").map(_.id).getOrElse(0L)
-      val sonobiOrderIds = orders.filter(_.advertiserId == sonobiAdvertiserId).map(_.id)
-
       // Sort line items into groups where possible, and bucket everything else.
       val pageskins = invalidItemsExtractor.pageSkinSponsorships
 
-      val groupedItems = invalidLineItems.groupBy {
-        case item if sonobiOrderIds.contains(item.orderId) => "sonobi"
-        case _                                             => "unknown"
-      }
-
-      val sonobiItems = groupedItems.getOrElse("sonobi", Seq.empty)
       val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
       val unidentifiedLineItems =
-        invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- sonobiItems.map(_.id)
+        invalidItemsMap.keySet -- pageskins.map(_.lineItemId)
 
       Ok(
         views.html.commercial.invalidLineItems(
           pageskins,
-          sonobiItems,
           unidentifiedLineItems.toSeq.map(invalidItemsMap),
         ),
       )

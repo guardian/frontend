@@ -46,15 +46,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  def customFields(stmtBuilder: StatementBuilder): Seq[CustomField] = {
-    logAroundRead("custom fields", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.customFieldsService.getCustomFieldsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
   def customTargetingKeys(stmtBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
     logAroundRead("custom targeting keys", stmtBuilder) {
       read(stmtBuilder) { statement =>
@@ -77,15 +68,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     logAroundRead("ad units", stmtBuilder) {
       read(stmtBuilder) { statement =>
         val page = services.inventoryService.getAdUnitsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
-  def placements(stmtBuilder: StatementBuilder): Seq[Placement] = {
-    logAroundRead("placements", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.placementService.getPlacementsByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
     }
