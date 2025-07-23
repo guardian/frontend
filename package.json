@@ -113,7 +113,6 @@
 		"rangefix": "^0.2.5",
 		"raven-js": "^3.19.1",
 		"raw-loader": "^0.5.1",
-		"request": "^2.81.0",
 		"requireindex": "^1.1.0",
 		"rimraf": "^2.6.1",
 		"rxjs": "^6.6.7",
