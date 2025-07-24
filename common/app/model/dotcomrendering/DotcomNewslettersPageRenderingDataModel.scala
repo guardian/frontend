@@ -14,6 +14,7 @@ import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
 import services.NewsletterData
+import ab.ABTests
 
 case class DotcomNewslettersPageRenderingDataModel(
     newsletters: List[NewsletterData],
@@ -58,6 +59,7 @@ object DotcomNewslettersPageRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
+      serverSideABTests = ABTests.allTests(request),
       ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

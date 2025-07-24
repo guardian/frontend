@@ -12,6 +12,7 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
+import ab.ABTests
 
 case class DotcomRenderingCricketDataModel(
     cricketMatch: Match,
@@ -47,6 +48,7 @@ object DotcomRenderingCricketDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
+      serverSideABTests = ABTests.allTests,
       ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
