@@ -23,7 +23,6 @@ trait OnwardControllers {
   def mostPopularAgent: MostPopularAgent
   def deeplyReadAgent: DeeplyReadAgent
   def mostReadAgent: MostReadAgent
-  def mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh
   def mostViewedVideoAgent: MostViewedVideoAgent
   def mostViewedGalleryAgent: MostViewedGalleryAgent
   def mostViewedAudioAgent: MostViewedAudioAgent
@@ -33,7 +32,6 @@ trait OnwardControllers {
   def popularInTagService: PopularInTagService
 
   lazy val navigationController = wire[NavigationController]
-  lazy val mostViewedSocialController = wire[MostViewedSocialController]
   lazy val mostPopularController = wire[MostPopularController]
   lazy val topStoriesController = wire[TopStoriesController]
   lazy val relatedController = wire[RelatedController]
