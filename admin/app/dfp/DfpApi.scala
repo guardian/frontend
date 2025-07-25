@@ -50,27 +50,14 @@ class DfpApi(dataMapper: DataMapper) extends GuLogging {
     }
   }
 
-  def readActiveAdUnits(rootName: String): Seq[GuAdUnit] = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("status = :status")
-      .withBindVariableValue("status", InventoryStatus._ACTIVE)
-
-    readDescendantAdUnits(rootName, stmtBuilder)
-  }
-
-  def readSpecialAdUnits(rootName: String): Seq[(String, String)] = {
-
-    val statementBuilder = new StatementBuilder()
-      .where("status = :status")
-      .where("explicitlyTargeted = :targeting")
-      .withBindVariableValue("status", InventoryStatus._ACTIVE)
-      .withBindVariableValue("targeting", true)
-
-    readDescendantAdUnits(rootName, statementBuilder) map { adUnit =>
-      (adUnit.id, adUnit.path.mkString("/"))
-    } sortBy (_._2)
-  }
+//  def readActiveAdUnits(rootName: String): Seq[GuAdUnit] = {
+//
+//    val stmtBuilder = new StatementBuilder()
+//      .where("status = :status")
+//      .withBindVariableValue("status", InventoryStatus._ACTIVE)
+//
+//    readDescendantAdUnits(rootName, stmtBuilder)
+//  }
 
   def getCreativeIds(lineItemId: Long): Seq[Long] = {
     val stmtBuilder = new StatementBuilder()
