@@ -18,9 +18,11 @@ import model.{
   CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
+  ContentType,
   CrosswordData,
   DotcomContentType,
   GUDateTimeFormatNew,
+  Gallery,
   GalleryPage,
   ImageContentPage,
   ImageMedia,
@@ -454,7 +456,7 @@ object DotcomRenderingDataModel {
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
-    val content = page.item
+    val content: ContentType = page.item
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
@@ -465,13 +467,21 @@ object DotcomRenderingDataModel {
     )
 
     def hasAffiliateLinks(
+        content: ContentType,
         blocks: Seq[APIBlock],
     ): Boolean = {
-      blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
+      content match {
+        case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
+        // TODO: I think the below could be used for galleries too, because the bodyHtml includes all the caption texts as well
+        case _ => blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
+      }
     }
 
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
-    val shouldAddDisclaimer = hasAffiliateLinks(bodyBlocks)
+    val shouldAddDisclaimer = hasAffiliateLinks(content, bodyBlocks)
+
+    println(s"shouldAddDisclaimer: ${shouldAddDisclaimer}")
+    println(s"shouldAddAffiliateLinks: ${shouldAddAffiliateLinks}")
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
