@@ -1,6 +1,7 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
+import commercial.AdmiralLifecycle
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import common.CloudWatchMetricsLifecycle
@@ -47,6 +48,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[CachedHealthCheckLifeCycle],
+    wire[AdmiralLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

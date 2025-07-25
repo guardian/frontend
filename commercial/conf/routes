@@ -6,6 +6,9 @@
 GET         /assets/*path                                                   dev.DevAssetsController.at(path)
 GET         /_healthcheck                                                   commercial.controllers.HealthCheck.healthCheck()
 
+# Admiral Ad Block Recovery solution - fetching the bootstrap script
+GET         /admiral/bootstrap                                              commercial.controllers.AdmiralController.getBootstrapScript()
+
 # Content API merchandising components
 # Attempting to remove ContentApiOffersController, discovered
 # https://github.com/guardian/commercial-templates/blob/dba808f89127d4405f4f4f087208e6135400e61c/src/capi-single-paidfor/web/index.js#L30

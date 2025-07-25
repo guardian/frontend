@@ -19,4 +19,5 @@ trait CommercialControllers {
   lazy val ampIframeHtmlController = wire[AmpIframeHtmlController]
   lazy val nonRefreshableLineItemsController = wire[nonRefreshableLineItemsController]
   lazy val TemporaryAdLiteController = wire[TemporaryAdLiteController]
+  lazy val admiralController = wire[AdmiralController]
 }
