@@ -8,8 +8,6 @@ GET        /assets/*path                              dev.DevAssetsController.at
 GET        /_healthcheck                              controllers.HealthCheck.healthCheck()
 
 # Most Read
-GET        /most-read-facebook.json                   controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "facebook")
-GET        /most-read-twitter.json                    controllers.MostViewedSocialController.renderMostViewed(socialContext: String = "twitter")
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()

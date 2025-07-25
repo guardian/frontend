@@ -91,7 +91,6 @@ trait AppComponents
       wire[ConfigAgentLifecycle],
       wire[SurgingContentAgentLifecycle],
       wire[SectionsLookUpLifecycle],
-      wire[MostPopularFacebookAutoRefreshLifecycle],
       wire[SwitchboardLifecycle],
       wire[FootballLifecycle],
       wire[CricketLifecycle],

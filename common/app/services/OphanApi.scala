@@ -76,12 +76,6 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
 
   def getBreakdown(path: String): Future[JsValue] = getBreakdown(Map("path" -> s"/$path"))
 
-  def getMostReadFacebook(hours: Int): Future[Seq[OphanMostReadItem]] =
-    getMostRead("Facebook", hours)
-
-  def getMostReadTwitter(hours: Int): Future[Seq[OphanMostReadItem]] =
-    getMostRead("Twitter", hours)
-
   def getMostRead(referrer: String, hours: Int): Future[Seq[OphanMostReadItem]] =
     getMostRead(Map("referrer" -> referrer, "hours" -> hours.toString))
 
@@ -94,9 +88,6 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
   def getMostReadInSection(section: String, days: Int, count: Int): Future[Seq[OphanMostReadItem]] =
     getMostRead(Map("days" -> days.toString, "count" -> count.toString, "section" -> section))
 
-  def getMostReferredFromSocialMedia(days: Int): Future[Seq[OphanMostReadItem]] =
-    getMostRead(Map("days" -> days.toString, "referrer" -> "social media"))
-
   def getMostViewedGalleries(hours: Int, count: Int): Future[Seq[OphanMostReadItem]] =
     getMostRead(Map("content-type" -> "gallery", "hours" -> hours.toString, "count" -> count.toString))
 
@@ -105,17 +96,6 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
 
   def getDeeplyRead(edition: Edition): Future[Seq[OphanDeeplyReadItem]] =
     getBody("deeplyread")(Map("country" -> countryFromEdition(edition))).map(_.as[Seq[OphanDeeplyReadItem]])
-
-  def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
-    val validatedParams = for {
-      (key, values) <- params
-      if Seq("platform", "hours", "ad-slot").contains(key)
-      value <- values
-    } yield {
-      key -> value
-    }
-    getBody("ads/render-time")(validatedParams)
-  }
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
 
