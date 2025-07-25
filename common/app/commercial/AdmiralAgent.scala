@@ -1,18 +1,31 @@
 package commercial
 
 import common.{Box, GuLogging}
+import conf.Configuration
 import play.api.libs.ws.WSClient
 
+import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
 
-object AdmiralAgent extends GuLogging {
+class AdmiralAgent(ws: WSClient) extends GuLogging with implicits.WSRequests {
 
-  private val scriptCache = Box(String)
+  private val scriptCache = Box[String](null)
 
-  def refresh(ws: WSClient, admiralApi: AdmiralApi)(implicit ec: ExecutionContext): Future[Unit] = {
+  private lazy val endpoint = Configuration.commercial.admiralEndpoint.get
+
+  private def getBootstrapScript(implicit ec: ExecutionContext): Future[String] = {
+    ws
+      .url(endpoint)
+      .addHttpHeaders("Content-Type" -> "text/javascript")
+      .withRequestTimeout(1.second)
+      .getOKResponse()
+      .map(_.body)
+  }
+
+  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"Admiral Agent refresh()")
 
-    admiralApi.getBootstrapScript(ws)(ec).map { script =>
+    getBootstrapScript(ec).map { script =>
       scriptCache.alter(script)
     }
   }

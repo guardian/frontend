@@ -3,7 +3,6 @@ package commercial
 import app.LifecycleComponent
 import common.{JobScheduler, PekkoAsync}
 import play.api.inject.ApplicationLifecycle
-import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -12,8 +11,7 @@ class AdmiralLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
     pekkoAsync: PekkoAsync,
-    ws: WSClient,
-    admiralApi: AdmiralApi,
+    admiralAgent: AdmiralAgent,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
 
@@ -26,12 +24,12 @@ class AdmiralLifecycle(
   override def start(): Unit = {
     jobs.deschedule("AdmiralAgentRefreshJob")
 
-    jobs.scheduleEvery("AdmiralAgentRefreshJob", 1.hour) {
-      AdmiralAgent.refresh(ws = ws, admiralApi = admiralApi)
+    jobs.scheduleEvery("AdmiralAgentRefreshJob", 10.seconds) {
+      admiralAgent.refresh()
     }
 
     pekkoAsync.after1s {
-      AdmiralAgent.refresh(ws = ws, admiralApi = admiralApi)
+      admiralAgent.refresh()
     }
   }
 }

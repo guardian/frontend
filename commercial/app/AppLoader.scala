@@ -1,7 +1,7 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
-import commercial.AdmiralLifecycle
+import commercial.{AdmiralAgent, AdmiralLifecycle}
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import common.CloudWatchMetricsLifecycle
@@ -36,6 +36,8 @@ trait CommercialServices {
   lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val capiAgent = wire[CapiAgent]
+
+  lazy val admiralAgent = wire[AdmiralAgent]
 }
 
 trait AppComponents extends FrontendComponents with CommercialControllers with CommercialServices {
