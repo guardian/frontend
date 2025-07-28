@@ -37,6 +37,8 @@ deployments:
     template: frontend
   facia:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   facia-press:
     template: frontend
   identity:
