@@ -480,9 +480,6 @@ object DotcomRenderingDataModel {
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
     val shouldAddDisclaimer = hasAffiliateLinks(content, bodyBlocks)
 
-    println(s"shouldAddDisclaimer: ${shouldAddDisclaimer}")
-    println(s"shouldAddAffiliateLinks: ${shouldAddAffiliateLinks}")
-
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
       firstPublicationDate = content.fields.firstPublicationDate,

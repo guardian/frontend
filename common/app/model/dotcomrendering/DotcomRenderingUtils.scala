@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.format.LiveBlogDesign
+import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, LiveBlogDesign}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import conf.switches.Switches
@@ -184,7 +184,6 @@ object DotcomRenderingUtils {
       article: ContentType,
       affiliateLinks: Boolean,
       isMainBlock: Boolean,
-      isImmersive: Boolean,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
   ): List[PageElement] = {
@@ -200,12 +199,13 @@ object DotcomRenderingUtils {
           pageUrl = request.uri,
           atoms = atoms,
           isMainBlock,
-          isImmersive,
+          article.content.metadata.format.exists(_.display == ImmersiveDisplay),
           campaigns,
           calloutsUrl,
           article.elements.thumbnail,
           edition,
           article.trail.webPublicationDate,
+          article.content.isGallery,
         ),
       )
       .filter(PageElement.isSupported)

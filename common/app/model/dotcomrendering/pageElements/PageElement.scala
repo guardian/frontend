@@ -23,7 +23,7 @@ import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{ImgSrc, SrcSet, Video700, AffiliateLinksCleaner}
+import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet, Video700}
 
 import java.net.URLEncoder
 import scala.jdk.CollectionConverters._
@@ -917,6 +917,7 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
       webPublicationDate: DateTime,
+      isGallery: Boolean,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -1026,7 +1027,7 @@ object PageElement {
         List(
           ImageBlockElement(
             ImageMedia(imageAssets.toSeq),
-            imageDataFor(element),
+            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
             imageSources,
@@ -1505,6 +1506,7 @@ object PageElement {
                 edition,
                 webPublicationDate,
                 item,
+                isGallery,
               )
             }.toSeq,
             listElementType = listTypeData.`type`.map(_.name),
@@ -1524,6 +1526,7 @@ object PageElement {
               edition,
               webPublicationDate,
               timelineTypeData,
+              isGallery,
             ),
           )
         }.toList
@@ -1543,6 +1546,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       timelineTypeData: TimelineElementFields,
+      isGallery: Boolean,
   ) = {
     timelineTypeData.sections.map { section =>
       TimelineSection(
@@ -1566,6 +1570,7 @@ object PageElement {
                   overrideImage = None,
                   edition,
                   webPublicationDate,
+                  isGallery,
                 )
                 .headOption
             },
@@ -1582,6 +1587,7 @@ object PageElement {
                 overrideImage = None,
                 edition,
                 webPublicationDate,
+                isGallery,
               )
             }.toSeq,
           )
@@ -1600,6 +1606,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       item: v1.ListItem,
+      isGallery: Boolean,
   ) = {
     ListItem(
       elements = item.elements.flatMap { element =>
@@ -1615,6 +1622,7 @@ object PageElement {
           overrideImage = None,
           edition,
           webPublicationDate,
+          isGallery,
         )
       }.toSeq,
       title = item.title,
@@ -1938,12 +1946,23 @@ object PageElement {
     pageElement.flatten
   }
 
-  private def imageDataFor(element: ApiBlockElement): Map[String, String] = {
+  private def imageDataFor(
+      element: ApiBlockElement,
+      isGallery: Boolean,
+      pageUrl: String,
+      addAffiliateLinks: Boolean,
+  ): Map[String, String] = {
     element.imageTypeData.map { d =>
       Map(
         "copyright" -> d.copyright,
         "alt" -> d.alt,
-        "caption" -> d.caption,
+        "caption" -> {
+          if (isGallery) {
+            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks))
+          } else {
+            d.caption
+          }
+        },
         "credit" -> d.credit,
       ) collect { case (k, Some(v)) => (k, v) }
     } getOrElse Map()
