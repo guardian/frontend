@@ -21,6 +21,7 @@ templates:
     - update-ami-for-applications
     - update-ami-for-rss
     - update-ami-for-onward
+    - update-ami-for-facia
 
 deployments:
   admin:
@@ -121,5 +122,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIOnward:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-facia:
+    app: facia
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIFacia:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
