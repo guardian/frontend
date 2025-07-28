@@ -5,7 +5,7 @@ import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import views.support.{AffiliateLinksCleaner, GalleryCaptionCleaner, HtmlCleaner}
+import views.support.{AffiliateLinksCleaner, HtmlCleaner}
 
 import scala.jdk.CollectionConverters._
 import scala.util.matching.Regex
@@ -128,6 +128,27 @@ object TagLinker {
     } else {
       (el, terms)
     }
+  }
+}
+
+object GalleryCaptionCleaner extends HtmlCleaner {
+  override def clean(galleryCaption: Document): Document = {
+    // There is an inconsistent number of <br> tags in gallery captions.
+    // To create some consistency, re will remove them all.
+    galleryCaption.getElementsByTag("br").remove()
+
+    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
+    val captionTitle = galleryCaption.createElement("h2")
+    val captionTitleText = firstStrong.map(_.html()).getOrElse("")
+
+    // <strong> is removed in place of having a <h2> element
+    firstStrong.foreach(_.remove())
+
+    captionTitle.html(captionTitleText)
+
+    galleryCaption.body.prependChild(captionTitle)
+
+    galleryCaption
   }
 }
 

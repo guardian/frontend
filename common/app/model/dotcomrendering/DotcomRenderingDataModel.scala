@@ -456,7 +456,7 @@ object DotcomRenderingDataModel {
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
-    val content: ContentType = page.item
+    val content = page.item
     val isImmersive = content.metadata.format.exists(_.display == ImmersiveDisplay)
     val isPaidContent = content.metadata.designType.contains(AdvertisementFeature)
 
@@ -472,7 +472,6 @@ object DotcomRenderingDataModel {
     ): Boolean = {
       content match {
         case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
-        // TODO: I think the below could be used for galleries too, because the bodyHtml includes all the caption texts as well
         case _ => blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
       }
     }
