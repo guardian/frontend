@@ -528,7 +528,7 @@ class GuardianConfiguration extends GuLogging {
       if (environment.isDev) configuration.getStringProperty("commercial.overrideCommercialBundleUrl")
       else None
 
-    lazy val admiralEndpoint = configuration.getStringProperty("commercial.admiralUrl")
+    lazy val admiralUrl = configuration.getStringProperty("commercial.admiralUrl")
   }
 
   object journalism {

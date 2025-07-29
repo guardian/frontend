@@ -1,7 +1,7 @@
+import agents.AdmiralAgent
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
-import commercial.{AdmiralAgent, AdmiralLifecycle}
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import common.CloudWatchMetricsLifecycle
@@ -11,6 +11,7 @@ import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
+import jobs.AdmiralLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext

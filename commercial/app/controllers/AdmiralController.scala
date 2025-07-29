@@ -1,6 +1,6 @@
 package commercial.controllers
 
-import commercial.AdmiralAgent
+import agents.AdmiralAgent
 import common.{GuLogging, ImplicitControllerExecutionContext}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 

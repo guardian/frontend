@@ -1,7 +1,7 @@
 package commercial.controllers
 
+import agents.AdmiralAgent
 import com.softwaremill.macwire._
-import commercial.AdmiralAgent
 import commercial.model.capi.CapiAgent
 import contentapi.ContentApiClient
 import model.ApplicationContext
