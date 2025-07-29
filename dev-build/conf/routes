@@ -245,8 +245,7 @@ GET            /advertiser-content/:campaignName/:pageName/autoplay.json        
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize()
 GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
 GET            /commercial/non-refreshable-line-items.json                                                                       commercial.controllers.nonRefreshableLineItemsController.getIds
-# Admiral Ad Block Recovery solution - fetching the bootstrap script
-GET            /admiral/bootstrap                                                                                                commercial.controllers.AdmiralController.getBootstrapScript
+
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
