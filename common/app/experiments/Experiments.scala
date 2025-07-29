@@ -42,7 +42,7 @@ object DarkModeWeb
       name = "dark-mode-web",
       description = "Enable dark mode on web",
       owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 7, 30),
+      sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
     )
 
@@ -51,6 +51,6 @@ object DCRJavascriptBundle
       name = "dcr-javascript-bundle",
       description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 7, 30),
+      sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
     )
