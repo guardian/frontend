@@ -7,7 +7,7 @@ GET         /assets/*path                                                   dev.
 GET         /_healthcheck                                                   commercial.controllers.HealthCheck.healthCheck()
 
 # Admiral Ad Block Recovery solution - fetching the bootstrap script
-GET         /commercial/admiral-bootstrap                                   commercial.controllers.AdmiralController.getBootstrapScript
+GET         /commercial/admiral-bootstrap.js                                commercial.controllers.AdmiralController.getBootstrapScript
 
 # Content API merchandising components
 # Attempting to remove ContentApiOffersController, discovered
