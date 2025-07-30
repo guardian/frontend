@@ -15,7 +15,6 @@ class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSReques
 
   private def fetchBootstrapScript(implicit ec: ExecutionContext): Future[String] = {
     log.info(s"Fetching Admiral's bootstrap script via the Install Tag API")
-    log.info(s"Admiral URL is: $admiralUrl")
     admiralUrl match {
       case Some(admiralUrl) =>
         wsClient
@@ -24,14 +23,16 @@ class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSReques
           .getOKResponse()
           .map(_.body)
 
-      case None => Future.failed(new Throwable("No configuration value available for commercial.admiralEndpoint"))
+      case None =>
+        val errorMessage = "No configuration value found for commercial.admiralUrl"
+        log.error(errorMessage)
+        Future.failed(new Throwable(errorMessage))
     }
   }
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
-    log.info(s"Admiral Agent refresh()")
+    log.info("Commercial Admiral Agent refresh")
     fetchBootstrapScript.map { script =>
-      log.info("Updating the cache with Admiral's script")
       scriptCache.alter(Some(script))
     }
   }
