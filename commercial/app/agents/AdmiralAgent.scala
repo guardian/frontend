@@ -11,10 +11,13 @@ class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSReques
 
   private val scriptCache = Box[Option[String]](None)
 
+  private val admiralUrl = Configuration.commercial.admiralUrl;
+
   private def fetchBootstrapScript(implicit ec: ExecutionContext): Future[String] = {
-    Configuration.commercial.admiralUrl match {
+    log.info(s"Fetching Admiral's bootstrap script via the Install Tag API")
+    log.info(s"Admiral URL is: $admiralUrl")
+    admiralUrl match {
       case Some(admiralUrl) =>
-        log.info(s"Fetching Admiral's bootstrap script via the Install Tag API")
         wsClient
           .url(admiralUrl)
           .withRequestTimeout(2.seconds)
@@ -28,11 +31,12 @@ class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSReques
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"Admiral Agent refresh()")
     fetchBootstrapScript.map { script =>
+      log.info("Updating the cache with Admiral's script")
       scriptCache.alter(Some(script))
     }
   }
 
-  def getBootstrapScript: String = {
-    scriptCache.get().getOrElse("Bootstrap script not in cache")
+  def getBootstrapScript: Option[String] = {
+    scriptCache.get()
   }
 }

@@ -37,7 +37,6 @@ trait CommercialServices {
   lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val capiAgent = wire[CapiAgent]
-
   lazy val admiralAgent = wire[AdmiralAgent]
 }
 
