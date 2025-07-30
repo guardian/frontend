@@ -18,7 +18,7 @@ class AdmiralController(admiralAgent: AdmiralAgent, val controllerComponents: Co
     Action { implicit request =>
       admiralAgent.getBootstrapScript match {
         case Some(script) =>
-          Cached(1.minute)(
+          Cached(10.minutes)(
             RevalidatableResult(Ok(script).as("text/javascript; charset=utf-8"), script),
           )
         case None => NotFound
