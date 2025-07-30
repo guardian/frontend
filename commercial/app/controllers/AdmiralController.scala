@@ -16,10 +16,11 @@ class AdmiralController(admiralAgent: AdmiralAgent, val controllerComponents: Co
 
   def getBootstrapScript: Action[AnyContent] =
     Action { implicit request =>
-      // Cache the result for 10 minutes
-      // We only actually refresh the agent and fetch the bootstrap script once every 2 hours
       Cached(1.minute)(
-        RevalidatableResult(Ok(admiralAgent.getBootstrapScript).as("text/javascript"), admiralAgent.getBootstrapScript),
+        RevalidatableResult(
+          Ok(admiralAgent.getBootstrapScript).as("text/javascript; charset=utf-8"),
+          admiralAgent.getBootstrapScript,
+        ),
       )
     }
 }
