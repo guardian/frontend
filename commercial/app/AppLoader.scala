@@ -1,3 +1,4 @@
+import agents.AdmiralAgent
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
@@ -10,6 +11,7 @@ import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
+import jobs.AdmiralLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
@@ -35,6 +37,7 @@ trait CommercialServices {
   lazy val contentApiClient = wire[ContentApiClient]
 
   lazy val capiAgent = wire[CapiAgent]
+  lazy val admiralAgent = wire[AdmiralAgent]
 }
 
 trait AppComponents extends FrontendComponents with CommercialControllers with CommercialServices {
@@ -47,6 +50,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[CachedHealthCheckLifeCycle],
+    wire[AdmiralLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
