@@ -9,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSRequests {
 
-  private val scriptCache = Box[String](null)
+  private val scriptCache = Box[Option[String]](None)
 
   private def fetchBootstrapScript(implicit ec: ExecutionContext): Future[String] = {
     Configuration.commercial.admiralUrl match {
@@ -28,11 +28,11 @@ class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSReques
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"Admiral Agent refresh()")
     fetchBootstrapScript.map { script =>
-      scriptCache.alter(script)
+      scriptCache.alter(Some(script))
     }
   }
 
   def getBootstrapScript: String = {
-    scriptCache.get()
+    scriptCache.get().getOrElse("Bootstrap script not in cache")
   }
 }
