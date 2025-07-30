@@ -33,7 +33,7 @@ object ABTests {
   }
 
   def isParticipating(implicit request: RequestHeader, testName: String): Boolean = {
-    request.attrs.get(attrKey).exists(_.contains((testName, "variant")))
+    request.attrs.get(attrKey).exists(_.contains((testName)))
   }
 
   def isInVariant(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
