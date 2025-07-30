@@ -111,7 +111,7 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
   */
 class ABTestingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    val r = ABTests.createRequest(request)
+    val r = ABTests.decorateRequest(request)
     nextFilter(r).map { result =>
       val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(ABTests.abTestHeader)
       val abTestHeaderValue = request.headers.get(ABTests.abTestHeader).getOrElse("")

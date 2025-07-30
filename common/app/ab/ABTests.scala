@@ -15,7 +15,7 @@ object ABTests {
   private val attrKey: TypedKey[ConcurrentHashMap[ABTest, Unit]] =
     TypedKey[ABTestsHashMap]("serverABTests")
 
-  def createRequest(implicit request: RequestHeader): RequestHeader = {
+  def decorateRequest(implicit request: RequestHeader): RequestHeader = {
     val tests = request.headers.get(abTestHeader).fold(Map.empty[String, String]) { tests =>
       tests
         .split(",")
