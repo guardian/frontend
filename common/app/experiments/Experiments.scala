@@ -37,15 +37,6 @@ object TopAboveNav250Reservation
       participationGroup = Perc0B,
     )
 
-object NoBoosts
-    extends Experiment(
-      name = "no-boosts",
-      description = "Test the impact of removing boosts (excluding Splash) from the Flexible General container",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc0C,
-    )
-
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
@@ -62,4 +53,13 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
+    )
+
+object NoBoosts
+    extends Experiment(
+      name = "no-boosts",
+      description = "Test the impact of removing boosts (excluding Splash) from the Flexible General container",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc5A,
     )
