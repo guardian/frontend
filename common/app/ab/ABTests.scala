@@ -42,7 +42,7 @@ object ABTests {
     *   true if the request is participating in the test, false otherwise.
     */
   def isParticipating(implicit request: RequestHeader, testName: String): Boolean = {
-    request.attrs.get(attrKey).exists(_.contains((testName)))
+    request.attrs.get(attrKey).exists(_.asScala.keys.exists { case (name, _) => name == testName })
   }
 
   /** Checks if the request is in a specific variant of an AB test.
@@ -54,7 +54,7 @@ object ABTests {
     *   true if the request is in the specified variant, false otherwise.
     */
   def isInVariant(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
-    request.attrs.get(attrKey).exists(_.contains((testName, variant)))
+    request.attrs.get(attrKey).exists(_.containsKey((testName, variant)))
   }
 
   /** Retrieves all AB tests and their variants for the current request.
