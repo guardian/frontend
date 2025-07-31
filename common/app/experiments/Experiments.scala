@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRJavascriptBundle,
       LoopingVideo,
+      NoBoosts,
       TopAboveNav250Reservation,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
