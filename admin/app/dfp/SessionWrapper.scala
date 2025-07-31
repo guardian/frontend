@@ -82,15 +82,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  def placements(stmtBuilder: StatementBuilder): Seq[Placement] = {
-    logAroundRead("placements", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.placementService.getPlacementsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
   def creativeTemplates(stmtBuilder: StatementBuilder): Seq[CreativeTemplate] = {
     logAroundRead("creative templates", stmtBuilder) {
       read(stmtBuilder) { statement =>

@@ -25,7 +25,7 @@ object LoopingVideo
       description = "Enable looping videos on DCR",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc1A,
+      participationGroup = Perc0A,
     )
 
 object TopAboveNav250Reservation
@@ -37,12 +37,21 @@ object TopAboveNav250Reservation
       participationGroup = Perc0B,
     )
 
+object NoBoosts
+    extends Experiment(
+      name = "no-boosts",
+      description = "Test the impact of removing boosts (excluding Splash) from the Flexible General container",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc0C,
+    )
+
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
       description = "Enable dark mode on web",
-      owners = Seq(Owner.withGithub("jakeii"), Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 7, 30),
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
     )
 
@@ -51,6 +60,6 @@ object DCRJavascriptBundle
       name = "dcr-javascript-bundle",
       description = "DCAR JS bundle experiment to test replacing Preact with React",
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 7, 30),
+      sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
     )

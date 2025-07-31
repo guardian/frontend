@@ -18,10 +18,6 @@ private[dfp] class ServicesWrapper(session: AdManagerSession) {
 
   lazy val inventoryService = dfpServices.get(session, classOf[InventoryServiceInterface])
 
-  lazy val suggestedAdUnitService = dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
-
-  lazy val placementService = dfpServices.get(session, classOf[PlacementServiceInterface])
-
   lazy val creativeTemplateService = dfpServices.get(session, classOf[CreativeTemplateServiceInterface])
 
   lazy val creativeService = dfpServices.get(session, classOf[CreativeServiceInterface])
