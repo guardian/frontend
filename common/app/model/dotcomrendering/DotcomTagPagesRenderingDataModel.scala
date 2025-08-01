@@ -14,6 +14,7 @@ import play.api.mvc.RequestHeader
 import services.IndexPage
 import views.support.{CamelCase, JavaScriptPage, PreviousAndNext}
 import model.PressedCollectionFormat.pressedContentFormat
+import ab.ABTests
 
 case class DotcomTagPagesRenderingDataModel(
     contents: Seq[PressedContent],
@@ -85,6 +86,7 @@ object DotcomTagPagesRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
+      serverSideABTests = ABTests.allTests(request),
       ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

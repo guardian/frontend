@@ -2,6 +2,7 @@ package experiments
 
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
+import ab.ABTests
 
 class CanCheckExperiment(e: ExperimentsDefinition)
 

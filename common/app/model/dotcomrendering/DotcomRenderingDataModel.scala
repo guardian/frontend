@@ -36,6 +36,8 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import services.NewsletterData
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
+import ab.ABTests
+
 // -----------------------------------------------------------------
 // DCR DataModel
 // -----------------------------------------------------------------
@@ -495,6 +497,7 @@ object DotcomRenderingDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
+      serverSideABTests = ABTests.allTests(request),
       ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
