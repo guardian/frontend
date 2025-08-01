@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.format.LiveBlogDesign
+import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, LiveBlogDesign}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import conf.switches.Switches
@@ -184,7 +184,6 @@ object DotcomRenderingUtils {
       article: ContentType,
       affiliateLinks: Boolean,
       isMainBlock: Boolean,
-      isImmersive: Boolean,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
   ): List[PageElement] = {
@@ -200,12 +199,13 @@ object DotcomRenderingUtils {
           pageUrl = request.uri,
           atoms = atoms,
           isMainBlock,
-          isImmersive,
+          article.content.metadata.format.exists(_.display == ImmersiveDisplay),
           campaigns,
           calloutsUrl,
           article.elements.thumbnail,
           edition,
           article.trail.webPublicationDate,
+          article.content.isGallery,
         ),
       )
       .filter(PageElement.isSupported)
@@ -256,26 +256,38 @@ object DotcomRenderingUtils {
   }
 
   def shouldAddAffiliateLinks(content: ContentType): Boolean = {
-    val contentHtml = Jsoup.parse(content.fields.body)
-    val bodyElements = contentHtml.select("body").first().children()
+    if (content.content.isGallery) {
+      // For galleries, the disclaimer is only inserted in the header so we don't need
+      // a check for paragraphs as in other articles
+      AffiliateLinksCleaner.shouldAddAffiliateLinks(
+        switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+        showAffiliateLinks = content.content.fields.showAffiliateLinks,
+        alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+        tagPaths = content.content.tags.tags.map(_.id),
+      )
+    } else {
+      val contentHtml = Jsoup.parse(content.fields.body)
+      val bodyElements = contentHtml.select("body").first().children()
 
-    /** On smaller devices, the disclaimer is inserted before paragraph 2 of the article body and floats left. This
-      * logic ensures there are two clear paragraphs of text at the top of the article. We don't support inserting the
-      * disclaimer next to other element types. It also ensures the second paragraph is long enough to accommodate the
-      * disclaimer appearing alongside it.
-      */
-    if (bodyElements.size >= 2) {
-      val firstEl = bodyElements.get(0)
-      val secondEl = bodyElements.get(1)
-      if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 150) {
-        AffiliateLinksCleaner.shouldAddAffiliateLinks(
-          switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-          showAffiliateLinks = content.content.fields.showAffiliateLinks,
-          alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-          tagPaths = content.content.tags.tags.map(_.id),
-        )
+      /** On smaller devices, the disclaimer is inserted before paragraph 2 of the article body and floats left. This
+        * logic ensures there are two clear paragraphs of text at the top of the article. We don't support inserting the
+        * disclaimer next to other element types. It also ensures the second paragraph is long enough to accommodate the
+        * disclaimer appearing alongside it.
+        */
+      if (bodyElements.size >= 2) {
+        val firstEl = bodyElements.get(0)
+        val secondEl = bodyElements.get(1)
+        if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 150) {
+          AffiliateLinksCleaner.shouldAddAffiliateLinks(
+            switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+            showAffiliateLinks = content.content.fields.showAffiliateLinks,
+            alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+            tagPaths = content.content.tags.tags.map(_.id),
+          )
+        } else false
       } else false
-    } else false
+    }
+
   }
 
   def contentDateTimes(content: ContentType): ArticleDateTimes = {
