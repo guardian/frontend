@@ -172,13 +172,6 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
     ABTests.getJavascriptConfig(enrichedRequest) should be(""""test1":"variant1"""")
   }
 
-  it should "properly escape quotes in test names and variants" in {
-    val request = FakeRequest().withHeaders(ABTests.abTestHeader -> "test1:variant1")
-    val enrichedRequest = ABTests.decorateRequest(request)
-
-    ABTests.getJavascriptConfig(enrichedRequest) should be(""""test1":"variant1"""")
-  }
-
   it should "return empty string when request has no AB test attributes" in {
     val request = FakeRequest()
 
