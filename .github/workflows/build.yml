@@ -116,7 +116,7 @@ jobs:
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar pullRemoteCache scalafmtCheckAll
 
-  scala-test-package:
+  scala-test:
     needs: [client-build, scala-compile]
     runs-on: ubuntu-latest
     steps:
@@ -151,7 +151,47 @@ jobs:
           -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar pullRemoteCache assets test assets Universal/packageBin
+          -jar ./bin/sbt-launch.jar pullRemoteCache assets test
+
+  package:
+    needs:
+      [client-validate, client-build, scala-compile, scala-lint, scala-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          cache: sbt
+          java-version: 11
+
+      # Scala tests rely on client build assets
+      - name: Download frontend-client
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-client
+          path: .
+
+      - name: Download frontend-sbt-cache
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-sbt-cache
+          path: sbt-cache/
+
+      - name: Package
+        # Australia/Sydney  -because it is too easy for devs to forget about timezones
+        run: |
+          java \
+          -Xmx6144M \
+          -XX:ReservedCodeCacheSize=128m \
+          -Dsbt.log.noformat=true \
+          -XX:+UseParallelGC \
+          -DAPP_SECRET="fake_secret" \
+          -Duser.timezone=Australia/Sydney \
+          -jar ./bin/sbt-launch.jar pullRemoteCache assets Universal/packageBin
 
       - uses: guardian/actions-riff-raff@v4.1.2
         env:
@@ -191,10 +231,3 @@ jobs:
               - rss/target/universal/rss.zip
             sport:
               - sport/target/universal/sport.zip
-
-  end:
-    needs: [client-validate, scala-lint, scala-test-package]
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'End of workflow'
-        run: echo 'All jobs completed successfully'
