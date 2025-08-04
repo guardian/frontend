@@ -60,7 +60,7 @@ jobs:
           if-no-files-found: error
 
   scala-compile:
-    runs-on: ubuntu-latest
+    runs-on: 8core-ubuntu-latest-frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -154,8 +154,7 @@ jobs:
           -jar ./bin/sbt-launch.jar pullRemoteCache assets test
 
   package:
-    needs:
-      [client-validate, client-build, scala-compile, scala-lint, scala-test]
+    needs: [client-build, scala-compile]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -192,6 +191,39 @@ jobs:
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar pullRemoteCache assets Universal/packageBin
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-package
+          path: |
+            static/hash
+            admin/target/universal/admin.zip
+            applications/target/universal/applications.zip
+            archive/target/universal/archive.zip
+            article/target/universal/article.zip
+            commercial/target/universal/commercial.zip
+            discussion/target/universal/discussion.zip
+            facia/target/universal/facia.zip
+            facia-press/target/universal/facia-press.zip
+            identity/target/universal/identity.zip
+            onward/target/universal/onward.zip
+            preview/target/universal/preview.zip
+            rss/target/universal/rss.zip
+            sport/target/universal/sport.zip
+          if-no-files-found: error
+
+  publish:
+    needs: [client-validate, scala-lint, scala-test, package]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download frontend-package
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-package
+          path: .
 
       - uses: guardian/actions-riff-raff@v4.1.2
         env:
