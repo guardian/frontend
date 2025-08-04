@@ -180,13 +180,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -225,6 +218,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
@@ -431,13 +431,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -476,6 +469,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
@@ -1982,13 +1982,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2027,6 +2020,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
@@ -2603,13 +2603,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2648,6 +2641,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
@@ -2799,13 +2799,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2844,6 +2837,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
@@ -3590,13 +3590,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3635,6 +3628,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
@@ -3786,13 +3786,6 @@
 					"url": "/football",
 					"children": [
 						{
-							"title": "Euro 2025",
-							"url": "/football/women-s-euro-2025",
-							"longTitle": "football/women-s-euro-2025",
-							"children": [],
-							"classList": []
-						},
-						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3831,6 +3824,13 @@
 							"title": "Clubs",
 							"url": "/football/teams",
 							"longTitle": "football/teams",
+							"children": [],
+							"classList": []
+						},
+						{
+							"title": "Euro 2025",
+							"url": "/football/women-s-euro-2025",
+							"longTitle": "football/women-s-euro-2025",
 							"children": [],
 							"classList": []
 						}
