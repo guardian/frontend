@@ -116,9 +116,9 @@ jobs:
           -Duser.timezone=Australia/Sydney \
           -jar ./bin/sbt-launch.jar pullRemoteCache scalafmtCheckAll
 
-  scala-test:
-    needs: [client-build, scala-compile]
-    runs-on: ubuntu-latest
+  scala-test-package:
+    needs: [client-build, client-validate, scala-compile]
+    runs-on: 8core-ubuntu-latest-frontend
     steps:
       - uses: actions/checkout@v4
 
@@ -151,79 +151,7 @@ jobs:
           -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar pullRemoteCache assets test
-
-  package:
-    needs: [client-build, scala-compile]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - run: corepack enable
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: corretto
-          cache: sbt
-          java-version: 11
-
-      # Scala tests rely on client build assets
-      - name: Download frontend-client
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-client
-          path: .
-
-      - name: Download frontend-sbt-cache
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-sbt-cache
-          path: sbt-cache/
-
-      - name: Package
-        # Australia/Sydney  -because it is too easy for devs to forget about timezones
-        run: |
-          java \
-          -Xmx6144M \
-          -XX:ReservedCodeCacheSize=128m \
-          -Dsbt.log.noformat=true \
-          -XX:+UseParallelGC \
-          -DAPP_SECRET="fake_secret" \
-          -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar pullRemoteCache assets Universal/packageBin
-
-      - name: Upload package artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-package
-          path: |
-            static/hash
-            admin/target/universal/admin.zip
-            applications/target/universal/applications.zip
-            archive/target/universal/archive.zip
-            article/target/universal/article.zip
-            commercial/target/universal/commercial.zip
-            discussion/target/universal/discussion.zip
-            facia/target/universal/facia.zip
-            facia-press/target/universal/facia-press.zip
-            identity/target/universal/identity.zip
-            onward/target/universal/onward.zip
-            preview/target/universal/preview.zip
-            rss/target/universal/rss.zip
-            sport/target/universal/sport.zip
-          if-no-files-found: error
-
-  publish:
-    needs: [client-validate, scala-lint, scala-test, package]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download frontend-package
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-package
-          path: .
+          -jar ./bin/sbt-launch.jar pullRemoteCache assets test assets Universal/packageBin
 
       - uses: guardian/actions-riff-raff@v4.1.2
         env:
