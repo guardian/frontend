@@ -25,7 +25,7 @@ object ABTests {
         .collect {
           case test if test.split(":").length == 2 =>
             val parts = test.split(":")
-            parts(0) -> parts(1)
+            parts(0).trim -> parts(1).trim
         }
         .toMap
     }

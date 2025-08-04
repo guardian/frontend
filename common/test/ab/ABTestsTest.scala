@@ -190,8 +190,8 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
     val enrichedRequest = ABTests.decorateRequest(request)
 
     ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
-      " test1" -> "variant1 ",
-      " test2" -> "variant2 ",
+      "test1" -> "variant1",
+      "test2" -> "variant2",
     )
   }
 
