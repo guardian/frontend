@@ -132,7 +132,7 @@ deployments:
     type: ami-cloudformation-parameter
     parameters:
       amiParametersToTags:
-        AMIFaciaPress:
+        AMIFaciapress:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
   update-ami-for-facia:
