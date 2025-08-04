@@ -59,4 +59,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-google-one-tap",
+    "This test is being used to prototype and roll out single sign-on with Google One Tap.",
+    owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

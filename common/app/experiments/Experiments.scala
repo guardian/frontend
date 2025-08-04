@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRJavascriptBundle,
       LoopingVideo,
+      NoBoosts,
       TopAboveNav250Reservation,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -53,4 +54,13 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
+    )
+
+object NoBoosts
+    extends Experiment(
+      name = "no-boosts",
+      description = "Test the impact of removing boosts (excluding Splash) from the Flexible General container",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc5A,
     )

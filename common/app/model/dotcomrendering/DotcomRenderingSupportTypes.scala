@@ -124,7 +124,6 @@ object Block {
         content,
         shouldAddAffiliateLinks,
         isMainBlock,
-        content.metadata.format.exists(_.display == ImmersiveDisplay),
         campaigns,
         calloutsUrl,
       ),
