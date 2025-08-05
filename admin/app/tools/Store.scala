@@ -28,7 +28,12 @@ trait Store extends GuLogging with Dates {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
   def putDfpTemplateCreatives(creatives: String): Unit = {
-    S3.putPrivate(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
+    val parsedCreatives = Json.parse(creatives).as[Seq[GuCreative]]
+    val wrapper = GuCreativeWrapper(
+      updatedTimeStamp = DateTime.now().toString,
+      creatives = parsedCreatives,
+    )
+    S3.putPrivate(dfpTemplateCreativesKey, Json.stringify(Json.toJson(wrapper)), defaultJsonEncoding)
   }
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
     S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
@@ -70,9 +75,9 @@ trait Store extends GuLogging with Dates {
 
   def getDfpTemplateCreatives: Seq[GuCreative] = {
     val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
-      Json.parse(doc).as[Seq[GuCreative]]
+      Json.parse(doc).as[GuCreativeWrapper]
     }
-    creatives getOrElse Nil
+    creatives.map(_.creatives).getOrElse(Nil)
   }
 
   def getDfpCustomTargetingKeyValues: Seq[GuCustomTargeting] = {
