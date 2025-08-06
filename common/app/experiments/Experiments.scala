@@ -35,7 +35,7 @@ object TopAboveNav250Reservation
       description = "Reserve 250px for top-above-nav instead of 90px",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc0B,
+      participationGroup = Perc2A,
     )
 
 object DarkModeWeb
