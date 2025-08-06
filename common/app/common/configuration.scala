@@ -501,6 +501,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpCustomFieldsKey = s"$gamRoot/custom-fields.json"
     lazy val dfpCreativeTemplatesKey = s"$gamRoot/creative-templates.json"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
+    lazy val dfpCreativesKey = s"$dfpRoot/creatives.json"
     lazy val dfpCustomTargetingKey =
       if (LineItemJobs.isSwitchedOn) s"$gamRoot/custom-targeting-key-values.json"
       else s"$dfpRoot/custom-targeting-key-values.json"

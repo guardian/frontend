@@ -67,7 +67,11 @@ class DfpDataCacheLifecycle(
     new Job[Unit] {
       val name: String = "DFP-Template-Creatives-Cache"
       val interval: Int = 2
-      def run() = dfpTemplateCreativeCacheJob.run()
+      def run(): Future[Unit] = if (LineItemJobs.isSwitchedOn) {
+        dfpTemplateCreativeCacheJob.run()
+      } else {
+        Future.successful(()) // Do nothing when switched off
+      }
     },
   )
 

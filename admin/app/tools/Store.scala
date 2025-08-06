@@ -3,6 +3,7 @@ package tools
 import common.GuLogging
 import common.dfp._
 import conf.Configuration.commercial._
+import conf.switches.Switches.LineItemJobs
 import conf.{AdminConfiguration, Configuration}
 import implicits.Dates
 import org.joda.time.DateTime
@@ -69,10 +70,19 @@ trait Store extends GuLogging with Dates {
   }
 
   def getDfpTemplateCreatives: Seq[GuCreative] = {
-    val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
-      Json.parse(doc).as[Seq[GuCreative]]
+    if (LineItemJobs.isSwitchedOn) {
+      // New system: read wrapper format from new key
+      val wrapper = for (doc <- S3.get(dfpCreativesKey)) yield {
+        Json.parse(doc).as[GuCreativeWrapper]
+      }
+      wrapper.map(_.creatives).getOrElse(Nil)
+    } else {
+      // Old system: read direct format from old key
+      val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
+        Json.parse(doc).as[Seq[GuCreative]]
+      }
+      creatives.getOrElse(Nil)
     }
-    creatives getOrElse Nil
   }
 
   def getDfpCustomTargetingKeyValues: Seq[GuCustomTargeting] = {
