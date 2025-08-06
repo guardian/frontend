@@ -1,4 +1,4 @@
-name: "Build"
+name: 'Build'
 
 on:
   pull_request:
@@ -14,54 +14,12 @@ permissions:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
 jobs:
-  client-validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - run: corepack enable
-
-      - uses: actions/setup-node@v4
-        with:
-          cache: yarn
-          node-version-file: .nvmrc
-
-      - run: make install
-      - run: make validate
-      - run: make test
-
-  client-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - run: corepack enable
-
-      - uses: actions/setup-node@v4
-        with:
-          cache: yarn
-          node-version-file: .nvmrc
-
-      - run: make install
-      - run: make compile
-
-      - name: upload frontend-client
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-client
-          path: |
-            static/hash
-            static/target
-            common/conf/assets
-          if-no-files-found: error
-
   build:
-    needs: [client-validate, client-build]
-    runs-on: ubuntu-latest
+    runs-on: 8core-ubuntu-latest-frontend
     steps:
       - uses: actions/checkout@v4
 
@@ -71,21 +29,18 @@ jobs:
         with:
           cache: yarn
           node-version-file: .nvmrc
-
       - uses: actions/setup-java@v4
         with:
           distribution: corretto
           cache: sbt
           java-version: 11
 
-      # Scala tests rely on client build assets
-      - name: Download frontend-client
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-client
-          path: .
+      - run: make reinstall
+      - run: make validate
+      - run: make test
+      - run: make compile
 
-      - name: Test, Compile, Package
+      - name: Test, compile
         # Australia/Sydney  -because it is too easy for devs to forget about timezones
         run: |
           java \
@@ -95,12 +50,12 @@ jobs:
           -XX:+UseParallelGC \
           -DAPP_SECRET="fake_secret" \
           -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar compile assets scalafmtCheckAll test Universal/packageBin
+          -jar ./bin/sbt-launch.jar clean compile assets scalafmtCheckAll test Universal/packageBin
 
       - name: Test Summary
         uses: test-summary/action@v2
         with:
-          paths: "test-results/**/TEST-*.xml"
+          paths: 'test-results/**/TEST-*.xml'
         if: always()
 
       - uses: guardian/actions-riff-raff@v4.1.2
