@@ -1,10 +1,11 @@
 package model.dotcomrendering.pageElements
 
-import common.{Edition, LinkTo}
+import common.{Edition, GuLogging, LinkTo}
 import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
-import views.support.AffiliateLinksCleaner
+import org.jsoup.nodes.Document
+import views.support.{AffiliateLinksCleaner, HtmlCleaner}
 
 import scala.jdk.CollectionConverters._
 import scala.util.matching.Regex
@@ -28,6 +29,27 @@ object TextCleaner {
     } else {
       html
     }
+  }
+
+  def cleanGalleryCaption(
+      caption: String,
+      pageUrl: String,
+      shouldAddAffiliateLinks: Boolean,
+  ): String = {
+
+    val cleaners = List(
+      GalleryCaptionCleaner,
+      GalleryAffiliateLinksCleaner(
+        pageUrl,
+        shouldAddAffiliateLinks,
+      ),
+    )
+
+    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) =>
+      cleaner.clean(html)
+    }
+    cleanedHtml.outputSettings().prettyPrint(false)
+    cleanedHtml.body.html
   }
 
   def sanitiseLinks(edition: Edition)(html: String): String = {
@@ -106,5 +128,39 @@ object TagLinker {
     } else {
       (el, terms)
     }
+  }
+}
+
+object GalleryCaptionCleaner extends HtmlCleaner {
+  override def clean(galleryCaption: Document): Document = {
+    // There is an inconsistent number of <br> tags in gallery captions.
+    // To create some consistency, re will remove them all.
+    galleryCaption.getElementsByTag("br").remove()
+
+    val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
+    val captionTitle = galleryCaption.createElement("h2")
+    val captionTitleText = firstStrong.map(_.html()).getOrElse("")
+
+    // <strong> is removed in place of having a <h2> element
+    firstStrong.foreach(_.remove())
+
+    captionTitle.html(captionTitleText)
+
+    galleryCaption.body.prependChild(captionTitle)
+
+    galleryCaption
+  }
+}
+
+case class GalleryAffiliateLinksCleaner(
+    pageUrl: String,
+    shouldAddAffiliateLinks: Boolean,
+) extends HtmlCleaner
+    with GuLogging {
+
+  override def clean(document: Document): Document = {
+    if (shouldAddAffiliateLinks) {
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksId)
+    } else document
   }
 }

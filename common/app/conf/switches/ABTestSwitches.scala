@@ -55,7 +55,18 @@ trait ABTestSwitches {
     "Test grouping slots to be used by PrebidAdUnit to allow full benefits of bidCache in Prebid",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 8, 12)),
+    sellByDate = Some(LocalDate.of(2025, 8, 21)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
+    "ab-google-one-tap",
+    "This test is being used to prototype and roll out single sign-on with Google One Tap.",
+    owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
     exposeClientSide = true,
     highImpact = false,
   )

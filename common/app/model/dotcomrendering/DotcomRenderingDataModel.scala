@@ -18,9 +18,11 @@ import model.{
   CanonicalLiveBlog,
   ContentFormat,
   ContentPage,
+  ContentType,
   CrosswordData,
   DotcomContentType,
   GUDateTimeFormatNew,
+  Gallery,
   GalleryPage,
   ImageContentPage,
   ImageMedia,
@@ -467,13 +469,17 @@ object DotcomRenderingDataModel {
     )
 
     def hasAffiliateLinks(
+        content: ContentType,
         blocks: Seq[APIBlock],
     ): Boolean = {
-      blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
+      content match {
+        case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
+        case _ => blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
+      }
     }
 
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
-    val shouldAddDisclaimer = hasAffiliateLinks(bodyBlocks)
+    val shouldAddDisclaimer = hasAffiliateLinks(content, bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,

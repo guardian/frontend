@@ -361,17 +361,6 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
-  val prebidAdYouLike: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-ad-you-like",
-    description = "Include AdYouLike adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val prebidCriteo: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-criteo",
