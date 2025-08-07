@@ -11,14 +11,15 @@ class AdmiralAgent(wsClient: WSClient) extends GuLogging with implicits.WSReques
 
   private val scriptCache = Box[Option[String]](None)
 
-  private val admiralUrl = Configuration.commercial.admiralUrl;
+  private val environment = Configuration.environment.stage
+  private val admiralUrl = Configuration.commercial.admiralUrl
 
   private def fetchBootstrapScript(implicit ec: ExecutionContext): Future[String] = {
     log.info(s"Fetching Admiral's bootstrap script via the Install Tag API")
     admiralUrl match {
-      case Some(admiralUrl) =>
+      case Some(baseUrl) =>
         wsClient
-          .url(admiralUrl)
+          .url(s"$baseUrl?cacheable=1&environment=$environment")
           .withRequestTimeout(2.seconds)
           .getOKResponse()
           .map(_.body)

@@ -25,7 +25,9 @@ class AdmiralLifecycle(
   override def start(): Unit = {
     jobs.deschedule("AdmiralAgentRefreshJob")
 
-    jobs.scheduleEvery("AdmiralAgentRefreshJob", 2.hours) {
+    // Why 6 hours?
+    // The Admiral script returned from the "Install Tag" API is unlikely to change frequently
+    jobs.scheduleEvery("AdmiralAgentRefreshJob", 6.hours) {
       admiralAgent.refresh()
     }
 
