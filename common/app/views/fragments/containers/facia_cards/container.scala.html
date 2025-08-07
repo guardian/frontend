@@ -1,6 +1,6 @@
 @import common.commercial.ContainerModel
 @import layout.MetaDataHeader
-@import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
+@import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
 @import views.html.fragments.commercial.containers.paidContainer
 @import views.html.fragments.audio.containers.flagshipContainer
 @import views.html.fragments.containers.facia_cards._
@@ -80,12 +80,6 @@
                     case NavList => {
                         <div class="fc-container__inner">
                             @navListContainer(containerDefinition, frontProperties)
-                        </div>
-                    }
-
-                    case Video => {
-                        <div class="gs-container">
-                            @videoContainer(containerDefinition, frontProperties)
                         </div>
                     }
 

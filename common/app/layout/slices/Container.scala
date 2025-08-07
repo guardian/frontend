@@ -18,7 +18,6 @@ case class Email(get: EmailLayout) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container
-case object Video extends Container
 object Container extends GuLogging {
 
   /** This is THE top level resolver for containers */
@@ -28,7 +27,6 @@ object Container extends GuLogging {
       ("dynamic/slow", Dynamic(DynamicSlow)),
       ("dynamic/package", Dynamic(DynamicPackage)),
       ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(adFree = adFree))),
-      ("fixed/video", Video),
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
