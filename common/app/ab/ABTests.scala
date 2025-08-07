@@ -10,15 +10,13 @@ object ABTests {
   type ABTest = (String, String)
   type ABTestsHashMap = ConcurrentHashMap[ABTest, Unit]
 
-  val abTestHeader = "X-GU-Server-AB-Tests"
-
   private val attrKey: TypedKey[ConcurrentHashMap[ABTest, Unit]] =
     TypedKey[ABTestsHashMap]("serverABTests")
 
   /** Decorates the request with the AB tests defined in the request header. The header should be in the format:
     * "testName1:variant1,testName2:variant2,..."
     */
-  def decorateRequest(implicit request: RequestHeader): RequestHeader = {
+  def decorateRequest(implicit request: RequestHeader, abTestHeader: String): RequestHeader = {
     val tests = request.headers.get(abTestHeader).fold(Map.empty[String, String]) { tests =>
       tests
         .split(",")
