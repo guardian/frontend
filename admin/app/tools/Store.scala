@@ -73,7 +73,7 @@ trait Store extends GuLogging with Dates {
     if (LineItemJobs.isSwitchedOn) {
       // New system: read wrapper format from new key
       val wrapper = for (doc <- S3.get(dfpCreativesKey)) yield {
-        Json.parse(doc).as[GuCreativeWrapper]
+        Json.parse(doc).as[GuCreativeReport]
       }
       wrapper.map(_.creatives).getOrElse(Nil)
     } else {
