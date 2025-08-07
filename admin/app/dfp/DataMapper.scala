@@ -7,7 +7,6 @@ import dfp.ApiHelper.{toJodaTime, toSeq}
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
 class DataMapper(
     customTargetingService: dfp.CustomTargetingService,
-    customFieldService: dfp.CustomFieldService,
 ) {
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)

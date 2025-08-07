@@ -1,7 +1,7 @@
 package dfp
 
 import app.LifecycleComponent
-import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomField, GuCustomTargeting}
+import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomTargeting}
 import common._
 import play.api.inject.ApplicationLifecycle
 import conf.switches.Switches.{LineItemJobs}
@@ -12,7 +12,6 @@ class DfpDataCacheLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobScheduler: JobScheduler,
     creativeTemplateAgent: CreativeTemplateAgent,
-    customFieldAgent: CustomFieldAgent,
     customTargetingAgent: CustomTargetingAgent,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
     dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
@@ -35,12 +34,6 @@ class DfpDataCacheLifecycle(
   }
 
   val jobs = Set(
-    // used for line items and custom fields admin page
-    new Job[DataCache[String, GuCustomField]] {
-      val name = "DFP-CustomFields-Update"
-      val interval = 30
-      def run() = customFieldAgent.refresh()
-    },
     // used for line items and custom targeting admin page
     new Job[DataCache[Long, GuCustomTargeting]] {
       val name = "DFP-CustomTargeting-Update"
@@ -83,7 +76,6 @@ class DfpDataCacheLifecycle(
       creativeTemplateAgent.refresh()
       dfpTemplateCreativeCacheJob.run()
       customTargetingKeyValueJob.run()
-      customFieldAgent.refresh()
     }
   }
 }

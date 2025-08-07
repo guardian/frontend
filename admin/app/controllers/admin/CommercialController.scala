@@ -3,7 +3,7 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
-import dfp.{CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor}
+import dfp.{CreativeTemplateAgent, DfpApi, DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
@@ -29,7 +29,6 @@ case class CommercialPage() extends StandalonePage {
 class CommercialController(
     val controllerComponents: ControllerComponents,
     createTemplateAgent: CreativeTemplateAgent,
-    customFieldAgent: CustomFieldAgent,
     dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -43,9 +42,7 @@ class CommercialController(
 
   def renderSpecialAdUnits: Action[AnyContent] =
     Action { implicit request =>
-      val specialAdUnits =
-        if (LineItemJobs.isSwitchedOn) { Store.getDfpSpecialAdUnits }
-        else { dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot) }
+      val specialAdUnits = Store.getDfpSpecialAdUnits
       NoCache(Ok(views.html.commercial.specialAdUnits(specialAdUnits)))
     }
 
@@ -89,8 +86,7 @@ class CommercialController(
 
   def renderCustomFields: Action[AnyContent] =
     Action { implicit request =>
-      val fields: Seq[GuCustomField] = if (LineItemJobs.isSwitchedOn) { Store.getDfpCustomFields }
-      else { customFieldAgent.get.data.values.toSeq }
+      val fields: Seq[GuCustomField] = Store.getDfpCustomFields
       NoCache(Ok(views.html.commercial.customFields(fields)))
     }
 
