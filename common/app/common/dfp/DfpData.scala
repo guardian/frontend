@@ -386,6 +386,15 @@ object GuCreativeTemplateParameter {
   )(GuCreativeTemplateParameter.apply _)
 }
 
+case class GuCreativeReport(
+    updatedTimeStamp: String,
+    creatives: Seq[GuCreative],
+)
+
+object GuCreativeReport {
+  implicit val guCreativeReportFormat: Format[GuCreativeReport] = Json.format[GuCreativeReport]
+}
+
 case class GuCreative(
     id: Long,
     name: String,

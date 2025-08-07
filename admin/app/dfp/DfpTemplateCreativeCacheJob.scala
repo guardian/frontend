@@ -11,9 +11,9 @@ class DfpTemplateCreativeCacheJob(dfpApi: DfpApi) {
 
   def run()(implicit executionContext: ExecutionContext): Future[Unit] =
     Future {
-      val cached = Store.getDfpTemplateCreatives
+      val cached = Store.getDfpTemplateCreatives // s3
       val threshold = GuCreative.lastModified(cached) getOrElse now.minusMonths(1)
-      val recentlyModified = dfpApi.readTemplateCreativesModifiedSince(threshold)
+      val recentlyModified = dfpApi.readTemplateCreativesModifiedSince(threshold) // GAM
       val merged = GuCreative.merge(cached, recentlyModified)
       Store.putDfpTemplateCreatives(Json.stringify(Json.toJson(merged)))
     }
