@@ -28,6 +28,7 @@ import pa.{
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
+import ab.ABTests
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -66,6 +67,7 @@ object DotcomRenderingFootballDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
+      serverSideABTests = ABTests.allTests,
       ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

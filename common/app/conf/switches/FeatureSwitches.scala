@@ -606,4 +606,15 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val EnableNewServerSideABTestsHeader = Switch(
+    SwitchGroup.Feature,
+    "enable-new-server-side-tests-header",
+    "Enable new server-side AB tests header and add it to the vary header",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }
