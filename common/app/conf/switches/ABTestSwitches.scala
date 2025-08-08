@@ -70,4 +70,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-consent-geolocation-test",
+    "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
+    owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 12, 1)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

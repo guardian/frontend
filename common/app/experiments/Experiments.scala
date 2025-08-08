@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       LoopingVideo,
       NoBoosts,
       TopAboveNav250Reservation,
+      ConsentGeolocationTest,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -63,4 +64,14 @@ object NoBoosts
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc5A,
+    )
+
+object ConsentGeolocationTest
+    extends Experiment(
+      name = "consent-geolocation-test",
+      description =
+        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0B,
     )
