@@ -14,6 +14,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRJavascriptBundle,
       LoopingVideo,
+      OpinionNoAvatar,
       TopAboveNav250Reservation,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -28,13 +29,13 @@ object LoopingVideo
       participationGroup = Perc0A,
     )
 
-object TopAboveNav250Reservation
+object OpinionNoAvatar
     extends Experiment(
-      name = "top-above-nav-250-reservation",
-      description = "Reserve 250px for top-above-nav instead of 90px",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc2A,
+      name = "opinion-no-avatar",
+      description = "In the Opinion section on network fronts, replace the avatar with the card image",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc0B,
     )
 
 object DarkModeWeb
@@ -53,4 +54,13 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
+    )
+
+object TopAboveNav250Reservation
+    extends Experiment(
+      name = "top-above-nav-250-reservation",
+      description = "Reserve 250px for top-above-nav instead of 90px",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 8, 29),
+      participationGroup = Perc2A,
     )
