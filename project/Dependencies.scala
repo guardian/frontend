@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.31"
+  val identityLibVersion = "4.37.0"
   val awsVersion = "1.12.782"
   val awsSdk2Version = "2.30.38"
   val capiVersion = "35.0.0"
@@ -18,7 +18,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.2"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
@@ -59,7 +59,7 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "9.0.2"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "10.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "4.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
