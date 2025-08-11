@@ -131,12 +131,20 @@ const go = () => {
 
         const isUserSignedIn = await isUserLoggedIn();
         const useNonAdvertisedList = allowRejectAll(isUserSignedIn);
+        const isInSourcepointGeolocationTestCookie = getCookie({
+		    name: 'X-GU-Experiment-0perc-B',
+	    }); // Get cookie
+	    const isInSourcepointGeolocationTest =
+		    isInSourcepointGeolocationTestCookie !== null
+			    ? Boolean(isInSourcepointGeolocationTestCookie)
+			    : undefined;
 
         cmp.init({
             pubData,
             country: await getLocale(),
             isUserSignedIn,
             useNonAdvertisedList,
+            isInSourcepointGeolocationTest,
         });
 
         /**
