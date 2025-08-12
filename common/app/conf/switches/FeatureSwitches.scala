@@ -607,6 +607,17 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
+  val DCARGalleyPages = Switch(
+    SwitchGroup.Feature,
+    "dcar-gallery-pages",
+    "If this switch is on, the gallery article will be rendered by DCAR",
+    owners = Seq(Owner.withGithub("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
+
   val EnableNewServerSideABTestsHeader = Switch(
     SwitchGroup.Feature,
     "enable-new-server-side-tests-header",

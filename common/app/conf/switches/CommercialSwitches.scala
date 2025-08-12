@@ -416,17 +416,6 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
-  val prebidBidCache: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-bid-cache",
-    description = "Enable the Prebid bid cache",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val sentinelLogger: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
