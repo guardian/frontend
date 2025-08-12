@@ -90,9 +90,9 @@ const canTargetUSNAT = (canTarget: boolean): ConsentState => ({
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
 	aus: {
 		personalisedAdvertising: canTarget,
+		signalStatus: 'ready',
 	},
 	canTarget,
-	signalStatus: 'ready',
 	framework: 'aus',
 });
 
