@@ -2936,7 +2936,7 @@ __metadata:
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:23.0.0"
+    "@guardian/libs": "npm:0.0.0-canary-20250812112542"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3091,6 +3091,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@guardian/libs@npm:0.0.0-canary-20250812112542":
+  version: 0.0.0-canary-20250812112542
+  resolution: "@guardian/libs@npm:0.0.0-canary-20250812112542"
+  dependencies:
+    "@guardian/ophan-tracker-js": "npm:2.2.10"
+  peerDependencies:
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.6.2
+    typescript: ~5.5.2
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/9fbc658abced61c5868ca5249dbe55be5ad09c72d228f6098d87eb841ee4d73d7e8af39990b3d4b274f3c989d57d698bf31617837f44741a3fe4b06cabd00bd8
+  languageName: node
+  linkType: hard
+
 "@guardian/libs@npm:22.5.0":
   version: 22.5.0
   resolution: "@guardian/libs@npm:22.5.0"
@@ -3104,16 +3120,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:23.0.0":
-  version: 23.0.0
-  resolution: "@guardian/libs@npm:23.0.0"
-  peerDependencies:
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/bfd4990f674fb39fb01aaf8a7780287c1b01369657d1afaddc22af6974a05b49dd7f7b4cc1c89e5921e7b00c7707533d86c5bedbc0628596ca6d23f9c1909139
+"@guardian/ophan-tracker-js@npm:2.2.10":
+  version: 2.2.10
+  resolution: "@guardian/ophan-tracker-js@npm:2.2.10"
+  dependencies:
+    "@guardian/tsconfig": "npm:^1.0.0"
+  checksum: 10c0/e43f520953d0ff18ddb398694f05061f36621a1246720ccce6960de7ed380a7ab4283fdba681f24142418405fec33bece25e6cf198ae0719bee51a37dbfe7cc4
   languageName: node
   linkType: hard
 
@@ -3188,6 +3200,13 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/00daddb850869cd2dbe3bf769076e089e2d3774eea19f0e472475c8cf6c72121e3bf30ecc4ef6c33795c04ad54940be110ecf5201c858dcc28810f72130e4abc
+  languageName: node
+  linkType: hard
+
+"@guardian/tsconfig@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@guardian/tsconfig@npm:1.0.0"
+  checksum: 10c0/1c7e6981b17e5a5bd452553ac2709ba938aecc642fb02e0e68a3eea54827d5a13dc67e701900b55b8e21d26a757d14901ac3424095ceafeb554fe029b1056b9e
   languageName: node
   linkType: hard
 
