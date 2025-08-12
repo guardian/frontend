@@ -245,12 +245,7 @@ object NavLinks {
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val apps =
     NavLink("The Guardian app", "https://app.adjust.com/16xt6hai")
-  val auWeekend = NavLink(
-    "Australia Weekend",
-    "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend?INTCMP=header_au_weekend",
-  )
   val printShop = NavLink("Guardian Print Shop", "/artanddesign/series/gnm-print-sales")
-  val auEvents = NavLink("Events", "/guardian-live-australia")
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val guardianLive =
@@ -703,20 +698,21 @@ object NavLinks {
     guardianLicensing,
   )
   val auBrandExtensions = List(
-    auEvents,
+    guardianLive,
     digitalNewspaperArchive,
-    auWeekend,
     guardianLicensing,
     aboutUs,
   )
   val usBrandExtensions = List(
     jobs,
+    guardianLive,
     digitalNewspaperArchive,
     guardianLicensing,
     aboutUs,
   )
   val intBrandExtensions = List(
     jobs,
+    guardianLive,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianLicensing,
@@ -724,6 +720,7 @@ object NavLinks {
   )
   val eurBrandExtensions = List(
     jobs,
+    guardianLive,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     guardianLicensing,

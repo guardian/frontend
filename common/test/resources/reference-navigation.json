@@ -1666,6 +1666,12 @@
 				"classList": []
 			},
 			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
+				"children": [],
+				"classList": []
+			},
+			{
 				"title": "Digital Archive",
 				"url": "https://theguardian.newspapers.com",
 				"children": [],
@@ -2360,20 +2366,14 @@
 		],
 		"brandExtensions": [
 			{
-				"title": "Events",
-				"url": "/guardian-live-australia",
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
 				"children": [],
 				"classList": []
 			},
 			{
 				"title": "Digital Archive",
 				"url": "https://theguardian.newspapers.com",
-				"children": [],
-				"classList": []
-			},
-			{
-				"title": "Australia Weekend",
-				"url": "/info/ng-interactive/2021/mar/17/make-sense-of-the-week-with-australia-weekend?INTCMP=header_au_weekend",
 				"children": [],
 				"classList": []
 			},
@@ -3241,6 +3241,12 @@
 			{
 				"title": "Search jobs",
 				"url": "https://jobs.theguardian.com",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
 				"children": [],
 				"classList": []
 			},
@@ -4228,6 +4234,12 @@
 			{
 				"title": "Search jobs",
 				"url": "https://jobs.theguardian.com",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
 				"children": [],
 				"classList": []
 			},

@@ -143,7 +143,6 @@ object FooterLinks {
   val auListTwo = List(
     allTopics("au"),
     allWriters("au"),
-    FooterLink("Events", "/guardian-masterclasses/guardian-masterclasses-australia", "au : footer : masterclasses"),
     digitalNewspaperArchive,
     taxStrategy("au"),
     facebook("au"),
