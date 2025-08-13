@@ -15,7 +15,6 @@ class DfpDataCacheLifecycle(
     customFieldAgent: CustomFieldAgent,
     customTargetingAgent: CustomTargetingAgent,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
-    dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
     pekkoAsync: PekkoAsync,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent {
@@ -63,12 +62,6 @@ class DfpDataCacheLifecycle(
         Future.successful(Seq.empty)
       }
     },
-    // used for creative templates admin page
-    new Job[Unit] {
-      val name: String = "DFP-Template-Creatives-Cache"
-      val interval: Int = 2
-      def run() = dfpTemplateCreativeCacheJob.run()
-    },
   )
 
   override def start(): Unit = {
@@ -81,7 +74,6 @@ class DfpDataCacheLifecycle(
 
     pekkoAsync.after1s {
       creativeTemplateAgent.refresh()
-      dfpTemplateCreativeCacheJob.run()
       customTargetingKeyValueJob.run()
       customFieldAgent.refresh()
     }
