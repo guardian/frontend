@@ -1666,12 +1666,6 @@
 				"classList": []
 			},
 			{
-				"title": "Live events",
-				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
-				"children": [],
-				"classList": []
-			},
-			{
 				"title": "Digital Archive",
 				"url": "https://theguardian.newspapers.com",
 				"children": [],
@@ -1680,6 +1674,12 @@
 			{
 				"title": "Guardian Licensing",
 				"url": "https://licensing.theguardian.com/",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_us_header_dropdown",
 				"children": [],
 				"classList": []
 			},
@@ -2366,12 +2366,6 @@
 		],
 		"brandExtensions": [
 			{
-				"title": "Live events",
-				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
-				"children": [],
-				"classList": []
-			},
-			{
 				"title": "Digital Archive",
 				"url": "https://theguardian.newspapers.com",
 				"children": [],
@@ -2380,6 +2374,12 @@
 			{
 				"title": "Guardian Licensing",
 				"url": "https://licensing.theguardian.com/",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_au_header_dropdown",
 				"children": [],
 				"classList": []
 			},
@@ -3245,12 +3245,6 @@
 				"classList": []
 			},
 			{
-				"title": "Live events",
-				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
-				"children": [],
-				"classList": []
-			},
-			{
 				"title": "Holidays",
 				"url": "https://holidays.theguardian.com?INTCMP=holidays_int_web_newheader",
 				"children": [],
@@ -3265,6 +3259,12 @@
 			{
 				"title": "Guardian Licensing",
 				"url": "https://licensing.theguardian.com/",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_eur_header_dropdown",
 				"children": [],
 				"classList": []
 			},
@@ -4238,12 +4238,6 @@
 				"classList": []
 			},
 			{
-				"title": "Live events",
-				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_uk_header_dropdown",
-				"children": [],
-				"classList": []
-			},
-			{
 				"title": "Holidays",
 				"url": "https://holidays.theguardian.com?INTCMP=holidays_int_web_newheader",
 				"children": [],
@@ -4258,6 +4252,12 @@
 			{
 				"title": "Guardian Licensing",
 				"url": "https://licensing.theguardian.com/",
+				"children": [],
+				"classList": []
+			},
+			{
+				"title": "Live events",
+				"url": "https://www.theguardian.com/guardian-live-events?INTCMP=live_int_header_dropdown",
 				"children": [],
 				"classList": []
 			},
