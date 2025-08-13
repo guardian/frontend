@@ -244,7 +244,6 @@ import layout.slices.EmailLayouts
         PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-V-mpu"),
         PressedCollectionBuilder.mkPressedCollection("fixed/small/slow-V-third"),
         PressedCollectionBuilder.mkPressedCollection("fixed/thrasher"),
-        PressedCollectionBuilder.mkPressedCollection("fixed/video"),
         PressedCollectionBuilder.mkPressedCollection("nav/list"),
         PressedCollectionBuilder.mkPressedCollection("nav/media-list"),
         PressedCollectionBuilder.mkPressedCollection("news/most-popular"),
