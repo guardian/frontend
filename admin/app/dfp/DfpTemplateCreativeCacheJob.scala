@@ -1,6 +1,7 @@
 package dfp
 
-import common.dfp.GuCreative
+import com.github.nscala_time.time.Imports.DateTime
+import common.dfp.{GuCreative, GuCreativeWrapper}
 import org.joda.time.DateTime.now
 import play.api.libs.json.Json
 import tools.Store
@@ -15,6 +16,11 @@ class DfpTemplateCreativeCacheJob(dfpApi: DfpApi) {
       val threshold = GuCreative.lastModified(cached) getOrElse now.minusMonths(1)
       val recentlyModified = dfpApi.readTemplateCreativesModifiedSince(threshold)
       val merged = GuCreative.merge(cached, recentlyModified)
-      Store.putDfpTemplateCreatives(Json.stringify(Json.toJson(merged)))
+      val wrapper = GuCreativeWrapper(
+        updatedTimeStamp = DateTime.now().toString,
+        creatives = merged,
+      )
+      Store.putDfpTemplateCreatives(Json.stringify(Json.toJson(wrapper)))
+//      Store.putDfpTemplateCreatives(Json.stringify(Json.toJson(merged)))
     }
 }
