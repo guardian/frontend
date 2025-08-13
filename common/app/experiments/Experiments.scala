@@ -19,15 +19,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object LoopingVideo
-    extends Experiment(
-      name = "looping-video",
-      description = "Enable looping videos on DCR",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc0A,
-    )
-
 object TopAboveNav250Reservation
     extends Experiment(
       name = "top-above-nav-250-reservation",
@@ -53,4 +44,13 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
+    )
+
+object LoopingVideo
+    extends Experiment(
+      name = "looping-video",
+      description = "Test looping videos on DCR",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc5A,
     )
