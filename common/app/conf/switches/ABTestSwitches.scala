@@ -60,7 +60,6 @@ trait ABTestSwitches {
     highImpact = false,
   )
 
-
   Switch(
     ABTests,
     "ab-consent-geolocation-test",
