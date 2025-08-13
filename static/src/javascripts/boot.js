@@ -137,7 +137,7 @@ const go = () => {
 	    const isInSourcepointGeolocationTest =
 		    isInSourcepointGeolocationTestCookie !== null
 			    ? Boolean(isInSourcepointGeolocationTestCookie)
-			    : undefined;
+			    : false;
 
         cmp.init({
             pubData,
