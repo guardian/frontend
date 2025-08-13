@@ -78,11 +78,7 @@ class CommercialController(
     Action { implicit request =>
       val emptyTemplates = if (LineItemJobs.isSwitchedOn) { Store.getDfpCreativeTemplates }
       else { createTemplateAgent.get }
-      val creatives = Store.getDfpTemplateCreatives
       val templates = emptyTemplates
-        .foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
-          soFar :+ template.copy(creatives = creatives.filter(_.templateId.get == template.id).sortBy(_.name))
-        }
         .sortBy(_.name)
       NoCache(Ok(views.html.commercial.templates(templates)))
     }
