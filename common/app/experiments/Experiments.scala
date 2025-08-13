@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       LoopingVideo,
       TopAboveNav250Reservation,
+      GoogleOneTap,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -26,6 +27,15 @@ object TopAboveNav250Reservation
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc2A,
+    )
+
+object GoogleOneTap
+    extends Experiment(
+      name = "google-one-tap",
+      description = "Signing into the Guardian with Google One Tap",
+      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0C,
     )
 
 object DarkModeWeb
