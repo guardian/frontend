@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       LoopingVideo,
       TopAboveNav250Reservation,
+      RolloutAddingServerABTestsToVaryHeader,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -53,4 +54,13 @@ object LoopingVideo
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc5A,
+    )
+
+object RolloutAddingServerABTestsToVaryHeader
+    extends Experiment(
+      name = "rollout-adding-server-ab-tests-to-vary-header",
+      description = "Rollout adding server AB tests to the vary header",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc1A,
     )
