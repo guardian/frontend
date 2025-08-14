@@ -26,19 +26,6 @@ class DfpApi(dataMapper: DataMapper) extends GuLogging {
     }
   }
 
-  def readTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("lastModifiedDateTime > :threshold")
-      .withBindVariableValue("threshold", threshold.getMillis)
-
-    withDfpSession {
-      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative =>
-        creative
-      } map dataMapper.toGuTemplateCreative
-    }
-  }
-
   private def readDescendantAdUnits(rootName: String, stmtBuilder: StatementBuilder): Seq[GuAdUnit] = {
     withDfpSession { session =>
       session.adUnits(stmtBuilder) filter { adUnit =>
