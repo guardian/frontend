@@ -179,80 +179,10 @@
             </div>
         </div>
 
-        <script>
-            loadCommercial(function () {
-                require(['commercial/modules/creatives/template'])
-                    .then(function(
-                        Template
-                    ) {
-                        var adSlot = document.querySelector('.ad-slot--manual-inline');
-                        new Template(adSlot, {
-                            creative: 'manual-inline',
-                            Toneclass: 'commercial--tone-brand',
-                            component_title: 'The Guardian Bookshop',
-                            omniture_id: '[%OmnitureID%]',
-                            base_url: 'https://bookshop.theguardian.com/',
-                            offer_title: 'Title',
-                            offer_url: 'https://bookshop.theguardian.com/',
-                            offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
-                            offer_meta: 'Meta',
-                            offer_button: 'yes',
-                            clickMacro: '%%CLICK_URL_ESC%%'
-                        }).create().then(function () {
-                            adSlot.classList.add('ad-slot--rendered');
-                        });
-                      });
-                });
-            loadCommercial(function () {
-                require(['commercial/modules/creatives/commercial-component'])
-                    .then(function(
-                        CommercialComponent
-                    ) {
-                        var adSlot = document.querySelector('.ad-slot--inline-book');
-                        new CommercialComponent(adSlot, {
-                            type: 'book',
-                            isbn: '9781786070470',
-                            clickMacro: '%%CLICK_URL_ESC%%',
-                            omnitureId: '[%OmnitureID%]'
-                        }).create().then(function () {
-                            adSlot.classList.add('ad-slot--rendered');
-                        });
-                    });
-                });
-            loadCommercial(function () {
-                require(['commercial/modules/creatives/commercial-component'])
-                    .then(function(
-                        CommercialComponent
-                    ) {
-                        var adSlot = document.querySelector('.ad-slot--inline-event')
-                        new CommercialComponent(adSlot, {
-                            type: 'liveevents',
-                            id: '29479196069',
-                            clickMacro: '%%CLICK_URL_ESC%%',
-                            omnitureId: '[%OmnitureID%]'
-                        }).create().then(function () {
-                            adSlot.classList.add('ad-slot--rendered');
-                        });
-                    });
-                });
-        </script>
+       
     </article>
 
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">
-                Merchandising: commercial component (books)
-            </a>
-        </h2>
-        <form class="js-merchandising-books-layout">
-            <label>Layout:
-                <select>
-                    <option value="standard" selected>Standard</option>
-                    <option value="prominent">Prominent</option>
-                </select>
-            </label>
-        </form>
-    </div>
+ 
     <div class="fc-container fc-container--commercial">
         <div class="js-merchandising-books ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
     </div>
@@ -292,11 +222,7 @@
         });
     </script>
 
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10022487">Merchandising: blended component</a>
-        </h2>
-    </div>
+
     <div class="ad-slot ad-slot--merchandising ad-slot--commercial-component dfp-ad--merchandising-multi"></div>
     <script>
         loadCommercial(function () {
@@ -326,11 +252,6 @@
         )
     ).map { component =>
         <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                    Merchandising: cAPI @component("type")
-                </a>
-            </h2>
             <form class="capi-@component("type")-paid-for-type">
                 <label>Type:
                     <select>
@@ -388,128 +309,4 @@
             });
         </script>
     }
-
-    @Seq(
-        Map(
-            ("id", "manual1"),
-            ("type", "single"),
-            ("creativeId", "10025607"),
-            ("args", Json.obj(
-                ("creative", "manual-single"),
-                ("toneClass",  "commercial--tone-brand"),
-                ("omnitureId", "[%omnitureid%]"),
-                ("baseUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
-                ("title", "title"),
-                ("viewAllText", "View all"),
-                ("offerTitle", "Scientists climb to bottom of Siberian sinkhole - in pictures"),
-                ("offerImage", "http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjk-jQkgEQARgBMghE750kQXQwJg"),
-                ("offerText", "A Russian research team including scientists, a medic and a professional climber has descended a giant sinkhole on the Yamal Peninsula in northern Siberia. Photographs by Vladimir Pushkarev/Siberian Times"),
-                ("offerUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
-                ("seeMoreUrl", "http://www.theguardian.com/technology/2014/nov/20/apple-beats-music-iphone-ipad-spotify"),
-                ("showCtaLink", "show-cta-link"),
-                ("offerLinkText", "See more"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        ),
-        Map(
-            ("id", "multiple1"),
-            ("type", "multiple"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "manual-multiple"),
-                ("title", "A Title"),
-                ("explainer", "Explainer text"),
-                ("base__url", "http://www.theguardian.com/uk"),
-                ("offerlinktext", "Offer link text"),
-                ("viewalltext", "View all text"),
-                ("offeramount", "offer-amount"),
-                ("relevance", "high"),
-                ("Toneclass", "commercial--tone-brand"),
-                ("prominent", "true"),
-                ("offer1title", "Offer 1 Title"),
-                ("offer1linktext", "Offer 1 Link Text"),
-                ("offer1url", "http://www.theguardian.com/uk"),
-                ("offer1meta", "Offer 1 Meta"),
-                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer2title", "Offer 2 Title"),
-                ("offer2linktext", "Offer 2 Link Text"),
-                ("offer2url", "http://www.theguardian.com/uk"),
-                ("offer2meta", "Offer 1 Meta"),
-                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer3title", "Offer 3 Title"),
-                ("offer3linktext", "Offer 3 Link Text"),
-                ("offer3url", "http://www.theguardian.com/uk"),
-                ("offer3meta", "Offer 1 Meta"),
-                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer4title", "Offer 4 Title"),
-                ("offer4linktext", "Offer 4 Link Text"),
-                ("offer4url", "http://www.theguardian.com/uk"),
-                ("offer4meta", "Offer 1 Meta"),
-                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        ),
-        Map(
-            ("id", "multipleMembership"),
-            ("type", "multiple"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "manual-multiple"),
-                ("base__url", "https://memebrship.theguardian.com"),
-                ("viewalltext", "Become a Supporter"),
-                ("title", "Events for foodies from Guardian Live"),
-                ("offeramount", "offer-amount"),
-                ("relevance", "high"),
-                ("Toneclass", "commercial--tone-membership"),
-                ("offer1title", "Offer 1 Title"),
-                ("offer1linktext", "Offer 1 Link Text"),
-                ("offer1url", "http://www.theguardian.com/uk"),
-                ("offer1meta", "Offer 1 Meta"),
-                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer2title", "Offer 2 Title"),
-                ("offer2linktext", "Offer 2 Link Text"),
-                ("offer2url", "http://www.theguardian.com/uk"),
-                ("offer2meta", "Offer 1 Meta"),
-                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer3title", "Offer 3 Title"),
-                ("offer3linktext", "Offer 3 Link Text"),
-                ("offer3url", "http://www.theguardian.com/uk"),
-                ("offer3meta", "Offer 1 Meta"),
-                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer4title", "Offer 4 Title"),
-                ("offer4linktext", "Offer 4 Link Text"),
-                ("offer4url", "http://www.theguardian.com/uk"),
-                ("offer4meta", "Offer 1 Meta"),
-                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        )
-    ).map { component =>
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                    Merchandising: manual @component("type")
-                </a>
-            </h2>
-        </div>
-        <div id="@component("id")" class="ad-slot ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
-        <script>
-            @component("args") match {
-                case args: JsObject => {
-                    loadCommercial(function () {
-                        require(['commercial/modules/creatives/template'])
-                            .then(function (Template) {
-                                new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
-                                    .create();
-                        });
-                    });
-                }
-                case _ => { }
-            }
-        </script>
-    }
-
-</div>
 }

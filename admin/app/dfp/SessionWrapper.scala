@@ -82,15 +82,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  def creativeTemplates(stmtBuilder: StatementBuilder): Seq[CreativeTemplate] = {
-    logAroundRead("creative templates", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.creativeTemplateService.getCreativeTemplatesByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
   def getRootAdUnitId: String = {
     services.networkService.getCurrentNetwork.getEffectiveRootAdUnitId
   }
@@ -169,26 +160,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  object creatives {
-
-    private val creativeService = services.creativeService
-    private val typeName = "creatives"
-
-    def get(stmtBuilder: StatementBuilder): Seq[Creative] = {
-      logAroundRead(typeName, stmtBuilder) {
-        read(stmtBuilder) { statement =>
-          val page = creativeService.getCreativesByStatement(statement)
-          (page.getResults, page.getTotalResultSetSize)
-        }
-      }
-    }
-
-    def create(creatives: Seq[Creative]): Seq[Creative] = {
-      logAroundCreate(typeName) {
-        creativeService.createCreatives(creatives.toArray).toIndexedSeq
-      }
-    }
-  }
 }
 
 object SessionWrapper extends GuLogging {
