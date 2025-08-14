@@ -90,7 +90,7 @@ object Dependencies {
   // We can remove this when a future version of dfp-axis includes a more up-to-date version of this library
   val commonsBeanutils = "commons-beanutils" % "commons-beanutils" % "1.11.0"
 
-  val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
+  val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.1")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
   val janino = "org.codehaus.janino" % "janino" % "3.1.12"
 
