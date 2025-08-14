@@ -11,7 +11,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class DfpDataCacheLifecycle(
     appLifecycle: ApplicationLifecycle,
     jobScheduler: JobScheduler,
-    creativeTemplateAgent: CreativeTemplateAgent,
     customFieldAgent: CustomFieldAgent,
     customTargetingAgent: CustomTargetingAgent,
     customTargetingKeyValueJob: CustomTargetingKeyValueJob,
@@ -52,16 +51,6 @@ class DfpDataCacheLifecycle(
       val interval: Int = 15
       def run() = customTargetingKeyValueJob.run()
     },
-    // used for line items and creative templates admin page
-    new Job[Seq[GuCreativeTemplate]] {
-      val name: String = "DFP-Creative-Templates-Update"
-      val interval: Int = 15
-      def run(): Future[Seq[GuCreativeTemplate]] = if (LineItemJobs.isSwitchedOff) {
-        creativeTemplateAgent.refresh()
-      } else {
-        Future.successful(Seq.empty)
-      }
-    },
   )
 
   override def start(): Unit = {
@@ -73,7 +62,6 @@ class DfpDataCacheLifecycle(
     }
 
     pekkoAsync.after1s {
-      creativeTemplateAgent.refresh()
       customTargetingKeyValueJob.run()
       customFieldAgent.refresh()
     }

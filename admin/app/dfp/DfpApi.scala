@@ -14,18 +14,6 @@ case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineIte
 class DfpApi(dataMapper: DataMapper) extends GuLogging {
   import dfp.DfpApi._
 
-  def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("status = :active and type = :userDefined")
-      .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
-      .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
-
-    withDfpSession {
-      _.creativeTemplates(stmtBuilder) map dataMapper.toGuCreativeTemplate filterNot (_.isForApps)
-    }
-  }
-
   private def readDescendantAdUnits(rootName: String, stmtBuilder: StatementBuilder): Seq[GuAdUnit] = {
     withDfpSession { session =>
       session.adUnits(stmtBuilder) filter { adUnit =>

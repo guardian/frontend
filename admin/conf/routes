@@ -69,7 +69,6 @@ GET         /commercial/pageskins                                               
 GET         /commercial/surging                                                                     controllers.admin.CommercialController.renderSurgingContent()
 GET         /commercial/liveblog-top                                                                controllers.admin.CommercialController.renderLiveBlogTopSponsorships()
 GET         /commercial/survey                                                                      controllers.admin.CommercialController.renderSurveySponsorships()
-GET         /commercial/templates                                                                   controllers.admin.CommercialController.renderCreativeTemplates()
 GET         /commercial/adtests                                                                     controllers.admin.CommercialController.renderAdTests()
 GET         /commercial/keyvalues                                                                   controllers.admin.CommercialController.renderKeyValues()
 GET         /commercial/keyvalues/csv/*key                                                          controllers.admin.CommercialController.renderKeyValuesCsv(key)
