@@ -16,7 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       LoopingVideo,
       TopAboveNav250Reservation,
       ConsentGeolocationTest,
-      RolloutAddingServerABTestsToVaryHeader
+      RolloutAddingServerABTestsToVaryHeader,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
