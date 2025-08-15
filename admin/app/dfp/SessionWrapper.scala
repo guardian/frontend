@@ -46,15 +46,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  def customFields(stmtBuilder: StatementBuilder): Seq[CustomField] = {
-    logAroundRead("custom fields", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.customFieldsService.getCustomFieldsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
   def customTargetingKeys(stmtBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
     logAroundRead("custom targeting keys", stmtBuilder) {
       read(stmtBuilder) { statement =>
@@ -77,15 +68,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     logAroundRead("ad units", stmtBuilder) {
       read(stmtBuilder) { statement =>
         val page = services.inventoryService.getAdUnitsByStatement(statement)
-        (page.getResults, page.getTotalResultSetSize)
-      }
-    }
-  }
-
-  def creativeTemplates(stmtBuilder: StatementBuilder): Seq[CreativeTemplate] = {
-    logAroundRead("creative templates", stmtBuilder) {
-      read(stmtBuilder) { statement =>
-        val page = services.creativeTemplateService.getCreativeTemplatesByStatement(statement)
         (page.getResults, page.getTotalResultSetSize)
       }
     }
@@ -169,26 +151,6 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
     }
   }
 
-  object creatives {
-
-    private val creativeService = services.creativeService
-    private val typeName = "creatives"
-
-    def get(stmtBuilder: StatementBuilder): Seq[Creative] = {
-      logAroundRead(typeName, stmtBuilder) {
-        read(stmtBuilder) { statement =>
-          val page = creativeService.getCreativesByStatement(statement)
-          (page.getResults, page.getTotalResultSetSize)
-        }
-      }
-    }
-
-    def create(creatives: Seq[Creative]): Seq[Creative] = {
-      logAroundCreate(typeName) {
-        creativeService.createCreatives(creatives.toArray).toIndexedSeq
-      }
-    }
-  }
 }
 
 object SessionWrapper extends GuLogging {

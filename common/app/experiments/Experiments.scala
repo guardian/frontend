@@ -15,19 +15,13 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       LoopingVideo,
       TopAboveNav250Reservation,
-      ConsentGeolocationTest,
+      <<<<<<< HEAD
+        ConsentGeolocationTest,
+      ======= RolloutAddingServerABTestsToVaryHeader,
+      >>>>>>> main,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object LoopingVideo
-    extends Experiment(
-      name = "looping-video",
-      description = "Enable looping videos on DCR",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc0A,
-    )
 
 object TopAboveNav250Reservation
     extends Experiment(
@@ -64,4 +58,22 @@ object ConsentGeolocationTest
       owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 12, 1),
       participationGroup = Perc0B,
+    )
+
+object LoopingVideo
+    extends Experiment(
+      name = "looping-video",
+      description = "Test looping videos on DCR",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc5A,
+    )
+
+object RolloutAddingServerABTestsToVaryHeader
+    extends Experiment(
+      name = "rollout-adding-server-ab-tests-to-vary-header",
+      description = "Rollout adding server AB tests to the vary header",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc2B,
     )

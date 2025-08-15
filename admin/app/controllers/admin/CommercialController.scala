@@ -1,9 +1,9 @@
 package controllers.admin
 
-import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
+import common.dfp.{GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
-import dfp.{CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor}
+import dfp.{DfpApi, DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
@@ -14,22 +14,8 @@ import conf.switches.Switches.{LineItemJobs}
 import scala.concurrent.duration._
 import scala.util.Try
 
-case class CommercialPage() extends StandalonePage {
-  override val metadata = MetaData.make(
-    id = "commercial-templates",
-    section = Some(SectionId.fromId("admin")),
-    webTitle = "Commercial Templates",
-    javascriptConfigOverrides = Map(
-      "keywordIds" -> JsString("live-better"),
-      "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng"),
-    ),
-  )
-}
-
 class CommercialController(
     val controllerComponents: ControllerComponents,
-    createTemplateAgent: CreativeTemplateAgent,
-    customFieldAgent: CustomFieldAgent,
     dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -43,9 +29,7 @@ class CommercialController(
 
   def renderSpecialAdUnits: Action[AnyContent] =
     Action { implicit request =>
-      val specialAdUnits =
-        if (LineItemJobs.isSwitchedOn) { Store.getDfpSpecialAdUnits }
-        else { dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot) }
+      val specialAdUnits = Store.getDfpSpecialAdUnits
       NoCache(Ok(views.html.commercial.specialAdUnits(specialAdUnits)))
     }
 
@@ -74,23 +58,9 @@ class CommercialController(
       NoCache(Ok(views.html.commercial.surveySponsorships(surveyAdUnits)))
     }
 
-  def renderCreativeTemplates: Action[AnyContent] =
-    Action { implicit request =>
-      val emptyTemplates = if (LineItemJobs.isSwitchedOn) { Store.getDfpCreativeTemplates }
-      else { createTemplateAgent.get }
-      val creatives = Store.getDfpTemplateCreatives
-      val templates = emptyTemplates
-        .foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
-          soFar :+ template.copy(creatives = creatives.filter(_.templateId.get == template.id).sortBy(_.name))
-        }
-        .sortBy(_.name)
-      NoCache(Ok(views.html.commercial.templates(templates)))
-    }
-
   def renderCustomFields: Action[AnyContent] =
     Action { implicit request =>
-      val fields: Seq[GuCustomField] = if (LineItemJobs.isSwitchedOn) { Store.getDfpCustomFields }
-      else { customFieldAgent.get.data.values.toSeq }
+      val fields: Seq[GuCustomField] = Store.getDfpCustomFields
       NoCache(Ok(views.html.commercial.customFields(fields)))
     }
 

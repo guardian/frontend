@@ -27,9 +27,7 @@ trait Store extends GuLogging with Dates {
   def putDfpLineItemsReport(everything: String): Unit = {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
-  def putDfpTemplateCreatives(creatives: String): Unit = {
-    S3.putPrivate(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
-  }
+
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
     S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
   }
@@ -68,13 +66,6 @@ trait Store extends GuLogging with Dates {
     maybeLineItems getOrElse LineItemReport("Empty Report", Nil, Nil)
   }
 
-  def getDfpTemplateCreatives: Seq[GuCreative] = {
-    val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
-      Json.parse(doc).as[Seq[GuCreative]]
-    }
-    creatives getOrElse Nil
-  }
-
   def getDfpCustomTargetingKeyValues: Seq[GuCustomTargeting] = {
     val targeting = for (doc <- S3.get(dfpCustomTargetingKey)) yield {
       val json = Json.parse(doc)
@@ -91,13 +82,6 @@ trait Store extends GuLogging with Dates {
       Json.parse(doc).as[Seq[GuCustomField]]
     }
     customFields getOrElse Nil
-  }
-
-  def getDfpCreativeTemplates: Seq[GuCreativeTemplate] = {
-    val creativeTemplates = for (doc <- S3.get(dfpCreativeTemplatesKey)) yield {
-      Json.parse(doc).as[Seq[GuCreativeTemplate]]
-    }
-    creativeTemplates getOrElse Nil
   }
 
   def getAbTestFrameUrl: Option[String] = {
