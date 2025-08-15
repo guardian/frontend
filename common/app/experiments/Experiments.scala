@@ -62,5 +62,5 @@ object RolloutAddingServerABTestsToVaryHeader
       description = "Rollout adding server AB tests to the vary header",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc5A,
+      participationGroup = Perc2B,
     )
