@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       LoopingVideo,
       TopAboveNav250Reservation,
       RolloutAddingServerABTestsToVaryHeader,
+      GoogleOneTap,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -29,6 +30,24 @@ object TopAboveNav250Reservation
       participationGroup = Perc2A,
     )
 
+object DCRJavascriptBundle
+    extends Experiment(
+      name = "dcr-javascript-bundle",
+      description = "DCAR JS bundle experiment to test replacing Preact with React",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 8, 29),
+      participationGroup = Perc0B,
+    )
+
+object GoogleOneTap
+    extends Experiment(
+      name = "google-one-tap",
+      description = "Signing into the Guardian with Google One Tap",
+      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0C,
+    )
+
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
@@ -36,15 +55,6 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
-    )
-
-object DCRJavascriptBundle
-    extends Experiment(
-      name = "dcr-javascript-bundle",
-      description = "DCAR JS bundle experiment to test replacing Preact with React",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc0E,
     )
 
 object LoopingVideo
