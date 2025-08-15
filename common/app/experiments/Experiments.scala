@@ -15,10 +15,8 @@ object ActiveExperiments extends ExperimentsDefinition {
       DCRJavascriptBundle,
       LoopingVideo,
       TopAboveNav250Reservation,
-      <<<<<<< HEAD
-        ConsentGeolocationTest,
-      ======= RolloutAddingServerABTestsToVaryHeader,
-      >>>>>>> main,
+      ConsentGeolocationTest,
+      RolloutAddingServerABTestsToVaryHeader
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
