@@ -49,8 +49,6 @@ trait AdminServices extends I18nComponents {
 
   lazy val dfpApi: DfpApi = wire[DfpApi]
   lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
-  lazy val customFieldAgent: CustomFieldAgent = wire[CustomFieldAgent]
-  lazy val customFieldService: CustomFieldService = wire[CustomFieldService]
   lazy val customTargetingAgent: CustomTargetingAgent = wire[CustomTargetingAgent]
   lazy val customTargetingService: CustomTargetingService = wire[CustomTargetingService]
   lazy val customTargetingKeyValueJob: CustomTargetingKeyValueJob = wire[CustomTargetingKeyValueJob]
