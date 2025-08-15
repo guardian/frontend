@@ -22,6 +22,7 @@ templates:
     - update-ami-for-rss
     - update-ami-for-onward
     - update-ami-for-facia
+    - update-ami-for-facia-press
 
 deployments:
   admin:
@@ -42,6 +43,8 @@ deployments:
       asgMigrationInProgress: true
   facia-press:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   identity:
     template: frontend
   onward:
@@ -132,5 +135,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIFacia:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-facia-press:
+    app: facia-press
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIFaciapress:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
