@@ -229,7 +229,6 @@ import layout.slices.EmailLayouts
         PressedCollectionBuilder.mkPressedCollection("dynamic/fast"),
         PressedCollectionBuilder.mkPressedCollection("dynamic/package"),
         PressedCollectionBuilder.mkPressedCollection("dynamic/slow"),
-        PressedCollectionBuilder.mkPressedCollection("dynamic/slow-mpu"),
         PressedCollectionBuilder.mkPressedCollection("fixed/large/slow-XIV"),
         PressedCollectionBuilder.mkPressedCollection("fixed/medium/fast-XI"),
         PressedCollectionBuilder.mkPressedCollection("fixed/medium/fast-XII"),

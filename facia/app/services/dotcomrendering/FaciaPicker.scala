@@ -24,7 +24,6 @@ object FrontChecks {
       "dynamic/fast",
       "dynamic/package",
       "dynamic/slow",
-      "dynamic/slow-mpu",
       "fixed/large/slow-XIV",
       "fixed/medium/fast-XI",
       "fixed/medium/fast-XII",
