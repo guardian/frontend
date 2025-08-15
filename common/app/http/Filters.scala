@@ -18,6 +18,7 @@ import conf.switches.Switches.{EnableNewServerSideABTestsHeader}
 import scala.concurrent.{ExecutionContext, Future}
 import experiments.Experiment
 import experiments.{ActiveExperiments, RolloutAddingServerABTestsToVaryHeader}
+import experiments.Excluded
 
 class GzipperConfig() extends GzipFilterConfig {
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {
@@ -117,9 +118,9 @@ class ABTestingFilter(implicit val mat: Materializer, executionContext: Executio
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (
-      EnableNewServerSideABTestsHeader.isSwitchedOff || !ActiveExperiments.isParticipating(
+      EnableNewServerSideABTestsHeader.isSwitchedOff || ActiveExperiments.groupFor(
         RolloutAddingServerABTestsToVaryHeader,
-      )(request)
+      )(request) == Excluded
     ) {
       nextFilter(request)
     } else {
