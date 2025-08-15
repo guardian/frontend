@@ -28,10 +28,6 @@ trait Store extends GuLogging with Dates {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
 
-  def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
-    S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
-  }
-
   val now: String = DateTime.now().toHttpDateTimeString
 
   def getDfpPageSkinnedAdUnits(): PageSkinSponsorshipReport =
