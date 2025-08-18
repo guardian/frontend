@@ -3,7 +3,7 @@ package controllers.admin
 import common.dfp.{GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import conf.Configuration
-import dfp.{DfpApi, DfpDataExtractor}
+import dfp.{DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
 import play.api.libs.json.{JsString, Json}
@@ -16,7 +16,6 @@ import scala.util.Try
 
 class CommercialController(
     val controllerComponents: ControllerComponents,
-    dfpApi: DfpApi,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -93,24 +92,6 @@ class CommercialController(
 
       Cached(5.minutes) {
         JsonComponent.fromWritable(lineItems)
-      }
-    }
-
-  def getCreativesListing(lineitemId: String, section: String): Action[AnyContent] =
-    Action { implicit request: RequestHeader =>
-      val validSections: List[String] = List("uk", "lifeandstyle", "sport", "science")
-
-      val previewUrls: Seq[String] =
-        (for {
-          lineItemId <- Try(lineitemId.toLong).toOption
-          validSection <- validSections.find(_ == section)
-        } yield {
-          dfpApi.getCreativeIds(lineItemId) flatMap (dfpApi
-            .getPreviewUrl(lineItemId, _, s"https://theguardian.com/$validSection"))
-        }) getOrElse Nil
-
-      Cached(5.minutes) {
-        JsonComponent.fromWritable(previewUrls)
       }
     }
 
