@@ -25,17 +25,6 @@ class DfpApi(dataMapper: DataMapper) extends GuLogging {
     }
   }
 
-  def getCreativeIds(lineItemId: Long): Seq[Long] = {
-    val stmtBuilder = new StatementBuilder()
-      .where("status = :status AND lineItemId = :lineItemId")
-      .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
-      .withBindVariableValue("lineItemId", lineItemId)
-
-    withDfpSession { session =>
-      session.lineItemCreativeAssociations.get(stmtBuilder) map (id => Long2long(id.getCreativeId))
-    }
-  }
-
   def getPreviewUrl(lineItemId: Long, creativeId: Long, url: String): Option[String] =
     for {
       session <- SessionWrapper()
