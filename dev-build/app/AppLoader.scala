@@ -13,7 +13,6 @@ import controllers._
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
 import dev.DevAssetsController
-import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
@@ -87,7 +86,6 @@ trait AppComponents
     List(
       wire[AdminLifecycle],
       wire[OnwardJourneyLifecycle],
-      wire[DfpDataCacheLifecycle],
       wire[ConfigAgentLifecycle],
       wire[SurgingContentAgentLifecycle],
       wire[SectionsLookUpLifecycle],
