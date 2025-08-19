@@ -28,10 +28,6 @@ trait Store extends GuLogging with Dates {
     S3.putPrivate(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
 
-  def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
-    S3.putPrivate(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
-  }
-
   val now: String = DateTime.now().toHttpDateTimeString
 
   def getDfpPageSkinnedAdUnits(): PageSkinSponsorshipReport =
@@ -82,13 +78,6 @@ trait Store extends GuLogging with Dates {
       Json.parse(doc).as[Seq[GuCustomField]]
     }
     customFields getOrElse Nil
-  }
-
-  def getDfpCreativeTemplates: Seq[GuCreativeTemplate] = {
-    val creativeTemplates = for (doc <- S3.get(dfpCreativeTemplatesKey)) yield {
-      Json.parse(doc).as[Seq[GuCreativeTemplate]]
-    }
-    creativeTemplates getOrElse Nil
   }
 
   def getAbTestFrameUrl: Option[String] = {

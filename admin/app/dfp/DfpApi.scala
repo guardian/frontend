@@ -14,18 +14,6 @@ case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineIte
 class DfpApi(dataMapper: DataMapper) extends GuLogging {
   import dfp.DfpApi._
 
-  def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("status = :active and type = :userDefined")
-      .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
-      .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
-
-    withDfpSession {
-      _.creativeTemplates(stmtBuilder) map dataMapper.toGuCreativeTemplate filterNot (_.isForApps)
-    }
-  }
-
   private def readDescendantAdUnits(rootName: String, stmtBuilder: StatementBuilder): Seq[GuAdUnit] = {
     withDfpSession { session =>
       session.adUnits(stmtBuilder) filter { adUnit =>
@@ -35,28 +23,6 @@ class DfpApi(dataMapper: DataMapper) extends GuLogging {
         Option(adUnit.getParentPath) exists { path => isRoot(path) || isDescendant(path) }
       } map dataMapper.toGuAdUnit sortBy (_.id)
     }
-  }
-
-  def readActiveAdUnits(rootName: String): Seq[GuAdUnit] = {
-
-    val stmtBuilder = new StatementBuilder()
-      .where("status = :status")
-      .withBindVariableValue("status", InventoryStatus._ACTIVE)
-
-    readDescendantAdUnits(rootName, stmtBuilder)
-  }
-
-  def readSpecialAdUnits(rootName: String): Seq[(String, String)] = {
-
-    val statementBuilder = new StatementBuilder()
-      .where("status = :status")
-      .where("explicitlyTargeted = :targeting")
-      .withBindVariableValue("status", InventoryStatus._ACTIVE)
-      .withBindVariableValue("targeting", true)
-
-    readDescendantAdUnits(rootName, statementBuilder) map { adUnit =>
-      (adUnit.id, adUnit.path.mkString("/"))
-    } sortBy (_._2)
   }
 
   def getCreativeIds(lineItemId: Long): Seq[Long] = {
