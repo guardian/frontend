@@ -131,12 +131,14 @@ const go = () => {
 
         const isUserSignedIn = await isUserLoggedIn();
         const useNonAdvertisedList = allowRejectAll(isUserSignedIn);
+	    const isInSourcepointGeolocationTest = window.guardian.config.tests['consentGeolocationTestVariant'] === 'variant';
 
         cmp.init({
             pubData,
             country: await getLocale(),
             isUserSignedIn,
             useNonAdvertisedList,
+            isInSourcepointGeolocationTest,
         });
 
         /**
