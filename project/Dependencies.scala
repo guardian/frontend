@@ -4,8 +4,8 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "1.12.782"
-  val awsSdk2Version = "2.30.38"
+  val awsVersion = "1.12.788"
+  val awsSdk2Version = "2.32.26"
   val capiVersion = "35.0.0"
   val faciaVersion = "22.0.0"
   val dispatchVersion = "0.13.1"
@@ -97,7 +97,7 @@ object Dependencies {
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.8.1"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.3"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.5"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"

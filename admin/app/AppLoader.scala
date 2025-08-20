@@ -5,7 +5,6 @@ import common.dfp._
 import common._
 import conf.switches.SwitchboardLifecycle
 import controllers.{AdminControllers, HealthCheck}
-import _root_.dfp.DfpDataCacheLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -49,12 +48,6 @@ trait AdminServices extends I18nComponents {
 
   lazy val dfpApi: DfpApi = wire[DfpApi]
   lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
-  lazy val creativeTemplateAgent: CreativeTemplateAgent = wire[CreativeTemplateAgent]
-  lazy val customFieldAgent: CustomFieldAgent = wire[CustomFieldAgent]
-  lazy val customFieldService: CustomFieldService = wire[CustomFieldService]
-  lazy val customTargetingAgent: CustomTargetingAgent = wire[CustomTargetingAgent]
-  lazy val customTargetingService: CustomTargetingService = wire[CustomTargetingService]
-  lazy val customTargetingKeyValueJob: CustomTargetingKeyValueJob = wire[CustomTargetingKeyValueJob]
   lazy val dataMapper: DataMapper = wire[DataMapper]
   lazy val parameterStoreService: ParameterStoreService = wire[ParameterStoreService]
   lazy val parameterStoreProvider: ParameterStoreProvider = wire[ParameterStoreProvider]
@@ -71,7 +64,6 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[DfpAgentLifecycle],
-    wire[DfpDataCacheLifecycle],
     wire[CommercialDfpReportingLifecycle],
   )
 
