@@ -34,7 +34,7 @@ class AdminLifecycle(
       descheduleJobs()
       CloudWatch.shutdown()
       emailService.shutdown()
-      deleteTmpFiles()
+      // deleteTmpFiles()
     }
   }
 
@@ -121,8 +121,6 @@ class AdminLifecycle(
     jobs.deschedule("ExpiringSwitchesAfternoonEmailJob")
     jobs.deschedule("AssetMetricsCache")
   }
-
-  private def deleteTmpFiles(): Unit = AdminConfiguration.dfpApi.serviceAccountKeyFile.map(deleteIfExists)
 
   override def start(): Unit = {
     descheduleJobs()
