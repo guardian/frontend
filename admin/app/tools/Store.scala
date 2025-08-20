@@ -55,7 +55,7 @@ trait Store extends GuLogging with Dates {
 
   def getDfpLineItemsReport(): LineItemReport = {
     val maybeLineItems = for {
-      json <- S3.get(dfpLineItemsKey)
+      json <- S3.get(dfpLineItemsKeyFromDFP)
       lineItemReport <- Json.parse(json).asOpt[LineItemReport]
     } yield lineItemReport
 
