@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       LoopingVideo,
       TopAboveNav250Reservation,
       RolloutAddingServerABTestsToVaryHeader,
+      SourcepointConsentGeolocation,
       GoogleOneTap,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -73,4 +74,14 @@ object RolloutAddingServerABTestsToVaryHeader
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc2B,
+    )
+
+object SourcepointConsentGeolocation
+    extends Experiment(
+      name = "sp-consent-geolocation",
+      description =
+        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0B,
     )
