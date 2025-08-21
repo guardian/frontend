@@ -16,6 +16,17 @@ trait NewslettersSwitches {
     highImpact = false,
   )
 
+  val ManyNewsletterVisibleRecaptcha = Switch(
+    SwitchGroup.Newsletters,
+    "many-newsletter-visible-recaptcha",
+    "Shows a visible rather than invisible reCAPTCHA when signing up on the All Newsletters page",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val NewslettersRemoveConfirmationStep = Switch(
     SwitchGroup.Newsletters,
     "newsletters-remove-confirmation-step",
