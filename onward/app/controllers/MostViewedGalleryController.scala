@@ -54,17 +54,16 @@ class MostViewedGalleryController(
   def renderMostViewed(): Action[AnyContent] =
     Action { implicit request =>
       getMostViewedGallery() match {
-        case Nil => Cached(15) { JsonNotFound() }
+        case Nil => Cached(60) { JsonNotFound() }
         case galleries if request.forceDCR =>
           val data = OnwardCollectionResponse(
             heading = MostGalleriesLabel,
-            trails = galleries.map(_.faciaContent).map(Trail.pressedContentToTrail).take(10),
+            trails = galleries.map(_.faciaContent).map(Trail.pressedContentToTrail).take(5),
           )
-          Cached(30.minutes)(JsonComponent.fromWritable(data))
+          Cached(15.minutes)(JsonComponent.fromWritable(data))
         case galleries => renderMostViewedGallery(galleries)
       }
     }
-  def renderMostViewedHtml(): Action[AnyContent] = renderMostViewed()
 
   private def getMostViewedGallery()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("6").toInt
