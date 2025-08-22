@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       DCRJavascriptBundle,
-      LoopingVideo,
       TopAboveNav250Reservation,
       RolloutAddingServerABTestsToVaryHeader,
       SourcepointConsentGeolocation,
@@ -22,13 +21,14 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object TopAboveNav250Reservation
+object SourcepointConsentGeolocation
     extends Experiment(
-      name = "top-above-nav-250-reservation",
-      description = "Reserve 250px for top-above-nav instead of 90px",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc2A,
+      name = "sp-consent-geolocation",
+      description =
+        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0B,
     )
 
 object GoogleOneTap
@@ -58,13 +58,13 @@ object DCRJavascriptBundle
       participationGroup = Perc0E,
     )
 
-object LoopingVideo
+object TopAboveNav250Reservation
     extends Experiment(
-      name = "looping-video",
-      description = "Test looping videos on DCR",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc5A,
+      name = "top-above-nav-250-reservation",
+      description = "Reserve 250px for top-above-nav instead of 90px",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 8, 29),
+      participationGroup = Perc2A,
     )
 
 object RolloutAddingServerABTestsToVaryHeader
@@ -74,14 +74,4 @@ object RolloutAddingServerABTestsToVaryHeader
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 9, 30),
       participationGroup = Perc2B,
-    )
-
-object SourcepointConsentGeolocation
-    extends Experiment(
-      name = "sp-consent-geolocation",
-      description =
-        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
-      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0B,
     )
