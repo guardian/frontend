@@ -13,28 +13,31 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       DCRJavascriptBundle,
-      LoopingVideo,
       TopAboveNav250Reservation,
+      RolloutAddingServerABTestsToVaryHeader,
+      SourcepointConsentGeolocation,
+      GoogleOneTap,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object LoopingVideo
+object SourcepointConsentGeolocation
     extends Experiment(
-      name = "looping-video",
-      description = "Enable looping videos on DCR",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc0A,
+      name = "sp-consent-geolocation",
+      description =
+        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0B,
     )
 
-object TopAboveNav250Reservation
+object GoogleOneTap
     extends Experiment(
-      name = "top-above-nav-250-reservation",
-      description = "Reserve 250px for top-above-nav instead of 90px",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc2A,
+      name = "google-one-tap",
+      description = "Signing into the Guardian with Google One Tap",
+      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0C,
     )
 
 object DarkModeWeb
@@ -53,4 +56,22 @@ object DCRJavascriptBundle
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc0E,
+    )
+
+object TopAboveNav250Reservation
+    extends Experiment(
+      name = "top-above-nav-250-reservation",
+      description = "Reserve 250px for top-above-nav instead of 90px",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 8, 29),
+      participationGroup = Perc2A,
+    )
+
+object RolloutAddingServerABTestsToVaryHeader
+    extends Experiment(
+      name = "rollout-adding-server-ab-tests-to-vary-header",
+      description = "Rollout adding server AB tests to the vary header",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 9, 30),
+      participationGroup = Perc2B,
     )

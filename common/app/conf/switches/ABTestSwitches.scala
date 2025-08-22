@@ -44,29 +44,18 @@ trait ABTestSwitches {
     "Testing the Admiral integration for adblock recovery on theguardian.com",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 8, 29)),
+    sellByDate = Some(LocalDate.of(2025, 9, 17)),
     exposeClientSide = true,
     highImpact = false,
   )
 
   Switch(
     ABTests,
-    "ab-prebid-ad-unit",
-    "Test grouping slots to be used by PrebidAdUnit to allow full benefits of bidCache in Prebid",
+    "ab-prebid946",
+    "This test is being used to test v9.46.0 of Prebid ahead of general upgrade.",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 8, 21)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
-    "ab-google-one-tap",
-    "This test is being used to prototype and roll out single sign-on with Google One Tap.",
-    owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 12, 1)),
+    sellByDate = Some(LocalDate.of(2025, 8, 29)),
     exposeClientSide = true,
     highImpact = false,
   )

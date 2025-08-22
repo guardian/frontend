@@ -113,7 +113,6 @@ object GetClasses {
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
       lazyLoad = containerDefinition.shouldLazyLoad,
-      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(adFree = isAdFree(request))),
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
@@ -130,7 +129,6 @@ object GetClasses {
       extraClasses = Nil,
       disableHide = true,
       lazyLoad = false,
-      dynamicSlowMpu = false,
     )
 
   def forContainer(
@@ -145,7 +143,6 @@ object GetClasses {
       extraClasses: Seq[String] = Nil,
       disableHide: Boolean = false,
       lazyLoad: Boolean,
-      dynamicSlowMpu: Boolean,
   ): String = {
     // no toggle for Headlines container as it will be hosting the weather widget instead
     val showToggle =
@@ -160,7 +157,6 @@ object GetClasses {
         ("fc-container--video", isVideo),
         ("fc-container--lazy-load", lazyLoad),
         ("js-container--lazy-load", lazyLoad),
-        ("fc-container--dynamic-slow-mpu", dynamicSlowMpu),
         ("fc-container--will-have-toggle", showToggle),
         ("js-container--toggle", showToggle),
       ) collect { case (kls, true) =>
