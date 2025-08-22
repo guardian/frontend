@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.facia.api.models.{GroupConfig, GroupsConfig}
-import common._
+import common.{JsonComponent, _}
 import feed.MostViewedGalleryAgent
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
@@ -9,6 +9,9 @@ import model.pressed.CollectionConfig
 import play.api.mvc._
 import services.CollectionConfigWithId
 import layout.slices.{Fixed, FixedContainers}
+import model.dotcomrendering.{OnwardCollectionResponse, Trail}
+
+import scala.concurrent.duration.DurationInt
 
 class MostViewedGalleryController(
     mostViewedGalleryAgent: MostViewedGalleryAgent,
@@ -18,16 +21,17 @@ class MostViewedGalleryController(
     with GuLogging
     with ImplicitControllerExecutionContext {
 
+  private val MostGalleriesLabel: String = "More galleries"
   private val page = SimplePage(
     MetaData.make(
-      "More galleries",
+      MostGalleriesLabel,
       Some(SectionId.fromId("inpictures")),
-      "More galleries",
+      MostGalleriesLabel,
     ),
   )
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
-    displayName = Some("More galleries"),
+    displayName = Some(MostGalleriesLabel),
     groupsConfig = Some(
       GroupsConfig(
         List(
@@ -50,7 +54,13 @@ class MostViewedGalleryController(
   def renderMostViewed(): Action[AnyContent] =
     Action { implicit request =>
       getMostViewedGallery() match {
-        case Nil       => Cached(60) { JsonNotFound() }
+        case Nil => Cached(15) { JsonNotFound() }
+        case galleries if request.forceDCR =>
+          val data = OnwardCollectionResponse(
+            heading = MostGalleriesLabel,
+            trails = galleries.map(_.faciaContent).map(Trail.pressedContentToTrail).take(10),
+          )
+          Cached(30.minutes)(JsonComponent.fromWritable(data))
         case galleries => renderMostViewedGallery(galleries)
       }
     }
@@ -71,7 +81,7 @@ class MostViewedGalleryController(
           CollectionEssentials(
             galleries.map(_.faciaContent),
             Nil,
-            Some("More galleries"),
+            Some(MostGalleriesLabel),
             Some("inpictures/all"),
             None,
             None,
