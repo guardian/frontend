@@ -61,7 +61,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
   def submit(form: EmailForm)(implicit request: Request[AnyContent], ec: ExecutionContext): Future[WSResponse] = {
     val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
     val isConsentEmailEndpoint = consentMailerUrl.endsWith("/consent-email")
-    
+
     val consentMailerPayload = if (isConsentEmailEndpoint) {
       Json.obj(
         "email" -> form.email,
@@ -98,13 +98,13 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           )
           .fields,
       )
-      
+
       val unsetConsentResponse = wsClient
         .url(s"${Configuration.id.apiRoot}/consent-email")
         .withQueryStringParameters(queryStringParameters: _*)
         .addHttpHeaders(getHeaders(request): _*)
         .post(unsetConsentPayload)
-      
+
       mainResponse.flatMap { response =>
         unsetConsentResponse.map(_ => response)
       }
@@ -113,7 +113,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     }
   }
 
-  def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {    
+  def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     val consentMailerPayload = JsObject(
       Json
         .obj(
