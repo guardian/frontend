@@ -13,7 +13,7 @@ Information about whether a line item should refresh isn't available when slots 
 
 The list of non-refreshable line item IDs is generated every 2 minutes via a call to the Google Ad Manager API. The resulting array is filtered to exclude prebid and amazon line items (see above) and stored in S3. The filename in S3 is `non-refreshable-lineitem-ids-v1.json`.
 
-See: [job schedule](https://github.com/guardian/frontend/blob/main/admin/app/dfp/DfpDataCacheLifecycle.scala), [job](https://github.com/guardian/frontend/blob/main/admin/app/dfp/DfpDataCacheJob.scala), [GAM API call](https://github.com/guardian/frontend/blob/main/admin/app/dfp/DfpApi.scala)
+See: [GAM API call](https://github.com/guardian/frontend/blob/main/admin/app/dfp/DfpApi.scala)
 
 ## How the list is consumed
 
