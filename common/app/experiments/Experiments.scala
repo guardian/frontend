@@ -52,6 +52,6 @@ object TopAboveNav250Reservation
       name = "top-above-nav-250-reservation",
       description = "Reserve 250px for top-above-nav instead of 90px",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
+      sellByDate = LocalDate.of(2025, 9, 12),
       participationGroup = Perc2A,
     )
