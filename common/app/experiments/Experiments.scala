@@ -14,7 +14,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       DCRJavascriptBundle,
       TopAboveNav250Reservation,
-      RolloutAddingServerABTestsToVaryHeader,
       SourcepointConsentGeolocation,
       GoogleOneTap,
     )
@@ -65,13 +64,4 @@ object TopAboveNav250Reservation
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 8, 29),
       participationGroup = Perc2A,
-    )
-
-object RolloutAddingServerABTestsToVaryHeader
-    extends Experiment(
-      name = "rollout-adding-server-ab-tests-to-vary-header",
-      description = "Rollout adding server AB tests to the vary header",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc2B,
     )
