@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       DarkModeWeb,
-      DCRJavascriptBundle,
       TopAboveNav250Reservation,
       SourcepointConsentGeolocation,
       GoogleOneTap,
@@ -46,15 +45,6 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
-    )
-
-object DCRJavascriptBundle
-    extends Experiment(
-      name = "dcr-javascript-bundle",
-      description = "DCAR JS bundle experiment to test replacing Preact with React",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc0E,
     )
 
 object TopAboveNav250Reservation
