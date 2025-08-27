@@ -58,14 +58,13 @@
 
 ## [Features and components](06-features-and-components/)
 - [How are trail pictures picked in Frontend?](06-features-and-components/01-trail-images.md)
-- [Tag combiners](06-features-and-components/03-tag-combiners.md)
+- [theguardian.com/font-loader](06-features-and-components/03-font-loader-route.md)
 
 ## [Performance](07-performance/)
 - [Performance reading list](07-performance/01-performance-reading.md)
 
 ## [Archives](99-archives/)
 - [Recipe for Breton crêpes](99-archives/crepes.md)
-- [theguardian.com/font-loader](99-archives/font-loader-route.md)
 
 
 ---
