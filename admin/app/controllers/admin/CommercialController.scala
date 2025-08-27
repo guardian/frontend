@@ -80,7 +80,7 @@ class CommercialController(
         }
 
       val sortedGroups = {
-        hasNumericTestValue.toSeq.sortBy { case (testValue, _) => testValue.toInt } ++
+        hasNumericTestValue.toSeq.sortBy { case (testValue, _) => testValue.toLong } ++
           hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue }
       }
 
