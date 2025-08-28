@@ -7,6 +7,37 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
 
   val hasValidLineItems: Boolean = lineItems.nonEmpty
 
+  val liveBlogTopSponsorships: Seq[LiveBlogTopSponsorship] = {
+    lineItems
+      .filter(lineItem => lineItem.targetsLiveBlogTop && lineItem.isCurrent)
+      .foldLeft(Seq.empty[LiveBlogTopSponsorship]) { (soFar, lineItem) =>
+        soFar :+ LiveBlogTopSponsorship(
+          lineItemName = lineItem.name,
+          lineItemId = lineItem.id,
+          adTest = lineItem.targeting.adTestValue,
+          editions = editionsTargeted(lineItem),
+          sections = lineItem.liveBlogTopTargetedSections,
+          keywords = lineItem.targeting.keywordValues,
+          targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+        )
+      }
+  }
+
+  val surveySponsorships: Seq[SurveySponsorship] = {
+    lineItems
+      .filter(lineItem => lineItem.targetsSurvey && lineItem.isCurrent)
+      .foldLeft(Seq.empty[SurveySponsorship]) { (soFar, lineItem) =>
+        soFar :+ SurveySponsorship(
+          lineItemName = lineItem.name,
+          lineItemId = lineItem.id,
+          adUnits = lineItem.targeting.adUnitsIncluded map (_.path mkString "/"),
+          countries = countriesTargeted(lineItem),
+          adTest = lineItem.targeting.adTestValue,
+          targetsAdTest = lineItem.targeting.hasAdTestTargetting,
+        )
+      }
+  }
+
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
     lineItems withFilter { lineItem =>
       lineItem.isPageSkin && lineItem.isCurrent
@@ -24,6 +55,11 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[Gu
       )
     }
   }
+
+  def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] =
+    lineItems sortBy { lineItem =>
+      (lineItem.startTime.getMillis, lineItem.endTime.map(_.getMillis).getOrElse(0L))
+    }
 
   def editionsTargeted(lineItem: GuLineItem): Seq[Edition] = {
     for {

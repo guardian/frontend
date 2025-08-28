@@ -27,6 +27,8 @@ trait AdminControllers {
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
   def assets: Assets
+  def dataMapper: DataMapper
+  def dfpApi: DfpApi
   def parameterStoreService: ParameterStoreService
 
   lazy val auth = new GuardianAuthWithExemptions(

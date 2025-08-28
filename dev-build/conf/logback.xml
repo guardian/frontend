@@ -7,9 +7,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>logs/frontend-dev-build.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-            <maxHistory>7</maxHistory>
-            <totalSizeCap>512MB</totalSizeCap>
-            <maxFileSize>256MB</maxFileSize>
+            <maxHistory>7</maxHistory><totalSizeCap>512MB</totalSizeCap><maxFileSize>256MB</maxFileSize>
         </rollingPolicy>
 
         <encoder>
@@ -24,6 +22,10 @@
     <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="STDOUT" />
     </appender>
+
+    <!-- DFP API logging -->
+    <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="OFF"/>
+    <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>

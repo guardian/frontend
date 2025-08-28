@@ -1,0 +1,26 @@
+package dfp
+
+import com.google.api.ads.admanager.axis.factory.AdManagerServices
+import com.google.api.ads.admanager.axis.v202502._
+import com.google.api.ads.admanager.lib.client.AdManagerSession
+
+private[dfp] class ServicesWrapper(session: AdManagerSession) {
+
+  private val dfpServices = new AdManagerServices
+
+  lazy val lineItemService = dfpServices.get(session, classOf[LineItemServiceInterface])
+
+  lazy val licaService = dfpServices.get(session, classOf[LineItemCreativeAssociationServiceInterface])
+
+  lazy val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
+
+  lazy val inventoryService = dfpServices.get(session, classOf[InventoryServiceInterface])
+
+  lazy val networkService = dfpServices.get(session, classOf[NetworkServiceInterface])
+
+  lazy val orderService = dfpServices.get(session, classOf[OrderServiceInterface])
+
+  lazy val companyService = dfpServices.get(session, classOf[CompanyServiceInterface])
+
+  lazy val reportService = dfpServices.get(session, classOf[ReportServiceInterface])
+}

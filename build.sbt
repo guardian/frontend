@@ -110,6 +110,7 @@ val admin = application("admin")
   .settings(
     libraryDependencies ++= Seq(
       paClient,
+      dfpAxis,
       bootstrap,
       jquery,
       jqueryui,
@@ -120,6 +121,7 @@ val admin = application("admin")
       awsElasticloadbalancing,
       awsSes,
       scalaUri,
+      commonsBeanutils,
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",

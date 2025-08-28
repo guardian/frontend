@@ -7,9 +7,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>logs/frontend-admin.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-            <maxHistory>7</maxHistory>
-            <totalSizeCap>512MB</totalSizeCap>
-            <maxFileSize>256MB</maxFileSize>
+            <maxHistory>7</maxHistory><totalSizeCap>512MB</totalSizeCap><maxFileSize>256MB</maxFileSize>
         </rollingPolicy>
 
         <encoder>
@@ -25,6 +23,9 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
+    <!-- DFP API logging -->
+    <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="WARN"/>
+    <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
     <!-- END -->
 
     <root level="INFO">
