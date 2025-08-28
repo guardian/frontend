@@ -1,7 +1,6 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
-import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, DCRMetrics, EmailSubsciptionMetrics}
 import _root_.commercial.targeting.TargetingLifecycle
 import conf.CachedHealthCheckLifeCycle
@@ -53,7 +52,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   override lazy val lifecycleComponents = List(
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[DfpAgentLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[IndexListingsLifecycle],
     wire[SectionsLookUpLifecycle],

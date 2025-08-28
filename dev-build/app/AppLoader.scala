@@ -26,7 +26,6 @@ import rugby.controllers.RugbyControllers
 import services._
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import common.dfp.DfpAgentLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -98,7 +97,6 @@ trait AppComponents
       wire[NewsletterSignupLifecycle],
       wire[MostViewedLifecycle],
       wire[SkimLinksCacheLifeCycle],
-      wire[DfpAgentLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
