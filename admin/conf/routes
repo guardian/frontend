@@ -75,7 +75,6 @@ GET         /commercial/keyvalues/csv/*key                                      
 GET         /commercial/invalid-lineitems                                                           controllers.admin.CommercialController.renderInvalidItems()
 GET         /commercial/custom-fields                                                               controllers.admin.CommercialController.renderCustomFields()
 GET         /commercial/adgrabber/order/:orderId                                                    controllers.admin.CommercialController.getLineItemsForOrder(orderId: String)
-GET         /commercial/adgrabber/previewUrls/:lineItemId/:section                                  controllers.admin.CommercialController.getCreativesListing(lineItemId: String, section: String)
 GET         /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.renderAdsDotText()
 POST        /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
 GET         /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()

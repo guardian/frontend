@@ -17,7 +17,7 @@ import conf.switches.Switches.{EnableNewServerSideABTestsHeader}
 
 import scala.concurrent.{ExecutionContext, Future}
 import experiments.Experiment
-import experiments.{ActiveExperiments, RolloutAddingServerABTestsToVaryHeader}
+import experiments.{ActiveExperiments}
 
 class GzipperConfig() extends GzipFilterConfig {
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {
@@ -116,23 +116,23 @@ class ABTestingFilter(implicit val mat: Materializer, executionContext: Executio
   private val abTestHeader = "X-GU-Server-AB-Tests"
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (
-      EnableNewServerSideABTestsHeader.isSwitchedOff || !ActiveExperiments.isParticipating(
-        RolloutAddingServerABTestsToVaryHeader,
-      )(request)
-    ) {
+    if (EnableNewServerSideABTestsHeader.isSwitchedOff) {
       nextFilter(request)
     } else {
       val r = ABTests.decorateRequest(request, abTestHeader)
       nextFilter(r).map { result =>
-        val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(abTestHeader)
-        val abTestHeaderValue = request.headers.get(abTestHeader).getOrElse("")
-        val responseHeaders =
-          Map(abTestHeader -> abTestHeaderValue, "Vary" -> varyHeaderValues.mkString(",")).filterNot { case (_, v) =>
-            v.isEmpty
-          }.toSeq
+        if (ABTests.allTests(r).isEmpty) {
+          result
+        } else {
+          val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(abTestHeader)
+          val abTestHeaderValue = request.headers.get(abTestHeader).getOrElse("")
+          val responseHeaders =
+            Map(abTestHeader -> abTestHeaderValue, "Vary" -> varyHeaderValues.mkString(",")).filterNot { case (_, v) =>
+              v.isEmpty
+            }.toSeq
 
-        result.withHeaders(responseHeaders: _*)
+          result.withHeaders(responseHeaders: _*)
+        }
       }
     }
   }
