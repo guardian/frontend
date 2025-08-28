@@ -12,9 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       DarkModeWeb,
-      DCRJavascriptBundle,
       TopAboveNav250Reservation,
-      RolloutAddingServerABTestsToVaryHeader,
       SourcepointConsentGeolocation,
       GoogleOneTap,
     )
@@ -49,29 +47,11 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object DCRJavascriptBundle
-    extends Experiment(
-      name = "dcr-javascript-bundle",
-      description = "DCAR JS bundle experiment to test replacing Preact with React",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
-      participationGroup = Perc0E,
-    )
-
 object TopAboveNav250Reservation
     extends Experiment(
       name = "top-above-nav-250-reservation",
       description = "Reserve 250px for top-above-nav instead of 90px",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 8, 29),
+      sellByDate = LocalDate.of(2025, 9, 12),
       participationGroup = Perc2A,
-    )
-
-object RolloutAddingServerABTestsToVaryHeader
-    extends Experiment(
-      name = "rollout-adding-server-ab-tests-to-vary-header",
-      description = "Rollout adding server AB tests to the vary header",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 9, 30),
-      participationGroup = Perc2B,
     )
