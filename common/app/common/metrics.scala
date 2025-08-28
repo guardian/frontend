@@ -138,6 +138,18 @@ object ContentApiMetrics {
 
 }
 
+object DfpApiMetrics {
+  val DfpSessionErrors = CountMetric(
+    "dfp-session-errors",
+    "Number of times the app failed to build a DFP session",
+  )
+
+  val DfpApiErrors = CountMetric(
+    "dfp-api-errors",
+    "Number of times a request to the DFP API results in an error",
+  )
+}
+
 object FaciaPressMetrics {
   val FrontPressCronSuccess = CountMetric(
     "front-press-cron-success",

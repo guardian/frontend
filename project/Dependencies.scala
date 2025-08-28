@@ -33,6 +33,7 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "29.0.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "5.9.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -84,6 +85,10 @@ object Dependencies {
   val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
   val pekkoSerializationJackson = "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion
   val pekkoActorTyped = "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion
+
+  // 16.07.2025: pinning commons-beanutils which is a transitive dependency of dfp-axis version `5.9.0`
+  // We can remove this when a future version of dfp-axis includes a more up-to-date version of this library
+  val commonsBeanutils = "commons-beanutils" % "commons-beanutils" % "1.11.0"
 
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
