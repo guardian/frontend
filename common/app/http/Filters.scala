@@ -121,18 +121,15 @@ class ABTestingFilter(implicit val mat: Materializer, executionContext: Executio
     } else {
       val r = ABTests.decorateRequest(request, abTestHeader)
       nextFilter(r).map { result =>
-        if (ABTests.allTests(r).isEmpty) {
-          result
-        } else {
-          val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(abTestHeader)
-          val abTestHeaderValue = request.headers.get(abTestHeader).getOrElse("")
-          val responseHeaders =
-            Map(abTestHeader -> abTestHeaderValue, "Vary" -> varyHeaderValues.mkString(",")).filterNot { case (_, v) =>
-              v.isEmpty
-            }.toSeq
+        val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(abTestHeader)
+        val abTestHeaderValue = request.headers.get(abTestHeader).getOrElse("")
+        val responseHeaders =
+          Map(abTestHeader -> abTestHeaderValue, "Vary" -> varyHeaderValues.mkString(",")).filterNot { case (_, v) =>
+            v.isEmpty
+          }.toSeq
 
-          result.withHeaders(responseHeaders: _*)
-        }
+        result.withHeaders(responseHeaders: _*)
+
       }
     }
   }
