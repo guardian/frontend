@@ -2,6 +2,7 @@ import _root_.commercial.targeting.TargetingLifecycle
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
+import common.dfp.DfpAgentLifecycle
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -41,6 +42,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
 
   override lazy val lifecycleComponents = List(
     wire[NewspaperBooksAndSectionsAutoRefresh],
+    wire[DfpAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[SwitchboardLifecycle],

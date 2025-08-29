@@ -5,6 +5,7 @@ import com.softwaremill.macwire._
 import commercial.controllers.{CommercialControllers, HealthCheck}
 import commercial.model.capi.CapiAgent
 import common.CloudWatchMetricsLifecycle
+import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -45,6 +46,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
   lazy val healthCheck = wire[HealthCheck]
 
   override lazy val lifecycleComponents = List(
+    wire[DfpAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[CachedHealthCheckLifeCycle],
