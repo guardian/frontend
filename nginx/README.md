@@ -17,13 +17,19 @@ $ brew bundle # install deps from the Brewfile
 
 You need to install:
 
-- [nginx](https://www.nginx.com/)
-- [dev-nginx](https://github.com/guardian/dev-nginx)
+-   [nginx](https://www.nginx.com/)
+-   [dev-nginx](https://github.com/guardian/dev-nginx)
 
 ## Configure Nginx with SSL
 
-1. Run `nginx/setup.sh`
-1. To setup Identity follow the [Identity README](../identity/README.md)
+```
+$ cd nginx
+$ ./setup.sh
+```
+
+### Identity
+
+To setup Identity follow the [Identity README](../identity/README.md)
 
 ## Access the Site
 

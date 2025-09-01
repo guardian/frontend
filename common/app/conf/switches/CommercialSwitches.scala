@@ -170,6 +170,17 @@ trait CommercialSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val disableChildDirected: Switch = Switch(
+    group = Commercial,
+    name = "disable-child-directed",
+    description = "Disable child-directed treatment for ads",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
 
 trait PrebidSwitches {
