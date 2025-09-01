@@ -59,4 +59,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-disable-child-directed",
+    "Test disabling child-directed treatment for ads",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 9, 19)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
