@@ -22,7 +22,7 @@ import play.filters.csrf.CSRFAddToken
 import services.newsletters.{GoogleRecaptchaValidationService, GoogleResponse, NewsletterSignupAgent}
 import utils.RemoteAddress
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{Future}
 import scala.concurrent.duration._
 
 object emailLandingPage extends StandalonePage {
@@ -33,7 +33,7 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
     email: String,
     listName: Option[String],
-    marketing: Option[Boolean],
+    marketing: Option[String],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -58,59 +58,28 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     extends LazyLogging
     with RemoteAddress {
 
-  def submit(form: EmailForm)(implicit request: Request[AnyContent], ec: ExecutionContext): Future[WSResponse] = {
+  def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
-    val isConsentEmailEndpoint = consentMailerUrl.endsWith("/consent-email")
-
-    val consentMailerPayload = if (isConsentEmailEndpoint) {
-      Json.obj(
-        "email" -> form.email,
-        "set-lists" -> List(form.listName),
-        "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
-        "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
-      )
-    } else {
-      Json.obj(
-        "email" -> form.email,
-        "set-lists" -> List(form.listName),
-        "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
-      )
-    }
+    val consentMailerPayload = JsObject(
+      Json
+        .obj(
+          "email" -> form.email,
+          "set-lists" -> List(form.listName),
+          "set-consents" -> form.marketing.map(_ => List("similar_guardian_products")),
+        )
+        .fields,
+    )
 
     val queryStringParameters = form.ref.map("ref" -> _).toList ++
       form.refViewId.map("refViewId" -> _).toList ++
       form.listName.map("listName" -> _).toList
 
     // FIXME: this should go via the identity api client / app
-    val mainResponse = wsClient
+    wsClient
       .url(consentMailerUrl)
       .withQueryStringParameters(queryStringParameters: _*)
       .addHttpHeaders(getHeaders(request): _*)
       .post(consentMailerPayload)
-
-    // Only make separate call if using /consent-signup (which doesn't support unset-consents)
-    if (!isConsentEmailEndpoint && form.marketing.contains(false)) {
-      val unsetConsentPayload = JsObject(
-        Json
-          .obj(
-            "email" -> form.email,
-            "unset-consents" -> List("similar_guardian_products"),
-          )
-          .fields,
-      )
-
-      val unsetConsentResponse = wsClient
-        .url(s"${Configuration.id.apiRoot}/consent-email")
-        .withQueryStringParameters(queryStringParameters: _*)
-        .addHttpHeaders(getHeaders(request): _*)
-        .post(unsetConsentPayload)
-
-      mainResponse.flatMap { response =>
-        unsetConsentResponse.map(_ => response)
-      }
-    } else {
-      mainResponse
-    }
   }
 
   def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
