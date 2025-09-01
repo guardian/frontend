@@ -22,7 +22,7 @@ import play.filters.csrf.CSRFAddToken
 import services.newsletters.{GoogleRecaptchaValidationService, GoogleResponse, NewsletterSignupAgent}
 import utils.RemoteAddress
 
-import scala.concurrent.{Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object emailLandingPage extends StandalonePage {
@@ -143,7 +143,7 @@ class EmailSignupController(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
-      "marketing" -> optional[Boolean](of[Boolean]),
+      "marketing" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
