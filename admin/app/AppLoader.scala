@@ -1,7 +1,5 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import dfp._
-import common.dfp._
 import common._
 import conf.switches.SwitchboardLifecycle
 import controllers.{AdminControllers, HealthCheck}
@@ -46,9 +44,7 @@ trait AdminServices extends I18nComponents {
   lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 
-  lazy val dfpApi: DfpApi = wire[DfpApi]
   lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
-  lazy val dataMapper: DataMapper = wire[DataMapper]
   lazy val parameterStoreService: ParameterStoreService = wire[ParameterStoreService]
   lazy val parameterStoreProvider: ParameterStoreProvider = wire[ParameterStoreProvider]
 }
@@ -63,18 +59,11 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
-    wire[DfpAgentLifecycle],
-    wire[CommercialDfpReportingLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
 
   lazy val appIdentity = ApplicationIdentity("admin")
-
-  override lazy val appMetrics = ApplicationMetrics(
-    DfpApiMetrics.DfpSessionErrors,
-    DfpApiMetrics.DfpApiErrors,
-  )
 
   def pekkoActorSystem: PekkoActorSystem
 
