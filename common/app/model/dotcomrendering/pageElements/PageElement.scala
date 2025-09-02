@@ -510,6 +510,28 @@ object LinkBlockElement {
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
 
+case class ProductBlockElement(
+    productName: String,
+    brandName: String,
+    primaryHeading: String,
+    secondaryHeading: String,
+    starRating: Int,
+    primaryProductUrl: String,
+    primaryCta: String,
+    primaryRetailer: String,
+    primaryPrice: String,
+    secondaryProductUrl: String,
+    secondaryCta: String,
+    secondaryRetailer: String,
+    secondaryPrice: String,
+    statistics: List[String],
+    image: String, //ToDo check type
+    content: String, //ToDo check type
+) extends PageElement
+object ProductBlockElement {
+  implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
+}
+                              )
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -897,6 +919,7 @@ object PageElement {
       case _: ListBlockElement            => true
       case _: TimelineBlockElement        => true
       case _: LinkBlockElement            => true
+      case _: ProductBlockElement         => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
