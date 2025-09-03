@@ -1,7 +1,7 @@
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import org.joda.time.{DateTime, DateTimeZone}
 
-package object dfp {
+package object gam {
 
   private def timeFormatter: DateTimeFormatter = {
     DateTimeFormat.forPattern("d MMM YYYY HH:mm:ss z")
