@@ -13,7 +13,7 @@ import {
 import { cookieIsExpiredOrMissing, timeInDaysFromNow } from './lib/cookie';
 
 // Persistence keys
-const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
+const USER_BENEFITS_EXPIRY_COOKIE = 'gu_user_benefits_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
@@ -67,7 +67,7 @@ const userHasData = () => {
 	const cookie =
 		getAdFreeCookie() ??
 		getCookie({ name: ACTION_REQUIRED_FOR_COOKIE }) ??
-		getCookie({ name: USER_FEATURES_EXPIRY_COOKIE }) ??
+		getCookie({ name: USER_BENEFITS_EXPIRY_COOKIE }) ??
 		getCookie({ name: PAYING_MEMBER_COOKIE }) ??
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) ??
 		getCookie({ name: ONE_OFF_CONTRIBUTION_DATE_COOKIE }) ??
@@ -102,7 +102,7 @@ const validateResponse = (
 
 const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 	setCookie({
-		name: USER_FEATURES_EXPIRY_COOKIE,
+		name: USER_BENEFITS_EXPIRY_COOKIE,
 		value: timeInDaysFromNow(1),
 	});
 	setCookie({
@@ -143,7 +143,7 @@ const persistResponse = (JsonResponse: UserFeaturesResponse) => {
 
 const deleteOldData = (): void => {
 	removeCookie({ name: AD_FREE_USER_COOKIE });
-	removeCookie({ name: USER_FEATURES_EXPIRY_COOKIE });
+	removeCookie({ name: USER_BENEFITS_EXPIRY_COOKIE });
 	removeCookie({ name: PAYING_MEMBER_COOKIE });
 	removeCookie({ name: RECURRING_CONTRIBUTOR_COOKIE });
 	removeCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
@@ -182,7 +182,7 @@ const requestNewData = () => {
 };
 
 const featuresDataIsOld = () =>
-	cookieIsExpiredOrMissing(USER_FEATURES_EXPIRY_COOKIE);
+	cookieIsExpiredOrMissing(USER_BENEFITS_EXPIRY_COOKIE);
 
 const userNeedsNewFeatureData = (): boolean =>
 	featuresDataIsOld() || (isDigitalSubscriber() && !adFreeDataIsPresent());
@@ -357,8 +357,7 @@ const fakeOneOffContributor = (): void => {
 	});
 };
 
-const isAdFreeUser = (): boolean =>
-	isDigitalSubscriber() || adFreeDataIsPresent();
+const isAdFreeUser = (): boolean => adFreeDataIsPresent();
 
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {
