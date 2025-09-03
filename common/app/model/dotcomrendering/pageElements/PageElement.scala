@@ -514,18 +514,18 @@ case class ProductBlockElement(
     productName: String,
     brandName: String,
     primaryHeading: String,
-    secondaryHeading: String,
-    starRating: Int,
+    secondaryHeading: Option[String],
+    starRating: Option[Int],
     primaryProductUrl: String,
     primaryCta: String,
     primaryRetailer: String,
-    primaryPrice: String,
+    primaryPrice: String, //ToDo check type
     secondaryProductUrl: String,
-    secondaryCta: String,
-    secondaryRetailer: String,
-    secondaryPrice: String,
+    secondaryCta: Option[String],
+    secondaryRetailer: Option[String],
+    secondaryPrice: Option[String], //ToDo check type
     statistics: List[String],
-    image: String, //ToDo check type
+    image: Option[String], //ToDo check type
     content: String, //ToDo check type
 ) extends PageElement
 object ProductBlockElement {
@@ -1553,6 +1553,30 @@ object PageElement {
             ),
           )
         }.toList
+
+      case Product =>
+        element.productTypeData
+          .map(d =>
+            ProductBlockElement(
+              d.productName,
+              d.brandName,
+              d.primaryHeading,
+              d.secondaryHeading,
+              d.starRating,
+              d.primaryProductUrl,
+              d.primaryCta,
+              d.primaryRetailer,
+              d.primaryPrice,
+              d.secondaryProductUrl,
+              d.secondaryCta,
+              d.secondaryRetailer,
+              d.secondaryPrice,
+              d.statistics,
+              d.image,
+              d.content,
+            ),
+          )
+          .toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
