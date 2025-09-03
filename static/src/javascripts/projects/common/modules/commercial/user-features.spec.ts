@@ -47,7 +47,7 @@ const getAuthStatus = getAuthStatus_ as jest.MockedFunction<
 >;
 
 const PERSISTENCE_KEYS = {
-	USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
+	USER_BENEFITS_EXPIRY_COOKIE: 'gu_user_benefits_expiry',
 	PAYING_MEMBER_COOKIE: 'gu_paying_member',
 	RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
 	AD_FREE_USER_COOKIE: 'GU_AF1',
@@ -80,7 +80,7 @@ const setAllFeaturesData = (opts: { isExpired: boolean }) => {
 		adFreeExpiryDate.getTime().toString(),
 	);
 	addCookie(
-		PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+		PERSISTENCE_KEYS.USER_BENEFITS_EXPIRY_COOKIE,
 		expiryDate.getTime().toString(),
 	);
 	addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'test');
@@ -90,7 +90,7 @@ const deleteAllFeaturesData = () => {
 	removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
-	removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+	removeCookie(PERSISTENCE_KEYS.USER_BENEFITS_EXPIRY_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
 	removeCookie(PERSISTENCE_KEYS.HIDE_SUPPORT_MESSAGING_COOKIE);
@@ -136,7 +136,7 @@ describe('Refreshing the features data', () => {
 			).toBe('true');
 			expect(
 				getCookie({
-					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+					name: PERSISTENCE_KEYS.USER_BENEFITS_EXPIRY_COOKIE,
 				}),
 			).toEqual(expect.stringMatching(/\d{13}/));
 			expect(
@@ -193,7 +193,7 @@ describe('Refreshing the features data', () => {
 			).toBeNull();
 			expect(
 				getCookie({
-					name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+					name: PERSISTENCE_KEYS.USER_BENEFITS_EXPIRY_COOKIE,
 				}),
 			).toBeNull();
 		});
@@ -230,6 +230,15 @@ describe('The isAdFreeUser getter', () => {
 		jest.resetAllMocks();
 		isUserLoggedIn.mockResolvedValue(false);
 		expect(isAdFreeUser()).toBe(false);
+	});
+
+	it('Is true when the user is logged in with the ad free cookie', () => {
+		jest.resetAllMocks();
+		const oneDayInMillis = 24 * 60 * 60 * 1000;
+		const cookieExpiry = new Date(Date.now() + (oneDayInMillis * 2))
+		addCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, cookieExpiry.getTime(), 2, true);
+		isUserLoggedIn.mockResolvedValue(true);
+		expect(isAdFreeUser()).toBe(true);
 	});
 });
 
@@ -451,7 +460,7 @@ describe('Storing new feature data', () => {
 	it('Puts an expiry date in an accompanying cookie', () =>
 		refresh().then(() => {
 			const expiryDate = getCookie({
-				name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+				name: PERSISTENCE_KEYS.USER_BENEFITS_EXPIRY_COOKIE,
 			});
 			expect(expiryDate).toBeTruthy();
 			// @ts-expect-error -- we’re testing it
@@ -461,7 +470,7 @@ describe('Storing new feature data', () => {
 	it('The expiry date is in the future', () =>
 		refresh().then(() => {
 			const expiryDateString = getCookie({
-				name: PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+				name: PERSISTENCE_KEYS.USER_BENEFITS_EXPIRY_COOKIE,
 			});
 			// @ts-expect-error -- we’re testing it
 			const expiryDateEpoch = parseInt(expiryDateString, 10);
