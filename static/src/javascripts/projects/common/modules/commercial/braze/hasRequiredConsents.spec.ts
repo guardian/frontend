@@ -98,6 +98,7 @@ describe('hasRequiredConsents', () => {
 			mockOnConsentChangeResult = {
 				aus: {
 					personalisedAdvertising: true,
+					signalStatus: 'ready'
 				},
 				canTarget: true,
 				framework: 'aus',
@@ -112,6 +113,7 @@ describe('hasRequiredConsents', () => {
 			mockOnConsentChangeResult = {
 				aus: {
 					personalisedAdvertising: false,
+					signalStatus: 'ready'
 				},
 				canTarget: false,
 				framework: 'aus',
