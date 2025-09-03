@@ -5,6 +5,7 @@ import com.gu.commercial.branding.{Branding, BrandingType, Dimensions, Logo => C
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import layout.{ContentCard, DiscussionSettings}
+import model.dotcomrendering.DotcomRenderingUtils.withoutNull
 import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import model.pressed.PressedContent
 import play.api.libs.json.{Json, OWrites, Writes}
@@ -33,6 +34,8 @@ case class Trail(
     avatarUrl: Option[String],
     branding: Option[Branding],
     discussion: DiscussionSettings,
+    trailText: Option[String] = None,
+    galleryCount: Option[Int] = None,
 )
 
 object Trail {
@@ -53,7 +56,35 @@ object Trail {
 
   implicit val discussionWrites: OWrites[DiscussionSettings] = Json.writes[DiscussionSettings]
 
-  implicit val OnwardItemWrites: OWrites[Trail] = Json.writes[Trail]
+  implicit val OnwardItemWrites: OWrites[Trail] = OWrites { trail =>
+    val jsObject = Json.obj(
+      "url" -> trail.url,
+      "linkText" -> trail.linkText,
+      "showByline" -> trail.showByline,
+      "byline" -> trail.byline,
+      "masterImage" -> trail.masterImage,
+      "image" -> trail.image,
+      "carouselImages" -> trail.carouselImages,
+      "ageWarning" -> trail.ageWarning,
+      "isLiveBlog" -> trail.isLiveBlog,
+      "pillar" -> trail.pillar,
+      "designType" -> trail.designType,
+      "format" -> trail.format,
+      "webPublicationDate" -> trail.webPublicationDate,
+      "headline" -> trail.headline,
+      "mediaType" -> trail.mediaType,
+      "shortUrl" -> trail.shortUrl,
+      "kickerText" -> trail.kickerText,
+      "starRating" -> trail.starRating,
+      "avatarUrl" -> trail.avatarUrl,
+      "branding" -> trail.branding,
+      "discussion" -> trail.discussion,
+      "trailText" -> trail.trailText,
+      "galleryCount" -> trail.galleryCount,
+    )
+
+    withoutNull(jsObject)
+  }
 
   private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
@@ -133,6 +164,7 @@ object Trail {
       avatarUrl = contentCardToAvatarUrl(contentCard),
       branding = contentCard.branding,
       discussion = contentCard.discussionSettings,
+      trailText = contentCard.trailText,
     )
   }
 
@@ -168,6 +200,8 @@ object Trail {
       avatarUrl = None,
       branding = content.branding(Edition(request)),
       discussion = DiscussionSettings.fromTrail(content),
+      trailText = content.card.trailText,
+      galleryCount = content.card.galleryCount,
     )
   }
 }

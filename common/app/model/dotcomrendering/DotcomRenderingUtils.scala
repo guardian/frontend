@@ -241,6 +241,13 @@ object DotcomRenderingUtils {
     }
   }
 
+  def withoutNull(json: JsObject): JsObject = {
+    json match {
+      case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
+      case other            => other
+    }
+  }
+
   def withoutDeepNull(json: JsValue): JsValue = {
     json match {
       case JsObject(fields) =>
