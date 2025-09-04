@@ -901,10 +901,17 @@ object AffiliateLinksCleaner {
     html
   }
 
-  def replaceUrlInLink(url: Option[String], pageUrl: String, addAffiliateLinks: Boolean): Option[String] = {
+  def replaceUrlInLink(
+      url: Option[String],
+      pageUrl: String,
+      addAffiliateLinks: Boolean,
+      isTheFilterUS: Boolean,
+  ): Option[String] = {
     url match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
-        Some(linkToSkimLink(link, pageUrl, skimlinksId))
+        // TODO - use skimlinks ID from parameter store here
+        if (isTheFilterUS) Some(linkToSkimLink(link, pageUrl, "US_SKIMLINKS_ID"))
+        else Some(linkToSkimLink(link, pageUrl, skimlinksId))
       case _ => url
     }
   }
