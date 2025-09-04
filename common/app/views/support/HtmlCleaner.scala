@@ -867,6 +867,7 @@ case class AffiliateLinksCleaner(
     showAffiliateLinks: Option[Boolean],
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
+    isTheFilterUS: Boolean,
 ) extends HtmlCleaner
     with GuLogging {
 
@@ -879,7 +880,12 @@ case class AffiliateLinksCleaner(
         tags,
       )
     ) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
+      if (isTheFilterUS) {
+        // TODO - use US ID from parameter store here
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, "US ID HERE")
+      } else {
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
+      }
     } else document
   }
 }
