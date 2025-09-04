@@ -7,7 +7,7 @@ object Dependencies {
   val awsVersion = "1.12.789"
   val awsSdk2Version = "2.32.33"
   val capiVersion = "35.0.0"
-  val faciaVersion = "22.0.0"
+  val faciaVersion = "23.0.0-PREVIEW.update-etag-caching.2025-09-04T1455.0497ec16"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -18,7 +18,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
   val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "11.0.0-PREVIEW.rearrange-executioncontexts.2025-09-04T1417.81632f48"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
