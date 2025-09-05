@@ -1,6 +1,6 @@
 package agents
 
-import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.model.v1.{Content, ElementType}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
 import common._
 import contentapi.ContentApiClient
@@ -123,6 +123,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       avatarUrl = None,
       branding = None,
       discussion = DiscussionSettings.fromTrail(FaciaContentConvert.contentToFaciaContent(content)),
+      trailText = content.fields.flatMap(_.trailText),
+      galleryCount =
+        content.elements.map(_.count(el => el.`type` == ElementType.Image && el.relation == "gallery")).filter(_ > 0),
     )
   }
 

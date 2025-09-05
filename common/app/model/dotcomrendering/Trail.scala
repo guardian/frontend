@@ -34,8 +34,8 @@ case class Trail(
     avatarUrl: Option[String],
     branding: Option[Branding],
     discussion: DiscussionSettings,
-    trailText: Option[String] = None,
-    galleryCount: Option[Int] = None,
+    trailText: Option[String],
+    galleryCount: Option[Int],
 )
 
 object Trail {
@@ -56,7 +56,7 @@ object Trail {
 
   implicit val discussionWrites: OWrites[DiscussionSettings] = Json.writes[DiscussionSettings]
 
-  implicit val OnwardItemWrites: OWrites[Trail] = OWrites { trail =>
+  implicit val OnwardItemWrites: Writes[Trail] = Writes { trail =>
     val jsObject = Json.obj(
       "url" -> trail.url,
       "linkText" -> trail.linkText,
@@ -129,44 +129,6 @@ object Trail {
       masterImage <- trailPicture.masterImage
       url <- masterImage.url
     } yield url
-
-  def contentCardToTrail(contentCard: ContentCard): Option[Trail] = {
-    for {
-      properties <- contentCard.properties
-      maybeContent <- properties.maybeContent
-      metadata = maybeContent.metadata
-      pillar <- metadata.pillar
-      url <- properties.webUrl
-      headline = contentCard.header.headline
-      isLiveBlog = properties.isLiveBlog
-      showByline = properties.showByline
-      webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
-      shortUrl <- contentCard.shortUrl
-    } yield Trail(
-      url = url,
-      linkText = "",
-      showByline = showByline,
-      byline = contentCard.byline.map(x => x.get),
-      masterImage = getMasterUrl(maybeContent.trail.trailPicture),
-      image = maybeContent.trail.thumbnailPath,
-      carouselImages = getImageSources(maybeContent.trail.trailPicture),
-      ageWarning = None,
-      isLiveBlog = isLiveBlog,
-      pillar = TrailUtils.normalisePillar(Some(pillar)),
-      designType = metadata.designType.toString,
-      format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
-      webPublicationDate = webPublicationDate,
-      headline = headline,
-      mediaType = contentCard.mediaType.map(x => x.toString),
-      shortUrl = shortUrl,
-      kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
-      starRating = contentCard.starRating,
-      avatarUrl = contentCardToAvatarUrl(contentCard),
-      branding = contentCard.branding,
-      discussion = contentCard.discussionSettings,
-      trailText = contentCard.trailText,
-    )
-  }
 
   def pressedContentToTrail(content: PressedContent)(implicit
       request: RequestHeader,
