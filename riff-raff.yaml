@@ -51,6 +51,8 @@ deployments:
     template: frontend
   preview:
     template: frontend
+    parameters:
+      asgMigrationInProgress: true
   rss:
     template: frontend
   sport:
