@@ -1,14 +1,18 @@
 package frontpress
 
-import java.nio.ByteBuffer
-import com.amazonaws.handlers.AsyncHandler
-import com.amazonaws.services.kinesis.{AmazonKinesisAsync, AmazonKinesisAsyncClient}
-import com.amazonaws.services.kinesis.model.{PutRecordRequest, PutRecordResult}
 import com.gu.facia.api.ApiError
 import conf.Configuration
 import conf.switches.Switches.FaciaPressStatusNotifications
 import play.api.Logger
 import play.api.libs.json.{Json, OFormat}
+import software.amazon.awssdk.core.SdkBytes
+import software.amazon.awssdk.services.kinesis.model.PutRecordRequest
+import software.amazon.awssdk.services.kinesis.{KinesisAsyncClient, KinesisAsyncClientBuilder}
+import utils.AWSv2
+
+import scala.concurrent.ExecutionContext
+import scala.jdk.FutureConverters._
+import scala.util.{Failure, Success}
 
 object StatusNotificationMessage {
   implicit val jsonFormat: OFormat[StatusNotificationMessage] = Json.format[StatusNotificationMessage]
@@ -24,24 +28,10 @@ object StatusNotification {
   lazy val log = Logger(getClass)
   lazy val partitionKey: String = "facia-tool-updates"
 
-  object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] {
-    def onError(exception: Exception): Unit = {
-      log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
-    }
-    def onSuccess(request: PutRecordRequest, result: PutRecordResult): Unit = {
-      log.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
-    }
-  }
+  lazy val client: KinesisAsyncClient =
+    AWSv2.build[KinesisAsyncClient, KinesisAsyncClientBuilder](KinesisAsyncClient.builder())
 
-  lazy val client: AmazonKinesisAsync = {
-    AmazonKinesisAsyncClient
-      .asyncBuilder()
-      .withCredentials(Configuration.aws.mandatoryCredentials)
-      .withRegion(conf.Configuration.aws.region)
-      .build()
-  }
-
-  def notifyFailedJob(front: String, isLive: Boolean, reason: ApiError): Unit = {
+  def notifyFailedJob(front: String, isLive: Boolean, reason: ApiError)(implicit ec: ExecutionContext): Unit =
     putMessage(
       StatusNotificationMessage(
         status = "error",
@@ -50,30 +40,36 @@ object StatusNotification {
         message = Some(s"${reason.cause} ${reason.message}"),
       ),
     )
-  }
 
-  def notifyCompleteJob(front: String, isLive: Boolean): Unit = {
-    putMessage(
-      StatusNotificationMessage(
-        status = "ok",
-        front = front,
-        isLive = isLive,
-        message = None,
-      ),
-    )
-  }
+  def notifyCompleteJob(front: String, isLive: Boolean)(implicit ec: ExecutionContext): Unit = putMessage(
+    StatusNotificationMessage(
+      status = "ok",
+      front = front,
+      isLive = isLive,
+      message = None,
+    ),
+  )
 
-  def putMessage(message: StatusNotificationMessage): Unit = {
+  def putMessage(message: StatusNotificationMessage)(implicit ec: ExecutionContext): Unit = {
     if (FaciaPressStatusNotifications.isSwitchedOn) {
       Configuration.faciatool.frontPressStatusNotificationStream match {
         case Some(streamName) =>
-          client.putRecordAsync(
-            new PutRecordRequest()
-              .withStreamName(streamName)
-              .withPartitionKey(partitionKey)
-              .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
-            KinesisLoggingAsyncHandler,
-          )
+          client
+            .putRecord(
+              PutRecordRequest
+                .builder()
+                .streamName(streamName)
+                .partitionKey(partitionKey)
+                .data(SdkBytes.fromUtf8String(Json.toJson(message).toString()))
+                .build(),
+            )
+            .asScala
+            .onComplete {
+              case Success(_) =>
+                log.info(s"Kinesis status notification sent to stream:$streamName")
+              case Failure(exception) =>
+                log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
+            }
         case None => log.info("Kinesis status notification not configured.")
       }
     }
