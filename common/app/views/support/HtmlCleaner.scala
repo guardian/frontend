@@ -882,7 +882,7 @@ case class AffiliateLinksCleaner(
     ) {
       if (isTheFilterUS) {
         // TODO - use US ID from parameter store here
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, "US ID HERE")
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksUSId)
       } else {
         AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
       }
@@ -915,8 +915,7 @@ object AffiliateLinksCleaner {
   ): Option[String] = {
     url match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
-        // TODO - use skimlinks ID from parameter store here
-        if (isTheFilterUS) Some(linkToSkimLink(link, pageUrl, "US_SKIMLINKS_ID"))
+        if (isTheFilterUS) Some(linkToSkimLink(link, pageUrl, skimlinksUSId))
         else Some(linkToSkimLink(link, pageUrl, skimlinksId))
       case _ => url
     }

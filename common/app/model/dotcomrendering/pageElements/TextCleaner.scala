@@ -20,8 +20,7 @@ object TextCleaner {
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       links.foreach(el => {
         if (isTheFilterUS) {
-          // TODO get US skimlinks ID from parameter store
-          el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, "US_SKIMLINKS_ID"))
+          el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksUSId))
             .attr("rel", "sponsored")
         } else {
           el.attr(
@@ -174,8 +173,7 @@ case class GalleryAffiliateLinksCleaner(
   override def clean(document: Document): Document = {
     if (shouldAddAffiliateLinks) {
       if (isTheFilterUS) {
-        // TODO - use US id from parameter store
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, "US_SKIMLINKS_ID")
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksUSId)
       } else {
         AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksId)
       }
