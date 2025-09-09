@@ -20,8 +20,10 @@ object TextCleaner {
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       links.foreach(el => {
         if (isTheFilterUS) {
-          el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksUSId))
-            .attr("rel", "sponsored")
+          el.attr(
+            "href",
+            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksUSId),
+          ).attr("rel", "sponsored")
         } else {
           el.attr(
             "href",
