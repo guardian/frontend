@@ -60,6 +60,7 @@ class DevParametersHttpRequestHandler(
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
     "dcr", // force page to render in DCR
     "_sp_env", // allow testing of Sourcepoint stage campaign
+    "_sp_geo_override", // allow Sourcepoint geolocation override for testing purposes
   )
 
   val commercialParams = Seq(
