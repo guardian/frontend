@@ -2936,7 +2936,7 @@ __metadata:
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:0.0.0-canary-20250904092658"
+    "@guardian/libs": "npm:0.0.0-canary-20250910081928"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3091,9 +3091,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:0.0.0-canary-20250904092658":
-  version: 0.0.0-canary-20250904092658
-  resolution: "@guardian/libs@npm:0.0.0-canary-20250904092658"
+"@guardian/libs@npm:0.0.0-canary-20250910081928":
+  version: 0.0.0-canary-20250910081928
+  resolution: "@guardian/libs@npm:0.0.0-canary-20250910081928"
   dependencies:
     "@guardian/ophan-tracker-js": "npm:2.2.10"
   peerDependencies:
@@ -3103,7 +3103,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/73cb25472a9a0a8efd7d777e1108f9751276bd95b2c73209ec38e0377365c862645db38079692b93b4842dcd9ed2edcab35586ab3effbc8813e8a1130ef25e3b
+  checksum: 10c0/a6e5857a3fe9c2a4bb765b8fd7aca900255942cdf09abe94e390f12eedcc88893e32e0140ed28411d703c39cc4f7c8a09106c2b85ba2ae62dfc7cef6474c1faa
   languageName: node
   linkType: hard
 
