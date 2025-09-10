@@ -93,7 +93,7 @@ object FooterLinks {
   def taxStrategy(edition: String): FooterLink =
     FooterLink(
       "Tax strategy",
-      "https://uploads.guim.co.uk/2024/08/27/TAX_STRATEGY_FOR_THE_YEAR_ENDED_31_MARCH_2025.pdf",
+      "https://uploads.guim.co.uk/2025/09/05/Tax_strategy_for_the_year_ended_31_March_2025.pdf",
       s"${edition} : footer : tax strategy",
     )
   def facebook(edition: String): FooterLink =
@@ -116,7 +116,7 @@ object FooterLinks {
     allWriters("uk"),
     FooterLink(
       "Modern Slavery Act",
-      "https://uploads.guim.co.uk/2024/09/04/Modern_Slavery_Statement_2024_.pdf",
+      "https://uploads.guim.co.uk/2025/09/05/Modern_Slavery_Statement_2025.pdf",
       "uk : footer : modern slavery act statement",
     ),
     taxStrategy("uk"),
