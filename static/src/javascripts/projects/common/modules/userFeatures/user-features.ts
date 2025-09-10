@@ -4,10 +4,11 @@
  * https://github.com/guardian/commercial/blob/1a429d6be05657f20df4ca909df7d01a5c3d7402/src/lib/user-features.ts
  */
 
-// import { getAuthStatus, isUserLoggedInOktaRefactor } from '../../lib/identity';
 import { getAuthStatus, isUserLoggedIn } from '../identity/api';
+import { AD_FREE_USER_COOKIE } from './cookies/adFree';
 import { ALLOW_REJECT_ALL_COOKIE } from './cookies/allowRejectAll';
 import { createOrRenewCookie } from './cookies/cookieHelpers';
+import { HIDE_SUPPORT_MESSAGING_COOKIE } from './cookies/hideSupportMessaging';
 import {
 	USER_BENEFITS_EXPIRY_COOKIE,
 	userBenefitsDataNeedsRefreshing,
@@ -41,8 +42,14 @@ const requestNewData = async () => {
 
 const persistResponse = (userBenefitsResponse: UserBenefits) => {
 	createOrRenewCookie(USER_BENEFITS_EXPIRY_COOKIE);
+	if (userBenefitsResponse.hideSupportMessaging) {
+		createOrRenewCookie(HIDE_SUPPORT_MESSAGING_COOKIE);
+	}
 	if (userBenefitsResponse.allowRejectAll) {
 		createOrRenewCookie(ALLOW_REJECT_ALL_COOKIE);
+	}
+	if (userBenefitsResponse.adFree) {
+		createOrRenewCookie(AD_FREE_USER_COOKIE);
 	}
 };
 
