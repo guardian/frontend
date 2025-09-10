@@ -3107,19 +3107,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:25.3.0":
-  version: 25.3.0
-  resolution: "@guardian/libs@npm:25.3.0"
-  dependencies:
-    "@guardian/ophan-tracker-js": "npm:2.2.10"
+"@guardian/libs@npm:22.5.0":
+  version: 22.5.0
+  resolution: "@guardian/libs@npm:22.5.0"
   peerDependencies:
-    "@guardian/ophan-tracker-js": ^2.2.10
     tslib: ^2.6.2
     typescript: ~5.5.2
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/655513a6d4bda1c14355aa353ab2edbc767d8495e5682196539b026ec1bbe57064904eeeabafaffc3a86807d394f09dfacd9a6fe011378ae27a11c710ce8da17
+  checksum: 10c0/6199ef6b64949328d4560e44f645cd0211a0641da6ecd3193aaee034558a44ca25ab93ef54d7bdac6105cd96370115d013658da9cd90367d1eb59a18a6026f33
   languageName: node
   linkType: hard
 
