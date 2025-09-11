@@ -4,14 +4,12 @@ import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import com.gu.contentapi.client.model.v1.Content
 import experiments.ActiveExperiments
-import layout.ContentCard
 import model.{PressedPage, RelatedContentItem}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
+import views.support.{CamelCase, JavaScriptPage, Commercial}
 import ab.ABTests
 
 case class DotcomFrontsRenderingDataModel(
@@ -94,7 +92,7 @@ object DotcomFrontsRenderingDataModel {
       config = combinedConfig,
       commercialProperties = commercialProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
-      isAdFreeUser = views.support.Commercial.isAdFree(request),
+      isAdFreeUser = Commercial.isAdFree(request),
       isNetworkFront = page.isNetworkFront,
       mostViewed = mostViewed.map(content => Trail.pressedContentToTrail(content.faciaContent)(request)),
       deeplyRead = deeplyRead,
