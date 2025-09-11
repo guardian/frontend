@@ -16,9 +16,19 @@ object ActiveExperiments extends ExperimentsDefinition {
       SourcepointConsentGeolocation,
       GoogleOneTap,
       OpinionNoAvatar,
+      HideTrails,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object HideTrails
+    extends Experiment(
+      name = "hide-trails",
+      description = "Hide card trails on desktop on network fronts",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0A,
+    )
 
 object SourcepointConsentGeolocation
     extends Experiment(
