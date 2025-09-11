@@ -22,10 +22,11 @@ object LoadBalancer extends GuLogging {
   private val loadBalancers = Seq(
     LoadBalancer("frontend-PROD-router-ELB", "Router", "frontend-router"),
     LoadBalancer(
-      "frontend-PROD-article-ELB",
+      "app/fronte-LoadB-xXnA5yhOxB7G/cf797b52302fc833",
       "Article",
       "frontend-article",
       testPath = Some("/uk-news/2014/jan/21/drax-protesters-convictions-quashed-police-spy-mark-kennedy"),
+      targetGroup = Some("targetgroup/fronte-Targe-YYBO08CFBLH9/19192d72461d4042"),
     ),
     LoadBalancer(
       "app/fronte-LoadB-qTAetyigfHhb/f4371301ea282f8a",
