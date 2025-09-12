@@ -2,11 +2,6 @@
 
 @import views.html.fragments.containers.facia_cards.containerScaffold
 
-@containerScaffold("Cookies sent via HTTP request", "http-cookies") {
-    <ul>
-        <li>GU_AF1: @request.cookies.find(_.name == "GU_AF1").getOrElse("unset")</li>
-        <li>gu_user_benefits_expiry: @request.cookies.find(_.name == "gu_user_benefits_expiry").getOrElse("unset")</li>
-        <li>gu_hide_support_messaging: @request.cookies.find(_.name == "gu_hide_support_messaging").getOrElse("unset")</li>
-        <li>gu_allow_reject_all: @request.cookies.find(_.name == "gu_allow_reject_all").getOrElse("unset")</li>
-    </ul>
+@containerScaffold("User benefits cookies", "user-benefits-cookies") {
+    <div id="diagnostics-cookies">Loading&hellip;</div>
 }

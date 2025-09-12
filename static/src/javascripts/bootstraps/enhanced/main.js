@@ -278,6 +278,19 @@ const bootEnhanced = () => {
                 );
             }
 
+			if (config.get('page.isDiagnosticsPage')) {
+				require.ensure(
+					[],
+					require => {
+						bootstrapContext(
+							'browser-diagnostics',
+							require('bootstraps/enhanced/browser-diagnostics').init
+						);
+					},
+					'browser-diagnostics'
+				);
+			}
+
             if (config.get('page.section') === 'newsletter-signup-page') {
                 require.ensure(
                     [],
