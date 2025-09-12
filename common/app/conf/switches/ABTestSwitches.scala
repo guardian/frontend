@@ -44,7 +44,7 @@ trait ABTestSwitches {
     "Testing the Admiral integration for adblock recovery on theguardian.com",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 9, 17)),
+    sellByDate = Some(LocalDate.of(2025, 9, 24)),
     exposeClientSide = true,
     highImpact = false,
   )
