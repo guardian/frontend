@@ -57,6 +57,15 @@ object TopAboveNav250Reservation
       participationGroup = Perc2A,
     )
 
+object LabsContainerRedesign
+    extends Experiment(
+      name = "labs-container-redesign",
+      description = "Redesign of the labs container on fronts",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 11, 5),
+      participationGroup = Perc0E,
+    )
+
 object HideTrails
     extends Experiment(
       name = "hide-trails",
