@@ -20,15 +20,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object HideTrails
-    extends Experiment(
-      name = "hide-trails",
-      description = "Hide card trails on desktop on network fronts",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0A,
-    )
-
 object SourcepointConsentGeolocation
     extends Experiment(
       name = "sp-consent-geolocation",
@@ -64,4 +55,13 @@ object TopAboveNav250Reservation
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 9, 26),
       participationGroup = Perc2A,
+    )
+
+object HideTrails
+    extends Experiment(
+      name = "hide-trails",
+      description = "Hide card trails on desktop on network fronts",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc5A,
     )
