@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       TopAboveNav250Reservation,
+      LabsContainerRedesign,
       SourcepointConsentGeolocation,
       GoogleOneTap,
       HideTrails,
