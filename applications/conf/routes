@@ -64,6 +64,10 @@ OPTIONS    /story-questions/answers/signup                                      
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
+
+# Cookies
+GET        /browser-diagnostics                                                 controllers.DiagnosticsController.renderDiagnosticsPage()
+
 # opt-in/out routes
 GET        /opt/$choice<in|out|delete>/:feature                                 controllers.OptInController.handle(feature, choice)
 GET        /opt/reset                                                           controllers.OptInController.reset()
