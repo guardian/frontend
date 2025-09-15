@@ -8,5 +8,6 @@ class DiagnosticsPageMetadata extends StandalonePage {
     section = Some(SectionId.fromId("Index")),
     webTitle = "Browser Diagnostics",
     javascriptConfigOverrides = Map("isDiagnosticsPage" -> JsBoolean(true)),
+    shouldGoogleIndex = false,
   )
 }
