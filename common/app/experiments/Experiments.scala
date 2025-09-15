@@ -15,7 +15,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       TopAboveNav250Reservation,
       SourcepointConsentGeolocation,
       GoogleOneTap,
-      OpinionNoAvatar,
       HideTrails,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -65,13 +64,4 @@ object TopAboveNav250Reservation
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 9, 26),
       participationGroup = Perc2A,
-    )
-
-object OpinionNoAvatar
-    extends Experiment(
-      name = "opinion-no-avatar",
-      description = "In the Opinion section on network fronts, replace the avatar with the card image",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc5A,
     )
