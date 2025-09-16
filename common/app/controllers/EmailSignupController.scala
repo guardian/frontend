@@ -33,7 +33,7 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
     email: String,
     listName: Option[String],
-    marketing: Option[String],
+    marketing: Option[Boolean],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -65,7 +65,8 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
         .obj(
           "email" -> form.email,
           "set-lists" -> List(form.listName),
-          "set-consents" -> form.marketing.map(_ => List("similar_guardian_products")),
+          "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
+          "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
         )
         .fields,
     )
@@ -143,7 +144,7 @@ class EmailSignupController(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
-      "marketing" -> optional[String](of[String]),
+      "marketing" -> optional[Boolean](of[Boolean]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),

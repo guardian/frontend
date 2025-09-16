@@ -44,7 +44,7 @@ trait ABTestSwitches {
     "Testing the Admiral integration for adblock recovery on theguardian.com",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 9, 17)),
+    sellByDate = Some(LocalDate.of(2025, 9, 24)),
     exposeClientSide = true,
     highImpact = false,
   )
@@ -55,18 +55,7 @@ trait ABTestSwitches {
     "This test is being used to test v9.46.0 of Prebid ahead of general upgrade.",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 9, 12)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
-    "ab-disable-child-directed",
-    "Test disabling child-directed treatment for ads",
-    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 9, 19)),
+    sellByDate = Some(LocalDate.of(2025, 9, 30)),
     exposeClientSide = true,
     highImpact = false,
   )
