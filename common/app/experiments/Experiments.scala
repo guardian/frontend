@@ -15,20 +15,10 @@ object ActiveExperiments extends ExperimentsDefinition {
       TopAboveNav250Reservation,
       SourcepointConsentGeolocation,
       GoogleOneTap,
-      OpinionNoAvatar,
       HideTrails,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object HideTrails
-    extends Experiment(
-      name = "hide-trails",
-      description = "Hide card trails on desktop on network fronts",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0A,
-    )
 
 object SourcepointConsentGeolocation
     extends Experiment(
@@ -46,7 +36,7 @@ object GoogleOneTap
       description = "Signing into the Guardian with Google One Tap",
       owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0C,
+      participationGroup = Perc10A,
     )
 
 object DarkModeWeb
@@ -63,14 +53,14 @@ object TopAboveNav250Reservation
       name = "top-above-nav-250-reservation",
       description = "Reserve 250px for top-above-nav instead of 90px",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 9, 12),
+      sellByDate = LocalDate.of(2025, 9, 26),
       participationGroup = Perc2A,
     )
 
-object OpinionNoAvatar
+object HideTrails
     extends Experiment(
-      name = "opinion-no-avatar",
-      description = "In the Opinion section on network fronts, replace the avatar with the card image",
+      name = "hide-trails",
+      description = "Hide card trails on desktop on network fronts",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 12, 1),
       participationGroup = Perc5A,
