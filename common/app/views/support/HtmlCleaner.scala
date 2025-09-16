@@ -881,7 +881,6 @@ case class AffiliateLinksCleaner(
       )
     ) {
       if (isTheFilterUS) {
-        // TODO - use US ID from parameter store here
         AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksUSId)
       } else {
         AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
