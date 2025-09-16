@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       SourcepointConsentGeolocation,
       GoogleOneTap,
       HideTrails,
+      ConsentOrPayEurope,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -64,4 +65,13 @@ object HideTrails
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 12, 1),
       participationGroup = Perc5A,
+    )
+
+object ConsentOrPayEurope
+    extends Experiment(
+      name = "consent-or-pay-europe",
+      description = "Releasing Consent or Pay to Europe",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0A,
     )
