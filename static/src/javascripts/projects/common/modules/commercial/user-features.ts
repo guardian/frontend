@@ -357,8 +357,6 @@ const fakeOneOffContributor = (): void => {
 	});
 };
 
-const isAdFreeUser = (): boolean => adFreeDataIsPresent();
-
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {
 	const cookie = getCookie({ name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE });
@@ -386,7 +384,6 @@ const _ = {
 export {
 	_,
 	accountDataUpdateWarning,
-	isAdFreeUser,
 	isPayingMember,
 	isRecurringContributor,
 	setAdFreeCookie,

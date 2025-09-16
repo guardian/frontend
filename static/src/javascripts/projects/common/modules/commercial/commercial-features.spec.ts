@@ -6,15 +6,12 @@
 
 import { commercialFeatures } from './commercial-features';
 import type { CommercialFeaturesConstructor } from './commercial-features';
-import { isAdFreeUser } from './user-features';
+import { isAdFreeUser } from '../userFeatures/cookies/adFree';
 
 const CommercialFeatures =
 	commercialFeatures.constructor as CommercialFeaturesConstructor;
 
-jest.mock('./user-features', () => ({
-	isPayingMember: jest.fn(),
-	isRecentOneOffContributor: jest.fn(),
-	shouldHideSupportMessaging: jest.fn(),
+jest.mock('../userFeatures/cookies/adFree', () => ({
 	isAdFreeUser: jest.fn(),
 }));
 

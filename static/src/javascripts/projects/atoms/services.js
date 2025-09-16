@@ -3,7 +3,7 @@
 
 import ophan from 'ophan/ng';
 import fastdom from 'fastdom';
-import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import { isAdFreeUser } from 'common/modules/userFeatures/cookies/adFree';
 import {
     onConsentChange,
     getConsentFor,

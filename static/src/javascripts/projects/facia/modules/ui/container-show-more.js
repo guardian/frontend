@@ -9,7 +9,7 @@ import { reportError } from 'lib/report-error';
 import timeout from 'lib/timeout';
 import userPrefs from 'common/modules/user-prefs';
 import groupBy from 'lodash/groupBy';
-import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import { isAdFreeUser } from 'common/modules/userFeatures/cookies/adFree';
 
 const HIDDEN_CLASS_NAME = 'fc-show-more--hidden';
 const VISIBLE_CLASS_NAME = 'fc-show-more--visible';

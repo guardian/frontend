@@ -7,7 +7,7 @@
  *
  */
 
-import { isAdFreeUser } from './user-features';
+import { isAdFreeUser } from '../userFeatures/cookies/adFree';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {

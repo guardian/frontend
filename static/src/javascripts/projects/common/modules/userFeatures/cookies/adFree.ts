@@ -9,3 +9,9 @@ export const adFreeDataIsPresent = (isSignedIn: boolean): boolean =>
 
 export const getAdFreeCookie = (): string | null =>
 	getCookie({ name: AD_FREE_USER_COOKIE });
+
+export const isAdFreeUser = () => {
+	const cookieVal = getAdFreeCookie();
+	if (!cookieVal) return false;
+	return !Number.isNaN(parseInt(cookieVal, 10));
+}

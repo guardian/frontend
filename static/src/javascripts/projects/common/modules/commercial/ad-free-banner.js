@@ -7,7 +7,7 @@
 import checkIcon from 'svgs/icon/tick.svg';
 import config from '../../../../lib/config';
 import { hasUserAcknowledgedBanner, Message } from '../ui/message';
-import { isAdFreeUser } from './user-features';
+import { isAdFreeUser } from './common/modules/userFeatures/cookies/adFree';
 
 const messageCode = 'ad-free-banner';
 const image = config.get('images.acquisitions.ad-free', '');

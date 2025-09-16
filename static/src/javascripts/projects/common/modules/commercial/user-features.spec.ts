@@ -12,7 +12,6 @@ import {
 	accountDataUpdateWarning,
 	getLastOneOffContributionTimestamp,
 	getLastRecurringContributionDate,
-	isAdFreeUser,
 	isPayingMember,
 	isRecurringContributor,
 	refresh,
@@ -222,23 +221,6 @@ describe('The account data update warning getter', () => {
 			removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
 			expect(accountDataUpdateWarning()).toBe(null);
 		});
-	});
-});
-
-describe('The isAdFreeUser getter', () => {
-	it('Is false when the user is logged out', () => {
-		jest.resetAllMocks();
-		isUserLoggedIn.mockResolvedValue(false);
-		expect(isAdFreeUser()).toBe(false);
-	});
-
-	it('Is true when the user is logged in with the ad free cookie', () => {
-		jest.resetAllMocks();
-		const oneDayInMillis = 24 * 60 * 60 * 1000;
-		const cookieExpiry = new Date(Date.now() + (oneDayInMillis * 2))
-		addCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, cookieExpiry.getTime(), 2, true);
-		isUserLoggedIn.mockResolvedValue(true);
-		expect(isAdFreeUser()).toBe(true);
 	});
 });
 
