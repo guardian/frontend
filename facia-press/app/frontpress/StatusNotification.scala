@@ -50,7 +50,7 @@ object StatusNotification {
     ),
   )
 
-  def putMessage(message: StatusNotificationMessage)(implicit ec: ExecutionContext): Unit = {
+  private def putMessage(message: StatusNotificationMessage)(implicit ec: ExecutionContext): Unit = {
     if (FaciaPressStatusNotifications.isSwitchedOn) {
       Configuration.faciatool.frontPressStatusNotificationStream match {
         case Some(streamName) =>
