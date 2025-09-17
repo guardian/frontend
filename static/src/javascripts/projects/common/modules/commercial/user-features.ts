@@ -2,8 +2,6 @@ import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
 import { noop } from 'lib/noop';
 import { fetchJson } from '../../../../lib/fetch-json';
 import { dateDiffDays } from '../../../../lib/time-utils';
-import { getLocalDate } from '../../../../types/dates';
-import type { LocalDate } from '../../../../types/dates';
 import type { UserFeaturesResponse } from '../../../../types/membership';
 import {
 	getAuthStatus,
@@ -209,107 +207,6 @@ const isPayingMember = async (): Promise<boolean> =>
 	(await isUserLoggedIn()) &&
 	getCookie({ name: PAYING_MEMBER_COOKIE }) !== 'false';
 
-// Expects milliseconds since epoch
-const getSupportFrontendOneOffContributionTimestamp = (): number | null => {
-	const supportFrontendCookie = getCookie({
-		name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-	});
-
-	if (supportFrontendCookie) {
-		const ms = parseInt(supportFrontendCookie, 10);
-		if (Number.isInteger(ms)) return ms;
-	}
-
-	return null;
-};
-
-// Expects YYYY-MM-DD format
-const getAttributesOneOffContributionTimestamp = (): number | null => {
-	const attributesCookie = getCookie({
-		name: ONE_OFF_CONTRIBUTION_DATE_COOKIE,
-	});
-
-	if (attributesCookie) {
-		const ms = Date.parse(attributesCookie);
-		if (Number.isInteger(ms)) return ms;
-	}
-
-	return null;
-};
-
-// number returned is Epoch time in milliseconds.
-// null value signifies no last contribution date.
-const getLastOneOffContributionTimestamp = (): number | null =>
-	getSupportFrontendOneOffContributionTimestamp() ??
-	getAttributesOneOffContributionTimestamp();
-
-const getLastOneOffContributionDate = (): LocalDate | null => {
-	const timestamp = getLastOneOffContributionTimestamp();
-
-	if (timestamp === null) {
-		return null;
-	}
-
-	const date = new Date(timestamp);
-	const year = date.getUTCFullYear();
-	const month = date.getUTCMonth() + 1;
-	const day = date.getUTCDate();
-
-	return getLocalDate(year, month, day);
-};
-
-const getLastRecurringContributionDate = (): number | null => {
-	// Check for cookies, ensure that cookies parse, and ensure parsed results are integers
-	const monthlyCookie = getCookie({
-		name: SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE,
-	});
-	const annualCookie = getCookie({
-		name: SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE,
-	});
-	const monthlyTime = monthlyCookie ? parseInt(monthlyCookie, 10) : null;
-	const annualTime = annualCookie ? parseInt(annualCookie, 10) : null;
-	const monthlyMS =
-		monthlyTime && Number.isInteger(monthlyTime) ? monthlyTime : null;
-	const annualMS =
-		annualTime && Number.isInteger(annualTime) ? annualTime : null;
-
-	if (!monthlyMS && !annualMS) {
-		return null;
-	}
-
-	if (monthlyMS && annualMS) {
-		return Math.max(monthlyMS, annualMS);
-	}
-
-	return monthlyMS ?? annualMS ?? null;
-};
-
-const getDaysSinceLastOneOffContribution = (): number | null => {
-	const lastContributionDate = getLastOneOffContributionTimestamp();
-	if (lastContributionDate === null) {
-		return null;
-	}
-	return dateDiffDays(lastContributionDate, Date.now());
-};
-
-// defaults to last three months
-const isRecentOneOffContributor = (askPauseDays = 90): boolean => {
-	const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
-	if (daysSinceLastContribution === null) {
-		return false;
-	}
-	return daysSinceLastContribution <= askPauseDays;
-};
-
-// true if the user has completed their ask-free period
-const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
-	const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
-	if (daysSinceLastContribution === null) {
-		return false;
-	}
-	return daysSinceLastContribution > askPauseDays;
-};
-
 const isRecurringContributor = async (): Promise<boolean> =>
 	((await isUserLoggedIn()) &&
 		getCookie({ name: RECURRING_CONTRIBUTOR_COOKIE }) !== 'false') ||
@@ -329,7 +226,6 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
 
 const shouldHideSupportMessaging = async (): Promise<boolean> =>
 	shouldNotBeShownSupportMessaging() ||
-	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
 	(await isRecurringContributor()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
 
@@ -358,10 +254,7 @@ const extendContribsCookieExpiry = (): void => {
 };
 
 const _ = {
-	isRecentOneOffContributor,
 	isDigitalSubscriber,
-	getDaysSinceLastOneOffContribution,
-	isPostAskPauseOneOffContributor,
 	shouldNotBeShownSupportMessaging,
 };
 
@@ -373,9 +266,6 @@ export {
 	setAdFreeCookie,
 	shouldHideSupportMessaging,
 	refresh,
-	getLastOneOffContributionTimestamp,
-	getLastOneOffContributionDate,
-	getLastRecurringContributionDate,
 	fakeOneOffContributor,
 	extendContribsCookieExpiry,
 };
