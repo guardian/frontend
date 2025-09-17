@@ -11,6 +11,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      AllBoosts,
       DarkModeWeb,
       SourcepointConsentGeolocation,
       GoogleOneTap,
@@ -18,6 +19,15 @@ object ActiveExperiments extends ExperimentsDefinition {
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object ConsentOrPayEuropeInternalTest
+    extends Experiment(
+      name = "consent-or-pay-europe-internal-test",
+      description = "Releasing Consent or Pay to Europe for internal testing",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2026, 4, 1),
+      participationGroup = Perc0A,
+    )
 
 object SourcepointConsentGeolocation
     extends Experiment(
@@ -29,13 +39,13 @@ object SourcepointConsentGeolocation
       participationGroup = Perc0B,
     )
 
-object GoogleOneTap
+object AllBoosts
     extends Experiment(
-      name = "google-one-tap",
-      description = "Signing into the Guardian with Google One Tap",
-      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+      name = "all-boosts",
+      description = "All non-feature cards on network fronts are boosted",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc10A,
+      participationGroup = Perc0C,
     )
 
 object DarkModeWeb
@@ -47,11 +57,11 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object ConsentOrPayEuropeInternalTest
+object GoogleOneTap
     extends Experiment(
-      name = "consent-or-pay-europe-internal-test",
-      description = "Releasing Consent or Pay to Europe for internal testing",
-      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2026, 4, 1),
-      participationGroup = Perc0A,
+      name = "google-one-tap",
+      description = "Signing into the Guardian with Google One Tap",
+      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc10A,
     )
