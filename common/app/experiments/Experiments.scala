@@ -36,7 +36,7 @@ object GoogleOneTap
       description = "Signing into the Guardian with Google One Tap",
       owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0C,
+      participationGroup = Perc10A,
     )
 
 object DarkModeWeb
