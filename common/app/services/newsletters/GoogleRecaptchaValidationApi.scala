@@ -10,9 +10,9 @@ import utils.RemoteAddress
 import scala.concurrent.Future
 
 class GoogleRecaptchaValidationService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
-  def submit(token: String): Future[WSResponse] = {
+  def submit(token: String, isFromManyNewsletters: Boolean = false): Future[WSResponse] = {
     val url = "https://www.google.com/recaptcha/api/siteverify"
-    val secret = if (ManyNewsletterVisibleRecaptcha.isSwitchedOn) {
+    val secret = if (ManyNewsletterVisibleRecaptcha.isSwitchedOn && isFromManyNewsletters) {
       Configuration.google.googleRecaptchaSecretVisible
     } else {
       Configuration.google.googleRecaptchaSecret
