@@ -1,7 +1,6 @@
 import { getCookie, isObject, removeCookie, setCookie } from '@guardian/libs';
 import { noop } from 'lib/noop';
 import { fetchJson } from '../../../../lib/fetch-json';
-import { dateDiffDays } from '../../../../lib/time-utils';
 import type { UserFeaturesResponse } from '../../../../types/membership';
 import {
 	getAuthStatus,
@@ -237,22 +236,6 @@ const fakeOneOffContributor = (): void => {
 	});
 };
 
-// Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
-const extendContribsCookieExpiry = (): void => {
-	const cookie = getCookie({ name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE });
-	if (cookie) {
-		const contributionDate = parseInt(cookie, 10);
-		if (Number.isInteger(contributionDate)) {
-			const daysToLive = 365 - dateDiffDays(contributionDate, Date.now());
-			setCookie({
-				name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-				value: contributionDate.toString(),
-				daysToLive,
-			});
-		}
-	}
-};
-
 const _ = {
 	isDigitalSubscriber,
 	shouldNotBeShownSupportMessaging,
@@ -266,6 +249,5 @@ export {
 	setAdFreeCookie,
 	shouldHideSupportMessaging,
 	refresh,
-	fakeOneOffContributor,
-	extendContribsCookieExpiry,
+	fakeOneOffContributor
 };
