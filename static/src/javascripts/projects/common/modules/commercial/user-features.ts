@@ -26,8 +26,7 @@ const SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE =
 	'gu.contributions.recurring.contrib-timestamp.Monthly';
 const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
 	'gu.contributions.recurring.contrib-timestamp.Annual';
-const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
-	'gu.contributions.contrib-timestamp';
+
 
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 
@@ -225,14 +224,6 @@ const shouldHideSupportMessaging = async (): Promise<boolean> =>
 	(await isRecurringContributor()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
 
-// For debug/test purposes
-const fakeOneOffContributor = (): void => {
-	setCookie({
-		name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-		value: Date.now().toString(),
-	});
-};
-
 const _ = {
 	isDigitalSubscriber,
 	shouldNotBeShownSupportMessaging,
@@ -245,5 +236,4 @@ export {
 	setAdFreeCookie,
 	shouldHideSupportMessaging,
 	refresh,
-	fakeOneOffContributor
 };

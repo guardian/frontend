@@ -1,4 +1,4 @@
-import { storage } from '@guardian/libs';
+import { setCookie, storage } from '@guardian/libs';
 import { addCookie, removeCookie } from '../../../../lib/cookies';
 import {
 	getCountryCode,
@@ -14,7 +14,6 @@ import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
 import {
-	fakeOneOffContributor,
 	readerRevenueRelevantCookies,
 } from './user-features';
 
@@ -24,6 +23,15 @@ const minArticlesBeforeShowingBanner = 2;
 const viewKey = 'gu.contributions.views';
 const clearEpicViewLog = () => {
 	storage.local.remove(viewKey);
+};
+
+const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
+	'gu.contributions.contrib-timestamp';
+const fakeOneOffContributor = () => {
+	setCookie({
+		name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+		value: Date.now().toString(),
+	});
 };
 
 const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
