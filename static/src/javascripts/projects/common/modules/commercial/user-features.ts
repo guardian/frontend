@@ -325,8 +325,6 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
     Whenever the checks are updated, please make sure to update
     applyRenderConditions.scala.js too, where the global CSS class, indicating
     the user should not see the revenue messages, is added to the body.
-    Please also update readerRevenueRelevantCookies below, if changing the cookies
-    which this function is dependent on.
 */
 
 const shouldHideSupportMessaging = async (): Promise<boolean> =>
@@ -334,15 +332,6 @@ const shouldHideSupportMessaging = async (): Promise<boolean> =>
 	isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
 	(await isRecurringContributor()); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
 
-const readerRevenueRelevantCookies = [
-	PAYING_MEMBER_COOKIE,
-	DIGITAL_SUBSCRIBER_COOKIE,
-	RECURRING_CONTRIBUTOR_COOKIE,
-	SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE,
-	SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE,
-	SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
-	HIDE_SUPPORT_MESSAGING_COOKIE,
-];
 
 // For debug/test purposes
 const fakeOneOffContributor = (): void => {
@@ -387,7 +376,6 @@ export {
 	getLastOneOffContributionTimestamp,
 	getLastOneOffContributionDate,
 	getLastRecurringContributionDate,
-	readerRevenueRelevantCookies,
 	fakeOneOffContributor,
 	extendContribsCookieExpiry,
 };
