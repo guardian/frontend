@@ -4,11 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
-import conf.switches.Switches.{
-  EmailSignupRecaptcha,
-  NewslettersRemoveConfirmationStep,
-  ValidateEmailSignupRecaptchaTokens,
-}
+import conf.switches.Switches.{EmailSignupRecaptcha, ManyNewsletterVisibleRecaptcha, NewslettersRemoveConfirmationStep, ValidateEmailSignupRecaptchaTokens}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.data.Forms._
@@ -389,7 +385,7 @@ class EmailSignupController(
             )
 
             (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn, shouldUseVisibleKey = false)
               result <- submitFormFooter(form)
             } yield {
               result
@@ -446,7 +442,7 @@ class EmailSignupController(
     }
   }
 
-  private def validateCaptcha(googleRecaptchaResponse: Option[String], shouldValidateCaptcha: Boolean)(implicit
+  private def validateCaptcha(googleRecaptchaResponse: Option[String], shouldValidateCaptcha: Boolean, shouldUseVisibleKey: Boolean)(implicit
       request: Request[AnyContent],
   ) = {
     if (shouldValidateCaptcha) {
@@ -457,7 +453,7 @@ class EmailSignupController(
             RecaptchaMissingTokenError.increment()
             Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
         }
-        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith { case e =>
+        wsResponse <- googleRecaptchaTokenValidationService.submit(token, shouldUseVisibleKey) recoverWith { case e =>
           RecaptchaAPIUnavailableError.increment()
           Future.failed(e)
         }
@@ -501,7 +497,7 @@ class EmailSignupController(
             )
 
             (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn, shouldUseVisibleKey = false)
               result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
             } yield {
               result
@@ -536,7 +532,7 @@ class EmailSignupController(
             )
 
             (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn, ManyNewsletterVisibleRecaptcha.isSwitchedOn)
               result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
             } yield {
               result
