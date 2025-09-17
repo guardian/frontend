@@ -32,11 +32,6 @@ const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
 const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
 	'gu.contributions.contrib-timestamp';
 
-const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
-	name: 'gu_article_count_opt_out',
-	daysToLive: 90,
-};
-
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 
 // TODO: isn’t this duplicated from commercial features?
@@ -395,5 +390,4 @@ export {
 	readerRevenueRelevantCookies,
 	fakeOneOffContributor,
 	extendContribsCookieExpiry,
-	ARTICLES_VIEWED_OPT_OUT_COOKIE,
 };
