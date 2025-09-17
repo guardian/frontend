@@ -13,9 +13,6 @@ import { clearParticipations } from '../experiments/ab-local-storage';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
-import {
-	readerRevenueRelevantCookies,
-} from './user-features';
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 const minArticlesBeforeShowingBanner = 2;
@@ -25,8 +22,27 @@ const clearEpicViewLog = () => {
 	storage.local.remove(viewKey);
 };
 
+
+const PAYING_MEMBER_COOKIE = 'gu_paying_member';
+const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
+const HIDE_SUPPORT_MESSAGING_COOKIE = 'gu_hide_support_messaging';
 const SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE =
 	'gu.contributions.contrib-timestamp';
+const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
+const SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE =
+	'gu.contributions.recurring.contrib-timestamp.Monthly';
+const SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE =
+	'gu.contributions.recurring.contrib-timestamp.Annual';
+const readerRevenueRelevantCookies = [
+	PAYING_MEMBER_COOKIE,
+	DIGITAL_SUBSCRIBER_COOKIE,
+	RECURRING_CONTRIBUTOR_COOKIE,
+	SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE,
+	SUPPORT_RECURRING_CONTRIBUTOR_ANNUAL_COOKIE,
+	SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
+	HIDE_SUPPORT_MESSAGING_COOKIE,
+];
+
 const fakeOneOffContributor = () => {
 	setCookie({
 		name: SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE,
