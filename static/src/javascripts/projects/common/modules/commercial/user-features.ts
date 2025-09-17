@@ -68,9 +68,6 @@ const userHasData = () => {
 	return !!cookie;
 };
 
-const accountDataUpdateWarning = (): string | null =>
-	getCookie({ name: ACTION_REQUIRED_FOR_COOKIE });
-
 /**
  * TODO: check that this validation is accurate
  */
@@ -243,7 +240,6 @@ const _ = {
 
 export {
 	_,
-	accountDataUpdateWarning,
 	isPayingMember,
 	isRecurringContributor,
 	setAdFreeCookie,
