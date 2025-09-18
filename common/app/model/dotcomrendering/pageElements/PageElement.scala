@@ -11,6 +11,9 @@ import com.gu.contentapi.client.model.v1.{
   WitnessElementFields,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
+  Statistic,
+  CartoonImage,
+  ProductElementFields,
 }
 import common.{Chronos, Edition}
 import conf.Configuration
@@ -511,24 +514,27 @@ object LinkBlockElement {
 }
 
 case class ProductBlockElement(
-    productName: String,
-    brandName: String,
-    primaryHeading: String,
+    productName: Option[String],
+    brandName: Option[String],
+    primaryHeading: Option[String],
     secondaryHeading: Option[String],
-    starRating: Option[Int],
-    primaryProductUrl: String,
-    primaryCta: String,
-    primaryRetailer: String,
-    primaryPrice: String, // ToDo check type
-    secondaryProductUrl: String,
+    starRating: Option[String],
+    primaryProductUrl: Option[String],
+    primaryCta: Option[String],
+    primaryRetailer: Option[String],
+    primaryPrice: Option[String],
+    secondaryProductUrl: Option[String],
     secondaryCta: Option[String],
     secondaryRetailer: Option[String],
-    secondaryPrice: Option[String], // ToDo check type
-    statistics: List[String],
-    image: Option[String], // ToDo check type
-    content: String, // ToDo check type
+    secondaryPrice: Option[String],
+    statistics: Option[scala.collection.Seq[Statistic]],
+    image: Option[CartoonImage],
+    content: Seq[PageElement],
 ) extends PageElement
 object ProductBlockElement {
+  implicit val ProductBlockElementImageWrites: Writes[CartoonImage] = Json.writes[CartoonImage]
+  implicit val ProductBlockElementStatisticWrites: Writes[Statistic] = Json.writes[Statistic]
+  implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
@@ -1555,28 +1561,21 @@ object PageElement {
         }.toList
 
       case Product =>
-        element.tempProductTypeData
-          .map(d =>
-            ProductBlockElement(
-              d.productName,
-              d.brandName,
-              d.primaryHeading,
-              d.secondaryHeading,
-              d.starRating,
-              d.primaryProductUrl,
-              d.primaryCta,
-              d.primaryRetailer,
-              d.primaryPrice,
-              d.secondaryProductUrl,
-              d.secondaryCta,
-              d.secondaryRetailer,
-              d.secondaryPrice,
-              d.statistics,
-              d.image,
-              d.content,
-            ),
+        element.tempProductTypeData.map { tempProductTypeData =>
+          makeProduct(
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            edition,
+            webPublicationDate,
+            tempProductTypeData,
+            isGallery,
           )
-          .toList
+        }.toList
+
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
@@ -1679,6 +1678,53 @@ object PageElement {
       byline = item.byline,
       bylineHtml = item.bylineHtml,
       contributorImageOverrideUrl = item.contributorImageOverrideUrl,
+    )
+  }
+
+  private def makeProduct(
+                            addAffiliateLinks: Boolean,
+                            pageUrl: String,
+                            atoms: Iterable[Atom],
+                            isImmersive: Boolean,
+                            campaigns: Option[JsValue],
+                            calloutsUrl: Option[String],
+                            edition: Edition,
+                            webPublicationDate: DateTime,
+                            product: ProductElementFields,
+                            isGallery: Boolean,
+                          ) = {
+    ProductBlockElement(
+      content = product.content.getOrElse(List()).flatMap { element =>
+        PageElement.make(
+          element,
+          addAffiliateLinks,
+          pageUrl,
+          atoms,
+          isMainBlock = false,
+          isImmersive,
+          campaigns,
+          calloutsUrl,
+          overrideImage = None,
+          edition,
+          webPublicationDate,
+          isGallery,
+        )
+      }.toSeq,
+      productName = product.productName,
+      brandName = product.brandName,
+      primaryHeading = product.primaryHeading,
+      secondaryHeading = product.secondaryHeading,
+      starRating = product.starRating,
+      primaryProductUrl = product.primaryProductUrl,
+      primaryCta = product.primaryCta,
+      primaryRetailer = product.primaryRetailer,
+      primaryPrice = product.primaryPrice,
+      secondaryProductUrl = product.secondaryProductUrl,
+      secondaryCta = product.secondaryCta,
+      secondaryRetailer = product.secondaryRetailer,
+      secondaryPrice = product.secondaryPrice,
+      statistics = product.statistics,
+      image = product.image,
     )
   }
 
