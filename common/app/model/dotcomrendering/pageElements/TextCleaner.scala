@@ -12,13 +12,24 @@ import scala.util.matching.Regex
 
 object TextCleaner {
 
-  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean)(html: String): String = {
+  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isTheFilterUS: Boolean)(
+      html: String,
+  ): String = {
     if (addAffiliateLinks) {
       val doc = Jsoup.parseBodyFragment(html)
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       links.foreach(el => {
-        val id = affiliateLinksConfig.skimlinksId
-        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id)).attr("rel", "sponsored")
+        if (isTheFilterUS) {
+          el.attr(
+            "href",
+            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksUSId),
+          ).attr("rel", "sponsored")
+        } else {
+          el.attr(
+            "href",
+            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksId),
+          ).attr("rel", "sponsored")
+        }
       })
 
       if (links.nonEmpty) {
@@ -35,6 +46,7 @@ object TextCleaner {
       caption: String,
       pageUrl: String,
       shouldAddAffiliateLinks: Boolean,
+      isTheFilterUS: Boolean,
   ): String = {
 
     val cleaners = List(
@@ -42,6 +54,7 @@ object TextCleaner {
       GalleryAffiliateLinksCleaner(
         pageUrl,
         shouldAddAffiliateLinks,
+        isTheFilterUS,
       ),
     )
 
@@ -155,12 +168,18 @@ object GalleryCaptionCleaner extends HtmlCleaner {
 case class GalleryAffiliateLinksCleaner(
     pageUrl: String,
     shouldAddAffiliateLinks: Boolean,
+    isTheFilterUS: Boolean,
 ) extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
     if (shouldAddAffiliateLinks) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksId)
+      if (isTheFilterUS) {
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksUSId)
+      } else {
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksId)
+      }
+
     } else document
   }
 }
