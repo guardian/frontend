@@ -16,7 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       SourcepointConsentGeolocation,
       GoogleOneTap,
       HideTrails,
-      ConsentOrPayEurope,
+      ConsentOrPayEuropeInternalTest,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }

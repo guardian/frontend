@@ -21,8 +21,8 @@ trait IdentitySwitches {
     "Releasing Consent or Pay to Europe",
     owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
     safeState = Off,
-    sellByDate = LocalDate.of(2026, 4, 1),
-    exposeClientSide = false,
+    sellByDate = never,
+    exposeClientSide = true,
     highImpact = false,
   )
 }
