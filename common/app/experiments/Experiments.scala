@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       DarkModeWeb,
-      TopAboveNav250Reservation,
       SourcepointConsentGeolocation,
       GoogleOneTap,
       HideTrails,
@@ -46,15 +45,6 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
-    )
-
-object TopAboveNav250Reservation
-    extends Experiment(
-      name = "top-above-nav-250-reservation",
-      description = "Reserve 250px for top-above-nav instead of 90px",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 9, 26),
-      participationGroup = Perc2A,
     )
 
 object HideTrails
