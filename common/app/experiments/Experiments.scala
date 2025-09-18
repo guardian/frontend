@@ -67,10 +67,10 @@ object HideTrails
       participationGroup = Perc5A,
     )
 
-object ConsentOrPayEurope
+object ConsentOrPayEuropeInternalTest
     extends Experiment(
-      name = "consent-or-pay-europe",
-      description = "Releasing Consent or Pay to Europe",
+      name = "consent-or-pay-europe-internal-test",
+      description = "Releasing Consent or Pay to Europe for internal testing",
       owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
       sellByDate = LocalDate.of(2026, 4, 1),
       participationGroup = Perc0A,
