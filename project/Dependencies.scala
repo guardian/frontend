@@ -6,8 +6,8 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "1.12.788"
   val awsSdk2Version = "2.32.26"
-  val capiVersion = "36.0.1-PREVIEW.filterbump-cpai-version.2025-09-18T1032.332cf666" //ToDo update version
-  val faciaVersion = "23.0.0-PREVIEW.filterfapi-bump.2025-09-18T1102.347ddf700"
+  val capiVersion = "36.0.1-PREVIEW.filterbump-cpai-version.2025-09-18T1032.332cf666"
+  val faciaVersion = "23.0.0-PREVIEW.filterfapi-bump.2025-09-18T1102.347ddf70"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
