@@ -72,6 +72,6 @@ object ConsentOrPayEurope
       name = "consent-or-pay-europe",
       description = "Releasing Consent or Pay to Europe",
       owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
+      sellByDate = LocalDate.of(2026, 4, 1),
       participationGroup = Perc0A,
     )
