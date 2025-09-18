@@ -519,14 +519,14 @@ case class ProductBlockElement(
     primaryProductUrl: String,
     primaryCta: String,
     primaryRetailer: String,
-    primaryPrice: String, //ToDo check type
+    primaryPrice: String, // ToDo check type
     secondaryProductUrl: String,
     secondaryCta: Option[String],
     secondaryRetailer: Option[String],
-    secondaryPrice: Option[String], //ToDo check type
+    secondaryPrice: Option[String], // ToDo check type
     statistics: List[String],
-    image: Option[String], //ToDo check type
-    content: String, //ToDo check type
+    image: Option[String], // ToDo check type
+    content: String, // ToDo check type
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
