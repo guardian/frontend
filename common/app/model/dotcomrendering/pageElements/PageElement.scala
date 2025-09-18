@@ -1576,7 +1576,6 @@ object PageElement {
           )
         }.toList
 
-
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
@@ -1682,34 +1681,37 @@ object PageElement {
   }
 
   private def makeProduct(
-                            addAffiliateLinks: Boolean,
-                            pageUrl: String,
-                            atoms: Iterable[Atom],
-                            isImmersive: Boolean,
-                            campaigns: Option[JsValue],
-                            calloutsUrl: Option[String],
-                            edition: Edition,
-                            webPublicationDate: DateTime,
-                            product: ProductElementFields,
-                            isGallery: Boolean,
-                          ) = {
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      product: ProductElementFields,
+      isGallery: Boolean,
+  ) = {
     ProductBlockElement(
-      content = product.content.getOrElse(List()).flatMap { element =>
-        PageElement.make(
-          element,
-          addAffiliateLinks,
-          pageUrl,
-          atoms,
-          isMainBlock = false,
-          isImmersive,
-          campaigns,
-          calloutsUrl,
-          overrideImage = None,
-          edition,
-          webPublicationDate,
-          isGallery,
-        )
-      }.toSeq,
+      content = product.content
+        .getOrElse(List())
+        .flatMap { element =>
+          PageElement.make(
+            element,
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isMainBlock = false,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            overrideImage = None,
+            edition,
+            webPublicationDate,
+            isGallery,
+          )
+        }
+        .toSeq,
       productName = product.productName,
       brandName = product.brandName,
       primaryHeading = product.primaryHeading,
