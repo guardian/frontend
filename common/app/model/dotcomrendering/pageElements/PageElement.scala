@@ -531,7 +531,7 @@ case class ProductBlockElement(
 object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
-                              )
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -1555,7 +1555,7 @@ object PageElement {
         }.toList
 
       case Product =>
-        element.productTypeData
+        element.tempProductTypeData
           .map(d =>
             ProductBlockElement(
               d.productName,
