@@ -616,4 +616,26 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val GuardianLabsRedesign = Switch(
+    SwitchGroup.Feature,
+    "guardian-labs-redesign",
+    "Shows the new style labs containers and cards",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    sellByDate = Some(LocalDate.of(2025, 11, 18)),
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val WholePictureLogoSwitch = Switch(
+    SwitchGroup.Feature,
+    "whole-picture-logo",
+    "Enables the Whole Picture logo for the US edition.",
+    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

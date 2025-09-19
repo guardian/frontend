@@ -12,9 +12,10 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       DarkModeWeb,
-      TopAboveNav250Reservation,
       SourcepointConsentGeolocation,
       GoogleOneTap,
+      HideTrails,
+      ConsentOrPayEuropeInternalTest,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -35,7 +36,7 @@ object GoogleOneTap
       description = "Signing into the Guardian with Google One Tap",
       owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0C,
+      participationGroup = Perc10A,
     )
 
 object DarkModeWeb
@@ -47,11 +48,20 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object TopAboveNav250Reservation
+object HideTrails
     extends Experiment(
-      name = "top-above-nav-250-reservation",
-      description = "Reserve 250px for top-above-nav instead of 90px",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 9, 12),
-      participationGroup = Perc2A,
+      name = "hide-trails",
+      description = "Hide card trails on desktop on network fronts",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc5A,
+    )
+
+object ConsentOrPayEuropeInternalTest
+    extends Experiment(
+      name = "consent-or-pay-europe-internal-test",
+      description = "Releasing Consent or Pay to Europe for internal testing",
+      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
+      sellByDate = LocalDate.of(2026, 4, 1),
+      participationGroup = Perc0A,
     )
