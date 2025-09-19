@@ -528,7 +528,7 @@ case class ProductBlockElement(
     secondaryRetailer: Option[String],
     secondaryPrice: Option[String],
     statistics: Option[scala.collection.Seq[Statistic]],
-    image: Option[CartoonImage],
+    image: Option[ImageAsset],
     content: Seq[PageElement],
 ) extends PageElement
 object ProductBlockElement {
@@ -1692,6 +1692,7 @@ object PageElement {
       product: ProductElementFields,
       isGallery: Boolean,
   ) = {
+    val imageAsset = product.image.map(image => ImageAsset.make(image, 0))
     ProductBlockElement(
       content = product.content
         .getOrElse(List())
@@ -1726,7 +1727,7 @@ object PageElement {
       secondaryRetailer = product.secondaryRetailer,
       secondaryPrice = product.secondaryPrice,
       statistics = product.statistics,
-      image = product.image,
+      image = imageAsset
     )
   }
 
