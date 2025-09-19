@@ -1,6 +1,6 @@
 package model.content
 
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.atom.media.{AssetType, Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{
@@ -195,6 +195,7 @@ final case class MediaAsset(
     version: Long,
     platform: MediaAssetPlatform,
     mimeType: Option[String],
+    assetType: AssetType,
 )
 
 sealed trait MediaAssetPlatform extends EnumEntry
@@ -257,6 +258,7 @@ object MediaAtom extends common.GuLogging {
       version = mediaAsset.version,
       platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
       mimeType = mediaAsset.mimeType,
+      assetType = mediaAsset.assetType,
     )
   }
 
