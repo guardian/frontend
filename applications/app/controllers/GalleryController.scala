@@ -56,12 +56,16 @@ class GalleryController(
   ) = {
     val pageType = PageType(model, request, context)
 
-    remoteRenderer.getGallery(
-      wsClient,
-      model,
-      pageType,
-      blocks,
-    )
+    if (request.isApps) {
+      remoteRenderer.getAppsGallery(wsClient, model, pageType, blocks)
+    } else {
+      remoteRenderer.getGallery(
+        wsClient,
+        model,
+        pageType,
+        blocks,
+      )
+    }
   }
 
   def lightboxJson(path: String): Action[AnyContent] =
