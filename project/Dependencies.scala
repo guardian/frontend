@@ -16,7 +16,7 @@ object Dependencies {
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
-  val awsKinesis = "com.amazonaws" % "aws-java-sdk-kinesis" % awsVersion
+  val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
   val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
