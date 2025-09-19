@@ -425,6 +425,18 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", gallery.metadata.cacheTime)
   }
 
+  def getAppsGallery(
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", gallery.metadata.cacheTime)
+  }
+
   def getCrossword(
       ws: WSClient,
       crosswordPage: CrosswordPageWithContent,
