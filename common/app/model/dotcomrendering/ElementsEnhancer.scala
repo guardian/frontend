@@ -19,6 +19,7 @@ object ElementsEnhancer {
         elementType match {
           case "model.dotcomrendering.pageElements.ListBlockElement"     => enhanceListBlockElement(elementWithId)
           case "model.dotcomrendering.pageElements.TimelineBlockElement" => enhanceTimelineBlockElement(elementWithId)
+          case "model.dotcomrendering.pageElements.ProductBlockElement"  => enhanceProductBlockElement(elementWithId)
           case _                                                         => elementWithId;
         }
       case _ => element
@@ -31,6 +32,10 @@ object ElementsEnhancer {
       obj ++ Json.obj("elements" -> enhanceElements(obj.value("elements")))
     }
     elementWithId ++ Json.obj("items" -> listItemsWithIds)
+  }
+
+  def enhanceProductBlockElement(elementWithId: JsObject): JsObject = {
+    elementWithId ++ Json.obj("content" -> enhanceElements(elementWithId.value("content")))
   }
 
   def enhanceTimelineBlockElement(element: JsObject): JsObject = {
