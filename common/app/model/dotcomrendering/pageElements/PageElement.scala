@@ -1727,7 +1727,7 @@ object PageElement {
       secondaryRetailer = product.secondaryRetailer,
       secondaryPrice = product.secondaryPrice,
       statistics = product.statistics,
-      image = imageAsset
+      image = imageAsset,
     )
   }
 
