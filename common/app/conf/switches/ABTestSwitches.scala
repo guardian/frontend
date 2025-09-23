@@ -40,17 +40,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-admiral-adblock-recovery",
-    "Testing the Admiral integration for adblock recovery on theguardian.com",
-    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 10, 23)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
     "ab-compare-client-test-with-new-framework",
     "Compare behaviour of new ab testing framework with existing one",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),

@@ -627,4 +627,15 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val AdmiralAdblockRecovery = Switch(
+    SwitchGroup.Feature,
+    "admiral-adblock-recovery",
+    "Enables Admiral Adblock Recovery to run on the site",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
