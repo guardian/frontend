@@ -14,4 +14,15 @@ trait IdentitySwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val consentOrPayEurope = Switch(
+    SwitchGroup.Identity,
+    "consent-or-pay-europe",
+    "Releasing Consent or Pay to Europe",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
