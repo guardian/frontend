@@ -11,6 +11,7 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      AllBoosts,
       DarkModeWeb,
       SourcepointConsentGeolocation,
       GoogleOneTap,
@@ -19,6 +20,15 @@ object ActiveExperiments extends ExperimentsDefinition {
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
+
+object AllBoosts
+    extends Experiment(
+      name = "all-boosts",
+      description = "All non-feature cards on network fronts are boosted",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0A,
+    )
 
 object SourcepointConsentGeolocation
     extends Experiment(
