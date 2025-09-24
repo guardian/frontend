@@ -1409,6 +1409,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "The Filter US",
+					"url": "/thefilter-us",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Wellness",
 					"url": "/us/wellness",
 					"children": [],
