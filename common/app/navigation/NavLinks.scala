@@ -176,7 +176,7 @@ object NavLinks {
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
   val theFilterUk = NavLink("The Filter", "/uk/thefilter")
-  val theFilterUs = NavLink("The Filter US", "/us/thefilter") // todo this path needs to be confirmed
+  val theFilterUs = NavLink("The Filter US", "/thefilter-us")
   val food = NavLink("Food", "/food")
   val foodAu = NavLink("Food", "/au/food")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")

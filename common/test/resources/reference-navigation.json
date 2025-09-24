@@ -1410,7 +1410,7 @@
 			"children": [
                 {
                     "title": "The Filter US",
-                    "url": "/us/thefilter", //todo this path needs to be confirmed
+                    "url": "/thefilter-us",
                     "children": [],
                     "classList": []
                 },
