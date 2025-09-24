@@ -15,11 +15,11 @@ object TextCleaner {
   def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isTheFilterUS: Boolean)(
       html: String,
   ): String = {
-    val skimlinksId = if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
-
     if (addAffiliateLinks) {
       val doc = Jsoup.parseBodyFragment(html)
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
+      val skimlinksId =
+        if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
       links.foreach(el => {
         el.attr(
           "href",
