@@ -1408,12 +1408,12 @@
 			"longTitle": "Lifestyle home",
 			"iconName": "home",
 			"children": [
-                {
-                    "title": "The Filter US",
-                    "url": "/thefilter-us",
-                    "children": [],
-                    "classList": []
-                },
+				{
+					"title": "The Filter US",
+					"url": "/thefilter-us",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Wellness",
 					"url": "/us/wellness",
