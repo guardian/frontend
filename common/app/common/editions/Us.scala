@@ -12,6 +12,7 @@ object Us
       timezone = DateTimeZone.forID("America/New_York"),
       locale = Some(Locale.forLanguageTag("en-us")),
       networkFrontId = "us",
+      editionalisedSections = Edition.commonEditionalisedSections :+ "thefilter",
       navigationLinks = EditionNavLinks(
         NavLinks.usNewsPillar,
         NavLinks.usOpinionPillar,
