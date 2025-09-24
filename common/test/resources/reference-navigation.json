@@ -1408,6 +1408,12 @@
 			"longTitle": "Lifestyle home",
 			"iconName": "home",
 			"children": [
+                {
+                    "title": "The Filter US",
+                    "url": "/us/thefilter", //todo this path needs to be confirmed
+                    "children": [],
+                    "classList": []
+                },
 				{
 					"title": "Wellness",
 					"url": "/us/wellness",
