@@ -872,6 +872,8 @@ case class AffiliateLinksCleaner(
     with GuLogging {
 
   override def clean(document: Document): Document = {
+    val skimlinksId = if (isTheFilterUS) skimlinksUSId else skimlinksDefaultId
+
     if (
       AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(
         AffiliateLinks.isSwitchedOn,
@@ -880,11 +882,7 @@ case class AffiliateLinksCleaner(
         tags,
       )
     ) {
-      if (isTheFilterUS) {
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksUSId)
-      } else {
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksDefaultId)
-      }
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
     } else document
   }
 }
@@ -912,11 +910,10 @@ object AffiliateLinksCleaner {
       addAffiliateLinks: Boolean,
       isTheFilterUS: Boolean,
   ): Option[String] = {
-    val
+    val skimlinksId = if (isTheFilterUS) skimlinksUSId else skimlinksDefaultId
     url match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
-        if (isTheFilterUS) Some(linkToSkimLink(link, pageUrl, skimlinksUSId))
-        else Some(linkToSkimLink(link, pageUrl, skimlinksDefaultId))
+        Some(linkToSkimLink(link, pageUrl, skimlinksId))
       case _ => url
     }
   }
