@@ -883,7 +883,7 @@ case class AffiliateLinksCleaner(
       if (isTheFilterUS) {
         AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksUSId)
       } else {
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksDefaultId)
       }
     } else document
   }
@@ -912,10 +912,11 @@ object AffiliateLinksCleaner {
       addAffiliateLinks: Boolean,
       isTheFilterUS: Boolean,
   ): Option[String] = {
+    val
     url match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
         if (isTheFilterUS) Some(linkToSkimLink(link, pageUrl, skimlinksUSId))
-        else Some(linkToSkimLink(link, pageUrl, skimlinksId))
+        else Some(linkToSkimLink(link, pageUrl, skimlinksDefaultId))
       case _ => url
     }
   }

@@ -22,12 +22,12 @@ object TextCleaner {
         if (isTheFilterUS) {
           el.attr(
             "href",
-            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksUSId),
+            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksDefaultId),
           ).attr("rel", "sponsored")
         } else {
           el.attr(
             "href",
-            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksId),
+            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksDefaultId),
           ).attr("rel", "sponsored")
         }
       })
@@ -177,7 +177,7 @@ case class GalleryAffiliateLinksCleaner(
       if (isTheFilterUS) {
         AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksUSId)
       } else {
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksId)
+        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksDefaultId)
       }
 
     } else document
