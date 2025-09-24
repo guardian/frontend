@@ -15,21 +15,16 @@ object TextCleaner {
   def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isTheFilterUS: Boolean)(
       html: String,
   ): String = {
+    val skimlinksId = if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
+
     if (addAffiliateLinks) {
       val doc = Jsoup.parseBodyFragment(html)
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       links.foreach(el => {
-        if (isTheFilterUS) {
-          el.attr(
-            "href",
-            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksDefaultId),
-          ).attr("rel", "sponsored")
-        } else {
-          el.attr(
-            "href",
-            AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, affiliateLinksConfig.skimlinksDefaultId),
-          ).attr("rel", "sponsored")
-        }
+        el.attr(
+          "href",
+          AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, skimlinksId),
+        ).attr("rel", "sponsored")
       })
 
       if (links.nonEmpty) {
@@ -173,13 +168,10 @@ case class GalleryAffiliateLinksCleaner(
     with GuLogging {
 
   override def clean(document: Document): Document = {
-    if (shouldAddAffiliateLinks) {
-      if (isTheFilterUS) {
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksUSId)
-      } else {
-        AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksDefaultId)
-      }
+    val skimlinksId = if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
 
+    if (shouldAddAffiliateLinks) {
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
     } else document
   }
 }
