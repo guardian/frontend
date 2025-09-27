@@ -63,7 +63,7 @@ jobs:
     runs-on: 8core-ubuntu-latest-frontend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: corretto
           cache: sbt
@@ -92,7 +92,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: corretto
           cache: sbt
