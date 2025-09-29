@@ -1,6 +1,7 @@
 package views.fragments.atoms
 
 import model.content.MediaAssetPlatform.Youtube
+import model.content.MediaAssetType.Video
 import model.content.{MediaAsset, MediaAtom}
 import org.scalatestplus.play.MixedPlaySpec
 import play.api.test.FakeRequest
@@ -19,6 +20,7 @@ class YoutubeSpec extends MixedPlaySpec {
             version = 0,
             platform = Youtube,
             mimeType = None,
+            assetType = Video,
           ),
         ),
         title = "",
