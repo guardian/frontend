@@ -96,14 +96,50 @@ object FooterLinks {
       "https://uploads.guim.co.uk/2025/09/05/Tax_strategy_for_the_year_ended_31_March_2025.pdf",
       s"${edition} : footer : tax strategy",
     )
-  def facebook(edition: String): FooterLink =
-    FooterLink("Facebook", "https://www.facebook.com/theguardian", s"${edition} : footer : facebook")
-  def youtube(edition: String): FooterLink =
-    FooterLink("YouTube", "https://www.youtube.com/user/TheGuardian", s"${edition} : footer : youtube")
-  def linkedin(edition: String): FooterLink =
-    FooterLink("LinkedIn", "https://www.linkedin.com/company/theguardian", s"${edition} : footer : linkedin")
-  def instagram(edition: String): FooterLink =
-    FooterLink("Instagram", "https://www.instagram.com/guardian", s"${edition} : footer : instagram")
+
+  def socialLinks(edition: String): Iterable[FooterLink] = {
+    /*
+     * The `socials` list preserves the order of the links in the footer.
+     * Change the order here, if required.
+     */
+    val socials = List(
+      "bluesky" -> "Bluesky",
+      "facebook" -> "Facebook",
+      "instagram" -> "Instagram",
+      "linkedin" -> "LinkedIn",
+      "threads" -> "Threads",
+      "tiktok" -> "TikTok",
+      "youtube" -> "YouTube",
+    )
+
+    /* Australia has its own social links. All other editions use the default links below. */
+    val auLinks = Map(
+      "bluesky" -> "https://bsky.app/profile/australia.theguardian.com",
+      "facebook" -> "https://www.facebook.com/theguardianaustralia",
+      "instagram" -> "https://www.instagram.com/guardianaustralia",
+      "linkedin" -> "https://www.linkedin.com/company/theguardianaustralia",
+      "threads" -> "https://www.threads.com/@guardianaustralia",
+      "tiktok" -> "https://www.tiktok.com/@guardianaustralia",
+      "youtube" -> "https://www.youtube.com/@GuardianAustralia",
+    )
+
+    val defaultLinks = Map(
+      "bluesky" -> "https://bsky.app/profile/theguardian.com",
+      "facebook" -> "https://www.facebook.com/theguardian",
+      "instagram" -> "https://www.instagram.com/guardian",
+      "linkedin" -> "https://www.linkedin.com/company/theguardian",
+      "threads" -> "https://www.threads.com/@guardian",
+      "tiktok" -> "https://www.tiktok.com/@guardian",
+      "youtube" -> "https://www.youtube.com/user/TheGuardian",
+    )
+
+    val urls = if (edition == "au") auLinks else defaultLinks
+
+    socials.map { case (key, displayName) =>
+      FooterLink(displayName, urls(key), s"$edition : footer : $displayName")
+    }
+  }
+
   def newsletters(edition: String): FooterLink =
     FooterLink(
       text = "Newsletters",
@@ -111,7 +147,7 @@ object FooterLinks {
       dataLinkName = s"$edition : footer : newsletters",
     )
 
-  val ukListTwo = List(
+  val ukListTwo: List[FooterLink] = List(
     allTopics("uk"),
     allWriters("uk"),
     FooterLink(
@@ -121,10 +157,8 @@ object FooterLinks {
     ),
     taxStrategy("uk"),
     digitalNewspaperArchive,
-    facebook("uk"),
-    youtube("uk"),
-    instagram("uk"),
-    linkedin("uk"),
+    newsletters("uk"),
+  ) ++ socialLinks("uk") ++ List(
     newsletters("uk"),
   )
 
@@ -133,10 +167,7 @@ object FooterLinks {
     allWriters("us"),
     digitalNewspaperArchive,
     taxStrategy("us"),
-    facebook("us"),
-    youtube("us"),
-    instagram("us"),
-    linkedin("us"),
+  ) ++ socialLinks("us") ++ List(
     newsletters("us"),
   )
 
@@ -145,10 +176,7 @@ object FooterLinks {
     allWriters("au"),
     digitalNewspaperArchive,
     taxStrategy("au"),
-    facebook("au"),
-    youtube("au"),
-    instagram("au"),
-    linkedin("au"),
+  ) ++ socialLinks("au") ++ List(
     newsletters("au"),
   )
 
@@ -157,10 +185,7 @@ object FooterLinks {
     allWriters("international"),
     digitalNewspaperArchive,
     taxStrategy("international"),
-    facebook("international"),
-    youtube("international"),
-    instagram("international"),
-    linkedin("international"),
+  ) ++ socialLinks("int") ++ List(
     newsletters("international"),
   )
 
