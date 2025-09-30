@@ -2848,17 +2848,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial-core@npm:27.1.0":
-  version: 27.1.0
-  resolution: "@guardian/commercial-core@npm:27.1.0"
+"@guardian/commercial-core@npm:28.0.0":
+  version: 28.0.0
+  resolution: "@guardian/commercial-core@npm:28.0.0"
   dependencies:
     "@guardian/ab-core": "npm:8.0.1"
-    "@guardian/libs": "npm:22.5.0"
+    "@guardian/libs": "npm:25.2.0"
     "@types/googletag": "npm:~3.3.0"
   peerDependencies:
-    "@guardian/ab-core": 8.0.1
-    "@guardian/libs": 22.5.0
-  checksum: 10c0/1ac790dddf212efef61a8f06a3c581a1d98df3b16abc3f4d767dfbef7161f168c63b2ef8988d38e102055f8f2ff13ae312072f3f243984fcfe15ae42e5b3cbd9
+    "@guardian/ab-core": ^8.0.1
+    "@guardian/libs": ^25.2.0
+  checksum: 10c0/8ca720a7fe7afa2cc0f182106cce990b316b6b77fb9cd58693b4417497d80286316211cfaf3999670a037f132da96c22f978b2ec4552709762d5dd4d32880afe
   languageName: node
   linkType: hard
 
@@ -2931,12 +2931,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial-core": "npm:27.1.0"
+    "@guardian/commercial-core": "npm:28.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/eslint-config-typescript": "npm:9.0.1"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:25.3.0"
+    "@guardian/libs": "npm:26.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3091,22 +3091,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:22.5.0":
-  version: 22.5.0
-  resolution: "@guardian/libs@npm:22.5.0"
-  peerDependencies:
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/6199ef6b64949328d4560e44f645cd0211a0641da6ecd3193aaee034558a44ca25ab93ef54d7bdac6105cd96370115d013658da9cd90367d1eb59a18a6026f33
-  languageName: node
-  linkType: hard
-
-"@guardian/libs@npm:25.3.0":
-  version: 25.3.0
-  resolution: "@guardian/libs@npm:25.3.0"
+"@guardian/libs@npm:25.2.0":
+  version: 25.2.0
+  resolution: "@guardian/libs@npm:25.2.0"
   dependencies:
     "@guardian/ophan-tracker-js": "npm:2.2.10"
   peerDependencies:
@@ -3116,7 +3103,23 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/655513a6d4bda1c14355aa353ab2edbc767d8495e5682196539b026ec1bbe57064904eeeabafaffc3a86807d394f09dfacd9a6fe011378ae27a11c710ce8da17
+  checksum: 10c0/41dd40a6c2ac0d9270924e5b4c2d3e6b703c1aaf8dd84f7a69cd76d4250a6782bd98d9c5e8508d6abd781bf3f2bdf57b001634fb88e9ac8597ff06b728eff998
+  languageName: node
+  linkType: hard
+
+"@guardian/libs@npm:26.0.0":
+  version: 26.0.0
+  resolution: "@guardian/libs@npm:26.0.0"
+  dependencies:
+    "@guardian/ophan-tracker-js": "npm:2.2.10"
+  peerDependencies:
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.6.2
+    typescript: ~5.5.2
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/3ccd52f63345282ef19c9b24d12f3f643f159583d918eebd549e160405cb0fab407185812a709a948ce9b20ef8be45dee8381a0d7390d89e5d7f0d61f1a9b6b6
   languageName: node
   linkType: hard
 
