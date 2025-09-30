@@ -79,59 +79,60 @@ object FooterLinks {
     FooterLink("About us", "/about", "uk : footer : about us"),
     help("uk"),
     complaintsAndCorrections,
+    FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
+    tipUsOff("uk"),
     secureDrop,
-    workForUs("uk"),
     privacyPolicy,
     cookiePolicy,
+    modernSlaveryActStatement("uk"),
+    taxStrategy("uk"),
     termsAndConditions,
-    FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
   )
 
   val usListOne = List(
     FooterLink("About us", "/info/about-guardian-us", "us : footer : about us"),
     help("us"),
     complaintsAndCorrections,
+    FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
+    tipUsOff("us"),
     secureDrop,
-    workForUs("us"),
     privacyPolicy,
     cookiePolicy,
+    taxStrategy("us"),
     termsAndConditions,
-    FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
   )
 
   val auListOne = List(
     FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
     FooterLink("Information", "/info", "au : footer : information"),
-    complaintsAndCorrections,
     help("au"),
-    secureDrop,
-    workForUs("australia"),
-    privacyPolicy,
-    termsAndConditions,
+    complaintsAndCorrections,
     FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
+    tipUsOff("au"),
+    secureDrop,
+    privacyPolicy,
+    cookiePolicy,
+    taxStrategy("au"),
+    termsAndConditions,
   )
 
   val intListOne = List(
+    FooterLink("About us", "/about", "international : footer : about us"),
     help("international"),
     complaintsAndCorrections,
+    FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
+    tipUsOff("international"),
     secureDrop,
-    workForUs("international"),
     privacyPolicy,
     cookiePolicy,
+    taxStrategy("international"),
     termsAndConditions,
-    FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
   )
 
   /* Column two */
   val ukListTwo = List(
     allTopics("uk"),
     allWriters("uk"),
-    FooterLink(
-      "Modern Slavery Act",
-      "https://uploads.guim.co.uk/2025/09/05/Modern_Slavery_Statement_2025.pdf",
-      "uk : footer : modern slavery act statement",
-    ),
-    taxStrategy("uk"),
     digitalNewspaperArchive,
     facebook("uk"),
     youtube("uk"),
@@ -144,7 +145,6 @@ object FooterLinks {
     allTopics("us"),
     allWriters("us"),
     digitalNewspaperArchive,
-    taxStrategy("us"),
     facebook("us"),
     youtube("us"),
     instagram("us"),
@@ -183,7 +183,7 @@ object FooterLinks {
     FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
-    FooterLink("Tips", "https://www.theguardian.com/tips", "uk : footer : tips"),
+    workForUs("uk"),
     accessibilitySettings,
   )
 
@@ -195,7 +195,7 @@ object FooterLinks {
     ),
     FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
-    FooterLink("Tips", "https://www.theguardian.com/tips", "us : footer : tips"),
+    workForUs("us"),
     accessibilitySettings,
   )
 
@@ -206,6 +206,7 @@ object FooterLinks {
       "https://ausadvertising.theguardian.com/",
       "au : footer : advertise with us",
     ),
+    workForUs("australia"),
     cookiePolicy,
     FooterLink("Tips", "https://www.theguardian.com/tips", "au : footer : tips"),
     accessibilitySettings,
@@ -224,6 +225,7 @@ object FooterLinks {
     ),
     FooterLink("Tips", "https://www.theguardian.com/tips", "int : footer : tips"),
     accessibilitySettings,
+    workForUs("international"),
   )
 
   def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
