@@ -5,6 +5,7 @@ import common.editions.Uk.{networkFrontId => UK}
 import common.editions.Us.{networkFrontId => US}
 import common.editions.Au.{networkFrontId => AU}
 import common.editions.International.{networkFrontId => INT}
+import common.editions.Europe.{networkFrontId => EUR}
 
 case class FooterLink(
     text: String,
@@ -64,66 +65,62 @@ object FooterLinks {
       dataLinkName = s"$edition : footer : newsletters",
     )
   }
-
-    def modernSlaveryActStatement(edition: String): FooterLink = {
-      FooterLink(
-        "Modern Slavery Act",
-        "https://uploads.guim.co.uk/2025/09/05/Modern_Slavery_Statement_2025.pdf",
-        s"$edition : footer : modern slavery act statement",
-      )
-    }
-
-    def tipUsOff(edition: String): FooterLink = {
-      FooterLink("Tip us off", "https://www.theguardian.com/tips", s"$edition : footer : tips")
-    }
-
+  def modernSlaveryActStatement(edition: String): FooterLink = {
+    FooterLink(
+      "Modern Slavery Act",
+      "https://uploads.guim.co.uk/2025/09/05/Modern_Slavery_Statement_2025.pdf",
+      s"$edition : footer : modern slavery act statement",
+    )
+  }
+  def tipUsOff(edition: String): FooterLink = {
+    FooterLink("Tip us off", "https://www.theguardian.com/tips", s"$edition : footer : tips")
+  }
   def searchJobs(edition: String): FooterLink = {
     FooterLink("Search jobs", "https://jobs.theguardian.com", s"$edition : footer : jobs")
   }
 
+  /* Column one */
 
-    /* Column one */
+  val ukListOne = List(
+    FooterLink("About us", "/about", s"$UK : footer : about us"),
+    help(UK),
+    complaintsAndCorrections,
+    FooterLink("Contact us", "/help/contact-us", s"$UK : footer : contact us"),
+    tipUsOff(UK),
+    secureDrop,
+    privacyPolicy,
+    cookiePolicy,
+    modernSlaveryActStatement(UK),
+    taxStrategy(UK),
+    termsAndConditions,
+  )
 
-    val ukListOne = List(
-      FooterLink("About us", "/about", s"$UK : footer : about us"),
-      help(UK),
-      complaintsAndCorrections,
-      FooterLink("Contact us", "/help/contact-us", s"$UK : footer : contact us"),
-      tipUsOff(UK),
-      secureDrop,
-      privacyPolicy,
-      cookiePolicy,
-      modernSlaveryActStatement(UK),
-      taxStrategy(UK),
-      termsAndConditions,
-    )
+  val usListOne = List(
+    FooterLink("About us", "/info/about-guardian-us", s"$US : footer : about us"),
+    help(US),
+    complaintsAndCorrections,
+    FooterLink("Contact us", "/info/about-guardian-us/contact", s"$US : footer : contact us"),
+    tipUsOff(US),
+    secureDrop,
+    privacyPolicy,
+    cookiePolicy,
+    taxStrategy(US),
+    termsAndConditions,
+  )
 
-    val usListOne = List(
-      FooterLink("About us", "/info/about-guardian-us", s"$US : footer : about us"),
-      help(US),
-      complaintsAndCorrections,
-      FooterLink("Contact us", "/info/about-guardian-us/contact", s"$US : footer : contact us"),
-      tipUsOff(US),
-      secureDrop,
-      privacyPolicy,
-      cookiePolicy,
-      taxStrategy(US),
-      termsAndConditions,
-    )
-
-    val auListOne = List(
-      FooterLink("About us", "/info/about-guardian-australia", s"$AU : footer : about us"),
-      FooterLink("Information", "/info", s"$AU : footer : information"),
-      help(AU),
-      complaintsAndCorrections,
-      FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", s"$AU : footer : contact us"),
-      tipUsOff(AU),
-      secureDrop,
-      privacyPolicy,
-      cookiePolicy,
-      taxStrategy(AU),
-      termsAndConditions,
-    )
+  val auListOne = List(
+    FooterLink("About us", "/info/about-guardian-australia", s"$AU : footer : about us"),
+    FooterLink("Information", "/info", s"$AU : footer : information"),
+    help(AU),
+    complaintsAndCorrections,
+    FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", s"$AU : footer : contact us"),
+    tipUsOff(AU),
+    secureDrop,
+    privacyPolicy,
+    cookiePolicy,
+    taxStrategy(AU),
+    termsAndConditions,
+  )
 
   def genericListOne(edition: String): List[FooterLink] = {
     List(
@@ -140,39 +137,39 @@ object FooterLinks {
     )
   }
 
-    /* Column two */
-    val ukListTwo = List(
-      allTopics(UK),
-      allWriters(UK),
-      newsletters(UK),
-      digitalNewspaperArchive,
-      facebook(UK),
-      instagram(UK),
-      linkedin(UK),
-      youtube(UK),
-    )
+  /* Column two */
+  val ukListTwo = List(
+    allTopics(UK),
+    allWriters(UK),
+    newsletters(UK),
+    digitalNewspaperArchive,
+    facebook(UK),
+    instagram(UK),
+    linkedin(UK),
+    youtube(UK),
+  )
 
-    val usListTwo = List(
-      allTopics(US),
-      allWriters(US),
-      newsletters(US),
-      digitalNewspaperArchive,
-      facebook(US),
-      instagram(US),
-      linkedin(US),
-      youtube(US),
-    )
+  val usListTwo = List(
+    allTopics(US),
+    allWriters(US),
+    newsletters(US),
+    digitalNewspaperArchive,
+    facebook(US),
+    instagram(US),
+    linkedin(US),
+    youtube(US),
+  )
 
-    val auListTwo = List(
-      allTopics(AU),
-      allWriters(AU),
-      newsletters(AU),
-      digitalNewspaperArchive,
-      facebook(AU),
-      instagram(AU),
-      linkedin(AU),
-      youtube(AU),
-    )
+  val auListTwo = List(
+    allTopics(AU),
+    allWriters(AU),
+    newsletters(AU),
+    digitalNewspaperArchive,
+    facebook(AU),
+    instagram(AU),
+    linkedin(AU),
+    youtube(AU),
+  )
 
   def genericListTwo(edition: String): List[FooterLink] = {
     List(
@@ -187,39 +184,39 @@ object FooterLinks {
     )
   }
 
-    /* Column three */
+  /* Column three */
 
-    val ukListThree = List(
-      FooterLink("Advertise with us", "https://advertising.theguardian.com", s"$UK : footer : advertise with us"),
-      FooterLink("Guardian Labs", "/guardian-labs", s"$UK : footer : guardian labs"),
-      searchJobs(UK),
-      FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", s"$UK : footer : patrons"),
-      workForUs(UK),
-      accessibilitySettings,
-    )
+  val ukListThree = List(
+    FooterLink("Advertise with us", "https://advertising.theguardian.com", s"$UK : footer : advertise with us"),
+    FooterLink("Guardian Labs", "/guardian-labs", s"$UK : footer : guardian labs"),
+    searchJobs(UK),
+    FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", s"$UK : footer : patrons"),
+    workForUs(UK),
+    accessibilitySettings,
+  )
 
-    val usListThree = List(
-      FooterLink(
-        "Advertise with us",
-        "https://usadvertising.theguardian.com",
-        s"$US : footer : advertise with us",
-      ),
-      FooterLink("Guardian Labs", "/guardian-labs-us", s"$US : footer : guardian labs"),
-      searchJobs(US),
-      workForUs(US),
-      accessibilitySettings,
-    )
+  val usListThree = List(
+    FooterLink(
+      "Advertise with us",
+      "https://usadvertising.theguardian.com",
+      s"$US : footer : advertise with us",
+    ),
+    FooterLink("Guardian Labs", "/guardian-labs-us", s"$US : footer : guardian labs"),
+    searchJobs(US),
+    workForUs(US),
+    accessibilitySettings,
+  )
 
-    val auListThree = List(
-      FooterLink(
-        "Advertise with us",
-        "https://ausadvertising.theguardian.com/",
-        s"$AU : footer : advertise with us",
-      ),
-      FooterLink("Guardian Labs", "/guardian-labs-australia", s"$AU : footer : guardian labs"),
-      workForUs(AU),
-      accessibilitySettings,
-    )
+  val auListThree = List(
+    FooterLink(
+      "Advertise with us",
+      "https://ausadvertising.theguardian.com/",
+      s"$AU : footer : advertise with us",
+    ),
+    FooterLink("Guardian Labs", "/guardian-labs-australia", s"$AU : footer : guardian labs"),
+    workForUs(AU),
+    accessibilitySettings,
+  )
 
   def genericListThree(edition: String): List[FooterLink] = {
     List(
@@ -233,15 +230,14 @@ object FooterLinks {
       accessibilitySettings,
       workForUs(edition),
     )
-    }
-
-
-    def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
-      edition match {
-        case editions.Uk => Seq(ukListOne, ukListTwo, ukListThree)
-        case editions.Us => Seq(usListOne, usListTwo, usListThree)
-        case editions.Au => Seq(auListOne, auListTwo, auListThree)
-        case editions.International => Seq(genericListOne(INT), genericListTwo(INT), genericListThree(INT))
-      }
   }
 
+  def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
+    edition match {
+      case editions.Uk            => Seq(ukListOne, ukListTwo, ukListThree)
+      case editions.Us            => Seq(usListOne, usListTwo, usListThree)
+      case editions.Au            => Seq(auListOne, auListTwo, auListThree)
+      case editions.International => Seq(genericListOne(INT), genericListTwo(INT), genericListThree(INT))
+      case editions.Europe        => Seq(genericListOne(EUR), genericListTwo(EUR), genericListThree(EUR))
+    }
+}
