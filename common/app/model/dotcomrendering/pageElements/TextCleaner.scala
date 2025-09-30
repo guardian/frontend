@@ -152,11 +152,13 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     // <strong> is removed in place of having a <h2> element
     firstStrong.foreach(_.remove())
 
-    captionTitle.html(captionTitleText)
-
-    galleryCaption.body.prependChild(captionTitle)
-
-    galleryCaption
+    if (captionTitleText.isEmpty) {
+      galleryCaption
+    } else {
+      captionTitle.html(captionTitleText)
+      galleryCaption.body.prependChild(captionTitle)
+      galleryCaption
+    }
   }
 }
 
