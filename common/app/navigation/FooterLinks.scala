@@ -59,6 +59,7 @@ object FooterLinks {
       url = s"/email-newsletters?INTCMP=DOTCOM_FOOTER_NEWSLETTER_${edition.toUpperCase}",
       dataLinkName = s"$edition : footer : newsletters",
     )
+  }
 
     def modernSlaveryActStatement(edition: String): FooterLink = {
       FooterLink(
@@ -66,175 +67,175 @@ object FooterLinks {
         "https://uploads.guim.co.uk/2025/09/05/Modern_Slavery_Statement_2025.pdf",
         s"$edition : footer : modern slavery act statement",
       )
-  }
+    }
+
     def tipUsOff(edition: String): FooterLink = {
       FooterLink("Tip us off", "https://www.theguardian.com/tips", s"$edition : footer : tips")
-
     }
 
 
-  /* Column one */
+    /* Column one */
 
-  val ukListOne = List(
-    FooterLink("About us", "/about", "uk : footer : about us"),
-    help("uk"),
-    complaintsAndCorrections,
-    FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
-    tipUsOff("uk"),
-    secureDrop,
-    privacyPolicy,
-    cookiePolicy,
-    modernSlaveryActStatement("uk"),
-    taxStrategy("uk"),
-    termsAndConditions,
-  )
+    val ukListOne = List(
+      FooterLink("About us", "/about", "uk : footer : about us"),
+      help("uk"),
+      complaintsAndCorrections,
+      FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
+      tipUsOff("uk"),
+      secureDrop,
+      privacyPolicy,
+      cookiePolicy,
+      modernSlaveryActStatement("uk"),
+      taxStrategy("uk"),
+      termsAndConditions,
+    )
 
-  val usListOne = List(
-    FooterLink("About us", "/info/about-guardian-us", "us : footer : about us"),
-    help("us"),
-    complaintsAndCorrections,
-    FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
-    tipUsOff("us"),
-    secureDrop,
-    privacyPolicy,
-    cookiePolicy,
-    taxStrategy("us"),
-    termsAndConditions,
-  )
+    val usListOne = List(
+      FooterLink("About us", "/info/about-guardian-us", "us : footer : about us"),
+      help("us"),
+      complaintsAndCorrections,
+      FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
+      tipUsOff("us"),
+      secureDrop,
+      privacyPolicy,
+      cookiePolicy,
+      taxStrategy("us"),
+      termsAndConditions,
+    )
 
-  val auListOne = List(
-    FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
-    FooterLink("Information", "/info", "au : footer : information"),
-    help("au"),
-    complaintsAndCorrections,
-    FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
-    tipUsOff("au"),
-    secureDrop,
-    privacyPolicy,
-    cookiePolicy,
-    taxStrategy("au"),
-    termsAndConditions,
-  )
+    val auListOne = List(
+      FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
+      FooterLink("Information", "/info", "au : footer : information"),
+      help("au"),
+      complaintsAndCorrections,
+      FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
+      tipUsOff("au"),
+      secureDrop,
+      privacyPolicy,
+      cookiePolicy,
+      taxStrategy("au"),
+      termsAndConditions,
+    )
 
-  val intListOne = List(
-    FooterLink("About us", "/about", "international : footer : about us"),
-    help("international"),
-    complaintsAndCorrections,
-    FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
-    tipUsOff("international"),
-    secureDrop,
-    privacyPolicy,
-    cookiePolicy,
-    taxStrategy("international"),
-    termsAndConditions,
-  )
+    val intListOne = List(
+      FooterLink("About us", "/about", "international : footer : about us"),
+      help("international"),
+      complaintsAndCorrections,
+      FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
+      tipUsOff("international"),
+      secureDrop,
+      privacyPolicy,
+      cookiePolicy,
+      taxStrategy("international"),
+      termsAndConditions,
+    )
 
-  /* Column two */
-  val ukListTwo = List(
-    allTopics("uk"),
-    allWriters("uk"),
-    digitalNewspaperArchive,
-    facebook("uk"),
-    youtube("uk"),
-    instagram("uk"),
-    linkedin("uk"),
-    newsletters("uk"),
-  )
+    /* Column two */
+    val ukListTwo = List(
+      allTopics("uk"),
+      allWriters("uk"),
+      digitalNewspaperArchive,
+      facebook("uk"),
+      youtube("uk"),
+      instagram("uk"),
+      linkedin("uk"),
+      newsletters("uk"),
+    )
 
-  val usListTwo = List(
-    allTopics("us"),
-    allWriters("us"),
-    digitalNewspaperArchive,
-    facebook("us"),
-    youtube("us"),
-    instagram("us"),
-    linkedin("us"),
-    newsletters("us"),
-  )
+    val usListTwo = List(
+      allTopics("us"),
+      allWriters("us"),
+      digitalNewspaperArchive,
+      facebook("us"),
+      youtube("us"),
+      instagram("us"),
+      linkedin("us"),
+      newsletters("us"),
+    )
 
-  val auListTwo = List(
-    allTopics("au"),
-    allWriters("au"),
-    digitalNewspaperArchive,
-    taxStrategy("au"),
-    facebook("au"),
-    youtube("au"),
-    instagram("au"),
-    linkedin("au"),
-    newsletters("au"),
-  )
+    val auListTwo = List(
+      allTopics("au"),
+      allWriters("au"),
+      digitalNewspaperArchive,
+      taxStrategy("au"),
+      facebook("au"),
+      youtube("au"),
+      instagram("au"),
+      linkedin("au"),
+      newsletters("au"),
+    )
 
-  val intListTwo = List(
-    allTopics("international"),
-    allWriters("international"),
-    digitalNewspaperArchive,
-    taxStrategy("international"),
-    facebook("international"),
-    youtube("international"),
-    instagram("international"),
-    linkedin("international"),
-    newsletters("international"),
-  )
+    val intListTwo = List(
+      allTopics("international"),
+      allWriters("international"),
+      digitalNewspaperArchive,
+      taxStrategy("international"),
+      facebook("international"),
+      youtube("international"),
+      instagram("international"),
+      linkedin("international"),
+      newsletters("international"),
+    )
 
-  /* Column three */
+    /* Column three */
 
-  val ukListThree = List(
-    FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
-    FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
-    FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
-    FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
-    workForUs("uk"),
-    accessibilitySettings,
-  )
+    val ukListThree = List(
+      FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
+      FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
+      FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
+      FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
+      workForUs("uk"),
+      accessibilitySettings,
+    )
 
-  val usListThree = List(
-    FooterLink(
-      "Advertise with us",
-      "https://usadvertising.theguardian.com",
-      "us : footer : advertise with us",
-    ),
-    FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
-    FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
-    workForUs("us"),
-    accessibilitySettings,
-  )
+    val usListThree = List(
+      FooterLink(
+        "Advertise with us",
+        "https://usadvertising.theguardian.com",
+        "us : footer : advertise with us",
+      ),
+      FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
+      FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
+      workForUs("us"),
+      accessibilitySettings,
+    )
 
-  val auListThree = List(
-    FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
-    FooterLink(
-      "Advertise with us",
-      "https://ausadvertising.theguardian.com/",
-      "au : footer : advertise with us",
-    ),
-    workForUs("australia"),
-    cookiePolicy,
-    FooterLink("Tips", "https://www.theguardian.com/tips", "au : footer : tips"),
-    accessibilitySettings,
-  )
+    val auListThree = List(
+      FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
+      FooterLink(
+        "Advertise with us",
+        "https://ausadvertising.theguardian.com/",
+        "au : footer : advertise with us",
+      ),
+      workForUs("australia"),
+      cookiePolicy,
+      FooterLink("Tips", "https://www.theguardian.com/tips", "au : footer : tips"),
+      accessibilitySettings,
+    )
 
-  val intListThree = List(
-    FooterLink(
-      "Advertise with us",
-      "https://advertising.theguardian.com",
-      "international : footer : advertise with us",
-    ),
-    FooterLink(
-      "Search UK jobs",
-      "https://jobs.theguardian.com",
-      "international : footer : uk-jobs",
-    ),
-    FooterLink("Tips", "https://www.theguardian.com/tips", "int : footer : tips"),
-    accessibilitySettings,
-    workForUs("international"),
-  )
+    val intListThree = List(
+      FooterLink(
+        "Advertise with us",
+        "https://advertising.theguardian.com",
+        "international : footer : advertise with us",
+      ),
+      FooterLink(
+        "Search UK jobs",
+        "https://jobs.theguardian.com",
+        "international : footer : uk-jobs",
+      ),
+      FooterLink("Tips", "https://www.theguardian.com/tips", "int : footer : tips"),
+      accessibilitySettings,
+      workForUs("international"),
+    )
 
-  def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
-    edition match {
-      case editions.Uk            => Seq(ukListOne, ukListTwo, ukListThree)
-      case editions.Us            => Seq(usListOne, usListTwo, usListThree)
-      case editions.Au            => Seq(auListOne, auListTwo, auListThree)
-      case editions.International => Seq(intListOne, intListTwo, intListThree)
-      case _                      => Seq(intListOne, intListTwo, intListThree)
-    }
+    def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
+      edition match {
+        case editions.Uk => Seq(ukListOne, ukListTwo, ukListThree)
+        case editions.Us => Seq(usListOne, usListTwo, usListThree)
+        case editions.Au => Seq(auListOne, auListTwo, auListThree)
+        case editions.International => Seq(intListOne, intListTwo, intListThree)
+        case _ => Seq(intListOne, intListTwo, intListThree)
+      }
+  }
 
-}
