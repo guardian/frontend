@@ -125,18 +125,20 @@ object FooterLinks {
       termsAndConditions,
     )
 
-    val intListOne = List(
-      FooterLink("About us", "/about", "international : footer : about us"),
-      help("international"),
+  def genericListOne(edition: String): List[FooterLink] = {
+    List(
+      FooterLink("About us", "/about", s"$edition : footer : about us"),
+      help(edition),
       complaintsAndCorrections,
-      FooterLink("Contact us", "/help/contact-us", "international : footer : contact us"),
-      tipUsOff("international"),
+      FooterLink("Contact us", "/help/contact-us", s"$edition : footer : contact us"),
+      tipUsOff(edition),
       secureDrop,
       privacyPolicy,
       cookiePolicy,
-      taxStrategy("international"),
+      taxStrategy(edition),
       termsAndConditions,
     )
+  }
 
     /* Column two */
     val ukListTwo = List(
@@ -172,16 +174,18 @@ object FooterLinks {
       youtube(AU),
     )
 
-    val intListTwo = List(
-      allTopics("international"),
-      allWriters("international"),
-      newsletters("international"),
+  def genericListTwo(edition: String): List[FooterLink] = {
+    List(
+      allTopics(edition),
+      allWriters(edition),
+      newsletters(edition),
       digitalNewspaperArchive,
-      facebook("international"),
-      instagram("international"),
-      linkedin("international"),
-      youtube("international"),
+      facebook(edition),
+      instagram(edition),
+      linkedin(edition),
+      youtube(edition),
     )
+  }
 
     /* Column three */
 
@@ -217,25 +221,27 @@ object FooterLinks {
       accessibilitySettings,
     )
 
-    val intListThree = List(
+  def genericListThree(edition: String): List[FooterLink] = {
+    List(
       FooterLink(
         "Advertise with us",
         "https://advertising.theguardian.com",
-        "international : footer : advertise with us",
+        s"$edition : footer : advertise with us",
       ),
-      searchJobs("int"), // may need to be changed for a specific title
-      FooterLink("Tips", "https://www.theguardian.com/tips", "int : footer : tips"),
+      FooterLink("Search UK jobs", "https://jobs.theguardian.com", s"$edition : footer : jobs"),
+      FooterLink("Tips", "https://www.theguardian.com/tips", s"$edition : footer : tips"),
       accessibilitySettings,
-      workForUs("international"),
+      workForUs(edition),
     )
+    }
+
 
     def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =
       edition match {
         case editions.Uk => Seq(ukListOne, ukListTwo, ukListThree)
         case editions.Us => Seq(usListOne, usListTwo, usListThree)
         case editions.Au => Seq(auListOne, auListTwo, auListThree)
-        case editions.International => Seq(intListOne, intListTwo, intListThree)
-        case _ => Seq(intListOne, intListTwo, intListThree)
+        case editions.International => Seq(genericListOne(INT), genericListTwo(INT), genericListThree(INT))
       }
   }
 
