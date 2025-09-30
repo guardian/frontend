@@ -73,6 +73,10 @@ object FooterLinks {
       FooterLink("Tip us off", "https://www.theguardian.com/tips", s"$edition : footer : tips")
     }
 
+  def searchJobs(edition: String): FooterLink = {
+    FooterLink("Search jobs", "https://jobs.theguardian.com", s"$edition : footer : jobs")
+  }
+
 
     /* Column one */
 
@@ -134,47 +138,45 @@ object FooterLinks {
     val ukListTwo = List(
       allTopics("uk"),
       allWriters("uk"),
+      newsletters("uk"),
       digitalNewspaperArchive,
       facebook("uk"),
-      youtube("uk"),
       instagram("uk"),
       linkedin("uk"),
-      newsletters("uk"),
+      youtube("uk"),
     )
 
     val usListTwo = List(
       allTopics("us"),
       allWriters("us"),
+      newsletters("us"),
       digitalNewspaperArchive,
       facebook("us"),
-      youtube("us"),
       instagram("us"),
       linkedin("us"),
-      newsletters("us"),
+      youtube("us"),
     )
 
     val auListTwo = List(
       allTopics("au"),
       allWriters("au"),
+      newsletters("au"),
       digitalNewspaperArchive,
-      taxStrategy("au"),
       facebook("au"),
-      youtube("au"),
       instagram("au"),
       linkedin("au"),
-      newsletters("au"),
+      youtube("au"),
     )
 
     val intListTwo = List(
       allTopics("international"),
       allWriters("international"),
+      newsletters("international"),
       digitalNewspaperArchive,
-      taxStrategy("international"),
       facebook("international"),
-      youtube("international"),
       instagram("international"),
       linkedin("international"),
-      newsletters("international"),
+      youtube("international"),
     )
 
     /* Column three */
@@ -182,7 +184,7 @@ object FooterLinks {
     val ukListThree = List(
       FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
       FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
-      FooterLink("Search jobs", "https://jobs.theguardian.com", "uk : footer : jobs"),
+      searchJobs("uk"),
       FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
       workForUs("uk"),
       accessibilitySettings,
@@ -195,21 +197,19 @@ object FooterLinks {
         "us : footer : advertise with us",
       ),
       FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
-      FooterLink("Search jobs", "https://jobs.theguardian.com", "us : footer : jobs"),
+      searchJobs("us"),
       workForUs("us"),
       accessibilitySettings,
     )
 
     val auListThree = List(
-      FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
       FooterLink(
         "Advertise with us",
         "https://ausadvertising.theguardian.com/",
         "au : footer : advertise with us",
       ),
+      FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
       workForUs("australia"),
-      cookiePolicy,
-      FooterLink("Tips", "https://www.theguardian.com/tips", "au : footer : tips"),
       accessibilitySettings,
     )
 
@@ -219,11 +219,7 @@ object FooterLinks {
         "https://advertising.theguardian.com",
         "international : footer : advertise with us",
       ),
-      FooterLink(
-        "Search UK jobs",
-        "https://jobs.theguardian.com",
-        "international : footer : uk-jobs",
-      ),
+      searchJobs("int"), // may need to be changed for a specific title
       FooterLink("Tips", "https://www.theguardian.com/tips", "int : footer : tips"),
       accessibilitySettings,
       workForUs("international"),
