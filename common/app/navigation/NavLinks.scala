@@ -176,6 +176,7 @@ object NavLinks {
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
   val theFilterUk = NavLink("The Filter", "/uk/thefilter")
+  val theFilterUs = NavLink("The Filter", "/thefilter-us")
   val food = NavLink("Food", "/food")
   val foodAu = NavLink("Food", "/au/food")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")
@@ -580,6 +581,7 @@ object NavLinks {
   )
   val usLifestylePillar = ukLifestylePillar.copy(
     children = List(
+      theFilterUs,
       usWellness,
       fashion,
       food,
