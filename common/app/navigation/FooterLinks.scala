@@ -1,6 +1,10 @@
 package navigation
 
 import common.{Edition, editions}
+import common.editions.Uk.{networkFrontId => UK}
+import common.editions.Us.{networkFrontId => US}
+import common.editions.Au.{networkFrontId => AU}
+import common.editions.International.{networkFrontId => INT}
 
 case class FooterLink(
     text: String,
@@ -81,43 +85,43 @@ object FooterLinks {
     /* Column one */
 
     val ukListOne = List(
-      FooterLink("About us", "/about", "uk : footer : about us"),
-      help("uk"),
+      FooterLink("About us", "/about", s"$UK : footer : about us"),
+      help(UK),
       complaintsAndCorrections,
-      FooterLink("Contact us", "/help/contact-us", "uk : footer : contact us"),
-      tipUsOff("uk"),
+      FooterLink("Contact us", "/help/contact-us", s"$UK : footer : contact us"),
+      tipUsOff(UK),
       secureDrop,
       privacyPolicy,
       cookiePolicy,
-      modernSlaveryActStatement("uk"),
-      taxStrategy("uk"),
+      modernSlaveryActStatement(UK),
+      taxStrategy(UK),
       termsAndConditions,
     )
 
     val usListOne = List(
-      FooterLink("About us", "/info/about-guardian-us", "us : footer : about us"),
-      help("us"),
+      FooterLink("About us", "/info/about-guardian-us", s"$US : footer : about us"),
+      help(US),
       complaintsAndCorrections,
-      FooterLink("Contact us", "/info/about-guardian-us/contact", "us : footer : contact us"),
-      tipUsOff("us"),
+      FooterLink("Contact us", "/info/about-guardian-us/contact", s"$US : footer : contact us"),
+      tipUsOff(US),
       secureDrop,
       privacyPolicy,
       cookiePolicy,
-      taxStrategy("us"),
+      taxStrategy(US),
       termsAndConditions,
     )
 
     val auListOne = List(
-      FooterLink("About us", "/info/about-guardian-australia", "au : footer : about us"),
-      FooterLink("Information", "/info", "au : footer : information"),
-      help("au"),
+      FooterLink("About us", "/info/about-guardian-australia", s"$AU : footer : about us"),
+      FooterLink("Information", "/info", s"$AU : footer : information"),
+      help(AU),
       complaintsAndCorrections,
-      FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", "au : footer : contact us"),
-      tipUsOff("au"),
+      FooterLink("Contact us", "/info/2013/may/26/contact-guardian-australia", s"$AU : footer : contact us"),
+      tipUsOff(AU),
       secureDrop,
       privacyPolicy,
       cookiePolicy,
-      taxStrategy("au"),
+      taxStrategy(AU),
       termsAndConditions,
     )
 
@@ -136,36 +140,36 @@ object FooterLinks {
 
     /* Column two */
     val ukListTwo = List(
-      allTopics("uk"),
-      allWriters("uk"),
-      newsletters("uk"),
+      allTopics(UK),
+      allWriters(UK),
+      newsletters(UK),
       digitalNewspaperArchive,
-      facebook("uk"),
-      instagram("uk"),
-      linkedin("uk"),
-      youtube("uk"),
+      facebook(UK),
+      instagram(UK),
+      linkedin(UK),
+      youtube(UK),
     )
 
     val usListTwo = List(
-      allTopics("us"),
-      allWriters("us"),
-      newsletters("us"),
+      allTopics(US),
+      allWriters(US),
+      newsletters(US),
       digitalNewspaperArchive,
-      facebook("us"),
-      instagram("us"),
-      linkedin("us"),
-      youtube("us"),
+      facebook(US),
+      instagram(US),
+      linkedin(US),
+      youtube(US),
     )
 
     val auListTwo = List(
-      allTopics("au"),
-      allWriters("au"),
-      newsletters("au"),
+      allTopics(AU),
+      allWriters(AU),
+      newsletters(AU),
       digitalNewspaperArchive,
-      facebook("au"),
-      instagram("au"),
-      linkedin("au"),
-      youtube("au"),
+      facebook(AU),
+      instagram(AU),
+      linkedin(AU),
+      youtube(AU),
     )
 
     val intListTwo = List(
@@ -182,11 +186,11 @@ object FooterLinks {
     /* Column three */
 
     val ukListThree = List(
-      FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
-      FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
-      searchJobs("uk"),
-      FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
-      workForUs("uk"),
+      FooterLink("Advertise with us", "https://advertising.theguardian.com", s"$UK : footer : advertise with us"),
+      FooterLink("Guardian Labs", "/guardian-labs", s"$UK : footer : guardian labs"),
+      searchJobs(UK),
+      FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", s"$UK : footer : patrons"),
+      workForUs(UK),
       accessibilitySettings,
     )
 
@@ -194,11 +198,11 @@ object FooterLinks {
       FooterLink(
         "Advertise with us",
         "https://usadvertising.theguardian.com",
-        "us : footer : advertise with us",
+        s"$US : footer : advertise with us",
       ),
-      FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
-      searchJobs("us"),
-      workForUs("us"),
+      FooterLink("Guardian Labs", "/guardian-labs-us", s"$US : footer : guardian labs"),
+      searchJobs(US),
+      workForUs(US),
       accessibilitySettings,
     )
 
@@ -206,10 +210,10 @@ object FooterLinks {
       FooterLink(
         "Advertise with us",
         "https://ausadvertising.theguardian.com/",
-        "au : footer : advertise with us",
+        s"$AU : footer : advertise with us",
       ),
-      FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
-      workForUs("australia"),
+      FooterLink("Guardian Labs", "/guardian-labs-australia", s"$AU : footer : guardian labs"),
+      workForUs(AU),
       accessibilitySettings,
     )
 
