@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "This test is being used to test v9.46.0 of Prebid ahead of general upgrade.",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 9, 30)),
+    sellByDate = Some(LocalDate.of(2025, 10, 14)),
     exposeClientSide = true,
     highImpact = false,
   )
