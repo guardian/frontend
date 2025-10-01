@@ -14,7 +14,6 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       SourcepointConsentGeolocation,
       GoogleOneTap,
-      HideTrails,
       ConsentOrPayEuropeInternalTest,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
@@ -46,15 +45,6 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
-    )
-
-object HideTrails
-    extends Experiment(
-      name = "hide-trails",
-      description = "Hide card trails on desktop on network fronts",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc5A,
     )
 
 object ConsentOrPayEuropeInternalTest
