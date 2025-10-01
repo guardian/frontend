@@ -103,7 +103,7 @@ jobs:
           paths: 'test-results/**/TEST-*.xml'
         if: always()
 
-      - uses: guardian/actions-riff-raff@v4.1.2
+      - uses: guardian/actions-riff-raff@v4.2.3
         env:
           GU_RIFF_RAFF_ROLE_ARN: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
         if: ${{ env.GU_RIFF_RAFF_ROLE_ARN }}
