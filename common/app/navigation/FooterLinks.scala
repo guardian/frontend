@@ -50,14 +50,6 @@ object FooterLinks {
       "https://uploads.guim.co.uk/2025/09/05/Tax_strategy_for_the_year_ended_31_March_2025.pdf",
       s"${edition} : footer : tax strategy",
     )
-  def facebook(edition: String): FooterLink =
-    FooterLink("Facebook", "https://www.facebook.com/theguardian", s"${edition} : footer : facebook")
-  def youtube(edition: String): FooterLink =
-    FooterLink("YouTube", "https://www.youtube.com/user/TheGuardian", s"${edition} : footer : youtube")
-  def linkedin(edition: String): FooterLink =
-    FooterLink("LinkedIn", "https://www.linkedin.com/company/theguardian", s"${edition} : footer : linkedin")
-  def instagram(edition: String): FooterLink =
-    FooterLink("Instagram", "https://www.instagram.com/guardian", s"${edition} : footer : instagram")
   def newsletters(edition: String): FooterLink = {
     FooterLink(
       text = "Newsletters",
@@ -77,6 +69,54 @@ object FooterLinks {
   }
   def searchJobs(edition: String): FooterLink = {
     FooterLink("Search jobs", "https://jobs.theguardian.com", s"$edition : footer : jobs")
+  }
+
+  def socialLinks(edition: String): Iterable[FooterLink] = {
+    /*
+     * The `socials` list preserves the order of the links in the footer.
+     * Change the order here, if required.
+     */
+    val socials = List(
+      "bluesky" -> "Bluesky",
+      "facebook" -> "Facebook",
+      "instagram" -> "Instagram",
+      "linkedin" -> "LinkedIn",
+      "threads" -> "Threads",
+      "tiktok" -> "TikTok",
+      "youtube" -> "YouTube",
+    )
+
+    val defaultLinks: Map[String, String] = Map(
+      "bluesky" -> "https://bsky.app/profile/theguardian.com",
+      "facebook" -> "https://www.facebook.com/theguardian",
+      "instagram" -> "https://www.instagram.com/guardian",
+      "linkedin" -> "https://www.linkedin.com/company/theguardian",
+      "threads" -> "https://www.threads.com/@guardian",
+      "tiktok" -> "https://www.tiktok.com/@guardian",
+      "youtube" -> "https://www.youtube.com/user/TheGuardian",
+    )
+
+    /* Some editions have regional accounts. We can override the defaults here */
+    val editionOverrides: Map[String, Map[String, String]] = Map(
+      "au" -> Map(
+        "bluesky" -> "https://bsky.app/profile/australia.theguardian.com",
+        "facebook" -> "https://www.facebook.com/theguardianaustralia",
+        "instagram" -> "https://www.instagram.com/guardianaustralia",
+        "linkedin" -> "https://www.linkedin.com/company/theguardianaustralia",
+        "threads" -> "https://www.threads.com/@guardianaustralia",
+        "tiktok" -> "https://www.tiktok.com/@guardianaustralia",
+        "youtube" -> "https://www.youtube.com/@GuardianAustralia",
+      ),
+      "us" -> Map(
+        "bluesky" -> "https://bsky.app/profile/us.theguardian.com",
+        "threads" -> "https://www.threads.com/@guardian_us",
+      ),
+    )
+    val urls: Map[String, String] = defaultLinks ++ editionOverrides.getOrElse(edition, Map.empty)
+
+    socials.map { case (key, displayName) =>
+      FooterLink(displayName, urls(key), s"$edition : footer : $displayName")
+    }
   }
 
   /* Column one */
@@ -143,33 +183,21 @@ object FooterLinks {
     allWriters(UK),
     newsletters(UK),
     digitalNewspaperArchive,
-    facebook(UK),
-    instagram(UK),
-    linkedin(UK),
-    youtube(UK),
-  )
+  ) ++ socialLinks(UK)
 
   val usListTwo = List(
     allTopics(US),
     allWriters(US),
     newsletters(US),
     digitalNewspaperArchive,
-    facebook(US),
-    instagram(US),
-    linkedin(US),
-    youtube(US),
-  )
+  ) ++ socialLinks(US)
 
   val auListTwo = List(
     allTopics(AU),
     allWriters(AU),
     newsletters(AU),
     digitalNewspaperArchive,
-    facebook(AU),
-    instagram(AU),
-    linkedin(AU),
-    youtube(AU),
-  )
+  ) ++ socialLinks(AU)
 
   def genericListTwo(edition: String): List[FooterLink] = {
     List(
@@ -177,11 +205,7 @@ object FooterLinks {
       allWriters(edition),
       newsletters(edition),
       digitalNewspaperArchive,
-      facebook(edition),
-      instagram(edition),
-      linkedin(edition),
-      youtube(edition),
-    )
+    ) ++ socialLinks(edition)
   }
 
   /* Column three */
