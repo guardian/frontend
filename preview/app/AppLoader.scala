@@ -97,6 +97,7 @@ trait AppComponents
     toolsDomainPrefix = "preview",
     oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
     AWSv2.S3Sync,
+    AWSv2.secretsClient,
     system = "preview",
     extraDoNotAuthenticatePathPrefixes = healthCheck.healthChecks.map(_.path),
     requiredEditorialPermissionName = "preview_access",
