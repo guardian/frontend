@@ -18,6 +18,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
   val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
+  val awsSecretsManager = "software.amazon.awssdk" % "secretsmanager" % awsSdk2Version
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
   val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
@@ -58,7 +59,8 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "9.0.2"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "12.0.0"
+  val panDomainHMAC = "com.gu" %% "panda-hmac-play_3-0" % "12.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "4.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
