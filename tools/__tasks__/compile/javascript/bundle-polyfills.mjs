@@ -12,7 +12,10 @@ import { paths } from '../../config.mjs';
 
 const dest = path.resolve(paths.target, 'javascripts', 'vendor');
 const polyfillURL = fs
-	.readFileSync(path.resolve(paths.src, 'javascripts', 'polyfill.io'), 'utf8')
+	.readFileSync(
+		path.resolve(paths.src, 'javascripts', 'polyfill.io.txt'),
+		'utf8',
+	)
 	.trim();
 
 /** @type {import('listr2').ListrTask} */
