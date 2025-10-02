@@ -35,6 +35,7 @@ trait AdminControllers {
     toolsDomainPrefix = "frontend",
     oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
     AWSv2.S3Sync,
+    AWSv2.secretsClient,
     system = "frontend-admin",
     extraDoNotAuthenticatePathPrefixes = Seq(
       // Date: 06 July 2021

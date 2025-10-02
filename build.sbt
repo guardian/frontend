@@ -23,6 +23,7 @@ val common = library("common")
       awsDynamodb,
       awsKinesis,
       awsS3,
+      awsSecretsManager,
       awsSns,
       awsSts, // AWS SDK v1 still used for CAPI-preview related code for now
       awsV2Sts, // AWS SDK v2 used for Fronts API access
@@ -39,6 +40,7 @@ val common = library("common")
       jSoup,
       json4s,
       panDomainAuth,
+      panDomainHMAC,
       editorialPermissions,
       quartzScheduler,
       redisClient,
