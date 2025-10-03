@@ -128,9 +128,9 @@ class InteractiveController(
           (requestFormat, tier) match {
             case (AppsFormat, DotcomRendering)                                          => renderApps(page, blocks)
             case (AmpFormat, DotcomRendering) if page.interactive.content.shouldAmplify => renderAmp(page, blocks)
+            case (HtmlFormat | AmpFormat, DotcomRendering)                              => renderHtml(page, blocks)
             case (JsonFormat, DotcomRendering)                                          => renderJson(page, blocks)
             case (HtmlFormat, PressedInteractive)                                       => servePressedPage(path)
-            case (HtmlFormat | AmpFormat, DotcomRendering)                              => renderHtml(page, blocks)
             case _                                                                      => renderNonDCR(page)
           }
         }
