@@ -95,6 +95,8 @@ final case class Content(
     val shouldAmplifyContent = {
       if (tags.isLiveBlog) {
         AmpLiveBlogSwitch.isSwitchedOn
+      } else if (tags.isInteractive) {
+        AmpArticleSwitch.isSwitchedOn
       } else if (tags.isArticle) {
         val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
         // Some Labs pages have quiz atoms but are not tagged as quizzes

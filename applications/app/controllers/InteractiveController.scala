@@ -126,12 +126,12 @@ class InteractiveController(
         case Right((page, blocks)) => {
           val tier = InteractivePicker.getRenderingTier(path)
           (requestFormat, tier) match {
-            case (AppsFormat, DotcomRendering)    => renderApps(page, blocks)
-            case (AmpFormat, DotcomRendering)     => renderAmp(page, blocks)
-            case (JsonFormat, DotcomRendering)    => renderJson(page, blocks)
-            case (HtmlFormat, PressedInteractive) => servePressedPage(path)
-            case (HtmlFormat, DotcomRendering)    => renderHtml(page, blocks)
-            case _                                => renderNonDCR(page)
+            case (AppsFormat, DotcomRendering)                                          => renderApps(page, blocks)
+            case (AmpFormat, DotcomRendering) if page.interactive.content.shouldAmplify => renderAmp(page, blocks)
+            case (JsonFormat, DotcomRendering)                                          => renderJson(page, blocks)
+            case (HtmlFormat, PressedInteractive)                                       => servePressedPage(path)
+            case (HtmlFormat, DotcomRendering)                                          => renderHtml(page, blocks)
+            case _                                                                      => renderNonDCR(page)
           }
         }
         case Left(result) => Future.successful(result)
