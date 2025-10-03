@@ -27,8 +27,9 @@ const task = {
 			cpy(['**/assets.map'], path.resolve(paths.conf), {
 				cwd: path.resolve(paths.hash, 'assets'),
 			}),
-			cpy(['polyfill.io'], path.resolve(paths.conf), {
+			cpy(['polyfill.io.txt'], path.resolve(paths.conf), {
 				cwd: path.resolve(paths.src, 'javascripts'),
+				rename: 'polyfill.io',
 			}),
 		]),
 };
