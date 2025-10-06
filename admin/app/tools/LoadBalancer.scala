@@ -55,7 +55,12 @@ object LoadBalancer extends GuLogging {
       "frontend-sport",
       targetGroup = Some("targetgroup/fronte-Targe-LJMDWMGH5FPD/e777dd4276b0bf29"),
     ),
-    LoadBalancer("frontend-PROD-commercial-ELB", "Commercial", "frontend-commercial"),
+    LoadBalancer(
+      "app/fronte-LoadB-4KxztKWTJxEu/faee39a2eecb4c1a",
+      "Commercial",
+      "frontend-commercial",
+      targetGroup = Some("targetgroup/fronte-Targe-C8VZWOPZ3TTS/271f997aea40fb19"),
+    ),
     LoadBalancer(
       "app/fronte-LoadB-NpLaks0rT7va/e5a6b5bea5119952",
       "Onward",
