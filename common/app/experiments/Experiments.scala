@@ -39,15 +39,6 @@ object SourcepointConsentGeolocation
       participationGroup = Perc0B,
     )
 
-object AllBoosts
-    extends Experiment(
-      name = "all-boosts",
-      description = "All non-feature cards on network fronts are boosted",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0C,
-    )
-
 object DarkModeWeb
     extends Experiment(
       name = "dark-mode-web",
@@ -55,6 +46,15 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2025, 10, 31),
       participationGroup = Perc0D,
+    )
+
+object AllBoosts
+    extends Experiment(
+      name = "all-boosts",
+      description = "All non-feature cards on network fronts are boosted",
+      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc5A,
     )
 
 object GoogleOneTap
