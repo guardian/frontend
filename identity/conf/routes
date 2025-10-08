@@ -24,13 +24,6 @@ GET         /form/:formReference                    controllers.FormstackControl
 GET         /form/embed/:formReference              controllers.FormstackController.formstackFormEmbed(formReference: String)
 
 ########################################################################################################################
-# Account deletion
-########################################################################################################################
-GET         /delete                                 controllers.AccountDeletionController.renderAccountDeletionForm
-POST        /delete                                 controllers.AccountDeletionController.processAccountDeletionForm
-GET         /delete/confirm                         controllers.AccountDeletionController.renderAccountDeletionConfirmation(autoDeletion: Boolean)
-
-########################################################################################################################
 # Consents journey
 ########################################################################################################################
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
