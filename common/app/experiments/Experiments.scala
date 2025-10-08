@@ -16,6 +16,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       SourcepointConsentGeolocation,
       GoogleOneTap,
       ConsentOrPayEuropeInternalTest,
+      LabsRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -64,4 +65,13 @@ object GoogleOneTap
       owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 12, 1),
       participationGroup = Perc10A,
+    )
+
+object LabsRedesign
+    extends Experiment(
+      name = "labs-redesign",
+      description = "Allows opting in to preview the Guardian Labs redesign work",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0C,
     )
