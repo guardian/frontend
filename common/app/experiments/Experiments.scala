@@ -72,6 +72,6 @@ object LabsRedesign
       name = "labs-redesign",
       description = "Allows opting in to preview the Guardian Labs redesign work",
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 12, 1),
+      sellByDate = LocalDate.of(2025, 12, 16),
       participationGroup = Perc0C,
     )
