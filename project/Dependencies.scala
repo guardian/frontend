@@ -6,8 +6,8 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "1.12.789"
   val awsSdk2Version = "2.32.33"
-  val capiVersion = "36.0.1-PREVIEW.filterbump-cpai-version.2025-09-18T1032.332cf666"
-  val faciaVersion = "23.0.0-PREVIEW.filterfapi-bump.2025-09-18T1102.347ddf70"
+  val capiVersion = "37.0.0-PREVIEW.filterbump-cpai-version.2025-10-08T1015.be077ecb"
+  val faciaVersion = "23.0.0-PREVIEW.filterfapi-bump.2025-10-08T1105.e273fd7d"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -32,7 +32,8 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.16.1"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "30.0.0-PREVIEW.filterproduct-element-temp.2025-09-17T1214.873da3a9"
+  val contentApiModelsJson =
+    "com.gu" %% "content-api-models-json" % "32.0.0-PREVIEW.filterproduct-element-temp.2025-10-07T1607.88693c5b"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 

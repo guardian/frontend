@@ -12,7 +12,7 @@ import com.gu.contentapi.client.model.v1.{
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
   Statistic,
-  CartoonImage,
+  ProductImage,
   ProductElementFields,
 }
 import common.{Chronos, Edition}
@@ -532,7 +532,7 @@ case class ProductBlockElement(
     content: Seq[PageElement],
 ) extends PageElement
 object ProductBlockElement {
-  implicit val ProductBlockElementImageWrites: Writes[CartoonImage] = Json.writes[CartoonImage]
+  implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
   implicit val ProductBlockElementStatisticWrites: Writes[Statistic] = Json.writes[Statistic]
   implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
