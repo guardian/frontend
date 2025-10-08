@@ -59,4 +59,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-compare-client-test-with-new-framework",
+    "Compare behaviour of new ab testing framework with existing one",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 10, 31)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
