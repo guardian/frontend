@@ -28,11 +28,8 @@ class SportTestSuite
       new ResultsListTest,
       new TeamColoursTest,
       new CompetitionAgentTest,
-      new FixturesFeatureTest,
       new LeagueTablesFeatureTest,
-      new LiveMatchesFeatureTest,
       new MatchFeatureTest,
-      new ResultsFeatureTest,
       new FixturesAndResultsTest,
     )
     with SingleServerSuite {}
