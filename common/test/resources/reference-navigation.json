@@ -862,6 +862,12 @@
 						"url": "/crosswords/series/special",
 						"children": [],
 						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini",
+						"children": [],
+						"classList": []
 					}
 				],
 				"classList": []
@@ -1627,6 +1633,12 @@
 						"url": "/crosswords/series/special",
 						"children": [],
 						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini",
+						"children": [],
+						"classList": []
 					}
 				],
 				"classList": []
@@ -2324,6 +2336,12 @@
 					{
 						"title": "Special",
 						"url": "/crosswords/series/special",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini",
 						"children": [],
 						"classList": []
 					}
@@ -3183,6 +3201,12 @@
 					{
 						"title": "Special",
 						"url": "/crosswords/series/special",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini",
 						"children": [],
 						"classList": []
 					}
@@ -4162,6 +4186,12 @@
 					{
 						"title": "Special",
 						"url": "/crosswords/series/special",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini",
 						"children": [],
 						"classList": []
 					}
