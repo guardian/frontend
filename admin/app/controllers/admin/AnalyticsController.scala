@@ -12,15 +12,14 @@ class AnalyticsController(val controllerComponents: ControllerComponents)(implic
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  // IN PROGRESS: Part of A/B test overhaul work, not currently accessible via the landing page, may be non-functional in PROD
-  def alphaAbtests(): Action[AnyContent] =
+  def abTests(): Action[AnyContent] =
     Action.async { implicit request =>
       val frameUrl = Store.getAbTestFrameUrl
-      Future(NoCache(Ok(views.html.abtestsNew(frameUrl))))
+      Future(NoCache(Ok(views.html.abtests(frameUrl))))
     }
 
-  def abtests(): Action[AnyContent] =
+  def legacyAbTests(): Action[AnyContent] =
     Action.async { implicit request =>
-      Future(NoCache(Ok(views.html.abtests())))
+      Future(NoCache(Ok(views.html.legacyabtests())))
     }
 }

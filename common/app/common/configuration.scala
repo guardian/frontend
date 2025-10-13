@@ -507,7 +507,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpCustomTargetingKey = s"$gamRoot/custom-targeting-key-values.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
-    lazy val abTestHtmlObjectKey = s"$commercialRoot/ab-tests.html"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
@@ -530,6 +529,10 @@ class GuardianConfiguration extends GuLogging {
       else None
 
     lazy val admiralUrl = configuration.getStringProperty("commercial.admiralUrl")
+  }
+
+  object abTesting {
+    lazy val uiHtmlObjectKey = s"${environment.stage.toUpperCase}/admin/ab-testing/ab-tests.html"
   }
 
   object journalism {

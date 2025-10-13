@@ -3,6 +3,7 @@ package tools
 import common.GuLogging
 import common.dfp._
 import conf.Configuration.commercial._
+import conf.Configuration.abTesting._
 import conf.{AdminConfiguration, Configuration}
 import implicits.Dates
 import org.joda.time.DateTime
@@ -81,7 +82,7 @@ trait Store extends GuLogging with Dates {
   }
 
   def getAbTestFrameUrl: Option[String] = {
-    S3.getPresignedUrl(abTestHtmlObjectKey)
+    S3.getPresignedUrl(uiHtmlObjectKey)
   }
 
   def getDfpSpecialAdUnits: Seq[(String, String)] = {

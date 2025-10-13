@@ -1,7 +1,0 @@
-@(frameUrl: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@import views.support.CamelCase
-
-@admin_embed("A/B Tests", isAuthed = true, hasCharts = true) {
-    <iframe frameborder="0" style="width:100vw; height: 100vh;" src="@frameUrl"></iframe>
-}
