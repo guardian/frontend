@@ -15,11 +15,11 @@ class AnalyticsController(val controllerComponents: ControllerComponents)(implic
   def abTests(): Action[AnyContent] =
     Action.async { implicit request =>
       val frameUrl = Store.getAbTestFrameUrl
-      Future(NoCache(Ok(views.html.abtests(frameUrl))))
+      Future(NoCache(Ok(views.html.abTests(frameUrl))))
     }
 
   def legacyAbTests(): Action[AnyContent] =
     Action.async { implicit request =>
-      Future(NoCache(Ok(views.html.legacyabtests())))
+      Future(NoCache(Ok(views.html.legacyAbTests())))
     }
 }
