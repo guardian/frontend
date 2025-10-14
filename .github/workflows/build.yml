@@ -72,11 +72,7 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
 
-      - uses: actions/setup-java@v5
-        with:
-          distribution: corretto
-          cache: sbt
-          java-version: 11
+      - uses: actions/setup-scala@v1
 
       # Scala tests rely on client build assets
       - name: Download frontend-client
