@@ -131,12 +131,6 @@ object ProjectSettings {
       .settings(libraryDependencies ++= Seq(commonsIo))
   }
 
-  def filterAssets(testAssets: Seq[(File, String)]): Seq[(File, String)] =
-    testAssets.filterNot { case (_, fileName) =>
-      // built in sbt plugins did not like the bower files
-      fileName.endsWith("bower.json")
-    }
-
   def withTests(project: Project): ClasspathDep[ProjectReference] =
     project % "test->test;compile->compile"
 }
