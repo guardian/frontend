@@ -2981,7 +2981,6 @@ __metadata:
     eslint-plugin-eslint-comments: "npm:^3.2.0"
     eslint-plugin-guardian-frontend: "file:tools/eslint-plugin-guardian-frontend"
     eslint-plugin-import: "npm:^2.22.1"
-    eslint-plugin-jasmine: "npm:^2.10.1"
     eslint-plugin-jsx-a11y: "npm:^6.4.1"
     eslint-plugin-prettier: "npm:^3.4.0"
     eslint-plugin-react: "npm:^7.22.0"
@@ -7844,13 +7843,6 @@ __metadata:
   peerDependencies:
     eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
   checksum: 10c0/5f35dfbf4e8e67f741f396987de9504ad125c49f4144508a93282b4ea0127e052bde65ab6def1f31b6ace6d5d430be698333f75bdd7dca3bc14226c92a083196
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-jasmine@npm:^2.10.1":
-  version: 2.10.1
-  resolution: "eslint-plugin-jasmine@npm:2.10.1"
-  checksum: 10c0/7b1df55a35a1b832061f2beb7e69c54d1d02fa1eb3dc1ad9a35d2cb31ea818ae59b5d4b1e0b136dcc6431fecbccc4b128f850af2b3391fd2bb2b8f5237172b82
   languageName: node
   linkType: hard
 

@@ -13,7 +13,7 @@ make watch
 ```
 
 ### Testing your JavaScript
-You can run the Jasmine unit test suite with
+You can run the unit test suite with
 
 ```
 make test
