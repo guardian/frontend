@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       AllBoosts,
       DarkModeWeb,
-      SourcepointConsentGeolocation,
       GoogleOneTap,
       ConsentOrPayEuropeInternalTest,
       LabsRedesign,
@@ -28,16 +27,6 @@ object ConsentOrPayEuropeInternalTest
       owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
       sellByDate = LocalDate.of(2026, 4, 1),
       participationGroup = Perc0A,
-    )
-
-object SourcepointConsentGeolocation
-    extends Experiment(
-      name = "sp-consent-geolocation",
-      description =
-        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
-      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0B,
     )
 
 object DarkModeWeb
