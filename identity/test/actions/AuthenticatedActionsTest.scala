@@ -4,9 +4,9 @@ import java.net.URLEncoder
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{StatusFields, User}
 import idapiclient.{Auth, IdApiClient, ScGuRp, ScGuU}
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito.{when,verify}
 import org.scalatest.concurrent.ScalaFutures
-import org.mockito.Matchers.any
 import play.api.mvc.{AnyContent, _}
 import play.api.test.{FakeRequest, Helpers}
 import services._

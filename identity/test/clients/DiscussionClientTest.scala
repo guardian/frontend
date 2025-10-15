@@ -2,8 +2,8 @@ package clients
 
 import conf.IdentityConfiguration
 import metadata.MetaDataMatcher.convertToAnyShouldWrapper
-import org.mockito.Matchers.any
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito.when
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.Json

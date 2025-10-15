@@ -10,7 +10,7 @@ import experiments.{ActiveExperiments, ParticipationGroups}
 import helpers.FaciaTestData
 import implicits.FakeRequests
 import model.{FrontProperties, PressedPage, SeoData}
-import org.mockito.Matchers.{any, anyString}
+import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.Mockito.when
 import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
