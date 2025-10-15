@@ -191,6 +191,7 @@ GET     /*path.json                 controllers.ArticleController.renderJson(pat
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
+POST    /*path                      controllers.ArticleController.renderLiveHarness(path)
 
 
 # Don't forward requests for favicon.ico to the Content API
