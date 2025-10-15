@@ -1,8 +1,7 @@
 package test
 
 import controllers.LiveBlogController
-import org.mockito.Mockito._
-import org.mockito.Matchers.{anyObject, anyString}
+import org.mockito.ArgumentMatchers._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
