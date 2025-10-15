@@ -1,7 +1,7 @@
 package controllers.editprofile
 
 import actions.AuthenticatedActions
-import controllers.editprofile.tabs.EmailsTab
+import controllers.editprofile.tabs.{AccountTab, EmailsTab, PublicTab, SupporterTabs}
 import form._
 import idapiclient.IdApiClient
 import model._
@@ -9,7 +9,7 @@ import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.newsletters.NewsletterSignupAgent
-import services._
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 
 class EditProfileController(
     override val idUrlBuilder: IdentityUrlBuilder,
@@ -28,4 +28,7 @@ class EditProfileController(
     val controllerComponents: ControllerComponents,
 ) extends EditProfileControllerComponents
     with EmailsTab
+    with AccountTab
+    with PublicTab
+    with SupporterTabs
     with ConsentsJourney
