@@ -70,8 +70,7 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       janino,
-    ) ++ jackson,
-    TestAssets / mappings ~= filterAssets,
+    ) ++ jackson
   )
 
 val commonWithTests = withTests(common)
