@@ -22,7 +22,7 @@ import recorder.{ContentApiHttpRecorder, HttpRecorder}
 import services.fronts.FrontJsonFapiLive
 
 import java.io.File
-import java.net.URL
+import java.net.URI
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 import scala.util.{Failure, Success, Try}
@@ -63,7 +63,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(page.getWebResponse().getContentAsString)
   }
 
-  def ignoringHost(path: String): String = new URL(path).getPath()
+  def ignoringHost(path: String): String = new URI(path).toURL.getPath()
 }
 
 trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {

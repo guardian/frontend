@@ -1,7 +1,6 @@
 package views.support.cleaner
 
-import java.net.{URL, URLEncoder}
-
+import java.net.{URI, URLEncoder}
 import model.{Article, DotcomContentType, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
@@ -67,8 +66,8 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
             "<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>",
           )
 
-        if (!canonicalUrl.isEmpty) {
-          element.attr("data-canonical-url", new URL(canonicalUrl).getPath.stripPrefix("/"))
+        if (canonicalUrl.nonEmpty) {
+          element.attr("data-canonical-url", new URI(canonicalUrl).toURL.getPath.stripPrefix("/"))
         }
 
         if (figcaption.asScala.nonEmpty) {
@@ -97,9 +96,9 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
 
           element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)
 
-          if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
+          if (canonicalUrl.nonEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
-            element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+            element.attr("data-embed-path", new URI(canonicalUrl).toURL.getPath.stripPrefix("/"))
           } else {
             element.attr("data-embeddable", "false")
           }

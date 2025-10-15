@@ -1,7 +1,6 @@
 package model
 
-import java.net.URL
-
+import java.net.URI
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.model.schemaorg.SchemaOrg
 import com.gu.facia.api.{utils => fapiutils}
@@ -265,7 +264,7 @@ final case class Content(
 
   lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
     video.attr("data-canonical-url") match {
-      case url if !url.isEmpty => Some(new URL(url).getPath.stripPrefix("/"))
+      case url if url.nonEmpty => Some(new URI(url).toURL.getPath.stripPrefix("/"))
       case _                   => None
     }
   })
