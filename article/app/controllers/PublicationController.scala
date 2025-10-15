@@ -8,6 +8,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services._
 
+import java.util.Locale
 import scala.concurrent.Future
 
 class PublicationController(
@@ -22,7 +23,7 @@ class PublicationController(
     with Dates
     with GuLogging {
 
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
+  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC).withLocale(Locale.US)
 
   private def requestedDate(dateString: String) = {
     dateFormatUTC
