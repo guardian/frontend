@@ -1,12 +1,12 @@
 package controllers.admin
 
-import common.{PekkoAsync, GuLogging, ImplicitControllerExecutionContext}
+import common.{GuLogging, ImplicitControllerExecutionContext, PekkoAsync}
 import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier, RedirectService}
 
 import java.io.File
-import java.net.URL
+import java.net.URI
 import scala.util.Try
 
 class R2PressController(
@@ -79,7 +79,7 @@ class R2PressController(
   }
 
   def getVariations(url: String): Option[List[String]] = {
-    Try(new URL(url)).toOption.map { url =>
+    Try(new URI(url).toURL).toOption.map { url =>
       val host = url.getHost
       val path = url.getPath
       val normalisedPath = RedirectService.normalisePath(path)

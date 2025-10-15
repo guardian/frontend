@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import implicits.{Dates, ItemResponses}
 import model.ApplicationContext
 import org.joda.time.format.DateTimeFormat

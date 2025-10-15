@@ -7,14 +7,14 @@ import implicits.Requests.RichRequestHeader
 import model.RelatedContentItem
 import services.OphanMostReadItem
 
-import java.net.URL
+import java.net.{URI, URL}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 object MostViewed extends GuLogging {
 
   def urlToContentPath(url: String): String = {
-    val path = new URL(url).getPath
+    val path = new URI(url).toURL.getPath
     if (path.startsWith("/")) path.substring(1) else path
   }
 

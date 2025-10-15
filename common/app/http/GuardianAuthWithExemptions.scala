@@ -15,7 +15,7 @@ import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 
-import java.net.URL
+import java.net.{URI, URL}
 import scala.concurrent.Future
 
 class GuardianAuthWithExemptions(
@@ -91,7 +91,7 @@ class GuardianAuthWithExemptions(
     private def doNotAuthenticate(request: RequestHeader) =
       context.environment.mode == Mode.Test ||
         (List(
-          new URL(authCallbackUrl).getPath, // oauth callback
+          new URI(authCallbackUrl).toURL.getPath, // oauth callback
           "/assets",
           "/favicon.ico",
           "/_healthcheck",
