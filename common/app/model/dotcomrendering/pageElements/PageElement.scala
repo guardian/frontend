@@ -11,6 +11,10 @@ import com.gu.contentapi.client.model.v1.{
   WitnessElementFields,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
+  ProductCTA,
+  ProductCustomAttribute,
+  ProductImage,
+  ProductElementFields,
 }
 import common.{Chronos, Edition}
 import conf.Configuration
@@ -510,6 +514,26 @@ object LinkBlockElement {
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
 
+case class ProductBlockElement(
+    productName: Option[String],
+    brandName: Option[String],
+    primaryHeading: Option[String],
+    secondaryHeading: Option[String],
+    starRating: Option[String],
+    productCtas: Option[scala.collection.Seq[ProductCTA]],
+    customAttributes: Option[scala.collection.Seq[ProductCustomAttribute]],
+    image: Option[ImageAsset],
+    content: Seq[PageElement],
+) extends PageElement
+object ProductBlockElement {
+  implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
+  implicit val ProductBlockElementCTAWrites: Writes[ProductCTA] = Json.writes[ProductCTA]
+  implicit val ProductBlockElementCustomAttributeWrites: Writes[ProductCustomAttribute] =
+    Json.writes[ProductCustomAttribute]
+  implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
+  implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
+}
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -897,6 +921,7 @@ object PageElement {
       case _: ListBlockElement            => true
       case _: TimelineBlockElement        => true
       case _: LinkBlockElement            => true
+      case _: ProductBlockElement         => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1534,6 +1559,23 @@ object PageElement {
           )
         }.toList
 
+      case Product =>
+        element.tempProductTypeData.map { tempProductTypeData =>
+          makeProduct(
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            edition,
+            webPublicationDate,
+            tempProductTypeData,
+            isGallery,
+            isTheFilterUS,
+          )
+        }.toList
+
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
@@ -1640,6 +1682,63 @@ object PageElement {
       byline = item.byline,
       bylineHtml = item.bylineHtml,
       contributorImageOverrideUrl = item.contributorImageOverrideUrl,
+    )
+  }
+
+  private def makeProduct(
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      product: ProductElementFields,
+      isGallery: Boolean,
+      isTheFilterUS: Boolean,
+  ) = {
+    val imageAsset = product.image.map(image => ImageAsset.make(image, 0))
+    ProductBlockElement(
+      content = product.content
+        .getOrElse(List())
+        .flatMap { element =>
+          PageElement.make(
+            element,
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isMainBlock = false,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            overrideImage = None,
+            edition,
+            webPublicationDate,
+            isGallery,
+            isTheFilterUS,
+          )
+        }
+        .toSeq,
+      productName = product.productName,
+      brandName = product.brandName,
+      primaryHeading = product.primaryHeading,
+      secondaryHeading = product.secondaryHeading,
+      starRating = product.starRating,
+      productCtas = Some(
+        product.productCtas
+          .getOrElse(Seq.empty)
+          .map(cta =>
+            ProductCTA(
+              url = AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS),
+              text = cta.text,
+              retailer = cta.retailer,
+              price = cta.price,
+            ),
+          ),
+      ),
+      customAttributes = product.customAttributes,
+      image = imageAsset,
     )
   }
 

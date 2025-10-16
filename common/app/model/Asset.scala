@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage, AudioElementFields}
+import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage, ProductImage, AudioElementFields}
 import play.api.libs.json.{Json, Writes}
 import views.support.{ImgSrc, Naked, Orientation}
 
@@ -60,6 +60,23 @@ object ImageAsset {
       mediaType = AssetType.Cartoon.name,
       mimeType = Some(cartoonImage.mimeType),
       url = Some(cartoonImage.file),
+    )
+  }
+  def make(productImage: ProductImage, index: Int): ImageAsset = {
+    ImageAsset(
+      index = index,
+      fields = Map(
+        "altText" -> productImage.alt.map(_.toString),
+        "caption" -> productImage.caption.map(_.toString),
+        "displayCredit" -> productImage.displayCredit.map(_.toString),
+        "mediaId" -> productImage.mediaId.map(_.toString),
+        "photographer" -> productImage.photographer.map(_.toString),
+        "height" -> Some("0"),
+        "width" -> Some("0"),
+      ).collect { case (k, Some(v)) => (k, v) },
+      mediaType = AssetType.Image.name,
+      mimeType = None,
+      url = productImage.file,
     )
   }
   implicit val imageAssetWrites: Writes[ImageAsset] = Json.writes[ImageAsset]
