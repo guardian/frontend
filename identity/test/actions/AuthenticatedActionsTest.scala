@@ -5,7 +5,7 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{StatusFields, User}
 import idapiclient.{Auth, IdApiClient, ScGuRp, ScGuU}
 import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito.{when,verify}
+import org.mockito.Mockito.{when, verify}
 import org.scalatest.concurrent.ScalaFutures
 import play.api.mvc.{AnyContent, _}
 import play.api.test.{FakeRequest, Helpers}
