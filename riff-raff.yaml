@@ -25,6 +25,7 @@ templates:
     - update-ami-for-facia-press
     - update-ami-for-article
     - update-ami-for-preview
+    - update-ami-for-commercial
 
 deployments:
   admin:
@@ -49,8 +50,6 @@ deployments:
     template: frontend
   preview:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   rss:
     template: frontend
   sport:
@@ -159,5 +158,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIPreview:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-commercial:
+    app: commercial
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMICommercial:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD

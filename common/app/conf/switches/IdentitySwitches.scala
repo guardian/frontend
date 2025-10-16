@@ -25,4 +25,15 @@ trait IdentitySwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val GoogleOneTapSwitch = Switch(
+    SwitchGroup.Identity,
+    "google-one-tap-switch",
+    "Signing into the Guardian with Google One Tap",
+    owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

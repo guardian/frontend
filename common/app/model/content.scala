@@ -87,6 +87,7 @@ final case class Content(
     fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists { tag => tag.id == "tone/advertisement-features" }
   lazy val isTheFilter: Boolean = tags.tags.exists { tag => tag.id == "thefilter/series/the-filter" }
+  lazy val isTheFilterUS: Boolean = productionOffice.exists(_.toLowerCase == "us")
   lazy val campaigns: List[Campaign] =
     _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
@@ -94,6 +95,8 @@ final case class Content(
     val shouldAmplifyContent = {
       if (tags.isLiveBlog) {
         AmpLiveBlogSwitch.isSwitchedOn
+      } else if (tags.isInteractive) {
+        AmpArticleSwitch.isSwitchedOn
       } else if (tags.isArticle) {
         val hasBodyBlocks: Boolean = fields.blocks.exists(b => b.body.nonEmpty)
         // Some Labs pages have quiz atoms but are not tagged as quizzes

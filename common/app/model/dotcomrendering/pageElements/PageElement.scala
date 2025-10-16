@@ -947,6 +947,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       isGallery: Boolean,
+      isTheFilterUS: Boolean,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -964,7 +965,7 @@ object PageElement {
     element.`type` match {
       case Text =>
         val textCleaners =
-          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks) _ andThen
+          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isTheFilterUS) _ andThen
             TextCleaner.sanitiseLinks(edition)
 
         for {
@@ -1056,7 +1057,7 @@ object PageElement {
         List(
           ImageBlockElement(
             ImageMedia(imageAssets.toSeq),
-            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks),
+            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isTheFilterUS),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
             imageSources,
@@ -1436,7 +1437,7 @@ object PageElement {
         element.linkTypeData
           .map(d =>
             LinkBlockElement(
-              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks),
+              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isTheFilterUS),
               d.label,
               d.linkType.getOrElse(LinkType.ProductButton),
             ),
@@ -1536,6 +1537,7 @@ object PageElement {
                 webPublicationDate,
                 item,
                 isGallery,
+                isTheFilterUS,
               )
             }.toSeq,
             listElementType = listTypeData.`type`.map(_.name),
@@ -1556,6 +1558,7 @@ object PageElement {
               webPublicationDate,
               timelineTypeData,
               isGallery,
+              isTheFilterUS,
             ),
           )
         }.toList
@@ -1592,6 +1595,7 @@ object PageElement {
       webPublicationDate: DateTime,
       timelineTypeData: TimelineElementFields,
       isGallery: Boolean,
+      isTheFilterUS: Boolean,
   ) = {
     timelineTypeData.sections.map { section =>
       TimelineSection(
@@ -1616,6 +1620,7 @@ object PageElement {
                   edition,
                   webPublicationDate,
                   isGallery,
+                  isTheFilterUS,
                 )
                 .headOption
             },
@@ -1633,6 +1638,7 @@ object PageElement {
                 edition,
                 webPublicationDate,
                 isGallery,
+                isTheFilterUS,
               )
             }.toSeq,
           )
@@ -1652,6 +1658,7 @@ object PageElement {
       webPublicationDate: DateTime,
       item: v1.ListItem,
       isGallery: Boolean,
+      isTheFilterUS: Boolean,
   ) = {
     ListItem(
       elements = item.elements.flatMap { element =>
@@ -1668,6 +1675,7 @@ object PageElement {
           edition,
           webPublicationDate,
           isGallery,
+          isTheFilterUS,
         )
       }.toSeq,
       title = item.title,
@@ -2048,6 +2056,7 @@ object PageElement {
       isGallery: Boolean,
       pageUrl: String,
       addAffiliateLinks: Boolean,
+      isTheFilterUS: Boolean,
   ): Map[String, String] = {
     element.imageTypeData.map { d =>
       Map(
@@ -2055,7 +2064,7 @@ object PageElement {
         "alt" -> d.alt,
         "caption" -> {
           if (isGallery) {
-            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks))
+            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isTheFilterUS))
           } else {
             d.caption
           }

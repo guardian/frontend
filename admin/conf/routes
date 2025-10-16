@@ -58,8 +58,8 @@ GET         /dev/switchboard                                                    
 POST        /dev/switchboard                                                                        controllers.admin.SwitchboardController.save()
 
 # Analytics
-GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
-GET         /analytics/abtestsnew                                                                   controllers.admin.AnalyticsController.alphaAbtests()
+GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.legacyAbTests()
+GET         /analytics/ab-testing                                                                   controllers.admin.AnalyticsController.abTests()
 GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
 # Commercial

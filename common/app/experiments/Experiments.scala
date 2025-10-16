@@ -11,32 +11,22 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
+      AllBoosts,
       DarkModeWeb,
-      SourcepointConsentGeolocation,
       GoogleOneTap,
-      HideTrails,
       ConsentOrPayEuropeInternalTest,
+      LabsRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
 
-object SourcepointConsentGeolocation
+object ConsentOrPayEuropeInternalTest
     extends Experiment(
-      name = "sp-consent-geolocation",
-      description =
-        "This test is being used to monitor discrepancies between the sourcepoint geolocation and fastly geolocation.",
+      name = "consent-or-pay-europe-internal-test",
+      description = "Releasing Consent or Pay to Europe for internal testing",
       owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0B,
-    )
-
-object GoogleOneTap
-    extends Experiment(
-      name = "google-one-tap",
-      description = "Signing into the Guardian with Google One Tap",
-      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc10A,
+      sellByDate = LocalDate.of(2026, 4, 1),
+      participationGroup = Perc0A,
     )
 
 object DarkModeWeb
@@ -48,20 +38,29 @@ object DarkModeWeb
       participationGroup = Perc0D,
     )
 
-object HideTrails
+object AllBoosts
     extends Experiment(
-      name = "hide-trails",
-      description = "Hide card trails on desktop on network fronts",
+      name = "all-boosts",
+      description = "All non-feature cards on network fronts are boosted",
       owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
       sellByDate = LocalDate.of(2025, 12, 1),
       participationGroup = Perc5A,
     )
 
-object ConsentOrPayEuropeInternalTest
+object GoogleOneTap
     extends Experiment(
-      name = "consent-or-pay-europe-internal-test",
-      description = "Releasing Consent or Pay to Europe for internal testing",
-      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2026, 4, 1),
-      participationGroup = Perc0A,
+      name = "google-one-tap",
+      description = "Signing into the Guardian with Google One Tap",
+      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 1),
+      participationGroup = Perc0B,
+    )
+
+object LabsRedesign
+    extends Experiment(
+      name = "labs-redesign",
+      description = "Allows opting in to preview the Guardian Labs redesign work",
+      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 12, 16),
+      participationGroup = Perc0C,
     )

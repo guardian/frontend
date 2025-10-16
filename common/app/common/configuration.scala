@@ -297,7 +297,8 @@ class GuardianConfiguration extends GuLogging {
   object affiliateLinks {
     lazy val bucket: Option[String] = configuration.getStringProperty("skimlinks.bucket")
     lazy val domainsKey = "skimlinks/skimlinks-domains.csv"
-    lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
+    lazy val skimlinksDefaultId = configuration.getMandatoryStringProperty("skimlinks.id")
+    lazy val skimlinksUSId = configuration.getMandatoryStringProperty("skimlinks.us.id")
     lazy val alwaysOffTags: Set[String] =
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
   }
@@ -506,7 +507,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val dfpCustomTargetingKey = s"$gamRoot/custom-targeting-key-values.json"
     lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val appAdsTextObjectKey = s"$commercialRoot/app-ads.txt"
-    lazy val abTestHtmlObjectKey = s"$commercialRoot/ab-tests.html"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
     lazy val merchandisingFeedsLatest = s"$merchandisingFeedsRoot/latest"
@@ -529,6 +529,10 @@ class GuardianConfiguration extends GuLogging {
       else None
 
     lazy val admiralUrl = configuration.getStringProperty("commercial.admiralUrl")
+  }
+
+  object abTesting {
+    lazy val uiHtmlObjectKey = s"${environment.stage.toUpperCase}/admin/ab-testing/ab-tests.html"
   }
 
   object journalism {

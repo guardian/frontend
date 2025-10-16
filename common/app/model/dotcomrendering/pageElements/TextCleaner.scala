@@ -12,13 +12,19 @@ import scala.util.matching.Regex
 
 object TextCleaner {
 
-  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean)(html: String): String = {
+  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isTheFilterUS: Boolean)(
+      html: String,
+  ): String = {
     if (addAffiliateLinks) {
       val doc = Jsoup.parseBodyFragment(html)
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
+      val skimlinksId =
+        if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
       links.foreach(el => {
-        val id = affiliateLinksConfig.skimlinksId
-        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id)).attr("rel", "sponsored")
+        el.attr(
+          "href",
+          AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, skimlinksId),
+        ).attr("rel", "sponsored")
       })
 
       if (links.nonEmpty) {
@@ -35,6 +41,7 @@ object TextCleaner {
       caption: String,
       pageUrl: String,
       shouldAddAffiliateLinks: Boolean,
+      isTheFilterUS: Boolean,
   ): String = {
 
     val cleaners = List(
@@ -42,6 +49,7 @@ object TextCleaner {
       GalleryAffiliateLinksCleaner(
         pageUrl,
         shouldAddAffiliateLinks,
+        isTheFilterUS,
       ),
     )
 
@@ -144,23 +152,28 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     // <strong> is removed in place of having a <h2> element
     firstStrong.foreach(_.remove())
 
-    captionTitle.html(captionTitleText)
-
-    galleryCaption.body.prependChild(captionTitle)
-
-    galleryCaption
+    if (captionTitleText.isEmpty) {
+      galleryCaption
+    } else {
+      captionTitle.html(captionTitleText)
+      galleryCaption.body.prependChild(captionTitle)
+      galleryCaption
+    }
   }
 }
 
 case class GalleryAffiliateLinksCleaner(
     pageUrl: String,
     shouldAddAffiliateLinks: Boolean,
+    isTheFilterUS: Boolean,
 ) extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
+    val skimlinksId = if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
+
     if (shouldAddAffiliateLinks) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, affiliateLinksConfig.skimlinksId)
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
     } else document
   }
 }

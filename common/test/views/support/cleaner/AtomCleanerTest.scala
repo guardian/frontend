@@ -3,6 +3,7 @@ package views.support.cleaner
 import com.gu.contentapi.client.model.v1.{Asset, AssetType}
 import conf.switches.Switches
 import implicits.FakeRequests
+import model.content.MediaAssetType.Video
 import model.content._
 import model.{ImageAsset, ImageMedia}
 import org.jsoup.Jsoup
@@ -27,7 +28,13 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
   val image: ImageMedia = ImageMedia.apply(Seq(imageAsset))
 
   val youTubeAsset =
-    MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)
+    MediaAsset(
+      id = "nQuN9CUsdVg",
+      version = 1L,
+      platform = MediaAssetPlatform.Youtube,
+      mimeType = None,
+      assetType = Video,
+    )
 
   val youTubeAtom = Some(
     Atoms(
