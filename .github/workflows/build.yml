@@ -72,7 +72,7 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
 
-      - uses: actions/setup-scala@v1
+      - uses: guardian/setup-scala@v1
 
       # Scala tests rely on client build assets
       - name: Download frontend-client
