@@ -11,7 +11,8 @@ import com.gu.contentapi.client.model.v1.{
   WitnessElementFields,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
-  Statistic,
+  ProductCTA,
+  ProductCustomAttribute,
   ProductImage,
   ProductElementFields,
 }
@@ -519,21 +520,16 @@ case class ProductBlockElement(
     primaryHeading: Option[String],
     secondaryHeading: Option[String],
     starRating: Option[String],
-    primaryProductUrl: Option[String],
-    primaryCta: Option[String],
-    primaryRetailer: Option[String],
-    primaryPrice: Option[String],
-    secondaryProductUrl: Option[String],
-    secondaryCta: Option[String],
-    secondaryRetailer: Option[String],
-    secondaryPrice: Option[String],
-    statistics: Option[scala.collection.Seq[Statistic]],
+    productCtas: Option[scala.collection.Seq[ProductCTA]],
+    customAttributes: Option[scala.collection.Seq[ProductCustomAttribute]],
     image: Option[ImageAsset],
     content: Seq[PageElement],
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
-  implicit val ProductBlockElementStatisticWrites: Writes[Statistic] = Json.writes[Statistic]
+  implicit val ProductBlockElementCTAWrites: Writes[ProductCTA] = Json.writes[ProductCTA]
+  implicit val ProductBlockElementCustomAttributeWrites: Writes[ProductCustomAttribute] =
+    Json.writes[ProductCustomAttribute]
   implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
@@ -1576,6 +1572,7 @@ object PageElement {
             webPublicationDate,
             tempProductTypeData,
             isGallery,
+            isTheFilterUS,
           )
         }.toList
 
@@ -1699,6 +1696,7 @@ object PageElement {
       webPublicationDate: DateTime,
       product: ProductElementFields,
       isGallery: Boolean,
+      isTheFilterUS: Boolean,
   ) = {
     val imageAsset = product.image.map(image => ImageAsset.make(image, 0))
     ProductBlockElement(
@@ -1718,6 +1716,7 @@ object PageElement {
             edition,
             webPublicationDate,
             isGallery,
+            isTheFilterUS,
           )
         }
         .toSeq,
@@ -1726,16 +1725,19 @@ object PageElement {
       primaryHeading = product.primaryHeading,
       secondaryHeading = product.secondaryHeading,
       starRating = product.starRating,
-      primaryProductUrl = AffiliateLinksCleaner.replaceUrlInLink(product.primaryProductUrl, pageUrl, addAffiliateLinks),
-      primaryCta = product.primaryCta,
-      primaryRetailer = product.primaryRetailer,
-      primaryPrice = product.primaryPrice,
-      secondaryProductUrl =
-        AffiliateLinksCleaner.replaceUrlInLink(product.secondaryProductUrl, pageUrl, addAffiliateLinks),
-      secondaryCta = product.secondaryCta,
-      secondaryRetailer = product.secondaryRetailer,
-      secondaryPrice = product.secondaryPrice,
-      statistics = product.statistics,
+      productCtas = Some(
+        product.productCtas
+          .getOrElse(Seq.empty)
+          .map(cta =>
+            ProductCTA(
+              url = AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS),
+              text = cta.text,
+              retailer = cta.retailer,
+              price = cta.price,
+            ),
+          ),
+      ),
+      customAttributes = product.customAttributes,
       image = imageAsset,
     )
   }
