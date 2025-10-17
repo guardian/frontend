@@ -1,8 +1,6 @@
 package http
 
 import com.amazonaws.regions.Regions
-import software.amazon.awssdk.core.sync.ResponseTransformer
-import software.amazon.awssdk.services.s3.S3Client
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
@@ -14,8 +12,10 @@ import org.apache.pekko.stream.Materializer
 import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc._
+import software.amazon.awssdk.core.sync.ResponseTransformer
+import software.amazon.awssdk.services.s3.S3Client
 
-import java.net.{URI, URL}
+import java.net.URI
 import scala.concurrent.Future
 
 class GuardianAuthWithExemptions(
@@ -91,7 +91,7 @@ class GuardianAuthWithExemptions(
     private def doNotAuthenticate(request: RequestHeader) =
       context.environment.mode == Mode.Test ||
         (List(
-          new URI(authCallbackUrl).toURL.getPath, // oauth callback
+          new URI(authCallbackUrl).getPath, // oauth callback
           "/assets",
           "/favicon.ico",
           "/_healthcheck",

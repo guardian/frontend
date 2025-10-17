@@ -1,12 +1,12 @@
 package html
 
-import java.net.{URI, URL}
 import common.GuLogging
 import model.EmailAddons
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
 import play.twirl.api.Html
 
+import java.net.URI
 import scala.jdk.CollectionConverters._
 import scala.util.Try
 
@@ -25,7 +25,7 @@ object BrazeEmailFormatter extends GuLogging {
     Option(element.attr("href"))
       .collect {
         case url if url.nonEmpty && element.nodeName() == "a" && !url.contains(EmailAddons.unsubscribePlaceholder) =>
-          val startQuery = Try(new URI(url).toURL).toOption
+          val startQuery = Try(new URI(url)).toOption
             .flatMap(uri => Option(uri.getQuery))
             .fold("?")(_ => "&")
           s"$url$startQuery##braze_utm##"
