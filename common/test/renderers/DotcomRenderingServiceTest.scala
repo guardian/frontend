@@ -9,7 +9,7 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.libs.json.{JsString}
 import play.api.mvc.{Result}
 import conf.Configuration
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 
 import scala.concurrent.{Future}
