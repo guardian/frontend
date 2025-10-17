@@ -14,7 +14,7 @@ import software.amazon.awssdk.regions.Region.EU_WEST_1
 import software.amazon.awssdk.services.s3.S3Client
 import utils.AWSv2
 
-import java.net.{URI, URL}
+import java.net.URI
 import scala.concurrent.Future
 
 class GuardianAuthWithExemptions(
@@ -85,7 +85,7 @@ class GuardianAuthWithExemptions(
     private def doNotAuthenticate(request: RequestHeader) =
       context.environment.mode == Mode.Test ||
         (List(
-          new URI(authCallbackUrl).toURL.getPath, // oauth callback
+          new URI(authCallbackUrl).getPath, // oauth callback
           "/assets",
           "/favicon.ico",
           "/_healthcheck",

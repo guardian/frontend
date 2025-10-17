@@ -1,11 +1,11 @@
 package services
 
-import java.net.{URI, URL}
-import java.util.concurrent.atomic.AtomicReference
 import app.LifecycleComponent
 import common.GuLogging
 import conf.Configuration.affiliateLinks
 
+import java.net.URI
+import java.util.concurrent.atomic.AtomicReference
 import scala.concurrent.ExecutionContext
 import scala.util.Try
 
@@ -23,7 +23,7 @@ object SkimLinksCache extends GuLogging {
   }
 
   def isSkimLink(link: String): Boolean = {
-    val uri: Option[URL] = Try(new URI(link).toURL).toOption
+    val uri: Option[URI] = Try(new URI(link)).toOption
     uri.exists(u => {
       // strip the www. subdomain as it is not included in the list of domains from the skimlinks api
       val cleanedHost = u.getHost.replace("www.", "")

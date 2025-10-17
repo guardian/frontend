@@ -1,11 +1,11 @@
 package test
 
-import org.apache.pekko.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient}
 import common.Lazy
 import contentapi._
 import model.{ApplicationContext, ApplicationIdentity, PressedPage, PressedPageType}
+import org.apache.pekko.stream.Materializer
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.{BeforeAndAfterAll, TestSuite}
 import org.scalatestplus.play._
@@ -63,7 +63,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(page.getWebResponse().getContentAsString)
   }
 
-  def ignoringHost(path: String): String = new URI(path).toURL.getPath()
+  def ignoringHost(path: String): String = new URI(path).getPath()
 }
 
 trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {

@@ -1,28 +1,28 @@
 package model
 
-import java.net.URI
-import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.github.nscala_time.time.Imports._
 import com.gu.contentapi.client.model.schemaorg.SchemaOrg
+import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.Campaign
 import common._
 import conf.Configuration
-import conf.switches.Switches._
 import conf.cricketPa.CricketTeams
+import conf.switches.Switches._
+import implicits.Booleans._
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, QuizAtom}
 import model.pressed._
-import org.jsoup.{Jsoup, nodes}
+import org.joda.time.DateTime
 import org.jsoup.safety.Safelist
-import com.github.nscala_time.time.Imports._
+import org.jsoup.{Jsoup, nodes}
 import play.api.libs.json._
 import views.support._
 
+import java.net.URI
 import scala.jdk.CollectionConverters._
 import scala.util.Try
-import implicits.Booleans._
-import org.joda.time.DateTime
 
 sealed trait ContentType {
   def content: Content
@@ -264,7 +264,7 @@ final case class Content(
 
   lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
     video.attr("data-canonical-url") match {
-      case url if url.nonEmpty => Some(new URI(url).toURL.getPath.stripPrefix("/"))
+      case url if url.nonEmpty => Some(new URI(url).getPath.stripPrefix("/"))
       case _                   => None
     }
   })

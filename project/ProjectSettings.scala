@@ -22,7 +22,7 @@ object ProjectSettings {
     scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
-      "-release:21",
+      "-release:11",
       "-Xcheckinit",
       "-encoding",
       "utf8",
