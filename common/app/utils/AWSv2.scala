@@ -7,6 +7,7 @@ import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.regions.Region.EU_WEST_1
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.{S3AsyncClient, S3AsyncClientBuilder, S3Client, S3ClientBuilder}
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient
 import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 import software.amazon.awssdk.services.sts.{StsClient, StsClientBuilder}
@@ -45,4 +46,9 @@ object AWSv2 {
       .build(),
   )
 
+  val secretsClient = SecretsManagerClient
+    .builder()
+    .region(region)
+    .credentialsProvider(credentials)
+    .build()
 }
