@@ -3,16 +3,7 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1
 import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
-import com.gu.contentapi.client.model.v1.{
-  EmbedTracking,
-  LinkType,
-  SponsorshipType,
-  TimelineElementFields,
-  WitnessElementFields,
-  BlockElement => ApiBlockElement,
-  Sponsorship => ApiSponsorship,
-  ProductElementFields,
-}
+import com.gu.contentapi.client.model.v1.{EmbedTracking, LinkType, ProductDisplayType, ProductElementFields, SponsorshipType, TimelineElementFields, WitnessElementFields, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import common.{Chronos, Edition}
 import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
@@ -516,7 +507,7 @@ case class ProductImage(
     caption: String,
     height: Int,
     width: Int,
-    altText: String,
+    alt: String,
     credit: String,
     displayCredit: Boolean,
 )
@@ -531,21 +522,25 @@ case class ProductCta(
     url: String,
 )
 case class ProductBlockElement(
-    productName: Option[String],
-    brandName: Option[String],
-    primaryHeading: Option[String],
-    secondaryHeading: Option[String],
-    starRating: Option[String],
-    productCtas: List[ProductCta],
-    customAttributes: List[ProductCustomAttribute],
-    image: Option[ProductImage],
-    content: Seq[PageElement],
+                                productName: Option[String],
+                                brandName: Option[String],
+                                primaryHeading: Option[String],
+                                secondaryHeading: Option[String],
+                                starRating: Option[String],
+                                productCtas: List[ProductCta],
+                                customAttributes: List[ProductCustomAttribute],
+                                image: Option[ProductImage],
+                                content: Seq[PageElement],
+                                displayType: ProductDisplayType
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
   implicit val ProductBlockElementCTAWrites: Writes[ProductCta] = Json.writes[ProductCta]
   implicit val ProductBlockElementCustomAttributeWrites: Writes[ProductCustomAttribute] =
     Json.writes[ProductCustomAttribute]
+  implicit val ProductBlockElementDisplayTypeWrites: Writes[ProductDisplayType] = Writes { displayType =>
+    JsString(displayType.name)
+  }
   implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
@@ -1769,9 +1764,10 @@ object PageElement {
           height = ApiImage.height.getOrElse(1),
           width = ApiImage.width.getOrElse(1),
           displayCredit = ApiImage.displayCredit.getOrElse(false),
-          altText = ApiImage.alt.getOrElse(""),
+          alt = ApiImage.alt.getOrElse(""),
         ),
       ),
+      displayType = product.displayType
     )
 
   }
