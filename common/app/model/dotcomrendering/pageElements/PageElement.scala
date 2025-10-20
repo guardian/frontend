@@ -11,9 +11,6 @@ import com.gu.contentapi.client.model.v1.{
   WitnessElementFields,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
-  ProductCTA,
-  ProductCustomAttribute,
-  ProductImage,
   ProductElementFields,
 }
 import common.{Chronos, Edition}
@@ -514,20 +511,37 @@ object LinkBlockElement {
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
 
+case class ProductImage(
+    url: String,
+    caption: String,
+    height: Int,
+    width: Int,
+    altText: String,
+    credit: String,
+    displayCredit: Boolean,
+)
+case class ProductCustomAttribute(
+    name: String,
+    value: String,
+)
+case class ProductCta(
+    label: String,
+    url: String,
+)
 case class ProductBlockElement(
     productName: Option[String],
     brandName: Option[String],
     primaryHeading: Option[String],
     secondaryHeading: Option[String],
     starRating: Option[String],
-    productCtas: Option[scala.collection.Seq[ProductCTA]],
-    customAttributes: Option[scala.collection.Seq[ProductCustomAttribute]],
-    image: Option[ImageAsset],
+    productCtas: List[ProductCta],
+    customAttributes: List[ProductCustomAttribute],
+    image: Option[ProductImage],
     content: Seq[PageElement],
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
-  implicit val ProductBlockElementCTAWrites: Writes[ProductCTA] = Json.writes[ProductCTA]
+  implicit val ProductBlockElementCTAWrites: Writes[ProductCta] = Json.writes[ProductCta]
   implicit val ProductBlockElementCustomAttributeWrites: Writes[ProductCustomAttribute] =
     Json.writes[ProductCustomAttribute]
   implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
@@ -1698,7 +1712,6 @@ object PageElement {
       isGallery: Boolean,
       isTheFilterUS: Boolean,
   ) = {
-    val imageAsset = product.image.map(image => ImageAsset.make(image, 0))
     ProductBlockElement(
       content = product.content
         .getOrElse(List())
@@ -1725,21 +1738,37 @@ object PageElement {
       primaryHeading = product.primaryHeading,
       secondaryHeading = product.secondaryHeading,
       starRating = product.starRating,
-      productCtas = Some(
-        product.productCtas
-          .getOrElse(Seq.empty)
-          .map(cta =>
-            ProductCTA(
-              url = AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS),
-              text = cta.text,
-              retailer = cta.retailer,
-              price = cta.price,
-            ),
-          ),
-      ),
-      customAttributes = product.customAttributes,
-      image = imageAsset,
+      productCtas = product.productCtas.getOrElse(Seq.empty).map { cta =>
+        val label =
+          if (cta.text.exists(_.trim.nonEmpty))
+            cta.text.get.trim
+          else
+            s"${cta.price.getOrElse("")} at ${cta.retailer.getOrElse("")}"
+
+        ProductCta(
+          label = label,
+          url = AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS).getOrElse("")
+        )
+      }.toList,
+      customAttributes = product.customAttributes.getOrElse(Seq.empty).map(attr =>
+        ProductCustomAttribute(
+          name = attr.name.getOrElse(""),
+          value = attr.value.getOrElse(""),
+        ),
+      ).toList,
+      image = product.image.map(ApiImage =>
+        ProductImage(
+          url = ApiImage.file.getOrElse(""),
+          caption = ApiImage.caption.getOrElse(""),
+          credit = ApiImage.credit.getOrElse(""),
+          height = ApiImage.height.getOrElse(1),
+          width = ApiImage.width.getOrElse(1),
+          displayCredit = ApiImage.displayCredit.getOrElse(false),
+          altText = ApiImage.alt.getOrElse("")
+        )
+      )
     )
+
   }
 
   private[this] def ensureHTTPS(url: String): String = {

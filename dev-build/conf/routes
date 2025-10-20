@@ -53,7 +53,7 @@ OPTIONS    /email                                                               
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
 # Analytics
-GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
+GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abTests()
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
 # Commercial admin
