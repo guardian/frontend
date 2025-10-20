@@ -1738,24 +1738,31 @@ object PageElement {
       primaryHeading = product.primaryHeading,
       secondaryHeading = product.secondaryHeading,
       starRating = product.starRating,
-      productCtas = product.productCtas.getOrElse(Seq.empty).map { cta =>
-        val label =
-          if (cta.text.exists(_.trim.nonEmpty))
-            cta.text.get.trim
-          else
-            s"${cta.price.getOrElse("")} at ${cta.retailer.getOrElse("")}"
+      productCtas = product.productCtas
+        .getOrElse(Seq.empty)
+        .map { cta =>
+          val label =
+            if (cta.text.exists(_.trim.nonEmpty))
+              cta.text.get.trim
+            else
+              s"${cta.price.getOrElse("")} at ${cta.retailer.getOrElse("")}"
 
-        ProductCta(
-          label = label,
-          url = AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS).getOrElse("")
+          ProductCta(
+            label = label,
+            url =
+              AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS).getOrElse(""),
+          )
+        }
+        .toList,
+      customAttributes = product.customAttributes
+        .getOrElse(Seq.empty)
+        .map(attr =>
+          ProductCustomAttribute(
+            name = attr.name.getOrElse(""),
+            value = attr.value.getOrElse(""),
+          ),
         )
-      }.toList,
-      customAttributes = product.customAttributes.getOrElse(Seq.empty).map(attr =>
-        ProductCustomAttribute(
-          name = attr.name.getOrElse(""),
-          value = attr.value.getOrElse(""),
-        ),
-      ).toList,
+        .toList,
       image = product.image.map(ApiImage =>
         ProductImage(
           url = ApiImage.file.getOrElse(""),
@@ -1764,9 +1771,9 @@ object PageElement {
           height = ApiImage.height.getOrElse(1),
           width = ApiImage.width.getOrElse(1),
           displayCredit = ApiImage.displayCredit.getOrElse(false),
-          altText = ApiImage.alt.getOrElse("")
-        )
-      )
+          altText = ApiImage.alt.getOrElse(""),
+        ),
+      ),
     )
 
   }
