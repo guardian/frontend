@@ -525,7 +525,9 @@ case class ProductCustomAttribute(
     value: String,
 )
 case class ProductCta(
-    label: String,
+    text: String,
+    price: String,
+    retailer:String,
     url: String,
 )
 case class ProductBlockElement(
@@ -1741,14 +1743,10 @@ object PageElement {
       productCtas = product.productCtas
         .getOrElse(Seq.empty)
         .map { cta =>
-          val label =
-            if (cta.text.exists(_.trim.nonEmpty))
-              cta.text.get.trim
-            else
-              s"${cta.price.getOrElse("")} at ${cta.retailer.getOrElse("")}"
-
           ProductCta(
-            label = label,
+            text = cta.text.getOrElse(""),
+            price = cta.price.getOrElse(""),
+            retailer = cta.retailer.getOrElse(""),
             url =
               AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS).getOrElse(""),
           )
