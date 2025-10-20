@@ -638,4 +638,15 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val ProductLeftColCards = Switch(
+    SwitchGroup.Feature,
+    "product-left-col-cards",
+    "Enables product element summary cards to be shown in the left column at wide breakpoints",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
