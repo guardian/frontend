@@ -7,7 +7,6 @@ import software.amazon.awssdk.services.cloudwatch.model.{StandardUnit => Standar
 import scala.concurrent.Future
 import scala.util.Try
 
-
 sealed trait FrontendMetricV2 {
   val name: String
   val metricUnit: StandardUnitV2
@@ -26,7 +25,7 @@ case class FrontendStatisticSetV2(datapoints: List[DataPoint], name: String, uni
 }
 
 final case class SamplerMetricV2(override val name: String, override val metricUnit: StandardUnitV2)
-  extends FrontendMetricV2 {
+    extends FrontendMetricV2 {
 
   private val dataPoints: Box[List[SampledDataPoint]] = Box(List[SampledDataPoint]())
 

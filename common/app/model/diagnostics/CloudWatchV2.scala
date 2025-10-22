@@ -4,12 +4,7 @@ import common.GuLogging
 import conf.Configuration
 import conf.Configuration.environment
 import metrics.{FrontendMetricV2, FrontendStatisticSetV2}
-import software.amazon.awssdk.services.cloudwatch.model.{
-  Dimension,
-  MetricDatum,
-  PutMetricDataRequest,
-  StatisticSet
-}
+import software.amazon.awssdk.services.cloudwatch.model.{Dimension, MetricDatum, PutMetricDataRequest, StatisticSet}
 import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient
 import utils.AWSv2
 import software.amazon.awssdk.regions.Region
