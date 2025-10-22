@@ -56,7 +56,7 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
 
       if (Configuration.environment.isProd) {
         fresh.foreach { updateMetricFromStatistic }
-        CloudWatchV2.putMetricsV2("Fastly", allFastlyMetrics, List.empty)
+        CloudWatchV2.putMetrics("Fastly", allFastlyMetrics, List.empty)
       } else {
         log.info("DISABLED: Metrics uploaded in PROD only to limit duplication.")
       }

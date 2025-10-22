@@ -22,15 +22,15 @@ trait CloudWatchV2 extends GuLogging {
       .region(Region.of(conf.Configuration.aws.region))
       .build()
 
-  def putMetricsV2(metricNamespace: String, metrics: List[FrontendMetricV2], dimensions: List[Dimension]): Unit = {
+  def putMetrics(metricNamespace: String, metrics: List[FrontendMetricV2], dimensions: List[Dimension]): Unit = {
     if (Configuration.environment.isProd) {
-      putMetricsWithStageV2(metricNamespace, metrics, dimensions :+ stageDimension)
+      putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
     } else {
       log.info(s"Logging suppressed outside Prod environment. namespace: $metricNamespace")
     }
   }
 
-  private def putMetricsWithStageV2(
+  private def putMetricsWithStage(
       metricNamespace: String,
       metrics: List[FrontendMetricV2],
       dimensions: List[Dimension],
@@ -49,7 +49,7 @@ trait CloudWatchV2 extends GuLogging {
 
             MetricDatum
               .builder()
-              .statisticValues(frontendMetricToStatisticSetV2(metricStatistic))
+              .statisticValues(frontendMetricToStatisticSet(metricStatistic))
               .unit(metricStatistic.unit)
               .metricName(metricStatistic.name)
               .dimensions(dimensions.asJava)
@@ -69,7 +69,7 @@ trait CloudWatchV2 extends GuLogging {
     }
   }
 
-  private def frontendMetricToStatisticSetV2(metricStatistics: FrontendStatisticSetV2): StatisticSet =
+  private def frontendMetricToStatisticSet(metricStatistics: FrontendStatisticSetV2): StatisticSet =
     StatisticSet
       .builder()
       .maximum(metricStatistics.maximum)
