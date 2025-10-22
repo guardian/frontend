@@ -102,7 +102,7 @@ object FooterLinks {
         "bluesky" -> "https://bsky.app/profile/australia.theguardian.com",
         "facebook" -> "https://www.facebook.com/theguardianaustralia",
         "instagram" -> "https://www.instagram.com/guardianaustralia",
-        "linkedin" -> "https://www.linkedin.com/company/theguardianaustralia",
+        "linkedin" -> "https://www.linkedin.com/company/guardianaustralia",
         "threads" -> "https://www.threads.com/@guardianaustralia",
         "tiktok" -> "https://www.tiktok.com/@guardianaustralia",
         "youtube" -> "https://www.youtube.com/@GuardianAustralia",
