@@ -15,6 +15,7 @@ object Dependencies {
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
+  val awsCloudwatchSdkV2 = "software.amazon.awssdk" % "cloudwatch" % awsSdk2Version
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
   val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version

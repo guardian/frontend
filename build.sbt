@@ -20,6 +20,7 @@ val common = library("common")
       apacheCommonsLang,
       awsCore,
       awsCloudwatch,
+      awsCloudwatchSdkV2,
       awsDynamodb,
       awsKinesis,
       awsS3,
