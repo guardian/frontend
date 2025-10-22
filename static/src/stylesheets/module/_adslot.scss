@@ -413,7 +413,7 @@
     padding: 0;
     margin: 0;
 
-    &:not(.ad-slot--im):not(.ad-slot--carrot):not(.ad-slot--offset-right) {
+    &:not(.ad-slot--im):not(.ad-slot--offset-right) {
         width: 100%;
     }
 
@@ -432,31 +432,6 @@
 .ad-slot--merchandising,
 .ad-slot--merchandising-high {
     min-height: 250px;
-}
-
-// See implementation on DCR
-// mark: dca5c7dd-dda4-4922-9317-a55a3789fe4c
-.ad-slot--carrot {
-    min-height: 0px;
-    padding: 0;
-    margin: 5px $gs-gutter $gs-baseline 0;
-
-    float: left;
-    clear: both;
-
-    @include mq($until: mobileLandscape) {
-        width: $gs-gutter * 6.5;
-        margin-bottom: $gs-baseline * 0.5;
-        margin-right: $gs-gutter * 0.5;
-    }
-
-    @include mq(mobileLandscape) {
-        width: gs-span(3);
-    }
-
-    @include mq(wide) {
-        margin-left: -1 * (gs-span(3) + $gs-gutter);
-    }
 }
 
 .ad-slot--fabric-v1 {
