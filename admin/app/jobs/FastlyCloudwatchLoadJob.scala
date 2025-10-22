@@ -1,10 +1,10 @@
 package jobs
 
-import com.amazonaws.services.cloudwatch.model.StandardUnit
+import software.amazon.awssdk.services.cloudwatch.model.StandardUnit
 import com.madgag.scala.collection.decorators.MapDecorator
 import common.GuLogging
-import metrics.SamplerMetric
-import model.diagnostics.CloudWatch
+import metrics.SamplerMetricV2
+import model.diagnostics.CloudWatchV2
 import services.{FastlyStatistic, FastlyStatisticService}
 
 import scala.collection.mutable
@@ -23,20 +23,20 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
     mutable.Map[(String, String, String), Long]().withDefaultValue(DateTime.now().minusMinutes(15).getMillis())
 
   // Be very explicit about which metrics we want. It is not necessary to cloudwatch everything.
-  val allFastlyMetrics: List[SamplerMetric] = List(
-    SamplerMetric("usa-hits", StandardUnit.Count),
-    SamplerMetric("usa-miss", StandardUnit.Count),
-    SamplerMetric("usa-errors", StandardUnit.Count),
-    SamplerMetric("europe-hits", StandardUnit.Count),
-    SamplerMetric("europe-miss", StandardUnit.Count),
-    SamplerMetric("europe-errors", StandardUnit.Count),
-    SamplerMetric("ausnz-hits", StandardUnit.Count),
-    SamplerMetric("ausnz-miss", StandardUnit.Count),
-    SamplerMetric("ausnz-errors", StandardUnit.Count),
+  val allFastlyMetrics: List[SamplerMetricV2] = List(
+    SamplerMetricV2("usa-hits", StandardUnit.COUNT),
+    SamplerMetricV2("usa-miss", StandardUnit.COUNT),
+    SamplerMetricV2("usa-errors", StandardUnit.COUNT),
+    SamplerMetricV2("europe-hits", StandardUnit.COUNT),
+    SamplerMetricV2("europe-miss", StandardUnit.COUNT),
+    SamplerMetricV2("europe-errors", StandardUnit.COUNT),
+    SamplerMetricV2("ausnz-hits", StandardUnit.COUNT),
+    SamplerMetricV2("ausnz-miss", StandardUnit.COUNT),
+    SamplerMetricV2("ausnz-errors", StandardUnit.COUNT),
   )
 
   private def updateMetricFromStatistic(stat: FastlyStatistic): Unit = {
-    val maybeMetric: Option[SamplerMetric] = allFastlyMetrics.find { metric =>
+    val maybeMetric: Option[SamplerMetricV2] = allFastlyMetrics.find { metric =>
       metric.name == s"${stat.region}-${stat.name}"
     }
 
@@ -56,7 +56,7 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
 
       if (Configuration.environment.isProd) {
         fresh.foreach { updateMetricFromStatistic }
-        CloudWatch.putMetrics("Fastly", allFastlyMetrics, List.empty)
+        CloudWatchV2.putMetricsV2("Fastly", allFastlyMetrics, List.empty)
       } else {
         log.info("DISABLED: Metrics uploaded in PROD only to limit duplication.")
       }
