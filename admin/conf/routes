@@ -86,7 +86,6 @@ GET         /config                                                             
 GET         /config/parameter/*key                                                                  controllers.AppConfigController.findParameter(key: String)
 
 # Metrics
-GET         /metrics/fastly                                                                         controllers.admin.FastlyController.renderFastly()
 GET         /metrics/errors                                                                         controllers.admin.MetricsController.renderErrors()
 GET         /metrics/errors/4xx                                                                     controllers.admin.MetricsController.render4XX()
 GET         /metrics/errors/5xx                                                                     controllers.admin.MetricsController.render5XX()
