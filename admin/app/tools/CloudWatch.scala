@@ -15,10 +15,6 @@ import org.joda.time.DateTime
 import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
-case class MaximumMetric(metric: GetMetricStatisticsResult) {
-  lazy val max: Double = metric.getDatapoints.asScala.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
-}
-
 object CloudWatch extends GuLogging {
   def shutdown(): Unit = {
     euWestClient.shutdown()
@@ -78,19 +74,6 @@ object CloudWatch extends GuLogging {
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
 
-  val assetsFiles = Seq(
-    "app.js",
-    "commercial.js",
-    "facia.js",
-    "content.css",
-    "head.commercial.css",
-    "head.content.css",
-    "head.facia.css",
-    "head.football.css",
-    "head.identity.css",
-    "head.index.css",
-  )
-
   def withErrorLogging[A](future: Future[A])(implicit executionContext: ExecutionContext): Future[A] = {
     future.failed.foreach { exception: Throwable =>
       log.error(s"CloudWatch error: ${exception.getMessage}", exception)
@@ -143,24 +126,6 @@ object CloudWatch extends GuLogging {
       euWestClient.getMetricStatisticsFuture(fullRequest),
     )
   }
-
-  private def latency(
-      loadBalancers: Seq[LoadBalancer],
-  )(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = {
-    Future.traverse(loadBalancers) { loadBalancer =>
-      fetchLatencyMetric(loadBalancer).map { metricsResult =>
-        new AwsLineChart(
-          loadBalancer.name,
-          Seq("Time", "latency (ms)"),
-          chartColours(loadBalancer.project),
-          metricsResult,
-        )
-      }
-    }
-  }
-
-  def fullStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] =
-    latency(primaryLoadBalancers ++ secondaryLoadBalancers)
 
   def fetchOkMetric(
       loadBalancer: LoadBalancer,
@@ -251,71 +216,6 @@ object CloudWatch extends GuLogging {
   def googleConfidence()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
     confidenceGraph("google-percent-conversion")
 
-  def routerBackend50x()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
-    val dimension = new Dimension()
-      .withName("LoadBalancerName")
-      .withValue(LoadBalancer("frontend-router").fold("unknown")(_.id))
-    for {
-      metric <- withErrorLogging(
-        euWestClient.getMetricStatisticsFuture(
-          new GetMetricStatisticsRequest()
-            .withStartTime(new DateTime().minusHours(2).toDate)
-            .withEndTime(new DateTime().toDate)
-            .withPeriod(60)
-            .withStatistics("Sum")
-            .withNamespace(v1LoadBalancerNamespace)
-            .withMetricName("HTTPCode_Backend_5XX")
-            .withDimensions(dimension),
-        ),
-      )
-    } yield new AwsLineChart("Router 50x", Seq("Time", "50x/min"), ChartFormat.SingleLineRed, metric)
-  }
-
-  object headlineTests {
-
-    private def get(
-        metricName: String,
-    )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-      euWestClient.getMetricStatisticsFuture(
-        new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(6).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(60)
-          .withStatistics("Sum")
-          .withNamespace("Diagnostics")
-          .withMetricName(metricName)
-          .withDimensions(stage),
-      )
-
-    def control()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
-      withErrorLogging(
-        for {
-          viewed <- get("headlines-control-seen")
-          clicked <- get("headlines-control-clicked")
-        } yield new AwsLineChart(
-          "Control Group",
-          Seq("", "Saw the headline", "Clicked the headline"),
-          ChartFormat.DoubleLineBlueRed,
-          viewed,
-          clicked,
-        ),
-      )
-
-    def variant()(implicit executionContext: ExecutionContext): Future[AwsLineChart] =
-      withErrorLogging(
-        for {
-          viewed <- get("headlines-variant-seen")
-          clicked <- get("headlines-variant-clicked")
-        } yield new AwsLineChart(
-          "Test Group",
-          Seq("cccc", "Saw the headline", "Clicked the headline"),
-          ChartFormat.DoubleLineBlueRed,
-          viewed,
-          clicked,
-        ),
-      )
-  }
-
   def AbMetricNames()(implicit executionContext: ExecutionContext): Future[ListMetricsResult] = {
     withErrorLogging(
       euWestClient.listMetricsFuture(
@@ -324,69 +224,5 @@ object CloudWatch extends GuLogging {
           .withDimensions(stageFilter),
       ),
     )
-  }
-
-  def eventualAdResponseConfidenceGraph()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
-
-    def getMetric(metricName: String): Future[GetMetricStatisticsResult] = {
-      val now = DateTime.now()
-      withErrorLogging(
-        euWestClient.getMetricStatisticsFuture(
-          new GetMetricStatisticsRequest()
-            .withNamespace("Diagnostics")
-            .withMetricName(metricName)
-            .withStartTime(now.minusWeeks(2).toDate)
-            .withEndTime(now.toDate)
-            .withPeriod(900)
-            .withStatistics("Sum")
-            .withDimensions(stage),
-        ),
-      )
-    }
-
-    def compare(
-        pvCount: GetMetricStatisticsResult,
-        pvWithAdCount: GetMetricStatisticsResult,
-    ): GetMetricStatisticsResult = {
-
-      val pvWithAdCountMap = pvWithAdCount.getDatapoints.asScala.map { point =>
-        point.getTimestamp -> point.getSum.toDouble
-      }.toMap
-
-      val confidenceValues = pvCount.getDatapoints.asScala.foldLeft(List.empty[Datapoint]) {
-        case (soFar, pvCountValue) =>
-          val confidenceValue = pvWithAdCountMap
-            .get(pvCountValue.getTimestamp)
-            .map { pvWithAdCountValue =>
-              pvWithAdCountValue * 100 / pvCountValue.getSum.toDouble
-            }
-            .getOrElse(0d)
-          soFar :+ new Datapoint().withTimestamp(pvCountValue.getTimestamp).withSum(confidenceValue)
-      }
-
-      new GetMetricStatisticsResult().withDatapoints(confidenceValues.asJava)
-    }
-
-    for {
-      pageViewCount <- getMetric("kpis-page-views")
-      pageViewWithAdCount <- getMetric("first-ad-rendered")
-    } yield {
-      val confidenceMetric = compare(pageViewCount, pageViewWithAdCount)
-      val averageMetric = {
-        val dataPoints = confidenceMetric.getDatapoints
-        val average = dataPoints.asScala.map(_.getSum.toDouble).sum / dataPoints.asScala.length
-        val averageDataPoints = dataPoints.asScala map { point =>
-          new Datapoint().withTimestamp(point.getTimestamp).withSum(average)
-        }
-        new GetMetricStatisticsResult().withDatapoints(averageDataPoints.asJava)
-      }
-      new AwsLineChart(
-        name = "Ad Response Confidence",
-        labels = Seq("Time", "%", "avg."),
-        ChartFormat(Colour.`tone-comment-2`, Colour.success),
-        charts = confidenceMetric,
-        averageMetric,
-      )
-    }
   }
 }
