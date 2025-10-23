@@ -13,20 +13,10 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       GoogleOneTap,
-      ConsentOrPayEuropeInternalTest,
       LabsRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object ConsentOrPayEuropeInternalTest
-    extends Experiment(
-      name = "consent-or-pay-europe-internal-test",
-      description = "Releasing Consent or Pay to Europe for internal testing",
-      owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
-      sellByDate = LocalDate.of(2026, 4, 1),
-      participationGroup = Perc0A,
-    )
 
 object GoogleOneTap
     extends Experiment(
