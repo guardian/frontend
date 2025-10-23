@@ -63,7 +63,6 @@ trait AdminControllers {
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
-  lazy val fastlyController = wire[FastlyController]
   lazy val redirectController = wire[RedirectController]
   lazy val sportTroubleShooterController = wire[SportTroubleshooterController]
   lazy val troubleshooterController = wire[TroubleshooterController]
