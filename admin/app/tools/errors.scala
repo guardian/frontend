@@ -4,13 +4,10 @@ import CloudWatch._
 import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
-import conf.Configuration._
 
 import scala.concurrent.{ExecutionContext, Future}
 
 object HttpErrors {
-
-  private val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   val v1Metric4XX = "HTTPCode_Backend_4XX"
   val v2Metric4XX = "HTTPCode_Target_4XX_Count"
