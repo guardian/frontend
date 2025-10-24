@@ -21,7 +21,6 @@ class AdminLifecycle(
     jobs: JobScheduler,
     pekkoAsync: PekkoAsync,
     emailService: EmailService,
-    fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
     r2PagePressJob: R2PagePressJob,
     analyticsSanityCheckJob: AnalyticsSanityCheckJob,
     rebuildIndexJob: RebuildIndexJob,
@@ -54,11 +53,6 @@ class AdminLifecycle(
     // every 4, 19, 34, 49 minutes past the hour, on the 2nd second past the minute (e.g 13:04:02, 13:19:02)
     jobs.schedule("LoadBalancerLoadJob", "2 4/15 * * * ?") {
       LoadBalancer.refresh()
-    }
-
-    // every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
-    jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
-      fastlyCloudwatchLoadJob.run()
     }
 
     jobs.scheduleEvery("R2PagePressJob", r2PagePressRateInSeconds.seconds) {
@@ -110,7 +104,6 @@ class AdminLifecycle(
   private def descheduleJobs(): Unit = {
     jobs.deschedule("AdminLoadJob")
     jobs.deschedule("LoadBalancerLoadJob")
-    jobs.deschedule("FastlyCloudwatchLoadJob")
     jobs.deschedule("R2PagePressJob")
     jobs.deschedule("AnalyticsSanityCheckJob")
     jobs.deschedule("RebuildIndexJob")
