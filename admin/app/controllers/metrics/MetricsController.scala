@@ -18,13 +18,6 @@ class MetricsController(
 
   lazy val stage = Configuration.environment.stage.toUpperCase
 
-  def renderLoadBalancers(): Action[AnyContent] =
-    Action.async { implicit request =>
-      for {
-        graphs <- CloudWatch.dualOkLatencyFullStack()
-      } yield NoCache(Ok(views.html.lineCharts(graphs)))
-    }
-
   def renderErrors(): Action[AnyContent] =
     Action.async { implicit request =>
       for {
