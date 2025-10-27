@@ -42,27 +42,6 @@ final case class SimpleMetric(override val name: String, datapoint: SimpleDataPo
   override val isEmpty = false
 }
 
-// MetricUploader is a class to allow basic putting of metrics. Why does it exist? Because if we provide
-// access to cloudwatch directly, then we start to measure everything, and never remove unused metrics.
-// Also, MetricUploader will upload in batches.
-final case class MetricUploader(namespace: String) {
-
-  private val datapoints: Box[List[SimpleMetric]] = Box(List.empty)
-
-  def put(metrics: Map[String, Double]): Unit = {
-    val timedMetrics = metrics.map { case (key, value) =>
-      SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
-    }
-    datapoints.send(_ ++ timedMetrics)
-  }
-
-  def upload(): Unit = {
-    val points = datapoints.get()
-    datapoints.alter(_.diff(points))
-    CloudWatch.putMetrics(namespace, points, List.empty)
-  }
-}
-
 case class TimingDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
 final case class TimingMetric(override val name: String, description: String) extends FrontendMetric {

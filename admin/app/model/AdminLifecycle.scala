@@ -22,7 +22,6 @@ class AdminLifecycle(
     pekkoAsync: PekkoAsync,
     emailService: EmailService,
     r2PagePressJob: R2PagePressJob,
-    analyticsSanityCheckJob: AnalyticsSanityCheckJob,
     rebuildIndexJob: RebuildIndexJob,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent
@@ -33,7 +32,6 @@ class AdminLifecycle(
       descheduleJobs()
       CloudWatch.shutdown()
       emailService.shutdown()
-      // deleteTmpFiles()
     }
   }
 
@@ -57,11 +55,6 @@ class AdminLifecycle(
 
     jobs.scheduleEvery("R2PagePressJob", r2PagePressRateInSeconds.seconds) {
       r2PagePressJob.run()
-    }
-
-    // every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
-    jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
-      analyticsSanityCheckJob.run()
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
