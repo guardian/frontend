@@ -1,9 +1,9 @@
 package metrics
 
-import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.{Box, StopWatch}
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
+import software.amazon.awssdk.services.cloudwatch.model.StandardUnit
 
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.atomic.AtomicLong
@@ -37,7 +37,7 @@ case class SimpleDataPoint(value: Double, sampleTime: DateTime) extends DataPoin
 }
 
 final case class SimpleMetric(override val name: String, datapoint: SimpleDataPoint) extends FrontendMetric {
-  override val metricUnit: StandardUnit = StandardUnit.Count
+  override val metricUnit: StandardUnit = StandardUnit.COUNT
   override val getAndResetDataPoints: List[DataPoint] = List(datapoint)
   override val isEmpty = false
 }
@@ -46,7 +46,7 @@ case class TimingDataPoint(value: Double, time: Option[DateTime] = None) extends
 
 final case class TimingMetric(override val name: String, description: String) extends FrontendMetric {
 
-  override val metricUnit: StandardUnit = StandardUnit.Milliseconds
+  override val metricUnit: StandardUnit = StandardUnit.MILLISECONDS
 
   private val timeInMillis = new AtomicLong()
   private val currentCount = new AtomicLong()
@@ -70,7 +70,7 @@ case class GaugeDataPoint(value: Double, time: Option[DateTime] = None) extends 
 final case class GaugeMetric(
     override val name: String,
     description: String,
-    override val metricUnit: StandardUnit = StandardUnit.Megabytes,
+    override val metricUnit: StandardUnit = StandardUnit.MEGABYTES,
     get: () => Double,
 ) extends FrontendMetric {
 
@@ -82,7 +82,7 @@ case class CountDataPoint(value: Double, time: Option[DateTime] = None) extends 
 
 final case class CountMetric(override val name: String, description: String) extends FrontendMetric {
   private val count: AtomicLong = new AtomicLong(0L)
-  override val metricUnit = StandardUnit.Count
+  override val metricUnit = StandardUnit.COUNT
 
   override def getAndResetDataPoints: List[DataPoint] = List(CountDataPoint(count.getAndSet(0L).toDouble))
 
