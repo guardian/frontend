@@ -1,17 +1,24 @@
 package tools
 
-import awswrappers.cloudwatch._
-import com.amazonaws.services.cloudwatch.model._
 import common.{Box, GuLogging}
 import org.joda.time.DateTime
+import software.amazon.awssdk.services.cloudwatch.model.{
+  Dimension,
+  GetMetricStatisticsRequest,
+  GetMetricStatisticsResponse,
+  ListMetricsRequest,
+  ListMetricsResponse,
+  Metric,
+  Statistic,
+}
 import tools.CloudWatch._
 
+import scala.jdk.FutureConverters._
 import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
-import scala.math.BigDecimal
 import scala.util.control.NonFatal
 
-case class AssetMetric(name: String, metric: GetMetricStatisticsResult, yLabel: String) {
+case class AssetMetric(name: String, metric: GetMetricStatisticsResponse, yLabel: String) {
   lazy val chart = new AwsLineChart(name, Seq(yLabel, name), ChartFormat.SingleLineBlack, metric)
   lazy val change = BigDecimal(
     chart.dataset.last.values.headOption.getOrElse(0.0) - chart.dataset.head.values.headOption.getOrElse(0.0),
@@ -22,37 +29,40 @@ object AssetMetrics {
 
   private val timePeriodInDays = 14 // Cloudwatch metric retention period is 14 days
 
-  private val gzipped = new Dimension().withName("Compression").withValue("GZip")
-  private val raw = new Dimension().withName("Compression").withValue("None")
-  private val rules = new Dimension().withName("Metric").withValue("Rules")
-  private val selectors = new Dimension().withName("Metric").withValue("Total Selectors")
+  private val gzipped = Dimension.builder().name("Compression").value("GZip").build()
 
   private def fetchMetric(metric: Metric, dimension: Dimension)(implicit
       executionContext: ExecutionContext,
-  ): Future[GetMetricStatisticsResult] =
+  ): Future[GetMetricStatisticsResponse] =
     withErrorLogging(
-      euWestClient.getMetricStatisticsFuture(
-        new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusDays(timePeriodInDays).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(86400) // One day
-          .withStatistics("Average")
-          .withNamespace("Assets")
-          .withMetricName(metric.getMetricName)
-          .withDimensions(dimension),
-      ),
+      euWestClient
+        .getMetricStatistics(
+          GetMetricStatisticsRequest
+            .builder()
+            .startTime(new DateTime().minusDays(timePeriodInDays).toDate.toInstant)
+            .endTime(new DateTime().toDate.toInstant)
+            .period(86400) // One day
+            .statistics(Statistic.AVERAGE)
+            .namespace("Assets")
+            .metricName(metric.metricName())
+            .dimensions(dimension)
+            .build(),
+        )
+        .asScala,
     )
 
-  private def allMetrics()(implicit executionContext: ExecutionContext): Future[ListMetricsResult] =
-    withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest().withNamespace("Assets")))
+  private def allMetrics()(implicit executionContext: ExecutionContext): Future[ListMetricsResponse] =
+    withErrorLogging(euWestClient.listMetrics(ListMetricsRequest.builder().namespace("Assets").build()).asScala)
 
   private def metricResults(
       dimension: Dimension,
-  )(implicit executionContext: ExecutionContext): Future[List[GetMetricStatisticsResult]] =
+  )(implicit executionContext: ExecutionContext): Future[List[GetMetricStatisticsResponse]] =
     allMetrics().flatMap { metricsList =>
       Future.sequence {
-        metricsList.getMetrics.asScala
-          .filter(_.getDimensions.contains(dimension))
+        metricsList
+          .metrics()
+          .asScala
+          .filter(_.dimensions().contains(dimension))
           .toList
           .map { metric =>
             fetchMetric(metric, dimension)
@@ -65,7 +75,7 @@ object AssetMetrics {
   ): Future[List[AssetMetric]] =
     metricResults(dimension).map(
       _.map { result =>
-        AssetMetric(result.getLabel, result, yLabel)
+        AssetMetric(result.label(), result, yLabel)
       },
     )
 
@@ -84,8 +94,6 @@ object AssetMetricsCache extends GuLogging {
 
   private val cache = Box[Map[ReportType, List[AssetMetric]]](Map.empty)
 
-  private def getReport(reportType: ReportType): Option[List[AssetMetric]] = cache().get(reportType)
-
   def run()(implicit executionContext: ExecutionContext): Future[Unit] = {
     AssetMetrics
       .sizeMetrics()
@@ -97,7 +105,4 @@ object AssetMetricsCache extends GuLogging {
         log.error("Error refreshing Asset Metrics data", e)
       }
   }
-
-  def sizes: List[AssetMetric] = getReport(ReportTypes.sizeOfFiles).getOrElse(List.empty[AssetMetric])
-
 }
