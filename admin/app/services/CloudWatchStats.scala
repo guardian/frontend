@@ -1,39 +1,49 @@
 package services
 
-import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient}
-import com.amazonaws.services.cloudwatch.model._
 import common.GuLogging
-import conf.Configuration
 import conf.Configuration.environment
 import org.joda.time.DateTime
-import awswrappers.cloudwatch._
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient
+import software.amazon.awssdk.services.cloudwatch.model.{
+  Dimension,
+  GetMetricStatisticsRequest,
+  GetMetricStatisticsResponse,
+  Statistic,
+}
+import utils.AWSv2
 
+import scala.jdk.FutureConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
 object CloudWatchStats extends GuLogging {
-  val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  val stage = Dimension.builder().name("Stage").value(environment.stage).build()
 
-  lazy val cloudwatch: AmazonCloudWatchAsync = {
-    AmazonCloudWatchAsyncClient
-      .asyncBuilder()
-      .withCredentials(Configuration.aws.mandatoryCredentials)
-      .withRegion(conf.Configuration.aws.region)
+  lazy val cloudwatch: CloudWatchAsyncClient = {
+    CloudWatchAsyncClient
+      .builder()
+      .credentialsProvider(AWSv2.credentials)
+      .region(Region.of(conf.Configuration.aws.region))
       .build()
   }
 
   private def sanityData(
       metric: String,
-  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
-    val ftr = cloudwatch.getMetricStatisticsFuture(
-      new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusMinutes(15).toDate)
-        .withEndTime(new DateTime().toDate)
-        .withPeriod(900)
-        .withStatistics("Sum")
-        .withNamespace("Diagnostics")
-        .withMetricName(metric)
-        .withDimensions(stage),
-    )
+  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResponse] = {
+    val ftr = cloudwatch
+      .getMetricStatistics(
+        GetMetricStatisticsRequest
+          .builder()
+          .startTime(new DateTime().minusMinutes(15).toDate.toInstant)
+          .endTime(new DateTime().toDate.toInstant)
+          .period(900)
+          .statistics(Statistic.SUM)
+          .namespace("Diagnostics")
+          .metricName(metric)
+          .dimensions(stage)
+          .build(),
+      )
+      .asScala
 
     ftr.failed.foreach { exception: Throwable =>
       log.error(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}", exception)
@@ -42,6 +52,6 @@ object CloudWatchStats extends GuLogging {
     ftr
   }
 
-  def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
+  def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResponse] =
     sanityData("kpis-page-views")
 }

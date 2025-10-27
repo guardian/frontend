@@ -19,7 +19,7 @@ val common = library("common")
     libraryDependencies ++= Seq(
       apacheCommonsLang,
       awsCore,
-      awsCloudwatch,
+      awsCloudwatchSdkV2,
       awsDynamodb,
       awsKinesis,
       awsS3,
