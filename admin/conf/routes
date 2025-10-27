@@ -60,7 +60,6 @@ POST        /dev/switchboard                                                    
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.legacyAbTests()
 GET         /analytics/ab-testing                                                                   controllers.admin.AnalyticsController.abTests()
-GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
