@@ -628,17 +628,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val WholePictureLogoSwitch = Switch(
-    SwitchGroup.Feature,
-    "whole-picture-logo",
-    "Enables the Whole Picture logo for the US edition.",
-    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val ProductLeftColCards = Switch(
     SwitchGroup.Feature,
     "product-left-col-cards",
