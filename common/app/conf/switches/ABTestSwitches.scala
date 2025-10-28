@@ -59,4 +59,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ses test",
+    "Ses test description",
+    owners = Seq(Owner.withEmail("daniel.clifton@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2025, 10, 29)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
