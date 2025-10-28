@@ -17,6 +17,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object CloudWatch extends GuLogging {
 
+  def close(): Unit = {
+    euWestClient.close()
+    defaultClient.close()
+  }
+
   val stage = Dimension.builder().name("Stage").value(environment.stage).build()
   val stageFilter = DimensionFilter.builder().name("Stage").value(environment.stage).build()
 
