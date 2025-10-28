@@ -1,7 +1,6 @@
 package model
 
 import java.util.TimeZone
-
 import app.LifecycleComponent
 import common._
 import conf.Configuration
@@ -9,7 +8,7 @@ import conf.switches.Switches._
 import _root_.jobs._
 import play.api.inject.ApplicationLifecycle
 import services.EmailService
-import tools.{AssetMetricsCache, LoadBalancer}
+import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
@@ -28,6 +27,7 @@ class AdminLifecycle(
   appLifecycle.addStopHook { () =>
     Future {
       descheduleJobs()
+      CloudWatch.close()
       emailService.shutdown()
     }
   }
