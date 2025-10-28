@@ -1,6 +1,10 @@
 package model.content
 
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.atom.media.{
+  Asset => AtomApiMediaAsset,
+  MediaAtom => AtomApiMediaAtom,
+  VideoPlayerFormat => AtomApiVideoPlayerFormat,
+}
 import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{
@@ -16,7 +20,7 @@ import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone, Duration}
-import play.api.libs.json.{JsError, JsSuccess, Json, OFormat}
+import play.api.libs.json.{JsError, JsSuccess, Json, OFormat, Writes}
 import quiz._
 import views.support.GoogleStructuredData
 
@@ -168,6 +172,7 @@ final case class MediaAtom(
     activeVersion: Option[Long],
     channelId: Option[String],
     trailImage: Option[ImageMedia],
+    videoPlayerFormat: Option[VideoPlayerFormat],
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] =
@@ -190,13 +195,34 @@ final case class MediaAtom(
   }
 }
 
+object AssetDimensions {
+  implicit val assetDimensionsWrites: Writes[AssetDimensions] =
+    Json.writes[AssetDimensions]
+}
+final case class AssetDimensions(
+    width: Int,
+    height: Int,
+)
+
 final case class MediaAsset(
     id: String,
     version: Long,
     platform: MediaAssetPlatform,
     mimeType: Option[String],
     assetType: MediaAssetType,
+    dimensions: Option[AssetDimensions],
+    aspectRatio: Option[String],
 )
+
+sealed trait VideoPlayerFormat extends EnumEntry
+
+object VideoPlayerFormat extends Enum[VideoPlayerFormat] with PlayJsonEnum[VideoPlayerFormat] {
+  val values = findValues
+
+  case object Default extends VideoPlayerFormat
+  case object Loop extends VideoPlayerFormat
+  case object Cinemagraph extends VideoPlayerFormat
+}
 
 sealed trait MediaAssetType extends EnumEntry
 
@@ -233,6 +259,15 @@ object MediaAtom extends common.GuLogging {
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
       trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
+      videoPlayerFormat = VideoPlayerFormat.withNameOption(
+        mediaAtom.metadata
+          .flatMap(_.selfHost)
+          .flatMap(_.videoPlayerFormat)
+          .getOrElse(
+            AtomApiVideoPlayerFormat.Default,
+          )
+          .name,
+      ),
     )
   }
 
@@ -254,6 +289,15 @@ object MediaAtom extends common.GuLogging {
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
       trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
+      videoPlayerFormat = VideoPlayerFormat.withNameOption(
+        mediaAtom.metadata
+          .flatMap(_.selfHost)
+          .flatMap(_.videoPlayerFormat)
+          .getOrElse(
+            AtomApiVideoPlayerFormat.Default,
+          )
+          .name,
+      ),
     )
   }
 
@@ -268,6 +312,8 @@ object MediaAtom extends common.GuLogging {
       platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
       mimeType = mediaAsset.mimeType,
       assetType = MediaAssetType.withName(mediaAsset.assetType.name),
+      dimensions = mediaAsset.dimensions.map(dim => AssetDimensions(dim.width, dim.height)),
+      aspectRatio = mediaAsset.aspectRatio,
     )
   }
 
