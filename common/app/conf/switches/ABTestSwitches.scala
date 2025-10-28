@@ -62,7 +62,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ses test",
+    "ab-ses-test",
     "Ses test description",
     owners = Seq(Owner.withEmail("daniel.clifton@guardian.co.uk")),
     safeState = Off,
