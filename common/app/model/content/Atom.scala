@@ -168,6 +168,7 @@ final case class MediaAtom(
     activeVersion: Option[Long],
     channelId: Option[String],
     trailImage: Option[ImageMedia],
+    videoPlayerFormat: Option[String],
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] =
@@ -190,12 +191,19 @@ final case class MediaAtom(
   }
 }
 
+final case class ImageAssetDimensions(
+    width: Option[Int],
+    height: Option[Int],
+)
+
 final case class MediaAsset(
     id: String,
     version: Long,
     platform: MediaAssetPlatform,
     mimeType: Option[String],
     assetType: MediaAssetType,
+    dimensions: Option[ImageAssetDimensions],
+    aspectRatio: Option[String],
 )
 
 sealed trait MediaAssetType extends EnumEntry
@@ -233,6 +241,7 @@ object MediaAtom extends common.GuLogging {
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
       trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
+      videoPlayerFormat = mediaAtom.metadata.flatMap(_.videoPlayerFormat),
     )
   }
 
@@ -254,6 +263,7 @@ object MediaAtom extends common.GuLogging {
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
       trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
+      videoPlayerFormat = mediaAtom.metadata.flatMap(_.videoPlayerFormat),
     )
   }
 
@@ -268,6 +278,8 @@ object MediaAtom extends common.GuLogging {
       platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
       mimeType = mediaAsset.mimeType,
       assetType = MediaAssetType.withName(mediaAsset.assetType.name),
+      dimensions = mediaAsset.dimensions.map(dim => ImageAssetDimensions(dim.width, dim.height)),
+      aspectRatio = mediaAsset.aspectRatio,
     )
   }
 
