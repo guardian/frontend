@@ -11,7 +11,6 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      AllBoosts,
       DarkModeWeb,
       GoogleOneTap,
       ConsentOrPayEuropeInternalTest,
@@ -27,24 +26,6 @@ object ConsentOrPayEuropeInternalTest
       owners = Seq(Owner.withEmail("identity.dev@guardian.co.uk")),
       sellByDate = LocalDate.of(2026, 4, 1),
       participationGroup = Perc0A,
-    )
-
-object DarkModeWeb
-    extends Experiment(
-      name = "dark-mode-web",
-      description = "Enable dark mode on web",
-      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 10, 31),
-      participationGroup = Perc0D,
-    )
-
-object AllBoosts
-    extends Experiment(
-      name = "all-boosts",
-      description = "All non-feature cards on network fronts are boosted",
-      owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc5A,
     )
 
 object GoogleOneTap
@@ -63,4 +44,13 @@ object LabsRedesign
       owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
       sellByDate = LocalDate.of(2025, 12, 16),
       participationGroup = Perc0C,
+    )
+
+object DarkModeWeb
+    extends Experiment(
+      name = "dark-mode-web",
+      description = "Enable dark mode on web",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2025, 10, 31),
+      participationGroup = Perc0D,
     )

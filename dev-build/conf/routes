@@ -53,8 +53,7 @@ OPTIONS    /email                                                               
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
 
 # Analytics
-GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abTests()
-GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.legacyAbTests()
 
 # Commercial admin
 
@@ -181,8 +180,6 @@ GET            /config                                                          
 GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
-GET            /metrics/loadbalancers                                                                                            controllers.admin.MetricsController.renderLoadBalancers()
-GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()
 GET            /metrics/errors                                                                                                   controllers.admin.MetricsController.renderErrors()
 GET            /metrics/errors/4xx                                                                                               controllers.admin.MetricsController.render4XX()
 GET            /metrics/errors/5xx                                                                                               controllers.admin.MetricsController.render5XX()
