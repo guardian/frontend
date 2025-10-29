@@ -36,12 +36,19 @@ object AWSv2 {
 
   val STS: StsClient = build[StsClient, StsClientBuilder](StsClient.builder())
 
-  def stsCredentials(devProfile: String, roleArn: String): AwsCredentialsProvider = credentialsForDevAndProd(
+  /** Assume a role (roleArn) with STS while allowing local dev to fall back to a profile. sessionName defaults to
+    * "frontend" but can be overridden per caller.
+    */
+  def stsCredentials(
+      devProfile: String,
+      roleArn: String,
+      sessionName: String = "frontend",
+  ): AwsCredentialsProvider = credentialsForDevAndProd(
     devProfile,
     StsAssumeRoleCredentialsProvider
       .builder()
       .stsClient(STS)
-      .refreshRequest(AssumeRoleRequest.builder.roleSessionName("frontend").roleArn(roleArn).build)
+      .refreshRequest(AssumeRoleRequest.builder.roleSessionName(sessionName).roleArn(roleArn).build)
       .build(),
   )
 
