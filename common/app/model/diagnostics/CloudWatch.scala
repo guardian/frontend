@@ -9,8 +9,10 @@ import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient
 import software.amazon.awssdk.services.cloudwatch.model.{Dimension, MetricDatum, PutMetricDataRequest, StatisticSet}
 import utils.AWSv2
 
+import scala.concurrent.ExecutionContext
 import scala.jdk.CollectionConverters._
-import scala.util.{Failure, Success, Try}
+import scala.jdk.FutureConverters._
+import scala.util.{Failure, Success}
 
 trait CloudWatch extends GuLogging {
 
@@ -23,7 +25,9 @@ trait CloudWatch extends GuLogging {
       .region(Region.of(conf.Configuration.aws.region))
       .build()
 
-  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
+  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension])(implicit
+      executionContext: ExecutionContext,
+  ): Unit = {
     if (Configuration.environment.isProd) {
       putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
     } else {
@@ -35,7 +39,7 @@ trait CloudWatch extends GuLogging {
       metricNamespace: String,
       metrics: List[FrontendMetric],
       dimensions: List[Dimension],
-  ): Unit = {
+  )(implicit executionContext: ExecutionContext): Unit = {
     for {
       metricGroup <- metrics.filterNot(_.isEmpty).grouped(20)
     } {
@@ -60,13 +64,16 @@ trait CloudWatch extends GuLogging {
           }
           .build()
 
-      Try(CloudWatch.cloudwatch.putMetricData(request)) match {
-        case Success(_) => log.info("CloudWatch PutMetricDataRequest - success")
-        case Failure(e) =>
-          log.warn(s"Failed to put ${metricsAsStatistics.size} metrics: $e")
-          log.warn(s"Failed to put ${metricsAsStatistics.map(_.name).mkString(",")}")
-          log.warn(s"CloudWatch PutMetricDataRequest error: ${e.getMessage}}")
-      }
+      CloudWatch.cloudwatch
+        .putMetricData(request)
+        .asScala
+        .onComplete {
+          case Success(_) => log.info("CloudWatch PutMetricDataRequest - success")
+          case Failure(e) =>
+            log.warn(s"Failed to put ${metricsAsStatistics.size} metrics: $e")
+            log.warn(s"Failed to put ${metricsAsStatistics.map(_.name).mkString(",")}")
+            log.info(s"CloudWatch PutMetricDataRequest error: ${e.getMessage}}")
+        }
     }
   }
 
