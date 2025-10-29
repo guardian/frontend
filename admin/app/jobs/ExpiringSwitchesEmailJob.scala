@@ -13,12 +13,6 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
   def run()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(webEngineersEmail)
   def runReminder()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(dotcomPlatformEmail)
 
-  // TEMP: testing SES update in CODE environment
-  def runWithRecipient(overrideRecipient: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
-    val fromAddress = conf.Configuration.frontend.dotcomPlatformEmail.orElse(Some(overrideRecipient))
-    runJob(fromAddress)
-  }
-
   private def runJob(baseRecipientEmail: Option[String])(implicit executionContext: ExecutionContext): Future[Unit] = {
     (for (baseRecipients <- baseRecipientEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
