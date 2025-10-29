@@ -95,14 +95,6 @@ class AdminLifecycle(
       ExpiringSwitchesEmailJob(emailService).runReminder()
     }
 
-    // TEMP: More frequent CODE trigger for SES v2 verification
-    if (conf.Configuration.environment.isNonProd) {
-      jobs.schedule("ExpiringSwitchesEmailJobVerification", "0 0/5 * * * ?") { // every 5 minutes
-        log.info("Starting ExpiringSwitchesEmailJobVerification (CODE only)")
-        ExpiringSwitchesEmailJob(emailService).run()
-      }
-    }
-
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
       AssetMetricsCache.run()
     }
@@ -120,7 +112,6 @@ class AdminLifecycle(
     jobs.deschedule("FrontPressJobLowFrequency")
     jobs.deschedule("ExpiringSwitchesEmailJob")
     jobs.deschedule("ExpiringSwitchesAfternoonEmailJob")
-    jobs.deschedule("ExpiringSwitchesEmailJobVerification")
     jobs.deschedule("AssetMetricsCache")
   }
 
