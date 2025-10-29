@@ -99,7 +99,7 @@ class AdminLifecycle(
     if (conf.Configuration.environment.isNonProd) {
       jobs.schedule("ExpiringSwitchesEmailJobVerification", "0 0/5 * * * ?") { // every 5 minutes
         log.info("Starting ExpiringSwitchesEmailJobVerification (CODE only)")
-        ExpiringSwitchesEmailJob(emailService).runWithRecipient("daniel.clifton@guardian.co.uk")
+        ExpiringSwitchesEmailJob(emailService).run()
       }
     }
 
