@@ -3,14 +3,13 @@ package common
 import java.io.File
 import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
-
 import app.LifecycleComponent
-import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
 import conf.Configuration
 import metrics._
 import model.ApplicationIdentity
 import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle
+import software.amazon.awssdk.services.cloudwatch.model.{Dimension, StandardUnit}
 
 import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
@@ -60,7 +59,7 @@ object SystemMetrics extends implicits.Numbers {
     name = "thread-count",
     description = "Thread Count",
     get = () => ManagementFactory.getThreadMXBean.getThreadCount,
-    metricUnit = StandardUnit.Count,
+    metricUnit = StandardUnit.COUNT,
   )
 
   // yeah, casting to com.sun.. ain't too pretty
@@ -93,7 +92,7 @@ object SystemMetrics extends implicits.Numbers {
     name = "build-number",
     description = "Build number",
     get = () => buildNumber,
-    metricUnit = StandardUnit.None,
+    metricUnit = StandardUnit.NONE,
   )
 
 }
@@ -132,15 +131,15 @@ object FaciaPressMetrics {
     "Number of times facia-tool cron job has successfully pressed",
   )
 
-  val UkPressLatencyMetric = DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
-  val UsPressLatencyMetric = DurationMetric("us-press-latency", StandardUnit.Milliseconds)
-  val AuPressLatencyMetric = DurationMetric("au-press-latency", StandardUnit.Milliseconds)
-  val AllFrontsPressLatencyMetric = DurationMetric("front-press-latency", StandardUnit.Milliseconds)
-  val FrontPressContentSize = SamplerMetric("front-press-content-size", StandardUnit.Bytes)
-  val FrontPressContentSizeLite = SamplerMetric("front-press-content-size-lite", StandardUnit.Bytes)
-  val FrontDecodingLatency = DurationMetric("front-decoding-latency", StandardUnit.Milliseconds)
-  val FrontDownloadLatency = DurationMetric("front-download-latency", StandardUnit.Milliseconds)
-  val FrontNotModifiedDownloadLatency = DurationMetric("front-not-modified-download-latency", StandardUnit.Milliseconds)
+  val UkPressLatencyMetric = DurationMetric("uk-press-latency", StandardUnit.MILLISECONDS)
+  val UsPressLatencyMetric = DurationMetric("us-press-latency", StandardUnit.MILLISECONDS)
+  val AuPressLatencyMetric = DurationMetric("au-press-latency", StandardUnit.MILLISECONDS)
+  val AllFrontsPressLatencyMetric = DurationMetric("front-press-latency", StandardUnit.MILLISECONDS)
+  val FrontPressContentSize = SamplerMetric("front-press-content-size", StandardUnit.BYTES)
+  val FrontPressContentSizeLite = SamplerMetric("front-press-content-size-lite", StandardUnit.BYTES)
+  val FrontDecodingLatency = DurationMetric("front-decoding-latency", StandardUnit.MILLISECONDS)
+  val FrontDownloadLatency = DurationMetric("front-download-latency", StandardUnit.MILLISECONDS)
+  val FrontNotModifiedDownloadLatency = DurationMetric("front-not-modified-download-latency", StandardUnit.MILLISECONDS)
 }
 
 object EmailSubsciptionMetrics {
@@ -184,7 +183,7 @@ class CloudWatchMetricsLifecycle(
     extends LifecycleComponent
     with GuLogging {
   val applicationMetricsNamespace: String = "Application"
-  val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
+  val applicationDimension = List(Dimension.builder().name("ApplicationName").value(appIdentity.name).build())
 
   appLifecycle.addStopHook { () =>
     Future {
@@ -209,13 +208,13 @@ class CloudWatchMetricsLifecycle(
         GaugeMetric(
           s"${gc.name}-gc-count-per-min",
           "Used heap memory (MB)",
-          StandardUnit.Count,
+          StandardUnit.COUNT,
           () => gc.gcCount,
         ),
         GaugeMetric(
           s"${gc.name}-gc-time-per-min",
           "Used heap memory (MB)",
-          StandardUnit.Count,
+          StandardUnit.COUNT,
           () => gc.gcTime,
         ),
       )
@@ -223,7 +222,6 @@ class CloudWatchMetricsLifecycle(
 
   private def report(): Unit = {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.appMetrics.metrics
-
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
 

@@ -14,8 +14,10 @@ object AbTestJob extends GuLogging {
 
     CloudWatch.AbMetricNames() map { result =>
       // Group variant names by test name
-      val tests = result.getMetrics.asScala
-        .map(_.getMetricName.split("-").toList)
+      val tests = result
+        .metrics()
+        .asScala
+        .map(_.metricName().split("-").toList)
         .collect { case test :: variant =>
           (test, variant.mkString("-"))
         }

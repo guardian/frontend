@@ -1,8 +1,6 @@
 package model
 
 import java.util.TimeZone
-import java.nio.file.Files.deleteIfExists
-
 import app.LifecycleComponent
 import common._
 import conf.Configuration
@@ -10,11 +8,10 @@ import conf.switches.Switches._
 import _root_.jobs._
 import play.api.inject.ApplicationLifecycle
 import services.EmailService
-import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
+import tools.{CloudWatch, LoadBalancer}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
-import conf.AdminConfiguration
 
 class AdminLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -30,7 +27,7 @@ class AdminLifecycle(
   appLifecycle.addStopHook { () =>
     Future {
       descheduleJobs()
-      CloudWatch.shutdown()
+      CloudWatch.close()
       emailService.shutdown()
     }
   }
@@ -87,11 +84,6 @@ class AdminLifecycle(
       log.info("Starting ExpiringSwitchesAfternoonEmailJob")
       ExpiringSwitchesEmailJob(emailService).runReminder()
     }
-
-    jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
-      AssetMetricsCache.run()
-    }
-
   }
 
   private def descheduleJobs(): Unit = {
@@ -114,7 +106,6 @@ class AdminLifecycle(
 
     pekkoAsync.after1s {
       rebuildIndexJob.run()
-      AssetMetricsCache.run()
       LoadBalancer.refresh()
     }
   }
