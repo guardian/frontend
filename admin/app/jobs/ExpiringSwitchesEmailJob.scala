@@ -13,13 +13,18 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
   def run()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(webEngineersEmail)
   def runReminder()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(dotcomPlatformEmail)
 
-  // TEMP: testing ses update in code
-  def runWithRecipient(overrideRecipient: String)(implicit executionContext: ExecutionContext): Future[Unit] =
-    runJob(Some(overrideRecipient))
+  // TEMP: testing SES update in CODE environment
+  def runWithRecipient(overrideRecipient: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    val fromAddress = conf.Configuration.frontend.dotcomPlatformEmail.orElse(Some(overrideRecipient))
+    runJob(fromAddress)
+  }
 
   private def runJob(baseRecipientEmail: Option[String])(implicit executionContext: ExecutionContext): Future[Unit] = {
     (for (baseRecipients <- baseRecipientEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
+      log.info(
+        s"ExpiringSwitchesEmailJob: found ${expiringSwitches.size} expiring switches: ${expiringSwitches.map(_.name).mkString(",")}",
+      )
 
       if (expiringSwitches.nonEmpty) {
 
@@ -30,6 +35,7 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
           baseRecipients +: switchOwners
         }
 
+        log.info(s"ExpiringSwitchesEmailJob: sending email from ${baseRecipients} to ${recipients.mkString(",")}")
         val eventualResult = emailService.send(
           from = baseRecipients,
           to = recipients,
