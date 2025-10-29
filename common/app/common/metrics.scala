@@ -222,7 +222,6 @@ class CloudWatchMetricsLifecycle(
 
   private def report(): Unit = {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.appMetrics.metrics
-
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
 
