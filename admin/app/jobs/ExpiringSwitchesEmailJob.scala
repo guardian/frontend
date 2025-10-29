@@ -16,9 +16,6 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
   private def runJob(baseRecipientEmail: Option[String])(implicit executionContext: ExecutionContext): Future[Unit] = {
     (for (baseRecipients <- baseRecipientEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
-      log.info(
-        s"ExpiringSwitchesEmailJob: found ${expiringSwitches.size} expiring switches: ${expiringSwitches.map(_.name).mkString(",")}",
-      )
 
       if (expiringSwitches.nonEmpty) {
 
@@ -29,7 +26,6 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
           baseRecipients +: switchOwners
         }
 
-        log.info(s"ExpiringSwitchesEmailJob: sending email from ${baseRecipients} to ${recipients.mkString(",")}")
         val eventualResult = emailService.send(
           from = baseRecipients,
           to = recipients,
