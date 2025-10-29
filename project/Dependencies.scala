@@ -96,7 +96,7 @@ object Dependencies {
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.6"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.7-PREVIEW.vbupdate-aws-sdk-v2.2025-10-13T1851.2761fd0f"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
