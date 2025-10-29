@@ -50,18 +50,6 @@ object SystemMetrics extends implicits.Numbers {
     get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed),
   )
 
-  val MaxNonHeapMemoryMetric = GaugeMetric(
-    name = "max-non-heap-memory",
-    description = "Max non heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax),
-  )
-
-  val UsedNonHeapMemoryMetric = GaugeMetric(
-    name = "used-non-heap-memory",
-    description = "Used non heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed),
-  )
-
   val FreeDiskSpaceMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
