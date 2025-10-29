@@ -65,7 +65,7 @@ trait CloudWatch extends GuLogging {
         case Failure(e) =>
           log.warn(s"Failed to put ${metricsAsStatistics.size} metrics: $e")
           log.warn(s"Failed to put ${metricsAsStatistics.map(_.name).mkString(",")}")
-          log.info(s"CloudWatch PutMetricDataRequest error: ${e.getMessage}}")
+          log.warn(s"CloudWatch PutMetricDataRequest error: ${e.getMessage}}")
       }
     }
   }
