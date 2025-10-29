@@ -32,7 +32,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.16.1"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "32.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "32.0.0-PREVIEW.bump-content-atom-to-support-looping-video-field.2025-10-29T1136.98f8ace6"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
