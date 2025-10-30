@@ -22,19 +22,6 @@ trait Notification extends GuLogging {
       .region(Region.of(conf.Configuration.aws.region))
       .build()
 
-  def send(
-      pekkoAsync: PekkoAsync,
-  )(subject: String, message: String)(implicit executionContext: ExecutionContext): Unit = {
-    val request = PublishRequest
-      .builder()
-      .topicArn(topic)
-      .subject(subject)
-      .message(message)
-      .build()
-
-    publishTopic(pekkoAsync)(request)
-  }
-
   def sendWithoutSubject(pekkoAsync: PekkoAsync)(message: String)(implicit executionContext: ExecutionContext): Unit = {
     val request = PublishRequest
       .builder()
