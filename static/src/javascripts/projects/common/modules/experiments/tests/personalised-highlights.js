@@ -6,11 +6,13 @@ export const personalisedHighlights = {
 	author: 'Anna Beddow',
 	description: 'Allow user behaviour to personalise the ordering of cards in the highlights container.',
     audience: 0,
-	audienceOffset: 0,
+	audienceOffset: 0.75,
 	successMeasure: '',
-	audienceCriteria: '',
-	idealOutcome: '',
+	audienceCriteria: 'All users, globally.',
+    idealOutcome:
+        'Increase click through rate on highlights container',
 	showForSensitive: true,
+
 	canRun: () => true,
 	variants: [
 		{
