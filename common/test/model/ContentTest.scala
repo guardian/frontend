@@ -398,7 +398,8 @@ class ContentTest
 
     val mediaAtomWithSource = Some(MediaAtom("", "", Nil, "", None, atomSource, None, None, None, None, None, None))
     val mediaAtomWithNoSource = Some(MediaAtom("", "", Nil, "", None, None, None, None, None, None, None, None))
-    val mediaAtomWithEmptySource = Some(MediaAtom("", "", Nil, "", None, emptySource, None, None, None, None, None, None))
+    val mediaAtomWithEmptySource =
+      Some(MediaAtom("", "", Nil, "", None, emptySource, None, None, None, None, None, None))
 
     Video(contentNoByline, None, None).bylineWithSource should be(None)
     Video(contentNoByline, videoSource, None).bylineWithSource should be(videoSource.map(s => s"Source: $s"))

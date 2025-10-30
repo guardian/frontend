@@ -1,6 +1,10 @@
 package model.content
 
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom, VideoPlayerFormat => AtomApiVideoPlayerFormat}
+import com.gu.contentatom.thrift.atom.media.{
+  Asset => AtomApiMediaAsset,
+  MediaAtom => AtomApiMediaAtom,
+  VideoPlayerFormat => AtomApiVideoPlayerFormat,
+}
 import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{
@@ -256,10 +260,10 @@ object MediaAtom extends common.GuLogging {
           .flatMap(_.selfHost)
           .flatMap(_.videoPlayerFormat)
           .getOrElse(
-            AtomApiVideoPlayerFormat.Default
+            AtomApiVideoPlayerFormat.Default,
           )
-          .name
-      )
+          .name,
+      ),
     )
   }
 
@@ -286,10 +290,11 @@ object MediaAtom extends common.GuLogging {
           .flatMap(_.selfHost)
           .flatMap(_.videoPlayerFormat)
           .getOrElse(
-            AtomApiVideoPlayerFormat.Default
+            AtomApiVideoPlayerFormat.Default,
           )
-          .name
-      )    )
+          .name,
+      ),
+    )
   }
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
