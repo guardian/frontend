@@ -24,7 +24,7 @@ val common = library("common")
       awsKinesis,
       awsS3,
       awsSns,
-      awsV2Sts,
+      awsSts,
       awsSqs,
       awsSsm,
       eTagCachingS3,
