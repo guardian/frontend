@@ -14,14 +14,13 @@ object Dependencies {
   val playJsonVersion = "3.0.5"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
-  val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
+  val awsCloudwatchSdkV2 = "software.amazon.awssdk" % "cloudwatch" % awsSdk2Version
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
   val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
-  val awsSes = "com.amazonaws" % "aws-java-sdk-ses" % awsVersion
+  val awsSes = "software.amazon.awssdk" % "ses" % awsSdk2Version
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
-  val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
   val awsV2Sts = "software.amazon.awssdk" % "sts" % awsSdk2Version
   val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
   val awsSsm = "com.amazonaws" % "aws-java-sdk-ssm" % awsVersion
@@ -96,7 +95,7 @@ object Dependencies {
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.6"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "1.0.1"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"

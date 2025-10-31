@@ -244,10 +244,12 @@ class GuardianConfiguration extends GuLogging {
     lazy val capiPreviewRoleToAssume: Option[String] =
       configuration.getStringProperty("content.api.preview.roleToAssume")
 
-    lazy val capiPreviewCredentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
-      Seq(new ProfileCredentialsProvider("capi")) ++
-        capiPreviewRoleToAssume.map(new STSAssumeRoleSessionCredentialsProvider.Builder(_, "capi").build()): _*,
-    )
+    lazy val capiPreviewCredentials: software.amazon.awssdk.auth.credentials.AwsCredentialsProvider = {
+      import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider
+      capiPreviewRoleToAssume
+        .map(roleArn => utils.AWSv2.stsCredentials("capi", roleArn, sessionName = "capi"))
+        .getOrElse(ProfileCredentialsProvider.create("capi"))
+    }
 
     lazy val nextPreviousPageSize: Int =
       configuration.getIntegerProperty("content.api.nextPreviousPageSize").getOrElse(50)
