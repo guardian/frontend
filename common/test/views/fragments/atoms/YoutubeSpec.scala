@@ -21,6 +21,8 @@ class YoutubeSpec extends MixedPlaySpec {
             platform = Youtube,
             mimeType = None,
             assetType = Video,
+            dimensions = None,
+            aspectRatio = None,
           ),
         ),
         title = "",
@@ -31,6 +33,7 @@ class YoutubeSpec extends MixedPlaySpec {
         activeVersion = None,
         channelId = None,
         trailImage = None,
+        videoPlayerFormat = None,
       )
       val displayCaption = false
       val view = views.html.fragments.atoms

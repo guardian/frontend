@@ -1,6 +1,10 @@
 package model.content
 
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.atom.media.{
+  Asset => AtomApiMediaAsset,
+  MediaAtom => AtomApiMediaAtom,
+  VideoPlayerFormat => AtomApiVideoPlayerFormat,
+}
 import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{
@@ -168,6 +172,7 @@ final case class MediaAtom(
     activeVersion: Option[Long],
     channelId: Option[String],
     trailImage: Option[ImageMedia],
+    videoPlayerFormat: Option[VideoPlayerFormat],
 ) extends Atom {
 
   def activeAssets: Seq[MediaAsset] =
@@ -190,13 +195,30 @@ final case class MediaAtom(
   }
 }
 
+final case class ImageAssetDimensions(
+    width: Int,
+    height: Int,
+)
+
 final case class MediaAsset(
     id: String,
     version: Long,
     platform: MediaAssetPlatform,
     mimeType: Option[String],
     assetType: MediaAssetType,
+    dimensions: Option[ImageAssetDimensions],
+    aspectRatio: Option[String],
 )
+
+sealed trait VideoPlayerFormat extends EnumEntry
+
+object VideoPlayerFormat extends Enum[VideoPlayerFormat] with PlayJsonEnum[VideoPlayerFormat] {
+  val values = findValues
+
+  case object Default extends VideoPlayerFormat
+  case object Loop extends VideoPlayerFormat
+  case object Cinemagraph extends VideoPlayerFormat
+}
 
 sealed trait MediaAssetType extends EnumEntry
 
@@ -233,6 +255,15 @@ object MediaAtom extends common.GuLogging {
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
       trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
+      videoPlayerFormat = VideoPlayerFormat.withNameOption(
+        mediaAtom.metadata
+          .flatMap(_.selfHost)
+          .flatMap(_.videoPlayerFormat)
+          .getOrElse(
+            AtomApiVideoPlayerFormat.Default,
+          )
+          .name,
+      ),
     )
   }
 
@@ -254,6 +285,15 @@ object MediaAtom extends common.GuLogging {
       activeVersion = mediaAtom.activeVersion,
       channelId = mediaAtom.metadata.flatMap(_.channelId),
       trailImage = mediaAtom.trailImage.map(imageMediaMake(_, mediaAtom.title)),
+      videoPlayerFormat = VideoPlayerFormat.withNameOption(
+        mediaAtom.metadata
+          .flatMap(_.selfHost)
+          .flatMap(_.videoPlayerFormat)
+          .getOrElse(
+            AtomApiVideoPlayerFormat.Default,
+          )
+          .name,
+      ),
     )
   }
 
@@ -268,6 +308,8 @@ object MediaAtom extends common.GuLogging {
       platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
       mimeType = mediaAsset.mimeType,
       assetType = MediaAssetType.withName(mediaAsset.assetType.name),
+      dimensions = mediaAsset.dimensions.map(dim => ImageAssetDimensions(dim.width, dim.height)),
+      aspectRatio = mediaAsset.aspectRatio,
     )
   }
 
