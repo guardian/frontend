@@ -1,12 +1,11 @@
 package frontpress
 
 import java.util.concurrent.atomic.AtomicInteger
-
-import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import com.gu.contentapi.client.model.ContentApiError
-import common.{JsonMessageQueue, GuLogging, Message}
+import common.{GuLogging, JsonMessageQueue, Message}
 import org.joda.time.DateTime
 import play.api.libs.json.Reads
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -78,43 +77,44 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
   def shouldRetryPress(message: Message[A]): Boolean
 
   final protected def getAndProcess: Future[Unit] = {
-    val getRequest = queue.receiveOne(new ReceiveMessageRequest().withWaitTimeSeconds(WaitTimeSeconds)) flatMap {
-      case Some(message @ Message(id, _, receipt)) =>
-        lastSuccessfulReceipt.refresh()
+    val getRequest =
+      queue.receiveOne(ReceiveMessageRequest.builder().waitTimeSeconds(WaitTimeSeconds).build()) flatMap {
+        case Some(message @ Message(id, _, receipt)) =>
+          lastSuccessfulReceipt.refresh()
 
-        val ftr = process(message)
+          val ftr = process(message)
 
-        ftr onComplete {
-          case Success(_) =>
-            /** Ultimately, we ought to be able to recover from processing the same message twice anyway, as the nature
-              * of SQS means you could get the same message delivered twice.
-              */
-            queue.delete(receipt).failed.foreach { error =>
-              log.error(s"Error deleting message $id from queue", error)
-            }
-
-            consecutiveProcessingErrors.recordSuccess()
-
-          case Failure(error) =>
-            if (shouldRetryPress(message)) {
-              log.warn(s"JsonQueueWorker getAndProcess retrying $message", error)
-              queue.retryMessageAfter(message.handle, 5)
-            } else if (deleteOnFailure) {
-              queue.delete(receipt).failed.foreach { e =>
-                log.error(s"Error deleting message $id from queue", e)
+          ftr onComplete {
+            case Success(_) =>
+              /** Ultimately, we ought to be able to recover from processing the same message twice anyway, as the
+                * nature of SQS means you could get the same message delivered twice.
+                */
+              queue.delete(receipt).failed.foreach { error =>
+                log.error(s"Error deleting message $id from queue", error)
               }
-            }
-            log.error(s"Error processing message $id", error)
-            consecutiveProcessingErrors.recordError()
-        }
 
-        ftr map { _ => () }
+              consecutiveProcessingErrors.recordSuccess()
 
-      case None =>
-        lastSuccessfulReceipt.refresh()
-        log.info(s"No message after $WaitTimeSeconds seconds")
-        Future.successful(())
-    }
+            case Failure(error) =>
+              if (shouldRetryPress(message)) {
+                log.warn(s"JsonQueueWorker getAndProcess retrying $message", error)
+                queue.retryMessageAfter(message.handle, 5)
+              } else if (deleteOnFailure) {
+                queue.delete(receipt).failed.foreach { e =>
+                  log.error(s"Error deleting message $id from queue", e)
+                }
+              }
+              log.error(s"Error processing message $id", error)
+              consecutiveProcessingErrors.recordError()
+          }
+
+          ftr map { _ => () }
+
+        case None =>
+          lastSuccessfulReceipt.refresh()
+          log.info(s"No message after $WaitTimeSeconds seconds")
+          Future.successful(())
+      }
 
     getRequest.failed.foreach {
       case error: ContentApiError =>
