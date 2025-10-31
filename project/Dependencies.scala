@@ -22,7 +22,7 @@ object Dependencies {
   val awsSes = "software.amazon.awssdk" % "ses" % awsSdk2Version
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsV2Sts = "software.amazon.awssdk" % "sts" % awsSdk2Version
-  val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
+  val awsSqs = "software.amazon.awssdk" % "sqs" % awsSdk2Version
   val awsSsm = "com.amazonaws" % "aws-java-sdk-ssm" % awsVersion
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20240317"
