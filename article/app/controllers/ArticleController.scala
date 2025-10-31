@@ -15,6 +15,7 @@ import renderers.DotcomRenderingService
 import services.{CAPILookup, NewsletterService}
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
 import views.support._
+import utils.{LiveHarness, LiveHarnessInteractiveAtom}
 
 import scala.concurrent.Future
 
@@ -57,6 +58,19 @@ class ArticleController(
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) { (article, blocks) =>
         render(path, article, blocks)
+      }
+    }
+  }
+
+  def renderLiveHarness(path: String): Action[JsValue] = {
+    Action.async(parse.json) { implicit request =>
+      request.body.validate[List[LiveHarnessInteractiveAtom]].asEither match {
+        case Right(value) =>
+          mapModel(path, ArticleBlocks) { (article, blocks) =>
+            val (newArticle, newBlocks) = LiveHarness.injectInteractiveAtomsIntoArticle(value, article, blocks)
+            render(path, newArticle, newBlocks)
+          }
+        case Left(value) => Future(BadRequest(value.toString()))
       }
     }
   }
