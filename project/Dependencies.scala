@@ -33,7 +33,7 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val contentApiModelsJson =
-    "com.gu" %% "content-api-models-json" % "32.0.0-PREVIEW.filterproduct-element-temp.2025-10-17T1357.19edb5e8"
+    "com.gu" %% "content-api-models-json" % "32.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
