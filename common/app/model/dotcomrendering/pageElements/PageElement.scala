@@ -6,6 +6,8 @@ import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   EmbedTracking,
   LinkType,
+  ProductDisplayType,
+  ProductElementFields,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
@@ -510,6 +512,49 @@ object LinkBlockElement {
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
 
+case class ProductImage(
+    url: String,
+    caption: String,
+    height: Int,
+    width: Int,
+    alt: String,
+    credit: String,
+    displayCredit: Boolean,
+)
+case class ProductCustomAttribute(
+    name: String,
+    value: String,
+)
+case class ProductCta(
+    text: String,
+    price: String,
+    retailer: String,
+    url: String,
+)
+case class ProductBlockElement(
+    productName: Option[String],
+    brandName: Option[String],
+    primaryHeading: Option[String],
+    secondaryHeading: Option[String],
+    starRating: Option[String],
+    productCtas: List[ProductCta],
+    customAttributes: List[ProductCustomAttribute],
+    image: Option[ProductImage],
+    content: Seq[PageElement],
+    displayType: ProductDisplayType,
+) extends PageElement
+object ProductBlockElement {
+  implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
+  implicit val ProductBlockElementCTAWrites: Writes[ProductCta] = Json.writes[ProductCta]
+  implicit val ProductBlockElementCustomAttributeWrites: Writes[ProductCustomAttribute] =
+    Json.writes[ProductCustomAttribute]
+  implicit val ProductBlockElementDisplayTypeWrites: Writes[ProductDisplayType] = Writes { displayType =>
+    JsString(displayType.name)
+  }
+  implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
+  implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
+}
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -897,6 +942,7 @@ object PageElement {
       case _: ListBlockElement            => true
       case _: TimelineBlockElement        => true
       case _: LinkBlockElement            => true
+      case _: ProductBlockElement         => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1534,6 +1580,23 @@ object PageElement {
           )
         }.toList
 
+      case Product =>
+        element.tempProductTypeData.map { tempProductTypeData =>
+          makeProduct(
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            edition,
+            webPublicationDate,
+            tempProductTypeData,
+            isGallery,
+            isTheFilterUS,
+          )
+        }.toList
+
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
@@ -1641,6 +1704,82 @@ object PageElement {
       bylineHtml = item.bylineHtml,
       contributorImageOverrideUrl = item.contributorImageOverrideUrl,
     )
+  }
+
+  private def makeProduct(
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      product: ProductElementFields,
+      isGallery: Boolean,
+      isTheFilterUS: Boolean,
+  ) = {
+    ProductBlockElement(
+      content = product.content
+        .getOrElse(List())
+        .flatMap { element =>
+          PageElement.make(
+            element,
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isMainBlock = false,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            overrideImage = None,
+            edition,
+            webPublicationDate,
+            isGallery,
+            isTheFilterUS,
+          )
+        }
+        .toSeq,
+      productName = product.productName,
+      brandName = product.brandName,
+      primaryHeading = product.primaryHeading,
+      secondaryHeading = product.secondaryHeading,
+      starRating = product.starRating,
+      productCtas = product.productCtas
+        .getOrElse(Seq.empty)
+        .map { cta =>
+          ProductCta(
+            text = cta.text.getOrElse(""),
+            price = cta.price.getOrElse(""),
+            retailer = cta.retailer.getOrElse(""),
+            url =
+              AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS).getOrElse(""),
+          )
+        }
+        .toList,
+      customAttributes = product.customAttributes
+        .getOrElse(Seq.empty)
+        .map(attr =>
+          ProductCustomAttribute(
+            name = attr.name.getOrElse(""),
+            value = attr.value.getOrElse(""),
+          ),
+        )
+        .toList,
+      image = product.image.map(ApiImage =>
+        ProductImage(
+          url = ApiImage.file.getOrElse(""),
+          caption = ApiImage.caption.getOrElse(""),
+          credit = ApiImage.credit.getOrElse(""),
+          height = ApiImage.height.getOrElse(1),
+          width = ApiImage.width.getOrElse(1),
+          displayCredit = ApiImage.displayCredit.getOrElse(false),
+          alt = ApiImage.alt.getOrElse(""),
+        ),
+      ),
+      displayType = product.displayType,
+    )
+
   }
 
   private[this] def ensureHTTPS(url: String): String = {

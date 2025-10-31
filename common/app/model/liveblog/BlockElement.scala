@@ -183,6 +183,7 @@ object BlockElement {
       case ElementType.List          => Some(UnsupportedBlockElement(None))
       case Timeline                  => Some(UnsupportedBlockElement(None))
       case Link                      => Some(UnsupportedBlockElement(None))
+      case Product                   => Some(UnsupportedBlockElement(None))
     }
   }
 
