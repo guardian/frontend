@@ -1,11 +1,10 @@
 package services
 
-import java.net.URL
+import java.net.URI
 import org.scanamo.syntax._
 import org.scanamo.{DynamoFormat, MissingProperty, Scanamo, ScanamoAsync, Table}
 import common.GuLogging
 import conf.Configuration
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
@@ -31,7 +30,7 @@ object RedirectService {
     }
 
   def normaliseURL(url: String): Option[String] = {
-    Try(new URL(url)).toOption.map { url =>
+    Try(new URI(url)).toOption.map { url =>
       val host = url.getHost
       val path = url.getPath
       val normalisedPath = normalisePath(path)

@@ -5,7 +5,7 @@ import com.gu.identity.model.{PublicFields, User, UserDates}
 import idapiclient.{Auth, _}
 import org.joda.time.DateTime
 import org.mockito.Mockito._
-import org.mockito.{Matchers => MockitoMatchers}
+import org.mockito.{ArgumentMatchers => MockitoMatchers}
 import org.scalatest.freespec.PathAnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
