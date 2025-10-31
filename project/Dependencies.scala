@@ -21,7 +21,6 @@ object Dependencies {
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
   val awsSes = "software.amazon.awssdk" % "ses" % awsSdk2Version
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
-  val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
   val awsV2Sts = "software.amazon.awssdk" % "sts" % awsSdk2Version
   val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
   val awsSsm = "com.amazonaws" % "aws-java-sdk-ssm" % awsVersion
@@ -96,7 +95,7 @@ object Dependencies {
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
-  val capiAws = "com.gu" %% "content-api-client-aws" % "0.7.6"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "1.0.1"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
