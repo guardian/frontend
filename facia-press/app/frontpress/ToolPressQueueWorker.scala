@@ -1,12 +1,13 @@
 package frontpress
 
-import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.gu.facia.api.models.faciapress.{Draft, FrontPath, Live, PressJob}
 import common.LoggingField.{LogFieldLong, LogFieldString}
 import common._
 import conf.Configuration
 import org.joda.time.DateTime
 import services._
+import software.amazon.awssdk.services.sqs.SqsAsyncClient
+import utils.AWSv2
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -18,7 +19,11 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[PressJob](
-      AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build(),
+      SqsAsyncClient
+        .builder()
+        .credentialsProvider(AWSv2.credentials)
+        .region(AWSv2.region)
+        .build(),
       queueUrl,
     )
   }) getOrElse {
