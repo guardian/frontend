@@ -1,6 +1,6 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage, ProductImage, AudioElementFields}
+import com.gu.contentapi.client.model.v1.{Asset, AssetType, CartoonImage, AudioElementFields}
 import play.api.libs.json.{Json, Writes}
 import views.support.{ImgSrc, Naked, Orientation}
 
