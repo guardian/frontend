@@ -1581,7 +1581,7 @@ object PageElement {
         }.toList
 
       case Product =>
-        element.tempProductTypeData.map { tempProductTypeData =>
+        element.productTypeData.map { productTypeData =>
           makeProduct(
             addAffiliateLinks,
             pageUrl,
@@ -1591,7 +1591,7 @@ object PageElement {
             calloutsUrl,
             edition,
             webPublicationDate,
-            tempProductTypeData,
+            productTypeData,
             isGallery,
             isTheFilterUS,
           )
