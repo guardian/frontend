@@ -40,6 +40,17 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-no-auxia-sign-in-gate",
+    "Defines a control group who should not have sign-in gate journeys handled by Auxia",
+    owners = Seq(Owner.withEmail("growth@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2027, 11, 1)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  Switch(
+    ABTests,
     "ab-admiral-adblock-recovery",
     "Testing the Admiral integration for adblock recovery on theguardian.com",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
