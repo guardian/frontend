@@ -1,37 +1,39 @@
 package tools
 
-import awswrappers.cloudwatch._
-import com.amazonaws.services.cloudwatch.{
-  AmazonCloudWatchAsync,
-  AmazonCloudWatchAsyncClient,
-  AmazonCloudWatchAsyncClientBuilder,
-}
-import com.amazonaws.services.cloudwatch.model._
 import common.GuLogging
-import conf.Configuration
 import conf.Configuration._
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.cloudwatch.{CloudWatchAsyncClient, CloudWatchAsyncClientBuilder}
+import software.amazon.awssdk.services.cloudwatch.model.{
+  Dimension,
+  DimensionFilter,
+  ListMetricsRequest,
+  ListMetricsResponse,
+}
+import utils.AWSv2
+import scala.jdk.FutureConverters._
 
 import scala.concurrent.{ExecutionContext, Future}
 
 object CloudWatch extends GuLogging {
-  def shutdown(): Unit = {
-    euWestClient.shutdown()
-    defaultClient.shutdown()
+
+  def close(): Unit = {
+    euWestClient.close()
+    defaultClient.close()
   }
 
-  val stage = new Dimension().withName("Stage").withValue(environment.stage)
-  val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
+  val stage = Dimension.builder().name("Stage").value(environment.stage).build()
+  val stageFilter = DimensionFilter.builder().name("Stage").value(environment.stage).build()
 
-  lazy val defaultClientBuilder: AmazonCloudWatchAsyncClientBuilder = AmazonCloudWatchAsyncClient
-    .asyncBuilder()
-    .withCredentials(Configuration.aws.mandatoryCredentials)
+  lazy val defaultClientBuilder: CloudWatchAsyncClientBuilder =
+    CloudWatchAsyncClient.builder().credentialsProvider(AWSv2.credentials)
 
-  lazy val euWestClient: AmazonCloudWatchAsync = defaultClientBuilder
-    .withRegion(conf.Configuration.aws.region)
+  lazy val euWestClient: CloudWatchAsyncClient = defaultClientBuilder
+    .region(Region.of(conf.Configuration.aws.region))
     .build()
 
   // some metrics are only available in the 'default' region
-  lazy val defaultClient: AmazonCloudWatchAsync = defaultClientBuilder.build()
+  lazy val defaultClient: CloudWatchAsyncClient = defaultClientBuilder.build()
 
   val v1LoadBalancerNamespace = "AWS/ELB"
   val v2LoadBalancerNamespace = "AWS/ApplicationELB"
@@ -63,13 +65,17 @@ object CloudWatch extends GuLogging {
     future
   }
 
-  def AbMetricNames()(implicit executionContext: ExecutionContext): Future[ListMetricsResult] = {
+  def AbMetricNames()(implicit executionContext: ExecutionContext): Future[ListMetricsResponse] = {
     withErrorLogging(
-      euWestClient.listMetricsFuture(
-        new ListMetricsRequest()
-          .withNamespace("AbTests")
-          .withDimensions(stageFilter),
-      ),
+      euWestClient
+        .listMetrics(
+          ListMetricsRequest
+            .builder()
+            .namespace("AbTests")
+            .dimensions(stageFilter)
+            .build(),
+        )
+        .asScala,
     )
   }
 }

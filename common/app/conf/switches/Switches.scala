@@ -8,6 +8,8 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import java.text.SimpleDateFormat
 import java.util.TimeZone
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -157,10 +159,13 @@ object Switch {
   }
 
   def expiryAsUserFriendlyString(switch: Switch): String = {
-    val timeFormatter = new SimpleDateFormat("E dd MMM")
-    timeFormatter.setTimeZone(TimeZone.getTimeZone("Europe/London"))
+    val zone = ZoneId.of("Europe/London")
+    val dateFormatter = DateTimeFormatter.ofPattern("E dd MMM", Locale.UK)
     switch.sellByDate
-      .map(d => s"expires ${timeFormatter.format(d)} at 23:59 (London time)")
+      .map { d =>
+        val datePortion = d.atStartOfDay(zone).format(dateFormatter)
+        s"expires $datePortion at 23:59 (London time)"
+      }
       .getOrElse("expiry not specified")
   }
 }

@@ -39,7 +39,6 @@ trait AdminServices extends I18nComponents {
   lazy val emailService = wire[EmailService]
   lazy val redirects = wire[RedirectService]
   lazy val r2PagePressJob = wire[R2PagePressJob]
-  lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 
   lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
