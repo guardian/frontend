@@ -31,7 +31,9 @@ class ParameterStore(region: String) {
       val resultMap = response
         .parameters()
         .asScala
-        .map { param => param.name() -> GuardianConfiguration.unwrapQuotedString(param.value()) }
+        .map { param =>
+          param.name() -> GuardianConfiguration.unwrapQuotedString(param.value())
+        }
         .toMap
       Option(response.nextToken()) match {
         case Some(next) if next.nonEmpty => pagination(accum ++ resultMap, Some(next))
