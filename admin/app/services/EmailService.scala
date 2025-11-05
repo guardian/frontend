@@ -1,30 +1,23 @@
 package services
 
+import common.{GuLogging, PekkoAsync}
+import software.amazon.awssdk.services.ses.SesAsyncClient
+import software.amazon.awssdk.services.ses.model.{Destination => EmailDestination, _}
+import utils.AWSv2
+
 import java.util.concurrent.TimeoutException
-
-import com.amazonaws.handlers.AsyncHandler
-import com.amazonaws.services.simpleemail._
-import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
-import common.{PekkoAsync, GuLogging}
-import conf.Configuration.aws.mandatoryCredentials
-
-import scala.jdk.CollectionConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal
-import scala.util.{Failure, Success}
 
 class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
-
-  private lazy val client: AmazonSimpleEmailServiceAsync = AmazonSimpleEmailServiceAsyncClient
-    .asyncBuilder()
-    .withCredentials(mandatoryCredentials)
-    .withRegion(conf.Configuration.aws.region)
+  private lazy val client: SesAsyncClient = SesAsyncClient
+    .builder()
+    .credentialsProvider(AWSv2.credentials)
+    .region(AWSv2.region)
     .build()
 
-  val sendAsync = client.sendAsyncEmail(pekkoAsync) _
-
-  def shutdown(): Unit = client.shutdown()
+  def shutdown(): Unit = client.close()
 
   def send(
       from: String,
@@ -33,69 +26,55 @@ class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
       subject: String,
       textBody: Option[String] = None,
       htmlBody: Option[String] = None,
-  )(implicit executionContext: ExecutionContext): Future[SendEmailResult] = {
+  )(implicit executionContext: ExecutionContext): Future[SendEmailResponse] = {
 
     log.info(s"Sending email from $from to $to about $subject")
 
-    def withText(body: Body): Body = {
-      textBody map { text =>
-        body.withText(new Content().withData(text))
-      } getOrElse body
+    val textPart: Option[Content] = textBody.map(tb => Content.builder().data(tb).build())
+    val htmlPart: Option[Content] = htmlBody.map(hb => Content.builder().data(hb).build())
+
+    val bodyBuilder = Body.builder()
+    textPart.foreach(bodyBuilder.text)
+    htmlPart.foreach(bodyBuilder.html)
+    val body = bodyBuilder.build()
+
+    val message = Message
+      .builder()
+      .subject(Content.builder().data(subject).build())
+      .body(body)
+      .build()
+
+    val destinationBuilder = EmailDestination.builder().toAddresses(to: _*)
+    if (cc.nonEmpty) destinationBuilder.ccAddresses(cc: _*)
+    val destination = destinationBuilder.build()
+
+    val request = SendEmailRequest
+      .builder()
+      .source(from)
+      .destination(destination)
+      .message(message)
+      .build()
+
+    val promise = Promise[SendEmailResponse]()
+
+    pekkoAsync.after(1.minute) {
+      promise.tryFailure(new TimeoutException("Timed out"))
     }
 
-    def withHtml(body: Body): Body = {
-      htmlBody map { html =>
-        body.withHtml(new Content().withData(html))
-      } getOrElse body
+    val cf = client.sendEmail(request)
+    cf.handle[Unit] { (result: SendEmailResponse, err: Throwable) =>
+      if (err != null) promise.tryFailure(err)
+      else promise.trySuccess(result)
+      ()
     }
 
-    val body = withHtml(withText(new Body()))
-
-    val message = new Message()
-      .withSubject(new Content().withData(subject))
-      .withBody(body)
-
-    val request = new SendEmailRequest()
-      .withSource(from)
-      .withDestination(new EmailDestination().withToAddresses(to.asJava).withCcAddresses(cc.asJava))
-      .withMessage(message)
-
-    val futureResponse = sendAsync(request)
-
-    futureResponse.foreach { response =>
-      log.info(s"Sent message ID ${response.getMessageId}")
+    promise.future.foreach { response =>
+      log.info(s"Sent message ID ${response.messageId()}")
     }
-
-    futureResponse.failed.foreach { case NonFatal(e) =>
+    promise.future.failed.foreach { case NonFatal(e) =>
       log.error(s"Email send failed: ${e.getMessage}")
     }
 
-    futureResponse
+    promise.future
   }
-
-  private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsync) {
-
-    def sendAsyncEmail(pekkoAsync: PekkoAsync)(request: SendEmailRequest): Future[SendEmailResult] = {
-      val promise = Promise[SendEmailResult]()
-
-      pekkoAsync.after(1.minute) {
-        promise.tryFailure(new TimeoutException(s"Timed out"))
-      }
-
-      val handler = new AsyncHandler[SendEmailRequest, SendEmailResult] {
-        override def onSuccess(request: SendEmailRequest, result: SendEmailResult): Unit =
-          promise.complete(Success(result))
-        override def onError(exception: Exception): Unit =
-          promise.complete(Failure(exception))
-      }
-
-      try {
-        client.sendEmailAsync(request, handler)
-        promise.future
-      } catch {
-        case NonFatal(e) => Future.failed(e)
-      }
-    }
-  }
-
 }
