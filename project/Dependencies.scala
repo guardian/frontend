@@ -12,7 +12,7 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.5"
-  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
+  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.19.0"
   val awsCloudwatchSdkV2 = "software.amazon.awssdk" % "cloudwatch" % awsSdk2Version
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
