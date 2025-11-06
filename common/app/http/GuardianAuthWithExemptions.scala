@@ -11,7 +11,6 @@ import common.GuLogging
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
-import play.api.http.HttpEntity
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import utils.AWSv2
