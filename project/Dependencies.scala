@@ -97,7 +97,7 @@ object Dependencies {
   val capiAws = "com.gu" %% "content-api-client-aws" % "1.0.1"
 
   // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
+  val bootstrap = "org.webjars" % "bootstrap" % "5.3.8"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
