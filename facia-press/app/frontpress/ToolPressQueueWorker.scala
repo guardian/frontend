@@ -16,8 +16,6 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
 ) extends JsonQueueWorker[PressJob]
     with GuLogging {
   override lazy val queue: JsonMessageQueue[PressJob] = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
-    val credentials = Configuration.aws.mandatoryCredentials
-
     JsonMessageQueue[PressJob](
       SqsAsyncClient
         .builder()
