@@ -13,9 +13,9 @@ import com.gu.pandomainauth.model.{
 }
 import common.Environment.{awsRegion, stage}
 import conf.Configuration.aws.mandatoryCredentials
+
 import scala.concurrent.duration.DurationInt
 import com.gu.pandomainauth.PublicSettings
-import com.gu.permissions.{PermissionDefinition, PermissionsProvider}
 
 trait PanDomainAuthenticated {
 
@@ -45,30 +45,13 @@ trait PanDomainAuthenticated {
     theRefresher
   }
 
-  trait AuthenticationResult
-
-  case class AuthenticationFailure(status: Int, reason: String) extends AuthenticationResult
-
-  case class AuthenticationSuccess(user: Option[AuthenticatedUser]) extends AuthenticationResult
-
   protected def evaluatePandaAuth(
-      authorizationHeader: String,
-      permissions: PermissionsProvider,
-  ): Option[AuthenticationResult] = {
-    val authHeaderParts = authorizationHeader.split(" ")
-
-    val requiredPermission = PermissionDefinition(
-      name = "preview_access",
-      app = "frontend",
-    )
+      authenticationHeader: String,
+  ): Either[String, AuthenticatedUser] = {
+    val authHeaderParts = authenticationHeader.split(" ")
 
     if (authHeaderParts.length != 2 || authHeaderParts.head.toLowerCase != "gu-desktop-panda") {
-      Some(
-        AuthenticationFailure(
-          status = 401,
-          reason = "presented Authorization header using incorrect scheme",
-        ),
-      )
+      Left("presented Authorization header using incorrect scheme")
     } else {
       val authStatus = PanDomain.authStatus(
         cookieData = authHeaderParts.last,
@@ -81,57 +64,12 @@ trait PanDomainAuthenticated {
       )
 
       authStatus match {
-        case Expired(authedUser) =>
-          Some(
-            AuthenticationFailure(
-              status = 419,
-              reason = s"user ${authedUser.user.email} login expired, returning 419",
-            ),
-          )
-
-        case NotAuthorized(authedUser) =>
-          Some(
-            AuthenticationFailure(
-              status = 403,
-              reason = s"user ${authedUser.user.email} failed validation",
-            ),
-          )
-
-        case InvalidCookie(exception) =>
-          Some(
-            AuthenticationFailure(
-              status = 403,
-              reason = "could not validate cookie",
-            ),
-          )
-
-        case NotAuthenticated =>
-          Some(
-            AuthenticationFailure(
-              status = 401,
-              reason = "user did not present a token",
-            ),
-          )
-
-        case GracePeriod(authedUser)
-            if permissions.hasPermission(
-              requiredPermission,
-              authedUser.user.email,
-            ) =>
-          // continue
-          Some(AuthenticationSuccess(user = Some(authedUser)))
-
-        case Authenticated(authedUser) if (permissions.hasPermission(requiredPermission, authedUser.user.email)) =>
-          // continue
-          Some(AuthenticationSuccess(user = Some(authedUser)))
-
-        case _ => // authed but not allowed ComposerAccess
-          Some(
-            AuthenticationFailure(
-              status = 403,
-              reason = "insufficient-permissions",
-            ),
-          )
+        case Expired(authedUser)       => Left(s"user ${authedUser.user.email} login expired")
+        case NotAuthorized(authedUser) => Left(s"user ${authedUser.user.email} failed validation")
+        case InvalidCookie(_)          => Left("could not validate cookie")
+        case NotAuthenticated          => Left("user did not present a token")
+        case GracePeriod(authedUser)   => Right(authedUser)
+        case Authenticated(authedUser) => Right(authedUser)
       }
     }
   }
