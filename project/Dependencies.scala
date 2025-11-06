@@ -83,7 +83,7 @@ object Dependencies {
   val pekkoSerializationJackson = "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion
   val pekkoActorTyped = "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion
 
-  val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
+  val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.1")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
   val janino = "org.codehaus.janino" % "janino" % "3.1.12"
 
