@@ -27,7 +27,7 @@ object Dependencies {
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20250820"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
-  val commonsIo = "commons-io" % "commons-io" % "2.16.1"
+  val commonsIo = "commons-io" % "commons-io" % "2.20.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "31.0.0"
