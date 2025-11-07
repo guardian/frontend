@@ -535,11 +535,11 @@ case class ProductCta(
     url: String,
 )
 case class ProductBlockElement(
-    productName: Option[String],
-    brandName: Option[String],
-    primaryHeadingHtml: Option[String],
-    secondaryHeadingHtml: Option[String],
-    starRating: Option[String],
+    productName: String,
+    brandName:  String,
+    primaryHeadingHtml: String,
+    secondaryHeadingHtml: String,
+    starRating: String,
     productCtas: List[ProductCta],
     customAttributes: List[ProductCustomAttribute],
     image: Option[ProductImage],
@@ -1795,11 +1795,11 @@ object PageElement {
           )
         }
         .toSeq,
-      productName = product.productName,
-      brandName = product.brandName,
-      primaryHeadingHtml = product.primaryHeading,
-      secondaryHeadingHtml = product.secondaryHeading,
-      starRating = product.starRating,
+      productName = product.productName.getOrElse(""),
+      brandName = product.brandName.getOrElse(""),
+      primaryHeadingHtml = product.primaryHeading.getOrElse(""),
+      secondaryHeadingHtml = product.secondaryHeading.getOrElse(""),
+      starRating = product.starRating.getOrElse("none-selected"),
       productCtas = product.productCtas
         .getOrElse(Seq.empty)
         .flatMap(cta => createProductCta(cta, pageUrl, addAffiliateLinks, isTheFilterUS))
