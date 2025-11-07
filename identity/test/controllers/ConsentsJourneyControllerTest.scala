@@ -8,7 +8,8 @@ import form._
 import idapiclient.{Auth, TrackingData, _}
 import model.PhoneNumbers
 import org.mockito.Mockito._
-import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
+import org.mockito.Mockito.{when, verify}
+import org.mockito.{ArgumentCaptor, ArgumentMatchers => MockitoMatchers}
 import MockitoMatchers._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest._
