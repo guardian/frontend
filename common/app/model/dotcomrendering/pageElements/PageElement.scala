@@ -1723,11 +1723,11 @@ object PageElement {
   ) = {
 
     def createProductCta(
-                          cta: ApiProductCta,
-                          pageUrl: String,
-                          addAffiliateLinks: Boolean,
-                          isTheFilterUS: Boolean
-                        ): Option[ProductCta] = {
+        cta: ApiProductCta,
+        pageUrl: String,
+        addAffiliateLinks: Boolean,
+        isTheFilterUS: Boolean,
+    ): Option[ProductCta] = {
       for {
         // URL must exist and be non-empty
         url <- AffiliateLinksCleaner
@@ -1741,39 +1741,38 @@ object PageElement {
         text = cta.text.getOrElse(""),
         price = cta.price.getOrElse(""),
         retailer = cta.retailer.getOrElse(""),
-        url = url
+        url = url,
       )
     }
 
     def createProductCustomAttribute(apiCustomAttribute: ApiProductCustomAttribute): Option[ProductCustomAttribute] = {
       for {
-        name  <- apiCustomAttribute.name  if name.nonEmpty
+        name <- apiCustomAttribute.name if name.nonEmpty
         value <- apiCustomAttribute.value if value.nonEmpty
       } yield ProductCustomAttribute(
         name = name,
-        value = value
+        value = value,
       )
     }
 
     def createProductImage(apiImage: ApiProductImage): Option[ProductImage] = {
-     for {
+      for {
         url <- apiImage.file if url.nonEmpty
         height <- apiImage.height
         width <- apiImage.width
         displayCredit <- apiImage.displayCredit
         credit <- apiImage.credit
         alt <- apiImage.alt
-      } yield
-        ProductImage(
-          url = url,
-          caption = apiImage.caption.getOrElse(""),
-          credit = credit,
-          height = height,
-          width = width,
-          displayCredit = displayCredit,
-          alt = alt,
-        )
-      }
+      } yield ProductImage(
+        url = url,
+        caption = apiImage.caption.getOrElse(""),
+        credit = credit,
+        height = height,
+        width = width,
+        displayCredit = displayCredit,
+        alt = alt,
+      )
+    }
 
     ProductBlockElement(
       content = product.content
