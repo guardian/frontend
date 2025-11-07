@@ -551,7 +551,6 @@ object ProductBlockElement {
   implicit val ProductBlockElementDisplayTypeWrites: Writes[ProductDisplayType] = Writes { displayType =>
     JsString(displayType.name)
   }
-  implicit val ProductBlockElementContentWrites: Writes[PageElement] = Json.writes[PageElement]
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
