@@ -1987,7 +1987,8 @@ object PageElement {
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
-      src <- getIframeSrc(html) if src.contains("charts-datawrapper.s3.amazonaws.com")
+      src <- getIframeSrc(html)
+      if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
       EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
