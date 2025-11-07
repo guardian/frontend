@@ -536,7 +536,7 @@ case class ProductCta(
 )
 case class ProductBlockElement(
     productName: String,
-    brandName:  String,
+    brandName: String,
     primaryHeadingHtml: String,
     secondaryHeadingHtml: String,
     starRating: String,
