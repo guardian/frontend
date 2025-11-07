@@ -1,7 +1,6 @@
 package http
 
 import com.amazonaws.regions.Regions
-import software.amazon.awssdk.core.sync.ResponseTransformer
 import software.amazon.awssdk.services.s3.S3Client
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
@@ -58,13 +57,7 @@ class GuardianAuthWithExemptions(
   override lazy val panDomainSettings = PanDomainAuthSettingsRefresher(
     domain = toolsDomainSuffix,
     system,
-    new S3BucketLoader {
-      def inputStreamFetching(key: String) =
-        s3Client.getObject(
-          _.bucket("pan-domain-auth-settings").key(key),
-          ResponseTransformer.toInputStream(),
-        )
-    },
+    S3BucketLoader.forAwsSdkV2(s3Client, "pan-domain-auth-settings"),
   )
 
   override def authCallbackUrl = s"https://$toolsDomainPrefix.$toolsDomainSuffix$oauthCallbackPath"
