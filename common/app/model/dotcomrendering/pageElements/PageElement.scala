@@ -532,16 +532,16 @@ case class ProductCta(
     url: String,
 )
 case class ProductBlockElement(
-    productName: Option[String],
-    brandName: Option[String],
-    primaryHeading: Option[String],
-    secondaryHeading: Option[String],
-    starRating: Option[String],
-    productCtas: List[ProductCta],
-    customAttributes: List[ProductCustomAttribute],
-    image: Option[ProductImage],
-    content: Seq[PageElement],
-    displayType: ProductDisplayType,
+                                productName: Option[String],
+                                brandName: Option[String],
+                                primaryHeadingHtml: Option[String],
+                                secondaryHeadingHtml: Option[String],
+                                starRating: Option[String],
+                                productCtas: List[ProductCta],
+                                customAttributes: List[ProductCustomAttribute],
+                                image: Option[ProductImage],
+                                content: Seq[PageElement],
+                                displayType: ProductDisplayType,
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
@@ -1741,8 +1741,8 @@ object PageElement {
         .toSeq,
       productName = product.productName,
       brandName = product.brandName,
-      primaryHeading = product.primaryHeading,
-      secondaryHeading = product.secondaryHeading,
+      primaryHeadingHtml = product.primaryHeading,
+      secondaryHeadingHtml = product.secondaryHeading,
       starRating = product.starRating,
       productCtas = product.productCtas
         .getOrElse(Seq.empty)
