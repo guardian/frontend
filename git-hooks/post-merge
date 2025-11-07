@@ -10,15 +10,7 @@ execa
     .then(result => {
         const changedFiles = result.stdout.split('\n');
 
-        if (changedFiles.includes('.nvmrc')) {
-            const nvmrcVersion = fs.readFileSync('.nvmrc').toString().trim();
-
-            console.log(
-                `${chalk.red(
-                    `Frontend now requires Node ${nvmrcVersion}\nSwitch to the latest version using \`nvm use\`, \`fnm use\` or \`asdf install\` (or whatever is appropriate) or download from nodejs.org. Then run \`make reinstall\`.`,
-                )}`
-            );
-        } else if (changedFiles.includes('yarn.lock')) {
+        if (changedFiles.includes('yarn.lock')) {
             console.log(
                 `${chalk.red(
                     'This application has new dependencies. Running `make install`...'

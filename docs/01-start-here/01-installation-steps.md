@@ -103,45 +103,19 @@ Using java version 11.0.15.9.1-amzn in this shell.
 
 Node.js can be found [here](https://github.com/nodejs/node).
 
-We recommend that you use the Node Version Manager to be able to switch easily between versions of nodes.
+We recommend that you use [mise](https://mise.jdx.dev/) to be able to switch easily between versions of nodes.
 
-To install nvm:
-
-```bash
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-```
-
-You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your
-`.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc`
-is present.
-
-Frontend uses a `.nvmrc` file which specifies a given version of node as a requirement. If you use
-[nvm](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can run `nvm use` to swich to the version specified by `.nvmrc`. If that version number is not available locally, you might have to install the missing version with `nvm install <version number>`. You may also be using `asdf` or `fnm`.
-
-Alternatively you could directly install Node on your system.
-See [.nvmrc](https://github.com/guardian/frontend/blob/main/.nvmrc) for the current version and install that version using your preferred package manager.
-For example:
-
-Ubuntu:
+To install mise:
 
 ```bash
-$ curl -sL https://deb.nodesource.com/setup_18.x | sudo bash -
-$ sudo apt-get install -y nodejs
+$ brew install mise
 ```
 
-Mac:
+Also add [this script](https://gist.github.com/ioannakok/5f08d4e603c53bc81b97d3f4846b8a1f) to your
+`.zshrc` to automatically switch Node versions if a `.tool-versions` is present.
 
-```bash
-$ brew install node@[current-version]
-```
-
-eg:
-
-```bash
-$ brew install node@18.16.0
-```
-
-
+Frontend uses a `.tool-versions` file which specifies a given version of node as a requirement. If you use
+[mise](https://mise.jdx.dev/) to manage multiple versions of Node on your machine, you can run `mise install` to install to the version specified by `.tool-versions`.
 
 ### Client side code
 
