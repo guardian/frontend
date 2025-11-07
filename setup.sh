@@ -78,7 +78,9 @@ install_mise() {
 install_node() {
     if ! mise_installed; then
         brew install mise
-        EXTRA_STEPS+=("Add https://gist.github.com/ioannakok/5f08d4e603c53bc81b97d3f4846b8a1f to your .zshrc")
+        echo "To enable the mise package manager add https://gist.github.com/ioannakok/5f08d4e603c53bc81b97d3f4846b8a1f to your .zshrc"
+        echo "Once done, run 'source ~/.zshrc' and then run the setup.sh script again"
+        exit
     fi
     mise install
 }
