@@ -8,6 +8,9 @@ import com.gu.contentapi.client.model.v1.{
   LinkType,
   ProductDisplayType,
   ProductElementFields,
+  ProductCTA => ApiProductCta,
+  ProductCustomAttribute => ApiProductCustomAttribute,
+  ProductImage => ApiProductImage,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
@@ -1718,6 +1721,60 @@ object PageElement {
       isGallery: Boolean,
       isTheFilterUS: Boolean,
   ) = {
+
+    def createProductCta(
+                          cta: ApiProductCta,
+                          pageUrl: String,
+                          addAffiliateLinks: Boolean,
+                          isTheFilterUS: Boolean
+                        ): Option[ProductCta] = {
+      for {
+        // URL must exist and be non-empty
+        url <- AffiliateLinksCleaner
+          .replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS)
+          .filter(_.nonEmpty)
+
+        // Must have either non-empty text, or both non-empty price & retailer
+        if cta.text.exists(_.nonEmpty) ||
+          (cta.price.exists(_.nonEmpty) && cta.retailer.exists(_.nonEmpty))
+      } yield ProductCta(
+        text = cta.text.getOrElse(""),
+        price = cta.price.getOrElse(""),
+        retailer = cta.retailer.getOrElse(""),
+        url = url
+      )
+    }
+
+    def createProductCustomAttribute(apiCustomAttribute: ApiProductCustomAttribute): Option[ProductCustomAttribute] = {
+      for {
+        name  <- apiCustomAttribute.name  if name.nonEmpty
+        value <- apiCustomAttribute.value if value.nonEmpty
+      } yield ProductCustomAttribute(
+        name = name,
+        value = value
+      )
+    }
+
+    def createProductImage(apiImage: ApiProductImage): Option[ProductImage] = {
+     for {
+        url <- apiImage.file if url.nonEmpty
+        height <- apiImage.height
+        width <- apiImage.width
+        displayCredit <- apiImage.displayCredit
+        credit <- apiImage.credit
+        alt <- apiImage.alt
+      } yield
+        ProductImage(
+          url = url,
+          caption = apiImage.caption.getOrElse(""),
+          credit = credit,
+          height = height,
+          width = width,
+          displayCredit = displayCredit,
+          alt = alt,
+        )
+      }
+
     ProductBlockElement(
       content = product.content
         .getOrElse(List())
@@ -1746,36 +1803,13 @@ object PageElement {
       starRating = product.starRating,
       productCtas = product.productCtas
         .getOrElse(Seq.empty)
-        .map { cta =>
-          ProductCta(
-            text = cta.text.getOrElse(""),
-            price = cta.price.getOrElse(""),
-            retailer = cta.retailer.getOrElse(""),
-            url =
-              AffiliateLinksCleaner.replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS).getOrElse(""),
-          )
-        }
+        .flatMap(cta => createProductCta(cta, pageUrl, addAffiliateLinks, isTheFilterUS))
         .toList,
       customAttributes = product.customAttributes
         .getOrElse(Seq.empty)
-        .map(attr =>
-          ProductCustomAttribute(
-            name = attr.name.getOrElse(""),
-            value = attr.value.getOrElse(""),
-          ),
-        )
+        .flatMap(apiAttr => createProductCustomAttribute(apiAttr))
         .toList,
-      image = product.image.map(ApiImage =>
-        ProductImage(
-          url = ApiImage.file.getOrElse(""),
-          caption = ApiImage.caption.getOrElse(""),
-          credit = ApiImage.credit.getOrElse(""),
-          height = ApiImage.height.getOrElse(1),
-          width = ApiImage.width.getOrElse(1),
-          displayCredit = ApiImage.displayCredit.getOrElse(false),
-          alt = ApiImage.alt.getOrElse(""),
-        ),
-      ),
+      image = product.image.flatMap(apiImage => createProductImage(apiImage)),
       displayType = product.displayType,
     )
 
@@ -1954,8 +1988,7 @@ object PageElement {
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
-      src <- getIframeSrc(html)
-      if src.contains("charts-datawrapper.s3.amazonaws.com")
+      src <- getIframeSrc(html) if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
       EmbedBlockElement(html, None, None, false, role, thirdPartyTracking, source, sourceDomain, caption)
     }
