@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       GoogleOneTap,
       ConsentOrPayEuropeInternalTest,
       LabsRedesign,
+      LoopVideoLoad,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -53,4 +54,12 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2026, 1, 30),
       participationGroup = Perc0D,
+    )
+object LoopVideoLoad
+    extends Experiment(
+      name = "loop-video-load",
+      description = "Monitor loop video load times",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2026, 1, 30),
+      participationGroup = Perc0E,
     )
