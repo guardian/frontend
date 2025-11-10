@@ -627,4 +627,26 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val EnableLoopVideoCORS = Switch(
+    SwitchGroup.Feature,
+    "enable-loop-video-cors",
+    "Enable CORS on loop videos",
+    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+    sellByDate = Some(LocalDate.of(2026, 2, 16)),
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val ProductLeftColCards = Switch(
+    SwitchGroup.Feature,
+    "product-left-col-cards",
+    "Enables product element summary cards to be shown in the left column at wide breakpoints",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
