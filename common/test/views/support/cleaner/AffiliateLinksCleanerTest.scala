@@ -15,6 +15,14 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
     )
   }
 
+  "linkToSkimLink" should "replace http: with https: in the original link" in {
+    val link = "http://www.piratendating.nl/"
+    val pageUrl = "/guardian-pirates/soulmates"
+    linkToSkimLink(link, pageUrl, "123") should equal(
+      s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
+    )
+  }
+
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
     // the switch is respected
     shouldAddAffiliateLinks(

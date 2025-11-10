@@ -910,18 +910,21 @@ object AffiliateLinksCleaner {
       isTheFilterUS: Boolean,
   ): Option[String] = {
     val skimlinksId = if (isTheFilterUS) skimlinksUSId else skimlinksDefaultId
-    url match {
+    val httpsUrl = url.map(ensureHttps)
+    httpsUrl match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
         Some(linkToSkimLink(link, pageUrl, skimlinksId))
-      case _ => url
+      case _ => httpsUrl
     }
   }
+
+  def ensureHttps(url: String): String = url.replace("http:", "https:")
 
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
-    val urlEncodedLink = URLEncode(link)
+    val urlEncodedLink = URLEncode(ensureHttps(link))
     s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
