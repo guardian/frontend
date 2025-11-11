@@ -10,6 +10,7 @@ import common.Environment.stage
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
+import play.api.http.HttpEntity
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import utils.AWSv2
@@ -30,7 +31,8 @@ class GuardianAuthWithExemptions(
     val mat: Materializer,
     context: ApplicationContext,
 ) extends AuthActions
-    with BaseController {
+    with BaseController
+    with PanDomainDesktopAuthentication {
 
   private val outer = this
 
@@ -93,6 +95,19 @@ class GuardianAuthWithExemptions(
     def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
       if (doNotAuthenticate(request)) {
         nextFilter(request)
+      } else if (request.headers.hasHeader(AUTHORIZATION)) {
+        evaluatePandaAuth(request.headers.get(AUTHORIZATION).get, permissions) match {
+          case Some(AuthenticationSuccess(_)) => nextFilter(request)
+          case Some(AuthenticationFailure(status, _)) =>
+            Future.successful(new Result(ResponseHeader(status), HttpEntity.NoEntity))
+          case _ =>
+            Future.successful(
+              Results.Forbidden(
+                s"You do not have permission to access $system. " +
+                  s"You should contact Central Production to request '$requiredEditorialPermissionName' permission.",
+              ),
+            )
+        }
       } else {
         AuthAction.authenticateRequest(request) { user =>
           if (permissions.hasPermission(requiredPermission, user.email)) {
