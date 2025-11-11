@@ -1,7 +1,5 @@
 package jobs
 
-import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import common._
 import conf.Configuration
 import conf.switches.Switches.R2PagePressServiceSwitch
@@ -14,6 +12,9 @@ import model.R2PressMessage
 import implicits.R2PressNotification.pressMessageFormatter
 import org.jsoup.nodes.Document
 import services.RedirectService.ArchiveRedirect
+import software.amazon.awssdk.services.sqs.SqsAsyncClient
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest
+import utils.AWSv2
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -23,15 +24,21 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
   private lazy val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private lazy val credentials = Configuration.aws.mandatoryCredentials
   private lazy val sqsClient =
-    AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build()
+    SqsAsyncClient
+      .builder()
+      .credentialsProvider(AWSv2.credentials)
+      .region(AWSv2.region)
+      .build()
 
   def run(): Future[Unit] = {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
       log.info("R2PagePressJob starting")
 
-      val receiveRequest = new ReceiveMessageRequest()
-        .withWaitTimeSeconds(waitTimeSeconds)
-        .withMaxNumberOfMessages(maxMessages)
+      val receiveRequest = ReceiveMessageRequest
+        .builder()
+        .waitTimeSeconds(waitTimeSeconds)
+        .maxNumberOfMessages(maxMessages)
+        .build()
 
       try {
         val pressing = queue

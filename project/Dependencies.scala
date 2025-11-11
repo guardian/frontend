@@ -6,8 +6,8 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "1.12.791"
   val awsSdk2Version = "2.35.10"
-  val capiVersion = "37.1.0"
-  val faciaVersion = "23.0.0"
+  val capiVersion = "38.0.0"
+  val faciaVersion = "24.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -21,7 +21,7 @@ object Dependencies {
   val awsSes = "software.amazon.awssdk" % "ses" % awsSdk2Version
   val awsSns = "software.amazon.awssdk" % "sns" % awsSdk2Version
   val awsSts = "software.amazon.awssdk" % "sts" % awsSdk2Version
-  val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
+  val awsSqs = "software.amazon.awssdk" % "sqs" % awsSdk2Version
   val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdk2Version
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20240317"
@@ -30,7 +30,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.16.1"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "31.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "32.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -56,7 +56,7 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "9.0.2"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "13.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "4.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
