@@ -65,8 +65,8 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     val stopWatch = new StopWatch
 
     lazy val pressFuture: Future[Unit] = pressType match {
-      case Draft => draftFapiFrontPress.pressByPathId(path, messageId)
-      case Live  => liveFapiFrontPress.pressByPathId(path, messageId)
+      case Draft => draftFapiFrontPress.pressByPathId(path)
+      case Live  => liveFapiFrontPress.pressByPathId(path)
     }
 
     lazy val forceConfigUpdateFuture: Future[_] =
