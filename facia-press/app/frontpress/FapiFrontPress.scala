@@ -262,7 +262,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         // temporary logging to investigate fronts weirdness on code - log entire front out
         if (Configuration.environment.stage == "CODE") {
           logInfoWithCustomFields(
-            s"Pressed data for front $path : ${Json.stringify(Json.toJson(pressedFronts.full))} ",
+            s"Pressed data for front $path",
             customFields = List(
               LogFieldString("messageId", messageId),
               LogFieldString("pressPath", path),
