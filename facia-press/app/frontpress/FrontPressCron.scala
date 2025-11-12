@@ -44,7 +44,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress)(implicit
     if (FrontPressJobSwitch.isSwitchedOn) {
       log.info(s"Cron pressing path $path")
       val pressFuture = liveFapiFrontPress
-        .pressByPathId(path, message.id.get)
+        .pressByPathId(path)
         .map(Function.const(()))
 
       pressFuture.foreach { _ =>
