@@ -36,6 +36,8 @@ class GuardianAuthWithExemptions(
 
   private val outer = this
 
+  private val desktopAuthPathPrefix = "/desktop-auth/"
+
   private val permissions: PermissionsProvider = PermissionsProvider(
     PermissionsConfig(
       stage = if (stage == "PROD") "PROD" else "CODE",
@@ -95,7 +97,7 @@ class GuardianAuthWithExemptions(
     def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
       if (doNotAuthenticate(request)) {
         nextFilter(request)
-      } else if (request.headers.hasHeader(AUTHORIZATION)) {
+      } else if (request.path.startsWith(desktopAuthPathPrefix) && request.headers.hasHeader(AUTHORIZATION)) {
         evaluatePandaAuth(request.headers.get(AUTHORIZATION).get, permissions) match {
           case Some(AuthenticationSuccess(_)) => nextFilter(request)
           case Some(AuthenticationFailure(status, _)) =>
