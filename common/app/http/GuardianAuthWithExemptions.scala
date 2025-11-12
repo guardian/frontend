@@ -7,12 +7,12 @@ import com.gu.pandomainauth.model.AuthenticatedUser
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
-import conf.Configuration.aws.mandatoryCredentials
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc._
+import utils.AWSv2
 
 import java.net.URL
 import scala.concurrent.Future
@@ -38,7 +38,7 @@ class GuardianAuthWithExemptions(
     PermissionsConfig(
       stage = if (stage == "PROD") "PROD" else "CODE",
       region = Regions.EU_WEST_1.getName,
-      awsCredentials = mandatoryCredentials,
+      awsCredentials = AWSv2.credentials,
     ),
   )
 

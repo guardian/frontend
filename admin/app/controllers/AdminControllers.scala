@@ -13,7 +13,6 @@ import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import services.{OphanApi, ParameterStoreService, RedirectService}
-import conf.Configuration.aws.mandatoryCredentials
 import org.apache.pekko.stream.Materializer
 import utils.AWSv2
 
