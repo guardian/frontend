@@ -1,8 +1,5 @@
 package common
 
-import com.amazonaws.AmazonClientException
-import com.amazonaws.auth._
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.typesafe.config.{ConfigException, ConfigFactory}
 import common.Environment.{app, awsRegion, stage}
 import conf.{Configuration, Static}
@@ -660,26 +657,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
     lazy val r2PressSns: Option[String] = configuration.getStringProperty("r2press.sns.topic")
     lazy val r2PressTakedownSns: Option[String] = configuration.getStringProperty("r2press.takedown.sns.topic")
-
-    def mandatoryCredentials: AWSCredentialsProvider =
-      credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
-    val credentials: Option[AWSCredentialsProvider] = {
-      val provider = new AWSCredentialsProviderChain(
-        new ProfileCredentialsProvider("frontend"),
-        InstanceProfileCredentialsProvider.getInstance(),
-      )
-
-      // this is a bit of a convoluted way to check whether we actually have credentials.
-      // I guess in an ideal world there would be some sort of isConfigued() method...
-      try {
-        provider.getCredentials
-        Some(provider)
-      } catch {
-        case ex: AmazonClientException =>
-          log.error(ex.getMessage, ex)
-          throw ex
-      }
-    }
   }
 
   object standalone {
