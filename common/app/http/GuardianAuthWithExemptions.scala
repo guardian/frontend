@@ -107,7 +107,10 @@ class GuardianAuthWithExemptions(
         }
       if (doNotAuthenticate(request)) {
         nextFilter(request)
-      } else if (request.path.startsWith(desktopAuthPathPrefix) && request.headers.hasHeader(AUTHORIZATION)) {
+
+      } else if (
+        context.isPreview && request.path.startsWith(desktopAuthPathPrefix) && request.headers.hasHeader(AUTHORIZATION)
+      ) {
         evaluatePandaAuth(request.headers.get(AUTHORIZATION).get) match {
           case Right(authedUser)  => authoriseUser(authedUser.user)
           case Left(errorMessage) => Future.successful(Unauthorized(errorMessage))
