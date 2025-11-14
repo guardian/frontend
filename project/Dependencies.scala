@@ -4,8 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "1.12.791"
-  val awsSdk2Version = "2.35.11"
+  val awsVersion = "2.35.11"
   val capiVersion = "39.0.0"
   val faciaVersion = "26.0.0"
   val dispatchVersion = "0.13.1"
@@ -13,17 +12,17 @@ object Dependencies {
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.5"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
-  val awsCloudwatchSdkV2 = "software.amazon.awssdk" % "cloudwatch" % awsSdk2Version
-  val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
-  val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
-  val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
+  val awsCloudwatch = "software.amazon.awssdk" % "cloudwatch" % awsVersion
+  val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
+  val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
+  val awsS3 = "software.amazon.awssdk" % "s3" % awsVersion
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
-  val awsSes = "software.amazon.awssdk" % "ses" % awsSdk2Version
-  val awsSns = "software.amazon.awssdk" % "sns" % awsSdk2Version
-  val awsSts = "software.amazon.awssdk" % "sts" % awsSdk2Version
-  val awsSqs = "software.amazon.awssdk" % "sqs" % awsSdk2Version
-  val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdk2Version
-  val awsElasticloadbalancing = "software.amazon.awssdk" % "elasticloadbalancing" % awsSdk2Version
+  val awsSes = "software.amazon.awssdk" % "ses" % awsVersion
+  val awsSns = "software.amazon.awssdk" % "sns" % awsVersion
+  val awsSts = "software.amazon.awssdk" % "sts" % awsVersion
+  val awsSqs = "software.amazon.awssdk" % "sqs" % awsVersion
+  val awsSsm = "software.amazon.awssdk" % "ssm" % awsVersion
+  val awsElasticloadbalancing = "software.amazon.awssdk" % "elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20240317"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
