@@ -1,7 +1,7 @@
 package http
 
-import com.amazonaws.regions.Regions
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.regions.Region.EU_WEST_1
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.AuthenticatedUser
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
@@ -37,7 +37,7 @@ class GuardianAuthWithExemptions(
   private val permissions: PermissionsProvider = PermissionsProvider(
     PermissionsConfig(
       stage = if (stage == "PROD") "PROD" else "CODE",
-      region = Regions.EU_WEST_1.getName,
+      region = EU_WEST_1.toString,
       awsCredentials = AWSv2.credentials,
     ),
   )
