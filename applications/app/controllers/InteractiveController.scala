@@ -34,6 +34,12 @@ class InteractiveController(
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
+  def renderAsset(): Action[AnyContent] = {
+    Action.async { implicit request =>
+      remoteRenderer.getRenderedItemsAsset(wsClient, "/assets/rendered-items-assets.html")
+    }
+  }
+
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
