@@ -1,16 +1,18 @@
 
 export const personalisedHighlights = {
 	id: 'PersonalisedHighlights',
-	start: '2025-10-29',
-	expiry: '2025-12-04',
+	start: '2025-11-17',
+	expiry: '2025-12-01',
 	author: 'Anna Beddow',
 	description: 'Allow user behaviour to personalise the ordering of cards in the highlights container.',
-    audience: 0,
-	audienceOffset: 0,
+    audience: 0.75,
+    audienceOffset: 0.75,
 	successMeasure: '',
-	audienceCriteria: '',
-	idealOutcome: '',
+	audienceCriteria: 'All users, globally.',
+    idealOutcome:
+        'Increase click through rate on highlights container',
 	showForSensitive: true,
+
 	canRun: () => true,
 	variants: [
 		{
