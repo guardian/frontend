@@ -100,54 +100,56 @@ import { compileSass } from '../tools/compile-css.mjs';
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
 const ignoredSassRegEx = /^(_|ie9|old-ie)/;
 
-chokidar.watch(await Array.fromAsync(glob(`${sassDir}/**/*.scss`))).on('change', (changedFile) => {
-	// see what top-level files need to be recompiled
-	const filesToCompile = [];
-	const changedFileBasename = path.basename(changedFile);
+chokidar
+	.watch(await Array.fromAsync(glob(`${sassDir}/**/*.scss`)))
+	.on('change', (changedFile) => {
+		// see what top-level files need to be recompiled
+		const filesToCompile = [];
+		const changedFileBasename = path.basename(changedFile);
 
-	sassGraph.visitAncestors(changedFile, (ancestorPath) => {
-		const ancestorFileName = path.basename(ancestorPath);
-		if (!ignoredSassRegEx.test(ancestorFileName)) {
-			filesToCompile.push(ancestorFileName);
-		}
-	});
-
-	if (!/^_/.test(changedFileBasename)) {
-		filesToCompile.push(changedFileBasename);
-	}
-
-	// now recompile all files that matter
-	Promise.all(
-		filesToCompile.map((fileName) => {
-			// email styles should not be remified
-			if (/head.email-(article|front).scss/.test(fileName)) {
-				return compileSass(fileName, { remify: false });
+		sassGraph.visitAncestors(changedFile, (ancestorPath) => {
+			const ancestorFileName = path.basename(ancestorPath);
+			if (!ignoredSassRegEx.test(ancestorFileName)) {
+				filesToCompile.push(ancestorFileName);
 			}
-
-			return compileSass(fileName);
-		}),
-	)
-		.then(() =>
-			// copy stylesheets that are to be inlined
-			Promise.all(
-				filesToCompile
-					.filter((file) => /head./.test(file))
-					.map((file) =>
-						cpy(
-							[`**/${file.replace('.scss', '.css')}`],
-							inlineStylesDir,
-							{
-								cwd: targetDir,
-							},
-						),
-					),
-			),
-		)
-		.then(() => {
-			console.log(chalk.green('✔️ Stylesheets compiled'));
-		})
-		.catch((e) => {
-			// send editing errors to console and browser
-			console.log(chalk.red(`\n${e.formatted}`));
 		});
-});
+
+		if (!/^_/.test(changedFileBasename)) {
+			filesToCompile.push(changedFileBasename);
+		}
+
+		// now recompile all files that matter
+		Promise.all(
+			filesToCompile.map((fileName) => {
+				// email styles should not be remified
+				if (/head.email-(article|front).scss/.test(fileName)) {
+					return compileSass(fileName, { remify: false });
+				}
+
+				return compileSass(fileName);
+			}),
+		)
+			.then(() =>
+				// copy stylesheets that are to be inlined
+				Promise.all(
+					filesToCompile
+						.filter((file) => /head./.test(file))
+						.map((file) =>
+							cpy(
+								[`**/${file.replace('.scss', '.css')}`],
+								inlineStylesDir,
+								{
+									cwd: targetDir,
+								},
+							),
+						),
+				),
+			)
+			.then(() => {
+				console.log(chalk.green('✔️ Stylesheets compiled'));
+			})
+			.catch((e) => {
+				// send editing errors to console and browser
+				console.log(chalk.red(`\n${e.formatted}`));
+			});
+	});
