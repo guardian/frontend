@@ -1,16 +1,17 @@
 package implicits
 
 import com.gu.facia.client.models.{
+  AUNewSouthWalesTerritory,
+  AUQueenslandTerritory,
+  AUVictoriaTerritory,
   EU27Territory,
   NZTerritory,
   TargetedTerritory,
   USEastCoastTerritory,
   USWestCoastTerritory,
-  AUVictoriaTerritory,
-  AUQueenslandTerritory,
-  AUNewSouthWalesTerritory,
 }
 import conf.Configuration
+import play.api.http.HeaderNames
 import play.api.mvc.RequestHeader
 
 sealed trait RequestFormat
@@ -25,7 +26,7 @@ object GUHeaders {
   val TERRITORY_HEADER = "X-GU-Territory"
 }
 
-trait Requests {
+trait Requests extends HeaderNames {
 
   val EMAIL_SUFFIX = "/email"
   val HEADLINE_SUFFIX = "/headline.txt"
@@ -64,6 +65,11 @@ trait Requests {
 
     lazy val isInteractiveRedirect: Boolean = r.path.startsWith("/interactive/")
 
+    private val desktopAuthPathPrefix = "/desktop-auth"
+
+    lazy val isDesktopAuthRequest: Boolean =
+      r.path.startsWith(desktopAuthPathPrefix) && r.headers.hasHeader(AUTHORIZATION)
+
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 
     lazy val isLazyLoad: Boolean =
@@ -84,11 +90,12 @@ trait Requests {
     lazy val isHeadlineText: Boolean =
       r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 
-    lazy val isModified = isJson || isRss || isEmail || isHeadlineText
+    lazy val isModified = isJson || isRss || isEmail || isHeadlineText || isDesktopAuthRequest
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
       else if (isInteractiveRedirect) r.path.stripPrefix("/interactive")
+      else if (isDesktopAuthRequest) r.path.stripPrefix(desktopAuthPathPrefix)
       else r.path.stripSuffix("/all")
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty

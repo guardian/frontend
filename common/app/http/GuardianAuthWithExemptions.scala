@@ -31,11 +31,10 @@ class GuardianAuthWithExemptions(
     context: ApplicationContext,
 ) extends AuthActions
     with BaseController
+    with implicits.Requests
     with PanDomainDesktopAuthentication {
 
   private val outer = this
-
-  private val desktopAuthPathPrefix = "/desktop-auth/"
 
   private val permissions: PermissionsProvider = PermissionsProvider(
     PermissionsConfig(
@@ -108,9 +107,7 @@ class GuardianAuthWithExemptions(
       if (doNotAuthenticate(request)) {
         nextFilter(request)
 
-      } else if (
-        context.isPreview && request.path.startsWith(desktopAuthPathPrefix) && request.headers.hasHeader(AUTHORIZATION)
-      ) {
+      } else if (context.isPreview && request.isDesktopAuthRequest) {
         evaluatePandaAuth(request.headers.get(AUTHORIZATION).get) match {
           case Right(authedUser)  => authoriseUser(authedUser.user)
           case Left(errorMessage) => Future.successful(Unauthorized(errorMessage))
