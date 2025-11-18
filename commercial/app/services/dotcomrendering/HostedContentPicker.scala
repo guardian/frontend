@@ -39,7 +39,7 @@ object HostedContentPicker {
     article100PercentPageFeatures.forall({ case (_, isMet) => isMet })
   }
 
-  def getTier(page: PageWithStoryPackage, path: String)(implicit
+  def getTier(page: PageWithStoryPackage)(implicit
       request: RequestHeader,
   ): RenderType = {
     val checks = dcrChecks(page)
@@ -79,8 +79,8 @@ object HostedContentPicker {
       request: RequestHeader,
   ): RenderType = {
     if (request.forceDCROff) LocalRender
-    else if (request.forceDCR) LocalRender // Prevent DCR rendering pages for now
-    else if (dcrCanRender) LocalRender // Prevent DCR rendering pages for now
+    else if (request.forceDCR) LocalRender // Prevent RemoteRender (DCR) for now
+    else if (dcrCanRender) LocalRender // Prevent RemoteRender (DCR) for now
     else LocalRender
   }
 }
