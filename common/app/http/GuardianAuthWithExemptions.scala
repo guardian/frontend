@@ -8,7 +8,6 @@ import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3Bucket
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
 import common.GuLogging
-import conf.Configuration.aws.mandatoryCredentials
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
