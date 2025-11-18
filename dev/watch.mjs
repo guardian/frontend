@@ -3,6 +3,7 @@
 import path, { dirname } from 'path';
 import cpy from 'cpy';
 import chalk from 'chalk';
+import { glob } from 'node:fs/promises';
 
 // ********************************** JAVASCRIPT **********************************
 
@@ -99,7 +100,7 @@ import { compileSass } from '../tools/compile-css.mjs';
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
 const ignoredSassRegEx = /^(_|ie9|old-ie)/;
 
-chokidar.watch(`${sassDir}/**/*.scss`).on('change', (changedFile) => {
+chokidar.watch(await Array.fromAsync(glob(`${sassDir}/**/*.scss`))).on('change', (changedFile) => {
 	// see what top-level files need to be recompiled
 	const filesToCompile = [];
 	const changedFileBasename = path.basename(changedFile);
