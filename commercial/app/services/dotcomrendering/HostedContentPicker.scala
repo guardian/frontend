@@ -8,7 +8,7 @@ import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
 import implicits.AppsFormat
 
-object ArticlePageChecks {
+object HostedContentPageChecks {
 
   def isSupportedType(page: PageWithStoryPackage): Boolean = {
     page match {
@@ -24,19 +24,19 @@ object HostedContentPicker {
 
   def dcrChecks(page: PageWithStoryPackage): Map[String, Boolean] = {
     Map(
-      ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
+      ("isSupportedType", HostedContentPageChecks.isSupportedType(page)),
     )
   }
 
-  private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage): Boolean = {
+  private[this] def dcr100PercentPage(page: PageWithStoryPackage): Boolean = {
     val allowListFeatures = dcrChecks(page)
-    val article100PercentPageFeatures = allowListFeatures.view.filterKeys(
+    val hostedPage100PercentFeatures = allowListFeatures.view.filterKeys(
       Set(
         "isSupportedType",
       ),
     )
 
-    article100PercentPageFeatures.forall({ case (_, isMet) => isMet })
+    hostedPage100PercentFeatures.forall({ case (_, isMet) => isMet })
   }
 
   def getTier(page: PageWithStoryPackage)(implicit
