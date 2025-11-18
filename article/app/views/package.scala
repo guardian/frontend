@@ -82,7 +82,7 @@ object BodyProcessor {
         pageUrl = request.uri,
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         tags = article.content.tags.tags.map(_.id),
-        isTheFilterUS = article.content.isTheFilterUS,
+        isUSProductionOffice = article.content.isUSProductionOffice,
       ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))
