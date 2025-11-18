@@ -966,7 +966,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -984,7 +984,7 @@ object PageElement {
     element.`type` match {
       case Text =>
         val textCleaners =
-          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isTheFilterUS) _ andThen
+          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isUSProductionOffice) _ andThen
             TextCleaner.sanitiseLinks(edition)
 
         for {
@@ -1076,7 +1076,7 @@ object PageElement {
         List(
           ImageBlockElement(
             ImageMedia(imageAssets.toSeq),
-            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isTheFilterUS),
+            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isUSProductionOffice),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
             imageSources,
@@ -1456,7 +1456,7 @@ object PageElement {
         element.linkTypeData
           .map(d =>
             LinkBlockElement(
-              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isTheFilterUS),
+              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isUSProductionOffice),
               d.label,
               d.linkType.getOrElse(LinkType.ProductButton),
             ),
@@ -1556,7 +1556,7 @@ object PageElement {
                 webPublicationDate,
                 item,
                 isGallery,
-                isTheFilterUS,
+                isUSProductionOffice,
               )
             }.toSeq,
             listElementType = listTypeData.`type`.map(_.name),
@@ -1577,7 +1577,7 @@ object PageElement {
               webPublicationDate,
               timelineTypeData,
               isGallery,
-              isTheFilterUS,
+              isUSProductionOffice,
             ),
           )
         }.toList
@@ -1595,7 +1595,7 @@ object PageElement {
             webPublicationDate,
             productTypeData,
             isGallery,
-            isTheFilterUS,
+            isUSProductionOffice,
           )
         }.toList
 
@@ -1615,7 +1615,7 @@ object PageElement {
       webPublicationDate: DateTime,
       timelineTypeData: TimelineElementFields,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ) = {
     timelineTypeData.sections.map { section =>
       TimelineSection(
@@ -1640,7 +1640,7 @@ object PageElement {
                   edition,
                   webPublicationDate,
                   isGallery,
-                  isTheFilterUS,
+                  isUSProductionOffice,
                 )
                 .headOption
             },
@@ -1658,7 +1658,7 @@ object PageElement {
                 edition,
                 webPublicationDate,
                 isGallery,
-                isTheFilterUS,
+                isUSProductionOffice,
               )
             }.toSeq,
           )
@@ -1678,7 +1678,7 @@ object PageElement {
       webPublicationDate: DateTime,
       item: v1.ListItem,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ) = {
     ListItem(
       elements = item.elements.flatMap { element =>
@@ -1695,7 +1695,7 @@ object PageElement {
           edition,
           webPublicationDate,
           isGallery,
-          isTheFilterUS,
+          isUSProductionOffice,
         )
       }.toSeq,
       title = item.title,
@@ -1719,19 +1719,19 @@ object PageElement {
       webPublicationDate: DateTime,
       product: ProductElementFields,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ) = {
 
     def createProductCta(
         cta: ApiProductCta,
         pageUrl: String,
         addAffiliateLinks: Boolean,
-        isTheFilterUS: Boolean,
+        isUSProductionOffice: Boolean,
     ): Option[ProductCta] = {
       for {
         // URL must exist and be non-empty
         url <- AffiliateLinksCleaner
-          .replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isTheFilterUS)
+          .replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isUSProductionOffice)
           .filter(_.nonEmpty)
 
         // Must have either non-empty text, or both non-empty price & retailer
@@ -1791,7 +1791,7 @@ object PageElement {
             edition,
             webPublicationDate,
             isGallery,
-            isTheFilterUS,
+            isUSProductionOffice,
           )
         }
         .toSeq,
@@ -1802,7 +1802,7 @@ object PageElement {
       starRating = product.starRating.getOrElse("none-selected"),
       productCtas = product.productCtas
         .getOrElse(Seq.empty)
-        .flatMap(cta => createProductCta(cta, pageUrl, addAffiliateLinks, isTheFilterUS))
+        .flatMap(cta => createProductCta(cta, pageUrl, addAffiliateLinks, isUSProductionOffice))
         .toList,
       customAttributes = product.customAttributes
         .getOrElse(Seq.empty)
@@ -2130,7 +2130,7 @@ object PageElement {
       isGallery: Boolean,
       pageUrl: String,
       addAffiliateLinks: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ): Map[String, String] = {
     element.imageTypeData.map { d =>
       Map(
@@ -2138,7 +2138,7 @@ object PageElement {
         "alt" -> d.alt,
         "caption" -> {
           if (isGallery) {
-            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isTheFilterUS))
+            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isUSProductionOffice))
           } else {
             d.caption
           }

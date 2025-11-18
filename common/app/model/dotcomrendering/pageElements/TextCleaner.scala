@@ -12,14 +12,14 @@ import scala.util.matching.Regex
 
 object TextCleaner {
 
-  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isTheFilterUS: Boolean)(
+  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isUSProductionOffice: Boolean)(
       html: String,
   ): String = {
     if (addAffiliateLinks) {
       val doc = Jsoup.parseBodyFragment(html)
       val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       val skimlinksId =
-        if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
+        if (isUSProductionOffice) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
       links.foreach(el => {
         el.attr(
           "href",
@@ -41,7 +41,7 @@ object TextCleaner {
       caption: String,
       pageUrl: String,
       shouldAddAffiliateLinks: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ): String = {
 
     val cleaners = List(
@@ -49,7 +49,7 @@ object TextCleaner {
       GalleryAffiliateLinksCleaner(
         pageUrl,
         shouldAddAffiliateLinks,
-        isTheFilterUS,
+        isUSProductionOffice,
       ),
     )
 
@@ -165,12 +165,13 @@ object GalleryCaptionCleaner extends HtmlCleaner {
 case class GalleryAffiliateLinksCleaner(
     pageUrl: String,
     shouldAddAffiliateLinks: Boolean,
-    isTheFilterUS: Boolean,
+    isUSProductionOffice: Boolean,
 ) extends HtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {
-    val skimlinksId = if (isTheFilterUS) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
+    val skimlinksId =
+      if (isUSProductionOffice) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
 
     if (shouldAddAffiliateLinks) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
