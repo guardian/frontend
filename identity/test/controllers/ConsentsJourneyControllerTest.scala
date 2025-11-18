@@ -61,8 +61,6 @@ import scala.concurrent.Future
       api,
       mock[IdentityUrlBuilder],
       controllerComponent,
-      newsletterService,
-      idRequestParser,
     )
 
     val signinService = mock[PlaySigninService]

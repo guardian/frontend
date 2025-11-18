@@ -29,7 +29,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
 
   /** GET /complete-consents */
-  def displayConsentComplete(): Action[AnyContent] =
+  def displayConsentComplete: Action[AnyContent] =
     displayConsentComplete(ConsentJourneyPageDefault, None)
 
   /** POST /complete-consents */
@@ -58,10 +58,10 @@ trait ConsentsJourney extends EditProfileControllerComponents {
                     logger.error(s"Failed to set save user consents ${request.user.id}: $idapiErrors")
                     InternalServerError(Json.toJson(idapiErrors))
 
-                  case Right(updatedUser) =>
+                  case Right(_) =>
                     logger.info(s"Successfully set consents for user ${request.user.id}")
                     Redirect(
-                      s"${routes.EditProfileController.displayConsentComplete().url}",
+                      s"${routes.EditProfileController.displayConsentComplete.url}",
                       Map("returnUrl" -> Seq(returnUrl)),
                     )
                 }
