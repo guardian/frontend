@@ -61,6 +61,10 @@ class ArticleController(
     }
   }
 
+  def renderLiveHarness(path: String): Action[AnyContent] = Action.async { implicit _ =>
+    Future.successful(Ok)
+  }
+
   def renderHeadline(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       def responseFromOptionalString(headline: Option[String]) = {
