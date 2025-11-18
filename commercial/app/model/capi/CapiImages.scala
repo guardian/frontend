@@ -65,7 +65,7 @@ object ImageSource {
   implicit val writesImageSource: Writes[ImageSource] = Json.writes[ImageSource]
 }
 
-// Holds all source element data, and the backup image src for older browsers.
+// Holds all source element data, the backup image src for older browsers, and the alt text.
 case class ImageInfo(sources: Seq[ImageSource], backupSrc: Option[String], altText: Option[String])
 
 object ImageInfo {
