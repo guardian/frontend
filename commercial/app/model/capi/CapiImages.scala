@@ -19,7 +19,7 @@ object CapiImages {
   // Puts together image source info using data from cAPI.
   def buildImageData(imageData: Option[ImageMedia], noImages: Int = 1): ImageInfo = {
 
-    val altText = imageData flatMap(_.masterImage.flatMap(_.altText))
+    val altText = imageData flatMap (_.masterImage.flatMap(_.altText))
     val fallbackImageUrl = imageData flatMap ImgSrc.getFallbackUrl
     val imageType = noImages match {
       case 3 => Third
