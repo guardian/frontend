@@ -1,5 +1,6 @@
 package model
 
+import com.gu.commercial.branding.Dimensions
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.commercial.hosted._
 import model.dotcomrendering.DotcomRenderingUtils._
@@ -43,14 +44,18 @@ case class DotcomRenderingHostedContentModel(
 object DotcomRenderingHostedContentModel {
 
   // Implicit Json writes
-  implicit val dcrContentWrites: Writes[DotcomRenderingHostedContentModel] =
-    Json.writes[DotcomRenderingHostedContentModel]
+  implicit val colourWrites: Writes[Colour] = Json.writes[Colour]
+  implicit val dimensionsWrites: Writes[Dimensions] = Json.writes[Dimensions]
+  implicit val logoWrites: Writes[HostedLogo] = Json.writes[HostedLogo]
   implicit val campaignWrites: Writes[HostedCampaign] = Json.writes[HostedCampaign]
   implicit val ctaWrites: Writes[HostedCallToAction] = Json.writes[HostedCallToAction]
   implicit val contentWrites: Writes[Content] = Json.writes[Content]
   implicit val metadataWrites: Writes[MetaData] = Json.writes[MetaData]
+  implicit val encodingWrites: Writes[Encoding] = Json.writes[Encoding]
   implicit val videoWrites: Writes[HostedVideo] = Json.writes[HostedVideo]
   implicit val imagesWrites: Writes[HostedGalleryImage] = Json.writes[HostedGalleryImage]
+  implicit val dcrContentWrites: Writes[DotcomRenderingHostedContentModel] =
+    Json.writes[DotcomRenderingHostedContentModel]
 
   def toJson(model: DotcomRenderingHostedContentModel): JsValue = {
     val jsValue = Json.toJson(model)
