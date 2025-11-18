@@ -7,6 +7,8 @@ import com.gu.pandomainauth.model.{AuthenticatedUser, User}
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
+import common.GuLogging
+import conf.Configuration.aws.mandatoryCredentials
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
@@ -32,7 +34,8 @@ class GuardianAuthWithExemptions(
 ) extends AuthActions
     with BaseController
     with implicits.Requests
-    with PanDomainDesktopAuthentication {
+    with PanDomainDesktopAuthentication
+    with GuLogging {
 
   private val outer = this
 
@@ -109,8 +112,10 @@ class GuardianAuthWithExemptions(
 
       } else if (context.isPreview && request.isDesktopAuthRequest) {
         evaluatePandaAuth(request.headers.get(AUTHORIZATION).get) match {
-          case Right(authedUser)  => authoriseUser(authedUser.user)
-          case Left(errorMessage) => Future.successful(Unauthorized(errorMessage))
+          case Right(authedUser) => authoriseUser(authedUser.user)
+          case Left(errorMessage) =>
+            log.warn(errorMessage)
+            Future.successful(Unauthorized)
         }
       } else {
         AuthAction.authenticateRequest(request)(authoriseUser)
