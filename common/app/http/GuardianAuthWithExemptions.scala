@@ -1,18 +1,17 @@
 package http
 
-import software.amazon.awssdk.services.s3.S3Client
-import software.amazon.awssdk.regions.Region.EU_WEST_1
 import com.gu.pandomainauth.action.AuthActions
 import com.gu.pandomainauth.model.{AuthenticatedUser, User}
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
-import common.GuLogging
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc._
+import software.amazon.awssdk.regions.Region.EU_WEST_1
+import software.amazon.awssdk.services.s3.S3Client
 import utils.AWSv2
 
 import java.net.URL
@@ -32,9 +31,7 @@ class GuardianAuthWithExemptions(
     val mat: Materializer,
     context: ApplicationContext,
 ) extends AuthActions
-    with BaseController
-    with implicits.Requests
-    with GuLogging {
+    with BaseController {
 
   private val outer = this
 

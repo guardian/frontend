@@ -5,13 +5,19 @@ import com.gu.pandomainauth.{PanDomain, PublicSettings}
 import common.Environment.stage
 import common.GuLogging
 import implicits.Requests
+import play.api.http.HeaderNames
 import play.api.mvc.{RequestHeader, Result, Results}
 import utils.AWSv2.S3Sync
 
 import java.time.Duration
 import scala.concurrent.Future
 
-class PanDomainDesktopAuthentication extends CustomPanDomainAuth with Requests with GuLogging with Results {
+class PanDomainDesktopAuthentication
+    extends CustomPanDomainAuth
+    with Requests
+    with HeaderNames
+    with GuLogging
+    with Results {
 
   private val desktopDomain = stage match {
     case "DEV"  => "local"

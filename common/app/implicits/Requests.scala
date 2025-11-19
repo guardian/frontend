@@ -11,7 +11,6 @@ import com.gu.facia.client.models.{
   USWestCoastTerritory,
 }
 import conf.Configuration
-import play.api.http.HeaderNames
 import play.api.mvc.RequestHeader
 
 sealed trait RequestFormat
@@ -26,7 +25,7 @@ object GUHeaders {
   val TERRITORY_HEADER = "X-GU-Territory"
 }
 
-trait Requests extends HeaderNames {
+trait Requests {
 
   val EMAIL_SUFFIX = "/email"
   val HEADLINE_SUFFIX = "/headline.txt"
