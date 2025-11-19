@@ -67,8 +67,7 @@ trait Requests extends HeaderNames {
 
     private val desktopAuthPathPrefix = "/desktop-auth"
 
-    lazy val isDesktopAuthRequest: Boolean =
-      r.path.startsWith(desktopAuthPathPrefix) && r.headers.hasHeader(AUTHORIZATION)
+    lazy val isDesktopAuthRequest: Boolean = r.path.startsWith(desktopAuthPathPrefix)
 
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 

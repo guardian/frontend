@@ -110,12 +110,17 @@ class GuardianAuthWithExemptions(
         nextFilter(request)
 
       } else if (context.isPreview && request.isDesktopAuthRequest) {
-        evaluatePandaAuth(request.headers.get(AUTHORIZATION).get) match {
-          case Right(authedUser) => authoriseUser(authedUser.user)
-          case Left(errorMessage) =>
-            log.warn(errorMessage)
-            Future.successful(Unauthorized)
-        }
+        request.headers
+          .get(AUTHORIZATION)
+          .toRight(s"No '$AUTHORIZATION' header provided")
+          .flatMap(evaluatePandaAuth)
+          .fold(
+            errorMessage => {
+              log.warn(errorMessage)
+              Future.successful(Unauthorized)
+            },
+            authenticatedUser => authoriseUser(authenticatedUser.user),
+          )
       } else {
         AuthAction.authenticateRequest(request)(authoriseUser)
       }
