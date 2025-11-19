@@ -81,6 +81,7 @@ trait PreviewControllerComponents
   lazy val faciaDraftController = wire[FaciaDraftController]
   lazy val faviconController = wire[FaviconController]
   lazy val itemController = wire[ItemController]
+  lazy val liveHarnessController = wire[LiveHarnessController]
   lazy val mostViewedAgent = wire[MostViewedAgent]
 }
 
@@ -100,6 +101,7 @@ trait AppComponents
     system = "preview",
     extraDoNotAuthenticatePathPrefixes = healthCheck.healthChecks.map(_.path),
     requiredEditorialPermissionName = "preview_access",
+    Some(new PanDomainDesktopAuthentication),
   )
 
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) {
