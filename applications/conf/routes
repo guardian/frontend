@@ -1,11 +1,13 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-GET /app-assets/rendered-items-assets  controllers.InteractiveController.renderAsset()
+
 # For dev machines
 GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
 GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
+
+GET        /dcar-assets/rendered-items-assets                                   controllers.DCARAssetsController.renderAsset()
 
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()

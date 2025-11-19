@@ -157,31 +157,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, newsletter)
 
-  def getRenderedItemsAsset(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
-    val dcrRequest = ws
+  def getDCARAssets(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
+    ws
       .url(Configuration.rendering.articleBaseURL + path)
       .withRequestTimeout(Configuration.rendering.timeout)
-      .addHttpHeaders("Content-Type" -> "application/json")
-
-    def handler(response: WSResponse): Result = {
-      response.status match {
-        case 200 =>
-          Cached(CacheTime.Default)(RevalidatableResult.Ok(Html(response.body)))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
-        case _ =>
-          log.error(
-            s"Request to DCR asset failed: status ${response.status}, path: ${request.path}, body: ${response.body}",
-          )
-          NoCache(
-            InternalServerError("Remote renderer error (500)")
-              .withHeaders("X-GU-Dotcomponents" -> "true"),
-          )
+      .get()
+      .map { response =>
+        response.status match {
+          case 200 =>
+            Cached(CacheTime.DCARAssets)(RevalidatableResult.Ok(Html(response.body)))
+              .withHeaders("X-GU-Dotcomponents" -> "true")
+          case _ =>
+            log.error(
+              s"Request to DCR assets failed: status ${response.status}, path: ${request.path}",
+            )
+            NoCache(
+              InternalServerError("Remote renderer error (500)")
+                .withHeaders("X-GU-Dotcomponents" -> "true"),
+            )
+        }
       }
-    }
-
-    val response = dcrRequest.get()
-
-    response.map(handler)
   }
 
   def getAppsArticle(
