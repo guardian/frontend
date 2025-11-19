@@ -81,6 +81,7 @@ trait PreviewControllerComponents
   lazy val faciaDraftController = wire[FaciaDraftController]
   lazy val faviconController = wire[FaviconController]
   lazy val itemController = wire[ItemController]
+  lazy val liveHarnessController = wire[LiveHarnessController]
   lazy val mostViewedAgent = wire[MostViewedAgent]
 }
 
