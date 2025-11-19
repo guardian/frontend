@@ -19,21 +19,21 @@ class PanDomainDesktopAuthentication extends CustomPanDomainAuth with Requests w
     case "PROD" => "prod"
   }
 
-  lazy val domain: String = s"$desktopDomain.integration.flexible.gnm"
-  lazy val bucket: String = "pan-domain-auth-settings"
+  private lazy val domain: String = s"$desktopDomain.integration.flexible.gnm"
+  private lazy val bucket: String = "pan-domain-auth-settings"
   lazy val system = "frontend"
 
   private val settingsRefresher = {
     val theRefresher = new PublicSettings(
       settingsFileKey = s"$domain.settings",
-      bucketName = "pan-domain-auth-settings",
+      bucketName = bucket,
       s3Client = S3Sync,
     )
     theRefresher.start()
     theRefresher
   }
 
-  def evaluatePandaAuth(authenticationHeader: String): Either[String, AuthenticatedUser] = {
+  private def evaluatePandaAuth(authenticationHeader: String): Either[String, AuthenticatedUser] = {
     val authHeaderParts = authenticationHeader.split(" ")
 
     if (authHeaderParts.length != 2 || authHeaderParts.head.toLowerCase != "gu-desktop-panda") {
