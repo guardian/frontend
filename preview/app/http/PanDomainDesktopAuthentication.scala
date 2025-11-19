@@ -1,22 +1,17 @@
 package http
 
-import com.gu.pandomainauth.PanDomain
-import com.gu.pandomainauth.model.{
-  Authenticated,
-  AuthenticatedUser,
-  Expired,
-  GracePeriod,
-  InvalidCookie,
-  NotAuthenticated,
-  NotAuthorized,
-}
+import com.gu.pandomainauth.model._
+import com.gu.pandomainauth.{PanDomain, PublicSettings}
 import common.Environment.stage
-
-import com.gu.pandomainauth.PublicSettings
+import common.GuLogging
+import implicits.Requests
+import play.api.mvc.{RequestHeader, Result, Results}
 import utils.AWSv2.S3Sync
-import java.time.Duration
 
-trait PanDomainDesktopAuthentication {
+import java.time.Duration
+import scala.concurrent.Future
+
+class PanDomainDesktopAuthentication extends CustomPanDomainAuth with Requests with GuLogging with Results {
 
   private val desktopDomain = stage match {
     case "DEV"  => "local"
@@ -38,9 +33,7 @@ trait PanDomainDesktopAuthentication {
     theRefresher
   }
 
-  protected def evaluatePandaAuth(
-      authenticationHeader: String,
-  ): Either[String, AuthenticatedUser] = {
+  def evaluatePandaAuth(authenticationHeader: String): Either[String, AuthenticatedUser] = {
     val authHeaderParts = authenticationHeader.split(" ")
 
     if (authHeaderParts.length != 2 || authHeaderParts.head.toLowerCase != "gu-desktop-panda") {
@@ -66,4 +59,21 @@ trait PanDomainDesktopAuthentication {
       }
     }
   }
+
+  override def appliesTo(request: RequestHeader): Boolean = request.isDesktopAuthRequest
+
+  override def authenticateRequest(
+      request: RequestHeader,
+  )(produceResultGivenAuthedUser: User => Future[Result]): Future[Result] =
+    request.headers
+      .get(AUTHORIZATION)
+      .toRight(s"No '$AUTHORIZATION' header provided")
+      .flatMap(evaluatePandaAuth)
+      .fold(
+        errorMessage => {
+          log.warn(errorMessage)
+          Future.successful(Unauthorized)
+        },
+        authenticatedUser => produceResultGivenAuthedUser(authenticatedUser.user),
+      )
 }

@@ -27,13 +27,13 @@ class GuardianAuthWithExemptions(
     system: String,
     extraDoNotAuthenticatePathPrefixes: Seq[String],
     requiredEditorialPermissionName: String,
+    customPandaAuth: Option[CustomPanDomainAuth] = None,
 )(implicit
     val mat: Materializer,
     context: ApplicationContext,
 ) extends AuthActions
     with BaseController
     with implicits.Requests
-    with PanDomainDesktopAuthentication
     with GuLogging {
 
   private val outer = this
@@ -95,7 +95,7 @@ class GuardianAuthWithExemptions(
         ) ++ extraDoNotAuthenticatePathPrefixes).exists(request.path.startsWith)
 
     def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
-      def authoriseUser = (user: User) =>
+      def authoriseUser(user: User): Future[Result] =
         if (permissions.hasPermission(requiredPermission, user.email)) {
           nextFilter(request)
         } else {
@@ -106,24 +106,13 @@ class GuardianAuthWithExemptions(
             ),
           )
         }
-      if (doNotAuthenticate(request)) {
-        nextFilter(request)
 
-      } else if (context.isPreview && request.isDesktopAuthRequest) {
-        request.headers
-          .get(AUTHORIZATION)
-          .toRight(s"No '$AUTHORIZATION' header provided")
-          .flatMap(evaluatePandaAuth)
-          .fold(
-            errorMessage => {
-              log.warn(errorMessage)
-              Future.successful(Unauthorized)
-            },
-            authenticatedUser => authoriseUser(authenticatedUser.user),
-          )
-      } else {
-        AuthAction.authenticateRequest(request)(authoriseUser)
-      }
+      if (doNotAuthenticate(request)) nextFilter(request)
+      else
+        customPandaAuth
+          .filter(_.appliesTo(request))
+          .map(_.authenticateRequest(request)(authoriseUser))
+          .getOrElse(AuthAction.authenticateRequest(request)(authoriseUser))
     }
   }
 }

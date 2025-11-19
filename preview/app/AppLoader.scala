@@ -101,6 +101,7 @@ trait AppComponents
     system = "preview",
     extraDoNotAuthenticatePathPrefixes = healthCheck.healthChecks.map(_.path),
     requiredEditorialPermissionName = "preview_access",
+    Some(new PanDomainDesktopAuthentication),
   )
 
   override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) {
