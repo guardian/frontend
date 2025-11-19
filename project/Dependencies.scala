@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.35.11"
+  val awsVersion = "2.38.6"
   val capiVersion = "39.0.0"
   val faciaVersion = "26.0.0"
   val dispatchVersion = "0.13.1"
