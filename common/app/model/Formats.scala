@@ -255,6 +255,7 @@ object PressedContentFormat {
   implicit val imageMediaFormat: OFormat[ImageMedia] = Json.format[ImageMedia]
   implicit val videoMediaFormat: OFormat[VideoMedia] = Json.format[VideoMedia]
   implicit val videoElementFormat: OFormat[VideoElement] = Json.format[VideoElement]
+  implicit val assetDimensionsFormat: OFormat[AssetDimensions] = Json.format[AssetDimensions]
   implicit val mediaAssetFormat: OFormat[MediaAsset] = Json.format[MediaAsset]
   implicit val mediaAtomFormat: OFormat[MediaAtom] = Json.format[MediaAtom]
   implicit val mediaTypeFormat: MediaTypeFormat.type = MediaTypeFormat
