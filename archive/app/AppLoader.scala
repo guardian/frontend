@@ -14,7 +14,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{ArchiveMetrics, RedirectService}
+import services.RedirectService
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -33,7 +33,6 @@ trait AppComponents extends FrontendComponents {
 
   override lazy val lifecycleComponents = List(
     wire[CloudWatchMetricsLifecycle],
-    wire[ArchiveMetrics],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
   )

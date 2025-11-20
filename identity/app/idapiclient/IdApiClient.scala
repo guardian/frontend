@@ -1,16 +1,13 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, Subscriber, User}
-
+import com.gu.identity.model.{Subscriber, User}
 import scala.concurrent.{ExecutionContext, Future}
-import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
+import idapiclient.responses.{CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
-import idapiclient.requests.{AutoSignInToken, DeletionBody}
 import net.liftweb.json.Formats
-import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
 class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpClient: HttpClient)(implicit
@@ -19,7 +16,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
 
   private val apiRootUrl: String = conf.apiRoot
   private val clientAuth: Auth = ClientAuth(conf.apiClientToken)
-  private val exactTargetLogger = LoggerFactory.getLogger("exactTarget")
 
   import idJsonBodyParser.{extractUnit, extract, jsonField}
 
@@ -41,31 +37,9 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     response map extract(jsonField("cookies"))
   }
 
-  def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
-    post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
-
-  //  AUTO SIGN IN TOKENS
-  def verifyAutoSignInToken(token: String): Future[Response[CookiesResponse]] = {
-    val response = httpClient.PUT(
-      apiUrl("auto-signin-token"),
-      Some(write(AutoSignInToken(token))),
-      clientAuth.parameters,
-      clientAuth.headers,
-    )
-    response map extract(jsonField("cookies"))
-  }
-
   // USERS
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
-    response map extractUser
-  }
-
-  def userFromQueryParam(param: String, field: String, auth: Auth = Anonymous): Future[Response[User]] = {
-    val apiPath = s"/user?${field}=${param}"
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
     val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
@@ -82,13 +56,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     response map extractUser
   }
 
-  def userForToken(token: String): Future[Response[User]] = {
-    val apiPath = urlJoin("pwd-reset", "user-for-token")
-    val params = buildParams(extra = Iterable("token" -> token))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders())
-    response map extractUser
-  }
-
   // EMAILS
   def userEmails(userId: String, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
     val apiPath = urlJoin("useremails", userId)
@@ -96,51 +63,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     val response =
       httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(extra = xForwardedForHeader(trackingParameters)))
     response map extract(jsonField("result"))
-  }
-
-  def addSubscription(
-      userId: String,
-      emailList: EmailList,
-      auth: Auth,
-      trackingParameters: TrackingData,
-  ): Future[Response[Unit]] = {
-    exactTargetLogger.debug(s"Subscribing $userId to listId: ${emailList.listId}")
-    post(
-      urlJoin("useremails", userId, "subscriptions"),
-      Some(auth),
-      Some(trackingParameters),
-      Some(write(emailList)),
-    ) map extractUnit
-  }
-
-  def deleteSubscription(
-      userId: String,
-      emailList: EmailList,
-      auth: Auth,
-      trackingParameters: TrackingData,
-  ): Future[Response[Unit]] = {
-    exactTargetLogger.debug(s"Unsubscribing $userId to listId: ${emailList.listId}")
-    delete(
-      urlJoin("useremails", userId, "subscriptions"),
-      Some(auth),
-      Some(trackingParameters),
-      Some(write(emailList)),
-    ) map extractUnit
-  }
-
-  // ACCOUNT DELETION
-  def executeAccountDeletionStepFunction(
-      userId: String,
-      email: String,
-      reason: Option[String],
-      auth: Auth,
-  ): Future[Response[AccountDeletionResult]] = {
-    httpClient.POST(
-      s"${conf.accountDeletionApiRoot}/delete",
-      Some(write(DeletionBody(userId, email, reason))),
-      urlParameters = Nil,
-      headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.accountDeletionApiKey))),
-    ) map extract[AccountDeletionResult](identity)
   }
 
   // EMAIL TOKENS

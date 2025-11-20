@@ -1,63 +1,54 @@
 package services
 
-import com.amazonaws.services.sns.{AmazonSNSAsync, AmazonSNSAsyncClient}
-import com.amazonaws.services.sns.model.PublishRequest
-import common.{PekkoAsync, GuLogging}
+import common.{GuLogging, PekkoAsync}
 import conf.Configuration
-import awswrappers.sns._
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.sns.SnsAsyncClient
+import software.amazon.awssdk.services.sns.model.PublishRequest
+import utils.AWSv2
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
+import scala.jdk.FutureConverters._
 
 trait Notification extends GuLogging {
 
   val topic: String
 
-  lazy val sns: Option[AmazonSNSAsync] = Configuration.aws.credentials.map { credentials =>
-    AmazonSNSAsyncClient
-      .asyncBuilder()
-      .withCredentials(credentials)
-      .withRegion(conf.Configuration.aws.region)
+  lazy val sns: SnsAsyncClient =
+    SnsAsyncClient
+      .builder()
+      .credentialsProvider(AWSv2.credentials)
+      .region(Region.of(conf.Configuration.aws.region))
       .build()
-  }
-
-  def send(
-      pekkoAsync: PekkoAsync,
-  )(subject: String, message: String)(implicit executionContext: ExecutionContext): Unit = {
-    val request = new PublishRequest()
-      .withTopicArn(topic)
-      .withSubject(subject)
-      .withMessage(message)
-
-    sendAsync(pekkoAsync)(request)
-  }
 
   def sendWithoutSubject(pekkoAsync: PekkoAsync)(message: String)(implicit executionContext: ExecutionContext): Unit = {
-    val request = new PublishRequest()
-      .withTopicArn(topic)
-      .withMessage(message)
+    val request = PublishRequest
+      .builder()
+      .topicArn(topic)
+      .message(message)
+      .build()
 
-    sendAsync(pekkoAsync)(request)
+    publishTopic(pekkoAsync)(request)
   }
 
-  private def sendAsync(
+  private def publishTopic(
       pekkoAsync: PekkoAsync,
-  )(request: PublishRequest)(implicit executionContext: ExecutionContext): Unit =
+  )(request: PublishRequest)(implicit executionContext: ExecutionContext): Unit = {
     pekkoAsync.after1s {
-      sns match {
-        case Some(client) =>
-          log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
-          client.publishFuture(request) onComplete {
-            case Success(_) =>
-              log.info(s"Successfully published SNS notification: ${request.getSubject}:${request.getMessage}")
+      log.info(s"Issuing SNS notification: ${request.subject()}:${request.message()}")
 
-            case Failure(error) =>
-              log.error(s"Failed to publish SNS notification: ${request.getSubject}:${request.getMessage}", error)
-          }
-        case None =>
-          log.error(s"There is NO SNS client available to publish ${request.getSubject}:${request.getMessage}")
-      }
+      sns
+        .publish(request)
+        .asScala
+        .onComplete {
+          case Success(_) =>
+            log.info(s"Successfully published SNS notification: ${request.subject()}:${request.message()}")
+          case Failure(error) =>
+            log.error(s"Failed to publish SNS notification: ${request.subject}:${request.message}", error)
+        }
     }
+  }
 }
 
 object FrontPressNotification extends Notification {

@@ -30,10 +30,10 @@
                     <p>Validation email resent. Please check your email and follow the link.</p>
                 }
                 case EmailNotResent => {
-                    <form method="post" action="@routes.EmailVerificationController.resendValidationEmail(verifiedReturnUrl.getOrElse(defaultReturnUrl))"><label>Didn't receive it? </label><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">Resend link</span></button></form>
+                    <form method="post" action="@routes.EmailVerificationController.resendValidationEmail"><label>Didn't receive it? </label><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">Resend link</span></button></form>
                 }
                 case ErrorResending => {
-                    <form method="post" action="@routes.EmailVerificationController.resendValidationEmail(verifiedReturnUrl.getOrElse(defaultReturnUrl))"><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">An error occurred, please click here to try again.</span></button></form>
+                    <form method="post" action="@routes.EmailVerificationController.resendValidationEmail"><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">An error occurred, please click here to try again.</span></button></form>
                 }
             }
             <p>Wrong email address? <a class="u-underline" href="@idUrlBuilder.buildUrl("/signin")" data-link-name="mma : verify-email : update-email-from-error">Change it here</a></p>

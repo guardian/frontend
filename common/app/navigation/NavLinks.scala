@@ -115,8 +115,6 @@ object NavLinks {
   private val footballResults = NavLink("Results", "/football/results", Some("football/results"))
   private val footballCompetitions = NavLink("Competitions", "/football/competitions", Some("football/competitions"))
   private val footballClubs = NavLink("Clubs", "/football/teams", Some("football/teams"))
-  private val footballWomenEuro2025 =
-    NavLink("Euro 2025", "/football/women-s-euro-2025", Some("football/women-s-euro-2025"))
 
   private val soccerSchedules = footballFixtures.copy(title = "Schedules")
 
@@ -130,7 +128,6 @@ object NavLinks {
       footballResults,
       footballCompetitions,
       footballClubs,
-      footballWomenEuro2025,
     ),
   )
   val usSoccer = NavLink(
@@ -179,6 +176,7 @@ object NavLinks {
   val fashion = NavLink("Fashion", "/fashion")
   val fashionAu = NavLink("Fashion", "/au/lifeandstyle/fashion")
   val theFilterUk = NavLink("The Filter", "/uk/thefilter")
+  val theFilterUs = NavLink("The Filter", "/thefilter-us")
   val food = NavLink("Food", "/food")
   val foodAu = NavLink("Food", "/au/food")
   val relationshipsAu = NavLink("Relationships", "/au/lifeandstyle/relationships")
@@ -583,6 +581,7 @@ object NavLinks {
   )
   val usLifestylePillar = ukLifestylePillar.copy(
     children = List(
+      theFilterUs,
       usWellness,
       fashion,
       food,

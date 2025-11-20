@@ -33,8 +33,6 @@ class ApplicationsTestSuite
       new LatestIndexControllerTest,
       new MediaControllerTest,
       new MediaFeatureTest,
-      new SectionTemplateTest,
-      new TagFeatureTest,
       new TagTemplateTest,
       new ShareLinksTest,
       new CrosswordDataTest,

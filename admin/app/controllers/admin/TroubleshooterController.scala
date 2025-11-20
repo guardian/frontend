@@ -1,18 +1,14 @@
 package controllers.admin
 
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import conf.Configuration.aws.credentials
 import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi, PreviewSigner}
 import model.{ApplicationContext, NoCache}
-import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import tools.LoadBalancer
 
-import scala.jdk.CollectionConverters._
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.util.Random
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 

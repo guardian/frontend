@@ -6,6 +6,7 @@ import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
 import conf.switches.Switches.{
   EmailSignupRecaptcha,
+  ManyNewsletterVisibleRecaptcha,
   NewslettersRemoveConfirmationStep,
   ValidateEmailSignupRecaptchaTokens,
 }
@@ -33,7 +34,7 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
     email: String,
     listName: Option[String],
-    marketing: Option[String],
+    marketing: Option[Boolean],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -65,7 +66,8 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
         .obj(
           "email" -> form.email,
           "set-lists" -> List(form.listName),
-          "set-consents" -> form.marketing.map(_ => List("similar_guardian_products")),
+          "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
+          "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
         )
         .fields,
     )
@@ -143,7 +145,7 @@ class EmailSignupController(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
-      "marketing" -> optional[String](of[String]),
+      "marketing" -> optional[Boolean](of[Boolean]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
@@ -445,7 +447,11 @@ class EmailSignupController(
     }
   }
 
-  private def validateCaptcha(googleRecaptchaResponse: Option[String], shouldValidateCaptcha: Boolean)(implicit
+  private def validateCaptcha(
+      googleRecaptchaResponse: Option[String],
+      shouldValidateCaptcha: Boolean,
+      shouldUseVisibleKey: Boolean = false,
+  )(implicit
       request: Request[AnyContent],
   ) = {
     if (shouldValidateCaptcha) {
@@ -456,7 +462,7 @@ class EmailSignupController(
             RecaptchaMissingTokenError.increment()
             Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
         }
-        wsResponse <- googleRecaptchaTokenValidationService.submit(token) recoverWith { case e =>
+        wsResponse <- googleRecaptchaTokenValidationService.submit(token, shouldUseVisibleKey) recoverWith { case e =>
           RecaptchaAPIUnavailableError.increment()
           Future.failed(e)
         }
@@ -535,7 +541,11 @@ class EmailSignupController(
             )
 
             (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+              _ <- validateCaptcha(
+                form.googleRecaptchaResponse,
+                ValidateEmailSignupRecaptchaTokens.isSwitchedOn,
+                shouldUseVisibleKey = ManyNewsletterVisibleRecaptcha.isSwitchedOn,
+              )
               result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
             } yield {
               result

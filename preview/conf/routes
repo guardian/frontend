@@ -14,7 +14,7 @@ GET        /geolocation                                                         
 GET         /oauthCallback                                                                    http.GuardianAuthWithExemptions.oauthCallback
 
 # Crossword
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 
 # Commercial
@@ -192,6 +192,8 @@ GET     /*path/email                controllers.ArticleController.renderEmail(pa
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
 
+# Harnesses
+POST    /desktop-auth/*path         controllers.LiveHarnessController.renderLiveHarness(path)
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

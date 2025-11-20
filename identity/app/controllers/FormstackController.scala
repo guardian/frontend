@@ -1,7 +1,6 @@
 package controllers
 
 import common.ImplicitControllerExecutionContext
-import conf.switches.Switches
 import model.ApplicationContext
 import model.IdentityPage
 import play.api.mvc._

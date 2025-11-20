@@ -56,9 +56,6 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(testBrowser)
   }
 
-  /** `HTMLUnit` doesn't support [[io.fluentlenium.core.domain.FluentWebElement.html]] via TestBrowser, so use
-    * [[WebClient]] to retrieve a [[WebResponse]] instead, so we can use [[WebResponse.getContentAsString]]
-    */
   protected def getContentString[T](path: String)(block: String => T): T = {
     webClient.getOptions.setJavaScriptEnabled(false)
 

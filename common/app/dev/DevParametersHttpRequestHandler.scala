@@ -60,6 +60,7 @@ class DevParametersHttpRequestHandler(
     "force-braze-message", // JSON encoded representation of "extras" data from Braze
     "dcr", // force page to render in DCR
     "_sp_env", // allow testing of Sourcepoint stage campaign
+    "_sp_geo_override", // allow Sourcepoint geolocation override for testing purposes
   )
 
   val commercialParams = Seq(
@@ -77,7 +78,7 @@ class DevParametersHttpRequestHandler(
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
     "cmpdebug", // CMP troubleshooting
-    "sfdebug", // enable spacefinder visualiser. '1' = inline ads (first pass), '2' = inline ads (second pass), 'carrot' = carrot ads
+    "sfdebug", // enable spacefinder visualiser. '1' = inline ads (first pass), '2' = inline ads (second pass)
     "rikerdebug", // enable debug logging for Canadian ad setup managed by the Globe and Mail
     "forceSendMetrics", // enable force sending of commercial metrics
     "multiSticky", // enable multiple sticky ads in the right column, for the purpose of qualitative testing

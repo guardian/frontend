@@ -44,7 +44,7 @@ object ProjectSettings {
       <dependencies>
         <exclude org="commons-logging" module="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
       </dependencies>,
-    resolvers ++= Resolver.sonatypeOssRepos("releases"),
+    resolvers += Resolver.sonatypeCentralSnapshots,
     update / evictionWarningOptions := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
       .withWarnDirectEvictions(false)
@@ -130,12 +130,6 @@ object ProjectSettings {
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(commonsIo))
   }
-
-  def filterAssets(testAssets: Seq[(File, String)]): Seq[(File, String)] =
-    testAssets.filterNot { case (_, fileName) =>
-      // built in sbt plugins did not like the bower files
-      fileName.endsWith("bower.json")
-    }
 
   def withTests(project: Project): ClasspathDep[ProjectReference] =
     project % "test->test;compile->compile"

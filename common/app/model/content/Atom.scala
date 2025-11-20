@@ -195,8 +195,18 @@ final case class MediaAsset(
     version: Long,
     platform: MediaAssetPlatform,
     mimeType: Option[String],
+    assetType: MediaAssetType,
 )
 
+sealed trait MediaAssetType extends EnumEntry
+
+object MediaAssetType extends Enum[MediaAssetType] with PlayJsonEnum[MediaAssetType] {
+  val values = findValues
+
+  case object Audio extends MediaAssetType
+  case object Video extends MediaAssetType
+  case object Subtitles extends MediaAssetType
+}
 sealed trait MediaAssetPlatform extends EnumEntry
 
 object MediaAtom extends common.GuLogging {
@@ -257,6 +267,7 @@ object MediaAtom extends common.GuLogging {
       version = mediaAsset.version,
       platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
       mimeType = mediaAsset.mimeType,
+      assetType = MediaAssetType.withName(mediaAsset.assetType.name),
     )
   }
 

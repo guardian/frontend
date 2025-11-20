@@ -616,4 +616,37 @@ trait FeatureSwitches {
     exposeClientSide = false,
     highImpact = false,
   )
+
+  val GuardianLabsRedesign = Switch(
+    SwitchGroup.Feature,
+    "guardian-labs-redesign",
+    "Shows the new style labs containers and cards",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    sellByDate = Some(LocalDate.of(2025, 12, 16)),
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val ProductLeftColCards = Switch(
+    SwitchGroup.Feature,
+    "product-left-col-cards",
+    "Enables product element summary cards to be shown in the left column at wide breakpoints",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val DCRHostedContent = Switch(
+    group = SwitchGroup.Feature,
+    name = "dcr-hosted-content",
+    description = "Render hosted content pages with DCR",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2026, 4, 15)),
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }

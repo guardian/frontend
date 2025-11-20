@@ -53,8 +53,6 @@ class EmailVerificationControllerTest
     api,
     mock[IdentityUrlBuilder],
     controllerComponent,
-    newsletterService,
-    idRequestParser,
   )
 
   val EmailValidatedMessage = "Your email address has been validated."
@@ -64,12 +62,8 @@ class EmailVerificationControllerTest
 
   val controller = new EmailVerificationController(
     api,
-    authenticatedActions,
-    authenticationService,
-    idRequestParser,
     identityUrlBuilder,
     returnUrlVerifier,
-    signinService,
     play.api.test.Helpers.stubControllerComponents(),
   )(testApplicationContext)
 

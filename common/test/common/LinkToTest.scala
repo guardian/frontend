@@ -127,8 +127,8 @@ class LinkToTest extends AnyFlatSpec with Matchers with implicits.FakeRequests {
     TheGuardianLinkTo("/thefilter", Europe) should endWith(s"www.theguardian.com/uk/thefilter")
   }
 
-  it should "correctly editionalise thefilter US to point to uk/thefilter temporarily until we create us/thefilter" in {
-    TheGuardianLinkTo("/thefilter", Us) should endWith(s"www.theguardian.com/uk/thefilter")
+  it should "correctly editionalise thefilter US to point to us/thefilter" in {
+    TheGuardianLinkTo("/thefilter", Us) should endWith(s"www.theguardian.com/us/thefilter")
   }
 
   object TestCanonicalLink extends CanonicalLink
