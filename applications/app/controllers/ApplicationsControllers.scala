@@ -18,6 +18,7 @@ trait ApplicationsControllers {
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
   lazy val siteMapController = wire[SiteMapController]
+  lazy val dCARAssetsController = wire[DCARAssetsController]
   lazy val crosswordPageController = wire[CrosswordPageController]
   lazy val crosswordSearchController = wire[CrosswordSearchController]
   lazy val crosswordEditionsController = wire[CrosswordEditionsController]
