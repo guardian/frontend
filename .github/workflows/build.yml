@@ -21,7 +21,7 @@ jobs:
   client-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: corepack enable
 
@@ -37,7 +37,7 @@ jobs:
   client-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: corepack enable
 
@@ -63,7 +63,7 @@ jobs:
     needs: [client-validate, client-build]
     runs-on: 8core-ubuntu-latest-frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: corepack enable
 
