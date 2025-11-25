@@ -1310,7 +1310,7 @@ object PageElement {
                     mediaAtom.id,
                     mediaAtom.title,
                     mediaAtom.defaultHtml,
-                    mediaAtom.assets.map(MediaAtomBlockElementMediaAsset.fromMediaAsset),
+                    mediaAtom.activeAssets.map(MediaAtomBlockElementMediaAsset.fromMediaAsset),
                     mediaAtom.duration,
                     mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     mediaAtom.expired,
