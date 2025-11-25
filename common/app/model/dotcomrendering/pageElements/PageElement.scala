@@ -434,12 +434,14 @@ object MapBlockElement {
 case class MediaAtomBlockElementMediaAsset(
     url: String,
     mimeType: Option[String],
+    dimensions: Option[AssetDimensions],
+    aspectRatio: Option[String],
 )
 object MediaAtomBlockElementMediaAsset {
   implicit val MediaAtomBlockElementMediaAssetWrites: Writes[MediaAtomBlockElementMediaAsset] =
     Json.writes[MediaAtomBlockElementMediaAsset]
   def fromMediaAsset(asset: MediaAsset): MediaAtomBlockElementMediaAsset = {
-    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType)
+    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType, asset.dimensions, asset.aspectRatio)
   }
 }
 case class MediaAtomBlockElement(
@@ -452,6 +454,7 @@ case class MediaAtomBlockElement(
     expired: Option[Boolean],
     activeVersion: Option[Long],
     channelId: Option[String],
+    videoPlayerFormat: Option[VideoPlayerFormat],
 ) extends PageElement
 object MediaAtomBlockElement {
   implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
@@ -1313,6 +1316,7 @@ object PageElement {
                     mediaAtom.expired,
                     mediaAtom.activeVersion,
                     mediaAtom.channelId,
+                    mediaAtom.videoPlayerFormat,
                   ),
                 )
             }
