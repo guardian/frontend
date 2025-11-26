@@ -6,6 +6,8 @@ import common.commercial.hosted._
 import model.dotcomrendering.DotcomRenderingUtils._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import model.{Content, MetaData}
+import net.liftweb.json.Meta
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -22,7 +24,6 @@ case class DotcomRenderingHostedContentModel(
     thumbnailUrl: String,
     standfirst: String,
     cta: HostedCallToAction,
-    metadata: MetaData,
     name: String,
     owner: String,
     logo: HostedLogo,
@@ -32,7 +33,6 @@ case class DotcomRenderingHostedContentModel(
     body: Option[String],
     mainPicture: Option[String],
     mainPictureCaption: Option[String],
-    content: Option[Content],
 
     // video
     video: Option[HostedVideo],
@@ -49,11 +49,10 @@ object DotcomRenderingHostedContentModel {
   implicit val logoWrites: Writes[HostedLogo] = Json.writes[HostedLogo]
   implicit val campaignWrites: Writes[HostedCampaign] = Json.writes[HostedCampaign]
   implicit val ctaWrites: Writes[HostedCallToAction] = Json.writes[HostedCallToAction]
-  implicit val contentWrites: Writes[Content] = Json.writes[Content]
-  implicit val metadataWrites: Writes[MetaData] = Json.writes[MetaData]
   implicit val encodingWrites: Writes[Encoding] = Json.writes[Encoding]
   implicit val videoWrites: Writes[HostedVideo] = Json.writes[HostedVideo]
   implicit val imagesWrites: Writes[HostedGalleryImage] = Json.writes[HostedGalleryImage]
+
   implicit val dcrContentWrites: Writes[DotcomRenderingHostedContentModel] =
     Json.writes[DotcomRenderingHostedContentModel]
 
@@ -64,7 +63,7 @@ object DotcomRenderingHostedContentModel {
 
   def forArticle(
       item: ApiContent,
-  )(implicit request: RequestHeader): DotcomRenderingHostedContentModel = {
+  ): DotcomRenderingHostedContentModel = {
     val page = HostedArticlePage.fromContent(item).get
     DotcomRenderingHostedContentModel(
       id = page.id,
@@ -76,7 +75,6 @@ object DotcomRenderingHostedContentModel {
       thumbnailUrl = page.thumbnailUrl,
       standfirst = page.standfirst,
       cta = page.cta,
-      metadata = page.metadata,
       name = page.name,
       owner = page.owner,
       logo = page.logo,
@@ -84,7 +82,6 @@ object DotcomRenderingHostedContentModel {
       body = Some(page.body),
       mainPicture = Some(page.mainPicture),
       mainPictureCaption = Some(page.mainPictureCaption),
-      content = Some(page.content),
       video = None,
       images = List.empty,
     )
@@ -92,7 +89,7 @@ object DotcomRenderingHostedContentModel {
 
   def forVideo(
       item: ApiContent,
-  )(implicit request: RequestHeader): DotcomRenderingHostedContentModel = {
+  ): DotcomRenderingHostedContentModel = {
     val page = HostedVideoPage.fromContent(item).get
     DotcomRenderingHostedContentModel(
       id = page.id,
@@ -104,7 +101,6 @@ object DotcomRenderingHostedContentModel {
       thumbnailUrl = page.thumbnailUrl,
       standfirst = page.standfirst,
       cta = page.cta,
-      metadata = page.metadata,
       name = page.name,
       owner = page.owner,
       logo = page.logo,
@@ -112,7 +108,6 @@ object DotcomRenderingHostedContentModel {
       body = None,
       mainPicture = None,
       mainPictureCaption = None,
-      content = None,
       video = Some(page.video),
       images = List.empty,
     )
@@ -120,7 +115,7 @@ object DotcomRenderingHostedContentModel {
 
   def forGallery(
       item: ApiContent,
-  )(implicit request: RequestHeader): DotcomRenderingHostedContentModel = {
+  ): DotcomRenderingHostedContentModel = {
     val page = HostedGalleryPage.fromContent(item).get
     DotcomRenderingHostedContentModel(
       id = page.id,
@@ -132,7 +127,6 @@ object DotcomRenderingHostedContentModel {
       thumbnailUrl = page.thumbnailUrl,
       standfirst = page.standfirst,
       cta = page.cta,
-      metadata = page.metadata,
       name = page.name,
       owner = page.owner,
       logo = page.logo,
@@ -140,7 +134,6 @@ object DotcomRenderingHostedContentModel {
       body = None,
       mainPicture = None,
       mainPictureCaption = None,
-      content = None,
       video = None,
       images = page.images,
     )
