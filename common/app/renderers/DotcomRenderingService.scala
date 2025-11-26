@@ -166,15 +166,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         response.status match {
           case 200 =>
             Cached(CacheTime.DCARAssets)(RevalidatableResult.Ok(Html(response.body)))
-              .withHeaders("X-GU-Dotcomponents" -> "true")
           case _ =>
             log.error(
               s"Request to DCR assets failed: status ${response.status}, path: ${request.path}",
             )
-            NoCache(
-              InternalServerError("Remote renderer error (500)")
-                .withHeaders("X-GU-Dotcomponents" -> "true"),
-            )
+            NoCache(InternalServerError("Remote renderer error (500)"))
         }
       }
   }
