@@ -7,6 +7,7 @@ import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger
 import implicits.AppsFormat
+import conf.switches.Switches
 
 object HostedContentPageChecks {
 
@@ -78,7 +79,8 @@ object HostedContentPicker {
   def decideTier(dcrCanRender: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
-    if (request.forceDCROff) LocalRender
+    if(Switches.DCRHostedContent.isSwitchedOff) LocalRender
+    else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) LocalRender // Prevent RemoteRender (DCR) for now
     else if (dcrCanRender) LocalRender // Prevent RemoteRender (DCR) for now
     else LocalRender
