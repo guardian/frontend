@@ -79,7 +79,7 @@ object HostedContentPicker {
   def decideTier(dcrCanRender: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
-    if(Switches.DCRHostedContent.isSwitchedOff) LocalRender
+    if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
     else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) LocalRender // Prevent RemoteRender (DCR) for now
     else if (dcrCanRender) LocalRender // Prevent RemoteRender (DCR) for now

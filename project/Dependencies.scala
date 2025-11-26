@@ -50,7 +50,7 @@ object Dependencies {
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.12.7"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
-  val jSoup = "org.jsoup" % "jsoup" % "1.18.1"
+  val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
@@ -62,7 +62,7 @@ object Dependencies {
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.18.0" % Test
-  val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "0.11"
+  val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "1.0.0"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.32.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
@@ -70,7 +70,7 @@ object Dependencies {
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
-  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.16"
+  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.17"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
@@ -96,7 +96,7 @@ object Dependencies {
   val capiAws = "com.gu" %% "content-api-client-aws" % "1.0.1"
 
   // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
+  val bootstrap = "org.webjars" % "bootstrap" % "5.3.8"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"
