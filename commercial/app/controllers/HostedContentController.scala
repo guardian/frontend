@@ -69,7 +69,7 @@ class HostedContentController(
       .showTags("all")
       .showAtoms("all")
 
-  def modelFromContent(item: Content): Option[DotcomRenderingHostedContentModel] = {
+  private def modelFromContent(item: Content): Option[DotcomRenderingHostedContentModel] = {
     if (item.isHosted) {
       item.`type` match {
         case Video   => Some(DotcomRenderingHostedContentModel.forVideo(item))
