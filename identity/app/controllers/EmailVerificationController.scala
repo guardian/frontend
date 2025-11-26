@@ -2,30 +2,25 @@ package controllers
 
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import idapiclient.IdApiClient
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
+import services.{IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
-import actions.AuthenticatedActions
 import pages.IdentityHtmlPage
 
 import scala.concurrent.Future
 
 class EmailVerificationController(
     api: IdApiClient,
-    authenticatedActions: AuthenticatedActions,
-    authenticationService: AuthenticationService,
-    idRequestParser: IdRequestParser,
     idUrlBuilder: IdentityUrlBuilder,
     returnUrlVerifier: ReturnUrlVerifier,
-    signinService: PlaySigninService,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  def completeRegistration(): Action[AnyContent] =
+  def completeRegistration: Action[AnyContent] =
     Action.async { implicit request =>
       val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
@@ -48,7 +43,7 @@ class EmailVerificationController(
         })
     }
 
-  def resendValidationEmail(returnUrl: String): Action[AnyContent] =
+  def resendValidationEmail: Action[AnyContent] =
     Action.async { implicit request =>
       val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)

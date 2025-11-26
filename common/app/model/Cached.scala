@@ -1,8 +1,6 @@
 package model
 
 import conf.switches.Switches.LongCacheSwitch
-import conf.switches.Switches.ShorterSurrogateCacheForOlderArticles
-import conf.switches.Switches.ShorterSurrogateCacheForRecentArticles
 import org.joda.time.DateTime
 import play.api.http.Writeable
 import play.api.mvc._
@@ -19,7 +17,7 @@ object CacheTime {
 
   object Default extends CacheTime(60)
   object LiveBlogActive extends CacheTime(5, Some(60))
-  def RecentlyUpdated = CacheTime(60, if (ShorterSurrogateCacheForRecentArticles.isSwitchedOn) Some(30) else None)
+  def RecentlyUpdated = CacheTime(60, None)
   // There is lambda which invalidates the cache on press events, so the facia cache time can be high.
   object Facia extends CacheTime(60, Some(900))
   object Crosswords extends CacheTime(60, Some(900))
@@ -33,9 +31,8 @@ object CacheTime {
   object Cricket extends CacheTime(60)
   object FootballTables extends CacheTime(60)
   object DCARAssets extends CacheTime(10)
-  private def oldArticleCacheTime = if (ShorterSurrogateCacheForOlderArticles.isSwitchedOn) 60 else longCacheTime
-  def LastDayUpdated = CacheTime(60, Some(oldArticleCacheTime))
-  def NotRecentlyUpdated = CacheTime(60, Some(oldArticleCacheTime))
+  def LastDayUpdated = CacheTime(60, Some(longCacheTime))
+  def NotRecentlyUpdated = CacheTime(60, Some(longCacheTime))
 }
 
 object Cached extends implicits.Dates {

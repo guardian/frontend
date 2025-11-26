@@ -4,33 +4,32 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "1.12.791"
-  val awsSdk2Version = "2.35.11"
-  val capiVersion = "38.0.0"
-  val faciaVersion = "24.0.0"
+  val awsVersion = "2.35.11"
+  val capiVersion = "39.0.0"
+  val faciaVersion = "26.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.5"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
-  val awsCloudwatchSdkV2 = "software.amazon.awssdk" % "cloudwatch" % awsSdk2Version
-  val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsSdk2Version
-  val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsSdk2Version
-  val awsS3 = "software.amazon.awssdk" % "s3" % awsSdk2Version
+  val awsCloudwatch = "software.amazon.awssdk" % "cloudwatch" % awsVersion
+  val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
+  val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
+  val awsS3 = "software.amazon.awssdk" % "s3" % awsVersion
   val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
-  val awsSes = "software.amazon.awssdk" % "ses" % awsSdk2Version
-  val awsSns = "software.amazon.awssdk" % "sns" % awsSdk2Version
-  val awsSts = "software.amazon.awssdk" % "sts" % awsSdk2Version
-  val awsSqs = "software.amazon.awssdk" % "sqs" % awsSdk2Version
-  val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdk2Version
-  val awsElasticloadbalancing = "software.amazon.awssdk" % "elasticloadbalancing" % awsSdk2Version
+  val awsSes = "software.amazon.awssdk" % "ses" % awsVersion
+  val awsSns = "software.amazon.awssdk" % "sns" % awsVersion
+  val awsSts = "software.amazon.awssdk" % "sts" % awsVersion
+  val awsSqs = "software.amazon.awssdk" % "sqs" % awsVersion
+  val awsSsm = "software.amazon.awssdk" % "ssm" % awsVersion
+  val awsElasticloadbalancing = "software.amazon.awssdk" % "elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20240317"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
   val commonsIo = "commons-io" % "commons-io" % "2.16.1"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "32.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "33.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -51,7 +50,7 @@ object Dependencies {
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.12.7"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
-  val jSoup = "org.jsoup" % "jsoup" % "1.18.1"
+  val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.9" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
@@ -71,7 +70,7 @@ object Dependencies {
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
-  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.16"
+  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.17"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
@@ -97,7 +96,7 @@ object Dependencies {
   val capiAws = "com.gu" %% "content-api-client-aws" % "1.0.1"
 
   // Web jars
-  val bootstrap = "org.webjars" % "bootstrap" % "5.3.3"
+  val bootstrap = "org.webjars" % "bootstrap" % "5.3.8"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
   val lodash = "org.webjars.npm" % "lodash" % "4.17.21"

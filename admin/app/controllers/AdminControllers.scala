@@ -1,12 +1,9 @@
 package controllers
-import com.amazonaws.regions.Regions
-import software.amazon.awssdk.services.s3.S3Client
 import com.softwaremill.macwire._
 import common.PekkoAsync
 import controllers.admin._
 import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
-import dfp._
 import http.{GuardianAuthWithExemptions, routes}
 import model.ApplicationContext
 import play.api.http.HttpConfiguration

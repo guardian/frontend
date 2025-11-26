@@ -51,8 +51,6 @@ class AuthenticatedActionsTest
       client,
       new IdentityUrlBuilder(testIdConfig),
       Helpers.stubControllerComponents(),
-      mock[NewsletterService],
-      mock[IdRequestParser],
     )
     val userWithRpCookie = AuthenticatedUser(user, rpCookie)
 
