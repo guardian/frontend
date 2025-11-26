@@ -14,6 +14,7 @@ import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.{CAPILookup, NewsletterService}
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
@@ -24,12 +25,15 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
 )(implicit val context: ApplicationContext)
-    extends ArticleControllerCommon
+    extends BaseController
+    with GuLogging
+    with Results
+    with ImplicitControllerExecutionContext
     with RendersItemResponse {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
-  override protected def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     mapModel(path, GenericFallback)((article, blocks) => render(path, article, blocks))
@@ -98,7 +102,7 @@ class ArticleController(
     )
   }
 
-  private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit
+  def render(path: String, article: ArticlePage, blocks: Blocks)(implicit
       request: RequestHeader,
   ): Future[Result] = {
 
@@ -136,6 +140,33 @@ class ArticleController(
           pageType,
           newsletter,
         )
+    }
+  }
+
+  def mapModel(path: String, range: BlockRange)(
+      render: (ArticlePage, Blocks) => Future[Result],
+  )(implicit request: RequestHeader): Future[Result] = {
+    capiLookup
+      .lookup(path, Some(range))
+      .map(responseToModelOrResult)
+      .recover(convertApiExceptions)
+      .flatMap {
+        case Right((model, blocks)) => render(model, blocks)
+        case Left(other)            => Future.successful(RenderOtherStatus(other))
+      }
+  }
+
+  private def responseToModelOrResult(
+      response: ItemResponse,
+  )(implicit request: RequestHeader): Either[Result, (ArticlePage, Blocks)] = {
+    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
+    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
+
+    ModelOrResult(supportedContent, response) match {
+      case Right(article: Article) =>
+        Right((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
+      case Left(r) => Left(r)
+      case _       => Left(NotFound)
     }
   }
 
