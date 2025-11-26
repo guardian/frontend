@@ -30,7 +30,6 @@ object CacheTime {
   object FootballMatch extends CacheTime(30)
   object Cricket extends CacheTime(60)
   object FootballTables extends CacheTime(60)
-  object DCARAssets extends CacheTime(10)
   def LastDayUpdated = CacheTime(60, Some(longCacheTime))
   def NotRecentlyUpdated = CacheTime(60, Some(longCacheTime))
 }

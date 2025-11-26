@@ -165,7 +165,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .map { response =>
         response.status match {
           case 200 =>
-            Cached(CacheTime.DCARAssets)(RevalidatableResult.Ok(Html(response.body)))
+            Cached(CacheTime.Default)(RevalidatableResult.Ok(Html(response.body)))
           case _ =>
             log.error(
               s"Request to DCR assets failed: status ${response.status}, path: ${request.path}",
