@@ -18,14 +18,12 @@ val common = library("common")
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
       apacheCommonsLang,
-      awsCore,
       awsCloudwatch,
       awsDynamodb,
       awsKinesis,
       awsS3,
       awsSns,
-      awsSts, // AWS SDK v1 still used for CAPI-preview related code for now
-      awsV2Sts, // AWS SDK v2 used for Fronts API access
+      awsSts,
       awsSqs,
       awsSsm,
       eTagCachingS3,
@@ -70,7 +68,7 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       janino,
-    ) ++ jackson
+    ) ++ jackson,
   )
 
 val commonWithTests = withTests(common)

@@ -1,19 +1,15 @@
 package controllers
-import com.amazonaws.regions.Regions
-import software.amazon.awssdk.services.s3.S3Client
 import com.softwaremill.macwire._
 import common.PekkoAsync
 import controllers.admin._
 import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
-import dfp._
 import http.{GuardianAuthWithExemptions, routes}
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import services.{OphanApi, ParameterStoreService, RedirectService}
-import conf.Configuration.aws.mandatoryCredentials
 import org.apache.pekko.stream.Materializer
 import utils.AWSv2
 
@@ -60,10 +56,8 @@ trait AdminControllers {
   lazy val appConfigController = wire[AppConfigController]
   lazy val switchboardController = wire[SwitchboardController]
   lazy val analyticsController = wire[AnalyticsController]
-  lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
-  lazy val fastlyController = wire[FastlyController]
   lazy val redirectController = wire[RedirectController]
   lazy val sportTroubleShooterController = wire[SportTroubleshooterController]
   lazy val troubleshooterController = wire[TroubleshooterController]

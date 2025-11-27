@@ -867,7 +867,7 @@ case class AffiliateLinksCleaner(
     showAffiliateLinks: Option[Boolean],
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
-    isTheFilterUS: Boolean,
+    isUSProductionOffice: Boolean,
 ) extends HtmlCleaner
     with GuLogging {
 
@@ -880,7 +880,7 @@ case class AffiliateLinksCleaner(
         tags,
       )
     ) {
-      val skimlinksId = if (isTheFilterUS) skimlinksUSId else skimlinksDefaultId
+      val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
     } else document
   }
@@ -907,21 +907,24 @@ object AffiliateLinksCleaner {
       url: Option[String],
       pageUrl: String,
       addAffiliateLinks: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ): Option[String] = {
-    val skimlinksId = if (isTheFilterUS) skimlinksUSId else skimlinksDefaultId
-    url match {
+    val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
+    val httpsUrl = url.map(ensureHttps)
+    httpsUrl match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
         Some(linkToSkimLink(link, pageUrl, skimlinksId))
-      case _ => url
+      case _ => httpsUrl
     }
   }
+
+  def ensureHttps(url: String): String = url.replace("http:", "https:")
 
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
-    val urlEncodedLink = URLEncode(link)
+    val urlEncodedLink = URLEncode(ensureHttps(link))
     s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 

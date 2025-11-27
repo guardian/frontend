@@ -226,26 +226,4 @@ trait PerformanceSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
-
-  val ShorterSurrogateCacheForRecentArticles = Switch(
-    SwitchGroup.Performance,
-    "shorter-surrogate-cache-for-recent-articles",
-    "Shorten the surrogate cache time for recent articles for load testing",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2025, 12, 1),
-    exposeClientSide = false,
-    highImpact = false,
-  )
-
-  val ShorterSurrogateCacheForOlderArticles = Switch(
-    SwitchGroup.Performance,
-    "shorter-surrogate-cache-for-older-articles",
-    "Shorten the surrogate cache time for older articles for load testing",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
-    safeState = Off,
-    sellByDate = LocalDate.of(2025, 12, 1),
-    exposeClientSide = false,
-    highImpact = false,
-  )
 }

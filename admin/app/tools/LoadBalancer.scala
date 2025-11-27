@@ -1,7 +1,10 @@
 package tools
 
 import common.{Box, GuLogging}
-import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.elasticloadbalancing.ElasticLoadBalancingClient
+import software.amazon.awssdk.services.elasticloadbalancing.model.DescribeLoadBalancersRequest
+import utils.AWSv2
 
 import scala.jdk.CollectionConverters._
 
@@ -16,8 +19,6 @@ case class LoadBalancer(
 )
 
 object LoadBalancer extends GuLogging {
-
-  import conf.Configuration.aws.credentials
 
   private val loadBalancers = Seq(
     LoadBalancer("frontend-PROD-router-ELB", "Router", "frontend-router"),
@@ -85,19 +86,20 @@ object LoadBalancer extends GuLogging {
 
   def refresh(): Unit = {
     log.info("starting refresh LoadBalancer ELB DNS names")
-    credentials.foreach { credentials =>
-      val client = AmazonElasticLoadBalancingClient
-        .builder()
-        .withCredentials(credentials)
-        .withRegion(conf.Configuration.aws.region)
-        .build()
-      val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
-      client.shutdown()
-      val newLoadBalancers = loadBalancers.map { lb =>
-        lb.copy(url = elbs.asScala.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
-      }
-      agent.send(newLoadBalancers)
+
+    val client = ElasticLoadBalancingClient
+      .builder()
+      .credentialsProvider(AWSv2.credentials)
+      .region(Region.of(conf.Configuration.aws.region))
+      .build()
+    val response = client.describeLoadBalancers(DescribeLoadBalancersRequest.builder().build())
+    val elbs = response.loadBalancerDescriptions()
+    client.close()
+    val newLoadBalancers = loadBalancers.map { lb =>
+      lb.copy(url = elbs.asScala.find(_.loadBalancerName() == lb.id).map(_.dnsName()))
     }
+    agent.send(newLoadBalancers)
+
     log.info("finished refresh LoadBalancer ELB DNS names")
   }
 

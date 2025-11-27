@@ -206,7 +206,7 @@ object DotcomRenderingUtils {
           edition,
           article.trail.webPublicationDate,
           article.content.isGallery,
-          article.content.isTheFilterUS,
+          article.content.isUSProductionOffice,
         ),
       )
       .filter(PageElement.isSupported)

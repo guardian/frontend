@@ -50,7 +50,7 @@ jobs:
       - run: make compile
 
       - name: upload frontend-client
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: frontend-client
           path: |
@@ -80,7 +80,7 @@ jobs:
 
       # Scala tests rely on client build assets
       - name: Download frontend-client
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: frontend-client
           path: .

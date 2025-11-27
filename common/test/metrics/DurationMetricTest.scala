@@ -1,20 +1,20 @@
 package metrics
 
-import com.amazonaws.services.cloudwatch.model.StandardUnit
 import org.scalatest.matchers.should.Matchers
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
+import software.amazon.awssdk.services.cloudwatch.model.StandardUnit
 
 class DurationMetricTest extends AnyFlatSpec with Matchers {
 
   "DurationMetric" should "start off empty" in {
-    val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)
+    val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.COUNT)
 
     durationMetric.getAndResetDataPoints should be(List())
   }
 
   it should "record some metrics" in {
-    val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)
+    val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.COUNT)
 
     durationMetric.recordDuration(1000)
     durationMetric.recordDuration(1000)
@@ -29,7 +29,7 @@ class DurationMetricTest extends AnyFlatSpec with Matchers {
   }
 
   it should "add datapoints to the head of the list" in {
-    val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)
+    val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.COUNT)
 
     val metricOne = DurationDataPoint(1000, None)
     val metricTwo = DurationDataPoint(1000, None)
@@ -48,13 +48,13 @@ class DurationMetricTest extends AnyFlatSpec with Matchers {
   }
 
   "SamplerMetric" should "start off empty" in {
-    val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.Count)
+    val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.COUNT)
 
     samplerMetric.getAndResetDataPoints should be(List())
   }
 
   it should "record some samples" in {
-    val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.Count)
+    val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.COUNT)
 
     samplerMetric.recordSample(1000, DateTime.now())
     samplerMetric.recordSample(1000, DateTime.now())
@@ -69,7 +69,7 @@ class DurationMetricTest extends AnyFlatSpec with Matchers {
   }
 
   it should "add recorded samples to the head of the list" in {
-    val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.Count)
+    val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.COUNT)
 
     val sampleOne = SampledDataPoint(10.00, DateTime.now())
     val sampleTwo = SampledDataPoint(11.00, DateTime.now())

@@ -5,8 +5,8 @@ GET         /_healthcheck                           controllers.HealthCheck.heal
 
 GET         /google1ec7a89a27d60d47.html            controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
 
-GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration()
-POST        /complete-registration                  controllers.EmailVerificationController.resendValidationEmail(returnUrl: String)
+GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration
+POST        /complete-registration                  controllers.EmailVerificationController.resendValidationEmail
 
 ########################################################################################################################
 # Discussion
@@ -28,7 +28,7 @@ GET         /form/embed/:formReference              controllers.FormstackControl
 ########################################################################################################################
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
 POST        /complete-consents                      controllers.editprofile.EditProfileController.completeConsents
-GET         /complete-consents                      controllers.editprofile.EditProfileController.displayConsentComplete()
+GET         /complete-consents                      controllers.editprofile.EditProfileController.displayConsentComplete
 
 ########################################################################################################################
 # Old routes

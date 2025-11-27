@@ -6,6 +6,11 @@ import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   EmbedTracking,
   LinkType,
+  ProductDisplayType,
+  ProductElementFields,
+  ProductCTA => ApiProductCta,
+  ProductCustomAttribute => ApiProductCustomAttribute,
+  ProductImage => ApiProductImage,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
@@ -429,12 +434,14 @@ object MapBlockElement {
 case class MediaAtomBlockElementMediaAsset(
     url: String,
     mimeType: Option[String],
+    dimensions: Option[AssetDimensions],
+    aspectRatio: Option[String],
 )
 object MediaAtomBlockElementMediaAsset {
   implicit val MediaAtomBlockElementMediaAssetWrites: Writes[MediaAtomBlockElementMediaAsset] =
     Json.writes[MediaAtomBlockElementMediaAsset]
   def fromMediaAsset(asset: MediaAsset): MediaAtomBlockElementMediaAsset = {
-    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType)
+    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType, asset.dimensions, asset.aspectRatio)
   }
 }
 case class MediaAtomBlockElement(
@@ -447,6 +454,7 @@ case class MediaAtomBlockElement(
     expired: Option[Boolean],
     activeVersion: Option[Long],
     channelId: Option[String],
+    videoPlayerFormat: Option[VideoPlayerFormat],
 ) extends PageElement
 object MediaAtomBlockElement {
   implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
@@ -508,6 +516,48 @@ object LinkBlockElement {
     JsString(linkType.name)
   }
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
+}
+
+case class ProductImage(
+    url: String,
+    caption: String,
+    height: Int,
+    width: Int,
+    alt: String,
+    credit: String,
+    displayCredit: Boolean,
+)
+case class ProductCustomAttribute(
+    name: String,
+    value: String,
+)
+case class ProductCta(
+    text: String,
+    price: String,
+    retailer: String,
+    url: String,
+)
+case class ProductBlockElement(
+    productName: String,
+    brandName: String,
+    primaryHeadingHtml: String,
+    secondaryHeadingHtml: String,
+    starRating: String,
+    productCtas: List[ProductCta],
+    customAttributes: List[ProductCustomAttribute],
+    image: Option[ProductImage],
+    content: Seq[PageElement],
+    displayType: ProductDisplayType,
+) extends PageElement
+object ProductBlockElement {
+  implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
+  implicit val ProductBlockElementCTAWrites: Writes[ProductCta] = Json.writes[ProductCta]
+  implicit val ProductBlockElementCustomAttributeWrites: Writes[ProductCustomAttribute] =
+    Json.writes[ProductCustomAttribute]
+  implicit val ProductBlockElementDisplayTypeWrites: Writes[ProductDisplayType] = Writes { displayType =>
+    JsString(displayType.name)
+  }
+  implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
@@ -897,6 +947,7 @@ object PageElement {
       case _: ListBlockElement            => true
       case _: TimelineBlockElement        => true
       case _: LinkBlockElement            => true
+      case _: ProductBlockElement         => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -918,7 +969,7 @@ object PageElement {
       edition: Edition,
       webPublicationDate: DateTime,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ): List[PageElement] = {
 
     def extractAtom: Option[Atom] =
@@ -936,7 +987,7 @@ object PageElement {
     element.`type` match {
       case Text =>
         val textCleaners =
-          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isTheFilterUS) _ andThen
+          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isUSProductionOffice) _ andThen
             TextCleaner.sanitiseLinks(edition)
 
         for {
@@ -1028,7 +1079,7 @@ object PageElement {
         List(
           ImageBlockElement(
             ImageMedia(imageAssets.toSeq),
-            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isTheFilterUS),
+            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isUSProductionOffice),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
             imageSources,
@@ -1259,12 +1310,13 @@ object PageElement {
                     mediaAtom.id,
                     mediaAtom.title,
                     mediaAtom.defaultHtml,
-                    mediaAtom.assets.map(MediaAtomBlockElementMediaAsset.fromMediaAsset),
+                    mediaAtom.activeAssets.map(MediaAtomBlockElementMediaAsset.fromMediaAsset),
                     mediaAtom.duration,
                     mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     mediaAtom.expired,
                     mediaAtom.activeVersion,
                     mediaAtom.channelId,
+                    mediaAtom.videoPlayerFormat,
                   ),
                 )
             }
@@ -1408,7 +1460,7 @@ object PageElement {
         element.linkTypeData
           .map(d =>
             LinkBlockElement(
-              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isTheFilterUS),
+              AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isUSProductionOffice),
               d.label,
               d.linkType.getOrElse(LinkType.ProductButton),
             ),
@@ -1508,7 +1560,7 @@ object PageElement {
                 webPublicationDate,
                 item,
                 isGallery,
-                isTheFilterUS,
+                isUSProductionOffice,
               )
             }.toSeq,
             listElementType = listTypeData.`type`.map(_.name),
@@ -1529,8 +1581,25 @@ object PageElement {
               webPublicationDate,
               timelineTypeData,
               isGallery,
-              isTheFilterUS,
+              isUSProductionOffice,
             ),
+          )
+        }.toList
+
+      case Product =>
+        element.productTypeData.map { productTypeData =>
+          makeProduct(
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            edition,
+            webPublicationDate,
+            productTypeData,
+            isGallery,
+            isUSProductionOffice,
           )
         }.toList
 
@@ -1550,7 +1619,7 @@ object PageElement {
       webPublicationDate: DateTime,
       timelineTypeData: TimelineElementFields,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ) = {
     timelineTypeData.sections.map { section =>
       TimelineSection(
@@ -1575,7 +1644,7 @@ object PageElement {
                   edition,
                   webPublicationDate,
                   isGallery,
-                  isTheFilterUS,
+                  isUSProductionOffice,
                 )
                 .headOption
             },
@@ -1593,7 +1662,7 @@ object PageElement {
                 edition,
                 webPublicationDate,
                 isGallery,
-                isTheFilterUS,
+                isUSProductionOffice,
               )
             }.toSeq,
           )
@@ -1613,7 +1682,7 @@ object PageElement {
       webPublicationDate: DateTime,
       item: v1.ListItem,
       isGallery: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ) = {
     ListItem(
       elements = item.elements.flatMap { element =>
@@ -1630,7 +1699,7 @@ object PageElement {
           edition,
           webPublicationDate,
           isGallery,
-          isTheFilterUS,
+          isUSProductionOffice,
         )
       }.toSeq,
       title = item.title,
@@ -1641,6 +1710,112 @@ object PageElement {
       bylineHtml = item.bylineHtml,
       contributorImageOverrideUrl = item.contributorImageOverrideUrl,
     )
+  }
+
+  private def makeProduct(
+      addAffiliateLinks: Boolean,
+      pageUrl: String,
+      atoms: Iterable[Atom],
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+      edition: Edition,
+      webPublicationDate: DateTime,
+      product: ProductElementFields,
+      isGallery: Boolean,
+      isUSProductionOffice: Boolean,
+  ) = {
+
+    def createProductCta(
+        cta: ApiProductCta,
+        pageUrl: String,
+        addAffiliateLinks: Boolean,
+        isUSProductionOffice: Boolean,
+    ): Option[ProductCta] = {
+      for {
+        // URL must exist and be non-empty
+        url <- AffiliateLinksCleaner
+          .replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isUSProductionOffice)
+          .filter(_.nonEmpty)
+
+        // Must have either non-empty text, or both non-empty price & retailer
+        if cta.text.exists(_.nonEmpty) ||
+          (cta.price.exists(_.nonEmpty) && cta.retailer.exists(_.nonEmpty))
+      } yield ProductCta(
+        text = cta.text.getOrElse(""),
+        price = cta.price.getOrElse(""),
+        retailer = cta.retailer.getOrElse(""),
+        url = url,
+      )
+    }
+
+    def createProductCustomAttribute(apiCustomAttribute: ApiProductCustomAttribute): Option[ProductCustomAttribute] = {
+      for {
+        name <- apiCustomAttribute.name if name.nonEmpty
+        value <- apiCustomAttribute.value if value.nonEmpty
+      } yield ProductCustomAttribute(
+        name = name,
+        value = value,
+      )
+    }
+
+    def createProductImage(apiImage: ApiProductImage): Option[ProductImage] = {
+      for {
+        url <- apiImage.file if url.nonEmpty
+        height <- apiImage.height
+        width <- apiImage.width
+        displayCredit <- apiImage.displayCredit
+        credit <- apiImage.credit
+        alt <- apiImage.alt
+      } yield ProductImage(
+        url = url,
+        caption = apiImage.caption.getOrElse(""),
+        credit = credit,
+        height = height,
+        width = width,
+        displayCredit = displayCredit,
+        alt = alt,
+      )
+    }
+
+    ProductBlockElement(
+      content = product.content
+        .getOrElse(List())
+        .flatMap { element =>
+          PageElement.make(
+            element,
+            addAffiliateLinks,
+            pageUrl,
+            atoms,
+            isMainBlock = false,
+            isImmersive,
+            campaigns,
+            calloutsUrl,
+            overrideImage = None,
+            edition,
+            webPublicationDate,
+            isGallery,
+            isUSProductionOffice,
+          )
+        }
+        .toSeq,
+      productName = product.productName.getOrElse(""),
+      brandName = product.brandName.getOrElse(""),
+      primaryHeadingHtml = product.primaryHeading.getOrElse(""),
+      secondaryHeadingHtml = product.secondaryHeading.getOrElse(""),
+      starRating = product.starRating.getOrElse("none-selected"),
+      productCtas = product.productCtas
+        .getOrElse(Seq.empty)
+        .flatMap(cta => createProductCta(cta, pageUrl, addAffiliateLinks, isUSProductionOffice))
+        .toList,
+      customAttributes = product.customAttributes
+        .getOrElse(Seq.empty)
+        .flatMap(apiAttr => createProductCustomAttribute(apiAttr))
+        .toList,
+      image = product.image.flatMap(apiImage => createProductImage(apiImage)),
+      displayType = product.displayType,
+    )
+
   }
 
   private[this] def ensureHTTPS(url: String): String = {
@@ -1959,7 +2134,7 @@ object PageElement {
       isGallery: Boolean,
       pageUrl: String,
       addAffiliateLinks: Boolean,
-      isTheFilterUS: Boolean,
+      isUSProductionOffice: Boolean,
   ): Map[String, String] = {
     element.imageTypeData.map { d =>
       Map(
@@ -1967,7 +2142,7 @@ object PageElement {
         "alt" -> d.alt,
         "caption" -> {
           if (isGallery) {
-            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isTheFilterUS))
+            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isUSProductionOffice))
           } else {
             d.caption
           }
