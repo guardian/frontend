@@ -33,7 +33,7 @@ trait ABTestSwitches {
     "Allow personalised highlights to be shown on the front page",
     owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2025, 12, 4)),
+    sellByDate = Some(LocalDate.of(2026, 1, 28)),
     exposeClientSide = true,
     highImpact = false,
   )
