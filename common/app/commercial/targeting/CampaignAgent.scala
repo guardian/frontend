@@ -13,7 +13,7 @@ object CampaignAgent extends GuLogging {
   def refresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
     // The maximum number of campaigns which will be fetched. If there are too many campaigns additional campaigns will be truncated.
     // Which campaigns make it through is undefined
-    val campaignLimit = 200
+    val campaignLimit = 300
 
     // Total number of rules allowed per campaign, any campaigns with more than one rule will be filtered
     val ruleLimit = 1
