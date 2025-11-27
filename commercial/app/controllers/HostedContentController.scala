@@ -69,21 +69,6 @@ class HostedContentController(
       .showTags("all")
       .showAtoms("all")
 
-  private def modelFromContent(item: Content): Option[DotcomRenderingHostedContentModel] = {
-    if (item.isHosted) {
-      item.`type` match {
-        case Video   => Some(DotcomRenderingHostedContentModel.forVideo(item))
-        case Article => Some(DotcomRenderingHostedContentModel.forArticle(item))
-        case Gallery => Some(DotcomRenderingHostedContentModel.forGallery(item))
-        case _ =>
-          log.error(s"Failed to make unsupported hosted type: ${item.`type`}: ${item.id}")
-          None
-      }
-    } else {
-      None
-    }
-  }
-
   private def lookup(
       campaignName: String,
       pageName: String,
@@ -109,8 +94,7 @@ class HostedContentController(
     Action.async { implicit request =>
       lookup(campaignName, pageName).flatMap {
         case Some(content) if request.getRequestFormat == JsonFormat =>
-          val model = DotcomRenderingHostedContentModel.forArticle(content)
-          Future.successful(Ok(DotcomRenderingHostedContentModel.toJson(model)).as("application/json"))
+          renderJsonResponse(content)
         case Some(content) =>
           renderPage(Future.successful(HostedPage.fromContent(content)))
         case None =>
@@ -120,14 +104,18 @@ class HostedContentController(
 
   def renderJson(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
-      lookup(campaignName, pageName).map {
-        case Some(content) =>
-          modelFromContent(content)
-            .map(model => Ok(DotcomRenderingHostedContentModel.toJson(model)).as("application/json"))
-            .getOrElse(NotFound)
-        case None =>
-          NotFound
+      lookup(campaignName, pageName).flatMap {
+        case Some(content) => renderJsonResponse(content)
+        case None          => Future.successful(NotFound)
       }
+    }
+
+  private def renderJsonResponse(content: Content): Future[Result] =
+    DotcomRenderingHostedContentModel.get(content) match {
+      case Some(model) =>
+        Future.successful(Ok(DotcomRenderingHostedContentModel.toJson(model)).as("application/json"))
+      case None =>
+        Future.successful(NotFound)
     }
 
   def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =

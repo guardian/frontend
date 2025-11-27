@@ -61,24 +61,18 @@ object DotcomRenderingHostedContentModel {
     withoutNull(jsValue)
   }
 
-  def forArticle(
-      item: ApiContent,
-  ): DotcomRenderingHostedContentModel = {
-    val page = HostedArticlePage.fromContent(item).get
-    DotcomRenderingHostedContentModel(
-      id = page.id,
-      url = page.url,
-      encodedUrl = page.encodedUrl,
-      campaign = page.campaign,
-      title = page.title,
-      mainImageUrl = page.mainImageUrl,
-      thumbnailUrl = page.thumbnailUrl,
-      standfirst = page.standfirst,
-      cta = page.cta,
-      name = page.name,
-      owner = page.owner,
-      logo = page.logo,
-      fontColour = page.fontColour,
+  def get(content: ApiContent): Option[DotcomRenderingHostedContentModel] = {
+    HostedPage.fromContent(content).flatMap {
+      case articlePage: HostedArticlePage => Some(forArticle(articlePage))
+      case videoPage: HostedVideoPage     => Some(forVideo(videoPage))
+      case galleryPage: HostedGalleryPage => Some(forGallery(galleryPage))
+      case _                              => None
+    }
+  }
+
+  def forArticle(page: HostedArticlePage): DotcomRenderingHostedContentModel = {
+    apply(
+      page = page,
       body = Some(page.body),
       mainPicture = Some(page.mainPicture),
       mainPictureCaption = Some(page.mainPictureCaption),
@@ -87,24 +81,9 @@ object DotcomRenderingHostedContentModel {
     )
   }
 
-  def forVideo(
-      item: ApiContent,
-  ): DotcomRenderingHostedContentModel = {
-    val page = HostedVideoPage.fromContent(item).get
-    DotcomRenderingHostedContentModel(
-      id = page.id,
-      url = page.url,
-      encodedUrl = page.encodedUrl,
-      campaign = page.campaign,
-      title = page.title,
-      mainImageUrl = page.mainImageUrl,
-      thumbnailUrl = page.thumbnailUrl,
-      standfirst = page.standfirst,
-      cta = page.cta,
-      name = page.name,
-      owner = page.owner,
-      logo = page.logo,
-      fontColour = page.fontColour,
+  def forVideo(page: HostedVideoPage): DotcomRenderingHostedContentModel = {
+    apply(
+      page = page,
       body = None,
       mainPicture = None,
       mainPictureCaption = None,
@@ -113,10 +92,25 @@ object DotcomRenderingHostedContentModel {
     )
   }
 
-  def forGallery(
-      item: ApiContent,
+  def forGallery(page: HostedGalleryPage): DotcomRenderingHostedContentModel = {
+    apply(
+      page = page,
+      body = None,
+      mainPicture = None,
+      mainPictureCaption = None,
+      video = None,
+      images = page.images,
+    )
+  }
+
+  def apply(
+      page: HostedPage,
+      body: Option[String] = None,
+      mainPicture: Option[String] = None,
+      mainPictureCaption: Option[String] = None,
+      video: Option[HostedVideo] = None,
+      images: List[HostedGalleryImage] = List.empty,
   ): DotcomRenderingHostedContentModel = {
-    val page = HostedGalleryPage.fromContent(item).get
     DotcomRenderingHostedContentModel(
       id = page.id,
       url = page.url,
@@ -131,11 +125,17 @@ object DotcomRenderingHostedContentModel {
       owner = page.owner,
       logo = page.logo,
       fontColour = page.fontColour,
-      body = None,
-      mainPicture = None,
-      mainPictureCaption = None,
-      video = None,
-      images = page.images,
+
+      // article
+      body = body,
+      mainPicture = mainPicture,
+      mainPictureCaption = mainPictureCaption,
+
+      // video
+      video = video,
+
+      // gallery
+      images = images,
     )
   }
 }
