@@ -193,7 +193,7 @@ GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(pa
 GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
 
 # Harnesses
-POST    /desktop-auth/*path         controllers.LiveHarnessController.renderLiveHarness(path)
+POST    /desktop-auth/render-harness/*path         controllers.LiveHarnessController.renderLiveHarness(path)
 
 # Don't forward requests for favicon.ico to the Content API
 GET        /favicon.ico                                                                        controllers.FaviconController.favicon

@@ -14,7 +14,7 @@ import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.{CAPILookup, NewsletterService}
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import views.support.RenderOtherStatus
+import views.support._
 
 import scala.concurrent.Future
 
@@ -26,10 +26,9 @@ class ArticleController(
     newsletterService: NewsletterService,
 )(implicit val context: ApplicationContext)
     extends BaseController
+    with RendersItemResponse
     with GuLogging
-    with Results
-    with ImplicitControllerExecutionContext
-    with RendersItemResponse {
+    with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 

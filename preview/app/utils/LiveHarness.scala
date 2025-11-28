@@ -75,12 +75,12 @@ object LiveHarness {
       blocks: Blocks,
       localAtoms: List[LiveHarnessInteractiveAtom],
   ): (Content, Blocks) = {
-    val (newAtoms, newBlocks) = turnLocalAtomsIntoAtomBlocksAndElements(localAtoms)
+    val (newAtoms, newElements) = turnLocalAtomsIntoAtomBlocksAndElements(localAtoms)
     val updatedAtoms = content.atoms.map(_.copy(interactives = newAtoms))
     val updatedContent = content.copy(atoms = updatedAtoms)
-    val newElements = newBlocks ++ blocks.body.flatMap(_.headOption.map(_.elements)).getOrElse(Seq.empty).toList
+    val updatedElements = newElements ++ blocks.body.flatMap(_.headOption.map(_.elements)).getOrElse(Seq.empty).toList
     val updatedBlocks = blocks.copy(body = blocks.body.map(blocks => {
-      val firstBlock = blocks.headOption.map(_.copy(elements = newElements))
+      val firstBlock = blocks.headOption.map(_.copy(elements = updatedElements))
       val restOfBlocks = blocks.tail
       firstBlock.toList ++ restOfBlocks
     }))
