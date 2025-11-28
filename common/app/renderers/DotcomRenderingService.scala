@@ -157,6 +157,24 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, newsletter)
 
+  def getDCARAssets(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
+    ws
+      .url(Configuration.rendering.articleBaseURL + path)
+      .withRequestTimeout(Configuration.rendering.timeout)
+      .get()
+      .map { response =>
+        response.status match {
+          case 200 =>
+            Cached(CacheTime.Default)(RevalidatableResult.Ok(Html(response.body)))
+          case _ =>
+            log.error(
+              s"Request to DCR assets failed: status ${response.status}, path: ${request.path}",
+            )
+            NoCache(InternalServerError("Remote renderer error (500)"))
+        }
+      }
+  }
+
   def getAppsArticle(
       ws: WSClient,
       page: PageWithStoryPackage,

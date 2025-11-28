@@ -7,6 +7,9 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
 
+# Returns a page to pre-warm assets for the WebView cache on iOS
+GET        /dcar-assets/rendered-items-assets                                   controllers.DCARAssetsController.renderAsset()
+
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
