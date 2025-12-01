@@ -1,6 +1,7 @@
 package services
 
 import common.{GuLogging, PekkoAsync}
+import conf.Configuration
 import software.amazon.awssdk.services.ses.SesAsyncClient
 import software.amazon.awssdk.services.ses.model.{Destination => EmailDestination, _}
 import utils.AWSv2
@@ -27,6 +28,12 @@ class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
       textBody: Option[String] = None,
       htmlBody: Option[String] = None,
   )(implicit executionContext: ExecutionContext): Future[SendEmailResponse] = {
+
+    // Don't send emails in non-prod environments
+    if (Configuration.environment.isNonProd) {
+      log.info(s"Skipping email send in non-prod: from=$from to=$to subject=$subject")
+      return Future.successful(SendEmailResponse.builder().messageId("non-prod-mock").build())
+    }
 
     log.info(s"Sending email from $from to $to about $subject")
 
