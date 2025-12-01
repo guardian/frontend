@@ -11,6 +11,7 @@ import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.meta.BlocksOn
 import model.{
   CacheTime,
   Cached,
@@ -30,7 +31,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
+import services.newsletters.model.{NewsletterLayout, NewsletterResponseV2}
 import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
@@ -150,12 +151,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getAMPArticle(
       ws: WSClient,
       page: PageWithStoryPackage,
-      blocks: Blocks,
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
-    baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, newsletter)
+    baseArticleRequest("/AMPArticle", ws, page, pageType, filterKeyEvents, false, newsletter)
 
   def getDCARAssets(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
     ws
@@ -178,7 +178,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getAppsArticle(
       ws: WSClient,
       page: PageWithStoryPackage,
-      blocks: Blocks,
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
@@ -188,7 +187,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       "/AppsArticle",
       ws,
       page,
-      blocks,
       pageType,
       filterKeyEvents,
       forceLive,
@@ -198,7 +196,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getArticle(
       ws: WSClient,
       page: PageWithStoryPackage,
-      blocks: Blocks,
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
@@ -208,7 +205,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       "/Article",
       ws,
       page,
-      blocks,
       pageType,
       filterKeyEvents,
       forceLive,
@@ -219,7 +215,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       path: String,
       ws: WSClient,
       page: PageWithStoryPackage,
-      blocks: Blocks,
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
@@ -229,14 +224,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       case liveblog: LiveBlogPage =>
         DotcomRenderingDataModel.forLiveblog(
           liveblog,
-          blocks,
           request,
           pageType,
           filterKeyEvents,
           forceLive,
           newsletter,
         )
-      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
+      case _ => DotcomRenderingDataModel.forArticle(page, request, pageType, newsletter)
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
@@ -332,27 +326,30 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getInteractive(
       ws: WSClient,
       page: InteractivePage,
-      blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     // Nb. interactives have a longer timeout because some of them are very
-    // large unfortunately. E.g.
+    // large, unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.interactiveBaseURL + "/Interactive", page.metadata.cacheTime, 4.seconds)
+    post(
+      ws,
+      json,
+      Configuration.rendering.interactiveBaseURL + "/Interactive",
+      page.metadata.cacheTime,
+      4.seconds,
+    )
   }
 
   def getAMPInteractive(
       ws: WSClient,
       page: InteractivePage,
-      blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-
-    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.interactiveBaseURL + "/AMPInteractive", page.metadata.cacheTime)
   }
@@ -360,17 +357,21 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getAppsInteractive(
       ws: WSClient,
       page: InteractivePage,
-      blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-
-    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(page, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     // Nb. interactives have a longer timeout because some of them are very
     // large unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.interactiveBaseURL + "/AppsInteractive", page.metadata.cacheTime, 4.seconds)
+    post(
+      ws,
+      json,
+      Configuration.rendering.interactiveBaseURL + "/AppsInteractive",
+      page.metadata.cacheTime,
+      4.seconds,
+    )
   }
 
   def getEmailNewsletters(

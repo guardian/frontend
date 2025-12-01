@@ -67,14 +67,14 @@ object LiveBlogHelpers extends GuLogging {
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
     val liveBlogPageModel: Option[LiveBlogCurrentPage] =
-      liveBlog.content.fields.blocks.map { blocks =>
+      liveBlog.content.fields.blocks.flatMap { blocks =>
         LiveBlogCurrentPage(
           pageSize = pageSize,
           blocks,
           range,
           filterKeyEvents,
         )
-      } getOrElse None
+      }
 
     liveBlogPageModel
       .map { pageModel =>
@@ -101,6 +101,7 @@ object LiveBlogHelpers extends GuLogging {
             currentPage = pageModel,
             related = StoryPackages(liveBlog.metadata.id, response),
             filterKeyEvents = filterKeyEvents,
+            pageModel.currentPage.blocks,
           ),
         )
       }
