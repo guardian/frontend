@@ -12,20 +12,10 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
       DarkModeWeb,
-      GoogleOneTap,
       LabsRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object GoogleOneTap
-    extends Experiment(
-      name = "google-one-tap",
-      description = "Signing into the Guardian with Google One Tap",
-      owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 12, 1),
-      participationGroup = Perc0B,
-    )
 
 object LabsRedesign
     extends Experiment(
