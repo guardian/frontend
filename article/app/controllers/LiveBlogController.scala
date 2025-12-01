@@ -12,6 +12,7 @@ import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model._
+import model.meta.BlocksOn
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -46,10 +47,12 @@ class LiveBlogController(
   def renderEmail(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, ArticleBlocks) {
-        case (minute: MinutePage, _) =>
-          Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
-        case (blog: LiveBlogPage, _) => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
-        case _                       => Future.successful(NotFound)
+        _.page match {
+          case minute: MinutePage =>
+            Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(minute), minute))
+          case blog: LiveBlogPage => Future.successful(common.renderEmail(LiveBlogHtmlPage.html(blog), blog))
+          case _                  => Future.successful(NotFound)
+        }
       }
     }
   }
@@ -96,29 +99,31 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
 
-      mapModel(path, range, filter) {
-        case (blog: LiveBlogPage, _) if rendered.contains(false) => getJsonForFronts(blog)
+      mapModel(path, range, filter) { pageBlocks =>
+        pageBlocks.page match {
+          case blog: LiveBlogPage if rendered.contains(false) => getJsonForFronts(blog)
 
-        /** When DCR requests new blocks from the client, it will add a `lastUpdate` parameter. If no such parameter is
-          * present, we should return a JSON representation of the whole payload that would be sent to DCR when
-          * initially server side rendering the LiveBlog page.
-          */
-        case (blog: LiveBlogPage, blocks) if request.forceDCR && lastUpdate.isEmpty =>
-          Future.successful(renderDCRJson(blog, blocks, filter))
-        case (blog: LiveBlogPage, blocks) =>
-          getJson(
-            blog,
-            range,
-            isLivePage,
-            filter,
-            blocks.requestedBodyBlocks.getOrElse(Map.empty).map(entry => (entry._1, entry._2.toSeq)),
-          )
-        case (minute: MinutePage, _) =>
-          Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
-        case _ =>
-          Future {
-            Cached(600)(WithoutRevalidationResult(NotFound))
-          }
+          /** When DCR requests new blocks from the client, it will add a `lastUpdate` parameter. If no such parameter
+            * is present, we should return a JSON representation of the whole payload that would be sent to DCR when
+            * initially server side rendering the LiveBlog page.
+            */
+          case blog: LiveBlogPage if request.forceDCR && lastUpdate.isEmpty =>
+            Future.successful(renderDCRJson(pageBlocks.copy(page = blog), filter))
+          case blog: LiveBlogPage =>
+            getJson(
+              blog,
+              range,
+              isLivePage,
+              filter,
+              pageBlocks.blocks.requestedBodyBlocks.getOrElse(Map.empty).map(entry => (entry._1, entry._2.toSeq)),
+            )
+          case minute: MinutePage =>
+            Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
+          case _ =>
+            Future {
+              Cached(600)(WithoutRevalidationResult(NotFound))
+            }
+        }
       }
     }
   }
@@ -130,8 +135,9 @@ class LiveBlogController(
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
-    mapModel(path, range, filterKeyEvents) { (page, blocks) =>
+    mapModel(path, range, filterKeyEvents) { pageBlocks =>
       {
+        val page = pageBlocks.page
         val isAmpSupported = page.article.content.shouldAmplify
         val pageType: PageType = PageType(page, request, context)
         (page, request.getRequestFormat) match {
@@ -161,8 +167,7 @@ class LiveBlogController(
               val pageType: PageType = PageType(blog, request, context)
               remoteRenderer.getArticle(
                 ws,
-                blog,
-                blocks,
+                pageBlocks.copy(page = blog),
                 pageType,
                 newsletter = None,
                 filterKeyEvents,
@@ -173,14 +178,13 @@ class LiveBlogController(
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType, newsletter = None, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, pageBlocks, pageType, newsletter = None, filterKeyEvents)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case (blog: LiveBlogPage, AppsFormat) =>
             remoteRenderer.getAppsArticle(
               ws,
-              blog,
-              blocks,
+              pageBlocks,
               pageType,
               newsletter = None,
               filterKeyEvents,
@@ -331,17 +335,16 @@ class LiveBlogController(
   /** Returns a JSON representation of the payload that's sent to DCR when rendering the whole LiveBlog page.
     */
   private[this] def renderDCRJson(
-      blog: LiveBlogPage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[LiveBlogPage],
       filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Result = {
+    val blog = pageBlocks.page
     val pageType: PageType = PageType(blog, request, context)
     val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
 
     val model =
       DotcomRenderingDataModel.forLiveblog(
-        blog,
-        blocks,
+        pageBlocks,
         request,
         pageType,
         filterKeyEvents,
@@ -357,38 +360,38 @@ class LiveBlogController(
       range: BlockRange,
       filterKeyEvents: Boolean = false,
   )(
-      render: (PageWithStoryPackage, Blocks) => Future[Result],
+      render: BlocksOn[PageWithStoryPackage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
       .map(responseToModelOrResult(range, filterKeyEvents))
       .recover(convertApiExceptions)
       .flatMap {
-        case Right((model, blocks)) => render(model, blocks)
-        case Left(other)            => Future.successful(RenderOtherStatus(other))
+        case Right(pageBlocks) => render(pageBlocks)
+        case Left(other)       => Future.successful(RenderOtherStatus(other))
       }
   }
 
   private[this] def responseToModelOrResult(
       range: BlockRange,
       filterKeyEvents: Boolean,
-  )(response: ItemResponse)(implicit request: RequestHeader): Either[Result, (PageWithStoryPackage, Blocks)] = {
+  )(response: ItemResponse)(implicit request: RequestHeader): Either[Result, BlocksOn[PageWithStoryPackage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[Result, ContentType] = ModelOrResult(supportedContent, response)
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     val content = supportedContentResult.flatMap {
       case minute: Article if minute.isTheMinute =>
-        Right(MinutePage(minute, StoryPackages(minute.metadata.id, response)), blocks)
+        Right(MinutePage(minute, StoryPackages(minute.metadata.id, response)))
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
-        Right(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)), blocks)
+        Right(MinutePage(liveBlog, StoryPackages(liveBlog.metadata.id, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         createLiveBlogModel(
           liveBlog,
           response,
           range,
           filterKeyEvents,
-        ).map(_ -> blocks)
+        )
       case nonLiveBlogArticle: Article =>
         /** If `isLiveBlog` is false, it must be because the article has no blocks, or lacks the `tone/minutebyminute`
           * tag, or both. Logging these values will help us to identify which is causing the issue.
@@ -404,7 +407,7 @@ class LiveBlogController(
         Left(InternalServerError)
     }
 
-    content
+    content.map(BlocksOn(_, blocks))
   }
 
   def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
