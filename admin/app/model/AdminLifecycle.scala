@@ -39,12 +39,6 @@ class AdminLifecycle(
   lazy val r2PagePressRateInSeconds: Int = Configuration.r2Press.pressRateInSeconds
 
   private def scheduleJobs(): Unit = {
-
-    // every 0, 30 seconds past the minute
-    jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
-      model.abtests.AbTestJob.run()
-    }
-
     // every 4, 19, 34, 49 minutes past the hour, on the 2nd second past the minute (e.g 13:04:02, 13:19:02)
     jobs.schedule("LoadBalancerLoadJob", "2 4/15 * * * ?") {
       LoadBalancer.refresh()
