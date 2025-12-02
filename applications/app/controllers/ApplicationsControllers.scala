@@ -27,6 +27,7 @@ trait ApplicationsControllers {
   lazy val AtomPageController = wire[AtomPageController]
   lazy val preferencesController = wire[PreferencesController]
   lazy val optInController = wire[OptInController]
+  lazy val abTestsOptInController = wire[AbTestsOptInController]
   lazy val newspaperController = wire[NewspaperController]
   lazy val quizController = wire[QuizController]
   lazy val allIndexController = wire[AllIndexController]
