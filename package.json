@@ -82,7 +82,7 @@
 		"eslint-plugin-prettier": "^3.4.0",
 		"eslint-plugin-react": "^7.22.0",
 		"eslint-plugin-react-hooks": "^4.2.0",
-		"execa": "^1.0.0",
+		"execa": "^9.6.1",
 		"fastdom": "1.0.9",
 		"fence": "guardian/fence#0.2.11",
 		"figures": "^2.0.0",
