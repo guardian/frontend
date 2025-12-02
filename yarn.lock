@@ -3041,7 +3041,7 @@ __metadata:
     videojs-ima: "googleads/videojs-ima#0.3.0"
     videojs-persistvolume: "guardian/videojs-persistvolume#0.1.4"
     videojs-playlist: "guardian/videojs-playlist#0.1.4"
-    web-vitals: "npm:3.5.1"
+    web-vitals: "npm:5.1.0"
     webpack: "npm:^5.79.0"
     webpack-bundle-analyzer: "npm:^4.10.2"
     webpack-cli: "npm:^5.0.1"
@@ -14803,10 +14803,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:3.5.1":
-  version: 3.5.1
-  resolution: "web-vitals@npm:3.5.1"
-  checksum: 10c0/2b0239241b40e491aa048fac67191ba50cbc5b9d4a859166455d751d12c33399b70579dd3bf5639c37d32421459ce0f64de69307f4f2adae43c0f6b23010849c
+"web-vitals@npm:5.1.0":
+  version: 5.1.0
+  resolution: "web-vitals@npm:5.1.0"
+  checksum: 10c0/1af22ddbe2836ba880fcb492cfba24c3349f4760ebb5e92f38324ea67bca3c4dbb9c86f1a32af4795b6115cdaf98b90000cf3a7402bffef6e8c503f0d1b2e706
   languageName: node
   linkType: hard
 

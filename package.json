@@ -135,7 +135,7 @@
 		"videojs-ima": "googleads/videojs-ima#0.3.0",
 		"videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
 		"videojs-playlist": "guardian/videojs-playlist#0.1.4",
-		"web-vitals": "3.5.1",
+		"web-vitals": "5.1.0",
 		"webpack": "^5.79.0",
 		"webpack-bundle-analyzer": "^4.10.2",
 		"webpack-cli": "^5.0.1",
