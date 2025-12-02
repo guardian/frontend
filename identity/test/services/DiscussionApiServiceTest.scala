@@ -5,8 +5,8 @@ import metadata.MetaDataMatcher.convertToAnyShouldWrapper
 import org.mockito.Mockito._
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatestplus.mockito.MockitoSugar
-
 import scala.concurrent.Future
+import scala.language.reflectiveCalls
 
 class DiscussionApiServiceTest extends AsyncFlatSpec with MockitoSugar {
   private def buildFixtures() =

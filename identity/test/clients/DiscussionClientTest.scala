@@ -8,6 +8,7 @@ import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
+import scala.language.reflectiveCalls
 
 import scala.concurrent.Future
 
