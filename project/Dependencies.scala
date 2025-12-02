@@ -63,7 +63,7 @@ object Dependencies {
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.18.1" % Test
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "1.0.0"
-  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.32.0"
+  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.34.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.18.0" % Test
