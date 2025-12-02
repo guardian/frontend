@@ -23,7 +23,7 @@ object GoogleOneTap
       name = "google-one-tap",
       description = "Signing into the Guardian with Google One Tap",
       owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 12, 1),
+      sellByDate = LocalDate.of(2026, 2, 2),
       participationGroup = Perc0B,
     )
 
