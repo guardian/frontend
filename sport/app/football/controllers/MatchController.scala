@@ -83,8 +83,13 @@ case class TeamAnswer(
     codename: String,
 ) extends NsAnswer
 
-case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer, comments: Option[String])
-    extends NsAnswer
+case class MatchDataAnswer(
+    id: String,
+    homeTeam: TeamAnswer,
+    awayTeam: TeamAnswer,
+    comments: Option[String],
+    status: String,
+) extends NsAnswer
 
 object NsAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
@@ -126,13 +131,14 @@ object NsAnswer {
     )
   }
 
-  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp): MatchDataAnswer = {
+  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, matchStatus: String): MatchDataAnswer = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
     MatchDataAnswer(
       theMatch.id,
       makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
       makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
       theMatch.comments,
+      matchStatus,
     )
   }
 
@@ -181,7 +187,7 @@ class MatchController(
           val tier = FootballSummaryPagePicker.getTier()
 
           page.flatMap { page =>
-            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp)
+            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
 
             request.getRequestFormat match {
               case JsonFormat if request.forceDCR =>
