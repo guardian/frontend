@@ -2,18 +2,20 @@ package commercial.controllers
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
-import com.gu.contentapi.client.model.v1.ContentType.Video
+import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
+import com.gu.contentapi.client.model.v1.Content
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, GuLogging}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Cached, NoCache}
+import model.{ApplicationContext, Cached, DotcomRenderingHostedContentModel, NoCache}
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
 import views.html.hosted._
+import implicits.JsonFormat
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -67,22 +69,53 @@ class HostedContentController(
       .showTags("all")
       .showAtoms("all")
 
+  private def lookup(
+      campaignName: String,
+      pageName: String,
+  )(implicit request: Request[AnyContent]): Future[Option[Content]] = {
+    val itemId = s"advertiser-content/$campaignName/$pageName"
+
+    contentApiClient
+      .getResponse(baseQuery(itemId))
+      .map(_.content)
+      .recover { case NonFatal(e) =>
+        log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
+        None
+      }
+      .map { content =>
+        if (content.isEmpty) {
+          log.warn(s"Hosted content model not found for item '$itemId'")
+        }
+        content
+      }
+  }
+
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val capiResponse = {
-        val itemId = s"advertiser-content/$campaignName/$pageName"
-        val response = contentApiClient.getResponse(baseQuery(itemId))
-        response.failed.foreach { case NonFatal(e) =>
-          log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
-        }
-        response
+      lookup(campaignName, pageName).flatMap {
+        case Some(content) if request.getRequestFormat == JsonFormat =>
+          renderJsonResponse(content)
+        case Some(content) =>
+          renderPage(Future.successful(HostedPage.fromContent(content)))
+        case None =>
+          Future.successful(NotFound)
       }
+    }
 
-      val page = capiResponse map {
-        _.content flatMap HostedPage.fromContent
+  def renderJson(campaignName: String, pageName: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      lookup(campaignName, pageName).flatMap {
+        case Some(content) => renderJsonResponse(content)
+        case None          => Future.successful(NotFound)
       }
+    }
 
-      renderPage(page)
+  private def renderJsonResponse(content: Content): Future[Result] =
+    DotcomRenderingHostedContentModel.get(content) match {
+      case Some(model) =>
+        Future.successful(Ok(DotcomRenderingHostedContentModel.toJson(model)).as("application/json"))
+      case None =>
+        Future.successful(NotFound)
     }
 
   def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =
