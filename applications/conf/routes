@@ -76,8 +76,8 @@ GET        /opt/$choice<in|out|delete>/:feature                                 
 GET        /opt/reset                                                           controllers.OptInController.reset()
 
 # A/B test opt-in/out routes for beta AB testing framework
-GET        /ab-tests/opt/$choice<in|out>/$type<server|client>/:test/:group      controllers.AbTestsOptInController.handle(choice, type, test, group)
-GET        /ab-tests/opt/reset                                                  controllers.AbTestsOptInController.reset()
+GET        /ab-tests/$type<server|client>/opt-$choice<in|out>/:testGroup                                                         controllers.AbTestsOptInController.handle(choice, type, testGroup)
+GET        /ab-tests/opt/reset                                                                                                   controllers.AbTestsOptInController.reset()
 
 GET        /getnext/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "next")
 GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "prev")

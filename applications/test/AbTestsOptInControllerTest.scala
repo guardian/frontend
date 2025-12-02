@@ -20,8 +20,8 @@ import play.api.mvc.Cookie
     new AbTestsOptInController(Helpers.stubControllerComponents())
 
   "AbTestsOptInController" should "opt in to a server test group with empty cookie" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/in/server/test-group:variant")
-    val result = abTestsOptInController.handle("in", "server", "test-group", "variant")(request)
+    val request = FakeRequest("GET", "/ab-tests/server/opt-in/test-group:variant")
+    val result = abTestsOptInController.handle("in", "server", "test-group:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -32,8 +32,8 @@ import play.api.mvc.Cookie
   }
 
   it should "opt in to a client test group with empty cookie" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/in/client/test-group/control")
-    val result = abTestsOptInController.handle("in", "client", "test-group", "control")(request)
+    val request = FakeRequest("GET", "/ab-tests/client/opt-in/test-group:control")
+    val result = abTestsOptInController.handle("in", "client", "test-group:control")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -44,9 +44,9 @@ import play.api.mvc.Cookie
   }
 
   it should "opt in to a server test group with existing cookie" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/in/server/test-group-2/variant")
+    val request = FakeRequest("GET", "/ab-tests/server/opt-in/test-group-2:variant")
       .withCookies(Cookie("gu_force_server_test_groups", "test-group-1:control"))
-    val result = abTestsOptInController.handle("in", "server", "test-group-2", "variant")(request)
+    val result = abTestsOptInController.handle("in", "server", "test-group-2:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -60,9 +60,9 @@ import play.api.mvc.Cookie
   }
 
   it should "opt in to a client test group with existing cookie" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/in/client/test-group-2/variant")
+    val request = FakeRequest("GET", "/ab-tests/client/opt-in/test-group-2:variant")
       .withCookies(Cookie("gu_force_client_test_groups", "test-group-1:control"))
-    val result = abTestsOptInController.handle("in", "client", "test-group-2", "variant")(request)
+    val result = abTestsOptInController.handle("in", "client", "test-group-2:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -76,9 +76,9 @@ import play.api.mvc.Cookie
   }
 
   it should "update existing test group when opting in again" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/in/server/test-group/variant")
+    val request = FakeRequest("GET", "/ab-tests/server/opt-in/test-group:variant")
       .withCookies(Cookie("gu_force_server_test_groups", "test-group:control,other-group:variant"))
-    val result = abTestsOptInController.handle("in", "server", "test-group", "variant")(request)
+    val result = abTestsOptInController.handle("in", "server", "test-group:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -92,9 +92,9 @@ import play.api.mvc.Cookie
   }
 
   it should "opt out of a server test group when it's the only one" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/out/server/test-group/variant")
+    val request = FakeRequest("GET", "/ab-tests/oserver/pt-out/test-group:variant")
       .withCookies(Cookie("gu_force_server_test_groups", "test-group:variant"))
-    val result = abTestsOptInController.handle("out", "server", "test-group", "variant")(request)
+    val result = abTestsOptInController.handle("out", "server", "test-group:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -105,9 +105,9 @@ import play.api.mvc.Cookie
   }
 
   it should "opt out of a client test group when it's the only one" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/out/client/test-group/control")
+    val request = FakeRequest("GET", "/ab-tests/oclient/pt-out/test-group:control")
       .withCookies(Cookie("gu_force_client_test_groups", "test-group:control"))
-    val result = abTestsOptInController.handle("out", "client", "test-group", "control")(request)
+    val result = abTestsOptInController.handle("out", "client", "test-group:control")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -118,9 +118,11 @@ import play.api.mvc.Cookie
   }
 
   it should "opt out of a server test group and keep other groups" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/out/server/test-group-2/variant")
-      .withCookies(Cookie("gu_force_server_test_groups", "test-group-1:control,test-group-2:variant,test-group-3:control"))
-    val result = abTestsOptInController.handle("out", "server", "test-group-2", "variant")(request)
+    val request = FakeRequest("GET", "/ab-tests/oserver/pt-out/test-group-2:variant")
+      .withCookies(
+        Cookie("gu_force_server_test_groups", "test-group-1:control,test-group-2:variant,test-group-3:control"),
+      )
+    val result = abTestsOptInController.handle("out", "server", "test-group-2:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -135,9 +137,11 @@ import play.api.mvc.Cookie
   }
 
   it should "opt out of a client test group and keep other groups" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/out/client/test-group-2/variant")
-      .withCookies(Cookie("gu_force_client_test_groups", "test-group-1:control,test-group-2:variant,test-group-3:control"))
-    val result = abTestsOptInController.handle("out", "client", "test-group-2", "variant")(request)
+    val request = FakeRequest("GET", "/ab-tests/oclient/pt-out/test-group-2:variant")
+      .withCookies(
+        Cookie("gu_force_client_test_groups", "test-group-1:control,test-group-2:variant,test-group-3:control"),
+      )
+    val result = abTestsOptInController.handle("out", "client", "test-group-2:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -152,9 +156,9 @@ import play.api.mvc.Cookie
   }
 
   it should "handle opting out when the group is not in the cookie" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/out/server/non-existent-group/variant")
+    val request = FakeRequest("GET", "/ab-tests/oserver/pt-out/non-existent-group:variant")
       .withCookies(Cookie("gu_force_server_test_groups", "test-group:control"))
-    val result = abTestsOptInController.handle("out", "server", "non-existent-group", "variant")(request)
+    val result = abTestsOptInController.handle("out", "server", "non-existent-group:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -167,8 +171,8 @@ import play.api.mvc.Cookie
   }
 
   it should "handle opting out when there is no cookie" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/out/server/test-group/variant")
-    val result = abTestsOptInController.handle("out", "server", "test-group", "variant")(request)
+    val request = FakeRequest("GET", "/ab-tests/oserver/pt-out/test-group:variant")
+    val result = abTestsOptInController.handle("out", "server", "test-group:variant")(request)
 
     status(result) should be(303)
     redirectLocation(result) should be(Some("/"))
@@ -196,8 +200,8 @@ import play.api.mvc.Cookie
   }
 
   it should "have correct cookie lifetime for opt in" in {
-    val request = FakeRequest("GET", "/ab-tests/opt/in/server/test-groupv/ariant")
-    val result = abTestsOptInController.handle("in", "server", "test-group", "variant")(request)
+    val request = FakeRequest("GET", "/ab-tests/server/opt-in/test-group:variant")
+    val result = abTestsOptInController.handle("in", "server", "test-group:variant")(request)
 
     val cookies = Helpers.cookies(result)
     val cookie = cookies.get("gu_force_server_test_groups").get

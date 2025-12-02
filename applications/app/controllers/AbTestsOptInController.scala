@@ -43,13 +43,17 @@ class AbTestsOptInController(val controllerComponents: ControllerComponents) ext
       case None => Map.empty[String, String]
     }
   }
-  private def opt(choice: String, testType: String, testName: String, testGroup: String)(implicit
+  private def opt(choice: String, testType: String, testNameGroup: String)(implicit
       request: RequestHeader,
   ): Result = {
     val cookieName = testType match {
       case "server" => serverForceTestCookie
       case "client" => clientForceTestCookie
     }
+
+    val parts = testNameGroup.split(":")
+    val testName = parts(0).trim
+    val testGroup = parts(1).trim
 
     choice match {
       case "in"  => optIn(testName, testGroup, cookieName)
@@ -98,11 +102,11 @@ class AbTestsOptInController(val controllerComponents: ControllerComponents) ext
       )
     }
 
-  def handle(choice: String, testType: String, test: String, group: String): Action[AnyContent] =
+  def handle(choice: String, testType: String, testNameGroup: String): Action[AnyContent] =
     Action { implicit request =>
       Cached(60)(
         WithoutRevalidationResult(
-          opt(choice, testType, test, group),
+          opt(choice, testType, testNameGroup),
         ),
       )
     }
