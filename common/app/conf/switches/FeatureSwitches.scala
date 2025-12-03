@@ -660,4 +660,15 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val EnableHlsWeb = Switch(
+    group = SwitchGroup.Feature,
+    name = "enable-hls-web",
+    description = "Enable HLS web streaming on web",
+    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
