@@ -63,7 +63,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(page.getWebResponse().getContentAsString)
   }
 
-  def ignoringHost(path: String): String = new URI(path).getPath()
+  def ignoringHost(path: String): String = new URI(path).toURL.getPath()
 }
 
 trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {

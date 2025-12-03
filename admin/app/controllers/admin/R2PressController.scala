@@ -79,7 +79,7 @@ class R2PressController(
   }
 
   def getVariations(url: String): Option[List[String]] = {
-    Try(new URI(url)).toOption.map { url =>
+    Try(new URI(url).toURL).toOption.map { url =>
       val host = url.getHost
       val path = url.getPath
       val normalisedPath = RedirectService.normalisePath(path)

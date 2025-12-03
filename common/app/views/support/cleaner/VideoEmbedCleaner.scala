@@ -67,7 +67,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
           )
 
         if (canonicalUrl.nonEmpty) {
-          element.attr("data-canonical-url", new URI(canonicalUrl).getPath.stripPrefix("/"))
+          element.attr("data-canonical-url", new URI(canonicalUrl).toURL.getPath.stripPrefix("/"))
         }
 
         if (figcaption.asScala.nonEmpty) {
@@ -98,7 +98,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
 
           if (canonicalUrl.nonEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
-            element.attr("data-embed-path", new URI(canonicalUrl).getPath.stripPrefix("/"))
+            element.attr("data-embed-path", new URI(canonicalUrl).toURL.getPath.stripPrefix("/"))
           } else {
             element.attr("data-embeddable", "false")
           }

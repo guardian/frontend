@@ -13,7 +13,7 @@ import scala.util.control.NonFatal
 object MostViewed extends GuLogging {
 
   def urlToContentPath(url: String): String = {
-    val path = new URI(url).getPath
+    val path = new URI(url).toURL.getPath
     if (path.startsWith("/")) path.substring(1) else path
   }
 

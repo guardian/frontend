@@ -264,7 +264,7 @@ final case class Content(
 
   lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
     video.attr("data-canonical-url") match {
-      case url if url.nonEmpty => Some(new URI(url).getPath.stripPrefix("/"))
+      case url if url.nonEmpty => Some(new URI(url).toURL.getPath.stripPrefix("/"))
       case _                   => None
     }
   })
