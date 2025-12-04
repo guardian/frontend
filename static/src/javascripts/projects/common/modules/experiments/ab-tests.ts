@@ -1,5 +1,4 @@
 import type { ABTest } from '@guardian/ab-core';
-import {personalisedHighlights} from "common/modules/experiments/tests/personalised-highlights";
 import { auxiaSignInGate } from './tests/auxia-sign-in-gate';
 import { remoteRRHeaderLinksTest } from './tests/remote-header-test';
 import { signInGateMainControl } from './tests/sign-in-gate-main-control';
@@ -12,5 +11,4 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMainControl,
 	remoteRRHeaderLinksTest,
 	auxiaSignInGate,
-	personalisedHighlights
 ];

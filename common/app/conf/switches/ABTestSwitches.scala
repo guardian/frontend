@@ -26,15 +26,4 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
-
-  Switch(
-    ABTests,
-    "ab-personalised-highlights",
-    "Allow personalised highlights to be shown on the front page",
-    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2026, 1, 28)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
 }
