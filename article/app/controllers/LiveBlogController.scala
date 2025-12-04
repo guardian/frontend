@@ -167,7 +167,7 @@ class LiveBlogController(
               val pageType: PageType = PageType(blog, request, context)
               remoteRenderer.getArticle(
                 ws,
-                pageBlocks.copy(page = blog),
+                pageBlocks,
                 pageType,
                 newsletter = None,
                 filterKeyEvents,
