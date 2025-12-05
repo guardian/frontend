@@ -1,5 +1,6 @@
 package model.dotcomrendering.pageElements
 
+import model.meta.BlocksOn
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes, Blocks, CapiDateTime, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.contentapi.client.utils.format.LiveBlogDesign
@@ -168,9 +169,9 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     )
     when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
 
-    val currentPage = getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8))
+    val pageBlocks = BlocksOn(getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8)), testCapiBlocks)
 
-    val result = DotcomRenderingUtils.blocksForLiveblogPage(currentPage, testCapiBlocks, true)
+    val result = DotcomRenderingUtils.blocksForLiveblogPage(pageBlocks, true)
 
     result.map(_.id) should equal(Seq("8", "7", "6", "5", "4", "3"))
   }
@@ -183,9 +184,9 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     )
     when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
 
-    val currentPage = getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8))
+    val pageBlocks = BlocksOn(getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8)), testCapiBlocks)
 
-    val result = DotcomRenderingUtils.blocksForLiveblogPage(currentPage, testCapiBlocks, false)
+    val result = DotcomRenderingUtils.blocksForLiveblogPage(pageBlocks, false)
 
     result.map(_.id) should equal(Seq("6", "7", "8"))
   }
