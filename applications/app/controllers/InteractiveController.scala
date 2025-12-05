@@ -73,6 +73,11 @@ class InteractiveController(
     capiLookup.lookup(path, range = Some(ArticleBlocks))
   }
 
+  def modelAndRenderHtml(response: ItemResponse)(
+      modifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
+  )(implicit req: RequestHeader): Future[Result] =
+    modelAndRender(response)(pageBlocks => renderHtml(modifier(pageBlocks)))
+
   def modelAndRender(
       response: ItemResponse,
   )(render: BlocksOn[InteractivePage] => Future[Result])(implicit req: RequestHeader): Future[Result] = {

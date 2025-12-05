@@ -8,4 +8,6 @@ import com.gu.contentapi.client.model.v1.Blocks
   *
   * https://docondev.com/blog/2020/6/2/refactoring-introduce-parameter-object
   */
-case class BlocksOn[+P](page: P, blocks: Blocks)
+case class BlocksOn[+P](page: P, blocks: Blocks) {
+  def mapBoth[Q >: P](p: P => Q, b: Blocks => Blocks) = BlocksOn(p(page), b(blocks))
+}
