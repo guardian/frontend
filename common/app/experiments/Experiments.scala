@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       GoogleOneTap,
+      AITagPageContent,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -33,4 +34,13 @@ object DarkModeWeb
       owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
       sellByDate = LocalDate.of(2026, 1, 30),
       participationGroup = Perc0D,
+    )
+
+object AITagPageContent
+    extends Experiment(
+      name = "ai-tag-page-content",
+      description = "Enable AI storylines content on web tag pages",
+      owners = Seq(Owner.withEmail("ai.dev@theguardian.com")),
+      sellByDate = LocalDate.of(2026, 1, 30),
+      participationGroup = Perc0E,
     )

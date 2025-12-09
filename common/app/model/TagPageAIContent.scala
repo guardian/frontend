@@ -6,7 +6,10 @@ import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, DecodingFailure, Encoder}
 import play.api.libs.json.{Json, Writes}
 import services.S3
+
 import java.time.Instant
+import experiments.{AITagPageContent, ActiveExperiments}
+import play.api.mvc.{Filter, RequestHeader}
 
 // this mirrors the structure in the tool generating the content
 // https://github.com/guardian/tag-page-supercharger/blob/main/app/models/FrontendContent.scala#L18
@@ -138,21 +141,25 @@ object TagPageAIContent extends GuLogging {
   implicit val tpsgContentEncoder: Encoder[TagPageAIContent] = deriveEncoder
   implicit val tpsgWrites: Writes[TagPageAIContent] = Json.writes[TagPageAIContent]
 
-  def getContent(tag: String): Option[TagPageAIContent] = {
-    lazy val stage: String = Configuration.facia.stage.toUpperCase
-    val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
-    val location = s"$stage/tag-page-ai-data/$encodedTag.json"
-    val maybeTagPageAIContent = S3.get(location).map { jsonString =>
-      io.circe.parser.decode[TagPageAIContent](jsonString) match {
-        case Right(content) => Some(content)
-        case Left(error) =>
-          log.error(s"Error decoding TPSGContent for tag $tag: $error")
-          None
+  def getContent(tag: String)(implicit rh: RequestHeader): Option[TagPageAIContent] = {
+    if (ActiveExperiments.isParticipating(AITagPageContent)) {
+      lazy val stage: String = Configuration.facia.stage.toUpperCase
+      val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
+      val location = s"$stage/tag-page-ai-data/$encodedTag.json"
+      val maybeTagPageAIContent = S3.get(location).map { jsonString =>
+        io.circe.parser.decode[TagPageAIContent](jsonString) match {
+          case Right(content) => Some(content)
+          case Left(error) =>
+            log.error(s"Error decoding TPSGContent for tag $tag: $error")
+            None
+        }
       }
-    }
-    maybeTagPageAIContent match {
-      case Some(content) => content
-      case None          => log.error("TPSGContent not found for tag: " + tag); None
+      maybeTagPageAIContent match {
+        case Some(content) => content
+        case None          => log.error("TPSGContent not found for tag: " + tag); None
+      }
+    } else {
+      None
     }
   }
 }
