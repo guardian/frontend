@@ -144,6 +144,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         .withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, requestId, timeout))
         .map(handler)
     } else {
+      logInfoWithRequestId(s"POST request to DCR, path: ${request.path}")
       postWithoutHandler(ws, payload, endpoint, requestId, timeout).map(handler)
     }
   }
@@ -283,7 +284,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   private def getTimeout: Duration = {
     if (Configuration.environment.stage == "DEV")
-      Configuration.rendering.timeout * 5
+      Configuration.rendering.timeout
     else
       Configuration.rendering.timeout
   }

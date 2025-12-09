@@ -148,6 +148,7 @@ trait FaciaController
 
   def renderFront(path: String): Action[AnyContent] =
     Action.async { implicit request =>
+      logInfoWithRequestId("renderFront called with path: " + path)
       if (shouldEditionRedirect(path))
         redirectTo(Editionalise(path, Edition(request)))
       else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined) {
