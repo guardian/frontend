@@ -118,7 +118,7 @@ class IdApiTest
       when(wsResponseMock.statusText).thenReturn("OK")
 
       whenReady(idApi.authBrowser(Anonymous, trackingParameters)) {
-        case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+        case Left(result)           => fail("Got Left(%s), instead of expected Right".format(result.toString()))
         case Right(cookiesResponse) => {
           cookiesResponse.expiresAt must equal(
             ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2018-01-08T15:49:19+00:00"),
@@ -137,7 +137,7 @@ class IdApiTest
       when(wsResponseMock.statusText).thenReturn("Forbidden")
 
       whenReady(idApi.authBrowser(Anonymous, trackingParameters)) {
-        case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
+        case Right(result)        => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(responseErrors) => {
           responseErrors must equal(errors)
         }
@@ -153,7 +153,7 @@ class IdApiTest
 
       whenReady(idApi.user(testUserId)) {
         case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-        case Right(user) => {
+        case Right(user)  => {
           user must have(Symbol("id")(testUserId))
           user.publicFields must have(Symbol("username")(Some("testUsername")))
           user.primaryEmailAddress mustEqual "test@example.com"

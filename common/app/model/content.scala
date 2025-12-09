@@ -163,7 +163,7 @@ final case class Content(
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
 
     () match {
-      case paid if isPaidContent => Paid
+      case paid if isPaidContent                                   => Paid
       case oldcommentObserver if isOldOpinion && isFromTheObserver =>
         CommentObserverOldContent(trail.webPublicationDate.getYear)
       case oldComment if isOldOpinion => CommentGuardianOldContent(trail.webPublicationDate.getYear)
@@ -334,7 +334,7 @@ final case class Content(
     } else Nil
 
     val seriesMeta = tags.series.filterNot { _.id == "commentisfree/commentisfree" } match {
-      case Nil => Nil
+      case Nil                         => Nil
       case allTags @ (mainSeries :: _) =>
         List(
           Some("series", JsString(mainSeries.name)),

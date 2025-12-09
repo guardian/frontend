@@ -39,7 +39,7 @@ object Front {
         accumulation: Vector[FaciaContainer] = Vector.empty,
     ): Seq[FaciaContainer] = {
       allConfigs.toList match {
-        case Nil => accumulation
+        case Nil                                                   => accumulation
         case ((config, collection), container) :: remainingConfigs =>
           val newItems = collection.items.distinctBy(_.header.url)
           val layoutMaybe = ContainerLayout.fromContainer(container, context, config, newItems, hasMore = false)
@@ -77,7 +77,7 @@ object Front {
     ): Seq[FaciaContainer] = {
 
       collections match {
-        case Nil => accumulation
+        case Nil                                              => accumulation
         case pressedCollection :: remainingPressedCollections =>
           val container: Container = Container.fromPressedCollection(pressedCollection, adFree)
           val newItems = pressedCollection.distinct

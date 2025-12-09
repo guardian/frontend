@@ -32,7 +32,7 @@ import scala.util.Random
     val path = s"/path/${Random.alphanumeric.take(12).mkString}"
     statusCode match {
       case 200 => HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
-      case _ =>
+      case _   =>
         HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), date, expiration)
     }
   }
