@@ -306,7 +306,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
     val timeout = getTimeout
-    post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia, timeout)
+    post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime(10), timeout)
   }
 
   def getTagPage(
