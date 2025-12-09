@@ -133,7 +133,7 @@ object DotcomTagPagesRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       contributionsServiceUrl = Configuration.contributionsService.url,
-      tagPageAIContent = TagPageAIContent.getContent(page.metadata.id),
+      tagPageAIContent = TagPageAIContent.getContent(page.metadata.id)(request),
     )
   }
 
