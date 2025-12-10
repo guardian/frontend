@@ -1,7 +1,7 @@
 @import common.dfp.GuLineItem
 @import tools.DfpLink
 
-@(timestamp: String, groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(timestamp: String, commDevLineItems: Seq[(String, Seq[GuLineItem])], groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Ad Tests", isAuthed = true) {
 
@@ -11,16 +11,40 @@
 <p>Last updated: @timestamp</p>
 <p>This page shows ready and delivering line items that are hidden behind a test cookie.</p >
 
+<h2>CommDev Test Order Line Items</h2>
 <table>
-    <thead><tr><th>Cookie</th><th>Line items</th></tr></thead>
+    <thead><tr><th class="cookie">Cookie</th><th>Line items</th></tr></thead>
+    <tbody>
+    @for((testValue, lineItems) <- commDevLineItems) {
+        <tr id="cookie-@testValue" class="cookie-row">
+            <td class="cookie"><code>@testValue</code></td>
+            <td>
+            @for(lineItem <- lineItems) {
+                @{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>)
+                <br />
+            }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h2>Line Items</h2>
+<table>
+    <thead>
+        <tr>
+            <th class="cookie">Cookie</th>
+            <th>Line items</th>
+        </tr>
+    </thead>
     <tbody>
     @for((testValue, lineItems) <- groupedLineItems) {
         <tr id="cookie-@testValue" class="cookie-row">
-            <td align="right" valign="top"><button value="@testValue" class="cookie">@testValue</button></td>
+            <td class="cookie"><code>@testValue</code></td>
             <td>
             @for(lineItem <- lineItems) {
-                @{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)">@{lineItem.id}</a>
-                )<br />
+                @{lineItem.name} (<a href="@DfpLink.lineItem(lineItem.id)" target="_blank">@{lineItem.id}</a>)
+                <br />
             }
             </td>
         </tr>
