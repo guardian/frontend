@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.38.6"
-  val capiVersion = "39.0.0"
-  val faciaVersion = "26.0.0"
+  val capiVersion = "40.0.0"
+  val faciaVersion = "27.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -29,7 +29,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.21.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "33.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "34.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -89,7 +89,7 @@ object Dependencies {
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.1"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.5"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
