@@ -285,7 +285,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     if (Configuration.environment.stage == "DEV")
       Configuration.rendering.timeout * 5
     else
-      Configuration.rendering.timeout
+      Configuration.rendering.timeout * 2
   }
 
   def getFront(
