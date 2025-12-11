@@ -56,6 +56,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
+  private[this] val circuitBreakerLongTimeout = CircuitBreakerRegistry.withConfig(
+    name = "dotcom-rendering-client-long-timeout",
+    system = PekkoActorSystem("dotcom-rendering-client-circuit-breaker-long-timeout"),
+    maxFailures = Configuration.rendering.circuitBreakerMaxFailures,
+    callTimeout = (Configuration.rendering.timeout * 2).plus(200.millis),
+    resetTimeout = Configuration.rendering.timeout * 4,
+  )
+
   private[this] def postWithoutHandler(
       ws: WSClient,
       payload: JsValue,
@@ -140,7 +148,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerDcrSwitch.isSwitchedOn) {
-      circuitBreaker
+      val breaker = if (timeout > Configuration.rendering.timeout) circuitBreakerLongTimeout else circuitBreaker
+      breaker
         .withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, requestId, timeout))
         .map(handler)
     } else {
