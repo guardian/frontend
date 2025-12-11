@@ -306,10 +306,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    val timeout = if (Configuration.environment.stage == "DEV")
-      Configuration.rendering.timeout * 5
-    else
-      Configuration.rendering.timeout * 2
+    val timeout =
+      if (Configuration.environment.stage == "DEV")
+        Configuration.rendering.timeout * 5
+      else
+        Configuration.rendering.timeout * 2
     post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia, timeout)
   }
 
