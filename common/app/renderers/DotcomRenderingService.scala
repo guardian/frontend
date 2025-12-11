@@ -290,13 +290,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       })
   }
 
-  private def getTimeout: Duration = {
-    if (Configuration.environment.stage == "DEV")
-      Configuration.rendering.timeout * 5
-    else
-      Configuration.rendering.timeout * 2
-  }
-
   def getFront(
       ws: WSClient,
       page: PressedPage,
@@ -313,7 +306,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    val timeout = getTimeout
+    val timeout = if (Configuration.environment.stage == "DEV")
+      Configuration.rendering.timeout * 5
+    else
+      Configuration.rendering.timeout * 2
     post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia, timeout)
   }
 
