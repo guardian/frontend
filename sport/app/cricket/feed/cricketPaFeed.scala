@@ -37,7 +37,7 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
             .map { response =>
               response.status match {
                 case 200 => response.body
-                case _ =>
+                case _   =>
                   val error = s"PA endpoint returned: ${response.status}, $endpoint"
                   log.warn(error)
                   throw CricketFeedException(error)

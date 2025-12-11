@@ -23,7 +23,7 @@ object SupportedUrl {
             .map(_.replaceFirst("^https?://www.theguardian.com/", ""))
             .orElse(supportingCuratedContent.properties.href)
             .getOrElse(supportingCuratedContent.card.id)}"
-      case linkSnap: LinkSnap => linkSnap.properties.href.getOrElse(linkSnap.card.id)
+      case linkSnap: LinkSnap     => linkSnap.properties.href.getOrElse(linkSnap.card.id)
       case latestSnap: LatestSnap =>
         latestSnap.properties.maybeContent
           .map(content => s"/${content.metadata.id}")

@@ -60,7 +60,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
       case p: MediaPage        => mediaOrAudioBody(p)
       case p: TodayNewspaper   => newspaperContent(p)
       case p: QuizAnswersPage  => quizAnswerContent(p)
-      case unsupported =>
+      case unsupported         =>
         throw new RuntimeException(
           s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}",
         )

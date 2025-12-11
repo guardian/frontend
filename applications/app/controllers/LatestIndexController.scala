@@ -25,7 +25,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
             index.page match {
               case tag: Tag if tag.isSeries || tag.isBlog => handleSeriesBlogs(index)
               case tag: Tag                               => MovedPermanently(s"${tag.metadata.url}/all")
-              case section: Section =>
+              case section: Section                       =>
                 val url =
                   if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url)
                   else section.metadata.url

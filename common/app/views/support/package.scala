@@ -239,7 +239,7 @@ object RenderOtherStatus {
     result.header.status match {
       case 404                   => NoCache(NotFound)
       case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-      case 410 =>
+      case 410                   =>
         Cached(60)(
           WithoutRevalidationResult(
             Gone(

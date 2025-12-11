@@ -20,7 +20,7 @@ object LiveBlogCurrentPage {
       filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
     range match {
-      case CanonicalLiveBlog => firstPage(pageSize, blocks, filterKeyEvents)
+      case CanonicalLiveBlog               => firstPage(pageSize, blocks, filterKeyEvents)
       case PageWithBlock(isRequestedBlock) =>
         findPageWithBlock(pageSize, blocks.body, isRequestedBlock, filterKeyEvents)
       case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId), filterKeyEvents)

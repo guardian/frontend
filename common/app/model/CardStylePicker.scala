@@ -37,7 +37,7 @@ object CardStylePicker {
 
   def getCampaignType(campaigns: Seq[Campaign]): CampaignType = {
     campaigns match {
-      case Nil => OtherCampaign
+      case Nil          => OtherCampaign
       case head :: tail =>
         head.fields match {
           case ReportFields(campaignId) =>

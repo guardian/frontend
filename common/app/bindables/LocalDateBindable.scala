@@ -14,7 +14,7 @@ class LocalDateBindable extends PathBindable[LocalDate] with GuLogging {
     Try {
       Option(LocalDate.parse(value, DateTimeFormat.forPattern(Format))).get
     } match {
-      case Success(date) => Right(date)
+      case Success(date)  => Right(date)
       case Failure(error) =>
         log.error(s"Could not bind $key to $value", error)
         Left(error.getMessage)

@@ -42,7 +42,7 @@ class JsonBodyParserTest extends PathAnyFreeSpec with Matchers {
       TestJsonBodyParser.extract[TestType]()(Right(validJSONResponse)) match {
         case Left(result) => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
         case Right(testObject: TestType) => testObject should have(Symbol("test")("value"))
-        case Right(result) =>
+        case Right(result)               =>
           fail("extract did not return a Right of the required type, got a %s".format(result.getClass.getName))
       }
     }

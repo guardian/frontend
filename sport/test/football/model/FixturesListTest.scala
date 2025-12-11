@@ -225,7 +225,7 @@ import java.time.format.DateTimeFormatter
   }
 
   def checkIsFixture: Function1[(FootballMatch, Competition), Unit] = {
-    case (fMatch: Fixture, _) =>
+    case (fMatch: Fixture, _)  =>
     case (fMatch: MatchDay, _) =>
       if ("-" != fMatch.matchStatus) fail(s"$fMatch is not a fixture (status is ${fMatch.matchStatus})")
     case (fMatch, _) => fail(s"$fMatch was not a fixture")

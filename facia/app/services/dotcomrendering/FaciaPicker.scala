@@ -77,7 +77,7 @@ object FrontChecks {
     def containsUnsupportedSnapLink(collection: PressedCollection) = {
       collection.curated.exists(card =>
         card match {
-          case card: LinkSnap if card.properties.embedType.contains("link") => false
+          case card: LinkSnap if card.properties.embedType.contains("link")        => false
           case card: LinkSnap if card.properties.embedType.contains("interactive") =>
             card.properties.embedUri.exists(UNSUPPORTED_THRASHERS.contains)
           case card: LinkSnap if card.properties.embedType.contains("json.html") =>

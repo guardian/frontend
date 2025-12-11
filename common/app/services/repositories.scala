@@ -74,7 +74,7 @@ trait Index extends ConciergeRepository {
       .map { response =>
         val trails = response.results.map(IndexPageItem(_)).toList
         trails match {
-          case Nil => Left(NotFound)
+          case Nil       => Left(NotFound)
           case head :: _ =>
             val tag1 = findTag(head.item, firstTag)
             val tag2 = findTag(head.item, secondTag)

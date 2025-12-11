@@ -21,9 +21,9 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
         val additionalInfo =
           response.header.headers.get("X-Accel-Redirect") match {
             case Some(internalRedirect) => s" - internal redirect to $internalRedirect"
-            case None =>
+            case None                   =>
               response.header.status match {
-                case 304 => " - 304 Not Modified"
+                case 304                           => " - 304 Not Modified"
                 case status if (status / 100) == 3 =>
                   s" - external redirect to ${response.header.headers.getOrElse("Location", "[location not found]")}"
                 case _ => ""

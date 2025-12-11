@@ -62,7 +62,7 @@ class MostPopularController(
         mostPopular match {
           case Nil                         => NotFound
           case popular if request.forceDCR => jsonResponse(popular)
-          case popular if !request.isJson =>
+          case popular if !request.isJson  =>
             Cached(900) {
               RevalidatableResult.Ok(views.html.mostPopular(page, popular))
             }

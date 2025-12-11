@@ -313,11 +313,11 @@ object ItemKickerFormat {
 
     def writes(itemKicker: ItemKicker): JsObject =
       itemKicker match {
-        case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
-        case LiveKicker         => JsObject(Seq("type" -> JsString("LiveKicker")))
-        case AnalysisKicker     => JsObject(Seq("type" -> JsString("AnalysisKicker")))
-        case ReviewKicker       => JsObject(Seq("type" -> JsString("ReviewKicker")))
-        case CartoonKicker      => JsObject(Seq("type" -> JsString("CartoonKicker")))
+        case BreakingNewsKicker           => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
+        case LiveKicker                   => JsObject(Seq("type" -> JsString("LiveKicker")))
+        case AnalysisKicker               => JsObject(Seq("type" -> JsString("AnalysisKicker")))
+        case ReviewKicker                 => JsObject(Seq("type" -> JsString("ReviewKicker")))
+        case CartoonKicker                => JsObject(Seq("type" -> JsString("CartoonKicker")))
         case podcastKicker: PodcastKicker =>
           JsObject(
             Seq("type" -> JsString("PodcastKicker"), "series" -> Json.toJson(podcastKicker)(podcastKickerFormat)),

@@ -38,7 +38,7 @@ class TablesController(val wsClient: WSClient, val controllerComponents: Control
       val url = submission.get("focus").get.head match {
         case "top"    => s"/admin/football/tables/league/$competitionId/top"
         case "bottom" => s"/admin/football/tables/league/$competitionId/bottom"
-        case "team" =>
+        case "team"   =>
           val teamId = submission.get("teamId").get.head
           submission.get("team2Id") match {
             case Some(Seq(team2Id)) if !team2Id.startsWith("Choose") =>
@@ -66,9 +66,9 @@ class TablesController(val wsClient: WSClient, val controllerComponents: Control
         ) { season =>
           client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
             val entries = focus match {
-              case "top"    => tableEntries.take(5)
-              case "bottom" => tableEntries.takeRight(5)
-              case "none"   => tableEntries
+              case "top"                               => tableEntries.take(5)
+              case "bottom"                            => tableEntries.takeRight(5)
+              case "none"                              => tableEntries
               case group if group.startsWith("group-") =>
                 tableEntries.filter(_.round.name.fold(false)(_.toLowerCase.replace(' ', '-') == group))
               case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)

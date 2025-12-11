@@ -40,7 +40,7 @@ object SliceWithCards {
     ): Seq[ColumnAndCards] = {
 
       columns match {
-        case Nil => accumulation
+        case Nil                        => accumulation
         case column :: remainingColumns =>
           val (itemsForColumn, itemsNotConsumed) = items splitAt column.numItems
 

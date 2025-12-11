@@ -130,7 +130,7 @@ object GuardianConfiguration extends GuLogging {
       Try(get(property)) match {
         case Success(value)                      => Some(value)
         case Failure(_: ConfigException.Missing) => None
-        case Failure(e) =>
+        case Failure(e)                          =>
           log.error(s"couldn't retrieve $property", e)
           None
       }

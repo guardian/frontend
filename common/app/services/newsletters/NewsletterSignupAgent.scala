@@ -26,7 +26,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   def getNewsletterById(listId: Int): Either[String, Option[NewsletterResponse]] = {
     newslettersAgent.get() match {
-      case Left(err) => Left(err)
+      case Left(err)          => Left(err)
       case Right(newsletters) =>
         Right(
           newsletters.find(newsletter => newsletter.listId == listId || newsletter.listIdV1 == listId),
@@ -43,7 +43,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   def getV2NewsletterById(listId: Int): Either[String, Option[NewsletterResponseV2]] = {
     newslettersV2Agent.get() match {
-      case Left(err) => Left(err)
+      case Left(err)          => Left(err)
       case Right(newsletters) =>
         Right(
           newsletters.find(newsletter => newsletter.listId == listId),
