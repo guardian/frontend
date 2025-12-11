@@ -32,11 +32,15 @@ const logFail = (msg) => console.log(`\x1b[31m✗\x1b[0m ${msg}`);
 
 const checkNodeEnv = async () => {
 	// check node
-	const nvmrcVersion = fs
-		.readFileSync(path.join(__dirname, '../', '.nvmrc'), 'utf8')
-		.trim();
-	await checkVersion('node', nvmrcVersion);
-	logSuccess(`Node ${nvmrcVersion}`);
+	const requiredNodeVersion = fs
+		.readFileSync(path.join(__dirname, '../', '.tool-versions'), 'utf8')
+        .split('\n')
+        .find(line => line.startsWith("node"))
+        .split(' ')[1]
+        .trim()
+
+	await checkVersion('node', requiredNodeVersion);
+	logSuccess(`Node ${requiredNodeVersion}`);
 
 	// check yarn
 	childProcess.exec('yarn --version', async (e, version) => {
