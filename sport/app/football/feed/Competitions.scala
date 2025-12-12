@@ -126,14 +126,13 @@ object CompetitionsProvider {
   val allCompetitions: Seq[Competition] = Seq(
     Competition(
       "700",
-      "/football/world-cup-2022",
-      "World Cup 2022",
-      "World Cup 2022",
+      "/football/world-cup-2026",
+      "World Cup 2026",
+      "World Cup 2026",
       "Internationals",
       showInTeamsList = true,
       tableDividers = List(2),
-      startDate = Some(LocalDate.of(2022, 11, 1)),
-      finalMatchSVG = Some("world_cup_2022_badge"),
+      startDate = Some(LocalDate.of(2025, 12, 2)),
     ),
     Competition(
       "423",
