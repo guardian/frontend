@@ -26,4 +26,15 @@ trait ABTestSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  Switch(
+    ABTests,
+    "ab-onward-journeys",
+    "Testing the new gallery Onward Journey component on all articles",
+    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(2026, 7, 23)),
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
