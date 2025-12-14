@@ -13,7 +13,7 @@ import play.api.mvc.{Filter, RequestHeader}
 
 // this mirrors the structure in the tool generating the content
 // https://github.com/guardian/tag-page-supercharger/blob/main/app/models/FrontendContent.scala#L18
-case class TagPageAIContent(
+case class StorylinesContent(
     created: Instant,
     tag: String,
     storylines: List[Storyline],
@@ -136,27 +136,27 @@ object ArticleData {
 
 }
 
-object TagPageAIContent extends GuLogging {
-  implicit val tpsgContentDecoder: Decoder[TagPageAIContent] = deriveDecoder
-  implicit val tpsgContentEncoder: Encoder[TagPageAIContent] = deriveEncoder
-  implicit val tpsgWrites: Writes[TagPageAIContent] = Json.writes[TagPageAIContent]
+object StorylinesContent extends GuLogging {
+  implicit val tpsgContentDecoder: Decoder[StorylinesContent] = deriveDecoder
+  implicit val tpsgContentEncoder: Encoder[StorylinesContent] = deriveEncoder
+  implicit val tpsgWrites: Writes[StorylinesContent] = Json.writes[StorylinesContent]
 
-  def getContent(tag: String)(implicit rh: RequestHeader): Option[TagPageAIContent] = {
+  def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
     if (ActiveExperiments.isParticipating(AITagPageContent)) {
       lazy val stage: String = Configuration.facia.stage.toUpperCase
       val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
       val location = s"$stage/tag-page-ai-data/$encodedTag.json"
-      val maybeTagPageAIContent = S3.get(location).map { jsonString =>
-        io.circe.parser.decode[TagPageAIContent](jsonString) match {
+      val maybeStorylinesContent = S3.get(location).map { jsonString =>
+        io.circe.parser.decode[StorylinesContent](jsonString) match {
           case Right(content) => Some(content)
           case Left(error) =>
-            log.error(s"Error decoding TPSGContent for tag $tag: $error")
+            log.error(s"Error decoding Storylines Content for tag $tag: $error")
             None
         }
       }
-      maybeTagPageAIContent match {
+      maybeStorylinesContent match {
         case Some(content) => content
-        case None          => log.error("TPSGContent not found for tag: " + tag); None
+        case None          => log.error("Storylines Content not found for tag: " + tag); None
       }
     } else {
       None
