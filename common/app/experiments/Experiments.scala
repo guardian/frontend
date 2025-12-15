@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     Set(
       DarkModeWeb,
       GoogleOneTap,
-      LabsRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -25,15 +24,6 @@ object GoogleOneTap
       owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
       sellByDate = LocalDate.of(2026, 2, 2),
       participationGroup = Perc0B,
-    )
-
-object LabsRedesign
-    extends Experiment(
-      name = "labs-redesign",
-      description = "Allows opting in to preview the Guardian Labs redesign work",
-      owners = Seq(Owner.withEmail("commercial.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2025, 12, 16),
-      participationGroup = Perc0C,
     )
 
 object DarkModeWeb
