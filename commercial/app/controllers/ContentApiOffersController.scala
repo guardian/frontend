@@ -59,7 +59,7 @@ class ContentApiOffersController(
   private def renderNative(isMulti: Boolean) =
     Action.async { implicit request =>
       retrieveContent().map {
-        case Nil => Cached(componentNilMaxAge) { jsonFormat.nilResult }
+        case Nil                => Cached(componentNilMaxAge) { jsonFormat.nilResult }
         case content if isMulti =>
           Cached(1.hour) {
             JsonComponent.fromWritable(CapiMultiple.fromContent(content, Edition(request)))

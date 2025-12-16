@@ -55,7 +55,7 @@ class MembersDataApiService(wsClient: WSClient, config: conf.IdentityConfigurati
           case 200 =>
             (response.json \ "contentAccess").validate[ContentAccess] match {
               case JsSuccess(contentAccess, _) => Right(contentAccess)
-              case error =>
+              case error                       =>
                 val errorMsg = s"Failed to parse MDAPI response: $error"
                 logger.error(errorMsg)
                 Left(MdapiServiceException(errorMsg))

@@ -334,7 +334,7 @@ object DotcomRenderingUtils {
   ): Option[OnwardCollectionResponse] = {
     faciaItems match {
       case Nil => None
-      case _ =>
+      case _   =>
         Some(
           OnwardCollectionResponse(
             heading = "More on this story",

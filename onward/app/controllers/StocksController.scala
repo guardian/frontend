@@ -16,7 +16,7 @@ class StocksController(stocksData: StocksData, val controllerComponents: Control
         Cached(1.minute)(JsonComponent.fromWritable(Stocks(Seq.empty)))
       } else {
         stocksData.get match {
-          case None => InternalServerError("Business data not loaded")
+          case None         => InternalServerError("Business data not loaded")
           case Some(stocks) =>
             Cached(1.minute)(JsonComponent.fromWritable(stocks))
         }
