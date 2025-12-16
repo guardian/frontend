@@ -8,7 +8,7 @@ import play.api.libs.json.{Json, Writes}
 import services.S3
 
 import java.time.Instant
-import experiments.{AITagPageContent, ActiveExperiments}
+import experiments.{TagPageStorylines, ActiveExperiments}
 import play.api.mvc.{Filter, RequestHeader}
 
 // this mirrors the structure in the tool generating the content
@@ -142,7 +142,7 @@ object StorylinesContent extends GuLogging {
   implicit val tpsgWrites: Writes[StorylinesContent] = Json.writes[StorylinesContent]
 
   def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
-    if (ActiveExperiments.isParticipating(AITagPageContent)) {
+    if (ActiveExperiments.isParticipating(TagPageStorylines)) {
       lazy val stage: String = Configuration.facia.stage.toUpperCase
       val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
       val location = s"$stage/tag-page-ai-data/$encodedTag.json"
