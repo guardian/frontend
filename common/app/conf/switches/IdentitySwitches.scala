@@ -15,11 +15,11 @@ trait IdentitySwitches {
     highImpact = false,
   )
 
-  val consentOrPayEurope = Switch(
+  val GoogleOneTapSwitch = Switch(
     SwitchGroup.Identity,
-    "consent-or-pay-europe",
-    "Releasing Consent or Pay to Europe",
-    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    "google-one-tap-switch",
+    "Signing into the Guardian with Google One Tap",
+    owners = Seq(Owner.withEmail("identity.dev@theguardian.com")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,

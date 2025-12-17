@@ -88,6 +88,7 @@ case class NxMatchData(
     comments: String,
     minByMinUrl: Option[String],
     reportUrl: Option[String],
+    status: String,
 ) extends NxAnswer
 
 object NxAnswer {
@@ -160,6 +161,7 @@ object NxAnswer {
       competition: Option[Competition],
       isResult: Boolean,
       isLive: Boolean,
+      matchStatus: String,
   ): NxMatchData = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
     NxMatchData(
@@ -173,6 +175,7 @@ object NxAnswer {
       comments = theMatch.comments.getOrElse(""),
       minByMinUrl = makeMinByMinUrl(request, theMatch, related),
       reportUrl = makeMatchReportUrl(request, theMatch, related),
+      status = matchStatus,
     )
   }
 
@@ -275,6 +278,7 @@ class MoreOnMatchController(
                     competition,
                     theMatch.isResult,
                     theMatch.isLive,
+                    theMatch.matchStatus,
                   ),
                 )
               }

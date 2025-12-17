@@ -1,19 +1,18 @@
 package http
 
-import com.amazonaws.regions.Regions
-import software.amazon.awssdk.core.sync.ResponseTransformer
-import software.amazon.awssdk.services.s3.S3Client
 import com.gu.pandomainauth.action.AuthActions
-import com.gu.pandomainauth.model.AuthenticatedUser
+import com.gu.pandomainauth.model.{AuthenticatedUser, User}
 import com.gu.pandomainauth.{PanDomain, PanDomainAuthSettingsRefresher, S3BucketLoader}
 import com.gu.permissions.{PermissionDefinition, PermissionsConfig, PermissionsProvider}
 import common.Environment.stage
-import conf.Configuration.aws.mandatoryCredentials
 import model.ApplicationContext
 import org.apache.pekko.stream.Materializer
 import play.api.Mode
 import play.api.libs.ws.WSClient
 import play.api.mvc._
+import software.amazon.awssdk.regions.Region.EU_WEST_1
+import software.amazon.awssdk.services.s3.S3Client
+import utils.AWSv2
 
 import java.net.URL
 import scala.concurrent.Future
@@ -27,6 +26,7 @@ class GuardianAuthWithExemptions(
     system: String,
     extraDoNotAuthenticatePathPrefixes: Seq[String],
     requiredEditorialPermissionName: String,
+    customPandaAuth: Option[CustomPanDomainAuth] = None,
 )(implicit
     val mat: Materializer,
     context: ApplicationContext,
@@ -38,8 +38,8 @@ class GuardianAuthWithExemptions(
   private val permissions: PermissionsProvider = PermissionsProvider(
     PermissionsConfig(
       stage = if (stage == "PROD") "PROD" else "CODE",
-      region = Regions.EU_WEST_1.getName,
-      awsCredentials = mandatoryCredentials,
+      region = EU_WEST_1.toString,
+      awsCredentials = AWSv2.credentials,
     ),
   )
 
@@ -58,13 +58,7 @@ class GuardianAuthWithExemptions(
   override lazy val panDomainSettings = PanDomainAuthSettingsRefresher(
     domain = toolsDomainSuffix,
     system,
-    new S3BucketLoader {
-      def inputStreamFetching(key: String) =
-        s3Client.getObject(
-          _.bucket("pan-domain-auth-settings").key(key),
-          ResponseTransformer.toInputStream(),
-        )
-    },
+    S3BucketLoader.forAwsSdkV2(s3Client, "pan-domain-auth-settings"),
   )
 
   override def authCallbackUrl = s"https://$toolsDomainPrefix.$toolsDomainSuffix$oauthCallbackPath"
@@ -98,22 +92,24 @@ class GuardianAuthWithExemptions(
         ) ++ extraDoNotAuthenticatePathPrefixes).exists(request.path.startsWith)
 
     def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
-      if (doNotAuthenticate(request)) {
-        nextFilter(request)
-      } else {
-        AuthAction.authenticateRequest(request) { user =>
-          if (permissions.hasPermission(requiredPermission, user.email)) {
-            nextFilter(request)
-          } else {
-            Future.successful(
-              Results.Forbidden(
-                s"You do not have permission to access $system. " +
-                  s"You should contact Central Production to request '$requiredEditorialPermissionName' permission.",
-              ),
-            )
-          }
+      def authoriseUser(user: User): Future[Result] =
+        if (permissions.hasPermission(requiredPermission, user.email)) {
+          nextFilter(request)
+        } else {
+          Future.successful(
+            Results.Forbidden(
+              s"You do not have permission to access $system." +
+                s"You should contact Central Production to request '$requiredEditorialPermissionName' permission.",
+            ),
+          )
         }
-      }
+
+      if (doNotAuthenticate(request)) nextFilter(request)
+      else
+        customPandaAuth
+          .filter(_.appliesTo(request))
+          .map(_.authenticateRequest(request)(authoriseUser))
+          .getOrElse(AuthAction.authenticateRequest(request)(authoriseUser))
     }
   }
 }

@@ -10,5 +10,5 @@ export const concurrentTests: readonly ABTest[] = [
 	signInGateMainVariant,
 	signInGateMainControl,
 	remoteRRHeaderLinksTest,
-	auxiaSignInGate
+	auxiaSignInGate,
 ];

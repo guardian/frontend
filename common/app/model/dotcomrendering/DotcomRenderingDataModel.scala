@@ -1,5 +1,6 @@
 package model.dotcomrendering
 
+import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
@@ -10,8 +11,8 @@ import conf.Configuration
 import crosswords.CrosswordPageWithContent
 import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
-import model.dotcomrendering.pageElements.{AudioBlockElement, ImageBlockElement, PageElement, Role, TextCleaner}
-import model.liveblog.BlockAttributes
+import model.dotcomrendering.pageElements._
+import model.meta.BlocksOn
 import model.{
   ArticleDateTimes,
   Badges,
@@ -36,7 +37,6 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import services.NewsletterData
 import views.support.{CamelCase, ContentLayout, JavaScriptPage}
-import ab.ABTests
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -204,13 +204,13 @@ object DotcomRenderingDataModel {
   }
 
   def forInteractive(
-      page: InteractivePage,
-      blocks: APIBlocks,
+      pageBlocks: BlocksOn[InteractivePage],
       request: RequestHeader,
       pageType: PageType,
   ): DotcomRenderingDataModel = {
     val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
-
+    val page = pageBlocks.page
+    val blocks = pageBlocks.blocks
     apply(
       page = page,
       request = request,
@@ -232,8 +232,7 @@ object DotcomRenderingDataModel {
   }
 
   def forArticle(
-      page: PageWithStoryPackage, // for now, any non-liveblog page type
-      blocks: APIBlocks,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
       request: RequestHeader,
       pageType: PageType,
       newsletter: Option[NewsletterData],
@@ -241,21 +240,21 @@ object DotcomRenderingDataModel {
     val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
     val linkedData =
       LinkedData.forArticle(
-        article = page.article,
+        article = pageBlocks.page.article,
         baseURL = baseUrl,
         fallbackLogo = Configuration.images.fallbackLogo,
       )
 
     apply(
-      page = page,
+      page = pageBlocks.page,
       request = request,
       pagination = None,
       linkedData = linkedData,
-      mainBlock = blocks.main,
-      bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
+      mainBlock = pageBlocks.blocks.main,
+      bodyBlocks = pageBlocks.blocks.body.getOrElse(Nil).toSeq,
       pageType = pageType,
-      hasStoryPackage = page.related.hasStoryPackage,
-      storyPackage = getStoryPackage(page.related.faciaItems, request),
+      hasStoryPackage = pageBlocks.page.related.hasStoryPackage,
+      storyPackage = getStoryPackage(pageBlocks.page.related.faciaItems, request),
       pinnedPost = None,
       keyEvents = Nil,
       newsletter = newsletter,
@@ -372,14 +371,14 @@ object DotcomRenderingDataModel {
   }
 
   def forLiveblog(
-      page: LiveBlogPage,
-      blocks: APIBlocks,
+      pageBlocks: BlocksOn[LiveBlogPage],
       request: RequestHeader,
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean,
       newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
+    val page = pageBlocks.page
     val pagination = page.currentPage.pagination.map(paginationInfo => {
       Pagination(
         currentPage = page.currentPage.currentPage.pageNumber,
@@ -391,8 +390,9 @@ object DotcomRenderingDataModel {
       )
     })
 
-    val bodyBlocks = blocksForLiveblogPage(page, blocks, filterKeyEvents).map(ensureSummaryTitle)
+    val bodyBlocks = blocksForLiveblogPage(pageBlocks, filterKeyEvents).map(ensureSummaryTitle)
 
+    val blocks = pageBlocks.blocks
     val allTimelineBlocks = blocks.body match {
       case Some(allBlocks) if allBlocks.nonEmpty =>
         allBlocks.filter(block => block.attributes.keyEvent.contains(true) || block.attributes.summary.contains(true))

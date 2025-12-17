@@ -255,6 +255,7 @@ object PressedContentFormat {
   implicit val imageMediaFormat: OFormat[ImageMedia] = Json.format[ImageMedia]
   implicit val videoMediaFormat: OFormat[VideoMedia] = Json.format[VideoMedia]
   implicit val videoElementFormat: OFormat[VideoElement] = Json.format[VideoElement]
+  implicit val assetDimensionsFormat: OFormat[AssetDimensions] = Json.format[AssetDimensions]
   implicit val mediaAssetFormat: OFormat[MediaAsset] = Json.format[MediaAsset]
   implicit val mediaAtomFormat: OFormat[MediaAtom] = Json.format[MediaAtom]
   implicit val mediaTypeFormat: MediaTypeFormat.type = MediaTypeFormat
@@ -312,11 +313,11 @@ object ItemKickerFormat {
 
     def writes(itemKicker: ItemKicker): JsObject =
       itemKicker match {
-        case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
-        case LiveKicker         => JsObject(Seq("type" -> JsString("LiveKicker")))
-        case AnalysisKicker     => JsObject(Seq("type" -> JsString("AnalysisKicker")))
-        case ReviewKicker       => JsObject(Seq("type" -> JsString("ReviewKicker")))
-        case CartoonKicker      => JsObject(Seq("type" -> JsString("CartoonKicker")))
+        case BreakingNewsKicker           => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
+        case LiveKicker                   => JsObject(Seq("type" -> JsString("LiveKicker")))
+        case AnalysisKicker               => JsObject(Seq("type" -> JsString("AnalysisKicker")))
+        case ReviewKicker                 => JsObject(Seq("type" -> JsString("ReviewKicker")))
+        case CartoonKicker                => JsObject(Seq("type" -> JsString("CartoonKicker")))
         case podcastKicker: PodcastKicker =>
           JsObject(
             Seq("type" -> JsString("PodcastKicker"), "series" -> Json.toJson(podcastKicker)(podcastKickerFormat)),

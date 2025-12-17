@@ -7,6 +7,9 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        controllers.HealthCheck.healthCheck()
 
+# Returns a page to pre-warm assets for the WebView cache on iOS
+GET        /dcar-assets/rendered-items-assets                                   controllers.DCARAssetsController.renderAsset()
+
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
 
@@ -17,11 +20,11 @@ GET        /survey/:formName/show                                               
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
-GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend|mini>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
 GET        /crosswords/search                                                                                                controllers.CrosswordSearchController.search()

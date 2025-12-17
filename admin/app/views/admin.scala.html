@@ -14,8 +14,8 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked nav-bleed">
-                        <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
-                        <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
+                    <li><a href="@controllers.admin.routes.AnalyticsController.legacyAbTests()">A/B Tests</a></li>
+                        <li><a href="@controllers.admin.routes.AnalyticsController.abTests()">Beta A/B Test Framework Tests</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,8 +55,6 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked nav-bleed">
-                        <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
-                        <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
                         <li>
                             <a href="@controllers.admin.routes.MetricsController.renderErrors()">Errors</a>
                             <ul class="nav nav-pills nav-stacked nav-bleed">

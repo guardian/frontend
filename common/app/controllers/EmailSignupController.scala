@@ -458,7 +458,7 @@ class EmailSignupController(
       for {
         token <- googleRecaptchaResponse match {
           case Some(token) => Future.successful(token)
-          case None =>
+          case None        =>
             RecaptchaMissingTokenError.increment()
             Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
         }

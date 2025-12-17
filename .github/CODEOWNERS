@@ -7,5 +7,5 @@
 /static/src/javascripts/projects/commercial/ @guardian/commercial-dev
 /commercial/ @guardian/commercial-dev
 
-# Targeted Experiences (TX)
-/static/src/javascripts/projects/common/modules/commercial/braze @guardian/tx-engineers
+# Value (Supporter Revenue)
+/static/src/javascripts/projects/common/modules/commercial/braze @guardian/value

@@ -32,7 +32,7 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.16",
+    scalaVersion := "2.13.18",
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
@@ -60,7 +60,8 @@ object ProjectSettings {
   }
 
   val frontendTestSettings = Seq(
-    Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o"),
+    Test / testOptions += Tests
+      .Argument(TestFrameworks.ScalaTest, "-u", s"test-results/scala-${scalaVersion.value}", "-o"),
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     Test / unmanagedClasspath += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
@@ -130,12 +131,6 @@ object ProjectSettings {
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(commonsIo))
   }
-
-  def filterAssets(testAssets: Seq[(File, String)]): Seq[(File, String)] =
-    testAssets.filterNot { case (_, fileName) =>
-      // built in sbt plugins did not like the bower files
-      fileName.endsWith("bower.json")
-    }
 
   def withTests(project: Project): ClasspathDep[ProjectReference] =
     project % "test->test;compile->compile"

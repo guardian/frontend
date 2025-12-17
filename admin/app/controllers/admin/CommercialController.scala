@@ -66,10 +66,19 @@ class CommercialController(
   def renderAdTests: Action[AnyContent] =
     Action { implicit request =>
       val report = Store.getDfpLineItemsReport()
+      val commDevTestOrderId = 3093057300L
+      val (commDevLineItems, lineItems) = report.lineItems partition (_.orderId == commDevTestOrderId)
 
-      val lineItemsByAdTest = report.lineItems
-        .filter(_.targeting.hasAdTestTargetting)
-        .groupBy(_.targeting.adTestValue.get)
+      def groupByAdTest(lineItems: Seq[GuLineItem]) = {
+        lineItems
+          .filter(_.targeting.hasAdTestTargetting)
+          .groupBy(_.targeting.adTestValue.get)
+      }
+
+      val lineItemsByAdTest = groupByAdTest(lineItems)
+      val commDevLineItemsByAdTest = groupByAdTest(commDevLineItems).toSeq.sortBy { case (testValue, _) =>
+        testValue
+      }
 
       val (hasNumericTestValue, hasStringTestValue) =
         lineItemsByAdTest partition { case (testValue, _) =>
@@ -83,7 +92,7 @@ class CommercialController(
           hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue }
       }
 
-      NoCache(Ok(views.html.commercial.adTests(report.timestamp, sortedGroups)))
+      NoCache(Ok(views.html.commercial.adTests(report.timestamp, commDevLineItemsByAdTest, sortedGroups)))
     }
 
   def getLineItemsForOrder(orderId: String): Action[AnyContent] =

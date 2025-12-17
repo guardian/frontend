@@ -11,6 +11,7 @@ import http.{HttpPreconnections, ResultWithPreconnectPreload}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
+import model.meta.BlocksOn
 import model.{
   CacheTime,
   Cached,
@@ -30,7 +31,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
+import services.newsletters.model.{NewsletterLayout, NewsletterResponseV2}
 import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
@@ -52,6 +53,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     system = PekkoActorSystem("dotcom-rendering-client-circuit-breaker"),
     maxFailures = Configuration.rendering.circuitBreakerMaxFailures,
     callTimeout = Configuration.rendering.timeout.plus(200.millis),
+    resetTimeout = Configuration.rendering.timeout * 4,
+  )
+
+  private[this] val circuitBreakerLongTimeout = CircuitBreakerRegistry.withConfig(
+    name = "dotcom-rendering-client-long-timeout",
+    system = PekkoActorSystem("dotcom-rendering-client-circuit-breaker-long-timeout"),
+    maxFailures = Configuration.rendering.circuitBreakerMaxFailures,
+    callTimeout = (Configuration.rendering.timeout * 2).plus(200.millis),
     resetTimeout = Configuration.rendering.timeout * 4,
   )
 
@@ -139,7 +148,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     }
 
     if (CircuitBreakerDcrSwitch.isSwitchedOn) {
-      circuitBreaker
+      val breaker = if (timeout > Configuration.rendering.timeout) circuitBreakerLongTimeout else circuitBreaker
+      breaker
         .withCircuitBreaker(postWithoutHandler(ws, payload, endpoint, requestId, timeout))
         .map(handler)
     } else {
@@ -149,18 +159,34 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getAMPArticle(
       ws: WSClient,
-      page: PageWithStoryPackage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
-    baseArticleRequest("/AMPArticle", ws, page, blocks, pageType, filterKeyEvents, false, newsletter)
+    baseArticleRequest("/AMPArticle", ws, pageBlocks, pageType, filterKeyEvents, false, newsletter)
+
+  def getDCARAssets(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
+    ws
+      .url(Configuration.rendering.articleBaseURL + path)
+      .withRequestTimeout(Configuration.rendering.timeout)
+      .get()
+      .map { response =>
+        response.status match {
+          case 200 =>
+            Cached(CacheTime.Default)(RevalidatableResult.Ok(Html(response.body)))
+          case _ =>
+            log.error(
+              s"Request to DCR assets failed: status ${response.status}, path: ${request.path}",
+            )
+            NoCache(InternalServerError("Remote renderer error (500)"))
+        }
+      }
+  }
 
   def getAppsArticle(
       ws: WSClient,
-      page: PageWithStoryPackage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
@@ -169,8 +195,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     baseArticleRequest(
       "/AppsArticle",
       ws,
-      page,
-      blocks,
+      pageBlocks,
       pageType,
       filterKeyEvents,
       forceLive,
@@ -179,8 +204,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getArticle(
       ws: WSClient,
-      page: PageWithStoryPackage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean = false,
@@ -189,8 +213,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     baseArticleRequest(
       "/Article",
       ws,
-      page,
-      blocks,
+      pageBlocks,
       pageType,
       filterKeyEvents,
       forceLive,
@@ -200,29 +223,27 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   private def baseArticleRequest(
       path: String,
       ws: WSClient,
-      page: PageWithStoryPackage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       filterKeyEvents: Boolean,
       forceLive: Boolean = false,
       newsletter: Option[NewsletterData],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = page match {
+    val dataModel = pageBlocks.page match {
       case liveblog: LiveBlogPage =>
         DotcomRenderingDataModel.forLiveblog(
-          liveblog,
-          blocks,
+          pageBlocks.copy(page = liveblog),
           request,
           pageType,
           filterKeyEvents,
           forceLive,
           newsletter,
         )
-      case _ => DotcomRenderingDataModel.forArticle(page, blocks, request, pageType, newsletter)
+      case _ => DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, newsletter)
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.articleBaseURL + path, page.metadata.cacheTime)
+    post(ws, json, Configuration.rendering.articleBaseURL + path, pageBlocks.page.metadata.cacheTime)
   }
 
   def getBlocks(
@@ -269,13 +290,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       })
   }
 
-  private def getTimeout: Duration = {
-    if (Configuration.environment.stage == "DEV")
-      Configuration.rendering.timeout * 5
-    else
-      Configuration.rendering.timeout
-  }
-
   def getFront(
       ws: WSClient,
       page: PressedPage,
@@ -292,7 +306,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
-    val timeout = getTimeout
+    val timeout =
+      if (Configuration.environment.stage == "DEV")
+        Configuration.rendering.timeout * 5
+      else
+        Configuration.rendering.timeout * 2
     post(ws, json, Configuration.rendering.faciaBaseURL + "/Front", CacheTime.Facia, timeout)
   }
 
@@ -313,46 +331,53 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getInteractive(
       ws: WSClient,
-      page: InteractivePage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     // Nb. interactives have a longer timeout because some of them are very
-    // large unfortunately. E.g.
+    // large, unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.interactiveBaseURL + "/Interactive", page.metadata.cacheTime, 4.seconds)
+    post(
+      ws,
+      json,
+      Configuration.rendering.interactiveBaseURL + "/Interactive",
+      pageBlocks.page.metadata.cacheTime,
+      4.seconds,
+    )
   }
 
   def getAMPInteractive(
       ws: WSClient,
-      page: InteractivePage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-
-    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
-    post(ws, json, Configuration.rendering.interactiveBaseURL + "/AMPInteractive", page.metadata.cacheTime)
+    post(ws, json, Configuration.rendering.interactiveBaseURL + "/AMPInteractive", pageBlocks.page.metadata.cacheTime)
   }
 
   def getAppsInteractive(
       ws: WSClient,
-      page: InteractivePage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-
-    val dataModel = DotcomRenderingDataModel.forInteractive(page, blocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     // Nb. interactives have a longer timeout because some of them are very
     // large unfortunately. E.g.
     // https://www.theguardian.com/education/ng-interactive/2018/may/29/university-guide-2019-league-table-for-computer-science-information.
-    post(ws, json, Configuration.rendering.interactiveBaseURL + "/AppsInteractive", page.metadata.cacheTime, 4.seconds)
+    post(
+      ws,
+      json,
+      Configuration.rendering.interactiveBaseURL + "/AppsInteractive",
+      pageBlocks.page.metadata.cacheTime,
+      4.seconds,
+    )
   }
 
   def getEmailNewsletters(

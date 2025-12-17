@@ -1,5 +1,6 @@
 package test
 
+import model.meta.BlocksOn
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.{OnwardCollectionResponse, PageType}
@@ -20,14 +21,14 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
 
   override def getArticle(
       ws: WSClient,
-      article: PageWithStoryPackage,
-      blocks: Blocks,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
       filterKeyEvents: Boolean,
       forceLive: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
+    val article = pageBlocks.page
     requestedBlogs.enqueue(article)
     Future(
       Cached(article)(RevalidatableResult.Ok(Html("FakeRemoteRender has found you out if you rely on this markup!"))),

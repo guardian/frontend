@@ -45,7 +45,7 @@ object GalleryCaptionCleaners {
         page.gallery.content.fields.showAffiliateLinks,
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
-        page.gallery.content.isTheFilterUS,
+        page.gallery.content.isUSProductionOffice,
       ),
     )
 

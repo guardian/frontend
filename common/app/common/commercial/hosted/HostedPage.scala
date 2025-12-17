@@ -46,7 +46,7 @@ object HostedPage extends GuLogging {
         case Video   => HostedVideoPage.fromContent(item)
         case Article => HostedArticlePage.fromContent(item)
         case Gallery => HostedGalleryPage.fromContent(item)
-        case _ =>
+        case _       =>
           log.error(s"Failed to make unsupported hosted type: ${item.`type`}: ${item.id}")
           None
       }

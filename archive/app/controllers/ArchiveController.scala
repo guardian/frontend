@@ -4,7 +4,7 @@ import commercial.campaigns.ShortCampaignCodes
 import common._
 import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
-import services.{GoogleBotMetric, RedirectService}
+import services.RedirectService
 import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
 

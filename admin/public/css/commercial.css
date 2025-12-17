@@ -95,3 +95,8 @@ dl.error, dd.error {
     font-size: 12px;
     overflow-wrap: break-word
 }
+
+.cookie {
+    text-align: right;
+    vertical-align: top;
+}

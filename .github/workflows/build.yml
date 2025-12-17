@@ -21,11 +21,11 @@ jobs:
   client-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: corepack enable
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: .nvmrc
@@ -37,11 +37,11 @@ jobs:
   client-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: corepack enable
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: .nvmrc
@@ -50,7 +50,7 @@ jobs:
       - run: make compile
 
       - name: upload frontend-client
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: frontend-client
           path: |
@@ -63,16 +63,16 @@ jobs:
     needs: [client-validate, client-build]
     runs-on: 8core-ubuntu-latest-frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - run: corepack enable
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: .nvmrc
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v5.1.0
         with:
           distribution: corretto
           cache: sbt
@@ -80,7 +80,7 @@ jobs:
 
       # Scala tests rely on client build assets
       - name: Download frontend-client
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: frontend-client
           path: .

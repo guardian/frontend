@@ -9,6 +9,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{PageElement, TextCleaner}
+import model.meta.BlocksOn
 import model.pressed.{PressedContent, SpecialReport}
 import model.{
   ArticleDateTimes,
@@ -156,10 +157,10 @@ object DotcomRenderingUtils {
   }
 
   def blocksForLiveblogPage(
-      liveblog: LiveBlogPage,
-      blocks: APIBlocks,
+      pageBlocks: BlocksOn[LiveBlogPage],
       filterKeyEvents: Boolean,
   ): Seq[APIBlock] = {
+    val blocks = pageBlocks.blocks
     // When the key events filter is on, we'd need all of the key events rather than just the latest 60 blocks
     val allBlocks =
       getKeyEventsIfFiltered(filterKeyEvents, blocks)
@@ -171,7 +172,7 @@ object DotcomRenderingUtils {
     // of the response so we use those
     val relevantBlocks = if (allBlocks.isEmpty) blocks.body.getOrElse(Nil) else allBlocks
 
-    val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
+    val ids = pageBlocks.page.currentPage.currentPage.blocks.map(_.id).toSet
     relevantBlocks.filter(block => ids(block.id))
   }.toSeq
   def stringContainsAffiliateableLinks(textString: String): Boolean = {
@@ -206,7 +207,7 @@ object DotcomRenderingUtils {
           edition,
           article.trail.webPublicationDate,
           article.content.isGallery,
-          article.content.isTheFilterUS,
+          article.content.isUSProductionOffice,
         ),
       )
       .filter(PageElement.isSupported)
@@ -333,7 +334,7 @@ object DotcomRenderingUtils {
   ): Option[OnwardCollectionResponse] = {
     faciaItems match {
       case Nil => None
-      case _ =>
+      case _   =>
         Some(
           OnwardCollectionResponse(
             heading = "More on this story",

@@ -54,7 +54,7 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
 
   private def getNewsletterResponseFromSignUpPage(articleId: String): Option[NewsletterResponseV2] = {
     newsletterSignupAgent.getV2Newsletters() match {
-      case Left(_) => None
+      case Left(_)     => None
       case Right(list) =>
         list
           .filter(shouldInclude)
