@@ -228,7 +228,7 @@ object NavLinks {
       NavLink("Genius", "/crosswords/series/genius"),
       NavLink("Weekend", "/crosswords/series/weekend-crossword"),
       NavLink("Special", "/crosswords/series/special"),
-      NavLink("Mini", "/crosswords/series/mini"),
+      NavLink("Mini", "/crosswords/series/mini-crossword"),
     ),
   )
   val wordiply = NavLink(
