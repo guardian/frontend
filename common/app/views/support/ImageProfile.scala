@@ -225,7 +225,7 @@ object OpenGraphImage extends OverlayBase64 {
       case ObserverStarRating(rating)      => starRatingObserver(rating, shouldIncludeOverlay, shouldUpscale)
       case GuardianStarRating(rating)      => starRating(rating, shouldIncludeOverlay, shouldUpscale)
       case Paid                            => Item700
-      case FilterUk =>
+      case FilterUk                        =>
         new ShareImage(s"overlay-base64=${overlayUrlBase64("filter-uk.png")}", shouldIncludeOverlay, shouldUpscale)
       case FilterUs =>
         new ShareImage(s"overlay-base64=${overlayUrlBase64("filter-us.png")}", shouldIncludeOverlay, shouldUpscale)
