@@ -865,7 +865,7 @@
 					},
 					{
 						"title": "Mini",
-						"url": "/crosswords/series/mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					}
@@ -1636,7 +1636,7 @@
 					},
 					{
 						"title": "Mini",
-						"url": "/crosswords/series/mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					}
@@ -2341,7 +2341,7 @@
 					},
 					{
 						"title": "Mini",
-						"url": "/crosswords/series/mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					}
@@ -3206,7 +3206,7 @@
 					},
 					{
 						"title": "Mini",
-						"url": "/crosswords/series/mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					}
@@ -4191,7 +4191,7 @@
 					},
 					{
 						"title": "Mini",
-						"url": "/crosswords/series/mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					}
