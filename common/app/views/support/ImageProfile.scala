@@ -193,6 +193,8 @@ case class GuardianOldContent(publicationYear: Int) extends ShareImageCategory
 case class ObserverStarRating(rating: Int) extends ShareImageCategory
 case class GuardianStarRating(rating: Int) extends ShareImageCategory
 case object Paid extends ShareImageCategory
+case object FilterUk extends ShareImageCategory
+case object FilterUs extends ShareImageCategory
 
 trait OverlayBase64 {
   def overlayUrlBase64(overlay: String): String =
@@ -223,6 +225,10 @@ object OpenGraphImage extends OverlayBase64 {
       case ObserverStarRating(rating)      => starRatingObserver(rating, shouldIncludeOverlay, shouldUpscale)
       case GuardianStarRating(rating)      => starRating(rating, shouldIncludeOverlay, shouldUpscale)
       case Paid                            => Item700
+      case FilterUk                        =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("filter-uk.png")}", shouldIncludeOverlay, shouldUpscale)
+      case FilterUs =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("filter-us.png")}", shouldIncludeOverlay, shouldUpscale)
     }
   }
 
