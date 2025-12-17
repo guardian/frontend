@@ -40,7 +40,7 @@ class RelatedController(
 
       related(edition, path, excludeTags) map {
         case related if related.items.isEmpty => Cached(60)(JsonNotFound())
-        case related if isMf2 =>
+        case related if isMf2                 =>
           renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), RelatedLabel)
         case trails =>
           renderRelated(

@@ -68,7 +68,7 @@ object IndexPage {
         accumulation: Vector[((ContainerDisplayConfig, CollectionEssentials), Container)] = Vector.empty,
     ): Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = {
       groupings.toList match {
-        case Nil => accumulation
+        case Nil                            => accumulation
         case grouping :: remainingGroupings =>
           val collection = CollectionEssentials.fromFaciaContent(
             grouping.items.flatMap { item =>

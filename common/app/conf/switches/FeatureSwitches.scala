@@ -617,17 +617,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val GuardianLabsRedesign = Switch(
-    SwitchGroup.Feature,
-    "guardian-labs-redesign",
-    "Shows the new style labs containers and cards",
-    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
-    sellByDate = Some(LocalDate.of(2025, 12, 16)),
-    safeState = Off,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val ProductLeftColCards = Switch(
     SwitchGroup.Feature,
     "product-left-col-cards",

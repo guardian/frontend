@@ -37,7 +37,7 @@ object ContainerLayout {
     val (slices, showMore, finalContext) = sliceDefinitions.foldLeft(
       (Seq.empty[SliceWithCards], indexedTrails, initialContext),
     ) {
-      case ((slicesSoFar, Nil, context), _) => (slicesSoFar, Nil, context)
+      case ((slicesSoFar, Nil, context), _)                        => (slicesSoFar, Nil, context)
       case ((slicesSoFar, trailsForUse, context), sliceDefinition) =>
         val (slice, remainingTrails, newContext) = SliceWithCards.fromItems(
           trailsForUse,
@@ -115,7 +115,7 @@ object ContainerLayout {
         accumulation: Vector[SliceWithCards] = Vector.empty,
     ): Seq[SliceWithCards] = {
       slices match {
-        case Nil => accumulation
+        case Nil                                      => accumulation
         case (slice, numToConsume) :: remainingSlices =>
           val (blobsConsumed, blobsUnconsumed) = blobs.splitAt(numToConsume)
           slicesWithCards(

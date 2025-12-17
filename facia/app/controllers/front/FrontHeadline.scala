@@ -29,7 +29,7 @@ object FrontHeadline extends Results with GuLogging {
 
     headlineOpt match {
       case Some(headlinestr) => RevalidatableResult.Ok(headlinestr)
-      case None => {
+      case None              => {
         log.warn(s"headline not found for ${faciaPage.id}")
         headlineNotFound
       }

@@ -28,7 +28,7 @@ class YoutubeController(
 
       response.transform {
         case result @ Success(_) => result
-        case Failure(error) =>
+        case Failure(error)      =>
           logErrorWithRequestId(s"Failed to get atom ID for youtube ID $youtubeId", error)
           Failure(error)
       }
