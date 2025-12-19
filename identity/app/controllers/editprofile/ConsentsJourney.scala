@@ -36,6 +36,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
   def completeConsents: Action[AnyContent] =
     csrfCheck {
       consentAuthWithIdapiUserAction.async { implicit request =>
+        logger.info(s"Request path is: ${request.path}")
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
         returnUrlForm
           .bindFromRequest()
@@ -67,20 +68,27 @@ trait ConsentsJourney extends EditProfileControllerComponents {
                 }
             },
           )
+          .map { result =>
+            logger.info(s"Response for ${request.path} is: ${result.header.status}")
+            result
+          }
       }
     }
 
   private def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] =
     csrfAddToken {
       consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
+        logger.info(s"Request path is: ${request.path}")
         consentJourneyView(
           page = page,
           journey = page.journey,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
           request.user,
           consentHint,
-        )
-
+        ).map { result =>
+          logger.info(s"Response for ${request.path} is: ${result.header.status}")
+          result
+        }
       }
     }
 
@@ -90,6 +98,7 @@ trait ConsentsJourney extends EditProfileControllerComponents {
   ): Action[AnyContent] =
     csrfAddToken {
       consentAuthWithIdapiUserWithEmailValidation.async { implicit request =>
+        logger.info(s"Request path is: ${request.path}")
         val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request) match {
           case Some(url) => if (url contains "/consents") returnUrlVerifier.defaultReturnUrl else url
           case _         => returnUrlVerifier.defaultReturnUrl
@@ -99,7 +108,10 @@ trait ConsentsJourney extends EditProfileControllerComponents {
           page,
           request.user,
           returnUrl,
-        )
+        ).map { result =>
+          logger.info(s"Response for ${request.path} is: ${result.header.status}")
+          result
+        }
       }
     }
 

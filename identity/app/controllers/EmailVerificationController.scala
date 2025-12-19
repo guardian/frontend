@@ -22,6 +22,7 @@ class EmailVerificationController(
 
   def completeRegistration: Action[AnyContent] =
     Action.async { implicit request =>
+      logger.info(s"Request path is: ${request.path}")
       val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
@@ -41,10 +42,15 @@ class EmailVerificationController(
           logger.error("No encryptedEmail parameter present on complete registration page request")
           Future.successful(errorPage(verifiedReturnUrlAsOpt, page))
         })
+        .map { result =>
+          logger.info(s"Response for ${request.path} is: ${result.header.status}")
+          result
+        }
     }
 
   def resendValidationEmail: Action[AnyContent] =
     Action.async { implicit request =>
+      logger.info(s"Request path is: ${request.path}")
       val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
       val email = request.session.get("email")
@@ -66,6 +72,10 @@ class EmailVerificationController(
           )
           Future.successful(errorPage(verifiedReturnUrlAsOpt, page))
         })
+        .map { result =>
+          logger.info(s"Response for ${request.path} is: ${result.header.status}")
+          result
+        }
     }
 
   private def successPage(
