@@ -20,11 +20,17 @@ class FormstackController(
 
   def formstackForm(formReference: String): Action[AnyContent] =
     Action { implicit request =>
-      NotFound(views.html.formstack.formstackFormNotFound(page))
+      logger.info(s"Request path is: ${request.path}")
+      val result = NotFound(views.html.formstack.formstackFormNotFound(page))
+      logger.info(s"Response for ${request.path} is: ${result.header.status}")
+      result
     }
 
   def complete: Action[AnyContent] =
     Action { implicit request =>
-      Ok(views.html.formstack.formstackComplete(page))
+      logger.info(s"Request path is: ${request.path}")
+      val result = Ok(views.html.formstack.formstackComplete(page))
+      logger.info(s"Response for ${request.path} is: ${result.header.status}")
+      result
     }
 }
