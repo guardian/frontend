@@ -5,7 +5,7 @@ import conf.switches.Owner.group
 
 trait NewslettersSwitches {
 
-  val HideNewsletterForSubscribers = Switch(
+  val HideNewsletterSignupComponentForSubscribers = Switch(
     SwitchGroup.Newsletters,
     "hide-newsletter-for-subscribers",
     "Feature flag to enable/disable newsletter subscription check",
