@@ -86,7 +86,8 @@ final case class Content(
   lazy val isImmersive =
     fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists { tag => tag.id == "tone/advertisement-features" }
-  lazy val isTheFilter: Boolean = tags.tags.exists { tag => tag.id == "thefilter/series/the-filter" }
+  lazy val isTheFilterUk: Boolean = tags.tags.exists { tag => tag.id == "thefilter/series/the-filter" }
+  lazy val isTheFilterUs: Boolean = tags.tags.exists { tag => tag.id == "thefilter-us/series/thefilter-us" }
   lazy val isUSProductionOffice: Boolean = productionOffice.exists(_.toLowerCase == "us")
   lazy val campaigns: List[Campaign] =
     _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
@@ -102,7 +103,7 @@ final case class Content(
         // Some Labs pages have quiz atoms but are not tagged as quizzes
         val hasQuizAtoms: Boolean = atoms.exists(a => a.quizzes.nonEmpty)
 
-        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz && !hasQuizAtoms && !isTheFilter
+        AmpArticleSwitch.isSwitchedOn && hasBodyBlocks && !tags.isQuiz && !hasQuizAtoms && !isTheFilterUk
       } else {
         false
       }
@@ -163,7 +164,9 @@ final case class Content(
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
 
     () match {
-      case paid if isPaidContent => Paid
+      case paid if isPaidContent                                   => Paid
+      case filterUk if isTheFilterUk                               => FilterUk
+      case filterUs if isTheFilterUs                               => FilterUs
       case oldcommentObserver if isOldOpinion && isFromTheObserver =>
         CommentObserverOldContent(trail.webPublicationDate.getYear)
       case oldComment if isOldOpinion => CommentGuardianOldContent(trail.webPublicationDate.getYear)
@@ -334,7 +337,7 @@ final case class Content(
     } else Nil
 
     val seriesMeta = tags.series.filterNot { _.id == "commentisfree/commentisfree" } match {
-      case Nil => Nil
+      case Nil                         => Nil
       case allTags @ (mainSeries :: _) =>
         List(
           Some("series", JsString(mainSeries.name)),

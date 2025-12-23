@@ -221,6 +221,7 @@ object NavLinks {
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),
       NavLink("Sunday quick", "/crosswords/series/sunday-quick"),
+      NavLink("Mini", "/crosswords/series/mini-crossword"),
       NavLink("Quick cryptic", "/crosswords/series/quick-cryptic"),
       NavLink("Quiptic", "/crosswords/series/quiptic"),
       NavLink("Cryptic", "/crosswords/series/cryptic"),

@@ -822,6 +822,12 @@
 						"classList": []
 					},
 					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini-crossword",
+						"children": [],
+						"classList": []
+					},
+					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
 						"children": [],
@@ -1587,6 +1593,12 @@
 						"classList": []
 					},
 					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini-crossword",
+						"children": [],
+						"classList": []
+					},
+					{
 						"title": "Quick cryptic",
 						"url": "/crosswords/series/quick-cryptic",
 						"children": [],
@@ -2282,6 +2294,12 @@
 					{
 						"title": "Sunday quick",
 						"url": "/crosswords/series/sunday-quick",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					},
@@ -3141,6 +3159,12 @@
 					{
 						"title": "Sunday quick",
 						"url": "/crosswords/series/sunday-quick",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					},
@@ -4120,6 +4144,12 @@
 					{
 						"title": "Sunday quick",
 						"url": "/crosswords/series/sunday-quick",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Mini",
+						"url": "/crosswords/series/mini-crossword",
 						"children": [],
 						"classList": []
 					},

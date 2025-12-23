@@ -16,7 +16,7 @@ class StocksData(wsClient: WSClient) extends AutoRefresh[Stocks](0 seconds, 1 mi
       wsClient.url(Configuration.business.stocksEndpoint).get() map { response =>
         Json.fromJson[Indices](response.json) match {
           case JsSuccess(rawStocksData, _) => Stocks.fromFingerpost(rawStocksData)
-          case error @ JsError(_) =>
+          case error @ JsError(_)          =>
             log.error(s"Could not read raw stocks data ${Json.stringify(JsError.toJson(error))}")
             throw new RuntimeException("Could not read raw stocks data")
         }

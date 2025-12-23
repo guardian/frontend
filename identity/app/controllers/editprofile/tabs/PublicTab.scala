@@ -8,7 +8,10 @@ trait PublicTab extends EditProfileControllerComponents {
 
   private def redirectToManage(path: String): Action[AnyContent] =
     Action { implicit request =>
-      Redirect(url = s"${Configuration.id.mmaUrl}/${path}", MOVED_PERMANENTLY)
+      logger.info(s"Request path is: ${request.path}")
+      val result = Redirect(url = s"${Configuration.id.mmaUrl}/${path}", MOVED_PERMANENTLY)
+      logger.info(s"Response for ${request.path} is: ${result.header.status}")
+      result
     }
 
   /** GET /public/edit */

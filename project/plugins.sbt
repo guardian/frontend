@@ -7,7 +7,7 @@ libraryDependencies ++= Seq(
   "org.joda" % "joda-convert" % "2.2.4",
 )
 
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.9")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
 
 addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.11.4")
 
