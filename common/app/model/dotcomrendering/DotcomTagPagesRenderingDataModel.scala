@@ -5,7 +5,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
 import experiments.ActiveExperiments
-import model.Tags
+import model.{StorylinesContent, Tags}
 import model.pressed.PressedContent
 import navigation.{FooterLinks, Nav}
 import org.joda.time.{DateTime, DateTimeZone}
@@ -37,6 +37,7 @@ case class DotcomTagPagesRenderingDataModel(
     isAdFreeUser: Boolean,
     canonicalUrl: String,
     contributionsServiceUrl: String,
+    storylinesContent: Option[StorylinesContent],
 )
 
 object DotcomTagPagesRenderingDataModel {
@@ -65,6 +66,7 @@ object DotcomTagPagesRenderingDataModel {
         "isAdFreeUser" -> model.isAdFreeUser,
         "canonicalUrl" -> model.canonicalUrl,
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
+        "storylinesContent" -> model.storylinesContent,
       )
     }
   }
@@ -131,6 +133,7 @@ object DotcomTagPagesRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       contributionsServiceUrl = Configuration.contributionsService.url,
+      storylinesContent = StorylinesContent.getContent(page.metadata.id)(request),
     )
   }
 
