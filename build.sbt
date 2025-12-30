@@ -13,6 +13,10 @@ https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-proj
  */
 ThisBuild / asciiGraphWidth := 999999999
 
+// Exclude vulnerable org.lz4:lz4-java and use at.yawk.lz4:lz4-java see https://github.com/advisories/GHSA-cmp6-m4wj-q63q
+ThisBuild / excludeDependencies += "org.lz4" % "lz4-java"
+ThisBuild / libraryDependencies += "at.yawk.lz4" % "lz4-java" % "1.10.2"
+
 val common = library("common")
   .settings(
     Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
