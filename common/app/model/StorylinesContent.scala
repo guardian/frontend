@@ -88,7 +88,7 @@ object TPSGMediaData {
         case "YoutubeVideo" => cursor.as[TPSGVideo]
         case "Audio"        => cursor.as[TPSGAudio]
         case "Gallery"      => cursor.as[TPSGGallery]
-        case other =>
+        case other          =>
           Left(DecodingFailure(s"Unknown mediaType: $other", cursor.history))
       }
     }
@@ -149,7 +149,7 @@ object StorylinesContent extends GuLogging {
       val maybeStorylinesContent = S3.get(location).map { jsonString =>
         io.circe.parser.decode[StorylinesContent](jsonString) match {
           case Right(content) => Some(content)
-          case Left(error) =>
+          case Left(error)    =>
             log.error(s"Error decoding Storylines Content for tag $tag: $error")
             None
         }
