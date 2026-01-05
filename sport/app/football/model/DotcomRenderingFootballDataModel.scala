@@ -29,7 +29,6 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import ab.ABTests
-import football.model.DotcomRenderingFootballTablesDataModel.getEntries
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -144,20 +143,6 @@ private object DotcomRenderingFootballDataModelImplicits {
     Json.writes[MatchesByDateAndCompetition]
 
   implicit val competitionFilterFormat: Writes[CompetitionFilter] = Json.writes[CompetitionFilter]
-
-  implicit val tableWrites: Writes[Table] = (table: Table) =>
-    withoutDeepNull(
-      Json.obj(
-        "competition" -> Json.toJson(table.competition: CompetitionSummary),
-        "groups" -> table.groups.map { group =>
-          Json.obj(
-            "round" -> group.round,
-            "entries" -> getEntries(table.competition, group),
-          )
-        },
-        "hasGroups" -> table.multiGroup,
-      ),
-    )
 }
 
 case class DotcomRenderingFootballMatchListDataModel(
@@ -288,7 +273,7 @@ object DotcomRenderingFootballTablesDataModel {
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
 
-  def getEntries(competition: Competition, group: Group): Seq[JsObject] = {
+  private def getEntries(competition: Competition, group: Group): Seq[JsObject] = {
     group.entries.map { entry =>
       Json.obj(
         "stageNumber" -> entry.stageNumber,
@@ -312,7 +297,20 @@ object DotcomRenderingFootballTablesDataModel {
 
   private implicit val teamScoreFormat: Writes[TeamScore] = Json.writes[TeamScore]
   private implicit val teamResultFormat: Writes[TeamResult] = Json.writes[TeamResult]
-  private implicit val groupFormat: Writes[Group] = Json.writes[Group]
+
+  private implicit val tableWrites: Writes[Table] = (table: Table) =>
+    withoutDeepNull(
+      Json.obj(
+        "competition" -> Json.toJson(table.competition: CompetitionSummary),
+        "groups" -> table.groups.map { group =>
+          Json.obj(
+            "round" -> group.round,
+            "entries" -> getEntries(table.competition, group),
+          )
+        },
+        "hasGroups" -> table.multiGroup,
+      ),
+    )
 
   implicit def dotcomRenderingFootballTablesDataModel: Writes[DotcomRenderingFootballTablesDataModel] =
     Json.writes[DotcomRenderingFootballTablesDataModel]
@@ -325,7 +323,7 @@ object DotcomRenderingFootballTablesDataModel {
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
     footballMatch: MatchDataAnswer,
-    table: Option[Table],
+    group: Option[Group],
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -341,7 +339,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
   def apply(
       page: MatchPage,
       footballMatch: MatchDataAnswer,
-      table: Option[Table],
+      group: Option[Group],
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -351,7 +349,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
     DotcomRenderingFootballMatchSummaryDataModel(
       footballMatch = footballMatch,
-      table = table,
+      group = group,
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -365,6 +363,22 @@ object DotcomRenderingFootballMatchSummaryDataModel {
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
+
+  private def getGroupEntries(group: Group): Seq[JsObject] = {
+    group.entries.map { entry =>
+      Json.obj(
+        "stageNumber" -> entry.stageNumber,
+        "round" -> entry.round,
+        "team" -> entry.team,
+        "teamUrl" -> TeamUrl(entry.team),
+      )
+    }
+  }
+  implicit val groupWrites: Writes[Group] = (group: Group) =>
+    Json.obj(
+      "round" -> group.round,
+      "entries" -> getGroupEntries(group),
+    )
 
   implicit def dotcomRenderingFootballMatchSummaryDataModel: Writes[DotcomRenderingFootballMatchSummaryDataModel] =
     Json.writes[DotcomRenderingFootballMatchSummaryDataModel]
