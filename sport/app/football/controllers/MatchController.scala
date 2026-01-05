@@ -182,8 +182,7 @@ class MatchController(
     Action.async { implicit request =>
       maybeMatch match {
         case Some((competitionId, theMatch)) =>
-          val table =
-            competitionsService.competitions.find(_.id == competitionId).filter(_.hasLeagueTable).map(Table(_))
+          val group = tableGroupForMatch(competitionId, theMatch)
           val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
@@ -196,7 +195,7 @@ class MatchController(
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
                   footballMatch = footballMatch,
-                  table = table,
+                  group = group,
                 )
                 Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
 
@@ -209,7 +208,7 @@ class MatchController(
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
                   footballMatch = footballMatch,
-                  table = table,
+                  group = group,
                 )
                 remoteRenderer.getFootballMatchSummaryPage(
                   wsClient,
@@ -229,4 +228,13 @@ class MatchController(
           Future.successful(Cached(CacheTime.FootballMatch)(WithoutRevalidationResult(Found("/football/results"))))
       }
     }
+
+  private def tableGroupForMatch(competitionId: String, theMatch: FootballMatch): Option[Group] =
+    competitionsService.competitions
+      .find(_.id == competitionId)
+      .filter(_.hasLeagueTable)
+      .map(Table(_))
+      .flatMap { table =>
+        table.groups.find(group => group.hasTeam(theMatch.homeTeam.id) && group.hasTeam(theMatch.awayTeam.id))
+      }
 }
