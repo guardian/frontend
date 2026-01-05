@@ -163,7 +163,7 @@ class MatchController(
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   def renderMatchIdJson(matchId: String): Action[AnyContent] = renderMatchId(matchId)
-  def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findMatch(matchId))
+  def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findCompetitionMatch(matchId))
 
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     renderMatch(year, month, day, home, away)
@@ -174,14 +174,16 @@ class MatchController(
         val date = LocalDate.parse(s"$year${month.capitalize}$day", formatter)
         val startOfDay = date.atStartOfDay(DateHelpers.defaultFootballZoneId)
         val startOfTomorrow = startOfDay.plusDays(1)
-        render(competitionsService.matchFor(Interval(startOfDay, startOfTomorrow), homeId, awayId))
+        render(competitionsService.competitionMatchFor(Interval(startOfDay, startOfTomorrow), homeId, awayId))
       case _ => render(None)
     }
 
-  private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] =
+  private def render(maybeMatch: Option[(String, FootballMatch)]): Action[AnyContent] =
     Action.async { implicit request =>
       maybeMatch match {
-        case Some(theMatch) =>
+        case Some((competitionId, theMatch)) =>
+          val table =
+            competitionsService.competitions.find(_.id == competitionId).filter(_.hasLeagueTable).map(Table(_))
           val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
@@ -194,6 +196,7 @@ class MatchController(
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
                   footballMatch = footballMatch,
+                  table = table,
                 )
                 Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
 
@@ -206,6 +209,7 @@ class MatchController(
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
                   footballMatch = footballMatch,
+                  table = table,
                 )
                 remoteRenderer.getFootballMatchSummaryPage(
                   wsClient,
