@@ -12,7 +12,7 @@ trait NewslettersSwitches {
     owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
     highImpact = false,
   )
 
