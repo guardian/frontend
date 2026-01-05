@@ -5,6 +5,17 @@ import conf.switches.Owner.group
 
 trait NewslettersSwitches {
 
+  val HideNewsletterSignupComponentForSubscribers = Switch(
+    SwitchGroup.Newsletters,
+    "hide-newsletter-signup-component-for-subscribers",
+    "Feature flag to enable/disable newsletter subscription check",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val EmailSignupRecaptcha = Switch(
     SwitchGroup.Newsletters,
     "email-signup-recaptcha",
