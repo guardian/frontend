@@ -35,7 +35,7 @@ case class ImageData(
     src: Option[String],
     altText: Option[String],
     isAvatar: Boolean = false,
-    mediaData: Option[TPSGMediaData] = None,
+    mediaData: Option[StorylinesMediaData] = None,
 )
 
 case class ArticleData(
@@ -50,12 +50,13 @@ case class ArticleData(
 
 // These mirror the definitions from DCR: https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/types/mainMedia.ts
 // In DCR, we effectively bypass the usual transformations done to Frontend/CAPI data,
-// but need to provide the fields below so multimedia cards can render correctly
-sealed trait TPSGMediaData {
+// but need to provide the fields below so multimedia cards can render correctly.
+// There are existing Video/Gallery/Audio references in Frontend, so we define separate types here to avoid confusion.
+sealed trait StorylinesMediaData {
   def `type`: String
 }
 
-case class TPSGVideo(
+case class StorylinesVideo(
     `type`: String = "YoutubeVideo",
     id: String,
     videoId: String,
@@ -66,46 +67,46 @@ case class TPSGVideo(
     duration: Int,
     expired: Boolean,
     image: Option[String] = None,
-) extends TPSGMediaData
+) extends StorylinesMediaData
 
-case class TPSGAudio(
+case class StorylinesAudio(
     `type`: String = "Audio",
     duration: String,
-) extends TPSGMediaData
+) extends StorylinesMediaData
 
-case class TPSGGallery(
+case class StorylinesGallery(
     `type`: String = "Gallery",
     count: String,
-) extends TPSGMediaData
+) extends StorylinesMediaData
 
-object TPSGMediaData {
-  implicit val videoDecoder: Decoder[TPSGVideo] = deriveDecoder
-  implicit val audioDecoder: Decoder[TPSGAudio] = deriveDecoder
-  implicit val galleryDecoder: Decoder[TPSGGallery] = deriveDecoder
-  implicit val mediaDataDecoder: Decoder[TPSGMediaData] =
+object StorylinesMediaData {
+  implicit val videoDecoder: Decoder[StorylinesVideo] = deriveDecoder
+  implicit val audioDecoder: Decoder[StorylinesAudio] = deriveDecoder
+  implicit val galleryDecoder: Decoder[StorylinesGallery] = deriveDecoder
+  implicit val mediaDataDecoder: Decoder[StorylinesMediaData] =
     Decoder.instance { cursor =>
       cursor.get[String]("type").flatMap {
-        case "YoutubeVideo" => cursor.as[TPSGVideo]
-        case "Audio"        => cursor.as[TPSGAudio]
-        case "Gallery"      => cursor.as[TPSGGallery]
+        case "YoutubeVideo" => cursor.as[StorylinesVideo]
+        case "Audio"        => cursor.as[StorylinesAudio]
+        case "Gallery"      => cursor.as[StorylinesGallery]
         case other          =>
           Left(DecodingFailure(s"Unknown mediaType: $other", cursor.history))
       }
     }
 
-  implicit val videoEncoder: Encoder[TPSGVideo] = deriveEncoder
-  implicit val audioEncoder: Encoder[TPSGAudio] = deriveEncoder
-  implicit val galleryEncoder: Encoder[TPSGGallery] = deriveEncoder
-  implicit val mediaDataEncoder: Encoder[TPSGMediaData] = Encoder.instance {
-    case v: TPSGVideo   => videoEncoder(v)
-    case a: TPSGAudio   => audioEncoder(a)
-    case g: TPSGGallery => galleryEncoder(g)
+  implicit val videoEncoder: Encoder[StorylinesVideo] = deriveEncoder
+  implicit val audioEncoder: Encoder[StorylinesAudio] = deriveEncoder
+  implicit val galleryEncoder: Encoder[StorylinesGallery] = deriveEncoder
+  implicit val mediaDataEncoder: Encoder[StorylinesMediaData] = Encoder.instance {
+    case v: StorylinesVideo   => videoEncoder(v)
+    case a: StorylinesAudio   => audioEncoder(a)
+    case g: StorylinesGallery => galleryEncoder(g)
   }
 
-  implicit val videoWrites: Writes[TPSGVideo] = Json.writes[TPSGVideo]
-  implicit val audioWrites: Writes[TPSGAudio] = Json.writes[TPSGAudio]
-  implicit val galleryWrites: Writes[TPSGGallery] = Json.writes[TPSGGallery]
-  implicit val mediaDataWrites: Writes[TPSGMediaData] = Json.writes[TPSGMediaData]
+  implicit val videoWrites: Writes[StorylinesVideo] = Json.writes[StorylinesVideo]
+  implicit val audioWrites: Writes[StorylinesAudio] = Json.writes[StorylinesAudio]
+  implicit val galleryWrites: Writes[StorylinesGallery] = Json.writes[StorylinesGallery]
+  implicit val mediaDataWrites: Writes[StorylinesMediaData] = Json.writes[StorylinesMediaData]
 }
 
 object Storyline {
@@ -137,9 +138,9 @@ object ArticleData {
 }
 
 object StorylinesContent extends GuLogging {
-  implicit val tpsgContentDecoder: Decoder[StorylinesContent] = deriveDecoder
-  implicit val tpsgContentEncoder: Encoder[StorylinesContent] = deriveEncoder
-  implicit val tpsgWrites: Writes[StorylinesContent] = Json.writes[StorylinesContent]
+  implicit val storylinesContentDecoder: Decoder[StorylinesContent] = deriveDecoder
+  implicit val storylinesContentEncoder: Encoder[StorylinesContent] = deriveEncoder
+  implicit val storylinesWrites: Writes[StorylinesContent] = Json.writes[StorylinesContent]
 
   def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
     if (ActiveExperiments.isParticipating(TagPageStorylines)) {
