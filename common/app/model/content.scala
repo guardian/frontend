@@ -1,7 +1,6 @@
 package model
 
 import java.net.URL
-
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.model.schemaorg.SchemaOrg
 import com.gu.facia.api.{utils => fapiutils}
@@ -23,6 +22,7 @@ import views.support._
 import scala.jdk.CollectionConverters._
 import scala.util.Try
 import implicits.Booleans._
+import model.liveblog.CalloutBlockElement
 import org.joda.time.DateTime
 
 sealed trait ContentType {
@@ -89,8 +89,20 @@ final case class Content(
   lazy val isTheFilterUk: Boolean = tags.tags.exists { tag => tag.id == "thefilter/series/the-filter" }
   lazy val isTheFilterUs: Boolean = tags.tags.exists { tag => tag.id == "thefilter-us/series/thefilter-us" }
   lazy val isUSProductionOffice: Boolean = productionOffice.exists(_.toLowerCase == "us")
-  lazy val campaigns: List[Campaign] =
+
+  // Some campaigns (Community callouts) are added to an article using a tag. Others (Reporter callouts) just use the
+  // campaign ID from the targeting tool. We need to fetch boh here
+  lazy val campaignIds = fields.blocks
+    .map(_.body.flatMap(_.elements.flatMap {
+      case CalloutBlockElement(campaignId, _) => Seq(campaignId)
+      case _                                  => Seq()
+    }))
+    .getOrElse(Seq())
+  lazy val idCampaigns: List[Campaign] =
+    _root_.commercial.targeting.CampaignAgent.getCampaignsForIds(campaignIds)
+  lazy val tagCampaigns: List[Campaign] =
     _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
+  lazy val campaigns: List[Campaign] = idCampaigns ++ tagCampaigns.filter(c => !idCampaigns.exists(_.id == c.id))
 
   lazy val shouldAmplify: Boolean = {
     val shouldAmplifyContent = {
