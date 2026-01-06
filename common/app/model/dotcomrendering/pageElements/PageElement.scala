@@ -137,6 +137,16 @@ object BlockquoteBlockElement {
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
 }
 
+sealed trait CalloutType {
+  def name: String
+}
+case object CommunityCallout extends CalloutType {
+  val name = "community"
+}
+case object ReporterCallout extends CalloutType {
+  val name = "reporter"
+}
+
 case class CalloutBlockElement(
     id: String,
     calloutsUrl: Option[String],
@@ -166,10 +176,34 @@ case class CalloutBlockElementV2(
     formFields: List[CalloutFormField],
     isNonCollapsible: Boolean,
     contacts: Option[Seq[Contact]],
+    calloutType: CalloutType,
 ) extends PageElement
 
 object CalloutBlockElementV2 {
+  implicit val CalloutTypeWrites: Writes[CalloutType] = Writes { calloutType =>
+    JsString(calloutType.name)
+  }
   implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
+}
+
+case class ReporterCalloutBlockElement(
+    id: String,
+    activeFrom: Option[Long],
+    activeUntil: Option[Long],
+    displayOnSensitive: Boolean,
+    title: String,
+    description: String,
+    contacts: Option[Seq[Contact]],
+    calloutType: CalloutType,
+) extends PageElement
+
+object ReporterCalloutBlockElement {
+  implicit val CalloutTypeWrites: Writes[CalloutType] = Writes { calloutType =>
+    JsString(calloutType.name)
+  }
+  implicit val ReporterCalloutBlockElementWrites: Writes[ReporterCalloutBlockElement] =
+    Json.writes[ReporterCalloutBlockElement]
+
 }
 
 case class DcrCartoonVariant(
@@ -953,6 +987,7 @@ object PageElement {
       case _: TimelineBlockElement        => true
       case _: LinkBlockElement            => true
       case _: ProductBlockElement         => true
+      case _: ReporterCalloutBlockElement => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
