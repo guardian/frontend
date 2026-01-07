@@ -30,7 +30,10 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
               }
           }
         // don't log uncacheable POST requests due to the volume of them
-        if (rh.method != "POST") {
+        // don't log healthcheck successes
+        val isHealthcheck = rh.uri == "/_healthcheck"
+        val isHealthcheckSuccess = isHealthcheck && response.header.status == 200
+        if (rh.method != "POST" && !isHealthcheckSuccess) {
           requestLogger.withResponse(response).info(s"${rh.method} ${rh.uri}$additionalInfo")
         }
       case Failure(error) =>
