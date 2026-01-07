@@ -37,7 +37,7 @@ object FooterLinks {
       "js-tech-feedback-report",
     )
   def workForUs(edition: String): FooterLink =
-    FooterLink("Work for us", "https://workforus.theguardian.com", s"${edition} : footer : work for us")
+    FooterLink("Work with us", "https://workwithus.theguardian.com/", s"${edition} : footer : work with us")
   def allTopics(edition: String): FooterLink =
     FooterLink("All topics", "/index/subjects/a", s"${edition} : footer : all topics")
   def allWriters(edition: String): FooterLink =
