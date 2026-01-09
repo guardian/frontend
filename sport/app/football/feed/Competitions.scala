@@ -11,7 +11,7 @@ import pa.{FootballMatch, _}
 
 import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.util.Comparator
-import scala.collection.immutable
+import scala.collection.{View, immutable}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
 
@@ -69,6 +69,8 @@ trait Competitions extends implicits.Football {
     matchDates.reverse.filter(_ <= date).take(numDays)
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
+  def findCompetitionMatch(id: String): Option[(String, FootballMatch)] =
+    matchesWithCompetition.find { case (_, m) => m.id == id }
 
   def competitionForMatch(matchId: String): Option[Competition] =
     competitions.find(_.matches.exists(_.id == matchId))
@@ -97,9 +99,21 @@ trait Competitions extends implicits.Football {
       .find(m => m.hasTeam(team1) && m.hasTeam(team2))
   }
 
+  // note team1 & team2 are the home and away team, but we do NOT know their order
+  def competitionMatchFor(interval: Interval, team1: String, team2: String): Option[(String, FootballMatch)] =
+    matchesWithCompetition
+      .find { case (_, m) =>
+        interval.contains(m.date) && m.hasTeam(team1) && m.hasTeam(team2)
+      }
+
   def sortedMatches: Seq[FootballMatch] = matches.sortByDate
 
   def matches: Seq[FootballMatch] = competitions.flatMap(_.matches)
+
+  // Returns a lazy view of all matches paired with their competition ID.
+  // WARNING: Only use this for single-pass lookups.
+  def matchesWithCompetition: View[(String, FootballMatch)] =
+    competitions.view.flatMap(comp => comp.matches.map(m => (comp.id, m)))
 
   def isMatchLiveOrAboutToStart(matches: Seq[FootballMatch], clock: Clock): Boolean =
     matches.exists(game => {
