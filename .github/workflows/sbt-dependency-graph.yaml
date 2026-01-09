@@ -22,7 +22,7 @@ jobs:
         uses: sbt/setup-sbt@a627500d27445f8c5021755a439829b6e78e3358 # v1.1.15
       - name: Submit dependencies
         id: submit
-        uses: scalacenter/sbt-dependency-submission@64084844d2b0a9b6c3765f33acde2fbe3f5ae7d3 # v3.1.0
+        uses: scalacenter/sbt-dependency-submission@f43202114d7522a4b233e052f82c2eea8d658134 # v3.2.1
       - name: Log snapshot for user validation
         id: validate
         run: cat ${{ steps.submit.outputs.snapshot-json-path }} | jq
