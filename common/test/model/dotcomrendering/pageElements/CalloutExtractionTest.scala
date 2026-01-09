@@ -154,6 +154,7 @@ class CalloutExtractionTest extends AnyFlatSpec with Matchers {
           Contact("signal", "+4488736683", "http://signal.com", Some("this is the guidance")),
         ),
       ),
+      CommunityCallout,
     )
   }
 
