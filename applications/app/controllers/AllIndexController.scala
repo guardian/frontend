@@ -172,7 +172,7 @@ class AllIndexController(
 
     result.failed.foreach {
       case ContentApiError(404, _, _) =>
-        log.info(s"Cannot fetch content for request '${request.uri}' - 404 Not Found")
+        logInfoWithRequestId(s"Cannot fetch content for request '${request.uri}' - 404 Not Found")
       case e: Exception =>
         logErrorWithRequestId(e.getMessage, e)
     }
@@ -196,7 +196,7 @@ class AllIndexController(
 
     result.failed.foreach {
       case ContentApiError(404, _, _) =>
-        log.info(s"Cannot fetch content for request '${request.uri}' - 404 Not Found")
+        logInfoWithRequestId(s"Cannot fetch content for request '${request.uri}' - 404 Not Found")
       case e: Exception =>
         logErrorWithRequestId(e.getMessage, e)
     }
