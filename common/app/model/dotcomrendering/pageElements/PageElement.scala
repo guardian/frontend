@@ -191,10 +191,16 @@ case class ReporterCalloutBlockElement(
     activeFrom: Option[Long],
     activeUntil: Option[Long],
     displayOnSensitive: Boolean,
-    title: String,
-    description: String,
-    contacts: Option[Seq[Contact]],
     calloutType: CalloutType,
+    title: String,
+    subtitle: String,
+    intro: String,
+    mainTextHeading: String,
+    mainText: String,
+    emailContact: Option[String],
+    messagingContact: Option[String],
+    securedropContact: Option[String],
+    endNote: Option[String],
 ) extends PageElement
 
 object ReporterCalloutBlockElement {
