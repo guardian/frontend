@@ -25,6 +25,8 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
+    <!-- END -->
+
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
     </root>
