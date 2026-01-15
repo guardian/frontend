@@ -27,7 +27,7 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").contains("DEV")'>
+    <if condition='!property("STAGE").contains("DEV")'>
         <then>
             <root level="INFO">
                 <appender-ref ref="ASYNCSTDOUT"/>
@@ -35,11 +35,9 @@
         </then>
     </if>
 
-    <if condition='property("STAGE") == null || property("STAGE").contains("DEV") || property("STAGE").contains("CODE")'>
+    <if condition='property("STAGE").contains("CODE")'>
         <then>
-            <root level="DEBUG">
-                <appender-ref ref="STDOUT"/>
-            </root>
+            <root level="DEBUG" />
         </then>
     </if>
 
