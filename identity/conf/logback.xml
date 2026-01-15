@@ -30,6 +30,7 @@
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
     </root>
+
     <if condition='!property("STAGE").contains("DEV")'>
         <then>
             <root level="INFO">
@@ -37,4 +38,11 @@
             </root>
         </then>
     </if>
+
+    <if condition='property("STAGE").contains("CODE")'>
+        <then>
+            <root level="DEBUG" />
+        </then>
+    </if>
+
 </configuration>

@@ -33,5 +33,10 @@
             </root>
         </then>
     </if>
+    <if condition='property("STAGE").contains("CODE")'>
+        <then>
+            <root level="DEBUG" />
+        </then>
+    </if>
 
 </configuration>
