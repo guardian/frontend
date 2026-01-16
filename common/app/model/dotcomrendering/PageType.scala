@@ -20,16 +20,18 @@ object PageType {
   implicit val writes: OWrites[PageType] = Json.writes[PageType]
 
   def apply(page: Page, request: RequestHeader, context: ApplicationContext): PageType = {
+    val config = getMap(page, Edition(request), false, request) // Only construct config once
+
+    def configFor(key: String): Boolean = config.getOrElse(key, JsBoolean(false)).as[Boolean]
+
     PageType(
-      getMap(page, Edition(request), false, request)
-        .getOrElse("hasShowcaseMainElement", JsBoolean(false))
-        .as[Boolean],
-      getMap(page, Edition(request), false, request).getOrElse("isFront", JsBoolean(false)).as[Boolean],
-      getMap(page, Edition(request), false, request).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
-      getMap(page, Edition(request), false, request).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
-      getMap(page, Edition(request), false, request).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
-      context.isPreview,
-      getMap(page, Edition(request), false, request).getOrElse("isSensitive", JsBoolean(false)).as[Boolean],
+      hasShowcaseMainElement = configFor("hasShowcaseMainElement"),
+      isFront = configFor("isFront"),
+      isLiveblog = configFor("isLiveBlog"),
+      isMinuteArticle = configFor("isMinuteArticle"),
+      isPaidContent = configFor("isPaidContent"),
+      isPreview = context.isPreview,
+      isSensitive = configFor("isSensitive"),
     )
   }
 }
