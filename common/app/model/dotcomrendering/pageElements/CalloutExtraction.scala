@@ -218,34 +218,98 @@ object CalloutExtraction {
     }
   }
 
+  private case class BaseCalloutFields(
+      id: String,
+      activeFrom: Option[Long],
+      activeUntil: Option[Long],
+      displayOnSensitive: Boolean,
+      calloutType: CalloutType,
+  )
+
+  private def extractBaseCalloutFields(
+      campaign: JsObject,
+  ): Option[BaseCalloutFields] = {
+    for {
+      id <- (campaign \ "id").asOpt[String]
+      displayOnSensitive <- (campaign \ "displayOnSensitive").asOpt[Boolean]
+      campaignType <- (campaign \ "fields" \ "_type").asOpt[String]
+    } yield {
+
+      val calloutType = campaignType match {
+        case "callout"          => CommunityCallout
+        case "reporter-callout" => ReporterCallout
+        case _                  => CommunityCallout
+      }
+      BaseCalloutFields(
+        id,
+        (campaign \ "activeFrom").asOpt[Long],
+        (campaign \ "activeUntil").asOpt[Long],
+        displayOnSensitive,
+        calloutType,
+      )
+    }
+  }
+
+  private def campaignJsObjectToReporterCalloutBlockElement(
+      campaign: JsObject,
+      baseCalloutFields: BaseCalloutFields,
+  ): Option[ReporterCalloutBlockElement] = {
+    for {
+      title <- (campaign \ "fields" \ "title").asOpt[String]
+      subtitle <- (campaign \ "fields" \ "subtitle").asOpt[String]
+      intro <- (campaign \ "fields" \ "intro").asOpt[String]
+      mainTextHeading <- (campaign \ "fields" \ "mainTextHeading").asOpt[String]
+      mainText <- (campaign \ "fields" \ "mainText").asOpt[String]
+    } yield {
+      val emailContact = (campaign \ "fields" \ "emailContact").asOpt[String]
+      val messagingContact = (campaign \ "fields" \ "messagingContact").asOpt[String]
+      val securedropContact = (campaign \ "fields" \ "securedropContact").asOpt[String]
+      val endNote = (campaign \ "fields" \ "endNote").asOpt[String]
+
+      ReporterCalloutBlockElement(
+        baseCalloutFields.id,
+        baseCalloutFields.activeFrom,
+        baseCalloutFields.activeUntil,
+        baseCalloutFields.displayOnSensitive,
+        baseCalloutFields.calloutType,
+        title,
+        subtitle,
+        intro,
+        mainTextHeading,
+        mainText,
+        emailContact,
+        messagingContact,
+        securedropContact,
+        endNote,
+      )
+    }
+  }
+
   private def campaignJsObjectToCalloutBlockElementV2(
       campaign: JsObject,
       callout: CalloutElementFields,
       calloutsUrl: Option[String],
+      baseCalloutFields: BaseCalloutFields,
   ): Option[CalloutBlockElementV2] = {
     for {
-      id <- (campaign \ "id").asOpt[String]
-      activeFrom <- (campaign \ "activeFrom").asOpt[Long]
-      displayOnSensitive <- (campaign \ "displayOnSensitive").asOpt[Boolean]
       formId <- (campaign \ "fields" \ "formId").asOpt[Int]
       prompt <- callout.overridePrompt.orElse(Some("Share your experience"))
       title <- callout.overrideTitle.orElse((campaign \ "fields" \ "callout").asOpt[String])
       description <- callout.overrideDescription.orElse((campaign \ "fields" \ "description").asOpt[String])
       tagName <- (campaign \ "fields" \ "tagName").asOpt[String]
       formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
+      activeFrom <- baseCalloutFields.activeFrom
     } yield {
       val contacts = (campaign \ "fields" \ "contacts").asOpt[Seq[Contact]]
-
       val formFields2 = formFields1.value
         .flatMap(formFieldItemToCalloutFormField)
         .toList
-
       CalloutBlockElementV2(
-        id,
+        baseCalloutFields.id,
         calloutsUrl,
         activeFrom,
-        (campaign \ "activeUntil").asOpt[Long],
-        displayOnSensitive,
+        baseCalloutFields.activeUntil,
+        baseCalloutFields.displayOnSensitive,
         formId,
         prompt,
         title,
@@ -254,6 +318,7 @@ object CalloutExtraction {
         formFields2,
         callout.isNonCollapsible.getOrElse(false),
         contacts,
+        baseCalloutFields.calloutType,
       )
     }
   }
@@ -400,11 +465,17 @@ object CalloutExtraction {
       callout: CalloutElementFields,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
-  ): Option[CalloutBlockElementV2] = {
+  ): Option[PageElement] = {
     for {
       cpgs <- campaigns
       campaign <- extractCampaignByCampaignId(callout.campaignId, cpgs)
-      element <- campaignJsObjectToCalloutBlockElementV2(campaign, callout, calloutsUrl)
+      baseCalloutFields <- extractBaseCalloutFields(campaign)
+      element <-
+        if (baseCalloutFields.calloutType == ReporterCallout) {
+          campaignJsObjectToReporterCalloutBlockElement(campaign, baseCalloutFields)
+        } else
+          campaignJsObjectToCalloutBlockElementV2(campaign, callout, calloutsUrl, baseCalloutFields)
+
     } yield {
       element
     }

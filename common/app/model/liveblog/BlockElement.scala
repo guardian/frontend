@@ -53,6 +53,7 @@ case class MapBlockElement(html: Option[String]) extends BlockElement
 case class UnknownBlockElement(html: Option[String]) extends BlockElement
 case class UnsupportedBlockElement(html: Option[String]) extends BlockElement
 case class InteractiveBlockElement(html: Option[String], scriptUrl: Option[String] = None) extends BlockElement
+case class CalloutBlockElement(campaignId: String, calloutType: Option[String]) extends BlockElement
 
 case class MembershipBlockElement(
     originalUrl: Option[String],
@@ -177,13 +178,14 @@ object BlockElement {
       case Form            => Some(FormBlockElement(None))
 
       case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
-      case Callout                   => Some(UnsupportedBlockElement(None))
-      case Cartoon                   => Some(UnsupportedBlockElement(None))
-      case Recipe                    => Some(UnsupportedBlockElement(None))
-      case ElementType.List          => Some(UnsupportedBlockElement(None))
-      case Timeline                  => Some(UnsupportedBlockElement(None))
-      case Link                      => Some(UnsupportedBlockElement(None))
-      case Product                   => Some(UnsupportedBlockElement(None))
+      case Callout                   =>
+        element.calloutTypeData.flatMap(typeData => typeData.campaignId.map(id => CalloutBlockElement(id, None)))
+      case Cartoon          => Some(UnsupportedBlockElement(None))
+      case Recipe           => Some(UnsupportedBlockElement(None))
+      case ElementType.List => Some(UnsupportedBlockElement(None))
+      case Timeline         => Some(UnsupportedBlockElement(None))
+      case Link             => Some(UnsupportedBlockElement(None))
+      case Product          => Some(UnsupportedBlockElement(None))
     }
   }
 
@@ -222,6 +224,7 @@ object BlockElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
+  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
   implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
