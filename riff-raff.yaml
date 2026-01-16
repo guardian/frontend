@@ -26,6 +26,7 @@ templates:
     - update-ami-for-article
     - update-ami-for-preview
     - update-ami-for-commercial
+    - update-ami-for-identity
 
 deployments:
   admin:
@@ -168,5 +169,13 @@ deployments:
     parameters:
       amiParametersToTags:
         AMICommercial:
+          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          AmigoStage: PROD
+  update-ami-for-identity:
+    app: identity
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AMIIdentity:
           Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
           AmigoStage: PROD
