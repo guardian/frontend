@@ -6,15 +6,16 @@ import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   EmbedTracking,
   LinkType,
+  Priority,
   ProductDisplayType,
   ProductElementFields,
-  ProductCTA => ApiProductCta,
-  ProductCustomAttribute => ApiProductCustomAttribute,
-  ProductImage => ApiProductImage,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
   BlockElement => ApiBlockElement,
+  ProductCTA => ApiProductCta,
+  ProductCustomAttribute => ApiProductCustomAttribute,
+  ProductImage => ApiProductImage,
   Sponsorship => ApiSponsorship,
 }
 import common.{Chronos, Edition}
@@ -510,6 +511,7 @@ case class LinkBlockElement(
     url: Option[String],
     label: Option[String],
     linkType: LinkType,
+    priority: Option[Priority],
 ) extends PageElement
 object LinkBlockElement {
   implicit val LinkTypeWrites: Writes[LinkType] = Writes { linkType =>
@@ -1463,6 +1465,7 @@ object PageElement {
               AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isUSProductionOffice),
               d.label,
               d.linkType.getOrElse(LinkType.ProductButton),
+              d.priority,
             ),
           )
           .toList
