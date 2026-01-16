@@ -517,6 +517,9 @@ object LinkBlockElement {
   implicit val LinkTypeWrites: Writes[LinkType] = Writes { linkType =>
     JsString(linkType.name)
   }
+  implicit val PriorityWrites: Writes[Priority] = Writes { priority =>
+    JsString(priority.name)
+  }
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
 
