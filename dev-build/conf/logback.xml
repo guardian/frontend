@@ -2,6 +2,7 @@
 
     <contextName>frontend-dev-build</contextName>
 
+
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/frontend-dev-build.log</file>
 
@@ -29,20 +30,21 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <if condition='!property("STAGE").contains("DEV")'>
-        <then>
-            <root level="INFO">
-                <appender-ref ref="ASYNCSTDOUT"/>
-            </root>
-        </then>
-    </if>
-
     <if condition='property("STAGE").contains("CODE")'>
         <then>
             <root level="DEBUG">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
+        <else>
+            <if condition='!property("STAGE").contains("DEV")'>
+                <then>
+                    <root level="INFO">
+                        <appender-ref ref="ASYNCSTDOUT"/>
+                    </root>
+                </then>
+            </if>
+        </else>
     </if>
 
 </configuration>
