@@ -39,7 +39,9 @@
 
     <if condition='property("STAGE").contains("CODE")'>
         <then>
-            <root level="DEBUG" />
+            <root level="DEBUG">
+                <appender-ref ref="ASYNCSTDOUT"/>
+            </root>
         </then>
     </if>
 
