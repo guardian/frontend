@@ -17,6 +17,13 @@ trait FrontendApplicationLoader extends ApplicationLoader {
   def buildComponents(context: Context): FrontendComponents
 
   override def load(context: Context): Application = {
+    // Set STAGE system property from environment variable if not already set
+    // This allows logback to distinguish between CODE and PROD environments
+    if (System.getProperty("STAGE") == null) {
+      val stage = sys.env.getOrElse("STAGE", "DEV")
+      System.setProperty("STAGE", stage)
+    }
+
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(context.environment, context.initialConfiguration, Map.empty)
     }
