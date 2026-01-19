@@ -137,16 +137,6 @@ object BlockquoteBlockElement {
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
 }
 
-sealed trait CalloutType {
-  def name: String
-}
-case object CommunityCallout extends CalloutType {
-  val name = "community"
-}
-case object ReporterCallout extends CalloutType {
-  val name = "reporter"
-}
-
 case class CalloutBlockElement(
     id: String,
     calloutsUrl: Option[String],
@@ -176,13 +166,9 @@ case class CalloutBlockElementV2(
     formFields: List[CalloutFormField],
     isNonCollapsible: Boolean,
     contacts: Option[Seq[Contact]],
-    calloutType: CalloutType,
 ) extends PageElement
 
 object CalloutBlockElementV2 {
-  implicit val CalloutTypeWrites: Writes[CalloutType] = Writes { calloutType =>
-    JsString(calloutType.name)
-  }
   implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
 }
 
@@ -191,7 +177,6 @@ case class ReporterCalloutBlockElement(
     activeFrom: Option[Long],
     activeUntil: Option[Long],
     displayOnSensitive: Boolean,
-    calloutType: CalloutType,
     title: String,
     subtitle: String,
     intro: String,
@@ -204,9 +189,6 @@ case class ReporterCalloutBlockElement(
 ) extends PageElement
 
 object ReporterCalloutBlockElement {
-  implicit val CalloutTypeWrites: Writes[CalloutType] = Writes { calloutType =>
-    JsString(calloutType.name)
-  }
   implicit val ReporterCalloutBlockElementWrites: Writes[ReporterCalloutBlockElement] =
     Json.writes[ReporterCalloutBlockElement]
 

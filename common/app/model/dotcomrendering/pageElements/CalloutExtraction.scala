@@ -218,6 +218,16 @@ object CalloutExtraction {
     }
   }
 
+  private sealed trait CalloutType {
+    def name: String
+  }
+  private case object CommunityCallout extends CalloutType {
+    val name = "community"
+  }
+  private case object ReporterCallout extends CalloutType {
+    val name = "reporter"
+  }
+
   private case class BaseCalloutFields(
       id: String,
       activeFrom: Option[Long],
@@ -271,7 +281,6 @@ object CalloutExtraction {
         baseCalloutFields.activeFrom,
         baseCalloutFields.activeUntil,
         baseCalloutFields.displayOnSensitive,
-        baseCalloutFields.calloutType,
         title,
         subtitle,
         intro,
@@ -318,7 +327,6 @@ object CalloutExtraction {
         formFields2,
         callout.isNonCollapsible.getOrElse(false),
         contacts,
-        baseCalloutFields.calloutType,
       )
     }
   }
