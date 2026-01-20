@@ -30,14 +30,14 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <if condition='property("STAGE").contains("CODE")'>
+    <if condition='"${STAGE:-DEV}".equals("CODE")'>
         <then>
             <root level="DEBUG">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
         <else>
-            <if condition='!property("STAGE").contains("DEV")'>
+            <if condition='!"${STAGE:-DEV}".equals("DEV")'>
                 <then>
                     <root level="INFO">
                         <appender-ref ref="ASYNCSTDOUT"/>
