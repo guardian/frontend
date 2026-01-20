@@ -56,7 +56,9 @@ case class Competition(
   }
 }
 
-case class Group(round: Round, entries: Seq[LeagueTableEntry])
+case class Group(round: Round, entries: Seq[LeagueTableEntry]) {
+  def hasTeam(teamId: String): Boolean = entries.exists(_.team.id == teamId)
+}
 
 case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolean = false) {
   lazy val multiGroup = hasGroups || groups.size > 1
