@@ -30,14 +30,16 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <if condition='"${STAGE:-DEV}".equals("CODE")'>
+    <variable name="STAGE_VALUE" value="${env.STAGE:-DEV}" />
+
+    <if condition='p("STAGE_VALUE").equals("CODE")'>
         <then>
             <root level="DEBUG">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
         <else>
-            <if condition='!"${STAGE:-DEV}".equals("DEV")'>
+            <if condition='!p("STAGE_VALUE").equals("DEV")'>
                 <then>
                     <root level="INFO">
                         <appender-ref ref="ASYNCSTDOUT"/>

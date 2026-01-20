@@ -17,6 +17,10 @@ trait FrontendApplicationLoader extends ApplicationLoader {
   def buildComponents(context: Context): FrontendComponents
 
   override def load(context: Context): Application = {
+    // Log STAGE for debugging - this will appear in stdout before logback is configured
+    val stageEnv = sys.env.get("STAGE")
+    val stageProp = Option(System.getProperty("STAGE"))
+    println(s"[FrontendApplicationLoader] STAGE env var: $stageEnv, system property: $stageProp")
 
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(context.environment, context.initialConfiguration, Map.empty)
