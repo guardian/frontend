@@ -1,6 +1,7 @@
 package app
 
 import common._
+import common.Environment
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpFilters
@@ -17,10 +18,12 @@ trait FrontendApplicationLoader extends ApplicationLoader {
   def buildComponents(context: Context): FrontendComponents
 
   override def load(context: Context): Application = {
-    // Log STAGE for debugging - this will appear in stdout before logback is configured
-    val stageEnv = sys.env.get("STAGE")
-    val stageProp = Option(System.getProperty("STAGE"))
-    println(s"[FrontendApplicationLoader] STAGE env var: $stageEnv, system property: $stageProp")
+    // Set STAGE system property BEFORE logback configures
+    // This allows logback conditionals to work correctly
+    // Uses Environment.stage which reads from env var or /etc/gu/install_vars
+    if (System.getProperty("STAGE") == null) {
+      System.setProperty("STAGE", Environment.stage)
+    }
 
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(context.environment, context.initialConfiguration, Map.empty)

@@ -2,7 +2,6 @@
 
     <contextName>frontend-rss</contextName>
 
-
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/frontend-rss.log</file>
 
@@ -28,16 +27,14 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <variable name="STAGE_VALUE" value="${env.STAGE:-DEV}" />
-
-    <if condition='p("STAGE_VALUE").equals("CODE")'>
+    <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("CODE")'>
         <then>
             <root level="DEBUG">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
         <else>
-            <if condition='!p("STAGE_VALUE").equals("DEV")'>
+            <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
                 <then>
                     <root level="INFO">
                         <appender-ref ref="ASYNCSTDOUT"/>

@@ -2,15 +2,12 @@
 
     <contextName>frontend-dev-build</contextName>
 
-
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/frontend-dev-build.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>logs/frontend-dev-build.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-            <maxHistory>7</maxHistory>
-            <totalSizeCap>512MB</totalSizeCap>
-            <maxFileSize>256MB</maxFileSize>
+            <maxHistory>7</maxHistory><totalSizeCap>512MB</totalSizeCap><maxFileSize>256MB</maxFileSize>
         </rollingPolicy>
 
         <encoder>
@@ -30,16 +27,14 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <variable name="STAGE_VALUE" value="${env.STAGE:-DEV}" />
-
-    <if condition='p("STAGE_VALUE").equals("CODE")'>
+    <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("CODE")'>
         <then>
             <root level="DEBUG">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
         <else>
-            <if condition='!p("STAGE_VALUE").equals("DEV")'>
+            <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
                 <then>
                     <root level="INFO">
                         <appender-ref ref="ASYNCSTDOUT"/>
