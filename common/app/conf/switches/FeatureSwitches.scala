@@ -649,4 +649,15 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val footballRedesign = Switch(
+    group = SwitchGroup.Feature,
+    name = "football-redesign",
+    description = "Enable football redesign ",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
