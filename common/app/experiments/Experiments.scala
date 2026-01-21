@@ -15,6 +15,7 @@ object ActiveExperiments extends ExperimentsDefinition {
       DarkModeWeb,
       GoogleOneTap,
       TagPageStorylines,
+      FootballRedesign,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
@@ -53,4 +54,13 @@ object TagPageStorylines
       owners = Seq(Owner.withEmail("ai.dev@theguardian.com")),
       sellByDate = LocalDate.of(2026, 1, 30),
       participationGroup = Perc0E,
+    )
+
+object FootballRedesign
+    extends Experiment(
+      name = "football-redesign",
+      description = "Enable redesigned football pages",
+      owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+      sellByDate = LocalDate.of(2026, 2, 28),
+      participationGroup = Perc0C,
     )
