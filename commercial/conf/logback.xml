@@ -30,13 +30,10 @@
     <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("CODE")'>
         <then>
             <logger name="common.RequestLogger" level="DEBUG"/>
-            <root level="INFO">
-                <appender-ref ref="ASYNCSTDOUT"/>
-            </root>
         </then>
     </if>
 
-    <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("PROD")'>
+    <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
         <then>
             <root level="INFO">
                 <appender-ref ref="ASYNCSTDOUT"/>

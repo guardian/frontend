@@ -35,19 +35,15 @@
     <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("CODE")'>
         <then>
             <logger name="common.RequestLogger" level="DEBUG"/>
+        </then>
+    </if>
+
+    <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
+        <then>
             <root level="INFO">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
-        <else>
-            <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
-                <then>
-                    <root level="INFO">
-                        <appender-ref ref="ASYNCSTDOUT"/>
-                    </root>
-                </then>
-            </if>
-        </else>
     </if>
 
 </configuration>

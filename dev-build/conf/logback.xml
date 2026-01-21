@@ -7,7 +7,9 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>logs/frontend-dev-build.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-            <maxHistory>7</maxHistory><totalSizeCap>512MB</totalSizeCap><maxFileSize>256MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>512MB</totalSizeCap>
+            <maxFileSize>256MB</maxFileSize>
         </rollingPolicy>
 
         <encoder>
@@ -30,19 +32,15 @@
     <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("CODE")'>
         <then>
             <logger name="common.RequestLogger" level="DEBUG"/>
+        </then>
+    </if>
+
+    <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
+        <then>
             <root level="INFO">
                 <appender-ref ref="ASYNCSTDOUT"/>
             </root>
         </then>
-        <else>
-            <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
-                <then>
-                    <root level="INFO">
-                        <appender-ref ref="ASYNCSTDOUT"/>
-                    </root>
-                </then>
-            </if>
-        </else>
     </if>
 
 </configuration>
