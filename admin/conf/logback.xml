@@ -34,7 +34,7 @@
 
     <logger name="common.RequestLogger" level="${ACCESS_LOG_LEVEL:-DEBUG}"/>
 
-    <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
+    <if condition='!property("STAGE").contains("DEV")'>
         <then>
             <root level="INFO">
                 <appender-ref ref="ASYNCSTDOUT"/>
