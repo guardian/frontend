@@ -18,15 +18,19 @@ trait FrontendApplicationLoader extends ApplicationLoader {
   def buildComponents(context: Context): FrontendComponents
 
   override def load(context: Context): Application = {
-    // Set STAGE system property BEFORE logback configures
-    // This allows logback conditionals to work correctly
-    // Uses Environment.stage which reads from env var or /etc/gu/install_vars
+    val stage = Environment.stage
     if (System.getProperty("STAGE") == null) {
-      System.setProperty("STAGE", Environment.stage)
+      System.setProperty("STAGE", stage)
     }
+    
+    val accessLogLevel = if (stage == "CODE") "DEBUG" else "INFO"
 
     LoggerConfigurator(context.environment.classLoader).foreach {
-      _.configure(context.environment, context.initialConfiguration, Map.empty)
+      _.configure(
+        context.environment,
+        context.initialConfiguration,
+        Map("ACCESS_LOG_LEVEL" -> accessLogLevel),
+      )
     }
     val components = buildComponents(context)
     components.startLifecycleComponents()

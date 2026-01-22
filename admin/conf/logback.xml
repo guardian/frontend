@@ -32,11 +32,7 @@
         <appender-ref ref="LOGFILE"/>
     </root>
 
-    <if condition='property("STAGE") != null &amp;&amp; property("STAGE").equals("CODE")'>
-        <then>
-            <logger name="common.RequestLogger" level="DEBUG"/>
-        </then>
-    </if>
+    <logger name="common.RequestLogger" level="${ACCESS_LOG_LEVEL:-DEBUG}"/>
 
     <if condition='property("STAGE") != null &amp;&amp; !property("STAGE").equals("DEV")'>
         <then>
