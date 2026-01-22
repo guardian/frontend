@@ -26,6 +26,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
 import layout.slices.Container
 
+import java.time.Instant
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
@@ -306,7 +307,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       case FullAdFreeType => FaciaPressMetrics.FrontPressContentSize
     }
 
-    metric.recordSample(json.getBytes.length, new DateTime())
+    metric.recordSample(json.getBytes.length, Instant.now())
     putPressedJson(path, json, pressedType)
   }
 

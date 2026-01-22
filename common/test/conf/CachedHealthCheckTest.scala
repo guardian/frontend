@@ -10,6 +10,8 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.wordspec.AnyWordSpec
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.Random
@@ -26,14 +28,14 @@ import scala.util.Random
   // Helper method to construct mock Results
   def mockResult(
       statusCode: Int,
-      date: DateTime = DateTime.now,
+      instant: Instant = Instant.now(),
       expiration: Option[Duration] = Some(10.seconds),
   ): HealthCheckResult = {
     val path = s"/path/${Random.alphanumeric.take(12).mkString}"
     statusCode match {
-      case 200 => HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
+      case 200 => HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), instant, expiration)
       case _   =>
-        HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), date, expiration)
+        HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), instant, expiration)
     }
   }
 
@@ -85,7 +87,7 @@ import scala.util.Random
       "cached result is expired" should {
         "503" in {
           val expiration = 5.seconds
-          val resultDate = DateTime.now.minus(expiration.toMillis + 1)
+          val resultDate = Instant.now.minus(expiration.toMillis + 1, ChronoUnit.MILLIS)
           val mockResults = List(mockResult(200, resultDate, Some(expiration)))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be(503)
@@ -110,7 +112,7 @@ import scala.util.Random
       }
       "results which are never expiring" should {
         "200" in {
-          val resultDate = DateTime.now.minus(scala.util.Random.nextLong()) // random date in the past
+          val resultDate = Instant.now.minus(scala.util.Random.nextLong(), ChronoUnit.MILLIS) // random date in the past
           val mockResults = List(mockResult(200, resultDate, None))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be(200)
@@ -129,7 +131,7 @@ import scala.util.Random
       "one cached result is successful but expired" should {
         "503" in {
           val expiration = 5.seconds
-          val resultDate = DateTime.now.minus(expiration.toMillis + 1)
+          val resultDate = Instant.now.minus(expiration.toMillis + 1, ChronoUnit.MILLIS)
           val mockResults = List(mockResult(200, resultDate, Some(expiration)), mockResult(404))
           getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(503)
