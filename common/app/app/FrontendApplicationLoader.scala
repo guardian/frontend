@@ -22,7 +22,7 @@ trait FrontendApplicationLoader extends ApplicationLoader {
     if (System.getProperty("STAGE") == null) {
       System.setProperty("STAGE", stage)
     }
-    
+
     val accessLogLevel = if (stage == "CODE") "DEBUG" else "INFO"
 
     LoggerConfigurator(context.environment.classLoader).foreach {
