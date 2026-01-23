@@ -20,6 +20,10 @@ trait GuLogging {
     log.error(ExceptionUtils.getStackTrace(e))
   }
 
+  def logDebugWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
+    log.logger.debug(getRequestIdField, message)
+  }
+
   def logInfoWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
     log.logger.info(getRequestIdField, message)
   }
