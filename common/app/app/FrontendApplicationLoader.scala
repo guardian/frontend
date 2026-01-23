@@ -22,11 +22,16 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
     val accessLogLevel = if (stage == "CODE") "DEBUG" else "INFO"
 
+    val stdoutLogLevel = if (stage == "DEV") "OFF" else "TRACE"
+
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(
         context.environment,
         context.initialConfiguration,
-        Map("ACCESS_LOG_LEVEL" -> accessLogLevel),
+        Map(
+          "ACCESS_LOG_LEVEL" -> accessLogLevel,
+          "STDOUT_LOG_LEVEL" -> stdoutLogLevel,
+        ),
       )
     }
     val components = buildComponents(context)
