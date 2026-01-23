@@ -375,9 +375,11 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     }
   }
   implicit val groupWrites: Writes[Group] = (group: Group) =>
-    Json.obj(
-      "round" -> group.round,
-      "entries" -> getGroupEntries(group),
+    withoutDeepNull(
+      Json.obj(
+        "round" -> group.round,
+        "entries" -> getGroupEntries(group),
+      ),
     )
 
   implicit def dotcomRenderingFootballMatchSummaryDataModel: Writes[DotcomRenderingFootballMatchSummaryDataModel] =
