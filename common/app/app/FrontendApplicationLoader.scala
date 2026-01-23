@@ -1,6 +1,7 @@
 package app
 
 import common._
+import common.Environment
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpFilters
@@ -17,8 +18,16 @@ trait FrontendApplicationLoader extends ApplicationLoader {
   def buildComponents(context: Context): FrontendComponents
 
   override def load(context: Context): Application = {
+    val stage = Environment.stage
+
+    val accessLogLevel = if (stage == "CODE") "DEBUG" else "INFO"
+
     LoggerConfigurator(context.environment.classLoader).foreach {
-      _.configure(context.environment, context.initialConfiguration, Map.empty)
+      _.configure(
+        context.environment,
+        context.initialConfiguration,
+        Map("ACCESS_LOG_LEVEL" -> accessLogLevel),
+      )
     }
     val components = buildComponents(context)
     components.startLifecycleComponents()

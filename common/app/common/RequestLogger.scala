@@ -99,6 +99,9 @@ case class RequestLogger(request: RequestHeader, response: Option[Result], stopW
     copy(request, Some(resp), stopWatch)
   }
 
+  def debug(message: String): Unit = {
+    logDebugWithCustomFields(message, allFields)
+  }
   def info(message: String): Unit = {
     logInfoWithCustomFields(message, allFields)
   }
