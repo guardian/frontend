@@ -19,9 +19,6 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
   override def load(context: Context): Application = {
     val stage = Environment.stage
-    if (System.getProperty("STAGE") == null) {
-      System.setProperty("STAGE", stage)
-    }
 
     val accessLogLevel = if (stage == "CODE") "DEBUG" else "INFO"
 
