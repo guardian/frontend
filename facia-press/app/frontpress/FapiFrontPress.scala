@@ -276,7 +276,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     pressFuture.onComplete {
       case Success(_) =>
         val pressDuration: Long = stopWatch.elapsed
-        log.info(s"Successfully pressed $path in $pressDuration ms")
+        log.debug(s"Successfully pressed $path in $pressDuration ms")
         FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration.toDouble)
 
         /** We record separate metrics for each of the editions' network fronts */
@@ -523,7 +523,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     )
 
     contentApiResponse.foreach { _ =>
-      log.info(s"Getting SEO data from content API for $id")
+      log.debug(s"Getting SEO data from content API for $id")
     }
 
     contentApiResponse.failed.foreach { e: Throwable =>

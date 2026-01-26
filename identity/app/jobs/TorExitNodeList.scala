@@ -13,7 +13,7 @@ object TorExitNodeList extends GuLogging {
   private val torNodeListUrl = "https://check.torproject.org/cgi-bin/TorBulkExitList.py"
 
   def run(): Unit = {
-    log.info("Updating tor list for current list for %s".format("profile.theguardian.com"))
+    log.debug("Updating tor list for current list for %s".format("profile.theguardian.com"))
     val addresses = InetAddress.getAllByName("profile.theguardian.com")
 
     val nodes = addresses map { address =>

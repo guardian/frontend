@@ -429,25 +429,25 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       .find { _.competition.id == id }
       .foreach { c =>
         c.refresh(clock)
-        log.info(
+        log.debug(
           s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches",
         )
       }
 
   def refreshCompetitionData()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    log.info("Refreshing competition data")
+    log.debug("Refreshing competition data")
     footballClient.competitions
       .map { allComps =>
         oldestRelevantCompetitionSeasons(allComps).foreach { season =>
           competitionAgents.find(_.competition.id == season.id).foreach { agent =>
             agent.competition.startDate match {
               case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.atStartOfDay().toLocalDate) =>
-                log.info(
+                log.debug(
                   s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}",
                 )
                 agent.update(agent.competition.copy(startDate = Some(season.startDate)))
               case None =>
-                log.info(
+                log.debug(
                   s"setting competition: ${season.id} season: ${season.seasonId} startDate was: None now: ${season.startDate.toString}",
                 )
                 agent.update(agent.competition.copy(startDate = Some(season.startDate)))
@@ -462,7 +462,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   def refreshMatchDay(
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
-    log.info("Refreshing match day data")
+    log.debug("Refreshing match day data")
     val result = getLiveMatches(clock).map(_.map { case (compId, newMatches) =>
       competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
@@ -476,7 +476,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     // matches is the list of all matches from all competitions
     if (isMatchLiveOrAboutToStart(matches, clock)) {
-      log.info("Match is in Progress - refreshing match day data")
+      log.debug("Match is in Progress - refreshing match day data")
       refreshMatchDay(clock)
     } else {
       Future.successful(immutable.Iterable[Competition]())

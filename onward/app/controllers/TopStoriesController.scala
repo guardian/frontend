@@ -40,7 +40,7 @@ class TopStoriesController(
     }
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
-    logInfoWithRequestId(s"Fetching top stories for edition ${edition.id}")
+    logDebugWithRequestId(s"Fetching top stories for edition ${edition.id}")
     contentApiClient
       .getResponse(
         contentApiClient
@@ -55,7 +55,7 @@ class TopStoriesController(
           case picks => Some(RelatedContent(picks))
         }
       } recover { case ContentApiError(404, message, _) =>
-      logInfoWithRequestId(s"Got a 404 while calling content api: $message")
+      logDebugWithRequestId(s"Got a 404 while calling content api: $message")
       None
     }
   }

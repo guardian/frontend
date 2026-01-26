@@ -112,7 +112,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
         case None =>
           lastSuccessfulReceipt.refresh()
-          log.info(s"No message after $WaitTimeSeconds seconds")
+          log.debug(s"No message after $WaitTimeSeconds seconds")
           Future.successful(())
       }
 
@@ -132,7 +132,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
   final private def next(): Unit = {
     getAndProcess onComplete {
       case _ if started => next()
-      case _            => log.info("Stopping worker...")
+      case _            => log.debug("Stopping worker...")
     }
   }
 
@@ -143,7 +143,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
       if (started) {
         log.warn("Attempted to start queue worker but queue worker is already started")
       } else {
-        log.info("Starting worker ... ")
+        log.debug("Starting worker ... ")
         started = true
         next()
       }

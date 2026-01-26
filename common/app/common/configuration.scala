@@ -34,13 +34,13 @@ object Environment extends GuLogging {
   private[this] def get(name: String, default: String): String = {
     sys.env.get(name.toUpperCase) match {
       case Some(env) =>
-        log.info(s"Environment lookup: resolved $name from environment variable")
+        log.debug(s"Environment lookup: resolved $name from environment variable")
         env
       case _ if installVars.contains(name) =>
-        log.info(s"Environment lookup: resolved $name from install_vars")
+        log.debug(s"Environment lookup: resolved $name from install_vars")
         installVars(name)
       case _ =>
-        log.info(s"Environment lookup: resolved $name from default value")
+        log.debug(s"Environment lookup: resolved $name from default value")
         default
     }
   }
@@ -51,7 +51,7 @@ object Environment extends GuLogging {
   val awsRegion = get("region", "eu-west-1")
   val configBucket = get("configBucket", "aws-frontend-store")
 
-  log.info(
+  log.debug(
     s"Environment loaded as: stack=$stack, app=$app, stage=$stage, awsRegion=$awsRegion, configBucket=$configBucket",
   )
 }

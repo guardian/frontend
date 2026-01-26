@@ -42,7 +42,7 @@ class MediaInSectionController(
       request: RequestHeader,
   ): Future[Option[Seq[RelatedContentItem]]] = {
     val currentShortUrl = request.getQueryString("shortUrl")
-    logInfoWithRequestId(s"Fetching $mediaType content in section: $sectionId")
+    logDebugWithRequestId(s"Fetching $mediaType content in section: $sectionId")
 
     val excludeTags: Seq[String] = (request.queryString.getOrElse("exclude-tag", Nil) ++ seriesId).map(t => s"-$t")
     val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
@@ -71,7 +71,7 @@ class MediaInSectionController(
       }
 
     promiseOrResponse recover { case ContentApiError(404, message, _) =>
-      logInfoWithRequestId(s"Got a 404 calling content api: $message")
+      logDebugWithRequestId(s"Got a 404 calling content api: $message")
       None
     }
   }

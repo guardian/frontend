@@ -66,11 +66,11 @@ object StatusNotification {
             .asScala
             .onComplete {
               case Success(_) =>
-                log.info(s"Kinesis status notification sent to stream:$streamName")
+                log.debug(s"Kinesis status notification sent to stream:$streamName")
               case Failure(exception) =>
                 log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
             }
-        case None => log.info("Kinesis status notification not configured.")
+        case None => log.debug("Kinesis status notification not configured.")
       }
     }
   }

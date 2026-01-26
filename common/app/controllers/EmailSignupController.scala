@@ -278,7 +278,7 @@ class EmailSignupController(
   }
 
   def logNewsletterNotFoundError(newsletterName: String)(implicit request: RequestHeader): Unit = {
-    logInfoWithRequestId(
+    logDebugWithRequestId(
       s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. It may no longer exist or $newsletterName may be an outdated reference number.",
     )
   }
@@ -375,12 +375,12 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respondFooter(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -491,12 +491,12 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -525,12 +525,12 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/many/ - " +
                 s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +

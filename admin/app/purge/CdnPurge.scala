@@ -25,7 +25,7 @@ object CdnPurge extends Dates with GuLogging {
     val result: Future[WSResponse] = if (environment.isProd || environment.isCode) {
       val serviceId = fastlyService.serviceId
       val endpoint = s"https://api.fastly.com/service/$serviceId/purge/$key"
-      log.info(
+      log.debug(
         s"Attempting to purge fastly cache from end point: $endpoint with key: ${fastly.key.substring(0, 4)} and service ID: ${serviceId}",
       )
 
@@ -39,7 +39,7 @@ object CdnPurge extends Dates with GuLogging {
         .map { response =>
           response.status match {
             case responseCode if (200 to 299) contains responseCode =>
-              log.info(s"purge $key from Fastly with response ${response.statusText}")
+              log.debug(s"purge $key from Fastly with response ${response.statusText}")
               response
             case _ =>
               throw new RuntimeException(

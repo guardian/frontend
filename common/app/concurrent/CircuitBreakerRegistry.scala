@@ -31,11 +31,11 @@ object CircuitBreakerRegistry extends GuLogging {
     )
 
     cb.onHalfOpen(
-      log.info(s"Circuit breaker ($name) reset timeout (${resetTimeout}) finished. Entered half open state."),
+      log.debug(s"Circuit breaker ($name) reset timeout (${resetTimeout}) finished. Entered half open state."),
     )
 
     cb.onClose(
-      log.info(s"Circuit breaker ($name) is closed. Downstream looks healthy again."),
+      log.debug(s"Circuit breaker ($name) is closed. Downstream looks healthy again."),
     )
 
     cb

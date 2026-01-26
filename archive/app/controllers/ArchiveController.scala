@@ -126,14 +126,14 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
   private def tempRedirectTo(path: String)(implicit request: RequestHeader): Result = {
     val redirect = LinkTo(path)
 
-    logInfoWithRequestId(s"""Archive $tempRedirectHttpStatus, redirect to $redirect""")
+    logDebugWithRequestId(s"""Archive $tempRedirectHttpStatus, redirect to $redirect""")
     Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(redirect, tempRedirectHttpStatus)))
   }
   private def redirectTo(path: String, pathSuffixes: String*)(implicit request: RequestHeader): Result = {
     val endOfPath = if (pathSuffixes.isEmpty) "" else s"/${pathSuffixes.mkString("/")}"
     val redirect = LinkTo(path) + endOfPath
 
-    logInfoWithRequestId(s"""Archive $redirectHttpStatus, redirect to $redirect""")
+    logDebugWithRequestId(s"""Archive $redirectHttpStatus, redirect to $redirect""")
     Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(redirect, redirectHttpStatus)))
   }
 

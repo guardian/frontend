@@ -46,7 +46,7 @@ class TorNodeLoggingIdRequestParser(idRequestParser: IdRequestParser) extends Re
     clientIp(request) match {
       case Some(ip) =>
         if (Switches.IdentityLogRegistrationsFromTor.isSwitchedOn && TorExitNodeList.getTorExitNodes.contains(ip)) {
-          log.info(s"Attempted registration from know tor exit node: $ip email: $email")
+          log.debug(s"Attempted registration from know tor exit node: $ip email: $email")
         }
       case _ =>
     }

@@ -236,13 +236,13 @@ class CloudWatchMetricsLifecycle(
     if (Configuration.environment.isProd) {
       jobs.scheduleEvery("LogMetricsJob", 5.seconds) {
         val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
-        log.info(s"heap used: ${heapUsed}Mb")
+        log.debug(s"heap used: ${heapUsed}Mb")
         Future.successful(())
       }
     }
 
     // Log the build number and revision number on startup.
-    log.info(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
+    log.debug(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
   }
 }
 

@@ -55,7 +55,7 @@ class TaggedContentController(
   )
 
   private def lookup(tag: String)(implicit request: RequestHeader): Future[List[ContentType]] = {
-    logInfoWithRequestId(s"Fetching tagged stories")
+    logDebugWithRequestId(s"Fetching tagged stories")
     contentApiClient
       .getResponse(
         contentApiClient
@@ -66,7 +66,7 @@ class TaggedContentController(
       .map { response =>
         response.results.toList map { Content(_) }
       } recover { case ContentApiError(404, message, _) =>
-      logInfoWithRequestId(s"Got a 404 while calling content api: $message")
+      logDebugWithRequestId(s"Got a 404 while calling content api: $message")
       Nil
     }
   }

@@ -39,7 +39,7 @@ object MatchStatus extends GuLogging {
     Html(
       statuses.getOrElse(
         status, {
-          log.info(s"unknown match status $status")
+          log.debug(s"unknown match status $status")
           status.take(2)
         },
       ),

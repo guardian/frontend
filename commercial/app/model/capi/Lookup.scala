@@ -21,7 +21,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
     response map {
       _.content map (Content(_))
     } recover { case e: Exception =>
-      log.info(s"CAPI search for item '$contentId' failed: ${e.getMessage}")
+      log.debug(s"CAPI search for item '$contentId' failed: ${e.getMessage}")
       None
     }
   }
@@ -50,7 +50,7 @@ class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicit
       _.results.getOrElse(Nil).toSeq map (Content(_))
     } recover {
       case e: Exception => {
-        log.info(s"CAPI search for item '${keywordId.stringDecoded}' failed: ${e.getMessage}")
+        log.debug(s"CAPI search for item '${keywordId.stringDecoded}' failed: ${e.getMessage}")
         Nil
       }
     }

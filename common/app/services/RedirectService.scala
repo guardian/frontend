@@ -149,14 +149,14 @@ class RedirectService(implicit executionContext: ExecutionContext) extends GuLog
 
   def set(destination: Destination): Boolean =
     normaliseDestination(destination).exists { dest =>
-      log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
+      log.debug(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
       Scanamo(DynamoDB.syncClient).exec(table.put(dest))
       true
     }
 
   def remove(source: String): Boolean =
     normaliseSource(source).exists { src =>
-      log.info(s"Removing redirect in: $tableName to: $src")
+      log.debug(s"Removing redirect in: $tableName to: $src")
       Scanamo(DynamoDB.syncClient).exec(table.delete("source" === src))
       true
     }
