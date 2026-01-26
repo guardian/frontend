@@ -31,7 +31,7 @@
         <appender-ref ref="ASYNCSTDOUT"/>
     </root>
 
-    <logger name="common.RequestLogger" level="${ACCESS_LOG_LEVEL:-DEBUG}"/>
+    <logger name="common" level="${ACCESS_LOG_LEVEL:-DEBUG}"/>
 
 
 </configuration>
