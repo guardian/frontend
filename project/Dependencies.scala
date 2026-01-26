@@ -85,8 +85,7 @@ object Dependencies {
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
 
-  val targetingClient =
-    "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0-PREVIEW.pm-reporter-callouts.2026-01-14T1622.cab4377d"
+  val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.2"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.5"
