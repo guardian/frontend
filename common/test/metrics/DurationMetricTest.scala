@@ -5,6 +5,8 @@ import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import software.amazon.awssdk.services.cloudwatch.model.StandardUnit
 
+import java.time.Instant
+
 class DurationMetricTest extends AnyFlatSpec with Matchers {
 
   "DurationMetric" should "start off empty" in {
@@ -56,9 +58,9 @@ class DurationMetricTest extends AnyFlatSpec with Matchers {
   it should "record some samples" in {
     val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.COUNT)
 
-    samplerMetric.recordSample(1000, DateTime.now())
-    samplerMetric.recordSample(1000, DateTime.now())
-    samplerMetric.recordSample(1000, DateTime.now())
+    samplerMetric.recordSample(1000, Instant.now())
+    samplerMetric.recordSample(1000, Instant.now())
+    samplerMetric.recordSample(1000, Instant.now())
 
     val storedDatapoints = samplerMetric.getAndResetDataPoints
 
@@ -71,15 +73,15 @@ class DurationMetricTest extends AnyFlatSpec with Matchers {
   it should "add recorded samples to the head of the list" in {
     val samplerMetric: SamplerMetric = SamplerMetric("TestMetric", StandardUnit.COUNT)
 
-    val sampleOne = SampledDataPoint(10.00, DateTime.now())
-    val sampleTwo = SampledDataPoint(11.00, DateTime.now())
-    val sampleThree = SampledDataPoint(12.00, DateTime.now())
-    val sampleFour = SampledDataPoint(13.00, DateTime.now())
+    val sampleOne = SampledDataPoint(10.00, Instant.now())
+    val sampleTwo = SampledDataPoint(11.00, Instant.now())
+    val sampleThree = SampledDataPoint(12.00, Instant.now())
+    val sampleFour = SampledDataPoint(13.00, Instant.now())
     val allSamples = List(sampleOne, sampleTwo, sampleThree, sampleFour)
 
-    samplerMetric.recordSample(10.00, DateTime.now())
-    samplerMetric.recordSample(10.00, DateTime.now())
-    samplerMetric.recordSample(10.00, DateTime.now())
+    samplerMetric.recordSample(10.00, Instant.now())
+    samplerMetric.recordSample(10.00, Instant.now())
+    samplerMetric.recordSample(10.00, Instant.now())
     allSamples.map((sample) => samplerMetric.recordSample(sample.value, sample.sampleTime))
 
     val samples = samplerMetric.getAndResetDataPoints

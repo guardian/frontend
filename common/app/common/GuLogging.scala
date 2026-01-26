@@ -44,6 +44,9 @@ trait GuLogging {
     log.logger.error(getRequestIdField, message, error)
   }
 
+  def logDebugWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.debug(customFieldMarkers(customFields), message)
+  }
   def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {
     log.logger.info(customFieldMarkers(customFields), message)
   }
