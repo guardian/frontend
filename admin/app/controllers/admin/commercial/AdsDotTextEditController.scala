@@ -50,7 +50,7 @@ class AdsDotTextEditController(val controllerComponents: ControllerComponents)(i
           },
           adsTextSellers => {
             S3.putPrivate(s3DotTextKey, adsTextSellers.sellers, "text/plain")
-            logDebugWithRequestId(s"Wrote new $name file to $s3DotTextKey")
+            logInfoWithRequestId(s"Wrote new $name file to $s3DotTextKey")
             NoCache(Redirect(postSave))
           },
         )

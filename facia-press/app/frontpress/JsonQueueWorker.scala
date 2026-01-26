@@ -143,7 +143,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
       if (started) {
         log.warn("Attempted to start queue worker but queue worker is already started")
       } else {
-        log.debug("Starting worker ... ")
+        log.info("Starting worker ... ")
         started = true
         next()
       }

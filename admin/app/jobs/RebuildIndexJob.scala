@@ -22,7 +22,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
       TagIndexesS3.putIndex(parentKey, tagPage)
     }
 
-    log.debug(s"Uploaded ${tagPages.length} $parentKey index pages to S3 after ${s3StopWatch.elapsed}ms")
+    log.info(s"Uploaded ${tagPages.length} $parentKey index pages to S3 after ${s3StopWatch.elapsed}ms")
 
     val listingStopWatch = new StopWatch
 

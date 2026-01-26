@@ -51,7 +51,7 @@ object Environment extends GuLogging {
   val awsRegion = get("region", "eu-west-1")
   val configBucket = get("configBucket", "aws-frontend-store")
 
-  log.debug(
+  log.info(
     s"Environment loaded as: stack=$stack, app=$app, stage=$stage, awsRegion=$awsRegion, configBucket=$configBucket",
   )
 }

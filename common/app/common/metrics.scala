@@ -242,7 +242,7 @@ class CloudWatchMetricsLifecycle(
     }
 
     // Log the build number and revision number on startup.
-    log.debug(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
+    log.info(s"Build number: ${ManifestData.build}, vcs revision: ${ManifestData.revision}")
   }
 }
 

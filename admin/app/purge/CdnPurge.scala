@@ -39,7 +39,7 @@ object CdnPurge extends Dates with GuLogging {
         .map { response =>
           response.status match {
             case responseCode if (200 to 299) contains responseCode =>
-              log.debug(s"purge $key from Fastly with response ${response.statusText}")
+              log.info(s"purge $key from Fastly with response ${response.statusText}")
               response
             case _ =>
               throw new RuntimeException(

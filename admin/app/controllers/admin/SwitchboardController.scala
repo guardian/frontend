@@ -83,11 +83,11 @@ class SwitchboardController(
 
       Store.putSwitches(updates mkString "\n")
 
-      logDebugWithRequestId("switches successfully updated")
+      logInfoWithRequestId("switches successfully updated")
 
       val changes = updates filterNot { current contains _ }
       changes foreach { change =>
-        logDebugWithRequestId(s"Switch change by $requester: $change")
+        logInfoWithRequestId(s"Switch change by $requester: $change")
       }
 
       Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
