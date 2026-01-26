@@ -172,6 +172,28 @@ object CalloutBlockElementV2 {
   implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
 }
 
+case class ReporterCalloutBlockElement(
+    id: String,
+    activeFrom: Option[Long],
+    activeUntil: Option[Long],
+    displayOnSensitive: Boolean,
+    title: String,
+    subtitle: String,
+    intro: String,
+    mainTextHeading: String,
+    mainText: String,
+    emailContact: Option[String],
+    messagingContact: Option[String],
+    securedropContact: Option[String],
+    endNote: Option[String],
+) extends PageElement
+
+object ReporterCalloutBlockElement {
+  implicit val ReporterCalloutBlockElementWrites: Writes[ReporterCalloutBlockElement] =
+    Json.writes[ReporterCalloutBlockElement]
+
+}
+
 case class DcrCartoonVariant(
     viewportSize: String,
     images: List[ImageAsset],
@@ -953,6 +975,7 @@ object PageElement {
       case _: TimelineBlockElement        => true
       case _: LinkBlockElement            => true
       case _: ProductBlockElement         => true
+      case _: ReporterCalloutBlockElement => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
