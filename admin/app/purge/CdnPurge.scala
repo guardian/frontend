@@ -25,7 +25,7 @@ object CdnPurge extends Dates with GuLogging {
     val result: Future[WSResponse] = if (environment.isProd || environment.isCode) {
       val serviceId = fastlyService.serviceId
       val endpoint = s"https://api.fastly.com/service/$serviceId/purge/$key"
-      log.debug(
+      log.info(
         s"Attempting to purge fastly cache from end point: $endpoint with key: ${fastly.key.substring(0, 4)} and service ID: ${serviceId}",
       )
 

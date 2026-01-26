@@ -34,13 +34,13 @@ object Environment extends GuLogging {
   private[this] def get(name: String, default: String): String = {
     sys.env.get(name.toUpperCase) match {
       case Some(env) =>
-        log.debug(s"Environment lookup: resolved $name from environment variable")
+        log.info(s"Environment lookup: resolved $name from environment variable")
         env
       case _ if installVars.contains(name) =>
-        log.debug(s"Environment lookup: resolved $name from install_vars")
+        log.info(s"Environment lookup: resolved $name from install_vars")
         installVars(name)
       case _ =>
-        log.debug(s"Environment lookup: resolved $name from default value")
+        log.info(s"Environment lookup: resolved $name from default value")
         default
     }
   }
