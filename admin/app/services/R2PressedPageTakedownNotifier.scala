@@ -10,7 +10,7 @@ object R2PressedPageTakedownNotifier extends GuLogging {
     try {
       R2PressedPageTakedownNotification.sendWithoutSubject(pekkoAsync)(path)
       val msg = s"Queued for takedown: $path"
-      log.debug(msg)
+      log.info(msg)
       msg
     } catch {
       case e: Exception =>

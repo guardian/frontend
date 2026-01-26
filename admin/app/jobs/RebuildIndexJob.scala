@@ -28,7 +28,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
 
     TagIndexesS3.putListing(parentKey, TagIndexListings.fromTagIndexPages(tagPages))
 
-    log.debug(s"Uploaded $parentKey listing in ${listingStopWatch.elapsed}ms")
+    log.info(s"Uploaded $parentKey listing in ${listingStopWatch.elapsed}ms")
   }
 
   /** The title for the alpha keys (A, B, C ... )

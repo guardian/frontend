@@ -76,7 +76,7 @@ class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
     }
 
     promise.future.foreach { response =>
-      log.debug(s"Sent message ID ${response.messageId()}")
+      log.info(s"Sent message ID ${response.messageId()}")
     }
     promise.future.failed.foreach { case NonFatal(e) =>
       log.error(s"Email send failed: ${e.getMessage}")
