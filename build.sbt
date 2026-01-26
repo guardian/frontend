@@ -67,7 +67,6 @@ val common = library("common")
       pekkoSlf4j,
       pekkoSerializationJackson,
       pekkoActorTyped,
-      janino,
     ) ++ jackson,
   )
 
