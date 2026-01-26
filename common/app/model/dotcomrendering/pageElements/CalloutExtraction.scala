@@ -227,6 +227,9 @@ object CalloutExtraction {
   private case object ReporterCallout extends CalloutType {
     val name = "reporter"
   }
+  private case object UnsupportedCallout extends CalloutType {
+    val name = "unsupported"
+  }
 
   private case class BaseCalloutFields(
       id: String,
@@ -248,7 +251,7 @@ object CalloutExtraction {
       val calloutType = campaignType match {
         case "callout"          => CommunityCallout
         case "reporter-callout" => ReporterCallout
-        case _                  => CommunityCallout
+        case _                  => UnsupportedCallout
       }
       BaseCalloutFields(
         id,
@@ -481,8 +484,9 @@ object CalloutExtraction {
       element <-
         if (baseCalloutFields.calloutType == ReporterCallout) {
           campaignJsObjectToReporterCalloutBlockElement(campaign, baseCalloutFields)
-        } else
+        } else if (baseCalloutFields.calloutType == CommunityCallout) {
           campaignJsObjectToCalloutBlockElementV2(campaign, callout, calloutsUrl, baseCalloutFields)
+        } else None
 
     } yield {
       element
