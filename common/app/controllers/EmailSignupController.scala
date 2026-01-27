@@ -375,7 +375,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respondFooter(InvalidEmail))
           },
@@ -491,7 +491,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
@@ -525,7 +525,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },

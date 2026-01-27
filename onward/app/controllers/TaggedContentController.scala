@@ -66,7 +66,7 @@ class TaggedContentController(
       .map { response =>
         response.results.toList map { Content(_) }
       } recover { case ContentApiError(404, message, _) =>
-      logDebugWithRequestId(s"Got a 404 while calling content api: $message")
+      logInfoWithRequestId(s"Got a 404 while calling content api: $message")
       Nil
     }
   }
