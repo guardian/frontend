@@ -70,7 +70,7 @@ object StatusNotification {
               case Failure(exception) =>
                 log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
             }
-        case None => log.debug("Kinesis status notification not configured.")
+        case None => log.warn("Kinesis status notification not configured.")
       }
     }
   }

@@ -132,7 +132,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
   final private def next(): Unit = {
     getAndProcess onComplete {
       case _ if started => next()
-      case _            => log.debug("Stopping worker...")
+      case _            => log.info("Stopping worker...")
     }
   }
 

@@ -110,7 +110,7 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with GuLogging {
               resp.body
             }
             case _ => {
-              log.debug(s"GET FAILED $path")
+              log.warn(s"GET FAILED $path")
               throw PARugbyAPIException(s"request for $path failed (status: ${resp.status}, body: ${resp.body})")
             }
           }

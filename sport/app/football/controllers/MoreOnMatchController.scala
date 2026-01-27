@@ -313,7 +313,7 @@ class MoreOnMatchController(
       val maybeResponse: Option[Future[RevalidatableResult]] = maybeMatch map { theMatch =>
         loadMoreOn(request, theMatch) map {
           case Nil =>
-            logDebugWithRequestId(s"Cannot load more for match id: ${theMatch.id}")
+            logInfoWithRequestId(s"Cannot load more for match id: ${theMatch.id}")
             JsonNotFound()
           case related =>
             JsonComponent(
