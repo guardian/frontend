@@ -162,6 +162,7 @@ object Filters {
       new BackendHeaderFilter(frontendBuildInfo),
       new SurrogateKeyFilter,
       new AmpFilter,
+      new TooManyHeadersFilter,
     )
 
   def preload(implicit
