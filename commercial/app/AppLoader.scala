@@ -10,7 +10,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.{CommonFilters, FrontendDefaultHttpErrorHandler}
 import jobs.AdmiralLifecycle
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -58,7 +58,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
   lazy val appIdentity = ApplicationIdentity("commercial")
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.commercial.BuildInfo
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 
