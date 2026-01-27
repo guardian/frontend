@@ -96,7 +96,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
 
   def results(message: String, results: Map[String, String], page: Option[ContentType]): Unit = {
     val elementsLogFieldFromContent = page.map(elementsLogFieldFromPage).getOrElse(List.empty)
-    logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromContent)
+    logDebugWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromContent)
   }
 
 }

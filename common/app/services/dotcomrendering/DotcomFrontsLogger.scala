@@ -46,7 +46,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   def logRequest(msg: String, properties: Map[String, String], faciaPage: PressedPage)(implicit
       request: RequestHeader,
   ): Unit = {
-    logInfoWithCustomFields(
+    logDebugWithCustomFields(
       msg,
       logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromFront(faciaPage),
     )
@@ -55,7 +55,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   def logRequest(msg: String, properties: Map[String, String], indexPage: IndexPage)(implicit
       request: RequestHeader,
   ): Unit = {
-    logInfoWithCustomFields(
+    logDebugWithCustomFields(
       msg,
       logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromTagPage(indexPage),
     )

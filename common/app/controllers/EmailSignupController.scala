@@ -380,7 +380,7 @@ class EmailSignupController(
             Future.successful(respondFooter(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -496,7 +496,7 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -530,7 +530,7 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/many/ - " +
                 s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +

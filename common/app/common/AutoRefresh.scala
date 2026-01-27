@@ -36,7 +36,7 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
   }
 
   final def start()(implicit pekkoActorSystem: PekkoActorSystem, executionContext: ExecutionContext): Unit = {
-    log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
+    log.debug(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
     val cancellable = pekkoActorSystem.scheduler.scheduleWithFixedDelay(initialDelay, interval) { new Task() }
     subscription = Some(cancellable)
   }

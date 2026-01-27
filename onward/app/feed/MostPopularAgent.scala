@@ -61,9 +61,9 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
       if (validItems.nonEmpty) {
-        log.info(s"Geo popular ${country.code} updated successfully.")
+        log.debug(s"Geo popular ${country.code} updated successfully.")
       } else {
-        log.info(s"Geo popular update for ${country.code} found nothing.")
+        log.debug(s"Geo popular update for ${country.code} found nothing.")
       }
       box.alter(_ + (country.code -> validItems))
     }
@@ -73,7 +73,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     box().getOrElse(country, box().getOrElse(defaultCountry.code, Nil))
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.info("Refreshing most popular for countries.")
+    log.debug("Refreshing most popular for countries.")
     MostViewed.refreshAll(countries)(refresh)
   }
 }
@@ -91,7 +91,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   def mostPopular(country: String): Seq[RelatedContentItem] = box().getOrElse(country, Nil)
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.info("Refreshing most popular for the day.")
+    log.debug("Refreshing most popular for the day.")
     MostViewed.refreshAll(countries)(refresh)
   }
 
@@ -100,7 +100,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
       if (validItems.isEmpty) {
-        log.info(s"Day popular update for ${country.code} found nothing.")
+        log.debug(s"Day popular update for ${country.code} found nothing.")
       }
       box.alter(_ + (country.code -> validItems))
     }

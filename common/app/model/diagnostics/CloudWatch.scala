@@ -31,7 +31,7 @@ trait CloudWatch extends GuLogging {
     if (Configuration.environment.isProd) {
       putMetricsWithStage(metricNamespace, metrics, dimensions :+ stageDimension)
     } else {
-      log.info(s"Logging suppressed outside Prod environment. namespace: $metricNamespace")
+      log.debug(s"Logging suppressed outside Prod environment. namespace: $metricNamespace")
     }
   }
 
@@ -68,11 +68,11 @@ trait CloudWatch extends GuLogging {
         .putMetricData(request)
         .asScala
         .onComplete {
-          case Success(_) => log.info("CloudWatch PutMetricDataRequest - success")
+          case Success(_) => log.debug("CloudWatch PutMetricDataRequest - success")
           case Failure(e) =>
             log.warn(s"Failed to put ${metricsAsStatistics.size} metrics: $e")
             log.warn(s"Failed to put ${metricsAsStatistics.map(_.name).mkString(",")}")
-            log.info(s"CloudWatch PutMetricDataRequest error: ${e.getMessage}}")
+            log.debug(s"CloudWatch PutMetricDataRequest error: ${e.getMessage}}")
         }
     }
   }

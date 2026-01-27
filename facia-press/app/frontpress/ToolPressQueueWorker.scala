@@ -60,7 +60,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     val messageId = message.id.get
 
     val processStartTime = DateTime.now()
-    log.info(s"Processing job from tool to update $path on $pressType at time $creationTime. MessageId: $messageId")
+    log.debug(s"Processing job from tool to update $path on $pressType at time $creationTime. MessageId: $messageId")
 
     val stopWatch = new StopWatch
 

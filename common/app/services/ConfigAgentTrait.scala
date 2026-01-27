@@ -40,7 +40,7 @@ object ConfigAgent extends GuLogging {
   def refresh(implicit ec: ExecutionContext): Future[Unit] = {
     val futureConfig = getClient.config
     futureConfig.onComplete {
-      case Success(_) => log.info(s"Successfully got config")
+      case Success(_) => log.debug(s"Successfully got config")
       case Failure(t) => log.error(s"Getting config failed with $t", t)
     }
     futureConfig.map(Option.apply).map(configAgent.send)

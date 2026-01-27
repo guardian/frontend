@@ -20,7 +20,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
   def mostViewedVideo(): Seq[Video] = agent()
 
   def refresh()(implicit ec: ExecutionContext): Future[Seq[Video]] = {
-    log.info("Refreshing most viewed video.")
+    log.debug("Refreshing most viewed video.")
 
     val ophanResponse = ophanApi.getMostViewedVideos(hours = 3, count = 20)
 
@@ -30,7 +30,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
         path <- videoResult.validate[QueryResult].asOpt.map(_.paths).getOrElse(Nil) if path.contains("/video/")
       } yield path
 
-      log.info(s"Number of paths returned from Ophan: ${paths.size}")
+      log.debug(s"Number of paths returned from Ophan: ${paths.size}")
 
       val contentIds = paths.distinct
         .take(10)
@@ -46,7 +46,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
         )
         .map { r =>
           val videoContent: Seq[client.model.v1.Content] = r.results.filter(_.isVideo).toSeq
-          log.info(s"Number of video content items from CAPI: ${videoContent.size}")
+          log.debug(s"Number of video content items from CAPI: ${videoContent.size}")
           videoContent.map(Content(_)).collect { case v: Video => v }
         }
 
