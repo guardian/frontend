@@ -13,7 +13,7 @@ class PreviewContentSecurityPolicyFilter(implicit val mat: Materializer, executi
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] =
     nextFilter(request).map(
       _.withHeaders(
-        "Content-Security-Policy" -> "default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval' blob: 'unsafe-inline'; frame-src https: data:; style-src https: 'unsafe-inline'; img-src https: data: blob:; media-src https: data: blob:; font-src https: data:; connect-src https: wss: blob:; child-src https: blob:; object-src 'none'; base-uri https://*.gracenote.com",
+        "Content-Security-Policy" -> "default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval' blob: 'unsafe-inline'; frame-src https: data:; style-src https: 'unsafe-inline'; img-src https: data: blob:; media-src https: data: blob:; font-src https: https://cdn.braze.eu data:; connect-src https: wss: blob:; child-src https: blob:; object-src 'none'; base-uri https://*.gracenote.com",
       ),
     )
 }
