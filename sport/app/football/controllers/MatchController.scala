@@ -178,26 +178,24 @@ class MatchController(
       case _ => render(None)
     }
 
-  private def render(maybeMatch: Option[(CompetitionSummary, FootballMatch)]): Action[AnyContent] =
+  private def render(maybeMatch: Option[(String, FootballMatch)]): Action[AnyContent] =
     Action.async { implicit request =>
       maybeMatch match {
-        case Some((competitionSummary, theMatch)) =>
-          val group = tableGroupForMatch(competitionSummary.id, theMatch)
+        case Some((competitionId, theMatch)) =>
+          val group = tableGroupForMatch(competitionId, theMatch)
           val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
 
           page.flatMap { page =>
-            val matchStats = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
+            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
 
             request.getRequestFormat match {
               case JsonFormat if request.forceDCR =>
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
-                  matchStats = matchStats,
-                  matchInfo = theMatch,
+                  footballMatch = footballMatch,
                   group = group,
-                  competitionName = competitionSummary.fullName,
                 )
                 Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
 
@@ -209,10 +207,8 @@ class MatchController(
               case HtmlFormat if tier == RemoteRender =>
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
-                  matchStats = matchStats,
-                  matchInfo = theMatch,
+                  footballMatch = footballMatch,
                   group = group,
-                  competitionName = competitionSummary.fullName,
                 )
                 remoteRenderer.getFootballMatchSummaryPage(
                   wsClient,

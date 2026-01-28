@@ -322,11 +322,8 @@ object DotcomRenderingFootballTablesDataModel {
 }
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
-    // this field will need to get renamed to matchStats in upcoming PR
     footballMatch: MatchDataAnswer,
-    matchInfo: FootballMatch,
     group: Option[Group],
-    competitionName: String,
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -341,10 +338,8 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
 object DotcomRenderingFootballMatchSummaryDataModel {
   def apply(
       page: MatchPage,
-      matchStats: MatchDataAnswer,
-      matchInfo: FootballMatch,
+      footballMatch: MatchDataAnswer,
       group: Option[Group],
-      competitionName: String,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -353,10 +348,8 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     val nav = Nav(page, edition)
     val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
     DotcomRenderingFootballMatchSummaryDataModel(
-      footballMatch = matchStats,
-      matchInfo = matchInfo,
+      footballMatch = footballMatch,
       group = group,
-      competitionName = competitionName,
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
