@@ -51,6 +51,6 @@ object TagPageStorylines
       name = "tag-page-storylines",
       description = "Enable AI storylines content on web tag pages",
       owners = Seq(Owner.withEmail("ai.dev@theguardian.com")),
-      sellByDate = LocalDate.of(2026, 1, 30),
+      sellByDate = LocalDate.of(2026, 2, 27),
       participationGroup = Perc0E,
     )
