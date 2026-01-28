@@ -5,7 +5,7 @@ import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
 import football.controllers.Interval
-import model.{Competition, Table, TeamFixture, TeamNameBuilder}
+import model.{Competition, CompetitionSummary, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
 import pa.{FootballMatch, _}
 
@@ -69,7 +69,7 @@ trait Competitions extends implicits.Football {
     matchDates.reverse.filter(_ <= date).take(numDays)
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
-  def findCompetitionMatch(id: String): Option[(String, FootballMatch)] =
+  def findCompetitionMatch(id: String): Option[(CompetitionSummary, FootballMatch)] =
     matchesWithCompetition.find { case (_, m) => m.id == id }
 
   def competitionForMatch(matchId: String): Option[Competition] =
@@ -100,7 +100,11 @@ trait Competitions extends implicits.Football {
   }
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
-  def competitionMatchFor(interval: Interval, team1: String, team2: String): Option[(String, FootballMatch)] =
+  def competitionMatchFor(
+      interval: Interval,
+      team1: String,
+      team2: String,
+  ): Option[(CompetitionSummary, FootballMatch)] =
     matchesWithCompetition
       .find { case (_, m) =>
         interval.contains(m.date) && m.hasTeam(team1) && m.hasTeam(team2)
@@ -112,8 +116,8 @@ trait Competitions extends implicits.Football {
 
   // Returns a lazy view of all matches paired with their competition ID.
   // WARNING: Only use this for single-pass lookups.
-  def matchesWithCompetition: View[(String, FootballMatch)] =
-    competitions.view.flatMap(comp => comp.matches.map(m => (comp.id, m)))
+  def matchesWithCompetition: View[(CompetitionSummary, FootballMatch)] =
+    competitions.view.flatMap(comp => comp.matches.map(m => (comp, m)))
 
   def isMatchLiveOrAboutToStart(matches: Seq[FootballMatch], clock: Clock): Boolean =
     matches.exists(game => {
