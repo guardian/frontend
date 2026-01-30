@@ -73,7 +73,7 @@ trait GuLogging {
   }
 
   private def getRequestIdField(implicit request: RequestHeader) = {
-    customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")))
+    customFieldMarkers(List("requestId" -> request.headers.get("x-request-id").getOrElse("request-id-not-provided")))
   }
 }
 
