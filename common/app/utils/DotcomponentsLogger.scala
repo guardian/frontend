@@ -18,7 +18,7 @@ case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
           "req.method" -> r.method,
           "req.url" -> r.uri,
           "req.id" -> Random.nextInt(Integer.MAX_VALUE).toString,
-          "requestId" -> r.headers.get("x-gu-xid").getOrElse("request-id-not-provided"),
+          "requestId" -> r.headers.get("x-request-id").getOrElse("request-id-not-provided"),
         )
       }
       .getOrElse(Nil)

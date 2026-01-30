@@ -28,7 +28,7 @@ abstract class OnwardContentCardController(
   protected def lookup(path: String, fields: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
-    val requestId = request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")
+    val requestId = request.headers.get("x-request-id").getOrElse("request-id-not-provided")
     val customFieldMarker = append("requestId", requestId)
 
     log.logger.info(customFieldMarker, s"Fetching article: $path for edition: ${edition.id}:")
