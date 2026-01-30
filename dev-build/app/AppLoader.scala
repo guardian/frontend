@@ -5,7 +5,6 @@ import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
-import concurrent.BlockingOperations
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}

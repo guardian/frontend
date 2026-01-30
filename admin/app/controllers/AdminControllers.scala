@@ -9,7 +9,7 @@ import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.{OphanApi, ParameterStoreService, RedirectService}
+import services.{OphanApi, RedirectService}
 import org.apache.pekko.stream.Materializer
 import utils.AWSv2
 
@@ -23,7 +23,6 @@ trait AdminControllers {
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
   def assets: Assets
-  def parameterStoreService: ParameterStoreService
 
   lazy val auth = new GuardianAuthWithExemptions(
     controllerComponents,
@@ -53,7 +52,6 @@ trait AdminControllers {
   lazy val interactiveLibrarianController = wire[InteractiveLibrarianController]
   lazy val imageDecacheController = wire[ImageDecacheController]
   lazy val pageDecacheController = wire[PageDecacheController]
-  lazy val appConfigController = wire[AppConfigController]
   lazy val switchboardController = wire[SwitchboardController]
   lazy val analyticsController = wire[AnalyticsController]
   lazy val metricsController = wire[MetricsController]

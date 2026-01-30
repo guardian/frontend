@@ -79,11 +79,6 @@ POST        /commercial/adops/ads-txt                                           
 GET         /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                           controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
-# Config
-
-GET         /config                                                                                 controllers.AppConfigController.renderAppConfig()
-GET         /config/parameter/*key                                                                  controllers.AppConfigController.findParameter(key: String)
-
 # Metrics
 GET         /metrics/errors                                                                         controllers.admin.MetricsController.renderErrors()
 GET         /metrics/errors/4xx                                                                     controllers.admin.MetricsController.render4XX()
