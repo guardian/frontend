@@ -4,7 +4,7 @@ logLevel := Level.Warn
 // Dependencies used by the VersionInfo plugin
 libraryDependencies ++= Seq(
   "joda-time" % "joda-time" % "2.12.7",
-  "org.joda" % "joda-convert" % "2.2.4",
+  "org.joda" % "joda-convert" % "3.0.1",
 )
 
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
