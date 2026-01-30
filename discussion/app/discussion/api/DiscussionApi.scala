@@ -197,7 +197,17 @@ trait DiscussionApiLike extends Http with GuLogging {
   override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*)(
       implicit executionContext: ExecutionContext,
   ) = {
-    failIfDisabled().flatMap(_ => super.getJsonOrError(url, onError, headers :+ guClientHeader: _*))
+    failIfDisabled().flatMap { _ =>
+      GET(url, (headers :+ guClientHeader): _*).flatMap { response =>
+        val errorCode = scala.util.Try((response.json \ "errorCode").asOpt[String]).getOrElse(None)
+        if (response.status == 404 && errorCode.contains("DISCUSSION_NOT_FOUND")) {
+          log.debug(s"Discussion API: 404 DISCUSSION_NOT_FOUND at $url")
+          Future.failed(NotFoundException(onError(response)))
+        } else {
+          super.getJsonOrError(url, onError, headers :+ guClientHeader: _*)
+        }
+      }
+    }
   }
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
