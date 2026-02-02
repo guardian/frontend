@@ -37,8 +37,9 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
           val status = response.header.status
           val logMessage = s"${rh.method} ${rh.uri}$additionalInfo"
           val logger = requestLogger.withResponse(response)
-          val isErrorStatus = (status >= 400 && status != 404)
-          if (isErrorStatus) {
+          if (status >= 500) {
+            logger.error(logMessage)
+          } else if (status >= 400 && status != 404) {
             logger.info(logMessage)
           } else {
             logger.debug(logMessage)

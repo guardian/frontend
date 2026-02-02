@@ -54,7 +54,10 @@ trait GuLogging {
     log.logger.warn(customFieldMarkers(customFields), message, error)
   }
   def logErrorWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
-    log.logger.error(customFieldMarkers(customFields), message, error)
+    Option(error) match {
+      case Some(e) => log.logger.error(customFieldMarkers(customFields), message, e)
+      case None    => log.logger.error(customFieldMarkers(customFields), message)
+    }
   }
 
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
