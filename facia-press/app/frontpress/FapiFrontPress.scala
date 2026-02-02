@@ -26,6 +26,7 @@ import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
 import layout.slices.Container
 
+import java.time.Instant
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
@@ -275,7 +276,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     pressFuture.onComplete {
       case Success(_) =>
         val pressDuration: Long = stopWatch.elapsed
-        log.info(s"Successfully pressed $path in $pressDuration ms")
+        log.debug(s"Successfully pressed $path in $pressDuration ms")
         FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration.toDouble)
 
         /** We record separate metrics for each of the editions' network fronts */
@@ -306,7 +307,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       case FullAdFreeType => FaciaPressMetrics.FrontPressContentSize
     }
 
-    metric.recordSample(json.getBytes.length, new DateTime())
+    metric.recordSample(json.getBytes.length, Instant.now())
     putPressedJson(path, json, pressedType)
   }
 
@@ -522,7 +523,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     )
 
     contentApiResponse.foreach { _ =>
-      log.info(s"Getting SEO data from content API for $id")
+      log.debug(s"Getting SEO data from content API for $id")
     }
 
     contentApiResponse.failed.foreach { e: Throwable =>

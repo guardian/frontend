@@ -36,16 +36,16 @@ case class RequestLoggerFields(request: RequestHeader, response: Option[Result],
 
     val guardianSpecificHeaders = allHeadersFields.view.filterKeys(_.toUpperCase.startsWith("X-GU-")).toMap
 
-    // Extract x-gu-xid case-insensitively and assign default if missing
+    // Extract x-request-id case-insensitively and assign default if missing
     val requestId = allHeadersFields
       .collectFirst {
-        case (key, value) if key.equalsIgnoreCase("x-gu-xid") => value
+        case (key, value) if key.equalsIgnoreCase("x-request-id") => value
       }
       .getOrElse("request-id-not-provided")
 
-    // Convert remaining headers to LogField format, ensuring x-gu-xid is not duplicated
+    // Convert remaining headers to LogField format, ensuring x-request-id is not duplicated
     val headerFields = (allowListedHeaders ++ guardianSpecificHeaders).toList.collect {
-      case (headerName, headerValue) if !headerName.equalsIgnoreCase("x-gu-xid") =>
+      case (headerName, headerValue) if !headerName.equalsIgnoreCase("x-request-id") =>
         LogFieldString(s"req.header.$headerName", headerValue)
     }
 
@@ -99,6 +99,9 @@ case class RequestLogger(request: RequestHeader, response: Option[Result], stopW
     copy(request, Some(resp), stopWatch)
   }
 
+  def debug(message: String): Unit = {
+    logDebugWithCustomFields(message, allFields)
+  }
   def info(message: String): Unit = {
     logInfoWithCustomFields(message, allFields)
   }

@@ -40,7 +40,7 @@ class TopStoriesController(
     }
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[RelatedContent]] = {
-    logInfoWithRequestId(s"Fetching top stories for edition ${edition.id}")
+    logDebugWithRequestId(s"Fetching top stories for edition ${edition.id}")
     contentApiClient
       .getResponse(
         contentApiClient

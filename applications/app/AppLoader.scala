@@ -9,7 +9,7 @@ import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.{CommonFilters, FrontendDefaultHttpErrorHandler}
 import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
@@ -86,7 +86,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   )
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.applications.BuildInfo
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 

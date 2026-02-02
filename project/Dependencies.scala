@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.40.9"
+  val awsVersion = "2.40.17"
   val capiVersion = "41.0.0"
   val faciaVersion = "29.0.0"
   val dispatchVersion = "0.13.1"
@@ -74,7 +74,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.13.55"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.23"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -84,9 +84,8 @@ object Dependencies {
 
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
-  val janino = "org.codehaus.janino" % "janino" % "3.1.12"
 
-  val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.1.9"
+  val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.2"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.5"

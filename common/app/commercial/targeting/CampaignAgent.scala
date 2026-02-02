@@ -36,6 +36,14 @@ object CampaignAgent extends GuLogging {
     }
   }
 
+  def getCampaignsForIds(ids: Seq[String]): List[Campaign] = {
+    if (Targeting.isSwitchedOn) {
+      agent().campaigns.filter(c => ids.contains(c.id.toString))
+    } else {
+      Nil
+    }
+  }
+
   def getCampaignsForTags(tags: Seq[String]): List[Campaign] = {
     if (Targeting.isSwitchedOn) {
       agent().getCampaignsForTags(tags, stripRules = true)

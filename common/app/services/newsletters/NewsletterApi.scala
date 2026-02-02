@@ -62,7 +62,7 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
       origin <- newsletterApi.origin
     } yield {
       val url = s"${ensureHostSecure(host)}/$path"
-      log.info(s"Making request to newsletters API: $url")
+      log.debug(s"Making request to newsletters API: $url")
       wsClient
         .url(url)
         .withRequestTimeout(10.seconds)

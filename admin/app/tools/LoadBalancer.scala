@@ -85,7 +85,7 @@ object LoadBalancer extends GuLogging {
   private val agent = Box(loadBalancers)
 
   def refresh(): Unit = {
-    log.info("starting refresh LoadBalancer ELB DNS names")
+    log.debug("starting refresh LoadBalancer ELB DNS names")
 
     val client = ElasticLoadBalancingClient
       .builder()
@@ -100,7 +100,7 @@ object LoadBalancer extends GuLogging {
     }
     agent.send(newLoadBalancers)
 
-    log.info("finished refresh LoadBalancer ELB DNS names")
+    log.debug("finished refresh LoadBalancer ELB DNS names")
   }
 
   def all: Seq[LoadBalancer] = agent()

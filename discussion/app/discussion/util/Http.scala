@@ -22,7 +22,7 @@ trait Http extends GuLogging {
         case 200 =>
           val dapiLatency = stopWatch.elapsed
           val customFields: List[LogField] = List("dapi.response.latency.millis" -> dapiLatency.toInt)
-          logInfoWithCustomFields(s"DAPI responded successfully in ${dapiLatency} ms for url: ${url}", customFields)
+          logDebugWithCustomFields(s"DAPI responded successfully in ${dapiLatency} ms for url: ${url}", customFields)
           response.json
         case otherStatus =>
           val errorMessage = onError(response)

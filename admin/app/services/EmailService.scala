@@ -31,11 +31,11 @@ class EmailService(pekkoAsync: PekkoAsync) extends GuLogging {
 
     // Don't send emails in non-prod environments
     if (Configuration.environment.isNonProd) {
-      log.info(s"Skipping email send in non-prod: from=$from to=$to subject=$subject")
+      log.debug(s"Skipping email send in non-prod: from=$from to=$to subject=$subject")
       return Future.successful(SendEmailResponse.builder().messageId("non-prod-mock").build())
     }
 
-    log.info(s"Sending email from $from to $to about $subject")
+    log.debug(s"Sending email from $from to $to about $subject")
 
     val textPart: Option[Content] = textBody.map(tb => Content.builder().data(tb).build())
     val htmlPart: Option[Content] = htmlBody.map(hb => Content.builder().data(hb).build())

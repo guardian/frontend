@@ -8,7 +8,7 @@ import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.{CommonFilters, FrontendDefaultHttpErrorHandler}
 import jobs.StoreNavigationLifecycleComponent
 import model.ApplicationIdentity
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
@@ -67,7 +67,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   )
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.article.BuildInfo
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 

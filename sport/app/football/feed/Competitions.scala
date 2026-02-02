@@ -5,7 +5,7 @@ import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
 import football.controllers.Interval
-import model.{Competition, Table, TeamFixture, TeamNameBuilder}
+import model.{Competition, CompetitionSummary, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.DateTimeComparator
 import pa.{FootballMatch, _}
 
@@ -69,7 +69,7 @@ trait Competitions extends implicits.Football {
     matchDates.reverse.filter(_ <= date).take(numDays)
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
-  def findCompetitionMatch(id: String): Option[(String, FootballMatch)] =
+  def findCompetitionMatch(id: String): Option[(CompetitionSummary, FootballMatch)] =
     matchesWithCompetition.find { case (_, m) => m.id == id }
 
   def competitionForMatch(matchId: String): Option[Competition] =
@@ -100,7 +100,11 @@ trait Competitions extends implicits.Football {
   }
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
-  def competitionMatchFor(interval: Interval, team1: String, team2: String): Option[(String, FootballMatch)] =
+  def competitionMatchFor(
+      interval: Interval,
+      team1: String,
+      team2: String,
+  ): Option[(CompetitionSummary, FootballMatch)] =
     matchesWithCompetition
       .find { case (_, m) =>
         interval.contains(m.date) && m.hasTeam(team1) && m.hasTeam(team2)
@@ -112,8 +116,8 @@ trait Competitions extends implicits.Football {
 
   // Returns a lazy view of all matches paired with their competition ID.
   // WARNING: Only use this for single-pass lookups.
-  def matchesWithCompetition: View[(String, FootballMatch)] =
-    competitions.view.flatMap(comp => comp.matches.map(m => (comp.id, m)))
+  def matchesWithCompetition: View[(CompetitionSummary, FootballMatch)] =
+    competitions.view.flatMap(comp => comp.matches.map(m => (comp, m)))
 
   def isMatchLiveOrAboutToStart(matches: Seq[FootballMatch], clock: Clock): Boolean =
     matches.exists(game => {
@@ -147,27 +151,6 @@ object CompetitionsProvider {
       showInTeamsList = true,
       tableDividers = List(2),
       startDate = Some(LocalDate.of(2025, 12, 2)),
-    ),
-    Competition(
-      "423",
-      "/football/women-s-euro-2025",
-      "Women's Euro 2025",
-      "Women's Euro 2025",
-      "Internationals",
-      showInTeamsList = true,
-      tableDividers = List(2),
-      startDate = Some(LocalDate.of(2025, 7, 2)),
-    ),
-    Competition(
-      "870",
-      "/football/womens-world-cup",
-      "Women's World Cup 2023",
-      "Women's World Cup 2023",
-      "Internationals",
-      showInTeamsList = true,
-      tableDividers = List(2),
-      startDate = Some(LocalDate.of(2023, 7, 20)),
-      finalMatchSVG = Some("womens_world_cup_2023_badge"),
     ),
     Competition(
       "100",
@@ -222,25 +205,6 @@ object CompetitionsProvider {
       "Champions League",
       "European",
       tableDividers = List(8, 24),
-    ),
-    Competition(
-      "750", // This ID was also used for the 2020 Euros
-      "/football/euro-2024",
-      "Euro 2024",
-      "Euro 2024",
-      "Internationals",
-      showInTeamsList = true,
-      tableDividers = List(2),
-      startDate = Some(LocalDate.of(2024, 6, 14)),
-    ),
-    Competition(
-      "751",
-      "/football/euro-2024",
-      "Euro 2024 qualifying",
-      "Euro 2024 qualifying",
-      "Internationals",
-      showInTeamsList = true,
-      startDate = Some(LocalDate.of(2023, 3, 23)),
     ),
     Competition(
       "701",
@@ -429,25 +393,25 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       .find { _.competition.id == id }
       .foreach { c =>
         c.refresh(clock)
-        log.info(
+        log.debug(
           s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches",
         )
       }
 
   def refreshCompetitionData()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    log.info("Refreshing competition data")
+    log.debug("Refreshing competition data")
     footballClient.competitions
       .map { allComps =>
         oldestRelevantCompetitionSeasons(allComps).foreach { season =>
           competitionAgents.find(_.competition.id == season.id).foreach { agent =>
             agent.competition.startDate match {
               case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.atStartOfDay().toLocalDate) =>
-                log.info(
+                log.debug(
                   s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}",
                 )
                 agent.update(agent.competition.copy(startDate = Some(season.startDate)))
               case None =>
-                log.info(
+                log.debug(
                   s"setting competition: ${season.id} season: ${season.seasonId} startDate was: None now: ${season.startDate.toString}",
                 )
                 agent.update(agent.competition.copy(startDate = Some(season.startDate)))
@@ -462,7 +426,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   def refreshMatchDay(
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
-    log.info("Refreshing match day data")
+    log.debug("Refreshing match day data")
     val result = getLiveMatches(clock).map(_.map { case (compId, newMatches) =>
       competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
@@ -476,7 +440,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     // matches is the list of all matches from all competitions
     if (isMatchLiveOrAboutToStart(matches, clock)) {
-      log.info("Match is in Progress - refreshing match day data")
+      log.debug("Match is in Progress - refreshing match day data")
       refreshMatchDay(clock)
     } else {
       Future.successful(immutable.Iterable[Competition]())

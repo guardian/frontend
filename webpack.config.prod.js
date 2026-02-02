@@ -3,7 +3,6 @@ const webpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin =
 	require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const TerserPlugin = require('terser-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 const config = require('./webpack.config.js');
 

@@ -1,10 +1,9 @@
 package metrics
 
 import common.{Box, StopWatch}
-import model.diagnostics.CloudWatch
-import org.joda.time.DateTime
 import software.amazon.awssdk.services.cloudwatch.model.StandardUnit
 
+import java.time.Instant
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.atomic.AtomicLong
 import scala.concurrent.Future
@@ -12,7 +11,7 @@ import scala.util.Try
 
 sealed trait DataPoint {
   val value: Double
-  val time: Option[DateTime]
+  val time: Option[Instant]
 }
 
 sealed trait FrontendMetric {
@@ -32,7 +31,7 @@ case class FrontendStatisticSet(datapoints: List[DataPoint], name: String, unit:
     Try(sum / sampleCount).toOption.getOrElse(0L)
 }
 
-case class SimpleDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
+case class SimpleDataPoint(value: Double, sampleTime: Instant) extends DataPoint {
   override val time = Some(sampleTime)
 }
 
@@ -42,7 +41,7 @@ final case class SimpleMetric(override val name: String, datapoint: SimpleDataPo
   override val isEmpty = false
 }
 
-case class TimingDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
+case class TimingDataPoint(value: Double, time: Option[Instant] = None) extends DataPoint
 
 final case class TimingMetric(override val name: String, description: String) extends FrontendMetric {
 
@@ -65,7 +64,7 @@ final case class TimingMetric(override val name: String, description: String) ex
   override def isEmpty: Boolean = currentCount.get() == 0L
 }
 
-case class GaugeDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
+case class GaugeDataPoint(value: Double, time: Option[Instant] = None) extends DataPoint
 
 final case class GaugeMetric(
     override val name: String,
@@ -78,7 +77,7 @@ final case class GaugeMetric(
   override def isEmpty: Boolean = false
 }
 
-case class CountDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
+case class CountDataPoint(value: Double, time: Option[Instant] = None) extends DataPoint
 
 final case class CountMetric(override val name: String, description: String) extends FrontendMetric {
   private val count: AtomicLong = new AtomicLong(0L)
@@ -92,7 +91,7 @@ final case class CountMetric(override val name: String, description: String) ext
   def add(value: Long): Unit = count.addAndGet(value)
 }
 
-case class DurationDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
+case class DurationDataPoint(value: Double, time: Option[Instant] = None) extends DataPoint
 
 final case class DurationMetric(override val name: String, override val metricUnit: StandardUnit)
     extends FrontendMetric {
@@ -108,7 +107,7 @@ final case class DurationMetric(override val name: String, override val metricUn
   // Public for tests.
   def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
-  def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
+  def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(Instant.now)))
   def recordDuration(duration: java.time.Duration): Unit =
     recordDuration(duration.toNanos.toDouble / MILLISECONDS.toNanos(1))
 
@@ -124,7 +123,7 @@ object DurationMetric {
   }
 }
 
-case class SampledDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
+case class SampledDataPoint(value: Double, sampleTime: Instant) extends DataPoint {
   override val time = Some(sampleTime)
 }
 
@@ -139,7 +138,7 @@ final case class SamplerMetric(override val name: String, override val metricUni
     points
   }
 
-  def recordSample(sampleValue: Double, sampleTime: DateTime): Future[List[SampledDataPoint]] =
+  def recordSample(sampleValue: Double, sampleTime: Instant): Future[List[SampledDataPoint]] =
     dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty

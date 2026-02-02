@@ -34,7 +34,7 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
   }
 
   def refresh(): Unit = {
-    log.info("Refreshing switches")
+    log.debug("Refreshing switches")
     services.S3.get(Configuration.switches.key) foreach { response =>
       val nextState = Properties(response)
 
