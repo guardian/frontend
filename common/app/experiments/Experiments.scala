@@ -11,22 +11,12 @@ import java.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] =
     Set(
-      StarRatingRedesign,
       DarkModeWeb,
       GoogleOneTap,
       TagPageStorylines,
     )
   implicit val canCheckExperiment: CanCheckExperiment = new CanCheckExperiment(this)
 }
-
-object StarRatingRedesign
-    extends Experiment(
-      name = "star-rating-redesign",
-      description = "Enable the refreshed star ratings design",
-      owners = Seq(Owner.withEmail("fronts.and.curation@theguardian.com")),
-      sellByDate = LocalDate.of(2026, 2, 2),
-      participationGroup = Perc0A,
-    )
 
 object GoogleOneTap
     extends Experiment(
