@@ -28,7 +28,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
   val commonsIo = "commons-io" % "commons-io" % "2.21.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
-  val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
+  val contentApiClient = "com.gu" %% "content-api-client" % "41.0.1-SNAPSHOT"
   val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "37.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
