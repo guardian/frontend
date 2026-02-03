@@ -24,10 +24,13 @@ trait Http extends GuLogging {
           val customFields: List[LogField] = List("dapi.response.latency.millis" -> dapiLatency.toInt)
           logDebugWithCustomFields(s"DAPI responded successfully in ${dapiLatency} ms for url: ${url}", customFields)
           response.json
+        case 404 =>
+          val errorMessage = onError(response)
+          throw NotFoundException(errorMessage)
         case otherStatus =>
           val errorMessage = onError(response)
           log.error(errorMessage)
-          throw if (otherStatus == 404) NotFoundException(errorMessage) else OtherException(errorMessage)
+          throw OtherException(errorMessage)
       }
     }
   }
