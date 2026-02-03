@@ -18,12 +18,14 @@
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeContext>false</includeContext>
+        </encoder>
     </appender>
 
     <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>${logger.stdoutLogLevel:-OFF}</level>
+            <level>${STDOUT_LOG_LEVEL:-OFF}</level>
         </filter>
         <appender-ref ref="STDOUT" />
     </appender>
@@ -33,6 +35,6 @@
         <appender-ref ref="ASYNCSTDOUT"/>
     </root>
 
-    <logger name="common.RequestLogger" level="${logger.accessLogLevel:-INFO}"/>
+    <logger name="common" level="${COMMON_PKG_LOG_LEVEL:-DEBUG}"/>
 
 </configuration>

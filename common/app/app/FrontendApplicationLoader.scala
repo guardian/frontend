@@ -10,46 +10,30 @@ import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
 import controllers.AssetsComponents
-import play.api.{
-  Application,
-  ApplicationLoader,
-  BuiltInComponents,
-  Configuration,
-  LoggerConfigurator,
-  OptionalDevContext,
-}
+import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator, OptionalDevContext}
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
   def buildComponents(context: Context): FrontendComponents
 
-  /** In here we pre-calculate values that are environment dependent and can't simply be set in the configuration files.
-    * @param configuration
-    *   the original configuration
-    * @return
-    *   a logger specific configuration enriched with environment dependent values
-    */
-  def enrichConfigWithLogging(configuration: Configuration): Configuration = {
+  private def extraLoggerConfig(): Map[String, String] = {
     val stage = Environment.stage
-    val accessLogLevel = if (stage != "PROD") "DEBUG" else "INFO"
-    val stdoutLogLevel = if (stage == "DEV") "DEBUG" else "OFF"
+    val accessLogLevel = if (stage == "CODE") "DEBUG" else "INFO"
+    val stdoutLogLevel = if (stage == "DEV") "OFF" else "TRACE"
 
-    val loggerConfiguration = Configuration(
-      "logger.includeConfigProperties" -> true,
-      "logger.stdoutLogLevel" -> stdoutLogLevel,
-      "logger.accessLogLevel" -> accessLogLevel,
+    Map(
+      "COMMON_PKG_LOG_LEVEL" -> accessLogLevel,
+      "STDOUT_LOG_LEVEL" -> stdoutLogLevel,
     )
-
-    loggerConfiguration.withFallback(loggerConfiguration)
   }
 
   override def load(context: Context): Application = {
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(
         context.environment,
-        enrichConfigWithLogging(context.initialConfiguration),
-        Map.empty,
+        context.initialConfiguration,
+        extraLoggerConfig(),
       )
     }
     val components = buildComponents(context)
