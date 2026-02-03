@@ -108,7 +108,13 @@ case class RequestLogger(request: RequestHeader, response: Option[Result], stopW
   def warn(message: String, error: Throwable): Unit = {
     logWarningWithCustomFields(message, error, allFields)
   }
+  def warn(message: String): Unit = {
+    logWarningWithCustomFields(message, error, allFields)
+  }
   def error(message: String, error: Throwable = null): Unit = {
+    logErrorWithCustomFields(message, error, allFields)
+  }
+  def error(message: String): Unit = {
     logErrorWithCustomFields(message, error, allFields)
   }
 }

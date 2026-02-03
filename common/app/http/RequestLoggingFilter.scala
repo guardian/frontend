@@ -40,7 +40,7 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
           if (status >= 500) {
             logger.error(logMessage)
           } else if (status >= 400 && status != 404) {
-            logger.info(logMessage)
+            logger.warn(logMessage)
           } else {
             logger.debug(logMessage)
           }
