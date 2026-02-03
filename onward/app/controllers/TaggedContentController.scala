@@ -55,7 +55,7 @@ class TaggedContentController(
   )
 
   private def lookup(tag: String)(implicit request: RequestHeader): Future[List[ContentType]] = {
-    logInfoWithRequestId(s"Fetching tagged stories")
+    logDebugWithRequestId(s"Fetching tagged stories")
     contentApiClient
       .getResponse(
         contentApiClient

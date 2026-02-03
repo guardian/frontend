@@ -55,7 +55,7 @@ trait LeagueTables extends GuLogging {
       competition: Competition,
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[List[LeagueTableEntry]] = {
-    log.info(s"refreshing table for ${competition.id}")
+    log.debug(s"refreshing table for ${competition.id}")
     footballClient
       .leagueTable(competition.id, LocalDate.now(clock))
       .map {
@@ -74,7 +74,7 @@ trait Fixtures extends GuLogging {
   def teamNameBuilder: TeamNameBuilder
 
   def getFixtures(competition: Competition)(implicit executionContext: ExecutionContext): Future[List[Fixture]] = {
-    log.info(s"refreshing fixtures for ${competition.id}")
+    log.debug(s"refreshing fixtures for ${competition.id}")
     footballClient
       .fixtures(competition.id)
       .map {
@@ -96,7 +96,7 @@ trait Results extends GuLogging {
   def getResults(competition: Competition, clock: Clock)(implicit
       executionContext: ExecutionContext,
   ): Future[List[Result]] = {
-    log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
+    log.debug(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     // it is possible that we do not know the startdate of the competition yet (concurrency)
     // in that case just get the last 30 days results, the start date will catch up soon enough
     val startDate = competition.startDate.getOrElse(LocalDate.now(clock).minusDays(30))
@@ -150,7 +150,7 @@ class CompetitionAgent(
         comp.matches.find(_.id == newMatch.id).foreach { oldMatch =>
           val newSummary = newMatch.statusSummary
           val oldSummary = oldMatch.statusSummary
-          if (newSummary != oldSummary) log.info(s"Match Status Changed $oldSummary -> $newSummary")
+          if (newSummary != oldSummary) log.debug(s"Match Status Changed $oldSummary -> $newSummary")
         }
       }
 

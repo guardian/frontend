@@ -88,7 +88,7 @@ object InternalRedirect extends implicits.Requests with GuLogging {
       case a if a.isVideo || a.isGallery || a.isAudio =>
         internalRedirect("applications", ItemOrRedirect.canonicalPath(a))
       case unsupportedContent =>
-        logInfoWithRequestId(s"unsupported content: ${unsupportedContent.id}")
+        logDebugWithRequestId(s"unsupported content: ${unsupportedContent.id}")
         NotFound
     }
   }

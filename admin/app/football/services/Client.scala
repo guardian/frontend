@@ -63,7 +63,7 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
         val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {
-            log.info(s"writing response to testdata, $filename.xml, $str")
+            log.debug(s"writing response to testdata, $filename.xml, $str")
             writeToFile(s"${environment.rootPath}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError

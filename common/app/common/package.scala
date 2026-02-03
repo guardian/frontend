@@ -43,7 +43,7 @@ object `package`
       context: ApplicationContext,
       log: Logger,
   ): PartialFunction[Throwable, Result] = {
-    val requestId = request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")
+    val requestId = request.headers.get("x-request-id").getOrElse("request-id-not-provided")
     val customFieldMarker: LogstashMarker = {
       append("requestId", requestId)
     }

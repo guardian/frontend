@@ -50,7 +50,7 @@ jobs:
       - run: make compile
 
       - name: upload frontend-client
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: frontend-client
           path: |
@@ -72,7 +72,7 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
 
-      - uses: actions/setup-java@v5.1.0
+      - uses: actions/setup-java@v5.2.0
         with:
           distribution: corretto
           cache: sbt
@@ -80,7 +80,7 @@ jobs:
 
       # Scala tests rely on client build assets
       - name: Download frontend-client
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: frontend-client
           path: .
@@ -103,7 +103,7 @@ jobs:
           paths: 'test-results/**/TEST-*.xml'
         if: always()
 
-      - uses: guardian/actions-riff-raff@v4.1.2
+      - uses: guardian/actions-riff-raff@v4.2.4
         env:
           GU_RIFF_RAFF_ROLE_ARN: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
         if: ${{ env.GU_RIFF_RAFF_ROLE_ARN }}

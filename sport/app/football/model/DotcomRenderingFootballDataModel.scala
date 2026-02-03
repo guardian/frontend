@@ -273,7 +273,7 @@ object DotcomRenderingFootballTablesDataModel {
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
 
-  def getEntries(competition: Competition, group: Group): Seq[JsObject] = {
+  private def getEntries(competition: Competition, group: Group): Seq[JsObject] = {
     group.entries.map { entry =>
       Json.obj(
         "stageNumber" -> entry.stageNumber,
@@ -297,7 +297,6 @@ object DotcomRenderingFootballTablesDataModel {
 
   private implicit val teamScoreFormat: Writes[TeamScore] = Json.writes[TeamScore]
   private implicit val teamResultFormat: Writes[TeamResult] = Json.writes[TeamResult]
-  private implicit val groupFormat: Writes[Group] = Json.writes[Group]
 
   private implicit val tableWrites: Writes[Table] = (table: Table) =>
     withoutDeepNull(
@@ -323,7 +322,11 @@ object DotcomRenderingFootballTablesDataModel {
 }
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
+    // this field will need to get renamed to matchStats in upcoming PR
     footballMatch: MatchDataAnswer,
+    matchInfo: FootballMatch,
+    group: Option[Group],
+    competitionName: String,
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -338,7 +341,10 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
 object DotcomRenderingFootballMatchSummaryDataModel {
   def apply(
       page: MatchPage,
-      footballMatch: MatchDataAnswer,
+      matchStats: MatchDataAnswer,
+      matchInfo: FootballMatch,
+      group: Option[Group],
+      competitionName: String,
   )(implicit
       request: RequestHeader,
       context: ApplicationContext,
@@ -347,7 +353,10 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     val nav = Nav(page, edition)
     val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
     DotcomRenderingFootballMatchSummaryDataModel(
-      footballMatch = footballMatch,
+      footballMatch = matchStats,
+      matchInfo = matchInfo,
+      group = group,
+      competitionName = competitionName,
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -359,6 +368,26 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       pageId = page.metadata.id,
     )
   }
+
+  import football.model.DotcomRenderingFootballDataModelImplicits._
+
+  private def getGroupEntries(group: Group): Seq[JsObject] = {
+    group.entries.map { entry =>
+      Json.obj(
+        "stageNumber" -> entry.stageNumber,
+        "round" -> entry.round,
+        "team" -> entry.team,
+        "teamUrl" -> TeamUrl(entry.team),
+      )
+    }
+  }
+  implicit val groupWrites: Writes[Group] = (group: Group) =>
+    withoutDeepNull(
+      Json.obj(
+        "round" -> group.round,
+        "entries" -> getGroupEntries(group),
+      ),
+    )
 
   implicit def dotcomRenderingFootballMatchSummaryDataModel: Writes[DotcomRenderingFootballMatchSummaryDataModel] =
     Json.writes[DotcomRenderingFootballMatchSummaryDataModel]

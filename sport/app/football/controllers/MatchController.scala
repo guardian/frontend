@@ -163,7 +163,7 @@ class MatchController(
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
   def renderMatchIdJson(matchId: String): Action[AnyContent] = renderMatchId(matchId)
-  def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findMatch(matchId))
+  def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findCompetitionMatch(matchId))
 
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     renderMatch(year, month, day, home, away)
@@ -174,26 +174,30 @@ class MatchController(
         val date = LocalDate.parse(s"$year${month.capitalize}$day", formatter)
         val startOfDay = date.atStartOfDay(DateHelpers.defaultFootballZoneId)
         val startOfTomorrow = startOfDay.plusDays(1)
-        render(competitionsService.matchFor(Interval(startOfDay, startOfTomorrow), homeId, awayId))
+        render(competitionsService.competitionMatchFor(Interval(startOfDay, startOfTomorrow), homeId, awayId))
       case _ => render(None)
     }
 
-  private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] =
+  private def render(maybeMatch: Option[(CompetitionSummary, FootballMatch)]): Action[AnyContent] =
     Action.async { implicit request =>
       maybeMatch match {
-        case Some(theMatch) =>
+        case Some((competitionSummary, theMatch)) =>
+          val group = tableGroupForMatch(competitionSummary.id, theMatch)
           val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
 
           page.flatMap { page =>
-            val footballMatch = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
+            val matchStats = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
 
             request.getRequestFormat match {
               case JsonFormat if request.forceDCR =>
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
-                  footballMatch = footballMatch,
+                  matchStats = matchStats,
+                  matchInfo = theMatch,
+                  group = group,
+                  competitionName = competitionSummary.fullName,
                 )
                 Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
 
@@ -205,7 +209,10 @@ class MatchController(
               case HtmlFormat if tier == RemoteRender =>
                 val model = DotcomRenderingFootballMatchSummaryDataModel(
                   page = page,
-                  footballMatch = footballMatch,
+                  matchStats = matchStats,
+                  matchInfo = theMatch,
+                  group = group,
+                  competitionName = competitionSummary.fullName,
                 )
                 remoteRenderer.getFootballMatchSummaryPage(
                   wsClient,
@@ -225,4 +232,13 @@ class MatchController(
           Future.successful(Cached(CacheTime.FootballMatch)(WithoutRevalidationResult(Found("/football/results"))))
       }
     }
+
+  private def tableGroupForMatch(competitionId: String, theMatch: FootballMatch): Option[Group] =
+    competitionsService.competitions
+      .find(_.id == competitionId)
+      .filter(_.hasLeagueTable)
+      .map(Table(_))
+      .flatMap { table =>
+        table.groups.find(group => group.hasTeam(theMatch.homeTeam.id) && group.hasTeam(theMatch.awayTeam.id))
+      }
 }

@@ -58,7 +58,7 @@ class MediaController(
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Result, (MediaPage, Blocks)]] = {
     val edition = Edition(request)
 
-    logInfoWithRequestId(s"Fetching media: $path for edition $edition")
+    logDebugWithRequestId(s"Fetching media: $path for edition $edition")
 
     val response: Future[ItemResponse] = contentApiClient.getResponse(
       contentApiClient

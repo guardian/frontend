@@ -1,5 +1,5 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.{CommonFilters, FrontendDefaultHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
 import com.softwaremill.macwire._
@@ -79,7 +79,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   val frontendBuildInfo: FrontendBuildInfo = frontend.onward.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
 
   def pekkoActorSystem: PekkoActorSystem
 }

@@ -15,7 +15,7 @@ object SurgingContentAgent extends SurgeLookupService with GuLogging {
   private val agent = Box[SurgingContent](SurgingContent())
 
   def update(implicit ophanApi: OphanApi, executionContext: ExecutionContext): Unit = {
-    log.info("Refreshing surging content.")
+    log.debug("Refreshing surging content.")
     val ophanQuery = ophanApi.getSurgingContent()
     ophanQuery.map { ophanResults =>
       val surging: Seq[(String, Int)] = SurgeUtils.parse(ophanResults)
