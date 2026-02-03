@@ -13,13 +13,13 @@ jobs:
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
       - name: Install Java
         id: java
-        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: corretto
           java-version: 17
       - name: Install sbt
         id: sbt
-        uses: sbt/setup-sbt@a627500d27445f8c5021755a439829b6e78e3358 # v1.1.15
+        uses: sbt/setup-sbt@ae54f7cfe46ec0d24ade661d77f007360ab48bda # v1.1.16
       - name: Submit dependencies
         id: submit
         uses: scalacenter/sbt-dependency-submission@64084844d2b0a9b6c3765f33acde2fbe3f5ae7d3 # v3.1.0

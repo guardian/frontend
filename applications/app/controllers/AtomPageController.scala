@@ -72,7 +72,7 @@ class AtomPageController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logDebugWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
             Future.successful(Cors(NoCache(BadRequest("Invalid email"))))
           },
           form => {

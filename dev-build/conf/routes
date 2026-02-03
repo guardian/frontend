@@ -176,8 +176,6 @@ GET            /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id       
 # Admin
 GET            /oauthCallback                                                                                                    http.GuardianAuthWithExemptions.oauthCallback
 GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
-GET            /config                                                                                                           controllers.AppConfigController.renderAppConfig()
-GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
 GET            /metrics/errors                                                                                                   controllers.admin.MetricsController.renderErrors()

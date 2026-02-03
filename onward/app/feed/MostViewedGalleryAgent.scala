@@ -14,7 +14,7 @@ class MostViewedGalleryAgent(contentApiClient: ContentApiClient, ophanApi: Ophan
   def mostViewedGalleries(): Seq[RelatedContentItem] = agent()
 
   def refresh()(implicit ec: ExecutionContext): Future[Seq[RelatedContentItem]] = {
-    log.info("Refreshing most viewed galleries.")
+    log.debug("Refreshing most viewed galleries.")
 
     val ophanMostViewed = ophanApi.getMostViewedGalleries(hours = 3, count = 12)
     MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>

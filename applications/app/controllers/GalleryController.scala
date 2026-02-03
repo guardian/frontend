@@ -87,7 +87,7 @@ class GalleryController(
       request: RequestHeader,
   ): Future[Either[Result, (GalleryPage, Blocks)]] = {
     val edition = Edition(request)
-    logInfoWithRequestId(s"Fetching gallery: $path for edition $edition")
+    logDebugWithRequestId(s"Fetching gallery: $path for edition $edition")
 
     contentApiClient
       .getResponse(

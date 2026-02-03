@@ -6,7 +6,6 @@ import html.{HtmlPage, Styles}
 import model.{
   ApplicationContext,
   ContributorsListing,
-  DiagnosticsPageMetadata,
   PreferencesMetaData,
   StandalonePage,
   SubjectsListing,
@@ -21,8 +20,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.preferences.index
-import views.html.browserDiagnostics.diagnosticsPage
-import html.HtmlPageHelpers.ContentCSSFile
+import html.HtmlPageHelpers.{ContentCSSFile}
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 
@@ -41,11 +39,10 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
     implicit val p: StandalonePage = page
 
     val content: Html = page match {
-      case p: TagIndexPage            => tagIndexBody(p)
-      case p: PreferencesMetaData     => index(p)
-      case p: ContributorsListing     => tagIndexListingBody("contributors", p.metadata.webTitle, p.listings)
-      case p: SubjectsListing         => tagIndexListingBody("subjects", p.metadata.webTitle, p.listings)
-      case p: DiagnosticsPageMetadata => diagnosticsPage(p)
+      case p: TagIndexPage        => tagIndexBody(p)
+      case p: PreferencesMetaData => index(p)
+      case p: ContributorsListing => tagIndexListingBody("contributors", p.metadata.webTitle, p.listings)
+      case p: SubjectsListing     => tagIndexListingBody("subjects", p.metadata.webTitle, p.listings)
 
       case unsupported =>
         throw new RuntimeException(

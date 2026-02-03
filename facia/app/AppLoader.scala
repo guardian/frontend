@@ -4,7 +4,6 @@ import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.dfp.DfpAgentLifecycle
-import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -37,7 +36,6 @@ trait FapiServices {
   def pekkoActorSystem: PekkoActorSystem
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
   lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
-  lazy val blockingOperations = wire[BlockingOperations]
 }
 
 trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {

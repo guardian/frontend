@@ -2,11 +2,14 @@ package conf
 
 import app.LifecycleComponent
 import common._
-import org.joda.time.DateTime
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
+
+import java.time.{Instant, ZonedDateTime}
+import java.time.temporal.ChronoUnit
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
+import scala.math.Ordered.orderingToOrdered
 import scala.util.control.NonFatal
 
 /*
@@ -45,11 +48,11 @@ object HealthCheckResultTypes {
 private[conf] case class HealthCheckResult(
     url: String,
     result: HealthCheckInternalRequestResult,
-    date: DateTime,
+    instant: Instant,
     expiration: Option[Duration],
 ) {
-  private val expirationDate: Option[DateTime] = expiration.map { e => date.plus(e.toMillis) }
-  private def expired: Boolean = expirationDate.fold(false)(DateTime.now.getMillis > _.getMillis)
+  private val expirationDate: Option[Instant] = expiration.map { e => instant.plus(e.toMillis, ChronoUnit.MILLIS) }
+  private def expired: Boolean = expirationDate.fold(false)(Instant.now() > _)
   def recentlySucceed: Boolean =
     result match {
       case _: HealthCheckResultTypes.Success => !expired
@@ -63,7 +66,7 @@ private[conf] case class HealthCheckResult(
     }
   def formattedDate: String =
     expiration
-      .map(_ => if (expired) s"$date (Expired)" else date.toString)
+      .map(_ => if (expired) s"$instant (Expired)" else instant.toString)
       .getOrElse("Never expires")
 }
 
@@ -85,11 +88,11 @@ private[conf] trait HealthCheckFetcher extends GuLogging {
           case 200 => HealthCheckResultTypes.Success(response.status)
           case _   => HealthCheckResultTypes.Failure(response.status, response.statusText)
         }
-        HealthCheckResult(healthCheck.path, result, DateTime.now, healthCheck.expires)
+        HealthCheckResult(healthCheck.path, result, Instant.now(), healthCheck.expires)
       }
       .recover { case NonFatal(t) =>
         log.error(s"HealthCheck request to ${healthCheck.path} failed", t)
-        HealthCheckResult(healthCheck.path, HealthCheckResultTypes.Exception(t), DateTime.now, healthCheck.expires)
+        HealthCheckResult(healthCheck.path, HealthCheckResultTypes.Exception(t), Instant.now(), healthCheck.expires)
       }
 
   }
@@ -115,7 +118,7 @@ private[conf] trait HealthCheckFetcher extends GuLogging {
           val preconditionFailedResult =
             HealthCheckResultTypes.Exception(new RuntimeException(precondition.errorMessage))
           Future.successful(
-            HealthCheckResult(healthCheck.path, preconditionFailedResult, DateTime.now, healthCheck.expires),
+            HealthCheckResult(healthCheck.path, preconditionFailedResult, Instant.now(), healthCheck.expires),
           )
         }
       },

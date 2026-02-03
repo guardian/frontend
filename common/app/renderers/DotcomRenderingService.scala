@@ -80,7 +80,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .addHttpHeaders("Content-Type" -> "application/json")
 
     val resp = requestId match {
-      case Some(id) => request.addHttpHeaders("x-gu-xid" -> id).post(payload)
+      case Some(id) => request.addHttpHeaders("x-request-id" -> id).post(payload)
       case None     => request.post(payload)
     }
 
@@ -113,7 +113,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
-    val requestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-request-id")
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -253,7 +253,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
-    val requestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-request-id")
 
     postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/Blocks", requestId)
       .flatMap(response => {
@@ -275,7 +275,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
-    val requestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-request-id")
 
     postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks", requestId)
       .flatMap(response => {

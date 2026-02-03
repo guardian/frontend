@@ -50,14 +50,14 @@ object RefreshFrontsJob extends GuLogging {
       pekkoAsync: PekkoAsync,
   )(frontType: FrontType)(implicit executionContext: ExecutionContext): Boolean = {
     if (Configuration.aws.frontPressSns.exists(_.nonEmpty)) {
-      log.info(s"Putting press jobs on Facia Cron $frontType")
+      log.debug(s"Putting press jobs on Facia Cron $frontType")
       for (update <- getAllCronUpdates.filter(_.frontType == frontType)) {
-        log.info(s"Pressing $update")
+        log.debug(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(pekkoAsync)(update.path)
       }
       true
     } else {
-      log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
+      log.debug("Not pressing jobs to Facia cron - is either turned off or no queue is set")
       false
     }
   }
@@ -66,10 +66,10 @@ object RefreshFrontsJob extends GuLogging {
   // The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
   def runAll(pekkoAsync: PekkoAsync)(implicit executionContext: ExecutionContext): Option[Seq[Unit]] = {
     Configuration.aws.frontPressSns.map(Function.const {
-      log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
+      log.debug("Putting press jobs on Facia Cron (MANUAL REQUEST)")
       for (update <- getAllCronUpdates)
         yield {
-          log.info(s"Pressing $update")
+          log.debug(s"Pressing $update")
           FrontPressNotification.sendWithoutSubject(pekkoAsync)(update.path)
         }
     })

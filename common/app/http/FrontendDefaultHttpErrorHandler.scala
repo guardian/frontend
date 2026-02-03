@@ -1,7 +1,7 @@
 package http
 
 import model.Cors
-import play.api.{Environment, Mode, Configuration => PlayConfiguration}
+import play.api.{Environment, Logger, Mode, Configuration => PlayConfiguration}
 import play.api.http.Status._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.{RequestHeader, Result, Results}
@@ -9,8 +9,9 @@ import play.api.routing.Router
 import play.core.SourceMapper
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Random
 
-class CorsHttpErrorHandler(
+class FrontendDefaultHttpErrorHandler(
     environment: Environment,
     configuration: PlayConfiguration,
     sourceMapper: Option[SourceMapper],
@@ -23,6 +24,8 @@ class CorsHttpErrorHandler(
       router = Some(router),
     )
     with Results {
+
+  private val logger = Logger(this.getClass)
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
@@ -43,7 +46,15 @@ class CorsHttpErrorHandler(
 
   override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] =
     statusCode match {
-      case NOT_FOUND | BAD_REQUEST => super.onClientError(request, statusCode, message).map(Cors(_)(request))
-      case _                       => super.onClientError(request, statusCode, message)
+      case BAD_REQUEST =>
+        // Sample 1% of 400 errors to warn log for investigation
+        if (Random.nextInt(100) == 0) {
+          logger.warn(
+            s"400 Bad Request: $message, for request: ${request.method} ${request.uri}, with headers: ${request.headers.headers}",
+          )
+        }
+        super.onClientError(request, statusCode, message).map(Cors(_)(request))
+      case NOT_FOUND => super.onClientError(request, statusCode, message).map(Cors(_)(request))
+      case _         => super.onClientError(request, statusCode, message)
     }
 }

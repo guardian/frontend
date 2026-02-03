@@ -110,7 +110,7 @@ object TeamMap extends GuLogging {
     teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
 
   def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient, executionContext: ExecutionContext): Unit = { // pages are 1 based
-    log.info(s"Refreshing team tag mappings - page $page")
+    log.debug(s"Refreshing team tag mappings - page $page")
     contentApiClient
       .getResponse(
         contentApiClient.tags

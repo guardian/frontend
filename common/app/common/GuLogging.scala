@@ -20,6 +20,10 @@ trait GuLogging {
     log.error(ExceptionUtils.getStackTrace(e))
   }
 
+  def logDebugWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
+    log.logger.debug(getRequestIdField, message)
+  }
+
   def logInfoWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
     log.logger.info(getRequestIdField, message)
   }
@@ -40,6 +44,9 @@ trait GuLogging {
     log.logger.error(getRequestIdField, message, error)
   }
 
+  def logDebugWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.debug(customFieldMarkers(customFields), message)
+  }
   def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {
     log.logger.info(customFieldMarkers(customFields), message)
   }
@@ -66,7 +73,7 @@ trait GuLogging {
   }
 
   private def getRequestIdField(implicit request: RequestHeader) = {
-    customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")))
+    customFieldMarkers(List("requestId" -> request.headers.get("x-request-id").getOrElse("request-id-not-provided")))
   }
 }
 

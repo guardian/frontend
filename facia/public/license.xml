@@ -1,0 +1,13 @@
+<rsl xmlns="https://rslstandard.org/rsl">
+  <content url="/">
+    <license>
+      <permits type="usage">ai-train ai-input</permits>
+    
+      <payment type="subscription">
+        <custom>https://licensing.theguardian.com/</custom>
+      </payment>
+    
+      <prohibits type="usage">all</prohibits>
+    </license>
+  </content>
+</rsl>

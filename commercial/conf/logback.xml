@@ -20,18 +20,18 @@
     </appender>
 
     <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${STDOUT_LOG_LEVEL:-OFF}</level>
+        </filter>
         <appender-ref ref="STDOUT" />
     </appender>
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
+        <appender-ref ref="ASYNCSTDOUT"/>
     </root>
-    <if condition='!property("STAGE").contains("DEV")'>
-        <then>
-            <root level="INFO">
-                <appender-ref ref="STDOUT"/>
-            </root>
-        </then>
-    </if>
+
+    <logger name="common" level="${ACCESS_LOG_LEVEL:-DEBUG}"/>
+
 
 </configuration>

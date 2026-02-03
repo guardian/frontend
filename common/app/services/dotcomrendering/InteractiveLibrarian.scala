@@ -92,7 +92,7 @@ object InteractiveLibrarian extends GuLogging {
   }
 
   def applyCleaning(s3path: String): Boolean = {
-    log.info(s"Interactive Librarian. Apply cleaning. s3path: ${s3path}")
+    log.debug(s"Interactive Librarian. Apply cleaning. s3path: ${s3path}")
     // This function takes a s3 path pointing at an original document (meaning something pressed from live contents)
     // and writes the cleaned version.
     retrieveOriginalDocumentFromS3(s3path) match {
@@ -112,7 +112,7 @@ object InteractiveLibrarian extends GuLogging {
     // 1. Takes a path ( books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
     // 2. Queries the live contents ( https://www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
     // 3. Stores the document at S3 path ( www.theguardian.com/books/ng-interactive/2021/mar/05/this-months-best-paperbacks-michelle-obama-jan-morris-and-more )
-    log.info(s"Interactive Librarian. Pressing path: ${path}")
+    log.debug(s"Interactive Librarian. Pressing path: ${path}")
     val liveUrl = s"https://www.theguardian.com/${path}?dcr=false"
     val s3path = s"www.theguardian.com/${path}"
     val wsRequest = wsClient.url(liveUrl)
