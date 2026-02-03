@@ -34,7 +34,16 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
         val isHealthcheck = rh.uri == "/_healthcheck"
         val isHealthcheckSuccess = isHealthcheck && response.header.status == 200
         if (rh.method != "POST" && !isHealthcheckSuccess) {
-          requestLogger.withResponse(response).debug(s"${rh.method} ${rh.uri}$additionalInfo")
+          val status = response.header.status
+          val logMessage = s"${rh.method} ${rh.uri}$additionalInfo"
+          val logger = requestLogger.withResponse(response)
+          if (status >= 500) {
+            logger.error(logMessage)
+          } else if (status >= 400 && status != 404) {
+            logger.warn(logMessage)
+          } else {
+            logger.debug(logMessage)
+          }
         }
       case Failure(error) =>
         requestLogger.warn(s"${rh.method} ${rh.uri} failed", error)
