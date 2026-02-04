@@ -128,7 +128,6 @@ class ArticleController(
   private def mapModel(path: String, range: BlockRange)(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
-    println(s"hitting map model for article: $path")
     capiLookup
       .lookup(path, Some(range))
       .map(responseToModelOrResult)
@@ -145,16 +144,12 @@ class ArticleController(
     val supportedContent: Option[ContentType] = response.content.map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    val result = ModelOrResult(supportedContent, response) match {
+    ModelOrResult(supportedContent, response) match {
       case Right(article: Article) =>
         Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Left(r) => Left(r)
       case _       => Left(NotFound)
     }
-    println("result:")
-    println(result.isRight)
-
-    result
   }
 
   def servePressedPage(path: String)(implicit request: RequestHeader): Future[Result] = {

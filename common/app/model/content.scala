@@ -434,12 +434,13 @@ object Content {
     val content = make(apiContent)
 
     apiContent match {
-      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
-      case _ if apiContent.isGallery                                                 => Gallery.make(content)
-      case _ if apiContent.isVideo                                                   => Video.make(content)
-      case _ if apiContent.isAudio                                                   => Audio.make(content)
-      case _ if apiContent.isImageContent                                            => ImageContent.make(content)
-      case _                                                                         => GenericContent(content)
+      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku || apiContent.isHosted =>
+        Article.make(content)
+      case _ if apiContent.isGallery      => Gallery.make(content)
+      case _ if apiContent.isVideo        => Video.make(content)
+      case _ if apiContent.isAudio        => Audio.make(content)
+      case _ if apiContent.isImageContent => ImageContent.make(content)
+      case _                              => GenericContent(content)
     }
   }
 
