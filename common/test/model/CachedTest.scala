@@ -24,7 +24,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=259200")
   }
 
   it should "cache content less than 1 hour old for 60 seconds" in {
@@ -38,7 +38,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=259200")
   }
 
   it should "cache older content for 1 minute" in {
@@ -52,7 +52,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=259200")
   }
 
   it should "cache other things for 1 minute" in {
@@ -65,7 +65,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(page.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=259200")
   }
 
   it should "have at least 1 second stale-while-revalidate" in {
@@ -74,7 +74,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(CacheTime(5), WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=259200")
   }
 
   it should "set Surrogate-Control the same as Cache-Control" in {
@@ -83,7 +83,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(CacheTime(60, Some(120)), WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=259200")
     headers("Cache-Control") should equal(headers("Surrogate-Control"))
   }
 
@@ -98,7 +98,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Surrogate-Control") should be("max-age=3800, stale-while-revalidate=380, stale-if-error=864000")
+    headers("Surrogate-Control") should be("max-age=3800, stale-while-revalidate=380, stale-if-error=259200")
   }
 
   it should "apply longer SurrogateControl cache time for live content" in {
@@ -112,7 +112,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Surrogate-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Surrogate-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=259200")
   }
 
   it should "use the cacheSeconds for browser max-age" in {
@@ -127,7 +127,7 @@ class CachedTest extends AnyFlatSpec with Matchers with Results with implicits.D
     val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=259200")
   }
 
   "ETags" should "should be added" in {

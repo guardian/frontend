@@ -39,6 +39,7 @@ object Cached extends implicits.Dates {
   private val cacheableStatusCodes = Seq(200, 404)
 
   private val tenDaysInSeconds = 864000
+  private val threeDaysInSeconds = 259200
 
   case class Hash(string: String)
 
@@ -98,7 +99,7 @@ object Cached extends implicits.Dates {
 
   private def cacheControl(maxAge: Int) = {
     val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
-    s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
+    s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$threeDaysInSeconds"
   }
   /*
     NOTE, if you change these headers make sure they are compatible with our Edge Cache
