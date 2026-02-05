@@ -53,8 +53,14 @@ trait GuLogging {
   def logWarningWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
     log.logger.warn(customFieldMarkers(customFields), message, error)
   }
+  def logWarningWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.warn(customFieldMarkers(customFields), message)
+  }
   def logErrorWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
     log.logger.error(customFieldMarkers(customFields), message, error)
+  }
+  def logErrorWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.error(customFieldMarkers(customFields), message)
   }
 
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception

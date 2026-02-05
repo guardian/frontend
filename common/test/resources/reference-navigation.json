@@ -420,6 +420,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Winter Olympics",
+					"url": "/sport/winter-olympics-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -1188,6 +1194,12 @@
 				{
 					"title": "Newsletters",
 					"url": "/email-newsletters",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "The Filter",
+					"url": "/thefilter-us",
 					"children": [],
 					"classList": []
 				},
@@ -1987,6 +1999,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Winter Olympics",
+					"url": "/sport/winter-olympics-2026",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
