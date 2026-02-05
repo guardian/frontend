@@ -2000,6 +2000,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Winter Olympics",
+					"url": "/sport/winter-olympics-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
