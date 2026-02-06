@@ -657,7 +657,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
     sellByDate = never,
     safeState = Off,
-    exposeClientSide = false,
+    exposeClientSide = true,
     highImpact = false,
   )
 }
