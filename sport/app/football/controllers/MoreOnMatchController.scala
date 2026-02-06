@@ -88,6 +88,7 @@ case class NxMatchData(
     comments: String,
     minByMinUrl: Option[String],
     reportUrl: Option[String],
+    matchInfoUrl: String,
     status: String,
 ) extends NxAnswer
 
@@ -135,26 +136,7 @@ object NxAnswer {
     )
   }
 
-  def makeMinByMinUrl(implicit
-      request: RequestHeader,
-      theMatch: FootballMatch,
-      related: Seq[ContentType],
-  ): Option[String] = {
-    val (_, minByMin, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
-    minByMin.map(x => LinkTo(x.url))
-  }
-
-  def makeMatchReportUrl(implicit
-      request: RequestHeader,
-      theMatch: FootballMatch,
-      related: Seq[ContentType],
-  ): Option[String] = {
-    val (matchReport, _, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
-    matchReport.map(x => LinkTo(x.url))
-  }
-
   def makeFromFootballMatch(
-      request: RequestHeader,
       theMatch: FootballMatch,
       related: Seq[ContentType],
       lineUp: LineUp,
@@ -162,8 +144,9 @@ object NxAnswer {
       isResult: Boolean,
       isLive: Boolean,
       matchStatus: String,
-  ): NxMatchData = {
+  )(implicit request: RequestHeader): NxMatchData = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
+    val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
     NxMatchData(
       id = theMatch.id,
       isResult = isResult,
@@ -173,8 +156,9 @@ object NxAnswer {
       isLive = isLive,
       venue = theMatch.venue.map(_.name).getOrElse(""),
       comments = theMatch.comments.getOrElse(""),
-      minByMinUrl = makeMinByMinUrl(request, theMatch, related),
-      reportUrl = makeMatchReportUrl(request, theMatch, related),
+      minByMinUrl = maybeMinByMin.map(x => LinkTo(x.url)),
+      reportUrl = maybeMatchReport.map(x => LinkTo(x.url)),
+      matchInfoUrl = LinkTo(matchInfo.url),
       status = matchStatus,
     )
   }
@@ -271,7 +255,6 @@ class MoreOnMatchController(
               Cached(if (theMatch.isLive) 10 else 300) {
                 JsonComponent.fromWritable(
                   NxAnswer.makeFromFootballMatch(
-                    request,
                     theMatch,
                     filtered,
                     lineup,

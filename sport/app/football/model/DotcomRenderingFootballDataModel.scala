@@ -5,8 +5,8 @@ import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
-import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, getMatchNavUrl, withoutDeepNull, withoutNull}
+import model.dotcomrendering.{Config, PageFooter, PageType}
 import model.{ApplicationContext, Competition, CompetitionSummary, Group, StandalonePage, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
@@ -29,6 +29,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import ab.ABTests
+import org.joda.time.{LocalDate => JodaLocalDate}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -327,6 +328,7 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
+    matchUrl: String,
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -357,6 +359,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       matchInfo = matchInfo,
       group = group,
       competitionName = competitionName,
+      matchUrl = getMatchUrl(matchInfo, page),
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -367,6 +370,12 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
     )
+  }
+
+  private def getMatchUrl(theMatch: FootballMatch, page: MatchPage) = {
+    val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
+    val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
+    getMatchNavUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
