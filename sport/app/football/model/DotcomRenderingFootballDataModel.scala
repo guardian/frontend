@@ -374,7 +374,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
 
   private def getMatchUrl(theMatch: FootballMatch, page: MatchPage) = {
     val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
-    val localDate = JodaLocalDate.parse(theMatch.date.toLocalDate.toString)
+    val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
     getMatchNavUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
   }
 
