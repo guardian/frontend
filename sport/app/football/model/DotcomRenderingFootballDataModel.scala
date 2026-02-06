@@ -5,8 +5,8 @@ import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
-import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, getMatchNavUrl, withoutDeepNull, withoutNull}
+import model.dotcomrendering.{Config, PageFooter, PageType}
 import model.{ApplicationContext, Competition, CompetitionSummary, Group, StandalonePage, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
@@ -29,9 +29,8 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import ab.ABTests
-import football.datetime.DateHelpers
+import org.joda.time.{LocalDate => JodaLocalDate}
 
-import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -374,11 +373,9 @@ object DotcomRenderingFootballMatchSummaryDataModel {
   }
 
   private def getMatchUrl(theMatch: FootballMatch, page: MatchPage) = {
-    val pageId = URLEncoder.encode(page.metadata.id, "UTF-8")
     val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
-    val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(DateHelpers.defaultFootballZoneId)
-    val datePath = theMatch.date.format(formatter)
-    s"${Configuration.ajax.url}/football/api/match-nav/$datePath/$homeId/$awayId.json?dcr=true&page=$pageId"
+    val localDate = JodaLocalDate.parse(theMatch.date.toLocalDate.toString)
+    getMatchNavUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
