@@ -70,6 +70,12 @@ object DotcomRenderingUtils {
     s"$host/football/api/match-nav/$datePath/$team1/$team2.json?dcr=true&page=$encodedPageId"
   }
 
+  def getMatchHeaderUrl(host: String, date: LocalDate, team1: String, team2: String): String = {
+    val formatter = DateTimeFormat.forPattern("yyyy/MM/dd")
+    val datePath = formatter.print(date)
+    s"$host/football/api/match-header/$datePath/$team1/$team2.json"
+  }
+
   def makeFootballMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
