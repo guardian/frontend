@@ -1,13 +1,13 @@
 package football.model
 
-import common.{CanonicalLink, Edition}
+import common.{CanonicalLink, Edition, LinkTo}
 import conf.Configuration
 import experiments.ActiveExperiments
-import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchPage}
+import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
 import model.dotcomrendering.DotcomRenderingUtils.{assetURL, getMatchNavUrl, withoutDeepNull, withoutNull}
 import model.dotcomrendering.{Config, PageFooter, PageType}
-import model.{ApplicationContext, Competition, CompetitionSummary, Group, StandalonePage, Table, TeamUrl}
+import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, StandalonePage, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
@@ -224,6 +224,42 @@ object DotcomRenderingFootballMatchListDataModel {
         },
       )
     }
+  }
+}
+
+case class DotcomRenderingFootballHeaderDataModel(
+    footballMatch: FootballMatch,
+    competitionName: String,
+    minByMinUrl: Option[String],
+    reportUrl: Option[String],
+    matchInfoUrl: String,
+    editionId: String,
+)
+
+object DotcomRenderingFootballHeaderDataModel {
+  import football.model.DotcomRenderingFootballDataModelImplicits._
+
+  def apply(theMatch: FootballMatch, competitionSummary: CompetitionSummary, related: Seq[ContentType])(implicit
+      request: RequestHeader,
+  ): DotcomRenderingFootballHeaderDataModel = {
+    val edition = Edition(request)
+    val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
+    DotcomRenderingFootballHeaderDataModel(
+      theMatch,
+      competitionSummary.fullName,
+      maybeMinByMin.map(x => LinkTo(x.url)),
+      maybeMatchReport.map(x => LinkTo(x.url)),
+      LinkTo(matchInfo.url),
+      edition.id,
+    )
+  }
+
+  implicit def DotcomRenderingFootballHeaderDataModelWrites: Writes[DotcomRenderingFootballHeaderDataModel] =
+    Json.writes[DotcomRenderingFootballHeaderDataModel]
+
+  def toJson(model: DotcomRenderingFootballHeaderDataModel): JsValue = {
+    val jsValue = Json.toJson(model)
+    withoutNull(jsValue)
   }
 }
 

@@ -6,7 +6,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
-import football.model.{FootballMatchTrail, GuTeamCodes}
+import football.model.{DotcomRenderingFootballHeaderDataModel, FootballMatchTrail, GuTeamCodes}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
@@ -226,6 +226,29 @@ class MoreOnMatchController(
   }
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchHeaderJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
+      val maybeResponse: Option[Future[Result]] =
+        competitionsService.competitionMatchFor(interval(contentDate), team1, team2) map {
+          case (competitionSummary, theMatch) =>
+            val relatedContentTypes: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
+            val filteredContentTypesFuture: Future[Seq[ContentType]] = relatedContentTypes map {
+              _ filter hasExactlyTwoTeams
+            }
+
+            filteredContentTypesFuture.map { filtered =>
+              val model = DotcomRenderingFootballHeaderDataModel(
+                theMatch,
+                competitionSummary,
+                filtered,
+              )
+              Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(model))
+            }
+        }
+      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+    }
+
   def matchNavJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
     matchNav(year, month, day, team1, team2)
   def matchNav(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
