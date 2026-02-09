@@ -5,7 +5,13 @@ import conf.Configuration
 import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{assetURL, getMatchNavUrl, withoutDeepNull, withoutNull}
+import model.dotcomrendering.DotcomRenderingUtils.{
+  assetURL,
+  getMatchHeaderUrl,
+  getMatchNavUrl,
+  withoutDeepNull,
+  withoutNull,
+}
 import model.dotcomrendering.{Config, PageFooter, PageType}
 import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, StandalonePage, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
@@ -233,7 +239,6 @@ case class DotcomRenderingFootballHeaderDataModel(
     minByMinUrl: Option[String],
     reportUrl: Option[String],
     matchInfoUrl: String,
-    editionId: String,
 )
 
 object DotcomRenderingFootballHeaderDataModel {
@@ -242,7 +247,6 @@ object DotcomRenderingFootballHeaderDataModel {
   def apply(theMatch: FootballMatch, competitionSummary: CompetitionSummary, related: Seq[ContentType])(implicit
       request: RequestHeader,
   ): DotcomRenderingFootballHeaderDataModel = {
-    val edition = Edition(request)
     val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
     DotcomRenderingFootballHeaderDataModel(
       theMatch,
@@ -250,17 +254,11 @@ object DotcomRenderingFootballHeaderDataModel {
       maybeMinByMin.map(x => LinkTo(x.url)),
       maybeMatchReport.map(x => LinkTo(x.url)),
       LinkTo(matchInfo.url),
-      edition.id,
     )
   }
 
   implicit def DotcomRenderingFootballHeaderDataModelWrites: Writes[DotcomRenderingFootballHeaderDataModel] =
     Json.writes[DotcomRenderingFootballHeaderDataModel]
-
-  def toJson(model: DotcomRenderingFootballHeaderDataModel): JsValue = {
-    val jsValue = Json.toJson(model)
-    withoutNull(jsValue)
-  }
 }
 
 case class DotcomRenderingFootballTablesDataModel(
@@ -365,6 +363,7 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
     group: Option[Group],
     competitionName: String,
     matchUrl: String,
+    matchHeaderUrl: String,
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -395,7 +394,8 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       matchInfo = matchInfo,
       group = group,
       competitionName = competitionName,
-      matchUrl = getMatchUrl(matchInfo, page),
+      matchUrl = matchUrl(matchInfo, page),
+      matchHeaderUrl = matchHeaderUrl(matchInfo, page),
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -408,10 +408,18 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     )
   }
 
-  private def getMatchUrl(theMatch: FootballMatch, page: MatchPage) = {
+  private def matchUrl(theMatch: FootballMatch, page: MatchPage) = {
     val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
     val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
+
     getMatchNavUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
+  }
+
+  private def matchHeaderUrl(theMatch: FootballMatch, page: MatchPage) = {
+    val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
+    val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
+
+    getMatchHeaderUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
