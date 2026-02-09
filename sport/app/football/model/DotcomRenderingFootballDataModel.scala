@@ -236,9 +236,9 @@ object DotcomRenderingFootballMatchListDataModel {
 case class DotcomRenderingFootballHeaderDataModel(
     footballMatch: FootballMatch,
     competitionName: String,
-    minByMinUrl: Option[String],
-    reportUrl: Option[String],
-    matchInfoUrl: String,
+    liveURL: Option[String],
+    reportURL: Option[String],
+    infoURL: String,
 )
 
 object DotcomRenderingFootballHeaderDataModel {
@@ -249,11 +249,11 @@ object DotcomRenderingFootballHeaderDataModel {
   ): DotcomRenderingFootballHeaderDataModel = {
     val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
     DotcomRenderingFootballHeaderDataModel(
-      theMatch,
-      competitionSummary.fullName,
-      maybeMinByMin.map(x => LinkTo(x.url)),
-      maybeMatchReport.map(x => LinkTo(x.url)),
-      LinkTo(matchInfo.url),
+      footballMatch = theMatch,
+      competitionName = competitionSummary.fullName,
+      liveURL = maybeMinByMin.map(x => LinkTo(x.url)),
+      reportURL = maybeMatchReport.map(x => LinkTo(x.url)),
+      infoURL = LinkTo(matchInfo.url),
     )
   }
 
