@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.40.17"
-  val capiVersion = "41.0.0"
+  val capiVersion = "41.1.1"
   val faciaVersion = "29.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -28,7 +28,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
   val commonsIo = "commons-io" % "commons-io" % "2.21.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
-  val contentApiClient = "com.gu" %% "content-api-client" % "41.0.1-SNAPSHOT"
+  val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "37.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion

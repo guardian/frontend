@@ -33,7 +33,7 @@ class ArticleController(
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
-  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit req: RequestHeader): Future[Result] =
     mapAndRender(path, GenericFallback)()
@@ -141,7 +141,7 @@ class ArticleController(
   private def responseToModelOrResult(
       response: ItemResponse,
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
-    val supportedContent: Option[ContentType] = response.content.map(Content(_))
+    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
     ModelOrResult(supportedContent, response) match {
