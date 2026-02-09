@@ -419,7 +419,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
     val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
 
-    getMatchHeaderUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
+    getMatchHeaderUrl(Configuration.ajax.url, localDate, homeId, awayId)
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
