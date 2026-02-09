@@ -6,7 +6,6 @@ import play.api.Logger
 import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
-import scala.util.Random
 
 class TooManyHeadersFilter(implicit val mat: Materializer) extends Filter {
   private val MAX_HEADERS = 64
