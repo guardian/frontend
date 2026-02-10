@@ -33,7 +33,7 @@ class ArticleController(
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
-  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit req: RequestHeader): Future[Result] =
     mapAndRender(path, GenericFallback)()
