@@ -1,13 +1,19 @@
 package football.model
 
-import common.{CanonicalLink, Edition}
+import common.{CanonicalLink, Edition, LinkTo}
 import conf.Configuration
 import experiments.ActiveExperiments
-import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchPage}
+import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{assetURL, withoutDeepNull, withoutNull}
-import model.dotcomrendering.{Config, PageFooter, PageType, Trail}
-import model.{ApplicationContext, Competition, CompetitionSummary, Group, StandalonePage, Table, TeamUrl}
+import model.dotcomrendering.DotcomRenderingUtils.{
+  assetURL,
+  getMatchHeaderUrl,
+  getMatchNavUrl,
+  withoutDeepNull,
+  withoutNull,
+}
+import model.dotcomrendering.{Config, PageFooter, PageType}
+import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, StandalonePage, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
@@ -29,6 +35,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 import ab.ABTests
+import org.joda.time.{LocalDate => JodaLocalDate}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -226,6 +233,34 @@ object DotcomRenderingFootballMatchListDataModel {
   }
 }
 
+case class DotcomRenderingFootballHeaderDataModel(
+    footballMatch: FootballMatch,
+    competitionName: String,
+    liveURL: Option[String],
+    reportURL: Option[String],
+    infoURL: String,
+)
+
+object DotcomRenderingFootballHeaderDataModel {
+  import football.model.DotcomRenderingFootballDataModelImplicits._
+
+  def apply(theMatch: FootballMatch, competitionSummary: CompetitionSummary, related: Seq[ContentType])(implicit
+      request: RequestHeader,
+  ): DotcomRenderingFootballHeaderDataModel = {
+    val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
+    DotcomRenderingFootballHeaderDataModel(
+      footballMatch = theMatch,
+      competitionName = competitionSummary.fullName,
+      liveURL = maybeMinByMin.map(x => LinkTo(x.url)),
+      reportURL = maybeMatchReport.map(x => LinkTo(x.url)),
+      infoURL = LinkTo(matchInfo.url),
+    )
+  }
+
+  implicit def DotcomRenderingFootballHeaderDataModelWrites: Writes[DotcomRenderingFootballHeaderDataModel] =
+    Json.writes[DotcomRenderingFootballHeaderDataModel]
+}
+
 case class DotcomRenderingFootballTablesDataModel(
     tables: Seq[Table],
     filters: Map[String, Seq[CompetitionFilter]],
@@ -327,6 +362,8 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
+    matchUrl: String,
+    matchHeaderUrl: String,
     nav: Nav,
     editionId: String,
     guardianBaseURL: String,
@@ -357,6 +394,8 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       matchInfo = matchInfo,
       group = group,
       competitionName = competitionName,
+      matchUrl = matchUrl(matchInfo, page),
+      matchHeaderUrl = matchHeaderUrl(matchInfo, page),
       nav = nav,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,
@@ -367,6 +406,20 @@ object DotcomRenderingFootballMatchSummaryDataModel {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
     )
+  }
+
+  private def matchUrl(theMatch: FootballMatch, page: MatchPage) = {
+    val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
+    val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
+
+    getMatchNavUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
+  }
+
+  private def matchHeaderUrl(theMatch: FootballMatch, page: MatchPage) = {
+    val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
+    val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
+
+    getMatchHeaderUrl(Configuration.ajax.url, localDate, homeId, awayId)
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._
