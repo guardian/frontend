@@ -46,6 +46,9 @@ class ArticleController(
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
   def renderEmail(path: String): Action[AnyContent] = renderArticle(path)
+  def renderHosted(campaignName: String, pageName: String): Action[AnyContent] = renderArticle(
+    s"advertiser-content/$campaignName/$pageName",
+  )
 
   def renderHeadline(path: String): Action[AnyContent] =
     Action.async { implicit request =>
