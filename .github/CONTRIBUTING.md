@@ -34,7 +34,7 @@ This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 - Understand what you are trying to achieve with the change (what does success look like?)
 - Fork the code and make your changes.
 - Test your branch locally by running unit and integration tests:
-    - `./sbt project <project> test`
+    - `sbt project <project> test`
     - `make test`
 - Open a pull request.
     - Explain why you are making this change in the pull request
