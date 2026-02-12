@@ -76,7 +76,7 @@ jobs:
         with:
           distribution: corretto
           cache: sbt
-          java-version: 11
+          java-version: 21
 
       - uses: guardian/setup-scala@v1
 
