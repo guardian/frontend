@@ -26,6 +26,7 @@ case class Tag(
     bylineImageUrl: Option[String],
     bylineLargeImageUrl: Option[String],
     podcast: Option[Podcast],
+    bio: Option[String],
 )
 
 object Tag {
@@ -40,6 +41,7 @@ object Tag {
       t.properties.bylineImageUrl.map(src => ImgSrc(src, Item300)),
       t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
       t.properties.podcast,
+      t.properties.bio,
     )
   }
 }
