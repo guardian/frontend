@@ -4,14 +4,13 @@ import common._
 import implicits.AppsFormat
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 
 class ComponentController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
-    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    remoteRenderer: renderers.DotcomRenderingService,
 ) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
