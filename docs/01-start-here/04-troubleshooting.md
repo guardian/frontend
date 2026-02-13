@@ -24,8 +24,7 @@ If this doesn't work, you can clean everything with `cleanAll` in `root`.
 > **Note:** The cost is that you have to recompile everything/whatever you are working on fully next time you run it (can be up to 10 mins for dev-build) but sometimes it's needed!
 
 ```
-./sbt
-[root] cleanAll
+sbt cleanAll
 ```
 
 If you're still seeing errors, try clearing out all build and `.gitignore`d folders, which includes `target` folders:
@@ -44,11 +43,13 @@ And compile again.
 
 ### The changes are not showing when running locally
 
-To make sure your code is compiled try `make compile-dev` before running `./sbt`. This might save you lots of time debugging why your changes don't show.
+To make sure your code is compiled try `make compile-dev` before running `sbt`. This might save you lots of time
+debugging why your changes don't show.
 
 ### NPM "EACCES"
 
 If you get errors like this on `npm install`
+
 ```
 npm WARN locking Error: EACCES, open '/Users/jduffell/.npm/_locks/karma-requirejs-4becac899d6c8f35.lock'
 ```
@@ -82,12 +83,14 @@ You may run into a "too many files open" error during compilation or reloading. 
 To increase the limit do the following (instructions from Ubuntu 12.10)...
 
 In the file `/etc/security/limits.conf` add the following two lines
+
 ```
 *  soft  nofile 20000
 *  hard  nofile 65000
 ```
 
 And in the file `/etc/pam.d/common-session` add the following line.
+
 ```
 session required pam_limits.so
 ```

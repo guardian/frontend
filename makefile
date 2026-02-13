@@ -2,10 +2,6 @@
 # They're helper targets that you probably only need to know about
 # if you've got as far as reading the makefile.
 
-# Add phony targets
-.PHONY: sbt
-
-
 # *********************** SETUP ***********************
 
 # Install all 3rd party dependencies.
@@ -33,8 +29,6 @@ check-node-env: # PRIVATE
 watch: compile-watch
 	@./dev/watch.mjs
 
-sbt: # PRIVATE
-	./sbt
 
 # *********************** ASSETS ***********************
 

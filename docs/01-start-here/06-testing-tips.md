@@ -31,10 +31,6 @@ make list
 ```
 to see a full list of the available make commands.
 
-### Starting sbt
-Its important to remember to use ./sbt to run the local build, not just sbt.
-./sbt will pick up some presets that are important for running the build successfully.
-
 ### What project to run
 In general, the best project to run is "dev-build".  Dev-build: is a project that combines multiple applications for ease of testing.
 Most of the time it is both convenient and reliable, however in some cases you might prefer to use the project containing the application you are changing.

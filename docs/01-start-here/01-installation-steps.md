@@ -32,8 +32,6 @@ You need to have a few command line tools installed on your computer (some are u
 	$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	```
 
-
-
 ## Obtain AWS credentials
 
 1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account).
@@ -141,8 +139,6 @@ eg:
 $ brew install node@18.16.0
 ```
 
-
-
 ### Client side code
 
 Install additional dependencies:
@@ -166,13 +162,11 @@ $ make watch
 As a convenience, this command will also watch for changes to client side code and
 automatically inject changes into the browser without requiring a browser refresh.
 
-In another console, run the supplied bash script `./sbt`
+In another console, run `sbt`
 
 ```bash
-$ ./sbt
+$ sbt
 ```
-
-(Do not run your global sbt command you need to use the one provided by frontend, hence `./sbt`)
 
 Wait for sbt to be up and running (this may take few minutes if it's the first time). Then clean and compile at the sbt prompt
 

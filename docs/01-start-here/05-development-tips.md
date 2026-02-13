@@ -38,33 +38,19 @@ If you are wondering what other options make has, you can simply type `make` at 
 It is often necessary to clean the `root` project when 3rd-party libs have been updated for instance.
 Developers can use the `cleanAll` sbt task to clean all sbt projects, rather than only cleaning the current project.
 
-
-### Debugging Play application
-You can debug your local Frontend application, by attaching a debugger.
-
-* Start Simple Build Tool in debug mode by typing `./sbt --debug`.
-* Build and run your application. See "Running" for steps.
-* Use a debugger to attach to the remote Java process, on localhost:1044.
-
-Any IDE debugger should be compatible. In IntelliJ, add a new Debug Configuration,
-based on the Remote default.
-Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
-Start a new Debug session, and your breakpoints should be active.
-
 ### Developing in IntelliJ
 
-To use the sbt shell, you should use the same configuration for the JVM as in the [custom sbt script](../../sbt).
-As an example of how to achieve this, the picture below demonstrates increasing the maximum heap size to 8000 and
-providing the `APP_SECRET` as a Java system property.
+The integrated SBT shell should automatically pick the `.jvmopts` file, no more specific set-up is required.
 
-![sbt_options](https://user-images.githubusercontent.com/4085817/67011346-4ce99980-f0e7-11e9-81fd-f1208e672800.png)
+Running the application through IntelliJ presents the benefit of being able to easily set debugging breakpoints.
 
-Being able to use sbt shell has a number of advantages:
-- IntelliJ can be [configured to use sbt shell for build and import](https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000117230-Sbt-shell-for-build-an-import);
-- and (perhaps more pertinently), by clicking on the debug icon (pictured below) you can debug the Scala application(s)
-without having to configure the debugger yourself:
+### Debugging Play application
 
-  ![debug_icon](https://user-images.githubusercontent.com/4085817/67011976-7bb43f80-f0e8-11e9-93fd-052ede190e34.png)
+You can debug your local Frontend application, by attaching a debugger to the sbt shell.
+
+* In IntelliJ, settings -> sbt -> "Enable debbugging"
+* Then go to the sbt shell (Cmd+Shift+S), the "Attach debugger to shell" button should have appeared, click it.
+* You can now run your application and place breakpoints in your code.
 
 ### Viewing AMP Pages
 
