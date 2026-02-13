@@ -4,8 +4,8 @@ import clients.DiscussionProfile
 import com.gu.identity.model.{PublicFields, User, UserDates}
 import idapiclient.{Auth, _}
 import org.joda.time.DateTime
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito._
-import org.mockito.{Matchers => MockitoMatchers}
 import org.scalatest.freespec.PathAnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -56,7 +56,7 @@ class PublicProfileControllerTest
     ),
   )
 
-  when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
+  when(idRequestParser.apply(ArgumentMatchers.any[RequestHeader])) thenReturn idRequest
 
   val controller = new PublicProfileController(
     idUrlBuilder,
@@ -68,7 +68,7 @@ class PublicProfileControllerTest
   val request = TestRequest()
 
   "Given renderProfileFromId is called" - Fake {
-    when(api.user(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+    when(api.user(ArgumentMatchers.anyString, ArgumentMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.user(userId)) thenReturn Future.successful(Right(user))
     when(discussionApi.findDiscussionUserFilterCommented(userId)) thenReturn Future.successful(Some(discussionProfile))
 

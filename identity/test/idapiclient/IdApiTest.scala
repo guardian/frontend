@@ -7,10 +7,9 @@ import scala.concurrent.Future
 import org.joda.time.format.ISODateTimeFormat
 import idapiclient.parser.IdApiJsonBodyParser
 import idapiclient.responses.Error
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito._
-import org.mockito.Matchers.any
 import org.scalatestplus.mockito.MockitoSugar
-
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import test.{SingleServerSuite, WithTestExecutionContext, WithTestIdConfig}
 
