@@ -5,7 +5,7 @@ const config = '--error';
 
 const error = (ctx) => {
 	ctx.messages.push(
-		`Run ${chalk.blue('./sbt scalafmt')} to format Scala files.`,
+		`Run ${chalk.blue('sbt scalafmt')} to format Scala files.`,
 	);
 };
 
@@ -17,7 +17,7 @@ const task = {
 			[
 				{
 					title: 'scalafmtCheck',
-					task: () => execa('./sbt', ['scalafmtCheck', config]),
+					task: () => execa('sbt', ['scalafmtCheck', config]),
 					onError: error,
 				},
 			],
