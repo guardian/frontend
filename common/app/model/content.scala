@@ -54,6 +54,7 @@ final case class Content(
     starRating: Option[Int],
     allowUserGeneratedContent: Boolean,
     isExpired: Boolean,
+    isHosted: Boolean,
     productionOffice: Option[String],
     tweets: Seq[Tweet],
     showInRelated: Boolean,
@@ -433,12 +434,13 @@ object Content {
     val content = make(apiContent)
 
     apiContent match {
-      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
-      case _ if apiContent.isGallery                                                 => Gallery.make(content)
-      case _ if apiContent.isVideo                                                   => Video.make(content)
-      case _ if apiContent.isAudio                                                   => Audio.make(content)
-      case _ if apiContent.isImageContent                                            => ImageContent.make(content)
-      case _                                                                         => GenericContent(content)
+      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku || apiContent.isHosted =>
+        Article.make(content)
+      case _ if apiContent.isGallery      => Gallery.make(content)
+      case _ if apiContent.isVideo        => Video.make(content)
+      case _ if apiContent.isAudio        => Audio.make(content)
+      case _ if apiContent.isImageContent => ImageContent.make(content)
+      case _                              => GenericContent(content)
     }
   }
 
@@ -472,6 +474,7 @@ object Content {
       starRating = apifields.flatMap(_.starRating),
       allowUserGeneratedContent = apifields.flatMap(_.allowUgc).getOrElse(false),
       isExpired = apiContent.isExpired.getOrElse(false),
+      isHosted = apiContent.isHosted,
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
       tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").toSeq.map { tweet =>
         val images = tweet.assets
@@ -549,7 +552,7 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isHosted", JsBoolean(false)),
+      ("isHosted", JsBoolean(content.isHosted)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isColumn", JsBoolean(content.isColumn)),
       ("isNumberedList", JsBoolean(content.isNumberedList)),

@@ -16,7 +16,8 @@ object ArticlePageChecks {
     }
   }
 
-  def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
+  // Treat all hosted content as non-galleries, at least during migration work
+  def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery || page.item.content.isHosted
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.item.tags.isPaidContent
 }

@@ -60,7 +60,7 @@ jobs:
           if-no-files-found: error
 
   build:
-    needs: [client-validate, client-build]
+    needs: [ client-validate, client-build ]
     runs-on: 8core-ubuntu-latest-frontend
     steps:
       - uses: actions/checkout@v6
@@ -78,6 +78,8 @@ jobs:
           cache: sbt
           java-version: 11
 
+      - uses: guardian/setup-scala@v1
+
       # Scala tests rely on client build assets
       - name: Download frontend-client
         uses: actions/download-artifact@v7
@@ -86,16 +88,7 @@ jobs:
           path: .
 
       - name: Test, Compile, Package
-        # Australia/Sydney  -because it is too easy for devs to forget about timezones
-        run: |
-          java \
-          -Xmx6144M \
-          -XX:ReservedCodeCacheSize=128m \
-          -Dsbt.log.noformat=true \
-          -XX:+UseParallelGC \
-          -DAPP_SECRET="fake_secret" \
-          -Duser.timezone=Australia/Sydney \
-          -jar ./bin/sbt-launch.jar compile assets scalafmtCheckAll test Universal/packageBin
+        run: sbt compile assets scalafmtCheckAll test Universal/packageBin
 
       - name: Test Summary
         uses: test-summary/action@v2
