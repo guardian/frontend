@@ -6,7 +6,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
-import football.model.{DotcomRenderingFootballHeaderDataModel, FootballMatchTrail, GuTeamCodes}
+import football.model.{DotcomRenderingFootballHeaderDataModel, FootballMatchTrail, GuTeamCodes, MatchStats}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
@@ -49,6 +49,10 @@ case class MatchNav(
   them to a single model file.
  */
 
+// TODO: This model will soon get deprecated after the football pages migration.
+// It's currently being used for match-nav api calls
+// but throughout the migration we will start using match-header & match-stats endpoints
+// and will stop using match-nav
 sealed trait NxAnswer
 case class NxEvent(eventTime: String, eventType: String) extends NxAnswer
 case class NxPlayer(
@@ -59,7 +63,7 @@ case class NxPlayer(
     substitute: Boolean,
     timeOnPitch: String,
     shirtNumber: String,
-    events: Seq[EventAnswer],
+    events: Seq[NxEvent],
 ) extends NxAnswer
 case class NxTeam(
     id: String,
@@ -96,8 +100,8 @@ object NxAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
   def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
     team.players.map { player =>
-      val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
-        EventAnswer(event.eventTime, event.eventType)
+      val events = player.events.filter(event => reportedEventTypes.contains(event.eventType)).map { event =>
+        NxEvent(event.eventTime, event.eventType)
       }
       NxPlayer(
         player.id,
@@ -245,6 +249,22 @@ class MoreOnMatchController(
               )
               Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(model))
             }
+        }
+      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+    }
+
+  // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchStatsJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
+      val maybeResponse: Option[Future[Result]] =
+        competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
+          val maybeLineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+
+          maybeLineup.map(lineup => {
+            val matchStats = MatchStats.statsFromFootballMatch(theMatch, lineup, theMatch.matchStatus)
+            Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStats))
+          })
         }
       maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
     }
