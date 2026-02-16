@@ -40,7 +40,12 @@ object DotcomRenderingMatchType {
 case object CricketMatchType extends DotcomRenderingMatchType
 case object FootballMatchType extends DotcomRenderingMatchType
 
-case class DotcomRenderingMatchData(matchUrl: String, matchType: DotcomRenderingMatchType)
+case class DotcomRenderingMatchData(
+    matchUrl: String,
+    matchHeaderUrl: Option[String],
+    matchStatsUrl: Option[String],
+    matchType: DotcomRenderingMatchType,
+)
 
 object DotcomRenderingUtils {
   def makeMatchData(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
@@ -55,8 +60,10 @@ object DotcomRenderingUtils {
       case (Some(date), Some(team)) =>
         Some(
           DotcomRenderingMatchData(
-            s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
-            CricketMatchType,
+            matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
+            matchHeaderUrl = None,
+            matchStatsUrl = None,
+            matchType = CricketMatchType,
           ),
         )
       case _ => None
@@ -74,6 +81,12 @@ object DotcomRenderingUtils {
     val formatter = DateTimeFormat.forPattern("yyyy/MM/dd")
     val datePath = formatter.print(date)
     s"$host/football/api/match-header/$datePath/$team1/$team2.json"
+  }
+
+  def getMatchStatsUrl(host: String, date: LocalDate, team1: String, team2: String): String = {
+    val formatter = DateTimeFormat.forPattern("yyyy/MM/dd")
+    val datePath = formatter.print(date)
+    s"$host/football/api/match-stats/$datePath/$team1/$team2.json"
   }
 
   def makeFootballMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
@@ -103,7 +116,7 @@ object DotcomRenderingUtils {
       obj.fields.map(pair => (pair._1, pair._2.as[String])).headOption
     }
 
-    val optionalUrl: Option[String] = for {
+    val optionalUrl = for {
       references <- articlePage.getJavascriptConfig.get("references")
       entries1 <- extraction1(references)
       entries2 =
@@ -116,17 +129,22 @@ object DotcomRenderingUtils {
       entries2.toList match {
         case e1 :: e2 :: _ =>
           val localDate = articlePage.item.trail.webPublicationDate.toLocalDate
-          getMatchNavUrl(Configuration.ajax.url, localDate, e1._2, e2._2, articlePage.metadata.id)
-        case _ => ""
+          val navUrl = getMatchNavUrl(Configuration.ajax.url, localDate, e1._2, e2._2, articlePage.metadata.id)
+          val headerUrl = getMatchHeaderUrl(Configuration.ajax.url, localDate, e1._2, e2._2)
+          val statsUrl = getMatchStatsUrl(Configuration.ajax.url, localDate, e1._2, e2._2)
+          Some(
+            DotcomRenderingMatchData(
+              matchUrl = navUrl,
+              matchHeaderUrl = Some(headerUrl),
+              matchStatsUrl = Some(statsUrl),
+              matchType = FootballMatchType,
+            ),
+          )
+        case _ => None
       }
     }
 
-    // We need one more transformation because we could have a Some(""), which we don't want
-
-    optionalUrl match {
-      case Some(url) if url.nonEmpty => Some(DotcomRenderingMatchData(url, FootballMatchType))
-      case _                         => None
-    }
+    optionalUrl.flatten
   }
 
   def assetURL(bundlePath: String): String = {
