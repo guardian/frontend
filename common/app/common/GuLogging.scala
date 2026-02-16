@@ -20,6 +20,10 @@ trait GuLogging {
     log.error(ExceptionUtils.getStackTrace(e))
   }
 
+  def logDebugWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
+    log.logger.debug(getRequestIdField, message)
+  }
+
   def logInfoWithRequestId(message: String)(implicit request: RequestHeader): Unit = {
     log.logger.info(getRequestIdField, message)
   }
@@ -49,8 +53,14 @@ trait GuLogging {
   def logWarningWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
     log.logger.warn(customFieldMarkers(customFields), message, error)
   }
+  def logWarningWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.warn(customFieldMarkers(customFields), message)
+  }
   def logErrorWithCustomFields(message: String, error: Throwable, customFields: List[LogField]): Unit = {
     log.logger.error(customFieldMarkers(customFields), message, error)
+  }
+  def logErrorWithCustomFields(message: String, customFields: List[LogField]): Unit = {
+    log.logger.error(customFieldMarkers(customFields), message)
   }
 
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
@@ -69,7 +79,7 @@ trait GuLogging {
   }
 
   private def getRequestIdField(implicit request: RequestHeader) = {
-    customFieldMarkers(List("requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided")))
+    customFieldMarkers(List("requestId" -> request.headers.get("x-request-id").getOrElse("request-id-not-provided")))
   }
 }
 

@@ -26,7 +26,7 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -80,7 +80,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       .addHttpHeaders("Content-Type" -> "application/json")
 
     val resp = requestId match {
-      case Some(id) => request.addHttpHeaders("x-gu-xid" -> id).post(payload)
+      case Some(id) => request.addHttpHeaders("x-request-id" -> id).post(payload)
       case None     => request.post(payload)
     }
 
@@ -113,7 +113,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       cacheTime: CacheTime,
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
-    val requestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-request-id")
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -253,7 +253,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
-    val requestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-request-id")
 
     postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/Blocks", requestId)
       .flatMap(response => {
@@ -275,7 +275,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[String] = {
     val dataModel = DotcomBlocksRenderingDataModel(page, request, blocks)
     val json = DotcomBlocksRenderingDataModel.toJson(dataModel)
-    val requestId = request.headers.get("x-gu-xid")
+    val requestId = request.headers.get("x-request-id")
 
     postWithoutHandler(ws, json, Configuration.rendering.articleBaseURL + "/AppsBlocks", requestId)
       .flatMap(response => {
@@ -506,6 +506,18 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       json: JsValue,
   )(implicit request: RequestHeader): Future[Result] = {
     post(ws, json, Configuration.rendering.articleBaseURL + "/FootballTablesPage", CacheTime.FootballTables)
+  }
+
+  def getAppsComponent(
+      ws: WSClient,
+      path: String,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(
+      ws,
+      JsObject.empty, // The component endpoint currently takes no config in the payload
+      Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
+      CacheTime.Component,
+    )
   }
 }
 

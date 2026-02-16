@@ -36,16 +36,16 @@ case class RequestLoggerFields(request: RequestHeader, response: Option[Result],
 
     val guardianSpecificHeaders = allHeadersFields.view.filterKeys(_.toUpperCase.startsWith("X-GU-")).toMap
 
-    // Extract x-gu-xid case-insensitively and assign default if missing
+    // Extract x-request-id case-insensitively and assign default if missing
     val requestId = allHeadersFields
       .collectFirst {
-        case (key, value) if key.equalsIgnoreCase("x-gu-xid") => value
+        case (key, value) if key.equalsIgnoreCase("x-request-id") => value
       }
       .getOrElse("request-id-not-provided")
 
-    // Convert remaining headers to LogField format, ensuring x-gu-xid is not duplicated
+    // Convert remaining headers to LogField format, ensuring x-request-id is not duplicated
     val headerFields = (allowListedHeaders ++ guardianSpecificHeaders).toList.collect {
-      case (headerName, headerValue) if !headerName.equalsIgnoreCase("x-gu-xid") =>
+      case (headerName, headerValue) if !headerName.equalsIgnoreCase("x-request-id") =>
         LogFieldString(s"req.header.$headerName", headerValue)
     }
 
@@ -108,7 +108,13 @@ case class RequestLogger(request: RequestHeader, response: Option[Result], stopW
   def warn(message: String, error: Throwable): Unit = {
     logWarningWithCustomFields(message, error, allFields)
   }
+  def warn(message: String): Unit = {
+    logWarningWithCustomFields(message, allFields)
+  }
   def error(message: String, error: Throwable): Unit = {
     logErrorWithCustomFields(message, error, allFields)
+  }
+  def error(message: String): Unit = {
+    logErrorWithCustomFields(message, allFields)
   }
 }

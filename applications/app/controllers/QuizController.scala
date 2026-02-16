@@ -67,7 +67,7 @@ class QuizController(
   ): Future[Result] = {
     val edition = Edition(request)
 
-    logInfoWithRequestId(s"Fetching quiz atom: $quizId from content id: $path")
+    logDebugWithRequestId(s"Fetching quiz atom: $quizId from content id: $path")
     val capiQuery = contentApiClient.item(path, edition).showAtoms("all")
     val result = contentApiClient.getResponse(capiQuery) map { itemResponse =>
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>

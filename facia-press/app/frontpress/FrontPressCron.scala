@@ -42,7 +42,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress)(implicit
     val path: String = message.get.Message
 
     if (FrontPressJobSwitch.isSwitchedOn) {
-      log.info(s"Cron pressing path $path")
+      log.debug(s"Cron pressing path $path")
       val pressFuture = liveFapiFrontPress
         .pressByPathId(path)
         .map(Function.const(()))
@@ -54,7 +54,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress)(implicit
       pressFuture
 
     } else {
-      log.info(s"Ignoring message $message in Facia Press cron as cron is turned OFF")
+      log.debug(s"Ignoring message $message in Facia Press cron as cron is turned OFF")
       Future.successful(())
     }
   }

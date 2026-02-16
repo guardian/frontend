@@ -1,0 +1,6 @@
+-Xmx8G
+-XX:ReservedCodeCacheSize=128m
+-XX:NewRatio=4
+-Duser.timezone=Australia/Sydney # because it is too easy for devs to forget about timezones, see https://github.com/guardian/frontend/pull/4713
+-DSTAGE=DEV
+-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests

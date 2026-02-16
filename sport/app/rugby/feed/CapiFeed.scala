@@ -35,7 +35,7 @@ class CapiFeed(contentApiClient: ContentApiClient) extends GuLogging {
     val searchTags =
       s"(tone/matchreports,sport/rugby-union,$teamTags) | (tone/minutebyminute,sport/rugby-union,$teamTags)"
 
-    log.info(s"Looking for ${rugbyMatch.toString}")
+    log.debug(s"Looking for ${rugbyMatch.toString}")
 
     val startMatchDayRange = matchDate.toDateTimeAtStartOfDay
     val endMatchDayRange = matchDate.plusDays(2).toDateTimeAtStartOfDay
@@ -57,7 +57,7 @@ class CapiFeed(contentApiClient: ContentApiClient) extends GuLogging {
           matchReport <- navContent.find(_.tags.isMatchReport)
           liveBlog <- navContent.find(_.tags.isLiveBlog)
         } yield {
-          log.info(
+          log.debug(
             s"Found report ${matchReport.metadata.id} and live blog ${liveBlog.metadata.id} for ${rugbyMatch.key}",
           )
           Future.successful(Some(MatchNavigation(matchReport, liveBlog)))

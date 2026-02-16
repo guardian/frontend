@@ -15,7 +15,7 @@ object SkimLinksCache extends GuLogging {
   private val skimLinkDomains = new AtomicReference(Set[String]())
 
   def populateSkimLinkDomains(): Unit = {
-    log.info("Fetching and caching skimlinks")
+    log.debug("Fetching and caching skimlinks")
     val domains = S3Skimlinks.get(affiliateLinks.domainsKey).getOrElse {
       log.error(s"Failed to fetch skimlinks from S3: ${S3Skimlinks.bucket}/${affiliateLinks.domainsKey}")
       ""

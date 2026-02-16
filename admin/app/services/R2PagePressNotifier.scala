@@ -13,7 +13,7 @@ object R2PagePressNotifier extends GuLogging {
     try {
       R2PressNotification.sendWithoutSubject(pekkoAsync)(Json.toJson[R2PressMessage](message).toString())
       val msg = s"Queued for pressing: ${message.url}."
-      log.info(msg)
+      log.debug(msg)
       msg
     } catch {
       case e: Exception =>
