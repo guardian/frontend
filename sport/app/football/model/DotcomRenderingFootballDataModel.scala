@@ -3,7 +3,7 @@ package football.model
 import common.{CanonicalLink, Edition, LinkTo}
 import conf.Configuration
 import experiments.ActiveExperiments
-import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchMetadata, MatchPage}
+import football.controllers.{CompetitionFilter, FootballPage, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
 import model.dotcomrendering.DotcomRenderingUtils.{
   assetURL,
@@ -358,7 +358,7 @@ object DotcomRenderingFootballTablesDataModel {
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
     // this field will need to get renamed to matchStats in upcoming PR
-    footballMatch: MatchDataAnswer,
+    footballMatch: MatchStats,
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
@@ -378,7 +378,7 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
 object DotcomRenderingFootballMatchSummaryDataModel {
   def apply(
       page: MatchPage,
-      matchStats: MatchDataAnswer,
+      matchStats: MatchStats,
       matchInfo: FootballMatch,
       group: Option[Group],
       competitionName: String,

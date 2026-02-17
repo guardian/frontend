@@ -7,11 +7,10 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUp, LineUpTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import conf.Configuration
-import football.model.{DotcomRenderingFootballMatchSummaryDataModel, GuTeamCodes}
+import football.model.{DotcomRenderingFootballMatchSummaryDataModel, MatchStats}
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{FootballSummaryPagePicker, RemoteRender}
@@ -54,100 +53,6 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-sealed trait NsAnswer
-
-case class EventAnswer(eventTime: String, eventType: String) extends NsAnswer
-case class PlayerAnswer(
-    id: String,
-    name: String,
-    position: String,
-    lastName: String,
-    substitute: Boolean,
-    timeOnPitch: String,
-    shirtNumber: String,
-    events: Seq[EventAnswer],
-) extends NsAnswer
-case class TeamAnswer(
-    id: String,
-    name: String,
-    players: Seq[PlayerAnswer],
-    score: Option[Int],
-    scorers: List[String],
-    possession: Int,
-    shotsOn: Int,
-    shotsOff: Int,
-    corners: Int,
-    fouls: Int,
-    colours: String,
-    crest: String,
-    codename: String,
-) extends NsAnswer
-
-case class MatchDataAnswer(
-    id: String,
-    homeTeam: TeamAnswer,
-    awayTeam: TeamAnswer,
-    comments: Option[String],
-    status: String,
-) extends NsAnswer
-
-object NsAnswer {
-  val reportedEventTypes = List("booking", "dismissal", "substitution")
-
-  def makePlayers(team: LineUpTeam): Seq[PlayerAnswer] = {
-    team.players.map { player =>
-      val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
-        EventAnswer(event.eventTime, event.eventType)
-      }
-      PlayerAnswer(
-        player.id,
-        player.name,
-        player.position,
-        player.lastName,
-        player.substitute,
-        player.timeOnPitch,
-        player.shirtNumber,
-        events,
-      )
-    }
-  }
-
-  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): TeamAnswer = {
-    val players = makePlayers(teamV2)
-    TeamAnswer(
-      teamV1.id,
-      teamV1.name,
-      players = players,
-      score = teamV1.score,
-      scorers = teamV1.scorers.fold(Nil: List[String])(_.split(",").toList),
-      possession = teamPossession,
-      shotsOn = teamV2.shotsOn,
-      shotsOff = teamV2.shotsOff,
-      corners = teamV2.corners,
-      fouls = teamV2.fouls,
-      colours = teamColour,
-      crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png",
-      codename = GuTeamCodes.codeFor(teamV1),
-    )
-  }
-
-  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, matchStatus: String): MatchDataAnswer = {
-    val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
-    MatchDataAnswer(
-      theMatch.id,
-      makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
-      makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
-      theMatch.comments,
-      matchStatus,
-    )
-  }
-
-  implicit val EventAnswerWrites: Writes[EventAnswer] = Json.writes[EventAnswer]
-  implicit val PlayerAnswerWrites: Writes[PlayerAnswer] = Json.writes[PlayerAnswer]
-  implicit val TeamAnswerWrites: Writes[TeamAnswer] = Json.writes[TeamAnswer]
-  implicit val MatchDataAnswerWrites: Writes[MatchDataAnswer] = Json.writes[MatchDataAnswer]
-}
-
 // --------------------------------------------------------------
 
 class MatchController(
@@ -188,7 +93,7 @@ class MatchController(
           val tier = FootballSummaryPagePicker.getTier()
 
           page.flatMap { page =>
-            val matchStats = NsAnswer.makeFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
+            val matchStats = MatchStats.statsFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
 
             request.getRequestFormat match {
               case JsonFormat if request.forceDCR =>
