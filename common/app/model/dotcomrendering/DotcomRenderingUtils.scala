@@ -47,9 +47,16 @@ case class DotcomRenderingMatchData(
     matchType: DotcomRenderingMatchType,
 )
 
+sealed trait MatchEndpoint {
+  val urlSegment: String
+}
+case object MatchHeaderEndpoint extends MatchEndpoint { val urlSegment = "match-header" }
+case object MatchStatsEndpoint extends MatchEndpoint { val urlSegment = "match-stats" }
+case object MatchStatsSummaryEndpoint extends MatchEndpoint { val urlSegment = "match-stats-summary" }
+
 object DotcomRenderingUtils {
-  def makeMatchData(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
-    makeFootballMatch(articlePage).orElse(makeCricketMatch(articlePage))
+  def makeMatchData(articlePage: ContentPage, pageType: PageType): Option[DotcomRenderingMatchData] = {
+    makeFootballMatch(articlePage, pageType).orElse(makeCricketMatch(articlePage))
   }
 
   def makeCricketMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
@@ -77,19 +84,19 @@ object DotcomRenderingUtils {
     s"$host/football/api/match-nav/$datePath/$team1/$team2.json?dcr=true&page=$encodedPageId"
   }
 
-  def getMatchHeaderUrl(host: String, date: LocalDate, team1: String, team2: String): String = {
+  def getMatchUrl(
+      host: String,
+      date: LocalDate,
+      team1: String,
+      team2: String,
+      endpoint: MatchEndpoint,
+  ): String = {
     val formatter = DateTimeFormat.forPattern("yyyy/MM/dd")
     val datePath = formatter.print(date)
-    s"$host/football/api/match-header/$datePath/$team1/$team2.json"
+    s"$host/football/api/${endpoint.urlSegment}/$datePath/$team1/$team2.json"
   }
 
-  def getMatchStatsUrl(host: String, date: LocalDate, team1: String, team2: String): String = {
-    val formatter = DateTimeFormat.forPattern("yyyy/MM/dd")
-    val datePath = formatter.print(date)
-    s"$host/football/api/match-stats/$datePath/$team1/$team2.json"
-  }
-
-  def makeFootballMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
+  def makeFootballMatch(articlePage: ContentPage, pageType: PageType): Option[DotcomRenderingMatchData] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
@@ -128,10 +135,12 @@ object DotcomRenderingUtils {
     } yield {
       entries2.toList match {
         case e1 :: e2 :: _ =>
+          val statsUrlSegment: MatchEndpoint =
+            if (pageType.isLiveblog) MatchStatsSummaryEndpoint else MatchStatsEndpoint
           val localDate = articlePage.item.trail.webPublicationDate.toLocalDate
           val navUrl = getMatchNavUrl(Configuration.ajax.url, localDate, e1._2, e2._2, articlePage.metadata.id)
-          val headerUrl = getMatchHeaderUrl(Configuration.ajax.url, localDate, e1._2, e2._2)
-          val statsUrl = getMatchStatsUrl(Configuration.ajax.url, localDate, e1._2, e2._2)
+          val headerUrl = getMatchUrl(Configuration.ajax.url, localDate, e1._2, e2._2, MatchHeaderEndpoint)
+          val statsUrl = getMatchUrl(Configuration.ajax.url, localDate, e1._2, e2._2, statsUrlSegment)
           Some(
             DotcomRenderingMatchData(
               matchUrl = navUrl,
