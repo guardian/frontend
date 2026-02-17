@@ -66,7 +66,8 @@ GET        /football/:competitionTag/wallchart.json                           fo
 
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json         football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET        /football/api/match-header/:year/:month/:day/:home/:away.json      football.controllers.MoreOnMatchController.matchHeaderJson(year, month, day, home, away)
-GET        /football/api/match-stats/:year/:month/:day/:home/:away.json      football.controllers.MoreOnMatchController.matchStatsJson(year, month, day, home, away)
+GET        /football/api/match-stats/:year/:month/:day/:home/:away.json       football.controllers.MoreOnMatchController.matchStatsJson(year, month, day, home, away)
+GET        /football/api/match-stats-summary/:year/:month/:day/:home/:away.json      football.controllers.MoreOnMatchController.matchStatsSummaryJson(year, month, day, home, away)
 GET        /football/api/match-nav/:year/:month/:day/:home/:away              football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
 GET        /football/api/match-nav/:matchId.json                              football.controllers.MoreOnMatchController.moreOnJson(matchId)
 GET        /football/api/match-nav/:matchId                                   football.controllers.MoreOnMatchController.moreOn(matchId)

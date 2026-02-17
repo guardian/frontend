@@ -1,9 +1,12 @@
 package football.model
 
+import common.LinkTo
 import conf.Configuration
+import implicits.Football.MatchHelpers
 import model.TeamColours
 import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json.{Json, Writes}
+import play.api.mvc.RequestHeader
 
 case class PlayerEvent(eventTime: String, eventType: String)
 case class Player(
@@ -61,7 +64,7 @@ object MatchStats {
     }
   }
 
-  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): TeamStats = {
+  def makeTeamStats(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): TeamStats = {
     val players = makePlayers(teamV2)
     TeamStats(
       teamV1.id,
@@ -84,8 +87,8 @@ object MatchStats {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
     MatchStats(
       theMatch.id,
-      makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
-      makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      makeTeamStats(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
+      makeTeamStats(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
       theMatch.comments,
       matchStatus,
     )
@@ -95,4 +98,56 @@ object MatchStats {
   implicit val PlayerWrites: Writes[Player] = Json.writes[Player]
   implicit val TeamStatsWrites: Writes[TeamStats] = Json.writes[TeamStats]
   implicit val MatchStatsWrites: Writes[MatchStats] = Json.writes[MatchStats]
+
+}
+
+case class TeamStatsSummary(
+    id: String,
+    name: String,
+    possession: Int,
+    shotsOn: Int,
+    shotsOff: Int,
+    colours: String,
+)
+
+case class MatchStatsSummary(
+    id: String,
+    homeTeam: TeamStatsSummary,
+    awayTeam: TeamStatsSummary,
+    status: String,
+    infoURL: String,
+)
+
+object MatchStatsSummary {
+  def makeTeamStatsSummary(
+      teamV1: MatchDayTeam,
+      teamV2: LineUpTeam,
+      teamPossession: Int,
+      teamColour: String,
+  ): TeamStatsSummary = {
+    TeamStatsSummary(
+      id = teamV1.id,
+      name = teamV1.name,
+      possession = teamPossession,
+      shotsOn = teamV2.shotsOn,
+      shotsOff = teamV2.shotsOff,
+      colours = teamColour,
+    )
+  }
+  def statsSummaryFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp)(implicit
+      request: RequestHeader,
+  ): MatchStatsSummary = {
+    val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
+    val matchInfo: FootballMatchTrail = FootballMatchTrail.toTrail(theMatch)
+    MatchStatsSummary(
+      id = theMatch.id,
+      homeTeam = makeTeamStatsSummary(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
+      awayTeam = makeTeamStatsSummary(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      status = theMatch.matchStatus,
+      infoURL = LinkTo(matchInfo.url),
+    )
+  }
+
+  implicit val TeamStatsSummaryWrites: Writes[TeamStatsSummary] = Json.writes[TeamStatsSummary]
+  implicit val MatchStatsSummaryWrites: Writes[MatchStatsSummary] = Json.writes[MatchStatsSummary]
 }

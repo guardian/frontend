@@ -6,7 +6,13 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
-import football.model.{DotcomRenderingFootballHeaderDataModel, FootballMatchTrail, GuTeamCodes, MatchStats}
+import football.model.{
+  DotcomRenderingFootballHeaderDataModel,
+  FootballMatchTrail,
+  GuTeamCodes,
+  MatchStats,
+  MatchStatsSummary,
+}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
@@ -264,6 +270,28 @@ class MoreOnMatchController(
           maybeLineup.map(lineup => {
             val matchStats = MatchStats.statsFromFootballMatch(theMatch, lineup, theMatch.matchStatus)
             Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStats))
+          })
+        }
+      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+    }
+
+  def matchStatsSummaryJson(
+      year: String,
+      month: String,
+      day: String,
+      team1: String,
+      team2: String,
+  ): Action[AnyContent] =
+    Action.async { implicit request =>
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
+      val maybeResponse: Option[Future[Result]] =
+        competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
+          val maybeLineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+
+          maybeLineup.map(lineup => {
+            val matchStatsSummary =
+              MatchStatsSummary.statsSummaryFromFootballMatch(theMatch, lineup)
+            Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStatsSummary))
           })
         }
       maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
