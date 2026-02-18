@@ -9,7 +9,7 @@ import common.commercial.hosted._
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Cached, DotcomRenderingHostedContentModel, NoCache}
+import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
@@ -93,29 +93,11 @@ class HostedContentController(
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(campaignName, pageName).flatMap {
-        case Some(content) if request.getRequestFormat == JsonFormat =>
-          renderJsonResponse(content)
         case Some(content) =>
           renderPage(Future.successful(HostedPage.fromContent(content)))
         case None =>
           Future.successful(NotFound)
       }
-    }
-
-  def renderJson(campaignName: String, pageName: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      lookup(campaignName, pageName).flatMap {
-        case Some(content) => renderJsonResponse(content)
-        case None          => Future.successful(NotFound)
-      }
-    }
-
-  private def renderJsonResponse(content: Content): Future[Result] =
-    DotcomRenderingHostedContentModel.get(content) match {
-      case Some(model) =>
-        Future.successful(Ok(DotcomRenderingHostedContentModel.toJson(model)).as("application/json"))
-      case None =>
-        Future.successful(NotFound)
     }
 
   def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =
