@@ -660,4 +660,16 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val DCROwnsAdmiral = Switch(
+    group = SwitchGroup.Feature,
+    name = "dcr-owns-admiral",
+    description =
+      "When ON - DCR will run Admiral bootstrap script, when OFF - Commercial will run the script in the usual way. This switch is intended to be ON for a short period of time while we verify that DCR can run the Admiral script without causing any issues, before we remove the script from Commercial and fully hand over control to DCR.",
+    owners = Seq(Owner.withEmail("growth.dev@guardian.co.uk")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
