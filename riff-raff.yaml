@@ -1,7 +1,7 @@
 stacks:
-- frontend
+  - frontend
 regions:
-- eu-west-1
+  - eu-west-1
 allowedStages:
   - CODE
   - PROD
@@ -12,21 +12,21 @@ templates:
       bucketSsmKey: /account/services/dotcom-artifact.bucket
       warmupGrace: 60
     dependencies:
-    - frontend-static
-    - update-ami-for-legacy-stacks
-    - update-ami-for-admin
-    - update-ami-for-discussion
-    - update-ami-for-sport
-    - update-ami-for-archive
-    - update-ami-for-applications
-    - update-ami-for-rss
-    - update-ami-for-onward
-    - update-ami-for-facia
-    - update-ami-for-facia-press
-    - update-ami-for-article
-    - update-ami-for-preview
-    - update-ami-for-commercial
-    - update-ami-for-identity
+      - frontend-static
+      - update-ami-for-legacy-stacks
+      - update-ami-for-admin
+      - update-ami-for-discussion
+      - update-ami-for-sport
+      - update-ami-for-archive
+      - update-ami-for-applications
+      - update-ami-for-rss
+      - update-ami-for-onward
+      - update-ami-for-facia
+      - update-ami-for-facia-press
+      - update-ami-for-article
+      - update-ami-for-preview
+      - update-ami-for-commercial
+      - update-ami-for-identity
 
 deployments:
   admin:
@@ -70,7 +70,7 @@ deployments:
       cloudFormationStackName: frontend
       amiParametersToTags:
         AMI:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   # Riff-Raff identifies the GuCDK stacks using tag-based lookups
   update-ami-for-admin:
@@ -79,7 +79,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIAdmin:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-discussion:
     app: discussion
@@ -87,7 +87,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIDiscussion:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-sport:
     app: sport
@@ -95,7 +95,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMISport:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-archive:
     app: archive
@@ -103,7 +103,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIArchive:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-applications:
     app: applications
@@ -111,7 +111,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIApplications:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-rss:
     app: rss
@@ -119,7 +119,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIRss:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-onward:
     app: onward
@@ -127,7 +127,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIOnward:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-facia:
     app: facia
@@ -135,7 +135,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIFacia:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-facia-press:
     app: facia-press
@@ -143,7 +143,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIFaciapress:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-article:
     app: article
@@ -151,7 +151,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIArticle:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-preview:
     app: preview
@@ -159,7 +159,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIPreview:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-commercial:
     app: commercial
@@ -167,7 +167,7 @@ deployments:
     parameters:
       amiParametersToTags:
         AMICommercial:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
   update-ami-for-identity:
     app: identity
@@ -175,5 +175,5 @@ deployments:
     parameters:
       amiParametersToTags:
         AMIIdentity:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
+          Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
           AmigoStage: PROD
