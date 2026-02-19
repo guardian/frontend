@@ -478,6 +478,7 @@ case class MediaAtomBlockElement(
     activeVersion: Option[Long],
     channelId: Option[String],
     videoPlayerFormat: Option[VideoPlayerFormat],
+    role: Option[String],
 ) extends PageElement
 object MediaAtomBlockElement {
   implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
@@ -1345,6 +1346,7 @@ object PageElement {
                     mediaAtom.activeVersion,
                     mediaAtom.channelId,
                     mediaAtom.videoPlayerFormat,
+                    elementRole,
                   ),
                 )
             }
