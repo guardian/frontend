@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.40.17"
-  val capiVersion = "41.1.1"
+  val capiVersion = "41.2.0"
   val faciaVersion = "29.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -54,9 +54,9 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "7.0.12"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "13.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "5.0.0"
+  val paClient = "com.gu" %% "pa-client" % "7.0.14"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "16.0.1"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.2"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.3.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
@@ -88,7 +88,7 @@ object Dependencies {
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.5"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.5"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
