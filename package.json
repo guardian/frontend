@@ -46,7 +46,7 @@
 		"@types/youtube": "^0.0.44",
 		"@typescript-eslint/eslint-plugin": "5.61.0",
 		"@typescript-eslint/parser": "8.0.1",
-		"any-observable": "^0.2.0",
+		"any-observable": "^0.5.1",
 		"autoprefixer": "^10.3.7",
 		"babel-core": "^7.0.0-bridge.0",
 		"babel-jest": "29.7.0",
