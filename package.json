@@ -104,7 +104,7 @@
 		"postcss-pxtorem": "^6.0.0",
 		"preact": "^10.5.13",
 		"prettier": "^2.2.1",
-		"prettysize": "^0.1.0",
+		"prettysize": "^2.0.0",
 		"qwery": "3.4.2",
 		"rangefix": "^0.2.5",
 		"raven-js": "^3.19.1",
