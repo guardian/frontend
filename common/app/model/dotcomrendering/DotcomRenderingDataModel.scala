@@ -106,6 +106,8 @@ case class DotcomRenderingDataModel(
     contributionsServiceUrl: String,
     badge: Option[DCRBadge],
     matchUrl: Option[String], // Optional url used for match data
+    matchHeaderUrl: Option[String],
+    matchStatsUrl: Option[String],
     matchType: Option[DotcomRenderingMatchType],
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
     promotedNewsletter: Option[NewsletterData],
@@ -185,6 +187,8 @@ object DotcomRenderingDataModel {
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
         "badge" -> model.badge,
         "matchUrl" -> model.matchUrl,
+        "matchHeaderUrl" -> model.matchHeaderUrl,
+        "matchStatsUrl" -> model.matchStatsUrl,
         "matchType" -> model.matchType,
         "isSpecialReport" -> model.isSpecialReport,
         "promotedNewsletter" -> model.promotedNewsletter,
@@ -630,7 +634,7 @@ object DotcomRenderingDataModel {
       modifiedFormat.design == InteractiveDesign && content.trail.webPublicationDate
         .isBefore(Chronos.javaTimeLocalDateTimeToJodaDateTime(InteractiveSwitchOver.date))
 
-    val matchData = makeMatchData(page)
+    val matchData = makeMatchData(page, pageType)
 
     def addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks: Boolean, shouldAddDisclaimer: Boolean) = {
       if (shouldAddAffiliateLinks && shouldAddDisclaimer) {
@@ -675,6 +679,8 @@ object DotcomRenderingDataModel {
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
       matchUrl = matchData.map(_.matchUrl),
+      matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
+      matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
       nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,

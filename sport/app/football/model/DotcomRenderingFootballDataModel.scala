@@ -3,16 +3,10 @@ package football.model
 import common.{CanonicalLink, Edition, LinkTo}
 import conf.Configuration
 import experiments.ActiveExperiments
-import football.controllers.{CompetitionFilter, FootballPage, MatchDataAnswer, MatchMetadata, MatchPage}
+import football.controllers.{CompetitionFilter, FootballPage, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{
-  assetURL,
-  getMatchHeaderUrl,
-  getMatchNavUrl,
-  withoutDeepNull,
-  withoutNull,
-}
-import model.dotcomrendering.{Config, PageFooter, PageType}
+import model.dotcomrendering.DotcomRenderingUtils.{assetURL, getMatchNavUrl, getMatchUrl, withoutDeepNull, withoutNull}
+import model.dotcomrendering.{Config, MatchHeaderEndpoint, PageFooter, PageType}
 import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, StandalonePage, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
@@ -358,7 +352,7 @@ object DotcomRenderingFootballTablesDataModel {
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
     // this field will need to get renamed to matchStats in upcoming PR
-    footballMatch: MatchDataAnswer,
+    footballMatch: MatchStats,
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
@@ -378,7 +372,7 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
 object DotcomRenderingFootballMatchSummaryDataModel {
   def apply(
       page: MatchPage,
-      matchStats: MatchDataAnswer,
+      matchStats: MatchStats,
       matchInfo: FootballMatch,
       group: Option[Group],
       competitionName: String,
@@ -419,7 +413,7 @@ object DotcomRenderingFootballMatchSummaryDataModel {
     val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
     val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
 
-    getMatchHeaderUrl(Configuration.ajax.url, localDate, homeId, awayId)
+    getMatchUrl(Configuration.ajax.url, localDate, homeId, awayId, MatchHeaderEndpoint)
   }
 
   import football.model.DotcomRenderingFootballDataModelImplicits._

@@ -63,6 +63,7 @@ GET        /embed/atom/:atomType/:id/nojs                                       
 GET        /embed/atom/:atomType/:id/nojs/scroll-y                              controllers.AtomPageController.renderNoJsVerticalScroll(atomType: String, id: String)
 POST       /story-questions/answers/signup                                      controllers.AtomPageController.signup()
 OPTIONS    /story-questions/answers/signup                                      controllers.AtomPageController.options()
+GET        /component/*path                                                     controllers.ComponentController.render(path)
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()

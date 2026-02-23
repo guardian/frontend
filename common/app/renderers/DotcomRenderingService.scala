@@ -26,7 +26,7 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
@@ -506,6 +506,18 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       json: JsValue,
   )(implicit request: RequestHeader): Future[Result] = {
     post(ws, json, Configuration.rendering.articleBaseURL + "/FootballTablesPage", CacheTime.FootballTables)
+  }
+
+  def getAppsComponent(
+      ws: WSClient,
+      path: String,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(
+      ws,
+      JsObject.empty, // The component endpoint currently takes no config in the payload
+      Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
+      CacheTime.Component,
+    )
   }
 }
 
