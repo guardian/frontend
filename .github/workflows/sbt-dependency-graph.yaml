@@ -11,12 +11,12 @@ jobs:
     steps:
       - name: Checkout branch
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@9f265659d3bb64ab1440b03b12f4d47a24320917 # v6
       - name: Install sbt
-        uses: guardian/setup-scala@v1
+        uses: guardian/setup-scala@f8b37d4380d93ee5c37739fd8aea97f7c580034a # v1.1.0
       - name: Submit dependencies
         id: submit
-        uses: scalacenter/sbt-dependency-submission@v3
+        uses: scalacenter/sbt-dependency-submission@0e494e20a396dac25645a0134cd6749cc581bbb5 # v3.2.1
       - name: Log snapshot for user validation
         id: validate
         run: cat ${{ steps.submit.outputs.snapshot-json-path }} | jq
