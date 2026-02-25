@@ -1,5 +1,6 @@
 package model
 
+import ab.ABTests
 import common.GuLogging
 import conf.Configuration
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
@@ -8,8 +9,7 @@ import play.api.libs.json.{Json, Writes}
 import services.S3
 
 import java.time.Instant
-import experiments.{TagPageStorylines, ActiveExperiments}
-import play.api.mvc.{Filter, RequestHeader}
+import play.api.mvc.RequestHeader
 
 // this mirrors the structure in the tool generating the content
 // https://github.com/guardian/tag-page-supercharger/blob/main/app/models/FrontendContent.scala#L18
@@ -143,7 +143,7 @@ object StorylinesContent extends GuLogging {
   implicit val storylinesWrites: Writes[StorylinesContent] = Json.writes[StorylinesContent]
 
   def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
-    if (ActiveExperiments.isParticipating(TagPageStorylines)) {
+    if (ABTests.isParticipating(rh, "fronts-and-curation-tag-page-storylines")) {
       lazy val stage: String = Configuration.facia.stage.toUpperCase
       val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
       val location = s"$stage/tag-page-ai-data/$encodedTag.json"
