@@ -7,33 +7,6 @@
 $fc-item-gutter: $gs-gutter * 0.25;
 $block-height: 58px; // Note: duplicated from _item.scss
 
-// Defaults Styles
-.fc-item {
-    &.fc-item--is-dynamic-card {
-        background-color: #ffffff;
-    }
-
-    &.fc-item--is-dynamic-card .fc-item__title,
-    &.fc-item--is-dynamic-card.fc-item--live .fc-item__headline {
-        color: #121212;
-    }
-
-    &.fc-item--is-dynamic-card .fc-item__kicker,
-    &.fc-item--is-dynamic-card.fc-item--live .fc-item__kicker {
-        color: #c70000;
-    }
-
-    &.fc-item--is-dynamic-card .live-pulse-icon::before,
-    &.fc-item--is-dynamic-card.fc-item--live .live-pulse-icon::before {
-        background-color: #c70000;
-    }
-
-    &.fc-item--is-dynamic-card.fc-item--has-floating-sublinks .fc-sublink {
-        background-color: #ffffff;
-        color: #000000;
-    }
-}
-
 @mixin pillar-override($tone, $colour, $dark-colour) {
     .fc-item--pillar-#{$tone} {
 
@@ -44,28 +17,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             .fc-item__standfirst-wrapper .fc-item__meta {
                 background-image: none;
-            }
-        }
-
-        &.fc-item--is-dynamic-card {
-
-            &.fc-item:not(.fc-item--pillar-special-report) {
-                .fc-sublink--pillar-#{$tone} {
-                    .fc-sublink__kicker {
-                        display: block;
-                        width: 100%;
-                    }
-                }
-            }
-
-            .fc-item__content--above {
-                padding: 6px 0;
-            }
-
-            .fc-item__content--below {
-                @include mq($until: tablet) {
-                    padding: 0;
-                }
             }
         }
 
