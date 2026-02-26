@@ -14,8 +14,4 @@ package object gam {
   def printUniversalTime(timestamp: DateTime): String = {
     timeFormatter.withZoneUTC().print(timestamp)
   }
-
-  def printDate(timestamp: DateTime): String = {
-    DateTimeFormat.forPattern("dd MMM YYYY").print(timestamp)
-  }
 }
