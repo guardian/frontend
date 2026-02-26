@@ -43,11 +43,9 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
           case Some("on")  => switch.switchOn()
           case Some("off") => switch.switchOff()
           case _           =>
-            log.info(s"""No state has yet been initialised for ${switch.name} in the switchboard,
-                        |which probably means the switchboard has not been updated and/or saved
-                        |since this switch was created. Setting it to its safe state for now."""
-                        .replaceAll("\n", " ")
-                    )
+            log.info(
+              s"No state has yet been initialised for ${switch.name} in the switchboard, which probably means the switchboard has not been updated and/or saved since this switch was created. Setting it to its safe state for now.",
+            )
             switch.switchToSafeState()
         }
       }
