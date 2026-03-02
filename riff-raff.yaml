@@ -13,7 +13,6 @@ templates:
       warmupGrace: 60
     dependencies:
     - frontend-static
-    - update-ami-for-legacy-stacks
     - update-ami-for-admin
     - update-ami-for-discussion
     - update-ami-for-sport
@@ -47,8 +46,6 @@ deployments:
     template: frontend
   identity:
     template: frontend
-    parameters:
-      asgMigrationInProgress: true
   onward:
     template: frontend
   preview:
@@ -64,16 +61,6 @@ deployments:
       cacheControl: public, max-age=315360000, immutable
       prefixStack: false
       publicReadAcl: false
-  update-ami-for-legacy-stacks:
-    type: ami-cloudformation-parameter
-    parameters:
-      cloudFormationStackByTags: false
-      prependStackToCloudFormationStackName: false
-      cloudFormationStackName: frontend
-      amiParametersToTags:
-        AMI:
-          Recipe: ubuntu-jammy-frontend-base-ARM-java11-cdk-base
-          AmigoStage: PROD
   # Riff-Raff identifies the GuCDK stacks using tag-based lookups
   update-ami-for-admin:
     app: admin

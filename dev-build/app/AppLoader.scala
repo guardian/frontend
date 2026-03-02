@@ -69,7 +69,6 @@ trait AppComponents
   override lazy val ophanApi = wire[OphanApi]
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
-  override lazy val blockingOperations = wire[BlockingOperations]
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   override lazy val mostViewedAgent = wire[MostViewedAgent]

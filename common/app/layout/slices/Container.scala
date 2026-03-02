@@ -21,7 +21,7 @@ case object MostPopular extends Container
 object Container extends GuLogging {
 
   /** This is THE top level resolver for containers */
-  def all(adFree: Boolean = false): Map[String, Container] =
+  def all(): Map[String, Container] =
     Map(
       ("dynamic/fast", Dynamic(DynamicFast)),
       ("dynamic/slow", Dynamic(DynamicSlow)),
@@ -38,10 +38,7 @@ object Container extends GuLogging {
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
-  def resolve(id: String, adFree: Boolean = false): Container = all(adFree).getOrElse(id, default)
-
-  def fromConfig(collectionConfig: CollectionConfig): Container =
-    resolve(collectionConfig.collectionType)
+  def resolve(id: String): Container = all().getOrElse(id, default)
 
   def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
     resolve(collectionConfig.collectionType) match {
@@ -62,25 +59,8 @@ object Container extends GuLogging {
     }
   }
 
-  def affectsDuplicates(collectionType: String): Boolean = {
-    resolve(collectionType) match {
-      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
-      case Dynamic(_)                                           => true
-      case Email(_)                                             => true
-      case _                                                    => false
-    }
-  }
-
-  def affectedByDuplicates(collectionType: String): Boolean = {
-    resolve(collectionType) match {
-      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
-      case Email(_)                                             => true
-      case _                                                    => false
-    }
-  }
-
   def fromPressedCollection(pressedCollection: PressedCollection, adFree: Boolean): Container = {
-    val container = resolve(pressedCollection.collectionType, adFree)
+    val container = resolve(pressedCollection.collectionType)
     container match {
       case Fixed(definition) if adFree =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))

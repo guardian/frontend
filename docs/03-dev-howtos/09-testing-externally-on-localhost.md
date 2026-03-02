@@ -11,7 +11,7 @@ brew cask install ngrok
 ```
 In sbt run your desired project:
 ```bash
-./sbt
+sbt
 > project article
 > run
 ```

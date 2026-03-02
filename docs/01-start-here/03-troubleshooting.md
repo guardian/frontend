@@ -24,31 +24,32 @@ If this doesn't work, you can clean everything with `cleanAll` in `root`.
 > **Note:** The cost is that you have to recompile everything/whatever you are working on fully next time you run it (can be up to 10 mins for dev-build) but sometimes it's needed!
 
 ```
-./sbt
-[root] cleanAll
+sbt cleanAll
 ```
 
 If you're still seeing errors, try clearing out all build and `.gitignore`d folders, which includes `target` folders:
 
-> **Note:** This will wipe *everything*, not just `target/` (built) folders - including `node_modules/`
+> **Note:** This will wipe _everything_, not just `target/` (built) folders - including `node_modules/`
 
 ```
 git clean -fxd
 ```
 
-> - `-d` will remove `untracked directories in addition to untracked files.`
-> - `-x` will not use `ignore rules read from .gitignore` (clean will usually listen to `.gitignore`)
-> - `-f` will force deletion
+> -   `-d` will remove `untracked directories in addition to untracked files.`
+> -   `-x` will not use `ignore rules read from .gitignore` (clean will usually listen to `.gitignore`)
+> -   `-f` will force deletion
 
 And compile again.
 
 ### The changes are not showing when running locally
 
-To make sure your code is compiled try `make compile-dev` before running `./sbt`. This might save you lots of time debugging why your changes don't show.
+To make sure your code is compiled try `make compile-dev` before running `sbt`. This might save you lots of time
+debugging why your changes don't show.
 
 ### NPM "EACCES"
 
 If you get errors like this on `npm install`
+
 ```
 npm WARN locking Error: EACCES, open '/Users/jduffell/.npm/_locks/karma-requirejs-4becac899d6c8f35.lock'
 ```
@@ -62,16 +63,16 @@ If it is owned by root, then take ownership of it
 `sudo chown -R $(whoami) ~/.npm`
 
 ### { Error: ENOENT: no such file or directory, scandir '../frontend/node_modules/node-sass/vendor'
+
 Run `make reinstall` to resolve.
 
 ### Accidentally ran `npm install` or `yarn install`
+
 Run `make reinstall` to resolve.
 
 ### Global install permissions errors
-The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
-### PhantomJS permissions errors (OSX)
-If you get an error about not having permissions to execute PhantomJS during `make compile`, your machine is probably set up as managed and you'll need to ask IT to make it unmanaged.
+The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
 ### File handles - "Too many files open"
 
@@ -82,12 +83,14 @@ You may run into a "too many files open" error during compilation or reloading. 
 To increase the limit do the following (instructions from Ubuntu 12.10)...
 
 In the file `/etc/security/limits.conf` add the following two lines
+
 ```
 *  soft  nofile 20000
 *  hard  nofile 65000
 ```
 
 And in the file `/etc/pam.d/common-session` add the following line.
+
 ```
 session required pam_limits.so
 ```
@@ -98,10 +101,10 @@ For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number
 
 ### Mac
 
-* Edit your `~/.bash-profile` file
-* add the following line: `ulimit -n 1024`
-* save and close the file
-* back at the command prompt enter: `source .bash_profile` and hit return.
+-   Edit your `~/.bash-profile` file
+-   add the following line: `ulimit -n 1024`
+-   save and close the file
+-   back at the command prompt enter: `source .bash_profile` and hit return.
 
 Now you should be able to compile and run. Yay.
 
@@ -113,4 +116,3 @@ to close and reopen your terminal if you installed 1.8 recently.
 You may also see `java.lang.UnsupportedClassVersionError: play/runsupport/classloader/ApplicationClassLoaderProvider : Unsupported major.minor version 52.0` which is described in the [Play 2.4 migration guide](https://www.playframework.com/documentation/2.4.x/Migration24#Java-8-support).
 
 Follow the [JDK install guide above.](#a-jdk)
-

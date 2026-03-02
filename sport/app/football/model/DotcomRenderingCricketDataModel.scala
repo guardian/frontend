@@ -25,6 +25,7 @@ case class DotcomRenderingCricketDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     pageId: String,
+    paId: String,
 )
 
 object DotcomRenderingCricketDataModel {
@@ -72,6 +73,7 @@ object DotcomRenderingCricketDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
+      paId = page.team.paId,
     )
   }
 
