@@ -123,6 +123,8 @@ class AtomPageController(
           renderAtom(QandaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
         case Right(atom: TimelineAtom) =>
           renderAtom(TimelineAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+        case Right(atom: CallToActionAtom) =>
+          renderAtom(CallToActionAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
         case Right(_) =>
           renderOther(NotFound)
         case Left(other) =>
@@ -152,6 +154,7 @@ class AtomPageController(
       apiAtom.profile.map(atom => ProfileAtom.make(atom)) orElse
       apiAtom.qanda.map(atom => QandaAtom.make(atom)) orElse
       apiAtom.timeline.map(atom => TimelineAtom.make(atom)) orElse
+      apiAtom.cta.map(atom => CallToActionAtom.make(atom)) orElse
       /*
     apiAtom.quiz.map(atom => Quiz.make(atom))                     orElse
     apiAtom.review.map(atom => RecipeAtom.make(atom))             orElse

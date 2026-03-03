@@ -691,6 +691,19 @@ object TimelineAtomBlockElement {
   implicit val timelineAtomBlockElementWrites: Writes[TimelineAtomBlockElement] = Json.writes[TimelineAtomBlockElement]
 }
 
+case class CallToActionAtomBlockElement(
+    id: String,
+    title: String,
+    url: String,
+    image: Option[String],
+    label: Option[String],
+    trackingCode: Option[String],
+    btnText: Option[String],
+) extends PageElement
+object CallToActionAtomBlockElement {
+  implicit val callToActionAtomBlockElementWrites: Writes[CallToActionAtomBlockElement] = Json.writes[CallToActionAtomBlockElement]
+}
+
 case class TweetBlockElement(
     html: String,
     url: String,
@@ -932,51 +945,52 @@ object PageElement {
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
     element match {
-      case _: AudioBlockElement           => true
-      case _: AudioAtomBlockElement       => true
-      case _: BlockquoteBlockElement      => true
-      case _: CalloutBlockElement         => true
-      case _: CalloutBlockElementV2       => true
-      case _: CartoonBlockElement         => true
-      case _: ChartAtomBlockElement       => true
-      case _: CodeBlockElement            => true
-      case _: CommentBlockElement         => true
-      case _: ContentAtomBlockElement     => true
-      case _: DocumentBlockElement        => true
-      case _: EmbedBlockElement           => true
-      case _: ExplainerAtomBlockElement   => true
-      case _: GenericAtomBlockElement     => true
-      case _: GuideAtomBlockElement       => true
-      case _: GuVideoBlockElement         => true
-      case _: ImageBlockElement           => true
-      case _: InstagramBlockElement       => true
-      case _: InteractiveAtomBlockElement => true
-      case _: InteractiveBlockElement     => true
-      case _: MapBlockElement             => true
-      case _: MediaAtomBlockElement       => true
-      case _: ProfileAtomBlockElement     => true
-      case _: PullquoteBlockElement       => true
-      case _: QABlockElement              => true
-      case _: QuizAtomBlockElement        => true
-      case _: RichLinkBlockElement        => true
-      case _: SoundcloudBlockElement      => true
-      case _: SpotifyBlockElement         => true
-      case _: SubheadingBlockElement      => true
-      case _: TextBlockElement            => true
-      case _: TimelineAtomBlockElement    => true
-      case _: TweetBlockElement           => true
-      case _: VideoBlockElement           => true
-      case _: VideoFacebookBlockElement   => true
-      case _: VideoVimeoBlockElement      => true
-      case _: VideoYoutubeBlockElement    => true
-      case _: YoutubeBlockElement         => true
-      case _: WitnessBlockElement         => true
-      case _: VineBlockElement            => true
-      case _: ListBlockElement            => true
-      case _: TimelineBlockElement        => true
-      case _: LinkBlockElement            => true
-      case _: ProductBlockElement         => true
-      case _: ReporterCalloutBlockElement => true
+      case _: AudioBlockElement             => true
+      case _: AudioAtomBlockElement         => true
+      case _: BlockquoteBlockElement        => true
+      case _: CalloutBlockElement           => true
+      case _: CalloutBlockElementV2         => true
+      case _: CartoonBlockElement           => true
+      case _: ChartAtomBlockElement         => true
+      case _: CodeBlockElement              => true
+      case _: CommentBlockElement           => true
+      case _: ContentAtomBlockElement       => true
+      case _: DocumentBlockElement          => true
+      case _: EmbedBlockElement             => true
+      case _: ExplainerAtomBlockElement     => true
+      case _: GenericAtomBlockElement       => true
+      case _: GuideAtomBlockElement         => true
+      case _: GuVideoBlockElement           => true
+      case _: ImageBlockElement             => true
+      case _: InstagramBlockElement         => true
+      case _: InteractiveAtomBlockElement   => true
+      case _: InteractiveBlockElement       => true
+      case _: MapBlockElement               => true
+      case _: MediaAtomBlockElement         => true
+      case _: ProfileAtomBlockElement       => true
+      case _: PullquoteBlockElement         => true
+      case _: QABlockElement                => true
+      case _: QuizAtomBlockElement          => true
+      case _: RichLinkBlockElement          => true
+      case _: SoundcloudBlockElement        => true
+      case _: SpotifyBlockElement           => true
+      case _: SubheadingBlockElement        => true
+      case _: TextBlockElement              => true
+      case _: TimelineAtomBlockElement      => true
+      case _: TweetBlockElement             => true
+      case _: VideoBlockElement             => true
+      case _: VideoFacebookBlockElement     => true
+      case _: VideoVimeoBlockElement        => true
+      case _: VideoYoutubeBlockElement      => true
+      case _: YoutubeBlockElement           => true
+      case _: WitnessBlockElement           => true
+      case _: VineBlockElement              => true
+      case _: ListBlockElement              => true
+      case _: TimelineBlockElement          => true
+      case _: CallToActionAtomBlockElement  => true
+      case _: LinkBlockElement              => true
+      case _: ProductBlockElement           => true
+      case _: ReporterCalloutBlockElement   => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1367,6 +1381,20 @@ object PageElement {
                 items = items,
                 credit = profile.credit.getOrElse(""),
               ),
+            )
+          }
+
+          case Some(cta: CallToActionAtom) => {
+            Some(
+              CallToActionAtomBlockElement(
+                id = cta.id,
+                title = cta.atom.title.getOrElse(""),
+                url = cta.data.url,
+                image = cta.data.backgroundImage,
+                label = cta.data.label,
+                trackingCode = cta.data.trackingCode,
+                btnText = cta.data.btnText
+              )
             )
           }
 

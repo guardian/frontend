@@ -1,0 +1,22 @@
+@import model.content.CallToActionAtom
+
+@(cta: CallToActionAtom)(implicit request: RequestHeader)
+
+<section class="host hosted__container--full">
+    <div class="hosted__banner">
+    <a href="@{cta.data.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.data.trackingCode}" target="_blank">
+        <img src="@{cta.data.backgroundImage}" alt="Call to action" class="hosted__banner" />
+        @if(cta.data.btnText.isEmpty) {
+            <div class="hosted__cta-wrapper content__hosted-body">
+                <span class="hosted__cta-text hosted-tone">@{cta.data.label}</span>
+                @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta", "hosted-tone-btn"))
+            </div>
+        } else {
+            <div class="hosted__cta-wrapper hosted__cta-btn-wrapper content__hosted-body">
+                <span class="hosted__cta-label">@{cta.data.label}</span>
+                <span class="hosted__cta-btn-text hosted-tone-btn">@{cta.data.btnText} @fragments.inlineSvg("external-link", "icon")</span>
+            </div>
+        }
+    </a>
+    </div>
+</section>

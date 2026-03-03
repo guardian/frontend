@@ -575,3 +575,21 @@ object TimelineItem {
       item.toDate,
     )
 }
+
+// ----------------------------------------
+// CallToActionAtom
+// ----------------------------------------
+
+final case class CallToActionAtom(
+    override val id: String,
+    title: String,
+    atom: AtomApiAtom,
+    data: atomapi.cta.CTAAtom
+) extends Atom
+
+object CallToActionAtom {
+  def make(atom: AtomApiAtom): CallToActionAtom = {
+    val cta = atom.data.asInstanceOf[AtomData.Cta].cta
+    CallToActionAtom(atom.id, atom.title.getOrElse("cta"), atom, cta)
+  }
+}
