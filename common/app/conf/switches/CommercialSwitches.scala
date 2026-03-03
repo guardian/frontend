@@ -406,7 +406,7 @@ trait PrebidSwitches {
   )
 
   val prebidLiveramp: Switch = Switch(
-    group = Commercial,
+    group = CommercialPrebid,
     name = "prebid-liveramp",
     description = "When ON, the Liveramp ID integration is enabled for user sync in Prebid",
     owners = group(Commercial),
