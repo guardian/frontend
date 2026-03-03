@@ -341,7 +341,7 @@ NB: You should be running in `project dev-build` because you will need it to acc
     ```
     @import experiments.{ActiveExperiments, AudioChangeImagePosition}
 
-    if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) {
+    if(ActiveExperiments.isUserInTest(AudioChangeImagePosition)) {
         //do variant thing
      }
 

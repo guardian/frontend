@@ -61,32 +61,32 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
     ABTests.allTests(enrichedRequest) should be(empty)
   }
 
-  "ABTests.isParticipating" should "return true when test exists" in {
+  "ABTests.isUserInTest" should "return true when test exists" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isParticipating(enrichedRequest, "test1") should be(true)
-    ABTests.isParticipating(enrichedRequest, "test2") should be(true)
+    ABTests.isUserInTest(enrichedRequest, "test1") should be(true)
+    ABTests.isUserInTest(enrichedRequest, "test2") should be(true)
   }
 
   it should "return false when test does not exist" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isParticipating(enrichedRequest, "test3") should be(false)
+    ABTests.isUserInTest(enrichedRequest, "test3") should be(false)
   }
 
   it should "return false for empty request" in {
     val request = FakeRequest()
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isParticipating(enrichedRequest, "test1") should be(false)
+    ABTests.isUserInTest(enrichedRequest, "test1") should be(false)
   }
 
   it should "return false when request has no AB test attributes" in {
     val request = FakeRequest()
 
-    ABTests.isParticipating(request, "test1") should be(false)
+    ABTests.isUserInTest(request, "test1") should be(false)
   }
 
   "ABTests.isInVariant" should "return true when test and variant match" in {
