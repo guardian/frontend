@@ -38,7 +38,7 @@ object ABTests {
     *   The name of the AB test to check.
     * @return
     *   true if the request is participating in the test, false otherwise.
-    * 
+    * @note
     *   previously named 'isParticipating', updated to be consistent with new AB test framework in DCR.
     */
   def isUserInTest(implicit request: RequestHeader, testName: String): Boolean = {
@@ -52,9 +52,9 @@ object ABTests {
     *   The variant to check.
     * @return
     *   true if the request is in the specified variant, false otherwise.
-    * @note 
+    * @note
     *   Previously named 'isInVariant', updated to be consistent with new AB test framework in DCR.
-   */
+    */
   def isUserInTestGroup(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
     request.attrs.get(attrKey).exists(_.containsKey((testName, variant)))
   }
@@ -62,7 +62,7 @@ object ABTests {
   /** Retrieves all AB tests and their variants for the current request.
     * @return
     *   A map of test names to their variants.
-    * @note 
+    * @note
     *   Previously named 'allTests', updated to be consistent with new AB test framework in DCR.
     */
   def getParticipations(implicit request: RequestHeader): Map[String, String] = {

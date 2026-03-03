@@ -156,7 +156,9 @@ object StorylinesContent extends GuLogging {
   )
 
   def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
-    if (allowedTags.contains(tag) && ABTests.isInVariant(rh, "fronts-and-curation-tag-page-storylines", "variant")) {
+    if (
+      allowedTags.contains(tag) && ABTests.isUserInTestGroup(rh, "fronts-and-curation-tag-page-storylines", "variant")
+    ) {
       lazy val stage: String = Configuration.facia.stage.toUpperCase
       val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
       val location = s"$stage/tag-page-ai-data/$encodedTag.json"
