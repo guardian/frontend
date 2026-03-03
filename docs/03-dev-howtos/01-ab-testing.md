@@ -210,9 +210,9 @@ In prod, the completion events are fired based on the MVT ID cookie. This doesn'
 This way, the `success` function of the test and variant you specify will be run, so you can test your completion behaviour.
 
 #### Detecting a user's bucket
-You can use this code to check anywhere in your JS whether you're in a test bucket. You need to import `isInVariant` from ```'common/modules/experiments/ab'``` and your test object (in this example `FaciaSlideshowTest`).
+You can use this code to check anywhere in your JS whether you're in a test bucket. You need to import `isUserInTestGroup` from ```'common/modules/experiments/ab'``` and your test object (in this example `FaciaSlideshowTest`).
 ```
-if (isInVariant(FaciaSlideshowTest, 'variant')) {
+if (isUserInTestGroup(FaciaSlideshowTest, 'variant')) {
     ///...
 }
 ```

@@ -89,40 +89,40 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
     ABTests.isUserInTest(request, "test1") should be(false)
   }
 
-  "ABTests.isInVariant" should "return true when test and variant match" in {
+  "ABTests.isUserInTestGroup" should "return true when test and variant match" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isInVariant(enrichedRequest, "test1", "variant1") should be(true)
-    ABTests.isInVariant(enrichedRequest, "test2", "variant2") should be(true)
+    ABTests.isUserInTestGroup(enrichedRequest, "test1", "variant1") should be(true)
+    ABTests.isUserInTestGroup(enrichedRequest, "test2", "variant2") should be(true)
   }
 
   it should "return false when test exists but variant does not match" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isInVariant(enrichedRequest, "test1", "variant2") should be(false)
-    ABTests.isInVariant(enrichedRequest, "test2", "variant1") should be(false)
+    ABTests.isUserInTestGroup(enrichedRequest, "test1", "variant2") should be(false)
+    ABTests.isUserInTestGroup(enrichedRequest, "test2", "variant1") should be(false)
   }
 
   it should "return false when test does not exist" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isInVariant(enrichedRequest, "test3", "variant1") should be(false)
+    ABTests.isUserInTestGroup(enrichedRequest, "test3", "variant1") should be(false)
   }
 
   it should "return false for empty request" in {
     val request = FakeRequest()
     val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
 
-    ABTests.isInVariant(enrichedRequest, "test1", "variant1") should be(false)
+    ABTests.isUserInTestGroup(enrichedRequest, "test1", "variant1") should be(false)
   }
 
   it should "return false when request has no AB test attributes" in {
     val request = FakeRequest()
 
-    ABTests.isInVariant(request, "test1", "variant1") should be(false)
+    ABTests.isUserInTestGroup(request, "test1", "variant1") should be(false)
   }
 
   "ABTests.allTests" should "return all parsed tests" in {

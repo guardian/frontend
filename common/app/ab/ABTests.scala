@@ -52,8 +52,10 @@ object ABTests {
     *   The variant to check.
     * @return
     *   true if the request is in the specified variant, false otherwise.
-    */
-  def isInVariant(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
+    * @note 
+    *   Previously named 'isInVariant', updated to be consistent with new AB test framework in DCR.
+   */
+  def isUserInTestGroup(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
     request.attrs.get(attrKey).exists(_.containsKey((testName, variant)))
   }
 
