@@ -17,7 +17,7 @@ trait ExperimentsDefinition {
 
   def getJsMap(implicit request: RequestHeader): Map[String, String] = {
     allExperiments
-      .filter(e => isParticipating(e) || isControl(e))
+      .filter(e => isUserInTest(e) || isControl(e))
       .toSeq
       .sortBy(_.name)
       .map { e =>
@@ -39,14 +39,14 @@ trait ExperimentsDefinition {
     p(experiment)
   }
 
-  def isParticipating(experiment: Experiment)(implicit request: RequestHeader): Boolean =
-    isIn(experiment)(_.isParticipating)
+  def isUserInTest(experiment: Experiment)(implicit request: RequestHeader): Boolean =
+    isIn(experiment)(_.isUserInTest)
 
   def isControl(experiment: Experiment)(implicit request: RequestHeader): Boolean =
     isIn(experiment)(_.isControl)
 
   def groupFor(experiment: Experiment)(implicit request: RequestHeader): Participation = {
-    if (isParticipating(experiment)) {
+    if (isUserInTest(experiment)) {
       Participant
     } else if (isControl(experiment)) {
       Control

@@ -38,8 +38,10 @@ object ABTests {
     *   The name of the AB test to check.
     * @return
     *   true if the request is participating in the test, false otherwise.
+    * 
+    *   previously named 'isParticipating', updated to be consistent with new AB test framework in DCR.
     */
-  def isParticipating(implicit request: RequestHeader, testName: String): Boolean = {
+  def isUserInTest(implicit request: RequestHeader, testName: String): Boolean = {
     request.attrs.get(attrKey).exists(_.asScala.keys.exists { case (name, _) => name == testName })
   }
 
