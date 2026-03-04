@@ -125,19 +125,3 @@ case class TimelineAtomPage(
     section = None,
   )
 }
-
-case class CallToActionAtomPage(
-    override val atom: CallToActionAtom,
-    override val withJavaScript: Boolean,
-    override val withVerticalScrollbar: Boolean,
-)(implicit request: RequestHeader)
-    extends AtomPage {
-  override val atomType = "cta"
-  override val body = views.html.fragments.atoms.callToAction(atom)
-  override val javascriptModule = "cta"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("cta"),
-    section = None,
-  )
-}
