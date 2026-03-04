@@ -142,7 +142,6 @@ object NavLinks {
       footballClubs,
     ),
   )
-  val winterOlympics = NavLink("Winter Olympics", "/sport/winter-olympics-2026")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -417,7 +416,6 @@ object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
-      winterOlympics,
       football,
       cricket,
       rugbyUnion,
@@ -433,7 +431,6 @@ object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      winterOlympics,
       football,
       AFL,
       NRL,
