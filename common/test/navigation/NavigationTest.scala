@@ -39,12 +39,12 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   }
 
   "On `/index/contributors`, the parent" should "be Opinion" in {
-    val edition = Us
+    val edition = Uk
     val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/index/contributors", edition, root.children, root.otherLinks)
     val maybeParent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
 
-    maybeParent.map(p => p should be(usOpinionPillar))
+    maybeParent.map(p => p should be(ukOpinionPillar))
   }
 
   "On `/football`, the parent" should "be Sport" in {
