@@ -68,6 +68,7 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
       commonsdivisions = Nil,
       audios = Nil,
       charts = Nil,
+      callToAction = Nil,
     ),
   )
   def doc: Document = Jsoup.parse(s"""<figure class="element element-atom">
