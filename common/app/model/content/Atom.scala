@@ -584,7 +584,7 @@ final case class CallToActionAtom(
     override val id: String,
     title: String,
     atom: AtomApiAtom,
-    data: atomapi.cta.CTAAtom
+    data: atomapi.cta.CTAAtom,
 ) extends Atom
 
 object CallToActionAtom {

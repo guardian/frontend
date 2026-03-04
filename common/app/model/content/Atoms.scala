@@ -19,7 +19,7 @@ final case class Atoms(
     quizzes: Seq[QuizAtom],
     reviews: Seq[ReviewAtom],
     timelines: Seq[TimelineAtom],
-    callToAction: Seq[CallToActionAtom]
+    callToAction: Seq[CallToActionAtom],
 ) {
   val all: Seq[Atom] =
     quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts ++ callToAction
@@ -38,7 +38,7 @@ final case class Atoms(
       "quizz" -> !quizzes.isEmpty,
       "review" -> !reviews.isEmpty,
       "timeline" -> !timelines.isEmpty,
-      "callToAction" -> !callToAction.isEmpty
+      "callToAction" -> !callToAction.isEmpty,
     )
 }
 
