@@ -2,8 +2,13 @@ import type {
 	AdsConfigTCFV2,
 	AdsConfigUSNATorAus,
 } from '@guardian/commercial-core/dist/cjs/types';
-import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
+import type { AUSConsentState, ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
+
+const ausConsent: AUSConsentState = {
+	personalisedAdvertising: true,
+	signalStatus: 'ready',
+};
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
 	getPageTargeting: jest.fn(() => ({ key: 'value' })),
@@ -90,6 +95,7 @@ const canTargetUSNAT = (canTarget: boolean): ConsentState => ({
 const canTargetAUS = (canTarget: boolean): ConsentState => ({
 	aus: {
 		personalisedAdvertising: canTarget,
+		signalStatus: 'ready',
 	},
 	canTarget,
 	framework: 'aus',
@@ -200,7 +206,7 @@ describe('Get Host (no-cookie)', () => {
 	test('`youtube-nocookie.com` with an ad-free', () => {
 		const host = youtubePlayer.getHost({
 			consentState: {
-				aus: { personalisedAdvertising: true },
+				aus: ausConsent,
 				canTarget: true,
 				framework: 'aus',
 			},
@@ -214,7 +220,7 @@ describe('Get Host (no-cookie)', () => {
 	test('`youtube-nocookie.com` with for other than youtube-media-atom__iframe', () => {
 		const host = youtubePlayer.getHost({
 			consentState: {
-				aus: { personalisedAdvertising: true },
+				aus: ausConsent,
 				canTarget: true,
 				framework: 'aus',
 			},
@@ -228,7 +234,7 @@ describe('Get Host (no-cookie)', () => {
 	test('`youtube.com` when all three conditions met', () => {
 		const host = youtubePlayer.getHost({
 			consentState: {
-				aus: { personalisedAdvertising: true },
+				aus: ausConsent,
 				canTarget: true,
 				framework: 'aus',
 			},
