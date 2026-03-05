@@ -3007,7 +3007,7 @@ __metadata:
     postcss-pxtorem: "npm:^6.0.0"
     preact: "npm:^10.5.13"
     prettier: "npm:^2.2.1"
-    prettysize: "npm:^0.1.0"
+    prettysize: "npm:^2.0.0"
     qwery: "npm:3.4.2"
     rangefix: "npm:^0.2.5"
     raven-js: "npm:^3.19.1"
@@ -12344,10 +12344,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettysize@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "prettysize@npm:0.1.0"
-  checksum: 10c0/406821cb3a11cef6bf6dd019a85c86ec2f92c95bd91547ffcd5f04a1b04fb5040778563b26bcf5ff3dc88d570d8317c726dde69304c4bcf1482df8b12d337b25
+"prettysize@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "prettysize@npm:2.0.0"
+  checksum: 10c0/b5ff8d54844a133d09b582540b731d721af4b86c3d8a9322f204e9e4cb08f891d076ad29acf1ad4091a0515920dd8bf26c96435dcf6ce248131ca4a3f8a1ec89
   languageName: node
   linkType: hard
 
