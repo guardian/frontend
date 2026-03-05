@@ -142,8 +142,21 @@ object StorylinesContent extends GuLogging {
   implicit val storylinesContentEncoder: Encoder[StorylinesContent] = deriveEncoder
   implicit val storylinesWrites: Writes[StorylinesContent] = Json.writes[StorylinesContent]
 
+  private val allowedTags: Set[String] = Set(
+    "world/americas",
+    "us-news/trump-administration",
+    "environment/wildlife",
+    "business/retail",
+    "technology/artificialintelligenceai",
+    "world/china",
+    "politics/labour",
+    "australia-news/indigenous-australians",
+    "sport/formulaone",
+    "football/liverpool",
+  )
+
   def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
-    if (ABTests.isInVariant(rh, "fronts-and-curation-tag-page-storylines", "variant")) {
+    if (allowedTags.contains(tag) && ABTests.isInVariant(rh, "fronts-and-curation-tag-page-storylines", "variant")) {
       lazy val stage: String = Configuration.facia.stage.toUpperCase
       val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
       val location = s"$stage/tag-page-ai-data/$encodedTag.json"
