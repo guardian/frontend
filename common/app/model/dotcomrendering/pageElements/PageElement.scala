@@ -951,6 +951,7 @@ object PageElement {
       case _: BlockquoteBlockElement       => true
       case _: CalloutBlockElement          => true
       case _: CalloutBlockElementV2        => true
+      case _: CallToActionAtomBlockElement => true
       case _: CartoonBlockElement          => true
       case _: ChartAtomBlockElement        => true
       case _: CodeBlockElement             => true
@@ -988,7 +989,6 @@ object PageElement {
       case _: VineBlockElement             => true
       case _: ListBlockElement             => true
       case _: TimelineBlockElement         => true
-      case _: CallToActionAtomBlockElement => true
       case _: LinkBlockElement             => true
       case _: ProductBlockElement          => true
       case _: ReporterCalloutBlockElement  => true
