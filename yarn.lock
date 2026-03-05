@@ -2948,7 +2948,7 @@ __metadata:
     "@types/youtube": "npm:^0.0.44"
     "@typescript-eslint/eslint-plugin": "npm:5.61.0"
     "@typescript-eslint/parser": "npm:8.0.1"
-    any-observable: "npm:^0.2.0"
+    any-observable: "npm:^0.5.1"
     autoprefixer: "npm:^10.3.7"
     babel-core: "npm:^7.0.0-bridge.0"
     babel-jest: "npm:29.7.0"
@@ -5517,6 +5517,18 @@ __metadata:
   version: 0.2.0
   resolution: "any-observable@npm:0.2.0"
   checksum: 10c0/e8c4586588698f55bacb0b3304cc0214bd3f189f4d2afa1a21bbae25e2c3edb2a9f9b8cbdde457b388b4291fcac3cdfc1c5bff1410a900b99a6b54e920d54ef2
+  languageName: node
+  linkType: hard
+
+"any-observable@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "any-observable@npm:0.5.1"
+  peerDependenciesMeta:
+    rxjs:
+      optional: true
+    zen-observable:
+      optional: true
+  checksum: 10c0/df51c63854819fc7b69e7ba22d37f63bd2aa116aef944aa45469476f5182f1489a56a3072f8eaaac78d7077b7343fbf6ae7d37a3759913d9c10e00256089706d
   languageName: node
   linkType: hard
 
