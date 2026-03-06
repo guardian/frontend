@@ -24,7 +24,7 @@ import experiments.ActiveExperiments._
 object Nx1Config {
   def makeAbTestReport(implicit request: RequestHeader) = {
     ActiveExperiments.allExperiments
-      .filter(e => isParticipating(e) || isControl(e))
+      .filter(e => isUserInTest(e) || isControl(e))
       .toSeq
       .map { e => (e.name, e.value) }
       .toMap

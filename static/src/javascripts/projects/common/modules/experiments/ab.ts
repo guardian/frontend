@@ -21,7 +21,7 @@ import {
 // Note that this is a subset of the potentially runnable tests,
 // because we only run one epic test and one banner test per pageview.
 // We memoize this because it can't change for a given pageview, and because getParticipations()
-// and isInVariantSynchronous() depend on it and these are called in many places.
+// and isUserInTestGroupSynchronous() depend on it and these are called in many places.
 export const getSynchronousTestsToRun = memoize(() =>
 	allRunnableTests(concurrentTests),
 );
@@ -34,7 +34,7 @@ export const getSynchronousParticipations = (): Participations =>
 	runnableTestsToParticipations(getSynchronousTestsToRun());
 
 // This excludes epic & banner tests
-export const isInVariantSynchronous = (
+export const isUserInTestGroupSynchronous = (
 	test: ABTest,
 	variantId: string,
 ): boolean =>

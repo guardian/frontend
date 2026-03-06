@@ -2,7 +2,7 @@ import type { ABTest, Runnable } from '@guardian/ab-core';
 import {
 	getAsyncTestsToRun,
 	getSynchronousTestsToRun,
-	isInVariantSynchronous,
+	isUserInTestGroupSynchronous,
 	runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
@@ -288,11 +288,11 @@ describe('A/B', () => {
 		});
 	});
 
-	describe('isInVariantSynchronous', () => {
+	describe('isUserInTestGroupSynchronous', () => {
 		test('should respect the URL hash', () => {
 			window.location.hash = '#ab-DummyTest=variant';
 			expect(
-				isInVariantSynchronous(concurrentTests[0], 'variant'),
+				isUserInTestGroupSynchronous(concurrentTests[0], 'variant'),
 			).toEqual(true);
 		});
 
@@ -306,19 +306,19 @@ describe('A/B', () => {
 			});
 
 			expect(
-				isInVariantSynchronous(concurrentTests[0], 'variant'),
+				isUserInTestGroupSynchronous(concurrentTests[0], 'variant'),
 			).toEqual(true);
 
 			expect(
-				isInVariantSynchronous(concurrentTests[1], 'control'),
+				isUserInTestGroupSynchronous(concurrentTests[1], 'control'),
 			).toEqual(true);
 
 			expect(
-				isInVariantSynchronous(concurrentTests[2], 'variant'),
+				isUserInTestGroupSynchronous(concurrentTests[2], 'variant'),
 			).toEqual(false);
 
 			expect(
-				isInVariantSynchronous(concurrentTests[1], 'variant'),
+				isUserInTestGroupSynchronous(concurrentTests[1], 'variant'),
 			).toEqual(false);
 		});
 	});

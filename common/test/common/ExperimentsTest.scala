@@ -26,9 +26,9 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
       .withHeaders(
         TestCases.experiment1.participationGroup.headerName -> "variant",
       )
-    AllExperiments.isParticipating(TestCases.experiment0)(testRequest) should be(false)
-    AllExperiments.isParticipating(TestCases.experiment1)(testRequest) should be(true)
-    AllExperiments.isParticipating(TestCases.experiment2)(testRequest) should be(false)
+    AllExperiments.isUserInTest(TestCases.experiment0)(testRequest) should be(false)
+    AllExperiments.isUserInTest(TestCases.experiment1)(testRequest) should be(true)
+    AllExperiments.isUserInTest(TestCases.experiment2)(testRequest) should be(false)
   }
 
   "A experiment" should "know if a given request is in control group" in EnabledExperiments {
@@ -46,14 +46,14 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
       .withHeaders(
         TestCases.experimentWithTruePriorCondition.participationGroup.headerName -> "variant",
       )
-    AllExperiments.isParticipating(TestCases.experimentWithTruePriorCondition)(testRequest) should be(true)
+    AllExperiments.isUserInTest(TestCases.experimentWithTruePriorCondition)(testRequest) should be(true)
   }
   "A experiment" should "not run if prior condition is not met" in EnabledExperiments {
     val testRequest = TestRequest("/uk")
       .withHeaders(
         TestCases.experimentWithFalsePriorCondition.participationGroup.headerName -> "variant",
       )
-    AllExperiments.isParticipating(TestCases.experimentWithFalsePriorCondition)(testRequest) should be(false)
+    AllExperiments.isUserInTest(TestCases.experimentWithFalsePriorCondition)(testRequest) should be(false)
   }
 
   "A experiment" should "not run if extra header value doesn't match" in EnabledExperiments {
@@ -61,7 +61,7 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
       .withHeaders(
         TestCases.experimentWithExtraHeader.participationGroup.headerName -> "variant",
       )
-    AllExperiments.isParticipating(TestCases.experimentWithExtraHeader)(testRequest) should be(false)
+    AllExperiments.isUserInTest(TestCases.experimentWithExtraHeader)(testRequest) should be(false)
   }
   "A experiment" should "only run if extra header value matches" in EnabledExperiments {
     val testRequest = TestRequest("/uk")
@@ -69,7 +69,7 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
         TestCases.experimentWithExtraHeader.participationGroup.headerName -> "variant",
         TestCases.experimentWithExtraHeader.extraHeader.get.key -> TestCases.experimentWithExtraHeader.extraHeader.get.value,
       )
-    AllExperiments.isParticipating(TestCases.experimentWithExtraHeader)(testRequest) should be(true)
+    AllExperiments.isUserInTest(TestCases.experimentWithExtraHeader)(testRequest) should be(true)
   }
 
   "Javascript config" should "contains correct experiment values" in EnabledExperiments {
@@ -85,8 +85,8 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
 
   "Requests that depends on experiments" should "be aware of those experiments" in EnabledExperiments {
     val testRequest = LookedAtExperiments.createRequest(TestRequest("/uk"))
-    AllExperiments.isParticipating(TestCases.experiment0)(testRequest)
-    AllExperiments.isParticipating(TestCases.experiment1)(testRequest)
+    AllExperiments.isUserInTest(TestCases.experiment0)(testRequest)
+    AllExperiments.isUserInTest(TestCases.experiment1)(testRequest)
 
     val lookedAtExperiments = LookedAtExperiments.forRequest(testRequest)
     lookedAtExperiments should contain(TestCases.experiment0)
@@ -95,7 +95,7 @@ class ExperimentsTest extends AnyFlatSpec with Matchers {
 
   "Request that depends on experiments" should "not be aware of experiments with false prior condition" in EnabledExperiments {
     val testRequest = LookedAtExperiments.createRequest(TestRequest("/uk"))
-    AllExperiments.isParticipating(TestCases.experimentWithFalsePriorCondition)(testRequest)
+    AllExperiments.isUserInTest(TestCases.experimentWithFalsePriorCondition)(testRequest)
     LookedAtExperiments.forRequest(testRequest) should not contain (TestCases.experimentWithFalsePriorCondition)
   }
 
