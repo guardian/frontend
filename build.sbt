@@ -73,35 +73,30 @@ val commonWithTests = withTests(common)
 
 val facia = application("facia")
   .dependsOn(commonWithTests)
-  .aggregate(common)
   .settings(
     libraryDependencies += scalaCheck,
   )
 
-val article = application("article").dependsOn(commonWithTests).aggregate(common)
+val article = application("article").dependsOn(commonWithTests)
 
 val applications = application("applications")
   .dependsOn(commonWithTests)
-  .aggregate(common)
 
 val archive = application("archive")
   .dependsOn(commonWithTests)
-  .aggregate(common)
 
 val sport = application("sport")
   .dependsOn(commonWithTests)
-  .aggregate(common)
   .settings(
     libraryDependencies ++= Seq(
       paClient,
     ),
   )
 
-val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
+val discussion = application("discussion").dependsOn(commonWithTests)
 
 val admin = application("admin")
   .dependsOn(commonWithTests)
-  .aggregate(common)
   .settings(
     libraryDependencies ++= Seq(
       paClient,
@@ -130,7 +125,6 @@ val faciaPress = application("facia-press")
 
 val identity = application("identity")
   .dependsOn(commonWithTests)
-  .aggregate(common)
   .settings(
     libraryDependencies ++= Seq(
       filters,
@@ -143,9 +137,9 @@ val identity = application("identity")
     Test / testOptions += Tests.Argument("-oF"),
   )
 
-val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+val commercial = application("commercial").dependsOn(commonWithTests)
 
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward").dependsOn(commonWithTests)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -180,25 +174,7 @@ val preview = application("preview")
 
 val rss = application("rss")
   .dependsOn(commonWithTests)
-  .aggregate(common)
 
-val main = root()
-  .aggregate(
-    common,
-    facia,
-    faciaPress,
-    article,
-    applications,
-    sport,
-    discussion,
-    admin,
-    identity,
-    commercial,
-    onward,
-    archive,
-    preview,
-    rss,
-  )
 val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
 badgeHash := {
   import java.math.BigInteger

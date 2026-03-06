@@ -92,10 +92,6 @@ object ProjectSettings {
         .value,
     )
 
-  def root(): Project =
-    Project("root", base = file("."))
-      .settings(frontendRootSettings)
-
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
       .enablePlugins(PlayScala, UniversalPlugin, BuildInfoPlugin)
