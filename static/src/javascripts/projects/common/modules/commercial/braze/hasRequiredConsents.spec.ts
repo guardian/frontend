@@ -1,9 +1,19 @@
-import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
+import type { AUSConsentState, ConsentState, OnConsentChangeCallback } from '@guardian/libs';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 let mockOnConsentChangeResult: ConsentState | undefined;
+
+const ausConsent: AUSConsentState = {
+	personalisedAdvertising: true,
+	signalStatus: 'ready',
+};
+
+const ausNonConsent: AUSConsentState = {
+	personalisedAdvertising: false,
+	signalStatus: 'ready',
+};
 jest.mock(
 	'@guardian/libs',
 	() =>
@@ -96,9 +106,7 @@ describe('hasRequiredConsents', () => {
 	describe('when the user is covered by aus and consent is given', () => {
 		it('returns a promise which resolves with true', async () => {
 			mockOnConsentChangeResult = {
-				aus: {
-					personalisedAdvertising: true,
-				},
+				aus: ausConsent,
 				canTarget: true,
 				framework: 'aus',
 			};
@@ -110,9 +118,7 @@ describe('hasRequiredConsents', () => {
 	describe('when the user is covered by aus and consent is not given', () => {
 		it('returns a promise which resolves with false', async () => {
 			mockOnConsentChangeResult = {
-				aus: {
-					personalisedAdvertising: false,
-				},
+				aus: ausNonConsent,
 				canTarget: false,
 				framework: 'aus',
 			};
