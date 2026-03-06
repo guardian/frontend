@@ -21,6 +21,10 @@ GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogContr
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean])
 
+# Hosted content (under migration, JSON requests only)
+
+GET     /advertiser-content/:campaignName/:pageName.json  controllers.ArticleController.renderHosted(campaignName, pageName)
+
 # articles, finished liveblogs
 
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
