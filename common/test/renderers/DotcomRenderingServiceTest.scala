@@ -1,18 +1,18 @@
 package renderers
 
-import model.{CacheTime}
+import model.CacheTime
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
 import org.scalatest.matchers.should.Matchers
 import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestWsClient}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
-import play.api.libs.json.{JsString}
-import play.api.mvc.{Result}
+import play.api.libs.json.JsString
+import play.api.mvc.Result
 import conf.Configuration
-import org.mockito.Matchers.any
 import org.mockito.Mockito.when
+import org.mockito.ArgumentMatchers._
 
-import scala.concurrent.{Future}
+import scala.concurrent.Future
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 

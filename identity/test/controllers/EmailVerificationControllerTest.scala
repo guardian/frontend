@@ -5,7 +5,7 @@ import com.gu.identity.model.{StatusFields, User}
 import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import model.PhoneNumbers
 import org.mockito.AdditionalAnswers.returnsFirstArg
-import org.mockito.Matchers.{any, anyString, anyVararg}
+import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.Mockito._
 import org.scalatest.freespec.PathAnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -56,7 +56,7 @@ class EmailVerificationControllerTest
   )
 
   val EmailValidatedMessage = "Your email address has been validated."
-  when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
+  when(identityUrlBuilder.buildUrl(anyString(), any[(String, String)]())) thenAnswer returnsFirstArg()
   when(idRequestParser.apply(any[Request[_]])) thenReturn idRequest
   when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 

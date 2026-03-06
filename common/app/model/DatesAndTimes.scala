@@ -6,6 +6,8 @@ import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 import play.api.mvc.RequestHeader
 
+import java.util.Locale
+
 case class ArticleDateTimes(
     webPublicationDate: DateTime,
     firstPublicationDate: Option[DateTime],
@@ -80,7 +82,9 @@ object GuDateTimeFormatOld {
       case Some(tz) => tz
       case _        => edition.timezone
     }
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
+    // using Locale.US to ensure September is abbreviated to "Sep" and not "Sept". See https://github.com/guardian/frontend/pull/28605
+    val formatter = DateTimeFormat.forPattern(pattern).withZone(timeZone).withLocale(Locale.US)
+    date.toString(formatter)
   }
 
   def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String =
@@ -94,6 +98,11 @@ object GUDateTimeFormatNew {
     val edition = Edition(request)
     formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition)
   }
+  private val dateTimeForDisplayGivenEditionFormatter = DateTimeFormat
+    .forPattern("E d MMM yyyy HH.mm")
+    // using Locale.US to ensure September is abbreviated to "Sep" and not "Sept". See https://github.com/guardian/frontend/pull/28605
+    .withLocale(Locale.US)
+
   def formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition): String = {
     def correctTimeZoneString(str: String): String = {
       // For some reasons For some reasons timezone.getShortName(date.getMillis) no longer returns "EDT"
@@ -102,12 +111,19 @@ object GUDateTimeFormatNew {
     }
     val timezone = edition.timezone
     val timeZoneString = correctTimeZoneString(timezone.getShortName(date.getMillis))
-    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timeZoneString
+    date.toString(dateTimeForDisplayGivenEditionFormatter.withZone(timezone)) + " " + timeZoneString
   }
+
+  private val dateTimeForDisplayFormatter = DateTimeFormat
+    .forPattern("E d MMM yyyy")
+    // using Locale.US to ensure September is abbreviated to "Sep" and not "Sept". See https://github.com/guardian/frontend/pull/28605
+    .withLocale(Locale.US)
+
   def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
     val timezone = Edition(request).timezone
-    date.toString(DateTimeFormat.forPattern("E d MMM yyyy").withZone(timezone))
+    date.toString(dateTimeForDisplayFormatter.withZone(timezone))
   }
+
   def formatTimeForDisplay(date: DateTime, request: RequestHeader): String = {
     val edition = Edition(request)
     val timezone = edition.timezone

@@ -11,6 +11,7 @@ import model.pressed.{CollectionConfig, LinkSnap, PressedContent}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeConstants, DateTimeZone}
 import layout.slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
+import utils.DateFormatUtils
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -22,7 +23,6 @@ case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionCo
 class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLogging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
-  private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
   val FRONT_PAGE_DISPLAY_NAME = "Front page"
   val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
@@ -34,9 +34,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
   def fetchNewspaperForDate(path: String, day: String, month: String, year: String)(implicit
       executionContext: ExecutionContext,
   ): Future[List[FaciaContainer]] = {
-    val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
-
-    val date = dateFormatUTC
+    val date = DateFormatUtils.jodaUrlDateFormatUTC
       .parseDateTime(s"$year/$month/$day")
       .toDateTime
 
@@ -182,7 +180,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLo
     val datesAroundNewspaperDate = daysAroundDateToFetchLinksFor.map(date.plusDays)
     datesAroundNewspaperDate.filter(d => d.isBeforeNow).map { d =>
       val displayFormat = d.toString(dateForFrontPagePattern)
-      val hrefDateFormat = d.toString(hrefFormat).toLowerCase
+      val hrefDateFormat = d.toString(DateFormatUtils.jodaUrlDateFormatUTC).toLowerCase
       val href =
         if (d.getDayOfWeek == DateTimeConstants.SUNDAY) s"/theobserver/$hrefDateFormat"
         else s"/theguardian/$hrefDateFormat"
