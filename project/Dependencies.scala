@@ -50,7 +50,7 @@ object Dependencies {
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.12.7"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
-  val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.22.1"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
