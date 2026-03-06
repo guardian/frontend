@@ -304,21 +304,6 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
-.fc-container--dynamic-slow-mpu {
-    .ad-slot--container-inline {
-        width: gs-span(4);
-        @include mq(tablet) {
-            width: gs-span(5);
-        }
-        @include mq(desktop) {
-            width: gs-span(4);
-        }
-    }
-    .ad-slot__label {
-        text-align: left;
-    }
-}
-
 /**
  * Commercial Nav lists
  */
