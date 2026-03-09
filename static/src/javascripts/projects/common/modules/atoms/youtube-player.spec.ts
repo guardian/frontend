@@ -62,7 +62,7 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
-	isUserInTestGroupSynchronous: jest.fn(),
+	isInVariantSynchronous: jest.fn(),
 }));
 
 const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
