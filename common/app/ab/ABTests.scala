@@ -39,7 +39,7 @@ object ABTests {
     * @return
     *   true if the request is participating in the test, false otherwise.
     */
-  def isParticipating(implicit request: RequestHeader, testName: String): Boolean = {
+  def isUserInTest(implicit request: RequestHeader, testName: String): Boolean = {
     request.attrs.get(attrKey).exists(_.asScala.keys.exists { case (name, _) => name == testName })
   }
 
@@ -51,15 +51,17 @@ object ABTests {
     * @return
     *   true if the request is in the specified variant, false otherwise.
     */
-  def isInVariant(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
+  def isUserInTestGroup(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
     request.attrs.get(attrKey).exists(_.containsKey((testName, variant)))
   }
 
   /** Retrieves all AB tests and their variants for the current request.
     * @return
     *   A map of test names to their variants.
+    * @note
+    *   Previously named 'allTests', updated to be consistent with new AB test framework in DCR.
     */
-  def allTests(implicit request: RequestHeader): Map[String, String] = {
+  def getParticipations(implicit request: RequestHeader): Map[String, String] = {
     request.attrs
       .get(attrKey)
       .map(_.asScala.keys.map { case (testName, variant) => testName -> variant }.toMap)
@@ -72,7 +74,7 @@ object ABTests {
     *   A string in the format: {"testName1":"variant1","testName2":"variant2",...}
     */
   def getJavascriptConfig(implicit request: RequestHeader): String = {
-    allTests.toList
+    getParticipations.toList
       .map({ case (key, value) => s""""${key}":"${value}"""" })
       .mkString(",")
   }
