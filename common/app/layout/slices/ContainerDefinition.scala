@@ -3,7 +3,6 @@ package layout.slices
 import model.pressed.PressedContent
 
 object ContainerDefinition {
-  val DefaultCards = 6
 
   def ofSlices(slices: Slice*): ContainerDefinition =
     ContainerDefinition(
@@ -26,8 +25,6 @@ object ContainerDefinition {
       items: Seq[PressedContent],
   ): Option[ContainerDefinition] = {
     container match {
-      case Dynamic(dynamicContainer) =>
-        dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
       case Flexible(flexibleContainer) =>
         flexibleContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
       case Fixed(containerDefinition) =>

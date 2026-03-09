@@ -49,7 +49,11 @@ trait Dates {
   }
 
   // http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
-  private val HTTPDateFormat = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'").withZone(DateTimeZone.UTC)
+  private val HTTPDateFormat = DateTimeFormat
+    .forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'")
+    .withZone(DateTimeZone.UTC)
+    // using Locale.US to ensure September is abbreviated to "Sep" and not "Sept". See https://github.com/guardian/frontend/pull/28605
+    .withLocale(java.util.Locale.US)
 
   implicit class DateTime2ToCommonDateFormats(date: DateTime) {
     lazy val toISODateTimeString: String = date.toString(ISODateTimeFormat.dateTime)
@@ -65,9 +69,5 @@ trait Dates {
         ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
       case _ => ISODateTimeFormat.dateTimeNoMillis.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
     }
-  }
-
-  implicit class String2Date(s: String) {
-    lazy val parseHttpDateTimeString: DateTime = HTTPDateFormat.parseDateTime(s)
   }
 }

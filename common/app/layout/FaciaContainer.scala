@@ -104,11 +104,6 @@ case class FaciaContainer(
 
   def shouldLazyLoad: Boolean = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
 
-  def isStoryPackage: Boolean =
-    container match {
-      case Dynamic(DynamicPackage) => true
-      case _                       => false
-    }
 }
 
 object FaciaContainer {

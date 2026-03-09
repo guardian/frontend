@@ -5,8 +5,8 @@ import contentapi.ContentApiClient
 import _root_.feed.Competitions
 import implicits.Football
 import pa._
+import utils.DateFormatUtils
 
-import java.time.format.DateTimeFormatter
 import scala.concurrent.ExecutionContext
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
@@ -148,7 +148,7 @@ object MatchUrl {
       awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.metadata.url)
       if homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/")
     } yield {
-      s"/football/match/${theMatch.date.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")).toLowerCase}/${homeTeam
+      s"/football/match/${theMatch.date.format(DateFormatUtils.javaUrlDateFormatUTC).toLowerCase}/${homeTeam
           .replace("/football/", "")}-v-${awayTeam
           .replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")

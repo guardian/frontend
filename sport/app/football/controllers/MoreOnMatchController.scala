@@ -21,8 +21,8 @@ import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
 import model.CompetitionDisplayHelpers.cleanTeamNameNextGenApi
+import utils.DateFormatUtils
 
-import java.time.format.DateTimeFormatter
 import java.time.ZonedDateTime
 import scala.concurrent.Future
 
@@ -348,7 +348,9 @@ class MoreOnMatchController(
                     .matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
                   "hasStarted" -> theMatch.hasStarted,
                   "group" -> group,
-                  "matchDate" -> theMatch.date.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")).toLowerCase(),
+                  "matchDate" -> theMatch.date
+                    .format(DateFormatUtils.javaUrlDateFormatUTC)
+                    .toLowerCase(),
                   "dropdown" -> views.html.fragments.dropdown("")(Html("")),
                 )
               }

@@ -8,8 +8,8 @@ import implicits.Football
 import model.Competition
 import pa.{FootballMatch, Round}
 import play.api.mvc.RequestHeader
+import utils.DateFormatUtils
 
-import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZonedDateTime}
 
 trait MatchesList extends Football with RichList {
@@ -80,15 +80,15 @@ trait MatchesList extends Football with RichList {
 
   lazy val nextPage: Option[String] = {
     val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
-    nextMatchDate.map(s"$baseUrl/more/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
+    nextMatchDate.map(s"$baseUrl/more/" + _.format(DateFormatUtils.javaUrlDateFormatUTC))
   }
   lazy val nextPageNoJs: Option[String] = {
     val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
-    nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
+    nextMatchDate.map(s"$baseUrl/" + _.format(DateFormatUtils.javaUrlDateFormatUTC))
   }
   lazy val previousPage: Option[String] = {
     val nextMatchDate = matchDates.takeWhile(dateComesFirstInList(_, date)).lastOption
-    nextMatchDate.map(s"$baseUrl/" + _.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")))
+    nextMatchDate.map(s"$baseUrl/" + _.format(DateFormatUtils.javaUrlDateFormatUTC))
   }
 
   def getPageTitle(edition: Edition): String = {
