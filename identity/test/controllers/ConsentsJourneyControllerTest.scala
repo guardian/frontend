@@ -8,8 +8,8 @@ import form._
 import idapiclient.{Auth, TrackingData, _}
 import model.PhoneNumbers
 import org.mockito.Mockito._
-import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
-import MockitoMatchers._
+import org.mockito.ArgumentMatchers._
+import org.mockito.{ArgumentCaptor, ArgumentMatcher, ArgumentMatchers}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest._
 import org.scalatestplus.play.ConfiguredServer
@@ -117,7 +117,7 @@ import scala.concurrent.Future
         status(result) should be(303)
 
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
-        verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
+        verify(api).saveUser(ArgumentMatchers.eq(userId), userUpdateCapture.capture(), ArgumentMatchers.eq(testAuth))
       }
 
     }
