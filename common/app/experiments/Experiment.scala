@@ -45,12 +45,12 @@ abstract case class Experiment(
 
   def canRun(implicit request: RequestHeader): Boolean = isSwitchedOn && priorCondition && matchesExtraHeader
 
-  def isUserInTest[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean =
+  def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean =
     canRun && inVariant
 
   def isControl[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = canRun && inControl
   def value(implicit request: RequestHeader, canCheck: CanCheckExperiment): String = {
-    val experimentValue = if (isUserInTest) variantValue else if (isControl) controlValue else unknownValue
+    val experimentValue = if (isParticipating) variantValue else if (isControl) controlValue else unknownValue
     experimentValue.value
   }
 
