@@ -35,7 +35,7 @@ object GetClasses {
     )
   }
 
-  def forItem(item: ContentCard, isFirstContainer: Boolean, isDynamic: Boolean = false)(implicit
+  def forItem(item: ContentCard, isFirstContainer: Boolean)(implicit
       request: RequestHeader,
   ): String = {
 
@@ -62,8 +62,6 @@ object GetClasses {
         ("fc-item--is-commentable", item.discussionSettings.isCommentable),
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
-        ("fc-item--is-dynamic-card", isDynamic && item.cardTypes.canBeDynamicLayout && item.cutOut.isEmpty),
-        ("fc-item--has-floating-sublinks", item.hasFloatingSublinks(isDynamic)),
       ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
@@ -174,7 +172,7 @@ object GetClasses {
 
   def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
     container match {
-      case Fixed(_) | Dynamic(_) =>
+      case Fixed(_) =>
         primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
       case _ => None
     }

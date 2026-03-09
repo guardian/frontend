@@ -226,9 +226,6 @@ import layout.slices.EmailLayouts
   it should "Should render supported collections" in {
     val faciaPage = FixtureBuilder.mkPressedPage(
       List(
-        PressedCollectionBuilder.mkPressedCollection("dynamic/fast"),
-        PressedCollectionBuilder.mkPressedCollection("dynamic/package"),
-        PressedCollectionBuilder.mkPressedCollection("dynamic/slow"),
         PressedCollectionBuilder.mkPressedCollection("fixed/large/slow-XIV"),
         PressedCollectionBuilder.mkPressedCollection("fixed/medium/fast-XI"),
         PressedCollectionBuilder.mkPressedCollection("fixed/medium/fast-XII"),
