@@ -17,6 +17,7 @@ import services.dotcomrendering.{FootballSummaryPagePicker, RemoteRender}
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import scala.concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
@@ -75,7 +76,8 @@ class MatchController(
   def renderMatch(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) =>
-        val formatter = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(DateHelpers.defaultFootballZoneId)
+        val formatter =
+          DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(DateHelpers.defaultFootballZoneId).withLocale(Locale.US)
         val date = LocalDate.parse(s"$year${month.capitalize}$day", formatter)
         val startOfDay = date.atStartOfDay(DateHelpers.defaultFootballZoneId)
         val startOfTomorrow = startOfDay.plusDays(1)

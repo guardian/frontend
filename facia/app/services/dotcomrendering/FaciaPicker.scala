@@ -21,9 +21,6 @@ object FrontChecks {
     */
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
-      "dynamic/fast",
-      "dynamic/package",
-      "dynamic/slow",
       "fixed/large/slow-XIV",
       "fixed/medium/fast-XI",
       "fixed/medium/fast-XII",

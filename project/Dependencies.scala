@@ -53,7 +53,6 @@ object Dependencies {
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "13.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "5.0.0"
@@ -66,7 +65,8 @@ object Dependencies {
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.34.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
-  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-4-11" % "3.2.18.0" % Test
+  val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-5-18" % "3.2.19.0" % Test
+  val mockito = "org.mockito" % "mockito-core" % "5.18.0" % Test // ensure this matches scalatest + mockito
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"

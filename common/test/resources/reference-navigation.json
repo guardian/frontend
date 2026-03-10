@@ -420,6 +420,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Winter Paralympics",
+					"url": "/sport/winter-paralympics",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -1220,7 +1226,7 @@
 				},
 				{
 					"title": "Columnists",
-					"url": "/index/contributors",
+					"url": "/us/columnists",
 					"children": [],
 					"classList": []
 				},
@@ -2797,6 +2803,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "Winter Paralympics",
+					"url": "/sport/winter-paralympics",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -3781,6 +3793,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "Winter Paralympics",
+					"url": "/sport/winter-paralympics",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",

@@ -405,6 +405,17 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
+  val prebidLiveramp: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-liveramp",
+    description = "When ON, the Liveramp ID integration is enabled for user sync in Prebid",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val prebidMagnite: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-magnite",

@@ -9,6 +9,7 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
 
 import java.time.LocalDate
+import java.util.Locale
 import pa.FootballTeam
 import play.api.mvc.{BaseController, RequestHeader, Result}
 import play.twirl.api.Html
@@ -27,7 +28,8 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val wsClient: WSClient
 
-  protected val datePattern = DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId)
+  protected val datePattern =
+    DateTimeFormatter.ofPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezoneId).withLocale(Locale.US)
   protected def createDate(year: String, month: String, day: String): LocalDate = {
     LocalDate.parse(s"$year${month.capitalize}$day", datePattern)
   }

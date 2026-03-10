@@ -2,7 +2,6 @@ package controllers
 
 import conf.switches.Switches
 import idapiclient.responses.Error
-import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import org.scalatest.freespec.PathAnyFreeSpec
 import org.scalatest.matchers.should.Matchers

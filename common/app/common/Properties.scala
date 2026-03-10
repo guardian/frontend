@@ -3,7 +3,6 @@ package common
 import java.io.{File, FileInputStream, InputStream}
 
 import scala.jdk.CollectionConverters._
-import java.net.URL
 import java.nio.charset.Charset
 
 import implicits.AutomaticResourceManagement
@@ -20,5 +19,4 @@ object Properties extends AutomaticResourceManagement {
 
   def apply(text: String): Map[String, String] = apply(IOUtils.toInputStream(text, Charset.defaultCharset()))
   def apply(file: File): Map[String, String] = apply(new FileInputStream(file))
-  def apply(url: URL): Map[String, String] = apply(url.openStream)
 }
