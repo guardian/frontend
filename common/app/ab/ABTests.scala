@@ -16,7 +16,7 @@ object ABTests {
   /** Decorates the request with the AB tests defined in the request header. The header should be in the format:
     * "testName1:variant1,testName2:variant2,..."
     */
-  def decorateRequest(implicit request: RequestHeader, abTestHeader: String): RequestHeader = {
+  def decorateRequest(abTestHeader: String)(implicit request: RequestHeader): RequestHeader = {
     val tests = request.headers.get(abTestHeader).fold(Map.empty[String, String]) { tests =>
       tests
         .split(",")
@@ -39,7 +39,7 @@ object ABTests {
     * @return
     *   true if the request is participating in the test, false otherwise.
     */
-  def isUserInTest(implicit request: RequestHeader, testName: String): Boolean = {
+  def isUserInTest(testName: String)(implicit request: RequestHeader): Boolean = {
     request.attrs.get(attrKey).exists(_.asScala.keys.exists { case (name, _) => name == testName })
   }
 
@@ -51,7 +51,7 @@ object ABTests {
     * @return
     *   true if the request is in the specified variant, false otherwise.
     */
-  def isUserInTestGroup(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
+  def isUserInTestGroup(testName: String, variant: String)(implicit request: RequestHeader): Boolean = {
     request.attrs.get(attrKey).exists(_.containsKey((testName, variant)))
   }
 
