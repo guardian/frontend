@@ -136,12 +136,12 @@ trait FaciaController
       }
 
       if (!ConfigAgent.frontExistsInConfig(path)) {
-        successful(Cached(CacheTime.Facia)(notFound()))
+        successful(Cached(CacheTime.RecentlyUpdated)(notFound()))
       } else {
         frontJsonFapi
           .get(path, liteRequestType)
           .map(_.fold[CacheableResult](notFound())(FrontHeadline.renderEmailHeadline))
-          .map(Cached(CacheTime.Facia))
+          .map(Cached(CacheTime.RecentlyUpdated))
       }
 
     }
