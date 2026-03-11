@@ -55,7 +55,7 @@ object Dependencies {
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.12"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "13.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "5.0.0"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.2"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
