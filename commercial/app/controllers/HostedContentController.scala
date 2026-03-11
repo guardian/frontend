@@ -18,6 +18,7 @@ import play.twirl.api.Html
 import views.html.commercialExpired
 import views.html.hosted._
 import implicits.JsonFormat
+import services.dotcomrendering.{HostedContentPicker, RemoteRender}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -93,12 +94,10 @@ class HostedContentController(
 
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
-      log.info(s"[Render Hosted Page] is DCRHostedContent switch on? ${DCRHostedContent.isSwitchedOn}")
-      log.info(
-        s"[Render Hosted Page] isUserInTestGroup commercial-hosted-content:preview? ${isUserInTestGroup("commercial-hosted-content", "preview")}",
-      )
-      if (DCRHostedContent.isSwitchedOn && isUserInTestGroup("commercial-hosted-content", "preview")) {
+      // Migration of Hosted Content pages to DCR
+      if (HostedContentPicker.getTier() == RemoteRender) {
         val itemId = s"advertiser-content/$campaignName/$pageName"
+        // Redirect to article application for further processing
         Future.successful(
           InternalRedirect.internalRedirect(
             "type/article",
