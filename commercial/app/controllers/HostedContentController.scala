@@ -1,12 +1,14 @@
 package commercial.controllers
 
+import ab.ABTests.isUserInTestGroup
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
-import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
+import com.gu.contentapi.client.model.v1.ContentType.Video
 import com.gu.contentapi.client.model.v1.Content
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, InternalRedirect, JsonComponent, JsonNotFound}
+import conf.switches.Switches.DCRHostedContent
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, DotcomRenderingHostedContentModel, NoCache}
@@ -74,7 +76,6 @@ class HostedContentController(
       pageName: String,
   )(implicit request: Request[AnyContent]): Future[Option[Content]] = {
     val itemId = s"advertiser-content/$campaignName/$pageName"
-
     contentApiClient
       .getResponse(baseQuery(itemId))
       .map(_.content)
@@ -92,13 +93,27 @@ class HostedContentController(
 
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
-      lookup(campaignName, pageName).flatMap {
-        case Some(content) if request.getRequestFormat == JsonFormat =>
-          renderJsonResponse(content)
-        case Some(content) =>
-          renderPage(Future.successful(HostedPage.fromContent(content)))
-        case None =>
-          Future.successful(NotFound)
+      log.info(s"[Render Hosted Page] is DCRHostedContent switch on? ${DCRHostedContent.isSwitchedOn}")
+      log.info(
+        s"[Render Hosted Page] isUserInTestGroup commercial-hosted-content:preview? ${isUserInTestGroup("commercial-hosted-content", "preview")}",
+      )
+      if (DCRHostedContent.isSwitchedOn && isUserInTestGroup("commercial-hosted-content", "preview")) {
+        Future.successful(
+          InternalRedirect.internalRedirect(
+            "type/article",
+            s"/$campaignName/$pageName",
+            request.rawQueryStringOption.map("?" + _),
+          ),
+        )
+      } else {
+        lookup(campaignName, pageName).flatMap {
+          case Some(content) if request.getRequestFormat == JsonFormat =>
+            renderJsonResponse(content)
+          case Some(content) =>
+            renderPage(Future.successful(HostedPage.fromContent(content)))
+          case None =>
+            Future.successful(NotFound)
+        }
       }
     }
 
