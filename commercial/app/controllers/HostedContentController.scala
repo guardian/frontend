@@ -98,10 +98,11 @@ class HostedContentController(
         s"[Render Hosted Page] isUserInTestGroup commercial-hosted-content:preview? ${isUserInTestGroup("commercial-hosted-content", "preview")}",
       )
       if (DCRHostedContent.isSwitchedOn && isUserInTestGroup("commercial-hosted-content", "preview")) {
+        val itemId = s"advertiser-content/$campaignName/$pageName"
         Future.successful(
           InternalRedirect.internalRedirect(
             "type/article",
-            s"/$campaignName/$pageName",
+            itemId,
             request.rawQueryStringOption.map("?" + _),
           ),
         )
