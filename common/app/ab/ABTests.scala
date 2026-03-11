@@ -16,7 +16,7 @@ object ABTests {
   /** Decorates the request with the AB tests defined in the request header. The header should be in the format:
     * "testName1:variant1,testName2:variant2,..."
     */
-  def decorateRequest(implicit request: RequestHeader, abTestHeader: String): RequestHeader = {
+  def decorateRequest(abTestHeader: String)(implicit request: RequestHeader): RequestHeader = {
     val tests = request.headers.get(abTestHeader).fold(Map.empty[String, String]) { tests =>
       tests
         .split(",")
@@ -39,7 +39,7 @@ object ABTests {
     * @return
     *   true if the request is participating in the test, false otherwise.
     */
-  def isParticipating(implicit request: RequestHeader, testName: String): Boolean = {
+  def isUserInTest(testName: String)(implicit request: RequestHeader): Boolean = {
     request.attrs.get(attrKey).exists(_.asScala.keys.exists { case (name, _) => name == testName })
   }
 
@@ -51,15 +51,17 @@ object ABTests {
     * @return
     *   true if the request is in the specified variant, false otherwise.
     */
-  def isInVariant(implicit request: RequestHeader, testName: String, variant: String): Boolean = {
+  def isUserInTestGroup(testName: String, variant: String)(implicit request: RequestHeader): Boolean = {
     request.attrs.get(attrKey).exists(_.containsKey((testName, variant)))
   }
 
   /** Retrieves all AB tests and their variants for the current request.
     * @return
     *   A map of test names to their variants.
+    * @note
+    *   Previously named 'allTests', updated to be consistent with new AB test framework in DCR.
     */
-  def allTests(implicit request: RequestHeader): Map[String, String] = {
+  def getParticipations(implicit request: RequestHeader): Map[String, String] = {
     request.attrs
       .get(attrKey)
       .map(_.asScala.keys.map { case (testName, variant) => testName -> variant }.toMap)
@@ -72,7 +74,7 @@ object ABTests {
     *   A string in the format: {"testName1":"variant1","testName2":"variant2",...}
     */
   def getJavascriptConfig(implicit request: RequestHeader): String = {
-    allTests.toList
+    getParticipations.toList
       .map({ case (key, value) => s""""${key}":"${value}"""" })
       .mkString(",")
   }

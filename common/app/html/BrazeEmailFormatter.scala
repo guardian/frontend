@@ -1,6 +1,6 @@
 package html
 
-import java.net.URL
+import java.net.URI
 import common.GuLogging
 import model.EmailAddons
 import org.jsoup.Jsoup
@@ -24,7 +24,7 @@ object BrazeEmailFormatter extends GuLogging {
     Option(element.attr("href"))
       .collect {
         case url if url.nonEmpty && element.nodeName() == "a" && !url.contains(EmailAddons.unsubscribePlaceholder) =>
-          val startQuery = Try(new URL(url)).toOption
+          val startQuery = Try(new URI(url)).toOption
             .flatMap(uri => Option(uri.getQuery))
             .fold("?")(_ => "&")
           s"$url$startQuery##braze_utm##"

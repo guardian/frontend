@@ -1,12 +1,12 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, GuLogging}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import implicits.{Dates, ItemResponses}
 import model.ApplicationContext
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.DateTime
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services._
+import utils.DateFormatUtils
 
 import scala.concurrent.Future
 
@@ -22,10 +22,8 @@ class PublicationController(
     with Dates
     with GuLogging {
 
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
-
   private def requestedDate(dateString: String) = {
-    dateFormatUTC
+    DateFormatUtils.jodaUrlDateFormatUTC
       .parseDateTime(dateString)
       .withTimeAtStartOfDay()
       .toDateTime
@@ -61,5 +59,5 @@ class PublicationController(
     }
   }
 
-  private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
+  private def urlFormat(date: DateTime) = date.toString(DateFormatUtils.jodaUrlDateFormatUTC).toLowerCase
 }

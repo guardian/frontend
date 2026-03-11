@@ -12,9 +12,9 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   "ABTests.decorateRequest" should "parse AB test header correctly" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
       "test2" -> "variant2",
     )
@@ -22,114 +22,114 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   it should "handle empty header" in {
     val request = FakeRequest()
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should be(empty)
+    ABTests.getParticipations(enrichedRequest) should be(empty)
   }
 
   it should "handle malformed test entries" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,malformed,test2:variant2:extra")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
     )
   }
 
   it should "handle test entries with missing variant" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test2" -> "variant2",
     )
   }
 
   it should "handle test entries with colons in values" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant:with:colons,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test2" -> "variant2",
     )
   }
 
   it should "handle empty string header" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should be(empty)
+    ABTests.getParticipations(enrichedRequest) should be(empty)
   }
 
-  "ABTests.isParticipating" should "return true when test exists" in {
+  "ABTests.isUserInTest" should "return true when test exists" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isParticipating(enrichedRequest, "test1") should be(true)
-    ABTests.isParticipating(enrichedRequest, "test2") should be(true)
+    ABTests.isUserInTest("test1")(enrichedRequest) should be(true)
+    ABTests.isUserInTest("test2")(enrichedRequest) should be(true)
   }
 
   it should "return false when test does not exist" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isParticipating(enrichedRequest, "test3") should be(false)
+    ABTests.isUserInTest("test3")(enrichedRequest) should be(false)
   }
 
   it should "return false for empty request" in {
     val request = FakeRequest()
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isParticipating(enrichedRequest, "test1") should be(false)
+    ABTests.isUserInTest("test1")(enrichedRequest) should be(false)
   }
 
   it should "return false when request has no AB test attributes" in {
     val request = FakeRequest()
 
-    ABTests.isParticipating(request, "test1") should be(false)
+    ABTests.isUserInTest("test1")(request) should be(false)
   }
 
-  "ABTests.isInVariant" should "return true when test and variant match" in {
+  "ABTests.isUserInTestGroup" should "return true when test and variant match" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isInVariant(enrichedRequest, "test1", "variant1") should be(true)
-    ABTests.isInVariant(enrichedRequest, "test2", "variant2") should be(true)
+    ABTests.isUserInTestGroup("test1", "variant1")(enrichedRequest) should be(true)
+    ABTests.isUserInTestGroup("test2", "variant2")(enrichedRequest) should be(true)
   }
 
   it should "return false when test exists but variant does not match" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isInVariant(enrichedRequest, "test1", "variant2") should be(false)
-    ABTests.isInVariant(enrichedRequest, "test2", "variant1") should be(false)
+    ABTests.isUserInTestGroup("test1", "variant2")(enrichedRequest) should be(false)
+    ABTests.isUserInTestGroup("test2", "variant1")(enrichedRequest) should be(false)
   }
 
   it should "return false when test does not exist" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isInVariant(enrichedRequest, "test3", "variant1") should be(false)
+    ABTests.isUserInTestGroup("test3", "variant1")(enrichedRequest) should be(false)
   }
 
   it should "return false for empty request" in {
     val request = FakeRequest()
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.isInVariant(enrichedRequest, "test1", "variant1") should be(false)
+    ABTests.isUserInTestGroup("test1", "variant1")(enrichedRequest) should be(false)
   }
 
   it should "return false when request has no AB test attributes" in {
     val request = FakeRequest()
 
-    ABTests.isInVariant(request, "test1", "variant1") should be(false)
+    ABTests.isUserInTestGroup("test1", "variant1")(request) should be(false)
   }
 
-  "ABTests.allTests" should "return all parsed tests" in {
+  "ABTests.getParticipations" should "return all parsed tests" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2,test3:control")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
       "test2" -> "variant2",
       "test3" -> "control",
@@ -138,20 +138,20 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   it should "return empty map for request without AB tests" in {
     val request = FakeRequest()
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should be(empty)
+    ABTests.getParticipations(enrichedRequest) should be(empty)
   }
 
   it should "return empty map when request has no AB test attributes" in {
     val request = FakeRequest()
 
-    ABTests.allTests(request) should be(empty)
+    ABTests.getParticipations(request) should be(empty)
   }
 
   "ABTests.getJavascriptConfig" should "return properly formatted JavaScript config" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
     val jsConfig = ABTests.getJavascriptConfig(enrichedRequest)
 
@@ -162,14 +162,14 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   it should "return empty string for request without AB tests" in {
     val request = FakeRequest()
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
     ABTests.getJavascriptConfig(enrichedRequest) should be("")
   }
 
   it should "handle single test" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
     ABTests.getJavascriptConfig(enrichedRequest) should be(""""test1":"variant1"""")
   }
@@ -182,9 +182,9 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   "ABTests header parsing" should "handle whitespace around test entries" in {
     val request = FakeRequest().withHeaders(abTestHeader -> " test1:variant1 , test2:variant2 ")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
       "test2" -> "variant2",
     )
@@ -192,9 +192,9 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   it should "handle trailing commas" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,test2:variant2,")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
       "test2" -> "variant2",
     )
@@ -202,9 +202,9 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   it should "handle leading commas" in {
     val request = FakeRequest().withHeaders(abTestHeader -> ",test1:variant1,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
       "test2" -> "variant2",
     )
@@ -212,9 +212,9 @@ class ABTestsTest extends AnyFlatSpec with Matchers {
 
   it should "handle multiple consecutive commas" in {
     val request = FakeRequest().withHeaders(abTestHeader -> "test1:variant1,,test2:variant2")
-    val enrichedRequest = ABTests.decorateRequest(request, abTestHeader)
+    val enrichedRequest = ABTests.decorateRequest(abTestHeader)(request)
 
-    ABTests.allTests(enrichedRequest) should contain theSameElementsAs Map(
+    ABTests.getParticipations(enrichedRequest) should contain theSameElementsAs Map(
       "test1" -> "variant1",
       "test2" -> "variant2",
     )

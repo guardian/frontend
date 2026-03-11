@@ -7,7 +7,8 @@ import idapiclient.{TrackingData, _}
 import model.PhoneNumbers
 import controllers.editprofile.EditProfileController
 import org.mockito.Mockito._
-import org.mockito.{Matchers => MockitoMatchers}
+import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, OptionValues}
 import org.scalatestplus.play.ConfiguredServer
@@ -65,15 +66,15 @@ import scala.concurrent.Future
       new PrivacyMapping,
     )
 
-    when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+    when(authService.fullyAuthenticatedUser(ArgumentMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
-    when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
+    when(idRequestParser.apply(ArgumentMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
     when(newsletterSignupAgent.getNewsletters()) thenReturn Right(Nil)
 
-    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(
+    when(api.userEmails(ArgumentMatchers.anyString(), ArgumentMatchers.any[TrackingData])) thenReturn Future.successful(
       Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
     )
 
