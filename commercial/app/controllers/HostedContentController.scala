@@ -1,6 +1,5 @@
 package commercial.controllers
 
-import ab.ABTests.isUserInTestGroup
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
 import com.gu.contentapi.client.model.v1.ContentType.Video
@@ -8,7 +7,6 @@ import com.gu.contentapi.client.model.v1.Content
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, InternalRedirect, JsonComponent, JsonNotFound}
-import conf.switches.Switches.DCRHostedContent
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, DotcomRenderingHostedContentModel, NoCache}
@@ -96,12 +94,11 @@ class HostedContentController(
     Action.async { implicit request =>
       // Migration of Hosted Content pages to DCR
       if (HostedContentPicker.getTier() == RemoteRender) {
-        val itemId = s"advertiser-content/$campaignName/$pageName"
         // Redirect to article application for further processing
         Future.successful(
           InternalRedirect.internalRedirect(
             "type/article",
-            itemId,
+            s"advertiser-content/$campaignName/$pageName",
             request.rawQueryStringOption.map("?" + _),
           ),
         )
@@ -119,6 +116,17 @@ class HostedContentController(
 
   def renderJson(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
+      // Migration of Hosted Content pages to DCR
+      if (HostedContentPicker.getTier() == RemoteRender) {
+        // Redirect to article application for further processing
+        Future.successful(
+          InternalRedirect.internalRedirect(
+            "type/article",
+            s"advertiser-content/$campaignName/$pageName",
+            request.rawQueryStringOption.map("?" + _),
+          ),
+        )
+      }
       lookup(campaignName, pageName).flatMap {
         case Some(content) => renderJsonResponse(content)
         case None          => Future.successful(NotFound)
