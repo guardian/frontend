@@ -29,7 +29,7 @@ object HostedContentPicker extends GuLogging {
   ): RenderType = {
     if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
     else if (request.forceDCROff) LocalRender
-    else if (request.forceDCR && isUserInTestGroup("commercial-hosted-content", "preview")) RemoteRender
+    else if (request.forceDCR) RemoteRender
     else LocalRender
   }
 }
