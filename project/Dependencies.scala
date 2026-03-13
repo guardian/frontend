@@ -68,7 +68,7 @@ object Dependencies {
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-5-18" % "3.2.19.0" % Test
   val mockito = "org.mockito" % "mockito-core" % "5.18.0" % Test // ensure this matches scalatest + mockito
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
-  val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
+  val scalaUri = "com.indoorvivants" %% "scala-uri" % "4.2.0"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.17"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
