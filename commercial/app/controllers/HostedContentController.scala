@@ -2,11 +2,11 @@ package commercial.controllers
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
-import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
+import com.gu.contentapi.client.model.v1.ContentType.Video
 import com.gu.contentapi.client.model.v1.Content
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, InternalRedirect, JsonComponent, JsonNotFound}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, DotcomRenderingHostedContentModel, NoCache}
@@ -16,6 +16,7 @@ import play.twirl.api.Html
 import views.html.commercialExpired
 import views.html.hosted._
 import implicits.JsonFormat
+import services.dotcomrendering.{HostedContentPicker, RemoteRender}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -74,7 +75,6 @@ class HostedContentController(
       pageName: String,
   )(implicit request: Request[AnyContent]): Future[Option[Content]] = {
     val itemId = s"advertiser-content/$campaignName/$pageName"
-
     contentApiClient
       .getResponse(baseQuery(itemId))
       .map(_.content)
@@ -92,18 +92,41 @@ class HostedContentController(
 
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
-      lookup(campaignName, pageName).flatMap {
-        case Some(content) if request.getRequestFormat == JsonFormat =>
-          renderJsonResponse(content)
-        case Some(content) =>
-          renderPage(Future.successful(HostedPage.fromContent(content)))
-        case None =>
-          Future.successful(NotFound)
+      // Migration of Hosted Content pages to DCR
+      if (HostedContentPicker.getTier() == RemoteRender) {
+        // Redirect to article application for further processing
+        Future.successful(
+          InternalRedirect.internalRedirect(
+            "type/article",
+            s"advertiser-content/$campaignName/$pageName",
+            request.rawQueryStringOption.map("?" + _),
+          ),
+        )
+      } else {
+        lookup(campaignName, pageName).flatMap {
+          case Some(content) if request.getRequestFormat == JsonFormat =>
+            renderJsonResponse(content)
+          case Some(content) =>
+            renderPage(Future.successful(HostedPage.fromContent(content)))
+          case None =>
+            Future.successful(NotFound)
+        }
       }
     }
 
   def renderJson(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
+      // Migration of Hosted Content pages to DCR
+      if (HostedContentPicker.getTier() == RemoteRender) {
+        // Redirect to article application for further processing
+        Future.successful(
+          InternalRedirect.internalRedirect(
+            "type/article",
+            s"advertiser-content/$campaignName/$pageName",
+            request.rawQueryStringOption.map("?" + _),
+          ),
+        )
+      }
       lookup(campaignName, pageName).flatMap {
         case Some(content) => renderJsonResponse(content)
         case None          => Future.successful(NotFound)
