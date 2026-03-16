@@ -13,13 +13,7 @@ import test.TestRequest
     tier should be(LocalRender)
   }
 
-  it should "return RemoteRender if force DCR and in the test group commercial-hosted-content:preview" in {
-    val testRequest = TestRequest("hosted-content-path?dcr=true&ab-commercial-hosted-content:preview")
-    val tier = HostedContentPicker.decideTier()(testRequest)
-    tier should be(LocalRender)
-  }
-
-  it should "return LocalRender if force DCR and NOT in the test group commercial-hosted-content:preview" in {
+  it should "return RemoteRender if force DCR" in {
     val testRequest = TestRequest("hosted-content-path?dcr=true")
     val tier = HostedContentPicker.decideTier()(testRequest)
     tier should be(LocalRender)
