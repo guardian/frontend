@@ -519,6 +519,51 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       CacheTime.Component,
     )
   }
+
+  def getHostedArticle(
+      ws: WSClient,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/HostedContent", pageBlocks.page.metadata.cacheTime)
+  }
+
+  def getAppsHostedArticle(
+      ws: WSClient,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsHostedContent", pageBlocks.page.metadata.cacheTime)
+  }
+
+  def getHostedGallery(
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/HostedContent", gallery.metadata.cacheTime)
+  }
+
+  def getHostedAppsGallery(
+      ws: WSClient,
+      gallery: GalleryPage,
+      pageType: PageType,
+      blocks: Blocks,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsHostedContent", gallery.metadata.cacheTime)
+  }
+
 }
 
 object DotcomRenderingService {
