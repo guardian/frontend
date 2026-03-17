@@ -52,7 +52,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
               .getMatch(matchId)
               .map { matchData =>
                 val date = PaFeed.dateFormat.format(matchData.gameDate)
-                log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")
+                log.debug(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")
                 agent.send(_ + (date -> matchData))
               }
               .recover {

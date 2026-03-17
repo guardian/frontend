@@ -16,7 +16,7 @@ class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
   def mostViewedPodcast(): Seq[RelatedContentItem] = podcastAgent()
 
   def refresh()(implicit ec: ExecutionContext): Future[Seq[RelatedContentItem]] = {
-    log.info("Refreshing most viewed audio.")
+    log.debug("Refreshing most viewed audio.")
 
     val ophanMostViewed = ophanApi.getMostViewedAudio(hours = 3, count = 100)
     MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>

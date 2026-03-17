@@ -25,6 +25,7 @@ case class DotcomRenderingCricketDataModel(
     contributionsServiceUrl: String,
     canonicalUrl: String,
     pageId: String,
+    paId: String,
 )
 
 object DotcomRenderingCricketDataModel {
@@ -48,7 +49,7 @@ object DotcomRenderingCricketDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.allTests,
+      serverSideABTests = ABTests.getParticipations,
       ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
@@ -72,6 +73,7 @@ object DotcomRenderingCricketDataModel {
       contributionsServiceUrl = Configuration.contributionsService.url,
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
+      paId = page.team.paId,
     )
   }
 

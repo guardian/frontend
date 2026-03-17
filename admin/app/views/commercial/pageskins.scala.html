@@ -16,7 +16,7 @@
 
 @listItem(sponsorship: PageSkinSponsorship, flagErrors: Boolean = true) = {
   <li class="lineItem">@sponsorship.lineItemName
-    (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+    (<a href="@DfpLink.lineItem(sponsorship.lineItemId)" target="_blank">@sponsorship.lineItemId</a>)
     @flaggableProperty("Editions", sponsorship.editions.map(_.id), "No edition", flagErrors)
     @flaggableProperty("Countries", sponsorship.countries, "No country", flagErrors)
     <br />

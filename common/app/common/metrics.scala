@@ -68,7 +68,7 @@ object SystemMetrics extends implicits.Numbers {
     description = "Total physical memory",
     get = () =>
       ManagementFactory.getOperatingSystemMXBean match {
-        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalPhysicalMemorySize)
+        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalMemorySize)
         case _                                           => -1
       },
   )
@@ -78,7 +78,7 @@ object SystemMetrics extends implicits.Numbers {
     description = "Free physical memory",
     get = () =>
       ManagementFactory.getOperatingSystemMXBean match {
-        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreePhysicalMemorySize)
+        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreeMemorySize)
         case _                                           => -1
       },
   )
@@ -236,7 +236,7 @@ class CloudWatchMetricsLifecycle(
     if (Configuration.environment.isProd) {
       jobs.scheduleEvery("LogMetricsJob", 5.seconds) {
         val heapUsed = bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
-        log.info(s"heap used: ${heapUsed}Mb")
+        log.debug(s"heap used: ${heapUsed}Mb")
         Future.successful(())
       }
     }

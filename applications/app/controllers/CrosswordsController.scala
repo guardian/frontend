@@ -67,7 +67,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       maybeCrossword getOrElse Future.successful(noResults())
     } recover {
       case capiError: ContentApiError if capiError.httpStatus == 404 => {
-        logInfoWithRequestId(s"The $crosswordType crossword with id $id was not found in CAPI")
+        logDebugWithRequestId(s"The $crosswordType crossword with id $id was not found in CAPI")
         noResults()
       }
       case t: Throwable => {

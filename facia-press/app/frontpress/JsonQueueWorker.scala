@@ -112,7 +112,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
         case None =>
           lastSuccessfulReceipt.refresh()
-          log.info(s"No message after $WaitTimeSeconds seconds")
+          log.debug(s"No message after $WaitTimeSeconds seconds")
           Future.successful(())
       }
 

@@ -37,7 +37,7 @@ trait IndexControllerCommon
 
   private def logGoogleBot(request: RequestHeader) = {
     request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { _ =>
-      logInfoWithRequestId(s"GoogleBot => ${request.uri}")(request)
+      logDebugWithRequestId(s"GoogleBot => ${request.uri}")(request)
     }
   }
 

@@ -70,12 +70,12 @@ class AdminLifecycle(
 
     val londonTime = TimeZone.getTimeZone("Europe/London")
     jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
-      log.info("Starting ExpiringSwitchesEmailJob")
+      log.debug("Starting ExpiringSwitchesEmailJob")
       ExpiringSwitchesEmailJob(emailService).run()
     }
 
     jobs.scheduleWeekdayJob("ExpiringSwitchesAfternoonEmailJob", 48, 15, londonTime) {
-      log.info("Starting ExpiringSwitchesAfternoonEmailJob")
+      log.debug("Starting ExpiringSwitchesAfternoonEmailJob")
       ExpiringSwitchesEmailJob(emailService).runReminder()
     }
   }

@@ -226,7 +226,7 @@ class MostPopularController(
     }
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
-    logInfoWithRequestId(s"Fetching most popular: $path for edition $edition")
+    logDebugWithRequestId(s"Fetching most popular: $path for edition $edition")
 
     val capiItem = contentApiClient
       .item(path, edition)

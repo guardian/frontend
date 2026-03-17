@@ -24,7 +24,7 @@ class SwitchboardController(
 
   def renderSwitchboard(): Action[AnyContent] =
     Action.async { implicit request =>
-      logInfoWithRequestId("loaded Switchboard")
+      logDebugWithRequestId("loaded Switchboard")
 
       Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
         val configuration = switchesWithLastModified.map(_._1)
@@ -57,7 +57,7 @@ class SwitchboardController(
           )
         }
       } else {
-        logInfoWithRequestId("saving switchboard")
+        logDebugWithRequestId("saving switchboard")
 
         val requester: String =
           auth.readAuthenticatedUser(request) map (authed =>

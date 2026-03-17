@@ -25,12 +25,12 @@ class FunctionJob extends Job with GuLogging {
     if (outstanding.get()(name) > 0) {
       log.warn(s"didn't run scheduled job $name because the previous one is still in progress")
     } else {
-      log.info(s"Running job: $name")
+      log.debug(s"Running job: $name")
       outstanding.send(map => map.updated(name, map(name) + 1))
       f().onComplete {
         case Success(_) =>
           outstanding.send(map => map.updated(name, map(name) - 1))
-          log.info(s"Finished job: $name")
+          log.debug(s"Finished job: $name")
         case Failure(t) =>
           outstanding.send(map => map.updated(name, map(name) - 1))
           log.error(s"An error has occured during job $name", t)
@@ -65,7 +65,7 @@ class JobScheduler(context: ApplicationContext) extends GuLogging {
     // it just results in unexpected data files when you
     // want to check in
     if (context.environment.mode != Test) {
-      log.info(s"Scheduling $name")
+      log.debug(s"Scheduling $name")
       jobs.put(name, () => block)
 
       scheduler.scheduleJob(
@@ -79,7 +79,7 @@ class JobScheduler(context: ApplicationContext) extends GuLogging {
     if (context.environment.mode != Test) {
       val schedule =
         DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
-      log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
+      log.debug(s"Scheduling $name to run every $intervalInMinutes minutes")
       jobs.put(name, () => block)
 
       scheduler.scheduleJob(
@@ -93,7 +93,7 @@ class JobScheduler(context: ApplicationContext) extends GuLogging {
     if (context.environment.mode != Test) {
       val schedule =
         DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(interval.toSeconds.toInt)
-      log.info(s"Scheduling $name to run every ${interval.toSeconds} seconds")
+      log.debug(s"Scheduling $name to run every ${interval.toSeconds} seconds")
       jobs.put(name, () => block)
 
       scheduler.scheduleJob(
@@ -104,7 +104,7 @@ class JobScheduler(context: ApplicationContext) extends GuLogging {
   }
 
   def deschedule(name: String): Unit = {
-    log.info(s"Descheduling $name")
+    log.debug(s"Descheduling $name")
     jobs.remove(name)
     scheduler.deleteJob(new JobKey(name))
   }

@@ -12,7 +12,7 @@ class SectionsLookUp(contentApiClient: ContentApiClient) extends GuLogging {
   def refresh()(implicit executionContext: ExecutionContext): Unit = {
     contentApiClient.getResponse(contentApiClient.sections) onComplete {
       case Success(response) =>
-        log.info("Refreshed sections from Content API")
+        log.debug("Refreshed sections from Content API")
         sections send Some(
           response.results
             .flatMap({ section =>

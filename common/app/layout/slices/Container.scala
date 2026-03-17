@@ -10,7 +10,6 @@ import scala.collection.immutable.Iterable
 
 sealed trait Container
 
-case class Dynamic(get: DynamicContainer) extends Container
 case class Flexible(get: FlexibleContainer) extends Container
 case class Fixed(get: ContainerDefinition) extends Container
 case class Scrollable(get: ContainerDefinition) extends Container
@@ -21,11 +20,8 @@ case object MostPopular extends Container
 object Container extends GuLogging {
 
   /** This is THE top level resolver for containers */
-  def all(adFree: Boolean = false): Map[String, Container] =
+  def all(): Map[String, Container] =
     Map(
-      ("dynamic/fast", Dynamic(DynamicFast)),
-      ("dynamic/slow", Dynamic(DynamicSlow)),
-      ("dynamic/package", Dynamic(DynamicPackage)),
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
@@ -38,17 +34,10 @@ object Container extends GuLogging {
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
-  def resolve(id: String, adFree: Boolean = false): Container = all(adFree).getOrElse(id, default)
-
-  def fromConfig(collectionConfig: CollectionConfig): Container =
-    resolve(collectionConfig.collectionType)
+  def resolve(id: String): Container = all().getOrElse(id, default)
 
   def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
     resolve(collectionConfig.collectionType) match {
-      case Dynamic(dynamicContainer) =>
-        dynamicContainer
-          .slicesFor(items.map(Story.fromFaciaContent))
-          .map(Front.itemsVisible)
       case Fixed(fixedContainer) => Some(Front.itemsVisible(fixedContainer.slices))
       case Email(_)              => Some(EmailContentContainer.storiesCount(collectionConfig))
       // scrollable feature containers are capped at 3 stories
@@ -62,25 +51,8 @@ object Container extends GuLogging {
     }
   }
 
-  def affectsDuplicates(collectionType: String): Boolean = {
-    resolve(collectionType) match {
-      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
-      case Dynamic(_)                                           => true
-      case Email(_)                                             => true
-      case _                                                    => false
-    }
-  }
-
-  def affectedByDuplicates(collectionType: String): Boolean = {
-    resolve(collectionType) match {
-      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
-      case Email(_)                                             => true
-      case _                                                    => false
-    }
-  }
-
   def fromPressedCollection(pressedCollection: PressedCollection, adFree: Boolean): Container = {
-    val container = resolve(pressedCollection.collectionType, adFree)
+    val container = resolve(pressedCollection.collectionType)
     container match {
       case Fixed(definition) if adFree =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))
@@ -96,8 +68,7 @@ object Container extends GuLogging {
 
   def customClasses(container: Container): Iterable[String] =
     container match {
-      case Dynamic(DynamicPackage) => Set("fc-container--story-package")
-      case Fixed(fixedContainer)   => fixedContainer.customCssClasses
-      case _                       => Nil
+      case Fixed(fixedContainer) => fixedContainer.customCssClasses
+      case _                     => Nil
     }
 }

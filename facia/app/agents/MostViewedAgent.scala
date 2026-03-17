@@ -31,9 +31,9 @@ class MostViewedAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     MostViewed.relatedContentItems(ophanMostViewed, edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
       if (validItems.nonEmpty) {
-        log.info(s"Geo popular ${countryCode} updated successfully.")
+        log.debug(s"Geo popular ${countryCode} updated successfully.")
       } else {
-        log.info(s"Geo popular update for ${countryCode} found nothing.")
+        log.debug(s"Geo popular update for ${countryCode} found nothing.")
       }
       mostViewedBox.alter(_ + (edition -> validItems))
     }

@@ -22,18 +22,7 @@ trait ABTestSwitches {
     "Testing the Admiral integration for adblock recovery on theguardian.com",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2026, 1, 21)),
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  Switch(
-    ABTests,
-    "ab-onward-journeys",
-    "Testing the new gallery Onward Journey component on all articles",
-    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-    safeState = Off,
-    sellByDate = Some(LocalDate.of(2026, 7, 23)),
+    sellByDate = Some(LocalDate.of(2027, 1, 21)),
     exposeClientSide = true,
     highImpact = false,
   )

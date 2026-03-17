@@ -6,7 +6,7 @@ import com.gu.identity.model.{StatusFields, User}
 import idapiclient.{Auth, IdApiClient, ScGuRp, ScGuU}
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers._
 import play.api.mvc.{AnyContent, _}
 import play.api.test.{FakeRequest, Helpers}
 import services._

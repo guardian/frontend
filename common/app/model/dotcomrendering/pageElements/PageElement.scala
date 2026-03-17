@@ -6,15 +6,16 @@ import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
 import com.gu.contentapi.client.model.v1.{
   EmbedTracking,
   LinkType,
+  Priority,
   ProductDisplayType,
   ProductElementFields,
-  ProductCTA => ApiProductCta,
-  ProductCustomAttribute => ApiProductCustomAttribute,
-  ProductImage => ApiProductImage,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
   BlockElement => ApiBlockElement,
+  ProductCTA => ApiProductCta,
+  ProductCustomAttribute => ApiProductCustomAttribute,
+  ProductImage => ApiProductImage,
   Sponsorship => ApiSponsorship,
 }
 import common.{Chronos, Edition}
@@ -169,6 +170,28 @@ case class CalloutBlockElementV2(
 
 object CalloutBlockElementV2 {
   implicit val CalloutBlockElementV2Writes: Writes[CalloutBlockElementV2] = Json.writes[CalloutBlockElementV2]
+}
+
+case class ReporterCalloutBlockElement(
+    id: String,
+    activeFrom: Option[Long],
+    activeUntil: Option[Long],
+    displayOnSensitive: Boolean,
+    title: String,
+    subtitle: String,
+    intro: String,
+    mainTextHeading: String,
+    mainText: String,
+    emailContact: Option[String],
+    messagingContact: Option[String],
+    securedropContact: Option[String],
+    endNote: Option[String],
+) extends PageElement
+
+object ReporterCalloutBlockElement {
+  implicit val ReporterCalloutBlockElementWrites: Writes[ReporterCalloutBlockElement] =
+    Json.writes[ReporterCalloutBlockElement]
+
 }
 
 case class DcrCartoonVariant(
@@ -455,6 +478,7 @@ case class MediaAtomBlockElement(
     activeVersion: Option[Long],
     channelId: Option[String],
     videoPlayerFormat: Option[VideoPlayerFormat],
+    role: Option[String],
 ) extends PageElement
 object MediaAtomBlockElement {
   implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
@@ -510,10 +534,14 @@ case class LinkBlockElement(
     url: Option[String],
     label: Option[String],
     linkType: LinkType,
+    priority: Option[Priority],
 ) extends PageElement
 object LinkBlockElement {
   implicit val LinkTypeWrites: Writes[LinkType] = Writes { linkType =>
     JsString(linkType.name)
+  }
+  implicit val PriorityWrites: Writes[Priority] = Writes { priority =>
+    JsString(priority.name)
   }
   implicit val LinkBlockElementWrites: Writes[LinkBlockElement] = Json.writes[LinkBlockElement]
 }
@@ -661,6 +689,20 @@ case class TimelineAtomBlockElement(
 ) extends PageElement
 object TimelineAtomBlockElement {
   implicit val timelineAtomBlockElementWrites: Writes[TimelineAtomBlockElement] = Json.writes[TimelineAtomBlockElement]
+}
+
+case class CallToActionAtomBlockElement(
+    id: String,
+    title: String,
+    url: String,
+    image: Option[String],
+    label: Option[String],
+    trackingCode: Option[String],
+    btnText: Option[String],
+) extends PageElement
+object CallToActionAtomBlockElement {
+  implicit val callToActionAtomBlockElementWrites: Writes[CallToActionAtomBlockElement] =
+    Json.writes[CallToActionAtomBlockElement]
 }
 
 case class TweetBlockElement(
@@ -904,50 +946,52 @@ object PageElement {
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
     element match {
-      case _: AudioBlockElement           => true
-      case _: AudioAtomBlockElement       => true
-      case _: BlockquoteBlockElement      => true
-      case _: CalloutBlockElement         => true
-      case _: CalloutBlockElementV2       => true
-      case _: CartoonBlockElement         => true
-      case _: ChartAtomBlockElement       => true
-      case _: CodeBlockElement            => true
-      case _: CommentBlockElement         => true
-      case _: ContentAtomBlockElement     => true
-      case _: DocumentBlockElement        => true
-      case _: EmbedBlockElement           => true
-      case _: ExplainerAtomBlockElement   => true
-      case _: GenericAtomBlockElement     => true
-      case _: GuideAtomBlockElement       => true
-      case _: GuVideoBlockElement         => true
-      case _: ImageBlockElement           => true
-      case _: InstagramBlockElement       => true
-      case _: InteractiveAtomBlockElement => true
-      case _: InteractiveBlockElement     => true
-      case _: MapBlockElement             => true
-      case _: MediaAtomBlockElement       => true
-      case _: ProfileAtomBlockElement     => true
-      case _: PullquoteBlockElement       => true
-      case _: QABlockElement              => true
-      case _: QuizAtomBlockElement        => true
-      case _: RichLinkBlockElement        => true
-      case _: SoundcloudBlockElement      => true
-      case _: SpotifyBlockElement         => true
-      case _: SubheadingBlockElement      => true
-      case _: TextBlockElement            => true
-      case _: TimelineAtomBlockElement    => true
-      case _: TweetBlockElement           => true
-      case _: VideoBlockElement           => true
-      case _: VideoFacebookBlockElement   => true
-      case _: VideoVimeoBlockElement      => true
-      case _: VideoYoutubeBlockElement    => true
-      case _: YoutubeBlockElement         => true
-      case _: WitnessBlockElement         => true
-      case _: VineBlockElement            => true
-      case _: ListBlockElement            => true
-      case _: TimelineBlockElement        => true
-      case _: LinkBlockElement            => true
-      case _: ProductBlockElement         => true
+      case _: AudioBlockElement            => true
+      case _: AudioAtomBlockElement        => true
+      case _: BlockquoteBlockElement       => true
+      case _: CalloutBlockElement          => true
+      case _: CalloutBlockElementV2        => true
+      case _: CallToActionAtomBlockElement => true
+      case _: CartoonBlockElement          => true
+      case _: ChartAtomBlockElement        => true
+      case _: CodeBlockElement             => true
+      case _: CommentBlockElement          => true
+      case _: ContentAtomBlockElement      => true
+      case _: DocumentBlockElement         => true
+      case _: EmbedBlockElement            => true
+      case _: ExplainerAtomBlockElement    => true
+      case _: GenericAtomBlockElement      => true
+      case _: GuideAtomBlockElement        => true
+      case _: GuVideoBlockElement          => true
+      case _: ImageBlockElement            => true
+      case _: InstagramBlockElement        => true
+      case _: InteractiveAtomBlockElement  => true
+      case _: InteractiveBlockElement      => true
+      case _: MapBlockElement              => true
+      case _: MediaAtomBlockElement        => true
+      case _: ProfileAtomBlockElement      => true
+      case _: PullquoteBlockElement        => true
+      case _: QABlockElement               => true
+      case _: QuizAtomBlockElement         => true
+      case _: RichLinkBlockElement         => true
+      case _: SoundcloudBlockElement       => true
+      case _: SpotifyBlockElement          => true
+      case _: SubheadingBlockElement       => true
+      case _: TextBlockElement             => true
+      case _: TimelineAtomBlockElement     => true
+      case _: TweetBlockElement            => true
+      case _: VideoBlockElement            => true
+      case _: VideoFacebookBlockElement    => true
+      case _: VideoVimeoBlockElement       => true
+      case _: VideoYoutubeBlockElement     => true
+      case _: YoutubeBlockElement          => true
+      case _: WitnessBlockElement          => true
+      case _: VineBlockElement             => true
+      case _: ListBlockElement             => true
+      case _: TimelineBlockElement         => true
+      case _: LinkBlockElement             => true
+      case _: ProductBlockElement          => true
+      case _: ReporterCalloutBlockElement  => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1317,6 +1361,7 @@ object PageElement {
                     mediaAtom.activeVersion,
                     mediaAtom.channelId,
                     mediaAtom.videoPlayerFormat,
+                    elementRole,
                   ),
                 )
             }
@@ -1336,6 +1381,20 @@ object PageElement {
                 html = html,
                 items = items,
                 credit = profile.credit.getOrElse(""),
+              ),
+            )
+          }
+
+          case Some(cta: CallToActionAtom) => {
+            Some(
+              CallToActionAtomBlockElement(
+                id = cta.id,
+                title = cta.atom.title.getOrElse(""),
+                url = cta.data.url,
+                image = cta.data.backgroundImage,
+                label = cta.data.label,
+                trackingCode = cta.data.trackingCode,
+                btnText = cta.data.btnText,
               ),
             )
           }
@@ -1463,6 +1522,7 @@ object PageElement {
               AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isUSProductionOffice),
               d.label,
               d.linkType.getOrElse(LinkType.ProductButton),
+              d.priority,
             ),
           )
           .toList

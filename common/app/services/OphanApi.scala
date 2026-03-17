@@ -52,7 +52,7 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
         s"$k=${URLEncoder.encode(v, "utf-8")}"
       } mkString "&"
       val url = s"${ensureHostSecure(host)}/$path?$queryString&api-key=$key"
-      log.info(s"Making request to Ophan API: $url")
+      log.debug(s"Making request to Ophan API: $url")
       wsClient.url(url).withRequestTimeout(10.seconds).getOKResponse().map(_.json)
     }
 

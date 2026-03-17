@@ -21,7 +21,12 @@ case class LoadBalancer(
 object LoadBalancer extends GuLogging {
 
   private val loadBalancers = Seq(
-    LoadBalancer("frontend-PROD-router-ELB", "Router", "frontend-router"),
+    LoadBalancer(
+      "app/fronte-LoadB-Qs4j1NIlqHHR/42b2a4e0e0528b70",
+      "Router",
+      "frontend-router",
+      targetGroup = Some("targetgroup/fronte-Targe-EJKJLKK5DKUZ/262ab39748d9c310"),
+    ),
     LoadBalancer(
       "app/fronte-LoadB-xXnA5yhOxB7G/cf797b52302fc833",
       "Article",
@@ -85,7 +90,7 @@ object LoadBalancer extends GuLogging {
   private val agent = Box(loadBalancers)
 
   def refresh(): Unit = {
-    log.info("starting refresh LoadBalancer ELB DNS names")
+    log.debug("starting refresh LoadBalancer ELB DNS names")
 
     val client = ElasticLoadBalancingClient
       .builder()
@@ -100,7 +105,7 @@ object LoadBalancer extends GuLogging {
     }
     agent.send(newLoadBalancers)
 
-    log.info("finished refresh LoadBalancer ELB DNS names")
+    log.debug("finished refresh LoadBalancer ELB DNS names")
   }
 
   def all: Seq[LoadBalancer] = agent()

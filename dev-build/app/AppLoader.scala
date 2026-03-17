@@ -5,7 +5,6 @@ import agents.MostViewedAgent
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
-import concurrent.BlockingOperations
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUpLifecycle}
@@ -15,7 +14,7 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import feed._
 import football.controllers._
-import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
+import http.{FrontendDefaultHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
 import model.{AdminLifecycle, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -70,7 +69,6 @@ trait AppComponents
   override lazy val ophanApi = wire[OphanApi]
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
-  override lazy val blockingOperations = wire[BlockingOperations]
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   override lazy val mostViewedAgent = wire[MostViewedAgent]
@@ -103,5 +101,5 @@ trait AppComponents
 
   override lazy val httpFilters = wire[DevFilters].filters
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
-  override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
 }

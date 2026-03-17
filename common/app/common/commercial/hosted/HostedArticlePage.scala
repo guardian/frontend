@@ -28,7 +28,7 @@ case class HostedArticlePage(
 object HostedArticlePage extends GuLogging {
 
   def fromContent(content: ApiContent): Option[HostedArticlePage] = {
-    log.info(s"Building hosted article ${content.id} ...")
+    log.debug(s"Building hosted article ${content.id} ...")
 
     val page = for {
       atoms <- getAndLog(content, content.atoms, "the atoms are missing")

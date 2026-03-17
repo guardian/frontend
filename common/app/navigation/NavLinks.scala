@@ -102,13 +102,13 @@ object NavLinks {
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
+  val usColumnists = NavLink("Columnists", "/us/columnists")
   val theGuardianView = NavLink("The Guardian view", "/profile/editorial")
   val cartoons = NavLink("Cartoons", "/tone/cartoons")
   val opinionVideos = NavLink("Opinion videos", "/type/video+tone/comment")
   val letters = NavLink("Letters", "/tone/letters")
 
   /* SPORT */
-
   private val footballScores = NavLink("Live scores", "/football/live", Some("football/live"))
   private val footballTables = NavLink("Tables", "/football/tables", Some("football/tables"))
   private val footballFixtures = NavLink("Fixtures", "/football/fixtures", Some("football/fixtures"))
@@ -142,6 +142,7 @@ object NavLinks {
       footballClubs,
     ),
   )
+  val winterParalympics = NavLink("Winter Paralympics", "/sport/winter-paralympics")
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -322,6 +323,7 @@ object NavLinks {
       usTech,
       science,
       newsletters,
+      theFilterUs,
       usWellness,
     ),
   )
@@ -383,7 +385,7 @@ object NavLinks {
   val usOpinionPillar = ukOpinionPillar.copy(
     children = List(
       theGuardianView,
-      columnists,
+      usColumnists,
       letters,
       opinionVideos,
       cartoons,
@@ -415,6 +417,7 @@ object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
+      winterParalympics,
       football,
       cricket,
       rugbyUnion,
@@ -457,6 +460,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
+      winterParalympics,
       football,
       cricket,
       rugbyUnion,
@@ -469,6 +473,7 @@ object NavLinks {
   )
   val eurSportPillar = ukSportPillar.copy(
     children = List(
+      winterParalympics,
       football,
       cricket,
       rugbyUnion,

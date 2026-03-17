@@ -7,12 +7,12 @@ import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import pages.AllIndexHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.{ConfigAgent, IndexPage, IndexPageItem}
+import utils.DateFormatUtils
 import views.support.PreviousAndNext
 
 import scala.concurrent.Future
@@ -31,11 +31,8 @@ class AllIndexController(
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents, ws)
 
-  // no need to set the zone here, it gets it from the date.
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
-
   private def requestedDate(dateString: String): DateTime = {
-    dateFormatUTC
+    DateFormatUtils.jodaUrlDateFormatUTC
       .parseDateTime(dateString)
       .withTimeAtStartOfDay()
       .plusDays(1)
@@ -172,7 +169,7 @@ class AllIndexController(
 
     result.failed.foreach {
       case ContentApiError(404, _, _) =>
-        logWarnWithRequestId(s"Cannot fetch content for request '${request.uri}'")
+        logDebugWithRequestId(s"Cannot fetch content for request '${request.uri}' - 404 Not Found")
       case e: Exception =>
         logErrorWithRequestId(e.getMessage, e)
     }
@@ -196,7 +193,7 @@ class AllIndexController(
 
     result.failed.foreach {
       case ContentApiError(404, _, _) =>
-        logWarnWithRequestId(s"Cannot fetch content for request '${request.uri}'")
+        logDebugWithRequestId(s"Cannot fetch content for request '${request.uri}' - 404 Not Found")
       case e: Exception =>
         logErrorWithRequestId(e.getMessage, e)
     }
@@ -204,5 +201,5 @@ class AllIndexController(
     result
   }
 
-  private def urlFormat(date: DateTime): String = date.toString(dateFormatUTC).toLowerCase
+  private def urlFormat(date: DateTime): String = date.toString(DateFormatUtils.jodaUrlDateFormatUTC).toLowerCase
 }

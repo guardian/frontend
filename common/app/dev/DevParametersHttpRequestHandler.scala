@@ -102,7 +102,8 @@ class DevParametersHttpRequestHandler(
         "/commercial/anx/anxresize.js",
       ) // this is used by commercial for advert resizing, served through api.nextgen
     ) {
-      val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
+      val illegalParams =
+        request.queryString.keySet.filterNot(param => allowedParams.contains(param) || param.startsWith("ab-"))
       if (illegalParams.nonEmpty) {
         // it is pretty hard to spot what is happening in tests without this println
         println(s"\n\nILLEGAL PARAMETER(S) FOUND : ${illegalParams.mkString(",")}\n\n")

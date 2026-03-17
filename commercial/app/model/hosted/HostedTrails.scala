@@ -40,7 +40,7 @@ object HostedTrails extends GuLogging {
 
     } getOrElse Nil
 
-    log.info {
+    log.debug {
       def mkString(ss: Seq[AnyRef]) = ss.mkString("'", "', '", "'")
       val content = mkString(results.map(item => (item.id, item.webPublicationDate.map(_.iso8601).getOrElse(""))))
       s"Tried to make $trailCount trails for item '$itemId' from content: $content.  " +

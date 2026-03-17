@@ -13,6 +13,8 @@ GET        /_agentcontents                                                      
 
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
 
+GET        /license.xml                                                             controllers.Assets.at(path="/public", file="license.xml")
+
 GET        /.well-known/security.txt                                                controllers.Assets.at(path="/public", file="security.txt")
 GET        /.well-known/security.txt.asc                                            controllers.Assets.at(path="/public", file="security.txt.asc")
 

@@ -115,11 +115,11 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
 class ABTestingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
   private val abTestHeader = "X-GU-Server-AB-Tests"
 
-  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+  override def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
     if (EnableNewServerSideABTestsHeader.isSwitchedOff) {
       nextFilter(request)
     } else {
-      val r = ABTests.decorateRequest(request, abTestHeader)
+      val r = ABTests.decorateRequest(abTestHeader)(request)
       nextFilter(r).map { result =>
         val varyHeaderValues = result.header.headers.get("Vary").toSeq ++ Seq(abTestHeader)
         val abTestHeaderValue = request.headers.get(abTestHeader).getOrElse("")
@@ -162,6 +162,7 @@ object Filters {
       new BackendHeaderFilter(frontendBuildInfo),
       new SurrogateKeyFilter,
       new AmpFilter,
+      new TooManyHeadersFilter,
     )
 
   def preload(implicit

@@ -3,26 +3,20 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: 
+  workflow_dispatch:
+
 jobs:
   dependency-graph:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         id: checkout
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
-      - name: Install Java
-        id: java
-        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
-        with:
-          distribution: corretto
-          java-version: 17
+        uses: actions/checkout@9f265659d3bb64ab1440b03b12f4d47a24320917 # v6
       - name: Install sbt
-        id: sbt
-        uses: sbt/setup-sbt@a627500d27445f8c5021755a439829b6e78e3358 # v1.1.15
+        uses: guardian/setup-scala@f8b37d4380d93ee5c37739fd8aea97f7c580034a # v1.1.0
       - name: Submit dependencies
         id: submit
-        uses: scalacenter/sbt-dependency-submission@64084844d2b0a9b6c3765f33acde2fbe3f5ae7d3 # v3.1.0
+        uses: scalacenter/sbt-dependency-submission@d892df7c6b92ce2a2ac44815f573e9e126de3670 # v3.2.1
       - name: Log snapshot for user validation
         id: validate
         run: cat ${{ steps.submit.outputs.snapshot-json-path }} | jq

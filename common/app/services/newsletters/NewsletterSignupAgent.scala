@@ -67,7 +67,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
   }
 
   private def refreshNewsletters()(implicit ec: ExecutionContext): Future[Unit] = {
-    log.info("Refreshing newsletters and Grouped Newsletters for newsletter signup embeds, and v2 newsletters.")
+    log.debug("Refreshing newsletters and Grouped Newsletters for newsletter signup embeds, and v2 newsletters.")
 
     newsletterApi.getNewsletters() map {
       case Right(allNewsletters) =>
@@ -76,7 +76,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
         newslettersAgent.alter(Right(supportedNewsletters))
         groupedNewslettersAgent.alter(Right(buildGroupedNewsletters(supportedNewsletters)))
 
-        log.info("Successfully refreshed Newsletters and Grouped Newsletters embed cache.")
+        log.debug("Successfully refreshed Newsletters and Grouped Newsletters embed cache.")
       case Left(err) =>
         log.error(s"Failed to refresh Newsletters and Grouped Newsletters embed cache: $err")
     }
@@ -84,7 +84,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
     newsletterApi.getV2Newsletters() map {
       case Right(allNewsletters) =>
         newslettersV2Agent.alter(Right(allNewsletters))
-        log.info("Successfully refreshed v2 Newsletters cache.")
+        log.debug("Successfully refreshed v2 Newsletters cache.")
       case Left(err) =>
         log.error(s"Failed to refresh v2  Newsletters cache: $err")
     }
@@ -92,7 +92,7 @@ class NewsletterSignupAgent(newsletterApi: NewsletterApi) extends GuLogging {
     newsletterApi.getNewsletterLayouts() map {
       case Right(layoutsMap) =>
         newsletterLayoutsAgent.alter(Right(layoutsMap))
-        log.info("Successfully refreshed newsletters layouts cache.")
+        log.debug("Successfully refreshed newsletters layouts cache.")
       case Left(err) =>
         log.error(s"Failed to refresh newsletters layouts cache: $err")
     }

@@ -27,7 +27,7 @@ object HostedVideoPage extends GuLogging {
   private implicit val ordering: EncodingOrdering.type = EncodingOrdering
 
   def fromContent(content: Content): Option[HostedVideoPage] = {
-    log.info(s"Building hosted video ${content.id} ...")
+    log.debug(s"Building hosted video ${content.id} ...")
 
     val page = for {
       atoms <- getAndLog(content, content.atoms, "the atoms are missing")

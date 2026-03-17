@@ -14,7 +14,7 @@ case class DotcomFrontsLogger() extends GuLogging {
       "req.method" -> request.method,
       "req.url" -> request.uri,
       "req.id" -> Random.nextInt(Integer.MAX_VALUE).toString,
-      "requestId" -> request.headers.get("x-gu-xid").getOrElse("request-id-not-provided"),
+      "requestId" -> request.headers.get("x-request-id").getOrElse("request-id-not-provided"),
     )
   }
 
@@ -46,7 +46,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   def logRequest(msg: String, properties: Map[String, String], faciaPage: PressedPage)(implicit
       request: RequestHeader,
   ): Unit = {
-    logInfoWithCustomFields(
+    logDebugWithCustomFields(
       msg,
       logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromFront(faciaPage),
     )
@@ -55,7 +55,7 @@ case class DotcomFrontsLogger() extends GuLogging {
   def logRequest(msg: String, properties: Map[String, String], indexPage: IndexPage)(implicit
       request: RequestHeader,
   ): Unit = {
-    logInfoWithCustomFields(
+    logDebugWithCustomFields(
       msg,
       logFieldFromProperties(properties) ++ logFieldFromRequest() ++ logFieldFromTagPage(indexPage),
     )

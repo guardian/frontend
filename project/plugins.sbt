@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
 
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
 
-addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.11.4")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.11.7")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.6.4")
 

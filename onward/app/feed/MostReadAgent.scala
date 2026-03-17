@@ -10,7 +10,7 @@ class MostReadAgent(ophanApi: OphanApi) extends GuLogging {
   private val agent = Box[Map[String, Int]](Map.empty)
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Int]] = {
-    log.info("Refreshing most read.")
+    log.debug("Refreshing most read.")
 
     // limiting to sport/football section for now as this is only used by popular-in-tag component
     val ophanQuery = ophanApi.getMostReadInSection("sport,football", 2, 1000)

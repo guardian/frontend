@@ -65,7 +65,7 @@ trait S3 extends GuLogging {
     val request = GetObjectRequest.builder().bucket(bucket).key(key).build()
     val resp = client.getObject(request)
     val objectResponse = resp.response()
-    log.info(s"S3 got ${objectResponse.contentLength} bytes from $key")
+    log.debug(s"S3 got ${objectResponse.contentLength} bytes from $key")
     try {
       val content = Source.fromInputStream(resp).mkString
       (objectResponse, content)

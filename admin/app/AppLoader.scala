@@ -4,7 +4,6 @@ import common._
 import conf.switches.SwitchboardLifecycle
 import controllers.{AdminControllers, HealthCheck}
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.{AdminHttpErrorHandler, CommonGzipFilter, Filters, RequestIdFilter}
 import dev.DevAssetsController
@@ -18,7 +17,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.i18n.I18nComponents
 import play.api.libs.ws.WSClient
-import services.{ParameterStoreService, _}
+import services._
 import router.Routes
 
 import scala.concurrent.ExecutionContext
@@ -41,9 +40,6 @@ trait AdminServices extends I18nComponents {
   lazy val r2PagePressJob = wire[R2PagePressJob]
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 
-  lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
-  lazy val parameterStoreService: ParameterStoreService = wire[ParameterStoreService]
-  lazy val parameterStoreProvider: ParameterStoreProvider = wire[ParameterStoreProvider]
 }
 
 trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {

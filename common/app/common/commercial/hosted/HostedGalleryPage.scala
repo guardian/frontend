@@ -35,7 +35,7 @@ case class HostedGalleryImage(
 object HostedGalleryPage extends GuLogging {
 
   def fromContent(content: Content): Option[HostedGalleryPage] = {
-    log.info(s"Building hosted gallery ${content.id} ...")
+    log.debug(s"Building hosted gallery ${content.id} ...")
 
     val page = for {
       atoms <- getAndLog(content, content.atoms, "the atoms are missing")

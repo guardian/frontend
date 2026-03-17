@@ -1,68 +1,30 @@
 # Identity
 
-This sub-project handles the Guardian profile functionality.
+This sub-project used to handle some of the Guardian [profile.theguardian.com](https://profile.theguardian.com/signin?) functionality
+along with the now archived [guardian/identity-frontend](https://github.com/guardian/identity-frontend/).
+The split over two projects was a cause of confusion and happened as part of an incomplete migration.
 
-## Running Identity locally
+Functionality previously handled by this sub-project has moved over to [gateway](https://github.com/guardian/gateway)
+which is the frontend to sign-in and registration at Guardian profile
+and [manage-frontend](https://github.com/guardian/manage-frontend), the repo behind [manage.theguardian.com](https://manage.theguardian.com/)
+(the 'Manage My Account'/MMA area for The Guardian).
 
-Identity runs securely on a separate subdomain. As such it isn't part of the
-dev-build application. The project should be run alongside dev-build if
-required.
+However, this project is still:
+* Serving the [healthcheck](https://github.com/guardian/frontend/blob/1af7982d4c426ce3f682d63985f15dfe76c3d68a/identity/conf/routes#L4): https://profile.theguardian.com/_healthcheck
+* Serving the [Comments & Replies page](https://github.com/guardian/frontend/blob/1af7982d4c426ce3f682d63985f15dfe76c3d68a/identity/conf/routes#L14), e.g. https://profile.theguardian.com/user/id/16290152 <br/><br/>
+<img alt="Comments & replies screenshot" src="images/comments-replies.png" width="200"><br/>
+* Redirecting to [Manage My Account](https://github.com/guardian/frontend/blob/167fd995fd4fe3e6fb0a09250cbcd95d02699198/identity/conf/routes#L36) for certain functionality
 
-The [`nginx` README] contains instructions for getting nginx setup. Make sure
-you follow those instructions first.
+## Architecture
+This service receives traffic from the profile.theguardian.com Fastly service and it is one of its three backends,
+the other two being Okta and Gateway.
 
-Now to run the identity app:
-
-```
-$ ./sbt
-project identity
-run
-```
-
-By default the app will listen on port 9009 (it doesn't run on the default
-port, 9000 because that would clash with the rest of the application)
-
-[`nginx` README]: ../nginx/README.md
-
-## Running Identity Frontend locally
-
-In order to have a fully functioning dev environment with working login etc
-you'll need to also run the [Identity Frontend] project locally.
-
-First follow the [nginx instructions] in the [identity-platform repo].
-
-Now follow the instructions for [running identity-frontend locally].
-
-[Identity Frontend]: https://github.com/guardian/identity-frontend
-[nginx instructions]: https://github.com/guardian/identity-platform/tree/master/nginx
-[identity-platform repo]: https://github.com/guardian/identity-platform
-[running identity-frontend locally]: https://github.com/guardian/identity-frontend#running
-
-With both these in place, you'll be able to browse Identity on
-https://profile.thegulocal.com/ and login on https://m.thegulocal.com.
-
-## Configuration of local Identity API
-
-By default local Identity will use the CODE Identity API.
-
-The Identity site can be configured to use the local Identity API with the
-following properties in `~/.gu/frontend.conf`.
-
-```
-devOverrides {
-  # ID
-  id.apiRoot="https://idapi.thegulocal.com"
-  id.apiClientToken=frontend-dev-client-token
-}
+```mermaid
+graph TD
+    A(profile.theguardian.com - Fastly service)
+    A --> B[Gateway]
+    A --> C[Okta]
+    A --> D[frontend/identity]
 ```
 
-You can configure [identity-frontend in the same way].
-
-[identity-frontend in the same way]: https://github.com/guardian/identity-frontend#running-against-dev-identity-api
-
-### Proxying local Identity API requests to CODE
-
-You can also use `idapi-code-proxy.thegulocal.com` locally to proxy requests to
-CODE. This is necessary if you want requests to CODE identity API to work from
-the browser (running on the same domain as `m.thegulocal.com` means Cookies
-will be sent correctly).
+Here's the VCL that sends traffic to identity for [CODE](https://github.com/guardian/identity-platform/blob/f36c9e49dcc0dbc071cecb7d9d68a6e77e483b1d/fastly/profile.code.dev-theguardian-com.vcl#L504) and [PROD](https://github.com/guardian/identity-platform/blob/f36c9e49dcc0dbc071cecb7d9d68a6e77e483b1d/fastly/profile-theguardian-com.vcl#L510).

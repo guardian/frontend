@@ -6,7 +6,13 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
-import football.model.{FootballMatchTrail, GuTeamCodes}
+import football.model.{
+  DotcomRenderingFootballHeaderDataModel,
+  FootballMatchTrail,
+  GuTeamCodes,
+  MatchStats,
+  MatchStatsSummary,
+}
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Competition, Content, ContentType, TeamColours}
@@ -15,8 +21,8 @@ import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
 import model.CompetitionDisplayHelpers.cleanTeamNameNextGenApi
+import utils.DateFormatUtils
 
-import java.time.format.DateTimeFormatter
 import java.time.ZonedDateTime
 import scala.concurrent.Future
 
@@ -49,6 +55,10 @@ case class MatchNav(
   them to a single model file.
  */
 
+// TODO: This model will soon get deprecated after the football pages migration.
+// It's currently being used for match-nav api calls
+// but throughout the migration we will start using match-header & match-stats endpoints
+// and will stop using match-nav
 sealed trait NxAnswer
 case class NxEvent(eventTime: String, eventType: String) extends NxAnswer
 case class NxPlayer(
@@ -59,7 +69,7 @@ case class NxPlayer(
     substitute: Boolean,
     timeOnPitch: String,
     shirtNumber: String,
-    events: Seq[EventAnswer],
+    events: Seq[NxEvent],
 ) extends NxAnswer
 case class NxTeam(
     id: String,
@@ -88,6 +98,7 @@ case class NxMatchData(
     comments: String,
     minByMinUrl: Option[String],
     reportUrl: Option[String],
+    matchInfoUrl: String,
     status: String,
 ) extends NxAnswer
 
@@ -95,8 +106,8 @@ object NxAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
   def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
     team.players.map { player =>
-      val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
-        EventAnswer(event.eventTime, event.eventType)
+      val events = player.events.filter(event => reportedEventTypes.contains(event.eventType)).map { event =>
+        NxEvent(event.eventTime, event.eventType)
       }
       NxPlayer(
         player.id,
@@ -135,26 +146,7 @@ object NxAnswer {
     )
   }
 
-  def makeMinByMinUrl(implicit
-      request: RequestHeader,
-      theMatch: FootballMatch,
-      related: Seq[ContentType],
-  ): Option[String] = {
-    val (_, minByMin, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
-    minByMin.map(x => LinkTo(x.url))
-  }
-
-  def makeMatchReportUrl(implicit
-      request: RequestHeader,
-      theMatch: FootballMatch,
-      related: Seq[ContentType],
-  ): Option[String] = {
-    val (matchReport, _, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
-    matchReport.map(x => LinkTo(x.url))
-  }
-
   def makeFromFootballMatch(
-      request: RequestHeader,
       theMatch: FootballMatch,
       related: Seq[ContentType],
       lineUp: LineUp,
@@ -162,8 +154,9 @@ object NxAnswer {
       isResult: Boolean,
       isLive: Boolean,
       matchStatus: String,
-  ): NxMatchData = {
+  )(implicit request: RequestHeader): NxMatchData = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
+    val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
     NxMatchData(
       id = theMatch.id,
       isResult = isResult,
@@ -173,8 +166,9 @@ object NxAnswer {
       isLive = isLive,
       venue = theMatch.venue.map(_.name).getOrElse(""),
       comments = theMatch.comments.getOrElse(""),
-      minByMinUrl = makeMinByMinUrl(request, theMatch, related),
-      reportUrl = makeMatchReportUrl(request, theMatch, related),
+      minByMinUrl = maybeMinByMin.map(x => LinkTo(x.url)),
+      reportUrl = maybeMatchReport.map(x => LinkTo(x.url)),
+      matchInfoUrl = LinkTo(matchInfo.url),
       status = matchStatus,
     )
   }
@@ -242,6 +236,67 @@ class MoreOnMatchController(
   }
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchHeaderJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
+      val maybeResponse: Option[Future[Result]] =
+        competitionsService.competitionMatchFor(interval(contentDate), team1, team2) map {
+          case (competitionSummary, theMatch) =>
+            val relatedContentTypes: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
+            val filteredContentTypesFuture: Future[Seq[ContentType]] = relatedContentTypes map {
+              _ filter hasExactlyTwoTeams
+            }
+
+            filteredContentTypesFuture.map { filtered =>
+              val model = DotcomRenderingFootballHeaderDataModel(
+                theMatch,
+                competitionSummary,
+                filtered,
+              )
+              Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(model))
+            }
+        }
+      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+    }
+
+  // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchStatsJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
+      val maybeResponse: Option[Future[Result]] =
+        competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
+          val maybeLineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+
+          maybeLineup.map(lineup => {
+            val matchStats = MatchStats.statsFromFootballMatch(theMatch, lineup, theMatch.matchStatus)
+            Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStats))
+          })
+        }
+      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+    }
+
+  def matchStatsSummaryJson(
+      year: String,
+      month: String,
+      day: String,
+      team1: String,
+      team2: String,
+  ): Action[AnyContent] =
+    Action.async { implicit request =>
+      val contentDate = DateHelpers.parseLocalDate(year, month, day)
+      val maybeResponse: Option[Future[Result]] =
+        competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
+          val maybeLineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+
+          maybeLineup.map(lineup => {
+            val matchStatsSummary =
+              MatchStatsSummary.statsSummaryFromFootballMatch(theMatch, lineup)
+            Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStatsSummary))
+          })
+        }
+      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+    }
+
   def matchNavJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
     matchNav(year, month, day, team1, team2)
   def matchNav(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
@@ -271,7 +326,6 @@ class MoreOnMatchController(
               Cached(if (theMatch.isLive) 10 else 300) {
                 JsonComponent.fromWritable(
                   NxAnswer.makeFromFootballMatch(
-                    request,
                     theMatch,
                     filtered,
                     lineup,
@@ -294,7 +348,9 @@ class MoreOnMatchController(
                     .matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
                   "hasStarted" -> theMatch.hasStarted,
                   "group" -> group,
-                  "matchDate" -> theMatch.date.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")).toLowerCase(),
+                  "matchDate" -> theMatch.date
+                    .format(DateFormatUtils.javaUrlDateFormatUTC)
+                    .toLowerCase(),
                   "dropdown" -> views.html.fragments.dropdown("")(Html("")),
                 )
               }

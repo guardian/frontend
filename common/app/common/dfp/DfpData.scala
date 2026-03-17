@@ -8,7 +8,6 @@ import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json
 import play.api.libs.json._
-import play.api.libs.json.JodaReads._
 
 import scala.language.postfixOps
 
@@ -358,91 +357,6 @@ object GuCreativePlaceholder {
 
   implicit val guCreativePlaceholderFormats: Format[GuCreativePlaceholder] = Json.format[GuCreativePlaceholder]
 }
-
-case class GuCreativeTemplateParameter(
-    parameterType: String,
-    label: String,
-    isRequired: Boolean,
-    description: Option[String],
-)
-
-object GuCreativeTemplateParameter {
-
-  implicit val GuCreativeTemplateParameterWrites: Writes[GuCreativeTemplateParameter] =
-    (param: GuCreativeTemplateParameter) => {
-      Json.obj(
-        "type" -> param.parameterType,
-        "label" -> param.label,
-        "isRequired" -> param.isRequired,
-        "description" -> param.description,
-      )
-    }
-
-  implicit val GuCreativeTemplateParameterReads: Reads[GuCreativeTemplateParameter] = (
-    (JsPath \ "type").read[String] and
-      (JsPath \ "label").read[String] and
-      (JsPath \ "isRequired").read[Boolean] and
-      (JsPath \ "description").readNullable[String]
-  )(GuCreativeTemplateParameter.apply _)
-}
-
-case class GuCreative(
-    id: Long,
-    name: String,
-    lastModified: DateTime,
-    args: Map[String, String],
-    templateId: Option[Long],
-    snippet: Option[String],
-    previewUrl: Option[String],
-)
-
-object GuCreative {
-
-  def lastModified(cs: Seq[GuCreative]): Option[DateTime] = {
-    if (cs.isEmpty) None
-    else Some(cs.map(_.lastModified).maxBy(_.getMillis))
-  }
-
-  def merge(old: Seq[GuCreative], recent: Seq[GuCreative]): Seq[GuCreative] = {
-    def mapById(cs: Seq[GuCreative]): Map[Long, GuCreative] = cs.map(c => c.id -> c).toMap
-    (mapById(old) ++ mapById(recent)).values.toSeq
-  }
-
-  implicit val dateToTimestampWrites: json.JodaWrites.JodaDateTimeNumberWrites.type =
-    play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
-  implicit val guCreativeFormats: Format[GuCreative] = Json.format[GuCreative]
-}
-
-case class GuCreativeTemplate(
-    id: Long,
-    name: String,
-    description: String,
-    parameters: Seq[GuCreativeTemplateParameter],
-    snippet: String,
-    isNative: Boolean,
-    creatives: Seq[GuCreative],
-) {
-
-  lazy val examplePreviewUrl: Option[String] = creatives flatMap { _.previewUrl } headOption
-
-  lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
-}
-
-object GuCreativeTemplate {
-
-  implicit val guCreativeTemplateFormats: Format[GuCreativeTemplate] = Json.format[GuCreativeTemplate]
-}
-
-case class GuAdvertiser(
-    id: Long,
-    name: String,
-)
-
-case class GuOrder(
-    id: Long,
-    name: String,
-    advertiserId: Long,
-)
 
 case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 

@@ -75,8 +75,15 @@ class InteractiveController(
 
   def modelAndRenderHtml(response: ItemResponse)(
       modifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
-  )(implicit req: RequestHeader): Future[Result] =
-    modelAndRender(response)(pageBlocks => renderHtml(modifier(pageBlocks)))
+  )(implicit req: RequestHeader): Future[Result] = {
+    modelAndRender(response)(pageBlocks => {
+      val modifiedBlocks = modifier(pageBlocks)
+      req.getRequestFormat match {
+        case AppsFormat => renderApps(modifiedBlocks)
+        case _          => renderHtml(modifiedBlocks)
+      }
+    })
+  }
 
   def modelAndRender(
       response: ItemResponse,

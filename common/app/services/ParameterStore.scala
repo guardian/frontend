@@ -20,12 +20,12 @@ class ParameterStore(region: String) {
     client.getParameter(parameterRequest).parameter().value()
   }
 
-  def getPath(path: String, isRecursiveSearch: Boolean = false): Map[String, String] = {
+  def getPath(path: String): Map[String, String] = {
 
     @tailrec
     def pagination(accum: Map[String, String], nextToken: Option[String]): Map[String, String] = {
       val baseBuilder =
-        GetParametersByPathRequest.builder().path(path).withDecryption(true).recursive(isRecursiveSearch)
+        GetParametersByPathRequest.builder().path(path).withDecryption(true).recursive(false)
       val parameterRequest = nextToken.fold(baseBuilder)(baseBuilder.nextToken).build()
       val response = client.getParametersByPath(parameterRequest)
       val resultMap = response

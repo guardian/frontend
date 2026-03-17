@@ -1,9 +1,11 @@
 package common
 
 import scala.concurrent.duration._
-import org.joda.time.Instant
 import conf.Configuration
 import services.ParameterStore
+
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 object CommercialBundle {
   import GuardianConfiguration._
@@ -31,7 +33,7 @@ object CommercialBundle {
   }
 
   private def bundlePath: String = {
-    if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis))) {
+    if (Instant.now().isAfter(cachedTimestamp.plus(cacheDuration.toMillis, ChronoUnit.MILLIS))) {
       cachedBundlePath = bundlePathFromParameterStore
       cachedTimestamp = Instant.now()
     }

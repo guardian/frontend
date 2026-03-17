@@ -11,7 +11,7 @@ import cricket.controllers.CricketControllers
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.{CommonFilters, FrontendDefaultHttpErrorHandler}
 import jobs.CricketStatsJob
 import model.ApplicationIdentity
 import org.apache.pekko.stream.{Materializer => PekkoMaterializer}
@@ -85,6 +85,6 @@ trait AppComponents
   val frontendBuildInfo: FrontendBuildInfo = frontend.sport.BuildInfo
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
   def pekkoActorSystem: PekkoActorSystem
 }

@@ -25,6 +25,8 @@ class NavigationDataTest extends AnyFlatSpec with Matchers {
         |If this is intentional (eg you're adding a new Section or Edition):
         |* Please update the test resource file 'reference-navigation.json' by copying over the new version from
         |  $tempFile
+        |  Unfortunately this file is space indented but reference-navigation.json is tab indented, so you might try
+        |  running `cat $tempFile | jq --tab > common/test/resources/reference-navigation.json` to convert spaces to tabs.
         |
         |If this is unintentional:
         |* Please check that you're not breaking the data used by DCR! See

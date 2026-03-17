@@ -21,22 +21,6 @@ object FrontChecks {
     */
   val SUPPORTED_COLLECTIONS: Set[String] =
     Set(
-      "dynamic/fast",
-      "dynamic/package",
-      "dynamic/slow",
-      "fixed/large/slow-XIV",
-      "fixed/medium/fast-XI",
-      "fixed/medium/fast-XII",
-      "fixed/medium/slow-VI",
-      "fixed/medium/slow-VII",
-      "fixed/medium/slow-XII-mpu",
-      "fixed/small/fast-VIII",
-      "fixed/small/slow-I",
-      "fixed/small/slow-III",
-      "fixed/small/slow-IV",
-      "fixed/small/slow-V-half",
-      "fixed/small/slow-V-mpu",
-      "fixed/small/slow-V-third",
       "fixed/thrasher",
       "nav/list",
       "nav/media-list",

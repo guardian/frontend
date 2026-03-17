@@ -25,7 +25,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
-    log.info(s"Deeply Read Agent refresh()")
+    log.debug(s"Deeply Read Agent refresh()")
     /*
       We query Ophan for the deeply read URLs and use them to queryCapi
       then use this information to create a sequence of trails that we cache
@@ -36,11 +36,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         ophanApi
           .getDeeplyRead(edition)
           .flatMap { ophanDeeplyReadItems =>
-            log.info(s"Fetched ${ophanDeeplyReadItems.size} Deeply Read items for ${edition.displayName}")
+            log.debug(s"Fetched ${ophanDeeplyReadItems.size} Deeply Read items for ${edition.displayName}")
             val constructedTrail: Seq[Future[Option[Trail]]] = ophanDeeplyReadItems.map { ophanItem =>
-              log.info(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
+              log.debug(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
               val path = removeStartingSlash(ophanItem.path)
-              log.info(s"CAPI Lookup for path: $path")
+              log.debug(s"CAPI Lookup for path: $path")
               val capiRequest = contentApiClient
                 .item(path)
                 .showTags("all")
@@ -52,7 +52,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
                 .getResponse(capiRequest)
                 .map { res =>
                   res.content.flatMap { capiData =>
-                    log.info(s"Retrieved CAPI data for Deeply Read item: ${path}")
+                    log.debug(s"Retrieved CAPI data for Deeply Read item: ${path}")
                     deeplyReadUrlToTrail(capiData)
                   }
                 }
@@ -77,10 +77,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         val map = trailsList.toMap
         for {
           (edition, list) <- map
-        } yield log.info(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
+        } yield log.debug(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
 
         val mapWithTenItems = map.filter { case (_, list) => list.size == 10 }
-        log.info(
+        log.debug(
           s"Updating the following ${mapWithTenItems.size} editions: ${mapWithTenItems.keys.map(_.id).toList.sorted.toString()}",
         )
 

@@ -18,7 +18,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     val s3StopWatch = new StopWatch
 
     tagPages foreach { tagPage =>
-      log.info(s"Uploading $parentKey ${tagPage.title} index to S3")
+      log.debug(s"Uploading $parentKey ${tagPage.title} index to S3")
       TagIndexesS3.putIndex(parentKey, tagPage)
     }
 

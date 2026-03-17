@@ -68,7 +68,7 @@ case class HostedCampaign(
 object HostedCampaign {
 
   def fromContent(item: Content): Option[HostedCampaign] = {
-    log.info(s"Building hosted campaign for ${item.id} ...")
+    log.debug(s"Building hosted campaign for ${item.id} ...")
     val campaign = for {
       section <- getAndLog(item, item.section, "has no section")
       hostedTag <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")

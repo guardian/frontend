@@ -31,7 +31,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
 
   def run(): Future[Unit] = {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
-      log.info("R2PagePressJob starting")
+      log.debug("R2PagePressJob starting")
 
       val receiveRequest = ReceiveMessageRequest
         .builder()
@@ -55,7 +55,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
           Future.failed(new RuntimeException(s"Failed to decode r2 url: ${e.getMessage}", e))
       }
     } else {
-      log.info("R2PagePressJob is switched OFF")
+      log.debug("R2PagePressJob is switched OFF")
       Future.successful(())
     }
   }
@@ -115,7 +115,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
     S3ArchiveOriginals
       .get(pressUrl)
       .map { originalSource =>
-        log.info(s"Re-pressing $urlIn")
+        log.debug(s"Re-pressing $urlIn")
 
         val cleanedHtmlString = parseAndClean(originalSource, message.convertToHttps)
 
@@ -124,7 +124,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
             S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
               case true =>
                 redirects.set(ArchiveRedirect(urlIn, pressUrl))
-                log.info(s"Pressed $urlIn as $pressUrl")
+                log.debug(s"Pressed $urlIn as $pressUrl")
                 queue.delete(notification.handle)
               case _ => log.error(s"Press failed for $pressUrl")
             }

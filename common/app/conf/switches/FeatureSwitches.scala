@@ -650,13 +650,13 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val EnableHlsWeb = Switch(
+  val FilterAtAGlanceTest = Switch(
     group = SwitchGroup.Feature,
-    name = "enable-hls-web",
-    description = "Enable HLS web streaming on web",
-    owners = Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk")),
-    safeState = Off,
+    name = "filter-at-a-glance",
+    description = "Switch for at a glance A / B / C test",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
     sellByDate = never,
+    safeState = Off,
     exposeClientSide = true,
     highImpact = false,
   )

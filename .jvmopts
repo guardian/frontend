@@ -1,0 +1,12 @@
+-Xmx8G
+-XX:ReservedCodeCacheSize=128m
+-XX:NewRatio=4
+# because it is too easy for devs to forget about timezones, see https://github.com/guardian/frontend/pull/4713
+-Duser.timezone=Australia/Sydney
+# user.country and user.language are set to match production.
+# user.country is intentionally set to empty to override the local OS default (e.g. GB),
+# since production has no user.country set. Omitting the line entirely would leave the OS default in place.
+-Duser.country=
+-Duser.language=en
+-DSTAGE=DEV
+-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests

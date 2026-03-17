@@ -1,5 +1,5 @@
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.{CommonFilters, FrontendDefaultHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendBuildInfo, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
@@ -42,7 +42,7 @@ trait AppComponents extends FrontendComponents {
   lazy val appIdentity = ApplicationIdentity("archive")
 
   val frontendBuildInfo: FrontendBuildInfo = frontend.archive.BuildInfo
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+  override lazy val httpErrorHandler: HttpErrorHandler = wire[FrontendDefaultHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   def pekkoActorSystem: PekkoActorSystem

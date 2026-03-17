@@ -38,6 +38,7 @@ case class EmailForm(
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
+    browserId: Option[String],
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: Option[String],
@@ -68,6 +69,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "set-lists" -> List(form.listName),
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
+          "browser-id" -> form.browserId,
         )
         .fields,
     )
@@ -149,6 +151,7 @@ class EmailSignupController(
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
+      "browserId" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> optional[String](of[String]),
@@ -380,7 +383,7 @@ class EmailSignupController(
             Future.successful(respondFooter(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -496,7 +499,7 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
@@ -530,7 +533,7 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logInfoWithRequestId(
+            logDebugWithRequestId(
               s"Post request received to /email/many/ - " +
                 s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +

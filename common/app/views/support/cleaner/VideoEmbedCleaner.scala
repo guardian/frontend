@@ -1,6 +1,6 @@
 package views.support.cleaner
 
-import java.net.{URL, URLEncoder}
+import java.net.{URI, URLEncoder}
 
 import model.{Article, DotcomContentType, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
@@ -68,7 +68,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
           )
 
         if (!canonicalUrl.isEmpty) {
-          element.attr("data-canonical-url", new URL(canonicalUrl).getPath.stripPrefix("/"))
+          element.attr("data-canonical-url", new URI(canonicalUrl).getPath.stripPrefix("/"))
         }
 
         if (figcaption.asScala.nonEmpty) {
@@ -99,7 +99,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
 
           if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
-            element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))
+            element.attr("data-embed-path", new URI(canonicalUrl).getPath.stripPrefix("/"))
           } else {
             element.attr("data-embeddable", "false")
           }

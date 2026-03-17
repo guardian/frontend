@@ -36,14 +36,14 @@ trait Notification extends GuLogging {
       pekkoAsync: PekkoAsync,
   )(request: PublishRequest)(implicit executionContext: ExecutionContext): Unit = {
     pekkoAsync.after1s {
-      log.info(s"Issuing SNS notification: ${request.subject()}:${request.message()}")
+      log.debug(s"Issuing SNS notification: ${request.subject()}:${request.message()}")
 
       sns
         .publish(request)
         .asScala
         .onComplete {
           case Success(_) =>
-            log.info(s"Successfully published SNS notification: ${request.subject()}:${request.message()}")
+            log.debug(s"Successfully published SNS notification: ${request.subject()}:${request.message()}")
           case Failure(error) =>
             log.error(s"Failed to publish SNS notification: ${request.subject}:${request.message}", error)
         }

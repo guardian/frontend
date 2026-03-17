@@ -15,7 +15,6 @@ ThisBuild / asciiGraphWidth := 999999999
 
 val common = library("common")
   .settings(
-    Test / javaOptions += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
       apacheCommonsLang,
       awsCloudwatch,
@@ -67,7 +66,6 @@ val common = library("common")
       pekkoSlf4j,
       pekkoSerializationJackson,
       pekkoActorTyped,
-      janino,
     ) ++ jackson,
   )
 
