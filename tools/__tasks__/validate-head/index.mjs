@@ -9,7 +9,6 @@ const task = {
 		task.newListr(
 			[
 				// prettier: multi-line
-				javascript,
 				sass,
 				scala,
 			],
