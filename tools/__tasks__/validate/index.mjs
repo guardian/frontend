@@ -1,4 +1,3 @@
-import javascript from './javascript.mjs';
 import typescript from './typescript.mjs';
 import sass from './sass.mjs';
 import checkForDisallowedStrings from './check-for-disallowed-strings.mjs';
@@ -10,7 +9,6 @@ const task = {
 		task.newListr(
 			[
 				// prettier: multi-line
-				javascript,
 				typescript,
 				sass,
 				checkForDisallowedStrings,
