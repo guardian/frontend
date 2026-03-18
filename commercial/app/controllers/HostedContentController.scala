@@ -98,7 +98,8 @@ class HostedContentController(
       .showAtoms("all")
       .showBlocks("all")
 
-  private def lookup(
+  /** Legacy lookup for frontend-rendered pages */
+  private def lookupLegacy(
       campaignName: String,
       pageName: String,
   )(implicit request: Request[AnyContent]): Future[Option[CapiContent]] = {
@@ -118,7 +119,7 @@ class HostedContentController(
       }
   }
 
-  private def lookupNew(
+  private def lookup(
       campaignName: String,
       pageName: String,
   )(implicit request: Request[AnyContent]): Future[Either[Result, BlocksOn[ArticlePage]]] = {
@@ -144,7 +145,7 @@ class HostedContentController(
       tier match {
         // Migration of Hosted Content pages to DCR
         case RemoteRender =>
-          lookupNew(campaignName, pageName) flatMap {
+          lookup(campaignName, pageName) flatMap {
             case Right(articleBlocks) if request.isJson && request.forceDCR =>
               Future.successful(
                 common.renderJson(getDCRJson(articleBlocks), articleBlocks.page).as("application/json"),
@@ -155,7 +156,7 @@ class HostedContentController(
           }
 
         case LocalRender =>
-          lookup(campaignName, pageName) flatMap {
+          lookupLegacy(campaignName, pageName) flatMap {
             case Some(content) =>
               localRender(Future.successful(HostedPage.fromContent(content)))
             case None =>
