@@ -26,9 +26,10 @@ object HostedContentPicker extends GuLogging {
   def decideTier()(implicit
       request: RequestHeader,
   ): RenderType = {
-    if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
-    else if (request.forceDCROff) LocalRender
-    else if (request.forceDCR) RemoteRender
-    else LocalRender
+    RemoteRender
+//    if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
+//    else if (request.forceDCROff) LocalRender
+//    else if (request.forceDCR) RemoteRender
+//    else LocalRender
   }
 }

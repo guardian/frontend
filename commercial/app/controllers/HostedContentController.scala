@@ -17,6 +17,11 @@ import model.{
   ArticlePage,
   Cached,
   Content,
+  ContentPage,
+  Gallery,
+  GalleryPage,
+  HostedArticle,
+  HostedGallery,
   NoCache,
   PageWithStoryPackage,
   StoryPackages,
@@ -113,7 +118,7 @@ class HostedContentController(
   private def lookup(
       campaignName: String,
       pageName: String,
-  )(implicit request: Request[AnyContent]): Future[Either[Result, BlocksOn[ArticlePage]]] = {
+  )(implicit request: Request[AnyContent]): Future[Either[Result, BlocksOn[ContentPage]]] = {
     val itemId = s"advertiser-content/$campaignName/$pageName"
     capiLookup
       .lookup(itemId, Some(ArticleBlocks))
@@ -121,6 +126,9 @@ class HostedContentController(
         val content = response.content.map(Content(_))
         val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
         ModelOrResult(content, response) match {
+          // TODO - support hosted gallery pages in DCR
+          case Right(gallery: Gallery) =>
+            Right(BlocksOn(GalleryPage(gallery, StoryPackages(gallery.metadata.id, response), 1, false), blocks))
           case Right(article: Article) =>
             Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
           case Left(r) => Left(r)
@@ -137,9 +145,14 @@ class HostedContentController(
         // Migration of Hosted Content pages to DCR
         case RemoteRender =>
           lookup(campaignName, pageName) flatMap {
+            case Right(galleryBlocks)
+                if request.isJson && request.forceDCR && galleryBlocks.page.item.content.isGallery =>
+              Future.successful(
+                common.renderJson(getDCRJsonGallery(galleryBlocks), galleryBlocks.page).as("application/json"),
+              )
             case Right(articleBlocks) if request.isJson && request.forceDCR =>
               Future.successful(
-                common.renderJson(getDCRJson(articleBlocks), articleBlocks.page).as("application/json"),
+                common.renderJson(getDCRJsonArticle(articleBlocks), articleBlocks.page).as("application/json"),
               )
             case Right(articleBlocks) =>
               remoteRender(articleBlocks)
@@ -156,22 +169,40 @@ class HostedContentController(
       }
     }
 
-  private def getDCRJson(
-      pageBlocks: BlocksOn[ArticlePage],
+  private def getDCRJsonArticle(
+      pageBlocks: BlocksOn[HostedArticle],
   )(implicit request: RequestHeader): JsValue = {
     val pageType: PageType = PageType(pageBlocks.page, request, context)
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forHostedArticle(pageBlocks.page, request, pageType, pageBlocks.blocks),
+    )
+  }
+
+  private def getDCRJsonGallery(
+      pageBlocks: BlocksOn[HostedGallery],
+  )(implicit request: RequestHeader): JsValue = {
+    val pageType: PageType = PageType(pageBlocks.page, request, context)
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forHostedGallery(pageBlocks.page, request, pageType, pageBlocks.blocks),
+    )
   }
 
   private def remoteRender(
       pageBlocks: BlocksOn[PageWithStoryPackage],
   )(implicit request: RequestHeader): Future[Result] = {
     val pageType = PageType(pageBlocks.page, request, context)
-
-    if (request.isApps) {
-      remoteRenderer.getAppsHostedArticle(wsClient, pageBlocks, pageType)
+    if (pageBlocks.page.item.content.isGallery) {
+      if (request.isApps) {
+        remoteRenderer.getAppsHostedGallery(wsClient, pageBlocks, pageType)
+      } else {
+        remoteRenderer.getHostedGallery(wsClient, pageBlocks, pageType)
+      }
     } else {
-      remoteRenderer.getHostedArticle(wsClient, pageBlocks, pageType)
+      if (request.isApps) {
+        remoteRenderer.getAppsHostedArticle(wsClient, pageBlocks, pageType)
+      } else {
+        remoteRenderer.getHostedArticle(wsClient, pageBlocks, pageType)
+      }
     }
   }
 

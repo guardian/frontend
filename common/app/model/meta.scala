@@ -544,6 +544,22 @@ case class GalleryPage(gallery: Gallery, related: RelatedContent, index: Int, tr
   override lazy val item = gallery
 }
 
+case class HostedArticle(article: Article, related: RelatedContent)(implicit
+    request: RequestHeader,
+) extends ContentPage {
+  override lazy val item = article
+}
+case class HostedGallery(gallery: Gallery, related: RelatedContent)(implicit
+    request: RequestHeader,
+) extends ContentPage {
+  override lazy val item = gallery
+}
+case class HostedPage[A](page: A, related: RelatedContent)(implicit
+    request: RequestHeader,
+) extends ContentPage {
+  override lazy val item = page
+}
+
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
 case class TagCombiner(
