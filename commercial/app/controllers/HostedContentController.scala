@@ -7,15 +7,7 @@ import com.gu.contentapi.client.model.v1.{Blocks, Content => CapiContent}
 import commercial.model.hosted.HostedTrails
 import common.`package`.convertApiExceptions
 import common.commercial.hosted._
-import common.{
-  Edition,
-  GuLogging,
-  ImplicitControllerExecutionContext,
-  InternalRedirect,
-  JsonComponent,
-  JsonNotFound,
-  ModelOrResult,
-}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, ModelOrResult}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{
@@ -96,7 +88,6 @@ class HostedContentController(
       .showFields("all")
       .showTags("all")
       .showAtoms("all")
-      .showBlocks("all")
 
   /** Legacy lookup for frontend-rendered pages */
   private def lookupLegacy(
