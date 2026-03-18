@@ -2860,7 +2860,6 @@ __metadata:
     any-observable: "npm:^0.2.0"
     autoprefixer: "npm:^10.3.7"
     babel-core: "npm:^7.0.0-bridge.0"
-    babel-jest: "npm:29.7.0"
     babel-loader: "npm:^8.1.0"
     babel-plugin-dynamic-import-node: "npm:^2.3.3"
     bean: "npm:~1.0.14"
@@ -5184,7 +5183,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-jest@npm:29.7.0, babel-jest@npm:^29.7.0":
+"babel-jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "babel-jest@npm:29.7.0"
   dependencies:
