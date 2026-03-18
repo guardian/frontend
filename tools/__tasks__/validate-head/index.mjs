@@ -1,4 +1,3 @@
-import javascript from './javascript.mjs';
 import sass from './sass.mjs';
 import scala from './scala.mjs';
 
