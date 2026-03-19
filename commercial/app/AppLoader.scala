@@ -38,12 +38,14 @@ trait CommercialServices {
 
   lazy val capiAgent = wire[CapiAgent]
   lazy val admiralAgent = wire[AdmiralAgent]
+
 }
 
 trait AppComponents extends FrontendComponents with CommercialControllers with CommercialServices {
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
   override lazy val lifecycleComponents = List(
     wire[DfpAgentLifecycle],

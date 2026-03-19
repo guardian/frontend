@@ -1,6 +1,5 @@
 package services.dotcomrendering
 
-import ab.ABTests.isUserInTestGroup
 import common.GuLogging
 import implicits.Requests._
 import play.api.mvc.RequestHeader
