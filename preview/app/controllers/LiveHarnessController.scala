@@ -45,7 +45,11 @@ class LiveHarnessController(
       renderingService,
     )
 
-  def renderLiveHarness(path: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
+  def renderLiveHarness(path: String): Action[JsValue] = Action.async(
+    // We allow a larger payload here to accommodate server-side rendered atoms, which can be larger than
+    // the Play default of 100kb - see https://www.playframework.com/documentation/3.0.x/ScalaBodyParsers#Max-content-length
+    parse.json(maxLength = 2048 * 1024),
+  ) { implicit request =>
     request.body.validate[List[LiveHarnessInteractiveAtom]] match {
       case JsSuccess(atoms, _) =>
         capiLookup.lookup(path, Some(ArticleBlocks)).flatMap { response =>
