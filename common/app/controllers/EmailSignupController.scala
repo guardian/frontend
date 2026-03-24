@@ -1,17 +1,14 @@
 package controllers
 
+import com.gu.i18n.{CountryGroup, Country}
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
 import conf.Configuration
-import conf.switches.Switches.{
-  EmailSignupRecaptcha,
-  ManyNewsletterVisibleRecaptcha,
-  NewslettersRemoveConfirmationStep,
-  ValidateEmailSignupRecaptchaTokens,
-}
+import conf.switches.Switches.{EmailSignupRecaptcha, ManyNewsletterVisibleRecaptcha, NewslettersRemoveConfirmationStep, ValidateEmailSignupRecaptchaTokens}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import net.liftweb.json.JObject
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
@@ -62,6 +59,17 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
 
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
+    val countryCode = request.headers.get("X-GU-GeoLocation").getOrElse("country:row").replace("country:", "")
+    val registrationLocation:String = CountryGroup.byFastlyCountryCode(countryCode).map(_.name).getOrElse("Other")
+    val registrationLocationState: Option[String] = countryCode match {
+      case "US" | "AU" =>
+        for {
+          country <- CountryGroup.countryByCode(countryCode)
+          stateCode <- request.headers.get("X-GU-GeoIP-Region")
+          stateName <- country.statesByCode.get(stateCode)
+        }  yield stateName
+      case _ => None
+    }
     val consentMailerPayload = JsObject(
       Json
         .obj(
@@ -70,6 +78,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
           "browser-id" -> form.browserId,
+          "privateFields" -> ("registrationLocation" ->  registrationLocation, "registrationLocationState" -> registrationLocationState)
         )
         .fields,
     )
@@ -98,6 +107,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
         )
         .fields,
+
     )
 
     val queryStringParameters = form.ref.map("ref" -> _).toList ++
