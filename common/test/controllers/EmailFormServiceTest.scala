@@ -31,7 +31,7 @@ class EmailFormServiceTest
 
     val service = new EmailFormService(wsClient, newsletterSignupAgent)
 
-    val baseForm: EmailForm = EmailForm(
+    val singleNewsletterBaseForm: EmailForm = EmailForm(
       email = "test@example.com",
       listName = Some("the-long-read"),
       marketing = None,
@@ -39,6 +39,18 @@ class EmailFormServiceTest
       ref = None,
       refViewId = None,
       browserId = None,
+      campaignCode = None,
+      googleRecaptchaResponse = None,
+      name = None,
+    )
+
+    val multipleNewslettersBaseForm: EmailFormManyNewsletters = EmailFormManyNewsletters(
+      email = "test@example.com",
+      listNames = Seq("the-long-read", "morning-briefing"),
+      marketing = None,
+      referrer = None,
+      ref = None,
+      refViewId = None,
       campaignCode = None,
       googleRecaptchaResponse = None,
       name = None,
@@ -72,20 +84,20 @@ class EmailFormServiceTest
       "use the country group name for a known country code" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] =
           FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:GB")
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocation(capturePostedBody(wsRequest)) shouldBe "United Kingdom"
       }
 
       "use 'Other' for an unrecognised country code" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] =
           FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:XX")
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
       }
 
       "use 'Other' when the X-GU-GeoLocation header isn't present" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
       }
     }
@@ -97,7 +109,7 @@ class EmailFormServiceTest
           "X-GU-GeoLocation" -> "country:US",
           "X-GU-GeoIP-Region" -> "CA",
         )
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsString("California")
       }
 
@@ -106,14 +118,14 @@ class EmailFormServiceTest
           "X-GU-GeoLocation" -> "country:AU",
           "X-GU-GeoIP-Region" -> "NSW",
         )
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsString("New South Wales")
       }
 
       "not be there (None) when the country is US but no state header is present" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] =
           FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:US")
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
       }
 
@@ -122,7 +134,7 @@ class EmailFormServiceTest
           "X-GU-GeoLocation" -> "country:US",
           "X-GU-GeoIP-Region" -> "ZZ",
         )
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
       }
 
@@ -131,13 +143,91 @@ class EmailFormServiceTest
           "X-GU-GeoLocation" -> "country:GB",
           "X-GU-GeoIP-Region" -> "ENG",
         )
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
       }
 
-      "not be there (None) for a country:row fallback (no geo header)" in new Fixture {
+      "not be there (None) when the X-GU-GeoLocation header is missing" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-        service.submit(baseForm).futureValue
+        service.submit(singleNewsletterBaseForm).futureValue
+        registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
+      }
+    }
+  }
+
+  "EmailFormService.submitWithMany" when {
+
+    "getting registrationLocation from X-GU-GeoLocation header" should {
+
+      "use the country group name for a known country code" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] =
+          FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:GB")
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocation(capturePostedBody(wsRequest)) shouldBe "United Kingdom"
+      }
+
+      "use 'Other' for an unrecognised country code" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] =
+          FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:XX")
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
+      }
+
+      "use 'Other' when the X-GU-GeoLocation header isn't present" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
+      }
+    }
+
+    "getting registrationLocationState from X-GU-GeoIP-Region header" should {
+
+      "get US state name from state code" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
+          "X-GU-GeoLocation"  -> "country:US",
+          "X-GU-GeoIP-Region" -> "CA",
+        )
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsString("California")
+      }
+
+      "get AU state name from state code" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
+          "X-GU-GeoLocation"  -> "country:AU",
+          "X-GU-GeoIP-Region" -> "NSW",
+        )
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsString("New South Wales")
+      }
+
+      "not be there (None) when the country is US but no state header is present" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] =
+          FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:US")
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
+      }
+
+      "not be there (None) when the country is US but the state code is unrecognised" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
+          "X-GU-GeoLocation"  -> "country:US",
+          "X-GU-GeoIP-Region" -> "ZZ",
+        )
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
+      }
+
+      "not be there (None) for a non-US/AU country even when a region header is present" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
+          "X-GU-GeoLocation"  -> "country:GB",
+          "X-GU-GeoIP-Region" -> "ENG",
+        )
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
+      }
+
+      "not be there (None) when the X-GU-GeoLocation header is missing" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
       }
     }
