@@ -2,20 +2,37 @@ package commercial.controllers
 
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
-import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
-import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.model.v1.ContentType.Video
+import com.gu.contentapi.client.model.v1.{Blocks, Content => CapiContent}
 import commercial.model.hosted.HostedTrails
+import common.`package`.convertApiExceptions
 import common.commercial.hosted._
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, ModelOrResult}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Cached, DotcomRenderingHostedContentModel, NoCache}
-import play.api.libs.json.{JsArray, Json}
+import model.{
+  ApplicationContext,
+  Article,
+  ArticleBlocks,
+  ArticlePage,
+  Cached,
+  Content,
+  NoCache,
+  PageWithStoryPackage,
+  StoryPackages,
+}
+import play.api.libs.json.{JsArray, JsValue, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
 import views.html.hosted._
-import implicits.JsonFormat
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.meta.BlocksOn
+import play.api.libs.ws.WSClient
+import renderers.DotcomRenderingService
+import services.CAPILookup
+import services.dotcomrendering.{HostedContentPicker, LocalRender, RemoteRender}
+import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -23,6 +40,8 @@ import scala.util.control.NonFatal
 class HostedContentController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
+    wsClient: WSClient,
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
@@ -30,8 +49,9 @@ class HostedContentController(
     with implicits.Requests {
 
   private def cacheDuration: Int = 60
+  val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
-  private def renderPage(
+  private def localRender(
       hostedPage: Future[Option[HostedPage]],
   )(implicit request: Request[AnyContent]): Future[Result] = {
     def cached(html: Html) = Cached(cacheDuration)(RevalidatableResult.Ok(html))
@@ -69,12 +89,12 @@ class HostedContentController(
       .showTags("all")
       .showAtoms("all")
 
-  private def lookup(
+  /** Legacy lookup for frontend-rendered pages */
+  private def lookupLegacy(
       campaignName: String,
       pageName: String,
-  )(implicit request: Request[AnyContent]): Future[Option[Content]] = {
+  )(implicit request: Request[AnyContent]): Future[Option[CapiContent]] = {
     val itemId = s"advertiser-content/$campaignName/$pageName"
-
     contentApiClient
       .getResponse(baseQuery(itemId))
       .map(_.content)
@@ -90,33 +110,70 @@ class HostedContentController(
       }
   }
 
+  private def lookup(
+      campaignName: String,
+      pageName: String,
+  )(implicit request: Request[AnyContent]): Future[Either[Result, BlocksOn[ArticlePage]]] = {
+    val itemId = s"advertiser-content/$campaignName/$pageName"
+    capiLookup
+      .lookup(itemId, Some(ArticleBlocks))
+      .map { response =>
+        val content = response.content.map(Content(_))
+        val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
+        ModelOrResult(content, response) match {
+          case Right(article: Article) =>
+            Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
+          case Left(r) => Left(r)
+          case _       => Left(NotFound)
+        }
+      }
+      .recover(convertApiExceptions)
+  }
+
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
-      lookup(campaignName, pageName).flatMap {
-        case Some(content) if request.getRequestFormat == JsonFormat =>
-          renderJsonResponse(content)
-        case Some(content) =>
-          renderPage(Future.successful(HostedPage.fromContent(content)))
-        case None =>
-          Future.successful(NotFound)
+      val tier = HostedContentPicker.getTier()
+      tier match {
+        // Migration of Hosted Content pages to DCR
+        case RemoteRender =>
+          lookup(campaignName, pageName) flatMap {
+            case Right(articleBlocks) if request.isJson && request.forceDCR =>
+              Future.successful(
+                common.renderJson(getDCRJson(articleBlocks), articleBlocks.page).as("application/json"),
+              )
+            case Right(articleBlocks) =>
+              remoteRender(articleBlocks)
+            case Left(other) => Future.successful(RenderOtherStatus(other))
+          }
+
+        case LocalRender =>
+          lookupLegacy(campaignName, pageName) flatMap {
+            case Some(content) =>
+              localRender(Future.successful(HostedPage.fromContent(content)))
+            case None =>
+              Future.successful(NotFound)
+          }
       }
     }
 
-  def renderJson(campaignName: String, pageName: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      lookup(campaignName, pageName).flatMap {
-        case Some(content) => renderJsonResponse(content)
-        case None          => Future.successful(NotFound)
-      }
-    }
+  private def getDCRJson(
+      pageBlocks: BlocksOn[ArticlePage],
+  )(implicit request: RequestHeader): JsValue = {
+    val pageType: PageType = PageType(pageBlocks.page, request, context)
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None))
+  }
 
-  private def renderJsonResponse(content: Content): Future[Result] =
-    DotcomRenderingHostedContentModel.get(content) match {
-      case Some(model) =>
-        Future.successful(Ok(DotcomRenderingHostedContentModel.toJson(model)).as("application/json"))
-      case None =>
-        Future.successful(NotFound)
+  private def remoteRender(
+      pageBlocks: BlocksOn[PageWithStoryPackage],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val pageType = PageType(pageBlocks.page, request, context)
+
+    if (request.isApps) {
+      remoteRenderer.getAppsHostedArticle(wsClient, pageBlocks, pageType)
+    } else {
+      remoteRenderer.getHostedArticle(wsClient, pageBlocks, pageType)
     }
+  }
 
   def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =
     Action.async { implicit request =>

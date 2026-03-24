@@ -7,7 +7,8 @@ import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import { reportError } from 'lib/report-error';
-import { cmp, getLocale, loadScript, onConsentChange, getCookie } from '@guardian/libs';
+import { cmp, getConsentDetailsForOphan, getLocale, loadScript, onConsentChange } from '@guardian/libs';
+import { getCookie } from 'lib/cookies';
 import { init as detectAdBlockers } from 'commercial/detect-adblock';
 import ophan from 'ophan/ng';
 import { isUserLoggedIn } from 'common/modules/identity/api';
@@ -85,52 +86,8 @@ const go = () => {
 
                 if (!consentState) return;
 
-                const consentDetails = () => {
-                    if (consentState.tcfv2) {
-                        return {
-                            consentJurisdiction: 'TCF',
-                            consentUUID: getCookie({ name: 'consentUUID' }) ?? '',
-                            consent: consentState.tcfv2.tcString,
-                        };
-                    }
-                    if (consentState.usnat) {
-			            // Users who interacted with the CCPA banner before the migration to usnat will still have a ccpaUUID cookie.
-                        // The usnatUUID cookie is set when the USNAT banner is interacted with.
-                        // We need to check both cookies to ensure we have the correct consentUUID.
-                        const consentUUID =
-                            getCookie({ name: 'usnatUUID' }) ??
-                            getCookie({ name: 'ccpaUUID' });
-
-                        return {
-                            consentJurisdiction: 'USNAT',
-                            consentUUID: consentUUID ?? '',
-                            consent: consentState.usnat.doNotSell ? 'false' : 'true',
-                        };
-                    }
-                    if (consentState.aus) {
-                        // Users who interacted with the CCPA banner before the migration to globalCmp will still have a ccpaUUID cookie.
-                        // The globalcmpUUID cookie is set when the AUS banner is interacted with.
-                        //  We need to check both cookies to ensure we have the correct consentUUID.
-			            const consentUUID =
-				            getCookie({ name: 'globalcmpUUID' }) ??
-				            getCookie({ name: 'ccpaUUID' });
-                        return {
-                            consentJurisdiction: 'AUS',
-                            consentUUID: consentUUID ?? '',
-                            consent: consentState.aus.personalisedAdvertising
-                                ? 'true'
-                                : 'false',
-                        };
-                    }
-                    return {
-                        consentJurisdiction: 'OTHER',
-                        consentUUID: '',
-                        consent: '',
-                    };
-                };
-
                 // Register changes in consent state with Ophan
-                ophan.record(consentDetails());
+                ophan.record(getConsentDetailsForOphan(consentState));
 
                 // ------------------------------------------------------
 

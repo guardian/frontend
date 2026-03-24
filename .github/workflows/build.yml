@@ -50,7 +50,7 @@ jobs:
       - run: make compile
 
       - name: upload frontend-client
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: frontend-client
           path: |
@@ -72,17 +72,11 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
 
-      - uses: actions/setup-java@v5.2.0
-        with:
-          distribution: corretto
-          cache: sbt
-          java-version: 11
-
       - uses: guardian/setup-scala@v1
 
       # Scala tests rely on client build assets
       - name: Download frontend-client
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: frontend-client
           path: .

@@ -102,6 +102,7 @@ object NavLinks {
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
   val auColumnists = NavLink("Columnists", "/au/index/contributors")
+  val usColumnists = NavLink("Columnists", "/us/columnists")
   val theGuardianView = NavLink("The Guardian view", "/profile/editorial")
   val cartoons = NavLink("Cartoons", "/tone/cartoons")
   val opinionVideos = NavLink("Opinion videos", "/type/video+tone/comment")
@@ -384,7 +385,7 @@ object NavLinks {
   val usOpinionPillar = ukOpinionPillar.copy(
     children = List(
       theGuardianView,
-      columnists,
+      usColumnists,
       letters,
       opinionVideos,
       cartoons,

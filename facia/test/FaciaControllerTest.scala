@@ -10,7 +10,8 @@ import experiments.{ActiveExperiments, ParticipationGroups}
 import helpers.FaciaTestData
 import implicits.FakeRequests
 import model.{FrontProperties, PressedPage, SeoData}
-import org.mockito.Matchers.{any, anyString}
+import org.apache.pekko.stream.scaladsl.Source
+import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
 import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
@@ -71,6 +72,7 @@ import scala.concurrent.{Await, Future}
     when(mockRequest.addHttpHeaders("Content-Type" -> "application/json")).thenReturn(mockRequest)
 
     when(mockRequest.post(anyString())(any())).thenReturn(Future.successful(mockResponse))
+    when(mockRequest.post(any(): Source[?, ?])(any())).thenReturn(Future.successful(mockResponse))
     when(mockRequest.get()).thenReturn(Future.successful(mockResponse))
 
     when(wsClient.url("http://localhost:3030/Front")).thenReturn(mockRequest)

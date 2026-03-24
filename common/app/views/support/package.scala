@@ -1,7 +1,6 @@
 package views.support
 
 import java.text.DecimalFormat
-
 import common._
 import model.Cached.WithoutRevalidationResult
 import model._
@@ -18,6 +17,7 @@ import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import layout.slices.ContainerDefinition
 
+import java.util.Locale
 import scala.jdk.CollectionConverters._
 
 /** Encapsulates previous and next urls
@@ -182,7 +182,9 @@ object GuDateFormatLegacy {
       case Some(tz) => tz
       case _        => edition.timezone
     }
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
+    // using Locale.US to ensure September is abbreviated to "Sep" and not "Sept". See https://github.com/guardian/frontend/pull/28605
+    val formatter = DateTimeFormat.forPattern(pattern).withZone(timeZone).withLocale(Locale.US)
+    date.toString(formatter)
   }
 
   def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String =

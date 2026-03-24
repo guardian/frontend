@@ -23,11 +23,11 @@ GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArti
 
 # articles, finished liveblogs
 
-GET     /*path.json                 controllers.ArticleController.renderJson(path)
-GET     /*path/email                controllers.ArticleController.renderEmail(path)
-GET     /*path/email/headline.txt   controllers.ArticleController.renderHeadline(path)
-GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
-GET     /*path/email.emailtxt       controllers.ArticleController.renderEmail(path)
+GET     /*path.json                     controllers.ArticleController.renderJson(path)
+GET     /*path/email                    controllers.ArticleController.renderEmail(path)
+GET     /*path/email/headline.txt       controllers.ArticleController.renderHeadline(path)
+GET     /*path/email.emailjson          controllers.ArticleController.renderEmail(path)
+GET     /*path/email.emailtxt           controllers.ArticleController.renderEmail(path)
 
 # Newspaper pages paths
 # gallery format (?)

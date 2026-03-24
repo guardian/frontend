@@ -8,6 +8,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import test.ConfiguredTestSuite
 import play.api.test.FakeRequest
+import utils.DateFormatUtils
 
 import java.time.format.DateTimeFormatter
 
@@ -108,7 +109,7 @@ import java.time.format.DateTimeFormatter
         "should find correct value for 'nextPage'" in {
           val expectedDate = today.plusDays(4) // see test data
           fixtures.nextPage.value should equal(
-            "/football/fixtures/more/" + expectedDate.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")),
+            "/football/fixtures/more/" + expectedDate.format(DateFormatUtils.javaUrlDateFormatUTC),
           )
         }
 
@@ -123,14 +124,14 @@ import java.time.format.DateTimeFormatter
         "should find correct value for 'nextPage'" in {
           val expectedDate = today.plusDays(10) // see test data
           fixtures.nextPage.value should equal(
-            "/football/fixtures/more/" + expectedDate.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")),
+            "/football/fixtures/more/" + expectedDate.format(DateFormatUtils.javaUrlDateFormatUTC),
           )
         }
 
         "should find correct value for 'prevPage'" in {
           val expectedDate = today // see test data
           fixtures.previousPage.value should equal(
-            "/football/fixtures/" + expectedDate.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")),
+            "/football/fixtures/" + expectedDate.format(DateFormatUtils.javaUrlDateFormatUTC),
           )
         }
       }
@@ -141,7 +142,7 @@ import java.time.format.DateTimeFormatter
         "should find correct value for 'nextPage'" in {
           val expectedDate = today.plusDays(11) // see test data
           fixtures.nextPage.value should equal(
-            "/football/fixtures/more/" + expectedDate.format(DateTimeFormatter.ofPattern("yyyy/MMM/dd")),
+            "/football/fixtures/more/" + expectedDate.format(DateFormatUtils.javaUrlDateFormatUTC),
           )
         }
       }

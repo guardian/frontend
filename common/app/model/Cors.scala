@@ -1,9 +1,11 @@
 package model
 
-import java.net.URI
+import java.net.{URI, URISyntaxException}
 import conf.Configuration.ajax
 import play.api.mvc.{RequestHeader, Results}
 import play.api.mvc.Result
+
+import scala.util.{Failure, Success, Try}
 
 object Cors extends Results with implicits.Requests {
 
@@ -37,12 +39,16 @@ object Cors extends Results with implicits.Requests {
   }
 
   private[model] def isWhitelisted(origin: String, corsOrigins: Seq[String], extraWhitelist: Seq[String]): Boolean = {
-    val originHost = new URI(origin).getHost
-    corsOrigins.contains(origin) ||
-    extraWhitelist.contains(originHost) ||
-    extraWhitelist.exists { domain =>
-      if (domain == "localhost") false
-      else originHost.endsWith(s".$domain")
+    Try(new URI(origin).getHost) match {
+      case Success(originHost) =>
+        corsOrigins.contains(origin) ||
+        extraWhitelist.contains(originHost) ||
+        extraWhitelist.exists { domain =>
+          if (domain == "localhost") false
+          else originHost.endsWith(s".$domain")
+        }
+      case Failure(e: URISyntaxException) => false
+      case Failure(exception)             => throw exception
     }
   }
 }

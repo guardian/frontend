@@ -58,7 +58,4 @@ module.exports = {
             ],
         },
     },
-    "ignore": [
-        "eslintrc.js",
-    ],
 };

@@ -68,7 +68,7 @@ object DotcomRenderingFootballDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.allTests,
+      serverSideABTests = ABTests.getParticipations,
       ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

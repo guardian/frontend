@@ -1,4 +1,3 @@
-import javascript from './javascript.mjs';
 import sass from './sass.mjs';
 import scala from './scala.mjs';
 
@@ -9,7 +8,6 @@ const task = {
 		task.newListr(
 			[
 				// prettier: multi-line
-				javascript,
 				sass,
 				scala,
 			],

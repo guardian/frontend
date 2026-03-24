@@ -1,6 +1,6 @@
 @import common.commercial.ContainerModel
 @import layout.MetaDataHeader
-@import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList}
+@import layout.slices.{Fixed, MostPopular, NavList, NavMediaList}
 @import views.html.fragments.commercial.containers.paidContainer
 @import views.html.fragments.audio.containers.flagshipContainer
 @import views.html.fragments.containers.facia_cards._
@@ -63,15 +63,9 @@
                  data-component="@componentName"
                  aria-expanded="true">
 
-                @if(containerDefinition.isStoryPackage) {
-                    <style>
-                        @Html(common.Assets.css.inlineStoryPackageGarnett)
-                    </style>
-                }
-
                 @containerDefinition.container match {
 
-                    case _: Dynamic | _: Fixed => {
+                    case _: Fixed => {
                         <div class="fc-container__inner">
                             @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding, frontId)
                         </div>
