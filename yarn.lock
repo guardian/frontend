@@ -2846,7 +2846,7 @@ __metadata:
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:30.1.1"
+    "@guardian/libs": "npm:0.0.0-canary-20260324113710"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -2984,6 +2984,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@guardian/libs@npm:0.0.0-canary-20260324113710":
+  version: 0.0.0-canary-20260324113710
+  resolution: "@guardian/libs@npm:0.0.0-canary-20260324113710"
+  dependencies:
+    "@guardian/ophan-tracker-js": "npm:2.8.0"
+  peerDependencies:
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.8.1
+    typescript: ~5.9.3
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/fda5b9990d054dbd8bb773366d5a3d95d405b8fcbc8ada775420cea7195df133d59f63e32641a2009b970682a2fb8ac8296577ecb1c2078f8860751bab1c98c7
+  languageName: node
+  linkType: hard
+
 "@guardian/libs@npm:25.2.0":
   version: 25.2.0
   resolution: "@guardian/libs@npm:25.2.0"
@@ -2997,22 +3013,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/41dd40a6c2ac0d9270924e5b4c2d3e6b703c1aaf8dd84f7a69cd76d4250a6782bd98d9c5e8508d6abd781bf3f2bdf57b001634fb88e9ac8597ff06b728eff998
-  languageName: node
-  linkType: hard
-
-"@guardian/libs@npm:30.1.1":
-  version: 30.1.1
-  resolution: "@guardian/libs@npm:30.1.1"
-  dependencies:
-    "@guardian/ophan-tracker-js": "npm:2.8.0"
-  peerDependencies:
-    "@guardian/ophan-tracker-js": ^2.2.10
-    tslib: ^2.8.1
-    typescript: ~5.9.3
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/d1cbe8ab1729af541eec3b937f4443f1205a79e9efe667b374ac2a4f084238d340652aa2a74cec5558f17cbfd324f4549ffbbea8c89cbcb565c8877103e81414
   languageName: node
   linkType: hard
 
