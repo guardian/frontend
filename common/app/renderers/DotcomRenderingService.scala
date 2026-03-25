@@ -494,6 +494,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchSummaryPage", CacheTime.FootballMatch)
   }
 
+  def getAppsFootballMatchSummaryPage(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsFootballMatchSummaryPage", CacheTime.FootballMatch)
+  }
+
   def getCricketPage(
       ws: WSClient,
       json: JsValue,
@@ -518,6 +525,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
       CacheTime.Component,
     )
+  }
+
+  def getHostedArticle(
+      ws: WSClient,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/HostedContent", pageBlocks.page.metadata.cacheTime)
+  }
+
+  def getAppsHostedArticle(
+      ws: WSClient,
+      pageBlocks: BlocksOn[PageWithStoryPackage],
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsHostedContent", pageBlocks.page.metadata.cacheTime)
   }
 }
 

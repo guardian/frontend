@@ -2,7 +2,7 @@ package football.controllers
 
 import common._
 import feed.CompetitionsService
-import implicits.{Football, HtmlFormat, JsonFormat, Requests}
+import implicits.{AppsFormat, Football, HtmlFormat, JsonFormat, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
@@ -122,6 +122,19 @@ class MatchController(
                   competitionName = competitionSummary.fullName,
                 )
                 remoteRenderer.getFootballMatchSummaryPage(
+                  wsClient,
+                  DotcomRenderingFootballMatchSummaryDataModel.toJson(model),
+                )
+
+              case AppsFormat if tier == RemoteRender =>
+                val model = DotcomRenderingFootballMatchSummaryDataModel(
+                  page = page,
+                  matchStats = matchStats,
+                  matchInfo = theMatch,
+                  group = group,
+                  competitionName = competitionSummary.fullName,
+                )
+                remoteRenderer.getAppsFootballMatchSummaryPage(
                   wsClient,
                   DotcomRenderingFootballMatchSummaryDataModel.toJson(model),
                 )

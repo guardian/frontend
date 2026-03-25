@@ -5,13 +5,18 @@ import com.softwaremill.macwire._
 import commercial.model.capi.CapiAgent
 import contentapi.ContentApiClient
 import model.ApplicationContext
+import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import renderers.DotcomRenderingService
 
 trait CommercialControllers {
   def contentApiClient: ContentApiClient
   def capiAgent: CapiAgent
   def controllerComponents: ControllerComponents
   def admiralAgent: AdmiralAgent
+  def wsClient: WSClient
+  def remoteRender: DotcomRenderingService
+
   implicit def appContext: ApplicationContext
   lazy val contentApiOffersController = wire[ContentApiOffersController]
   lazy val hostedContentController = wire[HostedContentController]
