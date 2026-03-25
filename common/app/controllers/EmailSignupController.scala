@@ -62,19 +62,30 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
     extends LazyLogging
     with RemoteAddress {
 
+  private def getCountryAndRegion(
+      countryCode: String,
+  )(implicit request: Request[AnyContent]): (String, Option[String]) = {
+    val registrationLocation: String = CountryGroup.byFastlyCountryCode(countryCode).map(_.name).getOrElse("Other")
+    val registrationLocationState: Option[String] =
+      for {
+        countryCode <- Option(countryCode).filter(Set("US", "AU").contains)
+        country <- CountryGroup.countryByCode(countryCode)
+        stateCode <- request.headers.get("X-GU-GeoIP-Region")
+        stateName <- country.statesByCode.get(stateCode)
+      } yield stateName
+    (registrationLocation, registrationLocationState)
+  }
+
   def submit(form: EmailForm)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     val consentMailerUrl = serviceUrl(form, emailEmbedAgent)
-    val countryCode = request.headers.get("X-GU-GeoLocation").getOrElse("country:row").replace("country:", "")
-    val registrationLocation: String = CountryGroup.byFastlyCountryCode(countryCode).map(_.name).getOrElse("Other")
-    val registrationLocationState: Option[String] = countryCode match {
-      case "US" | "AU" =>
-        for {
-          country <- CountryGroup.countryByCode(countryCode)
-          stateCode <- request.headers.get("X-GU-GeoIP-Region")
-          stateName <- country.statesByCode.get(stateCode)
-        } yield stateName
-      case _ => None
+    val countryCode = request.headers.get("X-GU-GeoLocation") match {
+      case Some(country) =>
+        country.replace("country:", "")
+      case None => "row"
     }
+
+    val (registrationLocation, registrationLocationState) = getCountryAndRegion(countryCode)
+
     val consentMailerPayload = JsObject(
       Json
         .obj(
@@ -105,16 +116,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
 
   def submitWithMany(form: EmailFormManyNewsletters)(implicit request: Request[AnyContent]): Future[WSResponse] = {
     val countryCode = request.headers.get("X-GU-GeoLocation").getOrElse("country:row").replace("country:", "")
-    val registrationLocation: String = CountryGroup.byFastlyCountryCode(countryCode).map(_.name).getOrElse("Other")
-    val registrationLocationState: Option[String] = countryCode match {
-      case "US" | "AU" =>
-        for {
-          country <- CountryGroup.countryByCode(countryCode)
-          stateCode <- request.headers.get("X-GU-GeoIP-Region")
-          stateName <- country.statesByCode.get(stateCode)
-        } yield stateName
-      case _ => None
-    }
+    val (registrationLocation, registrationLocationState) = getCountryAndRegion(countryCode)
     val consentMailerPayload = JsObject(
       Json
         .obj(
