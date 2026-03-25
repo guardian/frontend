@@ -184,7 +184,7 @@ class EmailFormServiceTest
 
       "get US state name from state code" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
-          "X-GU-GeoLocation"  -> "country:US",
+          "X-GU-GeoLocation" -> "country:US",
           "X-GU-GeoIP-Region" -> "CA",
         )
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
@@ -193,7 +193,7 @@ class EmailFormServiceTest
 
       "get AU state name from state code" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
-          "X-GU-GeoLocation"  -> "country:AU",
+          "X-GU-GeoLocation" -> "country:AU",
           "X-GU-GeoIP-Region" -> "NSW",
         )
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
@@ -209,7 +209,7 @@ class EmailFormServiceTest
 
       "not be there (None) when the country is US but the state code is unrecognised" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
-          "X-GU-GeoLocation"  -> "country:US",
+          "X-GU-GeoLocation" -> "country:US",
           "X-GU-GeoIP-Region" -> "ZZ",
         )
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
@@ -218,7 +218,7 @@ class EmailFormServiceTest
 
       "not be there (None) for a non-US/AU country even when a region header is present" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest().withHeaders(
-          "X-GU-GeoLocation"  -> "country:GB",
+          "X-GU-GeoLocation" -> "country:GB",
           "X-GU-GeoIP-Region" -> "ENG",
         )
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
