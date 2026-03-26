@@ -106,11 +106,12 @@ case class EmailFrontPath(path: String, edition: String)
 object EmailFrontPath {
   def fromPath(path: String): Option[EmailFrontPath] =
     path match {
-      case "email/uk/daily"     => Some(EmailFrontPath(path, "uk"))
-      case "email/us/daily"     => Some(EmailFrontPath(path, "us"))
-      case "email/au/daily"     => Some(EmailFrontPath(path, "au"))
-      case "email/europe/daily" => Some(EmailFrontPath(path, "europe"))
-      case _                    => None
+      case "email/uk/daily"                 => Some(EmailFrontPath(path, "uk"))
+      case "email/uk/daily-with-highlights" => Some(EmailFrontPath(path, "uk"))
+      case "email/us/daily"                 => Some(EmailFrontPath(path, "us"))
+      case "email/au/daily"                 => Some(EmailFrontPath(path, "au"))
+      case "email/europe/daily"             => Some(EmailFrontPath(path, "europe"))
+      case _                                => None
     }
 }
 
@@ -198,7 +199,7 @@ trait EmailFrontPress extends GuLogging {
 trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   val dependentFrontPaths: Map[String, Seq[String]] = Map(
-    "uk" -> Seq("email/uk/daily"),
+    "uk" -> Seq("email/uk/daily", "email/uk/daily-with-highlights"),
     "us" -> Seq("email/us/daily"),
     "au" -> Seq("email/au/daily"),
   )
