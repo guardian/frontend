@@ -70,12 +70,11 @@ class EmailFormServiceTest
     captor.getValue.as[JsObject]
   }
 
-  // privateFields serializes as [["registrationLocation", ImALocation], ["registrationLocationState", IamALocationState]]
   def registrationLocation(body: JsObject): String =
-    (body \ "privateFields")(0)(1).as[String]
+    (body \ "registrationLocation").get.as[String]
 
   def registrationLocationState(body: JsObject): JsValue =
-    (body \ "privateFields")(1)(1)
+    (body \ "registrationLocationState").get
 
   "EmailFormService.submit" when {
 
