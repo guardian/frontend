@@ -94,10 +94,8 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
           "browser-id" -> form.browserId,
-          "privateFields" -> (
-            "registrationLocation" -> registrationLocation,
-            "registrationLocationState" -> registrationLocationState,
-          ),
+          "registrationLocation" -> registrationLocation,
+          "registrationLocationState" -> registrationLocationState,
         )
         .fields,
     )
@@ -126,10 +124,8 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "ref" -> form.ref,
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
-          "privateFields" -> (
-            "registrationLocation" -> registrationLocation,
-            "registrationLocationState" -> registrationLocationState,
-          ),
+          "registrationLocation" -> registrationLocation,
+          "registrationLocationState" -> registrationLocationState,
         )
         .fields,
     )
