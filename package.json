@@ -31,7 +31,7 @@
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/identity-auth": "6.0.1",
 		"@guardian/identity-auth-frontend": "8.1.0",
-		"@guardian/libs": "30.1.1",
+		"@guardian/libs": "0.0.0-canary-20260324113710",
 		"@guardian/prettier": "^8.0.1",
 		"@guardian/shimport": "^1.0.2",
 		"@guardian/source-foundations": "16.0.0",
