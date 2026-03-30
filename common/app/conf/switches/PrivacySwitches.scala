@@ -20,4 +20,15 @@ trait PrivacySwitches {
       "Warning: Requires ExCo sign-off. Disabling this switch will cost £160,000/day in ad-revenue, impact marketing, impact reader revenue...",
     ),
   )
+
+  val MparticleConsentSync = Switch(
+    SwitchGroup.Privacy,
+    "mparticle-consent-sync",
+    "Enables syncing of browser consent state to mParticle for paid media targeting",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }

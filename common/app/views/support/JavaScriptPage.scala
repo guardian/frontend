@@ -74,6 +74,8 @@ object JavaScriptPage {
     val commercialBundleUrl = Configuration.commercial.overrideCommercialBundleUrl
       .getOrElse(CommercialBundle.bundleUrl)
 
+    val mparticleApiUrl = Configuration.mparticle.apiUrl.map("mparticleApiUrl" -> JsString(_))
+
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -96,6 +98,6 @@ object JavaScriptPage {
       ("isAdFree", JsBoolean(isAdFree(request))),
       ("commercialBundleUrl", JsString(commercialBundleUrl)),
       ("stage", JsString(Configuration.environment.stage)),
-    )
+    ) ++ mparticleApiUrl
   }.toMap
 }
