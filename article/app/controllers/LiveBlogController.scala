@@ -159,7 +159,7 @@ class LiveBlogController(
                 "isDead" -> isDeadBlog.toString,
                 "isLiveBlog" -> "true",
               )
-            val remoteRendering = !request.forceDCROff
+            val remoteRendering = false
 
             if (remoteRendering) {
               DotcomponentsLogger.logger
