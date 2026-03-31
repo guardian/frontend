@@ -27,6 +27,7 @@ import play.twirl.api.Html
 import views.html.commercialExpired
 import views.html.hosted._
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.hosted.HostedOnwardTrails
 import model.meta.BlocksOn
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
@@ -175,6 +176,42 @@ class HostedContentController(
     }
   }
 
+  def renderOnwardJson(campaignName: String, pageName: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      val itemId = s"advertiser-content/$campaignName/$pageName"
+      val sectionId = s"advertiser-content/$campaignName"
+      val defaultRowCount = 4
+
+      def toJson(trail: HostedPage) =
+        Json.obj(
+          "title" -> trail.title,
+          "url" -> trail.url,
+          "imageUrl" -> trail.thumbnailUrl,
+        )
+
+      capiLookup.lookup(sectionId, None) map { response =>
+        response.results.map { results =>
+          val hostedTrails = HostedOnwardTrails.fromContent(itemId, results.toSeq)
+          JsonComponent {
+            "items" -> JsArray(
+              Seq(
+                Json.obj(
+                  "owner" -> hostedTrails.headOption.map(_.owner),
+                  "trails" -> JsArray(hostedTrails.take(defaultRowCount).map(toJson)),
+                ),
+              ),
+            )
+          }
+        }
+      } recover { case NonFatal(e) =>
+        log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
+        Cached(0)(JsonNotFound())
+      }
+
+    }
+  }
+
+  /** Legacy method */
   def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =
     Action.async { implicit request =>
       def onwardView(trails: Seq[HostedPage], defaultRowCount: Int, maxRowCount: Int): RevalidatableResult = {
