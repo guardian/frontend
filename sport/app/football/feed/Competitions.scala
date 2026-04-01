@@ -159,7 +159,7 @@ object CompetitionsProvider {
       "Premier League",
       "English",
       showInTeamsList = true,
-      tableDividers = List(4, 5, 17),
+      tableDividers = List(4, 5, 6, 17),
     ),
     Competition(
       "625",
