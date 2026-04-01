@@ -17,9 +17,4 @@ class AnalyticsController(val controllerComponents: ControllerComponents)(implic
       val frameUrl = Store.getAbTestFrameUrl
       Future(NoCache(Ok(views.html.abTests(frameUrl))))
     }
-
-  def legacyAbTests(): Action[AnyContent] =
-    Action.async { implicit request =>
-      Future(NoCache(Ok(views.html.legacyAbTests())))
-    }
 }
