@@ -187,6 +187,7 @@
 	"packageManager": "yarn@4.1.1",
 	"resolutions": {
 		"micromatch": "4.0.8",
+		"path-to-regexp": "0.1.13",
 		"unset-value": "^2.0.1"
 	}
 }
