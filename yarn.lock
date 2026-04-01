@@ -2846,7 +2846,7 @@ __metadata:
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:30.1.1"
+    "@guardian/libs": "npm:31.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3000,9 +3000,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:30.1.1":
-  version: 30.1.1
-  resolution: "@guardian/libs@npm:30.1.1"
+"@guardian/libs@npm:31.0.0":
+  version: 31.0.0
+  resolution: "@guardian/libs@npm:31.0.0"
   dependencies:
     "@guardian/ophan-tracker-js": "npm:2.8.0"
   peerDependencies:
@@ -3012,7 +3012,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/d1cbe8ab1729af541eec3b937f4443f1205a79e9efe667b374ac2a4f084238d340652aa2a74cec5558f17cbfd324f4549ffbbea8c89cbcb565c8877103e81414
+  checksum: 10c0/d2193235241c49a0a7622f1034b540fb8df0057e217bf498898a4355675953cf3a26e5442d21736f67398edbb955de0af900adbf2ab3a1d309f7bb07fc9ca47e
   languageName: node
   linkType: hard
 
