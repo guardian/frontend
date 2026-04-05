@@ -91,4 +91,4 @@ Here are the browsers and devices we currently regularly test on:
 
 The share of traffic from IE8 is around 5%.
 
-We will serve a specific style sheet and JavaScript to offer some enhanced functionality (Eg. stylesheets, adverts) whilst it continues to have significant usage.
+We will serve a specific style sheet and JavaScript to offer some enhanced functionality (eg stylesheets, adverts) whilst it continues to have significant usage.
