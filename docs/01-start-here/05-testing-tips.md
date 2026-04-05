@@ -93,8 +93,8 @@ A list of useful information on device testing follows:
 
 -   Chrome and Firefox on windows 10 - Windows10 is slowly overtaking Windows7 as our users most popular desktop OS. When Windows 10 originally came out, firefox had some rendering issues and Chrome and firefox periodically show rendering issues there - especially with things like fonts.
 
--   Older devices - A common source of problems comes from older devices. Where the device is running the latest operating system, it will attempt to run all the latest features and give the fullest experience. This can be catastrophic if the device just doesnt have the memory or processing power to cope.
-    This is especially important if your feature is very resource heavy. For reasons unknown, but possibly connected to the way safari manages memory, iOS devices have proved more susceptable. Good examples of old devices to test on are: iPhone 4S, iPad3 (both known to be prone to crashes) and the Samsung Galaxy S3.
+-   Older devices - A common source of problems comes from older devices. Where the device is running the latest operating system, it will attempt to run all the latest features and give the fullest experience. This can be catastrophic if the device just doesn't have the memory or processing power to cope.
+    This is especially important if your feature is very resource heavy. For reasons unknown, but possibly connected to the way safari manages memory, iOS devices have proved more susceptible. Good examples of old devices to test on are: iPhone 4S, iPad3 (both known to be prone to crashes) and the Samsung Galaxy S3.
     [Interesting page talking about iOS crashes](http://stackoverflow.com/questions/22039534/ios-browser-crashes-due-to-low-memory). As a result of a large number of crashes on iPads, it has been necessary to limit all iPads to only showing the non-enhanced version of network and section fronts.
 
 -   non-enhanced pages - features should either be hidden or have a way of displaying on non-enhanced versions of pages. To see the non-enhanced version of a page use the links [here](https://www.theguardian.com/info/2015/sep/22/making-theguardiancom-work-best-for-you).
