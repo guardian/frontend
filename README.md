@@ -6,7 +6,7 @@ The backend of the Guardian website frontend.
 
 Frontend is [a set of Play Framework 2 Scala applications](docs/02-architecture/01-applications-architecture.md). It is built in two parts, using `make` for the client side asset build and SBT for the Play Framework backend.
 
-Frontend's responsiblity is to build JSON to pass to the modern rendering service, [Dotcom Rendering](https://github.com/guardian/dotcom-rendering).
+Frontend's responsibility is to build JSON to pass to the modern rendering service, [Dotcom Rendering](https://github.com/guardian/dotcom-rendering).
 
 # Core Development Principles (lines in the sand)
 
