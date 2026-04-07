@@ -25,7 +25,7 @@ trait PrivacySwitches {
     SwitchGroup.Privacy,
     "mparticle-consent-sync",
     "Enables syncing of browser consent state to mParticle for paid media targeting",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("value.dev@guardian.co.uk"), Owner.withEmail("growth.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
