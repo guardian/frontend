@@ -21,7 +21,7 @@ import model.{
   PageWithStoryPackage,
   StoryPackages,
 }
-import play.api.libs.json.{JsArray, JsValue, Json}
+import play.api.libs.json.{JsArray, JsString, JsValue, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
@@ -176,40 +176,58 @@ class HostedContentController(
     }
   }
 
-  def renderOnwardJson(campaignName: String, pageName: String): Action[AnyContent] = {
+  private def fetchOnwardTrails(itemId: String, sectionId: String, limit: Int = 3)(implicit
+      request: RequestHeader,
+  ): Future[Seq[CapiContent]] = {
+    capiLookup.lookup(sectionId, None) map { response =>
+      response.results match {
+        case Some(results) => HostedOnwardTrails.fromContent(itemId, results.toSeq).take(limit)
+        case None          => Seq.empty
+      }
+    }
+  }
+
+  def renderOnwardJson(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
       val itemId = s"advertiser-content/$campaignName/$pageName"
       val sectionId = s"advertiser-content/$campaignName"
-      val defaultRowCount = 4
 
-      def toJson(trail: HostedPage) =
-        Json.obj(
-          "title" -> trail.title,
-          "url" -> trail.url,
-          "imageUrl" -> trail.thumbnailUrl,
-        )
+      fetchOnwardTrails(itemId, sectionId) map { trails =>
+        val owner = trails.headOption flatMap { firstTrail =>
+          for {
+            hostedTag <- firstTrail.tags.find(_.paidContentType.contains("HostedContent"))
+            sponsorships <- hostedTag.activeSponsorships
+            sponsor <- sponsorships.headOption
+          } yield sponsor.sponsorName
+        }
 
-      capiLookup.lookup(sectionId, None) map { response =>
-        response.results.map { results =>
-          val hostedTrails = HostedOnwardTrails.fromContent(itemId, results.toSeq)
-          JsonComponent {
+        if (trails.nonEmpty) {
+          Cached(cacheDuration)(JsonComponent {
             "items" -> JsArray(
               Seq(
                 Json.obj(
-                  "owner" -> hostedTrails.headOption.map(_.owner),
-                  "trails" -> JsArray(hostedTrails.take(defaultRowCount).map(toJson)),
+                  "owner" -> JsString(owner.getOrElse("")),
+                  "trails" -> JsArray(trails map { trail =>
+                    Json.obj(
+                      "title" -> trail.webTitle,
+                      "url" -> trail.webUrl,
+                      "imageUrl" -> trail.fields.map(_.thumbnail),
+                    )
+                  }),
                 ),
               ),
             )
-          }
+          })
+        } else {
+          Cached(cacheDuration)(JsonComponent {
+            "items" -> JsArray(Seq.empty)
+          })
         }
       } recover { case NonFatal(e) =>
         log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
         Cached(0)(JsonNotFound())
       }
-
     }
-  }
 
   /** Legacy method */
   def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =
