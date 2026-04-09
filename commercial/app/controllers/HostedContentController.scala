@@ -10,17 +10,7 @@ import common.commercial.hosted._
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, ModelOrResult}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{
-  ApplicationContext,
-  Article,
-  ArticleBlocks,
-  ArticlePage,
-  Cached,
-  Content,
-  NoCache,
-  PageWithStoryPackage,
-  StoryPackages,
-}
+import model.{ApplicationContext, Article, ArticleBlocks, ArticlePage, Cached, Content, ContentFormat, NoCache, PageWithStoryPackage, StoryPackages}
 import play.api.libs.json.{JsArray, JsString, JsValue, Json}
 import play.api.mvc._
 import play.twirl.api.Html
@@ -203,20 +193,21 @@ class HostedContentController(
 
         if (trails.nonEmpty) {
           Cached(cacheDuration)(JsonComponent {
-            "items" -> JsArray(
-              Seq(
-                Json.obj(
-                  "owner" -> JsString(owner.getOrElse("")),
-                  "trails" -> JsArray(trails map { trail =>
-                    Json.obj(
-                      "title" -> trail.webTitle,
-                      "url" -> trail.webUrl,
-                      "imageUrl" -> trail.fields.map(_.thumbnail),
-                    )
-                  }),
-                ),
-              ),
-            )
+            "result" ->
+              Json.obj(
+                "owner" -> JsString(owner.getOrElse("")),
+                "trails" -> JsArray(trails map { trail =>
+                  Json.obj(
+                    "title" -> trail.webTitle,
+                    "url" -> trail.webUrl,
+                    "image" -> Json.obj(
+                      "src" -> trail.fields.map(_.thumbnail),
+                      "alt" -> "",
+                    ),
+                    "format" -> trail.tags.
+                  )
+                }),
+              )
           })
         } else {
           Cached(cacheDuration)(JsonComponent {
