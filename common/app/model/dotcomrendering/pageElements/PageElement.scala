@@ -5,7 +5,21 @@ import ab.ABTests.ABTest
 import com.gu.contentapi.client.model.v1
 import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack
-import com.gu.contentapi.client.model.v1.{EmbedTracking, LinkType, Priority, ProductDisplayType, ProductElementFields, SponsorshipType, TimelineElementFields, WitnessElementFields, BlockElement => ApiBlockElement, ProductCTA => ApiProductCta, ProductCustomAttribute => ApiProductCustomAttribute, ProductImage => ApiProductImage, Sponsorship => ApiSponsorship}
+import com.gu.contentapi.client.model.v1.{
+  EmbedTracking,
+  LinkType,
+  Priority,
+  ProductDisplayType,
+  ProductElementFields,
+  SponsorshipType,
+  TimelineElementFields,
+  WitnessElementFields,
+  BlockElement => ApiBlockElement,
+  ProductCTA => ApiProductCta,
+  ProductCustomAttribute => ApiProductCustomAttribute,
+  ProductImage => ApiProductImage,
+  Sponsorship => ApiSponsorship,
+}
 import common.{Chronos, Edition}
 import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
@@ -1610,7 +1624,7 @@ object PageElement {
                 item,
                 isGallery,
                 isUSProductionOffice,
-                abTests
+                abTests,
               )
             }.toSeq,
             listElementType = listTypeData.`type`.map(_.name),
@@ -1854,7 +1868,7 @@ object PageElement {
             webPublicationDate,
             isGallery,
             isUSProductionOffice,
-            abTests
+            abTests,
           )
         }
         .toSeq,

@@ -12,7 +12,12 @@ import scala.util.matching.Regex
 
 object TextCleaner {
 
-  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isUSProductionOffice: Boolean, abTests: Map[String, String])(
+  def affiliateLinks(
+      pageUrl: String,
+      addAffiliateLinks: Boolean,
+      isUSProductionOffice: Boolean,
+      abTests: Map[String, String],
+  )(
       html: String,
   ): String = {
     if (addAffiliateLinks) {
@@ -51,7 +56,7 @@ object TextCleaner {
         pageUrl,
         shouldAddAffiliateLinks,
         isUSProductionOffice,
-        abTests
+        abTests,
       ),
     )
 

@@ -896,7 +896,7 @@ object AffiliateLinksCleaner {
       html: Document,
       pageUrl: String,
       skimlinksId: String,
-      abTests: Map[String, String]
+      abTests: Map[String, String],
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el =>

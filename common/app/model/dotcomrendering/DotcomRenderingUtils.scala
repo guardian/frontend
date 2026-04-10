@@ -257,7 +257,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
           article.trail.webPublicationDate,
           article.content.isGallery,
           article.content.isUSProductionOffice,
-          abTests = ABTests.getParticipations(request)
+          abTests = ABTests.getParticipations(request),
         ),
       )
       .filter(PageElement.isSupported)
