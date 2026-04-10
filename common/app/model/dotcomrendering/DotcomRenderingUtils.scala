@@ -1,5 +1,6 @@
 package model.dotcomrendering
 
+import ab.ABTests
 import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, LiveBlogDesign}
@@ -256,6 +257,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
           article.trail.webPublicationDate,
           article.content.isGallery,
           article.content.isUSProductionOffice,
+          abTests = ABTests.getParticipations(request)
         ),
       )
       .filter(PageElement.isSupported)
