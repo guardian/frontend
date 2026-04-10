@@ -9,3 +9,7 @@
 
 # Value (Supporter Revenue)
 /static/src/javascripts/projects/common/modules/commercial/braze @guardian/value
+
+# Security code
+/facia/public/security.txt @guardian/devx-security @guardian/infosec
+/.github/workflows/security-txt.yaml @guardian/devx-security @guardian/infosec
