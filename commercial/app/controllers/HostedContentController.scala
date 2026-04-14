@@ -10,7 +10,17 @@ import common.commercial.hosted._
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, ModelOrResult}
 import contentapi.ContentApiClient
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Article, ArticleBlocks, ArticlePage, Cached, Content, ContentFormat, NoCache, PageWithStoryPackage, StoryPackages}
+import model.{
+  ApplicationContext,
+  Article,
+  ArticleBlocks,
+  ArticlePage,
+  Cached,
+  Content,
+  NoCache,
+  PageWithStoryPackage,
+  StoryPackages,
+}
 import play.api.libs.json.{JsArray, JsString, JsValue, Json}
 import play.api.mvc._
 import play.twirl.api.Html
@@ -196,22 +206,12 @@ class HostedContentController(
             "result" ->
               Json.obj(
                 "owner" -> JsString(owner.getOrElse("")),
-                "trails" -> JsArray(trails map { trail =>
-                  Json.obj(
-                    "title" -> trail.webTitle,
-                    "url" -> trail.webUrl,
-                    "image" -> Json.obj(
-                      "src" -> trail.fields.map(_.thumbnail),
-                      "alt" -> "",
-                    ),
-                    "format" -> trail.tags.
-                  )
-                }),
+                "trails" -> (trails map HostedOnwardTrails.contentToHostedTrail),
               )
           })
         } else {
           Cached(cacheDuration)(JsonComponent {
-            "items" -> JsArray(Seq.empty)
+            "result" -> Json.obj()
           })
         }
       } recover { case NonFatal(e) =>
