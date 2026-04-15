@@ -136,13 +136,10 @@ object MatchHeader {
       .find(c => c.isArticleType && c.isPage(currentPage))
       .orElse {
         related.find { content =>
-          val webPublicationDate =
-            DateHelpers.asZonedDateTime(content.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-
           content.isArticleType &&
           !content.isLiveCricket &&
-          (webPublicationDate.toLocalDate == date.toLocalDate ||
-            webPublicationDate.isAfter(DateHelpers.startOfDay(date)))
+          (content.webPublicationDate.toLocalDate == date.toLocalDate ||
+            content.webPublicationDate.isAfter(DateHelpers.startOfDay(date)))
         }
       }
       .map(content => getPageUrl(content.metadata.url))
@@ -150,15 +147,11 @@ object MatchHeader {
     val liveBlog = related
       .find(c => c.isLiveCricket && c.isPage(currentPage))
       .orElse {
-        related
-          .find { c =>
-            val webPublicationDate =
-              DateHelpers.asZonedDateTime(c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")))
-
-            c.isLiveCricket &&
-            (webPublicationDate.toLocalDate == date.toLocalDate ||
-              webPublicationDate.isAfter(page.theMatch.gameDate.atZone(ZoneId.of("Europe/London"))))
-          }
+        related.find { content =>
+          content.isLiveCricket &&
+          (content.webPublicationDate.toLocalDate == date.toLocalDate ||
+            content.webPublicationDate.isAfter(page.theMatch.gameDate.atZone(ZoneId.of("Europe/London"))))
+        }
       }
       .map(content => getPageUrl(content.metadata.url))
 

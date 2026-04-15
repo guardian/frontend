@@ -81,7 +81,7 @@ class CricketMatchController(
             val page = CricketMatchPage(matchData, date, team)
             val requestedDate: ZonedDateTime =
               LocalDate.parse(date, PaFeed.dateFormat).atStartOfDay(ZoneId.of("Europe/London"))
-            val related: Future[Seq[ContentType]] = loadMoreOn(matchData, requestedDate)
+            val related: Future[Seq[ContentType]] = relatedContents(matchData, requestedDate)
             related.map { relatedContents =>
               val model = MatchHeader(page, relatedContents, requestedDate)
               Cached(CacheTime.Cricket)(JsonComponent.fromWritable(model))
@@ -117,7 +117,7 @@ class CricketMatchController(
     }
   }
 
-  private def loadMoreOn(theMatch: Match, date: ZonedDateTime): Future[List[ContentType]] = {
+  private def relatedContents(theMatch: Match, date: ZonedDateTime): Future[List[ContentType]] = {
     val startOfDateRange = date.minusDays(1)
     val endOfDateRange = date.plusDays(1)
     val tagIds = theMatch.teams.flatMap(_.teamTagId).mkString(",")
