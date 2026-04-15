@@ -21,7 +21,7 @@ import scala.concurrent.Future.successful
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
-    id = s"sport/cricket/match/$matchId/${team.wordsForUrl}",
+    id = s"/sport/cricket/match/$matchId/${team.wordsForUrl}",
     section = Some(SectionId.fromId("cricket")),
     webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}",
   )

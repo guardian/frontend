@@ -1,12 +1,11 @@
 package cricketModel
 
-import com.github.nscala_time.time.Imports.DateTimeZone
 import cricket.controllers.CricketMatchPage
-import football.datetime.DateHelpers
 import cricket.implicits.Cricket._
+import football.datetime.DateHelpers
 import model.ContentType
 import model.Cors.RichRequestHeader
-import model.dotcomrendering.DotcomRenderingUtils.getPageUrl
+import model.dotcomrendering.DCARUrlHelper
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 
@@ -124,7 +123,7 @@ case class MatchHeader(
     infoURL: String,
 )
 
-object MatchHeader {
+object MatchHeader extends DCARUrlHelper {
   implicit val writes: OWrites[MatchHeader] = Json.writes[MatchHeader]
 
   def apply(page: CricketMatchPage, related: Seq[ContentType], date: ZonedDateTime)(implicit
@@ -155,6 +154,6 @@ object MatchHeader {
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    MatchHeader(page.theMatch, "", liveBlog, matchReport, page.metadata.webUrl)
+    MatchHeader(page.theMatch, "", liveBlog, matchReport, s"$getAjaxHost${page.metadata.id}")
   }
 }
