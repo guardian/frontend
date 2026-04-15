@@ -1,6 +1,7 @@
 package cricketModel
 
 import com.github.nscala_time.time.Imports.DateTimeZone
+import cricket.controllers.CricketMatchPage
 import football.datetime.DateHelpers
 import cricket.implicits.Cricket._
 import model.ContentType
@@ -120,12 +121,13 @@ case class MatchHeader(
     competitionName: String, // e.g., "Ashes 2025-26"
     liveURL: Option[String],
     reportURL: Option[String],
+    infoURL: String,
 )
 
 object MatchHeader {
   implicit val writes: OWrites[MatchHeader] = Json.writes[MatchHeader]
 
-  def apply(theMatch: Match, related: Seq[ContentType], date: ZonedDateTime)(implicit
+  def apply(page: CricketMatchPage, related: Seq[ContentType], date: ZonedDateTime)(implicit
       request: RequestHeader,
   ): MatchHeader = {
     val currentPage = request.getParameter("page").getOrElse("")
@@ -155,11 +157,11 @@ object MatchHeader {
 
             c.isLiveCricket &&
             (webPublicationDate.toLocalDate == date.toLocalDate ||
-              webPublicationDate.isAfter(theMatch.gameDate.atZone(ZoneId.of("Europe/London"))))
+              webPublicationDate.isAfter(page.theMatch.gameDate.atZone(ZoneId.of("Europe/London"))))
           }
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    MatchHeader(theMatch, "", liveBlog, matchReport)
+    MatchHeader(page.theMatch, "", liveBlog, matchReport, page.metadata.webUrl)
   }
 }

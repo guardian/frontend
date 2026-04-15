@@ -21,7 +21,7 @@ import scala.concurrent.Future.successful
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
-    id = s"/sport/cricket/match/$matchId/${team.wordsForUrl}",
+    id = s"sport/cricket/match/$matchId/${team.wordsForUrl}",
     section = Some(SectionId.fromId("cricket")),
     webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}",
   )
@@ -83,7 +83,7 @@ class CricketMatchController(
               LocalDate.parse(date, PaFeed.dateFormat).atStartOfDay(ZoneId.of("Europe/London"))
             val related: Future[Seq[ContentType]] = loadMoreOn(matchData, requestedDate)
             related.map { relatedContents =>
-              val model = MatchHeader(page.theMatch, relatedContents, requestedDate)
+              val model = MatchHeader(page, relatedContents, requestedDate)
               Cached(CacheTime.Cricket)(JsonComponent.fromWritable(model))
             }
           }
