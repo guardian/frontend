@@ -16,7 +16,7 @@ jobs:
         uses: guardian/setup-scala@f8b37d4380d93ee5c37739fd8aea97f7c580034a # v1.1.0
       - name: Submit dependencies
         id: submit
-        uses: scalacenter/sbt-dependency-submission@0afdb45ffc76c91f6c8f49cccefd40d7035e8a27 # v3.2.1
+        uses: scalacenter/sbt-dependency-submission@7bb141d5b54cee07fda3a427f596a5612dad7e31 # v3.2.1
       - name: Log snapshot for user validation
         id: validate
         run: cat ${{ steps.submit.outputs.snapshot-json-path }} | jq
