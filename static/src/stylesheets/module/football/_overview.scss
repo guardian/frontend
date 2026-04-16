@@ -1,7 +1,7 @@
 @use 'sass:math';
 
 /* ==========================================================================
-   World Cup 2018
+   World Cup 2026
    ========================================================================== */
 .wc-overview {
 	.container__title {
@@ -376,6 +376,7 @@
 		vertical-align: middle;
 	}
 	.football-match__team {
+        font-size: 10px;
 		height: math.div($gs-baseline, 1.5) * 2;
 		padding: 0 0 $gs-baseline * 1.5;
 		border: 1px solid $brightness-46;
@@ -542,14 +543,15 @@
 .football-round__matches {
 	box-sizing: border-box;
 	padding-right: $gs-gutter * 0.5;
-	height: 820px;
+	height: 960px;
 }
 
 .football-round--playoff {
 	background: $brightness-97;
 	bottom: 0;
 	height: 25%;
-	left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center
+	left: 50%;
+    transform: translateX(-50%);
 	position: absolute;
 	z-index: 2;
 
