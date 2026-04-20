@@ -3,4 +3,4 @@ Encryption: https://www.theguardian.com/pgp/PublicKeys/Guardian%20Application-Se
 Canonical: https://www.theguardian.com/.well-known/security.txt
 Hiring: https://workforus.theguardian.com/index.php/search-jobs-and-apply/?search_paths%5B%5D=&query=information+security&submit=Search+Jobs
 Signature: https://www.theguardian.com/.well-known/security.txt.asc
-Expires: 2027-05-31T08:00:00Z
+Expires: 2027-06-01T08:00:00Z
