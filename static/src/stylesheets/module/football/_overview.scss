@@ -430,7 +430,7 @@
 	.football-match__kickoff,
 	.football-match__date,
 	.football-match__comments {
-		@include fs-textSans(2, true);
+		@include fs-textSans(1, true);
 	}
 
 	.football-match__comments {
@@ -543,7 +543,7 @@
 .football-round__matches {
 	box-sizing: border-box;
 	padding-right: $gs-gutter * 0.5;
-	height: 960px;
+	height: 1100px;
 }
 
 .football-round--playoff {
