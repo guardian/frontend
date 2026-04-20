@@ -2,7 +2,7 @@ name: Update security.txt Expires Field
 
 on:
   schedule:
-    - cron: '0 8 30 4 *' # Runs at 8:00 UTC Q:on April 30th every year
+    - cron: '0 8 30 4 *' # Runs at 8:00 UTC on April 30th every year
   workflow_dispatch:
 
 permissions:
@@ -25,6 +25,10 @@ jobs:
           git checkout -b update-security-txt-${{ github.run_number }}
           git add facia/public/security.txt
           git commit -m "Update Expires field in security.txt to next year (automated)"
-          git push
+          git push --set-upstream origin update-security-txt-${{ github.run_number }}
+          gh pr create \
+            --title "Update Expires field in security.txt to next year (automated)" \
+            --body "Automated PR to update the Expires field in security.txt." \
+            --base main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
