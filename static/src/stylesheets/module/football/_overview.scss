@@ -376,14 +376,14 @@
 		vertical-align: middle;
 	}
 	.football-match__team {
-        font-size: 10px;
+		position: absolute;
+		display: flex;
+		align-items: center;
+		font-size: 10px;
 		height: math.div($gs-baseline, 1.5) * 2;
-		padding: 0 0 $gs-baseline * 1.5;
+		padding: 0;
 		border: 1px solid $brightness-46;
 		border-top: 0;
-		display: block;
-		float: none;
-		position: absolute;
 		text-align: left;
 		width: 100%;
 	}
@@ -398,6 +398,13 @@
 		margin-bottom: -(($gs-baseline * 1.5) * 0.5);
 		bottom: 25%;
 		top: auto;
+	}
+	.football-match__team-name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		flex-grow: 1;
+		padding: 0 2px;
 	}
 	.football-match__victory-line {
 		border-left: 1px dotted $brightness-46;
@@ -438,8 +445,8 @@
 	}
 
 	.team-crest {
-		margin-bottom: 2px;
 		margin-left: 1px;
+		margin-right: 0;
 	}
 
 	@include mq(desktop) {
@@ -551,7 +558,7 @@
 	bottom: 0;
 	height: 25%;
 	left: 50%;
-    transform: translateX(-50%);
+	transform: translateX(-50%);
 	position: absolute;
 	z-index: 2;
 
