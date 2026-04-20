@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 8 30 4 *' # Runs at 8:00 UTC on April 30th every year
   workflow_dispatch:
+  push:
+    branches:
+      - nt/update-expiry-test
 
 permissions:
   contents: write
