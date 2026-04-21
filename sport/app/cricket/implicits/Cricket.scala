@@ -7,7 +7,7 @@ import scala.language.implicitConversions
 
 object Cricket {
   implicit class ContentHelper(c: ContentType) {
-    lazy val matchReport = c.tags.tags.exists(_.id == "tone/matchreports")
+    lazy val isMatchReport = c.tags.tags.exists(_.id == "tone/matchreports")
 
     lazy val isLiveCricket =
       c.tags.tags.exists(_.id == "tone/minutebyminute") && c.tags.tags.exists(

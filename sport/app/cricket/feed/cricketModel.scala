@@ -117,7 +117,7 @@ object Match {
 
 case class MatchHeader(
     cricketMatch: Match,
-    competitionName: String, // e.g., "Ashes 2025-26"
+//    competitionName: String, TODO: we currently don't have this but need to retrieve it e.g., "Ashes 2025-26"
     liveURL: Option[String],
     reportURL: Option[String],
     infoURL: String,
@@ -136,9 +136,14 @@ object MatchHeader extends DCARUrlHelper {
       .orElse {
         related.find { content =>
           content.isArticleType &&
+          content.isMatchReport &&
           !content.isLiveCricket &&
-          (content.webPublicationDate.toLocalDate == date.toLocalDate ||
-            content.webPublicationDate.isAfter(DateHelpers.startOfDay(date)))
+          (content.webPublicationDate.toLocalDate == date.toLocalDate &&
+            content.webPublicationDate.isAfter(
+              DateHelpers.startOfDay(
+                page.theMatch.gameDate.atZone(ZoneId.of("Europe/London")),
+              ), // match report always happens after the match
+            ))
         }
       }
       .map(content => getPageUrl(content.metadata.url))
@@ -148,12 +153,11 @@ object MatchHeader extends DCARUrlHelper {
       .orElse {
         related.find { content =>
           content.isLiveCricket &&
-          (content.webPublicationDate.toLocalDate == date.toLocalDate ||
-            content.webPublicationDate.isAfter(page.theMatch.gameDate.atZone(ZoneId.of("Europe/London"))))
+          (content.webPublicationDate.toLocalDate == date.toLocalDate)
         }
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    MatchHeader(page.theMatch, "", liveBlog, matchReport, s"$getAjaxHost${page.metadata.id}")
+    MatchHeader(page.theMatch, liveBlog, matchReport, s"$getAjaxHost${page.metadata.id}")
   }
 }
