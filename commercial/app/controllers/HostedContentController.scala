@@ -21,13 +21,13 @@ import model.{
   PageWithStoryPackage,
   StoryPackages,
 }
-import play.api.libs.json.{JsArray, JsString, JsValue, Json}
+import play.api.libs.json.{JsArray, JsValue, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
 import views.html.hosted._
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
-import model.hosted.HostedOnwardTrails
+import model.hosted.{HostedOnwardTrails, HostedTrail}
 import model.meta.BlocksOn
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
@@ -178,11 +178,14 @@ class HostedContentController(
 
   private def fetchOnwardTrails(itemId: String, sectionId: String, limit: Int = 3)(implicit
       request: RequestHeader,
-  ): Future[Seq[CapiContent]] = {
+  ): Future[Seq[HostedTrail]] = {
     capiLookup.lookup(sectionId, None) map { response =>
       response.results match {
-        case Some(results) => HostedOnwardTrails.fromContent(itemId, results.toSeq).take(limit)
-        case None          => Seq.empty
+        case Some(results) =>
+          HostedOnwardTrails.fromContent(itemId, results.toSeq).take(limit) flatMap { trail =>
+            HostedOnwardTrails.toHostedTrail(trail)
+          }
+        case None => Seq.empty
       }
     }
   }
@@ -193,27 +196,9 @@ class HostedContentController(
       val sectionId = s"advertiser-content/$campaignName"
 
       fetchOnwardTrails(itemId, sectionId) map { trails =>
-        val owner = trails.headOption flatMap { firstTrail =>
-          for {
-            hostedTag <- firstTrail.tags.find(_.paidContentType.contains("HostedContent"))
-            sponsorships <- hostedTag.activeSponsorships
-            sponsor <- sponsorships.headOption
-          } yield sponsor.sponsorName
-        }
-
-        if (trails.nonEmpty) {
-          Cached(cacheDuration)(JsonComponent {
-            "result" ->
-              Json.obj(
-                "owner" -> JsString(owner.getOrElse("")),
-                "trails" -> (trails map HostedOnwardTrails.contentToHostedTrail),
-              )
-          })
-        } else {
-          Cached(cacheDuration)(JsonComponent {
-            "result" -> Json.obj()
-          })
-        }
+        Cached(cacheDuration)(
+          JsonComponent.fromWritable(HostedOnwardTrails(trails)),
+        )
       } recover { case NonFatal(e) =>
         log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
         Cached(0)(JsonNotFound())

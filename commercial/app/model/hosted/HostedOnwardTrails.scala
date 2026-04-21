@@ -21,14 +21,18 @@ case class HostedTrail(
 object HostedTrail {
   implicit val hostedTrailWrites: OWrites[HostedTrail] = Json.writes[HostedTrail]
 }
-
+case class HostedOnwardTrails(
+    trails: Seq[HostedTrail],
+)
 object HostedOnwardTrails {
+  implicit val hostedOnwardTrailWrites: OWrites[HostedOnwardTrails] = Json.writes[HostedOnwardTrails]
+
   private def publishedDateTime(item: Content): Long = item.webPublicationDate.map(_.dateTime).getOrElse(0L)
 
   def fromContent(itemId: String, results: Seq[Content]): Seq[Content] =
     results filterNot (_.id == itemId) sortBy publishedDateTime
 
-  def contentToHostedTrail(content: Content): Option[HostedTrail] = {
+  def toHostedTrail(content: Content): Option[HostedTrail] = {
     val contentFormat: ContentFormat = ContentFormat(content.design, content.theme, content.display)
     for {
       fields <- content.fields
