@@ -27,10 +27,7 @@ class AudioContainer extends Component {
 		const isPodcast = config.get('page.isPodcast');
 		const sourceUrl =
 			isAcastEnabled && isPodcast && this.state.acastConsent
-				? this.props.source.replace(
-						'https://',
-						'https://flex.acast.com/',
-				  )
+				? this.props.sourceWithAds
 				: this.props.source;
 
 		return (
@@ -59,6 +56,7 @@ const init = () => {
 
 	if (placeholder && article) {
 		const source = placeholder.dataset.source;
+		const sourceWithAds = placeholder.dataset.sourceWithAds;
 		const mediaId = placeholder.dataset.mediaId;
 		const downloadUrl = placeholder.dataset.downloadUrl;
 		const duration = placeholder.dataset.duration;
@@ -74,6 +72,7 @@ const init = () => {
 			supportsCSSGrid ? (
 				<AudioContainer
 					source={source}
+					sourceWithAds={sourceWithAds}
 					mediaId={mediaId}
 					downloadUrl={downloadUrl}
 					duration={duration}
