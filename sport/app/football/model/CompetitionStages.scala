@@ -30,7 +30,7 @@ class CompetitionStage(competitions: Seq[Competition]) {
     sortedStagesWithMatches.flatMap { case (stage, stageMatches) =>
       // work out stage type
       val stageLeagueEntries = competition.leagueTable.filter(_.stageNumber == stage.stageNumber)
-      val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber)
+      val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber.toIntOption.getOrElse(0))
       if (stageLeagueEntries.isEmpty) {
         if (rounds.size > 1) {
           orderings.get(competition.id) match {
@@ -54,7 +54,7 @@ class CompetitionStage(competitions: Seq[Competition]) {
       } else {
         if (rounds.size > 1) {
           // multiple rounds and league table entries is a group stage
-          val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber)
+          val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber.toIntOption.getOrElse(0))
           Some(Groups(competitions, stageMatches, groupTables))
         } else if (rounds.size == 1) {
           // single round with table is league
