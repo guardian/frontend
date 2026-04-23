@@ -212,6 +212,8 @@ final case class MediaAsset(
     assetType: MediaAssetType,
     dimensions: Option[AssetDimensions],
     aspectRatio: Option[String],
+    duration: Option[Long],
+    hasAudio: Option[Boolean],
 )
 
 sealed trait VideoPlayerFormat extends EnumEntry
@@ -314,6 +316,8 @@ object MediaAtom extends common.GuLogging {
       assetType = MediaAssetType.withName(mediaAsset.assetType.name),
       dimensions = mediaAsset.dimensions.map(dim => AssetDimensions(dim.width, dim.height)),
       aspectRatio = mediaAsset.aspectRatio,
+      duration = mediaAsset.duration,
+      hasAudio = mediaAsset.hasAudio,
     )
   }
 
