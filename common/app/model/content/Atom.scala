@@ -327,6 +327,7 @@ object MediaAtom extends common.GuLogging {
         "width" -> mediaImage.dimensions.map(_.width).map(_.toString),
         "caption" -> Some(caption),
         "altText" -> Some(caption),
+        "aspectRatio" -> mediaImage.aspectRatio,
       ).collect { case (k, Some(v)) => (k, v) },
     )
   }
