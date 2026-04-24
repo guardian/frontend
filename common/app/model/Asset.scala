@@ -158,8 +158,8 @@ object AudioAsset {
       mimeType = asset.mimeType,
       url = asset.typeData.flatMap(_.secureFile).orElse(asset.file),
       urlWithAds = asset.typeData
-        .flatMap(_.secureFile)
-        .orElse(asset.file), // todo - once library is upgraded this becomes _.secureFileWithAds
+        .flatMap(_.secureFileWithAds)
+        .orElse(asset.file),
     )
   }
   implicit val audioAssetWrites: Writes[AudioAsset] = Json.writes[AudioAsset]

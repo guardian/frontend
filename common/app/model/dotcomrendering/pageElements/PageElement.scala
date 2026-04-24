@@ -1265,8 +1265,7 @@ object PageElement {
                 title = audio.atom.title,
                 coverUrl = audio.data.coverUrl,
                 trackUrl = audio.data.trackUrl,
-                trackUrlWithAds =
-                  audio.data.trackUrl, // todo - once library is upgraded this becomes audio.data.trackUrlWithAds
+                trackUrlWithAds = audio.data.trackUrlWithAds,
                 duration = audio.data.duration,
                 contentId = audio.data.contentId,
               ),
