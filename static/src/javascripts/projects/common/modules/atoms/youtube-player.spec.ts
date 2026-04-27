@@ -61,10 +61,6 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
-	isInVariantSynchronous: jest.fn(),
-}));
-
 const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({
 	tcfv2: {
 		consents: { 1: canTarget, 2: canTarget, 3: canTarget },

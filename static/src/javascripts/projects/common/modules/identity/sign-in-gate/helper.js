@@ -2,10 +2,6 @@ import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
 import config from 'lib/config';
-import {
-    getSynchronousTestsToRun,
-    isInABTestSynchronous,
-} from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { cmp } from '@guardian/libs';
 import { submitClickEventTracking } from './component-event-tracking';
@@ -40,29 +36,6 @@ const retrieveDismissedCount = (
     } catch (error) {
         return 0;
     }
-};
-
-// wrapper over isInABTestSynchronous
-export const isInTest = test => isInABTestSynchronous(test);
-
-// when running multiple tests simultaneously to test the component, we need to get
-// which test the user is in, so that we can check and display the correct logic for that test
-export const getTestforMultiTest = tests =>
-    tests.reduce((acc, test) => {
-        const checkTest = getSynchronousTestsToRun().find(
-            t => t.id === test.id
-        );
-        if (checkTest) return checkTest;
-        return acc;
-    }, undefined);
-
-// get the current variant id the user is in
-export const getVariant = test => {
-    //  get the current test
-    const currentTest = getSynchronousTestsToRun().find(t => t.id === test.id);
-
-    // get variant user is in for the test
-    return currentTest ? currentTest.variantToRun.id : '';
 };
 
 // set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
