@@ -588,102 +588,119 @@ object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
-case class RecipeRange(min: Int, max: Int)
+// The canonical schema for recipe data is maintained in recipes-backend:
+// https://github.com/guardian/recipes-backend/tree/main/schema
+// If the schema changes there, this model should be updated to match.
+
+// schema/range.json — min/max are required fields but values can be null
+case class RecipeRange(min: Option[Double], max: Option[Double])
 object RecipeRange {
   implicit val RecipeRangeReads: Reads[RecipeRange] = Json.reads[RecipeRange]
   implicit val RecipeRangeWrites: Writes[RecipeRange] = Json.writes[RecipeRange]
 }
 
-case class RecipeContributor(
-    `type`: String,
-    tagId: String,
-)
-object RecipeContributor {
-  implicit val RecipeContributorReads: Reads[RecipeContributor] = Json.reads[RecipeContributor]
-  implicit val RecipeContributorWrites: Writes[RecipeContributor] = Json.writes[RecipeContributor]
+// schema/commerce-cta.json
+case class RecipeCommerceCta(sponsorName: String, territory: String, url: String)
+object RecipeCommerceCta {
+  implicit val RecipeCommerceCTAReads: Reads[RecipeCommerceCta] = Json.reads[RecipeCommerceCta]
+  implicit val RecipeCommerceCTAWrites: Writes[RecipeCommerceCta] = Json.writes[RecipeCommerceCta]
 }
 
+// schema/image.json — url, mediaId, cropId are required; all others optional
 case class RecipeFeaturedImage(
     url: String,
     mediaId: String,
-    caption: Option[String],
-    photographer: Option[String],
+    cropId: String,
     source: Option[String],
-    width: Int,
-    height: Int,
-    cropId: Option[String],
-    mediaApiUri: Option[String],
+    photographer: Option[String],
     imageType: Option[String],
+    caption: Option[String],
+    mediaApiUrl: Option[String],
 )
 object RecipeFeaturedImage {
   implicit val RecipeFeaturedImageReads: Reads[RecipeFeaturedImage] = Json.reads[RecipeFeaturedImage]
   implicit val RecipeFeaturedImageWrites: Writes[RecipeFeaturedImage] = Json.writes[RecipeFeaturedImage]
 }
 
-case class RecipeTiming(qualifier: String, durationInMins: RecipeRange, text: String)
+// schema/timing.json — no required fields
+case class RecipeTiming(
+    qualifier: Option[String],
+    durationInMins: Option[RecipeRange],
+    text: Option[String],
+)
 object RecipeTiming {
   implicit val RecipeTimingReads: Reads[RecipeTiming] = Json.reads[RecipeTiming]
   implicit val RecipeTimingWrites: Writes[RecipeTiming] = Json.writes[RecipeTiming]
 }
 
-case class RecipeServing(amount: RecipeRange, unit: String, text: String)
+// schema/serves.json — amount is required (but nullable); unit and text are optional
+case class RecipeServing(amount: Option[RecipeRange], unit: Option[String], text: Option[String])
 object RecipeServing {
   implicit val RecipeServingReads: Reads[RecipeServing] = Json.reads[RecipeServing]
   implicit val RecipeServingWrites: Writes[RecipeServing] = Json.writes[RecipeServing]
 }
 
+// schema/ingredient-item.json — name is required (but nullable); all others optional
 case class RecipeIngredient(
-    name: String,
-    text: String,
+    name: Option[String],
+    text: Option[String],
     unit: Option[String],
-    ingredientID: String,
-    template: String,
+    ingredientId: Option[String],
+    template: Option[String],
     prefix: Option[String],
     suffix: Option[String],
     amount: Option[RecipeRange],
+    optional: Option[Boolean],
 )
 object RecipeIngredient {
   implicit val RecipeIngredientReads: Reads[RecipeIngredient] = Json.reads[RecipeIngredient]
   implicit val RecipeIngredientWrites: Writes[RecipeIngredient] = Json.writes[RecipeIngredient]
 }
 
-case class RecipeIngredientGroup(recipeSection: String, ingredientsList: Seq[RecipeIngredient])
+// schema/ingredients-list.json — ingredientsList is required (but nullable)
+case class RecipeIngredientGroup(recipeSection: Option[String], ingredientsList: Option[Seq[RecipeIngredient]])
 object RecipeIngredientGroup {
   implicit val RecipeIngredientGroupReads: Reads[RecipeIngredientGroup] = Json.reads[RecipeIngredientGroup]
   implicit val RecipeIngredientGroupWrites: Writes[RecipeIngredientGroup] = Json.writes[RecipeIngredientGroup]
 }
 
+// schema/instruction.json — description is required; all others optional
 case class RecipeInstruction(
     description: String,
-    descriptionTemplate: String,
+    descriptionTemplate: Option[String],
+    stepNumber: Option[Double],
+    images: Option[Seq[String]],
 )
 object RecipeInstruction {
   implicit val RecipeInstructionReads: Reads[RecipeInstruction] = Json.reads[RecipeInstruction]
   implicit val RecipeInstructionWrites: Writes[RecipeInstruction] = Json.writes[RecipeInstruction]
 }
 
-// commerceCtas: commerce/affiliate call-to-action links — shape unknown (always [] in observed data); add when shape is confirmed
+// schema/recipe-v3.json — only id is required; all other fields are optional or nullable
 case class RecipeBlockElement(
     id: String,
-    title: String,
-    description: String,
-    isAppReady: Boolean,
-    bookCredit: String,
-    canonicalArticle: String,
-    composerId: String,
-    difficultyLevel: String,
+    isAppReady: Option[Boolean],
+    canonicalArticle: Option[String],
+    composerId: Option[String],
+    webPublicationDate: Option[String],
+    title: Option[String],
+    description: Option[String],
+    bookCredit: Option[String],
+    difficultyLevel: Option[String],
     featuredImage: Option[RecipeFeaturedImage],
-    contributors: Seq[RecipeContributor],
-    cuisineIds: Seq[String],
-    mealTypeIds: Seq[String],
-    suitableForDietIds: Seq[String],
-    celebrationIds: Seq[String],
-    techniquesUsedIds: Seq[String],
-    utensilsAndApplianceIds: Seq[String],
-    timings: Seq[RecipeTiming],
-    serves: Seq[RecipeServing],
-    ingredients: Seq[RecipeIngredientGroup],
-    instructions: Seq[RecipeInstruction],
+    contributors: Option[Seq[String]],
+    byline: Option[Seq[String]],
+    serves: Option[Seq[RecipeServing]],
+    timings: Option[Seq[RecipeTiming]],
+    ingredients: Option[Seq[RecipeIngredientGroup]],
+    instructions: Option[Seq[RecipeInstruction]],
+    commerceCtas: Option[Seq[RecipeCommerceCta]],
+    cuisineIds: Option[Seq[String]],
+    mealTypeIds: Option[Seq[String]],
+    suitableForDietIds: Option[Seq[String]],
+    celebrationIds: Option[Seq[String]],
+    techniquesUsedIds: Option[Seq[String]],
+    utensilsAndApplianceIds: Option[Seq[String]],
 ) extends PageElement
 object RecipeBlockElement {
   implicit val RecipeBlockElementReads: Reads[RecipeBlockElement] = Json.reads[RecipeBlockElement]
