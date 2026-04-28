@@ -7,10 +7,10 @@ import implicits.AppsFormat
 import conf.switches.Switches
 
 object HostedContentPicker extends GuLogging {
-  def getTier()(implicit
+  def getTier(isGallery: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
-    val tier: RenderType = decideTier()
+    val tier: RenderType = decideTier(isGallery)
     tier match {
       case RemoteRender =>
         if (request.getRequestFormat == AppsFormat)
@@ -23,10 +23,12 @@ object HostedContentPicker extends GuLogging {
     tier
   }
 
-  def decideTier()(implicit
+  def decideTier(isGallery: Boolean)(implicit
       request: RequestHeader,
   ): RenderType = {
     if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
+    // Gallery pages are not supported in DCR yet
+    else if (isGallery) LocalRender
     else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) RemoteRender
     else LocalRender
