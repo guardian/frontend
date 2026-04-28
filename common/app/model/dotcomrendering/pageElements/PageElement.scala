@@ -716,28 +716,28 @@ object RecipeBlockElement {
   // and RecipeBlockElement has 23.
   implicit val RecipeBlockElementReads: Reads[RecipeBlockElement] = Reads[RecipeBlockElement] { json =>
     for {
-      id                      <- (json \ "id").validate[String]
-      isAppReady              <- (json \ "isAppReady").validateOpt[Boolean]
-      canonicalArticle        <- (json \ "canonicalArticle").validateOpt[String]
-      composerId              <- (json \ "composerId").validateOpt[String]
-      webPublicationDate      <- (json \ "webPublicationDate").validateOpt[String]
-      title                   <- (json \ "title").validateOpt[String]
-      description             <- (json \ "description").validateOpt[String]
-      bookCredit              <- (json \ "bookCredit").validateOpt[String]
-      difficultyLevel         <- (json \ "difficultyLevel").validateOpt[String]
-      featuredImage           <- (json \ "featuredImage").validateOpt[RecipeFeaturedImage]
-      contributors            <- (json \ "contributors").validateOpt[Seq[String]]
-      byline                  <- (json \ "byline").validateOpt[Seq[String]]
-      serves                  <- (json \ "serves").validateOpt[Seq[RecipeServing]]
-      timings                 <- (json \ "timings").validateOpt[Seq[RecipeTiming]]
-      ingredients             <- (json \ "ingredients").validateOpt[Seq[RecipeIngredientGroup]]
-      instructions            <- (json \ "instructions").validateOpt[Seq[RecipeInstruction]]
-      commerceCtas            <- (json \ "commerceCtas").validateOpt[Seq[RecipeCommerceCta]]
-      cuisineIds              <- (json \ "cuisineIds").validateOpt[Seq[String]]
-      mealTypeIds             <- (json \ "mealTypeIds").validateOpt[Seq[String]]
-      suitableForDietIds      <- (json \ "suitableForDietIds").validateOpt[Seq[String]]
-      celebrationIds          <- (json \ "celebrationIds").validateOpt[Seq[String]]
-      techniquesUsedIds       <- (json \ "techniquesUsedIds").validateOpt[Seq[String]]
+      id <- (json \ "id").validate[String]
+      isAppReady <- (json \ "isAppReady").validateOpt[Boolean]
+      canonicalArticle <- (json \ "canonicalArticle").validateOpt[String]
+      composerId <- (json \ "composerId").validateOpt[String]
+      webPublicationDate <- (json \ "webPublicationDate").validateOpt[String]
+      title <- (json \ "title").validateOpt[String]
+      description <- (json \ "description").validateOpt[String]
+      bookCredit <- (json \ "bookCredit").validateOpt[String]
+      difficultyLevel <- (json \ "difficultyLevel").validateOpt[String]
+      featuredImage <- (json \ "featuredImage").validateOpt[RecipeFeaturedImage]
+      contributors <- (json \ "contributors").validateOpt[Seq[String]]
+      byline <- (json \ "byline").validateOpt[Seq[String]]
+      serves <- (json \ "serves").validateOpt[Seq[RecipeServing]]
+      timings <- (json \ "timings").validateOpt[Seq[RecipeTiming]]
+      ingredients <- (json \ "ingredients").validateOpt[Seq[RecipeIngredientGroup]]
+      instructions <- (json \ "instructions").validateOpt[Seq[RecipeInstruction]]
+      commerceCtas <- (json \ "commerceCtas").validateOpt[Seq[RecipeCommerceCta]]
+      cuisineIds <- (json \ "cuisineIds").validateOpt[Seq[String]]
+      mealTypeIds <- (json \ "mealTypeIds").validateOpt[Seq[String]]
+      suitableForDietIds <- (json \ "suitableForDietIds").validateOpt[Seq[String]]
+      celebrationIds <- (json \ "celebrationIds").validateOpt[Seq[String]]
+      techniquesUsedIds <- (json \ "techniquesUsedIds").validateOpt[Seq[String]]
       utensilsAndApplianceIds <- (json \ "utensilsAndApplianceIds").validateOpt[Seq[String]]
     } yield RecipeBlockElement(
       id,
@@ -767,28 +767,28 @@ object RecipeBlockElement {
   }
   implicit val RecipeBlockElementWrites: Writes[RecipeBlockElement] = Writes[RecipeBlockElement] { r =>
     Json.obj(
-      "id"                      -> r.id,
-      "isAppReady"              -> r.isAppReady,
-      "canonicalArticle"        -> r.canonicalArticle,
-      "composerId"              -> r.composerId,
-      "webPublicationDate"      -> r.webPublicationDate,
-      "title"                   -> r.title,
-      "description"             -> r.description,
-      "bookCredit"              -> r.bookCredit,
-      "difficultyLevel"         -> r.difficultyLevel,
-      "featuredImage"           -> r.featuredImage,
-      "contributors"            -> r.contributors,
-      "byline"                  -> r.byline,
-      "serves"                  -> r.serves,
-      "timings"                 -> r.timings,
-      "ingredients"             -> r.ingredients,
-      "instructions"            -> r.instructions,
-      "commerceCtas"            -> r.commerceCtas,
-      "cuisineIds"              -> r.cuisineIds,
-      "mealTypeIds"             -> r.mealTypeIds,
-      "suitableForDietIds"      -> r.suitableForDietIds,
-      "celebrationIds"          -> r.celebrationIds,
-      "techniquesUsedIds"       -> r.techniquesUsedIds,
+      "id" -> r.id,
+      "isAppReady" -> r.isAppReady,
+      "canonicalArticle" -> r.canonicalArticle,
+      "composerId" -> r.composerId,
+      "webPublicationDate" -> r.webPublicationDate,
+      "title" -> r.title,
+      "description" -> r.description,
+      "bookCredit" -> r.bookCredit,
+      "difficultyLevel" -> r.difficultyLevel,
+      "featuredImage" -> r.featuredImage,
+      "contributors" -> r.contributors,
+      "byline" -> r.byline,
+      "serves" -> r.serves,
+      "timings" -> r.timings,
+      "ingredients" -> r.ingredients,
+      "instructions" -> r.instructions,
+      "commerceCtas" -> r.commerceCtas,
+      "cuisineIds" -> r.cuisineIds,
+      "mealTypeIds" -> r.mealTypeIds,
+      "suitableForDietIds" -> r.suitableForDietIds,
+      "celebrationIds" -> r.celebrationIds,
+      "techniquesUsedIds" -> r.techniquesUsedIds,
       "utensilsAndApplianceIds" -> r.utensilsAndApplianceIds,
     )
   }
