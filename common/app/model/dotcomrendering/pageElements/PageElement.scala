@@ -459,12 +459,21 @@ case class MediaAtomBlockElementMediaAsset(
     mimeType: Option[String],
     dimensions: Option[AssetDimensions],
     aspectRatio: Option[String],
+    duration: Option[Long],
+    hasAudio: Option[Boolean],
 )
 object MediaAtomBlockElementMediaAsset {
   implicit val MediaAtomBlockElementMediaAssetWrites: Writes[MediaAtomBlockElementMediaAsset] =
     Json.writes[MediaAtomBlockElementMediaAsset]
   def fromMediaAsset(asset: MediaAsset): MediaAtomBlockElementMediaAsset = {
-    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType, asset.dimensions, asset.aspectRatio)
+    MediaAtomBlockElementMediaAsset(
+      asset.id,
+      asset.mimeType,
+      asset.dimensions,
+      asset.aspectRatio,
+      asset.duration,
+      asset.hasAudio,
+    )
   }
 }
 case class MediaAtomBlockElement(
