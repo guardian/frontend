@@ -588,6 +588,108 @@ object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
+case class RecipeRange(min: Int, max: Int)
+object RecipeRange {
+  implicit val RecipeRangeReads: Reads[RecipeRange] = Json.reads[RecipeRange]
+  implicit val RecipeRangeWrites: Writes[RecipeRange] = Json.writes[RecipeRange]
+}
+
+case class RecipeContributor(
+    `type`: String,
+    tagId: String,
+)
+object RecipeContributor {
+  implicit val RecipeContributorReads: Reads[RecipeContributor] = Json.reads[RecipeContributor]
+  implicit val RecipeContributorWrites: Writes[RecipeContributor] = Json.writes[RecipeContributor]
+}
+
+case class RecipeFeaturedImage(
+    url: String,
+    mediaId: String,
+    caption: Option[String],
+    photographer: Option[String],
+    source: Option[String],
+    width: Int,
+    height: Int,
+    cropId: Option[String],
+    mediaApiUri: Option[String],
+    imageType: Option[String],
+)
+object RecipeFeaturedImage {
+  implicit val RecipeFeaturedImageReads: Reads[RecipeFeaturedImage] = Json.reads[RecipeFeaturedImage]
+  implicit val RecipeFeaturedImageWrites: Writes[RecipeFeaturedImage] = Json.writes[RecipeFeaturedImage]
+}
+
+case class RecipeTiming(qualifier: String, durationInMins: RecipeRange, text: String)
+object RecipeTiming {
+  implicit val RecipeTimingReads: Reads[RecipeTiming] = Json.reads[RecipeTiming]
+  implicit val RecipeTimingWrites: Writes[RecipeTiming] = Json.writes[RecipeTiming]
+}
+
+case class RecipeServing(amount: RecipeRange, unit: String, text: String)
+object RecipeServing {
+  implicit val RecipeServingReads: Reads[RecipeServing] = Json.reads[RecipeServing]
+  implicit val RecipeServingWrites: Writes[RecipeServing] = Json.writes[RecipeServing]
+}
+
+case class RecipeIngredient(
+    name: String,
+    text: String,
+    unit: Option[String],
+    ingredientID: String,
+    template: String,
+    prefix: Option[String],
+    suffix: Option[String],
+    amount: Option[RecipeRange],
+)
+object RecipeIngredient {
+  implicit val RecipeIngredientReads: Reads[RecipeIngredient] = Json.reads[RecipeIngredient]
+  implicit val RecipeIngredientWrites: Writes[RecipeIngredient] = Json.writes[RecipeIngredient]
+}
+
+case class RecipeIngredientGroup(recipeSection: String, ingredientsList: Seq[RecipeIngredient])
+object RecipeIngredientGroup {
+  implicit val RecipeIngredientGroupReads: Reads[RecipeIngredientGroup] = Json.reads[RecipeIngredientGroup]
+  implicit val RecipeIngredientGroupWrites: Writes[RecipeIngredientGroup] = Json.writes[RecipeIngredientGroup]
+}
+
+case class RecipeInstruction(
+    description: String,
+    descriptionTemplate: String,
+)
+object RecipeInstruction {
+  implicit val RecipeInstructionReads: Reads[RecipeInstruction] = Json.reads[RecipeInstruction]
+  implicit val RecipeInstructionWrites: Writes[RecipeInstruction] = Json.writes[RecipeInstruction]
+}
+
+// commerceCtas: commerce/affiliate call-to-action links — shape unknown (always [] in observed data); add when shape is confirmed
+case class RecipeBlockElement(
+    id: String,
+    title: String,
+    description: String,
+    isAppReady: Boolean,
+    bookCredit: String,
+    canonicalArticle: String,
+    composerId: String,
+    difficultyLevel: String,
+    featuredImage: Option[RecipeFeaturedImage],
+    contributors: Seq[RecipeContributor],
+    cuisineIds: Seq[String],
+    mealTypeIds: Seq[String],
+    suitableForDietIds: Seq[String],
+    celebrationIds: Seq[String],
+    techniquesUsedIds: Seq[String],
+    utensilsAndApplianceIds: Seq[String],
+    timings: Seq[RecipeTiming],
+    serves: Seq[RecipeServing],
+    ingredients: Seq[RecipeIngredientGroup],
+    instructions: Seq[RecipeInstruction],
+) extends PageElement
+object RecipeBlockElement {
+  implicit val RecipeBlockElementReads: Reads[RecipeBlockElement] = Json.reads[RecipeBlockElement]
+  implicit val RecipeBlockElementWrites: Writes[RecipeBlockElement] = Json.writes[RecipeBlockElement]
+}
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -991,6 +1093,7 @@ object PageElement {
       case _: TimelineBlockElement         => true
       case _: LinkBlockElement             => true
       case _: ProductBlockElement          => true
+      case _: RecipeBlockElement           => true
       case _: ReporterCalloutBlockElement  => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
@@ -1664,7 +1767,16 @@ object PageElement {
         }.toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-      case _                         => Nil
+
+      case Recipe =>
+        (for {
+          data <- element.recipeTypeData
+          json <- data.recipeJson
+          jsValue <- Try(Json.parse(json)).toOption
+          recipe <- jsValue.validate[RecipeBlockElement].asOpt
+        } yield recipe).toList
+
+      case _ => Nil
     }
   }
 
