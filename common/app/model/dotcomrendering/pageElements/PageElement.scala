@@ -1873,12 +1873,27 @@ object PageElement {
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
 
       case Recipe =>
-        (for {
-          data <- element.recipeTypeData
-          json <- data.recipeJson
-          jsValue <- Try(Json.parse(json)).toOption
-          recipe <- jsValue.validate[RecipeBlockElement].asOpt
-        } yield recipe).toList
+        element.recipeTypeData match {
+          case None => List(UnknownBlockElement(Some("DEBUG[Recipe]: no recipeTypeData on element")))
+          case Some(data) =>
+            data.recipeJson match {
+              case None => List(UnknownBlockElement(Some("DEBUG[Recipe]: recipeTypeData present but recipeJson is None")))
+              case Some(json) =>
+                Try(Json.parse(json)) match {
+                  case scala.util.Failure(err) =>
+                    List(UnknownBlockElement(Some(s"DEBUG[Recipe]: JSON parse error: ${err.getMessage}")))
+                  case scala.util.Success(jsValue) =>
+                    jsValue.validate[RecipeBlockElement] match {
+                      case JsSuccess(recipe, _) => List(recipe)
+                      case JsError(errors) =>
+                        val errorMsg = errors
+                          .map { case (path, errs) => s"$path: ${errs.map(_.message).mkString(", ")}" }
+                          .mkString("; ")
+                        List(UnknownBlockElement(Some(s"DEBUG[Recipe]: validation failed: $errorMsg")))
+                    }
+                }
+            }
+        }
 
       case _ => Nil
     }
