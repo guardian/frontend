@@ -620,7 +620,6 @@ case class RecipeBlockElement(
     id: String,
     title: Option[String],
     description: Option[String],
-    isAppReady: Option[Boolean],
     featuredImage: Option[RecipeFeaturedImage],
 ) extends PageElement
 object RecipeBlockElement {
