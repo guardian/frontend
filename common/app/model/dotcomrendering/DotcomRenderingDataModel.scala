@@ -162,6 +162,7 @@ object DotcomRenderingDataModel {
         "isAdFreeUser" -> model.isAdFreeUser,
         "webURL" -> model.webURL,
         "linkedData" -> model.linkedData,
+        "recipes" -> model.linkedData.collect { case r: RecipeLinkedData => RecipeLinkedData.formats.writes(r) },
         "openGraphData" -> model.openGraphData,
         "twitterData" -> model.twitterData,
         "config" -> model.config,
