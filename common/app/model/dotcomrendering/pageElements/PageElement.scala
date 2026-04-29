@@ -1673,7 +1673,7 @@ object PageElement {
         }.toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-      case _ => Nil
+      case _                         => Nil
     }
   }
 
