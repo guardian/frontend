@@ -597,11 +597,90 @@ object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
-case class RecipeBlockElement(recipeJson: JsValue) extends PageElement
+case class RecipeAmount(min: Double, max: Double)
+object RecipeAmount {
+  implicit val format: OFormat[RecipeAmount] = Json.format[RecipeAmount]
+}
+
+case class RecipeFeaturedImage(
+    url: String,
+    mediaId: String,
+    cropId: String,
+    source: String,
+    photographer: String,
+    caption: String,
+    imageType: String,
+    width: Int,
+    height: Int,
+    mediaApiUri: Option[String],
+)
+object RecipeFeaturedImage {
+  implicit val format: OFormat[RecipeFeaturedImage] = Json.format[RecipeFeaturedImage]
+}
+
+case class RecipeContributor(`type`: String, tagId: String)
+object RecipeContributor {
+  implicit val format: OFormat[RecipeContributor] = Json.format[RecipeContributor]
+}
+
+case class RecipeServes(amount: RecipeAmount, text: String, unit: String)
+object RecipeServes {
+  implicit val format: OFormat[RecipeServes] = Json.format[RecipeServes]
+}
+
+case class RecipeTiming(durationInMins: RecipeAmount, qualifier: String, text: String)
+object RecipeTiming {
+  implicit val format: OFormat[RecipeTiming] = Json.format[RecipeTiming]
+}
+
+case class RecipeIngredient(
+    ingredientID: String,
+    name: String,
+    text: String,
+    template: String,
+    amount: Option[RecipeAmount],
+    unit: Option[String],
+    prefix: Option[String],
+    suffix: Option[String],
+)
+object RecipeIngredient {
+  implicit val format: OFormat[RecipeIngredient] = Json.format[RecipeIngredient]
+}
+
+case class RecipeIngredientSection(recipeSection: String, ingredientsList: List[RecipeIngredient])
+object RecipeIngredientSection {
+  implicit val format: OFormat[RecipeIngredientSection] = Json.format[RecipeIngredientSection]
+}
+
+case class RecipeInstruction(description: String, descriptionTemplate: String)
+object RecipeInstruction {
+  implicit val format: OFormat[RecipeInstruction] = Json.format[RecipeInstruction]
+}
+
+case class RecipeBlockElement(
+    id: String,
+    title: String,
+    description: String,
+    canonicalArticle: String,
+    composerId: String,
+    bookCredit: String,
+    isAppReady: Boolean,
+    difficultyLevel: String,
+    cuisineIds: List[String],
+    mealTypeIds: List[String],
+    suitableForDietIds: List[String],
+    celebrationIds: List[String],
+    techniquesUsedIds: List[String],
+    utensilsAndApplianceIds: List[String],
+    contributors: List[RecipeContributor],
+    serves: List[RecipeServes],
+    timings: List[RecipeTiming],
+    ingredients: List[RecipeIngredientSection],
+    instructions: List[RecipeInstruction],
+    featuredImage: Option[RecipeFeaturedImage],
+) extends PageElement
 object RecipeBlockElement {
-  implicit val writes: OWrites[RecipeBlockElement] = new OWrites[RecipeBlockElement] {
-    def writes(r: RecipeBlockElement): JsObject = Json.obj("recipeJson" -> r.recipeJson)
-  }
+  implicit val format: OFormat[RecipeBlockElement] = Json.format[RecipeBlockElement]
 }
 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
@@ -1686,7 +1765,7 @@ object PageElement {
         element.recipeTypeData
           .flatMap(_.recipeJson)
           .flatMap(json => scala.util.Try(Json.parse(json)).toOption)
-          .map(RecipeBlockElement.apply)
+          .flatMap(json => json.validate[RecipeBlockElement].asOpt)
           .toList
 
       case _ => Nil
