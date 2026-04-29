@@ -162,7 +162,10 @@ object DotcomRenderingDataModel {
         "isAdFreeUser" -> model.isAdFreeUser,
         "webURL" -> model.webURL,
         "linkedData" -> model.linkedData,
-        "recipes" -> JsArray(model.linkedData.collect { case r: RecipeLinkedData => RecipeLinkedData.formats.writes(r) }),
+        "recipes" -> JsArray(model.linkedData.collect { case r: RecipeLinkedData =>
+          RecipeLinkedData.formats.writes(r)
+        }),
+        "deployTest" -> "afs-deploy-check",
         "openGraphData" -> model.openGraphData,
         "twitterData" -> model.twitterData,
         "config" -> model.config,
