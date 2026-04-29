@@ -1874,10 +1874,11 @@ object PageElement {
 
       case Recipe =>
         element.recipeTypeData match {
-          case None => List(UnknownBlockElement(Some("DEBUG[Recipe]: no recipeTypeData on element")))
+          case None       => List(UnknownBlockElement(Some("DEBUG[Recipe]: no recipeTypeData on element")))
           case Some(data) =>
             data.recipeJson match {
-              case None => List(UnknownBlockElement(Some("DEBUG[Recipe]: recipeTypeData present but recipeJson is None")))
+              case None =>
+                List(UnknownBlockElement(Some("DEBUG[Recipe]: recipeTypeData present but recipeJson is None")))
               case Some(json) =>
                 Try(Json.parse(json)) match {
                   case scala.util.Failure(err) =>
@@ -1885,7 +1886,7 @@ object PageElement {
                   case scala.util.Success(jsValue) =>
                     jsValue.validate[RecipeBlockElement] match {
                       case JsSuccess(recipe, _) => List(recipe)
-                      case JsError(errors) =>
+                      case JsError(errors)      =>
                         val errorMsg = errors
                           .map { case (path, errs) => s"$path: ${errs.map(_.message).mkString(", ")}" }
                           .mkString("; ")
