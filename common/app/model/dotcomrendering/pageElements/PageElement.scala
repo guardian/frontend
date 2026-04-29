@@ -1673,9 +1673,6 @@ object PageElement {
         }.toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-
-      case Recipe => List(UnknownBlockElement(None))
-
       case _ => Nil
     }
   }
