@@ -597,6 +597,13 @@ object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
+case class RecipeBlockElement(recipeJson: JsValue) extends PageElement
+object RecipeBlockElement {
+  implicit val writes: OWrites[RecipeBlockElement] = new OWrites[RecipeBlockElement] {
+    def writes(r: RecipeBlockElement): JsObject = Json.obj("recipeJson" -> r.recipeJson)
+  }
+}
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
@@ -1000,6 +1007,7 @@ object PageElement {
       case _: TimelineBlockElement         => true
       case _: LinkBlockElement             => true
       case _: ProductBlockElement          => true
+      case _: RecipeBlockElement           => true
       case _: ReporterCalloutBlockElement  => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
@@ -1673,7 +1681,15 @@ object PageElement {
         }.toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-      case _                         => Nil
+
+      case Recipe =>
+        element.recipeTypeData
+          .flatMap(_.recipeJson)
+          .flatMap(json => scala.util.Try(Json.parse(json)).toOption)
+          .map(RecipeBlockElement.apply)
+          .toList
+
+      case _ => Nil
     }
   }
 
