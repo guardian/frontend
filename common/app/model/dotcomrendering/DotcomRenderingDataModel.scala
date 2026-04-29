@@ -165,7 +165,6 @@ object DotcomRenderingDataModel {
         "recipes" -> JsArray(model.linkedData.collect { case r: RecipeLinkedData =>
           RecipeLinkedData.formats.writes(r)
         }),
-        "deployTest" -> "afs-deploy-check",
         "openGraphData" -> model.openGraphData,
         "twitterData" -> model.twitterData,
         "config" -> model.config,
