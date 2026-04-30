@@ -5,6 +5,17 @@ import conf.switches.Owner.group
 
 trait NewslettersSwitches {
 
+  val ShowNewNewsLetterSignupCard = Switch(
+    SwitchGroup.Newsletters,
+    "show-new-newsletter-signup-card",
+    "Feature flag to show new newsletter signup card instead of email signup component",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val HideNewsletterSignupComponentForSubscribers = Switch(
     SwitchGroup.Newsletters,
     "hide-newsletter-signup-component-for-subscribers",

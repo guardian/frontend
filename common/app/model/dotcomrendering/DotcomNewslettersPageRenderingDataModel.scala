@@ -119,6 +119,9 @@ object DotcomNewslettersPageRenderingDataModel {
       response.mailSuccessDescription.getOrElse("You are subscribed"),
       response.regionFocus,
       response.illustrationCard,
+      response.illustrationSquare,
+      response.exampleUrl,
+      response.category,
     )
   }
 }
