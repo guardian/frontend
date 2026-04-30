@@ -80,13 +80,13 @@ object Sponsorship {
   }
 }
 
-case class NSImage1(url: String, width: Long)
+case class NSImage1(url: String, width: Long, aspectRatio: String)
 object NSImage1 {
   implicit val NSImage1Writes: Writes[NSImage1] = Json.writes[NSImage1]
   def imageMediaToSequence(image: ImageMedia): Seq[NSImage1] = {
     image.imageCrops
       .filter(_.url.isDefined)
-      .map(i => NSImage1(i.url.get, i.fields("width").toLong))
+      .map(i => NSImage1(i.url.get, i.fields("width").toLong, i.fields("aspectRatio")))
     // calling .get is safe here because of the previous filter
   }
 }
