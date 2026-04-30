@@ -5,6 +5,7 @@ import model.content.InteractiveAtom
 import model.meta.BlocksOn
 import model.{ArticlePage, Content, ContentPage, InteractivePage}
 import play.api.libs.json.{Json, Reads}
+import scala.xml.XML
 
 case class LiveHarnessInteractiveAtom(
     id: String,
@@ -51,7 +52,10 @@ object LiveHarness {
   implicit val iu: PageUpdater[InteractivePage] = (ip, nc) => ip.copy(interactive = ip.item.copy(content = nc))
   implicit val au: PageUpdater[ArticlePage] = (ap, nc) => ap.copy(article = ap.item.copy(content = nc))
 
-  private val tagPattern = """(?s)(<\w[^>]*>.*?</\w+>)""".r
+  private def splitIntoTags(html: String): List[String] = {
+    val xml = XML.loadString(s"<root>$html</root>")
+    xml.child.toList.map(_.toString).filter(_.trim.nonEmpty)
+  }
 
   def inject[P <: ContentPage](harnessAtoms: Seq[LiveHarnessInteractiveAtom])(implicit
       updater: PageUpdater[P],
@@ -68,7 +72,7 @@ object LiveHarness {
           // Each unit is Either[String (text chunk), BlockElement (non-text)]
           val visualUnits: List[Either[String, BlockElement]] = block.elements.toList.flatMap {
             case el if el.`type` == ElementType.Text =>
-              tagPattern.findAllIn(el.textTypeData.flatMap(_.html).getOrElse("")).toList.map(Left(_))
+              splitIntoTags(el.textTypeData.flatMap(_.html).getOrElse("")).map(Left(_))
             case el =>
               List(Right(el))
           }
@@ -81,22 +85,17 @@ object LiveHarness {
           }
 
           // Repack: merge adjacent text chunks back into Text BlockElements
-          val repacked: List[BlockElement] = withAtoms.foldRight(List.empty[BlockElement]) { (unit, acc) =>
-            unit match {
-              case Left(chunk) =>
-                acc match {
-                  case head :: tail if head.`type` == ElementType.Text =>
-                    val existingHtml = head.textTypeData.flatMap(_.html).getOrElse("")
-                    head.copy(textTypeData = Some(TextElementFields(html = Some(chunk + "\n" + existingHtml)))) :: tail
-                  case _ =>
-                    BlockElement(
-                      `type` = ElementType.Text,
-                      assets = Seq.empty,
-                      textTypeData = Some(TextElementFields(html = Some(chunk))),
-                    ) :: acc
-                }
-              case Right(el) => el :: acc
-            }
+          val repacked: List[BlockElement] = withAtoms.foldRight(List.empty[BlockElement]) {
+            case (Left(chunk), head :: tail) if head.`type` == ElementType.Text =>
+              val existingHtml = head.textTypeData.flatMap(_.html).getOrElse("")
+              head.copy(textTypeData = Some(TextElementFields(html = Some(chunk + "\n" + existingHtml)))) :: tail
+            case (Left(chunk), acc) =>
+              BlockElement(
+                `type` = ElementType.Text,
+                assets = Seq.empty,
+                textTypeData = Some(TextElementFields(html = Some(chunk))),
+              ) :: acc
+            case (Right(el), acc) => el :: acc
           }
 
           block.copy(elements = repacked.toIndexedSeq)
