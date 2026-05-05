@@ -1,4 +1,4 @@
-import { onConsent } from '@guardian/libs';
+import { onConsent } from '@guardian/consent-manager';
 
 /**
  * This local storage item is used to target ads if a user has the correct consents

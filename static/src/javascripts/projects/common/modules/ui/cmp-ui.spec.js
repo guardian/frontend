@@ -1,5 +1,5 @@
 import config from 'lib/config';
-import { cmp } from '@guardian/libs';
+import { cmp } from '@guardian/consent-manager';
 import { cmpBannerCandidate } from './cmp-ui';
 
 jest.mock('lib/raven');
