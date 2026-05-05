@@ -58,7 +58,6 @@ GET         /dev/switchboard                                                    
 POST        /dev/switchboard                                                                        controllers.admin.SwitchboardController.save()
 
 # Analytics
-GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.legacyAbTests()
 GET         /analytics/ab-testing                                                                   controllers.admin.AnalyticsController.abTests()
 
 # Commercial

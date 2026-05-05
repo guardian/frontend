@@ -94,6 +94,9 @@ class MatchController(
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
 
+          val cacheTime =
+            if (theMatch.isAboutToStart || theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache
+
           page.flatMap { page =>
             val matchStats = MatchStats.statsFromFootballMatch(theMatch, page.lineUp, theMatch.matchStatus)
 
@@ -106,10 +109,10 @@ class MatchController(
                   group = group,
                   competitionName = competitionSummary.fullName,
                 )
-                Future.successful(Cached(CacheTime.FootballMatch)(JsonComponent.fromWritable(model)))
+                Future.successful(Cached(CacheTime.FootballMediumCache)(JsonComponent.fromWritable(model)))
 
               case JsonFormat =>
-                Future.successful(Cached(CacheTime.FootballMatch) {
+                Future.successful(Cached(CacheTime.FootballMediumCache) {
                   JsonComponent(football.views.html.matchStats.matchStatsComponent(page))
                 })
 
@@ -121,9 +124,11 @@ class MatchController(
                   group = group,
                   competitionName = competitionSummary.fullName,
                 )
+
                 remoteRenderer.getFootballMatchSummaryPage(
                   wsClient,
                   DotcomRenderingFootballMatchSummaryDataModel.toJson(model),
+                  cacheTime,
                 )
 
               case AppsFormat if tier == RemoteRender =>
@@ -137,10 +142,11 @@ class MatchController(
                 remoteRenderer.getAppsFootballMatchSummaryPage(
                   wsClient,
                   DotcomRenderingFootballMatchSummaryDataModel.toJson(model),
+                  cacheTime,
                 )
 
               case _ =>
-                Future.successful(Cached(CacheTime.FootballMatch) {
+                Future.successful(Cached(CacheTime.FootballMediumCache) {
                   RevalidatableResult.Ok(
                     football.views.html.matchStats
                       .matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id)),
@@ -149,7 +155,9 @@ class MatchController(
             }
           }
         case None =>
-          Future.successful(Cached(CacheTime.FootballMatch)(WithoutRevalidationResult(Found("/football/results"))))
+          Future.successful(
+            Cached(CacheTime.FootballMediumCache)(WithoutRevalidationResult(Found("/football/results"))),
+          )
       }
     }
 

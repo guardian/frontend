@@ -30,7 +30,7 @@ class CompetitionStage(competitions: Seq[Competition]) {
     sortedStagesWithMatches.flatMap { case (stage, stageMatches) =>
       // work out stage type
       val stageLeagueEntries = competition.leagueTable.filter(_.stageNumber == stage.stageNumber)
-      val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber)
+      val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber.toIntOption.getOrElse(0))
       if (stageLeagueEntries.isEmpty) {
         if (rounds.size > 1) {
           orderings.get(competition.id) match {
@@ -54,7 +54,7 @@ class CompetitionStage(competitions: Seq[Competition]) {
       } else {
         if (rounds.size > 1) {
           // multiple rounds and league table entries is a group stage
-          val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber)
+          val groupTables = stageLeagueEntries.groupBy(_.round).toList.sortBy(_._1.roundNumber.toIntOption.getOrElse(0))
           Some(Groups(competitions, stageMatches, groupTables))
         } else if (rounds.size == 1) {
           // single round with table is league
@@ -123,39 +123,58 @@ object KnockoutSpider {
    */
 
   val orderings: Map[String, List[ZonedDateTime]] = Map(
-    // world cup 2022
+    // world cup 2026
     "700" -> List(
-      // Data from https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_knockout_stage & PA API
+      // Data from https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage,
+      // https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/standings
+      // & PA API
+      // ----
+      // Rounds of 32
+      // ----
+      ZonedDateTime.of(2026, 6, 29, 21, 30, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 74
+      ZonedDateTime.of(2026, 6, 30, 22, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 77
+      ZonedDateTime.of(2026, 6, 28, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 73
+      ZonedDateTime.of(2026, 6, 30, 2, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 75
+      ZonedDateTime.of(2026, 7, 3, 0, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 83
+      ZonedDateTime.of(2026, 7, 2, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 84
+      ZonedDateTime.of(2026, 7, 2, 1, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 81
+      ZonedDateTime.of(2026, 7, 1, 21, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 82
+      ZonedDateTime.of(2026, 6, 29, 18, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 76
+      ZonedDateTime.of(2026, 6, 30, 18, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 78
+      ZonedDateTime.of(2026, 7, 1, 2, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 79
+      ZonedDateTime.of(2026, 7, 1, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 80
+      ZonedDateTime.of(2026, 7, 3, 23, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 86
+      ZonedDateTime.of(2026, 7, 3, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 88
+      ZonedDateTime.of(2026, 7, 3, 4, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 85
+      ZonedDateTime.of(2026, 7, 4, 2, 30, 0, 0, ZoneId.of("Europe/London")), // Round of 32 - Match 87
       // ----
       // Rounds of 16
       // ----
-      ZonedDateTime.of(2022, 12, 3, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 49
-      ZonedDateTime.of(2022, 12, 3, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 50
-      // ----
-      ZonedDateTime.of(2022, 12, 5, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 53
-      ZonedDateTime.of(2022, 12, 5, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 54
-      // ----
-      ZonedDateTime.of(2022, 12, 4, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 52
-      ZonedDateTime.of(2022, 12, 4, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 51
-      // ----
-      ZonedDateTime.of(2022, 12, 6, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 55
-      ZonedDateTime.of(2022, 12, 6, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 56
+      ZonedDateTime.of(2026, 7, 4, 22, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 89
+      ZonedDateTime.of(2026, 7, 4, 18, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 90
+      ZonedDateTime.of(2026, 7, 6, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 93
+      ZonedDateTime.of(2026, 7, 7, 1, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 94
+      ZonedDateTime.of(2026, 7, 5, 21, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 91
+      ZonedDateTime.of(2026, 7, 6, 1, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 92
+      ZonedDateTime.of(2026, 7, 7, 17, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 95
+      ZonedDateTime.of(2026, 7, 7, 21, 0, 0, 0, ZoneId.of("Europe/London")), // Round of 16 - Match 96
       // ----
       // Quarter Finals
       // ----
-      ZonedDateTime.of(2022, 12, 9, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 57
-      ZonedDateTime.of(2022, 12, 9, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 58
-      ZonedDateTime.of(2022, 12, 10, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 59
-      ZonedDateTime.of(2022, 12, 10, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 60
+      ZonedDateTime.of(2026, 7, 9, 21, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 97
+      ZonedDateTime.of(2026, 7, 10, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 98
+      ZonedDateTime.of(2026, 7, 11, 22, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 99
+      ZonedDateTime.of(2026, 7, 12, 2, 0, 0, 0, ZoneId.of("Europe/London")), // Quarter Finals - Match 100
       // ----
       // Semi Finals
       // ----
-      ZonedDateTime.of(2022, 12, 13, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 61
-      ZonedDateTime.of(2022, 12, 14, 19, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 62
+      ZonedDateTime.of(2026, 7, 14, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 101
+      ZonedDateTime.of(2026, 7, 15, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 102
       // ----
-      // Final
+      // Third-place and Final
       // ----
-      ZonedDateTime.of(2022, 12, 18, 15, 0, 0, 0, ZoneId.of("Europe/London")), // Semi Finals - Match 64
+      ZonedDateTime.of(2026, 7, 18, 22, 0, 0, 0, ZoneId.of("Europe/London")), // Final - Match 103
+      ZonedDateTime.of(2026, 7, 19, 20, 0, 0, 0, ZoneId.of("Europe/London")), // Final - Match 104
     ),
     // women world cup 2023
     "870" -> List(

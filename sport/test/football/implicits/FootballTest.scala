@@ -44,5 +44,27 @@ class FootballTest extends AnyFeatureSpec with GivenWhenThen with Matchers with 
       val isMatchOnToday = todayMatch.isOn(today.toLocalDate)
       isMatchOnToday shouldBe (true)
     }
+
+    Scenario("isAboutToStart returns true if match start time is within the next 5 minutes") {
+
+      Given("a match which happens in 5 minutes")
+      val fiveMinutesFromNow = ZonedDateTime.now().plusMinutes(5)
+      val theMatch =
+        liveMatch("Aston Villa", "Cardiff", 1, 0, fiveMinutesFromNow, isLive = true)
+
+      Then("calling isAboutToStart should return true")
+      theMatch.isAboutToStart shouldBe (true)
+    }
+
+    Scenario("isAboutToStart returns false if match start time is more than 5 minutes from now") {
+
+      Given("a match starting in more than 5 minutes")
+      val fiveMinutesFromNow = ZonedDateTime.now().plusMinutes(5).plusSeconds(1)
+      val theMatch =
+        liveMatch("Aston Villa", "Cardiff", 1, 0, fiveMinutesFromNow, isLive = true)
+
+      Then("calling isAboutToStart should return fals")
+      theMatch.isAboutToStart shouldBe (false)
+    }
   }
 }

@@ -32,21 +32,6 @@ jest.mock('@guardian/libs', () => ({
     get: jest.fn(() => undefined),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
-    isInABTestSynchronous: jest.fn(() => true),
-    getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
-    getSynchronousTestsToRun: jest.fn(() => [
-        {
-            id: 'SignInGateMainVariant', // Update for each new test
-            dataLinkNames: 'SignInGateMain', // Update for each new test
-            variantToRun: {
-                id: 'main-variant-2', // Update for each new test
-            },
-            ophanComponentId: 'main_test',
-        },
-    ]),
-}));
-
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(() => false),
 }));

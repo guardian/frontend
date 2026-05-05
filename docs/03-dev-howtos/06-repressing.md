@@ -19,7 +19,7 @@ Tests are failing because of mis pressed data committed. In the Teamcity PR buil
 
 * Check your `facia.stage` property in your `frontend.conf` file is pointing at DEV (*not* PROD!)
 * Check you are using your own switches file and not the `PROD` or `CODE` one.
-	* To do this, create your own properties file in the the S3 bucket named `aws-frontend-store`. Add it to your `frontend.conf` like this: `switches.key=DEV/config/switches-nbaltazar.properties`
+	* To do this, create your own properties file in the S3 bucket named `aws-frontend-store`. Add it to your `frontend.conf` like this: `switches.key=DEV/config/switches-nbaltazar.properties`
 * Ensure you have the test AWS SQS queues in your `frontend.conf` properties
 	* Add two properties: `frontpress.sqs.tool_queue_url` and `frontpress.sqs.cron_queue_url`
 	* Set _both_ properties to the value `"https://sqs.eu-west-1.amazonaws.com/<id-here>/Frontend-TEST-page-presser-queue"`

@@ -310,6 +310,7 @@ class GuardianConfiguration extends GuLogging {
 
   object site {
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
+    lazy val viewerProxyBaseUrl = configuration.getStringProperty("viewer.proxy.baseUrl").getOrElse("")
   }
 
   object cookies {

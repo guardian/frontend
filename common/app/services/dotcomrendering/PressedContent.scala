@@ -134,6 +134,7 @@ object PressedContent {
     "/uk-news/ng-interactive/2017/feb/20/what-the-eu27-want-brexit-red-lines-from-the-other-side-of-the-table",
     "/sport/ng-interactive/2017/aug/02/usain-bolt-fastest-man-ever-lived",
     "/world/ng-interactive/2017/mar/01/who-are-europes-newcomers",
+    "/us-news/ng-interactive/2017/dec/20/bussed-out-america-moves-homeless-people-country-study",
     // 2018
     "/lifeandstyle/ng-interactive/2018/feb/25/the-ofm-50-everything-we-love-in-the-world-of-food-right-now",
     "/world/ng-interactive/2018/mar/05/italian-elections-2018-full-results-renzi-berlusconi",

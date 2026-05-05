@@ -20,6 +20,7 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday
 # Commercial
 GET        /advertiser-content/:campaignName/:pageName                                         commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET        /advertiser-content/:campaignName/:pageName/onward.json                             commercial.controllers.HostedContentController.renderOnwardJson(campaignName, pageName)
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
 # Onward
@@ -94,6 +95,9 @@ GET        /football/:competitionTag/groups/embed                            foo
 GET        /football/:competitionTag/spider/embed                            football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json        football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
+GET        /football/api/match-header/:year/:month/:day/:home/:away.json      football.controllers.MoreOnMatchController.matchHeaderJson(year, month, day, home, away)
+GET        /football/api/match-stats/:year/:month/:day/:home/:away.json       football.controllers.MoreOnMatchController.matchStatsJson(year, month, day, home, away)
+GET        /football/api/match-stats-summary/:year/:month/:day/:home/:away.json      football.controllers.MoreOnMatchController.matchStatsSummaryJson(year, month, day, home, away)
 GET        /football/api/match-nav/:year/:month/:day/:home/:away             football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
 GET        /football/api/match-nav/:matchId.json                             football.controllers.MoreOnMatchController.moreOnJson(matchId)
 GET        /football/api/match-nav/:matchId                                  football.controllers.MoreOnMatchController.moreOn(matchId)

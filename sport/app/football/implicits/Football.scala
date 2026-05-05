@@ -46,6 +46,13 @@ trait Football {
 
     def isOn(date: LocalDate): Boolean = m.date.toLocalDate == date
 
+    def isAboutToStart: Boolean = {
+      val now = ZonedDateTime.now()
+      val upperBound = now.plusMinutes(5)
+
+      m.date.isAfter(now) && m.date.isBefore(upperBound)
+    }
+
     // results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
       case f: Fixture   => "Fixture"
@@ -145,6 +152,55 @@ trait Football {
       "64648", // 3rd place playoff
       "64649",
       "64650", // final
+      // World Cup 2026
+      "65705", // round of 32
+      "65706",
+      "65707",
+      "65708",
+      "65709",
+      "65710",
+      "65711",
+      "65712",
+      "65713",
+      "65714",
+      "65715",
+      "65716",
+      "65717",
+      "65718",
+      "65719",
+      "65720",
+      "65721", // round of 16
+      "65722",
+      "65723",
+      "65724",
+      "65725",
+      "65726",
+      "65727",
+      "65728",
+      "65729",
+      "65730",
+      "65731",
+      "65732",
+      "65733",
+      "65734",
+      "65735",
+      "65736",
+      "65737", // quarter final
+      "65738",
+      "65739",
+      "65740",
+      "65741",
+      "65742",
+      "65743",
+      "65744",
+      "65745", // semi final
+      "65746",
+      "65747",
+      "65748",
+      "65749", // final
+      "65750",
+      "65751", // 3rd place playoff
+      "65752",
     )
 
     private val ghostTeamNameMappings = List(
@@ -156,8 +212,6 @@ trait Football {
       "Runner-up Group" -> "Runner-up",
     )
   }
-
-  // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
 
   val roundLinks = Map[String, Round => Option[String]]()
   def groupTag(competitionId: String, round: Round): Option[String] = roundLinks.get(competitionId).flatMap(_(round))

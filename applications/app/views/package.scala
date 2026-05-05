@@ -1,5 +1,6 @@
 package views
 
+import ab.ABTests
 import common.Edition
 import model.{ApplicationContext, GalleryPage, Interactive}
 import org.jsoup.Jsoup
@@ -46,6 +47,7 @@ object GalleryCaptionCleaners {
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
         page.gallery.content.isUSProductionOffice,
+        abTests = ABTests.getParticipations(request),
       ),
     )
 

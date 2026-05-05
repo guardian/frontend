@@ -4,9 +4,9 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.41.34"
-  val capiVersion = "41.1.1"
-  val faciaVersion = "29.0.0"
+  val awsVersion = "2.42.39"
+  val capiVersion = "42.0.1"
+  val faciaVersion = "30.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -23,13 +23,13 @@ object Dependencies {
   val awsSqs = "software.amazon.awssdk" % "sqs" % awsVersion
   val awsSsm = "software.amazon.awssdk" % "ssm" % awsVersion
   val awsElasticloadbalancing = "software.amazon.awssdk" % "elasticloadbalancing" % awsVersion
-  val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20260321"
+  val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20260415"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
   val commonsIo = "commons-io" % "commons-io" % "2.21.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "37.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "38.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -53,9 +53,9 @@ object Dependencies {
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val paClient = "com.gu" %% "pa-client" % "7.0.12"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "13.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "5.0.0"
+  val paClient = "com.gu" %% "pa-client" % "7.0.14"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
@@ -63,7 +63,7 @@ object Dependencies {
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.19.0" % Test
   val scalaCollectionPlus = "com.madgag" %% "scala-collection-plus" % "1.0.0"
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.34.0"
-  val scalaTest = "org.scalatest" %% "scalatest" % "3.2.19" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.2.20" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-5-18" % "3.2.19.0" % Test
   val mockito = "org.mockito" % "mockito-core" % "5.23.0" % Test // ensure this matches scalatest + mockito
@@ -74,7 +74,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.26"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.28"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -86,9 +86,9 @@ object Dependencies {
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
 
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
-  val scanamo = "org.scanamo" %% "scanamo" % "2.0.0"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.6"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.5"
+  val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.7"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
@@ -103,7 +103,7 @@ object Dependencies {
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "7.9.0"
 
-  val nettyVersion = "4.1.132.Final"
+  val nettyVersion = "4.2.12.Final"
   val netty = Seq(
     "io.netty" % "netty-codec-http" % nettyVersion,
     "io.netty" % "netty-codec-http2" % nettyVersion,

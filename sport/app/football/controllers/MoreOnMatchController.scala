@@ -15,7 +15,7 @@ import football.model.{
 }
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{Cached, Competition, Content, ContentType, TeamColours}
+import model.{CacheTime, Cached, Competition, Content, ContentType, TeamColours}
 import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
@@ -253,10 +253,12 @@ class MoreOnMatchController(
                 competitionSummary,
                 filtered,
               )
-              Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(model))
+              Cached(
+                if (theMatch.isAboutToStart || theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache,
+              )(JsonComponent.fromWritable(model))
             }
         }
-      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
@@ -269,10 +271,12 @@ class MoreOnMatchController(
 
           maybeLineup.map(lineup => {
             val matchStats = MatchStats.statsFromFootballMatch(theMatch, lineup, theMatch.matchStatus)
-            Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStats))
+            Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache)(
+              JsonComponent.fromWritable(matchStats),
+            )
           })
         }
-      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
   def matchStatsSummaryJson(
@@ -291,10 +295,12 @@ class MoreOnMatchController(
           maybeLineup.map(lineup => {
             val matchStatsSummary =
               MatchStatsSummary.statsSummaryFromFootballMatch(theMatch, lineup)
-            Cached(if (theMatch.isLive) 10 else 300)(JsonComponent.fromWritable(matchStatsSummary))
+            Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache)(
+              JsonComponent.fromWritable(matchStatsSummary),
+            )
           })
         }
-      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
   def matchNavJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
@@ -323,7 +329,7 @@ class MoreOnMatchController(
               lineup <- competitionsService.getLineup(theMatch)
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
-              Cached(if (theMatch.isLive) 10 else 300) {
+              Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
                 JsonComponent.fromWritable(
                   NxAnswer.makeFromFootballMatch(
                     theMatch,
@@ -341,7 +347,7 @@ class MoreOnMatchController(
             for {
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
-              Cached(if (theMatch.isLive) 10 else 300) {
+              Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
                 JsonComponent(
                   "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
                   "matchSummary" -> football.views.html.fragments
@@ -358,7 +364,7 @@ class MoreOnMatchController(
           }
         }
 
-      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
   def moreOnJson(matchId: String): Action[AnyContent] = moreOn(matchId)
@@ -432,7 +438,7 @@ class MoreOnMatchController(
           val fMatch = competition.matches.find(_.id == matchId).head
           JsonComponent(football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
         }
-      Cached(30)(response)
+      Cached(CacheTime.FootballMediumCache)(response)
     }
 
   def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
@@ -444,7 +450,7 @@ class MoreOnMatchController(
           val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
           // We are only interested in content with exactly 2 team tags
           related map { _ filter hasExactlyTwoTeams } map { filtered =>
-            Cached(if (theMatch.isLive) 10 else 300) {
+            Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
               lazy val competition = competitionsService.competitionForMatch(theMatch.id)
               lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
@@ -496,7 +502,7 @@ class MoreOnMatchController(
           }
         }
 
-      maybeResponse.getOrElse(Future.successful(Cached(30) { JsonNotFound() }))
+      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader)(implicit

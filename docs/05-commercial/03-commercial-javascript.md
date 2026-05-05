@@ -6,7 +6,7 @@ In frontend, commercial logic is intertwined with the rest of the JS code,
 being loaded as one of the “bootstraps” in [boot.js][frontend]. This means
 chunks and conditional loading is all handled by Webpack.
 
-With the introduction of `dotcom-rendering`, commercial scripts needed to to be
+With the introduction of `dotcom-rendering`, commercial scripts needed to be
 executed in different contexts, and a new remote bundle was introduced:
 `webpack.config.dcr.js`. The standalone bundle uses the same behaviour in every
 context, being loaded via a `<script>` tag injection.

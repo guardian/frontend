@@ -490,15 +490,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getFootballMatchSummaryPage(
       ws: WSClient,
       json: JsValue,
+      cacheTime: CacheTime,
   )(implicit request: RequestHeader): Future[Result] = {
-    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchSummaryPage", CacheTime.FootballMatch)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchSummaryPage", cacheTime)
   }
 
   def getAppsFootballMatchSummaryPage(
       ws: WSClient,
       json: JsValue,
+      cacheTime: CacheTime,
   )(implicit request: RequestHeader): Future[Result] = {
-    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsFootballMatchSummaryPage", CacheTime.FootballMatch)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/AppsFootballMatchSummaryPage", cacheTime)
   }
 
   def getCricketPage(

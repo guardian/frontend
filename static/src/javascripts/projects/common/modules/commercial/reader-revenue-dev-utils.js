@@ -9,7 +9,6 @@ import {
 	incrementMvtCookie,
 	initMvtCookie,
 } from '../analytics/mvt-cookie';
-import { clearParticipations } from '../experiments/ab-local-storage';
 import { isUserLoggedIn } from '../identity/api';
 import userPrefs from '../user-prefs';
 import { pageShouldHideReaderRevenue } from './contributions-utilities';
@@ -37,7 +36,6 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter) => {
 	readerRevenueRelevantCookies.forEach((cookie) => removeCookie(cookie));
 
 	initMvtCookie();
-	clearParticipations();
 
 	// Most versions of the epic only display for a certain number of pageviews in
 	// a given time window (typically, 4 per 30 days).

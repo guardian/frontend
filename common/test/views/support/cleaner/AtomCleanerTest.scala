@@ -36,6 +36,8 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
       assetType = Video,
       dimensions = None,
       aspectRatio = None,
+      duration = None,
+      hasAudio = None,
     )
 
   val youTubeAtom = Some(
