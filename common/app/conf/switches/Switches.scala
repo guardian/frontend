@@ -179,7 +179,6 @@ object Switches
     extends FeatureSwitches
     with ServerSideExperimentSwitches
     with FaciaSwitches
-    with ABTestSwitches
     with CommercialSwitches
     with PrivacySwitches
     with PrebidSwitches

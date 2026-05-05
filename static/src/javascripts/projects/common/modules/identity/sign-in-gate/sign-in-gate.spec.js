@@ -4,21 +4,6 @@ jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
-    isInABTestSynchronous: jest.fn(() => true),
-    getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
-    getSynchronousTestsToRun: jest.fn(() => [
-        {
-            id: 'SignInGateMainVariant', // Update for each new test
-            dataLinkNames: 'SignInGateMain', // Update for each new test
-            variantToRun: {
-                id: 'main-variant-4', // Update for each new test
-            },
-            ophanComponentId: 'main_test',
-        },
-    ]),
-}));
-
 jest.mock('@guardian/libs', () => ({
     storage: {
         local: {
@@ -48,8 +33,8 @@ jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => ''),
 }));
 
-const fakeIsInABTestSynchronous = require('common/modules/experiments/ab')
-    .isInABTestSynchronous;
+// const fakeIsInABTestSynchronous = require('common/modules/experiments/ab')
+//     .isInABTestSynchronous;
 
 const fakeLocal = require('@guardian/libs').storage.local;
 
@@ -76,31 +61,7 @@ describe('Sign in gate test', () => {
         window.navigator = navigator;
     });
 
-    describe('canShow returns true', () => {
-        it('should return true using default mocks', () => {
-            // Add a fake default config.get call for the keywordIds
-            fakeConfig.get.mockReturnValueOnce("")
-            signInGate.canShow().then(show => {
-                expect(show).toBe(true);
-            })
-        });
-
-        it('should return true if page view is greater than or equal to 2', () => {
-            fakeLocal.get.mockReturnValueOnce([{ count: 10, day: 1 }]);
-            signInGate.canShow().then(show => {
-                expect(show).toBe(true);
-            });
-        });
-    });
-
     describe('canShow returns false', () => {
-        it('should return false if not in correct test', () => {
-            fakeIsInABTestSynchronous.mockReturnValue(false);
-            return signInGate.canShow().then(show => {
-                expect(show).toBe(false);
-            });
-        });
-
         it('should return false if this is the first page view', () => {
             fakeLocal.get.mockReturnValueOnce([{count: 0, day: 1}]);
             return signInGate.canShow().then(show => {
