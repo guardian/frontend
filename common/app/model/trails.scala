@@ -117,7 +117,7 @@ final case class Trail(
   def javascriptConfig: Map[String, JsValue] =
     Map(
       ("sectionName", JsString(sectionName)),
-      ("thumbnail", thumbnailPath.map(JsString.apply).getOrElse(JsBoolean(false))),
+      ("thumbnail", JsString(thumbnailPath.getOrElse(""))),
       ("isLive", JsBoolean(fields.isLive)),
       ("webPublicationDate", Json.toJson(webPublicationDate)),
       ("headline", JsString(headline)),
