@@ -143,6 +143,25 @@ object NavLinks {
       footballClubs,
     ),
   )
+
+  val matchCentre = NavLink("Match centre", "")
+  val playerGuide = NavLink("Player guide", "")
+  val bracketology = NavLink("Bracketology", "")
+  val goldenBoot = NavLink("Golden boot", "")
+  val moreFootball = NavLink("More football", "")
+
+  val worldCup2026 = NavLink(
+    "World Cup",
+    "/football/world-cup-2026",
+    children = List(
+      matchCentre,
+      playerGuide,
+      bracketology,
+      goldenBoot,
+      moreFootball,
+    ),
+  )
+
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -418,6 +437,7 @@ object NavLinks {
     iconName = Some("home"),
     List(
       football,
+      worldCup2026,
       cricket,
       rugbyUnion,
       tennis,
