@@ -52,11 +52,6 @@ object LiveHarness {
   implicit val iu: PageUpdater[InteractivePage] = (ip, nc) => ip.copy(interactive = ip.item.copy(content = nc))
   implicit val au: PageUpdater[ArticlePage] = (ap, nc) => ap.copy(article = ap.item.copy(content = nc))
 
-  private def splitIntoTags(html: String): List[String] = {
-    val xml = XML.loadString(s"<root>$html</root>")
-    xml.child.toList.map(_.toString).filter(_.trim.nonEmpty)
-  }
-
   def inject[P <: ContentPage](harnessAtoms: Seq[LiveHarnessInteractiveAtom])(implicit
       updater: PageUpdater[P],
   ): BlocksOn[P] => BlocksOn[P] = _.mapBoth(
@@ -67,39 +62,51 @@ object LiveHarness {
     blocks =>
       blocks.copy(body = blocks.body.map { bodyBlocks =>
         bodyBlocks.map { block =>
-          // Flatten elements into visual units: Text elements are split into
-          // individual tags, all other elements count as one unit each.
-          // Each unit is Either[String (text chunk), BlockElement (non-text)]
-          val visualUnits: List[Either[String, BlockElement]] = block.elements.toList.flatMap {
-            case el if el.`type` == ElementType.Text =>
-              splitIntoTags(el.textTypeData.flatMap(_.html).getOrElse("")).map(Left(_))
-            case el =>
-              List(Right(el))
-          }
-
-          // Insert each harness atom at its requested visual position
-          val withAtoms = harnessAtoms.foldLeft(visualUnits) { (units, harnessAtom) =>
-            val insertAt = (harnessAtom.position.getOrElse(1) - 1).max(0).min(units.length)
-            val (before, after) = units.splitAt(insertAt)
-            before ::: List(Right(harnessAtom.blockElement)) ::: after
-          }
-
-          // Repack: merge adjacent text chunks back into Text BlockElements
-          val repacked: List[BlockElement] = withAtoms.foldRight(List.empty[BlockElement]) {
-            case (Left(chunk), head :: tail) if head.`type` == ElementType.Text =>
-              val existingHtml = head.textTypeData.flatMap(_.html).getOrElse("")
-              head.copy(textTypeData = Some(TextElementFields(html = Some(chunk + "\n" + existingHtml)))) :: tail
-            case (Left(chunk), acc) =>
-              BlockElement(
-                `type` = ElementType.Text,
-                assets = Seq.empty,
-                textTypeData = Some(TextElementFields(html = Some(chunk))),
-              ) :: acc
-            case (Right(el), acc) => el :: acc
-          }
-
-          block.copy(elements = repacked.toIndexedSeq)
+          block.copy(elements = insertAtomsAtNthPoints(block.elements.toSeq, harnessAtoms))
         }
       }),
   )
+
+  private[utils] def splitIntoTags(html: String): List[String] = {
+    val xml = XML.loadString(s"<root>$html</root>")
+    xml.child.toList.map(_.toString).filter(_.trim.nonEmpty)
+  }
+
+  private[utils] def insertAtomsAtNthPoints(
+      elements: Seq[BlockElement],
+      harnessAtoms: Seq[LiveHarnessInteractiveAtom],
+  ) = {
+    // Flatten elements into visual units: Text elements are split into
+    // individual tags, all other elements count as one unit each.
+    // Each unit is Either[String (text chunk), BlockElement (non-text)]
+    val visualUnits: List[Either[String, BlockElement]] = elements.toList.flatMap {
+      case el if el.`type` == ElementType.Text =>
+        splitIntoTags(el.textTypeData.flatMap(_.html).getOrElse("")).map(Left(_))
+      case el =>
+        List(Right(el))
+    }
+
+    // Insert each harness atom at its requested visual position
+    val withAtoms = harnessAtoms.foldLeft(visualUnits) { (units, harnessAtom) =>
+      val insertAt = (harnessAtom.position.getOrElse(1) - 1).max(0).min(units.length)
+      val (before, after) = units.splitAt(insertAt)
+      before ::: List(Right(harnessAtom.blockElement)) ::: after
+    }
+
+    // Repack: merge adjacent text chunks back into Text BlockElements
+    val repacked: List[BlockElement] = withAtoms.foldRight(List.empty[BlockElement]) {
+      case (Left(chunk), head :: tail) if head.`type` == ElementType.Text =>
+        val existingHtml = head.textTypeData.flatMap(_.html).getOrElse("")
+        head.copy(textTypeData = Some(TextElementFields(html = Some(chunk + "\n" + existingHtml)))) :: tail
+      case (Left(chunk), acc) =>
+        BlockElement(
+          `type` = ElementType.Text,
+          assets = Seq.empty,
+          textTypeData = Some(TextElementFields(html = Some(chunk))),
+        ) :: acc
+      case (Right(el), acc) => el :: acc
+    }
+
+    repacked.toIndexedSeq
+  }
 }
