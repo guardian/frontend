@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.42.39"
+  val awsVersion = "2.44.4"
   val capiVersion = "42.0.1"
   val faciaVersion = "30.0.0"
   val dispatchVersion = "0.13.1"
@@ -102,12 +102,6 @@ object Dependencies {
   val react = "org.webjars" % "react" % "16.5.2"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "7.9.0"
-
-  val nettyVersion = "4.2.12.Final"
-  val netty = Seq(
-    "io.netty" % "netty-codec-http" % nettyVersion,
-    "io.netty" % "netty-codec-http2" % nettyVersion,
-  )
 
   /*
     The versions are currently set as they are because of:
