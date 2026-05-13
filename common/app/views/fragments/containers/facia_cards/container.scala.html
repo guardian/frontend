@@ -28,7 +28,7 @@
 
     @containerDefinition.container match {
 
-        case _: model.MostPopular if isPaidFront => {}
+        case MostPopular if isPaidFront => {}
 
         case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, maybeContainerModel) => {
             @maybeContainerModel match {

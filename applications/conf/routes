@@ -19,6 +19,9 @@ GET        /email-newsletters                                                   
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
 
+GET        /puzzles.json                                                        controllers.PuzzlesPageController.renderPuzzlesJson()
+GET        /puzzles                                                             controllers.PuzzlesPageController.renderPuzzles()
+
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)

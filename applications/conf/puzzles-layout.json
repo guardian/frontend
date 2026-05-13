@@ -1,0 +1,142 @@
+{
+	"containers": [
+		{
+			"title": "Today's puzzles",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Quick crossword",
+							"type": "crossword",
+							"set": "quick"
+						},
+						{
+							"title": "Mini crossword",
+							"type": "crossword",
+							"set": "mini"
+						}
+					],
+					[
+						{
+							"title": "Sudoku (easy)",
+							"type": "sudoku",
+							"set": "easy",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
+							"index": 1
+						}
+					],
+					[
+						{
+							"title": "Word wheel",
+							"type": "wordWheel",
+							"set": "all",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel",
+							"index": 1
+						},
+						{
+							"title": "Wordiply",
+							"type": "wordiply",
+							"set": "all",
+							"url": "https://www.wordiply.com/"
+						}
+					],
+					[
+						{
+							"title": "On the ball",
+							"type": "onTheBall",
+							"set": "all",
+							"url": "https://sportsreveal.io/guardian",
+							"index": 1
+						},
+						{
+							"title": "Film reveal",
+							"type": "filmReveal",
+							"set": "all",
+							"url": "https://moviegrid.io/guardian",
+							"index": 1
+						}
+					],
+					[
+						{
+							"title": "Cryptic crossword",
+							"type": "crossword",
+							"set": "cryptic"
+						}
+					],
+					[
+						{
+							"title": "Killer sudoku",
+							"type": "sudoku",
+							"set": "killer",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium",
+							"index": 1
+						}
+					]
+				],
+				"nestedContainers": [
+					{
+						"title": "More sudokus",
+						"content": {
+							"items": [
+								[
+									{
+										"title": "Sudoku (medium)",
+										"type": "sudoku",
+										"set": "medium",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium",
+										"index": 1
+									},
+									{
+										"title": "Sudoku (hard)",
+										"type": "sudoku",
+										"set": "hard",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard",
+										"index": 1
+									}
+								]
+							],
+							"nestedContainers": []
+						}
+					}
+				]
+			}
+		},
+		{
+			"title": "Weekend crosswords",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Quick cryptic",
+							"type": "crossword",
+							"set": "quickcryptic"
+						}
+					],
+					[
+						{
+							"title": "Weekend",
+							"type": "crossword",
+							"set": "weekend"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "Archive",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Crosswords",
+							"type": "crossword",
+							"set": "all"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		}
+	]
+}

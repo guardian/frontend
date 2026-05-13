@@ -15,6 +15,10 @@ GET            /assets/admin/*file                                              
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
+# Puzzles
+GET            /puzzles.json                                                                                                     controllers.PuzzlesPageController.renderPuzzlesJson()
+GET            /puzzles                                                                                                          controllers.PuzzlesPageController.renderPuzzles()
+
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)

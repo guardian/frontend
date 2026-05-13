@@ -58,4 +58,21 @@ object StaticPages {
         shouldGoogleIndex = true,
       ),
     )
+  
+  def dcrSimplePuzzlesPage(
+      id: String,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = "Puzzles",
+        description = Some(
+          "Enjoy our range of puzzles, including crosswords and sudoku, updated daily.",
+        ),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
 }
