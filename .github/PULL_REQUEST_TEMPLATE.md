@@ -25,6 +25,5 @@
   - [ ] [Navigable with keyboard](https://github.com/guardian/accessibility/blob/main/people-and-technology/02-physical.md#Keyboard)
   - [ ] [Colour contrast passed](https://github.com/guardian/accessibility/blob/main/people-and-technology/03-visual.md#colour)
 
-<!-- AB test? https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/01-ab-testing.md -->
 <!-- Does this PR meet the contributing guidelines? https://github.com/guardian/frontend/blob/main/.github/CONTRIBUTING.md -->
 <!-- Unsure who to ask for a review? Tag https://github.com/orgs/guardian/teams/dotcom-platform to reach the team -->

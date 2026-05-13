@@ -1,7 +1,6 @@
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import { mediator } from 'lib/mediator';
-import { Affix } from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
@@ -13,29 +12,6 @@ import { elementInView } from 'lib/element-inview';
 import ophan from 'ophan/ng';
 import { measureTiming } from "commercial/measure-timing";
 
-const affixTimeline = () => {
-	const keywordIds = config.get('page.keywordIds', '');
-
-	if (
-		isBreakpoint({
-			min: 'desktop',
-		}) &&
-		!keywordIds.includes('football/football') &&
-		!keywordIds.includes('sport/rugby-union')
-	) {
-		// eslint-disable-next-line no-new
-		new Affix({
-			element: document.querySelector(
-				'.js-live-blog__sticky-components-container',
-			),
-			topMarker: document.querySelector('.js-top-marker'),
-			bottomMarker: document.querySelector('.js-bottom-marker'),
-			containerElement: document.querySelector(
-				'.js-live-blog__sticky-components',
-			),
-		});
-	}
-};
 
 const initFilterCheckbox = () => {
 	const filterKeyEvents = window.location.search.includes(
@@ -151,7 +127,6 @@ const init = () => {
 		['lb-listeners', setupListeners],
 		['lb-filter', initFilterCheckbox],
 		['lb-autoupdate', createAutoUpdate],
-		['lb-timeline', affixTimeline],
 		['lb-timestamp', keepTimestampsCurrent],
 		['lb-tracking', initTracking],
 	]);
