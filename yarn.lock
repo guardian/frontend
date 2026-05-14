@@ -2778,47 +2778,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/ab-core@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@guardian/ab-core@npm:8.0.1"
+"@guardian/commercial-core@npm:0.0.0-beta-20260518074451":
+  version: 0.0.0-beta-20260518074451
+  resolution: "@guardian/commercial-core@npm:0.0.0-beta-20260518074451"
+  dependencies:
+    "@guardian/consent-manager": "npm:1.0.0"
+    "@guardian/libs": "npm:32.0.0"
   peerDependencies:
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/d0c7c2eebe0f5ddd9851e572548857cae230431bf196aefbfd907b3667ca99a618d8eb261efdf0bb479fe955964662c0669b861dd7190e8a2b3e3791e65d9ea7
+    "@guardian/consent-manager": ^1.0.0
+    "@guardian/libs": ^32.0.0
+  checksum: 10c0/f811b6697036387dd7dc352397ec607c50b931470df2f8139e9f599beac5df345ea6caa27ea4e2b1ffa6a76b838b2cae5e8db551b616943f23ebc1b986d67a6b
   languageName: node
   linkType: hard
 
-"@guardian/commercial-core@npm:28.0.0":
-  version: 28.0.0
-  resolution: "@guardian/commercial-core@npm:28.0.0"
+"@guardian/consent-manager@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@guardian/consent-manager@npm:1.0.0"
   dependencies:
-    "@guardian/ab-core": "npm:8.0.1"
-    "@guardian/libs": "npm:25.2.0"
-    "@types/googletag": "npm:~3.3.0"
-  peerDependencies:
-    "@guardian/ab-core": ^8.0.1
-    "@guardian/libs": ^25.2.0
-  checksum: 10c0/8ca720a7fe7afa2cc0f182106cce990b316b6b77fb9cd58693b4417497d80286316211cfaf3999670a037f132da96c22f978b2ec4552709762d5dd4d32880afe
-  languageName: node
-  linkType: hard
-
-"@guardian/consent-manager@npm:0.0.0-canary-20260430141258":
-  version: 0.0.0-canary-20260430141258
-  resolution: "@guardian/consent-manager@npm:0.0.0-canary-20260430141258"
-  dependencies:
-    "@guardian/libs": "npm:0.0.0-canary-20260430141258"
+    "@guardian/libs": "npm:32.0.0"
     "@guardian/ophan-tracker-js": "npm:2.8.0"
   peerDependencies:
     "@guardian/ophan-tracker-js": ^2.2.10
     tslib: ^2.8.1
-    typescript: ~5.9.3
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/ea465dd8c7a2123b448b832f63673283d0483ff1629950fe83dff942d1f3a7868818c2e9dd32aff82c092f52bb92a3dd9d58b964f79037c8367e240e66a15f76
+  checksum: 10c0/0e50f4244ff3782fe45fe5e97565879f592591fc94b11cccf815b0619443b183d629ca94a29b3ef03fa6cc03c3c681ea6f5d29abc6466ba30693cad85e9f0b5b
   languageName: node
   linkType: hard
 
@@ -2859,12 +2844,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial-core": "npm:28.0.0"
-    "@guardian/consent-manager": "npm:0.0.0-canary-20260430141258"
+    "@guardian/commercial-core": "npm:0.0.0-beta-20260518074451"
+    "@guardian/consent-manager": "npm:1.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:0.0.0-canary-20260430141258"
+    "@guardian/libs": "npm:32.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -3002,9 +2987,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:0.0.0-canary-20260430141258":
-  version: 0.0.0-canary-20260430141258
-  resolution: "@guardian/libs@npm:0.0.0-canary-20260430141258"
+"@guardian/libs@npm:32.0.0":
+  version: 32.0.0
+  resolution: "@guardian/libs@npm:32.0.0"
   dependencies:
     "@guardian/ophan-tracker-js": "npm:2.8.0"
   peerDependencies:
@@ -3014,32 +2999,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/c2e7604e0b722ab24ce9d6c09950ce3820a3361f05d0e2d366f7db005496fc9f2f288b5d17e33f9efb0a1c41684b62750ea952330672190a73197b5b4753381c
-  languageName: node
-  linkType: hard
-
-"@guardian/libs@npm:25.2.0":
-  version: 25.2.0
-  resolution: "@guardian/libs@npm:25.2.0"
-  dependencies:
-    "@guardian/ophan-tracker-js": "npm:2.2.10"
-  peerDependencies:
-    "@guardian/ophan-tracker-js": ^2.2.10
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/41dd40a6c2ac0d9270924e5b4c2d3e6b703c1aaf8dd84f7a69cd76d4250a6782bd98d9c5e8508d6abd781bf3f2bdf57b001634fb88e9ac8597ff06b728eff998
-  languageName: node
-  linkType: hard
-
-"@guardian/ophan-tracker-js@npm:2.2.10":
-  version: 2.2.10
-  resolution: "@guardian/ophan-tracker-js@npm:2.2.10"
-  dependencies:
-    "@guardian/tsconfig": "npm:^1.0.0"
-  checksum: 10c0/e43f520953d0ff18ddb398694f05061f36621a1246720ccce6960de7ed380a7ab4283fdba681f24142418405fec33bece25e6cf198ae0719bee51a37dbfe7cc4
+  checksum: 10c0/b9809a5fa1fd1e31224ac3433b113ff5a7ed5dc5a904bac23516b213bd5678d9a2074cc1cd85e789b2a60ece7de651f93eebae9e2b62bd5ea031788b3016eda7
   languageName: node
   linkType: hard
 
@@ -4359,13 +4319,6 @@ __metadata:
   version: 3.1.3
   resolution: "@types/googletag@npm:3.1.3"
   checksum: 10c0/56a64143b71503a06ea7ab9308ea6f70e0c4ad7162cc2a0794c66426f767463e83f1b21b0a8cae28f0be6a678335e18320ae24fba41a8f0a352cb99516e70ff6
-  languageName: node
-  linkType: hard
-
-"@types/googletag@npm:~3.3.0":
-  version: 3.3.0
-  resolution: "@types/googletag@npm:3.3.0"
-  checksum: 10c0/8567cd7c5cb6319bc5fd1fe3985910a99f0044cac102b639e001d995961c5541bf23267d192479e0df84059725c355f70c50d3c81714af4d4774889b414912fc
   languageName: node
   linkType: hard
 
