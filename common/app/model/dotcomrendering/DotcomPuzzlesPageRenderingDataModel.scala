@@ -18,6 +18,7 @@ case class PuzzleItem(
     set: String,
     url: Option[String] = None,
     index: Option[Int] = None,
+    variant: Option[String] = None,
 )
 
 object PuzzleItem {
@@ -38,12 +39,14 @@ object PuzzleContent {
 
 case class PuzzleContainer(
     title: String,
+    variant: Option[String] = None,
     content: PuzzleContent,
 )
 
 object PuzzleContainer {
   implicit lazy val format: OFormat[PuzzleContainer] = (
     (__ \ "title").format[String] and
+      (__ \ "variant").formatNullable[String] and
       (__ \ "content").lazyFormat[PuzzleContent](PuzzleContent.format)
   )(PuzzleContainer.apply, unlift(PuzzleContainer.unapply))
 }
@@ -60,6 +63,7 @@ case class DotcomPuzzlesPageRenderingDataModel(
     id: String,
     editionId: String,
     editionLongForm: String,
+    contributionsServiceUrl: String,
     webTitle: String,
     description: Option[String],
     config: JsObject,
@@ -112,6 +116,7 @@ object DotcomPuzzlesPageRenderingDataModel {
       id = page.metadata.id,
       editionId = edition.id,
       editionLongForm = edition.displayName,
+      contributionsServiceUrl = Configuration.contributionsService.url,
       webTitle = page.metadata.webTitle,
       description = page.metadata.description,
       config = combinedConfig,

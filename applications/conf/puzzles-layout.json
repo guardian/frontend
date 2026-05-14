@@ -1,122 +1,31 @@
 {
 	"containers": [
 		{
-			"title": "Today's puzzles",
+			"title": "Crosswords",
+			"variant": "card-grid",
 			"content": {
 				"items": [
 					[
 						{
-							"title": "Quick crossword",
+							"title": "Today's Mini",
+							"type": "crossword",
+							"set": "mini"
+						},
+						{
+							"title": "Today's Cryptic",
+							"type": "crossword",
+							"set": "cryptic"
+						},
+						{
+							"title": "Today's Quick",
 							"type": "crossword",
 							"set": "quick"
 						},
 						{
-							"title": "Mini crossword",
+							"title": "Play the CW archive",
 							"type": "crossword",
-							"set": "mini"
-						}
-					],
-					[
-						{
-							"title": "Sudoku (easy)",
-							"type": "sudoku",
-							"set": "easy",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
-							"index": 1
-						}
-					],
-					[
-						{
-							"title": "Word wheel",
-							"type": "wordWheel",
 							"set": "all",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel",
-							"index": 1
-						},
-						{
-							"title": "Wordiply",
-							"type": "wordiply",
-							"set": "all",
-							"url": "https://www.wordiply.com/"
-						}
-					],
-					[
-						{
-							"title": "On the ball",
-							"type": "onTheBall",
-							"set": "all",
-							"url": "https://sportsreveal.io/guardian",
-							"index": 1
-						},
-						{
-							"title": "Film reveal",
-							"type": "filmReveal",
-							"set": "all",
-							"url": "https://moviegrid.io/guardian",
-							"index": 1
-						}
-					],
-					[
-						{
-							"title": "Cryptic crossword",
-							"type": "crossword",
-							"set": "cryptic"
-						}
-					],
-					[
-						{
-							"title": "Killer sudoku",
-							"type": "sudoku",
-							"set": "killer",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium",
-							"index": 1
-						}
-					]
-				],
-				"nestedContainers": [
-					{
-						"title": "More sudokus",
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Sudoku (medium)",
-										"type": "sudoku",
-										"set": "medium",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium",
-										"index": 1
-									},
-									{
-										"title": "Sudoku (hard)",
-										"type": "sudoku",
-										"set": "hard",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard",
-										"index": 1
-									}
-								]
-							],
-							"nestedContainers": []
-						}
-					}
-				]
-			}
-		},
-		{
-			"title": "Weekend crosswords",
-			"content": {
-				"items": [
-					[
-						{
-							"title": "Quick cryptic",
-							"type": "crossword",
-							"set": "quickcryptic"
-						}
-					],
-					[
-						{
-							"title": "Weekend",
-							"type": "crossword",
-							"set": "weekend"
+							"variant": "archive"
 						}
 					]
 				],
@@ -124,14 +33,78 @@
 			}
 		},
 		{
-			"title": "Archive",
+			"title": "Sudoku",
+			"variant": "card-grid",
 			"content": {
 				"items": [
 					[
 						{
-							"title": "Crosswords",
-							"type": "crossword",
-							"set": "all"
+							"title": "Today's Easy Sudoku",
+							"type": "sudoku",
+							"set": "easy",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
+							"index": 1
+						},
+						{
+							"title": "Today's Med Sudoku",
+							"type": "sudoku",
+							"set": "medium",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium",
+							"index": 1
+						},
+						{
+							"title": "Today's Hard Sudoku",
+							"type": "sudoku",
+							"set": "hard",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard",
+							"index": 1
+						},
+						{
+							"title": "Play the Sudoku archive",
+							"type": "sudoku",
+							"set": "all",
+							"url": "https://www.theguardian.com/crosswords/sudoku",
+							"variant": "archive"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "Wordiply",
+			"variant": "iframe-block",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Play Wordiply",
+							"type": "wordiply",
+							"set": "all",
+							"url": "https://www.wordiply.com/"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "For more games, download the app",
+			"variant": "store-links",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "App Store",
+							"type": "store",
+							"set": "ios",
+							"url": "https://apps.apple.com/"
+						},
+						{
+							"title": "Google Play",
+							"type": "store",
+							"set": "android",
+							"url": "https://play.google.com/store"
 						}
 					]
 				],
