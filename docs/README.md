@@ -19,7 +19,6 @@
 - [Javascript](02-architecture/06-client-side-architecture.md)
 
 ## [Dev howtos](03-dev-howtos/)
-- [How to setup and run A/B tests](03-dev-howtos/01-ab-testing.md)
 - [Deployment](03-dev-howtos/02-deployment.md)
 - [Guardian embeds](03-dev-howtos/03-embeds.md)
 - [Inline SVGs](03-dev-howtos/04-inline-svgs.md)

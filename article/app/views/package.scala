@@ -1,5 +1,6 @@
 package views
 
+import ab.ABTests
 import common.Edition
 import layout.ContentWidths
 import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
@@ -83,6 +84,7 @@ object BodyProcessor {
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         tags = article.content.tags.tags.map(_.id),
         isUSProductionOffice = article.content.isUSProductionOffice,
+        abTests = ABTests.getParticipations(request),
       ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))

@@ -10,7 +10,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
   "linkToSkimLink" should "correctly convert a link to a skimlink" in {
     val link = "https://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
-    linkToSkimLink(link, pageUrl, "123") should equal(
+    linkToSkimLink(link, pageUrl, "123", Map.empty) should equal(
       s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
     )
   }
@@ -18,8 +18,16 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
   "linkToSkimLink" should "replace http: with https: in the original link" in {
     val link = "http://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
-    linkToSkimLink(link, pageUrl, "123") should equal(
+    linkToSkimLink(link, pageUrl, "123", Map.empty) should equal(
       s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
+    )
+  }
+
+  "linkToSkimLink" should "replace add xcust with ab test participation" in {
+    val link = "http://www.piratendating.nl/"
+    val pageUrl = "/guardian-pirates/soulmates"
+    linkToSkimLink(link, pageUrl, "123", Map("testName" -> "variant")) should equal(
+      s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates&xcust=abTestParticipations%7CtestName%3Avariant",
     )
   }
 
