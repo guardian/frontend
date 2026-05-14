@@ -19,7 +19,8 @@
 						{
 							"title": "Today's Quick",
 							"type": "crossword",
-							"set": "quick"
+							"set": "quick",
+							"url": "crosswords/quick/17479"
 						},
 						{
 							"title": "Play the CW archive",
@@ -98,13 +99,13 @@
 							"title": "App Store",
 							"type": "store",
 							"set": "ios",
-							"url": "https://apps.apple.com/"
+							"url": "https://apps.apple.com/to/app/the-guardian-uk-world-news/id409128287"
 						},
 						{
 							"title": "Google Play",
 							"type": "store",
 							"set": "android",
-							"url": "https://play.google.com/store"
+							"url": "https://play.google.com/store/apps/details?id=com.guardian"
 						}
 					]
 				],
