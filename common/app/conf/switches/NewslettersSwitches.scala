@@ -82,6 +82,17 @@ trait NewslettersSwitches {
     highImpact = false,
   )
 
+  val UsNewsletterSignupHideMarketingToggle = Switch(
+    SwitchGroup.Newsletters,
+    "us-signup-hide-marketing-toggle",
+    "When ON, hides the marketing opt-in toggle for sign-ups and silently enrolls users in similar_guardian_products",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
   val UseDcrNewslettersPage = Switch(
     SwitchGroup.Newsletters,
     "use-dcr-newsletters-page",
