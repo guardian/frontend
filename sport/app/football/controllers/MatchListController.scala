@@ -76,6 +76,48 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
     }
   }
 
+  protected def renderMatchDayEmbed(
+      page: FootballPage,
+      matchesList: MatchesList,
+      filters: Map[String, Seq[CompetitionFilter]],
+      atom: Option[InteractiveAtom] = None,
+  )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
+
+    val tier = FootballPagePicker.getTier(page)
+
+    request.getRequestFormat match {
+      case JsonFormat if request.forceDCR =>
+        val model = DotcomRenderingFootballMatchListDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
+          atom,
+        )
+        successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
+      case JsonFormat =>
+        successful(Cached(CacheTime.Football) {
+          JsonComponent(
+            "html" -> football.views.html.matchList.matchesComponent(matchesList),
+            "next" -> Html(matchesList.nextPage.getOrElse("")),
+            "previous" -> Html(matchesList.previousPage.getOrElse("")),
+            "atom" -> atom.isDefined,
+          )
+        })
+      case HtmlFormat if tier == RemoteRender =>
+        val model = DotcomRenderingFootballMatchListDataModel(
+          page = page,
+          matchesList = matchesList,
+          filters = filters,
+          atom,
+        )
+        remoteRenderer.getFootballEmbed(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
+      case _ =>
+        successful(Cached(CacheTime.Football) {
+          RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters, atom))
+        })
+    }
+  }
+
   protected def renderMoreMatches(
       page: FootballPage,
       matchesList: MatchesList,

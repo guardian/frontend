@@ -46,6 +46,7 @@ GET        /football/match-day/:year/:month/:day.json                           
 GET        /football/match-day/:year/:month/:day                                               football.controllers.MatchDayController.matchesFor(year, month, day)
 GET        /football/match-day/:competition/:year/:month/:day.json                             football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
 GET        /football/match-day/:competition/:year/:month/:day                                  football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
+GET        /football/:competition/match-day/embed                                              football.controllers.MatchDayController.competitionMatchesEmbed(competition)
 
 GET        /football/tables                                                                    football.controllers.LeagueTableController.renderLeagueTables()
 GET        /football/tables.json                                                               football.controllers.LeagueTableController.renderLeagueTablesJson()

@@ -42,6 +42,8 @@ class MatchDayController(
   def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
   def competitionMatches(competitionTag: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, LocalDate.now(Edition.defaultEdition.timezoneId))
+  def competitionMatchesEmbed(competitionTag: String): Action[AnyContent] =
+    renderCompetitionMatchesEmbed(competitionTag, LocalDate.now(Edition.defaultEdition.timezoneId))
 
   def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, createDate(year, month, day))
@@ -65,6 +67,22 @@ class MatchDayController(
           )
 
           futureAtom.flatMap(maybeAtom => renderMatchList(page, matches, filters, maybeAtom))
+        }
+        .getOrElse {
+          Future.successful(NotFound)
+        }
+    }
+
+  private def renderCompetitionMatchesEmbed(competitionTag: String, date: LocalDate): Action[AnyContent] =
+    Action.async { implicit request =>
+      lookupCompetition(competitionTag)
+        .map { competition =>
+          val webTitle =
+            if (date == LocalDate.now(Edition.defaultEdition.timezoneId)) s"Today's ${competition.fullName} matches"
+            else s" ${competition.fullName} matches"
+          val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
+          val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
+          renderMatchDayEmbed(page, matches, filters)
         }
         .getOrElse {
           Future.successful(NotFound)
