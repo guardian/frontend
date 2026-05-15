@@ -42,6 +42,7 @@ class MatchDayController(
   def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
   def competitionMatches(competitionTag: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, LocalDate.now(Edition.defaultEdition.timezoneId))
+  def competitionMatchesEmbedJson(competitionTag: String): Action[AnyContent] = competitionMatchesEmbed(competitionTag)
   def competitionMatchesEmbed(competitionTag: String): Action[AnyContent] =
     renderCompetitionMatchesEmbed(competitionTag, LocalDate.now(Edition.defaultEdition.timezoneId))
 
