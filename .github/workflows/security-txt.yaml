@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v.6.0.2
 
       - name: Update Expires field in security.txt
-        run: node security-txt.js
+        run: node tools/security-txt.js
 
       - name: Commit and push changes
         run: |
