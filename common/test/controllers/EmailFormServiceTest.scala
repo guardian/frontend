@@ -35,6 +35,8 @@ class EmailFormServiceTest
       email = "test@example.com",
       listName = Some("the-long-read"),
       marketing = None,
+      marketingOptInHidden = None,
+      countryCode = None,
       referrer = None,
       ref = None,
       refViewId = None,
@@ -48,6 +50,8 @@ class EmailFormServiceTest
       email = "test@example.com",
       listNames = Seq("the-long-read", "morning-briefing"),
       marketing = None,
+      marketingOptInHidden = None,
+      countryCode = None,
       referrer = None,
       ref = None,
       refViewId = None,
@@ -152,6 +156,25 @@ class EmailFormServiceTest
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
       }
     }
+
+    "passing through DCR soft opt-in fields" should {
+
+      "include marketingOptInHidden when present" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submit(singleNewsletterBaseForm.copy(marketingOptInHidden = Some(true), countryCode = Some("US")))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "marketing-opt-in-hidden").get shouldBe JsBoolean(true)
+      }
+
+      "omit marketingOptInHidden when absent" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service.submit(singleNewsletterBaseForm).futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "marketing-opt-in-hidden").asOpt[Boolean] shouldBe None
+      }
+    }
   }
 
   "EmailFormService.submitWithMany" when {
@@ -228,6 +251,25 @@ class EmailFormServiceTest
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
+      }
+    }
+
+    "passing through DCR soft opt-in fields" should {
+
+      "include marketingOptInHidden when present" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submitWithMany(multipleNewslettersBaseForm.copy(marketingOptInHidden = Some(true), countryCode = Some("US")))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "marketing-opt-in-hidden").get shouldBe JsBoolean(true)
+      }
+
+      "omit marketingOptInHidden when absent" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "marketing-opt-in-hidden").asOpt[Boolean] shouldBe None
       }
     }
   }
