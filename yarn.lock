@@ -2778,16 +2778,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/commercial-core@npm:0.0.0-beta-20260518074451":
-  version: 0.0.0-beta-20260518074451
-  resolution: "@guardian/commercial-core@npm:0.0.0-beta-20260518074451"
+"@guardian/commercial-core@npm:34.0.0":
+  version: 34.0.0
+  resolution: "@guardian/commercial-core@npm:34.0.0"
   dependencies:
     "@guardian/consent-manager": "npm:1.0.0"
     "@guardian/libs": "npm:32.0.0"
   peerDependencies:
     "@guardian/consent-manager": ^1.0.0
     "@guardian/libs": ^32.0.0
-  checksum: 10c0/f811b6697036387dd7dc352397ec607c50b931470df2f8139e9f599beac5df345ea6caa27ea4e2b1ffa6a76b838b2cae5e8db551b616943f23ebc1b986d67a6b
+  checksum: 10c0/b064a9312de1fd9327df5e6c3aa725df5e6ad8275980fa7ecec99f51a4d6a9e3f2d9728575091a7ce07dc4011f731cafb9c4bca24da87bb065dad694da81e350
   languageName: node
   linkType: hard
 
@@ -2844,7 +2844,7 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial-core": "npm:0.0.0-beta-20260518074451"
+    "@guardian/commercial-core": "npm:34.0.0"
     "@guardian/consent-manager": "npm:1.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"

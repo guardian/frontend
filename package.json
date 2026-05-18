@@ -27,7 +27,7 @@
 		"@emotion/react": "11.11.1",
 		"@emotion/styled": "^11.14.0",
 		"@guardian/ab-core": "8.0.0",
-		"@guardian/commercial-core": "0.0.0-beta-20260518074451",
+		"@guardian/commercial-core": "34.0.0",
 		"@guardian/consent-manager": "1.0.0",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/identity-auth": "6.0.1",
