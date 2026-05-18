@@ -77,15 +77,36 @@ object Innings {
   implicit val writes: OWrites[Innings] = Json.writes[Innings]
 }
 
+case class MatchWinner(
+    winType: String,
+    margin: String,
+    team: String,
+)
+
+object MatchWinner {
+  implicit val writes: OWrites[MatchWinner] = Json.writes[MatchWinner]
+}
+
+case class MatchResult(
+    resultType: String,
+    description: String,
+    winner: Option[MatchWinner],
+)
+
+object MatchResult {
+  implicit val writes: OWrites[MatchResult] = Json.writes[MatchResult]
+}
+
 case class Match(
     teams: List[Team],
     innings: List[Innings],
     competitionName: String,
     venueName: String,
-    result: String,
+    status: String,
     gameDate: LocalDateTime,
     officials: List[String],
     matchId: String,
+    result: Option[MatchResult] = None,
 ) {
   def homeTeam: Team = teams.filter(_.home).head
   def awayTeam: Team = teams.filter(!_.home).head

@@ -23,19 +23,21 @@ object Parser {
       parseInnings(scorecardData \ "match" \ "innings"),
       matchDetail.competitionName,
       matchDetail.venueName,
-      matchDetail.result,
+      matchDetail.status,
       matchDetail.gameDate,
       matchDetail.officials,
       matchId,
+      matchDetail.result,
     )
   }
 
   private case class MatchDetail(
       competitionName: String,
       venueName: String,
-      result: String,
+      status: String,
       gameDate: LocalDateTime,
       officials: List[String],
+      result: Option[MatchResult],
   )
 
   private object Date {
@@ -60,6 +62,25 @@ object Parser {
       matchDetail \ "status" text,
       Date(matchDetail \ "dateTime" text),
       parseOfficials(matchDetail \ "official"),
+      parseMatchResult(matchDetail \ "result"),
+    )
+
+  private def parseMatchWinner(winner: NodeSeq): Option[MatchWinner] =
+    Option.when(winner.nonEmpty)(
+      MatchWinner(
+        winType = (winner \ "@type").text,
+        margin = (winner \ "margin").text,
+        team = (winner \ "team" \ "name").text,
+      ),
+    )
+
+  private def parseMatchResult(result: NodeSeq): Option[MatchResult] =
+    Option.when(result.nonEmpty)(
+      MatchResult(
+        resultType = (result \ "@type").text,
+        description = (result \ "description").text,
+        winner = parseMatchWinner(result \ "winner"),
+      ),
     )
 
   private def parseTeams(teams: NodeSeq): List[Team] =
