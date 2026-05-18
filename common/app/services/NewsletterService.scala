@@ -20,6 +20,9 @@ case class NewsletterData(
     successDescription: String,
     regionFocus: Option[String],
     illustrationCard: Option[String],
+    illustrationSquare: Option[String],
+    exampleUrl: Option[String],
+    category: String,
 )
 
 object NewsletterData {
@@ -81,6 +84,9 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
       response.mailSuccessDescription.getOrElse("You are subscribed"),
       response.regionFocus,
       response.illustrationCard,
+      response.illustrationSquare,
+      response.exampleUrl,
+      response.category,
     )
   }
 

@@ -1,13 +1,12 @@
 package football.model
 
-import common.{CanonicalLink, Edition, Environment, LinkTo}
+import common.{CanonicalLink, Edition}
 import conf.Configuration
-import experiments.ActiveExperiments
 import football.controllers.{CompetitionFilter, FootballPage, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{assetURL, getMatchNavUrl, getMatchUrl, withoutDeepNull, withoutNull}
-import model.dotcomrendering.{Config, DCARUrlHelper, MatchHeaderEndpoint, PageFooter, PageType}
-import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, StandalonePage, Table, TeamUrl}
+import model.dotcomrendering.DotcomRenderingUtils.{getMatchNavUrl, getMatchUrl, withoutDeepNull, withoutNull}
+import model.dotcomrendering.{DCARUrlHelper, DotcomRenderingConfig, MatchHeaderEndpoint, PageFooter, PageType}
+import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
 import pa.{
   Fixture,
@@ -27,8 +26,6 @@ import pa.{
 }
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
-import ab.ABTests
 import org.joda.time.{LocalDate => JodaLocalDate}
 
 import java.time.LocalDate
@@ -50,38 +47,6 @@ trait DotcomRenderingFootballDataModel {
   def contributionsServiceUrl: String
   def canonicalUrl: String
   def pageId: String
-}
-
-object DotcomRenderingFootballDataModel {
-  def getConfig(page: StandalonePage)(implicit
-      request: RequestHeader,
-      context: ApplicationContext,
-  ): JsObject = {
-    val pageType: PageType = PageType(page, request, context)
-
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.getParticipations,
-      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
-    )
-
-    val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] =
-        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
-    combinedConfig
-  }
 }
 
 private object DotcomRenderingFootballDataModelImplicits {
@@ -176,7 +141,11 @@ object DotcomRenderingFootballMatchListDataModel {
   ): DotcomRenderingFootballMatchListDataModel = {
     val edition = Edition(request)
     val nav = Nav(page, edition)
-    val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = PageType(page, request, context).isPreview,
+    )
 
     val matches =
       getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
@@ -282,7 +251,11 @@ object DotcomRenderingFootballTablesDataModel {
   ): DotcomRenderingFootballTablesDataModel = {
     val edition = Edition(request)
     val nav = Nav(page, edition)
-    val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = PageType(page, request, context).isPreview,
+    )
 
     DotcomRenderingFootballTablesDataModel(
       tables = tables,
@@ -382,7 +355,11 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
   ): DotcomRenderingFootballMatchSummaryDataModel = {
     val edition = Edition(request)
     val nav = Nav(page, edition)
-    val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = PageType(page, request, context).isPreview,
+    )
     DotcomRenderingFootballMatchSummaryDataModel(
       footballMatch = matchStats,
       matchInfo = matchInfo,

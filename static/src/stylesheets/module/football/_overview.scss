@@ -1,7 +1,7 @@
 @use 'sass:math';
 
 /* ==========================================================================
-   World Cup 2018
+   World Cup 2026
    ========================================================================== */
 .wc-overview {
 	.container__title {
@@ -376,13 +376,14 @@
 		vertical-align: middle;
 	}
 	.football-match__team {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		font-size: 10px;
 		height: math.div($gs-baseline, 1.5) * 2;
-		padding: 0 0 $gs-baseline * 1.5;
+		padding: 0;
 		border: 1px solid $brightness-46;
 		border-top: 0;
-		display: block;
-		float: none;
-		position: absolute;
 		text-align: left;
 		width: 100%;
 	}
@@ -397,6 +398,13 @@
 		margin-bottom: -(($gs-baseline * 1.5) * 0.5);
 		bottom: 25%;
 		top: auto;
+	}
+	.football-match__team-name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		flex-grow: 1;
+		padding: 0 2px;
 	}
 	.football-match__victory-line {
 		border-left: 1px dotted $brightness-46;
@@ -429,7 +437,7 @@
 	.football-match__kickoff,
 	.football-match__date,
 	.football-match__comments {
-		@include fs-textSans(2, true);
+		@include fs-textSans(1, true);
 	}
 
 	.football-match__comments {
@@ -437,8 +445,8 @@
 	}
 
 	.team-crest {
-		margin-bottom: 2px;
 		margin-left: 1px;
+		margin-right: 0;
 	}
 
 	@include mq(desktop) {
@@ -542,14 +550,15 @@
 .football-round__matches {
 	box-sizing: border-box;
 	padding-right: $gs-gutter * 0.5;
-	height: 820px;
+	height: 1100px;
 }
 
 .football-round--playoff {
 	background: $brightness-97;
 	bottom: 0;
 	height: 25%;
-	left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center
+	left: 50%;
+	transform: translateX(-50%);
 	position: absolute;
 	z-index: 2;
 

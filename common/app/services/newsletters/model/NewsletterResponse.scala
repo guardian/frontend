@@ -49,6 +49,7 @@ case class NewsletterResponseV2(
     regionFocus: Option[String], // edition Id
     illustrationCard: Option[String],
     illustrationCircle: Option[String],
+    illustrationSquare: Option[String],
     seriesTag: Option[String],
     signupPage: Option[String],
     exampleUrl: Option[String],
