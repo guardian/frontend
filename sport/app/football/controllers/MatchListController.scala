@@ -4,6 +4,7 @@ import common.{Edition, JsonComponent}
 import common._
 import feed.Competitions
 import football.model.{DotcomRenderingFootballMatchListDataModel, MatchesList}
+import football.model.{DotcomRenderingFootballMatchDayDataModel, MatchesList}
 import implicits.{HtmlFormat, JsonFormat, Requests}
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, CacheTime, Cached, Competition, TeamMap}
@@ -77,29 +78,20 @@ trait MatchListController extends BaseController with Requests with ImplicitCont
   }
 
   protected def renderMatchDayEmbed(
-      page: FootballPage,
       matchesList: MatchesList,
-      filters: Map[String, Seq[CompetitionFilter]],
-      atom: Option[InteractiveAtom] = None,
   )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
 
     request.getRequestFormat match {
       case JsonFormat =>
-        val model = DotcomRenderingFootballMatchListDataModel(
-          page = page,
+        val model = DotcomRenderingFootballMatchDayDataModel(
           matchesList = matchesList,
-          filters = filters,
-          atom,
         )
         successful(Cached(CacheTime.Football)(JsonComponent.fromWritable(model)))
       case HtmlFormat =>
-        val model = DotcomRenderingFootballMatchListDataModel(
-          page = page,
+        val model = DotcomRenderingFootballMatchDayDataModel(
           matchesList = matchesList,
-          filters = filters,
-          atom,
         )
-        remoteRenderer.getFootballEmbed(wsClient, DotcomRenderingFootballMatchListDataModel.toJson(model))
+        remoteRenderer.getFootballEmbed(wsClient, DotcomRenderingFootballMatchDayDataModel.toJson(model))
       case _ => successful(NotFound)
     }
   }

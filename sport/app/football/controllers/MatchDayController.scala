@@ -78,12 +78,8 @@ class MatchDayController(
     Action.async { implicit request =>
       lookupCompetition(competitionTag)
         .map { competition =>
-          val webTitle =
-            if (date == LocalDate.now(Edition.defaultEdition.timezoneId)) s"Today's ${competition.fullName} matches"
-            else s" ${competition.fullName} matches"
-          val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle)
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
-          renderMatchDayEmbed(page, matches, filters)
+          renderMatchDayEmbed(matches)
         }
         .getOrElse {
           Future.successful(NotFound)
