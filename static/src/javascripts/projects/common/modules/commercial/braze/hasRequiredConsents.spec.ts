@@ -1,14 +1,14 @@
-import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
+import type { ConsentState, OnConsentChangeCallback } from '@guardian/consent-manager';
 import { hasRequiredConsents } from './hasRequiredConsents';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 let mockOnConsentChangeResult: ConsentState | undefined;
 jest.mock(
-	'@guardian/libs',
+	'@guardian/consent-manager',
 	() =>
 		({
-			...jest.requireActual('@guardian/libs'),
+			...jest.requireActual('@guardian/consent-manager'),
 			onConsentChange: (callback: OnConsentChangeCallback) => {
 				if (mockOnConsentChangeResult) {
 					callback(mockOnConsentChangeResult);

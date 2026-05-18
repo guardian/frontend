@@ -2778,30 +2778,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/ab-core@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@guardian/ab-core@npm:8.0.1"
+"@guardian/commercial-core@npm:34.0.0":
+  version: 34.0.0
+  resolution: "@guardian/commercial-core@npm:34.0.0"
+  dependencies:
+    "@guardian/consent-manager": "npm:1.0.0"
+    "@guardian/libs": "npm:32.0.0"
   peerDependencies:
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/d0c7c2eebe0f5ddd9851e572548857cae230431bf196aefbfd907b3667ca99a618d8eb261efdf0bb479fe955964662c0669b861dd7190e8a2b3e3791e65d9ea7
+    "@guardian/consent-manager": ^1.0.0
+    "@guardian/libs": ^32.0.0
+  checksum: 10c0/b064a9312de1fd9327df5e6c3aa725df5e6ad8275980fa7ecec99f51a4d6a9e3f2d9728575091a7ce07dc4011f731cafb9c4bca24da87bb065dad694da81e350
   languageName: node
   linkType: hard
 
-"@guardian/commercial-core@npm:28.0.0":
-  version: 28.0.0
-  resolution: "@guardian/commercial-core@npm:28.0.0"
+"@guardian/consent-manager@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@guardian/consent-manager@npm:1.0.0"
   dependencies:
-    "@guardian/ab-core": "npm:8.0.1"
-    "@guardian/libs": "npm:25.2.0"
-    "@types/googletag": "npm:~3.3.0"
+    "@guardian/libs": "npm:32.0.0"
+    "@guardian/ophan-tracker-js": "npm:2.8.0"
   peerDependencies:
-    "@guardian/ab-core": ^8.0.1
-    "@guardian/libs": ^25.2.0
-  checksum: 10c0/8ca720a7fe7afa2cc0f182106cce990b316b6b77fb9cd58693b4417497d80286316211cfaf3999670a037f132da96c22f978b2ec4552709762d5dd4d32880afe
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.8.1
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/0e50f4244ff3782fe45fe5e97565879f592591fc94b11cccf815b0619443b183d629ca94a29b3ef03fa6cc03c3c681ea6f5d29abc6466ba30693cad85e9f0b5b
   languageName: node
   linkType: hard
 
@@ -2842,11 +2844,12 @@ __metadata:
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
-    "@guardian/commercial-core": "npm:28.0.0"
+    "@guardian/commercial-core": "npm:34.0.0"
+    "@guardian/consent-manager": "npm:1.0.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
-    "@guardian/libs": "npm:31.0.0"
+    "@guardian/libs": "npm:32.0.0"
     "@guardian/prettier": "npm:^8.0.1"
     "@guardian/shimport": "npm:^1.0.2"
     "@guardian/source-foundations": "npm:16.0.0"
@@ -2984,25 +2987,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/libs@npm:25.2.0":
-  version: 25.2.0
-  resolution: "@guardian/libs@npm:25.2.0"
-  dependencies:
-    "@guardian/ophan-tracker-js": "npm:2.2.10"
-  peerDependencies:
-    "@guardian/ophan-tracker-js": ^2.2.10
-    tslib: ^2.6.2
-    typescript: ~5.5.2
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/41dd40a6c2ac0d9270924e5b4c2d3e6b703c1aaf8dd84f7a69cd76d4250a6782bd98d9c5e8508d6abd781bf3f2bdf57b001634fb88e9ac8597ff06b728eff998
-  languageName: node
-  linkType: hard
-
-"@guardian/libs@npm:31.0.0":
-  version: 31.0.0
-  resolution: "@guardian/libs@npm:31.0.0"
+"@guardian/libs@npm:32.0.0":
+  version: 32.0.0
+  resolution: "@guardian/libs@npm:32.0.0"
   dependencies:
     "@guardian/ophan-tracker-js": "npm:2.8.0"
   peerDependencies:
@@ -3012,16 +2999,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/d2193235241c49a0a7622f1034b540fb8df0057e217bf498898a4355675953cf3a26e5442d21736f67398edbb955de0af900adbf2ab3a1d309f7bb07fc9ca47e
-  languageName: node
-  linkType: hard
-
-"@guardian/ophan-tracker-js@npm:2.2.10":
-  version: 2.2.10
-  resolution: "@guardian/ophan-tracker-js@npm:2.2.10"
-  dependencies:
-    "@guardian/tsconfig": "npm:^1.0.0"
-  checksum: 10c0/e43f520953d0ff18ddb398694f05061f36621a1246720ccce6960de7ed380a7ab4283fdba681f24142418405fec33bece25e6cf198ae0719bee51a37dbfe7cc4
+  checksum: 10c0/b9809a5fa1fd1e31224ac3433b113ff5a7ed5dc5a904bac23516b213bd5678d9a2074cc1cd85e789b2a60ece7de651f93eebae9e2b62bd5ea031788b3016eda7
   languageName: node
   linkType: hard
 
@@ -4341,13 +4319,6 @@ __metadata:
   version: 3.1.3
   resolution: "@types/googletag@npm:3.1.3"
   checksum: 10c0/56a64143b71503a06ea7ab9308ea6f70e0c4ad7162cc2a0794c66426f767463e83f1b21b0a8cae28f0be6a678335e18320ae24fba41a8f0a352cb99516e70ff6
-  languageName: node
-  linkType: hard
-
-"@types/googletag@npm:~3.3.0":
-  version: 3.3.0
-  resolution: "@types/googletag@npm:3.3.0"
-  checksum: 10c0/8567cd7c5cb6319bc5fd1fe3985910a99f0044cac102b639e001d995961c5541bf23267d192479e0df84059725c355f70c50d3c81714af4d4774889b414912fc
   languageName: node
   linkType: hard
 
@@ -9339,9 +9310,9 @@ __metadata:
   linkType: hard
 
 "lodash@npm:^4.17.11, lodash@npm:^4.17.15, lodash@npm:^4.17.20":
-  version: 4.18.1
-  resolution: "lodash@npm:4.18.1"
-  checksum: 10c0/757228fc68805c59789e82185135cf85f05d0b2d3d54631d680ca79ec21944ec8314d4533639a14b8bcfbd97a517e78960933041a5af17ecb693ec6eecb99a27
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
   languageName: node
   linkType: hard
 
@@ -10322,9 +10293,9 @@ __metadata:
   linkType: hard
 
 "path-to-regexp@npm:~0.1.12":
-  version: 0.1.13
-  resolution: "path-to-regexp@npm:0.1.13"
-  checksum: 10c0/1cae3921739c154a8926e136185a10c916f79a249b9072a5001b266d96e193860ca03867e8e8cc808b786862d750f427ed93686bc259355442c3407a62deab1a
+  version: 0.1.12
+  resolution: "path-to-regexp@npm:0.1.12"
+  checksum: 10c0/1c6ff10ca169b773f3bba943bbc6a07182e332464704572962d277b900aeee81ac6aa5d060ff9e01149636c30b1f63af6e69dd7786ba6e0ddb39d4dee1f0645b
   languageName: node
   linkType: hard
 
