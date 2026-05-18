@@ -80,7 +80,7 @@ const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 
 	const pageTargeting = buildPageTargeting({
 		adFree: commercialFeatures.adFree,
-		clientSideParticipations: {},
+		abTestParticipations: {},
 		consentState,
 	});
 
