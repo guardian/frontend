@@ -69,7 +69,7 @@ object Parser {
     Option.when(winner.nonEmpty)(
       MatchWinner(
         winType = (winner \ "@type").text,
-        margin = (winner \ "margin").text,
+        margin = (winner \ "margin").headOption.map(_.text),
         team = (winner \ "team" \ "name").text,
       ),
     )
@@ -78,7 +78,7 @@ object Parser {
     Option.when(result.nonEmpty)(
       MatchResult(
         resultType = (result \ "@type").text,
-        description = (result \ "description").text,
+        description = (result \ "description").headOption.map(_.text),
         winner = parseMatchWinner(result \ "winner"),
       ),
     )
