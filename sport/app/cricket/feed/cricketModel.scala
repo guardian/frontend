@@ -79,8 +79,8 @@ object Innings {
 
 case class MatchWinner(
     winType: String,
-    margin: String,
-    team: String,
+    margin: Option[String],
+    team: String, // team name
 )
 
 object MatchWinner {
@@ -89,7 +89,7 @@ object MatchWinner {
 
 case class MatchResult(
     resultType: String,
-    description: String,
+    description: Option[String],
     winner: Option[MatchWinner],
 )
 
