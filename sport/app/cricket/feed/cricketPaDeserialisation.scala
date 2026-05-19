@@ -19,15 +19,15 @@ object Parser {
     val scorecardData = XML.loadString(scorecard)
 
     Match(
-      parseTeams(lineupData \ "match" \ "team"),
-      parseInnings(scorecardData \ "match" \ "innings"),
-      matchDetail.competitionName,
-      matchDetail.venueName,
-      matchDetail.status,
-      matchDetail.gameDate,
-      matchDetail.officials,
-      matchId,
-      matchDetail.result,
+      teams = parseTeams(lineupData \ "match" \ "team"),
+      innings = parseInnings(scorecardData \ "match" \ "innings"),
+      competitionName = matchDetail.competitionName,
+      venueName = matchDetail.venueName,
+      status = matchDetail.status,
+      gameDate = matchDetail.gameDate,
+      officials = matchDetail.officials,
+      matchId = matchId,
+      result = matchDetail.result,
     )
   }
 
@@ -57,12 +57,12 @@ object Parser {
 
   private def parseMatchDetail(matchDetail: NodeSeq): MatchDetail =
     MatchDetail(
-      matchDetail \ "stage" text,
-      matchDetail \ "venue" \ "name" text,
-      matchDetail \ "status" text,
-      Date(matchDetail \ "dateTime" text),
-      parseOfficials(matchDetail \ "official"),
-      parseMatchResult(matchDetail \ "result"),
+      competitionName = matchDetail \ "stage" text,
+      venueName = matchDetail \ "venue" \ "name" text,
+      status = matchDetail \ "status" text,
+      gameDate = Date(matchDetail \ "dateTime" text),
+      officials = parseOfficials(matchDetail \ "official"),
+      result = parseMatchResult(matchDetail \ "result"),
     )
 
   private def parseMatchWinner(winner: NodeSeq): Option[MatchWinner] =
