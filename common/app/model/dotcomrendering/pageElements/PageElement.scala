@@ -935,6 +935,7 @@ case class YoutubeBlockElement(
     expired: Boolean,
     duration: Option[Long],
     altText: Option[String],
+    caption: Option[String],
 ) extends PageElement
 /*
   The difference between `overrideImage` and `posterImage`
@@ -1358,7 +1359,7 @@ object PageElement {
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                     altText = if (isMainBlock) altText else None,
-                    caption = mediaAtom.caption,
+                    caption = element.contentAtomTypeData.flatMap(_.caption),
                   )
                 })
               }
@@ -1376,7 +1377,7 @@ object PageElement {
                     mediaAtom.channelId,
                     mediaAtom.videoPlayerFormat,
                     elementRole,
-                    mediaAtom.caption,
+                    element.contentAtomTypeData.flatMap(_.caption),
                   ),
                 )
             }
