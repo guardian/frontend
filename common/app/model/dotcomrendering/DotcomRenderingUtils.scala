@@ -79,7 +79,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
         Some(
           DotcomRenderingMatchData(
             matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
-            matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
+            matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/api/match-header/$date/$team.json"),
             matchStatsUrl = None,
             matchType = CricketMatchType,
           ),

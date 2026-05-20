@@ -161,6 +161,6 @@ object MatchHeader extends DCARUrlHelper {
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    MatchHeader(page.theMatch, liveBlogUrl, matchReportUrl, s"$getAjaxHost${page.metadata.id}")
+    MatchHeader(page.theMatch, liveBlogUrl, matchReportUrl, getPageUrl(page.metadata.id))
   }
 }
