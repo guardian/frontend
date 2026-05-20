@@ -2,16 +2,19 @@ package com.gu
 
 import com.gu.versioninfo.VersionInfo
 import com.typesafe.sbt.packager.universal.UniversalPlugin
-import sbt._
-import sbt.Keys._
-import com.gu.Dependencies._
-import play.sbt.{PlayPekkoHttpServer, PlayScala}
+import sbt.*
+import sbt.Keys.*
+import com.gu.Dependencies.*
+import play.sbt.PlayScala
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
 import sbtbuildinfo.{BuildInfoKey, BuildInfoOption, BuildInfoPlugin}
 import sbtbuildinfo.BuildInfoKeys.{buildInfoKeys, buildInfoOptions, buildInfoPackage}
+import scalafix.sbt.ScalafixPlugin.autoImport.scalafixSemanticdb
 
 object ProjectSettings {
+
+  val SCALA_VERSION = "2.13.18"
 
   val cleanAll = taskKey[Unit]("Cleans all projects in a build, regardless of dependencies")
 
@@ -32,11 +35,19 @@ object ProjectSettings {
     Compile / packageDoc / publishArtifact := false,
     Compile / doc / sources := Seq.empty,
     Compile / doc := target.map(_ / "none").value,
-    scalaVersion := "2.13.18",
+    scalaVersion := SCALA_VERSION,
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
     }.value,
+
+    // These options need to be enabled when launching `scalafix RemoveUnused`
+    // semanticdbEnabled := true,
+    // semanticdbVersion := scalafixSemanticdb.revision,
+    // scalacOptions ++= Seq(
+    //   "-Wunused",
+    //   "-Wconf:cat=unused:info",
+    // ),
   )
 
   val frontendDependencyManagementSettings = Seq(
