@@ -5,6 +5,7 @@ import conf.Configuration
 import conf.cricketPa.{CricketTeam, CricketTeams, PaFeed}
 import contentapi.ContentApiClient
 import cricketModel.{Match, MatchHeader}
+import football.datetime.DateHelpers
 import football.model.{CricketScoreBoardDataModel, DotcomRenderingCricketDataModel}
 import implicits.{HtmlFormat, JsonFormat}
 import jobs.CricketStatsJob
@@ -118,8 +119,8 @@ class CricketMatchController(
   }
 
   private def relatedContents(theMatch: Match, date: ZonedDateTime): Future[List[ContentType]] = {
-    val startOfDateRange = date.minusDays(1)
-    val endOfDateRange = date.plusDays(1)
+    val startOfDateRange = DateHelpers.startOfDay(date)
+    val endOfDateRange = DateHelpers.startOfDay(date.plusDays(1))
     val tagIds = theMatch.teams.flatMap(_.teamTagId).mkString(",")
 
     contentApiClient

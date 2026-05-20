@@ -131,24 +131,27 @@ object MatchHeader extends DCARUrlHelper {
   ): MatchHeader = {
     val currentPage = request.getParameter("page").getOrElse("")
 
-    val matchReport = related
+    val matchReportUrl = related
       .find(c => c.isArticleType && c.isPage(currentPage))
       .orElse {
-        related.find { content =>
-          content.isArticleType &&
-          content.isMatchReport &&
-          !content.isLiveCricket &&
-          (content.webPublicationDate.toLocalDate == date.toLocalDate &&
-            content.webPublicationDate.isAfter(
-              DateHelpers.startOfDay(
-                page.theMatch.gameDate.atZone(ZoneId.of("Europe/London")),
-              ), // match report always happens after the match
-            ))
-        }
+
+        related
+          .filter { content =>
+            content.isArticleType &&
+            content.isMatchReport &&
+            !content.isLiveCricket
+          }
+          .find(content => {
+            val matchStart = DateHelpers.startOfDay(
+              page.theMatch.gameDate.atZone(ZoneId.of("Europe/London")),
+            )
+            content.webPublicationDate.toLocalDate == date.toLocalDate &&
+            content.webPublicationDate.isAfter(matchStart) // match report always happens after the match starts
+          })
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    val liveBlog = related
+    val liveBlogUrl = related
       .find(c => c.isLiveCricket && c.isPage(currentPage))
       .orElse {
         related.find { content =>
@@ -158,6 +161,6 @@ object MatchHeader extends DCARUrlHelper {
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    MatchHeader(page.theMatch, liveBlog, matchReport, s"$getAjaxHost${page.metadata.id}")
+    MatchHeader(page.theMatch, liveBlogUrl, matchReportUrl, s"$getAjaxHost${page.metadata.id}")
   }
 }
