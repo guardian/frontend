@@ -27,8 +27,8 @@ object HostedContentPicker extends GuLogging {
   def decideTier(isGallery: Boolean = false)(implicit
       request: RequestHeader,
   ): RenderType = {
-    if (Switches.DCRHostedContent.isSwitchedOff && !isUserInTestGroup("commercial-hosted-content", "preview"))
-      LocalRender
+    if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
+    else if (!isUserInTestGroup("commercial-hosted-content", "preview")) LocalRender
     // Gallery pages are not supported in DCR yet
     else if (isGallery) LocalRender
     else if (request.forceDCROff) LocalRender
