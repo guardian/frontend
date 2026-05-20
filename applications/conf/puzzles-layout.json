@@ -7,23 +7,34 @@
 				"items": [
 					[
 						{
-							"title": "Today's Mini",
+							"title": "Mini crossword No 148",
 							"type": "crossword",
-							"set": "mini"
-						},
+							"set": "mini",
+							"url": "https://www.theguardian.com/crosswords/mini/148",
+							"image": "https://api.nextgen.guardianapps.co.uk/crosswords/mini/148.svg"
+						}
+					],
+					[
 						{
-							"title": "Today's Cryptic",
+							"title": "Cryptic crossword No 30,006",
 							"type": "crossword",
-							"set": "cryptic"
-						},
+							"set": "cryptic",
+							"url": "https://www.theguardian.com/crosswords/cryptic/30006",
+							"image": "https://api.nextgen.guardianapps.co.uk/crosswords/cryptic/30006.svg"
+						}
+					],
+					[
 						{
-							"title": "Today's Quick",
+							"title": "Quick crossword No 17,484",
 							"type": "crossword",
 							"set": "quick",
-							"url": "crosswords/quick/17479"
-						},
+							"url": "https://www.theguardian.com/crosswords/quick/17484",
+							"image": "https://api.nextgen.guardianapps.co.uk/crosswords/quick/17484.svg"
+						}
+					],
+					[
 						{
-							"title": "Play the CW archive",
+							"title": "Browse the crossword archive",
 							"type": "crossword",
 							"set": "all",
 							"variant": "archive"
@@ -45,21 +56,27 @@
 							"set": "easy",
 							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
 							"index": 1
-						},
+						}
+					],
+					[
 						{
 							"title": "Today's Med Sudoku",
 							"type": "sudoku",
 							"set": "medium",
 							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium",
 							"index": 1
-						},
+						}
+					],
+					[
 						{
 							"title": "Today's Hard Sudoku",
 							"type": "sudoku",
 							"set": "hard",
 							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard",
 							"index": 1
-						},
+						}
+					],
+					[
 						{
 							"title": "Play the Sudoku archive",
 							"type": "sudoku",
@@ -99,13 +116,13 @@
 							"title": "App Store",
 							"type": "store",
 							"set": "ios",
-							"url": "https://apps.apple.com/to/app/the-guardian-uk-world-news/id409128287"
+							"url": "https://apps.apple.com/"
 						},
 						{
 							"title": "Google Play",
 							"type": "store",
 							"set": "android",
-							"url": "https://play.google.com/store/apps/details?id=com.guardian"
+							"url": "https://play.google.com/store"
 						}
 					]
 				],

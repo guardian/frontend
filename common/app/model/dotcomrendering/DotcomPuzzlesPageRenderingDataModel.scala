@@ -17,6 +17,7 @@ case class PuzzleItem(
     `type`: String,
     set: String,
     url: Option[String] = None,
+    image: Option[String] = None,
     index: Option[Int] = None,
     variant: Option[String] = None,
 )

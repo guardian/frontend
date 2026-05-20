@@ -9,16 +9,26 @@ object PuzzlesConfig {
           content = PuzzleContent(
             items = Seq(
               Seq(
-                PuzzleItem("Quick crossword", "crossword", "quick"),
-                PuzzleItem("Mini crossword", "crossword", "mini"),
+                PuzzleItem(
+                  title = "Quick crossword",
+                  `type` = "crossword",
+                  set = "quick",
+                ),
+                PuzzleItem(
+                  title = "Mini crossword",
+                  `type` = "crossword",
+                  set = "mini",
+                ),
               ),
               Seq(
                 PuzzleItem(
-                  "Sudoku (easy)",
-                  "sudoku",
-                  "easy",
-                  Some("https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy"),
-                  Some(1),
+                  title = "Sudoku (easy)",
+                  `type` = "sudoku",
+                  set = "easy",
+                  url = Some(
+                    "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
+                  ),
+                  index = Some(1),
                 ),
               ),
             ),
