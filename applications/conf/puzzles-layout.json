@@ -49,8 +49,10 @@
 							"title": "Today's Easy Sudoku",
 							"type": "sudoku",
 							"set": "easy",
+							"slug": "sudoku-easy",
 							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
-							"index": 1
+							"index": 1,
+							"variant": "iframe-page"
 						}
 					],
 					[
@@ -58,8 +60,10 @@
 							"title": "Today's Med Sudoku",
 							"type": "sudoku",
 							"set": "medium",
+							"slug": "sudoku-medium",
 							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium",
-							"index": 1
+							"index": 1,
+							"variant": "iframe-page"
 						}
 					],
 					[
@@ -67,8 +71,10 @@
 							"title": "Today's Hard Sudoku",
 							"type": "sudoku",
 							"set": "hard",
+							"slug": "sudoku-hard",
 							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard",
-							"index": 1
+							"index": 1,
+							"variant": "iframe-page"
 						}
 					],
 					[
@@ -94,7 +100,9 @@
 							"title": "Play Wordiply",
 							"type": "wordiply",
 							"set": "all",
-							"url": "https://www.wordiply.com/"
+							"slug": "wordiply",
+							"url": "https://www.wordiply.com/",
+							"variant": "iframe-page"
 						}
 					]
 				],

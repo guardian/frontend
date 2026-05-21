@@ -7,61 +7,11 @@ import conf.Configuration
 import experiments.ActiveExperiments
 import model.SimplePage
 import navigation.{FooterLinks, Nav}
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 
-case class PuzzleItem(
-    title: String,
-    `type`: String,
-    set: String,
-    url: Option[String] = None,
-    image: Option[String] = None,
-    slug: Option[String] = None,
-    index: Option[Int] = None,
-    variant: Option[String] = None,
-)
-
-object PuzzleItem {
-  implicit val format: OFormat[PuzzleItem] = Json.format[PuzzleItem]
-}
-
-case class PuzzleContent(
-    items: Seq[Seq[PuzzleItem]],
-    nestedContainers: Seq[PuzzleContainer],
-)
-
-object PuzzleContent {
-  implicit lazy val format: OFormat[PuzzleContent] = (
-    (__ \ "items").format[Seq[Seq[PuzzleItem]]] and
-      (__ \ "nestedContainers").lazyFormat[Seq[PuzzleContainer]](Format.of[Seq[PuzzleContainer]])
-  )(PuzzleContent.apply, unlift(PuzzleContent.unapply))
-}
-
-case class PuzzleContainer(
-    title: String,
-    variant: Option[String] = None,
-    content: PuzzleContent,
-)
-
-object PuzzleContainer {
-  implicit lazy val format: OFormat[PuzzleContainer] = (
-    (__ \ "title").format[String] and
-      (__ \ "variant").formatNullable[String] and
-      (__ \ "content").lazyFormat[PuzzleContent](PuzzleContent.format)
-  )(PuzzleContainer.apply, unlift(PuzzleContainer.unapply))
-}
-
-case class PuzzlesLayout(
-    containers: Seq[PuzzleContainer],
-)
-
-object PuzzlesLayout {
-  implicit lazy val format: OFormat[PuzzlesLayout] = Json.format[PuzzlesLayout]
-}
-
-case class DotcomPuzzlesPageRenderingDataModel(
+case class DotcomPuzzleIframePageRenderingDataModel(
     id: String,
     editionId: String,
     editionLongForm: String,
@@ -74,18 +24,18 @@ case class DotcomPuzzlesPageRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     isAdFreeUser: Boolean,
     canonicalUrl: String,
-    layout: PuzzlesLayout,
+    puzzle: PuzzleItem,
 )
 
-object DotcomPuzzlesPageRenderingDataModel {
-  implicit val writes: OWrites[DotcomPuzzlesPageRenderingDataModel] =
-    Json.writes[DotcomPuzzlesPageRenderingDataModel]
+object DotcomPuzzleIframePageRenderingDataModel {
+  implicit val writes: OWrites[DotcomPuzzleIframePageRenderingDataModel] =
+    Json.writes[DotcomPuzzleIframePageRenderingDataModel]
 
   def apply(
       page: SimplePage,
-      layout: PuzzlesLayout,
+      puzzle: PuzzleItem,
       request: RequestHeader,
-  ): DotcomPuzzlesPageRenderingDataModel = {
+  ): DotcomPuzzleIframePageRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
@@ -114,7 +64,7 @@ object DotcomPuzzlesPageRenderingDataModel {
       .map(_.perEdition.map { case (k, v) => k.id -> v })
       .getOrElse(Map.empty)
 
-    DotcomPuzzlesPageRenderingDataModel(
+    DotcomPuzzleIframePageRenderingDataModel(
       id = page.metadata.id,
       editionId = edition.id,
       editionLongForm = edition.displayName,
@@ -127,10 +77,10 @@ object DotcomPuzzlesPageRenderingDataModel {
       commercialProperties = commercialProperties,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
-      layout = layout,
+      puzzle = puzzle,
     )
   }
 
-  def toJson(model: DotcomPuzzlesPageRenderingDataModel): JsValue =
+  def toJson(model: DotcomPuzzleIframePageRenderingDataModel): JsValue =
     DotcomRenderingUtils.withoutNull(Json.toJson(model))
 }
