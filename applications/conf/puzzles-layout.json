@@ -10,7 +10,7 @@
 							"title": "Mini crossword No 148",
 							"type": "crossword",
 							"set": "mini",
-							"url": "https://www.theguardian.com/crosswords/mini/148",
+							"url": "/puzzles/crosswords/mini/148",
 							"image": "https://api.nextgen.guardianapps.co.uk/crosswords/mini/148.svg"
 						}
 					],
@@ -19,7 +19,7 @@
 							"title": "Cryptic crossword No 30,006",
 							"type": "crossword",
 							"set": "cryptic",
-							"url": "https://www.theguardian.com/crosswords/cryptic/30006",
+							"url": "/puzzles/crosswords/cryptic/30006",
 							"image": "https://api.nextgen.guardianapps.co.uk/crosswords/cryptic/30006.svg"
 						}
 					],
@@ -28,7 +28,7 @@
 							"title": "Quick crossword No 17,484",
 							"type": "crossword",
 							"set": "quick",
-							"url": "https://www.theguardian.com/crosswords/quick/17484",
+							"url": "/puzzles/crosswords/quick/17484",
 							"image": "https://api.nextgen.guardianapps.co.uk/crosswords/quick/17484.svg"
 						}
 					],
@@ -81,7 +81,7 @@
 							"title": "Play the Sudoku archive",
 							"type": "sudoku",
 							"set": "all",
-							"url": "https://www.theguardian.com/crosswords/sudoku",
+							"url": "/puzzles/crosswords/sudoku",
 							"variant": "archive"
 						}
 					]
