@@ -9,7 +9,6 @@ import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
-import common.LoggingField.LogFieldString
 import common._
 import common.commercial.CommercialProperties
 import conf.Configuration
@@ -20,7 +19,6 @@ import services.fronts.FrontsApi
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import model.pressed._
-import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}

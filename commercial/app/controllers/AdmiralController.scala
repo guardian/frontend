@@ -3,7 +3,7 @@ package commercial.controllers
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import agents.AdmiralAgent
 import common.{GuLogging, ImplicitControllerExecutionContext}
-import model.{Cached, NoCache}
+import model.Cached
 import model.Cached.RevalidatableResult
 
 import scala.concurrent.duration._

@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter
 import model.content.InteractiveAtom
 import play.api.libs.ws.WSClient
 import renderers.DotcomRenderingService
-import services.dotcomrendering.{FootballPagePicker, LocalRender, RemoteRender}
+import services.dotcomrendering.{FootballPagePicker, RemoteRender}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful

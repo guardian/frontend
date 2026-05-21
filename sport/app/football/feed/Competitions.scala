@@ -1,16 +1,12 @@
 package feed
 
-import com.github.nscala_time.time.Imports
-import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
 import football.controllers.Interval
 import model.{Competition, CompetitionSummary, Table, TeamFixture, TeamNameBuilder}
-import org.joda.time.DateTimeComparator
 import pa.{FootballMatch, _}
 
 import java.time.{Clock, LocalDate, ZonedDateTime}
-import java.util.Comparator
 import scala.collection.{View, immutable}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
@@ -366,10 +362,6 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with Lineups
     with GuLogging
     with implicits.Football {
-
-  private implicit val dateOrdering: Ordering[Imports.DateTime] = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]],
-  )
 
   // Avoid fetching very old results from PA by restricting to most recent season
   private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =

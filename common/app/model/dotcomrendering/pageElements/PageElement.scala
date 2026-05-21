@@ -1,7 +1,5 @@
 package model.dotcomrendering.pageElements
 
-import ab.ABTests
-import ab.ABTests.ABTest
 import com.gu.contentapi.client.model.v1
 import com.gu.contentapi.client.model.v1.ElementType.{List => GuList, Map => GuMap, _}
 import com.gu.contentapi.client.model.v1.EmbedTracksType.DoesNotTrack

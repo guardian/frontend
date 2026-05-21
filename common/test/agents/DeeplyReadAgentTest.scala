@@ -1,8 +1,6 @@
 package agents
 
 import common.{Edition}
-import contentapi.ContentApiClient
-import model.dotcomrendering.OnwardCollectionResponse
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -12,7 +10,6 @@ import test.{
   WithMaterializer,
   WithTestApplicationContext,
   WithTestContentApiClient,
-  WithTestExecutionContext,
   WithTestWsClient,
 }
 

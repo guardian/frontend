@@ -14,14 +14,11 @@ import com.gu.facia.client.models.{
 }
 import layout._
 import layout.slices._
-import model.pressed.{Audio, Gallery, SpecialReport, SpecialReportAlt, Video}
-import play.api.mvc.RequestHeader
-import model.Pillar.RichPillar
+import model.pressed.SpecialReportAlt
 import model.ContentDesignType.RichContentDesignType
 import model.Pillar.RichPillar
 import model.pressed.{Audio, Gallery, SpecialReport, Video}
 import play.api.mvc.RequestHeader
-import views.support.Commercial.isAdFree
 
 object GetClasses {
 

@@ -1,7 +1,6 @@
 package purge
 
 import common.GuLogging
-import conf.AdminConfiguration.fastly
 import conf.Configuration.environment
 import implicits.Dates
 import play.api.libs.ws.{WSClient, WSResponse}

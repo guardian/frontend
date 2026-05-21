@@ -1,10 +1,8 @@
 package services
 import services.newsletters.NewsletterSignupAgent
 import services.newsletters.model.NewsletterResponseV2
-import common._
-import model.{ArticlePage, LiveBlogPage, PageWithStoryPackage, Tag}
+import model.{ArticlePage, LiveBlogPage, Tag}
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.json.{Json, OWrites, Reads}
 import com.gu.contentapi.client.utils.format.NewsletterSignupDesign
 import com.gu.contentapi.client.model.v1.TagType
