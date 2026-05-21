@@ -27,14 +27,15 @@ class PuzzlesPageController(
       request.getRequestFormat match {
         case HtmlFormat =>
           val page = StaticPages.dcrSimplePuzzlesPage(request.path)
-          val layout = puzzlesLayoutProvider.getLayout()
-          val dataModel =
-            DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+          puzzlesLayoutProvider.getLayout().flatMap { layout =>
+            val dataModel =
+              DotcomPuzzlesPageRenderingDataModel(page, layout, request)
 
-          remoteRenderer.getPuzzlesPage(
-            wsClient,
-            DotcomPuzzlesPageRenderingDataModel.toJson(dataModel),
-          )
+            remoteRenderer.getPuzzlesPage(
+              wsClient,
+              DotcomPuzzlesPageRenderingDataModel.toJson(dataModel),
+            )
+          }
 
         case _ =>
           Future.successful(
@@ -48,15 +49,14 @@ class PuzzlesPageController(
       request.getRequestFormat match {
         case JsonFormat =>
           val page = StaticPages.dcrSimplePuzzlesPage(request.path)
-          val layout = puzzlesLayoutProvider.getLayout()
-          val dataModel =
-            DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+          puzzlesLayoutProvider.getLayout().map { layout =>
+            val dataModel =
+              DotcomPuzzlesPageRenderingDataModel(page, layout, request)
 
-          Future.successful(
             common
               .renderJson(DotcomPuzzlesPageRenderingDataModel.toJson(dataModel), page)
-              .as("application/json"),
-          )
+              .as("application/json")
+          }
 
         case _ =>
           Future.successful(
