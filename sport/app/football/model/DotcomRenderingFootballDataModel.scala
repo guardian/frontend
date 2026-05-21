@@ -197,6 +197,7 @@ object DotcomRenderingFootballMatchListDataModel {
 }
 
 case class DotcomRenderingFootballMatchDayDataModel(
+    competitionTag: String,
     matchesList: Seq[MatchesByDateAndCompetition],
     editionId: String,
     guardianBaseURL: String,
@@ -204,10 +205,10 @@ case class DotcomRenderingFootballMatchDayDataModel(
 
 object DotcomRenderingFootballMatchDayDataModel {
   def apply(
+      competitionTag: String,
       matchesList: MatchesList,
   )(implicit
       request: RequestHeader,
-      context: ApplicationContext,
   ): DotcomRenderingFootballMatchDayDataModel = {
     val edition = Edition(request)
 
@@ -215,6 +216,7 @@ object DotcomRenderingFootballMatchDayDataModel {
       getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
 
     DotcomRenderingFootballMatchDayDataModel(
+      competitionTag = competitionTag,
       matchesList = matches,
       editionId = edition.id,
       guardianBaseURL = Configuration.site.host,

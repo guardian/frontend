@@ -79,7 +79,7 @@ class MatchDayController(
       lookupCompetition(competitionTag)
         .map { competition =>
           val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
-          renderMatchDayEmbed(matches)
+          renderMatchDayEmbed(competitionTag, matches)
         }
         .getOrElse {
           Future.successful(NotFound)
