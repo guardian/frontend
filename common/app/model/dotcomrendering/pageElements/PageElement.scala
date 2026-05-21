@@ -490,6 +490,7 @@ case class MediaAtomBlockElement(
     channelId: Option[String],
     videoPlayerFormat: Option[VideoPlayerFormat],
     role: Option[String],
+    caption: Option[String],
 ) extends PageElement
 object MediaAtomBlockElement {
   implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
@@ -934,6 +935,7 @@ case class YoutubeBlockElement(
     expired: Boolean,
     duration: Option[Long],
     altText: Option[String],
+    caption: Option[String],
 ) extends PageElement
 /*
   The difference between `overrideImage` and `posterImage`
@@ -1357,6 +1359,7 @@ object PageElement {
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                     altText = if (isMainBlock) altText else None,
+                    caption = element.contentAtomTypeData.flatMap(_.caption),
                   )
                 })
               }
@@ -1374,6 +1377,7 @@ object PageElement {
                     mediaAtom.channelId,
                     mediaAtom.videoPlayerFormat,
                     elementRole,
+                    element.contentAtomTypeData.flatMap(_.caption),
                   ),
                 )
             }
