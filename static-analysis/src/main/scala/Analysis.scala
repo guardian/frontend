@@ -1,6 +1,8 @@
+import SourceLoader.SourceRef
+
 import java.nio.file.Path
 import scala.meta.{Defn, Import, Importer, Input, Pkg, Position, Source, Term, Tree}
-import scala.meta.internal.semanticdb.{Range, Locator, SymbolOccurrence, TextDocument}
+import scala.meta.internal.semanticdb.{Locator, Range, SymbolInformation, SymbolOccurrence, TextDocument}
 
 object Analysis {
 
@@ -15,29 +17,27 @@ object Analysis {
     case None                 => false
   }
 
-  def findViewsCallSites(scalaSources: ScalaSources): Seq[Term.Select] = {
-    val allCallSites = scalaSources.collect {
-      case (file, s: Term.Select) if s.qual.text.startsWith("views.html") && !isPackageOrImport(s) => file -> s
+  def findViewsDefinitions(semanticDB: SemanticDB): Seq[(SourceRef, SymbolInformation)] = {
+    semanticDB.allDocuments.flatMap { case (file, document) =>
+      document.symbols
+        .filter { symbol =>
+          symbol.symbol.startsWith("views/html/") && (symbol.kind.isMethod || symbol.kind.isObject)
+        }
+        .map(definitions => file -> definitions)
+        .map { case (file, definition) =>
+
+          file -> definition
+        }
     }
-    // dedupe to avoid selecting views.html.fragment as well as views.html.fragments.articleBody
-    val grouped = allCallSites
-      // we identify unique call sites by their start position in the source code
-      .groupBy { case (file, callSite) =>
-        val position = callSite.origin.position
-        (file, position.startLine, position.startColumn)
-      }
-    // for all the call sites at a given start position
-    // sorting by name length keeps the longest (most specific) at the end
-    grouped.flatMap { case (_, calls) =>
-      val sortedCalls = calls.sortBy(_._2.name.value.length).lastOption.map(_._2)
-      sortedCalls
-    }.toSeq
   }
-  def findViewsCallSites2(semanticDB: Map[String, TextDocument]): Seq[SymbolOccurrence] = {
-    semanticDB.toSeq.flatMap { case (_, document) =>
-      document.occurrences.filter { symbol =>
-        symbol.symbol.startsWith("views/html/") && symbol.role.isReference
-      }
+
+  def findViewsCallSites(semanticDB: SemanticDB): Seq[(SourceRef, SymbolOccurrence)] = {
+    val allDefs = findViewsDefinitions(semanticDB)
+    allDefs.flatMap { case (_, definition) =>
+      semanticDB
+        .getOccurrences(definition.symbol)
+        .filter { case (_, occurrence) => occurrence.role.isReference }
+        .map { case (callFile, occurrence) => callFile -> occurrence }
     }
   }
 
@@ -51,60 +51,63 @@ object Analysis {
     case None                    => None
   }
 
-  def identifyFullyQualifiedName(node: Tree, parents: List[Tree] = List.empty): Option[List[Tree]] = findOwner(
+  def identifyFullyQualifiedNameOfOwner(node: Tree, parents: List[Tree] = List.empty): Option[List[Tree]] = findOwner(
     node,
   ) match {
-    case Some(owner) => identifyFullyQualifiedName(owner, owner :: parents)
+    case Some(owner) => identifyFullyQualifiedNameOfOwner(owner, owner :: parents)
     case None        => Some(parents)
   }
 
   def formatFullyQualifiedName(nodes: List[Tree]): String = nodes.map {
-    case defn: Defn.Def    => s"#${defn.name.value}()."
-    case defn: Defn.Class  => defn.name.value
-    case defn: Defn.Trait  => defn.name.value
-    case defn: Defn.Object => defn.name.value
+    case defn: Defn.Def    => s"${defn.name.value}()."
+    case defn: Defn.Class  => s"${defn.name.value}#"
+    case defn: Defn.Trait  => s"${defn.name.value}#"
+    case defn: Defn.Object => s"${defn.name.value}."
     case pkg: Pkg          => s"${pkg.name.value.replace(".", "/")}/"
     case other             => other.toString()
   }.mkString
 
-  def findNextCallers(node: Tree, scalaSources: ScalaSources, semanticDB: Map[String, TextDocument]): Seq[Call] = {
-    identifyFullyQualifiedName(node).map(formatFullyQualifiedName) match {
-      case Some(fullyQualifiedName) =>
-        val callSites = semanticDB.toSeq.flatMap { case (file, document) =>
-          document.occurrences
-            .filter { symbol =>
-              symbol.symbol == fullyQualifiedName && symbol.role.isReference
-            }
-            .map(occurrence => file -> occurrence)
+  def symbolOccurrenceToSourceTree(
+      callSites: Seq[(SourceRef, SymbolOccurrence)],
+      scalaSources: ScalaSources,
+  ): Seq[Tree] = {
+    val positions = callSites.collect { case (file, SymbolOccurrence(Some(range), _, _)) =>
+      (file, range)
+    }.toSet
+
+    def toRange(position: Position): Range =
+      Range(position.startLine, position.startColumn, position.endLine, position.endColumn)
+
+    scalaSources
+      .collect {
+        case (file, node) if positions.contains(file -> toRange(node.origin.position)) => node
+      }
+
+  }
+
+  def findNextCallers(call: Call, scalaSources: ScalaSources, semanticDB: SemanticDB): Seq[Call] = {
+    val callSites = semanticDB.allDocuments.flatMap { case (file, document) =>
+      document.occurrences
+        .filter { symbol =>
+          symbol.symbol == call.owner && symbol.role.isReference
         }
+        .map(occurrence => file -> occurrence)
+    }
 
-        val positions = callSites.collect { case (file, SymbolOccurrence(Some(range), _, _)) =>
-          (file, range)
-        }.toSet
-
-        def toRange(position: Position): Range =
-          Range(position.startLine, position.startColumn, position.endLine, position.endColumn)
-
-        scalaSources
-          .collect {
-            case (file, node) if positions.contains(file -> toRange(node.origin.position)) => node
-          }
-          .map { callerNode =>
-            val callerOwner = identifyFullyQualifiedName(callerNode)
-              .map(formatFullyQualifiedName)
-              .getOrElse("unknown")
-            Call(fullyQualifiedName, callerOwner, callerNode)
-          }
-      case None => List.empty
+    symbolOccurrenceToSourceTree(callSites, scalaSources).map { callerNode =>
+      val callerOwner = identifyFullyQualifiedNameOfOwner(callerNode)
+        .map(formatFullyQualifiedName)
+        .getOrElse("unknown")
+      Call(call.owner, callerOwner, callerNode)
     }
   }
 
   def buildCallHierarchy(
       call: Call,
       scalaSources: ScalaSources,
-      semanticDB: Map[String, TextDocument],
+      semanticDB: SemanticDB,
   ): CallHierarchyNode = {
-    val callers = findNextCallers(call.node, scalaSources, semanticDB).map { caller =>
+    val callers = findNextCallers(call, scalaSources, semanticDB).map { caller =>
       buildCallHierarchy(caller, scalaSources, semanticDB)
     }
     CallHierarchyNode(call, callers)
@@ -114,20 +117,20 @@ object Analysis {
     val sources = SourceLoader.loadSources(Path.of("./article"))
     val semanticDB = SourceLoader.loadSemanticDB(Path.of("./article"))
 
-    val viewsCallSites = findViewsCallSites(sources)
-    // val viewsCallSites = findViewsCallSites2(semanticDB)
+    val viewsCallSites = findViewsCallSites(semanticDB)
 
-    // TODO use matching the position to the source to match to the source and find parent
+    viewsCallSites.foreach { case (file, occurrence) =>
+      val sourceTrees = symbolOccurrenceToSourceTree(Seq(file -> occurrence), sources).filterNot(isPackageOrImport)
 
-    val nextCallers = viewsCallSites.map { node =>
-      val fullyQualifiedSubjectName = s"${node.qual.text}.${node.name.value}"
-      println("Processing call site: " + fullyQualifiedSubjectName)
-      val fullyQualifiedCallerName = identifyFullyQualifiedName(node).map(formatFullyQualifiedName).getOrElse("unknown")
+      val nextCallers = sourceTrees.map { case node: Term.Name =>
+        val fullyQualifiedCallerName =
+          identifyFullyQualifiedNameOfOwner(node).map(formatFullyQualifiedName).getOrElse("unknown")
 
-      val call = Call(fullyQualifiedSubjectName, fullyQualifiedCallerName, node)
-      buildCallHierarchy(call, sources, semanticDB)
-    }.distinct
-    nextCallers.foreach(node => CallHierarchy.printCallHierarchy(node))
+        val call = Call(occurrence.symbol, fullyQualifiedCallerName, node)
+        buildCallHierarchy(call, sources, semanticDB)
+      }.distinct
+      nextCallers.foreach(node => CallHierarchy.printCallHierarchy(node))
+    }
   }
 
 }
