@@ -1,6 +1,6 @@
 import java.nio.file.Path
-import scala.meta.{Defn, Import, Importer, Input, Pkg, Source, Term, Tree}
-import scala.meta.internal.semanticdb.{Locator, TextDocument}
+import scala.meta.{Defn, Import, Importer, Input, Pkg, Position, Source, Term, Tree}
+import scala.meta.internal.semanticdb.{Range, Locator, SymbolOccurrence, TextDocument}
 
 object Analysis {
 
@@ -33,6 +33,13 @@ object Analysis {
       sortedCalls
     }.toSeq
   }
+  def findViewsCallSites2(semanticDB: Map[String, TextDocument]): Seq[SymbolOccurrence] = {
+    semanticDB.toSeq.flatMap { case (_, document) =>
+      document.occurrences.filter { symbol =>
+        symbol.symbol.startsWith("views/html/") && symbol.role.isReference
+      }
+    }
+  }
 
   def findOwner(node: Tree): Option[Tree] = node.parent match {
     case Some(defn: Defn.Def)    => Some(defn)
@@ -63,25 +70,24 @@ object Analysis {
   def findNextCallers(node: Tree, scalaSources: ScalaSources, semanticDB: Map[String, TextDocument]): Seq[Call] = {
     identifyFullyQualifiedName(node).map(formatFullyQualifiedName) match {
       case Some(fullyQualifiedName) =>
-        val callSites = semanticDB.toSeq.flatMap { case (_, document) =>
-          document.occurrences.filter { symbol =>
-            symbol.symbol == fullyQualifiedName && symbol.role.isReference
-          }
+        val callSites = semanticDB.toSeq.flatMap { case (file, document) =>
+          document.occurrences
+            .filter { symbol =>
+              symbol.symbol == fullyQualifiedName && symbol.role.isReference
+            }
+            .map(occurrence => file -> occurrence)
         }
 
-        val positions = callSites.flatMap(_.range)
-        val startLines = positions.map(_.startLine).toSet
-        def matchesPosition(node: Tree): Boolean = {
-          positions.exists { pos =>
-            node.pos.startLine == pos.startLine &&
-            node.pos.startColumn == pos.startCharacter &&
-            node.pos.endLine == pos.endLine &&
-            node.pos.endColumn == pos.endCharacter
-          }
-        }
+        val positions = callSites.collect { case (file, SymbolOccurrence(Some(range), _, _)) =>
+          (file, range)
+        }.toSet
+
+        def toRange(position: Position): Range =
+          Range(position.startLine, position.startColumn, position.endLine, position.endColumn)
+
         scalaSources
           .collect {
-            case (_, node) if startLines.contains(node.origin.position.startLine) && matchesPosition(node) => node
+            case (file, node) if positions.contains(file -> toRange(node.origin.position)) => node
           }
           .map { callerNode =>
             val callerOwner = identifyFullyQualifiedName(callerNode)
@@ -106,10 +112,13 @@ object Analysis {
 
   def main(args: Array[String]): Unit = {
     val sources = SourceLoader.loadSources(Path.of("./article"))
-
     val semanticDB = SourceLoader.loadSemanticDB(Path.of("./article"))
 
     val viewsCallSites = findViewsCallSites(sources)
+    // val viewsCallSites = findViewsCallSites2(semanticDB)
+
+    // TODO use matching the position to the source to match to the source and find parent
+
     val nextCallers = viewsCallSites.map { node =>
       val fullyQualifiedSubjectName = s"${node.qual.text}.${node.name.value}"
       println("Processing call site: " + fullyQualifiedSubjectName)
