@@ -223,3 +223,9 @@ badgeHash := {
 
   println(result)
 }
+
+val staticAnalysis = Project("static-analysis", file("static-analysis"))
+  .settings(
+    libraryDependencies += "org.scalameta" %% "semanticdb-shared" % "4.17.0",
+    libraryDependencies += "org.scalameta" %% "scalameta" % "4.17.0"
+  )
