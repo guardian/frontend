@@ -75,7 +75,7 @@ object StaticPages {
         shouldGoogleIndex = true,
       ),
     )
-    
+
   def dcrSimplePuzzleIframePage(
       id: String,
       title: String,
@@ -86,6 +86,22 @@ object StaticPages {
         section = Option(SectionId(value = "puzzles")),
         webTitle = title,
         description = Some(s"Play $title on the Guardian."),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
+  def dcrSimpleCrosswordArchivePage(
+      id: String,
+      selectedType: String,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = s"Crossword archive: ${selectedType.capitalize}",
+        description = Some(s"Browse archived ${selectedType} crosswords."),
         contentType = Some(DotcomContentType.Tag),
         iosType = None,
         shouldGoogleIndex = true,

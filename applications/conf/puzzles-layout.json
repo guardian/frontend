@@ -31,7 +31,7 @@
 							"title": "Browse the crossword archive",
 							"type": "crossword",
 							"set": "all",
-							"url": "/puzzles/crosswords",
+							"url": "/puzzles/crosswords/archive",
 							"variant": "archive"
 						}
 					]

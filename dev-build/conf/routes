@@ -35,6 +35,10 @@ GET            /puzzles/crosswords/lookup                                       
 GET        /puzzles/crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /puzzles/crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
 
+# Crossword archive
+GET           /puzzles/crosswords/archive.json                                                                                          controllers.PuzzlesPageController.renderCrosswordArchiveJson()
+GET           /puzzles/crosswords/archive                                                                                               controllers.PuzzlesPageController.renderCrosswordArchive()
+
 # IFrame Puzzles
 GET        /puzzles/:slug.json                                                                                                          controllers.PuzzlesPageController.renderPuzzleJson(slug: String)
 GET        /puzzles/:slug                                                                                                               controllers.PuzzlesPageController.renderPuzzle(slug: String)
