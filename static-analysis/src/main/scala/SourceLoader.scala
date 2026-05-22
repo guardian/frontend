@@ -1,5 +1,7 @@
 import scala.jdk.CollectionConverters._
 import java.nio.file.{Files, Path}
+import scala.collection.mutable
+import scala.meta.internal.semanticdb.{Locator, TextDocument}
 import scala.meta.{Input, Source, Tree}
 
 case class ScalaSources(private val sources: Map[String, Source]) {
@@ -16,7 +18,18 @@ case class ScalaSources(private val sources: Map[String, Source]) {
 
 object SourceLoader {
 
-  def load(path: Path): ScalaSources = {
+  def loadSemanticDB(path: Path): Map[String, TextDocument] = {
+    val result = mutable.Map.empty[String, TextDocument]
+    Locator(path) { case (path, documents) =>
+      documents.documents.headOption.foreach { doc =>
+        val filePath = path.toString.split("target/semanticdb/").lastOption.getOrElse(path.toString)
+        result.put(filePath, doc)
+      }
+    }
+    result.toMap
+  }
+
+  def loadSources(path: Path): ScalaSources = {
     val source = Files
       .walk(path)
       .iterator()

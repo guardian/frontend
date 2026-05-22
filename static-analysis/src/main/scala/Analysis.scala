@@ -60,30 +60,13 @@ object Analysis {
     case other             => other.toString()
   }.mkString
 
-  def parseScalaFile(path: Path): Option[Source] = {
-    val bytes = java.nio.file.Files.readAllBytes(path)
-    val text = new String(bytes, "UTF-8")
-    val input = Input.VirtualFile(path.toString, text)
-    input.parse[Source].toOption
-  }
-
-  def loadSemanticDB(path: Path, filename: String): Option[TextDocument] = {
-    var document: Option[TextDocument] = None
-    Locator(path) { case (path, documents) =>
-      if (path.getFileName.toString == filename) {
-        documents.documents.headOption.foreach { doc =>
-          document = Some(doc)
-        }
-      }
-    }
-    document
-  }
-
-  def findNextCallers(node: Tree, scalaSources: ScalaSources, document: TextDocument): Seq[Call] = {
+  def findNextCallers(node: Tree, scalaSources: ScalaSources, semanticDB: Map[String, TextDocument]): Seq[Call] = {
     identifyFullyQualifiedName(node).map(formatFullyQualifiedName) match {
       case Some(fullyQualifiedName) =>
-        val callSites = document.occurrences.filter { symbol =>
-          symbol.symbol == fullyQualifiedName && symbol.role.isReference
+        val callSites = semanticDB.toSeq.flatMap { case (_, document) =>
+          document.occurrences.filter { symbol =>
+            symbol.symbol == fullyQualifiedName && symbol.role.isReference
+          }
         }
 
         val positions = callSites.flatMap(_.range)
@@ -110,18 +93,21 @@ object Analysis {
     }
   }
 
-  def buildCallHierarchy(call: Call, scalaSources: ScalaSources, document: TextDocument): CallHierarchyNode = {
-    val callers = findNextCallers(call.node, scalaSources, document).map { caller =>
-      buildCallHierarchy(caller, scalaSources, document)
+  def buildCallHierarchy(
+      call: Call,
+      scalaSources: ScalaSources,
+      semanticDB: Map[String, TextDocument],
+  ): CallHierarchyNode = {
+    val callers = findNextCallers(call.node, scalaSources, semanticDB).map { caller =>
+      buildCallHierarchy(caller, scalaSources, semanticDB)
     }
     CallHierarchyNode(call, callers)
   }
 
   def main(args: Array[String]): Unit = {
-    val sources = SourceLoader.load(Path.of("./article"))
+    val sources = SourceLoader.loadSources(Path.of("./article"))
 
-    val semanticDBPath = Path.of("./article/target/scala-2.13/meta/META-INF/semanticdb/article/app/controllers")
-    val document = loadSemanticDB(semanticDBPath, "ArticleController.scala.semanticdb").get
+    val semanticDB = SourceLoader.loadSemanticDB(Path.of("./article"))
 
     val viewsCallSites = findViewsCallSites(sources)
     val nextCallers = viewsCallSites.map { node =>
@@ -130,7 +116,7 @@ object Analysis {
       val fullyQualifiedCallerName = identifyFullyQualifiedName(node).map(formatFullyQualifiedName).getOrElse("unknown")
 
       val call = Call(fullyQualifiedSubjectName, fullyQualifiedCallerName, node)
-      buildCallHierarchy(call, sources, document)
+      buildCallHierarchy(call, sources, semanticDB)
     }.distinct
     nextCallers.foreach(node => CallHierarchy.printCallHierarchy(node))
   }
