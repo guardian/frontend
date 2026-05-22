@@ -1,28 +1,37 @@
 import java.nio.file.Path
-import scala.meta.{Defn, Input, Pkg, Source, Term, Tree}
+import scala.meta.{Defn, Import, Importer, Input, Pkg, Source, Term, Tree}
 import scala.meta.internal.semanticdb.{Locator, TextDocument}
-
-case class Call(subject: String, owner: String, node: Tree)
-case class CallHierarchyNode(node: Call, callers: Seq[CallHierarchyNode])
 
 object Analysis {
 
-  def findViewsCallSites(node: Tree): Seq[Term.Select] = {
-    val allCallSites = node.collect {
-      case s: Term.Select if s.qual.text.startsWith("views.html") => s
+  def isPackageOrImport(node: Tree): Boolean = node.parent match {
+    case Some(_: Pkg)         => true
+    case Some(_: Importer)    => true
+    case Some(_: Defn.Def)    => false
+    case Some(_: Defn.Class)  => false
+    case Some(_: Defn.Trait)  => false
+    case Some(_: Defn.Object) => false
+    case Some(parent)         => isPackageOrImport(parent)
+    case None                 => false
+  }
+
+  def findViewsCallSites(scalaSources: ScalaSources): Seq[Term.Select] = {
+    val allCallSites = scalaSources.collect {
+      case (file, s: Term.Select) if s.qual.text.startsWith("views.html") && !isPackageOrImport(s) => file -> s
     }
     // dedupe to avoid selecting views.html.fragment as well as views.html.fragments.articleBody
-    allCallSites
+    val grouped = allCallSites
       // we identify unique call sites by their start position in the source code
-      .groupBy { callSite =>
+      .groupBy { case (file, callSite) =>
         val position = callSite.origin.position
-        (position.startLine, position.startColumn)
+        (file, position.startLine, position.startColumn)
       }
-      // for all the call sites at a given start position
-      // sorting by name length keeps the longest (most specific) at the end
-      .flatMap(_._2.sortBy(_.name.value.length).lastOption)
-      .toSeq
-
+    // for all the call sites at a given start position
+    // sorting by name length keeps the longest (most specific) at the end
+    grouped.flatMap { case (_, calls) =>
+      val sortedCalls = calls.sortBy(_._2.name.value.length).lastOption.map(_._2)
+      sortedCalls
+    }.toSeq
   }
 
   def findOwner(node: Tree): Option[Tree] = node.parent match {
@@ -70,7 +79,7 @@ object Analysis {
     document
   }
 
-  def findNextCallers(node: Tree, root: Tree, document: TextDocument): Seq[Call] = {
+  def findNextCallers(node: Tree, scalaSources: ScalaSources, document: TextDocument): Seq[Call] = {
     identifyFullyQualifiedName(node).map(formatFullyQualifiedName) match {
       case Some(fullyQualifiedName) =>
         val callSites = document.occurrences.filter { symbol =>
@@ -87,9 +96,9 @@ object Analysis {
             node.pos.endColumn == pos.endCharacter
           }
         }
-        root
+        scalaSources
           .collect {
-            case node if startLines.contains(node.origin.position.startLine) && matchesPosition(node) => node
+            case (_, node) if startLines.contains(node.origin.position.startLine) && matchesPosition(node) => node
           }
           .map { callerNode =>
             val callerOwner = identifyFullyQualifiedName(callerNode)
@@ -101,37 +110,29 @@ object Analysis {
     }
   }
 
-  def buildCallHierarchy(call: Call, root: Tree, document: TextDocument): CallHierarchyNode = {
-    val callers = findNextCallers(call.node, root, document).map { caller =>
-      buildCallHierarchy(caller, root, document)
+  def buildCallHierarchy(call: Call, scalaSources: ScalaSources, document: TextDocument): CallHierarchyNode = {
+    val callers = findNextCallers(call.node, scalaSources, document).map { caller =>
+      buildCallHierarchy(caller, scalaSources, document)
     }
     CallHierarchyNode(call, callers)
   }
 
-  def printCallHierarchy(node: CallHierarchyNode, indent: String = ""): Unit = {
-    if (indent.isEmpty) {
-      println(s"${node.node.subject}")
-    }
-    println(s"  $indent${node.node.owner}")
-    node.callers.foreach(caller => printCallHierarchy(caller, indent + "  "))
-  }
-
   def main(args: Array[String]): Unit = {
-
-    val scalaFilePath = java.nio.file.Paths.get("./article/app/controllers/ArticleController.scala")
-    val source = parseScalaFile(scalaFilePath).get
+    val sources = SourceLoader.load(Path.of("./article"))
 
     val semanticDBPath = Path.of("./article/target/scala-2.13/meta/META-INF/semanticdb/article/app/controllers")
     val document = loadSemanticDB(semanticDBPath, "ArticleController.scala.semanticdb").get
 
-    val viewsCallSites = findViewsCallSites(source)
+    val viewsCallSites = findViewsCallSites(sources)
     val nextCallers = viewsCallSites.map { node =>
-      val fullyQualifiedCallerName = identifyFullyQualifiedName(node).map(formatFullyQualifiedName).getOrElse("unknown")
       val fullyQualifiedSubjectName = s"${node.qual.text}.${node.name.value}"
+      println("Processing call site: " + fullyQualifiedSubjectName)
+      val fullyQualifiedCallerName = identifyFullyQualifiedName(node).map(formatFullyQualifiedName).getOrElse("unknown")
+
       val call = Call(fullyQualifiedSubjectName, fullyQualifiedCallerName, node)
-      buildCallHierarchy(call, source, document)
+      buildCallHierarchy(call, sources, document)
     }.distinct
-    nextCallers.foreach(node => printCallHierarchy(node))
+    nextCallers.foreach(node => CallHierarchy.printCallHierarchy(node))
   }
 
 }
