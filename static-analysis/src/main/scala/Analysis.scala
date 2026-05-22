@@ -109,7 +109,10 @@ object Analysis {
   }
 
   def printCallHierarchy(node: CallHierarchyNode, indent: String = ""): Unit = {
-    println(s"$indent${node.node.owner}")
+    if (indent.isEmpty) {
+      println(s"${node.node.subject}")
+    }
+    println(s"  $indent${node.node.owner}")
     node.callers.foreach(caller => printCallHierarchy(caller, indent + "  "))
   }
 
@@ -123,8 +126,9 @@ object Analysis {
 
     val viewsCallSites = findViewsCallSites(source)
     val nextCallers = viewsCallSites.map { node =>
-      val fullyQualifiedName = identifyFullyQualifiedName(node).map(formatFullyQualifiedName).getOrElse("unknown")
-      val call = Call(node.name.value, fullyQualifiedName, node)
+      val fullyQualifiedCallerName = identifyFullyQualifiedName(node).map(formatFullyQualifiedName).getOrElse("unknown")
+      val fullyQualifiedSubjectName = s"${node.qual.text}.${node.name.value}"
+      val call = Call(fullyQualifiedSubjectName, fullyQualifiedCallerName, node)
       buildCallHierarchy(call, source, document)
     }.distinct
     nextCallers.foreach(node => printCallHierarchy(node))
