@@ -1,5 +1,3 @@
-import SourceLoader.SourceRef
-
 import scala.jdk.CollectionConverters._
 import java.nio.file.{Files, Path}
 import scala.collection.{MapView, mutable}
@@ -8,7 +6,7 @@ import scala.meta.{Input, Source, Tree}
 
 case class ScalaSources(private val sources: Map[SourceRef, Source]) {
   def getSource(filePath: SourceRef): Option[Source] = sources.get(filePath)
-  def collect[T](f: PartialFunction[(String, Tree), T]): Seq[T] = {
+  def collect[T](f: PartialFunction[(SourceRef, Tree), T]): Seq[T] = {
     sources.toSeq.flatMap { case (filePath, source) =>
       val pf: PartialFunction[Tree, T] = {
         case node if f.isDefinedAt((filePath, node)) => f((filePath, node))
@@ -20,28 +18,30 @@ case class ScalaSources(private val sources: Map[SourceRef, Source]) {
 
 case class SemanticDB(private val documents: Map[SourceRef, TextDocument]) {
   // Giant map to look up all occurrences of a symbol across all documents, keyed by the symbol name
-  private val occurrences: MapView[String, Seq[(SourceRef, SymbolOccurrence)]] = documents.toSeq
+  private val occurrences: MapView[SemanticDBSymbol, Seq[(SourceRef, SymbolOccurrence)]] = documents.toSeq
     .flatMap { case (filePath, document) =>
-      document.occurrences.map(occurrence => occurrence.symbol -> (filePath, occurrence))
+      document.occurrences.map(occurrence => SemanticDBSymbol(occurrence.symbol) -> (filePath, occurrence))
     }
     .groupBy(_._1)
     .view
     .mapValues(_.map(_._2))
-  def getOccurrences(symbol: String): Seq[(SourceRef, SymbolOccurrence)] = occurrences.getOrElse(symbol, Seq.empty)
+  def getOccurrences(symbol: SemanticDBSymbol): Seq[(SourceRef, SymbolOccurrence)] =
+    occurrences.getOrElse(symbol, Seq.empty)
   def allDocuments = documents.toSeq
-  def getDocument(filePath: String): Option[TextDocument] = documents.get(filePath)
 }
 
 object SourceLoader {
 
-  type SourceRef = String
   def loadSemanticDB(path: Path): SemanticDB = {
-    val result = mutable.Map.empty[String, TextDocument]
+    val result = mutable.Map.empty[SourceRef, TextDocument]
     Locator(path) { case (path, documents) =>
       documents.documents.headOption.foreach { doc =>
-        val filePath =
-          path.toString.split("META-INF/semanticdb/").lastOption.getOrElse(path.toString).replaceAll(".semanticdb$", "")
-        result.put(filePath, doc)
+        val filePath = path.toString
+          .split("META-INF/semanticdb/")
+          .lastOption
+          .getOrElse(path.toString)
+          .replaceAll(".semanticdb$", "")
+        result.put(SourceRef(filePath), doc)
       }
     }
     SemanticDB(result.toMap)
@@ -58,7 +58,7 @@ object SourceLoader {
         val input = Input.VirtualFile(p.toString, content)
         val source = input.parse[Source].get
         val filePath = p.toString().replaceFirst("\\./", "")
-        filePath -> source
+        SourceRef(filePath) -> source
       }
       .toMap
 

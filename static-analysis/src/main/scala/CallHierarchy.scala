@@ -1,8 +1,14 @@
-import SourceLoader.SourceRef
-
 import scala.meta.internal.semanticdb.SymbolOccurrence
 
-case class MethodRef(symbolName: String, occurrence: SymbolOccurrence, file: SourceRef)
+case class SemanticDBSymbol(symbolName: String) extends AnyVal {
+  override def toString() = symbolName
+}
+
+case class SourceRef(file: String) extends AnyVal {
+  override def toString() = file
+}
+
+case class MethodRef(symbolName: SemanticDBSymbol, occurrence: SymbolOccurrence, file: SourceRef)
 
 sealed trait CallHierarchy
 case class CallHierarchyNode(callee: MethodRef, callers: Seq[CallHierarchy]) extends CallHierarchy

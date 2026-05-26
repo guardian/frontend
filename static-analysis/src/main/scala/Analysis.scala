@@ -1,5 +1,3 @@
-import SourceLoader.SourceRef
-
 import java.nio.file.Path
 import scala.meta.internal.semanticdb.{SymbolInformation, SymbolOccurrence}
 
@@ -23,7 +21,7 @@ object Analysis {
     val allDefs = findViewsDefinitions(semanticDB)
     allDefs.flatMap { case (_, definition) =>
       semanticDB
-        .getOccurrences(definition.symbol)
+        .getOccurrences(SemanticDBSymbol(definition.symbol))
         .filter { case (_, occurrence) => occurrence.role.isReference }
         .map { case (callFile, occurrence) => callFile -> occurrence }
     }
@@ -37,7 +35,7 @@ object Analysis {
 
     findViewsCallSites(semanticDB)
       .map { case (file, occurrence) =>
-        val methodRef = MethodRef(occurrence.symbol, occurrence, file)
+        val methodRef = MethodRef(SemanticDBSymbol(occurrence.symbol), occurrence, file)
         callHierarchyBuilder.buildCallHierarchy(methodRef)
       }
       .foreach(node => CallHierarchy.printCallHierarchy(node))

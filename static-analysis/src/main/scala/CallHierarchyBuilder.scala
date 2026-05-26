@@ -1,5 +1,3 @@
-import SourceLoader.SourceRef
-
 import scala.meta.{Defn, Importer, Pkg, Position, Tree}
 import scala.meta.internal.semanticdb.{Range, SymbolOccurrence}
 
@@ -35,56 +33,60 @@ class CallHierarchyBuilder(
       }
   }
 
-  private def findOwner(node: Tree): Option[Tree] = node.parent match {
+  private def findEnclosingConstruct(node: Tree): Option[Tree] = node.parent match {
     case Some(defn: Defn.Def)    => Some(defn)
     case Some(defn: Defn.Class)  => Some(defn)
     case Some(defn: Defn.Trait)  => Some(defn)
     case Some(defn: Defn.Object) => Some(defn)
     case Some(pkg: Pkg)          => Some(pkg)
-    case Some(parentNode)        => findOwner(parentNode)
+    case Some(parentNode)        => findEnclosingConstruct(parentNode)
     case None                    => None
   }
 
-  private def identifyFullyQualifiedNameOfOwner(node: Tree, parents: List[Tree] = List.empty): List[Tree] =
-    findOwner(
+  private def buildFullyQualifiedSymbolName(node: Tree, parents: List[Tree] = List.empty): List[Tree] =
+    findEnclosingConstruct(
       node,
     ) match {
-      case Some(owner) => identifyFullyQualifiedNameOfOwner(owner, owner :: parents)
+      case Some(owner) => buildFullyQualifiedSymbolName(owner, owner :: parents)
       case None        => parents
     }
 
-  def formatFullyQualifiedName(nodes: List[Tree]): String = nodes.map {
-    case defn: Defn.Def    => s"${defn.name.value}()."
-    case defn: Defn.Class  => s"${defn.name.value}#"
-    case defn: Defn.Trait  => s"${defn.name.value}#"
-    case defn: Defn.Object => s"${defn.name.value}."
-    case pkg: Pkg          => s"${pkg.name.value.replace(".", "/")}/"
-    case other             => throw new RuntimeException(s"Unexpected tree node type: ${other.getClass.getSimpleName}")
-  }.mkString
+  // Given a node in the AST, will resolve the fully qualified symbol name of the enclosing method
+  private def resolveEnclosingSymbolName(node: Tree): SemanticDBSymbol = {
+    val symbol = buildFullyQualifiedSymbolName(node).map {
+      case defn: Defn.Def    => s"${defn.name.value}()."
+      case defn: Defn.Class  => s"${defn.name.value}#"
+      case defn: Defn.Trait  => s"${defn.name.value}#"
+      case defn: Defn.Object => s"${defn.name.value}."
+      case pkg: Pkg          => s"${pkg.name.value.replace(".", "/")}/"
+      case other => throw new RuntimeException(s"Unexpected tree node type: ${other.getClass.getSimpleName}")
+    }.mkString
+    SemanticDBSymbol(symbol)
+  }
 
   private def nextLevelCallers(method: MethodRef): Seq[MethodRef] = {
     val fullyQualifiedCallers =
       symbolOccurrenceToSourceTree(method.file, method.occurrence)
+        // we don't care if a reference is just an import or a package declaration
+        // we want usage within the logic
         .filterNot(isPackageOrImport)
-        .map { callerNode =>
-          formatFullyQualifiedName(identifyFullyQualifiedNameOfOwner(callerNode))
-        }
+        .map(resolveEnclosingSymbolName)
 
     fullyQualifiedCallers
       .flatMap(semanticDB.getOccurrences)
       .filter { case (_, occurrence) => occurrence.role.isReference }
-      .map { case (file, occurrence) => MethodRef(occurrence.symbol, occurrence, file) }
+      .map { case (file, occurrence) => MethodRef(SemanticDBSymbol(occurrence.symbol), occurrence, file) }
   }
 
-  def buildCallHierarchy(
+  private def recursivelyBuildCallHierarchy(
       callee: MethodRef,
-      visited: Set[String] = Set.empty,
+      visited: Set[SemanticDBSymbol] = Set.empty,
   ): CallHierarchy = {
     if (visited.contains(callee.symbolName)) {
       CallHierarchyCycle(callee)
     } else {
       val callers = nextLevelCallers(callee).map { case caller =>
-        buildCallHierarchy(callee = caller, visited = visited + callee.symbolName)
+        recursivelyBuildCallHierarchy(callee = caller, visited = visited + callee.symbolName)
       }
       if (callers.isEmpty) {
         CallHierarchyEntryPoint(callee)
@@ -93,5 +95,16 @@ class CallHierarchyBuilder(
       }
     }
   }
+
+  /** Given a method reference, build the call hierarchy tree for that method, recursively finding all callers up the
+    * chain until reaching entry points (methods with no callers) or recursion (cycles).
+    * @param callee
+    *   the method reference to build the call hierarchy from
+    * @return
+    *   a call hierarchy tree
+    */
+  def buildCallHierarchy(
+      callee: MethodRef,
+  ): CallHierarchy = recursivelyBuildCallHierarchy(callee)
 
 }
