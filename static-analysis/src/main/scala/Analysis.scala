@@ -85,52 +85,48 @@ object Analysis {
 
   }
 
-  def findNextCallers(call: Call, scalaSources: ScalaSources, semanticDB: SemanticDB): Seq[Call] = {
-    val callSites = semanticDB.allDocuments.flatMap { case (file, document) =>
+  def findNextCallers(method: MethodRef, scalaSources: ScalaSources, semanticDB: SemanticDB): Seq[MethodRef] = {
+    val fullyQualifiedCallers =
+      symbolOccurrenceToSourceTree(Seq(method.file -> method.occurrence), scalaSources)
+        .filterNot(isPackageOrImport)
+        .map { callerNode =>
+          identifyFullyQualifiedNameOfOwner(callerNode)
+            .map(formatFullyQualifiedName)
+            .getOrElse("unknown")
+        }
+        .toSet
+
+    semanticDB.allDocuments.flatMap { case (file, document) =>
       document.occurrences
         .filter { symbol =>
-          symbol.symbol == call.owner && symbol.role.isReference
+          fullyQualifiedCallers.contains(symbol.symbol) && symbol.role.isReference
         }
-        .map(occurrence => file -> occurrence)
-    }
-
-    symbolOccurrenceToSourceTree(callSites, scalaSources).map { callerNode =>
-      val callerOwner = identifyFullyQualifiedNameOfOwner(callerNode)
-        .map(formatFullyQualifiedName)
-        .getOrElse("unknown")
-      Call(call.owner, callerOwner, callerNode)
+        .map(occurrence => MethodRef(occurrence.symbol, occurrence, file))
     }
   }
 
   def buildCallHierarchy(
-      call: Call,
+      callee: MethodRef,
       scalaSources: ScalaSources,
       semanticDB: SemanticDB,
   ): CallHierarchyNode = {
-    val callers = findNextCallers(call, scalaSources, semanticDB).map { caller =>
-      buildCallHierarchy(caller, scalaSources, semanticDB)
+    val callers = findNextCallers(callee, scalaSources, semanticDB).map { case caller =>
+      buildCallHierarchy(callee = caller, scalaSources, semanticDB)
     }
-    CallHierarchyNode(call, callers)
+    CallHierarchyNode(callee, callers)
   }
 
   def main(args: Array[String]): Unit = {
     val sources = SourceLoader.loadSources(Path.of("./article"))
     val semanticDB = SourceLoader.loadSemanticDB(Path.of("./article"))
 
-    val viewsCallSites = findViewsCallSites(semanticDB)
-
-    viewsCallSites.foreach { case (file, occurrence) =>
-      val sourceTrees = symbolOccurrenceToSourceTree(Seq(file -> occurrence), sources).filterNot(isPackageOrImport)
-
-      val nextCallers = sourceTrees.map { case node: Term.Name =>
-        val fullyQualifiedCallerName =
-          identifyFullyQualifiedNameOfOwner(node).map(formatFullyQualifiedName).getOrElse("unknown")
-
-        val call = Call(occurrence.symbol, fullyQualifiedCallerName, node)
-        buildCallHierarchy(call, sources, semanticDB)
-      }.distinct
-      nextCallers.foreach(node => CallHierarchy.printCallHierarchy(node))
-    }
+    findViewsCallSites(semanticDB)
+      .map { case (file, occurrence) =>
+        val methodRed = MethodRef(occurrence.symbol, occurrence, file)
+        buildCallHierarchy(methodRed, sources, semanticDB)
+      }
+      .distinct
+      .foreach(node => CallHierarchy.printCallHierarchy(node))
   }
 
 }

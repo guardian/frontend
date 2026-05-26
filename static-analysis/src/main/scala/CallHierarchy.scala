@@ -1,14 +1,13 @@
-import scala.meta.Tree
+import SourceLoader.SourceRef
 
-case class Call(subject: String, owner: String, node: Tree)
-case class CallHierarchyNode(node: Call, callers: Seq[CallHierarchyNode])
+import scala.meta.internal.semanticdb.SymbolOccurrence
+
+case class MethodRef(qualifiedName: String, occurrence: SymbolOccurrence, file: SourceRef)
+case class CallHierarchyNode(callee: MethodRef, callers: Seq[CallHierarchyNode])
 
 object CallHierarchy {
   def printCallHierarchy(node: CallHierarchyNode, indent: String = ""): Unit = {
-    if (indent.isEmpty) {
-      println(s"${node.node.subject}")
-    }
-    println(s"  $indent${node.node.owner}")
+    println(s"${indent}${node.callee.qualifiedName}")
     node.callers.foreach(caller => printCallHierarchy(caller, indent + "  "))
   }
 }
