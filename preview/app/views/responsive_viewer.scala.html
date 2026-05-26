@@ -93,7 +93,6 @@
 
             function init ( ) {
                 var sbWidth = 15, // scrollbar width
-                    html = '',
                     leftAcc = 0,
                     src = '@path';
 
@@ -108,17 +107,29 @@
 
                 iframeSrc += inheritedHash;
 
+                var framesContainer = document.querySelector ( '.frames' );
+                framesContainer.textContent = '';
+
                 breakpoints.forEach ( function ( bp ) {
-                    html += '<div style="left:' + leftAcc + 'px">' +
-                            '<h2>' + bp.name + '</h2>' +
-                            '<iframe frameBorder="0" sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
-                            'src="' + iframeSrc + '" ' +
-                            'width="' + ( bp.width + sbWidth ) + '"></iframe>' +
-                            '</div>' ;
+                    var wrapper = document.createElement('div');
+                    wrapper.style.left = leftAcc + 'px';
+
+                    var heading = document.createElement('h2');
+                    heading.textContent = bp.name;
+
+                    var iframe = document.createElement('iframe');
+                    iframe.setAttribute('frameBorder', '0');
+                    iframe.setAttribute('sandbox', 'allow-same-origin allow-forms allow-scripts');
+                    iframe.setAttribute('seamless', '');
+                    iframe.src = iframeSrc;
+                    iframe.width = ( bp.width + sbWidth ).toString();
+
+                    wrapper.appendChild(heading);
+                    wrapper.appendChild(iframe);
+                    framesContainer.appendChild(wrapper);
+
                     leftAcc += bp.width + sbWidth + 15 ;
                 });
-
-                document.querySelector ( '.frames' ).innerHTML = html ;
 
                 document.getElementById('toggle-ads' ).innerHTML = 'Turn ads ' +
                     (window.location.hash === '#noads' ? 'on' : 'off');
