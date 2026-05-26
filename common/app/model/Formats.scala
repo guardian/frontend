@@ -8,6 +8,7 @@ import json.ObjectDeduplication.deduplicate
 import model.content._
 import model.facia.PressedCollection
 import model.pressed._
+import services.NewsletterData
 import play.api
 import play.api.libs
 import play.api.libs.json
@@ -274,6 +275,7 @@ object PressedContentFormat {
   implicit val pressedElements: OFormat[PressedElements] = Json.format[PressedElements]
   implicit val pressedStory: OFormat[PressedStory] = Json.format[PressedStory]
   implicit val mediaSelectFormat: OFormat[MediaSelect] = Json.format[MediaSelect]
+  implicit val newsletterDataFormat: OFormat[NewsletterData] = Json.format[NewsletterData]
   implicit val pressedPropertiesFormat: OFormat[PressedProperties] = Json.format[PressedProperties]
   implicit val enrichedContentFormat: OFormat[EnrichedContent] = Json.format[EnrichedContent]
 

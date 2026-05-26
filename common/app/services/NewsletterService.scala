@@ -92,6 +92,19 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
     !response.restricted && response.status == "live"
   }
 
+  /** Look up newsletter data from a list of model.Tag objects. Used during facia-press to populate
+    * PressedProperties.newsletterData. Returns Some(NewsletterData) only when the content has the
+    * `info/newsletter-sign-up` tag AND a matching `campaign/email/[name]` tag resolves to a live newsletter.
+    */
+  def getNewsletterDataFromTags(tags: List[Tag]): Option[NewsletterData] = {
+    val hasNewsletterSignUpTag = tags.exists(_.properties.id == "info/newsletter-sign-up")
+    if (!hasNewsletterSignUpTag) None
+    else
+      getNewsletterResponseFromTags(tags).collect {
+        case response if shouldInclude(response) => convertNewsletterResponseToData(response)
+      }
+  }
+
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
     // Try retrieving newsletter data by matching a sign up tag to the newsletters response
     val maybeNewsletterFromTags = getNewsletterResponseFromTags(articlePage.article.tags.tags)

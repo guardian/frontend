@@ -15,20 +15,23 @@ import conf.Configuration
 import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi._
-import services.fronts.FrontsApi
+import services.{ConfigAgent, S3FrontsApi, NewsletterService}
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
-import services.{ConfigAgent, S3FrontsApi}
 import layout.slices.Container
 
 import java.time.Instant
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit
+class LiveFapiFrontPress(
+    val wsClient: WSClient,
+    val capiClientForFrontsSeo: ContentApiClient,
+    val newsletterService: NewsletterService,
+)(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
 
@@ -58,7 +61,11 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
       )
 }
 
-class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit
+class DraftFapiFrontPress(
+    val wsClient: WSClient,
+    val capiClientForFrontsSeo: ContentApiClient,
+    val newsletterService: NewsletterService,
+)(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
 
@@ -206,6 +213,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
+  val newsletterService: NewsletterService
   def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit
   def isLiveContent: Boolean
 
@@ -355,6 +363,10 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     )
   }
 
+  private[frontpress] def enrichWithNewsletterData(content: PressedContent): PressedContent = {
+    NewsletterEnrichment.enrichWithNewsletterData(content, newsletterService)
+  }
+
   private def getCurated(
       collection: Collection,
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
@@ -364,13 +376,13 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       Response.traverse(content.map {
         case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, curated, curated.enriched).map { updatedFields =>
-            curated.copy(enriched = Some(updatedFields))
+            enrichWithNewsletterData(curated.copy(enriched = Some(updatedFields)))
           }
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, link, link.enriched).map { updatedFields =>
-            link.copy(enriched = Some(updatedFields))
+            enrichWithNewsletterData(link.copy(enriched = Some(updatedFields)))
           }
-        case plain => Response.Right(plain)
+        case plain => Response.Right(enrichWithNewsletterData(plain))
       })
     }
   }
@@ -610,6 +622,26 @@ object Enrichment extends GuLogging {
     opt match {
       case Some(thing) => Future.successful(thing)
       case None        => Future.failed(new Throwable(errMsg))
+    }
+  }
+}
+
+object NewsletterEnrichment {
+  def enrichWithNewsletterData(content: PressedContent, newsletterService: NewsletterService): PressedContent = {
+    val maybeNewsletterData = for {
+      story <- content.properties.maybeContent
+      newsletterData <- newsletterService.getNewsletterDataFromTags(story.tags.tags)
+    } yield newsletterData
+    maybeNewsletterData match {
+      case Some(newsletterData) =>
+        content match {
+          case c: CuratedContent => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
+          case c: SupportingCuratedContent =>
+            c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
+          case c: LinkSnap   => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
+          case c: LatestSnap => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
+        }
+      case None => content
     }
   }
 }
