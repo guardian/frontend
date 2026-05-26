@@ -82,8 +82,9 @@
 							"title": "Play the Sudoku archive",
 							"type": "sudoku",
 							"set": "all",
-							"url": "https://www.theguardian.com/crosswords/sudoku",
-							"variant": "archive"
+							"slug": "sudoku-archive",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&embed=1",
+							"variant": "iframe-page"
 						}
 					]
 				],
