@@ -50,7 +50,7 @@
 							"type": "sudoku",
 							"set": "easy",
 							"slug": "sudoku-easy",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
 							"index": 1,
 							"variant": "iframe-page"
 						}
@@ -61,7 +61,7 @@
 							"type": "sudoku",
 							"set": "medium",
 							"slug": "sudoku-medium",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
 							"index": 1,
 							"variant": "iframe-page"
 						}
@@ -72,7 +72,7 @@
 							"type": "sudoku",
 							"set": "hard",
 							"slug": "sudoku-hard",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
 							"index": 1,
 							"variant": "iframe-page"
 						}
