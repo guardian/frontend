@@ -16,6 +16,7 @@ import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi._
 import services.{ConfigAgent, S3FrontsApi, NewsletterService}
+import services.fronts.FrontsApi
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import model.pressed._

@@ -85,7 +85,7 @@ class NewsletterServiceTest extends AnyFlatSpec with Matchers with MockitoSugar 
     result.get.name shouldBe "The Long Read"
     result.get.frequency shouldBe "Weekly"
     result.get.illustrationSquare shouldBe Some("https://example.com/square.png")
-    result.get.successDescription shouldBe Some("You're subscribed!")
+    result.get.successDescription shouldBe "You're subscribed!"
   }
 
   it should "return None when the info/newsletter-sign-up tag is missing" in {
