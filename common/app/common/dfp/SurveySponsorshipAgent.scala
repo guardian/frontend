@@ -3,7 +3,6 @@ package common.dfp
 import play.api.mvc.RequestHeader
 import model.{MetaData}
 import model.DotcomContentType
-import net.liftweb.json.Meta
 
 trait SurveySponsorshipAgent {
 

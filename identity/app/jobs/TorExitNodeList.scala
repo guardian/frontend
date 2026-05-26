@@ -2,7 +2,6 @@ package jobs
 
 import common.{Box, GuLogging}
 
-import scala.jdk.CollectionConverters._
 import java.net.InetAddress
 
 import scala.io.Source

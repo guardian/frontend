@@ -1,16 +1,10 @@
 package controllers
 
-import conf.switches.Switches
-import idapiclient.responses.Error
-import org.mockito.Mockito._
 import org.scalatest.freespec.PathAnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
-import services._
 import test.{Fake, TestRequest, WithTestApplicationContext, WithTestExecutionContext}
-import scala.concurrent.{ExecutionContext}
 
 class FormstackControllerTest
     extends PathAnyFreeSpec

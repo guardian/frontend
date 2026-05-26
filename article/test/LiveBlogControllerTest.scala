@@ -1,16 +1,12 @@
 package test
 
 import controllers.LiveBlogController
-import org.mockito.Mockito._
-import org.mockito.ArgumentMatchers._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import model.LiveBlogPage
-import play.api.libs.json.{JsValue, Json}
 import services.{NewsletterService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 

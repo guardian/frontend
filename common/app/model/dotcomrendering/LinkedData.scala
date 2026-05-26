@@ -2,15 +2,13 @@ package model.dotcomrendering
 
 import com.gu.contentapi.client.model.schemaorg.SchemaRecipe
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
-import model.{Article, ContentType, ImageMedia, Interactive, LiveBlogPage, Tags}
+import model.{ContentType, ImageMedia, Interactive, LiveBlogPage, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json._
 import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
-
-import scala.util.matching.Regex
 
 object LinkedData {
 

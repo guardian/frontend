@@ -4,17 +4,12 @@ import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import com.gu.contentapi.client.model.v1.Content
-import experiments.ActiveExperiments
-import layout.ContentCard
-import model.{RelatedContentItem, SimplePage}
+import model.SimplePage
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
 import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
 import services.NewsletterData
-import ab.ABTests
 
 case class DotcomNewslettersPageRenderingDataModel(
     newsletters: List[NewsletterData],

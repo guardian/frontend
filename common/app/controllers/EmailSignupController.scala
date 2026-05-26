@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.i18n.{CountryGroup, Country}
+import com.gu.i18n.CountryGroup
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
@@ -13,11 +13,10 @@ import conf.switches.Switches.{
 }
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import net.liftweb.json.JObject
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
-import play.api.data.validation.Constraints.{emailAddress, nonEmpty}
+import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._

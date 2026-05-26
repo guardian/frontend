@@ -4,9 +4,9 @@ import com.github.nscala_time.time.Imports.DateTimeZone
 import com.gu.commercial.branding.{Branding, BrandingType, Dimensions, Logo => CommercialLogo}
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
-import layout.{ContentCard, DiscussionSettings}
+import layout.DiscussionSettings
 import model.dotcomrendering.DotcomRenderingUtils.withoutNull
-import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
+import model.{Article, ContentFormat, ImageMedia, Pillar}
 import model.pressed.PressedContent
 import play.api.libs.json.{Json, OWrites, Writes}
 import play.api.mvc.RequestHeader
@@ -84,28 +84,6 @@ object Trail {
     )
 
     withoutNull(jsObject)
-  }
-
-  private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
-
-    val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
-      contentCard.cutOut.map { cutOut => cutOut.imageUrl }
-    } else {
-      None
-    }
-
-    val maybeUrl2 = contentCard.displayElement.flatMap { faciaDisplayElement =>
-      faciaDisplayElement match {
-        case InlineImage(imageMedia) => ImgSrc.getFallbackUrl(imageMedia)
-        case _                       => None
-      }
-    }
-
-    maybeUrl1 match {
-      case Some(_) => maybeUrl1
-      case None    => maybeUrl2
-    }
-
   }
 
   // We ideally want this to be replaced by something else in the near future. Probably

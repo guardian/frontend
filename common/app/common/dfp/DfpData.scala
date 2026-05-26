@@ -1,15 +1,11 @@
 package common.dfp
 
 import common.Edition
-import common.dfp.AdSize.{leaderboardSize, responsiveSize}
 import org.joda.time.DateTime
 import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
-import play.api.libs.json
 import play.api.libs.json._
-
-import scala.language.postfixOps
 
 sealed trait GuLineItemType {
   val asString: String

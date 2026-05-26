@@ -1,7 +1,6 @@
 package views
 
 import ab.ABTests
-import common.Edition
 import model.{ApplicationContext, GalleryPage, Interactive}
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
@@ -22,7 +21,6 @@ object InteractiveBodyCleaner {
 
 object IndexCleaner {
   def apply(page: IndexPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(
         isPaidContent = false,

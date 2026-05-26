@@ -1,6 +1,5 @@
 package views.support.cleaner
 import conf.Configuration
-import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import views.support.AffiliateLinksCleaner._

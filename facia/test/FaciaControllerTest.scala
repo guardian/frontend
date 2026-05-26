@@ -4,12 +4,10 @@ import agents.{DeeplyReadAgent, MostViewedAgent}
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
-import common.facia.FixtureBuilder
-import controllers.{Assets, FaciaControllerImpl}
-import experiments.{ActiveExperiments, ParticipationGroups}
+import controllers.FaciaControllerImpl
 import helpers.FaciaTestData
 import implicits.FakeRequests
-import model.{FrontProperties, PressedPage, SeoData}
+import model.PressedPage
 import org.apache.pekko.stream.scaladsl.Source
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
@@ -17,7 +15,7 @@ import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.libs.json.{JsArray, JsValue, Json}
+import play.api.libs.json.{JsArray, Json}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.test.Helpers._
 import play.api.test._

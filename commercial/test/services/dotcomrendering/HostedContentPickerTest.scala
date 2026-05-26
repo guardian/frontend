@@ -4,7 +4,7 @@ import conf.switches.Switches
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.DoNotDiscover
-import services.dotcomrendering.{LocalRender, RemoteRender}
+import services.dotcomrendering.LocalRender
 import test.TestRequest
 
 @DoNotDiscover class HostedContentPickerTest extends AnyFlatSpec with Matchers {

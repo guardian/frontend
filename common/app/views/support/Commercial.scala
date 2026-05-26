@@ -5,11 +5,9 @@ import common.Edition
 import common.commercial._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.DotcomContentType.Signup
-import model.{ContentType, Page, PressedPage}
-import org.apache.commons.lang.StringEscapeUtils._
+import model.{ContentType, Page}
 import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 
 object Commercial {
   // some users get an ad-free experience

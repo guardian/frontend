@@ -9,7 +9,6 @@ import implicits.{HtmlFormat, JsonFormat}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
-import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import renderers.DotcomRenderingService
