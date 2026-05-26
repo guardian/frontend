@@ -1,7 +1,8 @@
 package services
 
 import model.{Tag, TagProperties}
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.anyString
+import org.mockito.Mockito.{verifyNoInteractions, when}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -56,6 +57,7 @@ class NewsletterServiceTest extends AnyFlatSpec with Matchers with MockitoSugar 
       mailSuccessDescription = Some("You're subscribed!"),
       regionFocus = None,
       illustrationCard = None,
+      illustrationCircle = None,
       illustrationSquare = Some("https://example.com/square.png"),
       seriesTag = None,
       signupPage = None,
@@ -106,7 +108,7 @@ class NewsletterServiceTest extends AnyFlatSpec with Matchers with MockitoSugar 
     val agent = mock[NewsletterSignupAgent]
     val service = new NewsletterService(agent)
 
-    when(agent.getV2NewsletterByName(any())).thenReturn(Right(None))
+    when(agent.getV2NewsletterByName(anyString())).thenReturn(Right(None))
 
     val tags = List(
       mkTag("info/newsletter-sign-up"),
@@ -186,4 +188,3 @@ class NewsletterServiceTest extends AnyFlatSpec with Matchers with MockitoSugar 
     result.get.identityName shouldBe "tech-scape"
   }
 }
-
