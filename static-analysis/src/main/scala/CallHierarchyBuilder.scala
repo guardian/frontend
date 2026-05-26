@@ -20,18 +20,18 @@ class CallHierarchyBuilder(
   }
 
   private def symbolOccurrenceToSourceTree(
-      callSites: Seq[(SourceRef, SymbolOccurrence)],
+      file: SourceRef,
+      symbolOccurrence: SymbolOccurrence,
   ): Seq[Tree] = {
-    val positions = callSites.collect { case (file, SymbolOccurrence(Some(range), _, _)) =>
-      (file, range)
-    }.toSet
-
     def toRange(position: Position): Range =
       Range(position.startLine, position.startColumn, position.endLine, position.endColumn)
 
+    def sameCoordinates(sourceFile: SourceRef, position: Position): Boolean =
+      sourceFile == file && symbolOccurrence.range.contains(toRange(position))
+
     scalaSources
       .collect {
-        case (file, node) if positions.contains(file -> toRange(node.origin.position)) => node
+        case (sourceFile, node) if sameCoordinates(sourceFile, node.origin.position) => node
       }
   }
 
@@ -45,12 +45,12 @@ class CallHierarchyBuilder(
     case None                    => None
   }
 
-  private def identifyFullyQualifiedNameOfOwner(node: Tree, parents: List[Tree] = List.empty): Option[List[Tree]] =
+  private def identifyFullyQualifiedNameOfOwner(node: Tree, parents: List[Tree] = List.empty): List[Tree] =
     findOwner(
       node,
     ) match {
       case Some(owner) => identifyFullyQualifiedNameOfOwner(owner, owner :: parents)
-      case None        => Some(parents)
+      case None        => parents
     }
 
   def formatFullyQualifiedName(nodes: List[Tree]): String = nodes.map {
@@ -59,36 +59,39 @@ class CallHierarchyBuilder(
     case defn: Defn.Trait  => s"${defn.name.value}#"
     case defn: Defn.Object => s"${defn.name.value}."
     case pkg: Pkg          => s"${pkg.name.value.replace(".", "/")}/"
-    case other             => other.toString()
+    case other             => throw new RuntimeException(s"Unexpected tree node type: ${other.getClass.getSimpleName}")
   }.mkString
 
-  private def findNextCallers(method: MethodRef): Seq[MethodRef] = {
+  private def nextLevelCallers(method: MethodRef): Seq[MethodRef] = {
     val fullyQualifiedCallers =
-      symbolOccurrenceToSourceTree(Seq(method.file -> method.occurrence))
+      symbolOccurrenceToSourceTree(method.file, method.occurrence)
         .filterNot(isPackageOrImport)
         .map { callerNode =>
-          identifyFullyQualifiedNameOfOwner(callerNode)
-            .map(formatFullyQualifiedName)
-            .getOrElse("unknown")
+          formatFullyQualifiedName(identifyFullyQualifiedNameOfOwner(callerNode))
         }
-        .toSet
 
-    semanticDB.allDocuments.flatMap { case (file, document) =>
-      document.occurrences
-        .filter { symbol =>
-          fullyQualifiedCallers.contains(symbol.symbol) && symbol.role.isReference
-        }
-        .map(occurrence => MethodRef(occurrence.symbol, occurrence, file))
-    }
+    fullyQualifiedCallers
+      .flatMap(semanticDB.getOccurrences)
+      .filter { case (_, occurrence) => occurrence.role.isReference }
+      .map { case (file, occurrence) => MethodRef(occurrence.symbol, occurrence, file) }
   }
 
   def buildCallHierarchy(
       callee: MethodRef,
-  ): CallHierarchyNode = {
-    val callers = findNextCallers(callee).map { case caller =>
-      buildCallHierarchy(callee = caller)
+      visited: Set[String] = Set.empty,
+  ): CallHierarchy = {
+    if (visited.contains(callee.symbolName)) {
+      CallHierarchyCycle(callee)
+    } else {
+      val callers = nextLevelCallers(callee).map { case caller =>
+        buildCallHierarchy(callee = caller, visited = visited + callee.symbolName)
+      }
+      if (callers.isEmpty) {
+        CallHierarchyEntryPoint(callee)
+      } else {
+        CallHierarchyNode(callee, callers)
+      }
     }
-    CallHierarchyNode(callee, callers)
   }
 
 }
