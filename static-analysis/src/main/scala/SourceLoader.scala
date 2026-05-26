@@ -2,9 +2,27 @@ import scala.jdk.CollectionConverters._
 import java.nio.file.{Files, Path}
 import scala.collection.{MapView, mutable}
 import scala.meta.internal.semanticdb.{Locator, SymbolOccurrence, TextDocument}
-import scala.meta.{Input, Source, Tree}
+import scala.meta.{Input, Position, Source, Tree}
 
 case class ScalaSources(private val sources: Map[SourceRef, Source]) {
+  private val byCoordinates: MapView[SymbolCoordinates, Seq[Tree]] = sources.toSeq
+    .flatMap { case (filePath, source) =>
+      source.collect { case node =>
+        val coordinates = SymbolCoordinates(
+          filePath,
+          node.pos.startLine,
+          node.pos.startColumn,
+          node.pos.endLine,
+          node.pos.endColumn,
+        )
+        coordinates -> node
+      }
+    }
+    .groupBy(_._1)
+    .view
+    .mapValues(_.map(_._2))
+  def getByCoordinates(coordinates: SymbolCoordinates): Seq[Tree] =
+    byCoordinates.getOrElse(coordinates, Seq.empty)
   def getSource(filePath: SourceRef): Option[Source] = sources.get(filePath)
   def collect[T](f: PartialFunction[(SourceRef, Tree), T]): Seq[T] = {
     sources.toSeq.flatMap { case (filePath, source) =>

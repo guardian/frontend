@@ -21,16 +21,13 @@ class CallHierarchyBuilder(
       file: SourceRef,
       symbolOccurrence: SymbolOccurrence,
   ): Seq[Tree] = {
-    def toRange(position: Position): Range =
-      Range(position.startLine, position.startColumn, position.endLine, position.endColumn)
+    def toCoordinages(range: Range): SymbolCoordinates =
+      SymbolCoordinates(file, range.startLine, range.startCharacter, range.endLine, range.endCharacter)
 
-    def sameCoordinates(sourceFile: SourceRef, position: Position): Boolean =
-      sourceFile == file && symbolOccurrence.range.contains(toRange(position))
-
-    scalaSources
-      .collect {
-        case (sourceFile, node) if sameCoordinates(sourceFile, node.origin.position) => node
-      }
+    symbolOccurrence.range match {
+      case None        => return Seq.empty
+      case Some(range) => scalaSources.getByCoordinates(toCoordinages(range))
+    }
   }
 
   private def findEnclosingConstruct(node: Tree): Option[Tree] = node.parent match {

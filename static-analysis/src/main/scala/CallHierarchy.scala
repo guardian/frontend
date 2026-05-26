@@ -8,6 +8,14 @@ case class SourceRef(file: String) extends AnyVal {
   override def toString() = file
 }
 
+case class SymbolCoordinates(
+    file: SourceRef,
+    startLine: Int,
+    startCharacter: Int,
+    endLine: Int,
+    endCharacter: Int,
+)
+
 case class MethodRef(symbolName: SemanticDBSymbol, occurrence: SymbolOccurrence, file: SourceRef)
 
 sealed trait CallHierarchy {

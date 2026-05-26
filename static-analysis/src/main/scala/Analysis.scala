@@ -7,8 +7,8 @@ object Analysis {
     symbolInfo.symbol.startsWith("views/html/") && (symbolInfo.kind.isMethod || symbolInfo.kind.isObject)
 
   def main(args: Array[String]): Unit = {
-    val sources = SourceLoader.loadSources(Path.of("./article"))
-    val semanticDB = SourceLoader.loadSemanticDB(Path.of("./article"))
+    val sources = SourceLoader.loadSources(Path.of("."))
+    val semanticDB = SourceLoader.loadSemanticDB(Path.of("."))
 
     val callHierarchyBuilder = new CallHierarchyBuilder(sources, semanticDB)
     val callHierarchies = callHierarchyBuilder
