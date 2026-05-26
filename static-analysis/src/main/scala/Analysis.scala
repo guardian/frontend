@@ -1,21 +1,9 @@
 import SourceLoader.SourceRef
 
 import java.nio.file.Path
-import scala.meta.{Defn, Import, Importer, Input, Pkg, Position, Source, Term, Tree}
-import scala.meta.internal.semanticdb.{Locator, Range, SymbolInformation, SymbolOccurrence, TextDocument}
+import scala.meta.internal.semanticdb.{SymbolInformation, SymbolOccurrence}
 
 object Analysis {
-
-  def isPackageOrImport(node: Tree): Boolean = node.parent match {
-    case Some(_: Pkg)         => true
-    case Some(_: Importer)    => true
-    case Some(_: Defn.Def)    => false
-    case Some(_: Defn.Class)  => false
-    case Some(_: Defn.Trait)  => false
-    case Some(_: Defn.Object) => false
-    case Some(parent)         => isPackageOrImport(parent)
-    case None                 => false
-  }
 
   def findViewsDefinitions(semanticDB: SemanticDB): Seq[(SourceRef, SymbolInformation)] = {
     semanticDB.allDocuments.flatMap { case (file, document) =>
@@ -41,91 +29,17 @@ object Analysis {
     }
   }
 
-  def findOwner(node: Tree): Option[Tree] = node.parent match {
-    case Some(defn: Defn.Def)    => Some(defn)
-    case Some(defn: Defn.Class)  => Some(defn)
-    case Some(defn: Defn.Trait)  => Some(defn)
-    case Some(defn: Defn.Object) => Some(defn)
-    case Some(pkg: Pkg)          => Some(pkg)
-    case Some(parentNode)        => findOwner(parentNode)
-    case None                    => None
-  }
-
-  def identifyFullyQualifiedNameOfOwner(node: Tree, parents: List[Tree] = List.empty): Option[List[Tree]] = findOwner(
-    node,
-  ) match {
-    case Some(owner) => identifyFullyQualifiedNameOfOwner(owner, owner :: parents)
-    case None        => Some(parents)
-  }
-
-  def formatFullyQualifiedName(nodes: List[Tree]): String = nodes.map {
-    case defn: Defn.Def    => s"${defn.name.value}()."
-    case defn: Defn.Class  => s"${defn.name.value}#"
-    case defn: Defn.Trait  => s"${defn.name.value}#"
-    case defn: Defn.Object => s"${defn.name.value}."
-    case pkg: Pkg          => s"${pkg.name.value.replace(".", "/")}/"
-    case other             => other.toString()
-  }.mkString
-
-  def symbolOccurrenceToSourceTree(
-      callSites: Seq[(SourceRef, SymbolOccurrence)],
-      scalaSources: ScalaSources,
-  ): Seq[Tree] = {
-    val positions = callSites.collect { case (file, SymbolOccurrence(Some(range), _, _)) =>
-      (file, range)
-    }.toSet
-
-    def toRange(position: Position): Range =
-      Range(position.startLine, position.startColumn, position.endLine, position.endColumn)
-
-    scalaSources
-      .collect {
-        case (file, node) if positions.contains(file -> toRange(node.origin.position)) => node
-      }
-
-  }
-
-  def findNextCallers(method: MethodRef, scalaSources: ScalaSources, semanticDB: SemanticDB): Seq[MethodRef] = {
-    val fullyQualifiedCallers =
-      symbolOccurrenceToSourceTree(Seq(method.file -> method.occurrence), scalaSources)
-        .filterNot(isPackageOrImport)
-        .map { callerNode =>
-          identifyFullyQualifiedNameOfOwner(callerNode)
-            .map(formatFullyQualifiedName)
-            .getOrElse("unknown")
-        }
-        .toSet
-
-    semanticDB.allDocuments.flatMap { case (file, document) =>
-      document.occurrences
-        .filter { symbol =>
-          fullyQualifiedCallers.contains(symbol.symbol) && symbol.role.isReference
-        }
-        .map(occurrence => MethodRef(occurrence.symbol, occurrence, file))
-    }
-  }
-
-  def buildCallHierarchy(
-      callee: MethodRef,
-      scalaSources: ScalaSources,
-      semanticDB: SemanticDB,
-  ): CallHierarchyNode = {
-    val callers = findNextCallers(callee, scalaSources, semanticDB).map { case caller =>
-      buildCallHierarchy(callee = caller, scalaSources, semanticDB)
-    }
-    CallHierarchyNode(callee, callers)
-  }
-
   def main(args: Array[String]): Unit = {
     val sources = SourceLoader.loadSources(Path.of("./article"))
     val semanticDB = SourceLoader.loadSemanticDB(Path.of("./article"))
 
+    val callHierarchyBuilder = new CallHierarchyBuilder(sources, semanticDB)
+
     findViewsCallSites(semanticDB)
       .map { case (file, occurrence) =>
-        val methodRed = MethodRef(occurrence.symbol, occurrence, file)
-        buildCallHierarchy(methodRed, sources, semanticDB)
+        val methodRef = MethodRef(occurrence.symbol, occurrence, file)
+        callHierarchyBuilder.buildCallHierarchy(methodRef)
       }
-      .distinct
       .foreach(node => CallHierarchy.printCallHierarchy(node))
   }
 
