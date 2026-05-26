@@ -28,6 +28,7 @@ case class SemanticDB(private val documents: Map[SourceRef, TextDocument]) {
   def getOccurrences(symbol: SemanticDBSymbol): Seq[(SourceRef, SymbolOccurrence)] =
     occurrences.getOrElse(symbol, Seq.empty)
   def allDocuments = documents.toSeq
+  def getDocument(filePath: SourceRef): Option[TextDocument] = documents.get(filePath)
 }
 
 object SourceLoader {
@@ -44,6 +45,8 @@ object SourceLoader {
         result.put(SourceRef(filePath), doc)
       }
     }
+    val debug = result.flatMap(_._2.occurrences.filter(_.symbol.contains("emailArticleBody")))
+    println(debug)
     SemanticDB(result.toMap)
   }
 
