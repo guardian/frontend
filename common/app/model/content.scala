@@ -328,7 +328,9 @@ final case class Content(
   }
 
   def cricketMatchDate: Option[String] = {
-    if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
+    if (
+      (tags.isCricketLiveBlog || tags.isCricketMatchReport) && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn
+    ) {
       Some(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))
     } else None
   }
