@@ -1,12 +1,14 @@
 package frontpress
 
+import com.gu.contentapi.client.utils.Article
 import common.facia.FixtureBuilder
-import model.pressed.{CuratedContent, PressedStory}
+import model.pressed.{CuratedContent, PressedElements, PressedFields, PressedMetadata, PressedStory, PressedTrail}
 import model.{Tag, TagProperties, Tags}
 import org.mockito.Mockito._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import org.joda.time.DateTime
 import services.{NewsletterData, NewsletterService}
 
 class NewsletterEnrichmentTest extends AnyFlatSpec with Matchers with MockitoSugar {
@@ -55,9 +57,37 @@ class NewsletterEnrichmentTest extends AnyFlatSpec with Matchers with MockitoSug
 
   def contentWithTags(tags: List[Tag]): CuratedContent = {
     val base = FixtureBuilder.mkPressedCuratedContent(1).asInstanceOf[CuratedContent]
-    // Attach a minimal PressedStory carrying the given tags
-    val story = mock[PressedStory]
-    when(story.tags).thenReturn(Tags(tags))
+
+    val story = PressedStory(
+      trail = PressedTrail(
+        trailPicture = None,
+        byline = None,
+        thumbnailPath = None,
+        webPublicationDate = new DateTime(0L),
+      ),
+      metadata = PressedMetadata(
+        id = "test/id",
+        webTitle = "Test title",
+        webUrl = "https://www.theguardian.com/test/id",
+        `type` = None,
+        pillar = None,
+        sectionId = None,
+        designType = Article,
+        format = None,
+      ),
+      fields = PressedFields(
+        main = "<p>Test main</p>",
+        body = "Test body",
+        standfirst = None,
+      ),
+      elements = PressedElements(
+        mainVideo = None,
+        mainMediaAtom = None,
+        mediaAtoms = Seq.empty,
+      ),
+      tags = Tags(tags),
+    )
+
     base.copy(properties = base.properties.copy(maybeContent = Some(story)))
   }
 
