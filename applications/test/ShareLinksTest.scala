@@ -29,7 +29,6 @@ import org.scalatest.matchers.should.Matchers
 
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
-        implicit val request = TestRequest()
         val pageShares = model.Content(apiContent).sharelinks.pageShares
 
         pageShares.visible.map(_.text) should be(List("Facebook", "Twitter", "Email"))

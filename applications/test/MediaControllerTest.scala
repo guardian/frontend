@@ -7,8 +7,6 @@ import org.jsoup.Jsoup
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-import scala.util.matching.Regex
-
 @DoNotDiscover class MediaControllerTest
     extends AnyFlatSpec
     with Matchers

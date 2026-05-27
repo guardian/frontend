@@ -3,7 +3,7 @@ logLevel := Level.Warn
 
 // Dependencies used by the VersionInfo plugin
 libraryDependencies ++= Seq(
-  "joda-time" % "joda-time" % "2.14.1",
+  "joda-time" % "joda-time" % "2.14.2",
   "org.joda" % "joda-convert" % "2.2.4",
 )
 
@@ -20,3 +20,5 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.6")
 addDependencyTreePlugin
 
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.13.1")
+
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.6")

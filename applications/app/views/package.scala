@@ -1,6 +1,6 @@
 package views
 
-import common.Edition
+import ab.ABTests
 import model.{ApplicationContext, GalleryPage, Interactive}
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
@@ -21,7 +21,6 @@ object InteractiveBodyCleaner {
 
 object IndexCleaner {
   def apply(page: IndexPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(
         isPaidContent = false,
@@ -46,6 +45,7 @@ object GalleryCaptionCleaners {
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
         page.gallery.content.isUSProductionOffice,
+        abTests = ABTests.getParticipations(request),
       ),
     )
 

@@ -1,7 +1,6 @@
 package controllers.admin
 
 import common._
-import conf.Configuration
 import conf.switches.Switches
 import http.GuardianAuthWithExemptions
 import model.{ApplicationContext, NoCache}

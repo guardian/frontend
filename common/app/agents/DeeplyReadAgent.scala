@@ -6,15 +6,11 @@ import common._
 import contentapi.ContentApiClient
 import layout.DiscussionSettings
 import model.ContentFormat
-import model.dotcomrendering.OnwardCollectionResponse
-import play.api.libs.json._
-import services.{FaciaContentConvert, OphanApi, OphanDeeplyReadItem}
+import services.{FaciaContentConvert, OphanApi}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 import model.dotcomrendering.Trail
-
-import java.lang.Throwable
 
 class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 

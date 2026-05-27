@@ -103,7 +103,6 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   it should "return nothing if for whatever reason the blog is empty" in {
     val testBlocks = mock[Blocks]
     val testBlock1 = mock[Block]
-    val testBlock2 = mock[Block]
 
     when(testBlock1.id) thenReturn "testBlockId123"
     when(testBlocks.requestedBodyBlocks) thenReturn None

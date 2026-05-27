@@ -2,11 +2,8 @@ package indexes
 
 import com.gu.contentapi.client.model.v1.{TagType, Tag => ApiTag}
 import model.{TagDefinition, TagIndex}
-import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.DoNotDiscover
-import test.WithTestExecutionContext
 import TagPages._
 
 class TagPagesTest extends AnyFlatSpec with Matchers {

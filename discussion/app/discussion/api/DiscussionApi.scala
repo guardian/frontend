@@ -8,9 +8,8 @@ import discussion.model.{CommentCount, _}
 import discussion.util.Http
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.{Cookie, Headers, RequestHeader}
+import play.api.mvc.RequestHeader
 
-import scala.concurrent.duration._
 import conf.switches.Switches._
 import io.lemonlabs.uri.config.{ExcludeNones, UriConfig}
 import io.lemonlabs.uri.typesafe.QueryKey.stringQueryKey

@@ -6,7 +6,7 @@ import football.controllers.FootballPage
 import football.model.DotcomRenderingFootballDataModelImplicits._
 import model.{ApplicationContext, Competition, CompetitionSummary}
 import model.dotcomrendering.DotcomRenderingUtils.withoutNull
-import model.dotcomrendering.PageFooter
+import model.dotcomrendering.{DotcomRenderingConfig, PageFooter, PageType}
 import navigation.{FooterLinks, Nav}
 import pa.{FootballMatch, Round}
 import play.api.libs.json.{JsObject, JsString, JsValue, Json, Writes}
@@ -41,7 +41,11 @@ object DotcomRenderingWallchartDataModel {
   ): DotcomRenderingWallchartDataModel = {
     val edition = Edition(request)
     val nav = Nav(page, edition)
-    val combinedConfig: JsObject = DotcomRenderingFootballDataModel.getConfig(page)
+    val combinedConfig: JsObject = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = PageType(page, request, context).isPreview,
+    )
     DotcomRenderingWallchartDataModel(
       competitionStages = competitionStages,
       competition = competition,

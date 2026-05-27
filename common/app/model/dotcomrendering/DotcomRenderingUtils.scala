@@ -1,5 +1,6 @@
 package model.dotcomrendering
 
+import ab.ABTests
 import com.github.nscala_time.time.Imports.DateTime
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, LiveBlogDesign}
@@ -21,8 +22,8 @@ import model.{
   LiveBlogPage,
   Pillar,
 }
-import org.joda.time.{DateTimeZone, Instant, LocalDate, LocalTime}
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -256,6 +257,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
           article.trail.webPublicationDate,
           article.content.isGallery,
           article.content.isUSProductionOffice,
+          abTests = ABTests.getParticipations(request),
         ),
       )
       .filter(PageElement.isSupported)

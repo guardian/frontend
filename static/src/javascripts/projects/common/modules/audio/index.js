@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { onConsentChange, getConsentFor } from '@guardian/libs';
+import { onConsentChange, getConsentFor } from '@guardian/consent-manager';
 import config from 'lib/config';
 import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan, registerOphanListeners } from './utils';

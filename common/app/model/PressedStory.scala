@@ -6,7 +6,6 @@ import common.TrailsToRss
 import model.content.{Atoms, MediaAtom}
 import model.{Commercial, Elements, Fields, MetaData, Pillar, SectionId, Tags, Trail}
 import org.jsoup.Jsoup
-import scala.jdk.CollectionConverters._
 
 final case class PressedStory(
     trail: PressedTrail,

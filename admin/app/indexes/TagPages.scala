@@ -5,9 +5,6 @@ import common.GuLogging
 import common.StringEncodings.asAscii
 import model.{TagDefinition, TagIndex}
 
-import scala.concurrent.ExecutionContext
-import scala.util.Try
-
 object TagPages extends GuLogging {
 
   /** To be curated by Peter Martin */

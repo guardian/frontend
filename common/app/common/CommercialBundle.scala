@@ -8,7 +8,6 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 object CommercialBundle {
-  import GuardianConfiguration._
 
   private lazy val parameterStore = new ParameterStore(Environment.awsRegion)
 

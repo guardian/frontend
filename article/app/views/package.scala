@@ -1,5 +1,6 @@
 package views
 
+import ab.ABTests
 import common.Edition
 import layout.ContentWidths
 import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
@@ -28,7 +29,6 @@ object MainMediaWidths {
 
 object MainCleaner {
   def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    implicit val edition: Edition = Edition(request)
     withJsoup(BulletCleaner(article.fields.main))(
       VideoEmbedCleaner(article),
       PictureCleaner(article),
@@ -83,6 +83,7 @@ object BodyProcessor {
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         tags = article.content.tags.tags.map(_.id),
         isUSProductionOffice = article.content.isUSProductionOffice,
+        abTests = ABTests.getParticipations(request),
       ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))

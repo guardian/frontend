@@ -1,6 +1,5 @@
 package pages
 
-import common.Edition
 import conf.switches.Switches.WeAreHiring
 import controllers.{QuizAnswersPage, TodayNewspaper}
 import html.HtmlPageHelpers.{ContentCSSFile, _}
@@ -21,7 +20,6 @@ object ContentHtmlPage extends HtmlPage[Page] {
   def addMerchHighSlot(html: Html, page: Page)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     import views.support.`package`.withJsoup
     import views.support.{BulletCleaner, CommercialComponentHigh}
-    val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(
         isPaidContent = false,

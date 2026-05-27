@@ -1,7 +1,6 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Block, Blocks, ItemResponse, Content => ApiContent}
-import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, AppsFormat, HtmlFormat}

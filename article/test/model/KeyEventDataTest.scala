@@ -77,7 +77,6 @@ class KeyEventDataTest extends AnyFlatSpec with Matchers {
   it should "return a filtered list of key event and summary ids when requestedBodyBlocks has key events and summary blocks " in {
     val blockCount = 8
     val allBlocks = fakeBlocks(blockCount, 3, 0, 3)
-    val regularBlocks = allBlocks.slice(0, 2)
     val keyEventBlocks = allBlocks.slice(2, 5)
     val summaryBlocks = allBlocks.slice(5, 8)
     val requestedBodyBlocks = Map(
@@ -103,7 +102,6 @@ class KeyEventDataTest extends AnyFlatSpec with Matchers {
   it should "return a filtered list of key event and summary ids when body has key events and summary blocks " in {
     val blockCount = 8
     val allBlocks = fakeBlocks(blockCount, 3, 0, 3)
-    val regularBlocks = allBlocks.slice(0, 2)
     val keyEventBlocks = allBlocks.slice(2, 5)
     val summaryBlocks = allBlocks.slice(5, 8)
     val blocks = Some(

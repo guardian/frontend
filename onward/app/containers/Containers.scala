@@ -3,7 +3,6 @@ package containers
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.CollectionConfigJson
 import layout.{CollectionEssentials, FaciaContainer}
-import model.FrontProperties
 import model.pressed.{PressedContent, CollectionConfig}
 import services.CollectionConfigWithId
 import layout.slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
@@ -12,7 +11,6 @@ trait Containers {
 
   protected def onwardContainer(dataId: String, trails: Seq[PressedContent]): FaciaContainer = {
     val displayName = Some(dataId)
-    val properties = FrontProperties.empty
     val config = CollectionConfigJson.withDefaults(displayName = displayName)
 
     val containerDefinition = trails.length match {
