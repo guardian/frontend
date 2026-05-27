@@ -118,6 +118,7 @@ case class AudioAtomBlockElement(
     title: Option[String],
     coverUrl: String,
     trackUrl: String,
+    trackUrlWithAds: String,
     duration: Int,
     contentId: String,
 ) extends PageElement
@@ -1276,6 +1277,7 @@ object PageElement {
                 title = audio.atom.title,
                 coverUrl = audio.data.coverUrl,
                 trackUrl = audio.data.trackUrl,
+                trackUrlWithAds = audio.data.trackUrlWithAds.getOrElse(audio.data.trackUrl),
                 duration = audio.data.duration,
                 contentId = audio.data.contentId,
               ),
