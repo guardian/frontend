@@ -3,14 +3,21 @@ package agents
 import com.gu.contentapi.client.model.v1.{Content, ElementType}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
 import common._
+import conf.Configuration
 import contentapi.ContentApiClient
 import layout.DiscussionSettings
 import model.ContentFormat
-import services.{FaciaContentConvert, OphanApi}
+import services.{FaciaContentConvert, OphanApi, S3}
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.control.NonFatal
 import model.dotcomrendering.Trail
+import play.api.libs.json.Json
+
+
+object DeeplyReadS3Agent extends S3 {
+  override lazy val bucket = Configuration.cache.bucket;
+  lazy val stage: String = Configuration.environment.stage.toUpperCase
+}
 
 class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
@@ -29,45 +36,15 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
      */
     Future
       .sequence(Edition.allEditions.map { edition =>
-        ophanApi
-          .getDeeplyRead(edition)
-          .flatMap { ophanDeeplyReadItems =>
-            log.debug(s"Fetched ${ophanDeeplyReadItems.size} Deeply Read items for ${edition.displayName}")
-            val constructedTrail: Seq[Future[Option[Trail]]] = ophanDeeplyReadItems.map { ophanItem =>
-              log.debug(s"CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-              val path = removeStartingSlash(ophanItem.path)
-              log.debug(s"CAPI Lookup for path: $path")
-              val capiRequest = contentApiClient
-                .item(path)
-                .showTags("all")
-                .showFields("all")
-                .showReferences("none")
-                .showAtoms("none")
-
-              contentApiClient
-                .getResponse(capiRequest)
-                .map { res =>
-                  res.content.flatMap { capiData =>
-                    log.debug(s"Retrieved CAPI data for Deeply Read item: ${path}")
-                    deeplyReadUrlToTrail(capiData)
-                  }
-                }
-                .recover { case NonFatal(e) =>
-                  log.error(s"Error retrieving CAPI data for Deeply Read item: ${path}. ${e.getMessage}")
-                  None
-                }
-            }
-            Future
-              .sequence(constructedTrail)
-              .map { maybeTrails =>
-                (edition, maybeTrails.flatten.take(10))
-              }
-
-          }
-          .recover { e =>
-            log.error(s"Failed to fetch Deeply Read items for ${edition.displayName}. ${e.getMessage()}")
-            (edition, Seq.empty)
-          }
+        // TODO make s3.get async
+        DeeplyReadS3Agent.get(s"${DeeplyReadS3Agent.stage}/deeply-read/${edition.id.toLowerCase()}.json") match {
+          case Some(jsonTrail) =>
+            Json.parse(jsonTrail).asOpt[Trail]
+        }
+//          .recover { e =>
+//            log.error(s"Failed to fetch Deeply Read items for ${edition.displayName}. ${e.getMessage()}")
+//            (edition, Seq.empty)
+//          }
       })
       .map(trailsList => {
         val map = trailsList.toMap
