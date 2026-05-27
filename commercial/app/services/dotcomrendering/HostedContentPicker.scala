@@ -2,6 +2,7 @@ package services.dotcomrendering
 
 import ab.ABTests.isUserInTestGroup
 import common.GuLogging
+import conf.Configuration
 import implicits.Requests._
 import play.api.mvc.RequestHeader
 import implicits.AppsFormat
@@ -29,6 +30,7 @@ object HostedContentPicker extends GuLogging {
   ): RenderType = {
     if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
     // Gallery pages are not supported in DCR yet
+    else if (isGallery && Configuration.environment.isDev) RemoteRender
     else if (isGallery) LocalRender
     else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) RemoteRender
