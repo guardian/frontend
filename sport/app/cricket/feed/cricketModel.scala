@@ -161,6 +161,11 @@ object MatchHeader extends DCARUrlHelper {
       }
       .map(content => getPageUrl(content.metadata.url))
 
-    MatchHeader(page.theMatch, liveBlogUrl, matchReportUrl, getPageUrl(page.metadata.id))
+    MatchHeader(
+      cricketMatch = page.theMatch,
+      liveURL = liveBlogUrl,
+      reportURL = matchReportUrl,
+      infoURL = getPageUrl(page.metadata.id),
+    )
   }
 }
