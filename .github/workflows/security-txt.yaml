@@ -1,0 +1,35 @@
+name: Update security.txt Expires Field
+
+on:
+  schedule:
+    - cron: '0 8 30 4 *' # Runs at 8:00 UTC on April 30th every year
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-expires:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v.6.0.2
+
+      - name: Update Expires field in security.txt
+        run: node tools/security-txt.js
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-security-txt-${{ github.run_number }}
+          git add facia/public/security.txt
+          git commit -m "Update Expires field in security.txt to next year (automated)"
+          git push --set-upstream origin update-security-txt-${{ github.run_number }}
+          gh pr create \
+            --title "Update Expires field in security.txt to next year (automated)" \
+            --body "Automated PR to update the Expires field in security.txt." \
+            --base main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
