@@ -9,6 +9,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
+import play.api.test.FakeRequest
 
 @DoNotDiscover class NavigationTest
     extends AnyFlatSpec
@@ -202,7 +203,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
         val page = TestPage(Content(apiContent))
-        val menu = NavMenu(page, edition)
+        val menu = NavMenu(page, edition)(FakeRequest())
         val currentNavLink = menu.currentNavLink
         val pillar = menu.currentPillar
 
@@ -222,7 +223,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
         val page = TestPage(Content(apiContent))
-        val menu = NavMenu(page, edition)
+        val menu = NavMenu(page, edition)(FakeRequest())
         val currentNavLink = menu.currentNavLink
         val pillar = menu.currentPillar
 
