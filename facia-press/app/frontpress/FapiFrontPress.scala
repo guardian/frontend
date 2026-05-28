@@ -15,7 +15,7 @@ import conf.Configuration
 import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi._
-import services.{ConfigAgent, S3FrontsApi, NewsletterService}
+import services.{ConfigAgent, NewsletterService, S3FrontsApi}
 import services.fronts.FrontsApi
 import model.{PressedPage, _}
 import model.facia.PressedCollection
@@ -383,15 +383,11 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
             else enrichedContent
           }
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
-          enrichContent(collection, link, link.enriched).map { updatedFields =>
-            val enrichedContent = link.copy(enriched = Some(updatedFields))
-            if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
-            else enrichedContent
-          }
+          enrichContent(collection, link, link.enriched).map(updatedFields => link.copy(enriched = Some(updatedFields)))
+        case curated: CuratedContent if isHighlights =>
+          Response.Right(NewsletterEnrichment.enrichWithNewsletterData(curated, newsletterService))
         case plain =>
-          Response.Right(
-            if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(plain, newsletterService) else plain,
-          )
+          Response.Right(plain)
       })
     }
   }
@@ -637,21 +633,20 @@ object Enrichment extends GuLogging {
 
 object NewsletterEnrichment {
 
-  def enrichWithNewsletterData(content: PressedContent, newsletterService: NewsletterService): PressedContent = {
-    val maybeNewsletterData = for {
-      story <- content.properties.maybeContent
+  private def maybeNewsletterData(properties: PressedProperties, newsletterService: NewsletterService) = {
+    for {
+      story <- properties.maybeContent
       newsletterData <- newsletterService.getNewsletterDataFromTags(story.tags.tags)
     } yield newsletterData
-    maybeNewsletterData match {
-      case Some(newsletterData) =>
-        content match {
-          case c: CuratedContent => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
-          case c: SupportingCuratedContent =>
-            c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
-          case c: LinkSnap => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
-          case _           => content
-        }
-      case None => content
+  }
+
+  def enrichWithNewsletterData(content: PressedContent, newsletterService: NewsletterService): PressedContent = {
+    content match {
+      case c: CuratedContent =>
+        maybeNewsletterData(c.properties, newsletterService)
+          .map(newsletterData => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData))))
+          .getOrElse(c)
+      case _ => content
     }
   }
 }
