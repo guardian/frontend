@@ -129,4 +129,5 @@ class NewsletterEnrichmentTest extends AnyFlatSpec with Matchers with MockitoSug
     result.properties.newsletterData shouldBe None
     verifyNoInteractions(service)
   }
+
 }

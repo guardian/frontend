@@ -371,19 +371,27 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   private def getCurated(
       collection: Collection,
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+    val isHighlights = collection.collectionConfig.collectionType == "scrollable/highlights"
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
     initialContent.flatMap { content =>
       Response.traverse(content.map {
         case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, curated, curated.enriched).map { updatedFields =>
-            enrichWithNewsletterData(curated.copy(enriched = Some(updatedFields)))
+            val enrichedContent = curated.copy(enriched = Some(updatedFields))
+            if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
+            else enrichedContent
           }
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, link, link.enriched).map { updatedFields =>
-            enrichWithNewsletterData(link.copy(enriched = Some(updatedFields)))
+            val enrichedContent = link.copy(enriched = Some(updatedFields))
+            if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
+            else enrichedContent
           }
-        case plain => Response.Right(enrichWithNewsletterData(plain))
+        case plain =>
+          Response.Right(
+            if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(plain, newsletterService) else plain,
+          )
       })
     }
   }
@@ -628,6 +636,7 @@ object Enrichment extends GuLogging {
 }
 
 object NewsletterEnrichment {
+
   def enrichWithNewsletterData(content: PressedContent, newsletterService: NewsletterService): PressedContent = {
     val maybeNewsletterData = for {
       story <- content.properties.maybeContent
@@ -639,8 +648,8 @@ object NewsletterEnrichment {
           case c: CuratedContent => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
           case c: SupportingCuratedContent =>
             c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
-          case c: LinkSnap   => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
-          case c: LatestSnap => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
+          case c: LinkSnap => c.copy(properties = c.properties.copy(newsletterData = Some(newsletterData)))
+          case _           => content
         }
       case None => content
     }
