@@ -5,6 +5,7 @@ import model.content.InteractiveAtom
 import model.meta.BlocksOn
 import model.{ArticlePage, Content, ContentPage, InteractivePage}
 import play.api.libs.json.{Json, Reads}
+import scala.util.{Try, Success, Failure}
 import scala.xml.XML
 
 case class LiveHarnessInteractiveAtom(
@@ -68,8 +69,10 @@ object LiveHarness {
   )
 
   private[utils] def splitIntoTags(html: String): List[String] = {
-    val xml = XML.loadString(s"<root>$html</root>")
-    xml.child.toList.map(_.toString).filter(_.trim.nonEmpty)
+    Try(XML.loadString(s"<root>$html</root>")) match {
+      case Success(xml) => xml.child.toList.map(_.toString).filter(_.trim.nonEmpty)
+      case Failure(_)   => List(html)
+    }
   }
 
   private[utils] def insertAtomsAtNthPoints(
