@@ -9,7 +9,6 @@
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, PrintCTA, PrintCTAWeekly}
 @import conf.Configuration
 @import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
-@import ab.ABTests
 
 @editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
 <li class="dropdown-menu__item">
@@ -194,9 +193,7 @@
         </label>
     </nav>
 
-    @if(page.metadata.id == "/football/world-cup-2026" && ABTests.isUserInTest("webx-world-cup-2026-subnav")) {
-    } else {
-        @fragments.nav.subNav(navMenu, page.metadata.designType)
-    }
+
+    @fragments.nav.subNav(navMenu, page.metadata.designType)
 </header>
 }
