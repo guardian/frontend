@@ -53,7 +53,6 @@ const autoUpdate = (opts) => {
         $liveblogBody.offset().top < window.pageYOffset;
 
     const isLivePage = !window.location.search.includes('page=');
-    const filterKeyEvents = window.location.search.includes('filterKeyEvents=true');
 
     const revealInjectedElements = () => {
         fastdom.mutate(() => {
@@ -119,11 +118,10 @@ const autoUpdate = (opts) => {
         }
 
         let count = 0;
-        const filterKeyEventsParam = `&filterKeyEvents=${filterKeyEvents ? 'true' : 'false'}`;
         const shouldFetchBlocks = `&isLivePage=${isLivePage ? 'true' : 'false'}`;
-        const latestBlockIdToUse = filterKeyEvents ? latestKeyBlockId : latestBlockId;
+        const latestBlockIdToUse = latestBlockId;
 
-        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}${filterKeyEventsParam}`;
+        const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}`;
         const endpoint = `${window.location.pathname}.json${params}`;
 
         // #? One day this should be in Promise.finally()
@@ -191,9 +189,7 @@ const autoUpdate = (opts) => {
                         });
                 });
             } else {
-                const param = window.location.search.includes('filterKeyEvents=true') ? `?filterKeyEvents=true` : '';
-                const url = window.location.pathname + param;
-
+                const url = window.location.pathname;
                 window.location.assign(url);
             }
         });
