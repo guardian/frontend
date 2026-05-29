@@ -67,25 +67,10 @@ object LiveHarness {
       }),
   )
 
-  private val voidElements = Set(
-    "area",
-    "base",
-    "br",
-    "col",
-    "embed",
-    "hr",
-    "img",
-    "input",
-    "link",
-    "meta",
-    "param",
-    "source",
-    "track",
-    "wbr",
-  )
+  private val voidTextElements = Set("br", "hr", "wbr")
 
   private[utils] def splitIntoTags(html: String): List[String] = {
-    val sanitised = voidElements.foldLeft(html) { (acc, tag) =>
+    val sanitised = voidTextElements.foldLeft(html) { (acc, tag) =>
       acc.replaceAll(s"<$tag(\\s[^>]*)?>", "")
     }
     val xml = XML.loadString(s"<root>$sanitised</root>")
