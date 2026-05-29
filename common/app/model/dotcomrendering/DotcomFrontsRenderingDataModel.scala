@@ -40,7 +40,7 @@ object DotcomFrontsRenderingDataModel {
       deeplyRead: Option[Seq[Trail]],
   ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition)(request)
 
     val combinedConfig = DotcomRenderingConfig(
       page = page,

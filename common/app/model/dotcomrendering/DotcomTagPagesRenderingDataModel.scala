@@ -73,7 +73,7 @@ object DotcomTagPagesRenderingDataModel {
       pageType: PageType,
   ): DotcomTagPagesRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition)(request)
 
     val combinedConfig = DotcomRenderingConfig(
       page = page,
