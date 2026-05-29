@@ -87,10 +87,8 @@ class LiveBlogController(
       lastUpdate: Option[String],
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
-      filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request: Request[AnyContent] =>
-      val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
 
       mapModel(path, range) { pageBlocks =>
@@ -102,13 +100,12 @@ class LiveBlogController(
             * initially server side rendering the LiveBlog page.
             */
           case blog: LiveBlogPage if request.forceDCR && lastUpdate.isEmpty =>
-            Future.successful(renderDCRJson(pageBlocks.copy(page = blog), filter))
+            Future.successful(renderDCRJson(pageBlocks.copy(page = blog)))
           case blog: LiveBlogPage =>
             getJson(
               blog,
               range,
               isLivePage,
-              filter,
               pageBlocks.blocks.requestedBodyBlocks.getOrElse(Map.empty).map(entry => (entry._1, entry._2.toSeq)),
             )
           case minute: MinutePage =>
@@ -209,7 +206,6 @@ class LiveBlogController(
       liveblog: LiveBlogPage,
       range: BlockRange,
       isLivePage: Option[Boolean],
-      filterKeyEvents: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]] = Map.empty,
   )(implicit request: RequestHeader): Future[Result] = {
     val remoteRender = !request.forceDCROff
@@ -220,7 +216,6 @@ class LiveBlogController(
           liveblog,
           SinceBlockId(lastBlockId),
           isLivePage,
-          filterKeyEvents,
           remoteRender,
           requestedBodyBlocks,
         )
@@ -231,7 +226,6 @@ class LiveBlogController(
   private[this] def getNewBlocks(
       page: PageWithStoryPackage,
       lastUpdateBlockId: SinceBlockId,
-      filterKeyEvents: Boolean,
   ): (Option[BodyBlock], Seq[BodyBlock]) = {
     val requestedBlocks = page.article.fields.blocks.toSeq.flatMap {
       _.requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq())
@@ -241,28 +235,17 @@ class LiveBlogController(
       block.id != lastUpdateBlockId.lastUpdate
     }
 
-    val filteredBlocks = if (filterKeyEvents) {
-      latestBlocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    } else latestBlocks
-
     // the last block is picked from the unfiltered list
-    (latestBlocks.headOption, filteredBlocks)
+    (latestBlocks.headOption, latestBlocks)
   }
 
   private[this] def getNewBlocks(
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
       lastUpdateBlockId: SinceBlockId,
-      filterKeyEvents: Boolean,
   ): Seq[Block] = {
-    val blocksAround = requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty).takeWhile { block =>
+    requestedBodyBlocks.getOrElse(lastUpdateBlockId.around, Seq.empty).takeWhile { block =>
       block.id != lastUpdateBlockId.lastUpdate
     }
-
-    if (filterKeyEvents) {
-      blocksAround.filter(block =>
-        block.attributes.keyEvent.getOrElse(false) || block.attributes.summary.getOrElse(false),
-      )
-    } else blocksAround
   }
 
   private def getDCRBlocksHTML(page: LiveBlogPage, blocks: Seq[Block])(implicit
@@ -285,12 +268,11 @@ class LiveBlogController(
       page: LiveBlogPage,
       lastUpdateBlockId: SinceBlockId,
       isLivePage: Option[Boolean],
-      filterKeyEvents: Boolean,
       remoteRender: Boolean,
       requestedBodyBlocks: scala.collection.Map[String, Seq[Block]],
   )(implicit request: RequestHeader): Future[Result] = {
-    val (newestBlock, newBlocks) = getNewBlocks(page, lastUpdateBlockId, filterKeyEvents)
-    val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId, filterKeyEvents)
+    val (newestBlock, newBlocks) = getNewBlocks(page, lastUpdateBlockId)
+    val newCapiBlocks = getNewBlocks(requestedBodyBlocks, lastUpdateBlockId)
 
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
@@ -326,7 +308,6 @@ class LiveBlogController(
     */
   private[this] def renderDCRJson(
       pageBlocks: BlocksOn[LiveBlogPage],
-      filterKeyEvents: Boolean,
   )(implicit request: RequestHeader): Result = {
     val blog = pageBlocks.page
     val pageType: PageType = PageType(blog, request, context)
