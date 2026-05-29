@@ -1,6 +1,5 @@
 package html
 
-import common.Edition
 import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
@@ -40,7 +39,6 @@ object HtmlPageHelpers {
       request: RequestHeader,
       applicationContext: ApplicationContext,
   ): Map[String, Boolean] = {
-    val edition = Edition(request)
     val showAds =
       Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial
         .isAdFree(request)

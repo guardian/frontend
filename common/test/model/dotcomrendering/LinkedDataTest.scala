@@ -1,16 +1,14 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.schemaorg.{RecipeStep, SchemaOrg, SchemaRecipe}
-import com.gu.contentapi.client.model.v1.{CapiDateTime, Tag, TagType, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
-import model.{Article, Content, ContentType, DotcomContentType, MetaData, RelatedContent}
+import model.{Article, Content}
 import conf.Configuration
-import org.mockito.Mockito.when
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
-import test.{TestRequest, WithTestExecutionContext}
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.DateTime
 
 import java.time.ZoneOffset
 import implicits.Dates.jodaToJavaInstant

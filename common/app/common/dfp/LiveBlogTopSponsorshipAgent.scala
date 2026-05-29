@@ -1,8 +1,6 @@
 package common.dfp
 
 import model.Tag
-import model.ContentType
-import model.Section
 import common.Edition
 import play.api.mvc.RequestHeader
 import model.{MetaData}

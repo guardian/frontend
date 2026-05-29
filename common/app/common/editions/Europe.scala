@@ -1,6 +1,5 @@
 package common.editions
 
-import java.util.Locale
 import common._
 import navigation.{EditionNavLinks, NavLinks}
 import org.joda.time.DateTimeZone

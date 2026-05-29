@@ -1,3 +1,4 @@
 Contact: mailto:appsec@theguardian.com
 Canonical: https://www.theguardian.com/.well-known/security.txt
 Hiring: https://workwithus.theguardian.com/job-search?role=Technology
+Expires: 2027-05-31T08:00:00Z

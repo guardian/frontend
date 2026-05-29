@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 import java.time.LocalDate
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Commercial, Feature}
+import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 

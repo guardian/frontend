@@ -4,7 +4,6 @@ import software.amazon.awssdk.services.ssm.SsmClient
 import software.amazon.awssdk.services.ssm.model.{GetParameterRequest, GetParametersByPathRequest}
 import software.amazon.awssdk.regions.Region
 import common.GuardianConfiguration
-import conf.Configuration
 import utils.AWSv2
 
 import scala.annotation.tailrec

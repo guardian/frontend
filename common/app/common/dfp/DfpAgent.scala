@@ -8,7 +8,6 @@ import services.S3
 
 import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
-import org.checkerframework.checker.units.qual.s
 
 object DfpAgent extends PageskinAdAgent with LiveBlogTopSponsorshipAgent with SurveySponsorshipAgent {
 

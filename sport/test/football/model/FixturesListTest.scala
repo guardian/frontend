@@ -10,8 +10,6 @@ import test.ConfiguredTestSuite
 import play.api.test.FakeRequest
 import utils.DateFormatUtils
 
-import java.time.format.DateTimeFormatter
-
 @DoNotDiscover class FixturesListTest
     extends AnyFreeSpec
     with Matchers

@@ -2,7 +2,7 @@ package model
 
 import views.support.HttpsUrl
 
-case class Encoding(format: String, url: String, rawFormat: String)
+case class Encoding(format: String, url: String, urlWithAds: String, rawFormat: String)
 
 object Encoding extends HttpsUrl {
 
@@ -10,9 +10,9 @@ object Encoding extends HttpsUrl {
     "mp4" -> "video/mp4",
   )
 
-  def apply(url: String, rawFormat: String): Encoding = {
+  def apply(url: String, urlWithAds: String, rawFormat: String): Encoding = {
     val format = typeMapping.getOrElse(rawFormat, rawFormat)
-    Encoding(format, ensureHttps(url), rawFormat)
+    Encoding(format, ensureHttps(url), ensureHttps(urlWithAds), rawFormat)
   }
 }
 

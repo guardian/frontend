@@ -1,6 +1,5 @@
 package services.dotcomrendering
 
-import com.gu.contentapi.client.model.v1.{Block, ElementType}
 import common.GuLogging
 import implicits.AppsFormat
 import model.Cors.RichRequestHeader

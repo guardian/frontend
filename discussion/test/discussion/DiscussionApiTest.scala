@@ -5,7 +5,6 @@ import discussion.model.DiscussionKey
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.Headers
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 
 import scala.concurrent._

@@ -22,8 +22,8 @@ import model.{
   LiveBlogPage,
   Pillar,
 }
-import org.joda.time.{DateTimeZone, Instant, LocalDate, LocalTime}
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -79,7 +79,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
         Some(
           DotcomRenderingMatchData(
             matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
-            matchHeaderUrl = None,
+            matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/api/match-header/$date/$team.json"),
             matchStatsUrl = None,
             matchType = CricketMatchType,
           ),

@@ -1,9 +1,9 @@
 package test
 
 import model.meta.BlocksOn
-import com.gu.contentapi.client.model.v1.{Block, Blocks}
+import com.gu.contentapi.client.model.v1.Block
 import model.Cached.RevalidatableResult
-import model.dotcomrendering.{OnwardCollectionResponse, PageType}
+import model.dotcomrendering.PageType
 import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}

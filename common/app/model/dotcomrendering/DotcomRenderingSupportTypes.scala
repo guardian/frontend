@@ -1,7 +1,6 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
-import com.gu.contentapi.client.utils.format.ImmersiveDisplay
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
 import model.liveblog.{MembershipPlaceholder, BlockAttributes}

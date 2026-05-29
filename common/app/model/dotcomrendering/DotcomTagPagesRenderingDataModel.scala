@@ -4,17 +4,15 @@ import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import experiments.ActiveExperiments
 import model.Tags
 import model.pressed.PressedContent
 import navigation.{FooterLinks, Nav}
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.libs.json.{JsObject, JsValue, Json, Writes, __}
+import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
 import services.IndexPage
-import views.support.{CamelCase, JavaScriptPage, PreviousAndNext}
+import views.support.PreviousAndNext
 import model.PressedCollectionFormat.pressedContentFormat
-import ab.ABTests
 
 case class DotcomTagPagesRenderingDataModel(
     contents: Seq[PressedContent],

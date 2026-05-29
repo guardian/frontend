@@ -29,6 +29,9 @@ Handle: @mxdvl
 From: Montréal, CA
 Location: London, UK
 
+Developer: William Mead
+From: Milton Keynes
+
 Product Manager: Jon Kearnes
 LinkedIn: jonkearnes
 From: London, UK

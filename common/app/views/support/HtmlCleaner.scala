@@ -10,9 +10,7 @@ import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import model.content._
-import model.dotcomrendering.pageElements.TextBlockElement
 import navigation.ReaderRevenueSite
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader

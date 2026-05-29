@@ -328,7 +328,9 @@ final case class Content(
   }
 
   def cricketMatchDate: Option[String] = {
-    if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
+    if (
+      (tags.isCricketLiveBlog || tags.isCricketMatchReport) && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn
+    ) {
       Some(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))
     } else None
   }
@@ -695,6 +697,9 @@ final case class Audio(override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
+
+  lazy val downloadUrlWithAds: Option[String] = elements.mainAudio
+    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.urlWithAds))
 
   lazy val duration: Option[Int] = elements.mainAudio.map(_.audio.duration)
 
