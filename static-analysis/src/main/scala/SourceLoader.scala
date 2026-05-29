@@ -1,7 +1,7 @@
 import scala.jdk.CollectionConverters._
 import java.nio.file.{Files, Path}
 import scala.collection.{MapView, mutable}
-import scala.meta.internal.semanticdb.{Locator, SymbolOccurrence, TextDocument}
+import scala.meta.internal.semanticdb.{Locator, SymbolInformation, SymbolOccurrence, TextDocument}
 import scala.meta.{Input, Position, Source, Tree}
 
 case class ScalaSources(private val sources: Map[SourceRef, Source]) {
@@ -43,10 +43,19 @@ case class SemanticDB(private val documents: Map[SourceRef, TextDocument]) {
     .groupBy(_._1)
     .view
     .mapValues(_.map(_._2))
+
+  private val symbolInformation: MapView[SemanticDBSymbol, Seq[(SourceRef, SymbolInformation)]] = documents.toSeq
+    .flatMap { case (filePath, document) =>
+      document.symbols.map(symbolInfo => SemanticDBSymbol(symbolInfo.symbol) -> (filePath, symbolInfo))
+    }
+    .groupBy(_._1)
+    .view
+    .mapValues(_.map(_._2))
   def getOccurrences(symbol: SemanticDBSymbol): Seq[(SourceRef, SymbolOccurrence)] =
     occurrences.getOrElse(symbol, Seq.empty)
   def allDocuments = documents.toSeq
-  def getDocument(filePath: SourceRef): Option[TextDocument] = documents.get(filePath)
+  def findDefinition(symbol: SemanticDBSymbol): Option[(SourceRef, SymbolInformation)] =
+    symbolInformation.getOrElse(symbol, Seq.empty).headOption
 }
 
 object SourceLoader {

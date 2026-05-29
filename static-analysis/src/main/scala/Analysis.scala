@@ -1,6 +1,64 @@
+import java.io.PrintStream
 import java.nio.file.Files.writeString
 import java.nio.file.Path
-import scala.meta.internal.semanticdb.{SymbolInformation, SymbolOccurrence}
+import scala.meta.cli.Reporter
+import scala.meta.internal.metap.{BasePrinter, PrinterSymtab, SymbolInformationPrinter}
+import scala.meta.internal.semanticdb.Language.SCALA
+import scala.meta.internal.semanticdb.Schema.SEMANTICDB4
+import scala.meta.internal.semanticdb.{Scope, SymbolInformation, TextDocument}
+import scala.meta.metap.Settings
+
+class StringSymbolPrinter(semanticDB: SemanticDB) {
+
+  private val textDocument = TextDocument(
+    schema = SEMANTICDB4,
+    language = SCALA,
+    symbols = semanticDB.allDocuments.flatMap(_._2.symbols),
+    occurrences = semanticDB.allDocuments.flatMap(_._2.occurrences),
+  )
+
+  private val symtab = new PrinterSymtab {
+    override def info(symbol: String): Option[SymbolInformation] =
+      semanticDB.findDefinition(SemanticDBSymbol(symbol)).map(_._2)
+  }
+
+  private class StringPrinter(printStream: PrintStream)
+      extends BasePrinter(
+        settings = Settings(),
+        reporter = Reporter().withOut(printStream).withSilentErr(),
+        doc = textDocument,
+        symtab = symtab,
+      )
+      with SymbolInformationPrinter {}
+
+  private def capturingPrintStream[A](f: PrintStream => A): String = {
+    val outputStream = new java.io.ByteArrayOutputStream()
+    val printStream = new PrintStream(outputStream)
+    f(printStream)
+    printStream.flush()
+    outputStream.toString("UTF-8")
+  }
+
+  def print(symbol: SymbolInformation): String = {
+    capturingPrintStream { ps =>
+      val sp = new StringPrinter(ps)
+      val in = new sp.InfoNotes()
+      val ip = new sp.InfoPrinter(in)
+      ip.pprint(symbol)
+    }
+  }
+
+  def pprintMethod(symbol: SymbolInformation): String = {
+    val arguments = capturingPrintStream { ps =>
+      val sp = new StringPrinter(ps)
+      val in = new sp.InfoNotes()
+      val ip = new sp.InfoPrinter(in)
+      ip.pprint(symbol.signature)
+    }
+    val fullyQualifiedClassName = symbol.symbol.split("[/#\\.]").dropRight(1).mkString("", ".", ".")
+    s"${fullyQualifiedClassName}${symbol.displayName}${arguments}"
+  }
+}
 
 object Analysis {
 
@@ -52,14 +110,22 @@ object Analysis {
       .distinctBy(i => i._1.symbolName.symbolName + "->" + i._2.symbolName.symbolName)
       .sortBy(entry => entry._1.symbolName.symbolName + "->" + entry._2.symbolName.symbolName)
 
+    val printer = new StringSymbolPrinter(semanticDB)
+
     val csvContent = mappings.map { case (controller, template) =>
+      val controllerMethod = semanticDB
+        .findDefinition(controller.symbolName)
+        .map { case (_, symbol) =>
+          printer.pprintMethod(symbol)
+        }
+        .getOrElse("unknown")
       val controllerLocation =
         s"${controller.file}:${controller.occurrence.range.map(r => s"${r.startLine}:${r.startCharacter}").getOrElse("unknown")}"
       val templateLocation =
         s"${template.file}:${template.occurrence.range.map(r => s"${r.startLine}:${r.startCharacter}").getOrElse("unknown")}"
-      s"${controller.symbolName};${controllerLocation};${template.symbolName};${templateLocation};"
+      s"${controller.symbolName};${controllerLocation};${controllerMethod};${template.symbolName};${templateLocation};"
     }
-    val csvHeader = "Controller Symbol;Controller Location;Template Symbol;Template Location;"
+    val csvHeader = "Controller Symbol;Controller Location;Controller Method;Template Symbol;Template Location;"
     val csvOutput = (csvHeader +: csvContent).mkString("\n")
     val outputPath = Path.of("controller_template_mappings.csv")
     writeString(outputPath, csvOutput)
