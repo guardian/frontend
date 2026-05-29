@@ -59,17 +59,13 @@ class LiveBlogController(
   def renderArticle(
       path: String,
       page: Option[String] = None,
-      filterKeyEvents: Option[Boolean],
   ): Action[AnyContent] = {
     Action.async { implicit request =>
-      val filter = shouldFilter(filterKeyEvents)
-
       page.map(ParseBlockId.fromPageParam) match {
         case Some(ParsedBlockId(id)) =>
           renderWithRange(
             path,
             PageWithBlock(id),
-            filter,
           ) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
@@ -79,7 +75,6 @@ class LiveBlogController(
           renderWithRange(
             path,
             CanonicalLiveBlog,
-            filter,
           ) // no page param
         }
       }
@@ -98,7 +93,7 @@ class LiveBlogController(
       val filter = shouldFilter(filterKeyEvents)
       val range = getRange(lastUpdate, page)
 
-      mapModel(path, range, filter) { pageBlocks =>
+      mapModel(path, range) { pageBlocks =>
         pageBlocks.page match {
           case blog: LiveBlogPage if rendered.contains(false) => getJsonForFronts(blog)
 
@@ -130,11 +125,10 @@ class LiveBlogController(
   private[this] def renderWithRange(
       path: String,
       range: BlockRange,
-      filterKeyEvents: Boolean,
   )(implicit
       request: RequestHeader,
   ): Future[Result] = {
-    mapModel(path, range, filterKeyEvents) { pageBlocks =>
+    mapModel(path, range) { pageBlocks =>
       {
         val page = pageBlocks.page
         val isAmpSupported = page.article.content.shouldAmplify
@@ -169,7 +163,6 @@ class LiveBlogController(
                 pageBlocks,
                 pageType,
                 newsletter = None,
-                filterKeyEvents,
                 request.forceLive,
               )
             } else {
@@ -177,7 +170,7 @@ class LiveBlogController(
               Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
             }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-            remoteRenderer.getAMPArticle(ws, pageBlocks, pageType, newsletter = None, filterKeyEvents)
+            remoteRenderer.getAMPArticle(ws, pageBlocks, pageType, newsletter = None)
           case (blog: LiveBlogPage, AmpFormat) =>
             Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
           case (blog: LiveBlogPage, AppsFormat) =>
@@ -186,7 +179,6 @@ class LiveBlogController(
               pageBlocks,
               pageType,
               newsletter = None,
-              filterKeyEvents,
               request.forceLive,
             )
           case _ => Future.successful(NotFound)
@@ -303,7 +295,6 @@ class LiveBlogController(
     val timelineHtml = views.html.liveblog.keyEvents(
       "",
       model.KeyEventData(newBlocks, Edition(request).timezone),
-      filterKeyEvents,
     )
 
     for {
@@ -346,7 +337,6 @@ class LiveBlogController(
         pageBlocks,
         request,
         pageType,
-        filterKeyEvents,
         request.forceLive,
         newsletter,
       )
@@ -357,13 +347,12 @@ class LiveBlogController(
   private[this] def mapModel(
       path: String,
       range: BlockRange,
-      filterKeyEvents: Boolean = false,
   )(
       render: BlocksOn[PageWithStoryPackage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
-      .map(responseToModelOrResult(range, filterKeyEvents))
+      .map(responseToModelOrResult(range))
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
@@ -373,7 +362,6 @@ class LiveBlogController(
 
   private[this] def responseToModelOrResult(
       range: BlockRange,
-      filterKeyEvents: Boolean,
   )(response: ItemResponse)(implicit request: RequestHeader): Either[Result, BlocksOn[PageWithStoryPackage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult: Either[Result, ContentType] = ModelOrResult(supportedContent, response)
@@ -389,7 +377,6 @@ class LiveBlogController(
           liveBlog,
           response,
           range,
-          filterKeyEvents,
         )
       case nonLiveBlogArticle: Article =>
         /** If `isLiveBlog` is false, it must be because the article has no blocks, or lacks the `tone/minutebyminute`
