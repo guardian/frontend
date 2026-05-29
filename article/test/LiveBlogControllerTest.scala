@@ -49,7 +49,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       lastUpdate = Some(lastUpdateBlock),
       rendered = None,
       isLivePage = Some(true),
-      filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -81,7 +80,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       lastUpdate = Some(lastUpdateBlock),
       rendered = None,
       isLivePage = Some(true),
-      filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -103,7 +101,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       lastUpdate = None,
       rendered = None,
       isLivePage = Some(true),
-      filterKeyEvents = None,
     )(fakeRequest)
     status(result) should be(200)
 
@@ -112,51 +109,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     content should include("\"webTitle\"")
     content should include("\"headline\"")
     content should not include "FakeRemoteRender has found you out if you rely on this markup!"
-  }
-
-  it should "return only the key event blocks of a live blog, when switch is on" in new Setup {
-    val fakeRequest = FakeRequest(
-      GET,
-      s"${path}.json",
-    ).withHeaders("host" -> "localhost:9000")
-
-    val result = liveBlogController.renderJson(
-      path,
-      page = None,
-      lastUpdate = None,
-      rendered = None,
-      isLivePage = Some(true),
-      filterKeyEvents = Some(true),
-    )(fakeRequest)
-    status(result) should be(200)
-
-    val content = contentAsString(result)
-
-    content should not include "56d084d0e4b0bd5a0524ccbe"
-  }
-
-  it should "return only the key event and summary blocks of a live blog, when switch is on" in new Setup {
-    val fakeRequest = FakeRequest(
-      GET,
-      s"/world/live/2022/jan/17/covid-news-live-new-zealand-begins-vaccinating-children-aged-5-11-french-parliament-approves-vaccine-pass.json",
-    ).withHeaders("host" -> "localhost:9000")
-
-    val result = liveBlogController.renderJson(
-      path =
-        "/world/live/2022/jan/17/covid-news-live-new-zealand-begins-vaccinating-children-aged-5-11-french-parliament-approves-vaccine-pass",
-      page = None,
-      lastUpdate = None,
-      rendered = None,
-      isLivePage = Some(true),
-      filterKeyEvents = Some(true),
-    )(fakeRequest)
-    status(result) should be(200)
-
-    val content = contentAsString(result)
-
-    content should not include "61e611b28f0856426bba2624"
-    content should include("61e5b40e8f0856426bba21ea") // summary
-    content should include("61e5fa058f0856426bba251f") // key event
   }
 
   it should "return the requested page for DCR" in new Setup {
@@ -171,7 +123,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       lastUpdate = None,
       rendered = None,
       isLivePage = Some(true),
-      filterKeyEvents = Some(false),
     )(fakeRequest)
     status(result) should be(200)
 
@@ -203,15 +154,4 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     shouldRemoteRender should be(false)
   }
 
-  it should "filter when the filter parameter is true" in new Setup {
-    liveBlogController.shouldFilter(Some(true)) should be(true)
-  }
-
-  it should "not filter when the filter parameter is false" in new Setup {
-    liveBlogController.shouldFilter(Some(false)) should be(false)
-  }
-
-  it should "not filter when the filter parameter is not provided" in new Setup {
-    liveBlogController.shouldFilter(None) should be(false)
-  }
 }

@@ -204,7 +204,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
-      filterKeyEvents: Boolean = false,
       forceLive: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(

@@ -376,8 +376,4 @@ class LiveBlogController(
 
     content.map(BlocksOn(_, blocks))
   }
-
-  def shouldFilter(filterKeyEvents: Option[Boolean]): Boolean = {
-    filterKeyEvents.getOrElse(false)
-  }
 }

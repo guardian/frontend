@@ -188,11 +188,11 @@ POST       /email                                                               
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Articles
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt  controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String])
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)
