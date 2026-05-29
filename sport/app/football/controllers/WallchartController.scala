@@ -44,8 +44,9 @@ class WallchartController(
       competitionsService
         .competitionsWithTag(competitionTag)
         .map { competition =>
+          val tag = competition.url.stripSuffix("/").stripPrefix("/")
           val page = new FootballPage(
-            competition.url.stripSuffix("/"),
+            s"$tag/overview",
             "football",
             s"${competition.fullName} wallchart",
           )
