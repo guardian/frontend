@@ -44,6 +44,7 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: Option[String],
+    botHoneyPot: Option[String],
 ) {}
 
 case class EmailFormManyNewsletters(
@@ -180,6 +181,7 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> optional[String](of[String]),
+      "botHoneyPot" -> optional[String](of[String]),
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
@@ -524,22 +526,27 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logDebugWithRequestId(
-              s"Post request received to /email/ - " +
-                s"ref: ${form.ref}, " +
-                s"refViewId: ${form.refViewId}, " +
-                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-            )
+            if (form.botHoneyPot.exists(_.nonEmpty)) {
+              logInfoWithRequestId(s"Rejecting /email submission: botHoneyPot field was populated")
+              Future.successful(Forbidden)
+            } else {
+              logDebugWithRequestId(
+                s"Post request received to /email/ - " +
+                  s"ref: ${form.ref}, " +
+                  s"refViewId: ${form.refViewId}, " +
+                  s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+                  s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+                  s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+              )
 
-            (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
-            } yield {
-              result
-            }) recover { case _ =>
-              respond(OtherError)
+              (for {
+                _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+                result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
+              } yield {
+                result
+              }) recover { case _ =>
+                respond(OtherError)
+              }
             }
           },
         )
