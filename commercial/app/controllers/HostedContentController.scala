@@ -163,18 +163,6 @@ class HostedContentController(
     }
   }
 
-//  private def remoteRenderGallery(
-//      pageBlocks: BlocksOn[PageWithStoryPackage],
-//  )(implicit request: RequestHeader): Future[Result] = {
-//    val pageType = PageType(pageBlocks.page, request, context)
-//
-//    if (request.isApps) {
-//      remoteRenderer.getAppsHostedArticle(wsClient, pageBlocks, pageType)
-//    } else {
-//      remoteRenderer.getHostedArticle(wsClient, pageBlocks, pageType)
-//    }
-//  }
-
   private def fetchOnwardTrails(itemId: String, sectionId: String, limit: Int = 3)(implicit
       request: RequestHeader,
   ): Future[Seq[HostedTrail]] = {
