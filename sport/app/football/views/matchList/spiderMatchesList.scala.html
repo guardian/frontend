@@ -1,0 +1,69 @@
+@import java.time.format.DateTimeFormatter
+@import java.time.ZonedDateTime
+@import football.model.GuTeamCodes
+@import common.Edition
+@import java.time.LocalTime
+
+@(matchesList: List[pa.FootballMatch],
+    competition: model.Competition,
+    date: java.time.LocalDate,
+    matchType: String = "",
+    linkToCompetition: Boolean = false,
+)(implicit request: RequestHeader)
+@import implicits.Football._
+@import common.LinkTo
+@import views.support.RenderClasses
+@import views.MatchStatus
+@import conf.Configuration
+@import model.CompetitionDisplayHelpers.cleanTeamName
+
+@matchesList.map{ theMatch =>
+    <tr @(theMatch.smartUrl.map(url=>s"data-link-to=${LinkTo(url)}").getOrElse(""))
+        data-match-id="@theMatch.id"
+        data-score-home="@theMatch.homeTeam.score"
+        data-score-away="@theMatch.awayTeam.score"
+        data-match-status="@MatchStatus(theMatch.matchStatus)"
+        id="football-match-@theMatch.id"
+        class="@RenderClasses(Map(
+            "football-match" -> true,
+            "football-match--live" -> theMatch.isLive,
+            "football-match--fixture" -> theMatch.isFixture,
+            "football-match--result" -> theMatch.isResult
+        ))">
+        <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
+            @if(theMatch.isFixture){
+                <time datetime="@theMatch.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").withZone(Edition(request).timezoneId))" data-timestamp="@theMatch.date.toInstant.toEpochMilli">
+                    @theMatch.date.format(DateTimeFormatter.ofPattern("E d MMM HH:mm z").withZone(Edition(request).timezoneId))</time>
+            }else{
+                @MatchStatus(theMatch.matchStatus)
+            }
+        </td>
+        <td class="football-match__crest football-match__crest--home">
+        </td>
+        <td class="football-match__teams table-column--main">
+            <a @(theMatch.smartUrl.map(url => s"href=${LinkTo(url)}").getOrElse("")) class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
+                <div class="football-match__team football-match__team--home football-team">
+                    <div class="football-team__name team-name" data-abbr="@GuTeamCodes.codeFor(theMatch.homeTeam)">
+                        <span class="team-name__long">@cleanTeamName(theMatch.homeTeam.name)</span>
+                    </div>
+                    <div class="football-team__score">@theMatch.homeTeam.score</div>
+                </div>
+
+                <div class="football-match__team football-match__team--away football-team">
+                    <div class="football-team__name team-name" data-abbr="@GuTeamCodes.codeFor(theMatch.awayTeam)">
+                        <span class="team-name__long">@cleanTeamName(theMatch.awayTeam.name)</span>
+                    </div>
+                    <div class="football-team__score">@theMatch.awayTeam.score</div>
+                </div>
+
+                <div class="football-teams__battleline"></div>
+
+                @theMatch.comments.map { comments =>
+                    <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
+                }
+            </a>
+        </td>
+        <td class="football-match__crest football-match__crest--home">
+        </td>
+    </tr>
+}

@@ -4,26 +4,34 @@
 
 @knockoutList(competition: model.Competition, knockoutStage: football.model.KnockoutSpider, rounds: Round, hasSpider: Boolean) = {
     <div class="football-knockouts @if(hasSpider) {football-knockouts--has-spider}">
-    @round.name.map { name =>
-        <ul class="u-unstyled u-cf">
-            <li>
-                @{
-                    knockoutStage.matchesList(competition, round).matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
-                        competitionMatches.map { case (competition, matches) =>
-                            football.views.html.matchList.matchesList(matches, competition, date,
-                                heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
-                            )
+        @round.name.map { name =>
+            <ul class="u-unstyled u-cf">
+                <li>
+                    <table class="table table--football football-matches">
+                    <thead hidden>
+                        <tr>
+                            <th class="match__status">Match status / kick off time</th>
+                            <th class="match__details">Match details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            knockoutStage.matchesList(competition, round).matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
+                                competitionMatches.map { case (competition, matches) =>
+                                    football.views.html.matchList.spiderMatchesList(matches, competition, date)
+                                }
+                            }
                         }
-                    }
-                }
-            </li>
-        </ul>
-    }
+                    </tbody>
+                    <caption class="table__caption table__caption--top">
+                        <span class="football-matches__heading">Fixtures and results</span>
+                    </caption>
+                </li>
+            </ul>
+        }
     </div>
 }
 
 <div class="knockout-container" data-link-name="@competition.fullName knockout chart">
-@knockoutList(competition, competitionStage, round, true)
+    @knockoutList(competition, competitionStage, round, true)
 </div>
-
-
