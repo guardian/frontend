@@ -6,7 +6,6 @@ import play.api.libs.json.{JsValue, Json}
 
 import java.nio.file.Files
 import java.nio.file.Files.createTempFile
-import java.nio.file.Path
 
 class NavigationDataTest extends AnyFlatSpec with Matchers {
 

@@ -3,8 +3,6 @@ package ab
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test.FakeRequest
-import play.api.mvc.RequestHeader
-import play.api.libs.typedmap.TypedMap
 
 class ABTestsTest extends AnyFlatSpec with Matchers {
 

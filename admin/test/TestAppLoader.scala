@@ -1,12 +1,10 @@
 import app.FrontendComponents
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.mvc.EssentialFilter
 import org.scalatestplus.mockito.MockitoSugar
 import org.mockito.Mockito._
 import http.GuardianAuthWithExemptions
 import org.apache.pekko.stream.Materializer
-import org.mockito.stubbing.Answer
 import play.api.mvc.{Filter, _}
 
 import scala.concurrent.Future

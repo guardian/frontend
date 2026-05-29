@@ -1,15 +1,12 @@
 package services.dotcomrendering
 
 import common.facia.{FixtureBuilder, PressedCollectionBuilder}
-import com.gu.facia.client.models.AUQueenslandTerritory
 import model.pressed.LinkSnap
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import helpers.FaciaTestData
-import test.FaciaControllerTest
-import model.facia.PressedCollection
 import layout.slices.EmailLayouts
 
 @DoNotDiscover class FaciaPickerTest extends AnyFlatSpec with FaciaTestData with Matchers with MockitoSugar {

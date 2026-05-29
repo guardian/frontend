@@ -23,7 +23,6 @@ import com.gu.contentapi.client.model.Direction.Previous
 import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import scala.concurrent.Future
 import scala.util.Try
-import java.time.format.DateTimeFormatter
 
 class ImageContentController(
     val contentApiClient: ContentApiClient,

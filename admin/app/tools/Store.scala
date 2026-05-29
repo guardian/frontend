@@ -8,7 +8,6 @@ import conf.{AdminConfiguration, Configuration}
 import implicits.Dates
 import org.joda.time.DateTime
 import play.api.libs.json.{JsError, JsSuccess, Json}
-import play.api.libs.json.Json.toJson
 import services.S3
 
 trait Store extends GuLogging with Dates {

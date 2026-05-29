@@ -10,7 +10,6 @@ import conf.Configuration
 import model._
 import play.api.libs.json._
 import model.IpsosTags.getScriptTag
-import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
 import common.CommercialBundle
@@ -38,11 +37,6 @@ object JavaScriptPage {
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
-
-    val nonRefreshableLineItemIds: JsArray = {
-      val ids: Seq[Long] = metaData.commercial.map(_.nonRefreshableLineItemIds) getOrElse Nil
-      JsArray(ids map (id => JsNumber(id)))
-    }
 
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),

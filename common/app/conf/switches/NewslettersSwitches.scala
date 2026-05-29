@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import conf.switches.Owner.group
 
 trait NewslettersSwitches {
 
@@ -79,6 +78,17 @@ trait NewslettersSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false,
+    highImpact = false,
+  )
+
+  val UsNewsletterSignupHideMarketingToggle = Switch(
+    SwitchGroup.Newsletters,
+    "us-signup-hide-marketing-toggle",
+    "When ON, hides the marketing opt-in toggle for sign-ups and silently enrolls users in similar_guardian_products",
+    owners = Seq(Owner.withEmail("newsletters.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
     highImpact = false,
   )
 

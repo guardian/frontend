@@ -137,6 +137,8 @@ GET            /football/match-day/:year/:month/:day.json                       
 GET            /football/match-day/:year/:month/:day                                                                             football.controllers.MatchDayController.matchesFor(year, month, day)
 GET            /football/match-day/:competition/:year/:month/:day.json                                                           football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
 GET            /football/match-day/:competition/:year/:month/:day                                                                football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
+GET            /football/:competition/match-day/embed.json                                                                       football.controllers.MatchDayController.competitionMatchesEmbedJson(competition)
+GET            /football/:competition/match-day/embed                                                                            football.controllers.MatchDayController.competitionMatchesEmbed(competition)
 
 GET            /football/tables                                                                                                  football.controllers.LeagueTableController.renderLeagueTables()
 GET            /football/tables.json                                                                                             football.controllers.LeagueTableController.renderLeagueTablesJson()
@@ -236,6 +238,7 @@ GET            /$path<commercial-containers>                                    
 GET            /advertiser-content/:campaignName/:pageName.json                                                                  commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET            /advertiser-content/:campaignName/:pageName/onward.json                                                           commercial.controllers.HostedContentController.renderOnwardJson(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize()
 GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()

@@ -6,8 +6,6 @@ import java.time.{LocalDate, ZoneId}
 import java.time.Duration
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
-import java.text.SimpleDateFormat
-import java.util.TimeZone
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -179,7 +177,6 @@ object Switches
     extends FeatureSwitches
     with ServerSideExperimentSwitches
     with FaciaSwitches
-    with ABTestSwitches
     with CommercialSwitches
     with PrivacySwitches
     with PrebidSwitches

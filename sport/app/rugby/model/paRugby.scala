@@ -94,7 +94,6 @@ object PAMatch {
   def toMatch(item: PAMatch): Match = {
     val homeTeam = item.entrants(0)
     val awayTeam = item.entrants(1)
-    val stage = getStage(item)
 
     Match(
       date = item.date.toDateTimeISO,

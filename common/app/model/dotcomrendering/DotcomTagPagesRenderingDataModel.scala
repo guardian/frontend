@@ -4,17 +4,15 @@ import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import experiments.ActiveExperiments
-import model.{StorylinesContent, Tags}
+import model.Tags
 import model.pressed.PressedContent
 import navigation.{FooterLinks, Nav}
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.libs.json.{JsObject, JsValue, Json, Writes, __}
+import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
 import services.IndexPage
-import views.support.{CamelCase, JavaScriptPage, PreviousAndNext}
+import views.support.PreviousAndNext
 import model.PressedCollectionFormat.pressedContentFormat
-import ab.ABTests
 
 case class DotcomTagPagesRenderingDataModel(
     contents: Seq[PressedContent],
@@ -37,7 +35,6 @@ case class DotcomTagPagesRenderingDataModel(
     isAdFreeUser: Boolean,
     canonicalUrl: String,
     contributionsServiceUrl: String,
-    storylinesContent: Option[StorylinesContent],
 )
 
 object DotcomTagPagesRenderingDataModel {
@@ -66,7 +63,6 @@ object DotcomTagPagesRenderingDataModel {
         "isAdFreeUser" -> model.isAdFreeUser,
         "canonicalUrl" -> model.canonicalUrl,
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
-        "storylinesContent" -> model.storylinesContent,
       )
     }
   }
@@ -77,29 +73,13 @@ object DotcomTagPagesRenderingDataModel {
       pageType: PageType,
   ): DotcomTagPagesRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition)(request)
 
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.getParticipations(request),
-      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = pageType.isPreview,
     )
-
-    val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] =
-        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
 
     val commercialProperties = page.metadata.commercial
       .map {
@@ -133,7 +113,6 @@ object DotcomTagPagesRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       contributionsServiceUrl = Configuration.contributionsService.url,
-      storylinesContent = StorylinesContent.getContent(page.metadata.id)(request),
     )
   }
 

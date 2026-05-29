@@ -9,7 +9,7 @@ import com.gu.facia.api.models.{ContentFormat => fapiContentFormat}
 import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
-import common.{Edition, ManifestData, Pagination}
+import common.{ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
 import model.liveblog.Blocks
@@ -27,7 +27,6 @@ import scala.util.matching.Regex
 import utils.ShortUrls
 
 import java.time.{OffsetDateTime, ZoneId, ZoneOffset}
-import model.ApiContent2Is
 
 object Commercial {
 
@@ -858,6 +857,11 @@ final case class Tags(tags: List[Tag]) {
   lazy val isCricketLiveBlog: Boolean = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
     tags.map(_.id).contains("sport/over-by-over-reports")
+
+  lazy val isCricketMatchReport: Boolean =
+    isCricketSport && isMatchReport && tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId))
+
+  lazy val isCricketSport: Boolean = tags.exists(t => t.id == "sport/cricket")
 
   lazy val isRugbyMatch: Boolean = (isMatchReport || isLiveBlog) &&
     tags.exists(t => t.id == "sport/rugby-union")

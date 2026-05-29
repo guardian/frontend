@@ -1,9 +1,17 @@
 package cricketModel
 
+import cricket.controllers.CricketMatchPage
+import cricket.implicits.Cricket._
+import football.datetime.DateHelpers
+import model.ContentType
+import model.Cors.RichRequestHeader
+import model.dotcomrendering.DCARUrlHelper
 import play.api.libs.json._
-import java.time.LocalDateTime
+import play.api.mvc.RequestHeader
 
-case class Team(name: String, id: String, home: Boolean, lineup: List[String])
+import java.time.{LocalDateTime, ZoneId, ZonedDateTime}
+
+case class Team(name: String, id: String, home: Boolean, lineup: List[String], teamTagId: Option[String])
 
 object Team {
   implicit val writes: OWrites[Team] = Json.writes[Team]
@@ -44,6 +52,7 @@ case class Innings(
     order: Int,
     battingTeam: String,
     runsScored: Int,
+    wickets: Int,
     overs: String,
     declared: Boolean,
     forfeited: Boolean,
@@ -61,7 +70,6 @@ case class Innings(
   implicit val writes: OWrites[Innings] = Json.writes[Innings]
   lazy val closed = declared || forfeited || allOut
   lazy val allOut = wickets == 10
-  lazy val wickets = fallOfWicket.length
 
   lazy val firstIn: Option[InningsBatter] = batters.find(_.notOut)
   lazy val secondIn: Option[InningsBatter] = {
@@ -83,6 +91,8 @@ case class Match(
     competitionName: String,
     venueName: String,
     result: String,
+    currentDay: Int,
+    totalDays: Int,
     gameDate: LocalDateTime,
     officials: List[String],
     matchId: String,
@@ -103,4 +113,59 @@ case class Match(
 
 object Match {
   implicit val writes: OWrites[Match] = Json.writes[Match]
+}
+
+case class MatchHeader(
+    cricketMatch: Match,
+//    competitionName: String, TODO: we currently don't have this but need to retrieve it e.g., "Ashes 2025-26"
+    liveURL: Option[String],
+    reportURL: Option[String],
+    infoURL: String,
+)
+
+object MatchHeader extends DCARUrlHelper {
+  implicit val writes: OWrites[MatchHeader] = Json.writes[MatchHeader]
+
+  def apply(page: CricketMatchPage, related: Seq[ContentType], date: ZonedDateTime)(implicit
+      request: RequestHeader,
+  ): MatchHeader = {
+    val currentPage = request.getParameter("page").getOrElse("")
+
+    val matchReportUrl = related
+      .find(c => c.isArticleType && c.isPage(currentPage))
+      .orElse {
+
+        related
+          .filter { content =>
+            content.isArticleType &&
+            content.isMatchReport &&
+            !content.isLiveCricket
+          }
+          .find(content => {
+            val matchStart = DateHelpers.startOfDay(
+              page.theMatch.gameDate.atZone(ZoneId.of("Europe/London")),
+            )
+            content.webPublicationDate.toLocalDate == date.toLocalDate &&
+            content.webPublicationDate.isAfter(matchStart) // match report always happens after the match starts
+          })
+      }
+      .map(content => getPageUrl(content.metadata.url))
+
+    val liveBlogUrl = related
+      .find(c => c.isLiveCricket && c.isPage(currentPage))
+      .orElse {
+        related.find { content =>
+          content.isLiveCricket &&
+          (content.webPublicationDate.toLocalDate == date.toLocalDate)
+        }
+      }
+      .map(content => getPageUrl(content.metadata.url))
+
+    MatchHeader(
+      cricketMatch = page.theMatch,
+      liveURL = liveBlogUrl,
+      reportURL = matchReportUrl,
+      infoURL = getPageUrl(page.metadata.id),
+    )
+  }
 }

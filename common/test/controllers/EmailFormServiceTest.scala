@@ -35,6 +35,7 @@ class EmailFormServiceTest
       email = "test@example.com",
       listName = Some("the-long-read"),
       marketing = None,
+      marketingOptInHidden = None,
       referrer = None,
       ref = None,
       refViewId = None,
@@ -49,6 +50,7 @@ class EmailFormServiceTest
       email = "test@example.com",
       listNames = Seq("the-long-read", "morning-briefing"),
       marketing = None,
+      marketingOptInHidden = None,
       referrer = None,
       ref = None,
       refViewId = None,
@@ -153,6 +155,44 @@ class EmailFormServiceTest
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
       }
     }
+
+    "handling DCR soft opt-in (marketingOptInHidden)" should {
+
+      "include consent-actor 'implied-consent' when marketingOptInHidden is true" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submit(singleNewsletterBaseForm.copy(marketingOptInHidden = Some(true)))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "consent-actor").asOpt[String] shouldBe Some("implied-consent")
+      }
+
+      "omit consent-actor when marketingOptInHidden is absent" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service.submit(singleNewsletterBaseForm).futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "consent-actor").asOpt[String] shouldBe None
+      }
+
+      "omit consent-actor when marketingOptInHidden is false" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submit(singleNewsletterBaseForm.copy(marketingOptInHidden = Some(false)))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "consent-actor").asOpt[String] shouldBe None
+      }
+
+      "not forward marketingOptInHidden to Identity" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submit(singleNewsletterBaseForm.copy(marketingOptInHidden = Some(true)))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "marketingOptInHidden").asOpt[Boolean] shouldBe None
+        (body \ "marketing-opt-in-hidden").asOpt[Boolean] shouldBe None
+      }
+    }
   }
 
   "EmailFormService.submitWithMany" when {
@@ -229,6 +269,44 @@ class EmailFormServiceTest
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
         registrationLocationState(capturePostedBody(wsRequest)) shouldBe JsNull
+      }
+    }
+
+    "handling DCR soft opt-in (marketingOptInHidden)" should {
+
+      "include consent-actor 'implied-consent' when marketingOptInHidden is true" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submitWithMany(multipleNewslettersBaseForm.copy(marketingOptInHidden = Some(true)))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "consent-actor").asOpt[String] shouldBe Some("implied-consent")
+      }
+
+      "omit consent-actor when marketingOptInHidden is absent" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "consent-actor").asOpt[String] shouldBe None
+      }
+
+      "omit consent-actor when marketingOptInHidden is false" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submitWithMany(multipleNewslettersBaseForm.copy(marketingOptInHidden = Some(false)))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "consent-actor").asOpt[String] shouldBe None
+      }
+
+      "not forward marketingOptInHidden to Identity" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+        service
+          .submitWithMany(multipleNewslettersBaseForm.copy(marketingOptInHidden = Some(true)))
+          .futureValue
+        val body = capturePostedBody(wsRequest)
+        (body \ "marketingOptInHidden").asOpt[Boolean] shouldBe None
+        (body \ "marketing-opt-in-hidden").asOpt[Boolean] shouldBe None
       }
     }
   }

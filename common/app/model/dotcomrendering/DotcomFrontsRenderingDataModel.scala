@@ -4,15 +4,10 @@ import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import com.gu.contentapi.client.model.v1.Content
-import experiments.ActiveExperiments
-import layout.ContentCard
 import model.{PressedPage, RelatedContentItem}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
-import ab.ABTests
 
 case class DotcomFrontsRenderingDataModel(
     pressedPage: PressedPage,
@@ -45,29 +40,13 @@ object DotcomFrontsRenderingDataModel {
       deeplyRead: Option[Seq[Trail]],
   ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition)(request)
 
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.getParticipations(request),
-      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = pageType.isPreview,
     )
-
-    val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] =
-        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
 
     val commercialProperties = page.metadata.commercial
       .map { _.perEdition.mapKeys(_.id) }

@@ -1,6 +1,5 @@
 package model.dotcomrendering
 
-import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
@@ -9,7 +8,6 @@ import common.commercial.EditionCommercialProperties
 import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
 import conf.Configuration
 import crosswords.CrosswordPageWithContent
-import experiments.ActiveExperiments
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements._
 import model.meta.BlocksOn
@@ -36,7 +34,7 @@ import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import services.NewsletterData
-import views.support.{CamelCase, ContentLayout, JavaScriptPage}
+import views.support.ContentLayout
 
 // -----------------------------------------------------------------
 // DCR DataModel
@@ -492,27 +490,11 @@ object DotcomRenderingDataModel {
       lastModificationDate = content.fields.lastModified,
     )
 
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.getParticipations(request),
-      ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = pageType.isPreview,
     )
-
-    val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] =
-        JavaScriptPage.getMap(page, Edition(request), pageType.isPreview, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
 
     val calloutsUrl: Option[String] = combinedConfig.fields.toList
       .find(_._1 == "calloutsUrl")
@@ -682,7 +664,7 @@ object DotcomRenderingDataModel {
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
-      nav = Nav(page, edition),
+      nav = Nav(page, edition)(request),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,

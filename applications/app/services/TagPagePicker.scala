@@ -3,7 +3,6 @@ package services.dotcomrendering
 import common.GuLogging
 import conf.switches.Switches.DCRTagPages
 import implicits.Requests._
-import model.TagCombiner
 import play.api.mvc.RequestHeader
 import services.IndexPage
 

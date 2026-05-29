@@ -131,7 +131,7 @@ case class VideoAsset(fields: Map[String, String], url: Option[String], mimeType
   val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
   val encoding: Option[Encoding] = {
     (url, mimeType) match {
-      case (Some(url), Some(mimeType)) => Some(Encoding(url, mimeType))
+      case (Some(url), Some(mimeType)) => Some(Encoding(url, url, mimeType))
       case _                           => None
     }
   }
@@ -157,12 +157,20 @@ object AudioAsset {
       fields = fields,
       mimeType = asset.mimeType,
       url = asset.typeData.flatMap(_.secureFile).orElse(asset.file),
+      urlWithAds = asset.typeData
+        .flatMap(_.secureFileWithAds)
+        .orElse(asset.file),
     )
   }
   implicit val audioAssetWrites: Writes[AudioAsset] = Json.writes[AudioAsset]
 }
 
-case class AudioAsset(fields: Map[String, String], url: Option[String], mimeType: Option[String]) {
+case class AudioAsset(
+    fields: Map[String, String],
+    url: Option[String],
+    urlWithAds: Option[String],
+    mimeType: Option[String],
+) {
 
   // The audio duration in seconds
   val duration: Int = fields.getOrElse("durationSeconds", "0").toInt +

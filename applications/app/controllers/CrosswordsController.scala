@@ -8,7 +8,6 @@ import com.gu.contentapi.client.model.v1.{
   Section => ApiSection,
 }
 import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
-import conf.Static
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.{ContentApiError, SearchQuery}
 import crosswords.{
@@ -20,7 +19,6 @@ import crosswords.{
   CrosswordSearchPageWithResults,
   CrosswordSvg,
 }
-import html.HtmlPageHelpers.ContentCSSFile
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
@@ -189,8 +187,6 @@ class CrosswordPageController(
     Action.async { implicit request =>
       withCrossword(crosswordType, id) { (crossword, _) =>
         val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
-
-        val globalStylesheet = Static(s"stylesheets/$ContentCSSFile.css")
 
         Future.successful(
           Cached(60.seconds) {

@@ -2,7 +2,7 @@ import type {
 	AdsConfigTCFV2,
 	AdsConfigUSNATorAus,
 } from '@guardian/commercial-core/dist/cjs/types';
-import type { ConsentState, OnConsentChangeCallback } from '@guardian/libs';
+import type { ConsentState, OnConsentChangeCallback } from '@guardian/consent-manager';
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
@@ -36,10 +36,10 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock(
-	'@guardian/libs',
+	'@guardian/consent-manager',
 	() =>
 		({
-			...jest.requireActual('@guardian/libs'),
+			...jest.requireActual('@guardian/consent-manager'),
 			onConsentChange: jest.fn((callback: OnConsentChangeCallback) =>
 				callback({
 					tcfv2: {
@@ -59,10 +59,6 @@ jest.mock(
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
 	commercialFeatures: jest.fn(),
-}));
-
-jest.mock('common/modules/experiments/ab', () => ({
-	isInVariantSynchronous: jest.fn(),
 }));
 
 const canTargetTCFv2 = (canTarget: boolean): ConsentState => ({

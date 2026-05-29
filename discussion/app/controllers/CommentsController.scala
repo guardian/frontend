@@ -3,18 +3,14 @@ package controllers
 import common.{ImplicitControllerExecutionContext, JsonComponent}
 import discussion.api.DiscussionApiException._
 import discussion.api.{DiscussionApiLike, DiscussionParams}
-import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
+import discussion.model.{BlankComment, DiscussionKey}
 import discussion.{ThreadedCommentPage, UnthreadedCommentPage}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.data.Forms._
-import play.api.data._
-import play.api.data.validation._
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
-import scala.util.control.NonFatal
 
 class CommentsController(
     val discussionApi: DiscussionApiLike,

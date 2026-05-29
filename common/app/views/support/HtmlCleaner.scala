@@ -10,9 +10,7 @@ import layout.ContentWidths
 import layout.ContentWidths._
 import model._
 import model.content._
-import model.dotcomrendering.pageElements.TextBlockElement
 import navigation.ReaderRevenueSite
-import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -868,6 +866,7 @@ case class AffiliateLinksCleaner(
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
     isUSProductionOffice: Boolean,
+    abTests: Map[String, String],
 ) extends HtmlCleaner
     with GuLogging {
 
@@ -881,7 +880,7 @@ case class AffiliateLinksCleaner(
       )
     ) {
       val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId, abTests)
     } else document
   }
 }
@@ -895,10 +894,11 @@ object AffiliateLinksCleaner {
       html: Document,
       pageUrl: String,
       skimlinksId: String,
+      abTests: Map[String, String],
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el =>
-      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)).attr("rel", "sponsored")
+      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId, abTests)).attr("rel", "sponsored")
     }
     html
   }
@@ -908,12 +908,13 @@ object AffiliateLinksCleaner {
       pageUrl: String,
       addAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
+      abTests: Map[String, String],
   ): Option[String] = {
     val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
     val httpsUrl = url.map(ensureHttps)
     httpsUrl match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
-        Some(linkToSkimLink(link, pageUrl, skimlinksId))
+        Some(linkToSkimLink(link, pageUrl, skimlinksId, abTests))
       case _ => httpsUrl
     }
   }
@@ -923,9 +924,13 @@ object AffiliateLinksCleaner {
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
-  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
+  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String, abTests: Map[String, String]): String = {
     val urlEncodedLink = URLEncode(ensureHttps(link))
-    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
+    val xcustParam = if (abTests.nonEmpty) {
+      val xcust = URLEncode("abTestParticipations" + abTests.map { case (k, v) => s"|$k:$v" }.mkString)
+      s"&xcust=$xcust"
+    } else ""
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl$xcustParam"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {

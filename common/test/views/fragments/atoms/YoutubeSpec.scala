@@ -23,6 +23,8 @@ class YoutubeSpec extends MixedPlaySpec {
             assetType = Video,
             dimensions = None,
             aspectRatio = None,
+            duration = None,
+            hasAudio = None,
           ),
         ),
         title = "",

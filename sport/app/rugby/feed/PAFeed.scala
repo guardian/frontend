@@ -87,11 +87,6 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with GuLogging {
     val limit = 20
     val headers = Map("apikey" -> apiKey, "Accept" -> "application/json")
 
-    val request = client
-      .url(basePath + path)
-      .addHttpHeaders(headers.toSeq: _*)
-      .addQueryStringParameters(params.toSeq: _*)
-
     def hasNext(json: String): Boolean = (Json.parse(json) \ "hasNext").getOrElse(JsBoolean(false)) == JsBoolean(true)
 
     def req(offset: Int): Future[(Boolean, String)] = {
