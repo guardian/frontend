@@ -22,13 +22,13 @@ object Parser {
       innings = parseInnings(scorecardData \ "match" \ "innings"),
       competitionName = matchDetail.competitionName,
       venueName = matchDetail.venueName,
-      status = matchDetail.status,
+      result = matchDetail.status,
       currentDay = matchDetail.currentDay,
       totalDays = matchDetail.totalDays,
       gameDate = matchDetail.gameDate,
       officials = matchDetail.officials,
       matchId = matchId,
-      result = matchDetail.result,
+      fullResult = matchDetail.result,
     )
   }
 

@@ -110,13 +110,13 @@ case class Match(
     innings: List[Innings],
     competitionName: String,
     venueName: String,
-    status: String,
+    result: String,
     currentDay: Int,
     totalDays: Int,
     gameDate: LocalDateTime,
     officials: List[String],
     matchId: String,
-    result: Option[MatchResult] = None,
+    fullResult: Option[MatchResult] = None,
 ) {
   def homeTeam: Team = teams.filter(_.home).head
   def awayTeam: Team = teams.filter(!_.home).head
