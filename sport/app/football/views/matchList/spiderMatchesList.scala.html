@@ -39,9 +39,6 @@
             }
         </td>
         <td class="football-match__crest football-match__crest--home">
-            <!--
-            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/60/@{theMatch.homeTeam.id}.png" />
-            -->
         </td>
         <td class="football-match__teams table-column--main">
             <a @(theMatch.smartUrl.map(url => s"href=${LinkTo(url)}").getOrElse("")) class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
@@ -67,9 +64,6 @@
             </a>
         </td>
         <td class="football-match__crest football-match__crest--home">
-            <!--
-            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{theMatch.awayTeam.id}.png" />
-            -->
         </td>
     </tr>
 }
