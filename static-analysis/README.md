@@ -67,3 +67,4 @@ Initial results confirm the intuition that automation was necessary as we find a
 
 Beyound building the inventory that will help use decide what to keep, what to delete and what to migrate, we can imagine using these capabilities to automatically flag all the code trees that are candidates for deletion by only giving a list of controllers we would like to remove.
 This would require more work and is beyound the scope of this initial step.
+
