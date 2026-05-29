@@ -96,3 +96,6 @@ GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id           
 
 #AMP
 GET        /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                  football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
+
+GET        /football/:competition/sub-nav/embed.json                                           football.controllers.CompetitionsEmbedsController.competitionSubNavEmbedJson(competition)
+GET        /football/:competition/sub-nav/embed                                                football.controllers.CompetitionsEmbedsController.competitionSubNavEmbed(competition)

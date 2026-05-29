@@ -24,4 +24,5 @@ trait FootballControllers {
   lazy val competitionListController = wire[CompetitionListController]
   lazy val fixturesAndResultsContainerController = wire[FixturesAndResultsContainerController]
   lazy val matchController = wire[MatchController]
+  lazy val embedController = wire[CompetitionsEmbedsController]
 }

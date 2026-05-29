@@ -474,3 +474,12 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
     withoutNull(jsValue)
   }
 }
+
+case class DotcomRenderingFootballSubNavDataModel(
+    pageId: String,
+)
+
+object DotcomRenderingFootballSubNavDataModel {
+  implicit def dotcomRenderingFootballSubNavDataModelWrites: Writes[DotcomRenderingFootballSubNavDataModel] =
+    Json.writes[DotcomRenderingFootballSubNavDataModel]
+}
