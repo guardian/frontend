@@ -16,8 +16,6 @@ import ab.ABTests
 import conf.switches.Switches.{EnableNewServerSideABTestsHeader}
 
 import scala.concurrent.{ExecutionContext, Future}
-import experiments.Experiment
-import experiments.{ActiveExperiments}
 
 class GzipperConfig() extends GzipFilterConfig {
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {

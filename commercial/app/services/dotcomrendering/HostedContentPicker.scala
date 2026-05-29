@@ -1,5 +1,6 @@
 package services.dotcomrendering
 
+import ab.ABTests.isUserInTestGroup
 import common.GuLogging
 import implicits.Requests._
 import play.api.mvc.RequestHeader
@@ -7,7 +8,7 @@ import implicits.AppsFormat
 import conf.switches.Switches
 
 object HostedContentPicker extends GuLogging {
-  def getTier(isGallery: Boolean)(implicit
+  def getTier(isGallery: Boolean = false)(implicit
       request: RequestHeader,
   ): RenderType = {
     val tier: RenderType = decideTier(isGallery)
@@ -23,7 +24,7 @@ object HostedContentPicker extends GuLogging {
     tier
   }
 
-  def decideTier(isGallery: Boolean)(implicit
+  def decideTier(isGallery: Boolean = false)(implicit
       request: RequestHeader,
   ): RenderType = {
     if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
@@ -31,6 +32,7 @@ object HostedContentPicker extends GuLogging {
     else if (isGallery) LocalRender
     else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) RemoteRender
+    else if (isUserInTestGroup("commercial-hosted-content", "preview")) RemoteRender
     else LocalRender
   }
 }

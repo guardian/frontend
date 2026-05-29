@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import java.time.LocalDate
 
 trait PerformanceSwitches {
 

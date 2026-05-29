@@ -1,9 +1,8 @@
 package conf.switches
 
-import java.time.LocalDate
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
+import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
 
 trait CommercialSwitches {
 
@@ -398,6 +397,17 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-kargo",
     description = "Include the Kargo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidTeads: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-teads",
+    description = "Include the Teads adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

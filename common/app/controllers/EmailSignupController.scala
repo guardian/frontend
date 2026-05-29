@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.i18n.{CountryGroup, Country}
+import com.gu.i18n.CountryGroup
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
@@ -13,11 +13,10 @@ import conf.switches.Switches.{
 }
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import net.liftweb.json.JObject
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
-import play.api.data.validation.Constraints.{emailAddress, nonEmpty}
+import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
@@ -37,6 +36,7 @@ case class EmailForm(
     email: String,
     listName: Option[String],
     marketing: Option[Boolean],
+    marketingOptInHidden: Option[Boolean],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -50,6 +50,7 @@ case class EmailFormManyNewsletters(
     email: String,
     listNames: Seq[String],
     marketing: Option[Boolean],
+    marketingOptInHidden: Option[Boolean],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -89,6 +90,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "set-lists" -> List(form.listName),
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
+          "consent-actor" -> form.marketingOptInHidden.filter(_ == true).map(_ => "implied-consent"),
           "browser-id" -> form.browserId,
           "registration-location" -> registrationLocation,
           "registration-location-state" -> registrationLocationState,
@@ -119,6 +121,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "ref" -> form.ref,
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
+          "consent-actor" -> form.marketingOptInHidden.filter(_ == true).map(_ => "implied-consent"),
           "registration-location" -> registrationLocation,
           "registration-location-state" -> registrationLocationState,
         )
@@ -173,6 +176,7 @@ class EmailSignupController(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
       "marketing" -> optional[Boolean](of[Boolean]),
+      "marketingOptInHidden" -> optional[Boolean](of[Boolean]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
@@ -188,6 +192,7 @@ class EmailSignupController(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listNames" -> seq(of[String]),
       "marketing" -> optional[Boolean](of[Boolean]),
+      "marketingOptInHidden" -> optional[Boolean](of[Boolean]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),

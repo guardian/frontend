@@ -1,7 +1,6 @@
 package services.dotcomrendering
 
 import conf.switches.Switches.DCRFootballMatchSummary
-import football.controllers.FootballPage
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger

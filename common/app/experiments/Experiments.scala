@@ -1,10 +1,5 @@
 package experiments
 
-import conf.switches.Owner
-import experiments.ParticipationGroups._
-
-import java.time.LocalDate
-
 /*
  * This list of active experiments is sorted by participation group.
  */

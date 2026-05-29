@@ -452,9 +452,7 @@ class MoreOnMatchController(
           related map { _ filter hasExactlyTwoTeams } map { filtered =>
             Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
               lazy val competition = competitionsService.competitionForMatch(theMatch.id)
-              lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
-              implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
               JsonComponent(
                 "items" -> Json.arr(
                   Json.obj(

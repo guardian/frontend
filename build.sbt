@@ -12,6 +12,7 @@ See
 https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-projects-have-dependencies-truncated
  */
 ThisBuild / asciiGraphWidth := 999999999
+ThisBuild / scalaVersion := SCALA_VERSION
 
 val common = library("common")
   .settings(
@@ -67,7 +68,7 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       supportInternationalisation,
-    ) ++ jackson ++ netty,
+    ) ++ jackson,
   )
 
 val commonWithTests = withTests(common)

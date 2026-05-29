@@ -140,7 +140,7 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
   val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
   val encodings: Seq[Encoding] = {
     audioAssets.collect { case audio: AudioAsset =>
-      Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
+      Encoding(audio.url.getOrElse(""), audio.urlWithAds.orElse(audio.url).getOrElse(""), audio.mimeType.getOrElse(""))
     }.sorted
   }
 }

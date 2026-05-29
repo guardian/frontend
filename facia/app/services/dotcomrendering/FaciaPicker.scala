@@ -1,14 +1,12 @@
 package services.dotcomrendering
 
-import common.{Edition, GuLogging}
+import common.GuLogging
 import conf.switches.Switches.{DCRFronts, DCRNetworkFronts}
 import implicits.Requests._
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.LinkSnap
 import play.api.mvc.RequestHeader
-import views.support.Commercial
-import layout.slices.EmailLayouts
 
 object FrontChecks {
 

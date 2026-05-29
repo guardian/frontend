@@ -1,9 +1,7 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-//import com.gu.contentatom.renderer.{ArticleConfiguration, AudioSettings}
 import com.gu.contentatom.thrift.{Atom => AtomApiAtom}
-import conf.Configuration
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 
 final case class Atoms(

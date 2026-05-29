@@ -1,6 +1,5 @@
 package common
 
-import com.gu.facia.api.models.LinkSnap
 import com.sun.syndication.feed.module.DCModuleImpl
 import com.sun.syndication.feed.module.mediarss._
 import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Metadata, UrlReference}

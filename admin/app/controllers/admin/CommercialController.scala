@@ -2,17 +2,13 @@ package controllers.admin
 
 import common.dfp.{GuCustomField, GuLineItem}
 import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
-import conf.Configuration
 import dfp.{DfpDataExtractor}
 import model._
 import services.ophan.SurgingContentAgent
-import play.api.libs.json.{JsString, Json}
 import play.api.mvc._
 import tools._
-import conf.switches.Switches.{LineItemJobs}
 
 import scala.concurrent.duration._
-import scala.util.Try
 
 class CommercialController(
     val controllerComponents: ControllerComponents,

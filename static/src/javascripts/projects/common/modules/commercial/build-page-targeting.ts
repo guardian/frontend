@@ -6,10 +6,9 @@
 
 import type { PageTargeting } from '@guardian/commercial-core';
 import { buildPageTargeting } from '@guardian/commercial-core';
-import type { ConsentState } from '@guardian/libs';
+import type { ConsentState } from '@guardian/consent-manager';
 import { isString, log } from '@guardian/libs';
 import { once } from 'lodash-es';
-import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { commercialFeatures } from './commercial-features';
 
 /**
@@ -81,7 +80,7 @@ const getPageTargeting = (consentState: ConsentState): PageTargeting => {
 
 	const pageTargeting = buildPageTargeting({
 		adFree: commercialFeatures.adFree,
-		clientSideParticipations: getSynchronousParticipations(),
+		abTestParticipations: {},
 		consentState,
 	});
 

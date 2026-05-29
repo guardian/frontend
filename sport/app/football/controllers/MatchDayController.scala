@@ -42,6 +42,9 @@ class MatchDayController(
   def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
   def competitionMatches(competitionTag: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, LocalDate.now(Edition.defaultEdition.timezoneId))
+  def competitionMatchesEmbedJson(competitionTag: String): Action[AnyContent] = competitionMatchesEmbed(competitionTag)
+  def competitionMatchesEmbed(competitionTag: String): Action[AnyContent] =
+    renderCompetitionMatchesEmbed(competitionTag, LocalDate.now(Edition.defaultEdition.timezoneId))
 
   def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, createDate(year, month, day))
@@ -65,6 +68,18 @@ class MatchDayController(
           )
 
           futureAtom.flatMap(maybeAtom => renderMatchList(page, matches, filters, maybeAtom))
+        }
+        .getOrElse {
+          Future.successful(NotFound)
+        }
+    }
+
+  private def renderCompetitionMatchesEmbed(competitionTag: String, date: LocalDate): Action[AnyContent] =
+    Action.async { implicit request =>
+      lookupCompetition(competitionTag)
+        .map { competition =>
+          val matches = CompetitionMatchDayList(competitionsService.competitions, competition.id, date)
+          renderMatchDayEmbed(competitionTag, matches)
         }
         .getOrElse {
           Future.successful(NotFound)

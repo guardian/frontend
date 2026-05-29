@@ -4,17 +4,12 @@ import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import com.gu.contentapi.client.model.v1.Content
-import experiments.ActiveExperiments
-import layout.ContentCard
-import model.{RelatedContentItem, SimplePage}
+import model.SimplePage
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
-import views.support.{CamelCase, JavaScriptPage}
 import services.newsletters.model.{NewsletterResponseV2, NewsletterLayout}
 import services.NewsletterData
-import ab.ABTests
 
 case class DotcomNewslettersPageRenderingDataModel(
     newsletters: List[NewsletterData],
@@ -50,27 +45,11 @@ object DotcomNewslettersPageRenderingDataModel {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
 
-    val switches: Map[String, Boolean] = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      serverSideABTests = ABTests.getParticipations(request),
-      ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
+    val combinedConfig = DotcomRenderingConfig(
+      page = page,
+      request = request,
+      isPreview = false,
     )
-
-    val combinedConfig: JsObject = {
-      val jsPageConfig: Map[String, JsValue] =
-        JavaScriptPage.getMap(page, Edition(request), isPreview = false, request)
-      Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    }
 
     val commercialProperties = page.metadata.commercial
       .map { _.perEdition.mapKeys(_.id) }

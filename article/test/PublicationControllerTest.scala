@@ -24,7 +24,6 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     with WithTestContentApiClient {
 
   private val PermanentRedirect = 301
-  private val TemporaryRedirect = 302
   private val OK = 200
 
   val emptySeq: Seq[TagDefinition] = Seq.empty

@@ -1,7 +1,6 @@
 package metrics
 
 import org.scalatest.matchers.should.Matchers
-import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import software.amazon.awssdk.services.cloudwatch.model.StandardUnit
 

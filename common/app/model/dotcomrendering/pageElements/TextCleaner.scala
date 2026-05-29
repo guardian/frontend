@@ -12,7 +12,12 @@ import scala.util.matching.Regex
 
 object TextCleaner {
 
-  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean, isUSProductionOffice: Boolean)(
+  def affiliateLinks(
+      pageUrl: String,
+      addAffiliateLinks: Boolean,
+      isUSProductionOffice: Boolean,
+      abTests: Map[String, String],
+  )(
       html: String,
   ): String = {
     if (addAffiliateLinks) {
@@ -23,7 +28,7 @@ object TextCleaner {
       links.foreach(el => {
         el.attr(
           "href",
-          AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, skimlinksId),
+          AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, skimlinksId, abTests),
         ).attr("rel", "sponsored")
       })
 
@@ -42,6 +47,7 @@ object TextCleaner {
       pageUrl: String,
       shouldAddAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
+      abTests: Map[String, String],
   ): String = {
 
     val cleaners = List(
@@ -50,6 +56,7 @@ object TextCleaner {
         pageUrl,
         shouldAddAffiliateLinks,
         isUSProductionOffice,
+        abTests,
       ),
     )
 
@@ -166,6 +173,7 @@ case class GalleryAffiliateLinksCleaner(
     pageUrl: String,
     shouldAddAffiliateLinks: Boolean,
     isUSProductionOffice: Boolean,
+    abTests: Map[String, String],
 ) extends HtmlCleaner
     with GuLogging {
 
@@ -174,7 +182,7 @@ case class GalleryAffiliateLinksCleaner(
       if (isUSProductionOffice) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
 
     if (shouldAddAffiliateLinks) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId)
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId, abTests)
     } else document
   }
 }

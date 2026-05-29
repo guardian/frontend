@@ -1,7 +1,6 @@
 package services.dotcomrendering
 
 import conf.switches.Switches.DCRCricketPages
-import cricket.controllers.CricketMatchPage
 import model.Cors.RichRequestHeader
 import play.api.mvc.RequestHeader
 import utils.DotcomponentsLogger

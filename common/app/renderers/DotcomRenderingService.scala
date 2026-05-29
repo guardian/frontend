@@ -1,7 +1,7 @@
 package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import com.gu.contentapi.client.model.v1.{Block, Blocks, Content, Crossword}
+import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -485,6 +485,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       json: JsValue,
   )(implicit request: RequestHeader): Future[Result] = {
     post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchListPage", CacheTime.Football)
+  }
+
+  def getFootballEmbed(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchDayEmbed", CacheTime.Football)
   }
 
   def getFootballMatchSummaryPage(
