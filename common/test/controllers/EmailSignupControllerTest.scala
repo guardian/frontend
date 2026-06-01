@@ -66,7 +66,7 @@ class EmailSignupControllerTest
     }
 
     "botHoneyPot field is not present in the request" should {
-      "not return 403 Forbidden" in new Fixture {
+      "return a successful request" in new Fixture {
         val request = formRequest(
           "email" -> "test@example.com",
           "listName" -> "test-newsletter",
@@ -77,7 +77,7 @@ class EmailSignupControllerTest
     }
 
     "botHoneyPot is present but set to an empty string" should {
-      "not return 403 Forbidden" in new Fixture {
+      "return a successful request" in new Fixture {
         val request = formRequest(
           "email" -> "test@example.com",
           "listName" -> "test-newsletter",
