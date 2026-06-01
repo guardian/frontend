@@ -44,6 +44,7 @@ case class NewsletterResponseV2(
     restricted: Boolean,
     signUpEmbedDescription: String,
     signUpDescription: String,
+    highlightCardTitle: Option[String],
     frequency: String,
     mailSuccessDescription: Option[String],
     regionFocus: Option[String], // edition Id
