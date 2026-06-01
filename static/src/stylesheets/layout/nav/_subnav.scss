@@ -78,7 +78,7 @@
         content: '';
         display: block;
         height: 13px;
-        
+
         @include mq(tablet) {
             border: 1px solid $brightness-86;
             border-top: 0;
@@ -114,5 +114,171 @@
 
     .subnav-link  {
         color: $brightness-100;
+    }
+}
+
+.world-cup-sub-nav {
+    background-color: $brand-main;
+    display: grid;
+    grid-template-columns: [grid-start] 0px [centre-column-start] repeat(6, 1fr) [centre-column-end] 0px [grid-end];
+    column-gap: 10px;
+    align-content: space-between;
+    position: relative;
+
+    @include mq(mobileLandscape) {
+        column-gap: 20px;
+    }
+
+    @include mq(tablet) {
+        grid-template-columns: [grid-start] 1fr [centre-column-start] repeat(12, 40px) [centre-column-end] 1fr [grid-end];
+        width: 740px;
+        margin: 0 auto;
+
+        &::before,
+        &::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: $brand-pastel;
+            content: '';
+        }
+
+        &::before {
+            grid-column: centre-column-start;
+            transform: translateX(-20px);
+        }
+
+        &::after {
+            grid-column: right-column-end;
+            transform: translateX(-1px);
+        }
+    }
+
+    @include mq(tablet, $until: desktop) {
+        &::after {
+            grid-column: centre-column-end;
+        }
+    }
+
+    @include mq(desktop) {
+        grid-template-columns: [grid-start] 1fr [centre-column-start] repeat(8, 60px) [centre-column-end right-column-start] repeat(4, 60px) [right-column-end] 1fr [grid-end];
+        width: 980px;
+    }
+
+    @include mq(leftCol) {
+        grid-template-columns: [grid-start] 1fr [left-column-start] repeat(2, 60px) [left-column-end centre-column-start] repeat(8, 60px) [centre-column-end right-column-start] repeat(4, 60px) [right-column-end] 1fr [grid-end];
+        width: 1140px;
+
+        &::before {
+            grid-column: left-column-start;
+        }
+    }
+
+    @include mq(wide) {
+        grid-template-columns: [grid-start] 1fr [left-column-start] repeat(3, 60px) [left-column-end centre-column-start] repeat(8, 60px) [centre-column-end] 60px [right-column-start] repeat(4, 60px) [right-column-end] 1fr [grid-end];
+        width: 1300px;
+    }
+}
+
+.world-cup-sub-nav-list {
+    grid-column: grid-start / grid-end;
+    margin-block: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    border-color: $brand-pastel;
+    padding: 0 12px;
+    height: 40px;
+    margin-left: 0;
+
+    &::after {
+        content: '';
+        position: sticky;
+        right: -12px;
+        top: 0;
+        height: 100%;
+        min-width: 40px;
+        background: linear-gradient(to left, #052962, transparent);
+    }
+
+    @include mq(mobileLandscape) {
+        padding: 0 20px;
+        height: 40px;
+
+        &::after {
+            right: -20px;
+        }
+    }
+}
+
+.world-cup-sub-nav-list li {
+    position: relative;
+}
+
+.world-cup-sub-nav-list li a.current-section {
+    font-weight: 700;
+}
+
+.world-cup-sub-nav-list li a {
+    font-family: GuardianTextSans, 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    padding-right: 12px;
+    display: block;
+    text-decoration: none;
+    white-space: nowrap;
+    color: $brightness-100;
+
+    &:hover {
+        text-decoration: underline;
+        color: $highlight-main;
+    }
+
+    &.world-cup-sub-nav-primary-link {
+        display: flex;
+        align-items: center;
+        padding-right: 24px;
+
+        svg {
+            margin-right: 8px;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 12px;
+            background-color: $brand-pastel;
+        }
+
+        &:not(:hover) {
+            color: $sport-pastel;
+
+            svg rect,
+            svg circle {
+                fill: $sport-pastel;
+            }
+        }
+
+        &:hover {
+            text-decoration: none;
+
+            svg rect,
+            svg circle {
+                fill: $highlight-main;
+            }
+        }
     }
 }
