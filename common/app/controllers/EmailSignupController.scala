@@ -44,6 +44,10 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: Option[String],
+    // country is a honey pot field used to catch bots filling in the form. It should always be empty for
+    // legitimate submissions. If populated, the client receives a successful response but no request is
+    // made to the Identity API
+    country: Option[String],
 ) {}
 
 case class EmailFormManyNewsletters(
@@ -184,6 +188,7 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> optional[String](of[String]),
+      "country" -> optional[String](of[String]),
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
@@ -529,22 +534,29 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logDebugWithRequestId(
-              s"Post request received to /email/ - " +
-                s"ref: ${form.ref}, " +
-                s"refViewId: ${form.refViewId}, " +
-                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-            )
+            // the country form field here is used to catch bots filling it in. It is a honey pot trap.
+            // So the client gets a successful response but no subsequent request is made to Identity API.
+            if (form.country.exists(_.nonEmpty)) {
+              logInfoWithRequestId(s"Rejecting /email submission: country (bot honey pot field) field was populated")
+              Future.successful(respond(Subscribed, form.listName))
+            } else {
+              logDebugWithRequestId(
+                s"Post request received to /email/ - " +
+                  s"ref: ${form.ref}, " +
+                  s"refViewId: ${form.refViewId}, " +
+                  s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+                  s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+                  s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+              )
 
-            (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
-            } yield {
-              result
-            }) recover { case _ =>
-              respond(OtherError)
+              (for {
+                _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+                result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
+              } yield {
+                result
+              }) recover { case _ =>
+                respond(OtherError)
+              }
             }
           },
         )
