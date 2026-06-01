@@ -88,20 +88,20 @@ object DotcomNewslettersPageRenderingDataModel {
 
   private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
     NewsletterData(
-      response.identityName,
-      response.name,
-      response.theme,
-      response.signUpDescription,
-      response.highlightCardTitle,
-      response.frequency,
-      response.listId,
-      response.group,
-      response.mailSuccessDescription.getOrElse("You are subscribed"),
-      response.regionFocus,
-      response.illustrationCard,
-      response.illustrationSquare,
-      response.exampleUrl,
-      response.category,
+      identityName = response.identityName,
+      name = response.name,
+      theme = response.theme,
+      description = response.signUpDescription,
+      frequency = response.frequency,
+      highlightCardTitle = response.highlightCardTitle,
+      listId = response.listId,
+      group = response.group,
+      successDescription = response.mailSuccessDescription.getOrElse("You are subscribed"),
+      regionFocus = response.regionFocus,
+      illustrationCard = response.illustrationCard,
+      illustrationSquare = response.illustrationSquare,
+      exampleUrl = response.exampleUrl,
+      category = response.category,
     )
   }
 }
