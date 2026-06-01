@@ -122,22 +122,97 @@ case class Match(
   def awayTeam: Team = teams.filter(!_.home).head
   def homeTeamInnings: List[Innings] = innings.filter(x => x.battingTeam == homeTeam.name).sortBy(_.order)
   def awayTeamInnings: List[Innings] = innings.filter(x => x.battingTeam == awayTeam.name).sortBy(_.order)
-
-  def lastInnings: Option[Innings] = innings.lastOption
-
-  def firstInBatter: Option[InningsBatter] = lastInnings.flatMap(_.firstIn)
-
-  def secondInBatter: Option[InningsBatter] = lastInnings.flatMap(_.secondIn)
-
-  def lastOut: Option[InningsBatter] = lastInnings.flatMap(_.lastOut)
 }
 
 object Match {
   implicit val writes: OWrites[Match] = Json.writes[Match]
 }
 
+// *********** Cricket match stats data ***********
+case class MatchStats(
+    innings: List[Innings],
+    teams: List[Team],
+    officials: List[String],
+)
+
+object MatchStats {
+  implicit val writes: OWrites[MatchStats] = Json.writes[MatchStats]
+
+  def apply(matchData: Match): MatchStats = {
+    MatchStats(
+      innings = matchData.innings,
+      teams = matchData.teams,
+      officials = matchData.officials,
+    )
+  }
+}
+
+// *********** Cricket match header data ***********
+case class InningsOverview(
+    battingTeam: String,
+    order: Int,
+    runs: Int,
+    wickets: Int,
+    overs: String,
+    declared: Boolean,
+    allOut: Boolean,
+)
+
+object InningsOverview {
+  implicit val writes: OWrites[InningsOverview] = Json.writes[InningsOverview]
+
+  // convert heavy Innings type to the lightweight Overview type
+  def fromInnings(innings: Innings): InningsOverview = {
+    InningsOverview(
+      battingTeam = innings.battingTeam,
+      order = innings.order,
+      runs = innings.runsScored,
+      wickets = innings.wickets,
+      overs = innings.overs,
+      declared = innings.declared,
+      allOut = innings.allOut,
+    )
+  }
+}
+
+case class TeamOverview(name: String, id: String, home: Boolean, teamTagId: Option[String])
+
+object TeamOverview {
+  implicit val writes: OWrites[TeamOverview] = Json.writes[TeamOverview]
+}
+
+case class MatchOverview(
+    teamsOverview: List[TeamOverview],
+    inningsOverview: List[InningsOverview],
+    competitionName: String,
+    venueName: String,
+    result: String,
+    currentDay: Int,
+    totalDays: Int,
+    gameDate: LocalDateTime,
+    matchId: String,
+)
+
+object MatchOverview {
+  implicit val writes: OWrites[MatchOverview] = Json.writes[MatchOverview]
+
+  def fromMatch(matchData: Match): MatchOverview = {
+    MatchOverview(
+      teamsOverview = matchData.teams.map(team => TeamOverview(team.name, team.id, team.home, team.teamTagId)),
+      inningsOverview = matchData.innings.map(InningsOverview.fromInnings),
+      competitionName = matchData.competitionName,
+      venueName = matchData.venueName,
+      result = matchData.result,
+      currentDay = matchData.currentDay,
+      totalDays = matchData.totalDays,
+      gameDate = matchData.gameDate,
+      matchId = matchData.matchId,
+    )
+  }
+}
+
 case class MatchHeader(
-    cricketMatch: Match,
+    cricketMatch: MatchOverview,
 //    competitionName: String, TODO: we currently don't have this but need to retrieve it e.g., "Ashes 2025-26"
     liveURL: Option[String],
     reportURL: Option[String],
@@ -182,8 +257,9 @@ object MatchHeader extends DCARUrlHelper {
       }
       .map(content => getPageUrl(content.metadata.url))
 
+    println("Marji")
     MatchHeader(
-      cricketMatch = page.theMatch,
+      cricketMatch = MatchOverview.fromMatch(page.theMatch),
       liveURL = liveBlogUrl,
       reportURL = matchReportUrl,
       infoURL = getPageUrl(page.metadata.id),
