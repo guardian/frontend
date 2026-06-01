@@ -12,18 +12,6 @@ import { elementInView } from 'lib/element-inview';
 import ophan from 'ophan/ng';
 import { measureTiming } from "commercial/measure-timing";
 
-
-const initFilterCheckbox = () => {
-	const filterKeyEvents = window.location.search.includes(
-		'filterKeyEvents=true',
-	);
-	const filterSwitch = document.getElementById('filter-switch');
-
-	if (filterSwitch) {
-		filterSwitch.checked = filterKeyEvents;
-	}
-};
-
 const createAutoUpdate = () => {
 	if (config.get('page.isLive')) {
 		autoUpdate();
@@ -94,15 +82,6 @@ const trackOphanClick = (pinnedBlockId, clickValue) => {
 const setupListeners = () => {
 	const pinnedBlockButton = document.querySelector('.pinned-block__button');
 
-	bean.on(document.body, 'change', '.live-blog__filter-switch-label', () => {
-		const hasParam =
-			window.location.search.includes(`filterKeyEvents=true`);
-		const param = `?filterKeyEvents=${
-			hasParam ? 'false' : 'true'
-		}#liveblog-content`;
-		window.location.assign(`${window.location.pathname}${param}`);
-	});
-
 	bean.on(document.body, 'click', '.pinned-block__label', () => {
 
         //scroll to element top on close if out of view.
@@ -125,7 +104,6 @@ const setupListeners = () => {
 const init = () => {
 	catchErrorsWithContext([
 		['lb-listeners', setupListeners],
-		['lb-filter', initFilterCheckbox],
 		['lb-autoupdate', createAutoUpdate],
 		['lb-timestamp', keepTimestampsCurrent],
 		['lb-tracking', initTracking],
