@@ -38,8 +38,6 @@ object Analysis {
     val callHierarchies = callHierarchyBuilder
       .buildCallHierarchy(isViewsDefinition)
 
-    // callHierarchies.foreach(node => CallHierarchy.printCallHierarchy(node, indent = ""))
-
     val mappings = callHierarchies
       .flatMap { node =>
         val (templates, controllers) = recursivelyMap(node, Nil, Nil)

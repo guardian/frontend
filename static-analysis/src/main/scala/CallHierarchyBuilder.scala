@@ -21,12 +21,12 @@ class CallHierarchyBuilder(
       file: SourceRef,
       symbolOccurrence: SymbolOccurrence,
   ): Seq[Tree] = {
-    def toCoordinages(range: Range): SymbolCoordinates =
+    def toCoordinates(range: Range): SymbolCoordinates =
       SymbolCoordinates(file, range.startLine, range.startCharacter, range.endLine, range.endCharacter)
 
     symbolOccurrence.range match {
       case None        => return Seq.empty
-      case Some(range) => scalaSources.getByCoordinates(toCoordinages(range))
+      case Some(range) => scalaSources.getByCoordinates(toCoordinates(range))
     }
   }
 

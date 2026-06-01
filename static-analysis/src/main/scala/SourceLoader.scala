@@ -63,8 +63,6 @@ object SourceLoader {
         result.put(SourceRef(filePath), doc)
       }
     }
-    val debug = result.flatMap(_._2.occurrences.filter(_.symbol.contains("emailArticleBody")))
-    println(debug)
     SemanticDB(result.toMap)
   }
 
