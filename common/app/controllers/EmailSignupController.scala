@@ -44,7 +44,10 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: Option[String],
-    botHoneyPot: Option[String],
+    // country is a honey pot field used to catch bots filling in the form. It should always be empty for
+    // legitimate submissions. If populated, the client receives a successful response but no request is
+    // made to the Identity API
+    country: Option[String],
 ) {}
 
 case class EmailFormManyNewsletters(
@@ -185,7 +188,7 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> optional[String](of[String]),
-      "botHoneyPot" -> optional[String](of[String]),
+      "country" -> optional[String](of[String]),
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
@@ -531,9 +534,11 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            if (form.botHoneyPot.exists(_.nonEmpty)) {
-              logInfoWithRequestId(s"Rejecting /email submission: botHoneyPot field was populated")
-              Future.successful(Forbidden)
+            // the country form field here is used to catch bots filling it in. It is a honey pot trap.
+            // So the client gets a successful response but no subsequent request is made to Identity API.
+            if (form.country.exists(_.nonEmpty)) {
+              logInfoWithRequestId(s"Rejecting /email submission: country (bot honey pot field) field was populated")
+              Future.successful(respond(Subscribed, form.listName))
             } else {
               logDebugWithRequestId(
                 s"Post request received to /email/ - " +

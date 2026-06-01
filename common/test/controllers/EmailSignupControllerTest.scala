@@ -53,19 +53,20 @@ class EmailSignupControllerTest
 
   "EmailSignupController.submit" when {
 
-    "botHoneyPot is populated with a non-empty string" should {
-      "return 403 Forbidden" in new Fixture {
+    "country (bot honey pot field) is populated with a non-empty string" should {
+      "return a success response without calling the Identity API" in new Fixture {
         val request = formRequest(
           "email" -> "test@example.com",
           "listName" -> "test-newsletter",
-          "botHoneyPot" -> "I am a bot",
+          "country" -> "I am a bot",
         )
         val result = controller.submit()(request)
-        status(result) shouldBe FORBIDDEN
+        status(result) shouldBe CREATED
+        verify(wsClient, never()).url(any[String])
       }
     }
 
-    "botHoneyPot field is not present in the request" should {
+    "country (bot honey pot field) field is not present in the request" should {
       "return a successful request" in new Fixture {
         val request = formRequest(
           "email" -> "test@example.com",
@@ -76,12 +77,12 @@ class EmailSignupControllerTest
       }
     }
 
-    "botHoneyPot is present but set to an empty string" should {
+    "country (bot honey pot field) is present but set to an empty string" should {
       "return a successful request" in new Fixture {
         val request = formRequest(
           "email" -> "test@example.com",
           "listName" -> "test-newsletter",
-          "botHoneyPot" -> "",
+          "country" -> "",
         )
         val result = controller.submit()(request)
         status(result) should not be FORBIDDEN
