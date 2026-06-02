@@ -48,7 +48,6 @@ case class DotcomRenderingDataModel(
     affiliateLinksDisclaimer: Option[String],
     mainMediaElements: List[PageElement],
     main: String,
-    filterKeyEvents: Boolean,
     pinnedPost: Option[Block],
     keyEvents: List[Block],
     mostRecentBlockId: Option[String],
@@ -129,7 +128,6 @@ object DotcomRenderingDataModel {
         "affiliateLinksDisclaimer" -> model.affiliateLinksDisclaimer,
         "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
-        "filterKeyEvents" -> model.filterKeyEvents,
         "pinnedPost" -> model.pinnedPost,
         "keyEvents" -> model.keyEvents,
         "mostRecentBlockId" -> model.mostRecentBlockId,
@@ -376,7 +374,6 @@ object DotcomRenderingDataModel {
       pageBlocks: BlocksOn[LiveBlogPage],
       request: RequestHeader,
       pageType: PageType,
-      filterKeyEvents: Boolean,
       forceLive: Boolean,
       newsletter: Option[NewsletterData],
   ): DotcomRenderingDataModel = {
@@ -392,7 +389,7 @@ object DotcomRenderingDataModel {
       )
     })
 
-    val bodyBlocks = blocksForLiveblogPage(pageBlocks, filterKeyEvents).map(ensureSummaryTitle)
+    val bodyBlocks = blocksForLiveblogPage(pageBlocks).map(ensureSummaryTitle)
 
     val blocks = pageBlocks.blocks
     val allTimelineBlocks = blocks.body match {
@@ -433,7 +430,6 @@ object DotcomRenderingDataModel {
       storyPackage = getStoryPackage(page.related.faciaItems, request), // todo
       pinnedPost = pinnedPost,
       keyEvents = timelineBlocks,
-      filterKeyEvents = filterKeyEvents,
       mostRecentBlockId = mostRecentBlockId,
       forceLive = forceLive,
       newsletter = newsletter,
@@ -453,7 +449,6 @@ object DotcomRenderingDataModel {
       keyEvents: Seq[APIBlock] = Seq.empty,
       pagination: Option[Pagination] = None,
       pinnedPost: Option[APIBlock] = None,
-      filterKeyEvents: Boolean = false,
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
       crossword: Option[CrosswordData] = None,
@@ -653,7 +648,6 @@ object DotcomRenderingDataModel {
       isImmersive = isImmersive,
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = isSpecialReport(page),
-      filterKeyEvents = filterKeyEvents,
       pinnedPost = pinnedPostDCR,
       keyEvents = keyEventsDCR.toList,
       mostRecentBlockId = mostRecentBlockId,
@@ -664,7 +658,7 @@ object DotcomRenderingDataModel {
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
-      nav = Nav(page, edition),
+      nav = Nav(page, edition)(request),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,

@@ -53,4 +53,13 @@ class LiveHarnessTest extends AnyFlatSpec with Matchers {
   it should "handle an empty string" in {
     LiveHarness.splitIntoTags("") shouldEqual List.empty
   }
+
+  it should "strip void elements and split remaining tags" in {
+    val html = "<p>First</p><p>Second</p><br><h2>A heading</h2>"
+    LiveHarness.splitIntoTags(html) shouldEqual List(
+      "<p>First</p>",
+      "<p>Second</p>",
+      "<h2>A heading</h2>",
+    )
+  }
 }

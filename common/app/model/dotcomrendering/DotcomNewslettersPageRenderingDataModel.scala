@@ -43,7 +43,7 @@ object DotcomNewslettersPageRenderingDataModel {
       request: RequestHeader,
   ): DotcomNewslettersPageRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition)(request)
 
     val combinedConfig = DotcomRenderingConfig(
       page = page,

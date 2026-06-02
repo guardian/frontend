@@ -1,3 +1,4 @@
+@import ab.ABTests
 @()(implicit page: model.Page, request: RequestHeader)
 
 @import common.{LinkTo, Edition}
@@ -140,6 +141,10 @@
 
         @if(!page.metadata.hasSlimHeader) {
             @fragments.nav.subNav(navMenu, page.metadata.designType)
+        }
+
+        @if(page.metadata.id == "football/world-cup-2026/overview" && ABTests.isUserInTest("webx-world-cup-2026-subnav")) {
+            @fragments.nav.worldCupSubNav(page.metadata.id)
         }
     </header>
 }

@@ -5,8 +5,10 @@ import common.{Edition, editions}
 import navigation.NavMenu.navRoot
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
+import ab.ABTests
 
 import scala.annotation.tailrec
+import play.api.mvc.RequestHeader
 
 sealed trait Subnav
 case class FlatSubnav(links: Seq[NavLink]) extends Subnav
@@ -77,12 +79,22 @@ object NavMenu {
       brandExtensions: Seq[NavLink],
   )
 
-  def apply(page: Page, edition: Edition): NavMenu = {
+  def apply(page: Page, edition: Edition)(implicit request: RequestHeader): NavMenu = {
     val root = navRoot(edition)
     val currentUrl = getSectionOrPageUrl(page, edition)
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
     val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
     val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
+    val isWorldCupOverview = page.metadata.id == "football/world-cup-2026/overview"
+
+    // On the world cup overview page, we want to show the special football header atom
+    val subNavSections =
+      if (isWorldCupOverview && ABTests.isUserInTest("webx-world-cup-2026-subnav")) {
+        None
+      } else {
+        getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar)
+      }
+
     NavMenu(
       currentUrl = currentUrl,
       pillars = root.children,
@@ -91,7 +103,7 @@ object NavMenu {
       currentNavLink = currentNavLink,
       currentParent = currentParent,
       currentPillar = currentPillar,
-      subNavSections = getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar),
+      subNavSections = subNavSections,
     )
   }
 
@@ -239,7 +251,6 @@ object NavMenu {
       currentParent: Option[NavLink],
       currentPillar: Option[NavLink],
   ): Option[Subnav] = {
-
     customSignPosting match {
 
       case Some(navItem) =>

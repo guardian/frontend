@@ -16,11 +16,10 @@ object LiveBlogHelpers extends GuLogging {
   def blocksForLiveBlogRequest(
       article: Article,
       param: Option[String],
-      filterKeyEvents: Boolean,
   ): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      LiveBlogHelpers.createLiveBlogModel(article, range, filterKeyEvents)
+      LiveBlogHelpers.createLiveBlogModel(article, range)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
@@ -39,7 +38,6 @@ object LiveBlogHelpers extends GuLogging {
   def createLiveBlogModel(
       liveBlog: Article,
       range: BlockRange,
-      filterKeyEvents: Boolean,
   ): Option[LiveBlogCurrentPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -49,7 +47,6 @@ object LiveBlogHelpers extends GuLogging {
         pageSize = pageSize,
         _,
         range,
-        filterKeyEvents,
       ),
     )
 
@@ -61,7 +58,6 @@ object LiveBlogHelpers extends GuLogging {
       liveBlog: Article,
       response: ItemResponse,
       range: BlockRange,
-      filterKeyEvents: Boolean,
   ): Either[Status, LiveBlogPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
@@ -72,7 +68,6 @@ object LiveBlogHelpers extends GuLogging {
           pageSize = pageSize,
           blocks,
           range,
-          filterKeyEvents,
         )
       } getOrElse None
 
@@ -100,7 +95,6 @@ object LiveBlogHelpers extends GuLogging {
             article = liveBlogCache,
             currentPage = pageModel,
             related = StoryPackages(liveBlog.metadata.id, response),
-            filterKeyEvents = filterKeyEvents,
           ),
         )
       }

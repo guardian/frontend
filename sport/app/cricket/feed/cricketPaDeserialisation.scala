@@ -22,23 +22,25 @@ object Parser {
       innings = parseInnings(scorecardData \ "match" \ "innings"),
       competitionName = matchDetail.competitionName,
       venueName = matchDetail.venueName,
-      result = matchDetail.result,
+      result = matchDetail.status,
       currentDay = matchDetail.currentDay,
       totalDays = matchDetail.totalDays,
       gameDate = matchDetail.gameDate,
       officials = matchDetail.officials,
       matchId = matchId,
+      fullResult = matchDetail.result,
     )
   }
 
   private case class MatchDetail(
       competitionName: String,
       venueName: String,
-      result: String,
+      status: String,
       currentDay: Int,
       totalDays: Int,
       gameDate: LocalDateTime,
       officials: List[String],
+      result: Option[MatchResult],
   )
 
   private object Date {
@@ -60,11 +62,30 @@ object Parser {
     MatchDetail(
       competitionName = matchDetail \ "stage" text,
       venueName = matchDetail \ "venue" \ "name" text,
-      result = matchDetail \ "status" text,
+      status = matchDetail \ "status" text,
       currentDay = (matchDetail \ "currentDay").text.toInt,
       totalDays = (matchDetail \ "totalDays").text.toInt,
       gameDate = Date(matchDetail \ "dateTime" text),
       officials = parseOfficials(matchDetail \ "official"),
+      result = parseMatchResult(matchDetail \ "result"),
+    )
+
+  private def parseMatchWinner(winner: NodeSeq): Option[MatchWinner] =
+    Option.when(winner.nonEmpty)(
+      MatchWinner(
+        winType = (winner \ "@type").text,
+        margin = (winner \ "margin").headOption.map(_.text),
+        team = (winner \ "team" \ "name").text,
+      ),
+    )
+
+  private def parseMatchResult(result: NodeSeq): Option[MatchResult] =
+    Option.when(result.nonEmpty)(
+      MatchResult(
+        resultType = (result \ "@type").text,
+        description = (result \ "description").headOption.map(_.text),
+        winner = parseMatchWinner(result \ "winner"),
+      ),
     )
 
   private def parseTeams(teams: NodeSeq): List[Team] =
