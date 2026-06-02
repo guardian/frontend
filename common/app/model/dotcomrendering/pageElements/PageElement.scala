@@ -25,6 +25,7 @@ import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
+import common.GuLogging
 import model.dotcomrendering.pageElements.CartoonExtraction._
 import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
@@ -981,7 +982,7 @@ object YoutubeBlockElement {
 }
 
 //noinspection ScalaStyle
-object PageElement {
+object PageElement extends GuLogging {
 
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
@@ -1713,8 +1714,18 @@ object PageElement {
       case Recipe =>
         element.recipeTypeData
           .flatMap(_.recipeJson)
-          .flatMap(json => scala.util.Try(Json.parse(json)).toOption)
-          .flatMap(json => json.validate[RecipeBlockElement].asOpt)
+          .flatMap { raw =>
+            scala.util.Try(Json.parse(raw)).toOption.orElse {
+              log.warn(s"RecipeBlockElement: failed to parse recipeJson as JSON for element ${element.`type`}")
+              None
+            }
+          }
+          .flatMap { json =>
+            json.validate[RecipeBlockElement].asOpt.orElse {
+              log.warn(s"RecipeBlockElement: JSON did not validate against RecipeBlockElement schema: $json")
+              None
+            }
+          }
           .toList
 
       case _ => Nil
