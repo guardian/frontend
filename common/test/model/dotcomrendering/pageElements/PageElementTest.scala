@@ -45,7 +45,7 @@ class PageElementTest extends AnyFlatSpec with Matchers {
     recipe.featuredImage.map(_.cropId) should equal(Some("0_0_4299_5380"))
   }
 
-  it should "degrade featuredImage to None when cropId is missing" in {
+  it should "fail to deserialise when featuredImage is present but cropId is missing" in {
     val json = Json.parse("""
       {
         "id": "cd0c0bec00e84712bbc4e9708efa4dfd",
@@ -56,11 +56,7 @@ class PageElementTest extends AnyFlatSpec with Matchers {
         }
       }
     """)
-    val result = json.validate[RecipeBlockElement]
-    result.isSuccess should be(true)
-    val recipe = result.get
-    recipe.id should equal("cd0c0bec00e84712bbc4e9708efa4dfd")
-    recipe.featuredImage should be(None)
+    json.validate[RecipeBlockElement].isError should be(true)
   }
 
   it should "deserialise a recipe with no featuredImage" in {
