@@ -119,13 +119,27 @@ object Analysis {
           printer.pprintMethod(symbol)
         }
         .getOrElse("unknown")
+      val normalised_method = controllerMethod
+        // remove all whitespaces
+        .replaceAll("\\s+", "")
+        // remove return type
+        .split(":")
+        .dropRight(1)
+        .mkString(":")
+        // remove default values
+        .replaceAll("=[\\w\\\"]+", "")
+        // remove parameter names, leaving only types
+        .replaceAll("\\w+:", "")
+        // ensure that if there isn't a parameter list, we add empty parentheses to the end of the method signature for consistency
+        .replaceAll("([^)])$", "$1()")
       val controllerLocation =
         s"${controller.file}:${controller.occurrence.range.map(r => s"${r.startLine}:${r.startCharacter}").getOrElse("unknown")}"
       val templateLocation =
         s"${template.file}:${template.occurrence.range.map(r => s"${r.startLine}:${r.startCharacter}").getOrElse("unknown")}"
-      s"${controller.symbolName};${controllerLocation};${controllerMethod};${template.symbolName};${templateLocation};"
+      s"${controller.symbolName};${controllerLocation};${controllerMethod};${normalised_method};${template.symbolName};${templateLocation}"
     }
-    val csvHeader = "Controller Symbol;Controller Location;Controller Method;Template Symbol;Template Location;"
+    val csvHeader =
+      "controller_symbol;controller_location;controller_method;normalised_method;template_symbol;template_location"
     val csvOutput = (csvHeader +: csvContent).mkString("\n")
     val outputPath = Path.of("controller_template_mappings.csv")
     writeString(outputPath, csvOutput)
