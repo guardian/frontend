@@ -587,6 +587,7 @@ case class ProductBlockElement(
     image: Option[ProductImage],
     content: Seq[PageElement],
     displayType: ProductDisplayType,
+    id: String,
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
@@ -1900,6 +1901,7 @@ object PageElement {
         .toList,
       image = product.image.flatMap(apiImage => createProductImage(apiImage)),
       displayType = product.displayType,
+      id = product.id.getOrElse(""),
     )
 
   }
