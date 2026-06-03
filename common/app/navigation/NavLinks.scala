@@ -423,6 +423,7 @@ object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
+      footballWorldCup2026,
       football,
       cricket,
       rugbyUnion,
@@ -467,6 +468,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
+      footballWorldCup2026,
       football,
       cricket,
       rugbyUnion,
@@ -479,6 +481,7 @@ object NavLinks {
   )
   val eurSportPillar = ukSportPillar.copy(
     children = List(
+      footballWorldCup2026,
       football,
       cricket,
       rugbyUnion,

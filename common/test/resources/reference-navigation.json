@@ -432,6 +432,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -2814,6 +2820,12 @@
 			"iconName": "home",
 			"children": [
 				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Football",
 					"url": "/football",
 					"children": [
@@ -3818,6 +3830,12 @@
 			"longTitle": "Sport home",
 			"iconName": "home",
 			"children": [
+				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
+					"classList": []
+				},
 				{
 					"title": "Football",
 					"url": "/football",
