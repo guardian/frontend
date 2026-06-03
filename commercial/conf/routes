@@ -33,9 +33,6 @@ GET         /app-ads.txt                                                    comm
 # Passbacks
 GET         /commercial/ias-passback/:size                                  commercial.controllers.PassbackController.renderIasPassback(size)
 
-# AMP iframe HTML, needed for AMP (DCR repo)
-GET         /commercial/amp-iframe.html                                     commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
-
 # DFP Non refreshable line items
 GET         /commercial/non-refreshable-line-items.json                     commercial.controllers.nonRefreshableLineItemsController.getIds
 

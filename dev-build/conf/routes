@@ -241,7 +241,6 @@ GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json   
 GET            /advertiser-content/:campaignName/:pageName/onward.json                                                           commercial.controllers.HostedContentController.renderOnwardJson(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize()
-GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
 GET            /commercial/non-refreshable-line-items.json                                                                       commercial.controllers.nonRefreshableLineItemsController.getIds
 
 
