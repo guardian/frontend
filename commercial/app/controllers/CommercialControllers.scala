@@ -20,7 +20,6 @@ trait CommercialControllers {
   implicit def appContext: ApplicationContext
   lazy val contentApiOffersController = wire[ContentApiOffersController]
   lazy val hostedContentController = wire[HostedContentController]
-  lazy val piggybackPixelController = wire[PiggybackPixelController]
   lazy val adsDotTextFileController = wire[AdsDotTextViewController]
   lazy val nonRefreshableLineItemsController = wire[nonRefreshableLineItemsController]
   lazy val TemporaryAdLiteController = wire[TemporaryAdLiteController]
