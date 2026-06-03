@@ -32,6 +32,9 @@ object HostedContentPicker extends GuLogging {
     else if (isGallery) LocalRender
     else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) RemoteRender
+    // Apps traffic bypasses Fastly MVT so can never be bucketed into the AB test;
+    // route unconditionally to DCR for apps.
+    else if (request.getRequestFormat == AppsFormat) RemoteRender
     else if (isUserInTestGroup("commercial-hosted-content", "preview")) RemoteRender
     else LocalRender
   }
