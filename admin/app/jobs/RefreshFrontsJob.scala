@@ -23,7 +23,7 @@ object HighFrequency extends FrontType {
       "us/sport",
       "au/sport",
       "football",
-      "football/world-cup-2026"
+      "football/world-cup-2026",
     )
 }
 
