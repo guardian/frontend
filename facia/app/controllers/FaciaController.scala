@@ -549,13 +549,6 @@ trait FaciaController
     if (request.isAdFree) FullAdFreeType else FullType
   def liteRequestType(implicit request: RequestHeader): PressedPageType =
     if (request.isAdFree) LiteAdFreeType else LiteType
-
-  def ampRsaPublicKey: Action[AnyContent] = {
-    Action {
-      // The private key is in the CAPI account, see the documentation at https://github.com/guardian/fastly-cache-purger
-      Ok(Configuration.amp.flushPublicKey).as("text/plain")
-    }
-  }
 }
 
 class FaciaControllerImpl(
