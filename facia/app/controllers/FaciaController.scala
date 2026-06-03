@@ -26,7 +26,6 @@ import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 import services.{CollectionConfigWithId, ConfigAgent}
 import utils.TargetedCollections
 import views.html.fragments.containers.facia_cards.container
-import views.support.FaciaToMicroFormat2Helpers.getCollection
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -93,24 +92,6 @@ trait FaciaController
             WithoutRevalidationResult(NotFound(s"collection id $id does not exist")),
           )
       }
-    }
-
-  def renderSomeFrontContainersMf2(
-      count: Int,
-      offset: Int,
-      section: String = "",
-  ): Action[AnyContent] =
-    Action.async { implicit request =>
-      val e = Edition(request)
-      val collectionsPath = if (section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
-      getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
-        Cached(CacheTime.Facia) {
-          JsonComponent(
-            "items" -> JsArray(collections.map(getCollection)),
-          )
-        }
-      }
-
     }
 
   def renderContainerJsonWithFrontsLayout(id: String): Action[AnyContent] = renderContainer(id, true)
@@ -382,7 +363,7 @@ trait FaciaController
       renderContainerView(id, preserveLayout)
     }
 
-  private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit
+  private def renderContainerView(collectionId: String, preserveLayout: Boolean)(implicit
       request: RequestHeader,
   ): Future[Result] = {
     getPressedCollection(collectionId).map { collectionOption =>
@@ -499,24 +480,6 @@ trait FaciaController
           })
       }
       .getOrElse(successful(None))
-
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String)(implicit
-      requestHeader: RequestHeader,
-  ): Future[List[PressedCollection]] =
-    frontJsonFapi.get(path, fullRequestType).map { maybePage =>
-      maybePage
-        .map { faciaPage =>
-          // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
-          faciaPage.collections
-            .filterNot { collection =>
-              (collection.curated ++ collection.backfill).length < 2 ||
-              collection.displayName == "most popular" ||
-              collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)
-            }
-            .slice(offset, offset + num)
-        }
-        .getOrElse(Nil)
-    }
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String): Action[AnyContent] =
