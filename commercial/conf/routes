@@ -30,9 +30,6 @@ GET         /advertiser-content/:campaignName/:pageName/autoplay.json       comm
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET         /app-ads.txt                                                    commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 
-# Passbacks
-GET         /commercial/ias-passback/:size                                  commercial.controllers.PassbackController.renderIasPassback(size)
-
 # DFP Non refreshable line items
 GET         /commercial/non-refreshable-line-items.json                     commercial.controllers.nonRefreshableLineItemsController.getIds
 

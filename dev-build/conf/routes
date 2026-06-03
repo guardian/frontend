@@ -245,8 +245,7 @@ GET            /commercial/non-refreshable-line-items.json                      
 
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
-GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
-GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
+GET            /app-ads.txt                                                                                                      commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 
 # Ad-Lite opt in
 GET         /commercial/ad-lite/enable                                                                                           commercial.controllers.TemporaryAdLiteController.enable()
