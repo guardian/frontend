@@ -27,14 +27,15 @@ object HostedContentPicker extends GuLogging {
   def decideTier(isGallery: Boolean = false)(implicit
       request: RequestHeader,
   ): RenderType = {
-    if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
     // Gallery pages are not supported in DCR yet
-    else if (isGallery) LocalRender
+    if (isGallery) LocalRender
     else if (request.forceDCROff) LocalRender
-    else if (request.forceDCR) RemoteRender
-    // Apps traffic bypasses Fastly MVT so can never be bucketed into the AB test;
-    // route unconditionally to DCR for apps.
+    // Apps traffic bypasses Fastly MVT so can never be bucketed into the AB test,
+    // and has no meaningful fallback to the Scala template — route unconditionally
+    // to DCR for apps regardless of the DCRHostedContent feature switch.
     else if (request.getRequestFormat == AppsFormat) RemoteRender
+    else if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
+    else if (request.forceDCR) RemoteRender
     else if (isUserInTestGroup("commercial-hosted-content", "preview")) RemoteRender
     else LocalRender
   }
