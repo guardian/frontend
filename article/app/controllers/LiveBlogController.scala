@@ -9,7 +9,6 @@ import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
 import model.liveblog.BodyBlock
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model._
 import model.meta.BlocksOn
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
