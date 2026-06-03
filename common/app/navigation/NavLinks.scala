@@ -276,6 +276,7 @@ object NavLinks {
     iconName = Some("home"),
     List(
       ukNews,
+      footballWorldCup2026,
       usPolitics,
       world,
       climateCrisis,
@@ -298,6 +299,7 @@ object NavLinks {
       world,
       auPolitics,
       auEnvironment,
+      footballWorldCup2026,
       climateCrisis,
       indigenousAustralia,
       auImmigration,
@@ -314,12 +316,12 @@ object NavLinks {
     List(
       usNews,
       usPolitics,
+      footballWorldCup2026,
       world,
       climateCrisis,
       middleEast,
       ukraine,
       usImmigration,
-      usSoccer,
       usBusiness,
       usEnvironment,
       usTech,
@@ -332,6 +334,7 @@ object NavLinks {
   val intNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
+      footballWorldCup2026,
       usPolitics,
       ukNews,
       climateCrisis,
@@ -349,6 +352,7 @@ object NavLinks {
   val eurNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
+      footballWorldCup2026,
       ukNews,
       climateCrisis,
       ukraine,

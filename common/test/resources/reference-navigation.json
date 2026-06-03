@@ -88,6 +88,12 @@
 					"classList": []
 				},
 				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "US politics",
 					"url": "/us-news/us-politics",
 					"children": [],
@@ -981,6 +987,12 @@
 					"classList": []
 				},
 				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "World",
 					"url": "/world",
 					"longTitle": "World news",
@@ -1066,61 +1078,6 @@
 					"title": "US immigration",
 					"url": "/us-news/usimmigration",
 					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Soccer",
-					"url": "/us/soccer",
-					"children": [
-						{
-							"title": "Live scores",
-							"url": "/football/live",
-							"longTitle": "football/live",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Tables",
-							"url": "/football/tables",
-							"longTitle": "football/tables",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Schedules",
-							"url": "/football/fixtures",
-							"longTitle": "football/fixtures",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Results",
-							"url": "/football/results",
-							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Competitions",
-							"url": "/football/competitions",
-							"longTitle": "football/competitions",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "Clubs",
-							"url": "/football/teams",
-							"longTitle": "football/teams",
-							"children": [],
-							"classList": []
-						}
-					],
 					"classList": []
 				},
 				{
@@ -1866,6 +1823,12 @@
 					"classList": []
 				},
 				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
+					"classList": []
+				},
+				{
 					"title": "Climate crisis",
 					"url": "/environment/climate-crisis",
 					"children": [],
@@ -2511,6 +2474,12 @@
 							"classList": []
 						}
 					],
+					"classList": []
+				},
+				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
 					"classList": []
 				},
 				{
@@ -3498,6 +3467,12 @@
 							"classList": []
 						}
 					],
+					"classList": []
+				},
+				{
+					"title": "World Cup 2026",
+					"url": "/football/world-cup-2026",
+					"children": [],
 					"classList": []
 				},
 				{
