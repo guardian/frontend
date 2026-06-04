@@ -2,7 +2,6 @@ package navigation
 
 import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
-import navigation.NavMenu.navRoot
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
 import ab.ABTests
@@ -286,21 +285,4 @@ object NavMenu {
         }
     }
   }
-}
-
-// Used by AMP and DCR
-case class SimpleMenu(
-    pillars: Seq[NavLink],
-    otherLinks: Seq[NavLink],
-    brandExtensions: Seq[NavLink],
-    readerRevenueLinks: ReaderRevenueLinks,
-)
-
-object SimpleMenu {
-  def apply(edition: Edition): SimpleMenu = {
-    val root = navRoot(edition)
-    SimpleMenu(root.children, root.otherLinks, root.brandExtensions, ReaderRevenueLinks.all)
-  }
-
-  implicit val writes: OWrites[SimpleMenu] = Json.writes[SimpleMenu]
 }

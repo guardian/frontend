@@ -30,7 +30,6 @@ trait OnwardControllers {
   def remoteRenderer: DotcomRenderingService
   def popularInTagService: PopularInTagService
 
-  lazy val navigationController = wire[NavigationController]
   lazy val mostPopularController = wire[MostPopularController]
   lazy val topStoriesController = wire[TopStoriesController]
   lazy val relatedController = wire[RelatedController]

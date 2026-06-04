@@ -14,6 +14,5 @@ class OnwardTestSuite
       new SeriesControllerTest,
       new TopStoriesControllerTest,
       new RichLinkControllerTest,
-      new NavigationControllerTest,
     )
     with SingleServerSuite {}
