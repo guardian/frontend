@@ -11,7 +11,7 @@ GET        /_healthcheck                              controllers.HealthCheck.he
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
-GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
+
 # Deeply read experiment
 GET        /most-read-with-deeply-read.json          controllers.MostPopularController.renderWithDeeplyRead()
 

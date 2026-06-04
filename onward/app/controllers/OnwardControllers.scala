@@ -19,7 +19,6 @@ trait OnwardControllers {
   def contentApiClient: ContentApiClient
   def stocksData: StocksData
   def geoMostPopularAgent: GeoMostPopularAgent
-  def dayMostPopularAgent: DayMostPopularAgent
   def mostPopularAgent: MostPopularAgent
   def deeplyReadAgent: DeeplyReadAgent
   def mostReadAgent: MostReadAgent

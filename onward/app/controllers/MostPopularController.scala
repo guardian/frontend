@@ -3,7 +3,7 @@ package controllers
 import agents.DeeplyReadAgent
 import common._
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
 import model.dotcomrendering.{Trail, _}
@@ -18,7 +18,6 @@ import scala.concurrent.Future
 class MostPopularController(
     contentApiClient: ContentApiClient,
     geoMostPopularAgent: GeoMostPopularAgent,
-    dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
     deeplyReadAgent: DeeplyReadAgent,
     val controllerComponents: ControllerComponents,
@@ -139,20 +138,6 @@ class MostPopularController(
     )
     Cached(900)(JsonComponent.fromWritable(data))
   }
-
-  def renderPopularDay(countryCode: String): Action[AnyContent] =
-    Action { implicit request =>
-      Cached(900) {
-        JsonComponent(
-          "trails" -> JsArray(dayMostPopularAgent.mostPopular(countryCode).map { trail =>
-            Json.obj(
-              ("url", trail.content.metadata.url),
-              ("headline", trail.content.trail.headline),
-            )
-          }),
-        )
-      }
-    }
 
   def renderPopularMicroformat2: Action[AnyContent] =
     Action { implicit request =>
