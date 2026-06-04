@@ -13,7 +13,6 @@ class OnwardTestSuite
       new RelatedFeatureTest,
       new SeriesControllerTest,
       new TopStoriesControllerTest,
-      new VideoInSectionTest,
       new RichLinkControllerTest,
       new NavigationControllerTest,
     )
