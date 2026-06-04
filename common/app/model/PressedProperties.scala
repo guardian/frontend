@@ -4,6 +4,7 @@ import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import common.Edition
 import common.commercial.EditionBranding
+import services.NewsletterData
 
 case class MediaSelect(
     showMainVideo: Boolean,
@@ -32,6 +33,7 @@ final case class PressedProperties(
     webUrl: Option[String],
     editionBrandings: Option[Seq[EditionBranding]],
     atomId: Option[String],
+    newsletterData: Option[NewsletterData] = None,
 ) {
   lazy val isPaidFor: Boolean = editionBrandings.exists(
     _.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition),
