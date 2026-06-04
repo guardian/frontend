@@ -45,7 +45,6 @@ class NewsletterEnrichmentTest extends AnyFlatSpec with Matchers with MockitoSug
       theme = "features",
       description = "Great long reads",
       frequency = "Weekly",
-      highlightCardTitle = Some("Sign up to long reads (highlight)"),
       listId = 1234,
       group = "Features",
       successDescription = "You're subscribed!",
