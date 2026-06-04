@@ -658,7 +658,7 @@ object DotcomRenderingDataModel {
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
-      nav = Nav(page, edition)(request),
+      nav = Nav(page, edition),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
