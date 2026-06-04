@@ -1,0 +1,28 @@
+@(pageId: String)(implicit request: RequestHeader)
+        <nav class="world-cup-sub-nav">
+            <ul class="world-cup-sub-nav-list">
+                @defining("/football/world-cup-2026") { href =>
+                <li>
+                    <a href="@href" class="world-cup-sub-nav-primary-link dcr-qnrtfb @if(pageId == href.stripPrefix("/")){ current-section}"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="17"
+                    viewBox="0 0 16 17" fill="none">
+                        <rect width="4.39184" height="11.5286" fill="#90DCFF"></rect>
+                        <rect x="5.80347" y="5" width="4.39184" height="11.5286" fill="#90DCFF"></rect>
+                        <rect x="11.6084" width="4.39184" height="11.5286" fill="#90DCFF"></rect>
+                        <circle cx="7.99939" cy="2.19592" r="2.19592" fill="#90DCFF"></circle>
+                    </svg>World Cup 2026</a>
+                </li>
+                }
+                @for((href, label) <- Seq(
+                    "/football/world-cup-2026/overview" -> "Match centre",
+                    "/football/world-cup-2026/player-guide" -> "Player guide", // TODO: update when url is finalised
+                    "/football/world-cup-2026/bracketology" -> "Bracketology", // TODO: update when url is finalised
+                    "/football/world-cup-2026/golden-boot" -> "Golden boot", // TODO: update when url is finalised
+                    "/football" -> "More football",
+                )) {
+                <li>
+                    <a href="@href" class="@if(pageId == href.stripPrefix("/")){ current-section}">@label</a>
+                </li>
+                }
+            </ul>
+        </nav>

@@ -85,7 +85,7 @@ object NavMenu {
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
     val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
     val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
-    val isWorldCupOverview = page.metadata.id == "/football/world-cup-2026"
+    val isWorldCupOverview = page.metadata.id == "football/world-cup-2026/overview"
 
     // On the world cup overview page, we want to show the special football header atom
     val subNavSections =
