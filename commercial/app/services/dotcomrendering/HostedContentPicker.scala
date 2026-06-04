@@ -29,10 +29,10 @@ object HostedContentPicker extends GuLogging {
   ): RenderType = {
     if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
     // Gallery pages are not supported in DCR yet
-    else if (isGallery) LocalRender
+    else if (isGallery && !isUserInTestGroup("commercial-hosted-gallery", "preview")) LocalRender
+    else if (isGallery && request.forceDCR) RemoteRender
     else if (request.forceDCROff) LocalRender
     else if (request.forceDCR) RemoteRender
-    else if (isUserInTestGroup("commercial-hosted-content", "preview")) RemoteRender
-    else LocalRender
+    else RemoteRender
   }
 }
