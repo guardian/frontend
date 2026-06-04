@@ -7,9 +7,7 @@ import feed.{GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
 import model.dotcomrendering.{Trail, _}
-import play.api.libs.json._
 import play.api.mvc._
-import views.support.FaciaToMicroFormat2Helpers._
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -138,26 +136,6 @@ class MostPopularController(
     )
     Cached(900)(JsonComponent.fromWritable(data))
   }
-
-  def renderPopularMicroformat2: Action[AnyContent] =
-    Action { implicit request =>
-      val edition = Edition(request)
-      val mostPopular = mostPopularAgent.mostPopular(edition) take 5
-
-      Cached(900) {
-        JsonComponent(
-          "items" -> JsArray(
-            Seq(
-              Json.obj(
-                "displayName" -> "most viewed",
-                "showContent" -> mostPopular.nonEmpty,
-                "content" -> JsArray(mostPopular.map(content => isCuratedContent(content.faciaContent))),
-              ),
-            ),
-          ),
-        )
-      }
-    }
 
   def renderWithDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
