@@ -29,7 +29,7 @@ import test.TestRequest
 
   it should "return RemoteRender if in the test group and forcing DCR for isGallery = true" in {
     val testRequest = TestRequest("hosted-content-path?dcr=true").withHeaders(
-      "X-GU-Server-AB-Tests" -> "commercial-hosted-content:preview",
+      "X-GU-Server-AB-Tests" -> "commercial-hosted-gallery:preview",
     )
     val tier = HostedContentPicker.decideTier(isGallery = true)(testRequest)
     tier should be(RemoteRender)
