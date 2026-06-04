@@ -53,7 +53,6 @@ class NewsletterServiceTest extends AnyFlatSpec with Matchers with MockitoSugar 
       restricted = restricted,
       signUpEmbedDescription = "Great long reads",
       signUpDescription = "For the long reads",
-      highlightCardTitle = Some("Sign up to long reads (highlight)"),
       frequency = "Weekly",
       mailSuccessDescription = Some("You're subscribed!"),
       regionFocus = None,
