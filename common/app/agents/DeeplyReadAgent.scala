@@ -7,14 +7,14 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import layout.DiscussionSettings
 import model.ContentFormat
-import services.{FaciaContentConvert, OphanApi, S3}
+import services.{FaciaContentConvert, OphanApi, S3, S3Async}
 
 import scala.concurrent.{ExecutionContext, Future}
 import model.dotcomrendering.Trail
 import play.api.libs.json.Json
 
 
-object DeeplyReadS3Agent extends S3 {
+object DeeplyReadS3Agent extends S3Async {
   override lazy val bucket = Configuration.cache.bucket;
   lazy val stage: String = Configuration.environment.stage.toUpperCase
 }
@@ -36,29 +36,23 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
      */
     Future
       .sequence(Edition.allEditions.map { edition =>
-        // TODO make s3.get async
-        DeeplyReadS3Agent.get(s"${DeeplyReadS3Agent.stage}/deeply-read/${edition.id.toLowerCase()}.json") match {
-          case Some(jsonTrail) =>
-            Json.parse(jsonTrail).asOpt[Trail]
-        }
-//          .recover { e =>
-//            log.error(s"Failed to fetch Deeply Read items for ${edition.displayName}. ${e.getMessage()}")
-//            (edition, Seq.empty)
-//          }
-      })
-      .map(trailsList => {
-        val map = trailsList.toMap
-        for {
-          (edition, list) <- map
-        } yield log.debug(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
+        val futureTrails = DeeplyReadS3Agent.getObjectAsJson[Seq[Trail]](s"${DeeplyReadS3Agent.stage}/deeply-read/${edition.id.toLowerCase()}.json")
+        futureTrails.map(trailsList => {
+          val list = trailsList.take(10)
 
-        val mapWithTenItems = map.filter { case (_, list) => list.size == 10 }
-        log.debug(
-          s"Updating the following ${mapWithTenItems.size} editions: ${mapWithTenItems.keys.map(_.id).toList.sorted.toString()}",
-        )
+        val map = Map(edition -> list)
+        log.debug(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
 
-        deeplyReadItems.alter(deeplyReadItems.get() ++ mapWithTenItems)
+            log.debug(
+              s"Updating the following ${list.size} editions: ${map.keys.map(_.id).toList.sorted.toString()}",
+            )
+
+            log.warn(s"Not updating ${edition.displayName} as it has only ${list.size} items")
+
+//          deeplyReadItems.alter(deeplyReadItems.get() ++ map)
+          map
       })
+  })
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar

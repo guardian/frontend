@@ -15,7 +15,7 @@ import scala.io.Codec
 
 trait S3Async extends GuLogging {
 
-  lazy val bucket = Configuration.aws.frontendStoreBucket
+  lazy val bucket: String = Configuration.aws.frontendStoreBucket
 
   lazy private val client = AWSv2.S3Async
 
@@ -48,7 +48,6 @@ trait S3Async extends GuLogging {
   def getObjectAsJson[T: Reads](key: String)(implicit ec: ExecutionContext): Future[T] = {
     val futureResponse = getResponse(key)(Codec.UTF8, ec).map(_._2).flatMap { jsonString =>
       val parsedJson = Json.parse(jsonString)
-
       parsedJson.validate[T] match {
         case JsSuccess(parsedObject, _) =>
           Future.successful(parsedObject)
@@ -56,7 +55,6 @@ trait S3Async extends GuLogging {
           Future.failed(new RuntimeException(s"Failed to parse JSON for key $key. Errors: $errors"))
       }
     }
-
     handleS3Errors(key)(futureResponse)
   }
 }
