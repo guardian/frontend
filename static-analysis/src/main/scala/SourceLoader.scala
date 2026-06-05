@@ -53,6 +53,7 @@ case class SemanticDB(private val documents: Map[SourceRef, TextDocument]) {
     .mapValues(_.map(_._2))
   def getOccurrences(symbol: SemanticDBSymbol): Seq[(SourceRef, SymbolOccurrence)] =
     occurrences.getOrElse(symbol, Seq.empty)
+  lazy val allOccurrenceSymbols: Seq[String] = occurrences.keys.map(_.symbolName).toSeq
   def allDocuments = documents.toSeq
   def findDefinition(symbol: SemanticDBSymbol): Option[(SourceRef, SymbolInformation)] =
     symbolInformation.getOrElse(symbol, Seq.empty).headOption

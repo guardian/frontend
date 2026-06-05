@@ -1,5 +1,5 @@
 import java.nio.file.Path
-import scala.meta.internal.semanticdb.SymbolInformation
+import scala.meta.internal.semanticdb.{MethodSignature, SymbolInformation, TypeRef}
 
 case class SymbolInFile(symbol: SymbolInformation, filePath: SourceRef)
 
@@ -16,7 +16,7 @@ object DeadCodeDetector {
 
   def findMethodOwnerClass(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Option[SymbolInformation] = {
     if (symbolInFile.symbol.kind.isMethod) {
-      val classDefinitionSymbol = symbolInFile.symbol.symbol.replaceFirst("\\#.*\\(.*\\)\\.$", "#")
+      val classDefinitionSymbol = symbolInFile.symbol.symbol.replaceFirst("\\#.*(\\(.*\\))?\\.$", "#")
       semanticDB.findDefinition(SemanticDBSymbol(classDefinitionSymbol)) match {
         case Some((_, definition)) => Some(definition)
         case _                     => None
@@ -54,9 +54,6 @@ object DeadCodeDetector {
   val IMPLICIT_MODIFIER = 0x20
 
   def isCaseClassUtilityMethod(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Boolean = {
-    if (symbolInFile.symbol.symbol.startsWith("metrics/CountDataPoint.`")) {
-      println(s"Found CountDataPoint constructor default parameter: ${symbolInFile.symbol}")
-    }
     val caseClassUtilityMethod = findMethodOwnerClass(symbolInFile, semanticDB) match {
       case Some(definition) =>
         definition.kind.isClass && (definition.properties & CASE_MODIFIER) != 0 &&
@@ -81,14 +78,17 @@ object DeadCodeDetector {
   }
 
   val NON_LOGIC_FILE = Set(
-    "dev/javascript/JavaScriptReverseRoutes.scala",
+    "javascript/JavaScriptReverseRoutes.scala",
     "main/router/RoutesPrefix.scala",
-    "controllers/ReverseRoutes.scala",
+    "/ReverseRoutes.scala",
     "project/Dependencies.scala",
+    "AppLoader.scala",
   )
 
-  def isNoneLogicFile(symbolInFile: SymbolInFile): Boolean =
-    NON_LOGIC_FILE.exists(file => symbolInFile.filePath.file.contains(file))
+  def isNonLogicFile(symbolInFile: SymbolInFile): Boolean = {
+    NON_LOGIC_FILE.exists(file => symbolInFile.filePath.file.contains(file)) ||
+    symbolInFile.filePath.file.matches(".*/\\w+Controllers\\.scala$")
+  }
 
   def isTwirlTemplate(symbolInFile: SymbolInFile): Boolean =
     symbolInFile.filePath.file.endsWith(".template.scala")
@@ -105,10 +105,32 @@ object DeadCodeDetector {
     }
 
   // Some case classes aren't directly referenced, though their companion object is
-  def indirectlyUsed(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Boolean = {
+  def isCaseClassInstantiatedByCompanion(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Boolean = {
     if (symbolInFile.symbol.kind.isClass && (symbolInFile.symbol.properties & CASE_MODIFIER) != 0) {
       val companionObject = symbolInFile.symbol.symbol.dropRight(1) + "."
       semanticDB.getOccurrences(SemanticDBSymbol(companionObject)).filter(_._2.role.isReference).nonEmpty
+    } else false
+  }
+
+  // We consider that an object is used if any of its members are referenced,
+  // or if all of its members are implicit (since they could be used without an explicit reference)
+  def isObjectMethodsReferenced(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Boolean = {
+    if (symbolInFile.symbol.kind.isObject) {
+      val candidates = semanticDB.allOccurrenceSymbols.filter { s =>
+        s.startsWith(symbolInFile.symbol.symbol) && s != symbolInFile.symbol.symbol
+      }
+
+      val anySymbolReferenced = candidates.exists { candidate =>
+        semanticDB.getOccurrences(SemanticDBSymbol(candidate)).exists { case (_, occurrence) =>
+          occurrence.role.isReference
+        }
+      }
+      val allSymbolsImplicits = candidates.forall { candidate =>
+        semanticDB.findDefinition(SemanticDBSymbol(candidate)).exists { case (_, definition) =>
+          (definition.properties & IMPLICIT_MODIFIER) != 0
+        }
+      }
+      anySymbolReferenced || allSymbolsImplicits
     } else false
   }
 
@@ -116,20 +138,82 @@ object DeadCodeDetector {
   def isImplicitSymbol(symbolInFile: SymbolInFile): Boolean =
     (symbolInFile.symbol.properties & IMPLICIT_MODIFIER) != 0
 
+  // Some symbols aren't being used, but also aren't actionable. We don't know what they are nor where they are
+  // Not enough of a low hanging fruit to dig deeper
+  def isMysteriousSymbol(symbolInFile: SymbolInFile): Boolean = {
+    symbolInFile.symbol.symbol.matches("^local\\d+$")
+  }
+//
+//  def isCompanionObjectSerialising()
+//
+//  def isSerialisedCaseClass(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Boolean = {
+//    if (symbolInFile.symbol.kind.isMethod) {
+//      findMethodOwnerClass(symbolInFile, semanticDB) match {
+//        case Some(definition) =>
+//          definition.kind.isClass && (definition.properties & CASE_MODIFIER) != 0 &&
+//            findMethodCompanionObject(symbolInFile, semanticDB) match {
+//            case Some(companion) =>
+//              companion.kind.isObject && (companion.properties & CASE_MODIFIER) != 0 &&
+//              companion.symbol.contains("Serialiser")
+//            case _ => false
+//          }
+//        case _ => false
+//      }
+//    } else false
+//  }
+
+  val SERIALISING_REFERENCES = Set(
+    "play/api/libs/json/OWrites#",
+    "play/api/libs/json/OFormat#",
+    "play/api/libs/json/Writes#",
+    "play/api/libs/json/Format#",
+  )
+  def buildListOfSerialisedClasses(semanticDB: SemanticDB): Set[String] = {
+    semanticDB.allDocuments
+      .flatMap(_._2.symbols)
+      .filter(_.kind.isMethod)
+      .map(_.signature)
+      .collect {
+        case MethodSignature(_, _, TypeRef(_, returnType, Seq(TypeRef(_, paramType, _))), _)
+            if SERIALISING_REFERENCES.contains(returnType) =>
+          paramType
+      }
+      .toSet
+  }
+
+  def isSerialisedCaseClassAttribute(
+      symbolInFile: SymbolInFile,
+      serialisedCaseClasses: Set[String],
+      semanticDB: SemanticDB,
+  ): Boolean = {
+    if (symbolInFile.symbol.kind.isMethod) {
+      findMethodOwnerClass(symbolInFile, semanticDB) match {
+        case Some(definition) =>
+          if (definition.kind.isClass && (definition.properties & CASE_MODIFIER) != 0) {
+            serialisedCaseClasses.contains(definition.symbol)
+          } else false
+        case _ => false
+      }
+    } else false
+  }
+
   def main(args: Array[String]): Unit = {
 
     val semanticDB = SourceLoader.loadSemanticDB(Path.of("."))
 
-    semanticDB.findDefinition(SemanticDBSymbol("metrics/CountDataPoint#time.")).foreach { case (file, definition) =>
-      println(s"Found CountDataPoint.time definition in ${file}: ${definition}")
+    semanticDB.findDefinition(SemanticDBSymbol("model/dotcomrendering/Config#frontendAssetsFullURL.")).foreach {
+      case (file, definition) =>
+        println(s"Found model/dotcomrendering/Config#frontendAssetsFullURL definition in ${file}: ${definition}")
     }
+
+    val serialisedCaseClasses = buildListOfSerialisedClasses(semanticDB)
 
     val deadSymbols = semanticDB.allDocuments
       .flatMap { case (file, document) =>
         document.symbols.map(symbolInfo => SymbolInFile(symbolInfo, file))
       }
       .filterNot(isTestFile)
-      .filterNot(isNoneLogicFile)
+      .filterNot(isNonLogicFile)
       .filterNot(isTwirlTemplate)
       .filter(symbolContainingLogic)
       .filterNot(isCaseClassUtilityMethod(_, semanticDB))
@@ -142,15 +226,20 @@ object DeadCodeDetector {
           .filter(_._2.role.isReference) // exclude definitions
           .isEmpty
       }
-      .filterNot(indirectlyUsed(_, semanticDB))
+      .filterNot(isCaseClassInstantiatedByCompanion(_, semanticDB))
+      .filterNot(isObjectMethodsReferenced(_, semanticDB))
       .filterNot(isImplicitSymbol)
+      .filterNot(isMysteriousSymbol)
+      .filterNot(isSerialisedCaseClassAttribute(_, serialisedCaseClasses, semanticDB))
 
     println(s"Found ${deadSymbols.size} potentially dead symbols.")
 
     deadSymbols
-      .take(200)
+      .sortBy(_.filePath.file)
       .foreach { case SymbolInFile(symbol, file) =>
-        println(s"${symbol.symbol} in ${file}")
+        val refLocation =
+          semanticDB.getOccurrences(SemanticDBSymbol(symbol.symbol)).find(_._2.role.isDefinition).flatMap(_._2.range)
+        println(s"${symbol.symbol} in ${file}@${refLocation.getOrElse("unknown")}")
       }
 
   }
