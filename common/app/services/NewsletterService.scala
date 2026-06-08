@@ -72,24 +72,37 @@ class NewsletterService(newsletterSignupAgent: NewsletterSignupAgent) {
 
   private def convertNewsletterResponseToData(response: NewsletterResponseV2): NewsletterData = {
     NewsletterData(
-      response.identityName,
-      response.name,
-      response.theme,
-      response.signUpEmbedDescription,
-      response.frequency,
-      response.listId,
-      response.group,
-      response.mailSuccessDescription.getOrElse("You are subscribed"),
-      response.regionFocus,
-      response.illustrationCard,
-      response.illustrationSquare,
-      response.exampleUrl,
-      response.category,
+      identityName = response.identityName,
+      name = response.name,
+      theme = response.theme,
+      description = response.signUpEmbedDescription,
+      frequency = response.frequency,
+      listId = response.listId,
+      group = response.group,
+      successDescription = response.mailSuccessDescription.getOrElse("You are subscribed"),
+      regionFocus = response.regionFocus,
+      illustrationCard = response.illustrationCard,
+      illustrationSquare = response.illustrationSquare,
+      exampleUrl = response.exampleUrl,
+      category = response.category,
     )
   }
 
   private def shouldInclude(response: NewsletterResponseV2): Boolean = {
     !response.restricted && response.status == "live"
+  }
+
+  /** Look up newsletter data from a list of model.Tag objects. Used during facia-press to populate
+    * PressedProperties.newsletterData. Returns Some(NewsletterData) only when the content has the
+    * `info/newsletter-sign-up` tag AND a matching `campaign/email/[name]` tag resolves to a live newsletter.
+    */
+  def getNewsletterDataFromTags(tags: List[Tag]): Option[NewsletterData] = {
+    val hasNewsletterSignUpTag = tags.exists(_.properties.id == "info/newsletter-sign-up")
+    if (!hasNewsletterSignUpTag) None
+    else
+      getNewsletterResponseFromTags(tags).collect {
+        case response if shouldInclude(response) => convertNewsletterResponseToData(response)
+      }
   }
 
   def getNewsletterForArticle(articlePage: ArticlePage): Option[NewsletterData] = {
