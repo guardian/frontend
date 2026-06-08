@@ -1,6 +1,5 @@
 package model.dotcomrendering.pageElements
 
-import model.meta.BlocksOn
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes, Blocks, CapiDateTime, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.contentapi.client.utils.format.LiveBlogDesign

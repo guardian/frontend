@@ -1,6 +1,5 @@
 package model
 
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog._
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
