@@ -2,7 +2,6 @@
 
 @competitionStages.map { groupStage =>
     <div data-link-name="@competition.fullName groups">
-    @football.views.html.wallchart.groups(competition, groupStage)
+    @football.views.html.wallchart.groups(competition, groupStage, true)
     </div>
 }
-

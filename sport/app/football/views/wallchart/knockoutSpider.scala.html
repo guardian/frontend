@@ -2,9 +2,16 @@
 @import java.time.ZonedDateTime
 @import common.Edition
 @import java.time.LocalTime
-@(competition: model.Competition, knockoutStage: _root_.football.model.KnockoutSpider)(implicit request: RequestHeader)
+@(competition: model.Competition,
+    knockoutStage: _root_.football.model.KnockoutSpider,
+    embed: Boolean = false
+)(implicit request: RequestHeader)
 
-@football.views.html.wallchart.knockoutList(competition, knockoutStage, true)
+@if(embed) {
+    @football.views.html.wallchart.knockoutListEmbed(competition, knockoutStage, true)
+} else {
+    @football.views.html.wallchart.knockoutList(competition, knockoutStage, true)
+}
 
 <div class="football-knockout-chart football-knockout-chart--@knockoutStage.rounds.length-rounds u-cf">
     <div class="football-rounds football-rounds--first-half">

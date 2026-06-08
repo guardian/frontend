@@ -3,7 +3,10 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.RowInfo
 
-@(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
+@(competition: model.Competition,
+    groupStage: _root_.football.model.Groups,
+    embed: Boolean = false
+)(implicit request: RequestHeader)
 
 @footballGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry], row: RowInfo) = {
     @defining(groupStage.matchesList(competition, round)) { matches =>
@@ -19,14 +22,35 @@
                         )
                     </div>
                     <div class="football-group__matches">
-                    @{matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
-                        competitionMatches.map { case (competition, matches) =>
-                            football.views.html.matchList.matchesList(matches, competition, date,
-                                linkToCompetition = false,
-                                heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
-                            )
+                        @if(embed) {
+                            <table class="table table--football football-matches">
+                                <thead hidden>
+                                    <tr>
+                                        <th class="match__status">Match status / kick off time</th>
+                                        <th class="match__details">Match details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
+                                        competitionMatches.map { case (competition, matches) =>
+                                            football.views.html.matchList.spiderMatchesList(matches, competition, date)
+                                        }
+                                    }}
+                                </tbody>
+                                <caption class="table__caption table__caption--top">
+                                    <span class="football-matches__heading">Fixtures and results</span>
+                                </caption>
+                            </table>
+                        } else {
+                            @{matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
+                                competitionMatches.map { case (competition, matches) =>
+                                    football.views.html.matchList.matchesList(matches, competition, date,
+                                        linkToCompetition = false,
+                                        heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
+                                    )
+                                }
+                            }}
                         }
-                    }}
                     </div>
                 }
             </div>

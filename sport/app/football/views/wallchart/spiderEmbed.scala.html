@@ -2,6 +2,6 @@
 
 @competitionStages.map { knockoutStage =>
     <div class="knockout-container" data-link-name="@competition.fullName knockout chart">
-    @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
+    @football.views.html.wallchart.knockoutSpider(competition, knockoutStage, true)
     </div>
 }
