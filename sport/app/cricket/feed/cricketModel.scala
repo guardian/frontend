@@ -108,7 +108,9 @@ object MatchResult {
 case class Match(
     teams: List[Team],
     innings: List[Innings],
-    competitionName: String,
+    competitionName: String, // TODO: this needs to be removed after DCAR is updated to use stage
+    stage: String,
+    competitionNameV2: String, // TODO: this needs renaming to competitionName after DCAR is updated
     venueName: String,
     result: String,
     currentDay: Int,
@@ -138,7 +140,6 @@ object Match {
 
 case class MatchHeader(
     cricketMatch: Match,
-//    competitionName: String, TODO: we currently don't have this but need to retrieve it e.g., "Ashes 2025-26"
     liveURL: Option[String],
     reportURL: Option[String],
     infoURL: String,

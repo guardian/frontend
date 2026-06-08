@@ -18,6 +18,8 @@ object PaFeed {
   val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", ZoneId.of("UTC"))
 }
 
+case class CompetitionMatch(matchId: String, competitionId: String, competitionName: String)
+
 class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materializer: Materializer) extends GuLogging {
 
   private val paEndpoint = "https://cricket-api.guardianapis.com/v1"
@@ -48,19 +50,21 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
       .getOrElse(Future.failed(CricketFeedException("No cricket api key found")))
   }
 
-  def getMatch(matchId: String)(implicit executionContext: ExecutionContext): Future[cricketModel.Match] = {
+  def getMatch(
+      competitionMatch: CompetitionMatch,
+  )(implicit executionContext: ExecutionContext): Future[cricketModel.Match] = {
     for {
-      lineups: String <- getMatchPaResponse(s"match/$matchId/line-ups")
-      details: String <- getMatchPaResponse(s"match/$matchId")
-      scorecard: String <- getMatchPaResponse(s"match/$matchId/scorecard")
+      lineups: String <- getMatchPaResponse(s"match/${competitionMatch.matchId}/line-ups")
+      details: String <- getMatchPaResponse(s"match/${competitionMatch.matchId}")
+      scorecard: String <- getMatchPaResponse(s"match/${competitionMatch.matchId}/scorecard")
     } yield {
-      Parser.parseMatch(scorecard, details, lineups, matchId)
+      Parser.parseMatch(scorecard, details, lineups, competitionMatch)
     }
   }
 
-  def getMatchIds(team: CricketTeam, fromDate: LocalDate)(implicit
+  def getCompetitionMatches(team: CricketTeam, fromDate: LocalDate)(implicit
       executionContext: ExecutionContext,
-  ): Future[Seq[String]] = {
+  ): Future[Seq[CompetitionMatch]] = {
     Future
       .sequence(
         Seq(
@@ -73,7 +77,7 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
 
   private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit
       executionContext: ExecutionContext,
-  ): Future[Seq[String]] = {
+  ): Future[Seq[CompetitionMatch]] = {
 
     credentials
       .map(header =>
@@ -89,7 +93,23 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
             .get()
             .map { response =>
               response.status match {
-                case 200 => XML.loadString(response.body) \\ "match" map (content => (content \ "@id").text)
+                case 200 =>
+                  val xml = XML.loadString(response.body)
+
+                  // Iterate over each competition
+                  (xml \ "competition").flatMap { comp =>
+                    val compId = (comp \ "@id").text
+                    val compName = (comp \ "name").text
+
+                    // Iterate over the matches within this competition
+                    (comp \ "match").map { m =>
+                      CompetitionMatch(
+                        matchId = (m \ "@id").text,
+                        competitionId = compId,
+                        competitionName = compName,
+                      )
+                    }
+                  }
 
                 case 204 => Nil // No content for this date range.
 

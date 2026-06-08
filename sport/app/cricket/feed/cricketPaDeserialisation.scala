@@ -11,7 +11,7 @@ import java.util.TimeZone
 
 object Parser {
 
-  def parseMatch(scorecard: String, detail: String, lineups: String, matchId: String): Match = {
+  def parseMatch(scorecard: String, detail: String, lineups: String, competitionMatch: CompetitionMatch): Match = {
     val matchData = XML.loadString(detail) \ "match"
     val matchDetail = parseMatchDetail(matchData)
     val lineupData = XML.loadString(lineups)
@@ -21,13 +21,15 @@ object Parser {
       teams = parseTeams(lineupData \ "match" \ "team"),
       innings = parseInnings(scorecardData \ "match" \ "innings"),
       competitionName = matchDetail.competitionName,
+      stage = matchDetail.competitionName,
+      competitionNameV2 = competitionMatch.competitionName,
       venueName = matchDetail.venueName,
       result = matchDetail.status,
       currentDay = matchDetail.currentDay,
       totalDays = matchDetail.totalDays,
       gameDate = matchDetail.gameDate,
       officials = matchDetail.officials,
-      matchId = matchId,
+      matchId = competitionMatch.matchId,
       fullResult = matchDetail.result,
     )
   }
