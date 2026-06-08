@@ -16,7 +16,7 @@ object DeadCodeDetector {
 
   def findMethodOwnerClass(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Option[SymbolInformation] = {
     if (symbolInFile.symbol.kind.isMethod) {
-      val classDefinitionSymbol = symbolInFile.symbol.symbol.replaceFirst("\\#.*(\\(.*\\))?\\.$", "#")
+      val classDefinitionSymbol = symbolInFile.symbol.symbol.replaceFirst("\\#[^#]*(\\(.*\\))?\\.$", "#")
       semanticDB.findDefinition(SemanticDBSymbol(classDefinitionSymbol)) match {
         case Some((_, definition)) => Some(definition)
         case _                     => None
@@ -143,24 +143,6 @@ object DeadCodeDetector {
   def isMysteriousSymbol(symbolInFile: SymbolInFile): Boolean = {
     symbolInFile.symbol.symbol.matches("^local\\d+$")
   }
-//
-//  def isCompanionObjectSerialising()
-//
-//  def isSerialisedCaseClass(symbolInFile: SymbolInFile, semanticDB: SemanticDB): Boolean = {
-//    if (symbolInFile.symbol.kind.isMethod) {
-//      findMethodOwnerClass(symbolInFile, semanticDB) match {
-//        case Some(definition) =>
-//          definition.kind.isClass && (definition.properties & CASE_MODIFIER) != 0 &&
-//            findMethodCompanionObject(symbolInFile, semanticDB) match {
-//            case Some(companion) =>
-//              companion.kind.isObject && (companion.properties & CASE_MODIFIER) != 0 &&
-//              companion.symbol.contains("Serialiser")
-//            case _ => false
-//          }
-//        case _ => false
-//      }
-//    } else false
-//  }
 
   val SERIALISING_REFERENCES = Set(
     "play/api/libs/json/OWrites#",
@@ -200,11 +182,6 @@ object DeadCodeDetector {
   def main(args: Array[String]): Unit = {
 
     val semanticDB = SourceLoader.loadSemanticDB(Path.of("."))
-
-    semanticDB.findDefinition(SemanticDBSymbol("model/dotcomrendering/Config#frontendAssetsFullURL.")).foreach {
-      case (file, definition) =>
-        println(s"Found model/dotcomrendering/Config#frontendAssetsFullURL definition in ${file}: ${definition}")
-    }
 
     val serialisedCaseClasses = buildListOfSerialisedClasses(semanticDB)
 
