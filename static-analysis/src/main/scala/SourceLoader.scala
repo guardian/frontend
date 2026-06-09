@@ -35,6 +35,24 @@ case class ScalaSources(private val sources: Map[SourceRef, Source]) {
 }
 
 case class SemanticDB(private val documents: Map[SourceRef, TextDocument]) {
+  private val byCoordinates: MapView[SymbolCoordinates, Seq[(SourceRef, SymbolOccurrence)]] = documents.toSeq
+    .flatMap { case (filePath, document) =>
+      document.occurrences.flatMap { occurrence =>
+        occurrence.range.map { range =>
+          val coordinates = SymbolCoordinates(
+            filePath,
+            range.startLine,
+            range.startCharacter,
+            range.endLine,
+            range.endCharacter,
+          )
+          coordinates -> (filePath, occurrence)
+        }
+      }
+    }
+    .groupBy(_._1)
+    .view
+    .mapValues(_.map(_._2))
   // Giant map to look up all occurrences of a symbol across all documents, keyed by the symbol name
   private val occurrences: MapView[SemanticDBSymbol, Seq[(SourceRef, SymbolOccurrence)]] = documents.toSeq
     .flatMap { case (filePath, document) =>
@@ -57,6 +75,9 @@ case class SemanticDB(private val documents: Map[SourceRef, TextDocument]) {
   def allDocuments = documents.toSeq
   def findDefinition(symbol: SemanticDBSymbol): Option[(SourceRef, SymbolInformation)] =
     symbolInformation.getOrElse(symbol, Seq.empty).headOption
+  def getByCoordinates(coordinates: SymbolCoordinates): Seq[(SourceRef, SymbolOccurrence)] =
+    byCoordinates.getOrElse(coordinates, Seq.empty)
+  def getDocument(filePath: SourceRef): Option[TextDocument] = documents.get(filePath)
 }
 
 object SourceLoader {
