@@ -380,6 +380,7 @@ object DotcomRenderingFootballTablesDataModel {
 case class DotcomRenderingFootballMatchSummaryDataModel(
     // this field will need to get renamed to matchStats in upcoming PR
     footballMatch: MatchStats,
+    matchStats: MatchStats,
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
@@ -416,6 +417,7 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
     )
     DotcomRenderingFootballMatchSummaryDataModel(
       footballMatch = matchStats,
+      matchStats = matchStats,
       matchInfo = matchInfo,
       group = group,
       competitionName = competitionName,
