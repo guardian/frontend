@@ -378,7 +378,6 @@ object DotcomRenderingFootballTablesDataModel {
 }
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
-    // this field will need to get renamed to matchStats in upcoming PR
     matchStats: MatchStats,
     matchInfo: FootballMatch,
     group: Option[Group],
