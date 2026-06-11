@@ -185,18 +185,20 @@ object CompetitionDisplayHelpers {
       .replace("Ladies", "")
       .replace("Holland", "The Netherlands")
       .replace("Union Saint Gilloise", "Union Saint-Gilloise")
+      .replace("Ivory Coast", "Côte d’Ivoire")
+      .replace("Bialystock", "Białystok")
+      .replace("Bosnia-Herzegovina", "Bosnia and Herzegovina")
+      .replace("Congo DR", "DR Congo")
+      .replace("Curacao", "Curaçao")
+      .replace("Czech Republic", "Czechia");
   }
 
   def cleanTeamNameNextGenApi(teamName: String): String = {
-    teamName
-      .replace("Ladies", "")
-      .replace("Holland", "Netherlands")
+    cleanTeamName(teamName)
   }
 
   def cleanTeamNameSpider(teamName: String): String = {
-    teamName
-      .replace("Czech Republic", "Czech Rep.")
-      .replace("Holland", "Netherlands")
+    cleanTeamName(teamName)
       .replace("Winner of Match", "Winner match")
   }
 
