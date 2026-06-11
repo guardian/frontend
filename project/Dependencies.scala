@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.31"
+  val identityLibVersion = "4.37.0"
   val awsVersion = "2.44.4"
   val capiVersion = "44.0.0"
   val faciaVersion = "32.0.0"
@@ -16,7 +16,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
   val awsS3 = "software.amazon.awssdk" % "s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.2"
   val awsSes = "software.amazon.awssdk" % "ses" % awsVersion
   val awsSns = "software.amazon.awssdk" % "sns" % awsVersion
   val awsSts = "software.amazon.awssdk" % "sts" % awsVersion
@@ -85,7 +85,7 @@ object Dependencies {
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
 
-  val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
+  val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "2.0.0"
   val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.7"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
