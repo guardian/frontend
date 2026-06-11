@@ -186,6 +186,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -210,12 +216,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -442,6 +442,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -466,12 +472,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -1243,6 +1243,12 @@
 					"url": "/us/soccer",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -1267,12 +1273,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -2003,6 +2003,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2027,12 +2033,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -2629,6 +2629,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2653,12 +2659,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -2830,6 +2830,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -2854,12 +2860,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -3640,6 +3640,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3664,12 +3670,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
@@ -3841,6 +3841,12 @@
 					"url": "/football",
 					"children": [
 						{
+							"title": "World Cup 2026",
+							"url": "/football/world-cup-2026",
+							"children": [],
+							"classList": []
+						},
+						{
 							"title": "Live scores",
 							"url": "/football/live",
 							"longTitle": "football/live",
@@ -3865,12 +3871,6 @@
 							"title": "Results",
 							"url": "/football/results",
 							"longTitle": "football/results",
-							"children": [],
-							"classList": []
-						},
-						{
-							"title": "World Cup 2026",
-							"url": "/football/world-cup-2026",
 							"children": [],
 							"classList": []
 						},
