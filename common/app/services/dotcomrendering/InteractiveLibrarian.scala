@@ -63,7 +63,7 @@ object InteractiveLibrarian extends GuLogging {
   private def commitCleanedDocumentToS3(s3path: String, document: String): (Boolean, String) = {
     try {
       // On local bucket is: aws-frontend-archive-code
-      services.S3Archive.putPrivate(s3path, document, "text/html")
+      services.S3Archive.putPublic(s3path, document, "text/html")
       (true, "")
     } catch {
       case e: Exception => (false, e.getMessage)
