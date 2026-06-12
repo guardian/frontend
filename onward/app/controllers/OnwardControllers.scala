@@ -19,7 +19,6 @@ trait OnwardControllers {
   def contentApiClient: ContentApiClient
   def stocksData: StocksData
   def geoMostPopularAgent: GeoMostPopularAgent
-  def dayMostPopularAgent: DayMostPopularAgent
   def mostPopularAgent: MostPopularAgent
   def deeplyReadAgent: DeeplyReadAgent
   def mostReadAgent: MostReadAgent
@@ -31,13 +30,11 @@ trait OnwardControllers {
   def remoteRenderer: DotcomRenderingService
   def popularInTagService: PopularInTagService
 
-  lazy val navigationController = wire[NavigationController]
   lazy val mostPopularController = wire[MostPopularController]
   lazy val topStoriesController = wire[TopStoriesController]
   lazy val relatedController = wire[RelatedController]
   lazy val popularInTag = wire[PopularInTag]
   lazy val changeEditionController = wire[ChangeEditionController]
-  lazy val mediaInSectionController = wire[MediaInSectionController]
   lazy val mostViewedVideoController = wire[MostViewedVideoController]
   lazy val mostViewedAudioController = wire[MostViewedAudioController]
   lazy val mostViewedGalleryController = wire[MostViewedGalleryController]

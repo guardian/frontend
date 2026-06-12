@@ -16,7 +16,6 @@ class OnwardJourneyLifecycle(
     pekkoAsync: PekkoAsync,
     mostReadAgent: MostReadAgent,
     geoMostPopularAgent: GeoMostPopularAgent,
-    dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
     mostViewedAudioAgent: MostViewedAudioAgent,
     mostViewedGalleryAgent: MostViewedGalleryAgent,
@@ -91,16 +90,10 @@ class OnwardJourneyLifecycle(
       mostReadAgent.refresh()
     }
 
-    // Every 60 minutes
-    // Added 30 second offset to avoid conflicting with the jobs that run every 5 minutes
-    // 07m:30s, 37m:30s, 07m:30s, etc
-    jobs.schedule("DayMostPopularAgentRefreshJob", "30 7 * * * ?") { dayMostPopularAgent.refresh() }
-
     pekkoAsync.after1s {
       mostPopularAgent.refresh()
       deeplyReadAgent.refresh()
       geoMostPopularAgent.refresh()
-      dayMostPopularAgent.refresh()
       mostViewedAudioAgent.refresh()
       mostViewedGalleryAgent.refresh()
       mostViewedVideoAgent.refresh()

@@ -32,12 +32,6 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     )
   }
 
-  "Simple menu" should "just return the 5 primary links" in {
-    SimpleMenu(Uk).pillars should be(
-      Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar),
-    )
-  }
-
   "On `/index/contributors`, the parent" should "be Opinion" in {
     val edition = Uk
     val root = NavMenu.navRoot(edition)
