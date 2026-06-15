@@ -65,7 +65,7 @@ class FootballLifecycle(
       competitionsService.refreshMatchDay(defaultClock)
     }
 
-    // if preview "Every hour at 40 minutes" otherwise "Every minute"
+    // if preview "Every hour at 40 minutes" otherwise "Every 30 seconds"
     jobs.schedule("MaybeMatchDayAgentRefreshJob", if (context.isPreview) "0 41 * * * ?" else "0/30 * * * * ?") {
       competitionsService.maybeRefreshLiveMatches(defaultClock)
     }
