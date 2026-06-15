@@ -43,6 +43,7 @@ class EmailFormServiceTest
       campaignCode = None,
       googleRecaptchaResponse = None,
       name = None,
+      country = None,
     )
 
     val multipleNewslettersBaseForm: EmailFormManyNewsletters = EmailFormManyNewsletters(

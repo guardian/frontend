@@ -24,10 +24,10 @@
                 <div class="football-match__name"><b>Final</b></div>
             }
             @if(fm.isFixture){
-                <div class="football-match__date">
+                <time class="football-match__date" datetime="@fm.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ").withZone(Edition(request).timezoneId))">
                     <span class="football-match__kickoff">@fm.date.format(DateTimeFormatter.ofPattern("HH:mm  z").withZone(Edition(request).timezoneId))</span>
                     @fm.date.withZoneSameInstant(Edition(request).timezoneId).toLocalDate.format(DateTimeFormatter.ofPattern("E dd MMMM "))
-                </div>
+                </time>
             }
 
             @fm.comments.map { comments =>

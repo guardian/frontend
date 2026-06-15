@@ -1,7 +1,7 @@
 package utils
 
 import com.gu.contentapi.client.model.v1.{BlockElement, ContentAtomElementFields, ElementType, TextElementFields}
-import model.content.InteractiveAtom
+import model.content.{Atoms, InteractiveAtom}
 import model.meta.BlocksOn
 import model.{ArticlePage, Content, ContentPage, InteractivePage}
 import play.api.libs.json.{Json, Reads}
@@ -57,7 +57,11 @@ object LiveHarness {
   ): BlocksOn[P] => BlocksOn[P] = _.mapBoth(
     page => {
       val content = page.item.content
-      updater.update(page, content.copy(atoms = content.atoms.map(_.copy(interactives = harnessAtoms.map(_.atom)))))
+      val interactives = harnessAtoms.map(_.atom)
+      val updatedAtoms = content.atoms
+        .getOrElse(emptyAtoms)
+        .copy(interactives = interactives)
+      updater.update(page, content.copy(atoms = Some(updatedAtoms)))
     },
     blocks =>
       blocks.copy(body = blocks.body.map { bodyBlocks =>
@@ -65,6 +69,22 @@ object LiveHarness {
           block.copy(elements = insertAtomsAtNthPoints(block.elements.toSeq, harnessAtoms))
         }
       }),
+  )
+
+  private val emptyAtoms = Atoms(
+    audios = Seq.empty,
+    charts = Seq.empty,
+    commonsdivisions = Seq.empty,
+    explainers = Seq.empty,
+    guides = Seq.empty,
+    interactives = Seq.empty,
+    media = Seq.empty,
+    profiles = Seq.empty,
+    qandas = Seq.empty,
+    quizzes = Seq.empty,
+    reviews = Seq.empty,
+    timelines = Seq.empty,
+    callToAction = Seq.empty,
   )
 
   private val voidTextElements = Set("br", "hr", "wbr")

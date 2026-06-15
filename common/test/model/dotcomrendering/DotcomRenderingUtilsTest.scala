@@ -1,6 +1,5 @@
 package model.dotcomrendering.pageElements
 
-import model.meta.BlocksOn
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes, Blocks, CapiDateTime, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.contentapi.client.utils.format.LiveBlogDesign
@@ -160,40 +159,10 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     DotcomRenderingUtils.ensureSummaryTitle(testBlock1).title should be(Some("I have a title"))
   }
 
-  "blocksForLiveblogPage" should "return only the key events & summary blocks when keye events filter is on" in {
-    val requested = getRequestedBlocks(
-      keyEvents = Seq(1, 2, 4, 6, 7),
-      summaries = Seq(3, 5, 8),
-      latest60 = Seq(6, 7, 8, 9, 10),
-    )
-    when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
-
-    val pageBlocks = BlocksOn(getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8)), testCapiBlocks)
-
-    val result = DotcomRenderingUtils.blocksForLiveblogPage(pageBlocks, true)
-
-    result.map(_.id) should equal(Seq("8", "7", "6", "5", "4", "3"))
-  }
-
-  it should "return blocks from the latest 60 that are included in the page, keeping the order of latest60, given key events filter is off" in {
-    val requested = getRequestedBlocks(
-      keyEvents = Seq(1, 2, 4, 6, 7),
-      summaries = Seq(3, 5, 8),
-      latest60 = Seq(6, 7, 8, 9, 10),
-    )
-    when(testCapiBlocks.requestedBodyBlocks) thenReturn (Some(requested))
-
-    val pageBlocks = BlocksOn(getLiveblogPageWithBlockIds(Seq(3, 4, 5, 6, 7, 8)), testCapiBlocks)
-
-    val result = DotcomRenderingUtils.blocksForLiveblogPage(pageBlocks, false)
-
-    result.map(_.id) should equal(Seq("6", "7", "8"))
-  }
-
   def getLiveblogPageWithBlockIds(pageBlokIds: Seq[Int]) = {
     val liveblogBlocks = pageBlokIds.map(id => getBodyBlockWithId(id))
     val liveblogCurrentPage = LiveBlogCurrentPage(
-      currentPage = FirstPage(liveblogBlocks, filterKeyEvents = true),
+      currentPage = FirstPage(liveblogBlocks),
       pagination = None,
       pinnedBlock = None,
     )
@@ -202,7 +171,6 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
       article = testArticle,
       currentPage = liveblogCurrentPage,
       related = relatedContent,
-      filterKeyEvents = true,
     )
   }
 

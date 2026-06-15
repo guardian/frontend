@@ -1,6 +1,5 @@
 package model
 
-import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog._
 import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
@@ -60,14 +59,13 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
       LiveBlogCurrentPage.firstPage(
         2,
         Blocks(1, Nil, None, Map(CanonicalLiveBlog.firstPage -> Seq(fakeBlock(1)))),
-        false,
       )
     }
 
     result should be(
       Some(
         LiveBlogCurrentPage(
-          currentPage = FirstPage(Seq(fakeBlock(1)), filterKeyEvents = false),
+          currentPage = FirstPage(Seq(fakeBlock(1))),
           pagination = None,
           pinnedBlock = None,
         ),
@@ -102,7 +100,6 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
           CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
         ),
       ),
-      false,
     )
     result.get.pinnedBlock should be(Some(latestPinnedBlock))
     result.get.pinnedBlock should not be (Some(olderPinnedBlock))
@@ -127,102 +124,10 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
           CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
         ),
       ),
-      false,
     )
 
     result.get.pinnedBlock should be(Some(expectedPinnedBlock))
     result.get.currentPage.blocks.headOption.get.id should not be (expectedPinnedBlock.id)
-  }
-
-  it should "still include pinned post when filtering for key events" in {
-    val blocks = fakeBlocks(10, 3, 4)
-    val expectedPinnedBlock = fakeBlock(4, false, true).copy(id = "4-pinned")
-    val requestedBodyBlocks = Map(
-      CanonicalLiveBlog.firstPage -> blocks.take(3),
-      CanonicalLiveBlog.pinned -> blocks.slice(6, 10),
-      CanonicalLiveBlog.timeline -> blocks.slice(3, 6),
-      CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
-      CanonicalLiveBlog.summary -> Seq.empty,
-    )
-    val result = LiveBlogCurrentPage.firstPage(
-      2,
-      Blocks(
-        3,
-        Nil,
-        None,
-        requestedBodyBlocks,
-      ),
-      true,
-    )
-
-    result.get.pinnedBlock should be(Some(expectedPinnedBlock))
-  }
-
-  it should "return none when no summary key exist in requestedBodyBlocks and the filter is on" in {
-    val blocks = fakeBlocks(5, 4)
-    val requestedBodyBlocks = Map(
-      CanonicalLiveBlog.firstPage -> blocks.take(3),
-      CanonicalLiveBlog.pinned -> List(),
-      CanonicalLiveBlog.timeline -> blocks.take(6),
-      CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
-    );
-    val result = LiveBlogCurrentPage.firstPage(
-      2,
-      Blocks(
-        3,
-        Nil,
-        None,
-        requestedBodyBlocks,
-      ),
-      true,
-    )
-
-    result should be(None)
-  }
-
-  it should "return none when no key events key exist in requestedBodyBlocks and the filter is on" in {
-    val blocks = fakeBlocks(5, 0, 0, 4)
-    val requestedBodyBlocks = Map(
-      CanonicalLiveBlog.firstPage -> blocks.take(3),
-      CanonicalLiveBlog.pinned -> List(),
-      CanonicalLiveBlog.summary -> blocks.take(6),
-      CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
-    )
-    val result = LiveBlogCurrentPage.firstPage(
-      2,
-      Blocks(
-        3,
-        Nil,
-        None,
-        requestedBodyBlocks,
-      ),
-      true,
-    )
-
-    result should be(None)
-  }
-
-  it should "display a page with no blocks when in requestedBodyBlocks key events and summary lists are empty and filter is on" in {
-    val blocks = fakeBlocks(5, 0, 0, 4)
-    val requestedBodyBlocks = Map(
-      CanonicalLiveBlog.firstPage -> blocks.take(3),
-      CanonicalLiveBlog.pinned -> List(),
-      CanonicalLiveBlog.timeline -> List(),
-      CanonicalLiveBlog.summary -> List(),
-      CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq,
-    )
-    val result = LiveBlogCurrentPage.firstPage(
-      2,
-      Blocks(
-        3,
-        Nil,
-        None,
-        requestedBodyBlocks,
-      ),
-      true,
-    )
-
-    should(result, currentPage = FirstPage(List(), true), pagination = None)
   }
 
   it should "allow 3 blocks on one page" in {
@@ -236,10 +141,9 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         None,
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
-      false,
     )
 
-    should(result, FirstPage(blocks, filterKeyEvents = false), None)
+    should(result, FirstPage(blocks), None)
   }
 
   it should "put 4 blocks on two pages (main page)" in {
@@ -252,14 +156,13 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         None,
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
-      false,
     )
 
     val expected = blocks.take(2)
     val expectedOldestPage =
-      BlockPage(blocks = Nil, blockId = "1", pageNumber = 2, filterKeyEvents = false)
+      BlockPage(blocks = Nil, blockId = "1", pageNumber = 2)
     val expectedOlderPage =
-      BlockPage(blocks = Nil, blockId = "2", pageNumber = 2, filterKeyEvents = false)
+      BlockPage(blocks = Nil, blockId = "2", pageNumber = 2)
     val expectedPagination = Some(
       N1Pagination(
         newest = None,
@@ -270,7 +173,7 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
       ),
     )
 
-    should(result, currentPage = FirstPage(expected, false), pagination = expectedPagination)
+    should(result, currentPage = FirstPage(expected), pagination = expectedPagination)
   }
 
   it should "put 5 blocks on two pages (main page)" in {
@@ -283,14 +186,13 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         None,
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
-      false,
     )
 
-    val expectedCurrentPage = FirstPage(blocks = blocks.take(3), filterKeyEvents = false)
+    val expectedCurrentPage = FirstPage(blocks = blocks.take(3))
     val expectedOldestPage =
-      BlockPage(blocks = Nil, blockId = "1", pageNumber = 2, filterKeyEvents = false)
+      BlockPage(blocks = Nil, blockId = "1", pageNumber = 2)
     val expectedOlderPage =
-      BlockPage(blocks = Nil, blockId = "2", pageNumber = 2, filterKeyEvents = false)
+      BlockPage(blocks = Nil, blockId = "2", pageNumber = 2)
     val expectedPagination = Some(
       N1Pagination(
         newest = None,
@@ -303,57 +205,17 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
     should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
   }
 
-  it should "only display key events and summaries" in {
-    // fakeBlocks returns 11 blocks =>  3 regular blocks, 5 key event blocks, 1 pinned blocks and 2 summary blocks
-    val blocks = fakeBlocks(11, 5, 1, 2)
-    val keyBlocks = blocks.filter(_.eventType == KeyEvent)
-    val summaryBlocks = blocks.filter(_.eventType == SummaryEvent)
-    val result = LiveBlogCurrentPage.firstPage(
-      2,
-      Blocks(
-        5,
-        Nil,
-        None,
-        Map(
-          CanonicalLiveBlog.firstPage -> blocks.take(4),
-          CanonicalLiveBlog.oldestPage -> blocks.takeRight(2),
-          CanonicalLiveBlog.timeline -> keyBlocks,
-          CanonicalLiveBlog.summary -> summaryBlocks,
-        ),
-      ),
-      true,
-    )
-
-    val expectedCurrentPage = FirstPage(blocks = keyBlocks.take(3), filterKeyEvents = true)
-    val expectedOldestPage =
-      BlockPage(blocks = Nil, blockId = "1", pageNumber = 3, filterKeyEvents = true)
-    val expectedOlderPage =
-      BlockPage(blocks = Nil, blockId = "5", pageNumber = 2, filterKeyEvents = true)
-    val expectedPagination = Some(
-      N1Pagination(
-        newest = None,
-        newer = None,
-        older = Some(expectedOlderPage),
-        oldest = Some(expectedOldestPage),
-        numberOfPages = 3,
-      ),
-    )
-
-    should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
-  }
-
   "findPageWithBlock" should "put 4 blocks on two pages - older page link" in {
     val blocks = fakeBlocks(4)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2")
 
     val expectedCurrentPage =
       BlockPage(
         blocks = blocks.takeRight(2),
         blockId = "2",
         pageNumber = 2,
-        filterKeyEvents = false,
       )
-    val expectedNewestPage = FirstPage(blocks.take(2), filterKeyEvents = false)
+    val expectedNewestPage = FirstPage(blocks.take(2))
     val expectedPagination = Some(
       N1Pagination(
         newest = Some(expectedNewestPage),
@@ -369,16 +231,15 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 4 blocks on two pages - link to another block on the page" in {
     val blocks = fakeBlocks(4)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "1", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "1")
 
     val expectedCurrentPage =
       BlockPage(
         blocks = blocks.takeRight(2),
         blockId = "2",
         pageNumber = 2,
-        filterKeyEvents = false,
       )
-    val expectedNewestPage = FirstPage(blocks.take(2), filterKeyEvents = false)
+    val expectedNewestPage = FirstPage(blocks.take(2))
     val expectedPagination = Some(
       N1Pagination(
         newest = Some(expectedNewestPage),
@@ -394,16 +255,15 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 5 blocks on two pages (block 3 from oldest page)" in {
     val blocks = fakeBlocks(5)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2")
 
     val expectedCurrentPage =
       BlockPage(
         blocks = blocks.takeRight(2),
         blockId = "2",
         pageNumber = 2,
-        filterKeyEvents = false,
       )
-    val expectedNewestPage = FirstPage(blocks.take(3), filterKeyEvents = false)
+    val expectedNewestPage = FirstPage(blocks.take(3))
     val expectedPagination = Some(
       N1Pagination(
         newest = Some(expectedNewestPage),
@@ -427,14 +287,13 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
         None,
         Map(CanonicalLiveBlog.firstPage -> blocks.take(4), CanonicalLiveBlog.oldestPage -> blocks.lastOption.toSeq),
       ),
-      false,
     )
 
-    val expectedCurrentPage = FirstPage(blocks = blocks.take(2), filterKeyEvents = false)
+    val expectedCurrentPage = FirstPage(blocks = blocks.take(2))
     val expectedMiddlePage =
-      BlockPage(blocks = Nil, blockId = "4", pageNumber = 2, filterKeyEvents = false)
+      BlockPage(blocks = Nil, blockId = "4", pageNumber = 2)
     val expectedOldestPage =
-      BlockPage(blocks = Nil, blockId = "1", pageNumber = 3, filterKeyEvents = false)
+      BlockPage(blocks = Nil, blockId = "1", pageNumber = 3)
     val expectedPagination = Some(
       N1Pagination(
         newest = None,
@@ -450,22 +309,20 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 6 blocks on 3 pages (middle page)" in {
     val blocks = fakeBlocks(6)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "4", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "4")
 
     val expectedCurrentPage =
       BlockPage(
         blocks = blocks.slice(2, 4),
         blockId = "4",
         pageNumber = 2,
-        filterKeyEvents = false,
       )
-    val expectedFirstPage = FirstPage(blocks = blocks.take(2), filterKeyEvents = false)
+    val expectedFirstPage = FirstPage(blocks = blocks.take(2))
     val expectedOlderPage =
       BlockPage(
         blocks = blocks.takeRight(2),
         blockId = "2",
         pageNumber = 3,
-        filterKeyEvents = false,
       )
     val expectedPagination = Some(
       N1Pagination(
@@ -482,22 +339,20 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
 
   it should "put 6 blocks on 3 pages (oldest page)" in {
     val blocks = fakeBlocks(6)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", false)
+    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2")
 
     val expectedCurrentPage =
       BlockPage(
         blocks = blocks.takeRight(2),
         blockId = "2",
         pageNumber = 3,
-        filterKeyEvents = false,
       )
-    val expectedFirstPage = FirstPage(blocks = blocks.take(2), filterKeyEvents = false)
+    val expectedFirstPage = FirstPage(blocks = blocks.take(2))
     val expectedMiddlePage =
       BlockPage(
         blocks = blocks.slice(2, 4),
         blockId = "4",
         pageNumber = 2,
-        filterKeyEvents = false,
       )
     val expectedPagination = Some(
       N1Pagination(
@@ -510,48 +365,6 @@ class LiveBlogCurrentPageTest extends AnyFlatSpec with Matchers {
     )
 
     should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
-  }
-
-  it should "display only key events and summaries when the filter is on" in {
-    val blocks = fakeBlocks(12, 4, 0, 2)
-    val keyAndSummaryBlocks = blocks.filter(block => block.eventType == KeyEvent || block.eventType == SummaryEvent)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", true)
-
-    val expectedCurrentPage = {
-      BlockPage(
-        blocks = keyAndSummaryBlocks.takeRight(2),
-        blockId = "2",
-        pageNumber = 3,
-        filterKeyEvents = true,
-      )
-    }
-    val expectedFirstPage =
-      FirstPage(blocks = keyAndSummaryBlocks.take(2), filterKeyEvents = true)
-    val expectedMiddlePage =
-      BlockPage(
-        blocks = keyAndSummaryBlocks.slice(2, 4),
-        blockId = "4",
-        pageNumber = 2,
-        filterKeyEvents = true,
-      )
-    val expectedPagination = Some(
-      N1Pagination(
-        newest = Some(expectedFirstPage),
-        newer = Some(expectedMiddlePage),
-        older = None,
-        oldest = None,
-        numberOfPages = 3,
-      ),
-    )
-
-    should(result, currentPage = expectedCurrentPage, pagination = expectedPagination)
-  }
-
-  it should "display nothing when no key events exist and the filter is on" in {
-    val blocks = fakeBlocks(6, 0)
-    val result = LiveBlogCurrentPage.findPageWithBlock(2, blocks, "2", true)
-
-    result should be(None)
   }
 
   case class TestFakeBlocks(numberOfBlocks: Int, numberOfKeyEventsBlocks: Int, sinceBlockId: Option[String]) {

@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import experiments.ActiveExperiments
 
 trait ServerSideExperimentSwitches {
   val ServerSideExperiments = {

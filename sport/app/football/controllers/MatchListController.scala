@@ -3,7 +3,7 @@ package football.controllers
 import common.{Edition, JsonComponent}
 import common._
 import feed.Competitions
-import football.model.{DotcomRenderingFootballMatchListDataModel, MatchesList}
+import football.model.DotcomRenderingFootballMatchListDataModel
 import football.model.{DotcomRenderingFootballMatchDayDataModel, MatchesList}
 import implicits.{HtmlFormat, JsonFormat, Requests}
 import model.Cached.RevalidatableResult

@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.44.12"
-  val capiVersion = "43.0.0"
-  val faciaVersion = "31.0.0"
+  val capiVersion = "44.0.0"
+  val faciaVersion = "32.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -29,7 +29,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "39.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "41.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -107,8 +107,8 @@ object Dependencies {
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.1"
-  val jacksonDatabindVersion = "2.21.1"
+  val jacksonVersion = "2.21.2"
+  val jacksonDatabindVersion = "2.21.2"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion

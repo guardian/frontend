@@ -23,6 +23,7 @@ import conf.Configuration
 import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
 import model.content._
 import model.dotcomrendering.InteractiveSwitchOver
+import common.GuLogging
 import model.dotcomrendering.pageElements.CartoonExtraction._
 import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.joda.time.DateTime
@@ -587,6 +588,7 @@ case class ProductBlockElement(
     image: Option[ProductImage],
     content: Seq[PageElement],
     displayType: ProductDisplayType,
+    id: String,
 ) extends PageElement
 object ProductBlockElement {
   implicit val ProductBlockElementImageWrites: Writes[ProductImage] = Json.writes[ProductImage]
@@ -597,6 +599,35 @@ object ProductBlockElement {
     JsString(displayType.name)
   }
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
+}
+
+case class RecipeFeaturedImage(
+    url: String,
+    mediaId: String,
+    cropId: String,
+    source: Option[String],
+    photographer: Option[String],
+    caption: Option[String],
+    imageType: Option[String],
+    width: Option[Int],
+    height: Option[Int],
+    mediaApiUri: Option[String],
+)
+object RecipeFeaturedImage {
+  implicit val format: OFormat[RecipeFeaturedImage] = Json.format[RecipeFeaturedImage]
+}
+
+// NOTE: This case class intentionally exposes only a subset of the full recipe schema.
+// If you need to add more fields, refer to the canonical spec and extend accordingly:
+// https://github.com/guardian/recipes-backend/blob/main/schema/recipe-v3.json
+case class RecipeBlockElement(
+    id: String,
+    title: Option[String],
+    description: Option[String],
+    featuredImage: Option[RecipeFeaturedImage],
+) extends PageElement
+object RecipeBlockElement {
+  implicit val format: OFormat[RecipeBlockElement] = Json.format[RecipeBlockElement]
 }
 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
@@ -953,7 +984,7 @@ object YoutubeBlockElement {
 }
 
 //noinspection ScalaStyle
-object PageElement {
+object PageElement extends GuLogging {
 
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
@@ -1003,6 +1034,7 @@ object PageElement {
       case _: TimelineBlockElement         => true
       case _: LinkBlockElement             => true
       case _: ProductBlockElement          => true
+      case _: RecipeBlockElement           => true
       case _: ReporterCalloutBlockElement  => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
@@ -1683,7 +1715,25 @@ object PageElement {
         }.toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
-      case _                         => Nil
+
+      case Recipe =>
+        element.recipeTypeData
+          .flatMap(_.recipeJson)
+          .flatMap { raw =>
+            scala.util.Try(Json.parse(raw)).toOption.orElse {
+              log.warn(s"RecipeBlockElement: failed to parse recipeJson as JSON for element ${element.`type`}")
+              None
+            }
+          }
+          .flatMap { json =>
+            json.validate[RecipeBlockElement].asOpt.orElse {
+              log.warn(s"RecipeBlockElement: JSON did not validate against RecipeBlockElement schema: $json")
+              None
+            }
+          }
+          .toList
+
+      case _ => Nil
     }
   }
 
@@ -1900,6 +1950,7 @@ object PageElement {
         .toList,
       image = product.image.flatMap(apiImage => createProductImage(apiImage)),
       displayType = product.displayType,
+      id = product.id.getOrElse(""),
     )
 
   }
