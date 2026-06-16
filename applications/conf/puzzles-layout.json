@@ -50,7 +50,7 @@
 							"type": "sudoku",
 							"set": "easy",
 							"slug": "sudoku-easy",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
+							"url": "https://tg.amuselabs.com/guardian/crossword?id=guardian-wordwheel-20260529&set=guardian-word-wheel&picker=date-picker&src=https%3A%2F%2Ftg.amuselabs.com%2Fguardian%2Fdate-picker%3Fset%3Dguardian-word-wheel%26idx%3D1&loadToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI5ZTQ0YmUxMi02ZWU1LTQxZmItODBlZC02MTFiZTE4MzBiOWQiLCJzZXQiOiJndWFyZGlhbi13b3JkLXdoZWVsIiwidWlkU3JjIjowLCJpZCI6Imd1YXJkaWFuLXdvcmR3aGVlbC0yMDI2MDUyOSIsInRpbWVzdGFtcCI6MTc4MDA0NjkzMTQ3Mn0.kyAGOVP6hfvL-UcY91_jM8uka4FrWbluePO1P9f7Tlw&deepLink=1",
 							"index": 1,
 							"variant": "iframe-page"
 						}

@@ -56,9 +56,11 @@ object DotcomPuzzleIframePageRenderingDataModel {
     )
 
     val combinedConfig =
-      Json.toJsObject(config).deepMerge(
-        JsObject(JavaScriptPage.getMap(page, edition, isPreview = false, request)),
-      )
+      Json
+        .toJsObject(config)
+        .deepMerge(
+          JsObject(JavaScriptPage.getMap(page, edition, isPreview = false, request)),
+        )
 
     val commercialProperties = page.metadata.commercial
       .map(_.perEdition.map { case (k, v) => k.id -> v })

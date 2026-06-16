@@ -58,7 +58,7 @@ object StaticPages {
         shouldGoogleIndex = true,
       ),
     )
-  
+
   def dcrSimplePuzzlesPage(
       id: String,
   ): SimplePage =
