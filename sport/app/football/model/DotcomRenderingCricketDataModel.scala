@@ -97,6 +97,7 @@ object CricketScoreBoardDataModel {
     Json.obj(
       "matchId" -> theMatch.matchId,
       "competitionName" -> theMatch.competitionName,
+      "stage" -> theMatch.stage,
       "venueName" -> theMatch.venueName,
       "teams" -> theMatch.teams.map(getTeam),
       "innings" -> theMatch.innings.map(getInnings),
