@@ -15,7 +15,7 @@ import org.scalatest._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.libs.json.{JsArray, Json}
+import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.test.Helpers._
 import play.api.test._
@@ -194,23 +194,6 @@ import scala.concurrent.{Await, Future}
       .withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToInternational = faciaController.renderFront("commentisfree")(international)
     header("Location", redirectToInternational).head should endWith("/uk/commentisfree")
-  }
-
-  it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {
-    val count = 2
-    val request = FakeRequest("GET", s"/container/count/$count/offset/0/mf2.json")
-    val result = faciaController.renderSomeFrontContainersMf2(count, 0)(request)
-    status(result) should be(200)
-    (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)
-  }
-
-  it should "render fronts in mf2 format (no edition provided)" in {
-    val section = "music"
-    val count = 2
-    val request = FakeRequest("GET", s"/container/count/$count/offset/0/section/$section/mf2.json")
-    val result = faciaController.renderSomeFrontContainersMf2(count, 0, section)(request)
-    status(result) should be(200)
-    (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)
   }
 
   it should "render json email fronts" in {

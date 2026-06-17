@@ -78,7 +78,6 @@ GET            /discussion/profile/:id/picks.json                               
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
-GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 
 GET            /top-stories.json                                                                                                 controllers.TopStoriesController.renderTopStories()
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
@@ -266,7 +265,6 @@ GET         /commercial/adops/app-ads-txt                                       
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
 # AMP
-GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 
@@ -274,8 +272,6 @@ GET            /container/count/:count/offset/:offset/mf2.json                  
 GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section)
 
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
-
-GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
 
 # Onward journeys
 GET            /audio/series/*path.json                                                                                          controllers.SeriesController.renderPodcastEpisodes(path)

@@ -11,7 +11,7 @@ GET        /_healthcheck                              controllers.HealthCheck.he
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
-GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
+
 # Deeply read experiment
 GET        /most-read-with-deeply-read.json          controllers.MostPopularController.renderWithDeeplyRead()
 
@@ -24,8 +24,6 @@ GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.r
 
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 
-GET        /:mediaType/section/:sectionId/*seriesId.json   controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
-GET        /:mediaType/section/:sectionId.json             controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderMostViewed()
 GET        /video/in-series/*series.json              controllers.MostViewedVideoController.renderInSeries(series: String)
 GET        /audio/most-viewed.json                    controllers.MostViewedAudioController.renderMostViewed()
@@ -54,11 +52,8 @@ GET        /business-data/stocks.json                 controllers.StocksControll
 
 # DCR
 GET        /story-package/*path.json                  controllers.StoryPackageController.render(path)
-GET        /nav/:editionId.json                       controllers.NavigationController.renderDCRNav(editionId: String)
 
 # AMP
-GET        /most-read-mf2.json                        controllers.MostPopularController.renderPopularMicroformat2()
 GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
 GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
-GET        /editionalised-nav.json                    controllers.NavigationController.renderAmpNav()
 GET        /story-package-mf2/*path.json              controllers.StoryPackageController.renderMF2(path)

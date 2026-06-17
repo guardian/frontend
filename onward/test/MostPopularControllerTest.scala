@@ -1,7 +1,7 @@
 package test
 
 import controllers.MostPopularController
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{GeoMostPopularAgent, MostPopularAgent}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
@@ -26,7 +26,6 @@ import agents.DeeplyReadAgent
   lazy val mostPopularController = new MostPopularController(
     testContentApiClient,
     new GeoMostPopularAgent(testContentApiClient, ophanApi),
-    new DayMostPopularAgent(testContentApiClient, ophanApi),
     new MostPopularAgent(testContentApiClient),
     new DeeplyReadAgent(testContentApiClient, ophanApi),
     play.api.test.Helpers.stubControllerComponents(),
