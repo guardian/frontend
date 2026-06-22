@@ -51,7 +51,7 @@ object Dependencies {
   val jodaTime = "joda-time" % "joda-time" % "2.14.2"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
-  val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
+  val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.14"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
