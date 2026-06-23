@@ -20,9 +20,8 @@ object Parser {
     Match(
       teams = parseTeams(lineupData \ "match" \ "team"),
       innings = parseInnings(scorecardData \ "match" \ "innings"),
-      competitionName = matchDetail.competitionName,
-      stage = matchDetail.competitionName,
-      competitionNameV2 = competitionMatch.competitionName,
+      competitionName = competitionMatch.competitionName,
+      stage = matchDetail.stage,
       venueName = matchDetail.venueName,
       result = matchDetail.status,
       currentDay = matchDetail.currentDay,
@@ -35,7 +34,7 @@ object Parser {
   }
 
   private case class MatchDetail(
-      competitionName: String,
+      stage: String,
       venueName: String,
       status: String,
       currentDay: Int,
@@ -62,7 +61,7 @@ object Parser {
 
   private def parseMatchDetail(matchDetail: NodeSeq): MatchDetail =
     MatchDetail(
-      competitionName = matchDetail \ "stage" text,
+      stage = matchDetail \ "stage" text,
       venueName = matchDetail \ "venue" \ "name" text,
       status = matchDetail \ "status" text,
       currentDay = (matchDetail \ "currentDay").text.toInt,

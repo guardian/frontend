@@ -108,9 +108,8 @@ object MatchResult {
 case class Match(
     teams: List[Team],
     innings: List[Innings],
-    competitionName: String, // TODO: this needs to be removed after DCAR is updated to use stage
+    competitionName: String,
     stage: String,
-    competitionNameV2: String, // TODO: this needs renaming to competitionName after DCAR is updated
     venueName: String,
     result: String,
     currentDay: Int,
