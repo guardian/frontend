@@ -25,7 +25,7 @@ class CompetitionsTest extends AnyFreeSpec with Matchers with OptionValues {
         val matches: Seq[FootballMatch] =
           Seq(
             result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
-            liveMatch("Cardiff", "Brighton", 2, 0, today.minus(testcase.startTimeDelta), testcase.isLive),
+            liveMatch("Cardiff", "Brighton", Some(2), Some(0), today.minus(testcase.startTimeDelta), testcase.isLive),
             fixture("Wolves", "Burnley", today.plusDays(2)),
           )
 
@@ -51,7 +51,7 @@ class CompetitionsTest extends AnyFreeSpec with Matchers with OptionValues {
         val matches: Seq[FootballMatch] =
           Seq(
             result("Bolton", "Derby", 1, 1, today.minusDays(1), Some("Bolton win 4-2 on penalties.")),
-            liveMatch("Cardiff", "Brighton", 2, 0, today.plus(testcase.startTimeDelta), testcase.isLive),
+            liveMatch("Cardiff", "Brighton", Some(2), Some(0), today.plus(testcase.startTimeDelta), testcase.isLive),
             fixture("Wolves", "Burnley", today.plusDays(2)),
           )
         val testCompetition = competitions(1).copy(matches = matches)

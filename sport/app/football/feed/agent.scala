@@ -28,9 +28,11 @@ trait LiveMatches extends GuLogging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLiveMatches(clock: Clock)(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
+  def getDayMatches(localDate: LocalDate)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Map[String, Seq[MatchDay]]] =
     footballClient
-      .matchDay(LocalDate.now(clock))
+      .matchDay(localDate)
       .map { todaysMatches: List[MatchDay] =>
         val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
 
