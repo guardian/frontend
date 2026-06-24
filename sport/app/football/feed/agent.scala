@@ -152,7 +152,7 @@ class CompetitionAgent(
         comp.matches.find(_.id == newMatch.id).foreach { oldMatch =>
           val newSummary = newMatch.statusSummary
           val oldSummary = oldMatch.statusSummary
-          if (newSummary != oldSummary) log.debug(s"Match Status Changed $oldSummary -> $newSummary")
+          if (newSummary != oldSummary) log.info(s"Match Status Changed $oldSummary -> $newSummary")
         }
       }
 

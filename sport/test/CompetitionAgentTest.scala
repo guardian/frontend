@@ -130,8 +130,6 @@ import scala.concurrent.duration._
     )
   }
 
-  // ...existing code...
-
   it should "load live matches from yesterday that haven't yet finished" in {
 
     val yesterdayFirstMatchDate = ZonedDateTime.of(2016, 6, 21, 15, 30, 0, 0, ZoneId.of("Europe/London"))
@@ -263,7 +261,6 @@ import scala.concurrent.duration._
 
   }
 
-//  case class PAMatchDayData(matchId: String, homeTeam: String, awayTeam: String, isLive: Boolean, date: ZonedDateTime)
   def matchDayXml(competitionId: String, competitionName: String, matches: Seq[MatchDay]): String = {
     val dateFmt = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
     val timeFmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm")

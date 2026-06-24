@@ -423,7 +423,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   def refreshMatchDay(
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
-    println("Refreshing match day data 2")
+    log.debug("Refreshing match day data")
 
     val today = LocalDate.now(clock)
     val todayMatchesFuture = getDayMatches(today)
