@@ -111,7 +111,8 @@ case class Match(
     competitionName: String,
     stage: String,
     venueName: String,
-    result: String,
+    result: String, // to be removed once DCR is updated to use status instead
+    status: String,
     currentDay: Int,
     totalDays: Int,
     gameDate: LocalDateTime,

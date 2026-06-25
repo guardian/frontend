@@ -24,6 +24,7 @@ object Parser {
       stage = matchDetail.stage,
       venueName = matchDetail.venueName,
       result = matchDetail.status,
+      status = matchDetail.status,
       currentDay = matchDetail.currentDay,
       totalDays = matchDetail.totalDays,
       gameDate = matchDetail.gameDate,
