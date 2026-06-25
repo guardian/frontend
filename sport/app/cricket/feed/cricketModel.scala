@@ -201,14 +201,12 @@ object MatchStatsSummary {
   implicit val writes: OWrites[MatchStatsSummary] = Json.writes[MatchStatsSummary]
 
   def apply(theMatch: Match): MatchStatsSummary = {
-    val innings = theMatch.lastInnings.filter(_ => theMatch.innings.nonEmpty && theMatch.fullResult.isEmpty)
-
     theMatch.result match {
       case "in-play" =>
         MatchStatsSummary(
           status = theMatch.result,
-          currentBattingTeam = innings.map(_.battingTeam),
-          notOutBatters = innings.map(_.batters.filter(_.notOut)),
+          currentBattingTeam = theMatch.lastInnings.map(_.battingTeam),
+          notOutBatters = theMatch.lastInnings.map(_.batters.filter(_.notOut)),
         )
       case _ =>
         MatchStatsSummary(
