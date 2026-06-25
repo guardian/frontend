@@ -202,7 +202,7 @@ object MatchStatsSummary {
 
   def apply(theMatch: Match): MatchStatsSummary = {
     theMatch.result match {
-      case "in-play" =>
+      case "in-play" | "tea" | "lunch" | "between-innings" =>
         MatchStatsSummary(
           status = theMatch.result,
           currentBattingTeam = theMatch.lastInnings.map(_.battingTeam),
