@@ -13,7 +13,8 @@ GET        /football/wallchart/:competitionTag                                  
 GET        /sport/cricket/match/:matchDate/:teamId.json                                        cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
 GET        /sport/cricket/match/:matchDate/:teamId                                             cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 GET        /sport/cricket/match-scoreboard/:matchDate/:teamId.json                             cricket.controllers.CricketMatchController.renderMatchScoreboardJson(matchDate, teamId)
-GET        /sport/cricket/match-header/:matchDate/:teamId.json                              cricket.controllers.CricketMatchController.matchHeaderJson(matchDate, teamId)
+GET        /sport/cricket/match-header/:matchDate/:teamId.json                                 cricket.controllers.CricketMatchController.matchHeaderJson(matchDate, teamId)
+GET        /sport/cricket/match-stats-summary/:matchDate/:teamId.json                          cricket.controllers.CricketMatchController.matchStatsSummaryJson(matchDate, teamId)
 
 GET        /football/fixtures/more/:year/:month/:day.json                                      football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)
