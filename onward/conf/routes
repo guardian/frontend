@@ -41,7 +41,6 @@ GET        /top-stories                               controllers.TopStoriesCont
 
 # Experimental
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
-GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
 
 # Business data

@@ -85,7 +85,6 @@ GET            /popular-in-tag/*tag.json                                        
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
 
 GET            /cards/opengraph/*path.json                                                                                       controllers.CardController.opengraph(path)
-GET            /tagged.json                                                                                                      controllers.TaggedContentController.renderJson(tag: String)
 
 GET            /video/most-viewed.json                                                                                           controllers.MostViewedVideoController.renderMostViewed()
 GET            /video/in-series/*series.json                                                                                     controllers.MostViewedVideoController.renderInSeries(series: String)
