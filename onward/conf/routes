@@ -46,6 +46,3 @@ GET        /series/*path.json                         controllers.SeriesControll
 
 # Business data
 GET        /business-data/stocks.json                 controllers.StocksController.stocks
-
-# DCR
-GET        /story-package/*path.json                  controllers.StoryPackageController.render(path)

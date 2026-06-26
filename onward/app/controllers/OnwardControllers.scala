@@ -43,5 +43,4 @@ trait OnwardControllers {
   lazy val taggedContentController = wire[TaggedContentController]
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
-  lazy val storyPackageController = wire[StoryPackageController]
 }
