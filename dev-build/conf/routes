@@ -264,7 +264,6 @@ POST        /commercial/adops/app-ads-txt                                       
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
 # Onward journeys
-GET            /audio/series/*path.json                                                                                          controllers.SeriesController.renderPodcastEpisodes(path)
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # opt-in/out routes

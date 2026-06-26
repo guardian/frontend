@@ -39,17 +39,6 @@ class SeriesController(
       }
     }
 
-  def renderPodcastEpisodes(seriesId: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      lookup(Edition(request), seriesId, _.contentType("audio")) map {
-        _.map(series =>
-          Cached(900) {
-            JsonComponent(views.html.fragments.podcastEpisodes(series.trails.items.take(4).map(_.content)))
-          },
-        ).getOrElse(NotFound)
-      }
-    }
-
   private def lookup(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit
       request: RequestHeader,
   ): Future[Option[Series]] = {
