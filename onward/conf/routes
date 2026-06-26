@@ -50,8 +50,3 @@ GET        /business-data/stocks.json                 controllers.StocksControll
 
 # DCR
 GET        /story-package/*path.json                  controllers.StoryPackageController.render(path)
-
-# AMP
-GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
-GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
-GET        /story-package-mf2/*path.json              controllers.StoryPackageController.renderMF2(path)

@@ -5,9 +5,7 @@ import containers.Containers
 import contentapi.ContentApiClient
 import model._
 import model.dotcomrendering.{Trail, OnwardCollectionResponse}
-import play.api.libs.json._
 import play.api.mvc._
-import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -36,25 +34,6 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
             trails = items.map(_.faciaContent).map(Trail.pressedContentToTrail).take(10),
           ),
         )
-        Cached(5.minutes)(json)
-      })
-    }
-
-  def renderMF2(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      getRelatedContent(path).map(items => {
-        val json = JsonComponent(
-          "items" -> JsArray(
-            Seq(
-              Json.obj(
-                "displayName" -> "More on this story",
-                "showContent" -> items.nonEmpty,
-                "content" -> items.take(6).map(collection => isCuratedContent(collection.faciaContent)),
-              ),
-            ),
-          ),
-        )
-
         Cached(5.minutes)(json)
       })
     }

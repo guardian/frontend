@@ -261,9 +261,6 @@ GET         /commercial/adops/app-ads-txt                                       
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
 # AMP
-GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
-
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
 # Onward journeys
