@@ -11,17 +11,6 @@ case class NewsletterRoundupPage(
 }
 
 object StaticPages {
-  def simpleSurveyStaticPageForId(id: String): SimplePage =
-    SimplePage(
-      MetaData.make(
-        id = id,
-        section = Option(SectionId(value = "global")),
-        webTitle = "Guardian Survey Page",
-        contentType = Some(DotcomContentType.Survey),
-        iosType = None,
-        shouldGoogleIndex = false,
-      ),
-    )
 
   def simpleNewslettersPage(
       id: String,

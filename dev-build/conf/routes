@@ -5,9 +5,6 @@
 GET            /email-newsletters.json                                                                                           controllers.SignupPageController.renderNewsletters()
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewsletters()
 
-GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
-GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
-
 # For dev machines
 GET            /geolocation                                                                                                      controllers.FakeGeolocationController.geolocation
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
