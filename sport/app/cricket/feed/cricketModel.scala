@@ -190,3 +190,30 @@ object MatchHeader extends DCARUrlHelper {
     )
   }
 }
+
+case class MatchStatsSummary(
+    status: String,
+    currentBattingTeam: Option[String] = None,
+    notOutBatters: Option[List[InningsBatter]] = None,
+)
+
+object MatchStatsSummary {
+  implicit val writes: OWrites[MatchStatsSummary] = Json.writes[MatchStatsSummary]
+
+  def apply(theMatch: Match): MatchStatsSummary = {
+    theMatch.result match {
+      case "in-play" | "tea" | "lunch" | "between-innings" =>
+        MatchStatsSummary(
+          status = theMatch.result,
+          currentBattingTeam = theMatch.lastInnings.map(_.battingTeam),
+          notOutBatters = theMatch.lastInnings.map(_.batters.filter(_.notOut)),
+        )
+      case _ =>
+        MatchStatsSummary(
+          status = theMatch.result,
+          currentBattingTeam = None,
+          notOutBatters = None,
+        )
+    }
+  }
+}
