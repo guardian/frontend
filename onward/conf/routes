@@ -32,8 +32,6 @@ GET        /gallery/most-viewed.json                  controllers.MostViewedGall
 
 GET        /embed/card/*path.json                     controllers.RichLinkController.render(path)
 GET        /embed/card/*path                          controllers.RichLinkController.renderHtml(path)
-GET        /embed/contentcard/*path.json              controllers.RecommendedContentCardController.render(path)
-GET        /embed/contentcard/*path                   controllers.RecommendedContentCardController.renderHtml(path)
 
 
 # For tests

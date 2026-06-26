@@ -97,8 +97,6 @@ GET            /podcast/most-viewed.json                                        
 GET            /gallery/most-viewed.json                                                                                         controllers.MostViewedGalleryController.renderMostViewed()
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
-GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
-GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
 
 # Sport
 GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
