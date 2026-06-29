@@ -1,5 +1,6 @@
 import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
+import com.typesafe.sbt.packager.archetypes.JavaAppPackaging.autoImport._
 import com.gu.Dependencies._
 import com.gu.ProjectSettings._
 
@@ -13,6 +14,30 @@ https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-proj
  */
 ThisBuild / asciiGraphWidth := 999999999
 ThisBuild / scalaVersion := SCALA_VERSION
+
+/*
+ * Standalone JVM agent that records which Twirl templates are rendered at runtime.
+ *
+ * It is NOT a Play module: it's a plain, pure-Java project assembled into a shaded, self-contained
+ * jar (with a `Premain-Class` manifest entry) that gets attached to a host app via `-javaagent`.
+ * ByteBuddy is relocated under com.gu.shaded.bytebuddy so it can never clash with anything on an
+ * application's classpath (e.g. the byte-buddy that mockito pulls in for tests).
+ */
+val templateTrackerAgent = Project("template-tracker-agent", file("template-tracker-agent"))
+  .settings(
+    crossPaths := false, // pure Java: don't append a _2.13 suffix to the artifact
+    autoScalaLibrary := false, // pure Java: no scala-library dependency
+    libraryDependencies += byteBuddy,
+    assembly / assemblyJarName := "template-tracker-agent.jar",
+    assembly / assemblyShadeRules := Seq(
+      ShadeRule.rename("net.bytebuddy.**" -> "com.gu.shaded.bytebuddy.@1").inAll,
+    ),
+    assembly / packageOptions += Package.ManifestAttributes(
+      "Premain-Class" -> "com.gu.templatetracker.TemplateTrackerAgent",
+      "Can-Redefine-Classes" -> "true",
+      "Can-Retransform-Classes" -> "true",
+    ),
+  )
 
 val common = library("common")
   .settings(
@@ -99,7 +124,20 @@ val sport = application("sport")
     ),
   )
 
-val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
+val discussion = application("discussion")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(
+    // --- Twirl template usage tracker (PoC) ---
+    // Bundle the shaded agent jar into the packaged app under agent/, then have the generated
+    // native-packager start script attach it via -javaagent. ${app_home} is resolved by the start
+    // script at launch time, so this needs no change to the CDK/systemd launch config.
+    Universal / mappings += {
+      val agentJar = (templateTrackerAgent / assembly).value
+      agentJar -> "agent/template-tracker-agent.jar"
+    },
+    bashScriptExtraDefines += """addJava "-javaagent:${app_home}/../agent/template-tracker-agent.jar"""",
+  )
 
 val admin = application("admin")
   .dependsOn(commonWithTests)
