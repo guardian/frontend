@@ -2,7 +2,6 @@ package navigation
 
 import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
-import navigation.NavMenu.navRoot
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
 
@@ -83,6 +82,16 @@ object NavMenu {
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
     val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
     val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
+    val isWorldCupOverview = page.metadata.id == "football/world-cup-2026/overview"
+
+    // On the world cup overview page, we want to show the special football header atom
+    val subNavSections =
+      if (isWorldCupOverview) {
+        None
+      } else {
+        getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar)
+      }
+
     NavMenu(
       currentUrl = currentUrl,
       pillars = root.children,
@@ -91,7 +100,7 @@ object NavMenu {
       currentNavLink = currentNavLink,
       currentParent = currentParent,
       currentPillar = currentPillar,
-      subNavSections = getSubnav(page.metadata.customSignPosting, currentNavLink, currentParent, currentPillar),
+      subNavSections = subNavSections,
     )
   }
 
@@ -239,7 +248,6 @@ object NavMenu {
       currentParent: Option[NavLink],
       currentPillar: Option[NavLink],
   ): Option[Subnav] = {
-
     customSignPosting match {
 
       case Some(navItem) =>
@@ -268,28 +276,26 @@ object NavMenu {
             currentParent.map(_.children).getOrElse(Nil)
           }
 
+        // Editorial: on the Football and Soccer fronts (and their child pages), the World Cup 2026
+        // link should appear before the Football/Soccer self-link in the subnav. The default
+        // ParentSubnav layout always renders the parent first, so we instead emit a FlatSubnav
+        // with the World Cup promoted to first position, the parent self-link second, and the
+        // remaining children following.
+        //
+        // Guarded on the first child being the World Cup link, so this special case
+        // automatically disappears when the link is removed from NavLinks after the tournament.
+        val isFootballOrSoccerSubnav =
+          parent.exists(p => p.url == "/football" || p.url == "/us/soccer")
+        val firstChildIsWorldCup =
+          links.headOption.exists(_.url == "/football/world-cup-2026")
+
         parent match {
+          case Some(p) if isFootballOrSoccerSubnav && firstChildIsWorldCup =>
+            Some(FlatSubnav(links.head +: p +: links.tail))
           case Some(p)                => Some(ParentSubnav(p, links))
           case None if links.nonEmpty => Some(FlatSubnav(links))
           case None                   => None
         }
     }
   }
-}
-
-// Used by AMP and DCR
-case class SimpleMenu(
-    pillars: Seq[NavLink],
-    otherLinks: Seq[NavLink],
-    brandExtensions: Seq[NavLink],
-    readerRevenueLinks: ReaderRevenueLinks,
-)
-
-object SimpleMenu {
-  def apply(edition: Edition): SimpleMenu = {
-    val root = navRoot(edition)
-    SimpleMenu(root.children, root.otherLinks, root.brandExtensions, ReaderRevenueLinks.all)
-  }
-
-  implicit val writes: OWrites[SimpleMenu] = Json.writes[SimpleMenu]
 }

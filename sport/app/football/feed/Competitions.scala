@@ -1,16 +1,12 @@
 package feed
 
-import com.github.nscala_time.time.Imports
-import com.github.nscala_time.time.Imports._
 import common._
 import conf.FootballClient
 import football.controllers.Interval
 import model.{Competition, CompetitionSummary, Table, TeamFixture, TeamNameBuilder}
-import org.joda.time.DateTimeComparator
 import pa.{FootballMatch, _}
 
 import java.time.{Clock, LocalDate, ZonedDateTime}
-import java.util.Comparator
 import scala.collection.{View, immutable}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.Ordering.Implicits._
@@ -59,6 +55,11 @@ trait Competitions extends implicits.Football {
         -(group.map(_.entries.length) getOrElse competition.leagueTable.length)
       })
       .headOption
+
+  def liveMatchesFromYesterday(clock: Clock): Seq[FootballMatch] = {
+    val yesterday = LocalDate.now(clock).minusDays(1)
+    competitions.flatMap(_.matches.filter(m => m.isOn(yesterday) && m.isLive))
+  }
 
   lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
@@ -367,10 +368,6 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     with GuLogging
     with implicits.Football {
 
-  private implicit val dateOrdering: Ordering[Imports.DateTime] = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]],
-  )
-
   // Avoid fetching very old results from PA by restricting to most recent season
   private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =
     competitionDefinitions.flatMap { compDef =>
@@ -427,7 +424,30 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     log.debug("Refreshing match day data")
-    val result = getLiveMatches(clock).map(_.map { case (compId, newMatches) =>
+
+    val today = LocalDate.now(clock)
+    val todayMatchesFuture = getDayMatches(today)
+
+    val allMatches: Future[Map[String, Seq[MatchDay]]] =
+      if (liveMatchesFromYesterday(clock).nonEmpty) {
+        log.debug("Live matches from yesterday detected - also refreshing yesterday's match day data")
+        for {
+          todayMatches <- todayMatchesFuture
+          yesterdayMatches <- getDayMatches(today.minusDays(1))
+        } yield {
+          val liveYesterdayMatches = yesterdayMatches.collect {
+            case (compId, matches) if matches.exists(_.isLive) =>
+              compId -> matches.filter(_.isLive)
+          }
+          liveYesterdayMatches.foldLeft(todayMatches) { case (acc, (compId, liveMatches)) =>
+            acc.updated(compId, acc.getOrElse(compId, Seq.empty) ++ liveMatches)
+          }
+        }
+      } else {
+        todayMatchesFuture
+      }
+
+    val result = allMatches.map(_.map { case (compId, newMatches) =>
       competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
       }

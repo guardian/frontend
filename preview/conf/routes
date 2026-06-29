@@ -27,7 +27,6 @@ GET        /advertiser-content/:campaignName/:pageName/autoplay.json            
 GET        /most-read.json                                                                     controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                                                               controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                                                                 controllers.MostPopularController.renderPopularGeo()
-GET        /most-read-day.json                                                                 controllers.MostPopularController.renderPopularDay(countryCode)
 
 GET        /top-stories.json                                                                   controllers.TopStoriesController.renderTopStories()
 GET        /top-stories/trails.json                                                            controllers.TopStoriesController.renderTrails()
@@ -40,8 +39,6 @@ GET        /preference/edition/:edition                                         
 GET        /cards/opengraph/*path.json                                                         controllers.CardController.opengraph(path)
 GET        /tagged.json                                                                        controllers.TaggedContentController.renderJson(tag: String)
 
-GET        /:mediaType/section/:sectionId/*seriesId.json                                       controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
-GET        /:mediaType/section/:sectionId.json                                                 controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
 GET        /video/in-series/*series.json                                                       controllers.MostViewedVideoController.renderInSeries(series: String)
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
@@ -80,7 +77,9 @@ GET        /football/:competition/live.json                                     
 GET        /football/match-day/:year/:month/:day.json                                          football.controllers.MatchDayController.matchesForJson(year, month, day)
 GET        /football/match-day/:year/:month/:day                                               football.controllers.MatchDayController.matchesFor(year, month, day)
 GET        /football/match-day/:competition/:year/:month/:day.json                             football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
-GET        /football/match-day/:competition/:year/:month/:day                football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
+GET        /football/match-day/:competition/:year/:month/:day                                  football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
+GET        /football/:competition/match-day/embed.json                                         football.controllers.MatchDayController.competitionMatchesEmbedJson(competition)
+GET        /football/:competition/match-day/embed                                              football.controllers.MatchDayController.competitionMatchesEmbed(competition)
 
 GET        /football/tables                                                  football.controllers.LeagueTableController.renderLeagueTables()
 GET        /football/tables.json                                             football.controllers.LeagueTableController.renderLeagueTablesJson()
@@ -186,11 +185,11 @@ POST       /email                                                               
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Articles
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt  controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String])
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)

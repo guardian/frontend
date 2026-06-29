@@ -11,7 +11,8 @@ import play.api.ApplicationLoader.Context
 import play.api.routing.Router
 import play.api._
 import play.api.mvc.EssentialFilter
-import services.ConfigAgentLifecycle
+import services.{ConfigAgentLifecycle, NewsletterService}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import router.Routes
 import _root_.commercial.targeting.TargetingLifecycle
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
@@ -25,6 +26,10 @@ trait AppComponents extends FrontendComponents {
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
+
+  lazy val newsletterApi = wire[NewsletterApi]
+  lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
+  lazy val newsletterService = wire[NewsletterService]
 
   lazy val liveFapiFrontPress = wire[LiveFapiFrontPress]
   lazy val draftFapiFrontPress = wire[DraftFapiFrontPress]
@@ -40,6 +45,7 @@ trait AppComponents extends FrontendComponents {
     wire[CloudWatchMetricsLifecycle],
     wire[FaciaPressLifecycle],
     wire[TargetingLifecycle],
+    wire[NewsletterSignupLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.i18n.{CountryGroup, Country}
+import com.gu.i18n.CountryGroup
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{GuLogging, ImplicitControllerExecutionContext, LinkTo}
@@ -13,11 +13,10 @@ import conf.switches.Switches.{
 }
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import net.liftweb.json.JObject
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
-import play.api.data.validation.Constraints.{emailAddress, nonEmpty}
+import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
@@ -37,6 +36,7 @@ case class EmailForm(
     email: String,
     listName: Option[String],
     marketing: Option[Boolean],
+    marketingOptInHidden: Option[Boolean],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -44,12 +44,17 @@ case class EmailForm(
     campaignCode: Option[String],
     googleRecaptchaResponse: Option[String],
     name: Option[String],
+    // country is a honey pot field used to catch bots filling in the form. It should always be empty for
+    // legitimate submissions. If populated, the client receives a successful response but no request is
+    // made to the Identity API
+    country: Option[String],
 ) {}
 
 case class EmailFormManyNewsletters(
     email: String,
     listNames: Seq[String],
     marketing: Option[Boolean],
+    marketingOptInHidden: Option[Boolean],
     referrer: Option[String],
     ref: Option[String],
     refViewId: Option[String],
@@ -89,6 +94,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "set-lists" -> List(form.listName),
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
+          "consent-actor" -> form.marketingOptInHidden.filter(_ == true).map(_ => "implied-consent"),
           "browser-id" -> form.browserId,
           "registration-location" -> registrationLocation,
           "registration-location-state" -> registrationLocationState,
@@ -119,6 +125,7 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
           "ref" -> form.ref,
           "set-consents" -> form.marketing.filter(_ == true).map(_ => List("similar_guardian_products")),
           "unset-consents" -> form.marketing.filter(_ == false).map(_ => List("similar_guardian_products")),
+          "consent-actor" -> form.marketingOptInHidden.filter(_ == true).map(_ => "implied-consent"),
           "registration-location" -> registrationLocation,
           "registration-location-state" -> registrationLocationState,
         )
@@ -173,6 +180,7 @@ class EmailSignupController(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
       "marketing" -> optional[Boolean](of[Boolean]),
+      "marketingOptInHidden" -> optional[Boolean](of[Boolean]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
@@ -180,6 +188,7 @@ class EmailSignupController(
       "campaignCode" -> optional[String](of[String]),
       "g-recaptcha-response" -> optional[String](of[String]),
       "name" -> optional[String](of[String]),
+      "country" -> optional[String](of[String]),
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
@@ -188,6 +197,7 @@ class EmailSignupController(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listNames" -> seq(of[String]),
       "marketing" -> optional[Boolean](of[Boolean]),
+      "marketingOptInHidden" -> optional[Boolean](of[Boolean]),
       "referrer" -> optional[String](of[String]),
       "ref" -> optional[String](of[String]),
       "refViewId" -> optional[String](of[String]),
@@ -524,22 +534,29 @@ class EmailSignupController(
             Future.successful(respond(InvalidEmail))
           },
           form => {
-            logDebugWithRequestId(
-              s"Post request received to /email/ - " +
-                s"ref: ${form.ref}, " +
-                s"refViewId: ${form.refViewId}, " +
-                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-            )
+            // the country form field here is used to catch bots filling it in. It is a honey pot trap.
+            // So the client gets a successful response but no subsequent request is made to Identity API.
+            if (form.country.exists(_.nonEmpty)) {
+              logInfoWithRequestId(s"Rejecting /email submission: country (bot honey pot field) field was populated")
+              Future.successful(respond(Subscribed, form.listName))
+            } else {
+              logDebugWithRequestId(
+                s"Post request received to /email/ - " +
+                  s"ref: ${form.ref}, " +
+                  s"refViewId: ${form.refViewId}, " +
+                  s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+                  s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+                  s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+              )
 
-            (for {
-              _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-              result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
-            } yield {
-              result
-            }) recover { case _ =>
-              respond(OtherError)
+              (for {
+                _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
+                result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
+              } yield {
+                result
+              }) recover { case _ =>
+                respond(OtherError)
+              }
             }
           },
         )

@@ -196,6 +196,60 @@ object DotcomRenderingFootballMatchListDataModel {
   }
 }
 
+case class DotcomRenderingFootballMatchDayDataModel(
+    competitionTag: String,
+    matchesList: Seq[MatchesByDateAndCompetition],
+    editionId: String,
+    guardianBaseURL: String,
+)
+
+object DotcomRenderingFootballMatchDayDataModel {
+  def apply(
+      competitionTag: String,
+      matchesList: MatchesList,
+  )(implicit
+      request: RequestHeader,
+  ): DotcomRenderingFootballMatchDayDataModel = {
+    val edition = Edition(request)
+
+    val matches =
+      getMatchesList(matchesList.matchesGroupedByDateAndCompetition)
+
+    DotcomRenderingFootballMatchDayDataModel(
+      competitionTag = competitionTag,
+      matchesList = matches,
+      editionId = edition.id,
+      guardianBaseURL = Configuration.site.host,
+    )
+  }
+
+  import football.model.DotcomRenderingFootballDataModelImplicits._
+
+  implicit def dotcomRenderingFootballMatchDayDataModel: Writes[DotcomRenderingFootballMatchDayDataModel] =
+    Json.writes[DotcomRenderingFootballMatchDayDataModel]
+
+  def toJson(model: DotcomRenderingFootballMatchDayDataModel): JsValue = {
+    val jsValue = Json.toJson(model)
+    withoutNull(jsValue)
+  }
+
+  private def getMatchesList(
+      matches: Seq[(LocalDate, List[(Competition, List[FootballMatch])])],
+  ): Seq[MatchesByDateAndCompetition] = {
+    matches.map { case (date, competitionMatches) =>
+      MatchesByDateAndCompetition(
+        date = date,
+        competitionMatches = competitionMatches.map { case (competition, matches) =>
+          CompetitionMatches(
+            competitionSummary = competition,
+            matches = matches,
+          )
+        },
+      )
+    }
+  }
+}
+
 case class DotcomRenderingFootballHeaderDataModel(
     footballMatch: FootballMatch,
     competitionName: String,
@@ -324,8 +378,7 @@ object DotcomRenderingFootballTablesDataModel {
 }
 
 case class DotcomRenderingFootballMatchSummaryDataModel(
-    // this field will need to get renamed to matchStats in upcoming PR
-    footballMatch: MatchStats,
+    matchStats: MatchStats,
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
@@ -361,7 +414,7 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
       isPreview = PageType(page, request, context).isPreview,
     )
     DotcomRenderingFootballMatchSummaryDataModel(
-      footballMatch = matchStats,
+      matchStats = matchStats,
       matchInfo = matchInfo,
       group = group,
       competitionName = competitionName,

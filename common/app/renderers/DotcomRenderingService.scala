@@ -1,7 +1,7 @@
 package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
-import com.gu.contentapi.client.model.v1.{Block, Blocks, Content, Crossword}
+import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -162,9 +162,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
-      filterKeyEvents: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
-    baseArticleRequest("/AMPArticle", ws, pageBlocks, pageType, filterKeyEvents, false, newsletter)
+    baseArticleRequest("/AMPArticle", ws, pageBlocks, pageType, false, newsletter)
 
   def getDCARAssets(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
     ws
@@ -189,7 +188,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
-      filterKeyEvents: Boolean = false,
       forceLive: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(
@@ -197,7 +195,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws,
       pageBlocks,
       pageType,
-      filterKeyEvents,
       forceLive,
       newsletter,
     )
@@ -207,7 +204,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
-      filterKeyEvents: Boolean = false,
       forceLive: Boolean = false,
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(
@@ -215,7 +211,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws,
       pageBlocks,
       pageType,
-      filterKeyEvents,
       forceLive,
       newsletter,
     )
@@ -225,7 +220,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
-      filterKeyEvents: Boolean,
       forceLive: Boolean = false,
       newsletter: Option[NewsletterData],
   )(implicit request: RequestHeader): Future[Result] = {
@@ -235,7 +229,6 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           pageBlocks.copy(page = liveblog),
           request,
           pageType,
-          filterKeyEvents,
           forceLive,
           newsletter,
         )
@@ -506,6 +499,13 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       json: JsValue,
   )(implicit request: RequestHeader): Future[Result] = {
     post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchListPage", CacheTime.Football)
+  }
+
+  def getFootballEmbed(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(ws, json, Configuration.rendering.articleBaseURL + "/FootballMatchDayEmbed", CacheTime.Football)
   }
 
   def getFootballMatchSummaryPage(

@@ -69,6 +69,7 @@ final case class Content(
     showByline: Boolean,
     rawOpenGraphImage: Option[ImageAsset],
     schemaOrg: Option[SchemaOrg],
+    listElementCampaignIds: Seq[String] = Seq.empty,
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -92,13 +93,13 @@ final case class Content(
   lazy val isUSProductionOffice: Boolean = productionOffice.exists(_.toLowerCase == "us")
 
   // Some campaigns (Community callouts) are added to an article using a tag. Others (Reporter callouts) just use the
-  // campaign ID from the targeting tool. We need to fetch boh here
+  // campaign ID from the targeting tool. We need to fetch both here, including callouts nested within list-type elements
   lazy val campaignIds = fields.blocks
     .map(_.body.flatMap(_.elements.flatMap {
       case CalloutBlockElement(campaignId, _) => Seq(campaignId)
       case _                                  => Seq()
     }))
-    .getOrElse(Seq())
+    .getOrElse(Seq()) ++ listElementCampaignIds
   lazy val idCampaigns: List[Campaign] =
     _root_.commercial.targeting.CampaignAgent.getCampaignsForIds(campaignIds)
   lazy val tagCampaigns: List[Campaign] =
@@ -328,7 +329,9 @@ final case class Content(
   }
 
   def cricketMatchDate: Option[String] = {
-    if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
+    if (
+      (tags.isCricketLiveBlog || tags.isCricketMatchReport) && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn
+    ) {
       Some(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))
     } else None
   }
@@ -459,6 +462,18 @@ object Content {
     val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent)
     val schemaOrg = apiContent.schemaOrg
 
+    // Extract callout campaign IDs from within list-type elements (e.g. QAndAExplainer).
+    val listElementCampaignIds: Seq[String] = apiContent.blocks.toSeq
+      .flatMap(_.body.toSeq.flatten)
+      .flatMap(_.elements)
+      .filter(_.`type` == contentapi.ElementType.List)
+      .flatMap(_.listTypeData.toSeq)
+      .flatMap(_.items)
+      .flatMap(_.elements)
+      .filter(_.`type` == contentapi.ElementType.Callout)
+      .flatMap(_.calloutTypeData)
+      .flatMap(_.campaignId)
+
     Content(
       trail = trail,
       metadata = metadata,
@@ -504,6 +519,7 @@ object Content {
         .orElse(elements.mainPicture.flatMap(_.images.largestImage))
         .orElse(trail.trailPicture.flatMap(_.largestImage)),
       schemaOrg = schemaOrg,
+      listElementCampaignIds = listElementCampaignIds,
     )
   }
 }
@@ -695,6 +711,9 @@ final case class Audio(override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
+
+  lazy val downloadUrlWithAds: Option[String] = elements.mainAudio
+    .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.urlWithAds))
 
   lazy val duration: Option[Int] = elements.mainAudio.map(_.audio.duration)
 

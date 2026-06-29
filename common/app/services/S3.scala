@@ -9,7 +9,6 @@ import services.S3.logS3ExceptionWithDevHint
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL.{PRIVATE, PUBLIC_READ}
 import software.amazon.awssdk.services.s3.model._
-import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 import utils.AWSv2
 

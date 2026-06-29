@@ -1,5 +1,5 @@
 import config from 'lib/config';
-import { cmp } from '@guardian/libs';
+import { cmp } from '@guardian/consent-manager';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 
 export const addPrivacySettingsLink = () => {

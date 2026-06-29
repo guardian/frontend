@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.{JsArray, JsNull, JsObject, JsValue, Json}
+import play.api.libs.json.{JsArray, JsNull, JsObject, Json}
 import model.dotcomrendering.ElementsEnhancer
 
 class ElementEnhancerTest extends AnyFlatSpec with Matchers {

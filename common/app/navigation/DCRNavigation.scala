@@ -2,16 +2,10 @@ package navigation
 
 import common.Edition
 import model.Page
-import navigation.ReaderRevenueSite.{
-  PrintCTA,
-  PrintCTAWeekly,
-  Support,
-  SupportContribute,
-  SupportSubscribe,
-  SupporterCTA,
-}
+import navigation.ReaderRevenueSite.{PrintCTA, Support, SupportContribute, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, OWrites, Writes}
+import play.api.mvc.RequestHeader
 
 case class ReaderRevenueLink(
     contribute: String,

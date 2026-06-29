@@ -1,9 +1,9 @@
 package test
 
 import model.meta.BlocksOn
-import com.gu.contentapi.client.model.v1.{Block, Blocks}
+import com.gu.contentapi.client.model.v1.Block
 import model.Cached.RevalidatableResult
-import model.dotcomrendering.{OnwardCollectionResponse, PageType}
+import model.dotcomrendering.PageType
 import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
@@ -24,7 +24,6 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
       newsletter: Option[NewsletterData],
-      filterKeyEvents: Boolean,
       forceLive: Boolean,
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global

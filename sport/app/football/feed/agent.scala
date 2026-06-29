@@ -28,9 +28,11 @@ trait LiveMatches extends GuLogging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLiveMatches(clock: Clock)(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
+  def getDayMatches(localDate: LocalDate)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Map[String, Seq[MatchDay]]] =
     footballClient
-      .matchDay(LocalDate.now(clock))
+      .matchDay(localDate)
       .map { todaysMatches: List[MatchDay] =>
         val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
 
@@ -150,7 +152,7 @@ class CompetitionAgent(
         comp.matches.find(_.id == newMatch.id).foreach { oldMatch =>
           val newSummary = newMatch.statusSummary
           val oldSummary = oldMatch.statusSummary
-          if (newSummary != oldSummary) log.debug(s"Match Status Changed $oldSummary -> $newSummary")
+          if (newSummary != oldSummary) log.info(s"Match Status Changed $oldSummary -> $newSummary")
         }
       }
 

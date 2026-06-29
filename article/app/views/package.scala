@@ -29,7 +29,6 @@ object MainMediaWidths {
 
 object MainCleaner {
   def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    implicit val edition: Edition = Edition(request)
     withJsoup(BulletCleaner(article.fields.main))(
       VideoEmbedCleaner(article),
       PictureCleaner(article),

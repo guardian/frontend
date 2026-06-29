@@ -32,12 +32,6 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     )
   }
 
-  "Simple menu" should "just return the 5 primary links" in {
-    SimpleMenu(Uk).pillars should be(
-      Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar),
-    )
-  }
-
   "On `/index/contributors`, the parent" should "be Opinion" in {
     val edition = Uk
     val root = NavMenu.navRoot(edition)
@@ -132,6 +126,55 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
     subnav shouldBe Some(FlatSubnav(auCulturePillar.children))
+  }
+
+  "On `/football`, the subnav" should "promote World Cup 2026 above the Football self-link" in {
+    val edition = Uk
+    val root = NavMenu.navRoot(edition)
+    val maybeNavLink = NavMenu.findDescendantByUrl("/football", edition, root.children, root.otherLinks)
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
+    val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
+
+    subnav match {
+      case Some(FlatSubnav(links)) =>
+        links.map(_.title).take(2) shouldBe List("World Cup 2026", "Football")
+        links.map(_.url) should contain("/football")
+        links.map(_.url) should contain("/football/world-cup-2026")
+      case other => fail(s"Expected FlatSubnav with promoted World Cup, got $other")
+    }
+  }
+
+  "On `/football/tables`, the subnav" should "also promote World Cup 2026 above the Football self-link" in {
+    val edition = Uk
+    val root = NavMenu.navRoot(edition)
+    val maybeNavLink = NavMenu.findDescendantByUrl("/football/tables", edition, root.children, root.otherLinks)
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
+    val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
+
+    subnav match {
+      case Some(FlatSubnav(links)) =>
+        links.map(_.title).take(2) shouldBe List("World Cup 2026", "Football")
+      case other => fail(s"Expected FlatSubnav with promoted World Cup, got $other")
+    }
+  }
+
+  "On `/us/soccer`, the subnav" should "promote World Cup 2026 above the Soccer self-link" in {
+    val edition = Us
+    val root = NavMenu.navRoot(edition)
+    val maybeNavLink = NavMenu.findDescendantByUrl("/us/soccer", edition, root.children, root.otherLinks)
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
+    val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
+    val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
+
+    subnav match {
+      case Some(FlatSubnav(links)) =>
+        links.map(_.title).take(2) shouldBe List("World Cup 2026", "Soccer")
+        links.map(_.url) should contain("/us/soccer")
+        links.map(_.url) should contain("/football/world-cup-2026")
+      case other => fail(s"Expected FlatSubnav with promoted World Cup, got $other")
+    }
   }
 
   "The section `Indigenous Australians`" should "still be in the pillar News in the Uk edition" in {

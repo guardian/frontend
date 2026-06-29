@@ -1,7 +1,7 @@
 package jobs
 
 import common.{Box, GuLogging}
-import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
+import conf.cricketPa.{CompetitionMatch, CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
 
 import java.time.{Duration, LocalDate, LocalDateTime}
@@ -38,18 +38,21 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
           // Omit any recent match within the last 5 days, to account for test matches.
           Duration.between(cricketMatch.gameDate, LocalDateTime.now).toDays() > 5,
         )
-        .map(_.matchId)
+        .map(m => m.matchId)
         .toSeq
 
       paFeed
-        .getMatchIds(team, fromDate)
-        .map { matchIds =>
-          // never fetch more than 10 matches
-          val matches = matchIds.diff(loadedMatches).take(Math.min(matchesToFetch, 10))
+        .getCompetitionMatches(team, fromDate)
+        .map { competitionMatches: Seq[CompetitionMatch] =>
+          // Filter the incoming matches against the agent loaded IDs
+          // And never fetch more than 10 matches
+          val filteredCompetitionMatches = competitionMatches
+            .filterNot(theMatch => loadedMatches.contains(theMatch.matchId))
+            .take(Math.min(matchesToFetch, 10))
 
-          matches.map { matchId =>
+          filteredCompetitionMatches.map { competitionMatch =>
             paFeed
-              .getMatch(matchId)
+              .getMatch(competitionMatch)
               .map { matchData =>
                 val date = PaFeed.dateFormat.format(matchData.gameDate)
                 log.debug(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date")

@@ -116,13 +116,14 @@ object NavLinks {
   private val footballResults = NavLink("Results", "/football/results", Some("football/results"))
   private val footballCompetitions = NavLink("Competitions", "/football/competitions", Some("football/competitions"))
   private val footballClubs = NavLink("Clubs", "/football/teams", Some("football/teams"))
-
   private val soccerSchedules = footballFixtures.copy(title = "Schedules")
+  private val footballWorldCup2026 = NavLink("World Cup 2026", "/football/world-cup-2026")
 
   val football = NavLink(
     "Football",
     "/football",
     children = List(
+      footballWorldCup2026,
       footballScores,
       footballTables,
       footballFixtures,
@@ -135,6 +136,7 @@ object NavLinks {
     "Soccer",
     "/us/soccer",
     children = List(
+      footballWorldCup2026,
       footballScores,
       footballTables,
       soccerSchedules,
@@ -274,6 +276,7 @@ object NavLinks {
     iconName = Some("home"),
     List(
       ukNews,
+      footballWorldCup2026,
       usPolitics,
       world,
       climateCrisis,
@@ -296,6 +299,7 @@ object NavLinks {
       world,
       auPolitics,
       auEnvironment,
+      footballWorldCup2026,
       climateCrisis,
       indigenousAustralia,
       auImmigration,
@@ -312,12 +316,12 @@ object NavLinks {
     List(
       usNews,
       usPolitics,
+      footballWorldCup2026,
       world,
       climateCrisis,
       middleEast,
       ukraine,
       usImmigration,
-      usSoccer,
       usBusiness,
       usEnvironment,
       usTech,
@@ -330,6 +334,7 @@ object NavLinks {
   val intNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
+      footballWorldCup2026,
       usPolitics,
       ukNews,
       climateCrisis,
@@ -347,6 +352,7 @@ object NavLinks {
   val eurNewsPillar = ukNewsPillar.copy(
     children = List(
       world,
+      footballWorldCup2026,
       ukNews,
       climateCrisis,
       ukraine,
@@ -417,6 +423,7 @@ object NavLinks {
     longTitle = Some("Sport home"),
     iconName = Some("home"),
     List(
+      footballWorldCup2026,
       football,
       cricket,
       rugbyUnion,
@@ -432,6 +439,7 @@ object NavLinks {
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      footballWorldCup2026,
       football,
       AFL,
       NRL,
@@ -445,6 +453,7 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      footballWorldCup2026,
       usSoccer,
       NFL,
       tennis,
@@ -459,6 +468,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
+      footballWorldCup2026,
       football,
       cricket,
       rugbyUnion,
@@ -471,6 +481,7 @@ object NavLinks {
   )
   val eurSportPillar = ukSportPillar.copy(
     children = List(
+      footballWorldCup2026,
       football,
       cricket,
       rugbyUnion,

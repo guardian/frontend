@@ -8,7 +8,6 @@ import model.PhoneNumbers
 import controllers.editprofile.EditProfileController
 import org.mockito.Mockito._
 import org.mockito.ArgumentMatchers
-import org.mockito.ArgumentMatchers._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, OptionValues}
 import org.scalatestplus.play.ConfiguredServer

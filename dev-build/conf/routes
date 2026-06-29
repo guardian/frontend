@@ -91,7 +91,6 @@ GET            /discussion/profile/:id/picks.json                               
 GET            /most-read.json                                                                                                   controllers.MostPopularController.render(path = "")
 GET            /most-read/*path.json                                                                                             controllers.MostPopularController.render(path)
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
-GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 
 GET            /top-stories.json                                                                                                 controllers.TopStoriesController.renderTopStories()
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
@@ -104,8 +103,6 @@ GET            /preference/edition/:edition                                     
 GET            /cards/opengraph/*path.json                                                                                       controllers.CardController.opengraph(path)
 GET            /tagged.json                                                                                                      controllers.TaggedContentController.renderJson(tag: String)
 
-GET            /:mediaType/section/:sectionId/*seriesId.json                                                                     controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
-GET            /:mediaType/section/:sectionId.json                                                                               controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET            /video/most-viewed.json                                                                                           controllers.MostViewedVideoController.renderMostViewed()
 GET            /video/in-series/*series.json                                                                                     controllers.MostViewedVideoController.renderInSeries(series: String)
 GET            /audio/most-viewed.json                                                                                           controllers.MostViewedAudioController.renderMostViewed()
@@ -150,6 +147,8 @@ GET            /football/match-day/:year/:month/:day.json                       
 GET            /football/match-day/:year/:month/:day                                                                             football.controllers.MatchDayController.matchesFor(year, month, day)
 GET            /football/match-day/:competition/:year/:month/:day.json                                                           football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
 GET            /football/match-day/:competition/:year/:month/:day                                                                football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
+GET            /football/:competition/match-day/embed.json                                                                       football.controllers.MatchDayController.competitionMatchesEmbedJson(competition)
+GET            /football/:competition/match-day/embed                                                                            football.controllers.MatchDayController.competitionMatchesEmbed(competition)
 
 GET            /football/tables                                                                                                  football.controllers.LeagueTableController.renderLeagueTables()
 GET            /football/tables.json                                                                                             football.controllers.LeagueTableController.renderLeagueTablesJson()
@@ -251,14 +250,11 @@ GET            /advertiser-content/:campaignName/:pageName                      
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /advertiser-content/:campaignName/:pageName/onward.json                                                           commercial.controllers.HostedContentController.renderOnwardJson(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
-GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize()
-GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
 GET            /commercial/non-refreshable-line-items.json                                                                       commercial.controllers.nonRefreshableLineItemsController.getIds
 
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
-GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
-GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
+GET            /app-ads.txt                                                                                                      commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 
 # Ad-Lite opt in
 GET         /commercial/ad-lite/enable                                                                                           commercial.controllers.TemporaryAdLiteController.enable()
@@ -280,16 +276,10 @@ GET         /commercial/adops/app-ads-txt                                       
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
 # AMP
-GET            /most-read-mf2.json                                                                                               controllers.MostPopularController.renderPopularMicroformat2()
 GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
 GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
 
-GET            /container/count/:count/offset/:offset/mf2.json                                                                   controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "")
-GET            /container/count/:count/offset/:offset/section/:section/mf2.json                                                  controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section)
-
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
-
-GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
 
 # Onward journeys
 GET            /audio/series/*path.json                                                                                          controllers.SeriesController.renderPodcastEpisodes(path)
@@ -401,12 +391,12 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                         
 GET            /$leftSide<[^+]+>+*rightSide                                                                                      controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Live Blogs
-GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>.json                                                                                      controllers.LiveBlogController.renderJson(path, page: Option[String], lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean])
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email                                                                                     controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email/headline.txt                                                                        controllers.ArticleController.renderHeadline(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson                                                                           controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt                                                                            controllers.LiveBlogController.renderEmail(path)
-GET     /$path<[^/]+/([^/]+/)?live/.*>                                                                                           controllers.LiveBlogController.renderArticle(path, page: Option[String], filterKeyEvents: Option[Boolean])
+GET     /$path<[^/]+/([^/]+/)?live/.*>                                                                                           controllers.LiveBlogController.renderArticle(path, page: Option[String])
 
 # articles, finished liveblogs
 

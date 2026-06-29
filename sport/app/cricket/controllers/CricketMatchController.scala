@@ -2,19 +2,21 @@ package cricket.controllers
 
 import common._
 import conf.Configuration
-import cricketModel.Match
-import conf.cricketPa.{CricketTeam, CricketTeams}
+import conf.cricketPa.{CricketTeam, CricketTeams, PaFeed}
+import contentapi.ContentApiClient
+import cricketModel.{Match, MatchHeader, MatchStatsSummary}
+import football.datetime.DateHelpers
 import football.model.{CricketScoreBoardDataModel, DotcomRenderingCricketDataModel}
 import implicits.{HtmlFormat, JsonFormat}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
-import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
+import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{CricketPagePicker, RemoteRender}
 
+import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
@@ -30,6 +32,7 @@ class CricketMatchController(
     cricketStatsJob: CricketStatsJob,
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
+    contentApiClient: ContentApiClient,
 )(implicit
     context: ApplicationContext,
 ) extends BaseController
@@ -70,6 +73,38 @@ class CricketMatchController(
         .getOrElse(successful(NoCache(NotFound)))
     }
 
+  def matchHeaderJson(date: String, teamId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      CricketTeams
+        .byWordsForUrl(teamId)
+        .flatMap { team =>
+          cricketStatsJob.findMatch(team, date).map { matchData =>
+            val page = CricketMatchPage(matchData, date, team)
+            val requestedDate: ZonedDateTime =
+              LocalDate.parse(date, PaFeed.dateFormat).atStartOfDay(ZoneId.of("Europe/London"))
+            val related: Future[Seq[ContentType]] = relatedContents(matchData, requestedDate)
+            related.map { relatedContents =>
+              val model = MatchHeader(page, relatedContents, requestedDate)
+              Cached(CacheTime.Cricket)(JsonComponent.fromWritable(model))
+            }
+          }
+        }
+        .getOrElse(successful(NoCache(NotFound)))
+    }
+
+  def matchStatsSummaryJson(date: String, teamId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      CricketTeams
+        .byWordsForUrl(teamId)
+        .flatMap { team =>
+          cricketStatsJob.findMatch(team, date).map { matchData =>
+            val summary = MatchStatsSummary(matchData)
+            successful(Cached(CacheTime.Cricket)(JsonComponent.fromWritable(summary)))
+          }
+        }
+        .getOrElse(successful(NoCache(NotFound)))
+    }
+
   private def renderMatch(
       page: CricketMatchPage,
   )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
@@ -95,4 +130,32 @@ class CricketMatchController(
         })
     }
   }
+
+  private def relatedContents(theMatch: Match, date: ZonedDateTime): Future[List[ContentType]] = {
+    val startOfDateRange = DateHelpers.startOfDay(date)
+    val endOfDateRange = DateHelpers.startOfDay(date.plusDays(1))
+    val tagIds = theMatch.teams.flatMap(_.teamTagId).mkString(",")
+
+    contentApiClient
+      .getResponse(
+        contentApiClient
+          .search()
+          .section("sport")
+          .tag(
+            s"sport/cricket,$tagIds",
+          )
+          .fromDate(startOfDateRange.toInstant)
+          .toDate(endOfDateRange.toInstant),
+      )
+      .map { response =>
+        response.results
+          .map(Content(_))
+          .toList
+          .filter(c => hasExactlyTwoTeams(c))
+      }
+  }
+
+  private def hasExactlyTwoTeams(content: ContentType): Boolean = content.tags.tags.count(tag => {
+    tag.id.endsWith("-cricket-team") || tag.id.endsWith("cricketteam")
+  }) == 2
 }

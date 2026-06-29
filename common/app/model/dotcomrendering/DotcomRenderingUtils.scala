@@ -22,8 +22,8 @@ import model.{
   LiveBlogPage,
   Pillar,
 }
-import org.joda.time.{DateTimeZone, Instant, LocalDate, LocalTime}
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -79,8 +79,8 @@ object DotcomRenderingUtils extends DCARUrlHelper {
         Some(
           DotcomRenderingMatchData(
             matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
-            matchHeaderUrl = None,
-            matchStatsUrl = None,
+            matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
+            matchStatsUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-stats-summary/$date/$team.json"),
             matchType = CricketMatchType,
           ),
         )
@@ -187,34 +187,15 @@ object DotcomRenderingUtils extends DCARUrlHelper {
       .getOrElse("news")
   }
 
-  def getKeyEventsIfFiltered(filterKeyEvents: Boolean, blocks: APIBlocks): Option[List[APIBlock]] = {
-    if (filterKeyEvents) {
-      blocks.requestedBodyBlocks.flatMap { requested =>
-        for {
-          keyEvents <- requested.get(CanonicalLiveBlog.timeline)
-          summaries <- requested.get(CanonicalLiveBlog.summary)
-        } yield {
-          val res: Seq[APIBlock] = (keyEvents.toSeq ++ summaries.toSeq)
-          orderBlocks(res).toList
-        }
-      }
-    } else None
-  }
-
   def getLatest60Blocks(blocks: APIBlocks): Option[List[APIBlock]] = {
     blocks.requestedBodyBlocks.flatMap(_.get(CanonicalLiveBlog.firstPage).map(_.toList))
   }
 
   def blocksForLiveblogPage(
       pageBlocks: BlocksOn[LiveBlogPage],
-      filterKeyEvents: Boolean,
   ): Seq[APIBlock] = {
     val blocks = pageBlocks.blocks
-    // When the key events filter is on, we'd need all of the key events rather than just the latest 60 blocks
-    val allBlocks =
-      getKeyEventsIfFiltered(filterKeyEvents, blocks)
-        .orElse(getLatest60Blocks(blocks))
-        .getOrElse(List.empty)
+    val allBlocks = getLatest60Blocks(blocks).getOrElse(List.empty)
 
     // For the newest page, the latest 60 blocks are requested, but for other page,
     // all of the blocks have been requested and returned in the blocks.body bit

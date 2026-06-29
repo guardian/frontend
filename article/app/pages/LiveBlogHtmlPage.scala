@@ -31,7 +31,6 @@ object LiveBlogHtmlPage extends HtmlPage[LiveBlogPage] {
           LiveBlogHelpers.blocksForLiveBlogRequest(
             page.article,
             request.getQueryString("page"),
-            request.getQueryString("filterKeyEvents").exists(_.toBoolean),
           ),
         ).toString(),
       ),

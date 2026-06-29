@@ -1,10 +1,11 @@
 package utils
 
-import com.gu.contentapi.client.model.v1.{BlockElement, ContentAtomElementFields, ElementType}
-import model.content.InteractiveAtom
+import com.gu.contentapi.client.model.v1.{BlockElement, ContentAtomElementFields, ElementType, TextElementFields}
+import model.content.{Atoms, InteractiveAtom}
 import model.meta.BlocksOn
 import model.{ArticlePage, Content, ContentPage, InteractivePage}
 import play.api.libs.json.{Json, Reads}
+import scala.xml.XML
 
 case class LiveHarnessInteractiveAtom(
     id: String,
@@ -13,6 +14,7 @@ case class LiveHarnessInteractiveAtom(
     html: String,
     js: String,
     weighting: String,
+    position: Option[Int] = None, // 1-based visual index; defaults to 1 (before everything)
 ) {
   val atom = InteractiveAtom(
     id = id,
@@ -55,14 +57,81 @@ object LiveHarness {
   ): BlocksOn[P] => BlocksOn[P] = _.mapBoth(
     page => {
       val content = page.item.content
-      updater.update(page, content.copy(atoms = content.atoms.map(_.copy(interactives = harnessAtoms.map(_.atom)))))
+      val interactives = harnessAtoms.map(_.atom)
+      val updatedAtoms = content.atoms
+        .getOrElse(emptyAtoms)
+        .copy(interactives = interactives)
+      updater.update(page, content.copy(atoms = Some(updatedAtoms)))
     },
     blocks =>
       blocks.copy(body = blocks.body.map { bodyBlocks =>
-        val (headBlockOpt, tailBlocks) = bodyBlocks.splitAt(1)
-        headBlockOpt.map { headBlock =>
-          headBlock.copy(elements = harnessAtoms.map(_.blockElement) ++ headBlock.elements)
-        } ++ tailBlocks
+        bodyBlocks.map { block =>
+          block.copy(elements = insertAtomsAtNthPoints(block.elements.toSeq, harnessAtoms))
+        }
       }),
   )
+
+  private val emptyAtoms = Atoms(
+    audios = Seq.empty,
+    charts = Seq.empty,
+    commonsdivisions = Seq.empty,
+    explainers = Seq.empty,
+    guides = Seq.empty,
+    interactives = Seq.empty,
+    media = Seq.empty,
+    profiles = Seq.empty,
+    qandas = Seq.empty,
+    quizzes = Seq.empty,
+    reviews = Seq.empty,
+    timelines = Seq.empty,
+    callToAction = Seq.empty,
+  )
+
+  private val voidTextElements = Set("br", "hr", "wbr")
+
+  private[utils] def splitIntoTags(html: String): List[String] = {
+    val sanitised = voidTextElements.foldLeft(html) { (acc, tag) =>
+      acc.replaceAll(s"<$tag(\\s[^>]*)?>", "")
+    }
+    val xml = XML.loadString(s"<root>$sanitised</root>")
+    xml.child.toList.map(_.toString).filter(_.trim.nonEmpty)
+  }
+
+  private[utils] def insertAtomsAtNthPoints(
+      elements: Seq[BlockElement],
+      harnessAtoms: Seq[LiveHarnessInteractiveAtom],
+  ) = {
+    // Flatten elements into visual units: Text elements are split into
+    // individual tags, all other elements count as one unit each.
+    // Each unit is Either[String (text chunk), BlockElement (non-text)]
+    val visualUnits: List[Either[String, BlockElement]] = elements.toList.flatMap {
+      case el if el.`type` == ElementType.Text =>
+        splitIntoTags(el.textTypeData.flatMap(_.html).getOrElse("")).map(Left(_))
+      case el =>
+        List(Right(el))
+    }
+
+    // Insert each harness atom at its requested visual position
+    val withAtoms = harnessAtoms.foldLeft(visualUnits) { (units, harnessAtom) =>
+      val insertAt = (harnessAtom.position.getOrElse(1) - 1).max(0).min(units.length)
+      val (before, after) = units.splitAt(insertAt)
+      before ::: List(Right(harnessAtom.blockElement)) ::: after
+    }
+
+    // Repack: merge adjacent text chunks back into Text BlockElements
+    val repacked: List[BlockElement] = withAtoms.foldRight(List.empty[BlockElement]) {
+      case (Left(chunk), head :: tail) if head.`type` == ElementType.Text =>
+        val existingHtml = head.textTypeData.flatMap(_.html).getOrElse("")
+        head.copy(textTypeData = Some(TextElementFields(html = Some(chunk + "\n" + existingHtml)))) :: tail
+      case (Left(chunk), acc) =>
+        BlockElement(
+          `type` = ElementType.Text,
+          assets = Seq.empty,
+          textTypeData = Some(TextElementFields(html = Some(chunk))),
+        ) :: acc
+      case (Right(el), acc) => el :: acc
+    }
+
+    repacked.toIndexedSeq
+  }
 }

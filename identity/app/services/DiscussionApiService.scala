@@ -1,6 +1,6 @@
 package services
 
-import clients.{DiscussionClient, DiscussionProfile, DiscussionProfileResponse, DiscussionProfileStats}
+import clients.{DiscussionClient, DiscussionProfile, DiscussionProfileResponse}
 import utils.SafeLogging
 
 import scala.concurrent.{ExecutionContext, Future}

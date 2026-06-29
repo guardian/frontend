@@ -4,9 +4,9 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.42.39"
-  val capiVersion = "42.0.1"
-  val faciaVersion = "30.0.0"
+  val awsVersion = "2.44.12"
+  val capiVersion = "44.0.0"
+  val faciaVersion = "32.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -23,13 +23,13 @@ object Dependencies {
   val awsSqs = "software.amazon.awssdk" % "sqs" % awsVersion
   val awsSsm = "software.amazon.awssdk" % "ssm" % awsVersion
   val awsElasticloadbalancing = "software.amazon.awssdk" % "elasticloadbalancing" % awsVersion
-  val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20260415"
+  val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20260504"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
-  val commonsIo = "commons-io" % "commons-io" % "2.21.0"
+  val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "38.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "41.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -48,7 +48,7 @@ object Dependencies {
     .excludeAll(excludeDirectScalaXMLDependency)
 
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
-  val jodaTime = "joda-time" % "joda-time" % "2.14.1"
+  val jodaTime = "joda-time" % "joda-time" % "2.14.2"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
@@ -70,11 +70,11 @@ object Dependencies {
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
   val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
-  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.17"
+  val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.18"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.28"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.31"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -98,23 +98,17 @@ object Dependencies {
   val bootstrap = "org.webjars" % "bootstrap" % "5.3.8"
   val jquery = "org.webjars" % "jquery" % "3.7.1"
   val jqueryui = "org.webjars" % "jquery-ui" % "1.13.3"
-  val lodash = "org.webjars.npm" % "lodash" % "4.17.23"
+  val lodash = "org.webjars.npm" % "lodash" % "4.18.1"
   val react = "org.webjars" % "react" % "16.5.2"
   val epoch = "org.webjars.npm" % "epoch-charting" % "0.8.4"
   val d3 = "org.webjars.npm" % "d3" % "7.9.0"
-
-  val nettyVersion = "4.2.12.Final"
-  val netty = Seq(
-    "io.netty" % "netty-codec-http" % nettyVersion,
-    "io.netty" % "netty-codec-http2" % nettyVersion,
-  )
 
   /*
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.1"
-  val jacksonDatabindVersion = "2.21.1"
+  val jacksonVersion = "2.21.2"
+  val jacksonDatabindVersion = "2.21.2"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion

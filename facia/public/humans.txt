@@ -29,6 +29,13 @@ Handle: @mxdvl
 From: Montréal, CA
 Location: London, UK
 
+Developer: William Mead
+From: Milton Keynes
+
+Developer: Peace Williams-Ojomu
+From: London, UK
+GitHub: @apeacewilliams
+
 Product Manager: Jon Kearnes
 LinkedIn: jonkearnes
 From: London, UK

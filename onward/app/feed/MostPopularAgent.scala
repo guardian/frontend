@@ -1,6 +1,5 @@
 package feed
 
-import com.gu.contentapi.client.model.v1.Content
 import common._
 import contentapi.ContentApiClient
 import model.RelatedContentItem
@@ -75,34 +74,5 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.debug("Refreshing most popular for countries.")
     MostViewed.refreshAll(countries)(refresh)
-  }
-}
-
-class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
-
-  private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
-
-  private val countries = Seq(
-    Country("GB", editions.Uk),
-    Country("US", editions.Us),
-    Country("AU", editions.Au),
-  )
-
-  def mostPopular(country: String): Seq[RelatedContentItem] = box().getOrElse(country, Nil)
-
-  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.debug("Refreshing most popular for the day.")
-    MostViewed.refreshAll(countries)(refresh)
-  }
-
-  def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    val ophanMostViewed = ophanApi.getMostRead(hours = 24, count = 10, country = country.code.toLowerCase())
-    MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
-      val validItems = items.flatten
-      if (validItems.isEmpty) {
-        log.debug(s"Day popular update for ${country.code} found nothing.")
-      }
-      box.alter(_ + (country.code -> validItems))
-    }
   }
 }

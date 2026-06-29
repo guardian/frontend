@@ -11,31 +11,37 @@ import java.util.TimeZone
 
 object Parser {
 
-  def parseMatch(scorecard: String, detail: String, lineups: String, matchId: String): Match = {
-
+  def parseMatch(scorecard: String, detail: String, lineups: String, competitionMatch: CompetitionMatch): Match = {
     val matchData = XML.loadString(detail) \ "match"
     val matchDetail = parseMatchDetail(matchData)
     val lineupData = XML.loadString(lineups)
     val scorecardData = XML.loadString(scorecard)
 
     Match(
-      parseTeams(lineupData \ "match" \ "team"),
-      parseInnings(scorecardData \ "match" \ "innings"),
-      matchDetail.competitionName,
-      matchDetail.venueName,
-      matchDetail.result,
-      matchDetail.gameDate,
-      matchDetail.officials,
-      matchId,
+      teams = parseTeams(lineupData \ "match" \ "team"),
+      innings = parseInnings(scorecardData \ "match" \ "innings"),
+      competitionName = competitionMatch.competitionName,
+      stage = matchDetail.stage,
+      venueName = matchDetail.venueName,
+      result = matchDetail.status,
+      currentDay = matchDetail.currentDay,
+      totalDays = matchDetail.totalDays,
+      gameDate = matchDetail.gameDate,
+      officials = matchDetail.officials,
+      matchId = competitionMatch.matchId,
+      fullResult = matchDetail.result,
     )
   }
 
   private case class MatchDetail(
-      competitionName: String,
+      stage: String,
       venueName: String,
-      result: String,
+      status: String,
+      currentDay: Int,
+      totalDays: Int,
       gameDate: LocalDateTime,
       officials: List[String],
+      result: Option[MatchResult],
   )
 
   private object Date {
@@ -55,16 +61,45 @@ object Parser {
 
   private def parseMatchDetail(matchDetail: NodeSeq): MatchDetail =
     MatchDetail(
-      matchDetail \ "stage" text,
-      matchDetail \ "venue" \ "name" text,
-      matchDetail \ "status" text,
-      Date(matchDetail \ "dateTime" text),
-      parseOfficials(matchDetail \ "official"),
+      stage = matchDetail \ "stage" text,
+      venueName = matchDetail \ "venue" \ "name" text,
+      status = matchDetail \ "status" text,
+      currentDay = (matchDetail \ "currentDay").text.toInt,
+      totalDays = (matchDetail \ "totalDays").text.toInt,
+      gameDate = Date(matchDetail \ "dateTime" text),
+      officials = parseOfficials(matchDetail \ "official"),
+      result = parseMatchResult(matchDetail \ "result"),
+    )
+
+  private def parseMatchWinner(winner: NodeSeq): Option[MatchWinner] =
+    Option.when(winner.nonEmpty)(
+      MatchWinner(
+        winType = (winner \ "@type").text,
+        margin = (winner \ "margin").headOption.map(_.text),
+        team = (winner \ "team" \ "name").text,
+      ),
+    )
+
+  private def parseMatchResult(result: NodeSeq): Option[MatchResult] =
+    Option.when(result.nonEmpty)(
+      MatchResult(
+        resultType = (result \ "@type").text,
+        description = (result \ "description").headOption.map(_.text),
+        winner = parseMatchWinner(result \ "winner"),
+      ),
     )
 
   private def parseTeams(teams: NodeSeq): List[Team] =
     teams.map { team =>
-      Team((team \ "name").text, (team \ "@id").text, (team \ "home").text == "true", parseTeamLineup(team \ "player"))
+      val teamId = (team \ "@id").text
+      val teamTagId = CricketTeams.teams.find(_.paId == teamId).map(_.tagId)
+      Team(
+        (team \ "name").text,
+        (team \ "@id").text,
+        (team \ "home").text == "true",
+        parseTeamLineup(team \ "player"),
+        teamTagId,
+      )
 
     }.toList
 
@@ -80,22 +115,23 @@ object Parser {
         val inningsOrder = (singleInnings \ "@order").text.toInt
         val battingTeam = (singleInnings \ "batting" \ "team" \ "name").text
         Innings(
-          inningsOrder,
-          battingTeam,
-          getStatistic(singleInnings, "runs-scored").toInt,
-          getStatistic(singleInnings, "overs"),
-          getStatistic(singleInnings, "declared") == "true",
-          getStatistic(singleInnings, "forefeited") == "true",
-          inningsDescription(inningsOrder, battingTeam),
-          parseInningsBatters(singleInnings \ "batting" \ "batter"),
-          parseInningsBowlers(singleInnings \ "bowling" \ "bowler"),
-          parseInningsWickets(singleInnings \ "fallenWicket"),
-          getStatistic(singleInnings, "extra-byes").toInt,
-          getStatistic(singleInnings, "extra-leg-byes").toInt,
-          getStatistic(singleInnings, "extra-no-balls").toInt,
-          getStatistic(singleInnings, "extra-penalties").toInt,
-          getStatistic(singleInnings, "extra-wides").toInt,
-          getStatistic(singleInnings, "extra-total").toInt,
+          order = inningsOrder,
+          battingTeam = battingTeam,
+          runsScored = getStatistic(singleInnings, "runs-scored").toInt,
+          wickets = getStatistic(singleInnings, "wickets").toInt,
+          overs = getStatistic(singleInnings, "overs"),
+          declared = getStatistic(singleInnings, "declared") == "true",
+          forfeited = getStatistic(singleInnings, "forefeited") == "true",
+          description = inningsDescription(inningsOrder, battingTeam),
+          batters = parseInningsBatters(singleInnings \ "batting" \ "batter"),
+          bowlers = parseInningsBowlers(singleInnings \ "bowling" \ "bowler"),
+          fallOfWicket = parseInningsWickets(singleInnings \ "fallenWicket"),
+          byes = getStatistic(singleInnings, "extra-byes").toInt,
+          legByes = getStatistic(singleInnings, "extra-leg-byes").toInt,
+          noBalls = getStatistic(singleInnings, "extra-no-balls").toInt,
+          penalties = getStatistic(singleInnings, "extra-penalties").toInt,
+          wides = getStatistic(singleInnings, "extra-wides").toInt,
+          extras = getStatistic(singleInnings, "extra-total").toInt,
         )
       }
       .toList

@@ -1,6 +1,5 @@
 package common.dfp
 
-import com.gu.contentapi.client.model.v1.TagType
 import common.Edition
 import common.editions.{Uk, Us}
 import model.{Tag, TagProperties}

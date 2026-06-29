@@ -26,7 +26,9 @@
 
 <ul class="football-groups u-unstyled u-cf">
 @groupStage.groupTables.zipWithIndex.map { case (groupTable, index) =>
-    @footballGroup(groupTable._1, groupTable._2, !groupId.contains(index + 1))
+  @if(groupId.contains(index + 1)) {
+      @footballGroup(groupTable._1, groupTable._2, !groupId.contains(index + 1))
+  }
 }
 </ul>
 

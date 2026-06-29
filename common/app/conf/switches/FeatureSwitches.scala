@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 import java.time.LocalDate
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Commercial, Feature}
+import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
@@ -634,7 +634,7 @@ trait FeatureSwitches {
     description = "Render hosted content pages with DCR",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2026, 6, 17)),
+    sellByDate = Some(LocalDate.of(2026, 8, 19)),
     exposeClientSide = false,
     highImpact = false,
   )
