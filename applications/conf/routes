@@ -79,7 +79,6 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 
 # Atoms
 POST       /atom/quiz/:id/*path                                                 controllers.QuizController.submit(id, path)
-GET        /atom/youtube/:id.json                                               controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
 # mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code
