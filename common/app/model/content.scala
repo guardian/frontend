@@ -323,7 +323,9 @@ final case class Content(
     )
 
   def cricketTeam: Option[String] = {
-    if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
+    if (
+      (tags.isCricketLiveBlog || tags.isCricketMatchReport) && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn
+    ) {
       CricketTeams.teamFor(this).map(_.wordsForUrl)
     } else None
   }

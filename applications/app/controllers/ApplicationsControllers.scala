@@ -42,7 +42,6 @@ trait ApplicationsControllers {
   lazy val shortUrlsController = wire[ShortUrlsController]
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
-  lazy val youtubeController = wire[YoutubeController]
   lazy val nx1ConfigController = wire[Nx1ConfigController]
   lazy val componentController = wire[ComponentController]
 
