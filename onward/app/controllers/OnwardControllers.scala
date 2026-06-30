@@ -39,10 +39,7 @@ trait OnwardControllers {
   lazy val mostViewedAudioController = wire[MostViewedAudioController]
   lazy val mostViewedGalleryController = wire[MostViewedGalleryController]
   lazy val richLinkController = wire[RichLinkController]
-  lazy val recommendedContentCardController = wire[RecommendedContentCardController]
   lazy val cardController = wire[CardController]
-  lazy val taggedContentController = wire[TaggedContentController]
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
-  lazy val storyPackageController = wire[StoryPackageController]
 }

@@ -693,10 +693,6 @@ class GuardianConfiguration extends GuLogging {
     lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
   }
 
-  object Survey {
-    lazy val formStackAccountName: String = "guardiannewsampampmedia"
-  }
-
   object Media {
     lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
   }

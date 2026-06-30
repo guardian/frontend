@@ -47,7 +47,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val emailSignupController = wire[EmailSignupController]
-  lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]
 
   override lazy val lifecycleComponents = List(

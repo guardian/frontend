@@ -4,7 +4,7 @@ import common._
 import conf.Configuration
 import conf.cricketPa.{CricketTeam, CricketTeams, PaFeed}
 import contentapi.ContentApiClient
-import cricketModel.{Match, MatchHeader}
+import cricketModel.{Match, MatchHeader, MatchStatsSummary}
 import football.datetime.DateHelpers
 import football.model.{CricketScoreBoardDataModel, DotcomRenderingCricketDataModel}
 import implicits.{HtmlFormat, JsonFormat}
@@ -87,6 +87,19 @@ class CricketMatchController(
               val model = MatchHeader(page, relatedContents, requestedDate)
               Cached(CacheTime.Cricket)(JsonComponent.fromWritable(model))
             }
+          }
+        }
+        .getOrElse(successful(NoCache(NotFound)))
+    }
+
+  def matchStatsSummaryJson(date: String, teamId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      CricketTeams
+        .byWordsForUrl(teamId)
+        .flatMap { team =>
+          cricketStatsJob.findMatch(team, date).map { matchData =>
+            val summary = MatchStatsSummary(matchData)
+            successful(Cached(CacheTime.Cricket)(JsonComponent.fromWritable(summary)))
           }
         }
         .getOrElse(successful(NoCache(NotFound)))

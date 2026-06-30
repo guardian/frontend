@@ -5,9 +5,6 @@
 GET            /email-newsletters.json                                                                                           controllers.SignupPageController.renderNewsletters()
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewsletters()
 
-GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
-GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
-
 # For dev machines
 GET            /geolocation                                                                                                      controllers.FakeGeolocationController.geolocation
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
@@ -88,7 +85,6 @@ GET            /popular-in-tag/*tag.json                                        
 GET            /preference/edition/:edition                                                                                      controllers.ChangeEditionController.render(edition)
 
 GET            /cards/opengraph/*path.json                                                                                       controllers.CardController.opengraph(path)
-GET            /tagged.json                                                                                                      controllers.TaggedContentController.renderJson(tag: String)
 
 GET            /video/most-viewed.json                                                                                           controllers.MostViewedVideoController.renderMostViewed()
 GET            /video/in-series/*series.json                                                                                     controllers.MostViewedVideoController.renderInSeries(series: String)
@@ -97,8 +93,6 @@ GET            /podcast/most-viewed.json                                        
 GET            /gallery/most-viewed.json                                                                                         controllers.MostViewedGalleryController.renderMostViewed()
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
-GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
-GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
 
 # Sport
 GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
@@ -263,13 +257,9 @@ GET         /commercial/adops/app-ads-txt                                       
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
 # AMP
-GET            /related-mf2/*path.json                                                                                           controllers.RelatedController.renderMf2(path)
-GET            /series-mf2/*path.json                                                                                            controllers.SeriesController.renderMf2SeriesStories(path)
-
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
 # Onward journeys
-GET            /audio/series/*path.json                                                                                          controllers.SeriesController.renderPodcastEpisodes(path)
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
 # opt-in/out routes
@@ -294,7 +284,6 @@ GET            /index/contributors/*contributor                                 
 GET            /$shortCode<p/[\w]+>                                                                                              controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
-GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
 # mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code

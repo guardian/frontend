@@ -16,9 +16,6 @@ GET        /sitemaps/video.xml                                                  
 GET        /email-newsletters.json                                              controllers.SignupPageController.renderNewsletters()
 GET        /email-newsletters                                                   controllers.SignupPageController.renderNewsletters()
 
-GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
-GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
-
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
@@ -80,7 +77,6 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 
 # Atoms
 POST       /atom/quiz/:id/*path                                                 controllers.QuizController.submit(id, path)
-GET        /atom/youtube/:id.json                                               controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
 # mark: 2QJfZo - keep these in sync with other instances https://github.com/search?q=org%3Aguardian+2QJfZo&type=code
