@@ -107,8 +107,8 @@ object Dependencies {
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.2"
-  val jacksonDatabindVersion = "2.21.2"
+  val jacksonVersion = "2.21.4"
+  val jacksonDatabindVersion = "2.21.4"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion
