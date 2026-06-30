@@ -8,7 +8,9 @@ import com.gu.contentapi.client.model.v1.{
   LinkType,
   Priority,
   ProductDisplayType,
+  ProductSummaryDisplayType,
   ProductElementFields,
+  ProductSummaryElementFields,
   SponsorshipType,
   TimelineElementFields,
   WitnessElementFields,
@@ -17,6 +19,7 @@ import com.gu.contentapi.client.model.v1.{
   ProductCustomAttribute => ApiProductCustomAttribute,
   ProductImage => ApiProductImage,
   Sponsorship => ApiSponsorship,
+  SummaryProductRef => ApiSummaryProductRef,
 }
 import common.{Chronos, Edition}
 import conf.Configuration
@@ -601,6 +604,25 @@ object ProductBlockElement {
   implicit val ProductBlockElementWrites: Writes[ProductBlockElement] = Json.writes[ProductBlockElement]
 }
 
+case class SummaryProductRef(
+    productId: String,
+    ctaIndex: Int,
+)
+case class ProductSummaryBlockElement(
+    title: String,
+    displayType: ProductSummaryDisplayType,
+    products: List[SummaryProductRef],
+    id: String,
+) extends PageElement
+object ProductSummaryBlockElement {
+  implicit val SummaryProductRefWrites: Writes[SummaryProductRef] = Json.writes[SummaryProductRef]
+  implicit val ProductSummaryBlockElementDisplayTypeWrites: Writes[ProductSummaryDisplayType] = Writes { displayType =>
+    JsString(displayType.name)
+  }
+  implicit val ProductSummaryBlockElementWrites: Writes[ProductSummaryBlockElement] =
+    Json.writes[ProductSummaryBlockElement]
+}
+
 case class RecipeFeaturedImage(
     url: String,
     mediaId: String,
@@ -1036,6 +1058,7 @@ object PageElement extends GuLogging {
       case _: ProductBlockElement          => true
       case _: RecipeBlockElement           => true
       case _: ReporterCalloutBlockElement  => true
+      case _: ProductSummaryBlockElement   => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1713,6 +1736,21 @@ object PageElement extends GuLogging {
             abTests,
           )
         }.toList
+
+      case ProductSummary =>
+        element.productSummaryTypeData
+          .map(d =>
+            ProductSummaryBlockElement(
+              title = d.title.getOrElse(""),
+              displayType = d.displayType,
+              products = d.products
+                .getOrElse(Seq.empty)
+                .map(p => SummaryProductRef(p.productId.getOrElse(""), p.ctaIndex.getOrElse(0)))
+                .toList,
+              id = d.id.getOrElse(""),
+            ),
+          )
+          .toList
 
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
 
