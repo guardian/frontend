@@ -16,9 +16,6 @@ GET        /sitemaps/video.xml                                                  
 GET        /email-newsletters.json                                              controllers.SignupPageController.renderNewsletters()
 GET        /email-newsletters                                                   controllers.SignupPageController.renderNewsletters()
 
-GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
-GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
-
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
