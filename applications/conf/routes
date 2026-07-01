@@ -66,8 +66,6 @@ GET        /component/*path                                                     
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
 
 # opt-in/out routes
-GET        /opt/$choice<in|out|delete>/:feature                                 controllers.OptInController.handle(feature, choice)
-GET        /opt/reset                                                           controllers.OptInController.reset()
 
 GET        /getnext/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "next")
 GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "prev")
