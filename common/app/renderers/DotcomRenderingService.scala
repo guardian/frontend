@@ -562,7 +562,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     post(
       ws,
       json,
-      Configuration.rendering.articleBaseURL + s"/Shell/$path",
+      Configuration.rendering.articleBaseURL + s"/Site/$path",
       CacheTime.Component,
     )
   }
