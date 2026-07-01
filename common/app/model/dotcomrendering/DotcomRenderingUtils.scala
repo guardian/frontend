@@ -84,14 +84,18 @@ object DotcomRenderingUtils extends DCARUrlHelper {
     if (isCricketMatchRelated(item)) {
       val date = item.content.cricketMatchDate
       val team = item.content.cricketTeam
-      Some(
-        DotcomRenderingMatchData(
-          matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
-          matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
-          matchStatsUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-stats-summary/$date/$team.json"),
-          matchType = CricketMatchType,
-        ),
-      )
+      (date, team) match {
+        case (Some(date), Some(team)) =>
+          Some(
+            DotcomRenderingMatchData(
+              matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/$team.json",
+              matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
+              matchStatsUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-stats-summary/$date/$team.json"),
+              matchType = CricketMatchType,
+            ),
+          )
+        case _ => None
+      }
     } else None
   }
 
