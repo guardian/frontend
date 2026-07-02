@@ -13,11 +13,12 @@ import net.bytebuddy.asm.Advice;
  */
 public final class RecordTemplateAdvice {
 
-    private RecordTemplateAdvice() {}
+    private RecordTemplateAdvice() {
+    }
 
     @Advice.OnMethodEnter
     public static void onEnter(@Advice.Origin("#t") String templateClassName) {
-        TemplateTracker.recordFirstSeen(templateClassName);
+        TemplateTracker.recordRendering(templateClassName);
     }
 }
 
