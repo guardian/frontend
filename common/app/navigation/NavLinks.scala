@@ -218,8 +218,8 @@ object NavLinks {
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink(
-    "Crosswords",
-    "/crosswords",
+    "Puzzles & Crosswords",
+    "/puzzles",
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
       NavLink("Quick", "/crosswords/series/quick"),

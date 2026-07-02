@@ -12,21 +12,45 @@ GET            /assets/admin/*file                                              
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
+# Puzzles
+GET            /puzzles.json                                                                                                     controllers.PuzzlesPageController.renderPuzzlesJson()
+GET            /puzzles                                                                                                          controllers.PuzzlesPageController.renderPuzzles()
+
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json              controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
-GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend|mini>/:id/print                  controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
-GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
+GET            /puzzles/crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET            /puzzles/crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json              controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
+GET            /puzzles/crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id                   controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET            /puzzles/crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend|mini>/:id/print                  controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET            /puzzles/crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id        controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
-GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
-GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
+GET            /puzzles/crosswords/search                                                                                                controllers.CrosswordSearchController.search()
+GET            /puzzles/crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Crosswords digital edition
-GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
-GET        /crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
+GET        /puzzles/crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
+GET        /puzzles/crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
+
+# Crossword archive
+GET           /puzzles/crosswords/archive.json                                                                                          controllers.PuzzlesPageController.renderCrosswordArchiveJson()
+GET           /puzzles/crosswords/archive                                                                                               controllers.PuzzlesPageController.renderCrosswordArchive()
+
+# IFrame Puzzles
+GET        /puzzles/:slug.json                                                                                                          controllers.PuzzlesPageController.renderPuzzleJson(slug: String)
+GET        /puzzles/:slug                                                                                                               controllers.PuzzlesPageController.renderPuzzle(slug: String)
+
+# Legacy crossword routes. Keep these available while the /puzzles URL structure is evaluated.
+# The constrained crossword type is important: /crosswords/series/:series must fall through to IndexController.
+GET /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
+GET /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend|mini>/:id/print controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
+GET /crosswords/search controllers.CrosswordSearchController.search()
+GET /crosswords/lookup controllers.CrosswordSearchController.lookup()
+GET /crosswords/digital-edition controllers.CrosswordEditionsController.digitalEdition
+GET /crosswords/digital-edition.json controllers.CrosswordEditionsController.digitalEditionJson
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
