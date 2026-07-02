@@ -576,7 +576,7 @@ class EmailSignupController(
 
               (for {
                 _ <- validateCaptcha(form.googleRecaptchaResponse, ValidateEmailSignupRecaptchaTokens.isSwitchedOn)
-                result <- buildSubmissionResult(emailFormService.submit(form))
+                result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
               } yield {
                 result
               }) recover {
@@ -630,13 +630,13 @@ class EmailSignupController(
         )
     }
 
-  private def buildSubmissionResult(wsResponse: Future[WSResponse])(implicit
+  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String] = None)(implicit
       request: Request[AnyContent],
   ): Future[Result] = {
     wsResponse.map(_.status match {
       case 200 | 201 =>
         EmailSubmission.increment()
-        respond(Subscribed)
+        respond(Subscribed, listName)
 
       case status =>
         logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
@@ -645,7 +645,7 @@ class EmailSignupController(
 
     }) recover {
       case _: IllegalAccessException =>
-        respond(Subscribed)
+        respond(Subscribed, listName)
       case e: Exception =>
         logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
