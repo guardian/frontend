@@ -617,7 +617,7 @@ class EmailSignupController(
                 ValidateEmailSignupRecaptchaTokens.isSwitchedOn,
                 shouldUseVisibleKey = ManyNewsletterVisibleRecaptcha.isSwitchedOn,
               )
-              result <- buildSubmissionResult(emailFormService.submitWithMany(form))
+              result <- buildSubmissionResult(emailFormService.submitWithMany(form), None)
             } yield {
               result
             }) recover {
@@ -630,7 +630,7 @@ class EmailSignupController(
         )
     }
 
-  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String] = None)(implicit
+  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String])(implicit
       request: Request[AnyContent],
   ): Future[Result] = {
     wsResponse.map(_.status match {
