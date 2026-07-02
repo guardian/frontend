@@ -152,7 +152,7 @@ class CricketMatchController(
         response.results
           .map(Content(_))
           .toList
-          .filter(c => isCricketMatchRelated(c))
+          .filter(c => hasExactlyTwoTeams(c.tags))
       }
   }
 }

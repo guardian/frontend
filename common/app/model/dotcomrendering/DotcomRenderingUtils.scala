@@ -30,6 +30,7 @@ import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
 
 import java.net.URLEncoder
+import model.Tags
 
 sealed trait DotcomRenderingMatchType
 
@@ -70,33 +71,25 @@ object DotcomRenderingUtils extends DCARUrlHelper {
     makeFootballMatch(articlePage, pageType).orElse(makeCricketMatch(articlePage.item))
   }
 
-  def isCricketMatchRelated(item: ContentType): Boolean = {
-    val hasCricketDate = item.content.cricketMatchDate.isDefined
-    val hasCricketTeam = item.content.cricketTeam.isDefined
-    val hasExactlyTwoTeams = item.content.tags.tags.count(tag => {
-      tag.id.endsWith("-cricket-team") || tag.id.endsWith("cricketteam")
-    }) == 2
-
-    hasCricketDate && hasCricketTeam && hasExactlyTwoTeams
-  }
+  def hasExactlyTwoTeams(tags: Tags): Boolean = tags.tags.count(tag => {
+    tag.id.endsWith("-cricket-team") || tag.id.endsWith("cricketteam")
+  }) == 2
 
   def makeCricketMatch(item: ContentType): Option[DotcomRenderingMatchData] = {
-    if (isCricketMatchRelated(item)) {
-      val date = item.content.cricketMatchDate
-      val team = item.content.cricketTeam
-      (date, team) match {
-        case (Some(date), Some(team)) =>
-          Some(
-            DotcomRenderingMatchData(
-              matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/$team.json",
-              matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
-              matchStatsUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-stats-summary/$date/$team.json"),
-              matchType = CricketMatchType,
-            ),
-          )
-        case _ => None
-      }
-    } else None
+    val date = item.content.cricketMatchDate
+    val team = item.content.cricketTeam
+    (date, team, hasExactlyTwoTeams(item.content.tags)) match {
+      case (Some(date), Some(team), true) =>
+        Some(
+          DotcomRenderingMatchData(
+            matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/$team.json",
+            matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
+            matchStatsUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-stats-summary/$date/$team.json"),
+            matchType = CricketMatchType,
+          ),
+        )
+      case _ => None
+    }
   }
 
   def getMatchNavUrl(host: String, date: LocalDate, team1: String, team2: String, pageId: String): String = {
