@@ -29,7 +29,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "41.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "43.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -53,9 +53,9 @@ object Dependencies {
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val paClient = "com.gu" %% "pa-client" % "7.0.14"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
+  val paClient = "com.gu" %% "pa-client" % "7.0.16"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "20.0.0"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "7.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
