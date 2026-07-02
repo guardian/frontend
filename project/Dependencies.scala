@@ -109,7 +109,7 @@ object Dependencies {
    */
   val jacksonVersion = "2.21.4"
   val jacksonDatabindVersion = "2.21.4"
-  val jacksonAnnotationsVersion = "2.21"
+  val jacksonAnnotationsVersion = "2.22"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion
   val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
