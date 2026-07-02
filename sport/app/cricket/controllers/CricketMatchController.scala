@@ -19,7 +19,7 @@ import services.dotcomrendering.{CricketPagePicker, RemoteRender}
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
-import model.dotcomrendering.DotcomRenderingUtils.isCricketMatchRelated
+import model.dotcomrendering.DotcomRenderingUtils.hasExactlyTwoTeams
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
