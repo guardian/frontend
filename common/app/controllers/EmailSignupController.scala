@@ -184,7 +184,7 @@ class EmailSignupController(
   }
 
   private def requestLogContext(implicit request: Request[AnyContent]): String =
-    s"referrer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+    s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
       s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
       s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
 
@@ -617,7 +617,7 @@ class EmailSignupController(
                 ValidateEmailSignupRecaptchaTokens.isSwitchedOn,
                 shouldUseVisibleKey = ManyNewsletterVisibleRecaptcha.isSwitchedOn,
               )
-              result <- buildSubmissionResult(emailFormService.submitWithMany(form), None)
+              result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
             } yield {
               result
             }) recover {
@@ -630,7 +630,7 @@ class EmailSignupController(
         )
     }
 
-  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String])(implicit
+  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String] = None)(implicit
       request: Request[AnyContent],
   ): Future[Result] = {
     wsResponse.map(_.status match {
@@ -645,7 +645,7 @@ class EmailSignupController(
 
     }) recover {
       case _: IllegalAccessException =>
-        respond(Subscribed, listName)
+        respond(Subscribed)
       case e: Exception =>
         logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
