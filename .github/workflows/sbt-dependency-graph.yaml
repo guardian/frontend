@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout branch
         id: checkout
-        uses: actions/checkout@9f265659d3bb64ab1440b03b12f4d47a24320917 # v6
+        uses: actions/checkout@v7 # v6
       - name: Install sbt
         uses: guardian/setup-scala@f8b37d4380d93ee5c37739fd8aea97f7c580034a # v1.1.0
       - name: Submit dependencies
