@@ -47,7 +47,7 @@ import scala.concurrent.{Await, Future}
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
-    new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
+    new DeeplyReadAgent,
     assets = assets,
   )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
