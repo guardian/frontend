@@ -1,99 +1,46 @@
 package agents
 
-import com.gu.contentapi.client.model.v1.{Content, ElementType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
 import common._
 import conf.Configuration
-import contentapi.ContentApiClient
-import layout.DiscussionSettings
-import model.ContentFormat
-import services.{FaciaContentConvert, OphanApi, S3, S3Async}
+import model.dotcomrendering.Trail
+import services.S3Async
 
 import scala.concurrent.{ExecutionContext, Future}
-import model.dotcomrendering.Trail
-import play.api.libs.json.Json
-
 
 object DeeplyReadS3Agent extends S3Async {
   override lazy val bucket = Configuration.cache.bucket;
   lazy val stage: String = Configuration.environment.stage.toUpperCase
 }
 
-class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
+class DeeplyReadAgent extends GuLogging {
 
   private val deeplyReadItems = Box[Map[Edition, Seq[Trail]]](Map.empty)
 
-  def removeStartingSlash(path: String): String = {
-    if (path.startsWith("/")) path.stripPrefix("/") else path
-  }
-
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.debug(s"Deeply Read Agent refresh()")
-    /*
-      We query Ophan for the deeply read URLs and use them to queryCapi
-      then use this information to create a sequence of trails that we cache
-      using a Box structure.
-     */
     Future
       .sequence(Edition.allEditions.map { edition =>
-        val futureTrails = DeeplyReadS3Agent.getObjectAsJson[Seq[Trail]](s"${DeeplyReadS3Agent.stage}/deeply-read/${edition.id.toLowerCase()}.json")
-        futureTrails.map(trailsList => {
-          val list = trailsList.take(10)
-
-        val map = Map(edition -> list)
-        log.debug(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
-
-            log.debug(
-              s"Updating the following ${list.size} editions: ${map.keys.map(_.id).toList.sorted.toString()}",
-            )
-
-            log.warn(s"Not updating ${edition.displayName} as it has only ${list.size} items")
-
-//          deeplyReadItems.alter(deeplyReadItems.get() ++ map)
-          map
+        DeeplyReadS3Agent
+          .getObjectAsJson[Seq[Trail]](
+            s"${DeeplyReadS3Agent.stage}/deeply-read/${edition.id.toLowerCase()}.json",
+          )
+          .map(trailsList => {
+            edition -> trailsList.take(10)
+          })
       })
-  })
-  }
+      .map(trailsList => {
+        val map = trailsList.toMap
+        for {
+          (edition, list) <- map
+        } yield log.debug(s"Deeply Read in ${edition.displayName}, ${list.size} items: ${list.map(_.url).toString()}")
 
-  def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
+        val mapWithTenItems = map.filter { case (_, list) => list.size == 10 }
+        log.debug(
+          s"Updating the following ${mapWithTenItems.size} editions: ${mapWithTenItems.keys.map(_.id).toList.sorted.toString()}",
+        )
 
-  def deeplyReadUrlToTrail(content: Content): Option[Trail] = {
-
-    val contentFormat: ContentFormat = ContentFormat(content.design, content.theme, content.display)
-
-    for {
-      webPublicationDate <- content.webPublicationDate
-      fields <- content.fields
-      linkText <- fields.trailText
-      pillar <- content.pillarName
-      headline <- fields.headline
-      shortUrl <- fields.shortUrl
-    } yield Trail(
-      url = content.webUrl,
-      linkText = linkText,
-      showByline = false,
-      byline = fields.byline,
-      masterImage = None,
-      image = fields.thumbnail,
-      carouselImages = Map.empty,
-      ageWarning = None,
-      isLiveBlog = fields.liveBloggingNow.getOrElse(false),
-      pillar = correctPillar(pillar.toLowerCase),
-      designType = content.`type`.toString,
-      format = contentFormat,
-      webPublicationDate = webPublicationDate.toString(),
-      headline = headline,
-      mediaType = None,
-      shortUrl = shortUrl,
-      kickerText = None,
-      starRating = None,
-      avatarUrl = None,
-      branding = None,
-      discussion = DiscussionSettings.fromTrail(FaciaContentConvert.contentToFaciaContent(content)),
-      trailText = content.fields.flatMap(_.trailText),
-      galleryCount =
-        content.elements.map(_.count(el => el.`type` == ElementType.Image && el.relation == "gallery")).filter(_ > 0),
-    )
+        deeplyReadItems.alter(deeplyReadItems.get() ++ mapWithTenItems)
+      })
   }
 
   def getTrails(edition: Edition)(implicit ec: ExecutionContext): Seq[Trail] = {

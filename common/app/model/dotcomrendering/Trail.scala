@@ -1,7 +1,15 @@
 package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTimeZone
-import com.gu.commercial.branding.{Branding, BrandingType, Dimensions, Foundation, PaidContent, Sponsored, Logo => CommercialLogo}
+import com.gu.commercial.branding.{
+  Branding,
+  BrandingType,
+  Dimensions,
+  Foundation,
+  PaidContent,
+  Sponsored,
+  Logo => CommercialLogo,
+}
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import layout.DiscussionSettings
