@@ -25,10 +25,7 @@ import test.{
   "DeeplyReadAgent" should "initialise with trails being an empty Seq" in {
     val ophanApi = new OphanApi(wsClient)
     val contentApiClient = testContentApiClient
-    val agent = new DeeplyReadAgent(
-      contentApiClient = contentApiClient,
-      ophanApi = ophanApi,
-    )
+    val agent = new DeeplyReadAgent
     Edition.allEditions.map(edition => {
       agent.getTrails(edition) shouldBe Seq.empty
     })
