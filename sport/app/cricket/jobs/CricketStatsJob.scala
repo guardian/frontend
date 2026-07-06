@@ -49,10 +49,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
             log.info(s"Discovered ${discovered.size} matches for ${team.paId} between $fromDate and $toDate")
             discoveredCricketTeamMatches(team).send(discovered.map(cm => cm.matchId -> cm).toMap)
 
-            val cachedIds = cricketMatchData(team).apply().values.map(_.matchId).toSet
-            competitionMatches
-              .filterNot(cm => cachedIds.contains(cm.matchId))
-              .foreach(cm => updateMatchData(team, cm))
+            fetchNewMatchData() // fetch the full match data for any newly discovered matches
           }
           .recover {
             case paFeedError: CricketFeedException =>
@@ -63,25 +60,16 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
       .map(_ => ())
   }
 
-  /** Discovered matches (across all teams) whose full data has never been fetched. */
-  private def unfetchedMatches: Seq[(CricketTeam, CompetitionMatch)] =
-    CricketTeams.teams.flatMap { team =>
-      val cachedIds = cricketMatchData(team).apply().values.map(_.matchId).toSet
+  def fetchNewMatchData()(implicit executionContext: ExecutionContext): Unit = {
+    val newMatches = CricketTeams.teams.flatMap { team =>
       discoveredCricketTeamMatches(team)
         .apply()
         .values
-        .filterNot(cm => cachedIds.contains(cm.matchId))
+        .filterNot(cm => cricketMatchData(team).apply().values.exists(_.matchId == cm.matchId))
         .map(cm => (team, cm))
     }
 
-  /** Backfill the full match data for discovered matches that have never been fetched. This is done in batches to avoid
-    * overloading the cricket API.
-    */
-  def backfillMatches()(implicit executionContext: ExecutionContext): Unit = {
-    val unfetched = unfetchedMatches
-    log.info(s"Backfilling ${unfetched.size} unfetched matches")
-    batchUpdateMatchData(unfetched)
-
+    batchUpdateMatchData(newMatches)
   }
 
   def refreshActiveMatchData()(implicit executionContext: ExecutionContext): Unit = {
