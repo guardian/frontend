@@ -16,6 +16,8 @@ case class CricketFeedException(message: String) extends RuntimeException(messag
 
 object PaFeed {
   val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", ZoneId.of("UTC"))
+
+  val dateWindowMonths = 2
 }
 
 case class CompetitionMatch(

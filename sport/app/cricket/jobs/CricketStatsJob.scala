@@ -5,10 +5,8 @@ import conf.cricketPa.{CompetitionMatch, CricketFeedException, CricketTeam, Cric
 import cricketModel.Match
 import jobs.CricketStatsJob._
 
-import java.time.LocalDate
+import java.time.{LocalDate, LocalDateTime}
 import scala.concurrent.ExecutionContext
-import java.time.LocalDateTime
-import scala.tools.nsc.tasty.SafeEq
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
@@ -17,7 +15,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     CricketTeams.teams.map(team => team -> Box[Map[String, Match]](Map.empty)).toMap
 
   // Overview of the matches for each team, with only the match ID and start date.
-  private val cricketTeamMatches: Map[CricketTeam, Box[Map[String, CompetitionMatch]]] =
+  private val discoveredCricketTeamMatches: Map[CricketTeam, Box[Map[String, CompetitionMatch]]] =
     CricketTeams.teams.map(team => team -> Box[Map[String, CompetitionMatch]](Map.empty)).toMap
 
   def getMatch(team: CricketTeam, date: String): Option[Match] =
@@ -36,20 +34,17 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     matchObjects.flatten.headOption
   }
 
-  /** Discovery: refresh the registry from the fixtures/results lists, then load (once) any newly discovered match that
-    * is not yet in the cache. This is the only place historical matches are fetched.
+  /** Refresh the fixtures/results registry for every team. This only updates the lightweight list of known matches.
     */
-  def discoverMatches(fromDate: LocalDateTime)(implicit executionContext: ExecutionContext): Unit = {
+  def discoverMatches(fromDate: LocalDateTime, toDate: LocalDateTime)(implicit
+      executionContext: ExecutionContext,
+  ): Unit = {
     CricketTeams.teams.foreach { team =>
       paFeed
         .getCompetitionMatches(team, fromDate.toLocalDate)
         .map { competitionMatches: Seq[CompetitionMatch] =>
-          cricketTeamMatches(team).send(competitionMatches.map(cm => cm.matchId -> cm).toMap)
-
-          val cachedIds = cricketMatchData(team).apply().values.map(_.matchId).toSet
-          competitionMatches
-            .filterNot(cm => cachedIds.contains(cm.matchId))
-            .foreach(cm => updateMatchData(team, cm))
+          val discovered = competitionMatches.filterNot(_.startDate.isAfter(toDate))
+          discoveredCricketTeamMatches(team).send(discovered.map(cm => cm.matchId -> cm).toMap)
         }
         .recover {
           case paFeedError: CricketFeedException =>
@@ -59,17 +54,43 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     }
   }
 
+  /** Discovered matches (across all teams) whose full data has never been fetched. */
+  private def unfetchedMatches: Seq[(CricketTeam, CompetitionMatch)] =
+    CricketTeams.teams.flatMap { team =>
+      val cachedIds = cricketMatchData(team).apply().values.map(_.matchId).toSet
+      discoveredCricketTeamMatches(team)
+        .apply()
+        .values
+        .filterNot(cm => cachedIds.contains(cm.matchId))
+        .map(cm => (team, cm))
+    }
+
+  /** Backfill the full match data for discovered matches that have never been fetched. This is done in batches to avoid
+    * overloading the cricket API.
+    */
+  def backfillMatches()(implicit executionContext: ExecutionContext): Unit = {
+    val unfetched = unfetchedMatches
+    if (unfetched.nonEmpty) {
+      unfetched.take(matchesPerCycle).foreach { case (team, cm) => updateMatchData(team, cm) }
+    }
+  }
+
   def refreshActiveMatchData()(implicit executionContext: ExecutionContext): Unit = {
-    refreshMatchData(MatchType.Active)
+    val unfetched = unfetchedMatches
+    if (unfetched.isEmpty) {
+      refreshMatchData(MatchType.Active)
+    }
   }
 
   def refreshUpcomingMatchData()(implicit executionContext: ExecutionContext): Unit = {
-    refreshMatchData(MatchType.Upcoming)
+    if (unfetchedMatches.isEmpty) {
+      refreshMatchData(MatchType.Upcoming)
+    }
   }
 
   private def refreshMatchData(band: MatchType)(implicit executionContext: ExecutionContext): Unit = {
     CricketTeams.teams.foreach { team =>
-      cricketTeamMatches(team)
+      discoveredCricketTeamMatches(team)
         .apply()
         .values
         .filter(cm => classify(cm.startDate) == band)
@@ -106,6 +127,9 @@ object CricketStatsJob {
 
     case object Historical extends MatchType
   }
+
+  // The most matches to start loading in a single backfill cycle.
+  val matchesPerCycle = 10
 
   // A match is considered "upcoming" when it starts within this many days.
   private val upcomingDays = 5L

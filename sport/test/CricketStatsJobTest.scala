@@ -5,7 +5,7 @@ import cricketModel.{Match, Team}
 import jobs.CricketStatsJob
 import jobs.CricketStatsJob.MatchType
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
-import org.mockito.Mockito.{clearInvocations, never, verify, when}
+import org.mockito.Mockito.{clearInvocations, never, times, verify, when}
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -38,38 +38,71 @@ import scala.concurrent.{ExecutionContext, Future}
     CricketStatsJob.classify(today.minusDays(7)) shouldBe MatchType.Historical
   }
 
-  "discover" should "load a newly discovered match exactly once" in {
-    val paFeed = stubbedFeed(england, Seq(upcoming))
-    val job = new CricketStatsJob(paFeed)
-
-    job.discoverMatches(fromDate = today.minusMonths(2))
-
-    verify(paFeed).getMatch(eqTo(upcoming))(any())
-  }
-
-  it should "not re-fetch a match that is already cached" in {
+  "backfillMatches" should "load an unfetched match" in {
     val paFeed = stubbedFeed(england, Seq(historical))
     val job = new CricketStatsJob(paFeed)
 
-    job.discoverMatches(fromDate = today.minusMonths(2)) // loads it once
-    clearInvocations(paFeed)
-    job.discoverMatches(fromDate = today.minusMonths(2)) // already cached, so should be skipped
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2))
+    job.backfillMatches()
 
+    verify(paFeed).getMatch(eqTo(historical))(any())
+  }
+
+  it should "load active matches during the initial backfill" in {
+    val paFeed = stubbedFeed(england, Seq(active))
+    val job = new CricketStatsJob(paFeed)
+
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2))
+    job.backfillMatches()
+
+    verify(paFeed).getMatch(eqTo(active))(any())
+  }
+
+  it should "backfill no more than the per-cycle batch size, deferring the rest to later cycles" in {
+    val paFeed = stubbedFeed(england, manyHistorical)
+    val job = new CricketStatsJob(paFeed)
+
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2))
+
+    job.backfillMatches()
+    verify(paFeed, times(CricketStatsJob.matchesPerCycle)).getMatch(any[CompetitionMatch])(any())
+
+    clearInvocations(paFeed)
+    job.backfillMatches()
+    verify(paFeed, times(manyHistorical.size - CricketStatsJob.matchesPerCycle))
+      .getMatch(any[CompetitionMatch])(any())
+  }
+
+  it should "not refresh active or upcoming matches until backfill is complete" in {
+    val paFeed = stubbedFeed(england, Seq(active, historical))
+    val job = new CricketStatsJob(paFeed)
+
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2))
+    job.backfillMatches() // backfills both active and historical
+    clearInvocations(paFeed)
+    job.refreshActiveMatchData()
+    job.refreshUpcomingMatchData()
+
+    verify(paFeed).getMatch(eqTo(active))(any())
     verify(paFeed, never).getMatch(eqTo(historical))(any())
   }
 
-  "refreshBand" should "only fetch matches in the requested band" in {
-    val paFeed = stubbedFeed(england, Seq(upcoming, active, historical))
+  it should "refresh upcoming and active matches once backfill is complete" in {
+    val paFeed = stubbedFeed(england, Seq(active, upcoming))
     val job = new CricketStatsJob(paFeed)
 
-    job.discoverMatches(fromDate = today.minusMonths(2)) // populate the registry
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2))
+    job.backfillMatches() // backfills both active and historical
     clearInvocations(paFeed)
-
     job.refreshUpcomingMatchData()
 
     verify(paFeed).getMatch(eqTo(upcoming))(any())
-    verify(paFeed, never).getMatch(eqTo(active))(any())
-    verify(paFeed, never).getMatch(eqTo(historical))(any())
+    verify(paFeed, times(1)).getMatch(any[CompetitionMatch])(any())
+
+    clearInvocations(paFeed)
+    job.refreshActiveMatchData()
+    verify(paFeed).getMatch(eqTo(active))(any())
+    verify(paFeed, times(1)).getMatch(any[CompetitionMatch])(any())
   }
 }
 
@@ -80,6 +113,11 @@ object CricketStatsJobTest extends MockitoSugar {
   private val upcoming = CompetitionMatch("upcoming", "c", "Comp", today.plusDays(10))
   private val active = CompetitionMatch("active", "c", "Comp", today.plusDays(1))
   private val historical = CompetitionMatch("historical", "c", "Comp", today.minusDays(30))
+
+  // More than one batch's worth of historical matches, each on a distinct date so they occupy
+  // distinct cache slots.
+  private val manyHistorical: Seq[CompetitionMatch] =
+    (1 to 15).map(i => CompetitionMatch(s"h$i", "c", "Comp", today.minusDays(30L + i)))
 
   // Run all Future callbacks inline so assertions can follow synchronously.
   private implicit val sameThread: ExecutionContext = new ExecutionContext {
