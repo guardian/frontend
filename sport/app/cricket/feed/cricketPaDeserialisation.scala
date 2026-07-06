@@ -33,6 +33,10 @@ object Parser {
     )
   }
 
+  def parseDate(dateTime: String): LocalDateTime = {
+    Date(dateTime)
+  }
+
   private case class MatchDetail(
       stage: String,
       venueName: String,

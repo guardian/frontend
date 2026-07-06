@@ -6,7 +6,7 @@ import common.GuLogging
 import cricket.feed.CricketThrottler
 import org.apache.pekko.stream.Materializer
 
-import java.time.{LocalDate, ZoneId}
+import java.time.{LocalDate, LocalDateTime, ZoneId}
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -18,7 +18,12 @@ object PaFeed {
   val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", ZoneId.of("UTC"))
 }
 
-case class CompetitionMatch(matchId: String, competitionId: String, competitionName: String)
+case class CompetitionMatch(
+    matchId: String,
+    competitionId: String,
+    competitionName: String,
+    startDate: LocalDateTime,
+)
 
 class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materializer: Materializer) extends GuLogging {
 
@@ -103,10 +108,13 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
 
                     // Iterate over the matches within this competition
                     (comp \ "match").map { m =>
+                      val matchId = (m \ "@id").text
+                      val startDate = (m \ "dateTime").text
                       CompetitionMatch(
-                        matchId = (m \ "@id").text,
+                        matchId = matchId,
                         competitionId = compId,
                         competitionName = compName,
+                        startDate = Parser.parseDate(startDate),
                       )
                     }
                   }
