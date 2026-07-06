@@ -8,11 +8,10 @@ import services.dotcomrendering.LocalRender
 import test.TestRequest
 
 @DoNotDiscover class HostedContentPickerTest extends AnyFlatSpec with Matchers {
-  "Hosted Content Picker decideTier" should "return LocalRender if the feature switch is off" in {
-    Switches.DCRHostedContent.switchOff()
-    val testRequest = TestRequest("hosted-content-path")
+  "Hosted Content Picker decideTier" should "return RemoteRender if forcing DCR to be on via the query parameter" in {
+    val testRequest = TestRequest("hosted-content-path?dcr=true")
     val tier = HostedContentPicker.decideTier()(testRequest)
-    tier should be(LocalRender)
+    tier should be(RemoteRender)
   }
 
   it should "return LocalRender if forcing DCR to be off via the query parameter" in {
@@ -21,10 +20,11 @@ import test.TestRequest
     tier should be(LocalRender)
   }
 
-  it should "return RemoteRender if forcing DCR to be on via the query parameter" in {
-    val testRequest = TestRequest("hosted-content-path?dcr=true")
+  it should "return LocalRender if the feature switch is off" in {
+    Switches.DCRHostedContent.switchOff()
+    val testRequest = TestRequest("hosted-content-path")
     val tier = HostedContentPicker.decideTier()(testRequest)
-    tier should be(RemoteRender)
+    tier should be(LocalRender)
   }
 
   it should "return RemoteRender otherwise" in {

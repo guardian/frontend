@@ -1,6 +1,5 @@
 package services.dotcomrendering
 
-import ab.ABTests.isUserInTestGroup
 import common.GuLogging
 import implicits.Requests._
 import play.api.mvc.RequestHeader
@@ -27,9 +26,9 @@ object HostedContentPicker extends GuLogging {
   def decideTier()(implicit
       request: RequestHeader,
   ): RenderType = {
-    if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
+    if (request.forceDCR) RemoteRender
     else if (request.forceDCROff) LocalRender
-    else if (request.forceDCR) RemoteRender
+    else if (Switches.DCRHostedContent.isSwitchedOff) LocalRender
     else RemoteRender
   }
 }
