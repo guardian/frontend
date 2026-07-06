@@ -66,12 +66,12 @@ class CricketLifecycle(
 
     // ensure that we populate the cricket stats cache immediately
     pekkoAsync.after1s {
-      cricketStatsJob.discoverMatches(
-        fromDate = LocalDateTime.now.minusMonths(PaFeed.dateWindowMonths),
-        toDate = LocalDateTime.now.plusMonths(PaFeed.dateWindowMonths),
-      )
-      cricketStatsJob.backfillMatches()
+      cricketStatsJob
+        .discoverMatches(
+          fromDate = LocalDateTime.now.minusMonths(PaFeed.dateWindowMonths),
+          toDate = LocalDateTime.now.plusMonths(PaFeed.dateWindowMonths),
+        )
+        .andThen { case _ => cricketStatsJob.backfillMatches() }
     }
-
   }
 }

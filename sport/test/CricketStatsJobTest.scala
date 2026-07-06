@@ -87,6 +87,22 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(paFeed, never).getMatch(eqTo(historical))(any())
   }
 
+  it should "not keep retrying matches the feed reports as having no content" in {
+    val paFeed = stubbedFeed(england, Seq(historical))
+    when(paFeed.getMatch(eqTo(historical))(any())).thenReturn(Future.successful(None))
+    val job = new CricketStatsJob(paFeed)
+
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2))
+
+    job.backfillMatches()
+    verify(paFeed).getMatch(eqTo(historical))(any())
+
+    // Once a match has been reported as no-content it is skipped, so backfill is complete and does not fetch it again.
+    clearInvocations(paFeed)
+    job.backfillMatches()
+    verify(paFeed, never).getMatch(eqTo(historical))(any())
+  }
+
   it should "refresh upcoming and active matches once backfill is complete" in {
     val paFeed = stubbedFeed(england, Seq(active, upcoming))
     val job = new CricketStatsJob(paFeed)
@@ -146,7 +162,7 @@ object CricketStatsJobTest extends MockitoSugar {
     when(paFeed.getCompetitionMatches(eqTo(team), any[LocalDate])(any())).thenReturn(Future.successful(matches))
     matches.foreach { cm =>
       when(paFeed.getMatch(eqTo(cm))(any()))
-        .thenReturn(Future.successful(aMatch(cm.matchId, cm.startDate.toLocalDate.atStartOfDay)))
+        .thenReturn(Future.successful(Some(aMatch(cm.matchId, cm.startDate.toLocalDate.atStartOfDay))))
     }
     paFeed
   }

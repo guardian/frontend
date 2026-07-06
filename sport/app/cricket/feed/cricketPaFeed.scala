@@ -34,7 +34,9 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
   private val xmlContentType = ("Accept", "application/xml")
   private implicit val throttler: CricketThrottler = new CricketThrottler(pekkoActorSystem, materializer)
 
-  private def getMatchPaResponse(apiMethod: String)(implicit executionContext: ExecutionContext): Future[String] = {
+  private def getMatchPaResponse(
+      apiMethod: String,
+  )(implicit executionContext: ExecutionContext): Future[Option[String]] = {
     credentials
       .map(header =>
         throttler.throttle { () =>
@@ -45,7 +47,8 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
             .get()
             .map { response =>
               response.status match {
-                case 200 => response.body
+                case 200 => Some(response.body)
+                case 204 => None // No content published for this match yet.
                 case _   =>
                   val error = s"PA endpoint returned: ${response.status}, $endpoint"
                   log.warn(error)
@@ -59,13 +62,18 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
 
   def getMatch(
       competitionMatch: CompetitionMatch,
-  )(implicit executionContext: ExecutionContext): Future[cricketModel.Match] = {
+  )(implicit executionContext: ExecutionContext): Future[Option[cricketModel.Match]] = {
     for {
-      lineups: String <- getMatchPaResponse(s"match/${competitionMatch.matchId}/line-ups")
-      details: String <- getMatchPaResponse(s"match/${competitionMatch.matchId}")
-      scorecard: String <- getMatchPaResponse(s"match/${competitionMatch.matchId}/scorecard")
+      lineups: Option[String] <- getMatchPaResponse(s"match/${competitionMatch.matchId}/line-ups")
+      details: Option[String] <- getMatchPaResponse(s"match/${competitionMatch.matchId}")
+      scorecard: Option[String] <- getMatchPaResponse(s"match/${competitionMatch.matchId}/scorecard")
     } yield {
-      Parser.parseMatch(scorecard, details, lineups, competitionMatch)
+      // If any part of the match data is unavailable (204), treat the whole match as not-yet-available.
+      for {
+        lineupsBody <- lineups
+        detailsBody <- details
+        scorecardBody <- scorecard
+      } yield Parser.parseMatch(scorecardBody, detailsBody, lineupsBody, competitionMatch)
     }
   }
 
