@@ -19,6 +19,7 @@ import services.dotcomrendering.{CricketPagePicker, RemoteRender}
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
+import model.dotcomrendering.DotcomRenderingUtils.hasExactlyTwoTeams
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
@@ -151,11 +152,7 @@ class CricketMatchController(
         response.results
           .map(Content(_))
           .toList
-          .filter(c => hasExactlyTwoTeams(c))
+          .filter(c => hasExactlyTwoTeams(c.tags))
       }
   }
-
-  private def hasExactlyTwoTeams(content: ContentType): Boolean = content.tags.tags.count(tag => {
-    tag.id.endsWith("-cricket-team") || tag.id.endsWith("cricketteam")
-  }) == 2
 }
