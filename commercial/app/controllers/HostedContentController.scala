@@ -116,8 +116,7 @@ class HostedContentController(
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(campaignName, pageName) flatMap { response =>
-        val isGallery = response.content.exists(_.`type` == Gallery)
-        val tier = HostedContentPicker.getTier(isGallery)
+        val tier = HostedContentPicker.getTier()
         tier match {
           // DCR pages
           case RemoteRender =>
