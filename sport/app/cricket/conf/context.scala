@@ -37,11 +37,6 @@ class CricketLifecycle(
       )
     }
 
-    // Ensure cache is updated when cold or when new matches are discovered.
-    jobs.scheduleEvery("CricketBackfillMatches", if (context.isPreview) 1.hour else 5.minutes) {
-      Future(cricketStatsJob.backfillMatches())
-    }
-
     // Fetch active matches every 5 minutes to ensure the scorecard is up to date.
     jobs.scheduleEvery("CricketActiveMatches", if (context.isPreview) 1.hour else 5.minutes) {
       Future(cricketStatsJob.refreshActiveMatchData())
@@ -70,7 +65,6 @@ class CricketLifecycle(
         fromDate = LocalDateTime.now.minusMonths(PaFeed.dateWindowMonths),
         toDate = LocalDateTime.now.plusMonths(PaFeed.dateWindowMonths),
       )
-      cricketStatsJob.backfillMatches()
     }
 
   }

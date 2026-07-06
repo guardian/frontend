@@ -7,6 +7,7 @@ import jobs.CricketStatsJob._
 
 import java.time.{LocalDate, LocalDateTime}
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
@@ -38,20 +39,28 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     */
   def discoverMatches(fromDate: LocalDateTime, toDate: LocalDateTime)(implicit
       executionContext: ExecutionContext,
-  ): Unit = {
-    CricketTeams.teams.foreach { team =>
-      paFeed
-        .getCompetitionMatches(team, fromDate.toLocalDate)
-        .map { competitionMatches: Seq[CompetitionMatch] =>
-          val discovered = competitionMatches.filterNot(_.startDate.isAfter(toDate))
-          discoveredCricketTeamMatches(team).send(discovered.map(cm => cm.matchId -> cm).toMap)
-        }
-        .recover {
-          case paFeedError: CricketFeedException =>
-            log.warn(s"CricketStatsJob discovery couldn't find matches: ${paFeedError.message}")
-          case error: Exception => log.warn(error.getMessage)
-        }
-    }
+  ): Future[Unit] = {
+    Future
+      .traverse(CricketTeams.teams) { team =>
+        paFeed
+          .getCompetitionMatches(team, fromDate.toLocalDate)
+          .map { competitionMatches: Seq[CompetitionMatch] =>
+            val discovered = competitionMatches.filterNot(_.startDate.isAfter(toDate))
+            log.info(s"Discovered ${discovered.size} matches for ${team.paId} between $fromDate and $toDate")
+            discoveredCricketTeamMatches(team).send(discovered.map(cm => cm.matchId -> cm).toMap)
+
+            val cachedIds = cricketMatchData(team).apply().values.map(_.matchId).toSet
+            competitionMatches
+              .filterNot(cm => cachedIds.contains(cm.matchId))
+              .foreach(cm => updateMatchData(team, cm))
+          }
+          .recover {
+            case paFeedError: CricketFeedException =>
+              log.warn(s"CricketStatsJob discovery couldn't find matches: ${paFeedError.message}")
+            case error: Exception => log.warn(error.getMessage)
+          }
+      }
+      .map(_ => ())
   }
 
   /** Discovered matches (across all teams) whose full data has never been fetched. */
@@ -70,37 +79,44 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     */
   def backfillMatches()(implicit executionContext: ExecutionContext): Unit = {
     val unfetched = unfetchedMatches
-    if (unfetched.nonEmpty) {
-      unfetched.take(matchesPerCycle).foreach { case (team, cm) => updateMatchData(team, cm) }
-    }
+    log.info(s"Backfilling ${unfetched.size} unfetched matches")
+    batchUpdateMatchData(unfetched)
+
   }
 
   def refreshActiveMatchData()(implicit executionContext: ExecutionContext): Unit = {
-    val unfetched = unfetchedMatches
-    if (unfetched.isEmpty) {
-      refreshMatchData(MatchType.Active)
-    }
+    refreshMatchData(MatchType.Active)
   }
 
   def refreshUpcomingMatchData()(implicit executionContext: ExecutionContext): Unit = {
-    if (unfetchedMatches.isEmpty) {
-      refreshMatchData(MatchType.Upcoming)
-    }
+    refreshMatchData(MatchType.Upcoming)
   }
 
   private def refreshMatchData(band: MatchType)(implicit executionContext: ExecutionContext): Unit = {
-    CricketTeams.teams.foreach { team =>
+    val matches = CricketTeams.teams.flatMap { team =>
       discoveredCricketTeamMatches(team)
         .apply()
         .values
         .filter(cm => classify(cm.startDate) == band)
-        .foreach(cm => updateMatchData(team, cm))
+        .map(cm => (team, cm))
+    }
+
+    batchUpdateMatchData(matches)
+  }
+
+  private def batchUpdateMatchData(matches: Seq[(CricketTeam, CompetitionMatch)])(implicit
+      executionContext: ExecutionContext,
+  ): Future[Unit] = {
+    matches.grouped(matchesPerCycle).foldLeft(Future.successful(())) { (previousBatch, batch) =>
+      previousBatch.flatMap { _ =>
+        Future.traverse(batch) { case (team, cm) => updateMatchData(team, cm) }.map(_ => ())
+      }
     }
   }
 
   private def updateMatchData(team: CricketTeam, competitionMatch: CompetitionMatch)(implicit
       executionContext: ExecutionContext,
-  ): Unit = {
+  ): Future[Unit] = {
     paFeed
       .getMatch(competitionMatch)
       .map { matchData =>
