@@ -58,8 +58,6 @@ class CricketLifecycle(
     // ensure that we populate the cricket stats cache immediately
     pekkoAsync.after1s {
       cricketStatsJob.discoverMatches(fromDate = LocalDateTime.now.minusMonths(discoveryLookBack))
-      cricketStatsJob.refreshUpcomingMatchData()
-      cricketStatsJob.refreshActiveMatchData()
     }
   }
 }

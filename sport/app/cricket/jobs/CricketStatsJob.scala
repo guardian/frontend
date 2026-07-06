@@ -36,9 +36,8 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     matchObjects.flatten.headOption
   }
 
-  /** Discovery: refresh the registry from the fixtures/results lists, then load
-    * (once) any newly discovered match that is not yet in the cache. This is the
-    * only place historical matches are fetched.
+  /** Discovery: refresh the registry from the fixtures/results lists, then load (once) any newly discovered match that
+    * is not yet in the cache. This is the only place historical matches are fetched.
     */
   def discoverMatches(fromDate: LocalDateTime)(implicit executionContext: ExecutionContext): Unit = {
     CricketTeams.teams.foreach { team =>
@@ -119,8 +118,9 @@ object CricketStatsJob {
   def classify(startDate: LocalDateTime): MatchType = {
     val today = LocalDateTime.now
     startDate match {
-      case d if d.isAfter(today.plusDays(upcomingDays)) => MatchType.Upcoming
-      case d if d.isBefore(today.minusDays(historicalAfterDays + 1)) => MatchType.Historical // + 1 to include the start date itself in the active band
+      case d if d.isAfter(today.plusDays(upcomingDays))              => MatchType.Upcoming
+      case d if d.isBefore(today.minusDays(historicalAfterDays + 1)) =>
+        MatchType.Historical // + 1 to include the start date itself in the active band
       case _ => MatchType.Active
     }
   }
