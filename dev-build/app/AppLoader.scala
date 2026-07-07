@@ -50,7 +50,6 @@ trait Controllers
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
-  lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]
 }
 
