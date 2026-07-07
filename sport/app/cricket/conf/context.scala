@@ -29,22 +29,20 @@ class CricketLifecycle(
   private def scheduleJobs(): Unit = {
     // Refresh the fixtures/results registry once a day.
     jobs.scheduleEvery("CricketDiscoverMatches", 1.day) {
-      Future(
-        cricketStatsJob.discoverMatches(
-          fromDate = LocalDate.now.minusMonths(PaFeed.dateWindowMonths),
-          toDate = LocalDate.now.plusMonths(PaFeed.dateWindowMonths),
-        ),
+      cricketStatsJob.discoverMatches(
+        fromDate = LocalDate.now.minusMonths(PaFeed.dateWindowMonths),
+        toDate = LocalDate.now.plusMonths(PaFeed.dateWindowMonths),
       )
     }
 
     // Fetch active matches every 5 minutes to ensure the scorecard is up to date.
     jobs.scheduleEvery("CricketFrequentMatchUpdates", if (context.isPreview) 1.hour else 5.minutes) {
-      Future(cricketStatsJob.frequentMatchDataRefresh())
+      cricketStatsJob.frequentMatchDataRefresh()
     }
 
     // Fetch other matches every hour.
     jobs.scheduleEvery("CricketInfrequentMatchUpdates", 1.hour) {
-      Future(cricketStatsJob.infrequentMatchDataRefresh())
+      cricketStatsJob.infrequentMatchDataRefresh()
     }
   }
 

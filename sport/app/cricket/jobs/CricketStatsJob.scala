@@ -73,17 +73,23 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     batchUpdateMatchData(newMatches)
   }
 
-  def frequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Unit = {
+  def frequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
     refreshMatchData(MatchType.Active)
   }
 
-  def infrequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Unit = {
-    refreshMatchData(MatchType.Upcoming)
-    refreshMatchData(MatchType.Future)
-    refreshMatchData(MatchType.Historical)
+  def infrequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
+    Future
+      .sequence(
+        Seq(
+          refreshMatchData(MatchType.Upcoming),
+          refreshMatchData(MatchType.Future),
+          refreshMatchData(MatchType.Historical),
+        ),
+      )
+      .map(_ => ())
   }
 
-  private def refreshMatchData(band: MatchType)(implicit executionContext: ExecutionContext): Unit = {
+  private def refreshMatchData(band: MatchType)(implicit executionContext: ExecutionContext): Future[Unit] = {
     val matches = CricketTeams.teams.flatMap { team =>
       discoveredCricketTeamMatches(team)
         .apply()
