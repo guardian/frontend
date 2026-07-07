@@ -73,20 +73,16 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     batchUpdateMatchData(newMatches)
   }
 
-  def frequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def activeMatchDataRefresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
     refreshMatchData(MatchType.Active)
   }
 
+  def upcomingMatchDataRefresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
+    refreshMatchData(MatchType.Upcoming)
+  }
+
   def infrequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    Future
-      .sequence(
-        Seq(
-          refreshMatchData(MatchType.Upcoming),
-          refreshMatchData(MatchType.Future),
-          refreshMatchData(MatchType.Historical),
-        ),
-      )
-      .map(_ => ())
+    Future.sequence(Seq(refreshMatchData(MatchType.Future), refreshMatchData(MatchType.Historical))).map(_ => ())
   }
 
   private def refreshMatchData(band: MatchType)(implicit executionContext: ExecutionContext): Future[Unit] = {

@@ -41,8 +41,38 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(paFeed, never).getMatch(eqTo(historical))(any())
   }
 
-  "infrequentMatchDataRefresh" should "never fetches active matches" in {
+  "upcomingMatchDataRefresh" should "only fetches upcoming matches" in {
     val paFeed = stubbedFeed(england, Seq(upcoming, active, future, historical))
+    val job = new CricketStatsJob(paFeed)
+
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // populate the registry
+    clearInvocations(paFeed)
+
+    job.upcomingMatchDataRefresh()
+
+    verify(paFeed).getMatch(eqTo(upcoming))(any())
+    verify(paFeed, never).getMatch(eqTo(active))(any())
+    verify(paFeed, never).getMatch(eqTo(historical))(any())
+    verify(paFeed, never).getMatch(eqTo(future))(any())
+  }
+
+  "activeMatchDataRefresh" should "only fetches active matches" in {
+    val paFeed = stubbedFeed(england, Seq(upcoming, active, historical, future))
+    val job = new CricketStatsJob(paFeed)
+
+    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // populate the registry
+    clearInvocations(paFeed)
+
+    job.activeMatchDataRefresh()
+
+    verify(paFeed, never).getMatch(eqTo(upcoming))(any())
+    verify(paFeed).getMatch(eqTo(active))(any())
+    verify(paFeed, never).getMatch(eqTo(historical))(any())
+    verify(paFeed, never).getMatch(eqTo(future))(any())
+  }
+
+  "infrequentMatchDataRefresh" should "only fetches historical and future matches" in {
+    val paFeed = stubbedFeed(england, Seq(upcoming, active, historical, future))
     val job = new CricketStatsJob(paFeed)
 
     job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // populate the registry
@@ -50,21 +80,10 @@ import scala.concurrent.{ExecutionContext, Future}
 
     job.infrequentMatchDataRefresh()
 
-    verify(paFeed, never).getMatch(eqTo(active))(any())
-  }
-
-  "frequentMatchDataRefresh" should "only fetches active matches" in {
-    val paFeed = stubbedFeed(england, Seq(upcoming, active, historical))
-    val job = new CricketStatsJob(paFeed)
-
-    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // populate the registry
-    clearInvocations(paFeed)
-
-    job.frequentMatchDataRefresh()
-
     verify(paFeed, never).getMatch(eqTo(upcoming))(any())
-    verify(paFeed).getMatch(eqTo(active))(any())
-    verify(paFeed, never).getMatch(eqTo(historical))(any())
+    verify(paFeed, never).getMatch(eqTo(active))(any())
+    verify(paFeed).getMatch(eqTo(historical))(any())
+    verify(paFeed).getMatch(eqTo(future))(any())
   }
 
   "classify" should "mark a single-day match happening today as Active" in {
@@ -117,7 +136,7 @@ object CricketStatsJobTest extends MockitoSugar {
   private val today = LocalDate.now
   private val england: CricketTeam = CricketTeams.teams.head
 
-  private val future = CompetitionMatch("upcoming", "c", "Comp", today.plusDays(10), today.plusDays(12))
+  private val future = CompetitionMatch("future", "c", "Comp", today.plusDays(10), today.plusDays(12))
   private val upcoming = CompetitionMatch("upcoming", "c", "Comp", today.plusDays(2), today.plusDays(4))
   private val active = CompetitionMatch("active", "c", "Comp", today, today.plusDays(3))
   private val historical = CompetitionMatch("historical", "c", "Comp", today.minusDays(30), today.minusDays(28))
