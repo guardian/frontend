@@ -38,20 +38,20 @@ class CricketLifecycle(
     }
 
     // Fetch active matches every 5 minutes to ensure the scorecard is up to date.
-    jobs.scheduleEvery("CricketActiveMatches", if (context.isPreview) 1.hour else 5.minutes) {
-      Future(cricketStatsJob.refreshActiveMatchData())
+    jobs.scheduleEvery("CricketFrequentMatchUpdates", if (context.isPreview) 1.hour else 5.minutes) {
+      Future(cricketStatsJob.frequentMatchDataRefresh())
     }
 
-    // Fetch upcoming matches every hour.
-    jobs.scheduleEvery("CricketUpcomingMatches", 1.hour) {
-      Future(cricketStatsJob.refreshUpcomingMatchData())
+    // Fetch other matches every hour.
+    jobs.scheduleEvery("CricketInfrequentMatchUpdates", 1.hour) {
+      Future(cricketStatsJob.infrequentMatchDataRefresh())
     }
   }
 
   private def descheduleJobs(): Unit = {
     jobs.deschedule("CricketDiscoverMatches")
-    jobs.deschedule("CricketActiveMatches")
-    jobs.deschedule("CricketUpcomingMatches")
+    jobs.deschedule("CricketFrequentMatchUpdates")
+    jobs.deschedule("CricketInfrequentMatchUpdates")
   }
 
   override def start(): Unit = {

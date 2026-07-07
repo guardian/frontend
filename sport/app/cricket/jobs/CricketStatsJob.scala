@@ -75,12 +75,14 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     batchUpdateMatchData(newMatches)
   }
 
-  def refreshActiveMatchData()(implicit executionContext: ExecutionContext): Unit = {
+  def frequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Unit = {
     refreshMatchData(MatchType.Active)
   }
 
-  def refreshUpcomingMatchData()(implicit executionContext: ExecutionContext): Unit = {
+  def infrequentMatchDataRefresh()(implicit executionContext: ExecutionContext): Unit = {
     refreshMatchData(MatchType.Upcoming)
+    refreshMatchData(MatchType.Future)
+    refreshMatchData(MatchType.Historical)
   }
 
   private def refreshMatchData(band: MatchType)(implicit executionContext: ExecutionContext): Unit = {
