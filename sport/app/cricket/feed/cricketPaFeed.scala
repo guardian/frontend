@@ -25,6 +25,7 @@ case class CompetitionMatch(
     competitionId: String,
     competitionName: String,
     startDate: LocalDateTime,
+    endDate: LocalDateTime
 )
 
 class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materializer: Materializer) extends GuLogging {
@@ -111,12 +112,15 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
                     // Iterate over the matches within this competition
                     (comp \ "match").map { m =>
                       val matchId = (m \ "@id").text
-                      val startDate = (m \ "dateTime").text
+                      val startDate = Parser.parseDate((m \ "dateTime").text)
+                      val totalDays = (m \ "totalDays").text
+                      val endDate = startDate.plusDays(totalDays.toInt)
                       CompetitionMatch(
                         matchId = matchId,
                         competitionId = compId,
                         competitionName = compName,
-                        startDate = Parser.parseDate(startDate),
+                        startDate = startDate,
+                        endDate = endDate,
                       )
                     }
                   }

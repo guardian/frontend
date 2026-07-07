@@ -87,7 +87,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
       discoveredCricketTeamMatches(team)
         .apply()
         .values
-        .filter(cm => classify(cm.startDate) == band)
+        .filter(cm => classify(cm.startDate, cm.endDate) == band)
         .map(cm => (team, cm))
     }
 
@@ -137,18 +137,14 @@ object CricketStatsJob {
   // A match is considered "upcoming" when it starts within this many days.
   private val upcomingDays = 5L
 
-  // A match stays "active" until this many days after its start, to cover
-  // multi-day test matches (seen to run at least 6 days) while they settle.
-  private val historicalAfterDays = 6L
-
   /** Classify a match by the proximity of its start date to `today`. */
-  def classify(startDate: LocalDateTime): MatchType = {
-    val today = LocalDateTime.now
-    startDate match {
-      case d if d.isAfter(today.plusDays(upcomingDays))              => MatchType.Upcoming
-      case d if d.isBefore(today.minusDays(historicalAfterDays + 1)) =>
-        MatchType.Historical // + 1 to include the start date itself in the active band
-      case _ => MatchType.Active
+  def classify(startDate: LocalDateTime, endDate: LocalDateTime): MatchType = {
+    val today = LocalDate.now
+    (startDate.toLocalDate(), endDate.toLocalDate()) match {
+      case (start, _) if start.isAfter(today) && start.isBefore(today.plusDays(upcomingDays)) =>
+        MatchType.Upcoming
+      case (start, end) if (start.isEqual(today) || start.isBefore(today)) && end.isAfter(today) => MatchType.Active
+      case _                                                                                     => MatchType.Historical
     }
   }
 }
