@@ -5,7 +5,7 @@ import conf.cricketPa.{CompetitionMatch, CricketFeedException, CricketTeam, Cric
 import cricketModel.Match
 import jobs.CricketStatsJob._
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.{LocalDate}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
@@ -37,15 +37,16 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
     matchObjects.flatten.headOption
   }
 
-  /** Refresh the fixtures/results registry for every team. This only updates the lightweight list of known matches.
+  /** Refresh the fixtures/results registry for every team and fetch the full match data for any newly discovered
+    * matches.
     */
-  def discoverMatches(fromDate: LocalDateTime, toDate: LocalDateTime)(implicit
+  def discoverMatches(fromDate: LocalDate, toDate: LocalDate)(implicit
       executionContext: ExecutionContext,
   ): Future[Unit] = {
     Future
       .traverse(CricketTeams.teams) { team =>
         paFeed
-          .getCompetitionMatches(team, fromDate.toLocalDate)
+          .getCompetitionMatches(team, fromDate)
           .map { competitionMatches: Seq[CompetitionMatch] =>
             val discovered = competitionMatches.filterNot(_.startDate.isAfter(toDate))
             log.info(s"Discovered ${discovered.size} matches for ${team.paId} between $fromDate and $toDate")
@@ -127,6 +128,8 @@ object CricketStatsJob {
   sealed trait MatchType
   object MatchType {
 
+    case object Future extends MatchType
+
     case object Upcoming extends MatchType
 
     case object Active extends MatchType
@@ -137,14 +140,18 @@ object CricketStatsJob {
   // A match is considered "upcoming" when it starts within this many days.
   private val upcomingDays = 5L
 
-  /** Classify a match by the proximity of its start date to `today`. */
-  def classify(startDate: LocalDateTime, endDate: LocalDateTime): MatchType = {
+  def classify(startDate: LocalDate, endDate: LocalDate): MatchType = {
     val today = LocalDate.now
-    (startDate.toLocalDate(), endDate.toLocalDate()) match {
-      case (start, _) if start.isAfter(today) && start.isBefore(today.plusDays(upcomingDays)) =>
-        MatchType.Upcoming
-      case (start, end) if (start.isEqual(today) || start.isBefore(today)) && end.isAfter(today) => MatchType.Active
-      case _                                                                                     => MatchType.Historical
+
+    if (!startDate.isAfter(today) && !endDate.isBefore(today)) {
+      // startDate <= today <= endDate  (covers single-day and both boundaries)
+      MatchType.Active
+    } else if (startDate.isAfter(today) && startDate.isBefore(today.plusDays(upcomingDays))) {
+      MatchType.Upcoming
+    } else if (endDate.isBefore(today)) {
+      MatchType.Historical
+    } else {
+      MatchType.Future
     }
   }
 }

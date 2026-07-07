@@ -5,7 +5,7 @@ import common.{JobScheduler, PekkoAsync}
 import jobs.CricketStatsJob
 import model.ApplicationContext
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.duration._
@@ -31,8 +31,8 @@ class CricketLifecycle(
     jobs.scheduleEvery("CricketDiscoverMatches", 1.day) {
       Future(
         cricketStatsJob.discoverMatches(
-          fromDate = LocalDateTime.now.minusMonths(PaFeed.dateWindowMonths),
-          toDate = LocalDateTime.now.plusMonths(PaFeed.dateWindowMonths),
+          fromDate = LocalDate.now.minusMonths(PaFeed.dateWindowMonths),
+          toDate = LocalDate.now.plusMonths(PaFeed.dateWindowMonths),
         ),
       )
     }
@@ -61,8 +61,8 @@ class CricketLifecycle(
     // ensure that we populate the cricket stats cache immediately
     pekkoAsync.after1s {
       cricketStatsJob.discoverMatches(
-        fromDate = LocalDateTime.now.minusMonths(PaFeed.dateWindowMonths),
-        toDate = LocalDateTime.now.plusMonths(PaFeed.dateWindowMonths),
+        fromDate = LocalDate.now.minusMonths(PaFeed.dateWindowMonths),
+        toDate = LocalDate.now.plusMonths(PaFeed.dateWindowMonths),
       )
     }
   }

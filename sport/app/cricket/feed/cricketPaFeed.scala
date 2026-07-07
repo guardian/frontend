@@ -6,11 +6,12 @@ import common.GuLogging
 import cricket.feed.CricketThrottler
 import org.apache.pekko.stream.Materializer
 
-import java.time.{LocalDate, LocalDateTime, ZoneId}
+import java.time.{LocalDate, ZoneId}
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
+import scala.util.Try
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
@@ -24,8 +25,8 @@ case class CompetitionMatch(
     matchId: String,
     competitionId: String,
     competitionName: String,
-    startDate: LocalDateTime,
-    endDate: LocalDateTime
+    startDate: LocalDate,
+    endDate: LocalDate,
 )
 
 class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materializer: Materializer) extends GuLogging {
@@ -113,14 +114,15 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
                     (comp \ "match").map { m =>
                       val matchId = (m \ "@id").text
                       val startDate = Parser.parseDate((m \ "dateTime").text)
-                      val totalDays = (m \ "totalDays").text
-                      val endDate = startDate.plusDays(totalDays.toInt)
+                      val totalDays =
+                        Try((m \ "totalDays").text.toInt).getOrElse(5) - 1 // default to 5 days if not provided
+                      val endDate = startDate.plusDays(totalDays)
                       CompetitionMatch(
                         matchId = matchId,
                         competitionId = compId,
                         competitionName = compName,
-                        startDate = startDate,
-                        endDate = endDate,
+                        startDate = startDate.toLocalDate,
+                        endDate = endDate.toLocalDate,
                       )
                     }
                   }
