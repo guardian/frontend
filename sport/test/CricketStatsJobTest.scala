@@ -41,28 +41,26 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(paFeed, never).getMatch(eqTo(historical))(any())
   }
 
-  "refreshUpcomingMatchData" should "only fetches upcoming matches" in {
-    val paFeed = stubbedFeed(england, Seq(upcoming, active, historical))
+  "infrequentMatchDataRefresh" should "never fetches active matches" in {
+    val paFeed = stubbedFeed(england, Seq(upcoming, active, future, historical))
     val job = new CricketStatsJob(paFeed)
 
     job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // populate the registry
     clearInvocations(paFeed)
 
-    job.refreshUpcomingMatchData()
+    job.infrequentMatchDataRefresh()
 
-    verify(paFeed).getMatch(eqTo(upcoming))(any())
     verify(paFeed, never).getMatch(eqTo(active))(any())
-    verify(paFeed, never).getMatch(eqTo(historical))(any())
   }
 
-  "refreshActiveMatchData" should "only fetches active matches" in {
+  "frequentMatchDataRefresh" should "only fetches active matches" in {
     val paFeed = stubbedFeed(england, Seq(upcoming, active, historical))
     val job = new CricketStatsJob(paFeed)
 
     job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // populate the registry
     clearInvocations(paFeed)
 
-    job.refreshActiveMatchData()
+    job.frequentMatchDataRefresh()
 
     verify(paFeed, never).getMatch(eqTo(upcoming))(any())
     verify(paFeed).getMatch(eqTo(active))(any())

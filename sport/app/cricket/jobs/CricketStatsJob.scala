@@ -48,11 +48,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
         paFeed
           .getCompetitionMatches(team, fromDate)
           .map { competitionMatches: Seq[CompetitionMatch] =>
-            val discovered = competitionMatches.filterNot(_.startDate.isAfter(toDate))
-            log.info(s"Discovered ${discovered.size} matches for ${team.paId} between $fromDate and $toDate")
-            discoveredCricketTeamMatches(team).send(discovered.map(cm => cm.matchId -> cm).toMap)
-
-            fetchNewMatchData() // fetch the full match data for any newly discovered matches
+            discoveredCricketTeamMatches(team).send(competitionMatches.map(cm => cm.matchId -> cm).toMap)
           }
           .recover {
             case paFeedError: CricketFeedException =>
@@ -60,10 +56,12 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
             case error: Exception => log.warn(error.getMessage)
           }
       }
-      .map(_ => ())
+      .map { _ =>
+        fetchNewMatchData()
+      }
   }
 
-  def fetchNewMatchData()(implicit executionContext: ExecutionContext): Unit = {
+  def fetchNewMatchData()(implicit executionContext: ExecutionContext): Future[Unit] = {
     val newMatches = CricketTeams.teams.flatMap { team =>
       discoveredCricketTeamMatches(team)
         .apply()
