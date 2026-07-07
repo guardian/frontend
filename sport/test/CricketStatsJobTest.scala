@@ -53,7 +53,10 @@ import scala.concurrent.{ExecutionContext, Future}
 
     job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // loads it once
     clearInvocations(paFeed)
-    job.discoverMatches(fromDate = today.minusMonths(2), toDate = today.plusMonths(2)) // already cached, so should be skipped
+    job.discoverMatches(
+      fromDate = today.minusMonths(2),
+      toDate = today.plusMonths(2),
+    ) // already cached, so should be skipped
 
     verify(paFeed, never).getMatch(eqTo(historical))(any())
   }

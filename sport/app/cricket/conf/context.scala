@@ -50,7 +50,6 @@ class CricketLifecycle(
 
   private def descheduleJobs(): Unit = {
     jobs.deschedule("CricketDiscoverMatches")
-    jobs.deschedule("CricketBackfillMatches")
     jobs.deschedule("CricketActiveMatches")
     jobs.deschedule("CricketUpcomingMatches")
   }
@@ -66,6 +65,5 @@ class CricketLifecycle(
         toDate = LocalDateTime.now.plusMonths(PaFeed.dateWindowMonths),
       )
     }
-
   }
 }

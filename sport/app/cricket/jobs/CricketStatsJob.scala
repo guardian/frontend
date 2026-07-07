@@ -11,6 +11,8 @@ import scala.concurrent.Future
 
 class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
+  private val batchRequestSize = 10
+
   // The full match data cache with scorecard, line-ups, and match details.
   private val cricketMatchData: Map[CricketTeam, Box[Map[String, Match]]] =
     CricketTeams.teams.map(team => team -> Box[Map[String, Match]](Map.empty)).toMap
@@ -95,7 +97,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
   private def batchUpdateMatchData(matches: Seq[(CricketTeam, CompetitionMatch)])(implicit
       executionContext: ExecutionContext,
   ): Future[Unit] = {
-    matches.grouped(matchesPerCycle).foldLeft(Future.successful(())) { (previousBatch, batch) =>
+    matches.grouped(batchRequestSize).foldLeft(Future.successful(())) { (previousBatch, batch) =>
       previousBatch.flatMap { _ =>
         Future.traverse(batch) { case (team, cm) => updateMatchData(team, cm) }.map(_ => ())
       }
@@ -131,9 +133,6 @@ object CricketStatsJob {
 
     case object Historical extends MatchType
   }
-
-  // The most matches to start loading in a single backfill cycle.
-  val matchesPerCycle = 10
 
   // A match is considered "upcoming" when it starts within this many days.
   private val upcomingDays = 5L
