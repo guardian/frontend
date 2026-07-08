@@ -9,6 +9,7 @@ import cricketModel._
 import java.time.LocalDateTime
 import java.util.TimeZone
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 object Parser {
 
@@ -53,7 +54,8 @@ object Parser {
 
   object ZonedDate {
     private val dateTimePattern = "yyyy-MM-dd'T'HH:mm:ss"
-    private val dateTimeParser = Chronos.dateFormatter(dateTimePattern, TimeZone.getTimeZone("UTC").toZoneId)
+    private val dateTimeParser =
+      DateTimeFormatter.ofPattern(dateTimePattern).withZone(TimeZone.getTimeZone("UTC").toZoneId)
     def apply(dateTime: String): ZonedDateTime = ZonedDateTime.parse(dateTime, dateTimeParser)
   }
 
