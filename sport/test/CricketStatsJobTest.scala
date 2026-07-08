@@ -11,7 +11,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.{LocalDate, LocalDateTime, ZonedDateTime}
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class CricketStatsJobTest extends AnyFlatSpec with Matchers with MockitoSugar {
@@ -86,65 +86,70 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(paFeed).getMatch(eqTo(future))(any())
   }
 
-  "classify" should "mark a single-day match happening today as Active" in {
-    CricketStatsJob.classify(today, today) shouldBe MatchType.Active
+  it should "mark a match spanning today (start before, end after) as Active" in {
+    CricketStatsJob.classify(now.minusDays(2)) shouldBe MatchType.Active
   }
 
-  it should "mark a match spanning today (start before, end after) as Active" in {
-    CricketStatsJob.classify(today.minusDays(2), today.plusDays(2)) shouldBe MatchType.Active
+  it should "mark a match that starts in 30 minutes as Active" in {
+    CricketStatsJob.classify(now.plusMinutes(30)) shouldBe MatchType.Active
+  }
+
+  it should "mark a match that starts in 31 minutes as Upcoming" in {
+    CricketStatsJob.classify(now.plusMinutes(30)) shouldBe MatchType.Active
   }
 
   it should "mark a match that started earlier and ends today as Active" in {
     // Boundary: today is the final day (e.g. day 5 of a test match).
-    CricketStatsJob.classify(today.minusDays(4), today) shouldBe MatchType.Active
+    CricketStatsJob.classify(now.minusDays(4)) shouldBe MatchType.Active
   }
 
   it should "mark a match that starts today and ends later as Active" in {
     // Boundary: today is the first day of a multi-day match.
-    CricketStatsJob.classify(today, today.plusDays(4)) shouldBe MatchType.Active
+    CricketStatsJob.classify(now) shouldBe MatchType.Active
   }
 
   it should "mark a match starting tomorrow as Upcoming" in {
-    CricketStatsJob.classify(today.plusDays(1), today.plusDays(3)) shouldBe MatchType.Upcoming
+    CricketStatsJob.classify(now.plusDays(1)) shouldBe MatchType.Upcoming
   }
 
   it should "mark a match starting within the upcoming window as Upcoming" in {
     // upcomingDays is 5, so a start 4 days out is still upcoming.
-    CricketStatsJob.classify(today.plusDays(4), today.plusDays(6)) shouldBe MatchType.Upcoming
+    CricketStatsJob.classify(now.plusDays(4)) shouldBe MatchType.Upcoming
   }
 
-  it should "mark a match starting exactly on the upcoming boundary as Future" in {
+  it should "mark a match starting exactly on the upcoming boundary as Upcoming" in {
     // The window is exclusive: start == today + upcomingDays (5) is not upcoming.
-    CricketStatsJob.classify(today.plusDays(5), today.plusDays(7)) shouldBe MatchType.Future
+    CricketStatsJob.classify(now.plusDays(5)) shouldBe MatchType.Upcoming
   }
 
   it should "mark a match starting well beyond the upcoming window as Future" in {
-    CricketStatsJob.classify(today.plusDays(30), today.plusDays(32)) shouldBe MatchType.Future
+    CricketStatsJob.classify(now.plusDays(30)) shouldBe MatchType.Future
   }
 
-  it should "mark a match that ended yesterday as Historical" in {
-    CricketStatsJob.classify(today.minusDays(3), today.minusDays(1)) shouldBe MatchType.Historical
+  it should "mark a match that ended 5 days ago as Historical" in {
+    CricketStatsJob.classify(now.minusDays(5)) shouldBe MatchType.Historical
   }
 
   it should "mark a match that finished well in the past as Historical" in {
-    CricketStatsJob.classify(today.minusDays(30), today.minusDays(28)) shouldBe MatchType.Historical
+    CricketStatsJob.classify(now.minusDays(30)) shouldBe MatchType.Historical
   }
 
 }
 
 object CricketStatsJobTest extends MockitoSugar {
   private val today = LocalDate.now
+  private val now = ZonedDateTime.now
   private val england: CricketTeam = CricketTeams.teams.head
 
-  private val future = CompetitionMatch("future", "c", "Comp", today.plusDays(10), today.plusDays(12))
-  private val upcoming = CompetitionMatch("upcoming", "c", "Comp", today.plusDays(2), today.plusDays(4))
-  private val active = CompetitionMatch("active", "c", "Comp", today, today.plusDays(3))
-  private val historical = CompetitionMatch("historical", "c", "Comp", today.minusDays(30), today.minusDays(28))
+  private val future = CompetitionMatch("future", "c", "Comp", now.plusDays(10))
+  private val upcoming = CompetitionMatch("upcoming", "c", "Comp", now.plusDays(2))
+  private val active = CompetitionMatch("active", "c", "Comp", now)
+  private val historical = CompetitionMatch("historical", "c", "Comp", now.minusDays(30))
 
   // More than one batch's worth of historical matches, each on a distinct date so they occupy
   // distinct cache slots.
   private val manyHistorical: Seq[CompetitionMatch] =
-    (1 to 15).map(i => CompetitionMatch(s"h$i", "c", "Comp", today.minusDays(30L + i), today.minusDays(28L + i)))
+    (1 to 15).map(i => CompetitionMatch(s"h$i", "c", "Comp", now.minusDays(30L + i)))
 
   // Run all Future callbacks inline so assertions can follow synchronously.
   private implicit val sameThread: ExecutionContext = new ExecutionContext {
@@ -173,7 +178,7 @@ object CricketStatsJobTest extends MockitoSugar {
     when(paFeed.getCompetitionMatches(eqTo(team), any[LocalDate])(any())).thenReturn(Future.successful(matches))
     matches.foreach { cm =>
       when(paFeed.getMatch(eqTo(cm))(any()))
-        .thenReturn(Future.successful(aMatch(cm.matchId, cm.startDate.atStartOfDay)))
+        .thenReturn(Future.successful(aMatch(cm.matchId, cm.startDateTime.toLocalDateTime)))
     }
     paFeed
   }

@@ -5,7 +5,7 @@ import conf.cricketPa.{CompetitionMatch, CricketFeedException, CricketTeam, Cric
 import cricketModel.Match
 import jobs.CricketStatsJob._
 
-import java.time.{LocalDate}
+import java.time.{LocalDate, ZonedDateTime}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
@@ -90,7 +90,7 @@ class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
       discoveredCricketTeamMatches(team)
         .apply()
         .values
-        .filter(cm => classify(cm.startDate, cm.endDate) == band)
+        .filter(cm => classify(cm.startDateTime) == band)
         .map(cm => (team, cm))
     }
 
@@ -142,15 +142,23 @@ object CricketStatsJob {
   // A match is considered "upcoming" when it starts within this many days.
   private val upcomingDays = 5L
 
-  def classify(startDate: LocalDate, endDate: LocalDate): MatchType = {
-    val today = LocalDate.now
+  private val activeBufferMinutes = 30
 
-    if (!startDate.isAfter(today) && !endDate.isBefore(today)) {
-      // startDate <= today <= endDate  (covers single-day and both boundaries)
+  def classify(startDateTime: ZonedDateTime): MatchType = {
+    val endDateTime = startDateTime.plusDays(5) // cricket matches are typically max 5 days long but can be 6
+    val today = ZonedDateTime.now
+
+    if (
+      !startDateTime
+        .minusMinutes(activeBufferMinutes)
+        .isAfter(today) && !endDateTime.isBefore(today)
+    ) {
+      // a match is considered "active" from 30 minutes before it starts until it has finished, refreshed every 5 minutes
       MatchType.Active
-    } else if (startDate.isAfter(today) && startDate.isBefore(today.plusDays(upcomingDays))) {
+    } else if (startDateTime.isAfter(today) && startDateTime.isBefore(today.plusDays(upcomingDays))) {
+      // a match is considered "upcoming" if it starts within the next 5 days, refreshed every hour
       MatchType.Upcoming
-    } else if (endDate.isBefore(today)) {
+    } else if (endDateTime.isBefore(today)) {
       MatchType.Historical
     } else {
       MatchType.Future
