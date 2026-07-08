@@ -23,6 +23,7 @@ import model.{
   GUDateTimeFormatNew,
   Gallery,
   GalleryPage,
+  IabCategories,
   ImageContentPage,
   ImageMedia,
   InteractivePage,
@@ -112,6 +113,7 @@ case class DotcomRenderingDataModel(
     lang: Option[String],
     isRightToLeftLang: Boolean,
     crossword: Option[CrosswordData],
+    iabCategories: Option[IabCategories],
 )
 
 object DotcomRenderingDataModel {
@@ -192,6 +194,7 @@ object DotcomRenderingDataModel {
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
         "crossword" -> model.crossword,
+        "iabCategories" -> model.iabCategories,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -694,6 +697,7 @@ object DotcomRenderingDataModel {
       lang = content.fields.lang,
       isRightToLeftLang = content.fields.isRightToLeftLang,
       crossword = crossword,
+      iabCategories = content.content.iabCategories,
     )
   }
 }

@@ -25,6 +25,22 @@ import implicits.Booleans._
 import model.liveblog.CalloutBlockElement
 import org.joda.time.DateTime
 
+// ---- IAB content category types (LLM-generated, surfaced via CAPI) ----
+
+case class IabSegment(id: String, name: String)
+object IabSegment { implicit val writes: OWrites[IabSegment] = Json.writes[IabSegment] }
+
+case class IabTaxonomy(taxonomy: String, segtax: Int, segments: List[IabSegment])
+object IabTaxonomy { implicit val writes: OWrites[IabTaxonomy] = Json.writes[IabTaxonomy] }
+
+case class IabModel(modelId: String, modelVersion: String, description: String, taxonomies: List[IabTaxonomy])
+object IabModel { implicit val writes: OWrites[IabModel] = Json.writes[IabModel] }
+
+case class IabCategories(contentId: String, models: List[IabModel])
+object IabCategories { implicit val writes: OWrites[IabCategories] = Json.writes[IabCategories] }
+
+// -----------------------------------------------------------------------
+
 sealed trait ContentType {
   def content: Content
   final def tags: Tags = content.tags
@@ -70,6 +86,9 @@ final case class Content(
     rawOpenGraphImage: Option[ImageAsset],
     schemaOrg: Option[SchemaOrg],
     listElementCampaignIds: Seq[String] = Seq.empty,
+    // LLM-generated IAB content categories surfaced via CAPI.
+    // TODO: populate from CAPI once the iabCategories field is available in the CAPI models.
+    iabCategories: Option[IabCategories] = None,
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -522,6 +541,9 @@ object Content {
         .orElse(trail.trailPicture.flatMap(_.largestImage)),
       schemaOrg = schemaOrg,
       listElementCampaignIds = listElementCampaignIds,
+      // TODO: replace None with apiContent.fields.flatMap(_.iabCategories) (or equivalent)
+      // once the iabCategories field has been added to the CAPI models.
+      iabCategories = None,
     )
   }
 }
