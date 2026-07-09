@@ -22,10 +22,15 @@ public final class TemplateTracker {
         // After the first sighting of a template, `add` returns false and we do nothing further -
         // so the hot path for high-traffic templates is a single concurrent-set membership check.
         if (SEEN.add(template)) {
+            // The request that triggered this render, as seeded by the Play filter and carried across
+            // any thread hops by the executor instrumentation. May be null if the render happened
+            // outside a request (startup, background job) or before the context could propagate.
+            String request = RequestContext.get();
             try {
                 logger.log("{" +
                     "\"marker\":\"TEMPLATE_FIRST_SEEN\"," +
-                    "\"template\":\"" + template + "\", " +
+                    "\"template\":\"" + jsonEscape(template) + "\", " +
+                    "\"request\":" + (request == null ? "null" : "\"" + jsonEscape(request) + "\"") + ", " +
                     "\"timestamp\":\"" + formatter.format(ZonedDateTime.now()) + "\"" +
                     "}");
             } catch (IOException e) {
@@ -33,6 +38,31 @@ public final class TemplateTracker {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Minimal JSON string escaping for the values we hand-roll into the log line (template class
+     * names and request URLs, which can legitimately contain quotes, backslashes or control chars).
+     */
+    private static String jsonEscape(String value) {
+        StringBuilder sb = new StringBuilder(value.length() + 16);
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            switch (c) {
+                case '"':  sb.append("\\\""); break;
+                case '\\': sb.append("\\\\"); break;
+                case '\n': sb.append("\\n"); break;
+                case '\r': sb.append("\\r"); break;
+                case '\t': sb.append("\\t"); break;
+                default:
+                    if (c < 0x20) {
+                        sb.append(String.format("\\u%04x", (int) c));
+                    } else {
+                        sb.append(c);
+                    }
+            }
+        }
+        return sb.toString();
     }
 
     /**
