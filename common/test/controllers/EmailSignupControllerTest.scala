@@ -24,6 +24,8 @@ class EmailSignupControllerTest
     with WithTestExecutionContext
     with WithTestApplicationContext {
 
+  private val EmailSignupErrorCodeHeader = "Email-Signup-Error-Code"
+
   trait Fixture {
     val wsClient: WSClient = mock[WSClient]
     val identityWsRequest: WSRequest = mock[WSRequest]
@@ -108,6 +110,7 @@ class EmailSignupControllerTest
 
         status(result) shouldBe BAD_REQUEST
         contentAsString(result) shouldBe "Missing reCAPTCHA token"
+        headers(result).get(EmailSignupErrorCodeHeader) shouldBe Some("missing-recaptcha-token")
       }
     }
 
@@ -145,6 +148,7 @@ class EmailSignupControllerTest
 
         status(result) shouldBe BAD_GATEWAY
         contentAsString(result) shouldBe "Email subscription service returned an unexpected response"
+        headers(result).get(EmailSignupErrorCodeHeader) shouldBe Some("upstream-bad-response")
       }
     }
 
@@ -178,6 +182,7 @@ class EmailSignupControllerTest
 
         status(result) shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some("/email/error")
+        headers(result).get(EmailSignupErrorCodeHeader) shouldBe Some("missing-recaptcha-token")
       }
     }
   }
