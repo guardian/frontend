@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.46.18"
-  val capiVersion = "45.0.1"
-  val faciaVersion = "33.0.1"
+  val capiVersion = "45.0.0-PREVIEW.add-football-competition-atom.2026-06-30T0819.03b49f08"
+  val faciaVersion = "34.0.0-PREVIEW.gluse-capi-football-comp-preview-release.2026-07-08T1401.a026bb9e"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -32,9 +32,9 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.6"
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
-  val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "44.0.0"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
+  val contentApiClient = "com.gu" %% "content-api-client" % "45.0.0-PREVIEW.add-football-competition-atom.2026-06-30T0819.03b49f08"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "45.0.0-PREVIEW.add-football-competition-atom.2026-06-29T1713.8cf99b42"
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % "34.0.0-PREVIEW.gluse-capi-football-comp-preview-release.2026-07-08T1401.a026bb9e"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
   /** There can only be one version of `scala-xml`. We will evict all v1.x
