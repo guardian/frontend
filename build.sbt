@@ -114,16 +114,22 @@ val facia = application("facia")
   .settings(
     libraryDependencies += scalaCheck,
   )
+  .settings(withTwirlInstrumentation: _*)
 
-val article = application("article").dependsOn(commonWithTests).aggregate(common)
+val article = application("article")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val applications = application("applications")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val archive = application("archive")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val sport = application("sport")
   .dependsOn(commonWithTests)
@@ -133,6 +139,7 @@ val sport = application("sport")
       paClient,
     ),
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val discussion = application("discussion")
   .dependsOn(commonWithTests)
@@ -159,6 +166,7 @@ val admin = application("admin")
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val faciaPress = application("facia-press")
   .dependsOn(commonWithTests)
@@ -167,6 +175,7 @@ val faciaPress = application("facia-press")
       awsKinesis,
     ),
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val identity = application("identity")
   .dependsOn(commonWithTests)
@@ -182,10 +191,17 @@ val identity = application("identity")
     PlayKeys.playDefaultPort := 9009,
     Test / testOptions += Tests.Argument("-oF"),
   )
+  .settings(withTwirlInstrumentation: _*)
 
-val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+val commercial = application("commercial")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -217,10 +233,12 @@ val preview = application("preview")
     commercial,
     onward,
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val main = root()
   .aggregate(
