@@ -4,7 +4,7 @@ import common._
 import conf.Configuration
 import conf.cricketPa.{CricketTeam, CricketTeams, PaFeed}
 import contentapi.ContentApiClient
-import cricketModel.{Match, MatchHeader}
+import cricketModel.{Match, MatchHeader, MatchStatsSummary}
 import football.datetime.DateHelpers
 import football.model.{CricketScoreBoardDataModel, DotcomRenderingCricketDataModel}
 import implicits.{HtmlFormat, JsonFormat}
@@ -19,6 +19,7 @@ import services.dotcomrendering.{CricketPagePicker, RemoteRender}
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
+import model.dotcomrendering.DotcomRenderingUtils.hasExactlyTwoTeams
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
@@ -92,6 +93,19 @@ class CricketMatchController(
         .getOrElse(successful(NoCache(NotFound)))
     }
 
+  def matchStatsSummaryJson(date: String, teamId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      CricketTeams
+        .byWordsForUrl(teamId)
+        .flatMap { team =>
+          cricketStatsJob.findMatch(team, date).map { matchData =>
+            val summary = MatchStatsSummary(matchData)
+            successful(Cached(CacheTime.Cricket)(JsonComponent.fromWritable(summary)))
+          }
+        }
+        .getOrElse(successful(NoCache(NotFound)))
+    }
+
   private def renderMatch(
       page: CricketMatchPage,
   )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
@@ -138,11 +152,7 @@ class CricketMatchController(
         response.results
           .map(Content(_))
           .toList
-          .filter(c => hasExactlyTwoTeams(c))
+          .filter(c => hasExactlyTwoTeams(c.tags))
       }
   }
-
-  private def hasExactlyTwoTeams(content: ContentType): Boolean = content.tags.tags.count(tag => {
-    tag.id.endsWith("-cricket-team") || tag.id.endsWith("cricketteam")
-  }) == 2
 }

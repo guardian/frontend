@@ -108,9 +108,8 @@ object MatchResult {
 case class Match(
     teams: List[Team],
     innings: List[Innings],
-    competitionName: String, // TODO: this needs to be removed after DCAR is updated to use stage
+    competitionName: String,
     stage: String,
-    competitionNameV2: String, // TODO: this needs renaming to competitionName after DCAR is updated
     venueName: String,
     result: String,
     currentDay: Int,
@@ -189,5 +188,32 @@ object MatchHeader extends DCARUrlHelper {
       reportURL = matchReportUrl,
       infoURL = getPageUrl(page.metadata.id),
     )
+  }
+}
+
+case class MatchStatsSummary(
+    status: String,
+    currentBattingTeam: Option[String] = None,
+    notOutBatters: Option[List[InningsBatter]] = None,
+)
+
+object MatchStatsSummary {
+  implicit val writes: OWrites[MatchStatsSummary] = Json.writes[MatchStatsSummary]
+
+  def apply(theMatch: Match): MatchStatsSummary = {
+    theMatch.result match {
+      case "in-play" | "tea" | "lunch" | "between-innings" =>
+        MatchStatsSummary(
+          status = theMatch.result,
+          currentBattingTeam = theMatch.lastInnings.map(_.battingTeam),
+          notOutBatters = theMatch.lastInnings.map(_.batters.filter(_.notOut)),
+        )
+      case _ =>
+        MatchStatsSummary(
+          status = theMatch.result,
+          currentBattingTeam = None,
+          notOutBatters = None,
+        )
+    }
   }
 }

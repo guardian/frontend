@@ -1,5 +1,6 @@
 import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
+import com.typesafe.sbt.packager.archetypes.JavaAppPackaging.autoImport._
 import com.gu.Dependencies._
 import com.gu.ProjectSettings._
 
@@ -13,6 +14,40 @@ https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-proj
  */
 ThisBuild / asciiGraphWidth := 999999999
 ThisBuild / scalaVersion := SCALA_VERSION
+
+val templateTrackerJar = "template-tracker-agent.jar"
+
+/*
+ * Standalone JVM agent that records which Twirl templates are rendered at runtime.
+ *
+ * This is a pure java project that uses ByteBuddy to instrument the Twirl template classes at runtime
+ * It is self-contained and any dependency is shadded to avoid any dependency conflict.
+ *
+ * The output of this module is a JAR file that gets attached to any service that requires this instrumentation
+ */
+val templateTrackerAgent = Project("template-tracker-agent", file("template-tracker-agent"))
+  .settings(
+    crossPaths := false, // pure Java: don't append a _2.13 suffix to the artifact
+    autoScalaLibrary := false, // pure Java: no scala-library dependency
+    libraryDependencies += byteBuddy,
+    assembly / assemblyJarName := templateTrackerJar,
+    assembly / assemblyShadeRules := Seq(
+      ShadeRule.rename("net.bytebuddy.**" -> "com.gu.shaded.bytebuddy.@1").inAll,
+    ),
+    assembly / packageOptions += Package.ManifestAttributes(
+      "Premain-Class" -> "com.gu.templatetracker.TemplateTrackerAgent",
+      "Can-Redefine-Classes" -> "true",
+      "Can-Retransform-Classes" -> "true",
+    ),
+  )
+
+val withTwirlInstrumentation: Seq[SettingsDefinition] = Seq(
+  Universal / mappings += {
+    val agentJar = (templateTrackerAgent / assembly).value
+    agentJar -> s"agent/${templateTrackerJar}"
+  },
+  bashScriptExtraDefines += s"""addJava "-javaagent:$${app_home}/../agent/${templateTrackerJar}"""",
+)
 
 val common = library("common")
   .settings(
@@ -79,16 +114,22 @@ val facia = application("facia")
   .settings(
     libraryDependencies += scalaCheck,
   )
+  .settings(withTwirlInstrumentation: _*)
 
-val article = application("article").dependsOn(commonWithTests).aggregate(common)
+val article = application("article")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val applications = application("applications")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val archive = application("archive")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val sport = application("sport")
   .dependsOn(commonWithTests)
@@ -98,8 +139,12 @@ val sport = application("sport")
       paClient,
     ),
   )
+  .settings(withTwirlInstrumentation: _*)
 
-val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
+val discussion = application("discussion")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val admin = application("admin")
   .dependsOn(commonWithTests)
@@ -121,6 +166,7 @@ val admin = application("admin")
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val faciaPress = application("facia-press")
   .dependsOn(commonWithTests)
@@ -129,6 +175,7 @@ val faciaPress = application("facia-press")
       awsKinesis,
     ),
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val identity = application("identity")
   .dependsOn(commonWithTests)
@@ -144,10 +191,17 @@ val identity = application("identity")
     PlayKeys.playDefaultPort := 9009,
     Test / testOptions += Tests.Argument("-oF"),
   )
+  .settings(withTwirlInstrumentation: _*)
 
-val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+val commercial = application("commercial")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -179,10 +233,12 @@ val preview = application("preview")
     commercial,
     onward,
   )
+  .settings(withTwirlInstrumentation: _*)
 
 val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(withTwirlInstrumentation: _*)
 
 val main = root()
   .aggregate(
@@ -223,11 +279,3 @@ badgeHash := {
 
   println(result)
 }
-
-val staticAnalysis = Project("static-analysis", file("static-analysis"))
-  .settings(
-    libraryDependencies += "org.scalameta" %% "semanticdb-shared" % "4.17.0",
-    libraryDependencies += "org.scalameta" %% "scalameta" % "4.17.0",
-    // forcing dependency upgrade as scalameta is out of date
-    libraryDependencies += "com.google.protobuf" % "protobuf-java" % "3.25.9"
-  )

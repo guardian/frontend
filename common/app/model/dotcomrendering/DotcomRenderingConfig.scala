@@ -3,7 +3,6 @@ package model.dotcomrendering
 import ab.ABTests
 import common.Edition
 import conf.Configuration
-import experiments.ActiveExperiments
 import model.Page
 import model.dotcomrendering.DotcomRenderingUtils.assetURL
 import play.api.libs.json.{JsObject, JsValue, Json}
@@ -26,7 +25,6 @@ object DotcomRenderingConfig {
 
     val config = Config(
       switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
       serverSideABTests = ABTests.getParticipations(request),
       ampIframeUrl = assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,

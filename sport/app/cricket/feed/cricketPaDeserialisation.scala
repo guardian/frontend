@@ -8,6 +8,8 @@ import cricketModel._
 
 import java.time.LocalDateTime
 import java.util.TimeZone
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 object Parser {
 
@@ -20,9 +22,8 @@ object Parser {
     Match(
       teams = parseTeams(lineupData \ "match" \ "team"),
       innings = parseInnings(scorecardData \ "match" \ "innings"),
-      competitionName = matchDetail.competitionName,
-      stage = matchDetail.competitionName,
-      competitionNameV2 = competitionMatch.competitionName,
+      competitionName = competitionMatch.competitionName,
+      stage = matchDetail.stage,
       venueName = matchDetail.venueName,
       result = matchDetail.status,
       currentDay = matchDetail.currentDay,
@@ -35,7 +36,7 @@ object Parser {
   }
 
   private case class MatchDetail(
-      competitionName: String,
+      stage: String,
       venueName: String,
       status: String,
       currentDay: Int,
@@ -51,6 +52,13 @@ object Parser {
     def apply(dateTime: String): LocalDateTime = LocalDateTime.parse(dateTime, dateTimeParser)
   }
 
+  object ZonedDate {
+    private val dateTimePattern = "yyyy-MM-dd'T'HH:mm:ss"
+    private val dateTimeParser =
+      DateTimeFormatter.ofPattern(dateTimePattern).withZone(TimeZone.getTimeZone("UTC").toZoneId)
+    def apply(dateTime: String): ZonedDateTime = ZonedDateTime.parse(dateTime, dateTimeParser)
+  }
+
   private def inningsDescription(inningsOrder: Int, battingTeam: String): String = {
     // Construct a string consisting of the team name and an innings index.
     if (inningsOrder == 1 || inningsOrder == 2) {
@@ -62,7 +70,7 @@ object Parser {
 
   private def parseMatchDetail(matchDetail: NodeSeq): MatchDetail =
     MatchDetail(
-      competitionName = matchDetail \ "stage" text,
+      stage = matchDetail \ "stage" text,
       venueName = matchDetail \ "venue" \ "name" text,
       status = matchDetail \ "status" text,
       currentDay = (matchDetail \ "currentDay").text.toInt,

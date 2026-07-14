@@ -175,6 +175,26 @@ class EmailSignupController(
   val emailFormService = new EmailFormService(wsClient, emailEmbedAgent)
   val googleRecaptchaTokenValidationService = new GoogleRecaptchaValidationService(wsClient)
 
+  private sealed abstract class EmailSignupException(message: String) extends RuntimeException(message)
+  private case object MissingCaptchaTokenException extends EmailSignupException("Missing reCAPTCHA token")
+  private case object InvalidCaptchaTokenException extends EmailSignupException("Invalid reCAPTCHA token")
+  private case class CaptchaVerificationUnavailableException(cause: Throwable)
+      extends EmailSignupException("reCAPTCHA verification unavailable") {
+    initCause(cause)
+  }
+
+  private val EmailSignupErrorCodeHeader = "Email-Signup-Error-Code"
+  private val MissingRecaptchaTokenErrorCode = "missing-recaptcha-token"
+  private val InvalidRecaptchaTokenErrorCode = "invalid-recaptcha-token"
+  private val RecaptchaUnavailableErrorCode = "recaptcha-unavailable"
+  private val UpstreamBadResponseErrorCode = "upstream-bad-response"
+  private val UpstreamUnavailableErrorCode = "upstream-unavailable"
+
+  private def requestLogContext(implicit request: Request[AnyContent]): String =
+    s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+      s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+      s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
+
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -422,9 +442,7 @@ class EmailSignupController(
               s"Post request received to /email/ - " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
-                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+                requestLogContext,
             )
 
             (for {
@@ -432,11 +450,34 @@ class EmailSignupController(
               result <- submitFormFooter(form)
             } yield {
               result
-            }) recover { case _ =>
-              respondFooter(OtherError)
+            }) recover {
+              case MissingCaptchaTokenException =>
+                respondError(BadRequest("Missing reCAPTCHA token"), MissingRecaptchaTokenErrorCode, isFooter = true)
+              case InvalidCaptchaTokenException =>
+                respondError(BadRequest("Invalid reCAPTCHA token"), InvalidRecaptchaTokenErrorCode, isFooter = true)
+              case _: CaptchaVerificationUnavailableException =>
+                respondError(
+                  ServiceUnavailable("reCAPTCHA verification unavailable"),
+                  RecaptchaUnavailableErrorCode,
+                  isFooter = true,
+                )
             }
           },
         )
+    }
+
+  private def respondError(jsonResult: Result, errorCode: String, isFooter: Boolean = false)(implicit
+      request: Request[AnyContent],
+  ): Result =
+    render {
+      case Accepts.Html() =>
+        if (isFooter) SeeOther(LinkTo(s"/email/error/footer")).withHeaders(EmailSignupErrorCodeHeader -> errorCode)
+        else SeeOther(LinkTo(s"/email/error")).withHeaders(EmailSignupErrorCodeHeader -> errorCode)
+      case Accepts.Json() =>
+        Cors(NoCache(jsonResult)).withHeaders(EmailSignupErrorCodeHeader -> errorCode)
+      case _ =>
+        NotAccepted.increment()
+        NotAcceptable
     }
 
   private def respondFooter(result: SubscriptionResult)(implicit
@@ -462,7 +503,7 @@ class EmailSignupController(
     }
   }
 
-  private def submitFormFooter(form: EmailForm)(implicit request: Request[AnyContent]) = {
+  private def submitFormFooter(form: EmailForm)(implicit request: Request[AnyContent]): Future[Result] = {
     emailFormService
       .submit(form)
       .map(_.status match {
@@ -473,7 +514,11 @@ class EmailSignupController(
         case status =>
           logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
           APIHTTPError.increment()
-          respondFooter(OtherError)
+          respondError(
+            BadGateway("Email subscription service returned an unexpected response"),
+            UpstreamBadResponseErrorCode,
+            isFooter = true,
+          )
 
       }) recover {
       case _: IllegalAccessException =>
@@ -481,7 +526,11 @@ class EmailSignupController(
       case e: Exception =>
         logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
-        respondFooter(OtherError)
+        respondError(
+          ServiceUnavailable("Email subscription service unavailable"),
+          UpstreamUnavailableErrorCode,
+          isFooter = true,
+        )
     }
   }
 
@@ -498,11 +547,11 @@ class EmailSignupController(
           case Some(token) => Future.successful(token)
           case None        =>
             RecaptchaMissingTokenError.increment()
-            Future.failed(new IllegalAccessException("reCAPTCHA client token not provided"))
+            Future.failed(MissingCaptchaTokenException)
         }
         wsResponse <- googleRecaptchaTokenValidationService.submit(token, shouldUseVisibleKey) recoverWith { case e =>
           RecaptchaAPIUnavailableError.increment()
-          Future.failed(e)
+          Future.failed(CaptchaVerificationUnavailableException(e))
         }
         googleResponse = wsResponse.json.as[GoogleResponse]
         _ <- {
@@ -511,8 +560,7 @@ class EmailSignupController(
             Future.successful(())
           } else {
             RecaptchaValidationError.increment()
-            val errorMessage = s"Google token validation failed with error: ${googleResponse.`error-codes`}"
-            Future.failed(new IllegalAccessException(errorMessage))
+            Future.failed(InvalidCaptchaTokenException)
           }
         }
       } yield ()
@@ -544,9 +592,7 @@ class EmailSignupController(
                 s"Post request received to /email/ - " +
                   s"ref: ${form.ref}, " +
                   s"refViewId: ${form.refViewId}, " +
-                  s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                  s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                  s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+                  requestLogContext,
               )
 
               (for {
@@ -554,8 +600,13 @@ class EmailSignupController(
                 result <- buildSubmissionResult(emailFormService.submit(form), form.listName)
               } yield {
                 result
-              }) recover { case _ =>
-                respond(OtherError)
+              }) recover {
+                case MissingCaptchaTokenException =>
+                  respondError(BadRequest("Missing reCAPTCHA token"), MissingRecaptchaTokenErrorCode)
+                case InvalidCaptchaTokenException =>
+                  respondError(BadRequest("Invalid reCAPTCHA token"), InvalidRecaptchaTokenErrorCode)
+                case _: CaptchaVerificationUnavailableException =>
+                  respondError(ServiceUnavailable("reCAPTCHA verification unavailable"), RecaptchaUnavailableErrorCode)
               }
             }
           },
@@ -580,9 +631,7 @@ class EmailSignupController(
                 s"listNames.size: ${form.listNames.size.toString()}, " +
                 s"ref: ${form.ref}, " +
                 s"refViewId: ${form.refViewId}, " +
-                s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-                s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-                s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+                requestLogContext,
             )
 
             (for {
@@ -594,16 +643,21 @@ class EmailSignupController(
               result <- buildSubmissionResult(emailFormService.submitWithMany(form), Option.empty[String])
             } yield {
               result
-            }) recover { case _ =>
-              respond(OtherError)
+            }) recover {
+              case MissingCaptchaTokenException =>
+                respondError(BadRequest("Missing reCAPTCHA token"), MissingRecaptchaTokenErrorCode)
+              case InvalidCaptchaTokenException =>
+                respondError(BadRequest("Invalid reCAPTCHA token"), InvalidRecaptchaTokenErrorCode)
+              case _: CaptchaVerificationUnavailableException =>
+                respondError(ServiceUnavailable("reCAPTCHA verification unavailable"), RecaptchaUnavailableErrorCode)
             }
           },
         )
     }
 
-  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String])(implicit
+  private def buildSubmissionResult(wsResponse: Future[WSResponse], listName: Option[String] = None)(implicit
       request: Request[AnyContent],
-  ) = {
+  ): Future[Result] = {
     wsResponse.map(_.status match {
       case 200 | 201 =>
         EmailSubmission.increment()
@@ -612,7 +666,10 @@ class EmailSignupController(
       case status =>
         logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
         APIHTTPError.increment()
-        respond(OtherError)
+        respondError(
+          BadGateway("Email subscription service returned an unexpected response"),
+          UpstreamBadResponseErrorCode,
+        )
 
     }) recover {
       case _: IllegalAccessException =>
@@ -620,7 +677,7 @@ class EmailSignupController(
       case e: Exception =>
         logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
-        respond(OtherError)
+        respondError(ServiceUnavailable("Email subscription service unavailable"), UpstreamUnavailableErrorCode)
     }
   }
 

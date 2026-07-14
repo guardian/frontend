@@ -9,7 +9,7 @@ import scala.concurrent.Future
 import scala.util.control.NonFatal
 import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
-import com.gu.contentapi.client.model.v1.ContentType.{Gallery, Video}
+import com.gu.contentapi.client.model.v1.ContentType.Video
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse}
 import commercial.model.hosted.HostedTrails
 import common.`package`.convertApiExceptionsWithoutEither
@@ -116,8 +116,7 @@ class HostedContentController(
   def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
     Action.async { implicit request =>
       lookup(campaignName, pageName) flatMap { response =>
-        val isGallery = response.content.exists(_.`type` == Gallery)
-        val tier = HostedContentPicker.getTier(isGallery)
+        val tier = HostedContentPicker.getTier()
         tier match {
           // DCR pages
           case RemoteRender =>
