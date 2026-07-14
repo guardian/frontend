@@ -11,7 +11,7 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.6"
-  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
+  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.20.0"
   // ByteBuddy powers the standalone template-tracker JVM agent (shaded at assembly time).
   // Pinned to 1.15.x: later releases bundle Java 24 multi-release classes that the assembly
   // shader can't read/relocate (harmless on our Java 21 runtime, but noisy and not cleanly shaded).
