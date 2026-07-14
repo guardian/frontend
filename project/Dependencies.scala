@@ -78,7 +78,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.32"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.33"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -91,7 +91,7 @@ object Dependencies {
 
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.7"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.8"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
