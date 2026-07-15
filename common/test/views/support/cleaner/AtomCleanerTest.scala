@@ -68,6 +68,7 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
       profiles = Nil,
       timelines = Nil,
       commonsdivisions = Nil,
+      footballCompetitions = Nil,
       audios = Nil,
       charts = Nil,
       callToAction = Nil,
