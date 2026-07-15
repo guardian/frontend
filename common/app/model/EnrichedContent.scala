@@ -4,6 +4,7 @@ import model.dotcomrendering.pageElements.{
   AudioAtomBlockElement,
   CallToActionAtomBlockElement,
   ExplainerAtomBlockElement,
+  FootballCompetitionAtomBlockElement,
   GuideAtomBlockElement,
   ProfileAtomBlockElement,
   QABlockElement,
@@ -27,6 +28,7 @@ final case class EnrichedContent(
     TimelineAtom: Option[TimelineAtomBlockElement],
     AudioAtom: Option[AudioAtomBlockElement],
     ExplainerAtom: Option[ExplainerAtomBlockElement],
+    FootballCompetitionAtom: Option[FootballCompetitionAtomBlockElement],
     CtaAtom: Option[CallToActionAtomBlockElement],
 )
 
@@ -41,6 +43,7 @@ object EnrichedContent {
     TimelineAtom = None,
     AudioAtom = None,
     ExplainerAtom = None,
+    FootballCompetitionAtom = None,
     CtaAtom = None,
   )
 }

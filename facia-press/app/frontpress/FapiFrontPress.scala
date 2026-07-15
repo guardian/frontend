@@ -18,11 +18,21 @@ import contentapi._
 import services.{ConfigAgent, NewsletterService, S3FrontsApi}
 import services.fronts.FrontsApi
 import model.{PressedPage, _}
-import model.content.{AudioAtom, CallToActionAtom, ExplainerAtom, GuideAtom, ProfileAtom, QandaAtom, TimelineAtom}
+import model.content.{
+  AudioAtom,
+  CallToActionAtom,
+  ExplainerAtom,
+  FootballCompetitionAtom,
+  GuideAtom,
+  ProfileAtom,
+  QandaAtom,
+  TimelineAtom,
+}
 import model.dotcomrendering.pageElements.{
   AudioAtomBlockElement,
   CallToActionAtomBlockElement,
   ExplainerAtomBlockElement,
+  FootballCompetitionAtomBlockElement,
   GuideAtomBlockElement,
   ProfileAtomBlockElement,
   QABlockElement,
@@ -415,7 +425,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       // Spike: we assume atom snaps carry an embedType matching the atom type
       // name. enrichAtom itself is defensive and picks whichever atom the CAPI
       // response actually contains, so this dispatch can be adjusted cheaply.
-      case Some("guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta") =>
+      case Some("guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta" | "footballcompetition") =>
         Enrichment.enrichAtom(content.properties.atomId, beforeEnrichment, collection, capiClient)
       case _ => Future.successful(beforeEnrichment)
     }
@@ -683,6 +693,16 @@ object Enrichment extends GuLogging {
           response.cta.map(atom =>
             beforeEnrichment
               .copy(CtaAtom = Some(CallToActionAtomBlockElement.fromCallToActionAtom(CallToActionAtom.make(atom)))),
+          ),
+        )
+        .orElse(
+          response.footballcompetition.map(atom =>
+            beforeEnrichment
+              .copy(FootballCompetitionAtom =
+                Some(
+                  FootballCompetitionAtomBlockElement.fromFootballCompetitionAtom(FootballCompetitionAtom.make(atom)),
+                ),
+              ),
           ),
         )
     }
