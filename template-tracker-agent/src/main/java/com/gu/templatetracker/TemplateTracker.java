@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,20 +18,37 @@ public final class TemplateTracker {
 
     private static DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
+    // Fields of the request context we dedupe on (in addition to the template itself), so a template
+    // shared by many callers is captured once per distinct caller rather than only on its very first
+    // render across the whole JVM:
+    //   - the routed controller action (e.g. "controllers.FooController.bar"), and
+    //   - the `dcr` query param that forces legacy vs DCR rendering
+    //     ("true"/"false"/"apps"/"other"/"absent").
+    private static final String CONTROLLER_METHOD_KEY = "controllerMethod";
+    private static final String DCR_KEY = "dcr";
+
     public static void recordRendering(String rawClassName) {
         String template = normalise(rawClassName);
-        // After the first sighting of a template, `add` returns false and we do nothing further -
-        // so the hot path for high-traffic templates is a single concurrent-set membership check.
-        if (SEEN.add(template)) {
-            // The request that triggered this render, as seeded by the Play filter and carried across
-            // any thread hops by the executor instrumentation. May be null if the render happened
-            // outside a request (startup, background job) or before the context could propagate.
-            String request = RequestContext.get();
+        // The request that triggered this render, as seeded by the Play filter and carried across any
+        // thread hops by the executor instrumentation. May be null if the render happened outside a
+        // request (startup, background job) or before the context could propagate.
+        Map<String, String> request = RequestContext.get();
+        String controllerMethod = request == null ? null : request.get(CONTROLLER_METHOD_KEY);
+        String dcr = request == null ? null : request.get(DCR_KEY);
+
+        // Dedupe on (template, controller method, dcr). '\u0000' can't appear in any value, so it is
+        // an unambiguous separator.
+        String seenKey = template + '\u0000'
+            + (controllerMethod == null ? "" : controllerMethod) + '\u0000'
+            + (dcr == null ? "" : dcr);
+        // After the first sighting of a (template, action, dcr) tuple, `add` returns false and we do
+        // nothing further - so the hot path is a single concurrent-set membership check.
+        if (SEEN.add(seenKey)) {
             try {
                 logger.log("{" +
                     "\"marker\":\"TEMPLATE_FIRST_SEEN\"," +
-                    "\"template\":\"" + jsonEscape(template) + "\", " +
-                    "\"request\":" + (request == null ? "null" : "\"" + jsonEscape(request) + "\"") + ", " +
+                    "\"template\":\"" + jsonEscape(template) + "\"," +
+                    "\"request\":" + renderContext(request) + "," +
                     "\"timestamp\":\"" + formatter.format(ZonedDateTime.now()) + "\"" +
                     "}");
             } catch (IOException e) {
@@ -38,6 +56,32 @@ public final class TemplateTracker {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Render the request context map as a JSON object (or the literal {@code null} when there is no
+     * context). Keys and values are escaped; a null value is emitted as the JSON literal {@code null}.
+     */
+    private static String renderContext(Map<String, String> context) {
+        if (context == null || context.isEmpty()) {
+            return "null";
+        }
+        StringBuilder sb = new StringBuilder("{");
+        boolean first = true;
+        for (Map.Entry<String, String> entry : context.entrySet()) {
+            if (!first) {
+                sb.append(',');
+            }
+            first = false;
+            sb.append('"').append(jsonEscape(entry.getKey())).append("\":");
+            String value = entry.getValue();
+            if (value == null) {
+                sb.append("null");
+            } else {
+                sb.append('"').append(jsonEscape(value)).append('"');
+            }
+        }
+        return sb.append('}').toString();
     }
 
     /**

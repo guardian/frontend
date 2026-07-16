@@ -1,5 +1,7 @@
 package com.gu.templatetracker;
 
+import java.util.Map;
+
 /**
  * Wraps a {@link Runnable} so that the request context captured at <em>submit</em> time (on the
  * thread that hands the task to an executor) is restored around {@link #run()} on the <em>worker</em>
@@ -24,9 +26,9 @@ package com.gu.templatetracker;
 public final class ContextPropagatingRunnable implements Runnable {
 
     private final Runnable delegate;
-    private final String capturedContext;
+    private final Map<String, String> capturedContext;
 
-    private ContextPropagatingRunnable(Runnable delegate, String capturedContext) {
+    private ContextPropagatingRunnable(Runnable delegate, Map<String, String> capturedContext) {
         this.delegate = delegate;
         this.capturedContext = capturedContext;
     }
@@ -40,7 +42,7 @@ public final class ContextPropagatingRunnable implements Runnable {
         if (delegate == null || delegate instanceof ContextPropagatingRunnable) {
             return delegate;
         }
-        String context = RequestContext.get();
+        Map<String, String> context = RequestContext.get();
         if (context == null) {
             return delegate;
         }
@@ -49,7 +51,7 @@ public final class ContextPropagatingRunnable implements Runnable {
 
     @Override
     public void run() {
-        String previous = RequestContext.get();
+        Map<String, String> previous = RequestContext.get();
         RequestContext.set(capturedContext);
         try {
             delegate.run();
@@ -62,4 +64,6 @@ public final class ContextPropagatingRunnable implements Runnable {
         }
     }
 }
+
+
 

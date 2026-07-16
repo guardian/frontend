@@ -60,9 +60,11 @@ public final class TemplateTrackerAgent {
         // bootstrap-loaded JDK executor classes we instrument below, and gives them a single identity
         // shared with Play's application classloader. Doing this before any of those classes are
         // referenced guarantees there is exactly one RequestContext (and one ThreadLocal).
-        appendAgentJarToBootstrap(instrumentation);
+        boolean bootstrapReady = appendAgentJarToBootstrap(instrumentation);
 
         // 1. Record the first render of each Twirl template, tagged with the current request context.
+        //    Independent of the bootstrap append (it only needs TemplateTracker, loaded by the system
+        //    classloader), so we always install it.
         new AgentBuilder.Default()
             .type(TWIRL_TEMPLATE_MATCHER)
             .transform(RECORD_TEMPLATE_TRANSFORMER)
@@ -72,13 +74,25 @@ public final class TemplateTrackerAgent {
         //    RETRANSFORMATION lets us weave already-loaded JDK executors; disableClassFormatChanges
         //    keeps the transform to method-body inlining only, which retransformation of JDK classes
         //    allows. `ignore(none())` lifts the default guard that would otherwise skip JDK types.
-        new AgentBuilder.Default()
-            .disableClassFormatChanges()
-            .with(AgentBuilder.RedefinitionStrategy.RETRANSFORMATION)
-            .ignore(ElementMatchers.none())
-            .type(EXECUTOR_MATCHER)
-            .transform(PROPAGATE_CONTEXT_TRANSFORMER)
-            .installOn(instrumentation);
+        //
+        //    Only install this when the bootstrap append succeeded: the woven advice references
+        //    ContextPropagatingRunnable / RequestContext, so if those classes aren't on the bootstrap
+        //    classloader the JDK executors would throw NoClassDefFoundError on their hottest path. When
+        //    the append failed we simply skip propagation - templates are still recorded, just without
+        //    a request attached once the render crosses a thread boundary.
+        if (bootstrapReady) {
+            new AgentBuilder.Default()
+                .disableClassFormatChanges()
+                .with(AgentBuilder.RedefinitionStrategy.RETRANSFORMATION)
+                .ignore(ElementMatchers.none())
+                .type(EXECUTOR_MATCHER)
+                .transform(PROPAGATE_CONTEXT_TRANSFORMER)
+                .installOn(instrumentation);
+        } else {
+            System.err.println(
+                "{\"marker\":\"TEMPLATE_TRACKER_INIT\",\"message\":\"Skipping executor instrumentation; "
+                    + "cross-thread request-context propagation is disabled\"}");
+        }
     }
 
     /**
@@ -87,17 +101,22 @@ public final class TemplateTrackerAgent {
      * classloader. We locate the jar via {@code TemplateTrackerAgent} (already loaded, and not shared
      * state) rather than via the carrier classes, so we don't accidentally load a second copy of them
      * on the system classloader before the bootstrap entry is in place.
+     *
+     * @return {@code true} if the jar was appended and the carrier classes are now bootstrap-visible;
+     *         {@code false} if not (in which case the caller must not install the executor advice).
      */
-    private static void appendAgentJarToBootstrap(Instrumentation instrumentation) {
+    private static boolean appendAgentJarToBootstrap(Instrumentation instrumentation) {
         try {
             File agentJar = new File(
                 TemplateTrackerAgent.class.getProtectionDomain().getCodeSource().getLocation().toURI());
             instrumentation.appendToBootstrapClassLoaderSearch(new JarFile(agentJar));
+            return true;
         } catch (Exception e) {
             System.err.println(
                 "{\"marker\":\"TEMPLATE_TRACKER_INIT\",\"message\":\"Could not append agent jar to bootstrap "
                     + "classloader; cross-thread request-context propagation will be disabled\"}");
             e.printStackTrace();
+            return false;
         }
     }
 }
