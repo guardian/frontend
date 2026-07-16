@@ -6,7 +6,7 @@ import java.util.Map;
  * A JDK-only carrier for "the request currently being handled on this thread".
  *
  * <p>The context is a plain {@code Map<String, String>} of already-extracted, human-readable fields
- * (request id, HTTP method, controller method, dcr param, ...). We deliberately carry a small,
+ * (HTTP method, controller method, dcr param, sample uri). We deliberately carry a small,
  * immutable-in-spirit snapshot rather than a rich object: the map rides along inside every
  * queued/in-flight task (see {@link ContextPropagatingRunnable}), so keeping it a handful of short
  * strings avoids pinning heavyweight request state alive across async hops.

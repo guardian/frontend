@@ -36,8 +36,6 @@ val templateTrackerAgent = Project("template-tracker-agent", file("template-trac
     ),
     assembly / packageOptions += Package.ManifestAttributes(
       "Premain-Class" -> "com.gu.templatetracker.TemplateTrackerAgent",
-      // We only ever retransform (never redefine with supplied class files), so Can-Redefine-Classes
-      // is not required - RETRANSFORMATION needs Can-Retransform-Classes only.
       "Can-Retransform-Classes" -> "true",
     ),
   )

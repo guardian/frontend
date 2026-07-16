@@ -21,34 +21,43 @@ public final class TemplateTracker {
     // Fields of the request context we dedupe on (in addition to the template itself), so a template
     // shared by many callers is captured once per distinct caller rather than only on its very first
     // render across the whole JVM:
-    //   - the routed controller action (e.g. "controllers.FooController.bar"), and
+    //   - the routed controller action (e.g. "controllers.FooController.bar"),
     //   - the `dcr` query param that forces legacy vs DCR rendering
-    //     ("true"/"false"/"apps"/"other"/"absent").
+    //     ("true"/"false"/"apps"/"other"/"absent"), and
+    //   - the HTTP method.
     private static final String CONTROLLER_METHOD_KEY = "controllerMethod";
     private static final String DCR_KEY = "dcr";
+    private static final String METHOD_KEY = "method";
+    private static final String SAMPLE_URI_KEY = "sampleUri";
 
     public static void recordRendering(String rawClassName) {
         String template = normalise(rawClassName);
-        // The request that triggered this render, as seeded by the Play filter and carried across any
-        // thread hops by the executor instrumentation. May be null if the render happened outside a
-        // request (startup, background job) or before the context could propagate.
+        // The request that triggered this render, as seeded by the TemplateContextFilter and carried across any
+        // thread hops by the executor instrumentation. The context (or any individual field) may be
+        // absent if the render happened outside a request (startup, background job) or before the
+        // context could propagate - in which case that field is logged as JSON null.
         Map<String, String> request = RequestContext.get();
-        String controllerMethod = request == null ? null : request.get(CONTROLLER_METHOD_KEY);
-        String dcr = request == null ? null : request.get(DCR_KEY);
+        String method = field(request, METHOD_KEY);
+        String controllerMethod = field(request, CONTROLLER_METHOD_KEY);
+        String dcr = field(request, DCR_KEY);
+        String sampleUri = field(request, SAMPLE_URI_KEY);
 
-        // Dedupe on (template, controller method, dcr). '\u0000' can't appear in any value, so it is
-        // an unambiguous separator.
-        String seenKey = template + '\u0000'
-            + (controllerMethod == null ? "" : controllerMethod) + '\u0000'
-            + (dcr == null ? "" : dcr);
-        // After the first sighting of a (template, action, dcr) tuple, `add` returns false and we do
-        // nothing further - so the hot path is a single concurrent-set membership check.
+        // Dedupe on (template, controller method, dcr, http method).
+        String seenKey = template + '|'
+            + (controllerMethod == null ? "" : controllerMethod) + '|'
+            + (dcr == null ? "" : dcr) + '|'
+            + (method == null ? "" : method);
+        // After the first sighting of this tuple, `add` returns false and we do nothing further - so
+        // the hot path is a single concurrent-set membership check.
         if (SEEN.add(seenKey)) {
             try {
                 logger.log("{" +
                     "\"marker\":\"TEMPLATE_FIRST_SEEN\"," +
                     "\"template\":\"" + jsonEscape(template) + "\"," +
-                    "\"request\":" + renderContext(request) + "," +
+                    "\"method\":" + jsonStringOrNull(method) + "," +
+                    "\"controllerMethod\":" + jsonStringOrNull(controllerMethod) + "," +
+                    "\"dcr\":" + jsonStringOrNull(dcr) + "," +
+                    "\"sampleUri\":" + jsonStringOrNull(sampleUri) + "," +
                     "\"timestamp\":\"" + formatter.format(ZonedDateTime.now()) + "\"" +
                     "}");
             } catch (IOException e) {
@@ -59,29 +68,17 @@ public final class TemplateTracker {
     }
 
     /**
-     * Render the request context map as a JSON object (or the literal {@code null} when there is no
-     * context). Keys and values are escaped; a null value is emitted as the JSON literal {@code null}.
+     * The value for {@code key}, or {@code null} when there is no context or the field is absent.
      */
-    private static String renderContext(Map<String, String> context) {
-        if (context == null || context.isEmpty()) {
-            return "null";
-        }
-        StringBuilder sb = new StringBuilder("{");
-        boolean first = true;
-        for (Map.Entry<String, String> entry : context.entrySet()) {
-            if (!first) {
-                sb.append(',');
-            }
-            first = false;
-            sb.append('"').append(jsonEscape(entry.getKey())).append("\":");
-            String value = entry.getValue();
-            if (value == null) {
-                sb.append("null");
-            } else {
-                sb.append('"').append(jsonEscape(value)).append('"');
-            }
-        }
-        return sb.append('}').toString();
+    private static String field(Map<String, String> context, String key) {
+        return context == null ? null : context.get(key);
+    }
+
+    /**
+     * Render a string field as a quoted, escaped JSON string, or the JSON literal {@code null}.
+     */
+    private static String jsonStringOrNull(String value) {
+        return value == null ? "null" : "\"" + jsonEscape(value) + "\"";
     }
 
     /**
@@ -93,11 +90,21 @@ public final class TemplateTracker {
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
             switch (c) {
-                case '"':  sb.append("\\\""); break;
-                case '\\': sb.append("\\\\"); break;
-                case '\n': sb.append("\\n"); break;
-                case '\r': sb.append("\\r"); break;
-                case '\t': sb.append("\\t"); break;
+                case '"':
+                    sb.append("\\\"");
+                    break;
+                case '\\':
+                    sb.append("\\\\");
+                    break;
+                case '\n':
+                    sb.append("\\n");
+                    break;
+                case '\r':
+                    sb.append("\\r");
+                    break;
+                case '\t':
+                    sb.append("\\t");
+                    break;
                 default:
                     if (c < 0x20) {
                         sb.append(String.format("\\u%04x", (int) c));

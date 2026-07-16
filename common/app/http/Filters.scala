@@ -129,8 +129,6 @@ object Filters {
       new SurrogateKeyFilter,
       new AmpFilter,
       new TooManyHeadersFilter,
-      // Kept last so it is the innermost filter: its `next(rh)` invokes the action directly, so the
-      // request context is set on the thread that runs the action's synchronous prefix.
       new TemplateContextFilter,
     )
 
