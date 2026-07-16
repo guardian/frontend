@@ -304,14 +304,14 @@ object ExplainerAtomBlockElement {
     ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body)
 }
 
-case class FootballCompetitionAtomBlockElement(id: String, competitionId: String, componentType: String)
+case class TempFootballCompetitionAtomBlockElement(id: String, competitionId: String, componentType: String)
     extends PageElement
-object FootballCompetitionAtomBlockElement {
-  implicit val FootballCompetitionAtomBlockElementFormat: OFormat[FootballCompetitionAtomBlockElement] =
-    Json.format[FootballCompetitionAtomBlockElement]
+object TempFootballCompetitionAtomBlockElement {
+  implicit val TempFootballCompetitionAtomBlockElementFormat: OFormat[TempFootballCompetitionAtomBlockElement] =
+    Json.format[TempFootballCompetitionAtomBlockElement]
 
-  def fromFootballCompetitionAtom(atom: FootballCompetitionAtom): FootballCompetitionAtomBlockElement =
-    FootballCompetitionAtomBlockElement(atom.id, atom.competitionId, atom.componentType)
+  def fromTempFootballCompetitionAtom(atom: TempFootballCompetitionAtom): TempFootballCompetitionAtomBlockElement =
+    TempFootballCompetitionAtomBlockElement(atom.id, atom.competitionId, atom.componentType)
 }
 
 case class FormBlockElement(html: Option[String]) extends PageElement
@@ -1097,7 +1097,7 @@ object PageElement extends GuLogging {
       case _: DocumentBlockElement                => true
       case _: EmbedBlockElement                   => true
       case _: ExplainerAtomBlockElement           => true
-      case _: FootballCompetitionAtomBlockElement => true
+      case _: TempFootballCompetitionAtomBlockElement => true
       case _: GenericAtomBlockElement             => true
       case _: GuideAtomBlockElement               => true
       case _: GuVideoBlockElement                 => true
@@ -1415,8 +1415,8 @@ object PageElement extends GuLogging {
 
           case Some(explainer: ExplainerAtom) => Some(ExplainerAtomBlockElement.fromExplainerAtom(explainer))
 
-          case Some(footballCompetition: FootballCompetitionAtom) =>
-            Some(FootballCompetitionAtomBlockElement.fromFootballCompetitionAtom(footballCompetition))
+          case Some(tempFootballCompetition: TempFootballCompetitionAtom) =>
+            Some(TempFootballCompetitionAtomBlockElement.fromTempFootballCompetitionAtom(tempFootballCompetition))
 
           case Some(guide: GuideAtom) => Some(GuideAtomBlockElement.fromGuideAtom(guide))
 

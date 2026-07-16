@@ -75,7 +75,7 @@ object LiveHarness {
     audios = Seq.empty,
     charts = Seq.empty,
     commonsdivisions = Seq.empty,
-    footballCompetitions = Seq.empty,
+    tempFootballCompetitions = Seq.empty,
     explainers = Seq.empty,
     guides = Seq.empty,
     interactives = Seq.empty,

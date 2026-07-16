@@ -8,7 +8,7 @@ final case class Atoms(
     audios: Seq[AudioAtom],
     charts: Seq[ChartAtom],
     commonsdivisions: Seq[CommonsDivisionAtom],
-    footballCompetitions: Seq[FootballCompetitionAtom],
+    tempFootballCompetitions: Seq[TempFootballCompetitionAtom],
     explainers: Seq[ExplainerAtom],
     guides: Seq[GuideAtom],
     interactives: Seq[InteractiveAtom],
@@ -21,14 +21,14 @@ final case class Atoms(
     callToAction: Seq[CallToActionAtom],
 ) {
   val all: Seq[Atom] =
-    quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts ++ callToAction ++ footballCompetitions
+    quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts ++ callToAction ++ tempFootballCompetitions
 
   def atomTypes: Map[String, Boolean] =
     Map(
       "audio" -> !audios.isEmpty,
       "chart" -> !charts.isEmpty,
       "commonsdivision" -> !commonsdivisions.isEmpty,
-      "footballcompetition" -> !footballCompetitions.isEmpty,
+      "footballcompetition" -> !tempFootballCompetitions.isEmpty,
       "explainer" -> !explainers.isEmpty,
       "guide" -> !guides.isEmpty,
       "interactive" -> !interactives.isEmpty,
@@ -84,8 +84,8 @@ object Atoms extends common.GuLogging {
 
       val commonsdivisions = extract(atoms.commonsdivisions.map(_.toSeq), atom => { CommonsDivisionAtom.make(atom) })
 
-      val footballCompetitions =
-        extract(atoms.footballcompetitions.map(_.toSeq), atom => { FootballCompetitionAtom.make(atom) })
+      val tempFootballCompetitions =
+        extract(atoms.tempfootballcompetitions.map(_.toSeq), atom => { TempFootballCompetitionAtom.make(atom) })
 
       val audios = extract(atoms.audios.map(_.toSeq), atom => { AudioAtom.make(atom) })
 
@@ -104,7 +104,7 @@ object Atoms extends common.GuLogging {
         profiles = profiles,
         timelines = timelines,
         commonsdivisions = commonsdivisions,
-        footballCompetitions = footballCompetitions,
+        tempFootballCompetitions = tempFootballCompetitions,
         audios = audios,
         charts = charts,
         callToAction = callToAction,

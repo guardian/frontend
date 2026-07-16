@@ -22,7 +22,7 @@ import model.content.{
   AudioAtom,
   CallToActionAtom,
   ExplainerAtom,
-  FootballCompetitionAtom,
+  TempFootballCompetitionAtom,
   GuideAtom,
   ProfileAtom,
   QandaAtom,
@@ -32,7 +32,7 @@ import model.dotcomrendering.pageElements.{
   AudioAtomBlockElement,
   CallToActionAtomBlockElement,
   ExplainerAtomBlockElement,
-  FootballCompetitionAtomBlockElement,
+  TempFootballCompetitionAtomBlockElement,
   GuideAtomBlockElement,
   ProfileAtomBlockElement,
   QABlockElement,
@@ -425,7 +425,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       // Spike: we assume atom snaps carry an embedType matching the atom type
       // name. enrichAtom itself is defensive and picks whichever atom the CAPI
       // response actually contains, so this dispatch can be adjusted cheaply.
-      case Some("guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta" | "footballcompetition") =>
+      case Some("guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta" | "tempfootballcompetition") =>
         Enrichment.enrichAtom(content.properties.atomId, beforeEnrichment, collection, capiClient)
       case _ => Future.successful(beforeEnrichment)
     }
@@ -696,11 +696,11 @@ object Enrichment extends GuLogging {
           ),
         )
         .orElse(
-          response.footballcompetition.map(atom =>
+          response.tempfootballcompetition.map(atom =>
             beforeEnrichment
-              .copy(FootballCompetitionAtom =
+              .copy(TempFootballCompetitionAtom =
                 Some(
-                  FootballCompetitionAtomBlockElement.fromFootballCompetitionAtom(FootballCompetitionAtom.make(atom)),
+                  TempFootballCompetitionAtomBlockElement.fromTempFootballCompetitionAtom(TempFootballCompetitionAtom.make(atom)),
                 ),
               ),
           ),

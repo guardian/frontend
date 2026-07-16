@@ -85,19 +85,19 @@ object CommonsDivisionAtom {
 // FootballCompetitionAtom
 // ----------------------------------------
 
-final case class FootballCompetitionAtom(
+final case class TempFootballCompetitionAtom(
     override val id: String,
     atom: AtomApiAtom,
-    data: atomapi.footballcompetition.FootballCompetitionAtom,
+    data: atomapi.tempfootballcompetition.TempFootballCompetitionAtom,
 ) extends Atom {
   def competitionId: String = data.competitionId
   def componentType: String = data.componentType.name
 }
 
-object FootballCompetitionAtom {
-  def make(atom: AtomApiAtom): FootballCompetitionAtom = {
-    val footballCompetition = atom.data.asInstanceOf[AtomData.FootballCompetition].footballCompetition
-    FootballCompetitionAtom(atom.id, atom, footballCompetition)
+object TempFootballCompetitionAtom {
+  def make(atom: AtomApiAtom): TempFootballCompetitionAtom = {
+    val footballCompetition = atom.data.asInstanceOf[AtomData.TempFootballCompetition].tempFootballCompetition
+    TempFootballCompetitionAtom(atom.id, atom, footballCompetition)
   }
 }
 
