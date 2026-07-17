@@ -49,7 +49,7 @@ import scala.concurrent.duration._
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
-    new DeeplyReadAgent,
+    new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
     assets = assets,
   )
   val frontPath = "music"
