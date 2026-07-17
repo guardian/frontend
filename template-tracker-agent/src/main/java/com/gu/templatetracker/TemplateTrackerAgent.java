@@ -1,10 +1,5 @@
 package com.gu.templatetracker;
 
-import net.bytebuddy.agent.builder.AgentBuilder;
-import net.bytebuddy.asm.Advice;
-import net.bytebuddy.matcher.ElementMatcher;
-import net.bytebuddy.matcher.ElementMatchers;
-
 import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.util.jar.JarFile;
@@ -22,35 +17,16 @@ import java.util.jar.JarFile;
  * The instrumentation is deliberately small: it inlines a single call at the entry of each
  * template's {@code apply}/{@code render} method, which delegates to {@link TemplateTracker} where a
  * first-seen {@link java.util.Set} membership check makes every render after the first essentially free.
+ * <p>
+ * This class references <strong>no ByteBuddy type</strong> on purpose: it appends its own jar (which
+ * bundles ByteBuddy) to the bootstrap classloader, after which ByteBuddy must be defined solely by the
+ * bootstrap loader. All ByteBuddy wiring therefore lives in {@link TemplateTrackerInstaller}, which is
+ * only referenced <em>after</em> the append - see that class for the full rationale.
  */
 public final class TemplateTrackerAgent {
 
     private TemplateTrackerAgent() {
     }
-
-    // We define a "Twirl template" as: classes under views.html.* that are subtypes of play.twirl.api.Template* (Template0..Template22).
-    private static ElementMatcher TWIRL_TEMPLATE_MATCHER = ElementMatchers.<net.bytebuddy.description.type.TypeDescription>nameStartsWith("views.html.")
-        .and(ElementMatchers.hasSuperType(ElementMatchers.nameStartsWith("play.twirl.api.Template")));
-
-    // This transformer inlines `TemplateTracker.recordRendering` (via RecordTemplateAdvice) at the entry of each template's `apply` and `render` methods.
-    private static AgentBuilder.Transformer RECORD_TEMPLATE_TRANSFORMER = (builder, typeDescription, classLoader, module, protectionDomain) ->
-        builder.visit(
-            Advice.to(RecordTemplateAdvice.class)
-                .on(ElementMatchers.named("apply").or(ElementMatchers.named("render"))));
-
-    // Any type that is an Executor: ThreadPoolExecutor, ForkJoinPool (Scala's default EC), Pekko
-    // dispatchers, the CAPI/WS client pools, etc. Instrumenting `execute(Runnable)` on all of them is
-    // what lets the request context follow a logical request across every async hop.
-    private static ElementMatcher<net.bytebuddy.description.type.TypeDescription> EXECUTOR_MATCHER =
-        ElementMatchers.hasSuperType(ElementMatchers.named("java.util.concurrent.Executor"));
-
-    // Replaces the submitted Runnable with a context-carrying one (see PropagateContextAdvice).
-    private static AgentBuilder.Transformer PROPAGATE_CONTEXT_TRANSFORMER = (builder, typeDescription, classLoader, module, protectionDomain) ->
-        builder.visit(
-            Advice.to(PropagateContextAdvice.class)
-                .on(ElementMatchers.named("execute")
-                    .and(ElementMatchers.takesArguments(1))
-                    .and(ElementMatchers.takesArgument(0, Runnable.class))));
 
     public static void premain(String args, Instrumentation instrumentation) {
         System.out.println(
@@ -62,37 +38,11 @@ public final class TemplateTrackerAgent {
         // referenced guarantees there is exactly one RequestContext (and one ThreadLocal).
         boolean bootstrapReady = appendAgentJarToBootstrap(instrumentation);
 
-        // 1. Record the first render of each Twirl template, tagged with the current request context.
-        //    Independent of the bootstrap append (it only needs TemplateTracker, loaded by the system
-        //    classloader), so we always install it.
-        new AgentBuilder.Default()
-            .type(TWIRL_TEMPLATE_MATCHER)
-            .transform(RECORD_TEMPLATE_TRANSFORMER)
-            .installOn(instrumentation);
-
-        // 2. Propagate the request context across thread hops by instrumenting every Executor.
-        //    RETRANSFORMATION lets us weave already-loaded JDK executors; disableClassFormatChanges
-        //    keeps the transform to method-body inlining only, which retransformation of JDK classes
-        //    allows. `ignore(none())` lifts the default guard that would otherwise skip JDK types.
-        //
-        //    Only install this when the bootstrap append succeeded: the woven advice references
-        //    ContextPropagatingRunnable / RequestContext, so if those classes aren't on the bootstrap
-        //    classloader the JDK executors would throw NoClassDefFoundError on their hottest path. When
-        //    the append failed we simply skip propagation - templates are still recorded, just without
-        //    a request attached once the render crosses a thread boundary.
-        if (bootstrapReady) {
-            new AgentBuilder.Default()
-                .disableClassFormatChanges()
-                .with(AgentBuilder.RedefinitionStrategy.RETRANSFORMATION)
-                .ignore(ElementMatchers.none())
-                .type(EXECUTOR_MATCHER)
-                .transform(PROPAGATE_CONTEXT_TRANSFORMER)
-                .installOn(instrumentation);
-        } else {
-            System.err.println(
-                "{\"marker\":\"TEMPLATE_TRACKER_INIT\",\"message\":\"Skipping executor instrumentation; "
-                    + "cross-thread request-context propagation is disabled\"}");
-        }
+        // Delegate all ByteBuddy work to TemplateTrackerInstaller. This is an ordinary static call, so
+        // it is resolved lazily at execution time - i.e. after the append above - which means the
+        // installer and every ByteBuddy class it references are defined by the bootstrap loader (a
+        // single copy), rather than being loaded by the system loader before the append.
+        TemplateTrackerInstaller.install(instrumentation, bootstrapReady);
     }
 
     /**
