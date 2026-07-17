@@ -1,6 +1,7 @@
 package com.gu.templatetracker;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Wraps a {@link Runnable} so that the request context captured at <em>submit</em> time (on the
@@ -25,6 +26,16 @@ import java.util.Map;
  */
 public final class ContextPropagatingRunnable implements Runnable {
 
+    // DIAGNOSTIC: log the first time we actually capture a context at an executor submit, to confirm
+    // that propagation starts at all (and on which thread). Remove once propagation is verified.
+    private static final AtomicBoolean CAPTURE_LOGGED = new AtomicBoolean(false);
+
+    // DIAGNOSTIC: log the first time execute(Runnable) is intercepted at all - BEFORE the null-context
+    // early return below - so we can tell "execute was never woven/called" (this never prints) apart
+    // from "execute is woven and called, but the context was null on this hop" (this prints with
+    // hasContext=false while CAPTURE_LOGGED stays silent). Remove once propagation is verified.
+    private static final AtomicBoolean INTERCEPT_LOGGED = new AtomicBoolean(false);
+
     private final Runnable delegate;
     private final Map<String, String> capturedContext;
 
@@ -39,12 +50,23 @@ public final class ContextPropagatingRunnable implements Runnable {
      * hot path for the (vast majority of) tasks that have no associated request.
      */
     public static Runnable wrap(Runnable delegate) {
+        if (INTERCEPT_LOGGED.compareAndSet(false, true)) {
+            System.out.println(
+                "{\"marker\":\"TEMPLATE_TRACKER_DEBUG\",\"message\":\"First execute() interception (context may be null)\","
+                    + "\"thread\":\"" + Thread.currentThread().getName() + "\",\"hasContext\":"
+                    + (RequestContext.get() != null) + "}");
+        }
         if (delegate == null || delegate instanceof ContextPropagatingRunnable) {
             return delegate;
         }
         Map<String, String> context = RequestContext.get();
         if (context == null) {
             return delegate;
+        }
+        if (CAPTURE_LOGGED.compareAndSet(false, true)) {
+            System.out.println(
+                "{\"marker\":\"TEMPLATE_TRACKER_DEBUG\",\"message\":\"First context capture at executor submit\","
+                    + "\"thread\":\"" + Thread.currentThread().getName() + "\",\"context\":\"" + context + "\"}");
         }
         return new ContextPropagatingRunnable(delegate, context);
     }

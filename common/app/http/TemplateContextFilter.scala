@@ -83,8 +83,24 @@ object TemplateContextFilter {
       case NonFatal(_) => (None, None)
     }
 
+  // DIAGNOSTIC: confirm at startup whether the agent's RequestContext was found (i.e. the write side
+  // is armed). Remove once propagation is verified.
+  println(
+    s"""{"marker":"TEMPLATE_TRACKER_DEBUG","message":"TemplateContextFilter handles resolved","resolved":${setHandle.isDefined}}""",
+  )
+
+  // DIAGNOSTIC: log the first time we actually set a context on a request thread. Remove later.
+  private val setLogged = new java.util.concurrent.atomic.AtomicBoolean(false)
+
   private def setContext(context: JMap[String, String]): Unit =
     setHandle.foreach { h =>
+      if (setLogged.compareAndSet(false, true)) {
+        println(
+          s"""{"marker":"TEMPLATE_TRACKER_DEBUG","message":"First filter setContext","thread":"${Thread
+              .currentThread()
+              .getName}","context":"$context"}""",
+        )
+      }
       try { h.invokeWithArguments(context); () }
       catch { case NonFatal(_) => () }
     }
