@@ -1,4 +1,4 @@
-@(chart: tools.Chart[java.time.LocalDate])
+@(chart: tools.Chart[java.time.LocalDate])(implicit request: play.api.mvc.RequestHeader)
 
 @* placeholder for chart *@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>

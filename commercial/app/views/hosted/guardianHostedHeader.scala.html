@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedPage
-@(pageCssClass: String, page: HostedPage, isAMP: Boolean = false)
+@(pageCssClass: String, page: HostedPage, isAMP: Boolean = false)(implicit request: play.api.mvc.RequestHeader)
 
 <div class="hosted__header @pageCssClass">
     <div class="hosted__headerwrap js-hosted-headerwrap">

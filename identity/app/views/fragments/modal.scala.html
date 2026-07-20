@@ -1,7 +1,7 @@
 @(
     name: String,
     contents: Html
-)
+)(implicit request: play.api.mvc.RequestHeader)
 
 <div id="identity-modal--@name" class="identity-modal identity-modal--@name" role="dialog">
     <div class="identity-modal__wrap">

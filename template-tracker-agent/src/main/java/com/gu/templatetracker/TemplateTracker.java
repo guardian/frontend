@@ -208,8 +208,8 @@ public final class TemplateTracker {
      *
      * <p>This mirrors what {@code common.RequestLogger} does in Scala:
      * <pre>request.attrs.get(Router.Attrs.HandlerDef).map(h =&gt; h.controller + "." + h.method)</pre>
-     * but everything is done reflectively, and the Play types are resolved via the request object's
-     * own (child) classloader.
+     * but everything is done reflectively, as the Play types aren't available in this local class loader.
+     * This is because the agent classes are loaded before the application in a parent classloader.
      */
     private static String deduceController(Object request) {
         if (request == null) {

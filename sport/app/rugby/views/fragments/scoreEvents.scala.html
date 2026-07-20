@@ -1,7 +1,7 @@
 @import rugby.model.ScoreEvent
 @import rugby.model.ScoreType
 
-@(theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])
+@(theMatch: rugby.model.Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: play.api.mvc.RequestHeader)
 
 @scoreTypeEvents(scoreType: ScoreType.Value) = {
     <tr>

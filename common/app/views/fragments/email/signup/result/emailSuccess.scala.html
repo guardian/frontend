@@ -3,7 +3,7 @@
     successDescription: Option[String],
     name: String,
     frequency: String
-)
+)(implicit request: play.api.mvc.RequestHeader)
 
 @headlineText = @{
     if (emailConfirmation == true) "Check your email inbox and confirm your subscription" else "Subscription confirmed"

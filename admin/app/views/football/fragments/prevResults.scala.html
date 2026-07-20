@@ -1,4 +1,4 @@
-@(teamResults: List[_root_.football.model.PrevResult])
+@(teamResults: List[_root_.football.model.PrevResult])(implicit request: play.api.mvc.RequestHeader)
 
 @teamResults.filter(_.hasResult).take(5).map { result =>
   @if(result.won) {

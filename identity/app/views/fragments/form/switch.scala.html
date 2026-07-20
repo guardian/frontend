@@ -12,7 +12,7 @@
     skin: Option[String] = None,
     boldTitle: Boolean = true,
     newsletterIdentityName: Option[String] = None
-)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
+)(implicit request: play.api.mvc.RequestHeader, handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 
 @classes = @{

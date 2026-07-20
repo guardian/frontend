@@ -1,7 +1,7 @@
 @import rugby.model.{GroupTable, Match}
 @import views.support.RenderClasses
 
-@(theMatch: Match, group: Option[GroupTable])
+@(theMatch: Match, group: Option[GroupTable])(implicit request: play.api.mvc.RequestHeader)
 
 @if(group.isDefined) {
 <div data-component="football-table-embed" class="c-football-table table--hide-from-importance-1">

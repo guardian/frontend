@@ -1,4 +1,4 @@
-@(isFlow: Boolean)(topFragments: Html*)(contentFragments: Html*)(bottomFragments: Html*)
+@(isFlow: Boolean)(topFragments: Html*)(contentFragments: Html*)(bottomFragments: Html*)(implicit request: play.api.mvc.RequestHeader)
 
 <div class="@views.support.RenderClasses(Map(
     ("identity-wrapper-page-flex", true),

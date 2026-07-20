@@ -1,4 +1,4 @@
-@(stylesheet: String, forceSyncCss: Boolean = false)
+@(stylesheet: String, forceSyncCss: Boolean = false)(implicit request: play.api.mvc.RequestHeader)
 
 @import conf.switches.Switches._
 @import conf.Static

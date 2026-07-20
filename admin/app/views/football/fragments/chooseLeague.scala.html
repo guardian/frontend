@@ -1,4 +1,4 @@
-@(fieldName: String, leagues: List[pa.Season], withEmptyValue: Boolean = false)
+@(fieldName: String, leagues: List[pa.Season], withEmptyValue: Boolean = false)(implicit request: play.api.mvc.RequestHeader)
 @import _root_.football.model.PA.competitionName
 
 <select name="@fieldName" id="id-@fieldName" class="form-control" data-placeholder="Choose league">

@@ -1,4 +1,4 @@
-@(classes: Seq[String])(contents: Html)
+@(classes: Seq[String])(contents: Html)(implicit request: play.api.mvc.RequestHeader)
 
 <tr valign="top">
     <td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td>

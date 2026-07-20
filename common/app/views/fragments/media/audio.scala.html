@@ -1,4 +1,4 @@
-@(player: model.AudioPlayer, isAdFree: Boolean)
+@(player: model.AudioPlayer, isAdFree: Boolean)(implicit request: play.api.mvc.RequestHeader)
 
 @trackingCode(target: String) = {@if(player.audio.tags.isPodcast){podcast:subscribe:}@target:@player.title}
 

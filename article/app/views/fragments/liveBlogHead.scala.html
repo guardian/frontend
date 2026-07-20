@@ -1,4 +1,4 @@
-@(next: Option[String], prev: Option[String], organisation: Html, posting: Html)
+@(next: Option[String], prev: Option[String], organisation: Html, posting: Html)(implicit request: play.api.mvc.RequestHeader)
 
 @next.map { n =>
     <link rel="next" href="@n">

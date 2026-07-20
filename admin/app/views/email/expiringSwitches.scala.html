@@ -1,7 +1,7 @@
 @import conf.switches.Switch
 @import _root_.jobs.ExpiringSwitches
 
-@(switches: Seq[Switch])
+@(switches: Seq[Switch])(implicit request: play.api.mvc.RequestHeader)
 
 @showSwitch(switch: conf.switches.Switch, showExpirationDate: Boolean) = {
     <li style="padding-bottom: 6px">

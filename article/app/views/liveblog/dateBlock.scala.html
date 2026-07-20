@@ -1,6 +1,6 @@
 @import model.liveblog.LiveBlogDate
 
-@(date: Option[LiveBlogDate], showDate: Boolean = true, showTimestamp: Boolean = true, isPinned: Boolean = false)
+@(date: Option[LiveBlogDate], showDate: Boolean = true, showTimestamp: Boolean = true, isPinned: Boolean = false)(implicit request: play.api.mvc.RequestHeader)
     @date.map { date =>
         @if(showDate) {
             <time datetime="@date.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@date.ampm <span class="timezone">@date.gmt</span></time>

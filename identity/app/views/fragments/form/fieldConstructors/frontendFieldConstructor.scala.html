@@ -1,4 +1,4 @@
-@(elements: views.html.helper.FieldElements)
+@(elements: views.html.helper.FieldElements)(implicit request: play.api.mvc.RequestHeader)
 
 @elements.args.toMap.get(Symbol("type"))
 

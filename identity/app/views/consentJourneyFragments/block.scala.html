@@ -5,7 +5,7 @@
     block: ConsentBlock,
     isFirst: Boolean = false,
     isLast: Boolean = false
-)
+)(implicit request: play.api.mvc.RequestHeader)
 
 @showAgeStep(display: Boolean = false) = @{
     if(display){

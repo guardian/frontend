@@ -1,4 +1,4 @@
-@(fragments: Html*)
+@(fragments: Html*)(implicit request: play.api.mvc.RequestHeader)
 
 @for(f <- fragments){
     @f

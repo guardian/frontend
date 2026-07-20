@@ -2,7 +2,7 @@
 @import views.{NudgePercent, PercentMaker}
 @import views.support.RenderClasses
 
-@(theMatch: Match, matchStat: Option[MatchStat])
+@(theMatch: Match, matchStat: Option[MatchStat])(implicit request: play.api.mvc.RequestHeader)
 
 @if(matchStat.isDefined) {
 

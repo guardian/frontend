@@ -1,4 +1,4 @@
-@(mainPicture: String, ctaImage: Option[String], brandColour: String)
+@(mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: play.api.mvc.RequestHeader)
 
 .hosted-tone {
     color: @brandColour;

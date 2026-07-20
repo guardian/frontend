@@ -1,4 +1,4 @@
-@(dfpNetworkId: String, adUnitName: String, passbackTarget: String, width: Int, height: Int)
+@(dfpNetworkId: String, adUnitName: String, passbackTarget: String, width: Int, height: Int)(implicit request: play.api.mvc.RequestHeader)
 
 <head>
   <title>Passback for '@adUnitName' Size: [[@width,@height]]</title>

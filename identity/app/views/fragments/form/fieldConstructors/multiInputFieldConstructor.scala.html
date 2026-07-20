@@ -1,4 +1,4 @@
-@(elements: views.html.helper.FieldElements)
+@(elements: views.html.helper.FieldElements)(implicit request: play.api.mvc.RequestHeader)
 
 <div class="form-field @if(elements.errors.nonEmpty) {form-field--error}">
     @if(elements.infos.nonEmpty) {

@@ -3,7 +3,7 @@
 @import views.html.hosted._
 @import common.commercial.hosted.HostedGalleryPage
 
-@(picture: model.ImageMedia, image: HostedGalleryImage, index: Int, page: HostedGalleryPage)
+@(picture: model.ImageMedia, image: HostedGalleryImage, index: Int, page: HostedGalleryPage)(implicit request: play.api.mvc.RequestHeader)
 
 @picture.largestImage.map { largestImage =>
     <amp-img src="@ImgSrc.getAmpImageUrl(picture)"

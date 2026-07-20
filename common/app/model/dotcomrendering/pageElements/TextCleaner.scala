@@ -10,6 +10,14 @@ import views.support.{AffiliateLinksCleaner, HtmlCleaner}
 import scala.jdk.CollectionConverters._
 import scala.util.matching.Regex
 
+/** A minimal cleaner contract for the DCR gallery-caption model path. These cleaners run while building the
+  * dotcom-rendering JSON model, which is NOT a request context, and they do not render any Twirl templates, so they
+  * must not depend on a RequestHeader.
+  */
+private[pageElements] trait GalleryCaptionHtmlCleaner {
+  def clean(d: Document): Document
+}
+
 object TextCleaner {
 
   def affiliateLinks(

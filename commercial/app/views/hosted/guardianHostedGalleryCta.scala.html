@@ -1,4 +1,4 @@
-@(ctaText: Option[String], ctaLink: String, buttonText: Option[String])
+@(ctaText: Option[String], ctaLink: String, buttonText: Option[String])(implicit request: play.api.mvc.RequestHeader)
     <div class="hosted-gallery__cta js-hosted-gallery-cta">
         <div class="hosted-gallery__cta-title">
             @{ctaText}

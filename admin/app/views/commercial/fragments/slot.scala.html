@@ -1,5 +1,5 @@
 @import common.dfp.LineItemReport
-@(slotReport: LineItemReport)
+@(slotReport: LineItemReport)(implicit request: play.api.mvc.RequestHeader)
 @import _root_.gam.printUniversalTime
 @import common.dfp.GuLineItem
 @import tools.DfpLink

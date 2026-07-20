@@ -1,4 +1,4 @@
-@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil)
+@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil)(implicit request: play.api.mvc.RequestHeader)
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }

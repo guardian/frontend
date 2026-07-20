@@ -1,4 +1,4 @@
-@(fieldName: String, teams: List[pa.Team])
+@(fieldName: String, teams: List[pa.Team])(implicit request: play.api.mvc.RequestHeader)
 <div class="form-group">
     <select name="@fieldName" id="id-@fieldName" class="form-control form-control--team foot-autocomplete" data-placeholder="Choose team">
         <option value="">Choose team</option>
