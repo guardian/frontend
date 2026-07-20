@@ -17,8 +17,10 @@ public final class RecordTemplateAdvice {
     }
 
     @Advice.OnMethodEnter
-    public static void onEnter(@Advice.Origin("#t") String templateClassName) {
-        TemplateTracker.recordRendering(templateClassName);
+    public static void onEnter(
+        @Advice.Origin("#t") String templateClassName,
+        @Advice.AllArguments Object[] args) {
+        TemplateTracker.recordRendering(templateClassName, args);
     }
 }
 
