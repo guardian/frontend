@@ -67,6 +67,12 @@ public final class TemplateTracker {
      */
     private static final Set<String> ALLOWED_METHODS = Set.of("GET", "POST", "PUT");
 
+    /**
+     * controller value used when no RequestHeader argument was passed to the template, or when the
+     * request carries no routing {@code HandlerDef} (e.g. templates rendered outside a routed request).
+     */
+    private static final String CONTROLLER_UNKNOWN = "unknown";
+
     public static void recordRendering(String rawClassName, Object[] args) {
         String template = normalise(rawClassName);
 
@@ -75,9 +81,10 @@ public final class TemplateTracker {
         Object request = findRequestHeader(args);
         String dcr = deduceDcr(request);
         String method = deduceMethod(request);
+        String controller = deduceController(request);
 
-        // De-duplicate on the (template, dcr, method) triple so we capture each distinct combination once
-        String dedupeKey = template + "|" + dcr + "|" + method;
+        // De-duplicate on the (template, dcr, method, controller) tuple so we capture each distinct combination once
+        String dedupeKey = template + "|" + dcr + "|" + method + "|" + controller;
 
         // After the first sighting of a combination, `add` returns false and we do nothing further -
         // so the hot path for high-traffic templates is a single concurrent-set membership check: cheap and fast
@@ -88,6 +95,7 @@ public final class TemplateTracker {
                     "\"template\":\"" + template + "\", " +
                     "\"dcr\":\"" + dcr + "\", " +
                     "\"method\":\"" + method + "\", " +
+                    "\"controller\":\"" + controller + "\", " +
                     "\"timestamp\":\"" + formatter.format(ZonedDateTime.now()) + "\"" +
                     "}");
             } catch (IOException e) {
@@ -189,6 +197,53 @@ public final class TemplateTracker {
             return ALLOWED_METHODS.contains(raw) ? raw : METHOD_OTHER;
         } catch (ReflectiveOperationException | RuntimeException e) {
             return METHOD_UNKNOWN;
+        }
+    }
+
+    /**
+     * The fully-qualified controller action that handled the request - i.e. the routing
+     * {@code HandlerDef}'s controller class name plus its action method, e.g.
+     * {@code controllers.Application.index}. Returns {@code "unknown"} when there is no RequestHeader
+     * argument, no {@code HandlerDef} on the request, or reflection unexpectedly fails.
+     *
+     * <p>This mirrors what {@code common.RequestLogger} does in Scala:
+     * <pre>request.attrs.get(Router.Attrs.HandlerDef).map(h =&gt; h.controller + "." + h.method)</pre>
+     * but everything is done reflectively, and the Play types are resolved via the request object's
+     * own (child) classloader.
+     */
+    private static String deduceController(Object request) {
+        if (request == null) {
+            return CONTROLLER_UNKNOWN;
+        }
+        try {
+            ClassLoader cl = request.getClass().getClassLoader();
+
+            // The routing info lives under the HandlerDef key: play.api.routing.Router.Attrs.HandlerDef
+            // (`Router$Attrs$` is the compiled name of the `Router.Attrs` Scala object).
+            Class<?> attrsHolder = Class.forName("play.api.routing.Router$Attrs$", false, cl);
+            Object attrsModule = attrsHolder.getField("MODULE$").get(null);
+            Object handlerDefKey = attrsHolder.getMethod("HandlerDef").invoke(attrsModule);
+
+            // scala.Option<HandlerDef> TypedMap.get(TypedKey<HandlerDef> key)
+            Object typedMap = request.getClass().getMethod("attrs").invoke(request);
+            Class<?> typedKeyClass = Class.forName("play.api.libs.typedmap.TypedKey", false, cl);
+            Object option = typedMap.getClass()
+                .getMethod("get", typedKeyClass)
+                .invoke(typedMap, handlerDefKey);
+            if (option == null) {
+                return CONTROLLER_UNKNOWN;
+            }
+            boolean empty = (boolean) option.getClass().getMethod("isEmpty").invoke(option);
+            if (empty) {
+                return CONTROLLER_UNKNOWN;
+            }
+
+            Object handlerDef = option.getClass().getMethod("get").invoke(option);
+            Object controller = handlerDef.getClass().getMethod("controller").invoke(handlerDef);
+            Object action = handlerDef.getClass().getMethod("method").invoke(handlerDef);
+            return controller + "." + action;
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            return CONTROLLER_UNKNOWN;
         }
     }
 
