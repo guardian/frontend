@@ -425,7 +425,9 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
       // Spike: we assume atom snaps carry an embedType matching the atom type
       // name. enrichAtom itself is defensive and picks whichever atom the CAPI
       // response actually contains, so this dispatch can be adjusted cheaply.
-      case Some("guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta" | "tempfootballcompetition") =>
+      case Some(
+            "guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta" | "tempfootballcompetition",
+          ) =>
         Enrichment.enrichAtom(content.properties.atomId, beforeEnrichment, collection, capiClient)
       case _ => Future.successful(beforeEnrichment)
     }
@@ -700,7 +702,8 @@ object Enrichment extends GuLogging {
             beforeEnrichment
               .copy(TempFootballCompetitionAtom =
                 Some(
-                  TempFootballCompetitionAtomBlockElement.fromTempFootballCompetitionAtom(TempFootballCompetitionAtom.make(atom)),
+                  TempFootballCompetitionAtomBlockElement
+                    .fromTempFootballCompetitionAtom(TempFootballCompetitionAtom.make(atom)),
                 ),
               ),
           ),
