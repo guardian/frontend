@@ -36,8 +36,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
     def xml(): Elem = {
       <url>
         <loc>{location}</loc>
-        <lastmod>
-          {lastModified.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</lastmod>
+        <lastmod>{lastModified.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</lastmod>
         <video:video>
           {thumbnail_loc.map(thumbnail => <video:thumbnail_loc>{thumbnail}</video:thumbnail_loc>).getOrElse(Nil)}
           <video:title>{title}</video:title>

@@ -11,14 +11,23 @@ import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
+import scala.util.Try
+import java.time.ZonedDateTime
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
 
 object PaFeed {
   val dateFormat = Chronos.dateFormatter("yyyy-MM-dd", ZoneId.of("UTC"))
+
+  val dateWindowMonths = 2
 }
 
-case class CompetitionMatch(matchId: String, competitionId: String, competitionName: String)
+case class CompetitionMatch(
+    matchId: String,
+    competitionId: String,
+    competitionName: String,
+    startDateTime: ZonedDateTime,
+)
 
 class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materializer: Materializer) extends GuLogging {
 
@@ -103,10 +112,14 @@ class PaFeed(wsClient: WSClient, pekkoActorSystem: PekkoActorSystem, materialize
 
                     // Iterate over the matches within this competition
                     (comp \ "match").map { m =>
+                      val matchId = (m \ "@id").text
+                      // The PA API returns the match start time in UTC, so we parse it as a ZonedDateTime in UTC.
+                      val startDateTime = Parser.ZonedDate((m \ "dateTime").text)
                       CompetitionMatch(
-                        matchId = (m \ "@id").text,
+                        matchId = matchId,
                         competitionId = compId,
                         competitionName = compName,
+                        startDateTime = startDateTime,
                       )
                     }
                   }

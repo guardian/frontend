@@ -31,6 +31,7 @@ class SportTestSuite
       new LeagueTablesFeatureTest,
       new MatchFeatureTest,
       new FixturesAndResultsTest,
+      new CricketStatsJobTest,
     )
     with SingleServerSuite {}
 

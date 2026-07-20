@@ -10,7 +10,6 @@ import model.{ContentFormat, ContentPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
-import experiments.ActiveExperiments
 import ab.ABTests
 
 // -----------------------------------------------------------------
@@ -30,7 +29,6 @@ case class DotcomBlocksRenderingDataModel(
     sharedAdTargeting: Map[String, AdTargetParamValue],
     adUnit: String,
     switches: Map[String, Boolean],
-    abTests: Map[String, String],
     serverSideABTests: Map[String, String],
 )
 
@@ -53,7 +51,6 @@ object DotcomBlocksRenderingDataModel {
         "sharedAdTargeting" -> Json.toJson(model.sharedAdTargeting),
         "adUnit" -> model.adUnit,
         "switches" -> model.switches,
-        "abTests" -> model.abTests,
         "serverSideABTests" -> model.serverSideABTests,
       )
 
@@ -117,7 +114,6 @@ object DotcomBlocksRenderingDataModel {
         content.metadata.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty).map(f => (f.name, f.value)).toMap,
       adUnit = content.metadata.adUnitSuffix,
       switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
       serverSideABTests = ABTests.getParticipations(request),
     )
   }

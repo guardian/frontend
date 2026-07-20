@@ -1,10 +1,8 @@
 package controllers
 
 import play.api.libs.json.Json
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import views.support.CamelCase
-import experiments.ActiveExperiments
-import experiments.ActiveExperiments._
 
 /*
   Nx1Config (project name) was introduced to provide the client-side with metadata in places where the
@@ -21,16 +19,6 @@ import experiments.ActiveExperiments._
   If an object needs to be modified in a non backward compatible way, then also create a new route and let the clients know.
  */
 
-object Nx1Config {
-  def makeAbTestReport(implicit request: RequestHeader) = {
-    ActiveExperiments.allExperiments
-      .filter(e => isParticipating(e) || isControl(e))
-      .toSeq
-      .map { e => (e.name, e.value) }
-      .toMap
-  }
-}
-
 class Nx1ConfigController(val controllerComponents: ControllerComponents) extends BaseController {
   def switches: Action[AnyContent] =
     Action { implicit request =>
@@ -43,8 +31,7 @@ class Nx1ConfigController(val controllerComponents: ControllerComponents) extend
     }
 
   def tests: Action[AnyContent] =
-    Action { implicit request =>
-      val abTests = Nx1Config.makeAbTestReport(request)
-      Ok(Json.toJson(abTests))
+    Action {
+      Ok(Json.toJson(Map.empty[String, String]))
     }
 }

@@ -48,7 +48,7 @@ class ImageDecacheController(
           decacheRequest
             .map(_.status)
             .map {
-              case NOT_FOUND =>
+              case NOT_FOUND | UNAUTHORIZED =>
                 Ok(
                   views.html.cache.imageDecache(
                     messageType = Cleared,

@@ -30,6 +30,7 @@ import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
 
 import java.net.URLEncoder
+import model.Tags
 
 sealed trait DotcomRenderingMatchType
 
@@ -67,18 +68,21 @@ trait DCARUrlHelper {
 
 object DotcomRenderingUtils extends DCARUrlHelper {
   def makeMatchData(articlePage: ContentPage, pageType: PageType): Option[DotcomRenderingMatchData] = {
-    makeFootballMatch(articlePage, pageType).orElse(makeCricketMatch(articlePage))
+    makeFootballMatch(articlePage, pageType).orElse(makeCricketMatch(articlePage.item))
   }
 
-  def makeCricketMatch(articlePage: ContentPage): Option[DotcomRenderingMatchData] = {
-    val cricketDate = articlePage.item.content.cricketMatchDate
-    val cricketTeam = articlePage.item.content.cricketTeam
+  def hasExactlyTwoTeams(tags: Tags): Boolean = tags.tags.count(tag => {
+    tag.id.endsWith("-cricket-team") || tag.id.endsWith("cricketteam")
+  }) == 2
 
-    (cricketDate, cricketTeam) match {
-      case (Some(date), Some(team)) =>
+  def makeCricketMatch(item: ContentType): Option[DotcomRenderingMatchData] = {
+    val date = item.content.cricketMatchDate
+    val team = item.content.cricketTeam
+    (date, team, hasExactlyTwoTeams(item.content.tags)) match {
+      case (Some(date), Some(team), true) =>
         Some(
           DotcomRenderingMatchData(
-            matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/${team}.json",
+            matchUrl = s"${Configuration.ajax.url}/sport/cricket/match-scoreboard/$date/$team.json",
             matchHeaderUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-header/$date/$team.json"),
             matchStatsUrl = Some(s"${Configuration.ajax.url}/sport/cricket/match-stats-summary/$date/$team.json"),
             matchType = CricketMatchType,

@@ -34,8 +34,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
     def xml(): Elem = {
       <url>
         <loc>{location}</loc>
-        <lastmod>
-          {lastModified.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</lastmod>
+        <lastmod>{lastModified.withZone(DateTimeZone.UTC).toISODateTimeNoMillisString}</lastmod>
         <image:image>
           <image:loc>{imageUrl}</image:loc>
         </image:image>

@@ -7,6 +7,17 @@ import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
+  val ContentPresser = Switch(
+    SwitchGroup.Feature,
+    "content-presser",
+    "Enables routes for pressing and cleaning articles and interactives.",
+    owners = Seq(Owner.withName("unknown")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = false,
+  )
+
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",

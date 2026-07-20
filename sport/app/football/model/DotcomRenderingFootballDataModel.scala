@@ -66,7 +66,11 @@ private object DotcomRenderingFootballDataModelImplicits {
 
   implicit val atomFormat: Writes[InteractiveAtom] = Json.writes[InteractiveAtom]
 
-  private implicit val matchDayTeamFormat: Writes[MatchDayTeam] = Json.writes[MatchDayTeam]
+  private implicit val matchDayTeamFormat: Writes[MatchDayTeam] = Writes { matchDayTeam =>
+    withoutNull(
+      Json.writes[MatchDayTeam].writes(matchDayTeam).as[JsObject] + ("teamUrl" -> Json.toJson(TeamUrl(matchDayTeam))),
+    )
+  }
 
   // Writes for Fixture with a type discriminator
   private implicit val fixtureWrites: Writes[Fixture] = Writes { fixture =>
