@@ -1,11 +1,12 @@
 package model.hosted
 
 import org.jsoup.Jsoup
+import play.api.mvc.RequestHeader
 import views.html.fragments.inlineSvg
 
 object HostedArticleQuotes {
 
-  def prepareQuotes(html: String): String = {
+  def prepareQuotes(html: String)(implicit request: RequestHeader): String = {
 
     val doc = Jsoup.parseBodyFragment(html)
 

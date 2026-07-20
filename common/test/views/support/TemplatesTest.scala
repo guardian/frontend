@@ -22,6 +22,7 @@ import scala.jdk.CollectionConverters._
 import scala.xml.XML
 
 class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
+  val fakeRequest = FakeRequest("test", "/test")
 
   "RemoveOuterPara" should "remove outer paragraph tags" in {
     RemoveOuterParaHtml(" <P> foo <b>bar</b> </p> ").body should be("foo <b>bar</b>")
@@ -144,8 +145,7 @@ class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   "BlockCleaner" should "insert block ids in minute by minute content" in {
-
-    val body = withJsoup(bodyWithBlocks)(BlockNumberCleaner).body.trim
+    val body = withJsoup(bodyWithBlocks)(BlockNumberCleaner)(fakeRequest).body.trim
 
     body should include("""<span id="block-14">some heading</span>""")
     body should include("""<p id="block-1">some more text</p>""")
@@ -156,27 +156,27 @@ class TemplatesTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   "DropCap" should "add the dropcap span to the first letter of the first paragraph" in {
-    val body = withJsoup(bodyWithoutInlines)(DropCaps(true, false)).body.trim
+    val body = withJsoup(bodyWithoutInlines)(DropCaps(true, false))(fakeRequest).body.trim
     body should include("""<span class="drop-cap__inner">""")
   }
 
   it should "not add the dropcap span when the paragraph does not begin with a letter" in {
-    val body = withJsoup(bodyWithMarkup)(DropCaps(true, false)).body.trim
+    val body = withJsoup(bodyWithMarkup)(DropCaps(true, false))(fakeRequest).body.trim
     body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when first body element is not a paragraph" in {
-    val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true, false)).body.trim
+    val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true, false))(fakeRequest).body.trim
     body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when when the article is not a feature" in {
-    val body = withJsoup(bodyWithoutInlines)(DropCaps(false, false)).body.trim
+    val body = withJsoup(bodyWithoutInlines)(DropCaps(false, false))(fakeRequest).body.trim
     body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "add the dropcap span when the paragraph begins with a double quote mark" in {
-    val body = withJsoup(bodyStartsWithDoubleQuote)(DropCaps(true, false)).body.trim
+    val body = withJsoup(bodyStartsWithDoubleQuote)(DropCaps(true, false))(fakeRequest).body.trim
     body should include("""<span class="drop-cap__inner">“S</span>""")
   }
 

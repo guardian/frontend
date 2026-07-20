@@ -18,7 +18,7 @@ class PreviewErrorHandler(
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     exception match {
       case ContentApiError(statusCode, statusMessage, _) if statusCode == 404 =>
-        Future.successful(NotFound(views.html.not_found(request.path)))
+        Future.successful(NotFound(views.html.not_found(request.path)(request)))
       case _ =>
         super.onServerError(request, exception)
     }

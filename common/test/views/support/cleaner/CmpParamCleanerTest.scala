@@ -4,6 +4,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.test.FakeRequest
 
 class CmpParamCleanerTest extends AnyFlatSpec with Matchers {
 
@@ -11,7 +12,7 @@ class CmpParamCleanerTest extends AnyFlatSpec with Matchers {
     val doc =
       """<html><body><figure><iframe src="https://guardiannewsampampmedia.formstack.com/form" /></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
-    val result: Document = CmpParamCleaner.clean(document)
+    val result: Document = CmpParamCleaner.clean(document)(FakeRequest("test", "/test"))
 
     result.getElementsByClass("element-pass-cmp") should not be empty
 
@@ -21,7 +22,7 @@ class CmpParamCleanerTest extends AnyFlatSpec with Matchers {
     val doc =
       """<html><body><figure><iframe src="https://profile.theguardian.com/form/embed/blahyblah" /></figure></body></html>"""
     val document: Document = Jsoup.parse(doc)
-    val result: Document = CmpParamCleaner.clean(document)
+    val result: Document = CmpParamCleaner.clean(document)(FakeRequest("test", "/test"))
 
     result.getElementsByClass("element-pass-cmp") should not be empty
 

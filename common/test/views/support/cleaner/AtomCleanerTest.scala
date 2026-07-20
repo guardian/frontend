@@ -10,6 +10,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.test.FakeRequest
 import test.{TestRequest, WithTestApplicationContext}
 import views.support.AtomsCleaner
 
@@ -83,7 +84,7 @@ class AtomCleanerTest extends AnyFlatSpec with Matchers with WithTestApplication
 
   private def clean(document: Document): Document = {
     val cleaner = AtomsCleaner(youTubeAtom)(TestRequest(), testApplicationContext)
-    cleaner.clean(document)
+    cleaner.clean(document)(FakeRequest("test", "/test"))
     document
   }
 

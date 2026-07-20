@@ -4,6 +4,7 @@ import java.net.{URI, URLEncoder}
 
 import model.{Article, DotcomContentType, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
+import play.api.mvc.RequestHeader
 import views.support.{HtmlCleaner, Item640}
 
 import scala.jdk.CollectionConverters._
@@ -15,7 +16,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
   val facebookVideoEmbedUrl = "https://www.facebook.com/v2.3/plugins/video.php?href="
   def facebookVideoEmbedUrlFor(url: String): String = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
 
-  def addShareButtons(document: Document): Unit = {
+  def addShareButtons(document: Document)(implicit request: RequestHeader): Unit = {
     document
       .getElementsByClass("element-video")
       .asScala
@@ -48,7 +49,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
       })
   }
 
-  def cleanVideo(document: Document): Unit = {
+  def cleanVideo(document: Document)(implicit request: RequestHeader): Unit = {
     if (!article.isLiveBlog) {
       addShareButtons(document)
     }
@@ -108,7 +109,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
     }
   }
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     document
       .getElementsByClass("element-video")
       .asScala
