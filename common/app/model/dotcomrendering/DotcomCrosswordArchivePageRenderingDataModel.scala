@@ -4,7 +4,6 @@ import ab.ABTests
 import common.{CanonicalLink, Edition}
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import experiments.ActiveExperiments
 import model.SimplePage
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json._
@@ -72,7 +71,6 @@ object DotcomCrosswordArchivePageRenderingDataModel {
 
     val config = Config(
       switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
       serverSideABTests = ABTests.getParticipations(request),
       ampIframeUrl = DotcomRenderingUtils.assetURL("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
