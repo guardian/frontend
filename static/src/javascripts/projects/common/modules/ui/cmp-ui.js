@@ -18,7 +18,7 @@ export const addPrivacySettingsLink = () => {
 			newPrivacyLink.dataset.linkName = 'privacy-settings';
 			newPrivacyLink.removeAttribute('href');
 			newPrivacyLink.innerText = getPrivacyFramework().usnat
-				? 'California resident – Do Not Sell'
+				? 'US resident - Do Not Sell or Share'
 				: 'Privacy settings';
 
 			const newPrivacyLinkListItem = privacyLinkListItem.cloneNode(false);
