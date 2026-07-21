@@ -183,6 +183,13 @@ class EmailSignupController(
     initCause(cause)
   }
 
+  private val EmailSignupErrorCodeHeader = "Email-Signup-Error-Code"
+  private val MissingRecaptchaTokenErrorCode = "missing-recaptcha-token"
+  private val InvalidRecaptchaTokenErrorCode = "invalid-recaptcha-token"
+  private val RecaptchaUnavailableErrorCode = "recaptcha-unavailable"
+  private val UpstreamBadResponseErrorCode = "upstream-bad-response"
+  private val UpstreamUnavailableErrorCode = "upstream-unavailable"
+
   private def requestLogContext(implicit request: Request[AnyContent]): String =
     s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
       s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
@@ -444,24 +451,30 @@ class EmailSignupController(
             } yield {
               result
             }) recover {
-              case MissingCaptchaTokenException => respondError(BadRequest("Missing reCAPTCHA token"), isFooter = true)
-              case InvalidCaptchaTokenException => respondError(BadRequest("Invalid reCAPTCHA token"), isFooter = true)
+              case MissingCaptchaTokenException =>
+                respondError(BadRequest("Missing reCAPTCHA token"), MissingRecaptchaTokenErrorCode, isFooter = true)
+              case InvalidCaptchaTokenException =>
+                respondError(BadRequest("Invalid reCAPTCHA token"), InvalidRecaptchaTokenErrorCode, isFooter = true)
               case _: CaptchaVerificationUnavailableException =>
-                respondError(ServiceUnavailable("reCAPTCHA verification unavailable"), isFooter = true)
+                respondError(
+                  ServiceUnavailable("reCAPTCHA verification unavailable"),
+                  RecaptchaUnavailableErrorCode,
+                  isFooter = true,
+                )
             }
           },
         )
     }
 
-  private def respondError(jsonResult: Result, isFooter: Boolean = false)(implicit
+  private def respondError(jsonResult: Result, errorCode: String, isFooter: Boolean = false)(implicit
       request: Request[AnyContent],
   ): Result =
     render {
       case Accepts.Html() =>
-        if (isFooter) SeeOther(LinkTo(s"/email/error/footer"))
-        else SeeOther(LinkTo(s"/email/error"))
+        if (isFooter) SeeOther(LinkTo(s"/email/error/footer")).withHeaders(EmailSignupErrorCodeHeader -> errorCode)
+        else SeeOther(LinkTo(s"/email/error")).withHeaders(EmailSignupErrorCodeHeader -> errorCode)
       case Accepts.Json() =>
-        Cors(NoCache(jsonResult))
+        Cors(NoCache(jsonResult)).withHeaders(EmailSignupErrorCodeHeader -> errorCode)
       case _ =>
         NotAccepted.increment()
         NotAcceptable
@@ -501,7 +514,11 @@ class EmailSignupController(
         case status =>
           logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
           APIHTTPError.increment()
-          respondError(BadGateway("Email subscription service returned an unexpected response"), isFooter = true)
+          respondError(
+            BadGateway("Email subscription service returned an unexpected response"),
+            UpstreamBadResponseErrorCode,
+            isFooter = true,
+          )
 
       }) recover {
       case _: IllegalAccessException =>
@@ -509,7 +526,11 @@ class EmailSignupController(
       case e: Exception =>
         logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
-        respondError(ServiceUnavailable("Email subscription service unavailable"), isFooter = true)
+        respondError(
+          ServiceUnavailable("Email subscription service unavailable"),
+          UpstreamUnavailableErrorCode,
+          isFooter = true,
+        )
     }
   }
 
@@ -580,10 +601,12 @@ class EmailSignupController(
               } yield {
                 result
               }) recover {
-                case MissingCaptchaTokenException               => respondError(BadRequest("Missing reCAPTCHA token"))
-                case InvalidCaptchaTokenException               => respondError(BadRequest("Invalid reCAPTCHA token"))
+                case MissingCaptchaTokenException =>
+                  respondError(BadRequest("Missing reCAPTCHA token"), MissingRecaptchaTokenErrorCode)
+                case InvalidCaptchaTokenException =>
+                  respondError(BadRequest("Invalid reCAPTCHA token"), InvalidRecaptchaTokenErrorCode)
                 case _: CaptchaVerificationUnavailableException =>
-                  respondError(ServiceUnavailable("reCAPTCHA verification unavailable"))
+                  respondError(ServiceUnavailable("reCAPTCHA verification unavailable"), RecaptchaUnavailableErrorCode)
               }
             }
           },
@@ -621,10 +644,12 @@ class EmailSignupController(
             } yield {
               result
             }) recover {
-              case MissingCaptchaTokenException               => respondError(BadRequest("Missing reCAPTCHA token"))
-              case InvalidCaptchaTokenException               => respondError(BadRequest("Invalid reCAPTCHA token"))
+              case MissingCaptchaTokenException =>
+                respondError(BadRequest("Missing reCAPTCHA token"), MissingRecaptchaTokenErrorCode)
+              case InvalidCaptchaTokenException =>
+                respondError(BadRequest("Invalid reCAPTCHA token"), InvalidRecaptchaTokenErrorCode)
               case _: CaptchaVerificationUnavailableException =>
-                respondError(ServiceUnavailable("reCAPTCHA verification unavailable"))
+                respondError(ServiceUnavailable("reCAPTCHA verification unavailable"), RecaptchaUnavailableErrorCode)
             }
           },
         )
@@ -641,7 +666,10 @@ class EmailSignupController(
       case status =>
         logErrorWithRequestId(s"Error posting to Identity API: HTTP $status")
         APIHTTPError.increment()
-        respondError(BadGateway("Email subscription service returned an unexpected response"))
+        respondError(
+          BadGateway("Email subscription service returned an unexpected response"),
+          UpstreamBadResponseErrorCode,
+        )
 
     }) recover {
       case _: IllegalAccessException =>
@@ -649,7 +677,7 @@ class EmailSignupController(
       case e: Exception =>
         logErrorWithRequestId(s"Error posting to Identity API: ${e.getMessage}")
         APINetworkError.increment()
-        respondError(ServiceUnavailable("Email subscription service unavailable"))
+        respondError(ServiceUnavailable("Email subscription service unavailable"), UpstreamUnavailableErrorCode)
     }
   }
 
