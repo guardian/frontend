@@ -12,19 +12,17 @@ import com.gu.contentapi.client.{
   ScheduledExecutor,
   ContentApiClient => CapiContentApiClient,
 }
+import common.LoggingField.LogField
 import common._
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.Configuration.contentApi
 import conf.switches.Switches.CircuitBreakerSwitch
-import net.logstash.logback.marker.Markers.appendEntries
-import play.api.MarkerContext
 
 import java.lang.System.currentTimeMillis
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
-import scala.jdk.CollectionConverters._
 
 object QueryDefaults {
   // NOTE - do NOT add body to this list
@@ -161,21 +159,16 @@ final case class CircuitBreakingContentApiClient(
     resp.foreach((r: HttpResponse) => {
       val duration: Long = currentTimeMillis() - start
 
-      val markers = MarkerContext(
-        appendEntries(
-          Map(
-            "internal-request" -> Map(
-              "target" -> "CAPI",
-              "method" -> "GET",
-              "status" -> r.statusCode,
-              "duration" -> duration,
-              "requestUri" -> url,
-              "contentLength" -> r.body.length,
-            ),
-          ).asJava,
-        ),
+      val markers: List[LogField] = List[LogField](
+        "internal-request.target" -> "CAPI",
+        "internal-request.method" -> "GET",
+        "internal-request.status" -> r.statusCode,
+        "internal-request.duration" -> duration,
+        "internal-request.requestUri" -> url.toString,
+        "internal-request.contentLength" -> r.body.length,
       )
-      log.info(s"Request to Content API took ${duration}ms")(markers)
+
+      logInfoWithCustomFields(s"Request to CAPI completed with status ${r.statusCode} in ${duration}ms", markers)
     })
 
     resp

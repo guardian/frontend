@@ -2,6 +2,7 @@ package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
+import common.LoggingField.LogField
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -26,7 +27,6 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
-import net.logstash.logback.marker.Markers.appendEntries
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -41,8 +41,6 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import play.api.MarkerContext
-import scala.jdk.CollectionConverters._
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -93,22 +91,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       DCRMetrics.DCRLatencyMetric.recordDuration(duration)
       DCRMetrics.DCRRequestCountMetric.increment()
 
-      val markers = MarkerContext(
-        appendEntries(
-          Map(
-            "internal-request" -> Map(
-              "target" -> "DCR",
-              "method" -> "POST",
-              "status" -> r.status,
-              "duration" -> duration,
-              "requestUri" -> request.uri,
-              "contentLength" -> payload.toString().length,
-            ),
-          ).asJava,
-        ),
+      val markers: List[LogField] = List[LogField](
+        "internal-request.target" -> "DCR",
+        "internal-request.method" -> "POST",
+        "internal-request.status" -> r.status,
+        "internal-request.duration" -> duration,
+        "internal-request.requestUri" -> request.uri.toString,
+        "internal-request.contentLength" -> payload.toString.length,
       )
 
-      log.info(s"Request to DCR took ${duration}ms")(markers)
+      logInfoWithCustomFields(s"Request to DCR completed with status ${r.status} in ${duration}ms", markers)
     })
 
     resp.recoverWith({
