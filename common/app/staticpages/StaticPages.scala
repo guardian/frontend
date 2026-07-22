@@ -79,16 +79,13 @@ object StaticPages {
       ),
     )
 
-  def dcrSimpleCrosswordArchivePage(
-      id: String,
-      selectedType: String,
-  ): SimplePage =
+  def dcrSimpleCrosswordArchivePage(id: String): SimplePage =
     SimplePage(
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "puzzles")),
-        webTitle = s"Crossword archive: ${selectedType.capitalize}",
-        description = Some(s"Browse archived ${selectedType} crosswords."),
+        webTitle = "Crossword archive",
+        description = Some("Browse our crossword archive."),
         contentType = Some(DotcomContentType.Tag),
         iosType = None,
         shouldGoogleIndex = true,

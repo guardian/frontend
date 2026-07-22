@@ -10,25 +10,25 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 
-case class CrosswordArchiveTab(
-    label: String,
-    crosswordType: String,
-    url: String,
-    isSelected: Boolean,
-)
-
-object CrosswordArchiveTab {
-  implicit val writes: OWrites[CrosswordArchiveTab] = Json.writes[CrosswordArchiveTab]
-}
-
 case class CrosswordArchiveEntry(
-    title: String,
+    date: String,
     url: String,
-    isLocked: Boolean,
 )
 
 object CrosswordArchiveEntry {
   implicit val writes: OWrites[CrosswordArchiveEntry] = Json.writes[CrosswordArchiveEntry]
+}
+
+case class CrosswordArchiveSection(
+    title: String,
+    cadence: String,
+    crosswordType: String,
+    moreUrl: String,
+    entries: Seq[CrosswordArchiveEntry],
+)
+
+object CrosswordArchiveSection {
+  implicit val writes: OWrites[CrosswordArchiveSection] = Json.writes[CrosswordArchiveSection]
 }
 
 case class DotcomCrosswordArchivePageRenderingDataModel(
@@ -44,9 +44,7 @@ case class DotcomCrosswordArchivePageRenderingDataModel(
     commercialProperties: Map[String, EditionCommercialProperties],
     isAdFreeUser: Boolean,
     canonicalUrl: String,
-    selectedType: String,
-    tabs: Seq[CrosswordArchiveTab],
-    entries: Seq[CrosswordArchiveEntry],
+    sections: Seq[CrosswordArchiveSection],
 )
 
 object DotcomCrosswordArchivePageRenderingDataModel {
@@ -55,9 +53,7 @@ object DotcomCrosswordArchivePageRenderingDataModel {
 
   def apply(
       page: SimplePage,
-      selectedType: String,
-      tabs: Seq[CrosswordArchiveTab],
-      entries: Seq[CrosswordArchiveEntry],
+      sections: Seq[CrosswordArchiveSection],
       request: RequestHeader,
   ): DotcomCrosswordArchivePageRenderingDataModel = {
     val edition = Edition.edition(request)
@@ -102,9 +98,7 @@ object DotcomCrosswordArchivePageRenderingDataModel {
       commercialProperties = commercialProperties,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
-      selectedType = selectedType,
-      tabs = tabs,
-      entries = entries,
+      sections = sections,
     )
   }
 

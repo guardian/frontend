@@ -6,10 +6,10 @@ import common.ImplicitControllerExecutionContext
 import contentapi.ContentApiClient
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
-import model.{ApplicationContext, CacheTime, Cached}
+import model.{ApplicationContext, CacheTime, Cached, CrosswordData}
 import model.dotcomrendering.{
   CrosswordArchiveEntry,
-  CrosswordArchiveTab,
+  CrosswordArchiveSection,
   DotcomCrosswordArchivePageRenderingDataModel,
   DotcomPuzzleIframePageRenderingDataModel,
   DotcomPuzzlesPageRenderingDataModel,
@@ -33,52 +33,75 @@ class PuzzlesPageController(
     with ImplicitControllerExecutionContext {
 
   private val remoteRenderer = DotcomRenderingService()
-  private val archiveTypes = Seq("mini", "cryptic", "quick")
+  private case class ArchiveSeries(
+      title: String,
+      cadence: String,
+      crosswordType: String,
+      tag: String,
+      moreUrl: String,
+  )
 
-  private def normaliseArchiveType(request: RequestHeader): String =
-    request.getQueryString("type").filter(archiveTypes.contains).getOrElse("mini")
+  private val archiveSeries = Seq(
+    ArchiveSeries("Mini", "Daily", "mini", "crosswords/series/mini-crossword", "/crosswords/series/mini-crossword"),
+    ArchiveSeries("Quick", "Daily", "quick", "crosswords/series/quick", "/crosswords/series/quick"),
+    ArchiveSeries("Cryptic", "Daily", "cryptic", "crosswords/series/cryptic", "/crosswords/series/cryptic"),
+    ArchiveSeries(
+      "Quick cryptic",
+      "Weekly",
+      "quick-cryptic",
+      "crosswords/series/quick-cryptic",
+      "/crosswords/series/quick-cryptic",
+    ),
+    ArchiveSeries("Quiptic", "Weekly", "quiptic", "crosswords/series/quiptic", "/crosswords/series/quiptic"),
+    ArchiveSeries("Prize", "Weekly", "prize", "crosswords/series/prize", "/crosswords/series/prize"),
+    ArchiveSeries(
+      "Weekend",
+      "Weekly",
+      "weekend",
+      "crosswords/series/weekend-crossword",
+      "/crosswords/series/weekend-crossword",
+    ),
+    ArchiveSeries(
+      "Sunday quick",
+      "Weekly",
+      "sunday-quick",
+      "crosswords/series/sunday-quick",
+      "/crosswords/series/sunday-quick",
+    ),
+  )
 
-  private def archiveTag(selectedType: String): String =
-    selectedType match {
-      case "mini"    => "crosswords/series/mini-crossword"
-      case "cryptic" => "crosswords/series/cryptic"
-      case "quick"   => "crosswords/series/quick"
-      case _         => "crosswords/series/mini-crossword"
-    }
-
-  private def archiveTabs(selectedType: String): Seq[CrosswordArchiveTab] =
-    archiveTypes.map { crosswordType =>
-      CrosswordArchiveTab(
-        label = crosswordType match {
-          case "mini"    => "Today's Mini"
-          case "cryptic" => "Today's Cryptic"
-          case "quick"   => "Today's Quiptic"
-          case other     => other
-        },
-        crosswordType = crosswordType,
-        url = s"/puzzles/crosswords/archive?type=$crosswordType",
-        isSelected = crosswordType == selectedType,
-      )
-    }
-
-  private def archiveEntries(selectedType: String): Future[Seq[CrosswordArchiveEntry]] = {
+  private def archiveSection(series: ArchiveSeries): Future[CrosswordArchiveSection] = {
     val query = SearchQuery()
       .contentType("crossword")
-      .tag(archiveTag(selectedType))
+      .tag(series.tag)
       .useDate("newspaper-edition")
       .orderBy("newest")
-      .pageSize(20)
+      .pageSize(4)
       .showFields("all")
 
-    contentApiClient.getResponse(query).map(_.results.toList.map(content => toArchiveEntry(content)))
+    contentApiClient.getResponse(query).map { response =>
+      CrosswordArchiveSection(
+        title = series.title,
+        cadence = series.cadence,
+        crosswordType = series.crosswordType,
+        moreUrl = series.moreUrl,
+        entries = response.results.toList.flatMap(toArchiveEntry).take(4),
+      )
+    }
   }
 
-  private def toArchiveEntry(content: Content): CrosswordArchiveEntry =
-    CrosswordArchiveEntry(
-      title = content.webTitle,
-      url = s"/puzzles/${content.id.stripPrefix("/")}",
-      isLocked = true,
-    )
+  private def archiveSections(): Future[Seq[CrosswordArchiveSection]] =
+    Future.traverse(archiveSeries)(archiveSection)
+
+  private def toArchiveEntry(content: Content): Option[CrosswordArchiveEntry] =
+    content.crossword.map { crossword =>
+      val crosswordData = CrosswordData.fromCrossword(crossword, content)
+
+      CrosswordArchiveEntry(
+        date = crosswordData.date.toString("yyyy-MM-dd"),
+        url = s"/puzzles/${crosswordData.id}",
+      )
+    }
 
   private def findPuzzleBySlug(
       containers: Seq[PuzzleContainer],
@@ -197,14 +220,11 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       request.getRequestFormat match {
         case HtmlFormat =>
-          val selectedType = normaliseArchiveType(request)
-          val page = StaticPages.dcrSimpleCrosswordArchivePage(request.path, selectedType)
-          archiveEntries(selectedType).flatMap { entries =>
+          val page = StaticPages.dcrSimpleCrosswordArchivePage(request.path)
+          archiveSections().flatMap { sections =>
             val dataModel = DotcomCrosswordArchivePageRenderingDataModel(
               page,
-              selectedType,
-              archiveTabs(selectedType),
-              entries,
+              sections,
               request,
             )
 
@@ -225,14 +245,11 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       request.getRequestFormat match {
         case JsonFormat =>
-          val selectedType = normaliseArchiveType(request)
-          val page = StaticPages.dcrSimpleCrosswordArchivePage(request.path, selectedType)
-          archiveEntries(selectedType).map { entries =>
+          val page = StaticPages.dcrSimpleCrosswordArchivePage(request.path)
+          archiveSections().map { sections =>
             val dataModel = DotcomCrosswordArchivePageRenderingDataModel(
               page,
-              selectedType,
-              archiveTabs(selectedType),
-              entries,
+              sections,
               request,
             )
 
