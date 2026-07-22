@@ -20,6 +20,8 @@ case class PuzzleItem(
     slug: Option[String] = None,
     index: Option[Int] = None,
     variant: Option[String] = None,
+    backgroundColour: Option[String] = None,
+    filterId: Option[String] = None,
 )
 
 object PuzzleItem {
@@ -29,12 +31,14 @@ object PuzzleItem {
 case class PuzzleContent(
     items: Seq[Seq[PuzzleItem]],
     nestedContainers: Seq[PuzzleContainer],
+    archive: Option[PuzzleItem] = None,
 )
 
 object PuzzleContent {
   implicit lazy val format: OFormat[PuzzleContent] = (
     (__ \ "items").format[Seq[Seq[PuzzleItem]]] and
-      (__ \ "nestedContainers").lazyFormat[Seq[PuzzleContainer]](Format.of[Seq[PuzzleContainer]])
+      (__ \ "nestedContainers").lazyFormat[Seq[PuzzleContainer]](Format.of[Seq[PuzzleContainer]]) and
+      (__ \ "archive").formatNullable[PuzzleItem]
   )(PuzzleContent.apply, unlift(PuzzleContent.unapply))
 }
 
@@ -42,18 +46,33 @@ case class PuzzleContainer(
     title: String,
     variant: Option[String] = None,
     content: PuzzleContent,
+    filterId: Option[String] = None,
+    desktopSpan: Option[Int] = None,
 )
 
 object PuzzleContainer {
   implicit lazy val format: OFormat[PuzzleContainer] = (
     (__ \ "title").format[String] and
       (__ \ "variant").formatNullable[String] and
-      (__ \ "content").lazyFormat[PuzzleContent](PuzzleContent.format)
+      (__ \ "content").lazyFormat[PuzzleContent](PuzzleContent.format) and
+      (__ \ "filterId").formatNullable[String] and
+      (__ \ "desktopSpan").formatNullable[Int]
   )(PuzzleContainer.apply, unlift(PuzzleContainer.unapply))
+}
+
+case class PuzzleFilter(
+    id: String,
+    title: String,
+    backgroundColour: Option[String] = None,
+)
+
+object PuzzleFilter {
+  implicit val format: OFormat[PuzzleFilter] = Json.format[PuzzleFilter]
 }
 
 case class PuzzlesLayout(
     containers: Seq[PuzzleContainer],
+    filters: Seq[PuzzleFilter] = Seq.empty,
 )
 
 object PuzzlesLayout {

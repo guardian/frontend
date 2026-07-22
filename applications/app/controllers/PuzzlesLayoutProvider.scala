@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.GuLogging
 import contentapi.ContentApiClient
 import model.CrosswordData
-import model.dotcomrendering.{PuzzleItem, PuzzlesLayout}
+import model.dotcomrendering.{PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import play.api.Environment
 import play.api.libs.json.Json
 
@@ -44,7 +44,7 @@ class LocalJsonPuzzlesLayoutProvider(
       executionContext: ExecutionContext,
   ): Future[PuzzlesLayout] = {
     val crosswordSets = layout.containers
-      .flatMap(_.content.items.flatten)
+      .flatMap(crosswordItems)
       .filter(item => item.`type` == "crossword" && item.variant.forall(_ != "archive"))
       .map(_.set)
       .distinct
@@ -53,19 +53,33 @@ class LocalJsonPuzzlesLayoutProvider(
       .traverse(crosswordSets)(set => latestCrosswordForSet(set).map(set -> _))
       .map(_.collect { case (set, Some(item)) => set -> item }.toMap)
       .map { latestCrosswords =>
-        layout.copy(containers = layout.containers.map { container =>
-          container.copy(content = container.content.copy(items = container.content.items.map { row =>
-            row.map { item =>
-              if (item.`type` == "crossword") {
-                latestCrosswords.getOrElse(item.set, item)
-              } else {
-                item
-              }
-            }
-          }))
-        })
+        layout.copy(containers = layout.containers.map(enrichContainer(_, latestCrosswords)))
       }
   }
+
+  private def crosswordItems(container: PuzzleContainer): Seq[PuzzleItem] =
+    container.content.items.flatten ++ container.content.nestedContainers.flatMap(crosswordItems)
+
+  private def enrichContainer(
+      container: PuzzleContainer,
+      latestCrosswords: Map[String, PuzzleItem],
+  ): PuzzleContainer =
+    container.copy(content =
+      container.content.copy(
+        items = container.content.items.map(_.map(enrichItem(_, latestCrosswords))),
+        nestedContainers = container.content.nestedContainers.map(enrichContainer(_, latestCrosswords)),
+      ),
+    )
+
+  private def enrichItem(item: PuzzleItem, latestCrosswords: Map[String, PuzzleItem]): PuzzleItem =
+    if (item.`type` == "crossword") {
+      latestCrosswords
+        .get(item.set)
+        .map(latest => item.copy(url = latest.url, image = latest.image))
+        .getOrElse(item)
+    } else {
+      item
+    }
 
   private def latestCrosswordForSet(set: String)(implicit
       executionContext: ExecutionContext,

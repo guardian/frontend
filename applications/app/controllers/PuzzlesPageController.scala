@@ -87,6 +87,7 @@ class PuzzlesPageController(
     containers.iterator
       .flatMap { container =>
         container.content.items.flatten.iterator ++
+          container.content.archive.iterator ++
           findPuzzleBySlug(container.content.nestedContainers, slug).iterator
       }
       .find(_.slug.contains(slug))
