@@ -164,11 +164,14 @@ final case class CircuitBreakingContentApiClient(
       val markers = MarkerContext(
         appendEntries(
           Map(
-            "method" -> "GET",
-            "status" -> r.statusCode,
-            "duration" -> duration,
-            "requestUri" -> url,
-            "contentLength" -> r.body.length,
+            "internal-request" -> Map(
+              "target" -> "CAPI",
+              "method" -> "GET",
+              "status" -> r.statusCode,
+              "duration" -> duration,
+              "requestUri" -> url,
+              "contentLength" -> r.body.length,
+            ),
           ).asJava,
         ),
       )

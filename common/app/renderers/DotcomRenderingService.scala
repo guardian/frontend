@@ -96,11 +96,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       val markers = MarkerContext(
         appendEntries(
           Map(
-            "method" -> "POST",
-            "status" -> r.status,
-            "duration" -> duration,
-            "requestUri" -> request.uri,
-            "contentLength" -> payload.toString().length,
+            "internal-request" -> Map(
+              "target" -> "DCR",
+              "method" -> "POST",
+              "status" -> r.status,
+              "duration" -> duration,
+              "requestUri" -> request.uri,
+              "contentLength" -> payload.toString().length,
+            ),
           ).asJava,
         ),
       )
