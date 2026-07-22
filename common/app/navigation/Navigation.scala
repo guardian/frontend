@@ -276,22 +276,7 @@ object NavMenu {
             currentParent.map(_.children).getOrElse(Nil)
           }
 
-        // Editorial: on the Football and Soccer fronts (and their child pages), the World Cup 2026
-        // link should appear before the Football/Soccer self-link in the subnav. The default
-        // ParentSubnav layout always renders the parent first, so we instead emit a FlatSubnav
-        // with the World Cup promoted to first position, the parent self-link second, and the
-        // remaining children following.
-        //
-        // Guarded on the first child being the World Cup link, so this special case
-        // automatically disappears when the link is removed from NavLinks after the tournament.
-        val isFootballOrSoccerSubnav =
-          parent.exists(p => p.url == "/football" || p.url == "/us/soccer")
-        val firstChildIsWorldCup =
-          links.headOption.exists(_.url == "/football/world-cup-2026")
-
         parent match {
-          case Some(p) if isFootballOrSoccerSubnav && firstChildIsWorldCup =>
-            Some(FlatSubnav(links.head +: p +: links.tail))
           case Some(p)                => Some(ParentSubnav(p, links))
           case None if links.nonEmpty => Some(FlatSubnav(links))
           case None                   => None
