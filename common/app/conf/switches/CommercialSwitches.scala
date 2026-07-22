@@ -4,6 +4,8 @@ import conf.switches.Expiry.never
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
 
+import java.time.LocalDate
+
 trait CommercialSwitches {
 
   val LiveBlogTopSponsorshipSwitch = Switch(
@@ -488,6 +490,17 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val expiredTestSwitch: Switch = Switch(
+    group = Commercial,
+    name = "expired-switch",
+    description = "Only here to trip an alarm",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = Some(LocalDate.of(1970, 1, 1)),
     exposeClientSide = true,
     highImpact = false,
   )

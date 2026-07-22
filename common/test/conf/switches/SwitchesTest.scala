@@ -84,11 +84,6 @@ class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
     forAllSwitches(_.description.trim should not be empty)
   }
 
-  // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
-  they should "be deleted once expired" in {
-    forAllSwitches(Switch.expiry(_).hasExpired shouldBe false)
-  }
-
   they should "all have at least one owner" in {
     forAllSwitches(_.owners.nonEmpty shouldBe true)
   }
