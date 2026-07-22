@@ -26,6 +26,7 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
+import net.logstash.logback.marker.Markers.appendEntries
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -40,6 +41,8 @@ import java.util.concurrent.TimeoutException
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import play.api.MarkerContext
+import scala.jdk.CollectionConverters._
 
 // Introduced as CAPI error handling elsewhere would smother these otherwise
 case class DCRLocalConnectException(message: String) extends ConnectException(message)
@@ -84,9 +87,25 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       case None     => request.post(payload)
     }
 
-    resp.foreach(_ => {
-      DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis() - start)
+    resp.foreach((r: WSResponse) => {
+      val duration: Long = currentTimeMillis() - start
+
+      DCRMetrics.DCRLatencyMetric.recordDuration(duration)
       DCRMetrics.DCRRequestCountMetric.increment()
+
+      val markers = MarkerContext(
+        appendEntries(
+          Map(
+            "method" -> "POST",
+            "status" -> r.status,
+            "duration" -> duration,
+            "requestUri" -> request.uri,
+            "contentLength" -> payload.toString().length,
+          ).asJava,
+        ),
+      )
+
+      log.info(s"Request to DCR took ${duration}ms")(markers)
     })
 
     resp.recoverWith({

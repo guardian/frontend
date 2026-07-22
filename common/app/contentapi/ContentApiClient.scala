@@ -1,7 +1,6 @@
 package contentapi
 
 import java.util.concurrent.TimeUnit
-
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.github.nscala_time.time.Implicits._
 import com.gu.contentapi.client.model._
@@ -18,10 +17,14 @@ import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.Configuration.contentApi
 import conf.switches.Switches.CircuitBreakerSwitch
+import net.logstash.logback.marker.Markers.appendEntries
+import play.api.MarkerContext
 
+import java.lang.System.currentTimeMillis
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
+import scala.jdk.CollectionConverters._
 
 object QueryDefaults {
   // NOTE - do NOT add body to this list
@@ -146,11 +149,33 @@ final case class CircuitBreakingContentApiClient(
   override def get(url: String, headers: Map[String, String])(implicit
       executionContext: ExecutionContext,
   ): Future[HttpResponse] = {
-    if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(super.get(url, headers)(executionContext))
-    } else {
-      super.get(url, headers)
-    }
+    val start = currentTimeMillis()
+
+    val resp =
+      if (CircuitBreakerSwitch.isSwitchedOn) {
+        circuitBreaker.withCircuitBreaker(super.get(url, headers)(executionContext))
+      } else {
+        super.get(url, headers)
+      }
+
+    resp.foreach((r: HttpResponse) => {
+      val duration: Long = currentTimeMillis() - start
+
+      val markers = MarkerContext(
+        appendEntries(
+          Map(
+            "method" -> "GET",
+            "status" -> r.statusCode,
+            "duration" -> duration,
+            "requestUri" -> url,
+            "contentLength" -> r.body.length,
+          ).asJava,
+        ),
+      )
+      log.info(s"Request to Content API took ${duration}ms")(markers)
+    })
+
+    resp
   }
 }
 
