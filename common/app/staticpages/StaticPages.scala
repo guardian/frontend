@@ -55,10 +55,8 @@ object StaticPages {
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "puzzles")),
-        webTitle = "Puzzles",
-        description = Some(
-          "Enjoy our range of puzzles, including crosswords and sudoku, updated daily.",
-        ),
+        webTitle = "Puzzles and Games",
+        description = None,
         contentType = Some(DotcomContentType.Tag),
         iosType = None,
         shouldGoogleIndex = true,
