@@ -47,7 +47,7 @@ object FooterLinks {
   def taxStrategy(edition: String): FooterLink =
     FooterLink(
       "Tax strategy",
-      "https://uploads.guim.co.uk/2025/09/05/Tax_strategy_for_the_year_ended_31_March_2025.pdf",
+      "https://uploads.guim.co.uk/2026/07/22/STL_Global_Tax_Strategy_for_the_year_to_31_March_2027.pdf",
       s"${edition} : footer : tax strategy",
     )
   def newsletters(edition: String): FooterLink = {
