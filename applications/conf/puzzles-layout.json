@@ -426,14 +426,25 @@
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Archive",
-								"type": "quiz",
-								"set": "alex-bellos-monday-puzzle",
-								"url": "/science/series/alex-bellos-monday-puzzle",
-								"backgroundColour": "#D5F3F2"
-							}
+							"nestedContainers": []
+						}
+					},
+					{
+						"title": "Thursday quiz",
+						"desktopSpan": 4,
+						"content": {
+							"items": [
+								[
+									{
+										"title": "Thursday quiz",
+										"type": "quiz",
+										"set": "thursday-quiz",
+										"url": "/theguardian/series/the-quiz-thomas-eaton",
+										"backgroundColour": "#D5F3F2"
+									}
+								]
+							],
+							"nestedContainers": []
 						}
 					},
 					{
@@ -451,19 +462,12 @@
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Archive",
-								"type": "quiz",
-								"set": "sports-quiz",
-								"url": "/sport/series/sports-quiz-of-the-week",
-								"backgroundColour": "#D5F3F2"
-							}
+							"nestedContainers": []
 						}
 					},
 					{
 						"title": "Saturday quiz",
-						"desktopSpan": 4,
+						"desktopSpan": 6,
 						"content": {
 							"items": [
 								[
@@ -476,14 +480,7 @@
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Archive",
-								"type": "quiz",
-								"set": "saturday-quiz",
-								"url": "/theguardian/series/the-quiz-thomas-eaton",
-								"backgroundColour": "#D5F3F2"
-							}
+							"nestedContainers": []
 						}
 					},
 					{
