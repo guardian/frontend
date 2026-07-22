@@ -11,7 +11,11 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "3.0.6"
-  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.16.0"
+  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.20.0"
+  // ByteBuddy powers the standalone template-tracker JVM agent (shaded at assembly time).
+  // Pinned to 1.15.x: later releases bundle Java 24 multi-release classes that the assembly
+  // shader can't read/relocate (harmless on our Java 21 runtime, but noisy and not cleanly shaded).
+  val byteBuddy = "net.bytebuddy" % "byte-buddy" % "1.15.11"
   val awsCloudwatch = "software.amazon.awssdk" % "cloudwatch" % awsVersion
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
@@ -29,8 +33,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson =
-    "com.gu" %% "content-api-models-json" % "46.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "46.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -75,7 +78,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.31"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.33"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
@@ -88,7 +91,7 @@ object Dependencies {
 
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
-  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.7"
+  val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.8"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
@@ -108,8 +111,8 @@ object Dependencies {
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.2"
-  val jacksonDatabindVersion = "2.21.2"
+  val jacksonVersion = "2.21.4"
+  val jacksonDatabindVersion = "2.21.4"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion

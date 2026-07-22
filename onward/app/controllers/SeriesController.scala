@@ -7,16 +7,12 @@ import common.{JsonComponent, _}
 import contentapi.ContentApiClient
 import implicits.Requests
 import layout.FaciaContainer
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
-import views.support.FaciaToMicroFormat2Helpers._
 import models.{Series, SeriesHelper, SeriesStoriesDCR}
 import utils.ShortUrls
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 class SeriesController(
     contentApiClient: ContentApiClient,
@@ -40,28 +36,6 @@ class SeriesController(
         lookup(Edition(request), seriesId) map { series =>
           series.map(renderSeriesTrails).getOrElse(NotFound)
         }
-      }
-    }
-
-  def renderMf2SeriesStories(seriesId: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      lookup(Edition(request), seriesId) map {
-        _.map(series =>
-          Cached(15.minutes)(
-            rendermf2Series(series),
-          ),
-        ).getOrElse(Cached(15.minutes)(WithoutRevalidationResult(NotFound)))
-      }
-    }
-
-  def renderPodcastEpisodes(seriesId: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      lookup(Edition(request), seriesId, _.contentType("audio")) map {
-        _.map(series =>
-          Cached(900) {
-            JsonComponent(views.html.fragments.podcastEpisodes(series.trails.items.take(4).map(_.content)))
-          },
-        ).getOrElse(NotFound)
       }
     }
 
@@ -91,25 +65,6 @@ class SeriesController(
       logInfoWithRequestId(s"Got a 404 calling content api: $message")
       None
     }
-  }
-
-  private def rendermf2Series(series: Series)(implicit request: RequestHeader): RevalidatableResult = {
-    val displayName = Some(series.displayName)
-    val seriesStories = series.trails.items take 4
-    val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
-
-    JsonComponent(
-      "items" -> JsArray(
-        Seq(
-          Json.obj(
-            "displayName" -> displayName,
-            "description" -> description,
-            "showContent" -> seriesStories.nonEmpty,
-            "content" -> seriesStories.map(collection => isCuratedContent(collection.faciaContent)),
-          ),
-        ),
-      ),
-    )
   }
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader): Result = {

@@ -10,6 +10,7 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
+import conf.cricketPa.PaFeed
 
 class CricketLifecycle(
     appLifeCycle: ApplicationLifecycle,
@@ -26,19 +27,35 @@ class CricketLifecycle(
   }
 
   private def scheduleJobs(): Unit = {
-    // if preview "Every hour" otherwise "Every 5 minutes"
-    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", if (context.isPreview) 1.hour else 5.minutes) {
-      Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
+    // Refresh the fixtures/results registry once a day.
+    jobs.scheduleEvery("CricketDiscoverMatches", 1.day) {
+      cricketStatsJob.discoverMatches(
+        fromDate = LocalDate.now.minusMonths(PaFeed.dateWindowMonths),
+        toDate = LocalDate.now.plusMonths(PaFeed.dateWindowMonths),
+      )
     }
-    // if preview "Every hour" otherwise "Every 10 minutes"
-    jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", if (context.isPreview) 1.hour else 10.minutes) {
-      Future(cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10))
+
+    // Fetch active matches every 5 minutes to ensure the scorecard is up to date.
+    jobs.scheduleEvery("CricketActiveMatchUpdates", if (context.isPreview) 1.hour else 5.minutes) {
+      cricketStatsJob.activeMatchDataRefresh()
+    }
+
+    // Fetch upcoming matches every hour.
+    jobs.scheduleEvery("CricketUpcomingMatchUpdates", 1.hour) {
+      cricketStatsJob.upcomingMatchDataRefresh()
+    }
+
+    // Fetch historical and future matches every day.
+    jobs.scheduleEvery("CricketOtherMatchUpdates", 1.day) {
+      cricketStatsJob.infrequentMatchDataRefresh()
     }
   }
 
   private def descheduleJobs(): Unit = {
-    jobs.deschedule("CricketAgentRefreshCurrentMatches")
-    jobs.deschedule("CricketAgentRefreshHistoricalMatches")
+    jobs.deschedule("CricketDiscoverMatches")
+    jobs.deschedule("CricketActiveMatchUpdates")
+    jobs.deschedule("CricketUpcomingMatchUpdates")
+    jobs.deschedule("CricketOtherMatchUpdates")
   }
 
   override def start(): Unit = {
@@ -47,7 +64,10 @@ class CricketLifecycle(
 
     // ensure that we populate the cricket stats cache immediately
     pekkoAsync.after1s {
-      cricketStatsJob.run(fromDate = LocalDate.now.minusMonths(2), matchesToFetch = 10)
+      cricketStatsJob.discoverMatches(
+        fromDate = LocalDate.now.minusMonths(PaFeed.dateWindowMonths),
+        toDate = LocalDate.now.plusMonths(PaFeed.dateWindowMonths),
+      )
     }
   }
 }

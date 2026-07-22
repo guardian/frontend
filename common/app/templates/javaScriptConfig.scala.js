@@ -15,7 +15,7 @@
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
-        "tests": { @JavaScript(experiments.ActiveExperiments.getJavascriptConfig) },
+        "tests": { },
         "serverSideABTests": { @JavaScript(ab.ABTests.getJavascriptConfig) },
         "modules": {
             "tracking": {

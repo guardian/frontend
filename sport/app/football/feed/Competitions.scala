@@ -56,6 +56,11 @@ trait Competitions extends implicits.Football {
       })
       .headOption
 
+  def liveMatchesFromYesterday(clock: Clock): Seq[FootballMatch] = {
+    val yesterday = LocalDate.now(clock).minusDays(1)
+    competitions.flatMap(_.matches.filter(m => m.isOn(yesterday) && m.isLive))
+  }
+
   lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
   def nextMatchDates(startDate: LocalDate, numDays: Int): Seq[LocalDate] =
@@ -419,7 +424,30 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       clock: Clock,
   )(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
     log.debug("Refreshing match day data")
-    val result = getLiveMatches(clock).map(_.map { case (compId, newMatches) =>
+
+    val today = LocalDate.now(clock)
+    val todayMatchesFuture = getDayMatches(today)
+
+    val allMatches: Future[Map[String, Seq[MatchDay]]] =
+      if (liveMatchesFromYesterday(clock).nonEmpty) {
+        log.debug("Live matches from yesterday detected - also refreshing yesterday's match day data")
+        for {
+          todayMatches <- todayMatchesFuture
+          yesterdayMatches <- getDayMatches(today.minusDays(1))
+        } yield {
+          val liveYesterdayMatches = yesterdayMatches.collect {
+            case (compId, matches) if matches.exists(_.isLive) =>
+              compId -> matches.filter(_.isLive)
+          }
+          liveYesterdayMatches.foldLeft(todayMatches) { case (acc, (compId, liveMatches)) =>
+            acc.updated(compId, acc.getOrElse(compId, Seq.empty) ++ liveMatches)
+          }
+        }
+      } else {
+        todayMatchesFuture
+      }
+
+    val result = allMatches.map(_.map { case (compId, newMatches) =>
       competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
       }
