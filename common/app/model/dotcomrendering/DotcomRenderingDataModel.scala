@@ -11,7 +11,25 @@ import crosswords.CrosswordPageWithContent
 import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements._
 import model.meta.BlocksOn
-import model.{ArticleDateTimes, Badges, CanonicalLiveBlog, ContentFormat, ContentPage, ContentType, CrosswordData, DotcomContentType, GUDateTimeFormatNew, Gallery, GalleryPage, ImageContentPage, ImageMedia, InteractivePage, LiveBlogPage, MediaPage, PageWithStoryPackage}
+import model.{
+  ArticleDateTimes,
+  Badges,
+  CanonicalLiveBlog,
+  ContentFormat,
+  ContentPage,
+  ContentType,
+  CrosswordData,
+  DotcomContentType,
+  GUDateTimeFormatNew,
+  Gallery,
+  GalleryPage,
+  ImageContentPage,
+  ImageMedia,
+  InteractivePage,
+  LiveBlogPage,
+  MediaPage,
+  PageWithStoryPackage,
+}
 import navigation._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -603,7 +621,7 @@ object DotcomRenderingDataModel {
       }
     }
 
-    val guardianBaseURL=
+    val guardianBaseURL =
       if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
 
     DotcomRenderingDataModel(
