@@ -1,6 +1,6 @@
 package football.model
 
-import common.{CanonicalLink, Edition}
+import common.{CanonicalLink, Edition, Environment}
 import conf.Configuration
 import cricket.controllers.CricketMatchPage
 import cricketModel.{Innings, InningsWicket, Match, Team}
@@ -43,11 +43,13 @@ object DotcomRenderingCricketDataModel {
       isPreview = pageType.isPreview,
     )
 
+    val baseUrl = if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
+
     DotcomRenderingCricketDataModel(
       page.theMatch,
       nav = nav,
       editionId = edition.id,
-      guardianBaseURL = Configuration.site.host,
+      guardianBaseURL = baseUrl,
       config = combinedConfig,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
       isAdFreeUser = views.support.Commercial.isAdFree(request),
