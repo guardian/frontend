@@ -21,8 +21,8 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
         // These RequestHeaders are used to identify which controller is calling twirl templates
         // We're not in the context of a controller, so we need to mock the RequestHeader
         val mockedRequestHeader = new MockRequestHeader(
-          controller = "ExpiringSwitchesEmailJob",
-          method = "runJob",
+          controllerName = "ExpiringSwitchesEmailJob",
+          controllerMethodName = "runJob",
         )
         val htmlBody = views.html.email.expiringSwitches(expiringSwitches)(mockedRequestHeader).body.trim()
 

@@ -6,8 +6,8 @@ import play.api.mvc.{Headers, RequestHeader}
 import play.api.routing.HandlerDef
 
 class MockRequestHeader(
-    controller: String,
-    method: String,
+    controllerName: String,
+    controllerMethodName: String,
 ) extends RequestHeader {
   override def connection: RemoteConnection = RemoteConnection("", false, None)
   override def method: String = "GET"
@@ -20,8 +20,8 @@ class MockRequestHeader(
       HandlerDef(
         classLoader = this.getClass.getClassLoader,
         routerPackage = "mock",
-        controller = controller,
-        method = method,
+        controller = controllerName,
+        method = controllerMethodName,
         parameterTypes = Seq.empty,
         verb = "GET",
         path = "/mock/path",
