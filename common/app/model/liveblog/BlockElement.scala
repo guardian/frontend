@@ -186,6 +186,7 @@ object BlockElement {
       case Timeline         => Some(UnsupportedBlockElement(None))
       case Link             => Some(UnsupportedBlockElement(None))
       case Product          => Some(UnsupportedBlockElement(None))
+      case ProductSummary   => Some(UnsupportedBlockElement(None))
       case ResponsiveImage  => Some(UnsupportedBlockElement(None))
     }
   }
