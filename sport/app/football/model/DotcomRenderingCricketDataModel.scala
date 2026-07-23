@@ -43,7 +43,8 @@ object DotcomRenderingCricketDataModel {
       isPreview = pageType.isPreview,
     )
 
-    val baseUrl = if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
+    val baseUrl =
+      if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
 
     DotcomRenderingCricketDataModel(
       page.theMatch,
