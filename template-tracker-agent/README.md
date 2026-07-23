@@ -11,11 +11,11 @@ As of July 2026, the migration is coming to an end and we're in a situation wher
 The JVM comes with the ability to modify classes before they are being loaded with a mechanism called "instrumentation".
 This module is a jvm instrumentation agent which makes use of this capability to detect each time one of these 490 twirl templates is being used in a given context.
 
-Each novel use is logged to a file `twirl-usage.log`, which is then uploaded to S3 by fluent bit in order to be queriable through Athena.
+Each novel use is logged to a file `twirl-usage.log`, which is then uploaded to S3 by fluent bit in order to be queryable through Athena.
 
 ## Why?
 
-This gives use visibility into which part of our rendering code is still happening in this repo. We can then decide to keep, migrate or delete depending on each situation.
+This gives us visibility into which part of our rendering code is still happening in this repo. We can then decide to keep, migrate or delete depending on each situation.
 
 ## We don't need it anymore, how do we delete it?
 

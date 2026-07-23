@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Holds the set of (template, dcr, method) combinations seen so far in this JVM and logs each
+ * Holds the set of (template, dcr, method, controller) combinations seen so far in this JVM and logs each
  * combination the first time it is rendered.
  *
  * <p>The template arguments (which include an implicit {@code play.api.mvc.RequestHeader} for most
