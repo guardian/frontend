@@ -52,7 +52,7 @@ case class TimelineAtomEvent(
     toUnixDate: Option[Long],
 )
 object TimelineAtomEvent {
-  implicit val timelineAtomEventWrites: Writes[TimelineAtomEvent] = Json.writes[TimelineAtomEvent]
+  implicit val timelineAtomEventFormat: OFormat[TimelineAtomEvent] = Json.format[TimelineAtomEvent]
 }
 
 case class Sponsorship(
@@ -124,7 +124,19 @@ case class AudioAtomBlockElement(
     contentId: String,
 ) extends PageElement
 object AudioAtomBlockElement {
-  implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
+  implicit val AudioAtomBlockElementFormat: OFormat[AudioAtomBlockElement] = Json.format[AudioAtomBlockElement]
+
+  def fromAudioAtom(audio: AudioAtom): AudioAtomBlockElement =
+    AudioAtomBlockElement(
+      id = audio.id,
+      kicker = audio.data.kicker,
+      title = audio.atom.title,
+      coverUrl = audio.data.coverUrl,
+      trackUrl = audio.data.trackUrl,
+      trackUrlWithAds = audio.data.trackUrlWithAds.getOrElse(audio.data.trackUrl),
+      duration = audio.data.duration,
+      contentId = audio.data.contentId,
+    )
 }
 
 // We are currently using AudioBlockElement as a catch all for audio errors, skipping the first definition
@@ -285,9 +297,21 @@ object EmbedBlockElement {
 
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
 object ExplainerAtomBlockElement {
-  implicit val ExplainerAtomBlockElementWrites: Writes[ExplainerAtomBlockElement] =
-    Json.writes[ExplainerAtomBlockElement]
+  implicit val ExplainerAtomBlockElementFormat: OFormat[ExplainerAtomBlockElement] =
+    Json.format[ExplainerAtomBlockElement]
 
+  def fromExplainerAtom(explainer: ExplainerAtom): ExplainerAtomBlockElement =
+    ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body)
+}
+
+case class TempFootballCompetitionAtomBlockElement(id: String, competitionId: String, componentType: String)
+    extends PageElement
+object TempFootballCompetitionAtomBlockElement {
+  implicit val TempFootballCompetitionAtomBlockElementFormat: OFormat[TempFootballCompetitionAtomBlockElement] =
+    Json.format[TempFootballCompetitionAtomBlockElement]
+
+  def fromTempFootballCompetitionAtom(atom: TempFootballCompetitionAtom): TempFootballCompetitionAtomBlockElement =
+    TempFootballCompetitionAtomBlockElement(atom.id, atom.competitionId, atom.componentType)
 }
 
 case class FormBlockElement(html: Option[String]) extends PageElement
@@ -319,7 +343,21 @@ case class GuideAtomBlockElement(
     credit: String,
 ) extends PageElement
 object GuideAtomBlockElement {
-  implicit val GuideAtomBlockElementWrites: Writes[GuideAtomBlockElement] = Json.writes[GuideAtomBlockElement]
+  implicit val GuideAtomBlockElementFormat: OFormat[GuideAtomBlockElement] = Json.format[GuideAtomBlockElement]
+
+  def fromGuideAtom(guide: GuideAtom): GuideAtomBlockElement = {
+    val html = guide.data.items
+      .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
+      .mkString("")
+    GuideAtomBlockElement(
+      id = guide.id,
+      label = guide.data.typeLabel.getOrElse("Quick Guide"),
+      title = guide.atom.title.getOrElse(""),
+      img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
+      html = html,
+      credit = guide.credit.getOrElse(""),
+    )
+  }
 }
 
 case class GuVideoBlockElement(
@@ -513,8 +551,8 @@ object MembershipBlockElement {
 
 case class ProfileAtomBlockElementItem(title: Option[String], body: String)
 object ProfileAtomBlockElementItem {
-  implicit val GuideAtomBlockElementItemWrites: Writes[ProfileAtomBlockElementItem] =
-    Json.writes[ProfileAtomBlockElementItem]
+  implicit val ProfileAtomBlockElementItemFormat: OFormat[ProfileAtomBlockElementItem] =
+    Json.format[ProfileAtomBlockElementItem]
 }
 
 case class ProfileAtomBlockElement(
@@ -527,7 +565,23 @@ case class ProfileAtomBlockElement(
     credit: String,
 ) extends PageElement
 object ProfileAtomBlockElement {
-  implicit val ProfileAtomBlockElementWrites: Writes[ProfileAtomBlockElement] = Json.writes[ProfileAtomBlockElement]
+  implicit val ProfileAtomBlockElementFormat: OFormat[ProfileAtomBlockElement] = Json.format[ProfileAtomBlockElement]
+
+  def fromProfileAtom(profile: ProfileAtom): ProfileAtomBlockElement = {
+    val html = profile.data.items
+      .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
+      .mkString("")
+    val items = profile.data.items.toList.map(item => ProfileAtomBlockElementItem(item.title, item.body))
+    ProfileAtomBlockElement(
+      id = profile.id,
+      label = profile.data.typeLabel.getOrElse("Profile"),
+      title = profile.atom.title.getOrElse(""),
+      img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
+      html = html,
+      items = items,
+      credit = profile.credit.getOrElse(""),
+    )
+  }
 }
 case class PullquoteBlockElement(
     html: Option[String],
@@ -633,7 +687,16 @@ object RecipeBlockElement {
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
 object QABlockElement {
-  implicit val QABlockElementWrites: Writes[QABlockElement] = Json.writes[QABlockElement]
+  implicit val QABlockElementFormat: OFormat[QABlockElement] = Json.format[QABlockElement]
+
+  def fromQandaAtom(qa: QandaAtom): QABlockElement =
+    QABlockElement(
+      id = qa.id,
+      title = qa.atom.title.getOrElse(""),
+      img = qa.image.flatMap(ImgSrc.getAmpImageUrl),
+      html = qa.data.item.body,
+      credit = qa.credit.getOrElse(""),
+    )
 }
 
 case class QuizAtomAnswer(
@@ -730,7 +793,27 @@ case class TimelineAtomBlockElement(
     events: Seq[TimelineAtomEvent],
 ) extends PageElement
 object TimelineAtomBlockElement {
-  implicit val timelineAtomBlockElementWrites: Writes[TimelineAtomBlockElement] = Json.writes[TimelineAtomBlockElement]
+  implicit val timelineAtomBlockElementFormat: OFormat[TimelineAtomBlockElement] =
+    Json.format[TimelineAtomBlockElement]
+
+  def fromTimelineAtom(timeline: TimelineAtom): TimelineAtomBlockElement =
+    TimelineAtomBlockElement(
+      id = timeline.id,
+      title = timeline.atom.title.getOrElse(""),
+      description = timeline.data.description,
+      events = timeline.data.events
+        .map(event =>
+          TimelineAtomEvent(
+            title = event.title,
+            date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
+            body = event.body,
+            toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+            unixDate = event.date,
+            toUnixDate = event.toDate,
+          ),
+        )
+        .toSeq,
+    )
 }
 
 case class CallToActionAtomBlockElement(
@@ -743,8 +826,19 @@ case class CallToActionAtomBlockElement(
     btnText: Option[String],
 ) extends PageElement
 object CallToActionAtomBlockElement {
-  implicit val callToActionAtomBlockElementWrites: Writes[CallToActionAtomBlockElement] =
-    Json.writes[CallToActionAtomBlockElement]
+  implicit val callToActionAtomBlockElementFormat: OFormat[CallToActionAtomBlockElement] =
+    Json.format[CallToActionAtomBlockElement]
+
+  def fromCallToActionAtom(cta: CallToActionAtom): CallToActionAtomBlockElement =
+    CallToActionAtomBlockElement(
+      id = cta.id,
+      title = cta.atom.title.getOrElse(""),
+      url = cta.data.url,
+      image = cta.data.backgroundImage,
+      label = cta.data.label,
+      trackingCode = cta.data.trackingCode,
+      btnText = cta.data.btnText,
+    )
 }
 
 case class TweetBlockElement(
@@ -989,53 +1083,54 @@ object PageElement extends GuLogging {
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
     element match {
-      case _: AudioBlockElement            => true
-      case _: AudioAtomBlockElement        => true
-      case _: BlockquoteBlockElement       => true
-      case _: CalloutBlockElement          => true
-      case _: CalloutBlockElementV2        => true
-      case _: CallToActionAtomBlockElement => true
-      case _: CartoonBlockElement          => true
-      case _: ChartAtomBlockElement        => true
-      case _: CodeBlockElement             => true
-      case _: CommentBlockElement          => true
-      case _: ContentAtomBlockElement      => true
-      case _: DocumentBlockElement         => true
-      case _: EmbedBlockElement            => true
-      case _: ExplainerAtomBlockElement    => true
-      case _: GenericAtomBlockElement      => true
-      case _: GuideAtomBlockElement        => true
-      case _: GuVideoBlockElement          => true
-      case _: ImageBlockElement            => true
-      case _: InstagramBlockElement        => true
-      case _: InteractiveAtomBlockElement  => true
-      case _: InteractiveBlockElement      => true
-      case _: MapBlockElement              => true
-      case _: MediaAtomBlockElement        => true
-      case _: ProfileAtomBlockElement      => true
-      case _: PullquoteBlockElement        => true
-      case _: QABlockElement               => true
-      case _: QuizAtomBlockElement         => true
-      case _: RichLinkBlockElement         => true
-      case _: SoundcloudBlockElement       => true
-      case _: SpotifyBlockElement          => true
-      case _: SubheadingBlockElement       => true
-      case _: TextBlockElement             => true
-      case _: TimelineAtomBlockElement     => true
-      case _: TweetBlockElement            => true
-      case _: VideoBlockElement            => true
-      case _: VideoFacebookBlockElement    => true
-      case _: VideoVimeoBlockElement       => true
-      case _: VideoYoutubeBlockElement     => true
-      case _: YoutubeBlockElement          => true
-      case _: WitnessBlockElement          => true
-      case _: VineBlockElement             => true
-      case _: ListBlockElement             => true
-      case _: TimelineBlockElement         => true
-      case _: LinkBlockElement             => true
-      case _: ProductBlockElement          => true
-      case _: RecipeBlockElement           => true
-      case _: ReporterCalloutBlockElement  => true
+      case _: AudioBlockElement                       => true
+      case _: AudioAtomBlockElement                   => true
+      case _: BlockquoteBlockElement                  => true
+      case _: CalloutBlockElement                     => true
+      case _: CalloutBlockElementV2                   => true
+      case _: CallToActionAtomBlockElement            => true
+      case _: CartoonBlockElement                     => true
+      case _: ChartAtomBlockElement                   => true
+      case _: CodeBlockElement                        => true
+      case _: CommentBlockElement                     => true
+      case _: ContentAtomBlockElement                 => true
+      case _: DocumentBlockElement                    => true
+      case _: EmbedBlockElement                       => true
+      case _: ExplainerAtomBlockElement               => true
+      case _: TempFootballCompetitionAtomBlockElement => true
+      case _: GenericAtomBlockElement                 => true
+      case _: GuideAtomBlockElement                   => true
+      case _: GuVideoBlockElement                     => true
+      case _: ImageBlockElement                       => true
+      case _: InstagramBlockElement                   => true
+      case _: InteractiveAtomBlockElement             => true
+      case _: InteractiveBlockElement                 => true
+      case _: MapBlockElement                         => true
+      case _: MediaAtomBlockElement                   => true
+      case _: ProfileAtomBlockElement                 => true
+      case _: PullquoteBlockElement                   => true
+      case _: QABlockElement                          => true
+      case _: QuizAtomBlockElement                    => true
+      case _: RichLinkBlockElement                    => true
+      case _: SoundcloudBlockElement                  => true
+      case _: SpotifyBlockElement                     => true
+      case _: SubheadingBlockElement                  => true
+      case _: TextBlockElement                        => true
+      case _: TimelineAtomBlockElement                => true
+      case _: TweetBlockElement                       => true
+      case _: VideoBlockElement                       => true
+      case _: VideoFacebookBlockElement               => true
+      case _: VideoVimeoBlockElement                  => true
+      case _: VideoYoutubeBlockElement                => true
+      case _: YoutubeBlockElement                     => true
+      case _: WitnessBlockElement                     => true
+      case _: VineBlockElement                        => true
+      case _: ListBlockElement                        => true
+      case _: TimelineBlockElement                    => true
+      case _: LinkBlockElement                        => true
+      case _: ProductBlockElement                     => true
+      case _: RecipeBlockElement                      => true
+      case _: ReporterCalloutBlockElement             => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1301,20 +1396,7 @@ object PageElement extends GuLogging {
       case Contentatom =>
         (extractAtom match {
 
-          case Some(audio: AudioAtom) => {
-            Some(
-              AudioAtomBlockElement(
-                id = audio.id,
-                kicker = audio.data.kicker,
-                title = audio.atom.title,
-                coverUrl = audio.data.coverUrl,
-                trackUrl = audio.data.trackUrl,
-                trackUrlWithAds = audio.data.trackUrlWithAds.getOrElse(audio.data.trackUrl),
-                duration = audio.data.duration,
-                contentId = audio.data.contentId,
-              ),
-            )
-          }
+          case Some(audio: AudioAtom) => Some(AudioAtomBlockElement.fromAudioAtom(audio))
 
           case Some(chart: ChartAtom) => {
             val encodedId = URLEncoder.encode(chart.id, "UTF-8")
@@ -1331,25 +1413,12 @@ object PageElement extends GuLogging {
             )
           }
 
-          case Some(explainer: ExplainerAtom) => {
-            Some(ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body))
-          }
+          case Some(explainer: ExplainerAtom) => Some(ExplainerAtomBlockElement.fromExplainerAtom(explainer))
 
-          case Some(guide: GuideAtom) => {
-            val html = guide.data.items
-              .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
-              .mkString("")
-            Some(
-              GuideAtomBlockElement(
-                id = guide.id,
-                label = guide.data.typeLabel.getOrElse("Quick Guide"),
-                title = guide.atom.title.getOrElse(""),
-                img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
-                html = html,
-                credit = guide.credit.getOrElse(""),
-              ),
-            )
-          }
+          case Some(tempFootballCompetition: TempFootballCompetitionAtom) =>
+            Some(TempFootballCompetitionAtomBlockElement.fromTempFootballCompetitionAtom(tempFootballCompetition))
+
+          case Some(guide: GuideAtom) => Some(GuideAtomBlockElement.fromGuideAtom(guide))
 
           case Some(interactive: InteractiveAtom) => {
             val isLegacy =
@@ -1415,72 +1484,14 @@ object PageElement extends GuLogging {
             }
           }
 
-          case Some(profile: ProfileAtom) => {
-            val html = profile.data.items
-              .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
-              .mkString("")
-            val items = profile.data.items.toList.map(item => ProfileAtomBlockElementItem(item.title, item.body))
-            Some(
-              ProfileAtomBlockElement(
-                id = profile.id,
-                label = profile.data.typeLabel.getOrElse("Profile"),
-                title = profile.atom.title.getOrElse(""),
-                img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
-                html = html,
-                items = items,
-                credit = profile.credit.getOrElse(""),
-              ),
-            )
-          }
+          case Some(profile: ProfileAtom) => Some(ProfileAtomBlockElement.fromProfileAtom(profile))
 
-          case Some(cta: CallToActionAtom) => {
-            Some(
-              CallToActionAtomBlockElement(
-                id = cta.id,
-                title = cta.atom.title.getOrElse(""),
-                url = cta.data.url,
-                image = cta.data.backgroundImage,
-                label = cta.data.label,
-                trackingCode = cta.data.trackingCode,
-                btnText = cta.data.btnText,
-              ),
-            )
-          }
+          case Some(cta: CallToActionAtom) => Some(CallToActionAtomBlockElement.fromCallToActionAtom(cta))
 
-          case Some(qa: QandaAtom) => {
-            Some(
-              QABlockElement(
-                id = qa.id,
-                title = qa.atom.title.getOrElse(""),
-                img = qa.image.flatMap(ImgSrc.getAmpImageUrl),
-                html = qa.data.item.body,
-                credit = qa.credit.getOrElse(""),
-              ),
-            )
-          }
+          case Some(qa: QandaAtom) => Some(QABlockElement.fromQandaAtom(qa))
 
-          case Some(timeline: TimelineAtom) => {
-            Some(
-              TimelineAtomBlockElement(
-                id = timeline.id,
-                title = timeline.atom.title.getOrElse(""),
-                description = timeline.data.description,
-                events = timeline.data.events
-                  .map(event =>
-                    TimelineAtomEvent(
-                      title = event.title,
-                      date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
-                      body = event.body,
-                      toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
-                      unixDate = event.date,
-                      toUnixDate = event.toDate,
-                    ),
-                  )
-                  .toSeq,
-              ),
-            )
-          }
-          case Some(quizAtom: QuizAtom) => {
+          case Some(timeline: TimelineAtom) => Some(TimelineAtomBlockElement.fromTimelineAtom(timeline))
+          case Some(quizAtom: QuizAtom)     => {
             val questions = quizAtom.content.questions.map { q =>
               QuizAtomQuestion(
                 id = q.id,

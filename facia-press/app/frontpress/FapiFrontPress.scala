@@ -18,6 +18,26 @@ import contentapi._
 import services.{ConfigAgent, NewsletterService, S3FrontsApi}
 import services.fronts.FrontsApi
 import model.{PressedPage, _}
+import model.content.{
+  AudioAtom,
+  CallToActionAtom,
+  ExplainerAtom,
+  TempFootballCompetitionAtom,
+  GuideAtom,
+  ProfileAtom,
+  QandaAtom,
+  TimelineAtom,
+}
+import model.dotcomrendering.pageElements.{
+  AudioAtomBlockElement,
+  CallToActionAtomBlockElement,
+  ExplainerAtomBlockElement,
+  TempFootballCompetitionAtomBlockElement,
+  GuideAtomBlockElement,
+  ProfileAtomBlockElement,
+  QABlockElement,
+  TimelineAtomBlockElement,
+}
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
@@ -402,6 +422,13 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         Enrichment.enrichSnap(content.properties.embedUri, beforeEnrichment, collection, wsClient)
       case Some("interactive") =>
         Enrichment.enrichInteractive(content.properties.atomId, beforeEnrichment, collection, capiClient)
+      // Spike: we assume atom snaps carry an embedType matching the atom type
+      // name. enrichAtom itself is defensive and picks whichever atom the CAPI
+      // response actually contains, so this dispatch can be adjusted cheaply.
+      case Some(
+            "guide" | "qanda" | "profile" | "timeline" | "audio" | "explainer" | "cta" | "tempfootballcompetition",
+          ) =>
+        Enrichment.enrichAtom(content.properties.atomId, beforeEnrichment, collection, capiClient)
       case _ => Future.successful(beforeEnrichment)
     }
 
@@ -617,6 +644,80 @@ object Enrichment extends GuLogging {
 
     result.failed.foreach { error =>
       val msg = s"Processing of an interactive atom failed, and it won't be pressed: $error"
+      log.warn(msg)
+    }
+
+    result
+  }
+
+  // A single enrichment function for the "simple" atom types that we can
+  // pre-fetch and render server-side (mirroring enrichInteractive). It inspects
+  // the CAPI item response for whichever atom type is present and converts it
+  // into the equivalent DCR block element, storing it on the relevant
+  // EnrichedContent field.
+  def enrichAtom(
+      atomId: Option[String],
+      beforeEnrichment: EnrichedContent,
+      collection: Collection,
+      capiClient: CapiContentApiClient,
+  )(implicit executionContext: ExecutionContext): Future[EnrichedContent] = {
+
+    def enrich(response: ItemResponse): Option[EnrichedContent] = {
+      response.guide
+        .map(atom => beforeEnrichment.copy(GuideAtom = Some(GuideAtomBlockElement.fromGuideAtom(GuideAtom.make(atom)))))
+        .orElse(
+          response.qanda
+            .map(atom => beforeEnrichment.copy(QandaAtom = Some(QABlockElement.fromQandaAtom(QandaAtom.make(atom))))),
+        )
+        .orElse(
+          response.profile.map(atom =>
+            beforeEnrichment.copy(ProfileAtom = Some(ProfileAtomBlockElement.fromProfileAtom(ProfileAtom.make(atom)))),
+          ),
+        )
+        .orElse(
+          response.timeline.map(atom =>
+            beforeEnrichment
+              .copy(TimelineAtom = Some(TimelineAtomBlockElement.fromTimelineAtom(TimelineAtom.make(atom)))),
+          ),
+        )
+        .orElse(
+          response.audio.map(atom =>
+            beforeEnrichment.copy(AudioAtom = Some(AudioAtomBlockElement.fromAudioAtom(AudioAtom.make(atom)))),
+          ),
+        )
+        .orElse(
+          response.explainer.map(atom =>
+            beforeEnrichment
+              .copy(ExplainerAtom = Some(ExplainerAtomBlockElement.fromExplainerAtom(ExplainerAtom.make(atom)))),
+          ),
+        )
+        .orElse(
+          response.cta.map(atom =>
+            beforeEnrichment
+              .copy(CtaAtom = Some(CallToActionAtomBlockElement.fromCallToActionAtom(CallToActionAtom.make(atom)))),
+          ),
+        )
+        .orElse(
+          response.tempfootballcompetition.map(atom =>
+            beforeEnrichment
+              .copy(TempFootballCompetitionAtom =
+                Some(
+                  TempFootballCompetitionAtomBlockElement
+                    .fromTempFootballCompetitionAtom(TempFootballCompetitionAtom.make(atom)),
+                ),
+              ),
+          ),
+        )
+    }
+
+    val result = for {
+      atomId <- asFut(atomId, "atomId was undefined")
+      itemResponse <- capiClient.getResponse(ItemQuery(atomId))
+      enriched <- asFut(enrich(itemResponse), s"failed to enrich atom $atomId")
+    } yield enriched
+
+    result.failed.foreach { error =>
+      val msg = s"Processing of an atom failed, and it won't be pressed: $error"
       log.warn(msg)
     }
 
