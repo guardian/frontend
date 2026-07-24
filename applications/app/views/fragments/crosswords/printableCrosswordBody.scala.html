@@ -21,7 +21,7 @@
         <h3 class="printable-crossword__clues__title">Across</h3>
 
         <ul class="printable-crossword__clues__list">
-            @crosswordPage.crossword.acrossEntries.map(printableCrosswordClue.render)
+            @crosswordPage.crossword.acrossEntries.map(printableCrosswordClue.render(_, request))
         </ul>
     </div>
 
@@ -29,7 +29,7 @@
         <h3 class="printable-crossword__clues__title">Down</h3>
 
         <ul class="printable-crossword__clues__list">
-            @crosswordPage.crossword.downEntries.map(printableCrosswordClue.render)
+            @crosswordPage.crossword.downEntries.map(printableCrosswordClue.render(_, request))
         </ul>
     </div>
 

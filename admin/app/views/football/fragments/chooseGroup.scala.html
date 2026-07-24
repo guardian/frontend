@@ -1,4 +1,4 @@
-@(name: String)
+@(name: String)(implicit request: play.api.mvc.RequestHeader)
 
 <select name="@name" id="id-@name" class="form-control" data-placeholder="Choose group">
     <option value="">(choose group)</option>

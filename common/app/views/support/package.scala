@@ -140,9 +140,10 @@ object ContributorLinks {
 
 object `package` {
 
-  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body)(cleaners: _*)
+  def withJsoup(html: Html)(cleaners: HtmlCleaner*)(implicit request: RequestHeader): Html =
+    withJsoup(html.body)(cleaners: _*)
 
-  def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
+  def withJsoup(html: String)(cleaners: HtmlCleaner*)(implicit request: RequestHeader): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }
     Html(cleanedHtml.body.html)
   }
@@ -213,7 +214,7 @@ object StripHtmlTagsAndUnescapeEntities {
 }
 
 object TableEmbedComplimentaryToP extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: play.api.mvc.RequestHeader): Document = {
     document.getElementsByClass("element-table").asScala.foreach { element =>
       Option(element.nextElementSibling).map { nextSibling =>
         if (nextSibling.tagName == "p") element.addClass("element-table--complimentary")

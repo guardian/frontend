@@ -5,10 +5,18 @@ import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import views.support.{AffiliateLinksCleaner, HtmlCleaner}
+import views.support.AffiliateLinksCleaner
 
 import scala.jdk.CollectionConverters._
 import scala.util.matching.Regex
+
+/** A minimal cleaner contract for the DCR gallery-caption model path. These cleaners run while building the
+  * dotcom-rendering JSON model, which is NOT a request context, and they do not render any Twirl templates, so they
+  * must not depend on a RequestHeader.
+  */
+private[pageElements] trait GalleryCaptionHtmlCleaner {
+  def clean(d: Document): Document
+}
 
 object TextCleaner {
 
@@ -146,7 +154,7 @@ object TagLinker {
   }
 }
 
-object GalleryCaptionCleaner extends HtmlCleaner {
+object GalleryCaptionCleaner extends GalleryCaptionHtmlCleaner {
   override def clean(galleryCaption: Document): Document = {
     // There is an inconsistent number of <br> tags in gallery captions.
     // To create some consistency, re will remove them all.
@@ -174,7 +182,7 @@ case class GalleryAffiliateLinksCleaner(
     shouldAddAffiliateLinks: Boolean,
     isUSProductionOffice: Boolean,
     abTests: Map[String, String],
-) extends HtmlCleaner
+) extends GalleryCaptionHtmlCleaner
     with GuLogging {
 
   override def clean(document: Document): Document = {

@@ -1,5 +1,6 @@
 package views.support.fragment
 
+import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
 object ConsentBlock {
@@ -38,7 +39,7 @@ object ConsentBlock {
       override val show: Boolean = true,
   ) extends ConsentBlockWithHelp(show, name, help)
 
-  def renderBlocks(steps: List[ConsentBlock]): List[Html] = {
+  def renderBlocks(steps: List[ConsentBlock])(implicit request: RequestHeader): List[Html] = {
     val displaySteps = steps.filter(_.show)
     val firstHelpableBlock = steps
       .filter(_ match {

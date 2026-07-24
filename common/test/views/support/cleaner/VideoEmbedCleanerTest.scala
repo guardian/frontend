@@ -6,6 +6,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.test.FakeRequest
 
 class VideoEmbedCleanerTest extends AnyFlatSpec with Matchers {
 
@@ -24,7 +25,7 @@ class VideoEmbedCleanerTest extends AnyFlatSpec with Matchers {
 
   def clean(doc: String): Document = {
     val document: Document = Jsoup.parse(doc)
-    val result: Document = VideoEmbedCleaner(article, 600).clean(document)
+    val result: Document = VideoEmbedCleaner(article, 600).clean(document)(FakeRequest("test", "/test"))
     result
   }
 

@@ -22,7 +22,7 @@ class IdentityHttpErrorHandler(
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     logger.error("Serving error page", exception)
     if (environment.mode == Mode.Prod) {
-      Future.successful(InternalServerError(views.html.errors._50x()))
+      Future.successful(InternalServerError(views.html.errors._50x()(request)))
     } else {
       super.onServerError(request, exception)
     }
@@ -32,7 +32,7 @@ class IdentityHttpErrorHandler(
     def notFound = {
       logger.info(s"Serving 404, no handler found for ${request.path}")
       if (environment.mode == Mode.Prod) {
-        Future.successful(NotFound(views.html.errors._404()))
+        Future.successful(NotFound(views.html.errors._404()(request)))
       } else {
         super.onClientError(request, statusCode, message)
       }

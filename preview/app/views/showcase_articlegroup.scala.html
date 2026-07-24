@@ -1,4 +1,4 @@
-@(articleGroup: common.TrailsToShowcase.ArticleGroup)
+@(articleGroup: common.TrailsToShowcase.ArticleGroup)(implicit request: play.api.mvc.RequestHeader)
 @defining(articleGroup.articles) { articles =>
     <div class="articleGroup">
         @for((article, index) <- articles.zipWithIndex) {

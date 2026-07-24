@@ -1,7 +1,7 @@
 @import pa.{Fixture, FootballMatch, MatchDay}
 @import views.MatchStatus
 
-@(theMatch: FootballMatch)
+@(theMatch: FootballMatch)(implicit request: play.api.mvc.RequestHeader)
 
 @theMatch match {
     case f: Fixture     => { KO: }

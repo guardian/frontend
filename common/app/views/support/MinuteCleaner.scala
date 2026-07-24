@@ -1,10 +1,12 @@
 package views.support
 
 import org.jsoup.nodes.{Document, Element}
+import play.api.mvc.RequestHeader
+
 import scala.jdk.CollectionConverters._
 
 case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     // US Minute articles use liveblog blocks but we don't want to show timestamps
     if (article.isTheMinute) document.getElementsByClass("published-time").asScala.foreach(_.remove)
     document
@@ -33,7 +35,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "fig--has-shares",
   )
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (article.isTheMinute) {
       document.getElementsByClass("block").asScala.foreach { block =>
         val allElements = block.getAllElements

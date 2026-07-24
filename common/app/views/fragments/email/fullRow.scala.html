@@ -1,4 +1,4 @@
-@(classes: Seq[String])(cellContents: Html)
+@(classes: Seq[String])(cellContents: Html)(implicit request: play.api.mvc.RequestHeader)
 
 @* This template populates a table cell so it can accept arbitrary markup including further tables *@
 <table class="row">

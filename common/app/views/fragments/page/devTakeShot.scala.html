@@ -1,4 +1,4 @@
-@()(implicit context: model.ApplicationContext)
+@()(implicit request: play.api.mvc.RequestHeader, context: model.ApplicationContext)
 @if(context.environment.mode == play.api.Mode.Dev) {
     <script>
         if (window.callPhantom) {

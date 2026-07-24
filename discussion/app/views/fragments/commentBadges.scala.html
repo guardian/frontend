@@ -1,4 +1,4 @@
-@(comment: discussion.model.Comment)
+@(comment: discussion.model.Comment)(implicit request: play.api.mvc.RequestHeader)
 @if(comment.profile.isStaff){
     <div class="d-comment__author-label">
         @fragments.inlineSvg("marque-36", "icon", Seq("d-comment__gu-icon")) Staff

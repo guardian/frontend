@@ -18,6 +18,6 @@ class AdminHttpErrorHandler(
 
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] =
     Future.successful(
-      InternalServerError(views.html.errorPage(exception)),
+      InternalServerError(views.html.errorPage(exception)(request)),
     )
 }

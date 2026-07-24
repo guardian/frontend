@@ -1,6 +1,6 @@
 @import common.commercial.hosted.HostedPage
 @import java.net.URLEncoder
-@(page: HostedPage)
+@(page: HostedPage)(implicit request: play.api.mvc.RequestHeader)
 
 <ul class="social social--top u-unstyled u-cf" data-component="social">
     <li class="social__item social__item--facebook" data-link-name="facebook">

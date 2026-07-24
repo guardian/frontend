@@ -3,7 +3,7 @@
 @import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
 @import play.twirl.api.HtmlFormat
 
-@(chart: ChartAtom, shouldFence: Boolean)(implicit context: model.ApplicationContext)
+@(chart: ChartAtom, shouldFence: Boolean)(implicit request: play.api.mvc.RequestHeader, context: model.ApplicationContext)
 
 @iframeBody = {
     <!DOCTYPE html>

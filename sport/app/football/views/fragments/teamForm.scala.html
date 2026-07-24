@@ -1,6 +1,6 @@
 @import model.CompetitionDisplayHelpers.cleanTeamName
 
-@(teamId: String, competition: model.Competition)
+@(teamId: String, competition: model.Competition)(implicit request: play.api.mvc.RequestHeader)
 
 <div class="team__results">
 @competition.teamResults(teamId).takeRight(5).map { result =>

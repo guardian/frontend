@@ -4,6 +4,7 @@ import org.scalatest.matchers.should.Matchers
 import views.support.{WitnessCleaner, withJsoup}
 import play.twirl.api.Html
 import org.scalatest.flatspec.AnyFlatSpec
+import play.api.test.FakeRequest
 
 class WitnessCleanerTest extends AnyFlatSpec with Matchers {
 
@@ -18,7 +19,7 @@ class WitnessCleanerTest extends AnyFlatSpec with Matchers {
         |    Some video content
         |  </figure>
         | </body>""".stripMargin,
-    ) { WitnessCleaner }
+    ) { WitnessCleaner }(FakeRequest("test", "/test"))
 
     html.body should include("element-witness-video")
     html.body should include("Some video content")

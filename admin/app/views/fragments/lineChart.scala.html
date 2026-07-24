@@ -1,4 +1,4 @@
-@(chart: tools.Chart[String])
+@(chart: tools.Chart[String])(implicit request: play.api.mvc.RequestHeader)
 
 @* placeholder for chart *@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>

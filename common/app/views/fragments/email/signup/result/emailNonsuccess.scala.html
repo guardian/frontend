@@ -1,6 +1,6 @@
 @import model.{InvalidEmail, OtherError, NonsuccessResult}
 
-@(result: NonsuccessResult)
+@(result: NonsuccessResult)(implicit request: play.api.mvc.RequestHeader)
 
 <div class="email-sub email-sub--article">
     <div class="email-sub__message">

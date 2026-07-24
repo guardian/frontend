@@ -1,4 +1,4 @@
-@(entry: model.Entry)
+@(entry: model.Entry)(implicit request: play.api.mvc.RequestHeader)
 
 <li>
     <span class="printable-crossword__clue__number">@entry.humanNumber</span>

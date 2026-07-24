@@ -1,12 +1,13 @@
 package views.support.cleaner
 
 import org.jsoup.nodes.{Document, Element}
+import play.api.mvc.RequestHeader
 import views.support.HtmlCleaner
 
 import scala.jdk.CollectionConverters._
 
 object CmpParamCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     val formstackSrcValues = List(
       "guardiannewsampampmedia.formstack.com", // straight from Formstack
       "profile.theguardian.com/form/embed",

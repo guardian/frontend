@@ -12,7 +12,7 @@
     boldTitle: Boolean = true,
     titleProvider: ConsentWording => String = w => w.wording,
     descriptionProvider: ConsentWording => Option[String] = w => w.description
-)(messages: play.api.i18n.Messages)
+)(messages: play.api.i18n.Messages)(implicit request: play.api.mvc.RequestHeader)
 
 @getConsentText(consentField: Field) = @{
     Consent.wording(
@@ -35,4 +35,4 @@
     highlighted = highlighted,
     skin = skin,
     boldTitle = boldTitle
-)(nonInputFields, messages)
+)(request, nonInputFields, messages)

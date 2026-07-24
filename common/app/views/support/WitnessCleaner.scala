@@ -1,10 +1,12 @@
 package views.support
 
-import org.jsoup.nodes.{Element, Document}
+import org.jsoup.nodes.{Document, Element}
+import play.api.mvc.RequestHeader
+
 import scala.jdk.CollectionConverters._
 
 object WitnessCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
 
     document.getElementsByClass("element-witness-video").asScala.foreach { embed: Element =>
       // remove height from video iframe

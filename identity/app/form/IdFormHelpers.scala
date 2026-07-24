@@ -3,11 +3,14 @@ package form
 import views.html.helper.FieldConstructor
 import views.html.fragments.form.fieldConstructors.{frontendFieldConstructor, multiInputFieldConstructor}
 import play.api.data.Field
+import play.api.mvc.RequestHeader
 
 object IdFormHelpers {
-  implicit val fields: FieldConstructor = FieldConstructor(frontendFieldConstructor.f)
+  implicit def fields(implicit request: RequestHeader): FieldConstructor =
+    FieldConstructor(elements => frontendFieldConstructor(elements))
 
-  val nonInputFields = FieldConstructor(multiInputFieldConstructor.f)
+  def nonInputFields(implicit request: RequestHeader): FieldConstructor =
+    FieldConstructor(elements => multiInputFieldConstructor(elements))
 
   def Password(field: Field, args: (Symbol, Any)*): Input = {
     val updatedArgs =

@@ -1,6 +1,6 @@
 package jobs
 
-import common.GuLogging
+import common.{GuLogging, MockRequestHeader}
 import conf.Configuration.frontend.{dotcomPlatformEmail, webEngineersEmail}
 import conf.switches.{Switch, Switches}
 import services.EmailService
@@ -18,8 +18,13 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLoggin
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
       if (expiringSwitches.nonEmpty) {
-
-        val htmlBody = views.html.email.expiringSwitches(expiringSwitches).body.trim()
+        // These RequestHeaders are used to identify which controller is calling twirl templates
+        // We're not in the context of a controller, so we need to mock the RequestHeader
+        val mockedRequestHeader = new MockRequestHeader(
+          controllerName = "ExpiringSwitchesEmailJob",
+          controllerMethodName = "runJob",
+        )
+        val htmlBody = views.html.email.expiringSwitches(expiringSwitches)(mockedRequestHeader).body.trim()
 
         val recipients = {
           val switchOwners = expiringSwitches.flatMap(_.owners.flatMap(_.email)).distinct

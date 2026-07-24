@@ -1,5 +1,5 @@
 @import model.KeyEventData
-@(id: String, keyEvents: Seq[KeyEventData])
+@(id: String, keyEvents: Seq[KeyEventData])(implicit request: play.api.mvc.RequestHeader)
 
 @keyEvents.map { keyEvent =>
     <li class="timeline__item">

@@ -15,19 +15,20 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 import services.SkimLinksCache
+
 import scala.jdk.CollectionConverters._
 import scala.collection.mutable
 import scala.util.Try
 
 trait HtmlCleaner {
-  def clean(d: Document): Document
+  def clean(d: Document)(implicit request: RequestHeader): Document
 }
 
 object BlockNumberCleaner extends HtmlCleaner {
 
   private val Block = """<!-- Block (\d*) -->""".r
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     document.getAllElements.asScala.foreach { element =>
       val blockComments = element.childNodes.asScala.flatMap { node =>
         node.toString.trim match {
@@ -45,7 +46,7 @@ object BlockNumberCleaner extends HtmlCleaner {
 
 object BlockquoteCleaner extends HtmlCleaner {
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     val quotedBlockquotes = document.getElementsByTag("blockquote").asScala.filter(_.hasClass("quoted"))
     val quoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
     val wrapBlockquoteChildren = (blockquoteElement: Element) => {
@@ -65,7 +66,7 @@ object BlockquoteCleaner extends HtmlCleaner {
 
 object PullquoteCleaner extends HtmlCleaner {
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     val pullquotes = document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote"))
     val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("inline-tone-fill")).toString()
 
@@ -81,7 +82,7 @@ object PullquoteCleaner extends HtmlCleaner {
 
 case object R2VideoCleaner extends HtmlCleaner {
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
 
     val legacyVideos =
       document.getElementsByTag("video").asScala.filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
@@ -96,7 +97,7 @@ case object R2VideoCleaner extends HtmlCleaner {
 }
 
 case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isRecipeArticle) {
       document.getElementsByClass("element-image").asScala foreach (_.remove())
       document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote")) foreach (_.remove())
@@ -110,7 +111,7 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader)
     extends HtmlCleaner
     with implicits.Numbers {
 
-  def clean(body: Document): Document = {
+  def clean(body: Document)(implicit request: RequestHeader): Document = {
     for {
       figure <- body.getElementsByTag("figure").asScala
       image <- figure.getElementsByTag("img").asScala.headOption
@@ -227,7 +228,7 @@ object AmpSrcCleaner extends HttpsUrl {
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader)
     extends HtmlCleaner {
-  def clean(body: Document): Document = {
+  def clean(body: Document)(implicit request: RequestHeader): Document = {
     val links = body.getElementsByAttribute("href")
 
     links.asScala.foreach { link =>
@@ -258,7 +259,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
 
 case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader)
     extends HtmlCleaner {
-  def clean(body: Document): Document = {
+  def clean(body: Document)(implicit request: RequestHeader): Document = {
 
     def truncateTextNode(charLimit: Int, textNode: TextNode): Int = {
       val newCharLimit = charLimit - textNode.text.length
@@ -285,7 +286,7 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
 
 class TweetCleaner(content: Content) extends HtmlCleaner {
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
 
     document.getElementsByClass("element-tweet").asScala.foreach { tweet =>
       val tweetData: Option[Tweet] = Option(tweet.attr("data-canonical-url")).flatMap { url =>
@@ -349,7 +350,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
-  def clean(doc: Document): Document = {
+  def clean(doc: Document)(implicit request: RequestHeader): Document = {
 
     if (article.content.showInRelated) {
 
@@ -408,7 +409,7 @@ object InBodyElementCleaner extends HtmlCleaner {
     "element-interactive",
   )
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     // this code REMOVES unsupported embeds
     if (ShowAllArticleEmbedsSwitch.isSwitchedOff) {
       val embeddedElements = document.getElementsByTag("figure").asScala.filter(_.hasClass("element"))
@@ -420,7 +421,7 @@ object InBodyElementCleaner extends HtmlCleaner {
 }
 
 case class Summary(amount: Int) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     val children = document.body().children().asScala.toList
     val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
     // if there is are no p's, just take the first n things (could be a blog)
@@ -433,7 +434,7 @@ case class Summary(amount: Int) extends HtmlCleaner {
 }
 
 case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isPhotoEssay) {
       document.getElementsByTag("figure").asScala.filter(_.hasClass("element-image")) foreach { images =>
         images.addClass("element-image--photo-essay")
@@ -447,7 +448,7 @@ case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
 }
 
 case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isPhotoEssay) {
       document.getElementsByClass("element-pullquote").asScala.foreach { quotes =>
         quotes.addClass("element-pullquote--photo-essay")
@@ -458,7 +459,7 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
 }
 
 case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isPhotoEssay) {
       document.getElementsByClass("caption--img").asScala.foreach { captions =>
         captions.remove()
@@ -469,7 +470,7 @@ case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
 }
 
 case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isPhotoEssay) {
       document.getElementsByTag("figure").asScala.filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach {
         case (halfWidthImage, index) =>
@@ -483,7 +484,7 @@ case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
 }
 
 case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isPhotoEssay) {
       document.getElementsByTag("blockquote").asScala.foreach { blockquotes =>
         if (!blockquotes.children().is(".pullquote-paragraph")) {
@@ -496,7 +497,7 @@ case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
 }
 
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isImmersive) {
       document.getElementsByTag("a").asScala.foreach { a =>
         a.addClass("in-body-link--immersive")
@@ -507,7 +508,7 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
 }
 
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isImmersive) {
       document.getElementsByTag("h2").asScala.foreach { h2 =>
         val beforeH2 = h2.previousElementSibling()
@@ -534,7 +535,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
     } else p.html
   }
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isFeature && !isRecipeArticle) {
       val children = document.body().children().asScala.toList
       children.headOption match {
@@ -563,7 +564,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 }
 
 case class NumberedListFurniture(isNumberedList: Boolean) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (isNumberedList) {
       // Adds yellow styling to star ratings mid article
       document.select("p:containsOwn(★)").asScala.foreach { star =>
@@ -591,7 +592,7 @@ case class NumberedListFurniture(isNumberedList: Boolean) extends HtmlCleaner {
 // Gallery Caption's don't come back as structured data
 // This is a hack to serve the correct html
 object GalleryCaptionCleaner extends HtmlCleaner {
-  override def clean(galleryCaption: Document): Document = {
+  override def clean(galleryCaption: Document)(implicit request: RequestHeader): Document = {
     // There is an inconsistent number of <br> tags in gallery captions.
     // To create some consistency, re will remove them all.
     galleryCaption.getElementsByTag("br").remove()
@@ -613,7 +614,7 @@ object GalleryCaptionCleaner extends HtmlCleaner {
 }
 
 object InteractiveSrcdocCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (interactivePressing.isSwitchedOn) {
       for {
         iframe <- Option(document.getElementsByTag("iframe").first())
@@ -632,21 +633,21 @@ object InteractiveSrcdocCleaner extends HtmlCleaner {
 }
 
 object FigCaptionCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     document.getElementsByTag("figcaption").asScala.foreach { _.addClass("caption caption--img") }
     document
   }
 }
 
 object MainFigCaptionCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     document.getElementsByTag("figcaption").asScala.foreach { _.addClass("caption caption--img caption--main") }
     document
   }
 }
 
 case class RichLinkCleaner()(implicit val request: RequestHeader) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
 
     val richLinks = document.getElementsByClass("element-rich-link")
 
@@ -669,7 +670,7 @@ case class RichLinkCleaner()(implicit val request: RequestHeader) extends HtmlCl
 }
 
 object MembershipEventCleaner extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     val membershipEvents = document.getElementsByClass("element-membership")
     membershipEvents
       .addClass("element-membership--not-upgraded")
@@ -695,7 +696,7 @@ case class AtomsCleaner(
     atoms.flatMap(_.all.find(_.id == id))
   }
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (UseAtomsSwitch.isSwitchedOn) {
 
       for {
@@ -752,7 +753,7 @@ object setSvgClasses {
 }
 
 case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends HtmlCleaner {
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
 
     def hasFirstContainerThrasher(element: Element, index: Int): Boolean = {
       index == 0 && element.hasClass("fc-container--thrasher")
@@ -814,7 +815,7 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
     implicit val request: RequestHeader,
 ) extends HtmlCleaner {
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
 
     val containers: List[(Element, Int)] = document.getElementsByClass("fc-container").asScala.toList.zipWithIndex
 
@@ -846,9 +847,8 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 }
 
 object GarnettQuoteCleaner extends HtmlCleaner {
-  val garnettQuote = views.html.fragments.inlineSvg("garnett-quote", "icon").toString
-
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
+    val garnettQuote = views.html.fragments.inlineSvg("garnett-quote", "icon").toString
     for {
       quote <- document.getElementsByClass("inline-quote").asScala
     } {
@@ -870,7 +870,7 @@ case class AffiliateLinksCleaner(
 ) extends HtmlCleaner
     with GuLogging {
 
-  override def clean(document: Document): Document = {
+  override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (
       AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(
         AffiliateLinks.isSwitchedOn,
