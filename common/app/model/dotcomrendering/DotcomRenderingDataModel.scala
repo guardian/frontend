@@ -5,7 +5,7 @@ import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
-import common.{CanonicalLink, Chronos, Edition, Localisation, RichRequestHeader}
+import common.{CanonicalLink, Chronos, Edition, Environment, Localisation, RichRequestHeader}
 import conf.Configuration
 import crosswords.CrosswordPageWithContent
 import model.dotcomrendering.DotcomRenderingUtils._
@@ -621,6 +621,9 @@ object DotcomRenderingDataModel {
       }
     }
 
+    val guardianBaseURL =
+      if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
+
     DotcomRenderingDataModel(
       affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
       audioArticleImage = audioImageBlock,
@@ -638,7 +641,7 @@ object DotcomRenderingDataModel {
       editionId = edition.id,
       editionLongForm = Edition(request).displayName,
       format = modifiedFormat,
-      guardianBaseURL = Configuration.site.host,
+      guardianBaseURL = guardianBaseURL,
       hasRelated = content.content.showInRelated,
       hasStoryPackage = hasStoryPackage,
       storyPackage = storyPackage,
