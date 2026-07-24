@@ -1,0 +1,137 @@
+{
+	"containers": [
+		{
+			"title": "Crosswords",
+			"variant": "card-grid",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Mini crossword",
+							"type": "crossword",
+							"set": "mini"
+						}
+					],
+					[
+						{
+							"title": "Cryptic crossword",
+							"type": "crossword",
+							"set": "cryptic"
+						}
+					],
+					[
+						{
+							"title": "Quick crossword",
+							"type": "crossword",
+							"set": "quick"
+						}
+					],
+					[
+						{
+							"title": "Browse the crossword archive",
+							"type": "crossword",
+							"set": "all",
+							"url": "/puzzles/crosswords/archive",
+							"variant": "archive"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "Sudoku",
+			"variant": "card-grid",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Today's Easy Sudoku",
+							"type": "sudoku",
+							"set": "easy",
+							"slug": "sudoku-easy",
+							"url": "https://tg.amuselabs.com/guardian/crossword?id=guardian-wordwheel-20260529&set=guardian-word-wheel&picker=date-picker&src=https%3A%2F%2Ftg.amuselabs.com%2Fguardian%2Fdate-picker%3Fset%3Dguardian-word-wheel%26idx%3D1&loadToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI5ZTQ0YmUxMi02ZWU1LTQxZmItODBlZC02MTFiZTE4MzBiOWQiLCJzZXQiOiJndWFyZGlhbi13b3JkLXdoZWVsIiwidWlkU3JjIjowLCJpZCI6Imd1YXJkaWFuLXdvcmR3aGVlbC0yMDI2MDUyOSIsInRpbWVzdGFtcCI6MTc4MDA0NjkzMTQ3Mn0.kyAGOVP6hfvL-UcY91_jM8uka4FrWbluePO1P9f7Tlw&deepLink=1",
+							"index": 1,
+							"variant": "iframe-page"
+						}
+					],
+					[
+						{
+							"title": "Today's Med Sudoku",
+							"type": "sudoku",
+							"set": "medium",
+							"slug": "sudoku-medium",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
+							"index": 1,
+							"variant": "iframe-page"
+						}
+					],
+					[
+						{
+							"title": "Today's Hard Sudoku",
+							"type": "sudoku",
+							"set": "hard",
+							"slug": "sudoku-hard",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
+							"index": 1,
+							"variant": "iframe-page"
+						}
+					],
+					[
+						{
+							"title": "Play the Sudoku archive",
+							"type": "sudoku",
+							"set": "all",
+							"slug": "sudoku-archive",
+							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&embed=1",
+							"variant": "iframe-page"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "Wordiply",
+			"variant": "iframe-block",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Play Wordiply",
+							"type": "wordiply",
+							"set": "all",
+							"slug": "wordiply",
+							"url": "https://www.wordiply.com/",
+							"variant": "iframe-page"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "For more games, download the app",
+			"variant": "store-links",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "App Store",
+							"type": "store",
+							"set": "ios",
+							"url": "https://apps.apple.com/"
+						},
+						{
+							"title": "Google Play",
+							"type": "store",
+							"set": "android",
+							"url": "https://play.google.com/store"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		}
+	]
+}
