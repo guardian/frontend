@@ -2,7 +2,7 @@ package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
-import common.{DCRMetrics, GuLogging}
+import common.{DCRMetrics, Edition, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerDcrSwitch
@@ -13,6 +13,7 @@ import model.dotcomrendering._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.meta.BlocksOn
 import model.{
+  ApplicationContext,
   CacheTime,
   Cached,
   GalleryPage,
@@ -20,12 +21,16 @@ import model.{
   InteractivePage,
   LiveBlogPage,
   MediaPage,
+  MetaData,
   NoCache,
   PageWithStoryPackage,
   PressedPage,
   RelatedContentItem,
+  SectionId,
   SimplePage,
+  StandalonePage,
 }
+import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -547,6 +552,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
     val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/AppsHostedContent", pageBlocks.page.metadata.cacheTime)
+  }
+
+  def getShell(
+      ws: WSClient,
+      path: String,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] = {
+    post(
+      ws,
+      json,
+      Configuration.rendering.articleBaseURL + s"/Site/$path",
+      CacheTime.Component,
+    )
   }
 }
 
