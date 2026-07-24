@@ -2,6 +2,7 @@ package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
+import common.LoggingField.LogField
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
@@ -84,9 +85,28 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       case None     => request.post(payload)
     }
 
-    resp.foreach(_ => {
-      DCRMetrics.DCRLatencyMetric.recordDuration(currentTimeMillis() - start)
+    resp.foreach(r => {
+      val duration: Long = currentTimeMillis() - start
+
+      DCRMetrics.DCRLatencyMetric.recordDuration(duration)
       DCRMetrics.DCRRequestCountMetric.increment()
+
+      // Looking at some of these JSON payloads, they map to case classes in `model.dotcomrendering`.
+      // Use this to view the full JSON payload by adding `.json?dcr=true`.
+      // TODO refactor the case classes to share a trait so that we can pattern match here instead.
+      val canonicalUrl: String = (payload \ "canonicalUrl").asOpt[String].getOrElse("unknown")
+
+      val markers: List[LogField] = List[LogField](
+        "internal-request.target" -> "DCR",
+        "internal-request.method" -> "POST",
+        "internal-request.status" -> r.status,
+        "internal-request.duration" -> duration,
+        "internal-request.requestUri" -> request.uri.toString,
+        "internal-request.contentLength" -> payload.toString.length,
+        "internal-request.canonicalUrl" -> canonicalUrl,
+      )
+
+      logInfoWithCustomFields(s"Request to DCR completed with status ${r.status} in ${duration}ms", markers)
     })
 
     resp.recoverWith({
