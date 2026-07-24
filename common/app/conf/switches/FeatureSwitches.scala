@@ -671,4 +671,15 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val UseTrailsFromS3 = Switch(
+    group = SwitchGroup.Feature,
+    name = "use-trails-from-s3",
+    description = "Use trails from S3",
+    owners = Seq(Owner.withEmail("dotcom.platform@theguardian.com")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = false,
+    highImpact = false,
+  )
 }
