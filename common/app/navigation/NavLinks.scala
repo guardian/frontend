@@ -171,6 +171,7 @@ object NavLinks {
   val artAndDesign = NavLink("Art & design", "/artanddesign")
   val stage = NavLink("Stage", "/stage")
   val classical = NavLink("Classical", "/music/classicalmusicandopera")
+  val designABetterWorld = NavLink("Design a better world", "/artanddesign/series/design-a-better-world")
 
   /* LIFE */
   val fashion = NavLink("Fashion", "/fashion")
@@ -520,6 +521,7 @@ object NavLinks {
       stage,
       classical,
       games,
+      designABetterWorld,
     ),
   )
   val intCulturePillar = ukCulturePillar.copy(
