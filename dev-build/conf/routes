@@ -37,6 +37,8 @@ GET           /puzzles/crosswords/archive.json                                  
 GET           /puzzles/crosswords/archive                                                                                               controllers.PuzzlesPageController.renderCrosswordArchive()
 
 # IFrame Puzzles
+GET        /puzzles/:slug/archive/:year/:month.json                                                                                     controllers.PuzzlesPageController.renderPuzzleArchiveMonthJson(slug: String, year: Int, month: Int)
+GET        /puzzles/:slug/archive/:year/:month                                                                                          controllers.PuzzlesPageController.renderPuzzleArchiveMonth(slug: String, year: Int, month: Int)
 GET        /puzzles/:slug/archive.json                                                                                                  controllers.PuzzlesPageController.renderPuzzleArchiveJson(slug: String)
 GET        /puzzles/:slug/archive                                                                                                       controllers.PuzzlesPageController.renderPuzzleArchive(slug: String)
 GET        /puzzles/:slug.json                                                                                                          controllers.PuzzlesPageController.renderPuzzleJson(slug: String)

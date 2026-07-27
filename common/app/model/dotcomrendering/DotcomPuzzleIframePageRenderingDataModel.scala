@@ -34,6 +34,7 @@ case class DotcomPuzzleIframePageRenderingDataModel(
     canonicalUrl: String,
     puzzle: PuzzleItem,
     archiveNavigation: Seq[PuzzleArchiveNavigation],
+    archiveMonth: Option[String],
 )
 
 object DotcomPuzzleIframePageRenderingDataModel {
@@ -45,6 +46,7 @@ object DotcomPuzzleIframePageRenderingDataModel {
       puzzle: PuzzleItem,
       request: RequestHeader,
       archiveNavigation: Seq[PuzzleArchiveNavigation] = Seq.empty,
+      archiveMonth: Option[String] = None,
   ): DotcomPuzzleIframePageRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
@@ -90,6 +92,7 @@ object DotcomPuzzleIframePageRenderingDataModel {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       puzzle = puzzle,
       archiveNavigation = archiveNavigation,
+      archiveMonth = archiveMonth,
     )
   }
 

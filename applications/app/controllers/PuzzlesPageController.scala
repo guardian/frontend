@@ -244,6 +244,15 @@ class PuzzlesPageController(
       }
     }
 
+  private val PuzzleArchiveMonthPath =
+    """.*/archive/(\d{4})/(0[1-9]|1[0-2])(?:\.json)?$""".r
+
+  private def archiveMonthFromPath(path: String): Option[String] =
+    path match {
+      case PuzzleArchiveMonthPath(year, month) => Some(s"$year-$month")
+      case _                                   => None
+    }
+
   def renderPuzzleArchive(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
       request.getRequestFormat match {
@@ -260,6 +269,7 @@ class PuzzlesPageController(
                   archive.puzzle,
                   request,
                   archiveNavigation(pages),
+                  archiveMonthFromPath(request.path),
                 )
 
                 remoteRenderer.getPuzzleIframePage(
@@ -297,6 +307,7 @@ class PuzzlesPageController(
                   archive.puzzle,
                   request,
                   archiveNavigation(pages),
+                  archiveMonthFromPath(request.path),
                 )
 
                 common
@@ -312,6 +323,29 @@ class PuzzlesPageController(
           )
       }
     }
+
+  private def validArchiveMonth(year: Int, month: Int): Option[String] =
+    Option.when(year >= 1970 && year <= 9999 && month >= 1 && month <= 12)(
+      f"$year%04d-$month%02d",
+    )
+
+  def renderPuzzleArchiveMonth(
+      slug: String,
+      year: Int,
+      month: Int,
+  ): Action[AnyContent] =
+    validArchiveMonth(year, month)
+      .map(_ => renderPuzzleArchive(slug))
+      .getOrElse(Action(NotFound))
+
+  def renderPuzzleArchiveMonthJson(
+      slug: String,
+      year: Int,
+      month: Int,
+  ): Action[AnyContent] =
+    validArchiveMonth(year, month)
+      .map(_ => renderPuzzleArchiveJson(slug))
+      .getOrElse(Action(NotFound))
 
   def renderCrosswordArchive(): Action[AnyContent] =
     Action.async { implicit request =>
