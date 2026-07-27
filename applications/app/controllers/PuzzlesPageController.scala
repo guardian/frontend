@@ -13,6 +13,7 @@ import model.dotcomrendering.{
   DotcomCrosswordArchivePageRenderingDataModel,
   DotcomPuzzleIframePageRenderingDataModel,
   DotcomPuzzlesPageRenderingDataModel,
+  PuzzleArchiveNavigation,
   PuzzleContainer,
   PuzzleItem,
 }
@@ -116,6 +117,33 @@ class PuzzlesPageController(
       .find(_.slug.contains(slug))
   }
 
+  private case class PuzzleArchivePage(
+      title: String,
+      puzzle: PuzzleItem,
+  )
+
+  private def puzzleArchivePages(
+      containers: Seq[PuzzleContainer],
+  ): Seq[PuzzleArchivePage] =
+    containers.flatMap { container =>
+      val archivePage = container.content.archive
+        .filter(_.variant.contains("archive-page"))
+        .flatMap { archive =>
+          archive.slug.map(_ => PuzzleArchivePage(container.title, archive))
+        }
+
+      archivePage.toSeq ++ puzzleArchivePages(container.content.nestedContainers)
+    }
+
+  private def archiveNavigation(
+      pages: Seq[PuzzleArchivePage],
+  ): Seq[PuzzleArchiveNavigation] =
+    pages.flatMap { page =>
+      page.puzzle.slug.map { slug =>
+        PuzzleArchiveNavigation(page.title, s"/puzzles/$slug/archive")
+      }
+    }
+
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
       request.getRequestFormat match {
@@ -201,6 +229,75 @@ class PuzzlesPageController(
                 val page = StaticPages.dcrSimplePuzzleIframePage(request.path, puzzle.title)
                 val dataModel =
                   DotcomPuzzleIframePageRenderingDataModel(page, puzzle, request)
+
+                common
+                  .renderJson(DotcomPuzzleIframePageRenderingDataModel.toJson(dataModel), page)
+                  .as("application/json")
+              }
+              .getOrElse(NotFound)
+          }
+
+        case _ =>
+          Future.successful(
+            Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
+          )
+      }
+    }
+
+  def renderPuzzleArchive(slug: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      request.getRequestFormat match {
+        case HtmlFormat =>
+          puzzlesLayoutProvider.getLayout().flatMap { layout =>
+            val pages = puzzleArchivePages(layout.containers)
+            pages
+              .find(_.puzzle.slug.contains(slug))
+              .map { archive =>
+                val page =
+                  StaticPages.dcrSimplePuzzleArchivePage(request.path, archive.title)
+                val dataModel = DotcomPuzzleIframePageRenderingDataModel(
+                  page,
+                  archive.puzzle,
+                  request,
+                  archiveNavigation(pages),
+                )
+
+                remoteRenderer.getPuzzleIframePage(
+                  wsClient,
+                  DotcomPuzzleIframePageRenderingDataModel.toJson(dataModel),
+                )
+              }
+              .getOrElse(
+                Future.successful(
+                  Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
+                ),
+              )
+          }
+
+        case _ =>
+          Future.successful(
+            Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
+          )
+      }
+    }
+
+  def renderPuzzleArchiveJson(slug: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      request.getRequestFormat match {
+        case JsonFormat =>
+          puzzlesLayoutProvider.getLayout().map { layout =>
+            val pages = puzzleArchivePages(layout.containers)
+            pages
+              .find(_.puzzle.slug.contains(slug))
+              .map { archive =>
+                val page =
+                  StaticPages.dcrSimplePuzzleArchivePage(request.path, archive.title)
+                val dataModel = DotcomPuzzleIframePageRenderingDataModel(
+                  page,
+                  archive.puzzle,
+                  request,
+                  archiveNavigation(pages),
+                )
 
                 common
                   .renderJson(DotcomPuzzleIframePageRenderingDataModel.toJson(dataModel), page)

@@ -10,6 +10,15 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.{CamelCase, JavaScriptPage}
 
+case class PuzzleArchiveNavigation(
+    title: String,
+    url: String,
+)
+
+object PuzzleArchiveNavigation {
+  implicit val writes: OWrites[PuzzleArchiveNavigation] = Json.writes[PuzzleArchiveNavigation]
+}
+
 case class DotcomPuzzleIframePageRenderingDataModel(
     id: String,
     editionId: String,
@@ -24,6 +33,7 @@ case class DotcomPuzzleIframePageRenderingDataModel(
     isAdFreeUser: Boolean,
     canonicalUrl: String,
     puzzle: PuzzleItem,
+    archiveNavigation: Seq[PuzzleArchiveNavigation],
 )
 
 object DotcomPuzzleIframePageRenderingDataModel {
@@ -34,6 +44,7 @@ object DotcomPuzzleIframePageRenderingDataModel {
       page: SimplePage,
       puzzle: PuzzleItem,
       request: RequestHeader,
+      archiveNavigation: Seq[PuzzleArchiveNavigation] = Seq.empty,
   ): DotcomPuzzleIframePageRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition)
@@ -78,6 +89,7 @@ object DotcomPuzzleIframePageRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       puzzle = puzzle,
+      archiveNavigation = archiveNavigation,
     )
   }
 

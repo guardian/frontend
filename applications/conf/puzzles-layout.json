@@ -194,7 +194,9 @@
 								"title": "Sudoku archive",
 								"type": "sudoku",
 								"set": "all",
+								"slug": "sudoku-easy",
 								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
+								"variant": "archive-page",
 								"backgroundColour": "#CDECFB"
 							}
 						}
@@ -222,7 +224,9 @@
 								"title": "Archive",
 								"type": "futoshiki",
 								"set": "all",
+								"slug": "futoshiki",
 								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-futoshiki&embed=1",
+								"variant": "archive-page",
 								"backgroundColour": "#D3F4F7"
 							}
 						}
@@ -250,7 +254,9 @@
 								"title": "Archive",
 								"type": "suguru",
 								"set": "all",
+								"slug": "suguru",
 								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-suguru&embed=1",
+								"variant": "archive-page",
 								"backgroundColour": "#D6D4FA"
 							}
 						}
@@ -288,7 +294,9 @@
 								"title": "Archive",
 								"type": "word-wheel",
 								"set": "all",
+								"slug": "word-wheel",
 								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1",
+								"variant": "archive-page",
 								"backgroundColour": "#F9D4E8"
 							}
 						}
@@ -315,7 +323,9 @@
 								"title": "Archive",
 								"type": "wordiply",
 								"set": "all",
+								"slug": "wordiply",
 								"url": "https://www.wordiply.com/",
+								"variant": "archive-page",
 								"backgroundColour": "#F8D0C9"
 							}
 						}
@@ -343,7 +353,9 @@
 								"title": "Archive",
 								"type": "codeword",
 								"set": "all",
+								"slug": "codeword",
 								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-codeword&embed=1",
+								"variant": "archive-page",
 								"backgroundColour": "#F2D0F6"
 							}
 						}
@@ -379,7 +391,9 @@
 								"title": "Archive",
 								"type": "on-the-ball",
 								"set": "all",
+								"slug": "on-the-ball",
 								"url": "https://sportsreveal.io/guardian",
+								"variant": "archive-page",
 								"backgroundColour": "#D5F3F2"
 							}
 						}
@@ -406,7 +420,9 @@
 								"title": "Archive",
 								"type": "film-reveal",
 								"set": "all",
+								"slug": "film-reveal",
 								"url": "https://moviegrid.io/guardian",
+								"variant": "archive-page",
 								"backgroundColour": "#EAD8B9"
 							}
 						}

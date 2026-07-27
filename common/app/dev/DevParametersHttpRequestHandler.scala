@@ -62,6 +62,7 @@ class DevParametersHttpRequestHandler(
     "_sp_env", // allow testing of Sourcepoint stage campaign
     "_sp_geo_override", // allow Sourcepoint geolocation override for testing purposes
     "type", // used by the crossword archive to determine which type of crossword to show
+    "date", // used by puzzle archive links to select a particular puzzle date
   )
 
   val commercialParams = Seq(

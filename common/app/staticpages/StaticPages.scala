@@ -79,6 +79,22 @@ object StaticPages {
       ),
     )
 
+  def dcrSimplePuzzleArchivePage(
+      id: String,
+      title: String,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = title,
+        description = Some(s"Track your progress in $title puzzles."),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
   def dcrSimpleCrosswordArchivePage(id: String): SimplePage =
     SimplePage(
       MetaData.make(
