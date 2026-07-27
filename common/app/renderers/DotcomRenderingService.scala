@@ -104,6 +104,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         "internal-request.request-uri" -> request.uri.toString,
         "internal-request.payload-content-length" -> payload.toString.length,
         "internal-request.canonical-url" -> canonicalUrl,
+        "internal-request.content-length" -> r.body.length,
       )
 
       logInfoWithCustomFields(s"Request to DCR completed with status ${r.status} in ${duration}ms", markers)
