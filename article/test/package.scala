@@ -13,5 +13,6 @@ class ArticleTestSuite
       new PublicationControllerTest,
       new LiveBlogControllerTest,
       new ArticlePickerTest,
+      new FeastSavedRecipesControllerTest,
     )
     with SingleServerSuite {}

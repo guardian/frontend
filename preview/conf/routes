@@ -191,6 +191,11 @@ GET     /$path<[^/]+/([^/]+/)?live/.*>/email controllers.LiveBlogController.rend
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailjson controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*>/email.emailtxt  controllers.LiveBlogController.renderEmail(path)
 GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.LiveBlogController.renderArticle(path, page: Option[String])
+
+# Feast API "Saved from web" proxy - see FeastSavedRecipesController for details
+GET     /api/feast-saved-recipes                controllers.FeastSavedRecipesController.getSavedRecipes(ids: Option[String])
+PUT     /api/feast-saved-recipes/:recipeId       controllers.FeastSavedRecipesController.saveRecipe(recipeId: String)
+
 GET     /*path.json                 controllers.ArticleController.renderJson(path)
 GET     /*path/email                controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailjson      controllers.ArticleController.renderEmail(path)

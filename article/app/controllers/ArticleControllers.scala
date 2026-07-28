@@ -23,4 +23,5 @@ trait ArticleControllers {
   lazy val articleController = wire[ArticleController]
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]
+  lazy val feastSavedRecipesController = wire[FeastSavedRecipesController]
 }

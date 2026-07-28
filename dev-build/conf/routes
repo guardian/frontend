@@ -374,6 +374,10 @@ GET     /$path<[^/]+/([^/]+/)?live/.*>                                          
 
 # articles, finished liveblogs
 
+# Feast API "Saved from web" proxy - see FeastSavedRecipesController for details
+GET     /api/feast-saved-recipes                controllers.FeastSavedRecipesController.getSavedRecipes(ids: Option[String])
+PUT     /api/feast-saved-recipes/:recipeId       controllers.FeastSavedRecipesController.saveRecipe(recipeId: String)
+
 GET     /*path.json                                                                                                              controllers.ArticleController.renderJson(path)
 GET     /*path/email                                                                                                             controllers.ArticleController.renderEmail(path)
 GET     /*path/email/headline.txt                                                                                                controllers.ArticleController.renderHeadline(path)
