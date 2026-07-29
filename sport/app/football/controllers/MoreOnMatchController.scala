@@ -16,7 +16,7 @@ import football.model.{
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{CacheTime, Cached, Competition, Content, ContentType, TeamColours}
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUpEnhanced => LineUp, LineUpTeamEnhanced => LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -107,7 +107,7 @@ object NxAnswer {
   def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
     team.players.map { player =>
       val events = player.events.filter(event => reportedEventTypes.contains(event.eventType)).map { event =>
-        NxEvent(event.eventTime, event.eventType)
+        NxEvent(event.normalTime, event.eventType)
       }
       NxPlayer(
         player.id,
@@ -267,7 +267,7 @@ class MoreOnMatchController(
       val contentDate = DateHelpers.parseLocalDate(year, month, day)
       val maybeResponse: Option[Future[Result]] =
         competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
-          val maybeLineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+          val maybeLineup: Future[LineUp] = competitionsService.getLineupEnhanced(theMatch)
 
           maybeLineup.map(lineup => {
             val matchStats = MatchStats.statsFromFootballMatch(theMatch, lineup, theMatch.matchStatus)
@@ -290,7 +290,7 @@ class MoreOnMatchController(
       val contentDate = DateHelpers.parseLocalDate(year, month, day)
       val maybeResponse: Option[Future[Result]] =
         competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
-          val maybeLineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+          val maybeLineup: Future[LineUp] = competitionsService.getLineupEnhanced(theMatch)
 
           maybeLineup.map(lineup => {
             val matchStatsSummary =
@@ -326,7 +326,7 @@ class MoreOnMatchController(
 
           if (request.forceDCR) {
             for {
-              lineup <- competitionsService.getLineup(theMatch)
+              lineup <- competitionsService.getLineupEnhanced(theMatch)
               filtered <- related map { _ filter hasExactlyTwoTeams }
             } yield {
               Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {

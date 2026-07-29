@@ -21,6 +21,15 @@ trait Lineups extends GuLogging {
         LineUp(homeTeam, awayTeam, m.homeTeamPossession)
       }
       .recover(footballClient.logErrorsWithMessage(s"Failed getting line-up for match ${theMatch.id}"))
+  def getLineupEnhanced(theMatch: FootballMatch)(implicit executionContext: ExecutionContext): Future[LineUpEnhanced] =
+    footballClient
+      .lineUpEnhanced(theMatch.id)
+      .map { m =>
+        val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
+        val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
+        LineUpEnhanced(homeTeam, awayTeam, m.homeTeamPossession)
+      }
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting line-up for match ${theMatch.id}"))
 }
 
 trait LiveMatches extends GuLogging {

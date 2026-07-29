@@ -7,7 +7,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
-import pa.{FootballMatch, LineUp, LineUpTeam}
+import pa.{FootballMatch, LineUpEnhanced => LineUp, LineUpTeamEnhanced => LineUpTeam}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import football.model.{DotcomRenderingFootballMatchSummaryDataModel, MatchStats}
@@ -90,7 +90,7 @@ class MatchController(
       maybeMatch match {
         case Some((competitionSummary, theMatch)) =>
           val group = tableGroupForMatch(competitionSummary.id, theMatch)
-          val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
+          val lineup: Future[LineUp] = competitionsService.getLineupEnhanced(theMatch)
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
 

@@ -1,6 +1,7 @@
 package model
 
 import pa._
+import pa.{ LineUpTeamEnhanced => LineUpTeam }
 import pa.LeagueTableEntry
 import pa.MatchDayTeam
 import java.awt.Color
