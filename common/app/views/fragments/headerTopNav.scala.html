@@ -1,6 +1,7 @@
 @()(implicit page: model.Page, request: RequestHeader)
 
 @import common.{LinkTo, Edition}
+@import ab.PuzzlesHubExperiment
 @import views.support.RenderClasses
 @import views.support.DropdownMenus.accountDropdownMenu
 @import navigation.AuthenticationComponentEvent._
@@ -26,6 +27,12 @@
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
 <header class="@RenderClasses(s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
     )" role="banner">
+
+    @defining(if (PuzzlesHubExperiment.isEnabled(request)) "variant" else "off") { experimentState =>
+        <div data-puzzles-hub-experiment-debug style="background: #ffe500; color: #121212; padding: 8px; text-align:center; font-weight: bold;">
+            Puzzles Hub Experiment: @experimentState
+        </div>
+    }
 
     <div class="header-top-nav__full-width">
         <nav class="header-top-nav__inner gs-container" data-component="nav3" role="navigation"
