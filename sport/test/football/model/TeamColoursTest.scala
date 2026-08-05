@@ -4,7 +4,7 @@ import org.scalatest.DoNotDiscover
 import model.TeamColours
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
-import pa.{LineUpTeam, Official}
+import pa.{LineUpTeamEnhanced, Official}
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class TeamColoursTest extends AnyFreeSpec with Matchers with ConfiguredTestSuite {
@@ -60,7 +60,7 @@ import test.ConfiguredTestSuite
     }
   }
 
-  private def fakeTeam(colour: String): LineUpTeam =
-    LineUpTeam("", "", colour, Official("", ""), "", 0, 0, 0, 0, 0, 0, 0, Seq.empty)
+  private def fakeTeam(colour: String): LineUpTeamEnhanced =
+    LineUpTeamEnhanced("", "", colour, Official("", ""), "", 0, 0, 0, 0, 0, 0, 0, Seq.empty)
 
 }
