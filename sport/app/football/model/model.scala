@@ -1,7 +1,7 @@
 package model
 
 import pa._
-import pa.{ LineUpTeamEnhanced => LineUpTeam }
+import pa.{LineUpTeamEnhanced}
 import pa.LeagueTableEntry
 import pa.MatchDayTeam
 import java.awt.Color
@@ -142,7 +142,7 @@ object PrevResult {
   }
 }
 
-case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
+case class TeamColours(homeTeam: LineUpTeamEnhanced, awayTeam: LineUpTeamEnhanced) {
   private val darkenFactor = 0.3
   private val homeColour =
     if (homeTeam.teamColour.isEmpty) "#ffffff"

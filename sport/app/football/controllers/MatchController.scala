@@ -7,7 +7,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.TeamMap.findTeamIdByUrlName
 import football.datetime.DateHelpers
 import model._
-import pa.{FootballMatch, LineUpEnhanced => LineUp, LineUpTeamEnhanced => LineUpTeam}
+import pa.{FootballMatch, LineUpEnhanced, LineUpTeamEnhanced}
 import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import football.model.{DotcomRenderingFootballMatchSummaryDataModel, MatchStats}
@@ -20,11 +20,11 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import scala.concurrent.Future
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUpEnhanced) extends StandalonePage with Football {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
-  def teamHasStats(team: LineUpTeam): Boolean =
+  def teamHasStats(team: LineUpTeamEnhanced): Boolean =
     (team.offsides, team.shotsOn, team.shotsOff, team.fouls) match {
       case (0, 0, 0, 0) => false
       case _            => true
@@ -90,7 +90,7 @@ class MatchController(
       maybeMatch match {
         case Some((competitionSummary, theMatch)) =>
           val group = tableGroupForMatch(competitionSummary.id, theMatch)
-          val lineup: Future[LineUp] = competitionsService.getLineupEnhanced(theMatch)
+          val lineup: Future[LineUpEnhanced] = competitionsService.getLineupEnhanced(theMatch)
           val page: Future[MatchPage] = lineup.map(MatchPage(theMatch, _))
           val tier = FootballSummaryPagePicker.getTier()
 
