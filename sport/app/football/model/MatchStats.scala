@@ -89,17 +89,17 @@ object MatchStats {
     val players = makePlayers(teamV2)
     val substitutions: Seq[Substitution] = players
       .filter((p) => p.substitute)
-      .flatMap((player) => {
-        val substitutionEvent = player.enhancedEvents.find(_.eventType == "substitution")
-
-        substitutionEvent.map((sub) =>
-          Substitution(
-            eventId = sub.eventId,
-            name = player.name,
-            lastName = player.lastName,
+      .flatMap((player) =>
+        player.enhancedEvents
+          .find(_.eventType == "substitution")
+          .map((sub) =>
+            Substitution(
+              eventId = sub.eventId,
+              name = player.name,
+              lastName = player.lastName,
+            ),
           ),
-        )
-      })
+      )
 
     TeamStats(
       teamV1.id,
