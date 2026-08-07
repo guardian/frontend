@@ -21,7 +21,6 @@ import model.{
   CrosswordData,
   DotcomContentType,
   GUDateTimeFormatNew,
-  Gallery,
   GalleryPage,
   ImageContentPage,
   ImageMedia,
@@ -465,18 +464,8 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    def hasAffiliateLinks(
-        content: ContentType,
-        blocks: Seq[APIBlock],
-    ): Boolean = {
-      content match {
-        case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
-        case _ => blocks.exists(block => DotcomRenderingUtils.stringContainsAffiliateableLinks(block.bodyHtml))
-      }
-    }
-
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
-    val shouldAddDisclaimer = hasAffiliateLinks(content, bodyBlocks)
+    val shouldAddDisclaimer = DotcomRenderingUtils.shouldShowAffiliateDisclaimer(content, bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -613,8 +602,8 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page, pageType)
 
-    def addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks: Boolean, shouldAddDisclaimer: Boolean) = {
-      if (shouldAddAffiliateLinks && shouldAddDisclaimer) {
+    def addAffiliateLinksDisclaimerDCR(shouldAddDisclaimer: Boolean) = {
+      if (shouldAddDisclaimer) {
         Some("true")
       } else {
         None
@@ -625,7 +614,7 @@ object DotcomRenderingDataModel {
       if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
 
     DotcomRenderingDataModel(
-      affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddAffiliateLinks, shouldAddDisclaimer),
+      affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddDisclaimer),
       audioArticleImage = audioImageBlock,
       trailPicture = trailPicture,
       author = author,
