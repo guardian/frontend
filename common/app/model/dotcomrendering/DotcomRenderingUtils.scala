@@ -145,8 +145,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
           val statsUrlSegment: MatchEndpoint =
             if (pageType.isLiveblog) MatchStatsSummaryEndpoint else MatchStatsEndpoint
           val localDate = articlePage.item.trail.webPublicationDate.toLocalDate
-          val headerUrl = getMatchUrl(
-            getAjaxHost, localDate, e1._2, e2._2, MatchHeaderEndpoint)
+          val headerUrl = getMatchUrl(getAjaxHost, localDate, e1._2, e2._2, MatchHeaderEndpoint)
           val statsUrl = getMatchUrl(getAjaxHost, localDate, e1._2, e2._2, statsUrlSegment)
           Some(
             DotcomRenderingMatchData(
