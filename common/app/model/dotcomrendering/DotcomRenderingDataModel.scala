@@ -646,7 +646,7 @@ object DotcomRenderingDataModel {
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
-      matchUrl = matchData.map(_.matchUrl),
+      matchUrl = matchData.flatMap(_.matchUrl),
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),

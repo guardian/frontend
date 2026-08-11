@@ -10,7 +10,6 @@ GET        /_healthcheck                                                        
 # Football Spider
 GET        /football/wallchart/:competitionTag                                                 football.controllers.WallchartController.renderWallchartHTML(competitionTag)
 
-GET        /sport/cricket/match-scoreboard/:matchDate/:teamId.json                             cricket.controllers.CricketMatchController.renderMatchScoreboardJson(matchDate, teamId)
 GET        /sport/cricket/match-header/:matchDate/:teamId.json                                 cricket.controllers.CricketMatchController.matchHeaderJson(matchDate, teamId)
 GET        /sport/cricket/match-stats-summary/:matchDate/:teamId.json                          cricket.controllers.CricketMatchController.matchStatsSummaryJson(matchDate, teamId)
 

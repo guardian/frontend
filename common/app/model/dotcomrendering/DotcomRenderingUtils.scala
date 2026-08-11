@@ -44,7 +44,7 @@ case object CricketMatchType extends DotcomRenderingMatchType
 case object FootballMatchType extends DotcomRenderingMatchType
 
 case class DotcomRenderingMatchData(
-    matchUrl: String,
+    matchUrl: Option[String],
     matchHeaderUrl: Option[String],
     matchStatsUrl: Option[String],
     matchType: DotcomRenderingMatchType,
@@ -83,7 +83,8 @@ object DotcomRenderingUtils extends DCARUrlHelper {
       case (Some(date), Some(team), true) =>
         Some(
           DotcomRenderingMatchData(
-            matchUrl = s"${getAjaxHost}/sport/cricket/match-scoreboard/$date/$team.json",
+//            matchUrl = s"${getAjaxHost}/sport/cricket/match-scoreboard/$date/$team.json",
+            matchUrl = None,
             matchHeaderUrl = Some(s"${getAjaxHost}/sport/cricket/match-header/$date/$team.json"),
             matchStatsUrl = Some(s"${getAjaxHost}/sport/cricket/match-stats-summary/$date/$team.json"),
             matchType = CricketMatchType,
@@ -155,11 +156,12 @@ object DotcomRenderingUtils extends DCARUrlHelper {
             if (pageType.isLiveblog) MatchStatsSummaryEndpoint else MatchStatsEndpoint
           val localDate = articlePage.item.trail.webPublicationDate.toLocalDate
           val navUrl = getMatchNavUrl(getAjaxHost, localDate, e1._2, e2._2, articlePage.metadata.id)
-          val headerUrl = getMatchUrl(getAjaxHost, localDate, e1._2, e2._2, MatchHeaderEndpoint)
+          val headerUrl = getMatchUrl(
+            getAjaxHost, localDate, e1._2, e2._2, MatchHeaderEndpoint)
           val statsUrl = getMatchUrl(getAjaxHost, localDate, e1._2, e2._2, statsUrlSegment)
           Some(
             DotcomRenderingMatchData(
-              matchUrl = navUrl,
+              matchUrl = Some(navUrl),
               matchHeaderUrl = Some(headerUrl),
               matchStatsUrl = Some(statsUrl),
               matchType = FootballMatchType,
