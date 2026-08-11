@@ -6,15 +6,11 @@ import conf.cricketPa.{CricketTeam, CricketTeams, PaFeed}
 import contentapi.ContentApiClient
 import cricketModel.{Match, MatchHeader, MatchStatsSummary}
 import football.datetime.DateHelpers
-import football.model.{CricketScoreBoardDataModel, DotcomRenderingCricketDataModel}
-import implicits.{HtmlFormat, JsonFormat}
+import football.model.CricketScoreBoardDataModel
 import jobs.CricketStatsJob
-import model.Cached.RevalidatableResult
 import model._
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import renderers.DotcomRenderingService
-import services.dotcomrendering.{CricketPagePicker, RemoteRender}
 
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import scala.concurrent.Future
@@ -34,14 +30,9 @@ class CricketMatchController(
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
     contentApiClient: ContentApiClient,
-)(implicit
-    context: ApplicationContext,
 ) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
-  val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
-
-  def renderMatchIdJson(date: String, teamId: String): Action[AnyContent] = renderMatchId(date, teamId)
 
   def renderMatchScoreboardJson(date: String, teamId: String): Action[AnyContent] =
     Action { implicit request =>
@@ -59,19 +50,6 @@ class CricketMatchController(
           }
         }
         .getOrElse(NoCache(NotFound))
-    }
-
-  def renderMatchId(date: String, teamId: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      CricketTeams
-        .byWordsForUrl(teamId)
-        .flatMap { team =>
-          cricketStatsJob.findMatch(team, date).map { matchData =>
-            val page = CricketMatchPage(matchData, date, team)
-            renderMatch(page)
-          }
-        }
-        .getOrElse(successful(NoCache(NotFound)))
     }
 
   def matchHeaderJson(date: String, teamId: String): Action[AnyContent] =
@@ -105,32 +83,6 @@ class CricketMatchController(
         }
         .getOrElse(successful(NoCache(NotFound)))
     }
-
-  private def renderMatch(
-      page: CricketMatchPage,
-  )(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
-    val tier = CricketPagePicker.getTier()
-    request.getRequestFormat match {
-      case JsonFormat if request.forceDCR =>
-        val model = DotcomRenderingCricketDataModel(page)
-        successful(Cached(CacheTime.Cricket)(JsonComponent.fromWritable(model)))
-      case JsonFormat =>
-        successful(Cached(CacheTime.Cricket) {
-          JsonComponent(
-            "summary" -> cricket.views.html.fragments
-              .cricketMatchSummary(page.theMatch, page.metadata.id)
-              .toString,
-          )
-        })
-      case HtmlFormat if tier == RemoteRender =>
-        val model = DotcomRenderingCricketDataModel(page)
-        remoteRenderer.getCricketPage(wsClient, DotcomRenderingCricketDataModel.toJson(model))
-      case _ =>
-        successful(Cached(CacheTime.Cricket) {
-          RevalidatableResult.Ok(cricket.views.html.cricketMatch(page))
-        })
-    }
-  }
 
   private def relatedContents(theMatch: Match, date: ZonedDateTime): Future[List[ContentType]] = {
     val startOfDateRange = DateHelpers.startOfDay(date)
