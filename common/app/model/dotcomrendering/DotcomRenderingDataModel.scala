@@ -101,7 +101,6 @@ case class DotcomRenderingDataModel(
     slotMachineFlags: String, // slot machine (temporary for contributions development)
     contributionsServiceUrl: String,
     badge: Option[DCRBadge],
-    matchUrl: Option[String], // Optional url used for match data
     matchHeaderUrl: Option[String],
     matchStatsUrl: Option[String],
     matchType: Option[DotcomRenderingMatchType],
@@ -181,7 +180,6 @@ object DotcomRenderingDataModel {
         "slotMachineFlags" -> model.slotMachineFlags,
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
         "badge" -> model.badge,
-        "matchUrl" -> model.matchUrl,
         "matchHeaderUrl" -> model.matchHeaderUrl,
         "matchStatsUrl" -> model.matchStatsUrl,
         "matchType" -> model.matchType,
@@ -646,7 +644,6 @@ object DotcomRenderingDataModel {
       linkedData = linkedData,
       main = content.fields.main,
       mainMediaElements = mainMediaElements,
-      matchUrl = matchData.flatMap(_.matchUrl),
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
