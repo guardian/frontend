@@ -18,6 +18,7 @@ import model.{
   ContentFormat,
   ContentPage,
   ContentType,
+  Gallery,
   GUDateTimeFormatNew,
   LiveBlogPage,
   Pillar,
@@ -325,6 +326,30 @@ object DotcomRenderingUtils extends DCARUrlHelper {
       } else false
     }
 
+  }
+
+  def shouldShowAffiliateDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
+    shouldAddAffiliateDisclaimerByTagging(content) && hasAffiliateLinksForDisclaimer(content, blocks)
+  }
+
+  def shouldShowAffiliateDisclaimer(content: ContentType): Boolean = {
+    shouldAddAffiliateDisclaimerByTagging(content) && hasAffiliateLinksForDisclaimer(content, Seq.empty)
+  }
+
+  private def shouldAddAffiliateDisclaimerByTagging(content: ContentType): Boolean = {
+    AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      showAffiliateLinks = content.content.fields.showAffiliateLinks,
+      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+      tagPaths = content.content.tags.tags.map(_.id),
+    )
+  }
+
+  private def hasAffiliateLinksForDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
+    content match {
+      case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
+      case _                => blocks.exists(block => stringContainsAffiliateableLinks(block.bodyHtml))
+    }
   }
 
   def contentDateTimes(content: ContentType): ArticleDateTimes = {

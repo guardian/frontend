@@ -97,6 +97,13 @@ class EmailFormServiceTest
         registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
       }
 
+      "use 'Other' when the country resolves to International" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] =
+          FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:IN")
+        service.submit(singleNewsletterBaseForm).futureValue
+        registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
+      }
+
       "use 'Other' when the X-GU-GeoLocation header isn't present" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
         service.submit(singleNewsletterBaseForm).futureValue
@@ -209,6 +216,13 @@ class EmailFormServiceTest
       "use 'Other' for an unrecognised country code" in new Fixture {
         implicit val request: FakeRequest[AnyContentAsEmpty.type] =
           FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:XX")
+        service.submitWithMany(multipleNewslettersBaseForm).futureValue
+        registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
+      }
+
+      "use 'Other' when the country resolves to International" in new Fixture {
+        implicit val request: FakeRequest[AnyContentAsEmpty.type] =
+          FakeRequest().withHeaders("X-GU-GeoLocation" -> "country:IN")
         service.submitWithMany(multipleNewslettersBaseForm).futureValue
         registrationLocation(capturePostedBody(wsRequest)) shouldBe "Other"
       }

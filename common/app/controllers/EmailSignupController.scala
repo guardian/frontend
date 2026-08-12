@@ -72,7 +72,11 @@ class EmailFormService(wsClient: WSClient, emailEmbedAgent: NewsletterSignupAgen
       .get("X-GU-GeoLocation")
       .map(_.replace("country:", ""))
       .getOrElse("row")
-    val registrationLocation: String = CountryGroup.byFastlyCountryCode(countryCode).map(_.name).getOrElse("Other")
+    val registrationLocation: String = CountryGroup
+      .byFastlyCountryCode(countryCode)
+      .map(_.name)
+      .filterNot(_ == "International")
+      .getOrElse("Other")
     val registrationLocationState: Option[String] =
       for {
         code <- Option(countryCode).filter(Set("US", "AU").contains)
