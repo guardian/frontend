@@ -4,11 +4,14 @@ import common.LinkTo
 import conf.Configuration
 import implicits.Football.MatchHelpers
 import model.TeamColours
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUpEnhanced, LineUpTeamEnhanced, MatchDayTeam}
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.RequestHeader
 
 case class PlayerEvent(eventTime: String, eventType: String)
+
+case class PlayerEventEnhanced(eventId: String, eventType: String, normalTime: String, addedTime: String)
+
 case class Player(
     id: String,
     name: String,
@@ -18,6 +21,7 @@ case class Player(
     timeOnPitch: String,
     shirtNumber: String,
     events: Seq[PlayerEvent],
+    enhancedEvents: Seq[PlayerEventEnhanced],
 )
 case class TeamStats(
     id: String,
@@ -33,6 +37,7 @@ case class TeamStats(
     colours: String,
     crest: String,
     codename: String,
+    substitutions: Seq[Substitution],
 )
 
 case class MatchStats(
@@ -43,14 +48,24 @@ case class MatchStats(
     status: String,
 )
 
+case class Substitution(
+    eventId: String,
+    name: String,
+    lastName: String,
+)
+
 object MatchStats {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
 
-  def makePlayers(team: LineUpTeam): Seq[Player] = {
+  def makePlayers(team: LineUpTeamEnhanced): Seq[Player] = {
     team.players.map { player =>
       val events = player.events.filter(event => MatchStats.reportedEventTypes.contains(event.eventType)).map { event =>
-        PlayerEvent(event.eventTime, event.eventType)
+        PlayerEvent(event.normalTime, event.eventType)
       }
+      val enhancedEvents =
+        player.events.filter(event => MatchStats.reportedEventTypes.contains(event.eventType)).map { event =>
+          PlayerEventEnhanced(event.eventID, event.eventType, event.normalTime, event.addedTime)
+        }
       Player(
         player.id,
         player.name,
@@ -60,12 +75,32 @@ object MatchStats {
         player.timeOnPitch,
         player.shirtNumber,
         events,
+        enhancedEvents,
       )
     }
   }
 
-  def makeTeamStats(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): TeamStats = {
+  def makeTeamStats(
+      teamV1: MatchDayTeam,
+      teamV2: LineUpTeamEnhanced,
+      teamPossession: Int,
+      teamColour: String,
+  ): TeamStats = {
     val players = makePlayers(teamV2)
+    val substitutions: Seq[Substitution] = players
+      .filter((p) => p.substitute)
+      .flatMap((player) =>
+        player.enhancedEvents
+          .find(_.eventType == "substitution")
+          .map((sub) =>
+            Substitution(
+              eventId = sub.eventId,
+              name = player.name,
+              lastName = player.lastName,
+            ),
+          ),
+      )
+
     TeamStats(
       teamV1.id,
       teamV1.name,
@@ -80,10 +115,11 @@ object MatchStats {
       colours = teamColour,
       crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png",
       codename = GuTeamCodes.codeFor(teamV1),
+      substitutions = substitutions,
     )
   }
 
-  def statsFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, matchStatus: String): MatchStats = {
+  def statsFromFootballMatch(theMatch: FootballMatch, lineUp: LineUpEnhanced, matchStatus: String): MatchStats = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
     MatchStats(
       theMatch.id,
@@ -95,6 +131,8 @@ object MatchStats {
   }
 
   implicit val PlayerEventWrites: Writes[PlayerEvent] = Json.writes[PlayerEvent]
+  implicit val PlayerEventEnhancedWrites: Writes[PlayerEventEnhanced] = Json.writes[PlayerEventEnhanced]
+  implicit val SubstitutionWrites: Writes[Substitution] = Json.writes[Substitution]
   implicit val PlayerWrites: Writes[Player] = Json.writes[Player]
   implicit val TeamStatsWrites: Writes[TeamStats] = Json.writes[TeamStats]
   implicit val MatchStatsWrites: Writes[MatchStats] = Json.writes[MatchStats]
@@ -121,7 +159,7 @@ case class MatchStatsSummary(
 object MatchStatsSummary {
   def makeTeamStatsSummary(
       teamV1: MatchDayTeam,
-      teamV2: LineUpTeam,
+      teamV2: LineUpTeamEnhanced,
       teamPossession: Int,
       teamColour: String,
   ): TeamStatsSummary = {
@@ -134,7 +172,7 @@ object MatchStatsSummary {
       colours = teamColour,
     )
   }
-  def statsSummaryFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp)(implicit
+  def statsSummaryFromFootballMatch(theMatch: FootballMatch, lineUp: LineUpEnhanced)(implicit
       request: RequestHeader,
   ): MatchStatsSummary = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)

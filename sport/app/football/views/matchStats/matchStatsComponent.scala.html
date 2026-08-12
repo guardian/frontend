@@ -2,13 +2,13 @@
 @import model.TeamColours
 @import views.support.RenderClasses
 @import views.{NudgePercent, PercentMaker}
-@import pa.LineUpPlayer
+@import pa.LineUpPlayerEnhanced
 @import model.CompetitionDisplayHelpers.{cleanTeamName}
 
 @import football.model.GuTeamCodes
 @(page: MatchPage)(implicit request: RequestHeader)
 
-@team(players: Seq[LineUpPlayer]) = {
+@team(players: Seq[LineUpPlayerEnhanced]) = {
     <ul class="match-stats__players u-unstyled">
         @players.map{ player =>
             <li class="match-stats__player">
@@ -18,7 +18,7 @@
                     @{ event.eventType match {
                         case "booking" => <i class="i i-card-yellow"></i>
                         case "dismissal" => <i class="i i-card-red"></i>
-                        case "substitution" => "(s " + event.eventTime + "')"
+                        case "substitution" => "(s " + event.normalTime + "')"
                         case _ =>  ""
                     }}
                 }
