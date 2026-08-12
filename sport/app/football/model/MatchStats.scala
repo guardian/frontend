@@ -37,7 +37,6 @@ case class TeamStats(
     colours: String,
     crest: String,
     codename: String,
-    substitutions: Seq[Substitution],
 )
 
 case class MatchStats(
@@ -87,19 +86,6 @@ object MatchStats {
       teamColour: String,
   ): TeamStats = {
     val players = makePlayers(teamV2)
-    val substitutions: Seq[Substitution] = players
-      .filter((p) => p.substitute)
-      .flatMap((player) =>
-        player.enhancedEvents
-          .find(_.eventType == "substitution")
-          .map((sub) =>
-            Substitution(
-              eventId = sub.eventId,
-              name = player.name,
-              lastName = player.lastName,
-            ),
-          ),
-      )
 
     TeamStats(
       teamV1.id,
@@ -115,7 +101,6 @@ object MatchStats {
       colours = teamColour,
       crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png",
       codename = GuTeamCodes.codeFor(teamV1),
-      substitutions = substitutions,
     )
   }
 
