@@ -60,7 +60,7 @@ object FooterLinks {
   def modernSlaveryActStatement(edition: String): FooterLink = {
     FooterLink(
       "Modern Slavery Act",
-      "https://uploads.guim.co.uk/2025/09/05/Modern_Slavery_Statement_2025.pdf",
+      "https://uploads.guim.co.uk/2026/08/10/Modern_Slavery_Statement_2026.pdf",
       s"$edition : footer : modern slavery act statement",
     )
   }
