@@ -4,9 +4,9 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.49.4"
+  val awsVersion = "2.49.6"
   val capiVersion = "47.0.0"
-  val faciaVersion = "34.0.0"
+  val faciaVersion = "37.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -20,7 +20,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
   val awsS3 = "software.amazon.awssdk" % "s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "18.0.0"
   val awsSes = "software.amazon.awssdk" % "ses" % awsVersion
   val awsSns = "software.amazon.awssdk" % "sns" % awsVersion
   val awsSts = "software.amazon.awssdk" % "sts" % awsVersion
@@ -57,7 +57,7 @@ object Dependencies {
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val paClient = "com.gu" %% "pa-client" % "7.0.14"
+  val paClient = "com.gu" %% "pa-client" % "7.0.18"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"

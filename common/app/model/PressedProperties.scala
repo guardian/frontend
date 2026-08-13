@@ -2,6 +2,7 @@ package model.pressed
 
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
+import com.gu.facia.client.models.Test
 import common.Edition
 import common.commercial.EditionBranding
 import services.NewsletterData
@@ -34,6 +35,7 @@ final case class PressedProperties(
     editionBrandings: Option[Seq[EditionBranding]],
     atomId: Option[String],
     newsletterData: Option[NewsletterData] = None,
+    tests: Option[List[Test]] = None,
 ) {
   lazy val isPaidFor: Boolean = editionBrandings.exists(
     _.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition),
@@ -74,7 +76,16 @@ object PressedProperties {
         Edition.byId(editionId) map (EditionBranding(_, branding))
       }.toSeq),
       atomId = FaciaContentUtils.atomId(content),
+      tests = getTests(content),
     )
+  }
+
+  private def getTests(content: fapi.FaciaContent): Option[List[Test]] = {
+    content match {
+      case curatedContent: fapi.CuratedContent                     => curatedContent.tests
+      case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.tests
+      case _                                                       => None
+    }
   }
 
   def getProperties(content: fapi.FaciaContent): fapiutils.ContentProperties = {

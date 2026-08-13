@@ -41,6 +41,7 @@ object FaciaContentConvert {
         .toMap,
       atomId = None,
       mediaAtom = None,
+      tests = None,
     )
 
     PressedContent.make(curated, false)
