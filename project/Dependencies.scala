@@ -4,9 +4,9 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "4.31"
-  val awsVersion = "2.49.4"
+  val awsVersion = "2.49.6"
   val capiVersion = "47.0.0"
-  val faciaVersion = "34.0.0"
+  val faciaVersion = "35.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -20,7 +20,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
   val awsS3 = "software.amazon.awssdk" % "s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "7.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "18.0.0"
   val awsSes = "software.amazon.awssdk" % "ses" % awsVersion
   val awsSns = "software.amazon.awssdk" % "sns" % awsVersion
   val awsSts = "software.amazon.awssdk" % "sts" % awsVersion
