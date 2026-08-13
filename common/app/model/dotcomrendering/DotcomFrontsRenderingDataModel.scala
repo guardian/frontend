@@ -5,6 +5,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
 import model.{PressedPage, RelatedContentItem}
+import model.pressed.{CuratedContent, LatestSnap, LinkSnap, PressedContent, SupportingCuratedContent}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
@@ -52,11 +53,19 @@ object DotcomFrontsRenderingDataModel {
       .map { _.perEdition.mapKeys(_.id) }
       .getOrElse(Map.empty[String, EditionCommercialProperties])
 
+    def stripDataForDcr(content: PressedContent): PressedContent =
+      content.withoutCommercial match {
+        case curated: CuratedContent              => curated.withoutTestPII
+        case supporting: SupportingCuratedContent => supporting.withoutTestPII
+        case linkSnap: LinkSnap                   => linkSnap
+        case latestSnap: LatestSnap               => latestSnap
+      }
+
     val lighterPage = page.copy(collections =
       page.collections.map(collection =>
         collection.copy(
-          curated = collection.curated.map(content => content.withoutCommercial),
-          backfill = collection.backfill.map(content => content.withoutCommercial),
+          curated = collection.curated.map(stripDataForDcr),
+          backfill = collection.backfill.map(stripDataForDcr),
         ),
       ),
     )
