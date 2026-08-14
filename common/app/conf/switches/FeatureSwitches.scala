@@ -645,7 +645,7 @@ trait FeatureSwitches {
     description = "Render hosted content pages with DCR",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
-    sellByDate = Some(LocalDate.of(2026, 8, 19)),
+    sellByDate = never,
     exposeClientSide = false,
     highImpact = false,
   )
