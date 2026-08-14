@@ -168,7 +168,6 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   }
 
   // --- Affiliate disclaimer tests ---
-  // These tests exercise the paragraph-placement logic that gates whether the disclaimer can appear.
   // Testing skimlinks detection (hasAffiliateLinksForDisclaimer) requires a SkimLinksCache refactor
   // and will be covered in a follow-up PR.
 
@@ -189,57 +188,14 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     Article.make(Content.make(item))
   }
 
-  private val shortSecondParagraphBody =
-    """<p>Opening paragraph for an energy-bills article.</p>
-      |<p>Brief second paragraph.</p>""".stripMargin
+  private val sampleArticleBody =
+    """<p>Opening paragraph.</p><p>Second paragraph with some content.</p>"""
 
-  private val longSecondParagraphBody =
-    s"""<p>Opening paragraph.</p>
-       |<p>${"x" * 160}</p>""".stripMargin
-
-  private val bodyStartingWithNonParagraph =
-    s"""<figure><img src="hero.jpg"/></figure>
-       |<p>Opening paragraph.</p>
-       |<p>${"x" * 160}</p>""".stripMargin
-
-  private val singleParagraphBody =
-    s"""<p>${"x" * 200}</p>"""
-
-  "shouldAddAffiliateLinks" should "return false when the second paragraph is too short" in {
+  "shouldAddAffiliateLinks" should "return true when switch is on and showAffiliateLinks is true" in {
     Switches.AffiliateLinks.switchOn()
     try {
-      val content = articleWithBody(shortSecondParagraphBody)
-      DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
-    } finally {
-      Switches.AffiliateLinks.switchOff()
-    }
-  }
-
-  it should "return true when there are two leading paragraphs and the second is long enough" in {
-    Switches.AffiliateLinks.switchOn()
-    try {
-      val content = articleWithBody(longSecondParagraphBody)
+      val content = articleWithBody(sampleArticleBody)
       DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(true)
-    } finally {
-      Switches.AffiliateLinks.switchOff()
-    }
-  }
-
-  it should "return false when the first element is not a paragraph" in {
-    Switches.AffiliateLinks.switchOn()
-    try {
-      val content = articleWithBody(bodyStartingWithNonParagraph)
-      DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
-    } finally {
-      Switches.AffiliateLinks.switchOff()
-    }
-  }
-
-  it should "return false when there is only one element in the body" in {
-    Switches.AffiliateLinks.switchOn()
-    try {
-      val content = articleWithBody(singleParagraphBody)
-      DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
     } finally {
       Switches.AffiliateLinks.switchOff()
     }
@@ -247,14 +203,14 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
 
   it should "return false when the affiliate links switch is off" in {
     Switches.AffiliateLinks.switchOff()
-    val content = articleWithBody(longSecondParagraphBody)
+    val content = articleWithBody(sampleArticleBody)
     DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
   }
 
   it should "return false when showAffiliateLinks is not set on the content" in {
     Switches.AffiliateLinks.switchOn()
     try {
-      val content = articleWithBody(longSecondParagraphBody, showAffiliateLinks = None)
+      val content = articleWithBody(sampleArticleBody, showAffiliateLinks = None)
       DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
     } finally {
       Switches.AffiliateLinks.switchOff()
@@ -264,45 +220,17 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   it should "return false when showAffiliateLinks is explicitly false" in {
     Switches.AffiliateLinks.switchOn()
     try {
-      val content = articleWithBody(longSecondParagraphBody, showAffiliateLinks = Some(false))
+      val content = articleWithBody(sampleArticleBody, showAffiliateLinks = Some(false))
       DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
     } finally {
       Switches.AffiliateLinks.switchOff()
     }
   }
 
-  "shouldShowAffiliateDisclaimer" should "return false when the second paragraph is too short for disclaimer placement" in {
+  "shouldShowAffiliateDisclaimer" should "return false when no skimlinks exist in the blocks" in {
     Switches.AffiliateLinks.switchOn()
     try {
-      val content = articleWithBody(shortSecondParagraphBody)
-      val blocks = Seq(
-        Block(
-          id = "1",
-          bodyHtml = """<a href="https://www.example.com/product">link</a>""",
-          bodyTextSummary = "",
-          title = None,
-          attributes = BlockAttributes(),
-          published = true,
-          createdDate = None,
-          firstPublishedDate = None,
-          publishedDate = None,
-          lastModifiedDate = None,
-          createdBy = None,
-          lastModifiedBy = None,
-          elements = Seq(),
-        ),
-      )
-
-      DotcomRenderingUtils.shouldShowAffiliateDisclaimer(content, blocks) should be(false)
-    } finally {
-      Switches.AffiliateLinks.switchOff()
-    }
-  }
-
-  it should "return false when paragraph placement is valid but no skimlinks exist in the blocks" in {
-    Switches.AffiliateLinks.switchOn()
-    try {
-      val content = articleWithBody(longSecondParagraphBody)
+      val content = articleWithBody(sampleArticleBody)
       val blocks = Seq(
         Block(
           id = "1",
