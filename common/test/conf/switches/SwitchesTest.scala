@@ -25,12 +25,8 @@ class SwitchesTest extends AnyFlatSpec with Matchers with AppendedClues {
 
   private val testSwitchGroup = new SwitchGroup("category")
 
-  private val switchExpiryDate = {
-    val today = LocalDate.now()
-    if (today.getDayOfWeek == SATURDAY) today.plusDays(2)
-    else if (today.getDayOfWeek == SUNDAY) today.plusDays(1)
-    else today
-  }
+  // A fixed weekday far in the future, so the test switch never looks expired whatever the clock says
+  private val switchExpiryDate = LocalDate.of(2099, 1, 1)
 
   def testSwitch: Switch =
     Switch(
