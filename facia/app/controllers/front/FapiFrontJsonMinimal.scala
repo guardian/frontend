@@ -1,5 +1,6 @@
 package controllers.front
 
+import com.gu.facia.client.models.{Test, VariantMeta}
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed._
@@ -44,11 +45,41 @@ trait FapiFrontJsonMinimal {
           "group" -> faciaContent.card.group,
           "frontPublicationDate" -> faciaContent.properties.maybeFrontPublicationDate,
           "supporting" -> getSupporting(faciaContent),
+          "tests" -> getMinimalTests(faciaContent.properties.tests),
         )
         .fields
         .filterNot { case (_, v) => v == JsNull },
     )
   }
+
+  private case class MinimalTest(
+      testUuid: String,
+      variantMeta: List[VariantMeta],
+      startDate: Option[Long],
+      expiryDate: Option[Long],
+      hasManuallyEndedOnThisTrail: Boolean,
+  )
+
+  implicit private val minimalTestWrites: Writes[MinimalTest] = Json.writes[MinimalTest]
+
+  private def getMinimalTests(tests: Option[List[Test]]): JsValue =
+    tests.filter(_.nonEmpty) match {
+      case Some(tests) =>
+        JsArray(
+          tests.map(test =>
+            Json.toJson(
+              MinimalTest(
+                testUuid = test.testUuid,
+                variantMeta = test.variantMeta,
+                startDate = test.startDate,
+                expiryDate = test.expiryDate,
+                hasManuallyEndedOnThisTrail = test.hasManuallyEndedOnThisTrail,
+              ),
+            ),
+          ),
+        )
+      case None => JsNull
+    }
 
   private def getSupporting(faciaContent: PressedContent): JsValue =
     faciaContent match {

@@ -45,8 +45,6 @@ GET        /embed/card/*path.json                                               
 GET        /embed/card/*path                                                                   controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET        /sport/cricket/match/:matchDate/:teamId.json                                        cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
-GET        /sport/cricket/match/:matchDate/:teamId                                             cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
 GET        /sport/cricket/match-header/:matchDate/:teamId.json                                 cricket.controllers.CricketMatchController.matchHeaderJson(matchDate, teamId)
 GET        /sport/cricket/match-stats-summary/:matchDate/:teamId.json                          cricket.controllers.CricketMatchController.matchStatsSummaryJson(matchDate, teamId)
 
