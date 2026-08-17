@@ -191,17 +191,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   private val sampleArticleBody =
     """<p>Opening paragraph.</p><p>Second paragraph with some content.</p>"""
 
-  "shouldAddAffiliateLinks" should "return true when switch is on and showAffiliateLinks is true" in {
-    Switches.AffiliateLinks.switchOn()
-    try {
-      val content = articleWithBody(sampleArticleBody)
-      DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(true)
-    } finally {
-      Switches.AffiliateLinks.switchOff()
-    }
-  }
-
-  it should "return false when the affiliate links switch is off" in {
+  "shouldAddAffiliateLinks" should "return false when the affiliate links switch is off" in {
     Switches.AffiliateLinks.switchOff()
     val content = articleWithBody(sampleArticleBody)
     DotcomRenderingUtils.shouldAddAffiliateLinks(content) should be(false)
@@ -227,7 +217,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
     }
   }
 
-  "shouldShowAffiliateDisclaimer" should "return false when no skimlinks exist in the blocks" in {
+  it should "return false when no skimlinks exist in the blocks" in {
     Switches.AffiliateLinks.switchOn()
     try {
       val content = articleWithBody(sampleArticleBody)
@@ -249,7 +239,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
         ),
       )
 
-      DotcomRenderingUtils.shouldShowAffiliateDisclaimer(content, blocks) should be(false)
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(false)
     } finally {
       Switches.AffiliateLinks.switchOff()
     }

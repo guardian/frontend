@@ -292,8 +292,16 @@ object DotcomRenderingUtils extends DCARUrlHelper {
     }
   }
 
+  def shouldAddAffiliateLinks(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
+    isEligibleForAffiliateLinks(content) && hasAffiliateLinksInContent(content, blocks)
+  }
+
   def shouldAddAffiliateLinks(content: ContentType): Boolean = {
-    AffiliateLinksCleaner.shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(content) && hasAffiliateLinksInContent(content, Seq.empty)
+  }
+
+  private def isEligibleForAffiliateLinks(content: ContentType): Boolean = {
+    AffiliateLinksCleaner.isEligibleForAffiliateLinks(
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       showAffiliateLinks = content.content.fields.showAffiliateLinks,
       alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
@@ -301,19 +309,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
     )
   }
 
-  def shouldShowAffiliateDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
-    shouldAddAffiliateDisclaimerByTagging(content) && hasAffiliateLinksForDisclaimer(content, blocks)
-  }
-
-  def shouldShowAffiliateDisclaimer(content: ContentType): Boolean = {
-    shouldAddAffiliateDisclaimerByTagging(content) && hasAffiliateLinksForDisclaimer(content, Seq.empty)
-  }
-
-  private def shouldAddAffiliateDisclaimerByTagging(content: ContentType): Boolean = {
-    shouldAddAffiliateLinks(content)
-  }
-
-  private def hasAffiliateLinksForDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
+  private def hasAffiliateLinksInContent(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
     content match {
       case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
       case _                => blocks.exists(block => stringContainsAffiliateableLinks(block.bodyHtml))
