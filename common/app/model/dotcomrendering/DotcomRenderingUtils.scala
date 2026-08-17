@@ -337,12 +337,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
   }
 
   private def shouldAddAffiliateDisclaimerByTagging(content: ContentType): Boolean = {
-    AffiliateLinksCleaner.shouldAddAffiliateLinks(
-      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-      showAffiliateLinks = content.content.fields.showAffiliateLinks,
-      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-      tagPaths = content.content.tags.tags.map(_.id),
-    )
+    shouldAddAffiliateLinks(content)
   }
 
   private def hasAffiliateLinksForDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
