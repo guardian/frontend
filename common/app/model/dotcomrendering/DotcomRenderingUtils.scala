@@ -25,7 +25,6 @@ import model.{
 }
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import org.jsoup.Jsoup
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
@@ -293,54 +292,24 @@ object DotcomRenderingUtils extends DCARUrlHelper {
     }
   }
 
+  def shouldAddAffiliateLinks(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
+    isEligibleForAffiliateLinks(content) && hasAffiliateLinksInContent(content, blocks)
+  }
+
   def shouldAddAffiliateLinks(content: ContentType): Boolean = {
-    if (content.content.isGallery) {
-      // For galleries, the disclaimer is only inserted in the header so we don't need
-      // a check for paragraphs as in other articles
-      AffiliateLinksCleaner.shouldAddAffiliateLinks(
-        switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-        showAffiliateLinks = content.content.fields.showAffiliateLinks,
-        alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-        tagPaths = content.content.tags.tags.map(_.id),
-      )
-    } else {
-      val contentHtml = Jsoup.parse(content.fields.body)
-      val bodyElements = contentHtml.select("body").first().children()
-
-      /** On smaller devices, the disclaimer is inserted before paragraph 2 of the article body and floats left. This
-        * logic ensures there are two clear paragraphs of text at the top of the article. We don't support inserting the
-        * disclaimer next to other element types. It also ensures the second paragraph is long enough to accommodate the
-        * disclaimer appearing alongside it.
-        */
-      if (bodyElements.size >= 2) {
-        val firstEl = bodyElements.get(0)
-        val secondEl = bodyElements.get(1)
-        if (firstEl.tagName == "p" && secondEl.tagName == "p" && secondEl.text().length >= 150) {
-          AffiliateLinksCleaner.shouldAddAffiliateLinks(
-            switchedOn = Switches.AffiliateLinks.isSwitchedOn,
-            showAffiliateLinks = content.content.fields.showAffiliateLinks,
-            alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
-            tagPaths = content.content.tags.tags.map(_.id),
-          )
-        } else false
-      } else false
-    }
-
+    isEligibleForAffiliateLinks(content) && hasAffiliateLinksInContent(content, Seq.empty)
   }
 
-  def shouldShowAffiliateDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
-    shouldAddAffiliateDisclaimerByTagging(content) && hasAffiliateLinksForDisclaimer(content, blocks)
+  private def isEligibleForAffiliateLinks(content: ContentType): Boolean = {
+    AffiliateLinksCleaner.isEligibleForAffiliateLinks(
+      switchedOn = Switches.AffiliateLinks.isSwitchedOn,
+      showAffiliateLinks = content.content.fields.showAffiliateLinks,
+      alwaysOffTags = Configuration.affiliateLinks.alwaysOffTags,
+      tagPaths = content.content.tags.tags.map(_.id),
+    )
   }
 
-  def shouldShowAffiliateDisclaimer(content: ContentType): Boolean = {
-    shouldAddAffiliateDisclaimerByTagging(content) && hasAffiliateLinksForDisclaimer(content, Seq.empty)
-  }
-
-  private def shouldAddAffiliateDisclaimerByTagging(content: ContentType): Boolean = {
-    shouldAddAffiliateLinks(content)
-  }
-
-  private def hasAffiliateLinksForDisclaimer(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
+  private def hasAffiliateLinksInContent(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
     content match {
       case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
       case _                => blocks.exists(block => stringContainsAffiliateableLinks(block.bodyHtml))
