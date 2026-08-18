@@ -82,6 +82,20 @@ object PressedContent {
       case linkSnap: fapi.LinkSnap     => LinkSnap.make(linkSnap)
       case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
     }
+
+  def propertiesWithoutTestPII(properties: PressedProperties): PressedProperties =
+    properties.copy(
+      tests = properties.tests.map(
+        _.map(test =>
+          test.copy(
+            createdByName = "",
+            createdByEmail = "",
+            manuallyEndedOnThisTrailByName = None,
+            manuallyEndedOnThisTrailByEmail = None,
+          ),
+        ),
+      ),
+    )
 }
 
 final case class CuratedContent(
@@ -104,6 +118,16 @@ final case class CuratedContent(
   override def withoutCommercial: PressedContent = copy(
     properties = propertiesWithoutCommercial(properties),
     supportingContent = supportingContent.map(_.withoutCommercial),
+  )
+
+  def withoutTestPII: PressedContent = copy(
+    properties = PressedContent.propertiesWithoutTestPII(properties),
+    supportingContent = supportingContent.map {
+      case curated: CuratedContent              => curated.withoutTestPII
+      case supporting: SupportingCuratedContent => supporting.withoutTestPII
+      case linkSnap: LinkSnap                   => linkSnap
+      case latestSnap: LatestSnap               => latestSnap
+    },
   )
 
   override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
@@ -150,6 +174,8 @@ final case class SupportingCuratedContent(
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 
   override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  def withoutTestPII: PressedContent = copy(properties = PressedContent.propertiesWithoutTestPII(properties))
 
   override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
     display = display.copy(boostLevel = level),
