@@ -19,7 +19,7 @@ import play.api.libs.json.Json
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.test.Helpers._
 import play.api.test._
-import services.{ConfigAgent, OphanApi}
+import services.{ConfigAgent, OphanApi, SubnavAgent}
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
@@ -48,6 +48,7 @@ import scala.concurrent.{Await, Future}
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
+    new SubnavAgent(),
     assets = assets,
   )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"

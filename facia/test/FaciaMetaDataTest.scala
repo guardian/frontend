@@ -12,7 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json._
 import play.api.test.Helpers._
-import services.{ConfigAgent, OphanApi}
+import services.{ConfigAgent, OphanApi, SubnavAgent}
 import test._
 
 import scala.concurrent.Await
@@ -50,6 +50,7 @@ import scala.concurrent.duration._
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
+    new SubnavAgent(),
     assets = assets,
   )
   val frontPath = "music"

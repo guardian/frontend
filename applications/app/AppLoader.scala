@@ -40,6 +40,7 @@ trait ApplicationsServices {
   lazy val ophanApi = wire[OphanApi]
   lazy val newsletterApi = wire[NewsletterApi]
   lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
+  lazy val subnavAgent = wire[SubnavAgent]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
@@ -51,6 +52,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   override lazy val lifecycleComponents = List(
     wire[ConfigAgentLifecycle],
+    wire[SubnavAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[DfpAgentLifecycle],
     wire[SurgingContentAgentLifecycle],

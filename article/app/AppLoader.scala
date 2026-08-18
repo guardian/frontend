@@ -20,7 +20,7 @@ import play.api.routing.Router
 import router.Routes
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle, SubnavAgent, SubnavAgentLifecycle}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -38,10 +38,12 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
 
-  lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val subnavAgent = wire[SubnavAgent]
 
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
   override lazy val lifecycleComponents = List(
     wire[NewspaperBooksAndSectionsAutoRefresh],
+    wire[SubnavAgentLifecycle],
     wire[DfpAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],

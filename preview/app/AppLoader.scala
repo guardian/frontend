@@ -27,7 +27,7 @@ import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
-import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
+import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle, SubnavAgentLifecycle}
 import utils.AWSv2
 
 trait PreviewLifecycleComponents
@@ -47,6 +47,7 @@ trait PreviewLifecycleComponents
     List(
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
+      wire[SubnavAgentLifecycle],
       wire[SwitchboardLifecycle],
       wire[FootballLifecycle],
       wire[CricketLifecycle],
