@@ -62,20 +62,18 @@ const analyse = (filePath) => {
 		console.log(`Uncompressed: ${chalk.cyan(data.uncompressedPretty)}`);
 		console.log(`Compressed: ${chalk.cyan(data.compressedPretty)}`);
 
-		console.log('Success!');
-
-		// return cloudwatch
-		// 	.configure(credentials)
-		// 	.then(() => cloudwatch.log(path.basename(filePath), data))
-		// 	.then((msg) => {
-		// 		console.log(
-		// 			chalk.green(
-		// 				`Successfully logged file data to CloudWatch ${msg.id}`,
-		// 			),
-		// 		);
-		// 		return true;
-		// 	})
-		// 	.catch(console.log);
+		return cloudwatch
+			.configure(credentials)
+			.then(() => cloudwatch.log(path.basename(filePath), data))
+			.then((msg) => {
+				console.log(
+					chalk.green(
+						`Successfully logged file data to CloudWatch ${msg.id}`,
+					),
+				);
+				return true;
+			})
+			.catch(console.log);
 	} catch (e) {
 		console.log(e);
 		return null;

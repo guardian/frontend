@@ -95,7 +95,7 @@
 		"raven-js": "^3.19.1",
 		"raw-loader": "^0.5.1",
 		"requireindex": "^1.1.0",
-		"rimraf": "^2.6.1",
+		"rimraf": "6.1.3",
 		"rxjs": "^6.6.7",
 		"sass": "1.78.0",
 		"sass-graph": "4.0.1",
