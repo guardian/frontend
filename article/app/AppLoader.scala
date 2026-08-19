@@ -20,7 +20,13 @@ import play.api.routing.Router
 import router.Routes
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle, SubnavAgent, SubnavAgentLifecycle}
+import services.{
+  NewspaperBooksAndSectionsAutoRefresh,
+  OphanApi,
+  SkimLinksCacheLifeCycle,
+  SubnavAgent,
+  SubnavAgentLifecycle,
+}
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =

@@ -17,9 +17,6 @@ import scala.util.{Failure, Success}
   *
   * The config is authored in CMS Fronts and describes bespoke sub-navigations that can be targeted at specific fronts,
   * articles or tags. It is pulled from a single file in S3 in the CMS Fronts AWS account (via the Fronts API client).
-  *
-  * The full config is cached in memory and refreshed on a schedule (see [[SubnavAgentLifecycle]]). Lookups for a given
-  * front or piece of content are performed against the cached config using `com.gu.facia.api.CustomSubnavService`.
   */
 class SubnavAgent extends GuLogging {
   private val subnavConfigBox = Box[Option[CustomSubnavConfig]](None)
@@ -48,8 +45,13 @@ class SubnavAgent extends GuLogging {
   }
 }
 
-class SubnavAgentLifecycle(subnavAgent: SubnavAgent, appLifecycle: ApplicationLifecycle, jobs: JobScheduler, pekkoAsync: PekkoAsync)(
-    implicit ec: ExecutionContext,
+class SubnavAgentLifecycle(
+    subnavAgent: SubnavAgent,
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    pekkoAsync: PekkoAsync,
+)(implicit
+    ec: ExecutionContext,
 ) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () =>
