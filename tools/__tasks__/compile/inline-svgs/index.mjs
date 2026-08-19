@@ -2,7 +2,6 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 import mkdirp from 'mkdirp';
-import glob from 'glob';
 import { optimize } from 'svgo';
 import pify from 'pify';
 
@@ -18,7 +17,7 @@ const task = {
 	title: 'Prepare inline SVGs',
 	task: () =>
 		Promise.all(
-			glob.sync('**/*.svg', { cwd: srcDir }).map((svgPath) => {
+			fs.globSync('**/*.svg', { cwd: srcDir }).map((svgPath) => {
 				const dest = path.resolve(paths.conf, 'inline-svgs', svgPath);
 				return mkdirp(path.dirname(dest))
 					.then(() =>
