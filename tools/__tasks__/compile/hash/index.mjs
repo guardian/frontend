@@ -31,7 +31,11 @@ const task = {
 								withFileTypes: true,
 							})
 							.filter(entry => entry.isFile())
-							.map(entry => path.join(entry.parentPath, entry.name))
+							.map(entry => {
+								const rawPath = path.join(entry.parentPath, entry.name);
+								const relativePath = path.relative(paths.target, rawPath);
+								return `./${relativePath}`;
+							})
 							.reduce((map, assetPath) => {
 								const assetLocation = path.resolve(
 									paths.target,
