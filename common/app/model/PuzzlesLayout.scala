@@ -21,11 +21,12 @@ object PuzzleItem {
   private val writes: OWrites[PuzzleItem] = Json.writes[PuzzleItem].transform(removeNullFields)
   implicit val format: OFormat[PuzzleItem] = OFormat(reads, writes)
 
-  private def removeNullFields(json: JsObject): JsObject = JsObject(json.fields.filterNot(_._2 == JsNull))
+  private def removeNullFields(json: JsObject): JsObject =
+    JsObject(json.fields.filterNot(_._2 == JsNull))
 }
 
 case class PuzzleContent(
-    title: Seq[Seq[String]],
+    items: Seq[Seq[PuzzleItem]],
     nestedContainers: Seq[PuzzleContainer],
     archive: Option[PuzzleItem] = None,
 )
@@ -67,7 +68,8 @@ object PuzzleFilter {
   private val writes: OWrites[PuzzleFilter] = Json.writes[PuzzleFilter].transform(removeNullFields)
   implicit val format: OFormat[PuzzleFilter] = OFormat(reads, writes)
 
-  private def removeNullFields(json: JsObject): JsObject = JsObject(json.fields.filterNot(_._2 == JsNull))
+  private def removeNullFields(json: JsObject): JsObject =
+    JsObject(json.fields.filterNot(_._2 == JsNull))
 }
 
 case class PuzzlesLayout(
