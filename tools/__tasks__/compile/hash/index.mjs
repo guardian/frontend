@@ -34,7 +34,7 @@ const task = {
 							.map(entry => {
 								const rawPath = path.join(entry.parentPath, entry.name);
 								const relativePath = path.relative(paths.target, rawPath);
-								return `./${relativePath}`;
+								return relativePath;
 							})
 							.reduce((map, assetPath) => {
 								const assetLocation = path.resolve(
