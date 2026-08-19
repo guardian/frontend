@@ -7,7 +7,7 @@
 		},
 		{
 			"id": "logic",
-			"title": "Logic",
+			"title": "Sudoku",
 			"backgroundColour": "#CDECFB"
 		},
 		{
@@ -17,52 +17,36 @@
 		},
 		{
 			"id": "trivia-quizzes",
-			"title": "Trivia & quizzes",
+			"title": "Trivia",
 			"backgroundColour": "#D5F3F2"
 		}
 	],
 	"containers": [
 		{
-			"title": "Monday’s featured puzzles",
+			"title": "Today’s featured puzzles",
 			"variant": "featured",
 			"content": {
 				"items": [
 					[
 						{
-							"title": "Quick crossword",
-							"type": "crossword",
-							"set": "quick",
-							"filterId": "crosswords",
-							"backgroundColour": "#FCE1CE"
-						},
-						{
-							"title": "Alex Bellos’s Monday Puzzle",
-							"type": "quiz",
-							"set": "alex-bellos-monday-puzzle",
-							"url": "/science/series/alex-bellos-monday-puzzle",
-							"filterId": "trivia-quizzes",
-							"backgroundColour": "#D5F3F2"
-						},
-						{
-							"title": "On the Ball",
+							"title": "On the ball",
 							"type": "on-the-ball",
 							"set": "all",
 							"slug": "on-the-ball",
 							"url": "https://sportsreveal.io/guardian",
 							"variant": "iframe-page",
-							"filterId": "trivia-quizzes",
-							"backgroundColour": "#D5F3F2"
+							"backgroundColour": "#D5F3F2",
+							"filterId": "trivia-quizzes"
 						},
 						{
-							"title": "Word wheel",
-							"type": "word-wheel",
+							"title": "Film reveal",
+							"type": "film-reveal",
 							"set": "all",
-							"slug": "word-wheel",
-							"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
-							"index": 1,
+							"slug": "film-reveal",
+							"url": "https://moviegrid.io/guardian",
 							"variant": "iframe-page",
-							"filterId": "word-games",
-							"backgroundColour": "#F9D4E8"
+							"backgroundColour": "#EAD8B9",
+							"filterId": "trivia-quizzes"
 						}
 					]
 				],
@@ -98,11 +82,13 @@
 							"type": "crossword",
 							"set": "quick-cryptic",
 							"backgroundColour": "#FCE1CE"
-						},
+						}
+					],
+					[
 						{
-							"title": "Weekend",
+							"title": "Quiptic",
 							"type": "crossword",
-							"set": "weekend",
+							"set": "quiptic",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -112,15 +98,21 @@
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"title": "Quiptic",
+							"title": "Weekend",
 							"type": "crossword",
-							"set": "quiptic",
+							"set": "weekend",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
 							"title": "Sunday quick",
 							"type": "crossword",
 							"set": "sunday-quick",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Genius",
+							"type": "crossword",
+							"set": "genius",
 							"backgroundColour": "#FCE1CE"
 						}
 					]
@@ -136,136 +128,6 @@
 			}
 		},
 		{
-			"title": "Logic puzzles",
-			"filterId": "logic",
-			"content": {
-				"items": [],
-				"nestedContainers": [
-					{
-						"title": "Sudoku",
-						"desktopSpan": 12,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Easy sudoku",
-										"type": "sudoku",
-										"set": "easy",
-										"slug": "sudoku-easy",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"title": "Medium sudoku",
-										"type": "sudoku",
-										"set": "medium",
-										"slug": "sudoku-medium",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"title": "Hard sudoku",
-										"type": "sudoku",
-										"set": "hard",
-										"slug": "sudoku-hard",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"title": "Killer sudoku",
-										"type": "sudoku",
-										"set": "killer",
-										"slug": "sudoku-killer",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Sudoku archive",
-								"type": "sudoku",
-								"set": "all",
-								"slug": "sudoku-easy",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#CDECFB"
-							}
-						}
-					},
-					{
-						"title": "Futoshiki",
-						"desktopSpan": 6,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Futoshiki",
-										"type": "futoshiki",
-										"set": "all",
-										"slug": "futoshiki",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-futoshiki&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#D3F4F7"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Archive",
-								"type": "futoshiki",
-								"set": "all",
-								"slug": "futoshiki",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-futoshiki&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#D3F4F7"
-							}
-						}
-					},
-					{
-						"title": "Suguru",
-						"desktopSpan": 6,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Suguru",
-										"type": "suguru",
-										"set": "all",
-										"slug": "suguru",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-suguru&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#D6D4FA"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Archive",
-								"type": "suguru",
-								"set": "all",
-								"slug": "suguru",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-suguru&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#D6D4FA"
-							}
-						}
-					}
-				],
-				"archive": null
-			}
-		},
-		{
 			"title": "Word games",
 			"filterId": "word-games",
 			"content": {
@@ -273,7 +135,7 @@
 				"nestedContainers": [
 					{
 						"title": "Word wheel",
-						"desktopSpan": 4,
+						"desktopSpan": 6,
 						"content": {
 							"items": [
 								[
@@ -291,7 +153,7 @@
 							],
 							"nestedContainers": [],
 							"archive": {
-								"title": "Archive",
+								"title": "Word wheel archive",
 								"type": "word-wheel",
 								"set": "all",
 								"slug": "word-wheel",
@@ -303,7 +165,7 @@
 					},
 					{
 						"title": "Wordiply",
-						"desktopSpan": 4,
+						"desktopSpan": 6,
 						"content": {
 							"items": [
 								[
@@ -320,7 +182,7 @@
 							],
 							"nestedContainers": [],
 							"archive": {
-								"title": "Archive",
+								"title": "Wordiply archive",
 								"type": "wordiply",
 								"set": "all",
 								"slug": "wordiply",
@@ -329,34 +191,73 @@
 								"backgroundColour": "#F8D0C9"
 							}
 						}
-					},
+					}
+				]
+			}
+		},
+		{
+			"title": "Logic puzzles",
+			"filterId": "logic",
+			"content": {
+				"items": [],
+				"nestedContainers": [
 					{
-						"title": "Codeword",
-						"desktopSpan": 4,
+						"title": "Sudoku",
+						"desktopSpan": 12,
 						"content": {
 							"items": [
 								[
 									{
-										"title": "Codeword",
-										"type": "codeword",
-										"set": "all",
-										"slug": "codeword",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-codeword&embed=1&idx=1",
+										"title": "Sudoku easy",
+										"type": "sudoku",
+										"set": "easy",
+										"slug": "sudoku-easy",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
 										"index": 1,
 										"variant": "iframe-page",
-										"backgroundColour": "#F2D0F6"
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"title": "Sudoku medium",
+										"type": "sudoku",
+										"set": "medium",
+										"slug": "sudoku-medium",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"title": "Sudoku hard",
+										"type": "sudoku",
+										"set": "hard",
+										"slug": "sudoku-hard",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"title": "Sudoku killer",
+										"type": "sudoku",
+										"set": "killer",
+										"slug": "sudoku-killer",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
 									}
 								]
 							],
 							"nestedContainers": [],
 							"archive": {
-								"title": "Archive",
-								"type": "codeword",
+								"title": "Logic archive",
+								"type": "sudoku",
 								"set": "all",
-								"slug": "codeword",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-codeword&embed=1",
+								"slug": "sudoku-easy",
+								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
 								"variant": "archive-page",
-								"backgroundColour": "#F2D0F6"
+								"backgroundColour": "#CDECFB"
 							}
 						}
 					}
@@ -364,19 +265,19 @@
 			}
 		},
 		{
-			"title": "Quizzes and Trivia",
+			"title": "Trivia",
 			"filterId": "trivia-quizzes",
 			"content": {
 				"items": [],
 				"nestedContainers": [
 					{
-						"title": "On the Ball",
+						"title": "On the ball",
 						"desktopSpan": 6,
 						"content": {
 							"items": [
 								[
 									{
-										"title": "On the Ball",
+										"title": "On the ball",
 										"type": "on-the-ball",
 										"set": "all",
 										"slug": "on-the-ball",
@@ -388,7 +289,7 @@
 							],
 							"nestedContainers": [],
 							"archive": {
-								"title": "Archive",
+								"title": "On the ball archive",
 								"type": "on-the-ball",
 								"set": "all",
 								"slug": "on-the-ball",
@@ -417,110 +318,13 @@
 							],
 							"nestedContainers": [],
 							"archive": {
-								"title": "Archive",
+								"title": "Film reveal archive",
 								"type": "film-reveal",
 								"set": "all",
 								"slug": "film-reveal",
 								"url": "https://moviegrid.io/guardian",
 								"variant": "archive-page",
 								"backgroundColour": "#EAD8B9"
-							}
-						}
-					},
-					{
-						"title": "Alex Bellos’s Monday Puzzle",
-						"desktopSpan": 4,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Alex Bellos’s Monday Puzzle",
-										"type": "quiz",
-										"set": "alex-bellos-monday-puzzle",
-										"url": "/science/series/alex-bellos-monday-puzzle",
-										"backgroundColour": "#D5F3F2"
-									}
-								]
-							],
-							"nestedContainers": []
-						}
-					},
-					{
-						"title": "Thursday quiz",
-						"desktopSpan": 4,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Thursday quiz",
-										"type": "quiz",
-										"set": "thursday-quiz",
-										"url": "/theguardian/series/the-quiz-thomas-eaton",
-										"backgroundColour": "#D5F3F2"
-									}
-								]
-							],
-							"nestedContainers": []
-						}
-					},
-					{
-						"title": "Sports quiz",
-						"desktopSpan": 4,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Sports quiz",
-										"type": "quiz",
-										"set": "sports-quiz",
-										"url": "/sport/series/sports-quiz-of-the-week",
-										"backgroundColour": "#D5F3F2"
-									}
-								]
-							],
-							"nestedContainers": []
-						}
-					},
-					{
-						"title": "Saturday quiz",
-						"desktopSpan": 6,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Saturday quiz",
-										"type": "quiz",
-										"set": "saturday-quiz",
-										"url": "/theguardian/series/the-quiz-thomas-eaton",
-										"backgroundColour": "#D5F3F2"
-									}
-								]
-							],
-							"nestedContainers": []
-						}
-					},
-					{
-						"title": "Kids’ quiz",
-						"desktopSpan": 6,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Kids’ quiz",
-										"type": "quiz",
-										"set": "kids-quiz",
-										"url": "/lifeandstyle/series/the-kids--quiz",
-										"backgroundColour": "#D5F3F2"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Archive",
-								"type": "quiz",
-								"set": "kids-quiz",
-								"url": "/lifeandstyle/series/the-kids--quiz",
-								"backgroundColour": "#D5F3F2"
 							}
 						}
 					}
