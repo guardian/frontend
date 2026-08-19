@@ -31,14 +31,14 @@ class LocalJsonPuzzlesLayoutProvider(
       Json.parse(inputStream).validate[PuzzlesLayout] match {
         case JsSuccess(layout, _) => layout
         case JsError(errors)      =>
-          throw new IllegalStateException(
+          throw new IllegalArgumentException(
             s"Puzzles layout resource '$resourceName' is invalid: ${JsError.toJson(errors)}",
           )
       }
     } catch {
-      case error: IllegalStateException => throw error
-      case NonFatal(error)              =>
-        throw new IllegalStateException(
+      case error: IllegalArgumentException => throw error
+      case NonFatal(error)                 =>
+        throw new IllegalArgumentException(
           s"Puzzles layout resource '$resourceName' could not be parsed as JSON",
           error,
         )
