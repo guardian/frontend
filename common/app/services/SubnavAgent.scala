@@ -1,10 +1,10 @@
 package services
 
 import app.LifecycleComponent
-import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.api.models.PublicationStatus
-import com.gu.facia.api.models.PublicationStatus.Live
+import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
 import com.gu.facia.client.ApiClient
+import com.gu.facia.client.models.TargetedPageType.Front
 import com.gu.facia.client.models.{CustomSubnav, CustomSubnavConfig}
 import common._
 import fronts.FrontsApi
@@ -30,8 +30,10 @@ class SubnavAgent extends GuLogging {
 
   /** Look up the custom subnav targeted at the given front, if any. */
   def getSubnavForFront(frontId: String, status: PublicationStatus = Live): Option[CustomSubnav] = {
-    println("SubnavAgent.getSubnavForFront: frontId=" + frontId + ", status=" + status)
-    getSubnavConfig().flatMap(config => CustomSubnavService.getSubnavForFront(config, frontId, status))
+    getSubnavConfig().flatMap { config =>
+      val candidates = (if (status == Draft) config.draft else Nil) ++ config.live
+      candidates.find(_.pages.exists(p => p.`type` == Front && p.path == frontId))
+    }
   }
 
   def getClient(implicit ec: ExecutionContext): ApiClient = FrontsApi.crossAccountClient
