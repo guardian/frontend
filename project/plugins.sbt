@@ -3,7 +3,7 @@ logLevel := Level.Warn
 
 // Dependencies used by the VersionInfo plugin
 libraryDependencies ++= Seq(
-  "joda-time" % "joda-time" % "2.14.2",
+  "joda-time" % "joda-time" % "2.14.3",
   "org.joda" % "joda-convert" % "2.2.4",
 )
 
