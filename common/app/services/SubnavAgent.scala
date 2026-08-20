@@ -1,6 +1,7 @@
 package services
 
 import app.LifecycleComponent
+import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.api.models.PublicationStatus
 import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
 import com.gu.facia.client.ApiClient
@@ -28,8 +29,7 @@ class SubnavAgent extends GuLogging {
   /** Look up the custom subnav targeted at the given front, if any. */
   def getSubnavForFront(frontId: String, status: PublicationStatus = Live): Option[CustomSubnav] = {
     getSubnavConfig().flatMap { config =>
-      val candidates = (if (status == Draft) config.draft else Nil) ++ config.live
-      candidates.find(_.pages.exists(p => p.`type` == Front && p.path == frontId))
+      CustomSubnavService.getSubnavForFront(config, frontId, status)
     }
   }
 
