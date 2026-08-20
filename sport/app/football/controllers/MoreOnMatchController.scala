@@ -2,24 +2,15 @@ package football.controllers
 
 import com.github.nscala_time.time.Imports._
 import common._
-import conf.Configuration
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import football.datetime.DateHelpers
-import football.model.{
-  DotcomRenderingFootballHeaderDataModel,
-  FootballMatchTrail,
-  GuTeamCodes,
-  MatchStats,
-  MatchStatsSummary,
-}
+import football.model.{DotcomRenderingFootballHeaderDataModel, FootballMatchTrail, MatchStats, MatchStatsSummary}
 import implicits.{Football, Requests}
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.Cached.WithoutRevalidationResult
 import model.{CacheTime, Cached, Content, ContentType}
 import pa.{FootballMatch, LineUpEnhanced}
-import play.api.libs.json._
 import play.api.mvc._
-import model.CompetitionDisplayHelpers.cleanTeamNameNextGenApi
 
 import java.time.ZonedDateTime
 import scala.concurrent.Future
@@ -147,35 +138,7 @@ class MoreOnMatchController(
       maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
-  def moreOnJson(matchId: String): Action[AnyContent] = moreOn(matchId)
-  def moreOn(matchId: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val maybeMatch: Option[FootballMatch] = competitionsService.findMatch(matchId)
-
-      val maybeResponse: Option[Future[RevalidatableResult]] = maybeMatch map { theMatch =>
-        loadMoreOn(request, theMatch) map {
-          case Nil =>
-            logInfoWithRequestId(s"Cannot load more for match id: ${theMatch.id}")
-            JsonNotFound()
-          case related =>
-            JsonComponent(
-              "nav" -> football.views.html.fragments.matchNav(
-                populateNavModel(
-                  theMatch,
-                  related filter {
-                    hasExactlyTwoTeams
-                  },
-                ),
-              ),
-            )
-        }
-      }
-
-      val response: Future[RevalidatableResult] = maybeResponse.getOrElse(Future { JsonNotFound() })
-      response map { Cached(60) }
-    }
-
-  def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[List[ContentType]] = {
+  private def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[List[ContentType]] = {
     val matchDate = theMatch.date
     val startOfDateRange = DateHelpers.startOfDay(matchDate.minusDays(2))
     val endOfDateRange = DateHelpers.startOfDay(matchDate.plusDays(2))
@@ -221,68 +184,6 @@ class MoreOnMatchController(
       Cached(CacheTime.FootballMediumCache)(response)
     }
 
-  def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val contentDate = DateHelpers.parseLocalDate(year, month, day)
-
-      val maybeResponse: Option[Future[Result]] =
-        competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
-          val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
-          // We are only interested in content with exactly 2 team tags
-          related map { _ filter hasExactlyTwoTeams } map { filtered =>
-            Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
-              lazy val competition = competitionsService.competitionForMatch(theMatch.id)
-
-              JsonComponent(
-                "items" -> Json.arr(
-                  Json.obj(
-                    "id" -> theMatch.id,
-                    "date" -> theMatch.date,
-                    "venue" -> theMatch.venue.map(_.name),
-                    "isLive" -> theMatch.isLive,
-                    "isResult" -> theMatch.isResult,
-                    "isLiveOrIsResult" -> (theMatch.isResult || theMatch.isLive),
-                    "homeTeam" -> Json.obj(
-                      "name" -> theMatch.homeTeam.name,
-                      "id" -> theMatch.homeTeam.id,
-                      "score" -> theMatch.homeTeam.score,
-                      "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png",
-                      "scorers" -> theMatch.homeTeam.scorers
-                        .getOrElse("")
-                        .split(",")
-                        .map(scorer => {
-                          Json.obj(
-                            "scorer" -> scorer.replace("(", "").replace(")", ""),
-                          )
-                        }),
-                    ),
-                    "awayTeam" -> Json.obj(
-                      "name" -> theMatch.awayTeam.name,
-                      "id" -> theMatch.awayTeam.id,
-                      "score" -> theMatch.awayTeam.score,
-                      "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png",
-                      "scorers" -> theMatch.awayTeam.scorers
-                        .getOrElse("")
-                        .split(",")
-                        .map(scorer => {
-                          Json.obj(
-                            "scorer" -> scorer.replace("(", "").replace(")", ""),
-                          )
-                        }),
-                    ),
-                    "competition" -> Json.obj(
-                      "fullName" -> competition.map(_.fullName),
-                    ),
-                  ),
-                ),
-              )
-            }
-          }
-        }
-
-      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
-    }
-
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader)(implicit
       requestHeader: RequestHeader,
   ): Future[Result] = {
@@ -304,16 +205,4 @@ class MoreOnMatchController(
 
   // for our purposes we expect exactly 2 football teams
   private def hasExactlyTwoTeams(content: ContentType): Boolean = content.tags.tags.count(_.isFootballTeam) == 2
-
-  private def populateNavModel(theMatch: FootballMatch, related: Seq[ContentType])(implicit
-      request: RequestHeader,
-  ): MatchNav = {
-    val (matchReport, minByMin, preview, stats) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
-
-    val currentPage = request.getParameter("page").flatMap { pageId =>
-      (stats :: List(matchReport, minByMin, preview).flatten).find(_.url.endsWith(pageId))
-    }
-
-    MatchNav(theMatch, matchReport, minByMin, preview, stats, currentPage)
-  }
 }
