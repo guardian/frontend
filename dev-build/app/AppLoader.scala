@@ -84,6 +84,7 @@ trait AppComponents
       wire[AdminLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
+      wire[SubnavAgentLifecycle],
       wire[SurgingContentAgentLifecycle],
       wire[SectionsLookUpLifecycle],
       wire[SwitchboardLifecycle],
