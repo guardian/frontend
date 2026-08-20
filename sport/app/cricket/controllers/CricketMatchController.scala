@@ -6,7 +6,6 @@ import conf.cricketPa.{CricketTeam, CricketTeams, PaFeed}
 import contentapi.ContentApiClient
 import cricketModel.{Match, MatchHeader, MatchStatsSummary}
 import football.datetime.DateHelpers
-import football.model.CricketScoreBoardDataModel
 import jobs.CricketStatsJob
 import model._
 import play.api.libs.ws.WSClient
@@ -33,24 +32,6 @@ class CricketMatchController(
 ) extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
-
-  def renderMatchScoreboardJson(date: String, teamId: String): Action[AnyContent] =
-    Action { implicit request =>
-      CricketTeams
-        .byWordsForUrl(teamId)
-        .flatMap { team =>
-          cricketStatsJob.findMatch(team, date).map { matchData =>
-            val page = CricketMatchPage(matchData, date, team)
-            Cached(60) {
-              JsonComponent(
-                "match" -> CricketScoreBoardDataModel.toJson(page.theMatch),
-                "scorecardUrl" -> (Configuration.site.host + page.metadata.id),
-              )
-            }
-          }
-        }
-        .getOrElse(NoCache(NotFound))
-    }
 
   def matchHeaderJson(date: String, teamId: String): Action[AnyContent] =
     Action.async { implicit request =>

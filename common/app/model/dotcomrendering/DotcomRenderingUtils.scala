@@ -43,7 +43,6 @@ case object CricketMatchType extends DotcomRenderingMatchType
 case object FootballMatchType extends DotcomRenderingMatchType
 
 case class DotcomRenderingMatchData(
-    matchUrl: String,
     matchHeaderUrl: Option[String],
     matchStatsUrl: Option[String],
     matchType: DotcomRenderingMatchType,
@@ -82,7 +81,6 @@ object DotcomRenderingUtils extends DCARUrlHelper {
       case (Some(date), Some(team), true) =>
         Some(
           DotcomRenderingMatchData(
-            matchUrl = s"${getAjaxHost}/sport/cricket/match-scoreboard/$date/$team.json",
             matchHeaderUrl = Some(s"${getAjaxHost}/sport/cricket/match-header/$date/$team.json"),
             matchStatsUrl = Some(s"${getAjaxHost}/sport/cricket/match-stats-summary/$date/$team.json"),
             matchType = CricketMatchType,
@@ -90,13 +88,6 @@ object DotcomRenderingUtils extends DCARUrlHelper {
         )
       case _ => None
     }
-  }
-
-  def getMatchNavUrl(host: String, date: LocalDate, team1: String, team2: String, pageId: String): String = {
-    val formatter = DateTimeFormat.forPattern("yyyy/MM/dd")
-    val datePath = formatter.print(date)
-    val encodedPageId = URLEncoder.encode(pageId, "UTF-8")
-    s"$host/football/api/match-nav/$datePath/$team1/$team2.json?dcr=true&page=$encodedPageId"
   }
 
   def getMatchUrl(
@@ -153,12 +144,10 @@ object DotcomRenderingUtils extends DCARUrlHelper {
           val statsUrlSegment: MatchEndpoint =
             if (pageType.isLiveblog) MatchStatsSummaryEndpoint else MatchStatsEndpoint
           val localDate = articlePage.item.trail.webPublicationDate.toLocalDate
-          val navUrl = getMatchNavUrl(getAjaxHost, localDate, e1._2, e2._2, articlePage.metadata.id)
           val headerUrl = getMatchUrl(getAjaxHost, localDate, e1._2, e2._2, MatchHeaderEndpoint)
           val statsUrl = getMatchUrl(getAjaxHost, localDate, e1._2, e2._2, statsUrlSegment)
           Some(
             DotcomRenderingMatchData(
-              matchUrl = navUrl,
               matchHeaderUrl = Some(headerUrl),
               matchStatsUrl = Some(statsUrl),
               matchType = FootballMatchType,
