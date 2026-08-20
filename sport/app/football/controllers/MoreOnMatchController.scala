@@ -15,13 +15,11 @@ import football.model.{
 }
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{CacheTime, Cached, Competition, Content, ContentType, TeamColours}
-import pa.{FootballMatch, LineUp, LineUpEnhanced, LineUpTeam, LineUpTeamEnhanced, MatchDayTeam}
+import model.{CacheTime, Cached, Content, ContentType}
+import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
-import play.twirl.api.Html
 import model.CompetitionDisplayHelpers.cleanTeamNameNextGenApi
-import utils.DateFormatUtils
 
 import java.time.ZonedDateTime
 import scala.concurrent.Future
@@ -101,89 +99,6 @@ case class NxMatchData(
     matchInfoUrl: String,
     status: String,
 ) extends NxAnswer
-
-object NxAnswer {
-  val reportedEventTypes = List("booking", "dismissal", "substitution")
-  def makePlayers(team: LineUpTeamEnhanced): Seq[NxPlayer] = {
-    team.players.map { player =>
-      val events = player.events.filter(event => reportedEventTypes.contains(event.eventType)).map { event =>
-        NxEvent(event.normalTime, event.eventType)
-      }
-      NxPlayer(
-        player.id,
-        player.name,
-        player.position,
-        player.lastName,
-        player.substitute,
-        player.timeOnPitch,
-        player.shirtNumber,
-        events,
-      )
-    }
-  }
-  def makeTeamAnswer(
-      teamV1: MatchDayTeam,
-      teamV2: LineUpTeamEnhanced,
-      teamPossession: Int,
-      teamColour: String,
-  ): NxTeam = {
-    val players = makePlayers(teamV2)
-    NxTeam(
-      teamV1.id,
-      cleanTeamNameNextGenApi(teamV1.name),
-      codename = GuTeamCodes.codeFor(teamV1),
-      players = players,
-      score = teamV1.score.getOrElse(0),
-      scorers = teamV1.scorers.fold(Nil: List[String])(
-        _.split(",")
-          .map(scorer => {
-            scorer.replace("(", "").replace(")", "")
-          })
-          .toList,
-      ),
-      possession = teamPossession,
-      shotsOn = teamV2.shotsOn,
-      shotsOff = teamV2.shotsOff,
-      corners = teamV2.corners,
-      fouls = teamV2.fouls,
-      colours = teamColour,
-      crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png",
-    )
-  }
-
-  def makeFromFootballMatch(
-      theMatch: FootballMatch,
-      related: Seq[ContentType],
-      lineUp: LineUpEnhanced,
-      competition: Option[Competition],
-      isResult: Boolean,
-      isLive: Boolean,
-      matchStatus: String,
-  )(implicit request: RequestHeader): NxMatchData = {
-    val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
-    val (maybeMatchReport, maybeMinByMin, _, matchInfo) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
-    NxMatchData(
-      id = theMatch.id,
-      isResult = isResult,
-      homeTeam = makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
-      awayTeam = makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
-      competition = NxCompetition(competition.map(_.fullName)),
-      isLive = isLive,
-      venue = theMatch.venue.map(_.name).getOrElse(""),
-      comments = theMatch.comments.getOrElse(""),
-      minByMinUrl = maybeMinByMin.map(x => LinkTo(x.url)),
-      reportUrl = maybeMatchReport.map(x => LinkTo(x.url)),
-      matchInfoUrl = LinkTo(matchInfo.url),
-      status = matchStatus,
-    )
-  }
-
-  implicit val EventAnswerWrites: Writes[NxEvent] = Json.writes[NxEvent]
-  implicit val PlayerAnswerWrites: Writes[NxPlayer] = Json.writes[NxPlayer]
-  implicit val TeamAnswerWrites: Writes[NxTeam] = Json.writes[NxTeam]
-  implicit val CompetitionAnswerWrites: Writes[NxCompetition] = Json.writes[NxCompetition]
-  implicit val MatchDataAnswerWrites: Writes[NxMatchData] = Json.writes[NxMatchData]
-}
 
 case class Interval(start: ZonedDateTime, end: ZonedDateTime) {
   def contains(dt: ZonedDateTime): Boolean = {
@@ -305,70 +220,6 @@ class MoreOnMatchController(
             )
           })
         }
-      maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
-    }
-
-  def matchNavJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
-    matchNav(year, month, day, team1, team2)
-  def matchNav(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val contentDate = DateHelpers.parseLocalDate(year, month, day)
-
-      val maybeResponse: Option[Future[Result]] =
-        competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
-          val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
-          // We are only interested in content with exactly 2 team tags
-
-          val group = theMatch.round.name
-            .flatMap {
-              case roundName if roundName.toLowerCase.startsWith("group") =>
-                Some(roundName.toLowerCase.replace(' ', '-'))
-              case _ => None
-            }
-            .getOrElse("")
-
-          lazy val competition = competitionsService.competitionForMatch(theMatch.id)
-
-          if (request.forceDCR) {
-            for {
-              lineup <- competitionsService.getLineupEnhanced(theMatch)
-              filtered <- related map { _ filter hasExactlyTwoTeams }
-            } yield {
-              Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
-                JsonComponent.fromWritable(
-                  NxAnswer.makeFromFootballMatch(
-                    theMatch,
-                    filtered,
-                    lineup,
-                    competition,
-                    theMatch.isResult,
-                    theMatch.isLive,
-                    theMatch.matchStatus,
-                  ),
-                )
-              }
-            }
-          } else {
-            for {
-              filtered <- related map { _ filter hasExactlyTwoTeams }
-            } yield {
-              Cached(if (theMatch.isLive) CacheTime.Football else CacheTime.FootballLongCache) {
-                JsonComponent(
-                  "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-                  "matchSummary" -> football.views.html.fragments
-                    .matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
-                  "hasStarted" -> theMatch.hasStarted,
-                  "group" -> group,
-                  "matchDate" -> theMatch.date
-                    .format(DateFormatUtils.javaUrlDateFormatUTC)
-                    .toLowerCase(),
-                  "dropdown" -> views.html.fragments.dropdown("")(Html("")),
-                )
-              }
-            }
-          }
-        }
-
       maybeResponse.getOrElse(Future.successful(Cached(CacheTime.FootballMediumCache) { JsonNotFound() }))
     }
 
