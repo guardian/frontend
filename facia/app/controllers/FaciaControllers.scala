@@ -5,6 +5,7 @@ import com.softwaremill.macwire._
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import services.SubnavAgent
 import services.fronts.FrontJsonFapiLive
 
 trait FaciaControllers {
@@ -13,6 +14,7 @@ trait FaciaControllers {
   def wsClient: WSClient
   def mostViewedAgent: MostViewedAgent
   def deeplyReadAgent: DeeplyReadAgent
+  def subnavAgent: SubnavAgent
   def assets: Assets
   implicit def appContext: ApplicationContext
   lazy val faciaController = wire[FaciaControllerImpl]

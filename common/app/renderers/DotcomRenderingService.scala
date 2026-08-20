@@ -2,6 +2,7 @@ package renderers
 
 import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
+import com.gu.facia.client.models.CustomSubnav
 import common.LoggingField.LogField
 import common.{DCRMetrics, GuLogging}
 import concurrent.CircuitBreakerRegistry
@@ -310,6 +311,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       mostViewed: Seq[RelatedContentItem],
       deeplyRead: Option[Seq[Trail]],
+      subnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomFrontsRenderingDataModel(
       page,
@@ -317,6 +319,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType,
       mostViewed,
       deeplyRead,
+      subnav,
     )
 
     val json = DotcomFrontsRenderingDataModel.toJson(dataModel)
