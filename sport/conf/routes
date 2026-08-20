@@ -68,8 +68,7 @@ GET        /football/:competitionTag/wallchart.json                             
 GET        /football/api/match-header/:year/:month/:day/:home/:away.json                       football.controllers.MoreOnMatchController.matchHeaderJson(year, month, day, home, away)
 GET        /football/api/match-stats/:year/:month/:day/:home/:away.json                        football.controllers.MoreOnMatchController.matchStatsJson(year, month, day, home, away)
 GET        /football/api/match-stats-summary/:year/:month/:day/:home/:away.json                football.controllers.MoreOnMatchController.matchStatsSummaryJson(year, month, day, home, away)
-GET        /football/api/match-nav/:matchId.json                                               football.controllers.MoreOnMatchController.moreOnJson(matchId)
-GET        /football/api/match-nav/:matchId                                                    football.controllers.MoreOnMatchController.moreOn(matchId)
+
 GET        /football/api/big-match-special/:matchId.json                                       football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
 
 GET        /football/api/match-day                                                             football.controllers.MatchDayController.matchDayComponent()
@@ -89,6 +88,3 @@ GET        /football/match-redirect/:matchId                                    
 
 GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id.json                     rugby.controllers.MatchesController.scoreJson(year, month, day, team1Id, team2Id)
 GET        /sport/rugby/api/score/:year/:month/:day/:team1Id/:team2Id                          rugby.controllers.MatchesController.score(year, month, day, team1Id, team2Id)
-
-#AMP
-GET        /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                  football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
