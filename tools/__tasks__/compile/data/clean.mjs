@@ -1,5 +1,5 @@
 import path from 'node:path';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 
 import { paths } from '../../config.mjs';
 

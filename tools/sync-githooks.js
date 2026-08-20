@@ -2,7 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const rimraf = require('rimraf');
+const { rimraf } = require('rimraf');
 
 const src = path.resolve(__dirname, '..', 'git-hooks');
 const target = path.resolve(__dirname, '..', '.git', 'hooks');
