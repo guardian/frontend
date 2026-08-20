@@ -144,7 +144,7 @@ object DotcomRenderingFootballMatchListDataModel {
       context: ApplicationContext,
   ): DotcomRenderingFootballMatchListDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav = None)
     val combinedConfig = DotcomRenderingConfig(
       page = page,
       request = request,
@@ -308,7 +308,7 @@ object DotcomRenderingFootballTablesDataModel {
       context: ApplicationContext,
   ): DotcomRenderingFootballTablesDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav = None)
     val combinedConfig = DotcomRenderingConfig(
       page = page,
       request = request,
@@ -411,7 +411,7 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
       context: ApplicationContext,
   ): DotcomRenderingFootballMatchSummaryDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav = None)
     val combinedConfig = DotcomRenderingConfig(
       page = page,
       request = request,
