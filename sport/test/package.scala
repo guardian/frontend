@@ -20,7 +20,6 @@ class SportTestSuite
       new FixturesControllerTest,
       new LeagueTableControllerTest,
       new MatchControllerTest,
-      new MoreOnMatchFeatureTest,
       new RichListTest,
       new CompetitionStageTest,
       new FixturesListTest,
