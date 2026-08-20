@@ -30,44 +30,44 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
     )
   }
 
-  "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
+  "isEligibleForAffiliateLinks" should "correctly determine when to add affiliate links" in {
     // the switch is respected
-    shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(
       switchedOn = false,
       None,
       Set.empty,
       List.empty,
     ) should be(false)
     // affiliate links are not added when showAffiliateLinks is false
-    shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(
       switchedOn = true,
       Some(false),
       Set.empty,
       List.empty,
     ) should be(false)
     // affiliate links are added when showAffiliateLinks is true and there are no alwaysOff tags present
-    shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(
       switchedOn = true,
       Some(true),
       Set.empty,
       List.empty,
     ) should be(true)
     // affiliate links are not added when showAffiliateLinks is not defined
-    shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(
       switchedOn = true,
       None,
       Set.empty,
       List("tech"),
     ) should be(false)
     // affiliate links are not added when an always off tag is present on the article
-    shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(
       switchedOn = true,
       Some(true),
       Set("bereavement"),
       List("bereavement"),
     ) should be(false)
     // affiliate links are added when the tags are considered safe
-    shouldAddAffiliateLinks(
+    isEligibleForAffiliateLinks(
       switchedOn = true,
       Some(true),
       Set("bereavement"),

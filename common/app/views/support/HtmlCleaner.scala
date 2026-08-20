@@ -872,7 +872,7 @@ case class AffiliateLinksCleaner(
 
   override def clean(document: Document)(implicit request: RequestHeader): Document = {
     if (
-      AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(
+      AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.isEligibleForAffiliateLinks(
         AffiliateLinks.isSwitchedOn,
         showAffiliateLinks,
         alwaysOffTags,
@@ -937,7 +937,7 @@ object AffiliateLinksCleaner {
     tagPaths.exists(path => alwaysOffTags.contains(path))
   }
 
-  def shouldAddAffiliateLinks(
+  def isEligibleForAffiliateLinks(
       switchedOn: Boolean,
       showAffiliateLinks: Option[Boolean],
       alwaysOffTags: Set[String],

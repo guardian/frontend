@@ -464,8 +464,7 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
-    val shouldAddDisclaimer = DotcomRenderingUtils.shouldShowAffiliateDisclaimer(content, bodyBlocks)
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -602,19 +601,14 @@ object DotcomRenderingDataModel {
 
     val matchData = makeMatchData(page, pageType)
 
-    def addAffiliateLinksDisclaimerDCR(shouldAddDisclaimer: Boolean) = {
-      if (shouldAddDisclaimer) {
-        Some("true")
-      } else {
-        None
-      }
-    }
-
     val guardianBaseURL =
       if (Environment.app == "preview") s"${Configuration.site.viewerProxyBaseUrl}" else Configuration.site.host
 
     DotcomRenderingDataModel(
-      affiliateLinksDisclaimer = addAffiliateLinksDisclaimerDCR(shouldAddDisclaimer),
+      affiliateLinksDisclaimer = {
+        if (shouldAddAffiliateLinks) Some("true")
+        else None
+      },
       audioArticleImage = audioImageBlock,
       trailPicture = trailPicture,
       author = author,
