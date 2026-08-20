@@ -22,14 +22,6 @@ reinstall: uninstall install
 check-node-env: # PRIVATE
 	@./tools/check-node-env.js
 
-# *********************** DEVELOPMENT ***********************
-
-# Watch and automatically compile/reload all JS/SCSS.
-# Uses port 3000 insead of 9000.
-watch: compile-watch
-	@./dev/watch.mjs
-
-
 # *********************** ASSETS ***********************
 
 # Compile all assets in production.
@@ -43,10 +35,6 @@ compile-dev: install
 # Compile atom-specific JS
 compile-atoms: install
 	@./tools/task-runner/runner.mjs compile/javascript/index.atoms.mjs
-
-# Compile all assets for watch.
-compile-watch: install # PRIVATE
-	@NODE_ENV=development ./tools/task-runner/runner.mjs compile/index.watch.mjs
 
 compile-javascript: install # PRIVATE
 	@./tools/task-runner/runner.mjs compile/javascript/index.mjs
