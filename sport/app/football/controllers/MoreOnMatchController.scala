@@ -16,89 +16,13 @@ import football.model.{
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{CacheTime, Cached, Content, ContentType}
-import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
+import pa.{FootballMatch, LineUpEnhanced}
 import play.api.libs.json._
 import play.api.mvc._
 import model.CompetitionDisplayHelpers.cleanTeamNameNextGenApi
 
 import java.time.ZonedDateTime
 import scala.concurrent.Future
-
-// TODO import java.time.LocalDate and do not import DateHelpers.
-
-case class Report(trail: FootballMatchTrail, name: String)
-
-case class MatchNav(
-    theMatch: FootballMatch,
-    matchReport: Option[FootballMatchTrail],
-    minByMin: Option[FootballMatchTrail],
-    preview: Option[FootballMatchTrail],
-    stats: FootballMatchTrail,
-    currentPage: Option[FootballMatchTrail],
-) {
-
-  // do not count stats as a report (stats will always be there)
-  lazy val hasReports = hasReport || hasMinByMin || hasPreview
-  lazy val hasMinByMin = minByMin.isDefined
-  lazy val hasReport = matchReport.isDefined
-  lazy val hasPreview = preview.isDefined
-}
-
-/*
-  Date: 12th June 2020
-  Author: Pascal
-
-  For the moment I am essentially reproducing here what I did for MatchController.scala
-  If the two sets of classes turn out to be the same (or one an extension of the other) then I will move
-  them to a single model file.
- */
-
-// TODO: This model will soon get deprecated after the football pages migration.
-// It's currently being used for match-nav api calls
-// but throughout the migration we will start using match-header & match-stats endpoints
-// and will stop using match-nav
-sealed trait NxAnswer
-case class NxEvent(eventTime: String, eventType: String) extends NxAnswer
-case class NxPlayer(
-    id: String,
-    name: String,
-    position: String,
-    lastName: String,
-    substitute: Boolean,
-    timeOnPitch: String,
-    shirtNumber: String,
-    events: Seq[NxEvent],
-) extends NxAnswer
-case class NxTeam(
-    id: String,
-    name: String,
-    codename: String,
-    players: Seq[NxPlayer],
-    score: Int,
-    scorers: List[String],
-    possession: Int,
-    shotsOn: Int,
-    shotsOff: Int,
-    corners: Int,
-    fouls: Int,
-    colours: String,
-    crest: String,
-) extends NxAnswer
-case class NxCompetition(fullName: Option[String]) extends NxAnswer
-case class NxMatchData(
-    id: String,
-    isResult: Boolean,
-    homeTeam: NxTeam,
-    awayTeam: NxTeam,
-    competition: NxCompetition,
-    isLive: Boolean,
-    venue: String,
-    comments: String,
-    minByMinUrl: Option[String],
-    reportUrl: Option[String],
-    matchInfoUrl: String,
-    status: String,
-) extends NxAnswer
 
 case class Interval(start: ZonedDateTime, end: ZonedDateTime) {
   def contains(dt: ZonedDateTime): Boolean = {
