@@ -1,0 +1,335 @@
+{
+	"filters": [
+		{
+			"id": "crosswords",
+			"title": "Crosswords",
+			"backgroundColour": "#FCE1CE"
+		},
+		{
+			"id": "logic",
+			"title": "Sudoku",
+			"backgroundColour": "#CDECFB"
+		},
+		{
+			"id": "word-games",
+			"title": "Word games",
+			"backgroundColour": "#F9D4E8"
+		},
+		{
+			"id": "trivia-quizzes",
+			"title": "Trivia",
+			"backgroundColour": "#D5F3F2"
+		}
+	],
+	"containers": [
+		{
+			"title": "Today’s featured puzzles",
+			"variant": "featured",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "On the ball",
+							"type": "on-the-ball",
+							"set": "all",
+							"slug": "on-the-ball",
+							"url": "https://sportsreveal.io/guardian",
+							"variant": "iframe-page",
+							"backgroundColour": "#D5F3F2",
+							"filterId": "trivia-quizzes"
+						},
+						{
+							"title": "Film reveal",
+							"type": "film-reveal",
+							"set": "all",
+							"slug": "film-reveal",
+							"url": "https://moviegrid.io/guardian",
+							"variant": "iframe-page",
+							"backgroundColour": "#EAD8B9",
+							"filterId": "trivia-quizzes"
+						}
+					]
+				],
+				"nestedContainers": []
+			}
+		},
+		{
+			"title": "Crosswords",
+			"filterId": "crosswords",
+			"content": {
+				"items": [
+					[
+						{
+							"title": "Mini",
+							"type": "crossword",
+							"set": "mini",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Quick",
+							"type": "crossword",
+							"set": "quick",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Cryptic",
+							"type": "crossword",
+							"set": "cryptic",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Quick cryptic",
+							"type": "crossword",
+							"set": "quick-cryptic",
+							"backgroundColour": "#FCE1CE"
+						}
+					],
+					[
+						{
+							"title": "Quiptic",
+							"type": "crossword",
+							"set": "quiptic",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Prize",
+							"type": "crossword",
+							"set": "prize",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Weekend",
+							"type": "crossword",
+							"set": "weekend",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Sunday quick",
+							"type": "crossword",
+							"set": "sunday-quick",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"title": "Genius",
+							"type": "crossword",
+							"set": "genius",
+							"backgroundColour": "#FCE1CE"
+						}
+					]
+				],
+				"nestedContainers": [],
+				"archive": {
+					"title": "Crossword archive",
+					"type": "crossword",
+					"set": "all",
+					"url": "/puzzles/crosswords/archive",
+					"backgroundColour": "#FCE1CE"
+				}
+			}
+		},
+		{
+			"title": "Word games",
+			"filterId": "word-games",
+			"content": {
+				"items": [],
+				"nestedContainers": [
+					{
+						"title": "Word wheel",
+						"desktopSpan": 6,
+						"content": {
+							"items": [
+								[
+									{
+										"title": "Word wheel",
+										"type": "word-wheel",
+										"set": "all",
+										"slug": "word-wheel",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#F9D4E8"
+									}
+								]
+							],
+							"nestedContainers": [],
+							"archive": {
+								"title": "Word wheel archive",
+								"type": "word-wheel",
+								"set": "all",
+								"slug": "word-wheel",
+								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1",
+								"variant": "archive-page",
+								"backgroundColour": "#F9D4E8"
+							}
+						}
+					},
+					{
+						"title": "Wordiply",
+						"desktopSpan": 6,
+						"content": {
+							"items": [
+								[
+									{
+										"title": "Wordiply",
+										"type": "wordiply",
+										"set": "all",
+										"slug": "wordiply",
+										"url": "https://www.wordiply.com/",
+										"variant": "iframe-page",
+										"backgroundColour": "#F8D0C9"
+									}
+								]
+							],
+							"nestedContainers": [],
+							"archive": {
+								"title": "Wordiply archive",
+								"type": "wordiply",
+								"set": "all",
+								"slug": "wordiply",
+								"url": "https://www.wordiply.com/",
+								"variant": "archive-page",
+								"backgroundColour": "#F8D0C9"
+							}
+						}
+					}
+				]
+			}
+		},
+		{
+			"title": "Logic puzzles",
+			"filterId": "logic",
+			"content": {
+				"items": [],
+				"nestedContainers": [
+					{
+						"title": "Sudoku",
+						"desktopSpan": 12,
+						"content": {
+							"items": [
+								[
+									{
+										"title": "Sudoku easy",
+										"type": "sudoku",
+										"set": "easy",
+										"slug": "sudoku-easy",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"title": "Sudoku medium",
+										"type": "sudoku",
+										"set": "medium",
+										"slug": "sudoku-medium",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"title": "Sudoku hard",
+										"type": "sudoku",
+										"set": "hard",
+										"slug": "sudoku-hard",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"title": "Sudoku killer",
+										"type": "sudoku",
+										"set": "killer",
+										"slug": "sudoku-killer",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									}
+								]
+							],
+							"nestedContainers": [],
+							"archive": {
+								"title": "Logic archive",
+								"type": "sudoku",
+								"set": "all",
+								"slug": "sudoku-easy",
+								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
+								"variant": "archive-page",
+								"backgroundColour": "#CDECFB"
+							}
+						}
+					}
+				]
+			}
+		},
+		{
+			"title": "Trivia",
+			"filterId": "trivia-quizzes",
+			"content": {
+				"items": [],
+				"nestedContainers": [
+					{
+						"title": "On the ball",
+						"desktopSpan": 6,
+						"content": {
+							"items": [
+								[
+									{
+										"title": "On the ball",
+										"type": "on-the-ball",
+										"set": "all",
+										"slug": "on-the-ball",
+										"url": "https://sportsreveal.io/guardian",
+										"variant": "iframe-page",
+										"backgroundColour": "#D5F3F2"
+									}
+								]
+							],
+							"nestedContainers": [],
+							"archive": {
+								"title": "On the ball archive",
+								"type": "on-the-ball",
+								"set": "all",
+								"slug": "on-the-ball",
+								"url": "https://sportsreveal.io/guardian",
+								"variant": "archive-page",
+								"backgroundColour": "#D5F3F2"
+							}
+						}
+					},
+					{
+						"title": "Film reveal",
+						"desktopSpan": 6,
+						"content": {
+							"items": [
+								[
+									{
+										"title": "Film reveal",
+										"type": "film-reveal",
+										"set": "all",
+										"slug": "film-reveal",
+										"url": "https://moviegrid.io/guardian",
+										"variant": "iframe-page",
+										"backgroundColour": "#EAD8B9"
+									}
+								]
+							],
+							"nestedContainers": [],
+							"archive": {
+								"title": "Film reveal archive",
+								"type": "film-reveal",
+								"set": "all",
+								"slug": "film-reveal",
+								"url": "https://moviegrid.io/guardian",
+								"variant": "archive-page",
+								"backgroundColour": "#EAD8B9"
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+}
