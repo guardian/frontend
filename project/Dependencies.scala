@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.49.6"
-  val capiVersion = "47.0.0"
+  val capiVersion = "48.0.1"
   val faciaVersion = "37.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -33,7 +33,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "46.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "47.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -58,8 +58,8 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.18"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "21.0.0"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "8.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
@@ -92,7 +92,7 @@ object Dependencies {
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.8"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.9"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
