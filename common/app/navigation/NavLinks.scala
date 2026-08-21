@@ -217,20 +217,15 @@ object NavLinks {
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink(
-    "Crosswords",
-    "/crosswords",
+    "Puzzles and Games",
+    "/puzzles",
     children = List(
-      NavLink("Blog", "/crosswords/crossword-blog"),
-      NavLink("Quick", "/crosswords/series/quick"),
-      NavLink("Sunday quick", "/crosswords/series/sunday-quick"),
-      NavLink("Mini", "/crosswords/series/mini-crossword"),
-      NavLink("Quick cryptic", "/crosswords/series/quick-cryptic"),
-      NavLink("Quiptic", "/crosswords/series/quiptic"),
-      NavLink("Cryptic", "/crosswords/series/cryptic"),
-      NavLink("Prize", "/crosswords/series/prize"),
-      NavLink("Genius", "/crosswords/series/genius"),
-      NavLink("Weekend", "/crosswords/series/weekend-crossword"),
-      NavLink("Special", "/crosswords/series/special"),
+      NavLink("Crosswords", "/crosswords/crossword-blog"),
+      NavLink("Sudoku", "/crosswords/series/quick"),
+      NavLink("Wordiply", "/crosswords/series/sunday-quick"),
+      NavLink("Word wheel", "/crosswords/series/mini-crossword"),
+      NavLink("On the ball", "/crosswords/series/quick-cryptic"),
+      NavLink("Film reveal", "/crosswords/series/quiptic"),
     ),
   )
   val wordiply = NavLink(

@@ -47,4 +47,64 @@ object StaticPages {
         shouldGoogleIndex = true,
       ),
     )
+
+  def dcrSimplePuzzlesPage(
+      id: String,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = "Puzzles and Games",
+        description = None,
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
+  def dcrSimplePuzzleIframePage(
+      id: String,
+      title: String,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = title,
+        description = Some(s"Play $title on the Guardian."),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
+  def dcrSimplePuzzleArchivePage(
+      id: String,
+      title: String,
+  ): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = title,
+        description = Some(s"Track your progress in $title puzzles."),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
+  def dcrSimpleCrosswordArchivePage(id: String): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles")),
+        webTitle = "Crossword archive",
+        description = Some("Browse our crossword archive."),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
 }
