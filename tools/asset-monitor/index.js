@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const glob = require('glob');
 const gzipSize = require('gzip-size');
 const pretty = require('prettysize');
 const cssstats = require('cssstats');
@@ -9,19 +8,21 @@ const chalk = require('chalk');
 
 const cloudwatch = require('./cloudwatch');
 
-const { target } = require('../__tasks__/config').paths;
+const { target } = require('../__tasks__/config.mjs').paths;
 
 const credentials = '/etc/gu/frontend.properties';
 
+const getAssets = (globPattern, exclude = []) =>
+	fs.globSync(globPattern, {
+		exclude: exclude,
+		withFileTypes: true,
+	})
+	.filter(entry => entry.isFile())
+	.map(entry => path.join(entry.parentPath, entry.name));
+
 const files = [].concat(
-	glob.sync(`${target}/javascripts/**/*.js`, {
-		ignore: '**/{components,vendor}/**',
-		nodir: true,
-	}),
-	glob.sync(`${target}/stylesheets/**/*`, {
-		ignore: '**/*head.identity.css',
-		nodir: true,
-	}),
+	getAssets(`${target}/javascripts/**/*.js`, exclude=['**/{components,vendor}/**']),
+	getAssets(`${target}/stylesheets/**/*`, exclude=['**/*head.identity.css']),
 );
 
 const size = (filePath, fileData) => {

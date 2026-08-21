@@ -2,7 +2,6 @@ import { paths } from '../../config.mjs';
 
 import fs from 'node:fs';
 import path from 'node:path';
-import glob from 'glob';
 import btoa from 'btoa';
 import { optimize, extendDefaultPlugins } from 'svgo';
 import mkdirp from 'mkdirp';
@@ -109,7 +108,7 @@ const task = {
 					);
 					const fileName = `_${target}-icons-svg.scss`;
 
-					const iconPaths = glob.sync(path.join(srcPath, '*.svg'));
+					const iconPaths = fs.globSync(path.join(srcPath, '*.svg'));
 
 					mkdirp.sync(destPath);
 
