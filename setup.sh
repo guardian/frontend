@@ -17,27 +17,6 @@ installed() {
   hash "$1" 2>/dev/null
 }
 
-nvm_installed() {
-  if [ -d '/usr/local/opt/nvm' ] || [ -d "$HOME/.nvm" ]; then
-    true
-  else
-    false
-  fi
-}
-
-nvm_available() {
-  type -t nvm > /dev/null
-}
-
-source_nvm() {
-  if ! nvm_available; then
-    [ -e "/usr/local/opt/nvm/nvm.sh" ] && source /usr/local/opt/nvm/nvm.sh
-  fi
-  if ! nvm_available; then
-    [ -e "$HOME/.nvm/nvm.sh" ] && source $HOME/.nvm/nvm.sh
-  fi
-}
-
 check_encryption() {
 
     if linux; then
@@ -70,33 +49,29 @@ install_homebrew() {
   fi
 }
 
-install_jdk() {
-  if ! installed javac; then
-    if linux; then
-      sudo apt-get install -y openjdk-7-jdk
-    elif mac; then
-      EXTRA_STEPS+=("Download the JDK from https://adoptopenjdk.net")
-    fi
-  fi
-}
-
-install_node() {
-  if ! nvm_installed; then
-    if linux; then
+install_mise() {
+  if ! installed mise; then
+    if mac; then
+      brew install mise
+    elif linux; then
       if ! installed curl; then
         sudo apt-get install -y curl
       fi
+      curl https://mise.run | sh
+      export PATH="$HOME/.local/bin:$PATH"
     fi
 
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-    nvm install
-    EXTRA_STEPS+=("Add https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb to your .bash_profile")
-  else
-    if ! nvm_available; then
-      source_nvm
-    fi
-    nvm install
+    EXTRA_STEPS+=("Activate mise in your shell - see https://mise.jdx.dev/getting-started.html#activate-mise (e.g. add \`eval \"\$(mise activate zsh)\"\` to your ~/.zshrc)")
   fi
+}
+
+# Installs the JDK, Node etc. at the versions pinned in .tool-versions
+install_tools() {
+  (cd "$BASEDIR" && mise install)
+
+  # make the just-installed tools available to the rest of this script,
+  # even if mise isn't activated in the current shell yet
+  export PATH="${MISE_DATA_DIR:-$HOME/.local/share/mise}/shims:$PATH"
 }
 
 install_dev-nginx() {
@@ -149,8 +124,8 @@ main() {
   check_encryption
   create_aws_config
   install_homebrew
-  install_jdk
-  install_node
+  install_mise
+  install_tools
   install_gcc
   install_libpng
   compile

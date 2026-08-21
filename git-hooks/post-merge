@@ -10,12 +10,15 @@ execa
     .then(result => {
         const changedFiles = result.stdout.split('\n');
 
-        if (changedFiles.includes('.nvmrc')) {
-            const nvmrcVersion = fs.readFileSync('.nvmrc').toString().trim();
+        if (changedFiles.includes('.tool-versions')) {
+            const toolVersions = fs
+                .readFileSync('.tool-versions')
+                .toString()
+                .trim();
 
             console.log(
                 `${chalk.red(
-                    `Frontend now requires Node ${nvmrcVersion}\nSwitch to the latest version using \`nvm use\`, \`fnm use\` or \`asdf install\` (or whatever is appropriate) or download from nodejs.org. Then run \`make reinstall\`.`,
+                    `Frontend's pinned tool versions have changed:\n\n${toolVersions}\n\nRun \`mise install\` to update, then \`make reinstall\`.`,
                 )}`
             );
         } else if (changedFiles.includes('yarn.lock')) {

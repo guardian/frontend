@@ -1,1 +1,3 @@
-java corretto-21.0.10.7.1
+java corretto-21
+github:guardian/devenv 20260721-123412
+node 24

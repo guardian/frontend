@@ -11,6 +11,17 @@
 You need to have a few command line tools installed on your computer (some are used to install other tools). You should already have them if your laptop has been properly set up as part of your onboarding, otherwise here are what you need:
 
 -   [Homebrew](http://brew.sh/) (this is needed on Mac only)
+-   [mise](https://mise.jdx.dev/) - manages the versions of Node, Java etc. used by this repo
+
+    ```bash
+    $ brew install mise
+    ```
+
+    Then [activate it in your shell](https://mise.jdx.dev/getting-started.html#activate-mise), e.g. for `zsh`:
+
+    ```bash
+    $ echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
+    ```
 
 ## Obtain AWS credentials
 
@@ -42,8 +53,6 @@ We present you with two setup types: _automatic_ and _manual_. They are equivale
 
 1. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for _Frontend_, _CMS fronts_ and _Content API_ (You will need access to Janus).
 
-1. Make sure you have the [latest version of Java](#jdk).
-
 1. Run `./setup.sh` to install dependencies and compile assets. (If you get a _EACCES error_ see [here](04-troubleshooting.md#npm-eacces)).
 
 1. All being well, you should be able to [run the app](#running-frontend)
@@ -61,46 +70,25 @@ You need one file on your machine:
 region = eu-west-1
 ```
 
-### JDK
+### Tool versions (JDK, Node.js, …)
 
-Java 11 is required - on Mac OS this can be installed using [sdkman](https://sdkman.io/):
+All the tool versions this repo needs are pinned in [.tool-versions](../../.tool-versions), which is read by [mise](https://mise.jdx.dev/).
+
+With `mise` installed and [activated in your shell](https://mise.jdx.dev/getting-started.html#activate-mise), install everything from the root of the repo:
 
 ```bash
-$ sdk list java | grep -m 1 "11.*.1-amzn"
-$ sdk install java 11.0.15.9.1-amzn # Choose latest of 11.*.1-amzn
-$ sdk current java
-Using java version 11.0.15.9.1-amzn
-$ java -version
-openjdk version "11.0.15" 2022-04-19 LTS
-$ sdk use java 11.0.15.9.1-amzn
-Using java version 11.0.15.9.1-amzn in this shell.
+$ mise install
 ```
 
-### Node.js
+`mise` will then automatically use those versions whenever you `cd` into the repo. Check it worked:
 
-We highly recommend installing a Node version manager such as [fnm](https://github.com/Schniz/fnm) (preferred), [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://asdf-vm.com/guide/getting-started.html).
-
-Install the Node version manager of your choice.
-
-Run the command for your version manager to use the Node version as specified in [.nvmrc](../../.nvmrc).
-
-For `fnm` this will be:
-
-```
-$ fnm use
-```
-
-For `nvm` this will be:
-
-```
-$ nvm use
-```
-
-Once installed, check the running Node version (ignoring any 'v' prefix) matches the version in [.nvmrc](../.nvmrc)
-
-```
+```bash
+$ mise ls
 $ node --version
+$ java -version
 ```
+
+If you need to change a version, edit `.tool-versions` and run `mise install` again. We only pin major versions (e.g. `node 24`), so `mise` will pick up minor and patch releases for you.
 
 ### Client side code
 
