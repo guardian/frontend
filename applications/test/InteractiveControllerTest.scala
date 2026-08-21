@@ -1,5 +1,6 @@
 package test
 
+import com.gu.facia.client.models.CustomSubnav
 import conf.Configuration.interactive.cdnPath
 import controllers.InteractiveController
 import model.InteractivePage
@@ -11,6 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result, Results}
 import play.api.test.Helpers._
+import services.MockSubnavAgent
 
 import scala.concurrent.Future
 
@@ -19,6 +21,7 @@ class DCRFake() extends renderers.DotcomRenderingService {
       ws: WSClient,
       pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
     Future.successful(Results.Ok("test"))
   }
@@ -37,10 +40,11 @@ class DCRFake() extends renderers.DotcomRenderingService {
 
   val url = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
   lazy val interactiveController = new InteractiveController(
-    testContentApiClient,
-    wsClient,
-    play.api.test.Helpers.stubControllerComponents(),
-    new DCRFake(),
+    contentApiClient = testContentApiClient,
+    wsClient = wsClient,
+    controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+    remoteRenderer = new DCRFake(),
+    subnavAgent = new MockSubnavAgent(),
   )
 
   val getWebWorkerPath = PrivateMethod[String](Symbol("getWebWorkerPath"))

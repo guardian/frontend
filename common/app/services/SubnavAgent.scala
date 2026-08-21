@@ -5,10 +5,11 @@ import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.api.models.PublicationStatus
 import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.TargetedPageType.Front
+import com.gu.facia.client.models.TargetedPageType.{Article, HasTag}
 import com.gu.facia.client.models.{CustomSubnav, CustomSubnavConfig}
 import common._
 import fronts.FrontsApi
+import model.Content
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -30,6 +31,21 @@ class SubnavAgent extends GuLogging {
   def getSubnavForFront(frontId: String, status: PublicationStatus = Live): Option[CustomSubnav] = {
     getSubnavConfig().flatMap { config =>
       CustomSubnavService.getSubnavForFront(config, frontId, status)
+    }
+  }
+
+  def getSubnavForContent(content: Content, status: PublicationStatus = Live): Option[CustomSubnav] = {
+    getSubnavConfig().flatMap { config =>
+      def subnavMatchesSpecificArticle(subnav: CustomSubnav): Boolean =
+        subnav.pages.exists(p => p.path == content.metadata.id && p.`type` == Article)
+      def subnavMatchesOneOfTheArticleTag(subnav: CustomSubnav): Boolean =
+        subnav.pages.exists(p => p.`type` == HasTag && content.tags.tags.exists(_.id == p.path))
+
+      val draft = if (status == Draft) config.draft else Nil
+      val all = draft ++ config.live
+      all.find { subnav =>
+        subnavMatchesSpecificArticle(subnav) || subnavMatchesOneOfTheArticleTag(subnav)
+      }
     }
   }
 

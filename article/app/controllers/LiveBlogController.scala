@@ -16,7 +16,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
-import services.{CAPILookup, NewsletterService}
+import services.{CAPILookup, NewsletterService, SubnavAgent}
 import utils.DotcomponentsLogger
 import views.support.RenderOtherStatus
 
@@ -30,6 +30,7 @@ class LiveBlogController(
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -149,6 +150,7 @@ class LiveBlogController(
                 "isLiveBlog" -> "true",
               )
             val remoteRendering = !request.forceDCROff
+            val customSubnav = subnavAgent.getSubnavForContent(blog.article.content)
 
             if (remoteRendering) {
               DotcomponentsLogger.logger
@@ -160,6 +162,7 @@ class LiveBlogController(
                 pageType,
                 newsletter = None,
                 request.forceLive,
+                customSubnav = customSubnav,
               )
             } else {
               DotcomponentsLogger.logger.logRequest(s"liveblog executing in web", properties, page.article)
@@ -311,14 +314,16 @@ class LiveBlogController(
     val blog = pageBlocks.page
     val pageType: PageType = PageType(blog, request, context)
     val newsletter = newsletterService.getNewsletterForLiveBlog(blog)
+    val customSubnav = subnavAgent.getSubnavForContent(blog.article.content)
 
     val model =
       DotcomRenderingDataModel.forLiveblog(
-        pageBlocks,
-        request,
-        pageType,
-        request.forceLive,
-        newsletter,
+        pageBlocks = pageBlocks,
+        request = request,
+        pageType = pageType,
+        forceLive = request.forceLive,
+        newsletter = newsletter,
+        customSubnav = customSubnav,
       )
     val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
