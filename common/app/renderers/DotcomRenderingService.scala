@@ -185,7 +185,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       newsletter: Option[NewsletterData],
   )(implicit request: RequestHeader): Future[Result] =
-    baseArticleRequest("/AMPArticle", ws, pageBlocks, pageType, false, newsletter)
+    baseArticleRequest("/AMPArticle", ws, pageBlocks, pageType, false, newsletter, None)
 
   def getDCARAssets(ws: WSClient, path: String)(implicit request: RequestHeader): Future[Result] = {
     ws
@@ -211,14 +211,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       newsletter: Option[NewsletterData],
       forceLive: Boolean = false,
+      customSubnav: Option[CustomSubnav] = None,
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(
-      "/AppsArticle",
-      ws,
-      pageBlocks,
-      pageType,
-      forceLive,
-      newsletter,
+      path = "/AppsArticle",
+      ws = ws,
+      pageBlocks = pageBlocks,
+      pageType = pageType,
+      forceLive = forceLive,
+      newsletter = newsletter,
+      customSubnav = customSubnav,
     )
 
   def getArticle(
@@ -227,14 +229,16 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       newsletter: Option[NewsletterData],
       forceLive: Boolean = false,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] =
     baseArticleRequest(
-      "/Article",
-      ws,
-      pageBlocks,
-      pageType,
-      forceLive,
-      newsletter,
+      path = "/Article",
+      ws = ws,
+      pageBlocks = pageBlocks,
+      pageType = pageType,
+      forceLive = forceLive,
+      newsletter = newsletter,
+      customSubnav = customSubnav,
     )
 
   private def baseArticleRequest(
@@ -244,17 +248,26 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageType: PageType,
       forceLive: Boolean = false,
       newsletter: Option[NewsletterData],
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = pageBlocks.page match {
       case liveblog: LiveBlogPage =>
         DotcomRenderingDataModel.forLiveblog(
-          pageBlocks.copy(page = liveblog),
-          request,
-          pageType,
-          forceLive,
-          newsletter,
+          pageBlocks = pageBlocks.copy(page = liveblog),
+          request = request,
+          pageType = pageType,
+          forceLive = forceLive,
+          newsletter = newsletter,
+          customSubnav = customSubnav,
         )
-      case _ => DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, newsletter)
+      case _ =>
+        DotcomRenderingDataModel.forArticle(
+          pageBlocks = pageBlocks,
+          request = request,
+          pageType = pageType,
+          newsletter = newsletter,
+          customSubnav = customSubnav,
+        )
     }
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
@@ -350,9 +363,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
 
-    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType, customSubnav)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     // Nb. interactives have a longer timeout because some of them are very
@@ -372,7 +386,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType, None)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.interactiveBaseURL + "/AMPInteractive", pageBlocks.page.metadata.cacheTime)
   }
@@ -382,7 +396,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[InteractivePage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType, None)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     // Nb. interactives have a longer timeout because some of them are very
@@ -414,8 +428,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       imageContent: ImageContentPage,
       pageType: PageType,
       mainBlock: Option[Block],
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock, customSubnav)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", imageContent.metadata.cacheTime)
   }
@@ -425,8 +440,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       imageContent: ImageContentPage,
       pageType: PageType,
       mainBlock: Option[Block],
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock)
+    val dataModel = DotcomRenderingDataModel.forImageContent(imageContent, request, pageType, mainBlock, customSubnav)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", imageContent.metadata.cacheTime)
   }
@@ -436,8 +452,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mediaPage: MediaPage,
       pageType: PageType,
       blocks: Blocks,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
+    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks, customSubnav)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", mediaPage.metadata.cacheTime)
@@ -448,8 +465,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       mediaPage: MediaPage,
       pageType: PageType,
       blocks: Blocks,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks)
+    val dataModel = DotcomRenderingDataModel.forMedia(mediaPage, request, pageType, blocks, customSubnav)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", mediaPage.metadata.cacheTime)
@@ -460,8 +478,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       gallery: GalleryPage,
       pageType: PageType,
       blocks: Blocks,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks, customSubnav)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", gallery.metadata.cacheTime)
@@ -472,8 +491,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       gallery: GalleryPage,
       pageType: PageType,
       blocks: Blocks,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks)
+    val dataModel = DotcomRenderingDataModel.forGallery(gallery, request, pageType, blocks, customSubnav)
 
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/AppsArticle", gallery.metadata.cacheTime)
@@ -484,7 +504,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       crosswordPage: CrosswordPageWithContent,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType)
+    val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Crosswords)
   }
@@ -551,7 +571,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
+    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None, None)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/HostedContent", pageBlocks.page.metadata.cacheTime)
   }
@@ -561,7 +581,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       pageBlocks: BlocksOn[PageWithStoryPackage],
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None)
+    val dataModel = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None, None)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/AppsHostedContent", pageBlocks.page.metadata.cacheTime)
   }
