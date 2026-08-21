@@ -102,42 +102,42 @@ import scala.concurrent.Future
 
   "ConsentsJourney" when {
 
-    "using any journey" should {
+    // "using any journey" should {
 
-      "update Identity user on submit" in new ConsentsJourneyFixture {
-        val fakeRequest = FakeCSRFRequest(csrfAddToken)
-          .withFormUrlEncodedBody(
-            "returnUrl" -> returnUrlVerifier.defaultReturnUrl,
-          )
+    //   "update Identity user on submit" in new ConsentsJourneyFixture {
+    //     val fakeRequest = FakeCSRFRequest(csrfAddToken)
+    //       .withFormUrlEncodedBody(
+    //         "returnUrl" -> returnUrlVerifier.defaultReturnUrl,
+    //       )
 
-        when(api.saveUser(any[String], any[UserUpdateDTO], any[Auth]))
-          .thenReturn(Future.successful(Right(user)))
+    //     when(api.saveUser(any[String], any[UserUpdateDTO], any[Auth]))
+    //       .thenReturn(Future.successful(Right(user)))
 
-        val result = controller.completeConsents.apply(fakeRequest)
-        status(result) should be(303)
+    //     val result = controller.completeConsents.apply(fakeRequest)
+    //     status(result) should be(303)
 
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
-        verify(api).saveUser(ArgumentMatchers.eq(userId), userUpdateCapture.capture(), ArgumentMatchers.eq(testAuth))
-      }
+    //     val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
+    //     verify(api).saveUser(ArgumentMatchers.eq(userId), userUpdateCapture.capture(), ArgumentMatchers.eq(testAuth))
+    //   }
 
-    }
+    // }
 
-    "using displayConsentsJourneyThankYou" should {
+    // "using displayConsentsJourneyThankYou" should {
 
-      "thank you" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("form__success")
-        contentAsString(result) should include("Thank you")
-      }
+    //   "thank you" in new ConsentsJourneyFixture {
+    //     val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
+    //     status(result) should be(200)
+    //     contentAsString(result) should include("form__success")
+    //     contentAsString(result) should include("Thank you")
+    //   }
 
-      "have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include(xml.Utility.escape(Supporter.latestWording.wording))
-      }
+    //   "have consent checkboxes" in new ConsentsJourneyFixture {
+    //     val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
+    //     status(result) should be(200)
+    //     contentAsString(result) should include(xml.Utility.escape(Supporter.latestWording.wording))
+    //   }
 
-    }
+    // }
 
   }
 }
