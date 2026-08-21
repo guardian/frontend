@@ -30,13 +30,30 @@ const logSuccess = (msg) => console.log(`\x1b[32m✔\x1b[0m ${msg}`);
 
 const logFail = (msg) => console.log(`\x1b[31m✗\x1b[0m ${msg}`);
 
+// Tool versions are pinned in .tool-versions, which is read by mise.
+// See https://mise.jdx.dev/configuration.html#tool-versions
+const TOOL_VERSIONS_PATH = path.join(__dirname, '../', '.tool-versions');
+
+const getToolVersion = (tool) => {
+	const line = fs
+		.readFileSync(TOOL_VERSIONS_PATH, 'utf8')
+		.split('\n')
+		.map((l) => l.replace(/#.*$/, '').trim())
+		.find((l) => l.split(/\s+/)[0] === tool);
+
+	if (!line) {
+		logFail(`No \`${tool}\` entry found in .tool-versions`);
+		process.exit(1);
+	}
+
+	return line.split(/\s+/)[1];
+};
+
 const checkNodeEnv = async () => {
 	// check node
-	const nvmrcVersion = fs
-		.readFileSync(path.join(__dirname, '../', '.nvmrc'), 'utf8')
-		.trim();
-	await checkVersion('node', nvmrcVersion);
-	logSuccess(`Node ${nvmrcVersion}`);
+	const nodeVersion = getToolVersion('node');
+	await checkVersion('node', nodeVersion);
+	logSuccess(`Node ${nodeVersion}`);
 
 	// check yarn
 	childProcess.exec('yarn --version', async (e, version) => {
