@@ -1,14 +1,21 @@
 package model.dotcomrendering
 
 import com.github.nscala_time.time.Imports.DateTimeZone
-import com.gu.commercial.branding.{Branding, BrandingType, Dimensions, Logo => CommercialLogo}
+import com.gu.commercial.branding.{
+  Branding,
+  BrandingType,
+  Dimensions,
+  Foundation,
+  PaidContent,
+  Sponsored,
+  Logo => CommercialLogo,
+}
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import layout.DiscussionSettings
-import model.dotcomrendering.DotcomRenderingUtils.withoutNull
 import model.{Article, ContentFormat, ImageMedia, Pillar}
 import model.pressed.PressedContent
-import play.api.libs.json.{Json, OWrites, Writes}
+import play.api.libs.json.{JsNull, JsObject, JsResult, JsValue, Json, OFormat, Reads, Writes}
 import play.api.mvc.RequestHeader
 import views.support.{ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 
@@ -40,50 +47,116 @@ case class Trail(
 
 object Trail {
 
-  implicit val brandingTypeWrites: Writes[BrandingType] = new Writes[BrandingType] {
-    def writes(bt: BrandingType) = {
-      Json.obj(
-        "name" -> bt.name,
-      )
+  implicit val carouselImagesReads: Reads[Map[String, Option[String]]] =
+    Reads[Map[String, Option[String]]] { json =>
+      json.validate[JsObject].map {
+        _.fields.map { case (k, v) => k -> v.asOpt[String] }.toMap
+      }
     }
+
+  implicit val brandingTypeFormat: OFormat[BrandingType] = new OFormat[BrandingType] {
+    def reads(json: JsValue): JsResult[BrandingType] =
+      (json \ "name").validate[String].map {
+        case PaidContent.name => PaidContent
+        case Foundation.name  => Foundation
+        case _                => Sponsored
+      }
+    def writes(bt: BrandingType): JsObject = Json.obj("name" -> bt.name)
   }
 
-  implicit val dimensionsWrites: OWrites[Dimensions] = Json.writes[Dimensions]
+  implicit val dimensionsFormat: OFormat[Dimensions] = Json.format[Dimensions]
 
-  implicit val logoWrites: OWrites[CommercialLogo] = Json.writes[CommercialLogo]
+  implicit val logoFormat: OFormat[CommercialLogo] = Json.format[CommercialLogo]
 
-  implicit val brandingWrites: OWrites[Branding] = Json.writes[Branding]
+  implicit val brandingFormat: OFormat[Branding] = Json.format[Branding]
 
-  implicit val discussionWrites: OWrites[DiscussionSettings] = Json.writes[DiscussionSettings]
+  implicit val discussionSettingsFormat: OFormat[DiscussionSettings] = Json.format[DiscussionSettings]
 
-  implicit val OnwardItemWrites: Writes[Trail] = Writes { trail =>
-    val jsObject = Json.obj(
-      "url" -> trail.url,
-      "linkText" -> trail.linkText,
-      "showByline" -> trail.showByline,
-      "byline" -> trail.byline,
-      "masterImage" -> trail.masterImage,
-      "image" -> trail.image,
-      "carouselImages" -> trail.carouselImages,
-      "ageWarning" -> trail.ageWarning,
-      "isLiveBlog" -> trail.isLiveBlog,
-      "pillar" -> trail.pillar,
-      "designType" -> trail.designType,
-      "format" -> trail.format,
-      "webPublicationDate" -> trail.webPublicationDate,
-      "headline" -> trail.headline,
-      "mediaType" -> trail.mediaType,
-      "shortUrl" -> trail.shortUrl,
-      "kickerText" -> trail.kickerText,
-      "starRating" -> trail.starRating,
-      "avatarUrl" -> trail.avatarUrl,
-      "branding" -> trail.branding,
-      "discussion" -> trail.discussion,
-      "trailText" -> trail.trailText,
-      "galleryCount" -> trail.galleryCount,
-    )
+  implicit val contentFormatFormat: OFormat[ContentFormat] = new OFormat[ContentFormat] {
+    def reads(json: JsValue): JsResult[ContentFormat] = ContentFormat.contentFormatReads.reads(json)
+    def writes(cf: ContentFormat): JsObject = ContentFormat.contentFormatWrites.writes(cf).as[JsObject]
+  }
 
-    withoutNull(jsObject)
+  implicit val trailFormat: OFormat[Trail] = new OFormat[Trail] {
+    override def reads(json: JsValue): JsResult[Trail] =
+      for {
+        url <- (json \ "url").validate[String]
+        linkText <- (json \ "linkText").validate[String]
+        showByline <- (json \ "showByline").validate[Boolean]
+        byline <- (json \ "byline").validateOpt[String]
+        masterImage <- (json \ "masterImage").validateOpt[String]
+        image <- (json \ "image").validateOpt[String]
+        carouselImages <- (json \ "carouselImages").validate[Map[String, Option[String]]]
+        ageWarning <- (json \ "ageWarning").validateOpt[String]
+        isLiveBlog <- (json \ "isLiveBlog").validate[Boolean]
+        pillar <- (json \ "pillar").validate[String]
+        designType <- (json \ "designType").validate[String]
+        format <- (json \ "format").validate[ContentFormat]
+        webPublicationDate <- (json \ "webPublicationDate").validate[String]
+        headline <- (json \ "headline").validate[String]
+        mediaType <- (json \ "mediaType").validateOpt[String]
+        shortUrl <- (json \ "shortUrl").validate[String]
+        kickerText <- (json \ "kickerText").validateOpt[String]
+        starRating <- (json \ "starRating").validateOpt[Int]
+        avatarUrl <- (json \ "avatarUrl").validateOpt[String]
+        branding <- (json \ "branding").validateOpt[Branding]
+        discussion <- (json \ "discussion").validate[DiscussionSettings]
+        trailText <- (json \ "trailText").validateOpt[String]
+        galleryCount <- (json \ "galleryCount").validateOpt[Int]
+      } yield Trail(
+        url,
+        linkText,
+        showByline,
+        byline,
+        masterImage,
+        image,
+        carouselImages,
+        ageWarning,
+        isLiveBlog,
+        pillar,
+        designType,
+        format,
+        webPublicationDate,
+        headline,
+        mediaType,
+        shortUrl,
+        kickerText,
+        starRating,
+        avatarUrl,
+        branding,
+        discussion,
+        trailText,
+        galleryCount,
+      )
+
+    override def writes(trail: Trail): JsObject = {
+      val obj = Json.obj(
+        "url" -> trail.url,
+        "linkText" -> trail.linkText,
+        "showByline" -> trail.showByline,
+        "byline" -> trail.byline,
+        "masterImage" -> trail.masterImage,
+        "image" -> trail.image,
+        "carouselImages" -> trail.carouselImages,
+        "ageWarning" -> trail.ageWarning,
+        "isLiveBlog" -> trail.isLiveBlog,
+        "pillar" -> trail.pillar,
+        "designType" -> trail.designType,
+        "format" -> trail.format,
+        "webPublicationDate" -> trail.webPublicationDate,
+        "headline" -> trail.headline,
+        "mediaType" -> trail.mediaType,
+        "shortUrl" -> trail.shortUrl,
+        "kickerText" -> trail.kickerText,
+        "starRating" -> trail.starRating,
+        "avatarUrl" -> trail.avatarUrl,
+        "branding" -> trail.branding,
+        "discussion" -> trail.discussion,
+        "trailText" -> trail.trailText,
+        "galleryCount" -> trail.galleryCount,
+      )
+      JsObject(obj.fields.filterNot(_._2 == JsNull))
+    }
   }
 
   // We ideally want this to be replaced by something else in the near future. Probably
