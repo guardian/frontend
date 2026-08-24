@@ -33,7 +33,7 @@ object DotcomPuzzlesPageRenderingDataModel {
       layout: PuzzlesLayout,
       request: RequestHeader,
   ): DotcomPuzzlesPageRenderingDataModel = {
-    val edition = Edition.editon(request)
+    val edition = Edition.edition(request)
     val commercialProperties = page.metadata.commercial
       .map(_.perEdition.map { case (key, value) => key.id -> value })
       .getOrElse(Map.empty)
