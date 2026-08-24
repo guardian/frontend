@@ -13,6 +13,7 @@ import play.api.libs.json.{Format, JsObject, JsValue, Json}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
+import services.SubnavAgent
 import services.dotcomrendering.{MediaPicker, RemoteRender}
 import views.support.RenderOtherStatus
 
@@ -23,6 +24,7 @@ class MediaController(
     val controllerComponents: ControllerComponents,
     wsClient: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -125,7 +127,7 @@ class MediaController(
           mediaPage = content,
           pageType = pageType,
           blocks = blocks,
-          customSubnav = None,
+          customSubnav = subnavAgent.getSubnavForContent(content.media.content),
         )
     }
   }
