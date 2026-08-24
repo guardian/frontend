@@ -132,7 +132,7 @@ class CrosswordPageController(
       request: RequestHeader,
   ): JsValue =
     DotcomRenderingDataModel.toJson(
-      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType),
+      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None),
     )
 
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =

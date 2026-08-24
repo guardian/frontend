@@ -57,13 +57,14 @@ class GalleryController(
     val pageType = PageType(model, request, context)
 
     if (request.isApps) {
-      remoteRenderer.getAppsGallery(wsClient, model, pageType, blocks)
+      remoteRenderer.getAppsGallery(wsClient, model, pageType, blocks, None)
     } else {
       remoteRenderer.getGallery(
-        wsClient,
-        model,
-        pageType,
-        blocks,
+        ws = wsClient,
+        gallery = model,
+        pageType = pageType,
+        blocks = blocks,
+        customSubnav = None,
       )
     }
   }
@@ -80,7 +81,7 @@ class GalleryController(
   private def getDCRJson(galleryPage: GalleryPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forGallery(galleryPage, request, pageType, blocks))
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forGallery(galleryPage, request, pageType, blocks, None))
   }
 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit
