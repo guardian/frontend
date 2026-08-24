@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
-import services.NewsletterService
+import services.{MockSubnavAgent, NewsletterService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest
@@ -26,11 +26,12 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
 
   lazy val articleController = new ArticleController(
-    testContentApiClient,
-    play.api.test.Helpers.stubControllerComponents(),
-    wsClient,
-    new DCRFake(),
-    new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+    contentApiClient = testContentApiClient,
+    controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+    ws = wsClient,
+    remoteRenderer = new DCRFake(),
+    newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+    subnavAgent = new MockSubnavAgent(),
   )
 
   "Article Controller" should "200 when content type is article" in {

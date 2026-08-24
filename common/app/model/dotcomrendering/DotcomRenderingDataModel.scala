@@ -3,6 +3,7 @@ package model.dotcomrendering
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.AdvertisementFeature
 import com.gu.contentapi.client.utils.format.{ImmersiveDisplay, InteractiveDesign}
+import com.gu.facia.client.models.CustomSubnav
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import common.{CanonicalLink, Chronos, Edition, Environment, Localisation, RichRequestHeader}
@@ -204,6 +205,7 @@ object DotcomRenderingDataModel {
       pageBlocks: BlocksOn[InteractivePage],
       request: RequestHeader,
       pageType: PageType,
+      customSubnav: Option[CustomSubnav],
   ): DotcomRenderingDataModel = {
     val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
     val page = pageBlocks.page
@@ -225,6 +227,7 @@ object DotcomRenderingDataModel {
       pinnedPost = None,
       keyEvents = Nil,
       newsletter = None,
+      customSubnav = customSubnav,
     )
   }
 
@@ -233,6 +236,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       newsletter: Option[NewsletterData],
+      customSubnav: Option[CustomSubnav],
   ): DotcomRenderingDataModel = {
     val baseUrl = if (request.isAmp) Configuration.amp.baseUrl else Configuration.dotcom.baseUrl
     val linkedData =
@@ -255,6 +259,7 @@ object DotcomRenderingDataModel {
       pinnedPost = None,
       keyEvents = Nil,
       newsletter = newsletter,
+      customSubnav = customSubnav,
     )
   }
 
@@ -263,6 +268,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       blocks: APIBlocks,
+      customSubnav: Option[CustomSubnav],
   ) = {
 
     val linkedData = LinkedData.forArticle(
@@ -280,6 +286,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       hasStoryPackage = mediaPage.related.hasStoryPackage,
       storyPackage = getStoryPackage(mediaPage.related.faciaItems, request),
+      customSubnav = None,
     )
   }
 
@@ -288,6 +295,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       mainBlock: Option[APIBlock],
+      customSubnav: Option[CustomSubnav],
   ) = {
 
     val linkedData = LinkedData.forArticle(
@@ -305,6 +313,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = Seq.empty,
       hasStoryPackage = imageContentPage.related.hasStoryPackage,
       storyPackage = getStoryPackage(imageContentPage.related.faciaItems, request),
+      customSubnav = customSubnav,
     )
   }
 
@@ -313,6 +322,7 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       blocks: APIBlocks,
+      customSubnav: Option[CustomSubnav],
   ) = {
 
     val linkedData = LinkedData.forArticle(
@@ -330,6 +340,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       hasStoryPackage = galleryPage.related.hasStoryPackage,
       storyPackage = getStoryPackage(galleryPage.related.faciaItems, request),
+      customSubnav = customSubnav,
     )
   }
 
@@ -337,6 +348,7 @@ object DotcomRenderingDataModel {
       crosswordPage: CrosswordPageWithContent,
       request: RequestHeader,
       pageType: PageType,
+      customSubnav: Option[CustomSubnav],
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -352,6 +364,7 @@ object DotcomRenderingDataModel {
       mainBlock = None,
       bodyBlocks = Seq.empty,
       crossword = Some(crosswordPage.crossword),
+      customSubnav = customSubnav,
     )
   }
 
@@ -373,6 +386,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       forceLive: Boolean,
       newsletter: Option[NewsletterData],
+      customSubnav: Option[CustomSubnav],
   ): DotcomRenderingDataModel = {
     val page = pageBlocks.page
     val pagination = page.currentPage.pagination.map(paginationInfo => {
@@ -430,6 +444,7 @@ object DotcomRenderingDataModel {
       mostRecentBlockId = mostRecentBlockId,
       forceLive = forceLive,
       newsletter = newsletter,
+      customSubnav = customSubnav,
     )
   }
 
@@ -449,6 +464,7 @@ object DotcomRenderingDataModel {
       mostRecentBlockId: Option[String] = None,
       forceLive: Boolean = false,
       crossword: Option[CrosswordData] = None,
+      customSubnav: Option[CustomSubnav],
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -641,7 +657,7 @@ object DotcomRenderingDataModel {
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
-      nav = Nav(page, edition),
+      nav = Nav(page, edition, customSubnav = customSubnav),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,

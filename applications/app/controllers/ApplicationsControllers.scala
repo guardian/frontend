@@ -7,6 +7,7 @@ import model.ApplicationContext
 import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import services.SubnavAgent
 
 trait ApplicationsControllers {
 
@@ -16,6 +17,7 @@ trait ApplicationsControllers {
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
   def environment: Environment
+  def subnavAgent: SubnavAgent
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]

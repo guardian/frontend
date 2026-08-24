@@ -8,8 +8,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
-import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
-import services.NewsletterService
+import services.{MockSubnavAgent, NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class PublicationControllerTest
@@ -32,11 +31,12 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
   lazy val articleController =
     new ArticleController(
-      testContentApiClient,
-      controllerComponents,
-      wsClient,
-      new DCRFake(),
-      new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+      contentApiClient = testContentApiClient,
+      controllerComponents = controllerComponents,
+      ws = wsClient,
+      remoteRenderer = new DCRFake(),
+      newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+      subnavAgent = new MockSubnavAgent(),
     )
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
