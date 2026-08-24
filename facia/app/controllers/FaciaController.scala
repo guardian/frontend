@@ -203,7 +203,7 @@ trait FaciaController
       targetedTerritories,
     )
 
-  private def subnavForFront(page: PressedPage, pageType: PageType): Option[CustomSubnav] =
+  private def customSubnavForFront(page: PressedPage, pageType: PageType): Option[CustomSubnav] =
     subnavAgent.getSubnavForFront(page.metadata.id, if (pageType.isPreview) Draft else Live)
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
@@ -230,7 +230,7 @@ trait FaciaController
             pageType = pageType,
             mostViewed = mostViewedAgent.mostViewed(Edition(request)),
             deeplyRead = deeplyRead,
-            subnav = subnavForFront(faciaPage, pageType),
+            subnav = customSubnavForFront(faciaPage, pageType),
           )(request),
           targetedTerritories,
         )
@@ -254,7 +254,7 @@ trait FaciaController
               pageType = pageType,
               mostViewed = mostViewedAgent.mostViewed(Edition(request)),
               deeplyRead = deeplyRead,
-              subnav = subnavForFront(faciaPage, pageType),
+              customSubnav = customSubnavForFront(faciaPage, pageType),
             ),
           )
         } else JsonFront(faciaPage)
