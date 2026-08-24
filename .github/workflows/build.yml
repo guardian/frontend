@@ -23,12 +23,22 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # Installs the tools pinned in .tool-versions
+      - uses: jdx/mise-action@v4
+        with:
+          install_args: node
+
       - run: corepack enable
 
-      - uses: actions/setup-node@v6
+      - name: Locate yarn cache
+        id: yarn-cache
+        run: echo "dir=$(yarn config get cacheFolder)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
         with:
-          cache: yarn
-          node-version-file: .nvmrc
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
 
       - run: make install
       - run: make validate
@@ -39,12 +49,22 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # Installs the tools pinned in .tool-versions
+      - uses: jdx/mise-action@v4
+        with:
+          install_args: node
+
       - run: corepack enable
 
-      - uses: actions/setup-node@v6
+      - name: Locate yarn cache
+        id: yarn-cache
+        run: echo "dir=$(yarn config get cacheFolder)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
         with:
-          cache: yarn
-          node-version-file: .nvmrc
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
 
       - run: make install
       - run: make compile
@@ -65,12 +85,23 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # Installs the tools pinned in .tool-versions
+      # (the JDK and sbt are provided by guardian/setup-scala below)
+      - uses: jdx/mise-action@v4
+        with:
+          install_args: node
+
       - run: corepack enable
 
-      - uses: actions/setup-node@v6
+      - name: Locate yarn cache
+        id: yarn-cache
+        run: echo "dir=$(yarn config get cacheFolder)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
         with:
-          cache: yarn
-          node-version-file: .nvmrc
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
 
       - uses: guardian/setup-scala@v1
 
