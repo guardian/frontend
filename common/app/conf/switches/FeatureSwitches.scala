@@ -671,4 +671,16 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val EditorialABTests = Switch(
+    group = SwitchGroup.Feature,
+    name = "editorial-ab-tests",
+    description = "Enables editorial A/B tests to run",
+    owners =
+      Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk"), Owner.withEmail("a.b.test.mission@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
