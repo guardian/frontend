@@ -14,9 +14,12 @@ trait ApplicationsControllers {
   def sectionsLookUp: SectionsLookUp
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
+  def environment: Environment
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val puzzlesLayoutProvider: PuzzlesLayoutProvider = new LocalJsonPuzzlesLayoutProvider(environment)
+  lazy val puzzlesPageController = wire[PuzzlesPageController]
   lazy val siteMapController = wire[SiteMapController]
   lazy val dCARAssetsController = wire[DCARAssetsController]
   lazy val crosswordPageController = wire[CrosswordPageController]
