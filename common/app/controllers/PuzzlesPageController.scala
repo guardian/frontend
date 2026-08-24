@@ -47,7 +47,7 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       request.getRequestFormat match {
         case JsonFormat =>
-          val page = StaticPages.dcrSimplesPuzzlesPage(request.path)
+          val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
           puzzlesLayoutProvider.getLayout().map { layout =>
             val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
