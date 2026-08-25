@@ -1,7 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
 
-import glob from 'glob';
 import pify from 'pify';
 
 const readFile = pify(fs.readFile);
@@ -16,7 +15,7 @@ const task = {
 	title: 'Prohibit inline data URIs in svgs and other unoptimised things',
 	task: () =>
 		Promise.all(
-			glob.sync('**/*.svg', { cwd: srcDir }).map((svgPath) =>
+			fs.globSync('**/*.svg', { cwd: srcDir }).map((svgPath) =>
 				Promise.all([
 					stat(path.resolve(srcDir, svgPath)).then(
 						(fileStats) =>

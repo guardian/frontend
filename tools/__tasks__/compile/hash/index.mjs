@@ -1,7 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
 
-import glob from 'glob';
 import hasha from 'hasha';
 import cpFile from 'cp-file';
 import mkdirp from 'mkdirp';
@@ -27,10 +26,15 @@ const task = {
 						const sourcemapRegex = /\.map$/;
 
 						// create the hashed asset map for all files in target
-						const assetMap = glob
-							.sync('**/!(*.map)', {
-								nodir: true,
+						const assetMap = fs.globSync('**/!(*.map)', {
 								cwd: paths.target,
+								withFileTypes: true,
+							})
+							.filter(entry => entry.isFile())
+							.map(entry => {
+								const rawPath = path.join(entry.parentPath, entry.name);
+								const relativePath = path.relative(paths.target, rawPath);
+								return relativePath;
 							})
 							.reduce((map, assetPath) => {
 								const assetLocation = path.resolve(

@@ -61,7 +61,9 @@ class ImageContentController(
   private def getDCRJson(content: ImageContentPage, pageType: PageType, mainBlock: Option[Block])(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forImageContent(content, request, pageType, mainBlock))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forImageContent(content, request, pageType, mainBlock, None),
+    )
   }
 
   private def remoteRender(content: ImageContentPage, mainBlock: Option[Block])(implicit
@@ -76,17 +78,19 @@ class ImageContentController(
         )
       case AppsFormat =>
         remoteRenderer.getAppsImageContent(
-          wsClient,
-          content,
-          pageType,
-          mainBlock,
+          ws = wsClient,
+          imageContent = content,
+          pageType = pageType,
+          mainBlock = mainBlock,
+          customSubnav = None,
         )
       case _ =>
         remoteRenderer.getImageContent(
-          wsClient,
-          content,
-          pageType,
-          mainBlock,
+          ws = wsClient,
+          imageContent = content,
+          pageType = pageType,
+          mainBlock = mainBlock,
+          customSubnav = None,
         )
     }
   }

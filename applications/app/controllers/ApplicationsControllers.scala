@@ -6,6 +6,7 @@ import jobs.SiteMapJob
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import services.SubnavAgent
 
 trait ApplicationsControllers {
 
@@ -14,6 +15,7 @@ trait ApplicationsControllers {
   def sectionsLookUp: SectionsLookUp
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
+  def subnavAgent: SubnavAgent
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]

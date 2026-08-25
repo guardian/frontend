@@ -98,7 +98,7 @@ class MediaController(
   private def getDCRJson(content: MediaPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, blocks))
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, blocks, None))
   }
 
   private def remoteRender(content: MediaPage, blocks: Blocks)(implicit
@@ -113,17 +113,19 @@ class MediaController(
         )
       case AppsFormat =>
         remoteRenderer.getAppsMedia(
-          wsClient,
-          content,
-          pageType,
-          blocks,
+          ws = wsClient,
+          mediaPage = content,
+          pageType = pageType,
+          blocks = blocks,
+          customSubnav = None,
         )
       case _ =>
         remoteRenderer.getMedia(
-          wsClient,
-          content,
-          pageType,
-          blocks,
+          ws = wsClient,
+          mediaPage = content,
+          pageType = pageType,
+          blocks = blocks,
+          customSubnav = None,
         )
     }
   }
