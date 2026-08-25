@@ -9,7 +9,7 @@ import com.gu.facia.client.models.TargetedPageType.{Article, HasTag}
 import com.gu.facia.client.models.{CustomSubnav, CustomSubnavConfig}
 import common._
 import fronts.FrontsApi
-import model.Content
+import model.{ApplicationIdentity, Content}
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,21 +20,22 @@ import scala.util.{Failure, Success}
   * The config is authored in CMS Fronts and describes bespoke sub-navigations that can be targeted at specific fronts,
   * articles or tags. It is pulled from a single file in S3 in the CMS Fronts AWS account (via the Fronts API client).
   */
-class SubnavAgent extends GuLogging {
+class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
   private val subnavConfigBox = Box[Option[CustomSubnavConfig]](None)
+  private val publicationStatus: PublicationStatus = if (appIdentity.name == "preview") Draft else Live
 
   def isLoaded(): Boolean = subnavConfigBox.get().isDefined
 
   def getSubnavConfig(): Option[CustomSubnavConfig] = subnavConfigBox.get()
 
   /** Look up the custom subnav targeted at the given front, if any. */
-  def getSubnavForFront(frontId: String, status: PublicationStatus = Live): Option[CustomSubnav] = {
+  def getSubnavForFront(frontId: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
     getSubnavConfig().flatMap { config =>
       CustomSubnavService.getSubnavForFront(config, frontId, status)
     }
   }
 
-  def getSubnavForContent(content: Content, status: PublicationStatus = Live): Option[CustomSubnav] = {
+  def getSubnavForContent(content: Content, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
     getSubnavConfig().flatMap { config =>
       def subnavMatchesSpecificArticle(subnav: CustomSubnav): Boolean =
         subnav.pages.exists(p => p.path == content.metadata.id && p.`type` == Article)
