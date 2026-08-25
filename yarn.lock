@@ -2913,9 +2913,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/consent-manager@npm:0.0.0-canary-20260819100844":
-  version: 0.0.0-canary-20260819100844
-  resolution: "@guardian/consent-manager@npm:0.0.0-canary-20260819100844"
+"@guardian/consent-manager@npm:0.0.0-canary-20260825082015":
+  version: 0.0.0-canary-20260825082015
+  resolution: "@guardian/consent-manager@npm:0.0.0-canary-20260825082015"
   dependencies:
     "@guardian/libs": "npm:33.0.0"
     "@guardian/ophan-tracker-js": "npm:3.1.0"
@@ -2925,7 +2925,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/20c179d9a85eae02b75508ede78aab78b0cb9f0df5857ae6f5222e0a332b8126b09641a36b7179de7b30c081786af60a1445979b2f295f895ec56bcf4ca2bd12
+  checksum: 10c0/4d63ab367ab0e4b2acc6fdba8d8139d64868e425cb279d0cbc6713dd10161048558fee9999d01fe8fcedea9fe6811cc02e6792399f3f4afdde7696d352e39e2a
   languageName: node
   linkType: hard
 
@@ -2983,7 +2983,7 @@ __metadata:
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
     "@guardian/commercial-core": "npm:34.0.0"
-    "@guardian/consent-manager": "npm:0.0.0-canary-20260819100844"
+    "@guardian/consent-manager": "npm:0.0.0-canary-20260825082015"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"

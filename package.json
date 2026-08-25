@@ -28,7 +28,7 @@
 		"@emotion/styled": "^11.14.0",
 		"@guardian/ab-core": "8.0.0",
 		"@guardian/commercial-core": "34.0.0",
-		"@guardian/consent-manager": "0.0.0-canary-20260819100844",
+		"@guardian/consent-manager": "0.0.0-canary-20260825082015",
 		"@guardian/core-web-vitals": "6.0.0",
 		"@guardian/identity-auth": "6.0.1",
 		"@guardian/identity-auth-frontend": "8.1.0",
