@@ -377,6 +377,7 @@ case class InteractiveBlockElement(
     role: Option[String],
     isMandatory: Option[Boolean],
     caption: Option[String],
+    customData: Option[String],
 ) extends PageElement
 object InteractiveBlockElement {
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
@@ -1601,7 +1602,15 @@ object PageElement extends GuLogging {
       case Interactive =>
         element.interactiveTypeData
           .map(d =>
-            InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl.map(ensureHTTPS), d.role, d.isMandatory, d.caption),
+            InteractiveBlockElement(
+              d.iframeUrl,
+              d.alt,
+              d.scriptUrl.map(ensureHTTPS),
+              d.role,
+              d.isMandatory,
+              d.caption,
+              d.customData,
+            ),
           )
           .toList
       case Table   => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
