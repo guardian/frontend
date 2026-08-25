@@ -63,7 +63,13 @@ class ImageContentController(
       request: RequestHeader,
   ): JsValue = {
     DotcomRenderingDataModel.toJson(
-      DotcomRenderingDataModel.forImageContent(content, request, pageType, mainBlock, None),
+      DotcomRenderingDataModel.forImageContent(
+        imageContentPage = content,
+        request = request,
+        pageType = pageType,
+        mainBlock = mainBlock,
+        customSubnav = subnavAgent.getSubnavForContent(content.image.content),
+      ),
     )
   }
 

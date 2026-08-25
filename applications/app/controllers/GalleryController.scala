@@ -83,7 +83,15 @@ class GalleryController(
   private def getDCRJson(galleryPage: GalleryPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forGallery(galleryPage, request, pageType, blocks, None))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forGallery(
+        galleryPage = galleryPage,
+        request = request,
+        pageType = pageType,
+        blocks = blocks,
+        customSubnav = subnavAgent.getSubnavForContent(galleryPage.gallery.content),
+      ),
+    )
   }
 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit

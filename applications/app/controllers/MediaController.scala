@@ -100,7 +100,15 @@ class MediaController(
   private def getDCRJson(content: MediaPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, blocks, None))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forMedia(
+        mediaPage = content,
+        request = request,
+        pageType = pageType,
+        blocks = blocks,
+        customSubnav = subnavAgent.getSubnavForContent(content.media.content),
+      ),
+    )
   }
 
   private def remoteRender(content: MediaPage, blocks: Blocks)(implicit
