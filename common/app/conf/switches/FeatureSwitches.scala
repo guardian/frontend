@@ -661,17 +661,6 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val FilterAtAGlanceTest = Switch(
-    group = SwitchGroup.Feature,
-    name = "filter-at-a-glance",
-    description = "Switch for at a glance A / B / C test",
-    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
-    sellByDate = never,
-    safeState = Off,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val EditorialABTests = Switch(
     group = SwitchGroup.Feature,
     name = "editorial-ab-tests",

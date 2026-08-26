@@ -32,6 +32,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait ApplicationsServices {
   def wsClient: WSClient
+  def appIdentity: ApplicationIdentity
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]

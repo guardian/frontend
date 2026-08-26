@@ -5,6 +5,7 @@ import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import conf.Configuration
 import conf.switches.Switches.DCRFronts
 import controllers.FaciaControllerImpl
+import model.ApplicationIdentity
 import org.jsoup.Jsoup
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -45,12 +46,12 @@ import scala.concurrent.duration._
   }
 
   lazy val faciaController = new FaciaControllerImpl(
-    fapi,
-    play.api.test.Helpers.stubControllerComponents(),
-    wsClient,
-    new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
-    new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
-    new SubnavAgent(),
+    frontJsonFapi = fapi,
+    controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+    ws = wsClient,
+    mostViewedAgent = new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
+    deeplyReadAgent = new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
+    subnavAgent = new SubnavAgent(ApplicationIdentity("mock")),
     assets = assets,
   )
   val frontPath = "music"

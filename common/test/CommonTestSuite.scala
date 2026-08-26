@@ -5,6 +5,7 @@ import conf.CachedHealthCheckTest
 import conf.audio.FlagshipFrontContainerSpec
 import http.ABTestingFilterTest
 import navigation.NavigationTest
+import model.dotcomrendering.DotcomPuzzlesPageRenderingDataModelTest
 import org.scalatest.Suites
 import renderers.DotcomRenderingServiceTest
 
@@ -15,6 +16,7 @@ class CommonTestSuite
       new ABTestingFilterTest,
       new CachedHealthCheckTest,
       new NavigationTest,
+      new DotcomPuzzlesPageRenderingDataModelTest,
       new FlagshipFrontContainerSpec,
       new DotcomRenderingServiceTest,
     )

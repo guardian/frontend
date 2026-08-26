@@ -1,10 +1,12 @@
 package test
 
 import controllers.ImageContentController
+import model.ApplicationIdentity
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import play.api.test.Helpers._
+import services.SubnavAgent
 
 @DoNotDiscover class ImageContentControllerTest
     extends AnyFlatSpec
@@ -20,7 +22,12 @@ import play.api.test.Helpers._
   val pictureUrl = "artanddesign/picture/2013/oct/08/photography"
 
   lazy val imageContentController =
-    new ImageContentController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
+    new ImageContentController(
+      contentApiClient = testContentApiClient,
+      controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+      wsClient = wsClient,
+      subnavAgent = new SubnavAgent(ApplicationIdentity("mock")),
+    )
 
   "Image Content Controller" should "200 when content type is picture" in {
     val result = imageContentController.render(pictureUrl)(TestRequest(s"$pictureUrl?dcr=false"))

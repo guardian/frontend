@@ -2328,6 +2328,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@guardian/consent-manager@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@guardian/consent-manager@npm:2.1.0"
+  dependencies:
+    "@guardian/libs": "npm:33.0.0"
+    "@guardian/ophan-tracker-js": "npm:3.1.0"
+  peerDependencies:
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.8.1
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/1bc4f608024a3cd39531d72076b1cdeacc0c1b31d73123ff1e37e2cafe3a359f0e16e98c585f7509363958e4f5eaca85c0fdc32746aac5ac0a6f88b944c1c726
+  languageName: node
+  linkType: hard
+
 "@guardian/core-web-vitals@npm:6.0.0":
   version: 6.0.0
   resolution: "@guardian/core-web-vitals@npm:6.0.0"
@@ -2366,7 +2382,7 @@ __metadata:
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
     "@guardian/commercial-core": "npm:34.0.0"
-    "@guardian/consent-manager": "npm:1.0.0"
+    "@guardian/consent-manager": "npm:2.1.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
@@ -2520,12 +2536,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@guardian/libs@npm:33.0.0":
+  version: 33.0.0
+  resolution: "@guardian/libs@npm:33.0.0"
+  dependencies:
+    "@guardian/ophan-tracker-js": "npm:3.1.0"
+  peerDependencies:
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.8.1
+    typescript: ~6.0.3
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/8b7a05a5bf3d07d65330ffc1d00951deadd2aa4640d57c6b167cd1ad9001d47b90c0da5b8656be5760d384f581a99b5e2ef5dcb9f074ae35a0783cb4ca83c686
+  languageName: node
+  linkType: hard
+
 "@guardian/ophan-tracker-js@npm:2.8.0":
   version: 2.8.0
   resolution: "@guardian/ophan-tracker-js@npm:2.8.0"
   dependencies:
     "@guardian/tsconfig": "npm:^1.0.0"
   checksum: 10c0/72f7c374385254b46df671702e26a9d7bcfec0bfdaf084dcc29f810a269a4dd86db8caad835408b9c322c376f13fb87fa85396d39b9e924cc8c339ae0e923c83
+  languageName: node
+  linkType: hard
+
+"@guardian/ophan-tracker-js@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@guardian/ophan-tracker-js@npm:3.1.0"
+  dependencies:
+    "@guardian/tsconfig": "npm:^1.0.0"
+  checksum: 10c0/f005fbd7ccb15373e55c8933c2b4a4842532e6c7f77a263b4f7ed26fc58c2f933d87649e340e3c950e32f0097eac0989020724209d0acf2b82a64a95cdd7c710
   languageName: node
   linkType: hard
 
