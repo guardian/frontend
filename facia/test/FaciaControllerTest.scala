@@ -7,7 +7,7 @@ import common.editions.{Uk, Us}
 import controllers.FaciaControllerImpl
 import helpers.FaciaTestData
 import implicits.FakeRequests
-import model.PressedPage
+import model.{ApplicationIdentity, PressedPage}
 import org.apache.pekko.stream.scaladsl.Source
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.when
@@ -48,7 +48,7 @@ import scala.concurrent.{Await, Future}
     wsClient,
     new MostViewedAgent(testContentApiClient, new OphanApi(wsClient)),
     new DeeplyReadAgent(testContentApiClient, new OphanApi(wsClient)),
-    new SubnavAgent(),
+    new SubnavAgent(ApplicationIdentity("mock")),
     assets = assets,
   )
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"

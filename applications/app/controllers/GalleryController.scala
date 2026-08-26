@@ -12,6 +12,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.twirl.api.Html
 import renderers.DotcomRenderingService
+import services.SubnavAgent
 import services.dotcomrendering.{GalleryPicker, RemoteRender}
 import views.support.RenderOtherStatus
 
@@ -22,6 +23,7 @@ class GalleryController(
     val controllerComponents: ControllerComponents,
     wsClient: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -64,7 +66,7 @@ class GalleryController(
         gallery = model,
         pageType = pageType,
         blocks = blocks,
-        customSubnav = None,
+        customSubnav = subnavAgent.getSubnavForContent(model.gallery.content),
       )
     }
   }
@@ -81,7 +83,15 @@ class GalleryController(
   private def getDCRJson(galleryPage: GalleryPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forGallery(galleryPage, request, pageType, blocks, None))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forGallery(
+        galleryPage = galleryPage,
+        request = request,
+        pageType = pageType,
+        blocks = blocks,
+        customSubnav = subnavAgent.getSubnavForContent(galleryPage.gallery.content),
+      ),
+    )
   }
 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit
