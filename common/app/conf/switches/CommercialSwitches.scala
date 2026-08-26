@@ -54,17 +54,6 @@ trait CommercialSwitches {
     highImpact = false,
   )
 
-  val TwitterUwtSwitch = Switch(
-    Commercial,
-    "twitter-uwt",
-    "Include the Twitter universal website tag code.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val PermutiveSwitch = Switch(
     Commercial,
     "permutive",
@@ -338,17 +327,6 @@ trait PrebidSwitches {
     highImpact = false,
   )
 
-  val prebidSmart: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-smart",
-    description = "Include the Smart AdServer adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val prebidKargo: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-kargo",
@@ -419,17 +397,6 @@ trait PrebidSwitches {
     group = Commercial,
     name = "opt-out-advertising",
     description = "Enable Opt Out Advertising",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val youtubeIma: Switch = Switch(
-    group = Commercial,
-    name = "youtube-ima",
-    description = "When ON, the YouTube player will use the YouTube IMA (Interactive Media Ads) integration",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
