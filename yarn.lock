@@ -2312,22 +2312,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/consent-manager@npm:0.0.0-canary-20260825082015":
-  version: 0.0.0-canary-20260825082015
-  resolution: "@guardian/consent-manager@npm:0.0.0-canary-20260825082015"
-  dependencies:
-    "@guardian/libs": "npm:33.0.0"
-    "@guardian/ophan-tracker-js": "npm:3.1.0"
-  peerDependencies:
-    "@guardian/ophan-tracker-js": ^2.2.10
-    tslib: ^2.8.1
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/4d63ab367ab0e4b2acc6fdba8d8139d64868e425cb279d0cbc6713dd10161048558fee9999d01fe8fcedea9fe6811cc02e6792399f3f4afdde7696d352e39e2a
-  languageName: node
-  linkType: hard
-
 "@guardian/consent-manager@npm:1.0.0":
   version: 1.0.0
   resolution: "@guardian/consent-manager@npm:1.0.0"
@@ -2341,6 +2325,22 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/0e50f4244ff3782fe45fe5e97565879f592591fc94b11cccf815b0619443b183d629ca94a29b3ef03fa6cc03c3c681ea6f5d29abc6466ba30693cad85e9f0b5b
+  languageName: node
+  linkType: hard
+
+"@guardian/consent-manager@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@guardian/consent-manager@npm:2.1.0"
+  dependencies:
+    "@guardian/libs": "npm:33.0.0"
+    "@guardian/ophan-tracker-js": "npm:3.1.0"
+  peerDependencies:
+    "@guardian/ophan-tracker-js": ^2.2.10
+    tslib: ^2.8.1
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/1bc4f608024a3cd39531d72076b1cdeacc0c1b31d73123ff1e37e2cafe3a359f0e16e98c585f7509363958e4f5eaca85c0fdc32746aac5ac0a6f88b944c1c726
   languageName: node
   linkType: hard
 
@@ -2382,7 +2382,7 @@ __metadata:
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
     "@guardian/commercial-core": "npm:34.0.0"
-    "@guardian/consent-manager": "npm:0.0.0-canary-20260825082015"
+    "@guardian/consent-manager": "npm:2.1.0"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
