@@ -76,17 +76,6 @@ trait CommercialSwitches {
     highImpact = false,
   )
 
-  val ampAmazon = Switch(
-    Commercial,
-    "amp-amazon",
-    "Amp inventory is being auctioned through Amazon",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val RemarketingSwitch = Switch(
     Commercial,
     "remarketing",
@@ -199,39 +188,6 @@ trait PrebidSwitches {
     group = CommercialPrebid,
     name = "prebid-analytics",
     description = "Gather analytics from Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampPrebidPubmatic: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid-pubmatic",
-    description = "Amp inventory is being auctioned through Pubmatic's Prebid Server",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampPrebidCriteo: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid-criteo",
-    description = "Amp inventory is being auctioned through Criteo's Prebid Server",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampPrebidOzone: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid-ozone",
-    description = "Amp inventory is being auctioned through Ozone's Prebid Server",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
@@ -454,17 +410,6 @@ trait PrebidSwitches {
     description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampContentABTesting: Switch = Switch(
-    group = Commercial,
-    name = "amp-content-ab-testing",
-    description = "Enable content based testing on AMP",
-    owners = group(Commercial),
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
