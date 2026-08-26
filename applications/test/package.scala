@@ -37,6 +37,8 @@ class ApplicationsTestSuite
       new ShareLinksTest,
       new CrosswordDataTest,
       new NewspaperControllerTest,
+      new PuzzlesPageControllerTest,
+      new PuzzlesRoutesTest,
       new IndexPageTest,
       new InteractivePickerTest,
     )
