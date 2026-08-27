@@ -23,11 +23,7 @@ object SwitchGroup {
     ),
   )
   val Commercial = SwitchGroup("Commercial")
-  val CommercialFeeds = SwitchGroup(
-    "Commercial: Feeds",
-    Some("These switches enable the fetching and parsing of the commercial merchandising components."),
-  )
-  val CommercialPrebid = SwitchGroup(
+  val CommercialHeaderBidding = SwitchGroup(
     name = "Commercial: Header Bidding",
     description = Some("Features of our Prebid & A9 auction configuration."),
   )
@@ -177,7 +173,6 @@ object Switches
     with FaciaSwitches
     with CommercialSwitches
     with PrivacySwitches
-    with PrebidSwitches
     with DiscussionSwitches
     with PerformanceSwitches
     with MonitoringSwitches

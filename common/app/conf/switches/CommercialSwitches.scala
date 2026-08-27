@@ -2,10 +2,9 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
+import conf.switches.SwitchGroup.{Commercial, CommercialHeaderBidding}
 
-trait CommercialSwitches {
-
+trait CommercialSwitchGroup {
   val LiveBlogTopSponsorshipSwitch = Switch(
     Commercial,
     "live-blog-top-sponsorship",
@@ -87,19 +86,6 @@ trait CommercialSwitches {
     highImpact = false,
   )
 
-  val a9HeaderBidding: Switch = Switch(
-    group = CommercialPrebid,
-    name = "a9-header-bidding",
-    description = "Turn on A9 header bidding",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = true,
-    impactShortMessage = Some("Required for Amazon A9 (TAM) header bidding"),
-    impactFullMessage = Some("Warning: Disabling this switch will prevent Amazon A9 (TAM) from running"),
-  )
-
   val commercialMetrics: Switch = Switch(
     group = Commercial,
     name = "commercial-metrics",
@@ -144,229 +130,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
-}
-
-trait PrebidSwitches {
-
-  val prebidHeaderBidding: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-header-bidding",
-    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidAnalytics: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-analytics",
-    description = "Gather analytics from Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidUserSync: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-user-sync",
-    description = "Enable bidders to sync their user data with iframe or image beacons",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val PrebidPermutiveAudience = Switch(
-    group = CommercialPrebid,
-    name = "prebid-permutive-audience",
-    description = "Enable Permutive’s Audience Connector to run with Prebid",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidAppNexus: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-appnexus",
-    description = "Include AppNexus adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidAppNexusUKROW: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-appnexus-uk-row",
-    description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidAppNexusInvcode: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-appnexus-invcode",
-    description = "Swap placementId for invCode in the bid params",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidIndexExchange: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-index-exchange",
-    description = "Include Index Exchange adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidOpenx: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-openx",
-    description = "Include OpenX adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidOzone: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-ozone",
-    description = "Include Ozone adapter direct in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidPubmatic: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-pubmatic",
-    description = "Include Pubmatic adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidTrustx: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-trustx",
-    description = "Include TrustX adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidTripleLift: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-triplelift",
-    description = "Include Triple Lift adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidXaxis: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-xaxis",
-    description = "Include Xaxis adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidCriteo: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-criteo",
-    description = "Include Criteo adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidKargo: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-kargo",
-    description = "Include the Kargo adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidTeads: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-teads",
-    description = "Include the Teads adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidLiveramp: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-liveramp",
-    description = "When ON, the Liveramp ID integration is enabled for user sync in Prebid",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidMagnite: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-magnite",
-    description = "Include the Magnite adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidTheTradeDesk: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-the-trade-desk",
-    description = "Include The Trade Desk (ttd) adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
 
   val sentinelLogger: Switch = Switch(
     group = Commercial,
@@ -390,3 +153,240 @@ trait PrebidSwitches {
     highImpact = false,
   )
 }
+
+trait CommercialHeaderBiddingSwitchGroup {
+  val a9HeaderBidding: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "a9-header-bidding",
+    description = "Turn on A9 header bidding",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = true,
+    impactShortMessage = Some("Required for Amazon A9 (TAM) header bidding"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent Amazon A9 (TAM) from running"),
+  )
+
+  val prebidHeaderBidding: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-header-bidding",
+    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidAnalytics: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-analytics",
+    description = "Gather analytics from Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidUserSync: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-user-sync",
+    description = "Enable bidders to sync their user data with iframe or image beacons",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val PrebidPermutiveAudience = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-permutive-audience",
+    description = "Enable Permutive’s Audience Connector to run with Prebid",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidAppNexus: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-appnexus",
+    description = "Include AppNexus adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidAppNexusUKROW: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-appnexus-uk-row",
+    description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidAppNexusInvcode: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-appnexus-invcode",
+    description = "Swap placementId for invCode in the bid params",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidIndexExchange: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-index-exchange",
+    description = "Include Index Exchange adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidOpenx: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-openx",
+    description = "Include OpenX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidOzone: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-ozone",
+    description = "Include Ozone adapter direct in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidPubmatic: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-pubmatic",
+    description = "Include Pubmatic adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidTrustx: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-trustx",
+    description = "Include TrustX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidTripleLift: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-triplelift",
+    description = "Include Triple Lift adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidXaxis: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-xaxis",
+    description = "Include Xaxis adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidCriteo: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-criteo",
+    description = "Include Criteo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidKargo: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-kargo",
+    description = "Include the Kargo adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidTeads: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-teads",
+    description = "Include the Teads adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidLiveramp: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-liveramp",
+    description = "When ON, the Liveramp ID integration is enabled for user sync in Prebid",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidMagnite: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-magnite",
+    description = "Include the Magnite adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val prebidTheTradeDesk: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-the-trade-desk",
+    description = "Include The Trade Desk (ttd) adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+}
+
+trait CommercialSwitches extends CommercialSwitchGroup with CommercialHeaderBiddingSwitchGroup
