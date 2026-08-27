@@ -75,7 +75,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val confiantAdVerification: Switch = Switch(
+  val ConfiantAdVerification: Switch = Switch(
     group = Commercial,
     name = "confiant-ad-verification",
     description = "Enable Confiant ad verification",
@@ -86,7 +86,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val commercialMetrics: Switch = Switch(
+  val CommercialMetricsSwitch: Switch = Switch(
     group = Commercial,
     name = "commercial-metrics",
     description = "Send commercial metric data to the lake via Fastly",
@@ -97,7 +97,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val articleEndSlot: Switch = Switch(
+  val ArticleEndSlotSwitch: Switch = Switch(
     group = Commercial,
     name = "article-end-slot",
     description =
@@ -109,7 +109,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val AdManagerJobs: Switch = Switch(
+  val AdManagerJobsSwitch: Switch = Switch(
     group = Commercial,
     name = "ad-manager-jobs",
     description = "Use line items file from the ad manager jobs process instead of the legacy frontend process",
@@ -120,7 +120,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val disableChildDirected: Switch = Switch(
+  val DisableChildDirectedSwitch: Switch = Switch(
     group = Commercial,
     name = "disable-child-directed",
     description = "Disable child-directed treatment for ads",
@@ -131,7 +131,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val sentinelLogger: Switch = Switch(
+  val SentinelLoggerSwitch: Switch = Switch(
     group = Commercial,
     name = "sentinel-logger",
     description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
@@ -142,7 +142,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val optOutAdvertising: Switch = Switch(
+  val OptOutAdvertisingSwitch: Switch = Switch(
     group = Commercial,
     name = "opt-out-advertising",
     description = "Enable Opt Out Advertising",
@@ -153,7 +153,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val ias: Switch = Switch(
+  val IasSwitch: Switch = Switch(
     group = Commercial,
     name = "commercial-ias",
     description = "Enable IAS third party integration in Commercial code",
@@ -164,7 +164,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val teadsCookieless: Switch = Switch(
+  val TeadsCookielessSwitch: Switch = Switch(
     group = Commercial,
     name = "teads-cookieless",
     description = "Enable Teads cookieless in commercial",
@@ -175,7 +175,7 @@ trait CommercialSwitchGroup {
     highImpact = false,
   )
 
-  val ipsosMori: Switch = Switch(
+  val IpsosMoriSwitch: Switch = Switch(
     group = Commercial,
     name = "ipsos-mori",
     description = "Enable Ipsos Mori (market research partner) integration in commercial",
@@ -185,10 +185,21 @@ trait CommercialSwitchGroup {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val ComscoreSwitch = Switch(
+    group = Commercial,
+    name = "comscore",
+    description = "If this switch is on, then Comscore reporting is enabled",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
 
 trait CommercialHeaderBiddingSwitchGroup {
-  val a9HeaderBidding: Switch = Switch(
+  val A9HeaderBiddingSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "a9-header-bidding",
     description = "Turn on A9 header bidding",
@@ -201,7 +212,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     impactFullMessage = Some("Warning: Disabling this switch will prevent Amazon A9 (TAM) from running"),
   )
 
-  val prebidHeaderBidding: Switch = Switch(
+  val PrebidHeaderBiddingSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",
@@ -212,7 +223,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidAnalytics: Switch = Switch(
+  val PrebidAnalyticsSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-analytics",
     description = "Gather analytics from Prebid auctions",
@@ -223,7 +234,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidUserSync: Switch = Switch(
+  val PrebidUserSyncSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-user-sync",
     description = "Enable bidders to sync their user data with iframe or image beacons",
@@ -234,7 +245,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val PrebidPermutiveAudience = Switch(
+  val PrebidPermutiveAudienceSwitch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-permutive-audience",
     description = "Enable Permutive’s Audience Connector to run with Prebid",
@@ -245,7 +256,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidAppNexus: Switch = Switch(
+  val PrebidAppNexusSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-appnexus",
     description = "Include AppNexus adapter in Prebid auctions",
@@ -256,7 +267,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidAppNexusUKROW: Switch = Switch(
+  val PrebidAppNexusUKROWSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-appnexus-uk-row",
     description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
@@ -267,7 +278,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidAppNexusInvcode: Switch = Switch(
+  val PrebidAppNexusInvcodeSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-appnexus-invcode",
     description = "Swap placementId for invCode in the bid params",
@@ -278,7 +289,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidIndexExchange: Switch = Switch(
+  val PrebidIndexExchangeSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-index-exchange",
     description = "Include Index Exchange adapter in Prebid auctions",
@@ -289,7 +300,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidOpenx: Switch = Switch(
+  val PrebidOpenxSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-openx",
     description = "Include OpenX adapter in Prebid auctions",
@@ -300,7 +311,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidOzone: Switch = Switch(
+  val PrebidOzoneSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-ozone",
     description = "Include Ozone adapter direct in Prebid auctions",
@@ -311,7 +322,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidPubmatic: Switch = Switch(
+  val PrebidPubmaticSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-pubmatic",
     description = "Include Pubmatic adapter in Prebid auctions",
@@ -322,7 +333,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidTrustx: Switch = Switch(
+  val PrebidTrustxSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-trustx",
     description = "Include TrustX adapter in Prebid auctions",
@@ -333,7 +344,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidTripleLift: Switch = Switch(
+  val PrebidTripleLiftSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-triplelift",
     description = "Include Triple Lift adapter in Prebid auctions",
@@ -344,7 +355,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidXaxis: Switch = Switch(
+  val PrebidXaxisSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-xaxis",
     description = "Include Xaxis adapter in Prebid auctions",
@@ -355,7 +366,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidCriteo: Switch = Switch(
+  val PrebidCriteoSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-criteo",
     description = "Include Criteo adapter in Prebid auctions",
@@ -366,7 +377,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidKargo: Switch = Switch(
+  val PrebidKargoSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-kargo",
     description = "Include the Kargo adapter in Prebid auctions",
@@ -377,7 +388,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidTeads: Switch = Switch(
+  val PrebidTeadsSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-teads",
     description = "Include the Teads adapter in Prebid auctions",
@@ -388,7 +399,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidLiveramp: Switch = Switch(
+  val PrebidLiverampSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-liveramp",
     description = "When ON, the Liveramp ID integration is enabled for user sync in Prebid",
@@ -399,7 +410,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidMagnite: Switch = Switch(
+  val PrebidMagniteSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-magnite",
     description = "Include the Magnite adapter in Prebid auctions",
@@ -410,7 +421,7 @@ trait CommercialHeaderBiddingSwitchGroup {
     highImpact = false,
   )
 
-  val prebidTheTradeDesk: Switch = Switch(
+  val PrebidTheTradeDeskSwitch: Switch = Switch(
     group = CommercialHeaderBidding,
     name = "prebid-the-trade-desk",
     description = "Include The Trade Desk (ttd) adapter in Prebid auctions",

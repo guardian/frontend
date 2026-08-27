@@ -27,17 +27,6 @@ trait MonitoringSwitches {
     highImpact = false,
   )
 
-  val ComscoreSwitch = Switch(
-    SwitchGroup.Monitoring,
-    "comscore",
-    "If this switch is on, then Comscore reporting is enabled",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
   val ThirdPartyEmbedTracking = Switch(
     SwitchGroup.Monitoring,
     "third-party-embed-tracking",

@@ -15,7 +15,7 @@ import java.util.Map.Entry
 import scala.concurrent.duration._
 import scala.jdk.CollectionConverters._
 import scala.util.{Failure, Success, Try}
-import conf.switches.Switches.AdManagerJobs
+import conf.switches.Switches.AdManagerJobsSwitch
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
@@ -498,7 +498,7 @@ class GuardianConfiguration extends GuLogging {
     def dfpSurveySponsorshipDataKey = s"$gamRoot/survey-sponsorships.json"
     def dfpNonRefreshableLineItemIdsKey = s"$gamRoot/non-refreshable-line-items.json"
     def dfpLineItemsKey =
-      if (AdManagerJobs.isSwitchedOn) s"$gamRoot/line-items.json"
+      if (AdManagerJobsSwitch.isSwitchedOn) s"$gamRoot/line-items.json"
       else s"$dfpRoot/lineitems-v7.json"
     lazy val dfpSpecialAdUnitsKey = s"$gamRoot/special-ad-units.json"
     lazy val dfpCustomFieldsKey = s"$gamRoot/custom-fields.json"
