@@ -35,7 +35,7 @@ A scala helper method will insert the image for you:
 @fragments.inlineSvg(Filename[, path: Subdirectory[, classes: Classes[, title: Title]]])
 ```
 
-- `Filename` **String** The name of the file, excluding the extention
+- `Filename` **String** The name of the file, excluding the extension
 - `Subdirectory` **String** (optional) The folder the image lives in inside `inline-svgs`
 - `Classes` **List** (optional) A list of bespoke classes for this image
 - `Title` **String** (optional) A title that gets added to the wrapping `span`
