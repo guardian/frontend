@@ -76,20 +76,6 @@ trait CommercialSwitches {
     highImpact = false,
   )
 
-  val AffiliateLinks: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links",
-    description =
-      "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-    highImpact = true,
-    impactShortMessage = Some("Required for 'The Filter'"),
-    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
-  )
-
   val confiantAdVerification: Switch = Switch(
     group = Commercial,
     name = "confiant-ad-verification",

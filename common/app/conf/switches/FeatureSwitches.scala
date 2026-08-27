@@ -639,6 +639,20 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
+  val AffiliateLinks = Switch(
+    group = SwitchGroup.Feature,
+    name = "affiliate-links",
+    description =
+      "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter'"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
+  )
+
   val DCRHostedContent = Switch(
     group = SwitchGroup.Feature,
     name = "dcr-hosted-content",
