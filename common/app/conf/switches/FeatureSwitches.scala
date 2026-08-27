@@ -621,7 +621,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "enable-new-server-side-tests-header",
     "Enable new server-side AB tests header and add it to the vary header",
-    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     sellByDate = never,
     safeState = Off,
     exposeClientSide = false,
