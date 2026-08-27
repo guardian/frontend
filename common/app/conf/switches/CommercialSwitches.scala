@@ -78,7 +78,7 @@ trait CommercialSwitchGroup {
   val ConfiantAdVerification: Switch = Switch(
     group = Commercial,
     name = "confiant-ad-verification",
-    description = "Enable Confiant ad verification",
+    description = "Enable Confiant ad verification (blocking bad ads)",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
@@ -156,7 +156,7 @@ trait CommercialSwitchGroup {
   val IasSwitch: Switch = Switch(
     group = Commercial,
     name = "commercial-ias",
-    description = "Enable IAS third party integration in Commercial code",
+    description = "Enable IAS (Integral Ad Science) third party integration in Commercial code",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
@@ -425,6 +425,50 @@ trait CommercialHeaderBiddingSwitchGroup {
     group = CommercialHeaderBidding,
     name = "prebid-the-trade-desk",
     description = "Include The Trade Desk (ttd) adapter in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val PrebidID5Switch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-id5",
+    description = "Include ID5 (identity provider) IDs in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val PrebidIntentIqSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-intent-iq",
+    description = "Include Intent IQ (identity provider) IDs in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val PrebidOzoneIdSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-ozone-id",
+    description = "Include Ozone HEMs (hashed IDs) in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val PrebidTheTradeDeskIdSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-ttd-id",
+    description = "Include The Trade Desk (ttd) IDs in Prebid auctions",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
