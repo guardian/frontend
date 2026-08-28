@@ -155,7 +155,7 @@ trait CommercialSwitchGroup {
 
   val IasSwitch: Switch = Switch(
     group = Commercial,
-    name = "commercial-ias",
+    name = "ias",
     description = "Enable IAS (Integral Ad Science) third party integration in Commercial code",
     owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
