@@ -564,7 +564,7 @@ class EmailSignupController(
             Future.successful(())
           } else {
             val errorCodes = googleResponse.`error-codes`.getOrElse(Seq.empty).mkString(",")
-            logWarnWithRequestId(s"reCAPTCHA validation failed. error-codes: [$errorCodes]")
+            logErrorWithRequestId(s"reCAPTCHA validation failed. error-codes: [$errorCodes]")
             RecaptchaValidationError.increment()
             Future.failed(InvalidCaptchaTokenException)
           }
