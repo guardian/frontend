@@ -1,5 +1,6 @@
 package model.dotcomrendering
 
+import com.gu.facia.client.models.CustomSubnav
 import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
@@ -39,9 +40,10 @@ object DotcomFrontsRenderingDataModel {
       pageType: PageType,
       mostViewed: Seq[RelatedContentItem],
       deeplyRead: Option[Seq[Trail]],
+      customSubnav: Option[CustomSubnav],
   ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav)
 
     val combinedConfig = DotcomRenderingConfig(
       page = page,

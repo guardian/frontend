@@ -12,6 +12,10 @@ GET            /assets/admin/*file                                              
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
+# Puzzles
+GET        /puzzles.json                                                                                                         controllers.PuzzlesPageController.renderPuzzlesJson()
+GET        /puzzles                                                                                                              controllers.PuzzlesPageController.renderPuzzles()
+
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
@@ -95,8 +99,6 @@ GET            /embed/card/*path.json                                           
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET            /sport/cricket/match-scoreboard/:matchDate/:teamId.json                                                           cricket.controllers.CricketMatchController.renderMatchScoreboardJson(matchDate, teamId)
-
 GET            /football/fixtures/more/:year/:month/:day.json                                                                    football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET            /football/fixtures/:year/:month/:day                                                                              football.controllers.FixturesController.allFixturesFor(year, month, day)
 GET            /football/fixtures/:year/:month/:day.json                                                                         football.controllers.FixturesController.allFixturesForJson(year, month, day)
@@ -142,10 +144,6 @@ GET            /football/:competitionTag/overview                               
 GET            /football/:competitionTag/groups/embed                                                                            football.controllers.WallchartController.renderGroupTablesEmbed(competitionTag)
 GET            /football/:competitionTag/spider/embed                                                                            football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 
-GET            /football/api/match-nav/:year/:month/:day/:home/:away.json                                                        football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
-GET            /football/api/match-nav/:year/:month/:day/:home/:away                                                             football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
-GET            /football/api/match-nav/:matchId.json                                                                             football.controllers.MoreOnMatchController.moreOnJson(matchId)
-GET            /football/api/match-nav/:matchId                                                                                  football.controllers.MoreOnMatchController.moreOn(matchId)
 GET            /football/api/big-match-special/:matchId.json                                                                     football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
 
 GET            /football/competitions                                                                                            football.controllers.CompetitionListController.renderCompetitionList()

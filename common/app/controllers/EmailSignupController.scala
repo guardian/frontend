@@ -563,6 +563,8 @@ class EmailSignupController(
             RecaptchaValidationSuccess.increment()
             Future.successful(())
           } else {
+            val errorCodes = googleResponse.`error-codes`.getOrElse(Seq.empty).mkString(",")
+            logErrorWithRequestId(s"reCAPTCHA validation failed. error-codes: [$errorCodes]")
             RecaptchaValidationError.increment()
             Future.failed(InvalidCaptchaTokenException)
           }

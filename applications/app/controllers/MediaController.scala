@@ -13,6 +13,7 @@ import play.api.libs.json.{Format, JsObject, JsValue, Json}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
+import services.SubnavAgent
 import services.dotcomrendering.{MediaPicker, RemoteRender}
 import views.support.RenderOtherStatus
 
@@ -23,6 +24,7 @@ class MediaController(
     val controllerComponents: ControllerComponents,
     wsClient: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -98,7 +100,15 @@ class MediaController(
   private def getDCRJson(content: MediaPage, pageType: PageType, blocks: Blocks)(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forMedia(content, request, pageType, blocks))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forMedia(
+        mediaPage = content,
+        request = request,
+        pageType = pageType,
+        blocks = blocks,
+        customSubnav = subnavAgent.getSubnavForContent(content.media.content),
+      ),
+    )
   }
 
   private def remoteRender(content: MediaPage, blocks: Blocks)(implicit
@@ -113,17 +123,19 @@ class MediaController(
         )
       case AppsFormat =>
         remoteRenderer.getAppsMedia(
-          wsClient,
-          content,
-          pageType,
-          blocks,
+          ws = wsClient,
+          mediaPage = content,
+          pageType = pageType,
+          blocks = blocks,
+          customSubnav = None,
         )
       case _ =>
         remoteRenderer.getMedia(
-          wsClient,
-          content,
-          pageType,
-          blocks,
+          ws = wsClient,
+          mediaPage = content,
+          pageType = pageType,
+          blocks = blocks,
+          customSubnav = subnavAgent.getSubnavForContent(content.media.content),
         )
     }
   }

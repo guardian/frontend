@@ -4,8 +4,10 @@ import com.softwaremill.macwire._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import jobs.SiteMapJob
 import model.ApplicationContext
+import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import services.SubnavAgent
 
 trait ApplicationsControllers {
 
@@ -14,9 +16,14 @@ trait ApplicationsControllers {
   def sectionsLookUp: SectionsLookUp
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
+  def environment: Environment
+  def subnavAgent: SubnavAgent
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val puzzlesLayoutProvider: PuzzlesLayoutProvider =
+    new LocalJsonPuzzlesLayoutProvider(environment, contentApiClient)
+  lazy val puzzlesPageController = wire[PuzzlesPageController]
   lazy val siteMapController = wire[SiteMapController]
   lazy val dCARAssetsController = wire[DCARAssetsController]
   lazy val crosswordPageController = wire[CrosswordPageController]

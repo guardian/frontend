@@ -4,7 +4,7 @@ import common.{CanonicalLink, Edition}
 import conf.Configuration
 import football.controllers.{CompetitionFilter, FootballPage, MatchMetadata, MatchPage}
 import model.content.InteractiveAtom
-import model.dotcomrendering.DotcomRenderingUtils.{getMatchNavUrl, getMatchUrl, withoutDeepNull, withoutNull}
+import model.dotcomrendering.DotcomRenderingUtils.{getMatchUrl, withoutDeepNull, withoutNull}
 import model.dotcomrendering.{DCARUrlHelper, DotcomRenderingConfig, MatchHeaderEndpoint, PageFooter, PageType}
 import model.{ApplicationContext, Competition, CompetitionSummary, ContentType, Group, Table, TeamUrl}
 import navigation.{FooterLinks, Nav}
@@ -144,7 +144,7 @@ object DotcomRenderingFootballMatchListDataModel {
       context: ApplicationContext,
   ): DotcomRenderingFootballMatchListDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav = None)
     val combinedConfig = DotcomRenderingConfig(
       page = page,
       request = request,
@@ -308,7 +308,7 @@ object DotcomRenderingFootballTablesDataModel {
       context: ApplicationContext,
   ): DotcomRenderingFootballTablesDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav = None)
     val combinedConfig = DotcomRenderingConfig(
       page = page,
       request = request,
@@ -386,7 +386,6 @@ case class DotcomRenderingFootballMatchSummaryDataModel(
     matchInfo: FootballMatch,
     group: Option[Group],
     competitionName: String,
-    matchUrl: String,
     matchHeaderUrl: String,
     nav: Nav,
     editionId: String,
@@ -411,7 +410,7 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
       context: ApplicationContext,
   ): DotcomRenderingFootballMatchSummaryDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition)
+    val nav = Nav(page, edition, customSubnav = None)
     val combinedConfig = DotcomRenderingConfig(
       page = page,
       request = request,
@@ -422,7 +421,6 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
       matchInfo = matchInfo,
       group = group,
       competitionName = competitionName,
-      matchUrl = matchUrl(matchInfo, page),
       matchHeaderUrl = matchHeaderUrl(matchInfo),
       nav = nav,
       editionId = edition.id,
@@ -434,13 +432,6 @@ object DotcomRenderingFootballMatchSummaryDataModel extends DCARUrlHelper {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       pageId = page.metadata.id,
     )
-  }
-
-  private def matchUrl(theMatch: FootballMatch, page: MatchPage) = {
-    val (homeId, awayId) = (theMatch.homeTeam.id, theMatch.awayTeam.id)
-    val localDate = new JodaLocalDate(theMatch.date.getYear, theMatch.date.getMonthValue, theMatch.date.getDayOfMonth)
-
-    getMatchNavUrl(Configuration.ajax.url, localDate, homeId, awayId, page.metadata.id)
   }
 
   private def matchHeaderUrl(theMatch: FootballMatch): String = {
