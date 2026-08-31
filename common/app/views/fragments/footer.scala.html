@@ -31,7 +31,7 @@
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
         <div class="footer__pillars u-cf">
-            @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+            @defining(NavMenu(page, Edition(request), request)) { navMenu: NavMenu =>
                 <ul class="pillars pillars--footer">
                     @navMenu.pillars.map { link =>
                         <li class="pillars__item">
