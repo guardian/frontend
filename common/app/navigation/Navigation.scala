@@ -78,7 +78,7 @@ object NavMenu {
       brandExtensions: Seq[NavLink],
   )
 
-  def apply(page: Page, edition: Edition, request: RequestHandler): NavMenu = {
+  def apply(page: Page, edition: Edition, request: RequestHeader): NavMenu = {
     val useExperimentalPuzzlesNavigation = PuzzlesHubExperiment.isEnabled(request)
     val root = navRoot(edition, useExperimentalPuzzlesNavigation)
     val currentUrl = getSectionOrPageUrl(page, edition)
@@ -127,8 +127,8 @@ object NavMenu {
     Edition
       .othersWithBetaEditions(edition)
       .flatMap { edition =>
-        NavMenu.navRoot(edition, useExperimentalPuzzlesNavigation)
-        children ++ NavMenu.navRoot(edition).otherLinks
+        val root = NavMenu.navRoot(edition, useExperimentalPuzzlesNavigation)
+        root.children ++ root.otherLinks
       }
   }
 
