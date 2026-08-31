@@ -24,7 +24,7 @@
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
     <div class="footer__primary">
-            @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+            @defining(NavMenu(page, Edition(request), request)) { navMenu: NavMenu =>
                 @fragments.nav.subNav(navMenu, page.metadata.designType, isFooter = true)
             }
     </div>
