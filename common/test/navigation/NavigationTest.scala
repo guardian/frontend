@@ -240,7 +240,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   }
 
   private def requestWithParticipations(participations: String): RequestHeader = {
-    val request = FakeRequest().withHeader("X-GU-Server-AB-Tests" -> participations)
+    val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations)
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
@@ -292,7 +292,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val controlRequest = requestWithParticipations("puzzles-new-hub:control")
     val page = StaticPages.dcrSimplePuzzlesPage("/puzzles")
 
-    Nav(page, Uk, variantRequest).otherLinks should contain(puzzles)
-    Nav(page, Uk, controlRequest).otherLinks should contain(legacyCrosswords)
+    Nav(page, Uk, variantRequest, None).otherLinks should contain(puzzles)
+    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyCrosswords)
   }
 }
