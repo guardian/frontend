@@ -216,7 +216,7 @@ object NavLinks {
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/insidetheguardian")
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
-  val crosswords = NavLink(
+  val legacyCrosswords = NavLink(
     "Crosswords",
     "/crosswords",
     children = List(
@@ -231,6 +231,15 @@ object NavLinks {
       NavLink("Genius", "/crosswords/series/genius"),
       NavLink("Weekend", "/crosswords/series/weekend-crossword"),
       NavLink("Special", "/crosswords/series/special"),
+    ),
+  )
+  var puzzles = NavLink(
+    "Puzzles and Games",
+    "/puzzles",
+    children = List(
+      NavLink("Crossword", "/puzzles#crossword"),
+      NavLink("Logic", "/puzzles#logic"),
+      NavLink("Word games", "/puzzles#word-games"),
     ),
   )
   val wordiply = NavLink(
@@ -640,7 +649,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
-    crosswords,
+    legacyCrosswords,
     wordiply,
     corrections,
     tips,
@@ -653,7 +662,7 @@ object NavLinks {
     newsletters,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
-    crosswords,
+    legacyCrosswords,
     wordiply,
     corrections,
     tips,
@@ -665,7 +674,7 @@ object NavLinks {
     pictures,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
-    crosswords,
+    legacyCrosswords,
     wordiply,
     corrections,
     tips,
@@ -679,7 +688,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
-    crosswords,
+    legacyCrosswords,
     wordiply,
     corrections,
     tips,
@@ -693,7 +702,7 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
-    crosswords,
+    legacyCrosswords,
     wordiply,
     corrections,
     tips,
