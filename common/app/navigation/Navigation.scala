@@ -5,7 +5,7 @@ import ab.PuzzlesHubExperiment
 import common.{Edition, editions}
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
-import play.api.mvc.RequestHandler
+import play.api.mvc.RequestHeader
 
 import scala.annotation.tailrec
 
