@@ -77,8 +77,8 @@ trait IndexControllerCommon
       case TagPattern(left, right) if left == right => successful(Cached(60)(redirect(left, request.isRss)))
       // This page does not exist on dotcom, and we don't want to make a CAPI request because that
       // will trigger a CAPI sections query.
-      case "sections" | "puzzles" => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
-      case _                      =>
+      case "sections" => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
+      case _          =>
         logGoogleBot(request)
         (index(Edition(request), path, inferPage(request), request.isRss) map {
           // if no content is returned (as often happens with old/expired/migrated microsites) return 404 rather than an empty page
