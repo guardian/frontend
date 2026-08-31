@@ -40,7 +40,7 @@ object DotcomRenderingWallchartDataModel {
       context: ApplicationContext,
   ): DotcomRenderingWallchartDataModel = {
     val edition = Edition(request)
-    val nav = Nav(page, edition, customSubnav = None)
+    val nav = Nav(page, edition, request, customSubnav = None)
     val combinedConfig: JsObject = DotcomRenderingConfig(
       page = page,
       request = request,
