@@ -242,7 +242,7 @@ object NavLinks {
       NavLink("Word games", "/puzzles#word-games"),
     ),
   )
-  val wordiply = NavLink(
+  val legacyWordiply = NavLink(
     "Wordiply",
     "https://www.wordiply.com",
   )
@@ -650,7 +650,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     legacyCrosswords,
-    wordiply,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -663,7 +663,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
     legacyCrosswords,
-    wordiply,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -675,7 +675,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
     legacyCrosswords,
-    wordiply,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -689,7 +689,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     legacyCrosswords,
-    wordiply,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -703,7 +703,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
     legacyCrosswords,
-    wordiply,
+    legacyWordiply,
     corrections,
     tips,
   )
