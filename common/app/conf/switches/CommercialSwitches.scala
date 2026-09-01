@@ -2,15 +2,14 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Commercial, CommercialPrebid}
+import conf.switches.SwitchGroup.{Commercial, CommercialHeaderBidding}
 
-trait CommercialSwitches {
-
+trait CommercialSwitchGroup {
   val LiveBlogTopSponsorshipSwitch = Switch(
     Commercial,
     "live-blog-top-sponsorship",
-    "When on allows a sposorship ad to be displayed on live blogs",
-    owners = group(Commercial),
+    "When on allows a sponsorship ad to be displayed on live blogs",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
@@ -21,14 +20,14 @@ trait CommercialSwitches {
     Commercial,
     "should-load-googletag",
     "If this switch is OFF, the commercial bundle won't load the googletag script. This is intended for use as a failsafe, and will disable all forms of advertising that are managed via Google Ad Manager, including Prebid and A9.",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = true,
     impactShortMessage = Some("Critical for advertising!"),
     impactFullMessage = Some(
-      "Warning: Requires director-level sign-off + notification of global commerical stakeholders. Disabling this switch will cost £160k/day in ad-revenue",
+      "Warning: Requires director-level sign-off + notification of global commercial stakeholders. Disabling this switch will cost £160k/day in ad-revenue",
     ),
   )
 
@@ -36,7 +35,7 @@ trait CommercialSwitches {
     Commercial,
     "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -47,18 +46,7 @@ trait CommercialSwitches {
     Commercial,
     "inizio",
     "Include the Inizio script on page so that creatives can show a survey.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val TwitterUwtSwitch = Switch(
-    Commercial,
-    "twitter-uwt",
-    "Include the Twitter universal website tag code.",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -69,18 +57,7 @@ trait CommercialSwitches {
     Commercial,
     "permutive",
     "Enable Permutive library loading",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampAmazon = Switch(
-    Commercial,
-    "amp-amazon",
-    "Amp inventory is being auctioned through Amazon",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -91,43 +68,142 @@ trait CommercialSwitches {
     Commercial,
     "remarketing",
     "Enable Remarketing tracking",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val AffiliateLinks: Switch = Switch(
-    group = Commercial,
-    name = "affiliate-links",
-    description =
-      "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-    highImpact = true,
-    impactShortMessage = Some("Required for 'The Filter'"),
-    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
-  )
-
-  val confiantAdVerification: Switch = Switch(
+  val ConfiantAdVerification: Switch = Switch(
     group = Commercial,
     name = "confiant-ad-verification",
-    description = "Enable Confiant ad verification",
-    owners = group(Commercial),
+    description = "Enable Confiant ad verification (blocking bad ads)",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val a9HeaderBidding: Switch = Switch(
-    group = CommercialPrebid,
+  val CommercialMetricsSwitch: Switch = Switch(
+    group = Commercial,
+    name = "commercial-metrics",
+    description = "Send commercial metric data to the lake via Fastly",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val ArticleEndSlotSwitch: Switch = Switch(
+    group = Commercial,
+    name = "article-end-slot",
+    description =
+      "Enable the article end slot, this appears when the contributions epic does not. Currently only Public Good is served in this slot in the US.",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val AdManagerJobsSwitch: Switch = Switch(
+    group = Commercial,
+    name = "ad-manager-jobs",
+    description = "Use line items file from the ad manager jobs process instead of the legacy frontend process",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val DisableChildDirectedSwitch: Switch = Switch(
+    group = Commercial,
+    name = "disable-child-directed",
+    description = "Disable child-directed treatment for ads",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val SentinelLoggerSwitch: Switch = Switch(
+    group = Commercial,
+    name = "sentinel-logger",
+    description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val OptOutAdvertisingSwitch: Switch = Switch(
+    group = Commercial,
+    name = "opt-out-advertising",
+    description = "Enable Opt Out Advertising",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val IasSwitch: Switch = Switch(
+    group = Commercial,
+    name = "ias",
+    description = "Enable IAS (Integral Ad Science) third party integration in Commercial code",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val TeadsCookielessSwitch: Switch = Switch(
+    group = Commercial,
+    name = "teads-cookieless",
+    description = "Enable Teads cookieless in commercial",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val IpsosMoriSwitch: Switch = Switch(
+    group = Commercial,
+    name = "ipsos-mori",
+    description = "Enable Ipsos Mori (market research partner) integration in commercial",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val ComscoreSwitch = Switch(
+    group = Commercial,
+    name = "comscore",
+    description = "If this switch is on, then Comscore reporting is enabled",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+}
+
+trait CommercialHeaderBiddingSwitchGroup {
+  val A9HeaderBiddingSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "a9-header-bidding",
     description = "Turn on A9 header bidding",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
@@ -136,359 +212,269 @@ trait CommercialSwitches {
     impactFullMessage = Some("Warning: Disabling this switch will prevent Amazon A9 (TAM) from running"),
   )
 
-  val commercialMetrics: Switch = Switch(
-    group = Commercial,
-    name = "commercial-metrics",
-    description = "Send commercial metric data to the lake via fastly",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val articleEndSlot: Switch = Switch(
-    group = Commercial,
-    name = "article-end-slot",
-    description =
-      "Enable the article end slot, this appears when the contributions epic does not. Currently only Public Good is served in this slot in the US.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val LineItemJobs: Switch = Switch(
-    group = Commercial,
-    name = "line-item-jobs",
-    description = "Enable Frontend to read from the S3 line items jobs generated by the Step Functions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val disableChildDirected: Switch = Switch(
-    group = Commercial,
-    name = "disable-child-directed",
-    description = "Disable child-directed treatment for ads",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-}
-
-trait PrebidSwitches {
-
-  val prebidHeaderBidding: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidHeaderBiddingSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-header-bidding",
     description = "Turn on Prebid header bidding (takes priority over Sonobi)",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidAnalytics: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidAnalyticsSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-analytics",
     description = "Gather analytics from Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val ampPrebidPubmatic: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid-pubmatic",
-    description = "Amp inventory is being auctioned through Pubmatic's Prebid Server",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampPrebidCriteo: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid-criteo",
-    description = "Amp inventory is being auctioned through Criteo's Prebid Server",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampPrebidOzone: Switch = Switch(
-    group = CommercialPrebid,
-    name = "amp-prebid-ozone",
-    description = "Amp inventory is being auctioned through Ozone's Prebid Server",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidUserSync: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidUserSyncSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-user-sync",
     description = "Enable bidders to sync their user data with iframe or image beacons",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val PrebidPermutiveAudience = Switch(
-    group = CommercialPrebid,
+  val PrebidPermutiveAudienceSwitch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-permutive-audience",
     description = "Enable Permutive’s Audience Connector to run with Prebid",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidAppNexus: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidAppNexusSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-appnexus",
     description = "Include AppNexus adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidAppNexusUKROW: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidAppNexusUKROWSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-appnexus-uk-row",
     description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidAppNexusInvcode: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidAppNexusInvcodeSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-appnexus-invcode",
     description = "Swap placementId for invCode in the bid params",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidIndexExchange: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidIndexExchangeSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-index-exchange",
     description = "Include Index Exchange adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidOpenx: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidOpenxSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-openx",
     description = "Include OpenX adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidOzone: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidOzoneSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-ozone",
     description = "Include Ozone adapter direct in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidPubmatic: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidPubmaticSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-pubmatic",
     description = "Include Pubmatic adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidTrustx: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidTrustxSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-trustx",
     description = "Include TrustX adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidTripleLift: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidTripleLiftSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-triplelift",
     description = "Include Triple Lift adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidXaxis: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidXaxisSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-xaxis",
     description = "Include Xaxis adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidCriteo: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidCriteoSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-criteo",
     description = "Include Criteo adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidSmart: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-smart",
-    description = "Include the Smart AdServer adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val prebidKargo: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidKargoSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-kargo",
     description = "Include the Kargo adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidTeads: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidTeadsSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-teads",
     description = "Include the Teads adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidLiveramp: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidLiverampSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-liveramp",
     description = "When ON, the Liveramp ID integration is enabled for user sync in Prebid",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidMagnite: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidMagniteSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-magnite",
     description = "Include the Magnite adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val prebidTheTradeDesk: Switch = Switch(
-    group = CommercialPrebid,
+  val PrebidTheTradeDeskSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
     name = "prebid-the-trade-desk",
     description = "Include The Trade Desk (ttd) adapter in Prebid auctions",
-    owners = group(Commercial),
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val sentinelLogger: Switch = Switch(
-    group = Commercial,
-    name = "sentinel-logger",
-    description = "Send logs to BigQuery allowing devs to discover from which pages legacy code is run",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-    highImpact = false,
-  )
-
-  val ampContentABTesting: Switch = Switch(
-    group = Commercial,
-    name = "amp-content-ab-testing",
-    description = "Enable content based testing on AMP",
-    owners = group(Commercial),
+  val PrebidID5Switch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-id5",
+    description = "Include ID5 (identity provider) IDs in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val optOutAdvertising: Switch = Switch(
-    group = Commercial,
-    name = "opt-out-advertising",
-    description = "Enable Opt Out Advertising",
-    owners = group(Commercial),
+  val PrebidIntentIqSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-intent-iq",
+    description = "Include Intent IQ (identity provider) IDs in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 
-  val youtubeIma: Switch = Switch(
-    group = Commercial,
-    name = "youtube-ima",
-    description = "When ON, the YouTube player will use the YouTube IMA (Interactive Media Ads) integration",
-    owners = group(Commercial),
+  val PrebidOzoneIdSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-ozone-id",
+    description = "Include Ozone HEMs (hashed IDs) in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
+
+  val PrebidTheTradeDeskIdSwitch: Switch = Switch(
+    group = CommercialHeaderBidding,
+    name = "prebid-ttd-id",
+    description = "Include The Trade Desk (ttd) IDs in Prebid auctions",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
     highImpact = false,
   )
 }
+
+trait CommercialSwitches extends CommercialSwitchGroup with CommercialHeaderBiddingSwitchGroup

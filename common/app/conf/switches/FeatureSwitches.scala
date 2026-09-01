@@ -621,7 +621,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "enable-new-server-side-tests-header",
     "Enable new server-side AB tests header and add it to the vary header",
-    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     sellByDate = never,
     safeState = Off,
     exposeClientSide = false,
@@ -637,6 +637,20 @@ trait FeatureSwitches {
     safeState = Off,
     exposeClientSide = true,
     highImpact = false,
+  )
+
+  val AffiliateLinks = Switch(
+    group = SwitchGroup.Feature,
+    name = "affiliate-links",
+    description =
+      "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter'"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
   )
 
   val DCRHostedContent = Switch(
