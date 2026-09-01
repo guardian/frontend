@@ -557,7 +557,15 @@ class EmailSignupController(
           RecaptchaAPIUnavailableError.increment()
           Future.failed(CaptchaVerificationUnavailableException(e))
         }
-        googleResponse = wsResponse.json.as[GoogleResponse]
+        googleResponse <- scala.util.Try(wsResponse.json.as[GoogleResponse]) match {
+          case scala.util.Success(r) => Future.successful(r)
+          case scala.util.Failure(e) =>
+            logErrorWithRequestId(
+              s"reCAPTCHA API returned non-JSON response (HTTP ${wsResponse.status}): ${e.getMessage}",
+            )
+            RecaptchaAPIUnavailableError.increment()
+            Future.failed(CaptchaVerificationUnavailableException(e))
+        }
         _ <- {
           if (googleResponse.success) {
             RecaptchaValidationSuccess.increment()
