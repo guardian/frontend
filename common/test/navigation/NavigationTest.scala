@@ -244,7 +244,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
-  "Puzzles navigation" should "use the experimental information architecture in every edition for variant requests" in {
+  "Puzzles navigation" should "add Puzzles and Games alongside the legacy links in every edition for variant requests" in {
     val request = requestWithParticipations("puzzles-new-hub:variant")
     puzzles.children shouldBe Seq(
       NavLink("Crossword", "/puzzles#crossword"),
@@ -256,8 +256,8 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
       val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles"), edition, request)
 
       menu.otherLinks should contain(puzzles)
-      menu.otherLinks should not contain legacyCrosswords
-      menu.otherLinks should not contain wordiply
+      menu.otherLinks should contain(legacyCrosswords)
+      menu.otherLinks should contain(legacyWordiply)
       menu.currentNavLink should contain(puzzles)
       menu.currentParent should contain(puzzles)
       menu.currentPillar shouldBe None
@@ -265,7 +265,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-  it should "keep the production crosswords navigation in every edition for non-variant requests" in {
+  it should "keep the legacy Crosswords and Wordiply navigation in every edition for non-variant requests" in {
     Seq(
       "puzzles-new-hub:control",
       "",
@@ -280,7 +280,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
         menu.otherLinks should contain(legacyCrosswords)
         menu.otherLinks should not contain puzzles
-        menu.otherLinks should contain(wordiply)
+        menu.otherLinks should contain(legacyWordiply)
         menu.currentNavLink should contain(legacyCrosswords)
         menu.currentParent should contain(legacyCrosswords)
         menu.currentPillar shouldBe None
@@ -295,11 +295,11 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val page = StaticPages.dcrSimplePuzzlesPage("/puzzles")
 
     Nav(page, Uk, variantRequest, None).otherLinks should contain(puzzles)
-    Nav(page, Uk, variantRequest, None).otherLinks should not contain wordiply
-    Nav(page, Uk, variantRequest, None).otherLinks should not contain legacyCrosswords
+    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyCrosswords)
+    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyWordiply)
 
-    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, controlRequest, None).otherLinks should contain(wordiply)
     Nav(page, Uk, controlRequest, None).otherLinks should not contain puzzles
+    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyCrosswords)
+    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyWordiply)
   }
 }
