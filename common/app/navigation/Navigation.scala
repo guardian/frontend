@@ -204,10 +204,12 @@ object NavMenu {
 
     val puzzlesLink = if (useExperimentalPuzzlesNavigation) NavLinks.puzzles else NavLinks.legacyCrosswords
 
-    val otherLinks = editionLinks.otherLinks.map {
-      case NavLinks.legacyCrosswords => puzzlesLink
-      case link                      => link
-    }
+    val otherLinks = editionLinks.otherLinks
+      .filterNot(link => useExperimentalPuzzlesNavigation && link == NavLinks.wordiply)
+      .map {
+        case NavLinks.legacyCrosswords => puzzlesLink
+        case link                      => link
+      }
 
     NavRoot(
       Seq(
