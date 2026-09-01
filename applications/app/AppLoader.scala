@@ -83,6 +83,10 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     EmailSubsciptionMetrics.APINetworkError,
     EmailSubsciptionMetrics.ListIDError,
     EmailSubsciptionMetrics.AllEmailSubmission,
+    EmailSubsciptionMetrics.RecaptchaMissingTokenError,
+    EmailSubsciptionMetrics.RecaptchaValidationError,
+    EmailSubsciptionMetrics.RecaptchaAPIUnavailableError,
+    EmailSubsciptionMetrics.RecaptchaValidationSuccess,
     DCRMetrics.DCRLatencyMetric,
     DCRMetrics.DCRRequestCountMetric,
   )
