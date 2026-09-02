@@ -61,6 +61,7 @@ object DotcomFrontsRenderingDataModel {
         case supporting: SupportingCuratedContent => supporting.withoutTestPII
         case linkSnap: LinkSnap                   => linkSnap
         case latestSnap: LatestSnap               => latestSnap
+        case eventsGraphics: PressedContent       => eventsGraphics
       }
 
     val lighterPage = page.copy(collections =
