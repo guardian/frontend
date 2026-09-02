@@ -364,6 +364,7 @@ case class InteractiveAtomBlockElement(
     placeholderUrl: Option[String],
     role: Option[String],
     title: String,
+    customData: Option[String],
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
@@ -1096,6 +1097,12 @@ object PageElement extends GuLogging {
         role <- d.role
       } yield role
 
+    val elementCustomData: Option[String] =
+      for {
+        d <- element.contentAtomTypeData
+        customData <- d.customData
+      } yield customData
+
     element.`type` match {
       case Text =>
         val textCleaners =
@@ -1394,6 +1401,7 @@ object PageElement extends GuLogging {
                 placeholderUrl = interactive.placeholderUrl,
                 role = elementRole,
                 title = interactive.title,
+                customData = elementCustomData,
               ),
             )
           }
