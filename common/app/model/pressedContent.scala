@@ -1,7 +1,6 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
-import com.gu.facia.api.models.EventGraphic
 import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
@@ -80,10 +79,9 @@ object PressedContent {
       case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent, suppressImages)
       case supportingCuratedContent: fapi.SupportingCuratedContent =>
         SupportingCuratedContent.make(supportingCuratedContent)
-      case linkSnap: fapi.LinkSnap     => LinkSnap.make(linkSnap)
-      case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
-      case _: EventGraphic             =>
-        throw new RuntimeException("EventGraphic FaciaContent is not supported in PressedContent")
+      case linkSnap: fapi.LinkSnap           => LinkSnap.make(linkSnap)
+      case latestSnap: fapi.LatestSnap       => LatestSnap.make(latestSnap)
+      case eventGraphics: fapi.EventGraphics => EventGraphics.make(eventGraphics)
     }
 
   def propertiesWithoutTestPII(properties: PressedProperties): PressedProperties =
@@ -130,6 +128,7 @@ final case class CuratedContent(
       case supporting: SupportingCuratedContent => supporting.withoutTestPII
       case linkSnap: LinkSnap                   => linkSnap
       case latestSnap: LatestSnap               => latestSnap
+      case eventGraphics: EventGraphics         => eventGraphics
     },
   )
 
@@ -274,6 +273,40 @@ object LatestSnap {
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content, None),
       format = ContentFormat.fromFapiContentFormat(content.format),
+    )
+  }
+}
+
+final case class EventGraphics(
+    override val properties: PressedProperties,
+    override val header: PressedCardHeader,
+    override val card: PressedCard,
+    override val discussion: PressedDiscussionSettings,
+    override val display: PressedDisplaySettings,
+    override val format: ContentFormat,
+) extends PressedContent {
+  override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+
+  override def withoutCommercial: PressedContent = copy(properties = propertiesWithoutCommercial(properties))
+
+  override def withBoostLevel(level: Option[BoostLevel]): PressedContent = copy(
+    display = display.copy(boostLevel = level),
+  )
+
+  override def withCard(card: PressedCard): PressedContent = copy(
+    card = card,
+  )
+}
+
+object EventGraphics {
+  def make(content: fapi.EventGraphics): EventGraphics = {
+    EventGraphics(
+      properties = PressedProperties.make(content),
+      header = PressedCardHeader.make(content),
+      card = PressedCard.make(content),
+      discussion = PressedDiscussionSettings.make(content),
+      display = PressedDisplaySettings.make(content, None),
+      format = ContentFormat.defaultContentFormat,
     )
   }
 }

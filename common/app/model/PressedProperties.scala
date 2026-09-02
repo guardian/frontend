@@ -94,22 +94,7 @@ object PressedProperties {
       case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.properties
       case linkSnap: fapi.LinkSnap                                 => linkSnap.properties
       case latestSnap: fapi.LatestSnap                             => latestSnap.properties
-      case _: fapi.EventGraphic                                    =>
-        fapiutils.ContentProperties(
-          isBreaking = false,
-          isBoosted = false,
-          boostLevel = com.gu.facia.api.utils.BoostLevel.Default,
-          isImmersive = false,
-          imageHide = false,
-          showBoostedHeadline = false,
-          showMainVideo = false,
-          showLivePlayable = false,
-          showKickerTag = false,
-          showByline = false,
-          showQuotedHeadline = false,
-          imageSlideshowReplace = false,
-          videoReplace = false,
-        )
+      case eventGraphics: fapi.EventGraphics                       => eventGraphics.properties
     }
   }
 }
