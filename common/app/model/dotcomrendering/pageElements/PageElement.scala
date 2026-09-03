@@ -2328,7 +2328,7 @@ object PageElement extends GuLogging {
           if (isGallery) {
             d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests))
           } else {
-            d.caption
+            d.caption.map(TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isUSProductionOffice, abTests))
           }
         },
         "credit" -> d.credit,

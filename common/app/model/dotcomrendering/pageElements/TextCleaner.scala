@@ -29,24 +29,28 @@ object TextCleaner {
       html: String,
   ): String = {
     if (addAffiliateLinks) {
-      val doc = Jsoup.parseBodyFragment(html)
-      val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
       val skimlinksId =
         if (isUSProductionOffice) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
-      links.foreach(el => {
-        el.attr(
-          "href",
-          AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, skimlinksId, abTests),
-        ).attr("rel", "sponsored")
-      })
-
-      if (links.nonEmpty) {
-        doc.body().html()
-      } else {
-        html
-      }
+      rewriteAffiliateLinks(html, pageUrl, skimlinksId, abTests)
     } else {
       html
+    }
+  }
+
+  /** Rewrites affiliateable links in an HTML fragment (body copy or an image caption) to skimlinks. Pure: no config
+    * access. Returns `html` unchanged when it contains no affiliateable links.
+    */
+  def rewriteAffiliateLinks(
+      html: String,
+      pageUrl: String,
+      skimlinksId: String,
+      abTests: Map[String, String],
+  ): String = {
+    val doc = Jsoup.parseBodyFragment(html)
+    if (AffiliateLinksCleaner.getAffiliateableLinks(doc).isEmpty) {
+      html
+    } else {
+      AffiliateLinksCleaner.replaceLinksInHtml(doc, pageUrl, skimlinksId, abTests).body().html()
     }
   }
 
