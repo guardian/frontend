@@ -15,6 +15,7 @@ case class LiveHarnessInteractiveAtom(
     js: String,
     weighting: String,
     position: Option[Int] = None, // 1-based visual index; defaults to 1 (before everything)
+    customData: Option[String] = None,
 ) {
   val atom = InteractiveAtom(
     id = id,
@@ -36,6 +37,7 @@ case class LiveHarnessInteractiveAtom(
         atomType = "interactive",
         role = Some(weighting),
         isMandatory = None,
+        customData = customData,
       ),
     ),
   )
