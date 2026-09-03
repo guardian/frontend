@@ -301,8 +301,14 @@ object DotcomRenderingUtils extends DCARUrlHelper {
   private def hasAffiliateLinksInContent(content: ContentType, blocks: Seq[APIBlock]): Boolean = {
     content match {
       case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
-      case _                => blocks.exists(block => stringContainsAffiliateableLinks(block.bodyHtml))
+      case _                => blocks.exists(blockContainsAffiliateableLinks)
     }
+  }
+
+  // Editors put affiliate links in image captions as well as body copy, so check both.
+  private def blockContainsAffiliateableLinks(block: APIBlock): Boolean = {
+    stringContainsAffiliateableLinks(block.bodyHtml) ||
+    block.elements.exists(_.imageTypeData.flatMap(_.caption).exists(stringContainsAffiliateableLinks))
   }
 
   def contentDateTimes(content: ContentType): ArticleDateTimes = {

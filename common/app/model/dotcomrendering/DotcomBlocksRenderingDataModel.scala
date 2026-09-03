@@ -69,7 +69,7 @@ object DotcomBlocksRenderingDataModel {
       bodyBlocks: Seq[APIBlock],
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content)
+    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
     val edition = Edition(request)

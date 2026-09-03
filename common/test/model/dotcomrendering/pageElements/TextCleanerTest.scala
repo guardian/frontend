@@ -8,6 +8,8 @@ import conf.Configuration
 import model.dotcomrendering.pageElements.{TagLinker, TextBlockElement, TextCleaner}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import services.SkimLinksCache
+import views.support.AffiliateLinksCleaner
 
 class TextCleanerTest extends AnyFlatSpec with Matchers {
 
@@ -208,5 +210,47 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
     val got = TextCleaner.sanitiseLinks(Uk)(original)
 
     got shouldBe original
+  }
+
+  "rewriteAffiliateLinks" should "rewrite affiliateable links in an image caption to skimlinks" in {
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val pageUrl = "/money/2025/nov/19/test-article"
+      val productUrl = "https://www.amazon.co.uk/product/123"
+      val caption = s"""Photo of <a href="$productUrl">the thing</a>. Photograph: Someone"""
+
+      val got = TextCleaner.rewriteAffiliateLinks(caption, pageUrl, "123", Map.empty)
+
+      // Jsoup serialises '&' in attribute values as '&amp;'
+      val expectedHref =
+        AffiliateLinksCleaner.linkToSkimLink(productUrl, pageUrl, "123", Map.empty).replace("&", "&amp;")
+      got should include("https://go.skimresources.com/")
+      got should include(s"""href="$expectedHref"""")
+      got should include("""rel="sponsored"""")
+      got should include("Photograph: Someone")
+    } finally {
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  it should "return the caption unchanged when it has no affiliateable links" in {
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val caption = """Photo of <a href="https://www.theguardian.com/help">something</a>. Photograph: Someone"""
+
+      val got = TextCleaner.rewriteAffiliateLinks(caption, "/money/2025/nov/19/test-article", "123", Map.empty)
+
+      got should be theSameInstanceAs caption
+    } finally {
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  "affiliateLinks" should "return the html unchanged when affiliate links are not to be added" in {
+    val caption = """Photo of <a href="https://www.amazon.co.uk/product/123">the thing</a>"""
+
+    val got = TextCleaner.affiliateLinks("/money/2025/nov/19/test-article", false, false, Map.empty)(caption)
+
+    got should be theSameInstanceAs caption
   }
 }

@@ -478,7 +478,8 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
+    val shouldAddAffiliateLinks =
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks ++ mainBlock.toSeq ++ pinnedPost.toSeq)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
