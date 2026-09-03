@@ -124,6 +124,5 @@ POST        /admin/football/fronts/matches/redirect                             
 GET         /admin/football/fronts/matches/:competitionId                                           controllers.admin.FrontsController.chooseMatchForComp(competitionId)
 GET         /admin/football/fronts/matches/:competitionId/:teamId                                   controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
 GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                         controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
-GET         /admin/football/fronts/match/:matchId                                                   controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                       controllers.admin.PlayerController.squad(teamId: String)

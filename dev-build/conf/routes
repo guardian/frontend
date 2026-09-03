@@ -144,8 +144,6 @@ GET            /football/:competitionTag/overview                               
 GET            /football/:competitionTag/groups/embed                                                                            football.controllers.WallchartController.renderGroupTablesEmbed(competitionTag)
 GET            /football/:competitionTag/spider/embed                                                                            football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
 
-GET            /football/api/big-match-special/:matchId.json                                                                     football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
-
 GET            /football/competitions                                                                                            football.controllers.CompetitionListController.renderCompetitionList()
 GET            /football/competitions.json                                                                                       football.controllers.CompetitionListController.renderCompetitionListJson()
 GET            /football/teams                                                                                                   football.controllers.LeagueTableController.renderTeamlist()
@@ -212,7 +210,6 @@ POST           /admin/football/fronts/matches/redirect                          
 GET            /admin/football/fronts/matches/:competitionId                                                                     controllers.admin.FrontsController.chooseMatchForComp(competitionId)
 GET            /admin/football/fronts/matches/:competitionId/:teamId                                                             controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
 GET            /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                                   controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
-GET            /admin/football/fronts/match/:matchId                                                                             controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET            /admin/football/api/squad/:teamId                                                                                 controllers.admin.PlayerController.squad(teamId: String)
 
