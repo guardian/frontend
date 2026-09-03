@@ -23,7 +23,7 @@
 </li>
 }
 
-@defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+@defining(NavMenu(page, Edition(request), request)) { navMenu: NavMenu =>
 <header class="@RenderClasses(s" pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "header-top-nav"
     )" role="banner">
 
