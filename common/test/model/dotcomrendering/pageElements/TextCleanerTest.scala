@@ -226,7 +226,7 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
         AffiliateLinksCleaner.linkToSkimLink(productUrl, pageUrl, "123", Map.empty).replace("&", "&amp;")
       got should include("https://go.skimresources.com/")
       got should include(s"""href="$expectedHref"""")
-      got should include("""rel="sponsored"""")
+      got should include("""rel="sponsored noreferrer noopener"""")
       got should include("Photograph: Someone")
     } finally {
       SkimLinksCache.setDomains(Set.empty)

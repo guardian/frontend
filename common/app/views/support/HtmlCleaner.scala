@@ -898,7 +898,8 @@ object AffiliateLinksCleaner {
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el =>
-      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId, abTests)).attr("rel", "sponsored")
+      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId, abTests))
+        .attr("rel", "sponsored noreferrer noopener")
     }
     html
   }
