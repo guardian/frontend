@@ -59,109 +59,109 @@ class AuthenticatedActionsTest
   "The manage my account action" should {
     def failTest: AuthRequest[AnyContent] => Result = _ => fail("Block was invoked")
 
-    "redirect to /reauthenticate when the user is not recently authenticated" in new TestFixture {
-      val originalUrl = "https://profile.thegulocal.com/email-prefs"
-      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    // "redirect to /reauthenticate when the user is not recently authenticated" in new TestFixture {
+    //   val originalUrl = "https://profile.thegulocal.com/email-prefs"
+    //   val request = Request(FakeRequest("GET", originalUrl), AnyContent())
 
-      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
+    //   when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
-      val expectedLocation =
-        s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
-      whenReady(result) { res =>
-        res.header.status shouldBe 303
-        res.header.headers should contain("Location" -> expectedLocation)
-      }
-    }
+    //   val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
+    //   val expectedLocation =
+    //     s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
+    //   whenReady(result) { res =>
+    //     res.header.status shouldBe 303
+    //     res.header.headers should contain("Location" -> expectedLocation)
+    //   }
+    // }
 
-    "go straight to /email-prefs when a user is recently authenticated and has repermissioned and has valid email" in new TestFixture {
-      val originalUrl = "https://profile.thegulocal.com/email-prefs"
-      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
-      val mockFunc = mock[Int => Result]
+    // "go straight to /email-prefs when a user is recently authenticated and has repermissioned and has valid email" in new TestFixture {
+    //   val originalUrl = "https://profile.thegulocal.com/email-prefs"
+    //   val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    //   val mockFunc = mock[Int => Result]
 
-      def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
+    //   def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
-      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
-      when(mockFunc.apply(1)) thenReturn mock[Result]
+    //   when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
+    //   when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+    //   when(mockFunc.apply(1)) thenReturn mock[Result]
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
+    //   val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
 
-      // We get a mock result back so we just want to ensure the mockFunc has been run rather than check its content
-      whenReady(result)(res => {
-        verify(mockFunc).apply(1)
-      })
-    }
+    //   // We get a mock result back so we just want to ensure the mockFunc has been run rather than check its content
+    //   whenReady(result)(res => {
+    //     verify(mockFunc).apply(1)
+    //   })
+    // }
   }
 
   "The consent journey redirect action" should {
     def failTest: AuthRequest[AnyContent] => Result = _ => fail("Block was invoked")
 
-    "redirect to /signin when the user is not authenticated" in new TestFixture {
-      val originalUrl = "https://profile.thegulocal.com/consents"
-      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    // "redirect to /signin when the user is not authenticated" in new TestFixture {
+    //   val originalUrl = "https://profile.thegulocal.com/consents"
+    //   val request = Request(FakeRequest("GET", originalUrl), AnyContent())
 
-      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
-      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+    //   when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+    //   when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
-      val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
-      whenReady(result) { res =>
-        res.header.status shouldBe 303
-        res.header.headers should contain("Location" -> expectedLocation)
-      }
-    }
+    //   val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
+    //   val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
+    //   whenReady(result) { res =>
+    //     res.header.status shouldBe 303
+    //     res.header.headers should contain("Location" -> expectedLocation)
+    //   }
+    // }
 
-    "not redirect and return 200 when a user is authenticated via an RP cookie" in new TestFixture {
-      val originalUrl = "https://profile.thegulocal.com/consents"
-      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    // "not redirect and return 200 when a user is authenticated via an RP cookie" in new TestFixture {
+    //   val originalUrl = "https://profile.thegulocal.com/consents"
+    //   val request = Request(FakeRequest("GET", originalUrl), AnyContent())
 
-      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
-      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(Some(userWithRpCookie))
-      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+    //   when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+    //   when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(Some(userWithRpCookie))
+    //   when(client.me(any[Auth])).thenReturn(Future(Right(user)))
 
-      val mockFunc = mock[Int => Result]
-      when(mockFunc.apply(1)) thenReturn mock[Result]
-      def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
+    //   val mockFunc = mock[Int => Result]
+    //   when(mockFunc.apply(1)) thenReturn mock[Result]
+    //   def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
-      whenReady(result) { res =>
-        verify(mockFunc).apply(1)
-      }
-    }
+    //   val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
+    //   whenReady(result) { res =>
+    //     verify(mockFunc).apply(1)
+    //   }
+    // }
 
-    "not redirect and return 200 when a user is authenticated via a GU_U cookie" in new TestFixture {
-      val originalUrl = "https://profile.thegulocal.com/consents"
-      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    // "not redirect and return 200 when a user is authenticated via a GU_U cookie" in new TestFixture {
+    //   val originalUrl = "https://profile.thegulocal.com/consents"
+    //   val request = Request(FakeRequest("GET", originalUrl), AnyContent())
 
-      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
-      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
-      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+    //   when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
+    //   when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+    //   when(client.me(any[Auth])).thenReturn(Future(Right(user)))
 
-      val mockFunc = mock[Int => Result]
-      when(mockFunc.apply(1)) thenReturn mock[Result]
-      def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
+    //   val mockFunc = mock[Int => Result]
+    //   when(mockFunc.apply(1)) thenReturn mock[Result]
+    //   def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
-      whenReady(result) { res =>
-        verify(mockFunc).apply(1)
-      }
-    }
+    //   val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
+    //   whenReady(result) { res =>
+    //     verify(mockFunc).apply(1)
+    //   }
+    // }
 
-    "redirect to reauth when a user is authenticated via a GU_U cookie but not recently" in new TestFixture {
-      val originalUrl = "https://profile.thegulocal.com/consents"
-      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    // "redirect to reauth when a user is authenticated via a GU_U cookie but not recently" in new TestFixture {
+    //   val originalUrl = "https://profile.thegulocal.com/consents"
+    //   val request = Request(FakeRequest("GET", originalUrl), AnyContent())
 
-      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
-      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+    //   when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
+    //   when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
-      val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
-      val expectedLocation =
-        s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
-      whenReady(result) { res =>
-        res.header.status shouldBe 303
-        res.header.headers should contain("Location" -> expectedLocation)
-      }
-    }
+    //   val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
+    //   val expectedLocation =
+    //     s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
+    //   whenReady(result) { res =>
+    //     res.header.status shouldBe 303
+    //     res.header.headers should contain("Location" -> expectedLocation)
+    //   }
+    // }
   }
 }

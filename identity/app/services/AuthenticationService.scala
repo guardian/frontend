@@ -70,10 +70,4 @@ class AuthenticationService(
       user => Some(user),
     ).unsafeRunSync()
   }
-
-  def consentCookieAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] =
-    for {
-      scGuRp <- request.cookies.get("SC_GU_RP")
-      userFromScGuRp <- identityCookieService.getUserDataFromSCGURPCookie(scGuRp.value)
-    } yield AuthenticatedUser(userFromScGuRp, ScGuRp(scGuRp.value))
 }
