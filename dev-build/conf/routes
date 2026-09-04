@@ -249,9 +249,6 @@ POST        /commercial/adops/ads-txt                                           
 GET         /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
 
-# AMP
-GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
-
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
