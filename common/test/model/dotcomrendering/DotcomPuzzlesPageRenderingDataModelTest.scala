@@ -13,9 +13,12 @@ import staticpages.StaticPages
   private val layout = PuzzlesLayout(
     containers = Seq(
       PuzzleContainer(
+        id = "daily-puzzles",
         title = "Daily puzzles",
         content = PuzzleContent(
-          items = Seq(Seq(PuzzleItem("Quick crossword", "crossword", "quick"))),
+          items = Seq(
+            Seq(PuzzleItem("crossword-quick", "Quick crossword", "crossword", "quick", "primary", Some("Daily"))),
+          ),
           nestedContainers = Seq.empty,
         ),
       ),
