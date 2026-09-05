@@ -13,7 +13,9 @@ are expected to run.
 
 The puzzles hub uses the Fastly-managed puzzles-new-hub experiment. Frontend code should check
 PuzzlesHubExperiment.isEnabled, which is true only for the variant group and safely defaults to false for control,
-excluded, missing, or malformed participations.
+excluded, missing, or malformed participations outside local development. In `DEV`, the helper enables the hub
+without a Fastly participation so Frontend can render `/puzzles` through a locally running dotcom-rendering
+instance.
 
 The existing Fastly routes can be used to force a group in CODE or PROD:
 
