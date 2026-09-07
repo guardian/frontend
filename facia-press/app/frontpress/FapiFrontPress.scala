@@ -406,7 +406,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         Response.Async.Right(eventGraphicService.getData(dataUrl.getPath).map {
           case Right(result) => eventGraphic.copy(eventData = Some(result))
           case Left(error)   =>
-            log.error(s"Failed to fetch test election result: ${error.message}")
+            log.error(s"Failed to fetch data for event graphic ${eventGraphic.id}: ${error.message}")
             eventGraphic
         })
 

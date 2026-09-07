@@ -2,7 +2,6 @@ package services.eventgraphic
 
 import conf.Configuration
 import play.api.libs.json._
-import services.eventgraphic.models.PressedEventData
 import services.zug.{ZugClient, ZugClientError}
 
 import java.net.URI
@@ -47,7 +46,7 @@ object EventGraphicSource {
 }
 
 class EventGraphicService(zugClient: ZugClient)(implicit executionContext: ExecutionContext) {
-  def getData(path: String): Future[Either[ZugClientError, PressedEventData]] = {
-    zugClient.get(path).map(_.map(PressedEventData.apply))
+  def getData(path: String): Future[Either[ZugClientError, JsObject]] = {
+    zugClient.get(path)
   }
 }
