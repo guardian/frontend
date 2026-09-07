@@ -6,8 +6,8 @@ import com.gu.facia.api.{models => fapi}
 import common.Edition
 import model.content.MediaAtom
 import model.{ContentFormat, Pillar}
+import play.api.libs.json.JsObject
 import services.eventgraphic.{EventGraphicSource, GraphicKind}
-import services.eventgraphic.models.PressedEventData
 import views.support.ContentOldAgeDescriber
 
 import java.net.URI
@@ -293,7 +293,7 @@ final case class EventGraphic(
     override val format: ContentFormat,
     dataUrl: Option[URI],
     graphicKind: Option[GraphicKind],
-    eventData: Option[PressedEventData] = None,
+    eventData: Option[JsObject] = None,
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 

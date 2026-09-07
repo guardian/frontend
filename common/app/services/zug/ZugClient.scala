@@ -35,7 +35,6 @@ class ZugClientImpl(wsClient: WSClient) extends ZugClient with WSRequests with G
         }
       }
       .recover { case e: Exception =>
-        log.warn(s"Zug API request to $url failed: ${e.getMessage}")
         Left(ZugClientError(s"Request to $url failed: ${e.getMessage}"))
       }
   }
