@@ -83,8 +83,6 @@ object PressedContent {
       case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent, suppressImages)
       case supportingCuratedContent: fapi.SupportingCuratedContent =>
         SupportingCuratedContent.make(supportingCuratedContent)
-      case link: fapi.LinkSnap if link.href.contains("https://google.com/marji") =>
-        EventGraphic.makeTest(link) // TODO: just for testing - remove before merge
       case linkSnap: fapi.LinkSnap         => LinkSnap.make(linkSnap)
       case latestSnap: fapi.LatestSnap     => LatestSnap.make(latestSnap)
       case eventGraphic: fapi.EventGraphic => EventGraphic.make(eventGraphic)
@@ -313,24 +311,6 @@ object EventGraphic {
     val eventGraphicSource = EventGraphicSource.byId(content.id)
     EventGraphic(
       id = content.id,
-      properties = PressedProperties.make(content),
-      header = PressedCardHeader.make(content),
-      card = PressedCard.make(content),
-      discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content, None),
-      format = ContentFormat.defaultContentFormat,
-      dataUrl = eventGraphicSource.map(_.fullUrl),
-      graphicKind = eventGraphicSource.map(_.graphicKind),
-    )
-  }
-
-  // TODO: this is just for testing, remove before merge
-  def makeTest(content: fapi.LinkSnap): EventGraphic = {
-    val eventGraphicSource = EventGraphicSource.byId("test.json")
-    println("marji")
-    println(eventGraphicSource)
-    EventGraphic(
-      id = "test.json",
       properties = PressedProperties.make(content),
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
