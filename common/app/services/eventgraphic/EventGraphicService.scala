@@ -35,11 +35,6 @@ object EventGraphicSource {
       fullUrl = new URI(s"$host/election-tracker/us-midterms-2026"),
       graphicKind = GraphicKind.ElectionTracker,
     ),
-    // TODO: This is for testing, remove before merge
-    "test.json" -> EventGraphicSource(
-      fullUrl = new URI(s"$host/test.json"),
-      graphicKind = GraphicKind.ElectionTracker,
-    ),
   )
 
   def byId(id: String): Option[EventGraphicSource] = sources.get(id)
