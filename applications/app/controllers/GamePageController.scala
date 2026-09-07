@@ -15,14 +15,12 @@ import scala.util.Try
 
 /** Controller for the new, isolated "Game Page" flow: a generalization of today's crossword article page to all
   * Guardian puzzle/game types. This is entirely additive and separate from `CrosswordsController`/
-  * `CrosswordPageController` and the existing crossword routes, which this controller does not touch or call
-  * into (it reuses the `CrosswordController` trait's CAPI-fetching helpers, unmodified, rather than duplicating
-  * them).
+  * `CrosswordPageController` and the existing crossword routes, which this controller does not touch or call into (it
+  * reuses the `CrosswordController` trait's CAPI-fetching helpers, unmodified, rather than duplicating them).
   *
-  * The whole flow is gated behind the `game-page-experiment` server-side AB test
-  * ([[ab.GamePageExperiment]]) so that it is invisible to the general public in production: without the
-  * `X-GU-Server-AB-Tests` request header carrying `game-page-experiment:variant`, every slug 404s before any
-  * rendering or CAPI fetch is attempted.
+  * The whole flow is gated behind the `game-page-experiment` server-side AB test ([[ab.GamePageExperiment]]) so that it
+  * is invisible to the general public in production: without the `X-GU-Server-AB-Tests` request header carrying
+  * `game-page-experiment:variant`, every slug 404s before any rendering or CAPI fetch is attempted.
   */
 class GamePageController(
     val contentApiClient: ContentApiClient,
@@ -42,7 +40,7 @@ class GamePageController(
       if (!GamePageExperiment.isEnabled) notFound
       else
         slug match {
-          case GamePageController.CrosswordSlug        => renderCrosswordGamePage()
+          case GamePageController.CrosswordSlug                                       => renderCrosswordGamePage()
           case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
             renderIframeGamePage(iframeSlug)
           case _ => notFound
@@ -90,16 +88,16 @@ class GamePageController(
 
   /** For the "crossword" slug we fetch a real example crossword from CAPI, exactly like the existing
     * `/crosswords/{type}/{id}` flow does today, by reusing `CrosswordController.withCrossword` (defined in
-    * CrosswordsController.scala, left unmodified). The crossword type/id are taken as request query params so
-    * this phase doesn't need to invent a "pick today's crossword" search - see docs/puzzles-game-page-plan.md
-    * for manual validation examples.
+    * CrosswordsController.scala, left unmodified). The crossword type/id are taken as request query params so this
+    * phase doesn't need to invent a "pick today's crossword" search - see docs/puzzles-game-page-plan.md for manual
+    * validation examples.
     */
   private def renderCrosswordGamePage(asJson: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
     val crosswordType = request.getQueryString("crosswordType").getOrElse(GamePageController.DefaultCrosswordType)
     val maybeId = request.getQueryString("id").flatMap(idParam => Try(idParam.toInt).toOption)
 
     maybeId match {
-      case None => notFound
+      case None     => notFound
       case Some(id) =>
         withCrossword(crosswordType, id) { (crossword, content) =>
           val crosswordData = CrosswordData.fromCrossword(crossword, content)
@@ -142,8 +140,8 @@ object GamePageController {
   val DefaultCrosswordType = "quick"
 
   /** The 11 currently-live, iframe-based (non-CAPI) game slugs, and a reasonable static title for each. DCR's own
-    * static registry, keyed by slug, owns the iframe URL and all other structural/rendering behaviour - this repo
-    * does not need to know or send any of that.
+    * static registry, keyed by slug, owns the iframe URL and all other structural/rendering behaviour - this repo does
+    * not need to know or send any of that.
     */
   val iframeSlugTitles: Map[String, String] = Map(
     "sudoku-easy" -> "Sudoku (easy)",

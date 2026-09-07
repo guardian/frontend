@@ -61,9 +61,9 @@ object StaticPages {
       ),
     )
 
-  /** A minimal, static page used for the new Game Page flow (see GamePageController) for the iframe-based game
-    * slugs, which have no per-instance CAPI content of their own - the iframe always shows "today's" puzzle from
-    * the third party's own logic. Not used by, or shared with, the existing crossword article page flow.
+  /** A minimal, static page used for the new Game Page flow (see GamePageController) for the iframe-based game slugs,
+    * which have no per-instance CAPI content of their own - the iframe always shows "today's" puzzle from the third
+    * party's own logic. Not used by, or shared with, the existing crossword article page flow.
     */
   def dcrSimpleGamePage(id: String, webTitle: String): SimplePage =
     SimplePage(
