@@ -94,7 +94,7 @@ object PressedProperties {
       case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.properties
       case linkSnap: fapi.LinkSnap                                 => linkSnap.properties
       case latestSnap: fapi.LatestSnap                             => latestSnap.properties
-      case eventGraphics: fapi.EventGraphics                       => eventGraphics.properties
+      case eventGraphic: fapi.EventGraphic                         => eventGraphic.properties
     }
   }
 }

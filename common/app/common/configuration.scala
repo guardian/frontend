@@ -705,6 +705,11 @@ class GuardianConfiguration extends GuLogging {
     lazy val host = configuration.getStringProperty("newsletterApi.host")
     lazy val origin = configuration.getStringProperty("newsletterApi.origin")
   }
+
+  object zugApi {
+    lazy val host =
+      configuration.getMandatoryStringProperty("zugApi.host")
+  }
 }
 
 object ManifestData {
