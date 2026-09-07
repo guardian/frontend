@@ -66,7 +66,7 @@ import scala.concurrent.Future
     verifyNoInteractions(renderer)
   }
 
-  it should "return not found for the crossword slug when no id query param is given" in {
+  it should "return not found for the bare crossword slug (it is served by renderCrossword instead)" in {
     val renderer = mock[DotcomRenderingService]
 
     val result = controller(renderer).renderGame("crossword")(request("/puzzles/crossword"))
@@ -75,15 +75,25 @@ import scala.concurrent.Future
     verifyNoInteractions(renderer)
   }
 
-  it should "fetch real CAPI content and render the crossword slug via DCR when the experiment is enabled" in {
+  "renderCrossword" should "fetch real CAPI content and render the crossword slug via DCR when the experiment is enabled" in {
     val renderer = stubbedRenderer()
 
     val result = controller(renderer)
-      .renderGame("crossword")(request("/puzzles/crossword?crosswordType=cryptic&id=26697"))
+      .renderCrossword("cryptic", 26697)(request("/puzzles/crossword/cryptic/26697"))
 
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
     verify(renderer).getGamePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found when the experiment is not enabled, without calling CAPI or DCR" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(renderer)
+      .renderCrossword("cryptic", 26697)(request("/puzzles/crossword/cryptic/26697", ""))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
   }
 
   Seq(
@@ -94,13 +104,13 @@ import scala.concurrent.Future
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
     s"game page access with $participationCase participation" should
-      "return not found for both iframe and crossword slugs without calling DCR" in {
+      "return not found for both iframe and crossword paths without calling DCR" in {
         val renderer = mock[DotcomRenderingService]
         val gamePageController = controller(renderer)
 
         val iframeResult = gamePageController.renderGame("sudoku-easy")(request("/puzzles/sudoku-easy", participations))
-        val crosswordResult = gamePageController.renderGame("crossword")(
-          request("/puzzles/crossword?crosswordType=cryptic&id=26697", participations),
+        val crosswordResult = gamePageController.renderCrossword("cryptic", 26697)(
+          request("/puzzles/crossword/cryptic/26697", participations),
         )
 
         status(iframeResult) should be(NOT_FOUND)
@@ -126,5 +136,17 @@ import scala.concurrent.Future
       .renderGameJson("not-a-real-game")(request("/puzzles/not-a-real-game.json"))
 
     status(result) should be(NOT_FOUND)
+  }
+
+  "renderCrosswordJson" should "return the equivalent rendering data as JSON, including real crosswordData" in {
+    val result = controller(mock[DotcomRenderingService])
+      .renderCrosswordJson("cryptic", 26697)(request("/puzzles/crossword/cryptic/26697.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("crossword")
+    (json \ "instance" \ "puzzleType").as[String] should be("cryptic")
+    (json \ "instance" \ "crosswordData").asOpt[JsValue] should not be None
   }
 }

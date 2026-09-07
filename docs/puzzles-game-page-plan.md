@@ -143,17 +143,25 @@ X-GU-Server-AB-Tests: game-page-experiment:variant
 ### 4. URLs to try
 
 With the header present:
-- `http://localhost:9000/puzzles/crossword?crosswordType=cryptic&id=26697` - fetches a real example
-  crossword from CAPI (this id is already used by existing crossword tests, so it's known-good) and POSTs
-  a `/GamePage` payload to DCR with `slug: "crossword"` and a populated `instance.crosswordData`/
-  `instance.discussionId`. Expect DCR's rendered page (once its `/GamePage` handler exists).
+- `http://localhost:9000/puzzles/crossword/cryptic/26697` - fetches a real example crossword from CAPI
+  (`crosswordType`/`id` are path segments, exactly like the existing `/crosswords/{type}/{id}` routes -
+  this id is already used by existing crossword tests, so it's known-good) and POSTs a `/GamePage` payload
+  to DCR with `slug: "crossword"` and a populated `instance.crosswordData`/`instance.discussionId`. Expect
+  DCR's rendered page (once its `/GamePage` handler exists).
 - `http://localhost:9000/puzzles/sudoku-easy` - no CAPI fetch; POSTs a `/GamePage` payload with
   `slug: "sudoku-easy"` and only `instance.title = "Sudoku (easy)"`. Expect DCR's rendered iframe page.
-- `http://localhost:9000/puzzles/crossword` (no `crosswordType`/`id` query params) - expect `404`, since
-  this phase requires an explicit crossword to fetch (see `GamePageController.renderCrosswordGamePage`).
+- `http://localhost:9000/puzzles/crossword` (the bare slug, with no path segments) - expect `404`: the
+  "crossword" slug is only served via the dedicated `renderCrossword`/`renderCrosswordJson` path-based
+  actions above, not via `renderGame`.
 - `http://localhost:9000/puzzles/not-a-real-slug` - expect `404` (unrecognised slug).
-- Add `.json` to any of the above (e.g. `/puzzles/sudoku-easy.json`) to see the raw JSON payload frontend
-  would send to DCR, without needing DCR itself to be running.
+- Add `.json` to any of the above (e.g. `/puzzles/sudoku-easy.json`, `/puzzles/crossword/cryptic/26697.json`)
+  to see the raw JSON payload frontend would send to DCR, without needing DCR itself to be running.
+
+**Note:** `crosswordType`/`id` are deliberately path segments, not query params: in local dev,
+`DevParametersHttpRequestHandler` (`common/app/dev/DevParametersHttpRequestHandler.scala`) hard-rejects any
+query param name not on its allowlist with a `RuntimeException`, so `?crosswordType=...&id=...` would crash
+locally (and wouldn't survive the CDN in prod either) - this mirrors exactly how the existing, untouched
+`/crosswords/{type}/{id}` routes already take these as path segments.
 
 Without the header (or with an unrelated/absent AB test participation):
 - Every one of the URLs above returns `404 Not Found`, and neither CAPI nor DCR is called (verified by the

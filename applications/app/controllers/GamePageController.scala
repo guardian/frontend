@@ -11,7 +11,6 @@ import renderers.DotcomRenderingService
 import staticpages.StaticPages
 
 import scala.concurrent.Future
-import scala.util.Try
 
 /** Controller for the new, isolated "Game Page" flow: a generalization of today's crossword article page to all
   * Guardian puzzle/game types. This is entirely additive and separate from `CrosswordsController`/
@@ -35,12 +34,16 @@ class GamePageController(
 
   private def notFound(implicit request: RequestHeader): Future[Result] = Future.successful(noResults())
 
+  /** Only the 11 iframe-based slugs are served from here - the "crossword" slug has its own dedicated,
+    * path-segment-based route/actions below (`renderCrossword`/`renderCrosswordJson`), exactly like the existing
+    * `/crosswords/{type}/{id}` routes, rather than query params (query params on unrecognised names are rejected
+    * outright in local dev by `DevParametersHttpRequestHandler`, and wouldn't survive the CDN in prod either).
+    */
   def renderGame(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!GamePageExperiment.isEnabled) notFound
       else
         slug match {
-          case GamePageController.CrosswordSlug                                       => renderCrosswordGamePage()
           case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
             renderIframeGamePage(iframeSlug)
           case _ => notFound
@@ -52,11 +55,27 @@ class GamePageController(
       if (!GamePageExperiment.isEnabled) notFound
       else
         slug match {
-          case GamePageController.CrosswordSlug => renderCrosswordGamePage(asJson = true)
           case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
             renderIframeGamePageJson(iframeSlug)
           case _ => notFound
         }
+    }
+
+  /** For the "crossword" slug we fetch a real example crossword from CAPI, exactly like the existing
+    * `/crosswords/{type}/{id}` flow does today, by reusing `CrosswordController.withCrossword` (defined in
+    * CrosswordsController.scala, left unmodified). `crosswordType`/`id` are path segments, mirroring the existing
+    * crossword routes, rather than query params - see docs/puzzles-game-page-plan.md for manual validation examples.
+    */
+  def renderCrossword(crosswordType: String, id: Int): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!GamePageExperiment.isEnabled) notFound
+      else renderCrosswordGamePage(crosswordType, id)
+    }
+
+  def renderCrosswordJson(crosswordType: String, id: Int): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!GamePageExperiment.isEnabled) notFound
+      else renderCrosswordGamePage(crosswordType, id, asJson = true)
     }
 
   /** For the iframe-based slugs there is no per-instance CAPI content to fetch - the iframe always shows "today's"
@@ -86,58 +105,46 @@ class GamePageController(
     DotcomGamePageRenderingDataModel(page, slug, webTitle, instance, request)
   }
 
-  /** For the "crossword" slug we fetch a real example crossword from CAPI, exactly like the existing
-    * `/crosswords/{type}/{id}` flow does today, by reusing `CrosswordController.withCrossword` (defined in
-    * CrosswordsController.scala, left unmodified). The crossword type/id are taken as request query params so this
-    * phase doesn't need to invent a "pick today's crossword" search - see docs/puzzles-game-page-plan.md for manual
-    * validation examples.
-    */
-  private def renderCrosswordGamePage(asJson: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
-    val crosswordType = request.getQueryString("crosswordType").getOrElse(GamePageController.DefaultCrosswordType)
-    val maybeId = request.getQueryString("id").flatMap(idParam => Try(idParam.toInt).toOption)
+  private def renderCrosswordGamePage(crosswordType: String, id: Int, asJson: Boolean = false)(implicit
+      request: RequestHeader,
+  ): Future[Result] = {
+    withCrossword(crosswordType, id) { (crossword, content) =>
+      val crosswordData = CrosswordData.fromCrossword(crossword, content)
+      val crosswordContent = CrosswordContent.make(crosswordData, content)
+      val page = new CrosswordPageWithContent(crosswordContent)
 
-    maybeId match {
-      case None     => notFound
-      case Some(id) =>
-        withCrossword(crosswordType, id) { (crossword, content) =>
-          val crosswordData = CrosswordData.fromCrossword(crossword, content)
-          val crosswordContent = CrosswordContent.make(crosswordData, content)
-          val page = new CrosswordPageWithContent(crosswordContent)
+      val instance = GamePageInstance(
+        title = content.webTitle,
+        puzzleType = Some(crosswordType),
+        setterName = crosswordData.creator.map(_.name),
+        date = Some(crosswordData.date.toString),
+        specialInstructions = crosswordData.instructions,
+        discussionId = crosswordContent.content.discussionId,
+        crosswordData = Some(crosswordData),
+      )
 
-          val instance = GamePageInstance(
-            title = content.webTitle,
-            puzzleType = Some(crosswordType),
-            setterName = crosswordData.creator.map(_.name),
-            date = Some(crosswordData.date.toString),
-            specialInstructions = crosswordData.instructions,
-            discussionId = crosswordContent.content.discussionId,
-            crosswordData = Some(crosswordData),
-          )
+      val dataModel = DotcomGamePageRenderingDataModel(
+        page,
+        GamePageController.CrosswordSlug,
+        content.webTitle,
+        instance,
+        request,
+      )
+      val json = DotcomGamePageRenderingDataModel.toJson(dataModel)
 
-          val dataModel = DotcomGamePageRenderingDataModel(
-            page,
-            GamePageController.CrosswordSlug,
-            content.webTitle,
-            instance,
-            request,
-          )
-          val json = DotcomGamePageRenderingDataModel.toJson(dataModel)
-
-          if (asJson)
-            Future.successful(
-              Cached(CacheTime.NotFound)(
-                Cached.WithoutRevalidationResult(Ok(json).as("application/json")),
-              ),
-            )
-          else remoteRenderer.getGamePage(wsClient, json)
-        }
+      if (asJson)
+        Future.successful(
+          Cached(CacheTime.NotFound)(
+            Cached.WithoutRevalidationResult(Ok(json).as("application/json")),
+          ),
+        )
+      else remoteRenderer.getGamePage(wsClient, json)
     }
   }
 }
 
 object GamePageController {
   val CrosswordSlug = "crossword"
-  val DefaultCrosswordType = "quick"
 
   /** The 11 currently-live, iframe-based (non-CAPI) game slugs, and a reasonable static title for each. DCR's own
     * static registry, keyed by slug, owns the iframe URL and all other structural/rendering behaviour - this repo does
