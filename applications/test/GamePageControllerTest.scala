@@ -116,4 +116,17 @@ import scala.concurrent.Future
     (json \ "instance" \ "puzzleType").as[String] should be("cryptic")
     (json \ "instance" \ "crosswordData").asOpt[JsValue] should not be None
   }
+
+  it should "format instance.date as a human-readable display date, not a raw ISO timestamp" in {
+    val result = controller(mock[DotcomRenderingService])
+      .renderCrosswordJson("cryptic", 26697)(request("/puzzles/crossword/cryptic/26697.json"))
+
+    status(result) should be(OK)
+    val json = Json.parse(contentAsString(result))
+    val date = (json \ "instance" \ "date").as[String]
+
+    // e.g. "Fri 20 Feb 2015" - matches GUDateTimeFormatNew.formatDateForDisplay's "E d MMM yyyy" pattern
+    // (and not a raw ISO-8601 timestamp like "2015-02-20T00:00:00.000Z").
+    date should fullyMatch regex """[A-Z][a-z]{2} \d{1,2} [A-Z][a-z]{2} \d{4}"""
+  }
 }

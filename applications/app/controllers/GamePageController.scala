@@ -3,7 +3,7 @@ package controllers
 import contentapi.ContentApiClient
 import crosswords.CrosswordPageWithContent
 import model.dotcomrendering.{DotcomGamePageRenderingDataModel, GamePageInstance}
-import model.{ApplicationContext, CacheTime, Cached, CrosswordContent, CrosswordData}
+import model.{ApplicationContext, CacheTime, Cached, CrosswordContent, CrosswordData, GUDateTimeFormatNew}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
@@ -110,7 +110,7 @@ class GamePageController(
         title = content.webTitle,
         puzzleType = Some(crosswordType),
         setterName = crosswordData.creator.map(_.name),
-        date = Some(crosswordData.date.toString),
+        date = Some(GUDateTimeFormatNew.formatDateForDisplay(crosswordData.webPublicationDate, request)),
         specialInstructions = crosswordData.instructions,
         discussionId = crosswordContent.content.discussionId,
         crosswordData = Some(crosswordData),
