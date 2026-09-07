@@ -29,6 +29,7 @@ trait ApplicationsControllers {
   lazy val crosswordPageController = wire[CrosswordPageController]
   lazy val crosswordSearchController = wire[CrosswordSearchController]
   lazy val crosswordEditionsController = wire[CrosswordEditionsController]
+  lazy val gamePageController = wire[GamePageController]
   lazy val tagIndexController = wire[TagIndexController]
   lazy val embedController = wire[EmbedController]
   lazy val AtomPageController = wire[AtomPageController]

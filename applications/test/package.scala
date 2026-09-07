@@ -40,6 +40,8 @@ class ApplicationsTestSuite
       new PuzzlesPageControllerTest,
       new PuzzlesLayoutProviderTest,
       new PuzzlesRoutesTest,
+      new GamePageControllerTest,
+      new GamePageRoutesTest,
       new IndexPageTest,
       new InteractivePickerTest,
     )

@@ -35,6 +35,13 @@ GET        /crosswords/lookup                                                   
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /crosswords/digital-edition.json                                                                                   controllers.CrosswordEditionsController.digitalEditionJson
 
+# Game Page (NEW, isolated - see docs/puzzles-game-page-plan.md)
+# A generalization of the crossword article page to all Guardian puzzle/game types (sudoku, word games,
+# quizzes, etc). Entirely additive: gated behind the "game-page-experiment" server-side AB test, so it is
+# invisible to the general public in production. Does not affect any /crosswords/* route above.
+GET        /puzzles/:slug.json                                                                                                controllers.GamePageController.renderGameJson(slug: String)
+GET        /puzzles/:slug                                                                                                     controllers.GamePageController.renderGame(slug: String)
+
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
