@@ -89,15 +89,79 @@ before considering any public exposure.
 
 ## Progress tracker
 - [x] Confirmed on branch `afs/puzzles-game-page`, working tree was clean before starting.
-- [ ] `docs/puzzles-game-page-plan.md` committed.
-- [ ] `DotcomRenderingService.getGamePage` added.
-- [ ] `DotcomGamePageRenderingDataModel` added.
-- [ ] `GamePageController` added (AB-gated, crossword CAPI fetch + 11 static slugs).
-- [ ] Routes added in isolated, clearly-commented section.
-- [ ] Tests added/passing; targeted sbt run green.
-- [ ] Existing crossword code/routes verified untouched (`git diff` review).
-- [ ] Manual validation steps written up below.
-- [ ] Committed incrementally; reported back to creator session; STOP (no further phases).
+- [x] `docs/puzzles-game-page-plan.md` committed.
+- [x] `DotcomRenderingService.getGamePage` added.
+- [x] `DotcomGamePageRenderingDataModel` added.
+- [x] `GamePageController` added (AB-gated, crossword CAPI fetch + 11 static slugs).
+- [x] Routes added in isolated, clearly-commented section.
+- [x] Tests added/passing (148/148 green via `applications/testOnly test.ApplicationsTestSuite`).
+- [x] Existing crossword code/routes verified untouched (`git diff` review - only additive changes).
+- [x] Manual validation steps written up below.
+- [x] Committed incrementally; reported back to creator session; STOP (no further phases).
 
 ## Manual validation steps
-_(to be filled in as the final step of this phase)_
+
+These assume you have this repo (`frontend`) and a checkout of `dotcom-rendering` (with its `/GamePage`
+endpoint implemented by the parallel session) locally.
+
+### 1. Point frontend's DCR calls at your local dotcom-rendering dev server
+
+1. Start the DCR dev server from the `dotcom-rendering/dotcom-rendering` package as usual (see
+   https://github.com/guardian/dotcom-rendering). By convention (same as for crosswords today) it serves
+   on `http://localhost:3030`.
+2. In `~/.gu/frontend.conf`, add/confirm a `devOverrides` block pointing frontend's article renderer at it
+   (see `docs/03-dev-howtos/14-override-default-configuration.md` for the general mechanism):
+
+   ```
+   devOverrides {
+     article-rendering.baseURL="http://localhost:3030"
+   }
+   ```
+
+### 2. Start frontend's local dev server
+
+1. In one terminal, run `sbt` then, at the sbt prompt, `project applications` and `run` (or `~run` to
+   auto-reload). This serves on `http://localhost:9000` as usual.
+2. Confirm normal existing pages still work unaffected, e.g. `http://localhost:9000/crosswords/quick/1` -
+   this phase must not have changed this behaviour.
+
+### 3. Satisfy the AB test gate
+
+Without the header below, every `/puzzles/:slug` URL introduced in this phase returns `404 Not Found`
+before any CAPI fetch or DCR call is attempted - this is the "invisible to the public" mechanism. To pass
+the gate locally, add the request header:
+
+```
+X-GU-Server-AB-Tests: game-page-experiment:variant
+```
+
+- **curl**: `curl -H "X-GU-Server-AB-Tests: game-page-experiment:variant" http://localhost:9000/puzzles/sudoku-easy`
+- **Browser**: use an extension that lets you set a static request header for `localhost:9000` (e.g.
+  "ModHeader" or similar), set `X-GU-Server-AB-Tests` to `game-page-experiment:variant`, then browse
+  normally.
+
+### 4. URLs to try
+
+With the header present:
+- `http://localhost:9000/puzzles/crossword?crosswordType=cryptic&id=26697` - fetches a real example
+  crossword from CAPI (this id is already used by existing crossword tests, so it's known-good) and POSTs
+  a `/GamePage` payload to DCR with `slug: "crossword"` and a populated `instance.crosswordData`/
+  `instance.discussionId`. Expect DCR's rendered page (once its `/GamePage` handler exists).
+- `http://localhost:9000/puzzles/sudoku-easy` - no CAPI fetch; POSTs a `/GamePage` payload with
+  `slug: "sudoku-easy"` and only `instance.title = "Sudoku (easy)"`. Expect DCR's rendered iframe page.
+- `http://localhost:9000/puzzles/crossword` (no `crosswordType`/`id` query params) - expect `404`, since
+  this phase requires an explicit crossword to fetch (see `GamePageController.renderCrosswordGamePage`).
+- `http://localhost:9000/puzzles/not-a-real-slug` - expect `404` (unrecognised slug).
+- Add `.json` to any of the above (e.g. `/puzzles/sudoku-easy.json`) to see the raw JSON payload frontend
+  would send to DCR, without needing DCR itself to be running.
+
+Without the header (or with an unrelated/absent AB test participation):
+- Every one of the URLs above returns `404 Not Found`, and neither CAPI nor DCR is called (verified by the
+  `GamePageControllerTest` gating cases, which assert `verifyNoInteractions` on a mocked
+  `DotcomRenderingService`).
+
+### 5. Confirm existing crossword pages are unaffected
+
+- `http://localhost:9000/crosswords/quick/1` (no special header needed) should behave exactly as before -
+  this phase's routes are physically separate in `applications/conf/routes` and
+  `CrosswordsController.scala`/`CrosswordPageController` were not modified.
