@@ -1,6 +1,5 @@
 package controllers
 
-import ab.GamePageExperiment
 import contentapi.ContentApiClient
 import crosswords.CrosswordPageWithContent
 import model.dotcomrendering.{DotcomGamePageRenderingDataModel, GamePageInstance}
@@ -17,9 +16,9 @@ import scala.concurrent.Future
   * `CrosswordPageController` and the existing crossword routes, which this controller does not touch or call into (it
   * reuses the `CrosswordController` trait's CAPI-fetching helpers, unmodified, rather than duplicating them).
   *
-  * The whole flow is gated behind the `game-page-experiment` server-side AB test ([[ab.GamePageExperiment]]) so that it
-  * is invisible to the general public in production: without the `X-GU-Server-AB-Tests` request header carrying
-  * `game-page-experiment:variant`, every slug 404s before any rendering or CAPI fetch is attempted.
+  * Note: this flow is not currently gated behind any AB test - it was previously gated behind a `game-page-experiment`
+  * server-side AB test, but that gate was removed at the user's explicit request (see docs/puzzles-game-page-plan.md)
+  * since these routes are expected to be mapped/exposed via a separate project instead.
   */
 class GamePageController(
     val contentApiClient: ContentApiClient,
@@ -41,24 +40,20 @@ class GamePageController(
     */
   def renderGame(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!GamePageExperiment.isEnabled) notFound
-      else
-        slug match {
-          case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
-            renderIframeGamePage(iframeSlug)
-          case _ => notFound
-        }
+      slug match {
+        case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
+          renderIframeGamePage(iframeSlug)
+        case _ => notFound
+      }
     }
 
   def renderGameJson(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!GamePageExperiment.isEnabled) notFound
-      else
-        slug match {
-          case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
-            renderIframeGamePageJson(iframeSlug)
-          case _ => notFound
-        }
+      slug match {
+        case iframeSlug if GamePageController.iframeSlugTitles.contains(iframeSlug) =>
+          renderIframeGamePageJson(iframeSlug)
+        case _ => notFound
+      }
     }
 
   /** For the "crossword" slug we fetch a real example crossword from CAPI, exactly like the existing
@@ -68,14 +63,12 @@ class GamePageController(
     */
   def renderCrossword(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!GamePageExperiment.isEnabled) notFound
-      else renderCrosswordGamePage(crosswordType, id)
+      renderCrosswordGamePage(crosswordType, id)
     }
 
   def renderCrosswordJson(crosswordType: String, id: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!GamePageExperiment.isEnabled) notFound
-      else renderCrosswordGamePage(crosswordType, id, asJson = true)
+      renderCrosswordGamePage(crosswordType, id, asJson = true)
     }
 
   /** For the iframe-based slugs there is no per-instance CAPI content to fetch - the iframe always shows "today's"

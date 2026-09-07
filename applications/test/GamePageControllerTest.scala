@@ -1,6 +1,5 @@
 package test
 
-import ab.ABTests
 import controllers.GamePageController
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
@@ -19,6 +18,10 @@ import scala.concurrent.Future
 
 /** Tests for the new, isolated Game Page controller (see docs/puzzles-game-page-plan.md). These do not exercise, and
   * are entirely separate from, the existing crossword controller tests.
+  *
+  * Note: this flow is not gated behind any AB test (a previous `game-page-experiment` gate was removed at the user's
+  * explicit request, since these routes are expected to be mapped/exposed via a separate project instead) - no special
+  * request header is needed for any of these.
   */
 @DoNotDiscover class GamePageControllerTest
     extends AnyFlatSpec
@@ -35,10 +38,7 @@ import scala.concurrent.Future
   private def controller(renderer: DotcomRenderingService): GamePageController =
     new GamePageController(testContentApiClient, stubControllerComponents(), wsClient, renderer)
 
-  private def request(path: String, participations: String = "game-page-experiment:variant"): Request[AnyContent] = {
-    val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
-    rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
-  }
+  private def request(path: String): Request[AnyContent] = TestRequest(path)
 
   private def stubbedRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
@@ -47,7 +47,7 @@ import scala.concurrent.Future
     renderer
   }
 
-  "renderGame" should "render an iframe-based slug via DCR when the experiment is enabled" in {
+  "renderGame" should "render an iframe-based slug via DCR" in {
     val renderer = stubbedRenderer()
 
     val result = controller(renderer).renderGame("sudoku-easy")(request("/puzzles/sudoku-easy"))
@@ -75,7 +75,7 @@ import scala.concurrent.Future
     verifyNoInteractions(renderer)
   }
 
-  "renderCrossword" should "fetch real CAPI content and render the crossword slug via DCR when the experiment is enabled" in {
+  "renderCrossword" should "fetch real CAPI content and render the crossword slug via DCR" in {
     val renderer = stubbedRenderer()
 
     val result = controller(renderer)
@@ -84,39 +84,6 @@ import scala.concurrent.Future
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
     verify(renderer).getGamePage(any[WSClient], any[JsValue])(any[RequestHeader])
-  }
-
-  it should "return not found when the experiment is not enabled, without calling CAPI or DCR" in {
-    val renderer = mock[DotcomRenderingService]
-
-    val result = controller(renderer)
-      .renderCrossword("cryptic", 26697)(request("/puzzles/crossword/cryptic/26697", ""))
-
-    status(result) should be(NOT_FOUND)
-    verifyNoInteractions(renderer)
-  }
-
-  Seq(
-    "control" -> "game-page-experiment:control",
-    "absent" -> "",
-    "malformed" -> "game-page-experiment:,game-page-experiment:variant:extra",
-    "unknown group" -> "game-page-experiment:unknown",
-    "unrelated experiment" -> "another-test:variant",
-  ).foreach { case (participationCase, participations) =>
-    s"game page access with $participationCase participation" should
-      "return not found for both iframe and crossword paths without calling DCR" in {
-        val renderer = mock[DotcomRenderingService]
-        val gamePageController = controller(renderer)
-
-        val iframeResult = gamePageController.renderGame("sudoku-easy")(request("/puzzles/sudoku-easy", participations))
-        val crosswordResult = gamePageController.renderCrossword("cryptic", 26697)(
-          request("/puzzles/crossword/cryptic/26697", participations),
-        )
-
-        status(iframeResult) should be(NOT_FOUND)
-        status(crosswordResult) should be(NOT_FOUND)
-        verifyNoInteractions(renderer)
-      }
   }
 
   "renderGameJson" should "return the equivalent rendering data as JSON for an iframe-based slug" in {
