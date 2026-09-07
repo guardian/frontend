@@ -120,10 +120,16 @@ endpoint implemented by the parallel session) locally.
 
 ### 2. Start frontend's local dev server
 
-1. In one terminal, run `sbt` then, at the sbt prompt, `project applications` and `run` (or `~run` to
-   auto-reload). This serves on `http://localhost:9000` as usual.
-2. Confirm normal existing pages still work unaffected, e.g. `http://localhost:9000/crosswords/quick/1` -
-   this phase must not have changed this behaviour.
+1. In one terminal, run `sbt` then, at the sbt prompt, `project dev-build` and `run` (or `~run` to
+   auto-reload). Per this repo's own install docs (`docs/01-start-here/01-installation-steps.md`), `dev-build`
+   is the documented, complete local dev setup that emulates the whole site (as opposed to `project
+   applications` on its own, which uses a separate, narrower `applications/conf/routes` file) - this phase's
+   new Game Page routes are added to `dev-build/conf/routes` for that reason, mirrored identically from
+   `applications/conf/routes`. This serves on `http://localhost:9000` as usual.
+2. Confirm normal existing pages still work unaffected, e.g. `http://localhost:9000/crosswords/quick/17578`
+   or `http://localhost:9000/crosswords/cryptic/26697` (real, known-good ids - a small/made-up id like `1`
+   will correctly 404 since it doesn't exist in CAPI, which is not a regression) - this phase must not have
+   changed this behaviour.
 
 ### 3. Satisfy the AB test gate
 
