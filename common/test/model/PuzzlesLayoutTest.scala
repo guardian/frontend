@@ -9,17 +9,10 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
   private val representativeLayoutJson = Json.parse(
     """
  |{
- | "filters": [{
- | "id":"logic",
- | "title":"Logic",
- | "target":"#logic-puzzles",
- | "backgroundColour":"#CDECFB"
- | }],
  | "containers": [{
  | "id":"logic-puzzles",
  | "title":"Logic puzzles",
  | "variant":"standard",
- | "filterId":"logic",
  | "content": {
  | "items": [[{
  | "id":"sudoku-easy",
@@ -33,8 +26,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
  | "slug":"sudoku-easy",
  | "index":1,
  | "variant":"iframe-page",
- | "backgroundColour":"#CDECFB",
- | "filterId":"logic"
+ | "backgroundColour":"#CDECFB"
  | }]],
  | "nestedContainers": [{
  | "id":"more-logic",
@@ -68,13 +60,12 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
  |""".stripMargin,
   )
 
-  "PuzzlesLayout JSON format" should "parse presentation metadata, grouped rows, navigation and archives" in {
+  "PuzzlesLayout JSON format" should "parse presentation metadata, grouped rows and archives" in {
     val layout = representativeLayoutJson.as[PuzzlesLayout]
     val container = layout.containers.head
     val item = container.content.items.head.head
     val nested = container.content.nestedContainers.head
 
-    layout.filters.head.target shouldBe "#logic-puzzles"
     container.id shouldBe "logic-puzzles"
     container.variant shouldBe Some("standard")
     item.id shouldBe "sudoku-easy"
@@ -91,7 +82,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     Json.toJson(layout) shouldBe representativeLayoutJson
   }
 
-  it should "omit absent optional item, container, archive and navigation fields" in {
+  it should "omit absent optional item, container and archive fields" in {
     val layout = PuzzlesLayout(
       containers = Seq(
         PuzzleContainer(
@@ -105,7 +96,6 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
           ),
         ),
       ),
-      filters = Seq(PuzzleFilter("crosswords", "Crosswords", "#crosswords")),
     )
 
     Json.toJson(layout) shouldBe Json.parse(
@@ -124,8 +114,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
  | }]],
  | "nestedContainers":[]
  | }
- | }],
- | "filters":[{"id":"crosswords","title":"Crosswords","target":"#crosswords"}]
+ | }]
  |}""".stripMargin,
     )
   }
@@ -157,7 +146,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     invalidVariant.validate[PuzzlesLayout] shouldBe a[JsError]
   }
 
-  it should "reject duplicate puzzle IDs, broken navigation anchors and unknown filter references" in {
+  it should "reject duplicate puzzle IDs" in {
     val duplicate = PuzzleItem("duplicate", "One", "quiz", "one", "primary", Some("Daily"))
     val layout = PuzzlesLayout(
       containers = Seq(
@@ -165,24 +154,19 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
           id = "section",
           title = "Section",
           content = PuzzleContent(Seq(Seq(duplicate, duplicate.copy(title = "Two"))), Seq.empty),
-          filterId = Some("missing-filter"),
         ),
       ),
-      filters = Seq(PuzzleFilter("navigation", "Navigation", "#missing-section")),
     )
 
     val errors = PuzzlesLayout.validationErrors(layout)
 
     errors should contain("duplicate puzzle id 'duplicate'")
-    errors should contain("navigation target '#missing-section' has no container")
-    errors should contain("filterId 'missing-filter' is not defined")
     Json.toJson(layout).validate[PuzzlesLayout] shouldBe a[JsError]
   }
 
-  it should "reject unsupported desktop spans and navigation targets" in {
+  it should "reject unsupported desktop spans" in {
     val json = Json.parse(
       """{
- | "filters":[{"id":"crosswords","title":"Crosswords","target":"/crosswords"}],
  | "containers":[{
  | "id":"crosswords",
  | "title":"Crosswords",

@@ -16,7 +16,6 @@ case class PuzzleItem(
     index: Option[Int] = None,
     variant: Option[String] = None,
     backgroundColour: Option[String] = None,
-    filterId: Option[String] = None,
 )
 
 object PuzzleItem {
@@ -61,28 +60,28 @@ case class PuzzleContainer(
     title: String,
     variant: Option[String] = None,
     content: PuzzleContent,
-    filterId: Option[String] = None,
     desktopSpan: Option[Int] = None,
     adSlot: Option[String] = None,
+    supporting: Option[PuzzlesSupportingContent] = None,
 )
 
 object PuzzleContainer {
-  val SupportedVariants: Set[String] = Set("featured", "standard", "ad")
+  val SupportedVariants: Set[String] = Set("featured", "standard", "ad", "supporting")
 
   private lazy val reads: Reads[PuzzleContainer] = (
     (__ \ "id").read[String] and
       (__ \ "title").read[String] and
       (__ \ "variant").readNullable[String] and
       (__ \ "content").lazyRead[PuzzleContent](PuzzleContent.format) and
-      (__ \ "filterId").readNullable[String] and
       (__ \ "desktopSpan").readNullable[Int] and
-      (__ \ "adSlot").readNullable[String]
+      (__ \ "adSlot").readNullable[String] and
+      (__ \ "supporting").readNullable[PuzzlesSupportingContent]
   )(PuzzleContainer.apply _).filter(JsonValidationError("container variant, span or ad slot is unsupported"))(
     container =>
       container.id.matches("[a-z0-9]+(?:-[a-z0-9]+)*") &&
         container.variant.forall(SupportedVariants.contains) &&
         container.desktopSpan.forall(span => span >= 1 && span <= 12) &&
-        container.adSlot.forall(_.matches("inline[1-9][0-9]*")),
+        container.adSlot.forall(slot => slot.matches("inline[1-9][0-9]*") || slot == "mostpop"),
   )
 
   private lazy val writes: OWrites[PuzzleContainer] = (
@@ -90,41 +89,61 @@ object PuzzleContainer {
       (__ \ "title").write[String] and
       (__ \ "variant").writeNullable[String] and
       (__ \ "content").lazyWrite[PuzzleContent](PuzzleContent.format) and
-      (__ \ "filterId").writeNullable[String] and
       (__ \ "desktopSpan").writeNullable[Int] and
-      (__ \ "adSlot").writeNullable[String]
+      (__ \ "adSlot").writeNullable[String] and
+      (__ \ "supporting").writeNullable[PuzzlesSupportingContent]
   )(unlift(PuzzleContainer.unapply))
 
   implicit lazy val format: OFormat[PuzzleContainer] = OFormat(reads, writes)
 }
 
-case class PuzzleFilter(
-    id: String,
+case class PuzzleLink(
     title: String,
-    target: String,
-    backgroundColour: Option[String] = None,
+    url: String,
 )
 
-object PuzzleFilter {
-  private val reads: Reads[PuzzleFilter] = Json
-    .reads[PuzzleFilter]
-    .filter(JsonValidationError("navigation id must be a lowercase kebab-case identifier"))(
-      _.id.matches("[a-z0-9]+(?:-[a-z0-9]+)*"),
-    )
-    .filter(JsonValidationError("navigation target must be a section anchor or an internal /puzzles path"))(filter =>
-      filter.target.startsWith("#") || filter.target.startsWith("/puzzles"),
-    )
-  private val writes: OWrites[PuzzleFilter] = Json.writes[PuzzleFilter].transform(removeNullFields)
-  implicit val format: OFormat[PuzzleFilter] = OFormat(reads, writes)
+object PuzzleLink {
+  implicit val format: OFormat[PuzzleLink] = Json.format[PuzzleLink]
+}
+
+case class PuzzlesNewsletter(
+    identityName: String,
+    name: String,
+    frequency: String,
+    description: String,
+    illustrationSquare: Option[String] = None,
+)
+
+object PuzzlesNewsletter {
+  private val writes: OWrites[PuzzlesNewsletter] = Json.writes[PuzzlesNewsletter].transform(removeNullFields)
+  implicit val format: OFormat[PuzzlesNewsletter] = OFormat(Json.reads[PuzzlesNewsletter], writes)
 
   private def removeNullFields(json: JsObject): JsObject =
     JsObject(json.fields.filterNot(_._2 == JsNull))
 }
 
-case class PuzzlesLayout(
-    containers: Seq[PuzzleContainer],
-    filters: Seq[PuzzleFilter] = Seq.empty,
+case class PuzzlePopularityGroup(
+    title: String,
+    itemIds: Seq[String],
 )
+
+object PuzzlePopularityGroup {
+  implicit val format: OFormat[PuzzlePopularityGroup] = Json.format[PuzzlePopularityGroup]
+}
+
+case class PuzzlesSupportingContent(
+    usefulLinksTitle: String,
+    usefulLinks: Seq[PuzzleLink],
+    newsletter: Option[PuzzlesNewsletter],
+    popularTitle: String,
+    popularGroups: Seq[PuzzlePopularityGroup],
+)
+
+object PuzzlesSupportingContent {
+  implicit val format: OFormat[PuzzlesSupportingContent] = Json.format[PuzzlesSupportingContent]
+}
+
+case class PuzzlesLayout(containers: Seq[PuzzleContainer])
 
 object PuzzlesLayout {
   private val rawFormat: OFormat[PuzzlesLayout] = Json.format[PuzzlesLayout]
@@ -145,34 +164,60 @@ object PuzzlesLayout {
     val items = containers.flatMap(container =>
       container.content.items.flatten ++ container.content.archive.toSeq ++ container.content.archiveChoices.toSeq.flatten,
     )
-    val filterIds = layout.filters.map(_.id)
     val containerIds = containers.map(_.id)
     val itemIds = items.map(_.id)
-    val anchorTargets = layout.filters.map(_.target).filter(_.startsWith("#")).map(_.drop(1))
-    val referencedFilterIds = containers.flatMap(_.filterId) ++ items.flatMap(_.filterId)
     val topLevelIds = layout.containers.map(_.id).toSet
+    val supportingItemIds = containers.flatMap(_.supporting.toSeq.flatMap(_.popularGroups.flatMap(_.itemIds)))
 
-    duplicateValues("filter", filterIds) ++
-      duplicateValues("container", containerIds) ++
+    duplicateValues("container", containerIds) ++
       duplicateValues("puzzle", itemIds) ++
-      anchorTargets
-        .filterNot(containerIds.contains)
-        .distinct
-        .map(target => s"navigation target '#$target' has no container") ++
-      referencedFilterIds.filterNot(filterIds.contains).distinct.map(id => s"filterId '$id' is not defined") ++
+      supportingItemIds.filterNot(itemIds.contains).distinct.map(id => s"popular puzzle '$id' is not defined") ++
       containers.collect {
         case container
             if container.variant.contains("ad") &&
-              (container.adSlot.isEmpty || container.title.nonEmpty || container.content.items.flatten.nonEmpty ||
+              (container.adSlot.forall(!_.matches("inline[1-9][0-9]*")) || container.title.nonEmpty ||
                 container.content.nestedContainers.nonEmpty || container.content.archive.nonEmpty ||
-                container.content.archiveChoices.exists(_.nonEmpty)) =>
+                container.content.items.flatten.nonEmpty || container.content.archiveChoices.exists(_.nonEmpty) ||
+                container.supporting.nonEmpty) =>
           s"ad container '${container.id}' must have an adSlot and no title or puzzle content"
-        case container if !container.variant.contains("ad") && container.adSlot.nonEmpty =>
-          s"container '${container.id}' has an adSlot without the ad variant"
+        case container if container.variant.contains("supporting") && container.adSlot.exists(_ != "mostpop") =>
+          s"supporting container '${container.id}' has an unsupported adSlot"
+        case container
+            if !container.variant
+              .contains("ad") && !container.variant.contains("supporting") && container.adSlot.nonEmpty =>
+          s"container '${container.id}' has an adSlot without an ad variant"
         case container if container.variant.contains("ad") && !topLevelIds.contains(container.id) =>
           s"ad container '${container.id}' must be top-level"
-        case container if !container.variant.contains("ad") && container.title.trim.isEmpty =>
+        case container if container.variant.contains("supporting") && !topLevelIds.contains(container.id) =>
+          s"supporting container '${container.id}' must be top-level"
+        case container
+            if !container.variant
+              .contains("ad") && !container.variant.contains("supporting") && container.title.trim.isEmpty =>
           s"container '${container.id}' must have a title"
+        case container
+            if container.variant.contains("supporting") &&
+              (container.supporting.isEmpty || container.title.nonEmpty || container.content.items.flatten.nonEmpty ||
+                container.content.nestedContainers.nonEmpty || container.content.archive.nonEmpty ||
+                container.content.archiveChoices.exists(_.nonEmpty)) =>
+          s"supporting container '${container.id}' must have supporting content and no title or puzzle content"
+        case container if !container.variant.contains("supporting") && container.supporting.nonEmpty =>
+          s"container '${container.id}' has supporting content without the supporting variant"
+      } ++
+      containers.flatMap(_.supporting).flatMap { supporting =>
+        val invalidLinks = supporting.usefulLinks.filter(link =>
+          link.title.trim.isEmpty || !(link.url.startsWith("/puzzles") || link.url.matches("https?://.+")),
+        )
+        val invalidGroups = supporting.popularGroups.filter(group => group.title.trim.isEmpty || group.itemIds.isEmpty)
+        val invalidNewsletter = supporting.newsletter.exists(newsletter =>
+          newsletter.identityName.trim.isEmpty || newsletter.name.trim.isEmpty || newsletter.frequency.trim.isEmpty ||
+            newsletter.description.trim.isEmpty,
+        )
+
+        invalidLinks.map(link => s"supporting link '${link.title}' has an invalid title or URL") ++
+          invalidGroups.map(group => s"popular group '${group.title}' must have a title and puzzle IDs") ++
+          Option.when(
+            supporting.usefulLinksTitle.trim.isEmpty || supporting.popularTitle.trim.isEmpty || invalidNewsletter,
+          )("supporting content has incomplete headings or newsletter metadata")
       } ++
       containers.collect {
         case container if container.content.archive.nonEmpty && container.content.archiveChoices.exists(_.nonEmpty) =>
