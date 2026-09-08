@@ -60,6 +60,7 @@ case class PuzzleContainer(
     title: String,
     variant: Option[String] = None,
     content: PuzzleContent,
+    enabled: Option[Boolean] = None,
     desktopSpan: Option[Int] = None,
     adSlot: Option[String] = None,
     supporting: Option[PuzzlesSupportingContent] = None,
@@ -73,6 +74,7 @@ object PuzzleContainer {
       (__ \ "title").read[String] and
       (__ \ "variant").readNullable[String] and
       (__ \ "content").lazyRead[PuzzleContent](PuzzleContent.format) and
+      (__ \ "enabled").readNullable[Boolean] and
       (__ \ "desktopSpan").readNullable[Int] and
       (__ \ "adSlot").readNullable[String] and
       (__ \ "supporting").readNullable[PuzzlesSupportingContent]
@@ -89,6 +91,7 @@ object PuzzleContainer {
       (__ \ "title").write[String] and
       (__ \ "variant").writeNullable[String] and
       (__ \ "content").lazyWrite[PuzzleContent](PuzzleContent.format) and
+      (__ \ "enabled").writeNullable[Boolean] and
       (__ \ "desktopSpan").writeNullable[Int] and
       (__ \ "adSlot").writeNullable[String] and
       (__ \ "supporting").writeNullable[PuzzlesSupportingContent]
@@ -202,6 +205,8 @@ object PuzzlesLayout {
           s"supporting container '${container.id}' must have supporting content and no title or puzzle content"
         case container if !container.variant.contains("supporting") && container.supporting.nonEmpty =>
           s"container '${container.id}' has supporting content without the supporting variant"
+        case container if !container.variant.contains("featured") && container.enabled.nonEmpty =>
+          s"container '${container.id}' has enabled without the featured variant"
       } ++
       containers.flatMap(_.supporting).flatMap { supporting =>
         val invalidLinks = supporting.usefulLinks.filter(link =>

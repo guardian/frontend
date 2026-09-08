@@ -4,37 +4,9 @@
 			"id": "featured-puzzles",
 			"title": "Today’s featured puzzles",
 			"variant": "featured",
+			"enabled": true,
 			"content": {
-				"items": [
-					[
-						{
-							"id": "on-the-ball",
-							"title": "On the ball",
-							"type": "on-the-ball",
-							"set": "all",
-							"cardVariant": "large",
-							"cadence": "Daily",
-							"slug": "on-the-ball",
-							"url": "https://sportsreveal.io/guardian",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
-							"variant": "iframe-page",
-							"backgroundColour": "#D5F3F2"
-						},
-						{
-							"id": "film-reveal",
-							"title": "Film reveal",
-							"type": "film-reveal",
-							"set": "all",
-							"cardVariant": "large",
-							"cadence": "Daily",
-							"slug": "film-reveal",
-							"url": "https://moviegrid.io/guardian",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
-							"variant": "iframe-page",
-							"backgroundColour": "#EAD8B9"
-						}
-					]
-				],
+				"items": [],
 				"nestedContainers": []
 			}
 		},
