@@ -71,20 +71,6 @@ class AuthenticatedActions(
       }
     }
 
-  private def consentAuthRefiner: ActionRefiner[Request, AuthRequest] =
-    new ActionRefiner[Request, AuthRequest] {
-      override val executionContext = ec
-
-      def refine[A](request: Request[A]) =
-        authService.consentCookieAuthenticatedUser(request) match {
-          case Some(userFormCookie) =>
-            Future.successful(Right(new AuthenticatedRequest(userFormCookie, request)))
-
-          case _ =>
-            checkRecentAuthenticationAndRedirect(request)
-        }
-    }
-
   private def retrieveUserFromIdapiRefiner: ActionRefiner[AuthRequest, AuthRequest] =
     new ActionRefiner[AuthRequest, AuthRequest] {
       override val executionContext = ec
@@ -120,11 +106,4 @@ class AuthenticatedActions(
   // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
   private def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
 
-  /** Auth with at least SC_GU_RP, that is, auth with SC_GU_U or else SC_GU_RP, and user retrieved from IDAPI */
-  def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
-    noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
-
-  /** Enforce a validated email */
-  def consentAuthWithIdapiUserWithEmailValidation: ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen emailValidationFilter
 }
