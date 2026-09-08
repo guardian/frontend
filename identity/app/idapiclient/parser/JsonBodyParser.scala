@@ -1,9 +1,10 @@
 package idapiclient.parser
 
+import com.fasterxml.jackson.core.JsonParseException
 import idapiclient.responses.{Error, HttpResponse}
-import net.liftweb.json.{Formats, MappingException}
-import net.liftweb.json.JsonAST.{JNothing, JValue}
-import net.liftweb.json.JsonParser._
+import org.json4s.{Formats, MappingException}
+import org.json4s.JsonAST.{JNothing, JValue}
+import org.json4s.jackson.JsonMethods._
 import idapiclient.Response
 import utils.Logging
 
@@ -54,7 +55,7 @@ trait JsonBodyParser extends Logging {
             ),
           )
         }
-        case e: ParseException => {
+        case e: JsonParseException => {
           logger.error("JSON parse exception", e)
           Left(
             List(Error("JSON parsing exception", "The api returned a response that was not valid json:" + e.getMessage)),
