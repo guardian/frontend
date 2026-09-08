@@ -40,18 +40,22 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
     val layout = Await.result(provider.getLayout(), 5.seconds)
     val featured = layout.containers.head
-    val crosswords = layout.containers(1)
+    val crosswords = layout.containers(_.id == "crosswords").get
 
     layout.filters.map(filter => filter.title -> filter.target) shouldBe Seq(
       "Crosswords" -> "#crosswords",
       "Logic" -> "#logic-puzzles",
       "Word games" -> "#word-games",
     )
-    layout.containers.map(_.title) shouldBe Seq(
+    layout.containers.filterNot(_.variant.contains("ad")).map(_.title) shouldBe Seq(
       "Today’s featured puzzles",
       "Crosswords",
-      "Word games",
       "Logic puzzles",
+      "Word games",
+    )
+    layout.containers.filter(_.variant.contains("ad")).map(_.adSlot) shouldBe Seq(
+      Some("inline1"),
+      Some("inline2"),
     )
     featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
       ("On the ball", "large", Some("Daily")),
