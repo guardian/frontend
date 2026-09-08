@@ -71,6 +71,7 @@ val common = library("common")
       jodaTime,
       jSoup,
       json4s,
+      json4sJackson,
       panDomainAuth,
       editorialPermissions,
       quartzScheduler,

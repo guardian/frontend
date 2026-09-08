@@ -2,8 +2,8 @@ package idapiclient.parser
 
 import com.gu.identity.model.{LiftJsonConfig, Error => IdApiError}
 import idapiclient.responses.Error
-import net.liftweb.json.Formats
-import net.liftweb.json.JsonAST.JValue
+import org.json4s.Formats
+import org.json4s.JsonAST.JValue
 import utils.SafeLogging
 
 class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {
