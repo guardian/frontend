@@ -96,8 +96,8 @@ object Nav {
 
   implicit val writes: OWrites[Nav] = Json.writes[Nav]
 
-  def apply(page: Page, edition: Edition, customSubnav: Option[CustomSubnav]): Nav = {
-    val navMenu = NavMenu(page, edition)
+  def apply(page: Page, edition: Edition, request: RequestHeader, customSubnav: Option[CustomSubnav]): Nav = {
+    val navMenu = NavMenu(page, edition, request)
     Nav(
       currentUrl = navMenu.currentUrl,
       pillars = navMenu.pillars,

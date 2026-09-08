@@ -8,7 +8,7 @@
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupporterCTA}
 @import conf.switches.Switches.{IdentityProfileNavigationSwitch, SearchSwitch}
 
-@defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+@defining(NavMenu(page, Edition(request), request)) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
         "new-header--slim" -> page.metadata.hasSlimHeader
     ), s"pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"

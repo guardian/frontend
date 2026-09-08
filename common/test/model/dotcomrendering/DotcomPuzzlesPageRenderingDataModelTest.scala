@@ -48,6 +48,10 @@ import staticpages.StaticPages
     (json \ "commercialProperties").toOption should not be empty
     (json \ "canonicalUrl").as[String] should endWith("/puzzles")
     (json \ "layout").as[PuzzlesLayout] should be(layout)
+    val puzzlesNav = (json \ "nav" \ "otherLinks").as[Seq[play.api.libs.json.JsObject]]
+    puzzlesNav
+      .find(link => (link \ "url").as[String] == "/puzzles")
+      .map(link => (link \ "title").as[String]) should contain("Puzzles and Games")
   }
 
   it should "propagate every current server-side AB-test participation" in {

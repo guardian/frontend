@@ -1,9 +1,10 @@
 package test
 
+import ab.ABTests
 import controllers.{PuzzlesLayoutProvider, PuzzlesPageController}
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{verify, when}
+import org.mockito.Mockito.{verify, verifyNoInteractions, when}
 import org.scalatest.DoNotDiscover
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
@@ -11,7 +12,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{RequestHeader, Results}
+import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
@@ -53,13 +54,18 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
+  private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
+    val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
+    rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
+  }
+
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {
     val provider = successfulProvider
     val renderer = mock[DotcomRenderingService]
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
 
-    val result = controller(provider, renderer).renderPuzzles()(TestRequest("/puzzles"))
+    val result = controller(provider, renderer).renderPuzzles()(request("/puzzles"))
 
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
@@ -69,7 +75,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
   it should "return not found for an unsupported format" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzles()(TestRequest("/puzzles.json"))
+      .renderPuzzles()(request("/puzzles.json"))
 
     status(result) should be(NOT_FOUND)
   }
@@ -79,7 +85,7 @@ import scala.concurrent.{ExecutionContext, Future}
     val provider = mock[PuzzlesLayoutProvider]
     when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.failed(failure))
 
-    val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(TestRequest("/puzzles"))
+    val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(request("/puzzles"))
 
     result.failed.futureValue should be(failure)
   }
@@ -90,14 +96,14 @@ import scala.concurrent.{ExecutionContext, Future}
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.failed(failure))
 
-    val result = controller(successfulProvider, renderer).renderPuzzles()(TestRequest("/puzzles"))
+    val result = controller(successfulProvider, renderer).renderPuzzles()(request("/puzzles"))
 
     result.failed.futureValue should be(failure)
   }
 
   "renderPuzzlesJson" should "return the equivalent rendering data as JSON" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(TestRequest("/puzzles.json"))
+      .renderPuzzlesJson()(request("/puzzles.json"))
 
     status(result) should be(OK)
     contentType(result) should contain("application/json")
@@ -109,15 +115,37 @@ import scala.concurrent.{ExecutionContext, Future}
 
   it should "return not found when the JSON action receives an HTML request" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(TestRequest("/puzzles"))
+      .renderPuzzlesJson()(request("/puzzles"))
 
     status(result) should be(NOT_FOUND)
   }
 
   it should "return not found for another unsupported format" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(TestRequest("/puzzles.atom"))
+      .renderPuzzlesJson()(request("/puzzles.atom"))
 
     status(result) should be(NOT_FOUND)
+  }
+
+  Seq(
+    "control" -> "puzzles-new-hub:control",
+    "absent" -> "",
+    "malformed" -> "puzzles-new-hub:,puzzles-new-hub:variant:extra",
+    "unknown group" -> "puzzles-new-hub:unknown",
+    "unrelated experiment" -> "another-test:variant",
+  ).foreach { case (participationCase, participations) =>
+    s"puzzles hub access with $participationCase participation" should
+      "return not found for HTML and JSON without loading the layout or calling DCR" in {
+        val provider = mock[PuzzlesLayoutProvider]
+        val renderer = mock[DotcomRenderingService]
+        val puzzlesController = controller(provider, renderer)
+
+        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles", participations))
+        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles.json", participations))
+
+        status(htmlResult) should be(NOT_FOUND)
+        status(jsonResult) should be(NOT_FOUND)
+        verifyNoInteractions(provider, renderer)
+      }
   }
 }

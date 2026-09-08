@@ -478,7 +478,8 @@ object DotcomRenderingDataModel {
       twitterHandle = content.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
+    val shouldAddAffiliateLinks =
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks ++ mainBlock.toSeq ++ pinnedPost.toSeq)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -657,7 +658,7 @@ object DotcomRenderingDataModel {
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
-      nav = Nav(page, edition, customSubnav = customSubnav),
+      nav = Nav(page, edition, request, customSubnav = customSubnav),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,

@@ -1,5 +1,6 @@
 package controllers
 
+import ab.PuzzlesHubExperiment
 import common.ImplicitControllerExecutionContext
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -28,34 +29,40 @@ class PuzzlesPageController(
 
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
-      request.getRequestFormat match {
-        case HtmlFormat =>
-          val page = StaticPages.dcrSimplePuzzlesPage(request.path)
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else
+        request.getRequestFormat match {
+          case HtmlFormat =>
+            val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
-          puzzlesLayoutProvider.getLayout().flatMap { layout =>
-            val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
-            remoteRenderer.getPuzzlesPage(
-              wsClient,
-              DotcomPuzzlesPageRenderingDataModel.toJson(renderingData),
-            )
-          }
-        case _ => notFound
-      }
+            puzzlesLayoutProvider.getLayout().flatMap { layout =>
+              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+              remoteRenderer.getPuzzlesPage(
+                wsClient,
+                DotcomPuzzlesPageRenderingDataModel.toJson(renderingData),
+              )
+            }
+
+          case _ => notFound
+        }
     }
 
   def renderPuzzlesJson(): Action[AnyContent] =
     Action.async { implicit request =>
-      request.getRequestFormat match {
-        case JsonFormat =>
-          val page = StaticPages.dcrSimplePuzzlesPage(request.path)
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else
+        request.getRequestFormat match {
+          case JsonFormat =>
+            val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
-          puzzlesLayoutProvider.getLayout().map { layout =>
-            val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
-            common
-              .renderJson(DotcomPuzzlesPageRenderingDataModel.toJson(renderingData), page)
-              .as("application/json")
-          }
-        case _ => notFound
-      }
+            puzzlesLayoutProvider.getLayout().map { layout =>
+              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+              common
+                .renderJson(DotcomPuzzlesPageRenderingDataModel.toJson(renderingData), page)
+                .as("application/json")
+            }
+
+          case _ => notFound
+        }
     }
 }

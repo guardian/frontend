@@ -43,7 +43,7 @@ object DotcomFrontsRenderingDataModel {
       customSubnav: Option[CustomSubnav],
   ): DotcomFrontsRenderingDataModel = {
     val edition = Edition.edition(request)
-    val nav = Nav(page, edition, customSubnav)
+    val nav = Nav(page, edition, request, customSubnav)
 
     val combinedConfig = DotcomRenderingConfig(
       page = page,
