@@ -35,14 +35,7 @@ GET        /crosswords/lookup                                                   
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /crosswords/digital-edition.json                                                                                   controllers.CrosswordEditionsController.digitalEditionJson
 
-# Game Page (NEW, isolated - see docs/puzzles-game-page-plan.md)
-# A generalization of the crossword article page to all Guardian puzzle/game types (sudoku, word games,
-# quizzes, etc). Entirely additive: gated behind the "game-page-experiment" server-side AB test, so it is
-# invisible to the general public in production. Does not affect any /crosswords/* route above.
-# The "crossword" slug takes crosswordType/id as path segments (like /crosswords/{type}/{id} above), not query
-# params, since arbitrary query param names are rejected outright in local dev (DevParametersHttpRequestHandler)
-# and wouldn't survive the CDN in prod either. The other 11 (iframe-based) slugs have no per-instance content,
-# so a bare slug is enough.
+# Game Page
 GET        /puzzles/crossword/:crosswordType/:id.json                                                                          controllers.GamePageController.renderCrosswordJson(crosswordType: String, id: Int)
 GET        /puzzles/crossword/:crosswordType/:id                                                                               controllers.GamePageController.renderCrossword(crosswordType: String, id: Int)
 GET        /puzzles/:slug.json                                                                                                controllers.GamePageController.renderGameJson(slug: String)
