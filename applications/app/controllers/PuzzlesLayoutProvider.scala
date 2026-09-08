@@ -98,7 +98,9 @@ class LocalJsonPuzzlesLayoutProvider(
     if (isLatestCrosswordCard(item)) {
       latestCrosswords
         .get(item.set)
-        .map(dynamicFields => item.copy(url = Some(dynamicFields.url), image = Some(dynamicFields.image)))
+        .map(dynamicFields =>
+          item.copy(url = Some(dynamicFields.url), image = item.image.orElse(Some(dynamicFields.image))),
+        )
         .getOrElse(item)
     } else {
       item

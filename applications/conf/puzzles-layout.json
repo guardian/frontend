@@ -1,24 +1,4 @@
 {
-	"filters": [
-		{
-			"id": "crosswords",
-			"title": "Crosswords",
-			"target": "#crosswords",
-			"backgroundColour": "#FCE1CE"
-		},
-		{
-			"id": "logic",
-			"title": "Logic",
-			"target": "#logic-puzzles",
-			"backgroundColour": "#CDECFB"
-		},
-		{
-			"id": "word-games",
-			"title": "Word games",
-			"target": "#word-games",
-			"backgroundColour": "#F9D4E8"
-		}
-	],
 	"containers": [
 		{
 			"id": "featured-puzzles",
@@ -36,6 +16,7 @@
 							"cadence": "Daily",
 							"slug": "on-the-ball",
 							"url": "https://sportsreveal.io/guardian",
+							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
 							"variant": "iframe-page",
 							"backgroundColour": "#D5F3F2"
 						},
@@ -48,6 +29,7 @@
 							"cadence": "Daily",
 							"slug": "film-reveal",
 							"url": "https://moviegrid.io/guardian",
+							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
 							"variant": "iframe-page",
 							"backgroundColour": "#EAD8B9"
 						}
@@ -61,28 +43,15 @@
 			"title": "",
 			"variant": "ad",
 			"adSlot": "inline1",
-			"content": {
-				"items": [],
-				"nestedContainers": []
-			}
+			"content": { "items": [], "nestedContainers": [] }
 		},
 		{
 			"id": "crosswords",
 			"title": "Crosswords",
 			"variant": "standard",
-			"filterId": "crosswords",
 			"content": {
 				"items": [
 					[
-						{
-							"id": "crossword-mini",
-							"title": "Mini",
-							"type": "crossword",
-							"set": "mini",
-							"cardVariant": "primary",
-							"cadence": "Daily",
-							"backgroundColour": "#FCE1CE"
-						},
 						{
 							"id": "crossword-quick",
 							"title": "Quick",
@@ -90,6 +59,17 @@
 							"set": "quick",
 							"cardVariant": "primary",
 							"cadence": "Daily",
+							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"id": "crossword-mini",
+							"title": "Mini",
+							"type": "crossword",
+							"set": "mini",
+							"cardVariant": "primary",
+							"cadence": "Daily",
+							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -99,6 +79,7 @@
 							"set": "cryptic",
 							"cardVariant": "primary",
 							"cadence": "Daily",
+							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -108,6 +89,7 @@
 							"set": "quick-cryptic",
 							"cardVariant": "primary",
 							"cadence": "Every Saturday",
+							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
 							"backgroundColour": "#FCE1CE"
 						}
 					],
@@ -140,15 +122,6 @@
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"id": "crossword-sunday-quick",
-							"title": "Sunday quick",
-							"type": "crossword",
-							"set": "sunday-quick",
-							"cardVariant": "compact",
-							"cadence": "Every Sunday",
-							"backgroundColour": "#FCE1CE"
-						},
-						{
 							"id": "crossword-genius",
 							"title": "Genius",
 							"type": "crossword",
@@ -160,118 +133,104 @@
 					]
 				],
 				"nestedContainers": [],
-				"archive": {
-					"id": "crosswords-archive",
-					"title": "Crosswords archive",
-					"type": "crossword",
-					"set": "all",
-					"cardVariant": "archive",
-					"url": "/puzzles/crosswords/archive",
-					"backgroundColour": "#FCE1CE"
-				}
-			}
-		},
-		{
-			"id": "logic-puzzles",
-			"title": "Logic puzzles",
-			"variant": "standard",
-			"filterId": "logic",
-			"content": {
-				"items": [],
-				"nestedContainers": [
+				"archiveChoices": [
 					{
-						"id": "sudoku",
-						"title": "Sudoku",
-						"desktopSpan": 12,
-						"content": {
-							"items": [
-								[
-									{
-										"id": "sudoku-easy",
-										"title": "Easy",
-										"type": "sudoku",
-										"set": "easy",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-easy",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"id": "sudoku-medium",
-										"title": "Medium",
-										"type": "sudoku",
-										"set": "medium",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-medium",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"id": "sudoku-hard",
-										"title": "Hard",
-										"type": "sudoku",
-										"set": "hard",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-hard",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"id": "sudoku-killer",
-										"title": "Killer",
-										"type": "sudoku",
-										"set": "killer",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-killer",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"id": "logic-archive",
-								"title": "Logic archive",
-								"type": "sudoku",
-								"set": "all",
-								"cardVariant": "archive",
-								"slug": "sudoku-easy",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#CDECFB"
-							}
-						}
+						"id": "archive-mini",
+						"title": "Mini",
+						"type": "crossword",
+						"set": "mini",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=mini",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-quick",
+						"title": "Quick",
+						"type": "crossword",
+						"set": "quick",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=quick",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-cryptic",
+						"title": "Cryptic",
+						"type": "crossword",
+						"set": "cryptic",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=cryptic",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-quick-cryptic",
+						"title": "Quick cryptic",
+						"type": "crossword",
+						"set": "quick-cryptic",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=quick-cryptic",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-quiptic",
+						"title": "Quiptic",
+						"type": "crossword",
+						"set": "quiptic",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=quiptic",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-weekend",
+						"title": "Weekend",
+						"type": "crossword",
+						"set": "weekend",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=weekend",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-prize",
+						"title": "Prize",
+						"type": "crossword",
+						"set": "prize",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=prize",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sunday-quick",
+						"title": "Sunday quick",
+						"type": "crossword",
+						"set": "sunday-quick",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=sunday-quick",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-genius",
+						"title": "Genius",
+						"type": "crossword",
+						"set": "genius",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=genius",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-special",
+						"title": "Special",
+						"type": "crossword",
+						"set": "special",
+						"cardVariant": "archive",
+						"url": "/puzzles/crosswords/archive?type=special",
+						"variant": "archive-page"
 					}
 				]
-			}
-		},
-		{
-			"id": "logic-ad",
-			"title": "",
-			"variant": "ad",
-			"adSlot": "inline2",
-			"content": {
-				"items": [],
-				"nestedContainers": []
 			}
 		},
 		{
 			"id": "word-games",
 			"title": "Word games",
 			"variant": "standard",
-			"filterId": "word-games",
 			"content": {
 				"items": [],
 				"nestedContainers": [
@@ -291,6 +250,7 @@
 										"cadence": "Daily",
 										"slug": "word-wheel",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#F9D4E8"
@@ -316,6 +276,7 @@
 										"cadence": "Daily",
 										"slug": "wordiply",
 										"url": "https://www.wordiply.com/",
+										"image": "https://www.wordiply.com/share.png",
 										"variant": "iframe-page",
 										"backgroundColour": "#F8D0C9"
 									}
@@ -324,17 +285,150 @@
 							"nestedContainers": []
 						}
 					}
-				],
-				"archive": {
-					"id": "word-games-archive",
-					"title": "Word games archive",
-					"type": "word-games",
-					"set": "all",
-					"cardVariant": "archive",
-					"slug": "word-wheel",
-					"variant": "archive-page"
-				}
+				]
 			}
+		},
+		{
+			"id": "word-games-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline2",
+			"content": { "items": [], "nestedContainers": [] }
+		},
+		{
+			"id": "logic-puzzles",
+			"title": "Logic puzzles",
+			"variant": "standard",
+			"content": {
+				"items": [],
+				"nestedContainers": [
+					{
+						"id": "sudoku",
+						"title": "Sudoku",
+						"desktopSpan": 12,
+						"content": {
+							"items": [
+								[
+									{
+										"id": "sudoku-easy",
+										"title": "Easy sudoku",
+										"type": "sudoku",
+										"set": "easy",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-easy",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"id": "sudoku-medium",
+										"title": "Medium sudoku",
+										"type": "sudoku",
+										"set": "medium",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-medium",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"id": "sudoku-hard",
+										"title": "Hard sudoku",
+										"type": "sudoku",
+										"set": "hard",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-hard",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"id": "sudoku-killer",
+										"title": "Killer sudoku",
+										"type": "sudoku",
+										"set": "killer",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-killer",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									}
+								]
+							],
+							"nestedContainers": []
+						}
+					}
+				]
+			}
+		},
+		{
+			"id": "puzzles-supporting",
+			"title": "",
+			"variant": "supporting",
+			"adSlot": "mostpop",
+			"content": { "items": [], "nestedContainers": [] },
+			"supporting": {
+				"usefulLinksTitle": "Useful links",
+				"usefulLinks": [
+					{
+						"title": "Crossword setter A–Z",
+						"url": "/puzzles/crosswords/archive"
+					},
+					{
+						"title": "Crossword blog",
+						"url": "https://www.theguardian.com/crosswords/crossword-blog"
+					}
+				],
+				"newsletter": {
+					"identityName": "saturday-edition",
+					"name": "Saturday Edition",
+					"frequency": "Weekly",
+					"description": "An exclusive roundup of the week’s best Guardian journalism from the editor-in-chief, Katharine Viner, free to your inbox every Saturday.",
+					"illustrationSquare": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=220&dpr=2&s=none&crop=5%3A3"
+				},
+				"popularTitle": "Most popular puzzles",
+				"popularGroups": [
+					{
+						"title": "Most played",
+						"itemIds": [
+							"crossword-quick",
+							"word-wheel-daily",
+							"crossword-mini",
+							"sudoku-medium",
+							"crossword-cryptic"
+						]
+					},
+					{
+						"title": "Most comments",
+						"itemIds": [
+							"crossword-cryptic",
+							"crossword-quick",
+							"crossword-prize",
+							"crossword-genius",
+							"crossword-weekend"
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "bottom-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline3",
+			"content": { "items": [], "nestedContainers": [] }
 		}
 	]
 }
