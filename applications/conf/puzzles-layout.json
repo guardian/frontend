@@ -57,6 +57,16 @@
 			}
 		},
 		{
+			"id": "featured-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline1",
+			"content": {
+				"items": [],
+				"nestedContainers": []
+			}
+		},
+		{
 			"id": "crosswords",
 			"title": "Crosswords",
 			"variant": "standard",
@@ -162,6 +172,102 @@
 			}
 		},
 		{
+			"id": "logic-puzzles",
+			"title": "Logic puzzles",
+			"variant": "standard",
+			"filterId": "logic",
+			"content": {
+				"items": [],
+				"nestedContainers": [
+					{
+						"id": "sudoku",
+						"title": "Sudoku",
+						"desktopSpan": 12,
+						"content": {
+							"items": [
+								[
+									{
+										"id": "sudoku-easy",
+										"title": "Easy",
+										"type": "sudoku",
+										"set": "easy",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-easy",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"id": "sudoku-medium",
+										"title": "Medium",
+										"type": "sudoku",
+										"set": "medium",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-medium",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"id": "sudoku-hard",
+										"title": "Hard",
+										"type": "sudoku",
+										"set": "hard",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-hard",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									},
+									{
+										"id": "sudoku-killer",
+										"title": "Killer",
+										"type": "sudoku",
+										"set": "killer",
+										"cardVariant": "primary",
+										"cadence": "Daily",
+										"slug": "sudoku-killer",
+										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
+										"index": 1,
+										"variant": "iframe-page",
+										"backgroundColour": "#CDECFB"
+									}
+								]
+							],
+							"nestedContainers": [],
+							"archive": {
+								"id": "logic-archive",
+								"title": "Logic archive",
+								"type": "sudoku",
+								"set": "all",
+								"cardVariant": "archive",
+								"slug": "sudoku-easy",
+								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
+								"variant": "archive-page",
+								"backgroundColour": "#CDECFB"
+							}
+						}
+					}
+				]
+			}
+		},
+		{
+			"id": "logic-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline2",
+			"content": {
+				"items": [],
+				"nestedContainers": []
+			}
+		},
+		{
 			"id": "word-games",
 			"title": "Word games",
 			"variant": "standard",
@@ -191,18 +297,7 @@
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"id": "word-wheel-archive",
-								"title": "Word wheel archive",
-								"type": "word-wheel",
-								"set": "all",
-								"cardVariant": "archive",
-								"slug": "word-wheel",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#F9D4E8"
-							}
+							"nestedContainers": []
 						}
 					},
 					{
@@ -226,107 +321,19 @@
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"id": "wordiply-archive",
-								"title": "Wordiply archive",
-								"type": "wordiply",
-								"set": "all",
-								"cardVariant": "archive",
-								"slug": "wordiply",
-								"url": "https://www.wordiply.com/",
-								"variant": "archive-page",
-								"backgroundColour": "#F8D0C9"
-							}
+							"nestedContainers": []
 						}
 					}
-				]
-			}
-		},
-		{
-			"id": "logic-puzzles",
-			"title": "Logic puzzles",
-			"variant": "standard",
-			"filterId": "logic",
-			"content": {
-				"items": [],
-				"nestedContainers": [
-					{
-						"id": "sudoku",
-						"title": "Sudoku",
-						"desktopSpan": 12,
-						"content": {
-							"items": [
-								[
-									{
-										"id": "sudoku-easy",
-										"title": "Sudoku easy",
-										"type": "sudoku",
-										"set": "easy",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-easy",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"id": "sudoku-medium",
-										"title": "Sudoku medium",
-										"type": "sudoku",
-										"set": "medium",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-medium",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"id": "sudoku-hard",
-										"title": "Sudoku hard",
-										"type": "sudoku",
-										"set": "hard",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-hard",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									},
-									{
-										"id": "sudoku-killer",
-										"title": "Sudoku killer",
-										"type": "sudoku",
-										"set": "killer",
-										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-killer",
-										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
-										"index": 1,
-										"variant": "iframe-page",
-										"backgroundColour": "#CDECFB"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"id": "logic-archive",
-								"title": "Logic archive",
-								"type": "sudoku",
-								"set": "all",
-								"cardVariant": "archive",
-								"slug": "sudoku-easy",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#CDECFB"
-							}
-						}
-					}
-				]
+				],
+				"archive": {
+					"id": "word-games-archive",
+					"title": "Word games archive",
+					"type": "word-games",
+					"set": "all",
+					"cardVariant": "archive",
+					"slug": "word-wheel",
+					"variant": "archive-page"
+				}
 			}
 		}
 	]
