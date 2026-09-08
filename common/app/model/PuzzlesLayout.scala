@@ -44,13 +44,15 @@ case class PuzzleContent(
     items: Seq[Seq[PuzzleItem]],
     nestedContainers: Seq[PuzzleContainer],
     archive: Option[PuzzleItem] = None,
+    archiveChoices: Option[Seq[PuzzleItem]] = None,
 )
 
 object PuzzleContent {
   implicit lazy val format: OFormat[PuzzleContent] = (
     (__ \ "items").format[Seq[Seq[PuzzleItem]]] and
       (__ \ "nestedContainers").lazyFormat[Seq[PuzzleContainer]](Format.of[Seq[PuzzleContainer]]) and
-      (__ \ "archive").formatNullable[PuzzleItem]
+      (__ \ "archive").formatNullable[PuzzleItem] and
+      (__ \ "archiveChoices").formatNullable[Seq[PuzzleItem]]
   )(PuzzleContent.apply, unlift(PuzzleContent.unapply))
 }
 
@@ -61,10 +63,11 @@ case class PuzzleContainer(
     content: PuzzleContent,
     filterId: Option[String] = None,
     desktopSpan: Option[Int] = None,
+    adSlot: Option[String] = None,
 )
 
 object PuzzleContainer {
-  val SupportedVariants: Set[String] = Set("featured", "standard")
+  val SupportedVariants: Set[String] = Set("featured", "standard", "ad")
 
   private lazy val reads: Reads[PuzzleContainer] = (
     (__ \ "id").read[String] and
@@ -72,11 +75,14 @@ object PuzzleContainer {
       (__ \ "variant").readNullable[String] and
       (__ \ "content").lazyRead[PuzzleContent](PuzzleContent.format) and
       (__ \ "filterId").readNullable[String] and
-      (__ \ "desktopSpan").readNullable[Int]
-  )(PuzzleContainer.apply _).filter(JsonValidationError("container variant or desktopSpan is unsupported"))(container =>
-    container.id.matches("[a-z0-9]+(?:-[a-z0-9]+)*") &&
-      container.variant.forall(SupportedVariants.contains) &&
-      container.desktopSpan.forall(span => span >= 1 && span <= 12),
+      (__ \ "desktopSpan").readNullable[Int] and
+      (__ \ "adSlot").readNullable[String]
+  )(PuzzleContainer.apply _).filter(JsonValidationError("container variant, span or ad slot is unsupported"))(
+    container =>
+      container.id.matches("[a-z0-9]+(?:-[a-z0-9]+)*") &&
+        container.variant.forall(SupportedVariants.contains) &&
+        container.desktopSpan.forall(span => span >= 1 && span <= 12) &&
+        container.adSlot.forall(_.matches("inline[1-9][0-9]*")),
   )
 
   private lazy val writes: OWrites[PuzzleContainer] = (
@@ -85,7 +91,8 @@ object PuzzleContainer {
       (__ \ "variant").writeNullable[String] and
       (__ \ "content").lazyWrite[PuzzleContent](PuzzleContent.format) and
       (__ \ "filterId").writeNullable[String] and
-      (__ \ "desktopSpan").writeNullable[Int]
+      (__ \ "desktopSpan").writeNullable[Int] and
+      (__ \ "adSlot").writeNullable[String]
   )(unlift(PuzzleContainer.unapply))
 
   implicit lazy val format: OFormat[PuzzleContainer] = OFormat(reads, writes)
@@ -135,12 +142,15 @@ object PuzzlesLayout {
 
   def validationErrors(layout: PuzzlesLayout): Seq[String] = {
     val containers = flattenContainers(layout.containers)
-    val items = containers.flatMap(container => container.content.items.flatten ++ container.content.archive.toSeq)
+    val items = containers.flatMap(container =>
+      container.content.items.flatten ++ container.content.archive.toSeq ++ container.content.archiveChoices.toSeq.flatten,
+    )
     val filterIds = layout.filters.map(_.id)
     val containerIds = containers.map(_.id)
     val itemIds = items.map(_.id)
     val anchorTargets = layout.filters.map(_.target).filter(_.startsWith("#")).map(_.drop(1))
     val referencedFilterIds = containers.flatMap(_.filterId) ++ items.flatMap(_.filterId)
+    val topLevelIds = layout.containers.map(_.id).toSet
 
     duplicateValues("filter", filterIds) ++
       duplicateValues("container", containerIds) ++
@@ -150,10 +160,36 @@ object PuzzlesLayout {
         .distinct
         .map(target => s"navigation target '#$target' has no container") ++
       referencedFilterIds.filterNot(filterIds.contains).distinct.map(id => s"filterId '$id' is not defined") ++
+      containers.collect {
+        case container
+            if container.variant.contains("ad") &&
+              (container.adSlot.isEmpty || container.title.nonEmpty || container.content.items.flatten.nonEmpty ||
+                container.content.nestedContainers.nonEmpty || container.content.archive.nonEmpty ||
+                container.content.archiveChoices.exists(_.nonEmpty)) =>
+          s"ad container '${container.id}' must have an adSlot and no title or puzzle content"
+        case container if !container.variant.contains("ad") && container.adSlot.nonEmpty =>
+          s"container '${container.id}' has an adSlot without the ad variant"
+        case container if container.variant.contains("ad") && !topLevelIds.contains(container.id) =>
+          s"ad container '${container.id}' must be top-level"
+        case container if !container.variant.contains("ad") && container.title.trim.isEmpty =>
+          s"container '${container.id}' must have a title"
+      } ++
+      containers.collect {
+        case container if container.content.archive.nonEmpty && container.content.archiveChoices.exists(_.nonEmpty) =>
+          s"container '${container.id}' cannot define both archive and archiveChoices"
+        case container if container.content.archiveChoices.exists(_.size < 2) =>
+          s"container '${container.id}' archiveChoices must contain at least two destinations"
+      } ++
       items.collect {
-        case item if item.cardVariant == "archive" && !containers.exists(_.content.archive.contains(item)) =>
+        case item
+            if item.cardVariant == "archive" && !containers.exists(container =>
+              container.content.archive.contains(item) || container.content.archiveChoices.exists(_.contains(item)),
+            ) =>
           s"puzzle '${item.id}' uses archive presentation outside an archive slot"
-        case item if item.cardVariant != "archive" && containers.exists(_.content.archive.contains(item)) =>
+        case item
+            if item.cardVariant != "archive" && containers.exists(container =>
+              container.content.archive.contains(item) || container.content.archiveChoices.exists(_.contains(item)),
+            ) =>
           s"archive '${item.id}' must use the archive cardVariant"
       }
   }

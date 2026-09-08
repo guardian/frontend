@@ -204,4 +204,41 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
     result shouldBe a[JsError]
   }
+
+  it should "support ad placements and multiple archive choices" in {
+    val archive = PuzzleItem("archive-one", "Archive one", "word-game", "all", "archive", url = Some("/puzzles/one"))
+    val section = PuzzleContainer(
+      id = "word-games",
+      title = "Word games",
+      content = PuzzleContent(
+        items = Seq(Seq(PuzzleItem("word-game", "Word game", "word-game", "all", "primary", Some("Daily")))),
+        nestedContainers = Seq.empty,
+        archiveChoices = Some(Seq(archive, archive.copy(id = "archive-two", title = "Archive two"))),
+      ),
+    )
+    val advert = PuzzleContainer(
+      id = "inline-ad",
+      title = "",
+      variant = Some("ad"),
+      content = PuzzleContent(Seq.empty, Seq.empty),
+      adSlot = Some("inline1"),
+    )
+    val layout = PuzzlesLayout(Seq(section, advert))
+
+    PuzzlesLayout.validationErrors(layout) shouldBe empty
+    ((Json.toJson(layout) \ "containers")(1) \ "adSlot").as[String] shouldBe "inline1"
+  }
+
+  it should "reject malformed ad and archive composition" in {
+    val malformedAd = PuzzleContainer(
+      id = "ad",
+      title = "Not empty",
+      variant = Some("ad"),
+      content = PuzzleContent(Seq.empty, Seq.empty),
+      adSlot = Some("bad-slot"),
+    )
+    val layout = PuzzlesLayout(Seq(malformedAd))
+
+    Json.toJson(layout).validate[PuzzlesLayout] shouldBe a[JsError]
+  }
 }
