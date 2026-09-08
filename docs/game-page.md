@@ -56,6 +56,51 @@ see `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverri
 run this repo via `sbt` -> `project dev-build` -> `run` (this repo's documented, complete local dev
 setup - see `docs/01-start-here/01-installation-steps.md`).
 
+### Directly browsable URLs for all 12 slugs
+
+Unlike DCR's own `/GamePage` endpoint (POST-only, not directly browsable), every route below is a
+plain `GET` served by this repo, so each URL can be pasted straight into a browser - no `curl`, no
+manually-built JSON payload, and (since the AB gate was removed) no special header or query param
+needed either.
+
+**Both servers must be running for these to render real HTML:**
+- DCR locally on `http://localhost:3030` (`make dev` in the `dotcom-rendering` repo, per its own
+  docs), and
+- this repo on `http://localhost:9000`, via `sbt` -> `project dev-build` -> `run`, with
+  `article-rendering.baseURL` pointed at `http://localhost:3030` (see the `devOverrides` mechanism
+  above). If DCR isn't reachable, these URLs will fail at the point this repo tries to POST to DCR -
+  add `.json` to any URL below to inspect the payload this repo would have sent, without needing DCR
+  running at all.
+
+| Slug | Group | URL |
+|---|---|---|
+| `crossword` | Crosswords | `http://localhost:9000/puzzles/crossword/quick/17578` |
+| `sudoku-easy` | Logic puzzles | `http://localhost:9000/puzzles/sudoku-easy` |
+| `sudoku-medium` | Logic puzzles | `http://localhost:9000/puzzles/sudoku-medium` |
+| `sudoku-hard` | Logic puzzles | `http://localhost:9000/puzzles/sudoku-hard` |
+| `sudoku-killer` | Logic puzzles | `http://localhost:9000/puzzles/sudoku-killer` |
+| `futoshiki` | Logic puzzles | `http://localhost:9000/puzzles/futoshiki` |
+| `suguru` | Logic puzzles | `http://localhost:9000/puzzles/suguru` |
+| `word-wheel` | Word games | `http://localhost:9000/puzzles/word-wheel` |
+| `codeword` | Word games | `http://localhost:9000/puzzles/codeword` |
+| `wordiply` | Word games | `http://localhost:9000/puzzles/wordiply` |
+| `on-the-ball` | Quizzes and Trivia | `http://localhost:9000/puzzles/on-the-ball` |
+| `film-reveal` | Quizzes and Trivia | `http://localhost:9000/puzzles/film-reveal` |
+
+For `crossword`, the route is `/puzzles/crossword/:crosswordType/:id` - it needs a real, valid
+`crosswordType`/`id` pair, not just any values. `quick/17578` above is one known-good example. To pick
+a different one: any currently-published crossword's type and id both work (the id is the number
+shown in its URL/title, e.g. "Quick crossword No 17,578" -> `17578`) - either browse
+theguardian.com/crosswords for a real one, or check this repo's own existing
+`/crosswords/{type}/{id}` pages locally (e.g. `http://localhost:9000/crosswords/quick/17578`) to
+confirm an id resolves before using it here. Our `/puzzles/crossword/:crosswordType/:id` route itself
+doesn't restrict `crosswordType` to a fixed list (unlike the existing `/crosswords/...` routes) - it
+just passes whatever you give it straight to CAPI, so anything other than a genuine series will 404.
+In practice, use one of the same series values the existing crossword routes accept: `cryptic`,
+`quick`, `quiptic`, `quick-cryptic`, `sunday-quick`, `prize`, `everyman`, `azed`, `special`, `genius`,
+`speedy`, `weekend`, `mini`.
+
+
 ## How to configure/add a new game type
 
 All per-slug *structural* configuration (iframe URL, render mode, which UI chrome is enabled) lives
