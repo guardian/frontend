@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.49.6"
   val capiVersion = "49.0.0"
-  val faciaVersion = "40.0.0-PREVIEW.glupdate-custom-subnav-model.2026-09-08T2328.04cd90bc"
+  val faciaVersion = "41.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
