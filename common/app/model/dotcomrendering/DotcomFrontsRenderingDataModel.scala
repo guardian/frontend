@@ -6,7 +6,7 @@ import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
 import model.{PressedPage, RelatedContentItem}
-import model.pressed.{CuratedContent, LatestSnap, LinkSnap, PressedContent, SupportingCuratedContent}
+import model.pressed.{CuratedContent, PressedContent, SupportingCuratedContent}
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
@@ -59,9 +59,7 @@ object DotcomFrontsRenderingDataModel {
       content.withoutCommercial match {
         case curated: CuratedContent              => curated.withoutTestPII
         case supporting: SupportingCuratedContent => supporting.withoutTestPII
-        case linkSnap: LinkSnap                   => linkSnap
-        case latestSnap: LatestSnap               => latestSnap
-        case eventsGraphics: PressedContent       => eventsGraphics
+        case unchanged: PressedContent            => unchanged
       }
 
     val lighterPage = page.copy(collections =
