@@ -290,12 +290,12 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val controlRequest = requestWithParticipations("puzzles-new-hub:control")
     val page = StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games")
 
-    Nav(page, Uk, variantRequest).otherLinks should contain(puzzles)
-    Nav(page, Uk, variantRequest).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, variantRequest).otherLinks should contain(legacyWordiply)
+    Nav(page, Uk, variantRequest, None).otherLinks should contain(puzzles)
+    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyCrosswords)
+    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyWordiply)
 
-    Nav(page, Uk, controlRequest).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, controlRequest).otherLinks should not contain puzzles
-    Nav(page, Uk, controlRequest).otherLinks should contain(legacyWordiply)
+    Nav(page, Uk, controlRequest, None).otherLinks should not contain puzzles
+    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyCrosswords)
+    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyWordiply)
   }
 }
