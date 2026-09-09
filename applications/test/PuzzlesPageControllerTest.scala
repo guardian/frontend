@@ -68,7 +68,7 @@ import scala.concurrent.{ExecutionContext, Future}
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
 
-    val result = controller(provider, renderer).renderPuzzles()(request("/puzzles"))
+    val result = controller(provider, renderer).renderPuzzles()(request("/puzzles-and-games"))
 
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
@@ -78,7 +78,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
   it should "return not found for an unsupported format" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzles()(request("/puzzles.json"))
+      .renderPuzzles()(request("/puzzles-and-games.json"))
 
     status(result) should be(NOT_FOUND)
   }
@@ -88,7 +88,7 @@ import scala.concurrent.{ExecutionContext, Future}
     val provider = mock[PuzzlesLayoutProvider]
     when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.failed(failure))
 
-    val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(request("/puzzles"))
+    val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(request("/puzzles-and-games"))
 
     result.failed.futureValue should be(failure)
   }
@@ -99,33 +99,33 @@ import scala.concurrent.{ExecutionContext, Future}
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.failed(failure))
 
-    val result = controller(successfulProvider, renderer).renderPuzzles()(request("/puzzles"))
+    val result = controller(successfulProvider, renderer).renderPuzzles()(request("/puzzles-and-games"))
 
     result.failed.futureValue should be(failure)
   }
 
   "renderPuzzlesJson" should "return the equivalent rendering data as JSON" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(request("/puzzles.json"))
+      .renderPuzzlesJson()(request("/puzzles-and-games.json"))
 
     status(result) should be(OK)
     contentType(result) should contain("application/json")
     val json = Json.parse(contentAsString(result))
-    (json \ "id").as[String] should be("/puzzles.json")
+    (json \ "id").as[String] should be("/puzzles-and-games.json")
     (json \ "webTitle").as[String] should be("Puzzles and Games")
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
   it should "return not found when the JSON action receives an HTML request" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(request("/puzzles"))
+      .renderPuzzlesJson()(request("/puzzles-and-games"))
 
     status(result) should be(NOT_FOUND)
   }
 
   it should "return not found for another unsupported format" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(request("/puzzles.atom"))
+      .renderPuzzlesJson()(request("/puzzles-and-games.atom"))
 
     status(result) should be(NOT_FOUND)
   }
@@ -143,8 +143,8 @@ import scala.concurrent.{ExecutionContext, Future}
         val renderer = mock[DotcomRenderingService]
         val puzzlesController = controller(provider, renderer)
 
-        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles", participations))
-        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles.json", participations))
+        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))
+        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
 
         status(htmlResult) should be(NOT_FOUND)
         status(jsonResult) should be(NOT_FOUND)
