@@ -190,7 +190,14 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
   }
 
   it should "support ad placements and multiple archive choices" in {
-    val archive = PuzzleItem("archive-one", "Archive one", "word-game", "all", "archive", url = Some("/puzzles/one"))
+    val archive = PuzzleItem(
+      "archive-one",
+      "Archive one",
+      "word-game",
+      "all",
+      "archive",
+      url = Some("/puzzles-and-games/one"),
+    )
     val section = PuzzleContainer(
       id = "word-games",
       title = "Word games",

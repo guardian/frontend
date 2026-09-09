@@ -210,7 +210,7 @@ object PuzzlesLayout {
       } ++
       containers.flatMap(_.supporting).flatMap { supporting =>
         val invalidLinks = supporting.usefulLinks.filter(link =>
-          link.title.trim.isEmpty || !(link.url.startsWith("/puzzles") || link.url.matches("https?://.+")),
+          link.title.trim.isEmpty || !(link.url.startsWith("/puzzles-and-games") || link.url.matches("https?://.+")),
         )
         val invalidGroups = supporting.popularGroups.filter(group => group.title.trim.isEmpty || group.itemIds.isEmpty)
         val invalidNewsletter = supporting.newsletter.exists(newsletter =>

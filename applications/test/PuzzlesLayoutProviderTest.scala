@@ -180,7 +180,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val enrichedItem = firstItem(Await.result(provider.getLayout(), 5.seconds))
 
     enrichedItem shouldBe baseItem.copy(
-      url = Some("/puzzles/crosswords/quick-cryptic/321"),
+      url = Some("/puzzles-and-games/crosswords/quick-cryptic/321"),
       image = Some("/fallback.svg"),
     )
   }
@@ -222,7 +222,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val enriched = Await.result(provider.getLayout(), 5.seconds)
 
     queries should have size 1
-    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/puzzles/crosswords/quick/42"))
+    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/puzzles-and-games/crosswords/quick/42"))
   }
 
   it should "query the corresponding CAPI series tag for every supported crossword set" in {
@@ -314,7 +314,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     queries should have size 1
     allItems(result) should contain theSameElementsInOrderAs Seq(
       latestCard.copy(
-        url = Some("/puzzles/crosswords/quick/99"),
+        url = Some("/puzzles-and-games/crosswords/quick/99"),
         image = Some("/latest-card.svg"),
       ),
       archiveInItems,
@@ -338,7 +338,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
     val result = Await.result(provider.getLayout(), 5.seconds)
 
-    allItems(result).find(_.set == "quick").flatMap(_.url) shouldBe Some("/puzzles/crosswords/quick/100")
+    allItems(result).find(_.set == "quick").flatMap(_.url) shouldBe Some("/puzzles-and-games/crosswords/quick/100")
     allItems(result).find(_.set == "cryptic") shouldBe Some(cryptic)
   }
 

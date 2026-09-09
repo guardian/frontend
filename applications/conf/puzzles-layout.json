@@ -112,7 +112,7 @@
 						"type": "crossword",
 						"set": "mini",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=mini",
+						"url": "/crosswords/series/mini-crossword",
 						"variant": "archive-page"
 					},
 					{
@@ -121,7 +121,7 @@
 						"type": "crossword",
 						"set": "quick",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=quick",
+						"url": "/crosswords/series/quick",
 						"variant": "archive-page"
 					},
 					{
@@ -130,7 +130,7 @@
 						"type": "crossword",
 						"set": "cryptic",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=cryptic",
+						"url": "/crosswords/series/cryptic",
 						"variant": "archive-page"
 					},
 					{
@@ -139,7 +139,7 @@
 						"type": "crossword",
 						"set": "quick-cryptic",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=quick-cryptic",
+						"url": "/crosswords/series/quick-cryptic",
 						"variant": "archive-page"
 					},
 					{
@@ -148,7 +148,7 @@
 						"type": "crossword",
 						"set": "quiptic",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=quiptic",
+						"url": "/crosswords/series/quiptic",
 						"variant": "archive-page"
 					},
 					{
@@ -157,7 +157,7 @@
 						"type": "crossword",
 						"set": "weekend",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=weekend",
+						"url": "/crosswords/series/weekend-crossword",
 						"variant": "archive-page"
 					},
 					{
@@ -166,7 +166,7 @@
 						"type": "crossword",
 						"set": "prize",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=prize",
+						"url": "/crosswords/series/prize",
 						"variant": "archive-page"
 					},
 					{
@@ -175,7 +175,7 @@
 						"type": "crossword",
 						"set": "sunday-quick",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=sunday-quick",
+						"url": "/crosswords/series/sunday-quick",
 						"variant": "archive-page"
 					},
 					{
@@ -184,7 +184,7 @@
 						"type": "crossword",
 						"set": "genius",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=genius",
+						"url": "/crosswords/series/genius",
 						"variant": "archive-page"
 					},
 					{
@@ -193,7 +193,7 @@
 						"type": "crossword",
 						"set": "special",
 						"cardVariant": "archive",
-						"url": "/puzzles/crosswords/archive?type=special",
+						"url": "/crosswords/series/special",
 						"variant": "archive-page"
 					}
 				]
@@ -356,7 +356,7 @@
 				"usefulLinks": [
 					{
 						"title": "Crossword setter A–Z",
-						"url": "/puzzles/crosswords/archive"
+						"url": "/puzzles-and-games/crosswords/archive"
 					},
 					{
 						"title": "Crossword blog",

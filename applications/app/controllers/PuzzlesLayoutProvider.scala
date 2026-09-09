@@ -158,7 +158,7 @@ class LocalJsonPuzzlesLayoutProvider(
       val crosswordNumber = crossword.number
 
       CrosswordDynamicFields(
-        url = s"/puzzles/crosswords/$crosswordType/$crosswordNumber",
+        url = s"/puzzles-and-games/crosswords/$crosswordType/$crosswordNumber",
         image = s"https://api.nextgen.guardianapps.co.uk/crosswords/$crosswordType/$crosswordNumber.svg",
       )
     }
