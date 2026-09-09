@@ -69,8 +69,6 @@ GET        /football/api/match-header/:year/:month/:day/:home/:away.json        
 GET        /football/api/match-stats/:year/:month/:day/:home/:away.json                        football.controllers.MoreOnMatchController.matchStatsJson(year, month, day, home, away)
 GET        /football/api/match-stats-summary/:year/:month/:day/:home/:away.json                football.controllers.MoreOnMatchController.matchStatsSummaryJson(year, month, day, home, away)
 
-GET        /football/api/big-match-special/:matchId.json                                       football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
-
 GET        /football/api/match-day                                                             football.controllers.MatchDayController.matchDayComponent()
 
 GET        /football/competitions                                                              football.controllers.CompetitionListController.renderCompetitionList()

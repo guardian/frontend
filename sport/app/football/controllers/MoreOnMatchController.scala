@@ -173,17 +173,6 @@ class MoreOnMatchController(
       canonicalRedirectForMatch(maybeMatch, request)
     }
 
-  def bigMatchSpecial(matchId: String): Action[AnyContent] =
-    Action { implicit request =>
-      val response = competitionsService.competitions
-        .find { _.matches.exists(_.id == matchId) }
-        .fold(JsonNotFound()) { competition =>
-          val fMatch = competition.matches.find(_.id == matchId).head
-          JsonComponent(football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
-        }
-      Cached(CacheTime.FootballMediumCache)(response)
-    }
-
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader)(implicit
       requestHeader: RequestHeader,
   ): Future[Result] = {
