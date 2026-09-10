@@ -28,7 +28,7 @@ trait DiscussionApiLike extends Http with GuLogging {
 
   def endpointUrl(relativePath: String, params: List[(String, Option[String])] = List()): String = { // Using List for params because order is important for caching reason
     val cleanedParams = (params ++ defaultParams).collect { case (key, Some(value)) => (key, value) }
-    Uri.unsafeParse(apiRoot + relativePath).addParams(cleanedParams:_*).toString
+    Uri.unsafeParse(apiRoot + relativePath).addParams(cleanedParams: _*).toString
   }
 
   def commentCounts(ids: String)(implicit executionContext: ExecutionContext): Future[Seq[CommentCount]] = {
