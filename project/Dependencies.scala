@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "4.31"
   val awsVersion = "2.49.6"
   val capiVersion = "49.0.0"
-  val faciaVersion = "40.0.0"
+  val faciaVersion = "41.0.0-PREVIEW.adu-implement-storage-event-graphic.2026-09-07T1415.a7d87573"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
