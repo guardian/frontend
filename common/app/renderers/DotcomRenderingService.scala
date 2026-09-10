@@ -515,11 +515,11 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] =
     post(ws, json, Configuration.rendering.articleBaseURL + "/PuzzlesPage", CacheTime.Default)
 
-  def getGamePage(
+  def getPuzzlePage(
       ws: WSClient,
       json: JsValue,
   )(implicit request: RequestHeader): Future[Result] =
-    post(ws, json, Configuration.rendering.articleBaseURL + "/GamePage", CacheTime.Default)
+    post(ws, json, Configuration.rendering.articleBaseURL + "/PuzzlePage", CacheTime.Default)
 
   def getEditionsCrossword(
       ws: WSClient,

@@ -6,9 +6,9 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 
-/** Best-effort "more from puzzles and games" recommendation, sent to DCR's `/GamePage` endpoint. This is additional,
-  * isolated data used only by the Game Page flow (see PuzzlesPageController) and does not affect the existing crossword
-  * article rendering.
+/** Best-effort "more from puzzles and games" recommendation, sent to DCR's `/PuzzlePage` endpoint. This is additional,
+  * isolated data used only by the Puzzle Page flow (see PuzzlesPageController) and does not affect the existing
+  * crossword article rendering.
   */
 case class MoreFromPuzzlesAndGamesItem(
     title: String,
@@ -21,15 +21,15 @@ object MoreFromPuzzlesAndGamesItem {
   implicit val writes: OWrites[MoreFromPuzzlesAndGamesItem] = Json.writes[MoreFromPuzzlesAndGamesItem]
 }
 
-/** Per-instance data for a single Game Page. Game Page is currently scoped to iframe-based games only (see
+/** Per-instance data for a single Puzzle Page. Puzzle Page is currently scoped to iframe-based puzzles only (see
   * PuzzlesPageController), which only ever populate `title` - `puzzleType`/`setterName`/`date`/
-  * `specialInstructions`/`discussionId`/`crosswordData` were added for a crossword-flavoured Game Page slug that has
+  * `specialInstructions`/`discussionId`/`crosswordData` were added for a crossword-flavoured Puzzle Page slug that has
   * since been descoped (crosswords remain on their own, separate crossword-only flow). These fields are kept here,
-  * always `None`/unpopulated, only because they are part of the JSON contract already agreed with DCR's `/GamePage`
+  * always `None`/unpopulated, only because they are part of the JSON contract already agreed with DCR's `/PuzzlePage`
   * endpoint - removing them is a DCR-side contract change to coordinate separately, not something to do unilaterally
   * from this repo.
   */
-case class GamePageInstance(
+case class PuzzlePageInstance(
     title: String,
     puzzleType: Option[String] = None,
     setterName: Option[String] = None,
@@ -40,15 +40,15 @@ case class GamePageInstance(
     moreFromPuzzlesAndGames: Seq[MoreFromPuzzlesAndGamesItem] = Nil,
 )
 
-object GamePageInstance {
-  implicit val writes: OWrites[GamePageInstance] = Json.writes[GamePageInstance]
+object PuzzlePageInstance {
+  implicit val writes: OWrites[PuzzlePageInstance] = Json.writes[PuzzlePageInstance]
 }
 
-/** Rendering data model for the Game Page flow (POST to DCR's `/GamePage` endpoint), currently scoped to iframe-based
-  * puzzle/game types only. It is entirely additive and separate from the existing crossword article rendering flow
-  * (`DotcomRenderingDataModel.forCrossword`) used by the crossword-only routes.
+/** Rendering data model for the Puzzle Page flow (POST to DCR's `/PuzzlePage` endpoint), currently scoped to
+  * iframe-based puzzle types only. It is entirely additive and separate from the existing crossword article rendering
+  * flow (`DotcomRenderingDataModel.forCrossword`) used by the crossword-only routes.
   */
-case class DotcomGamePageRenderingDataModel(
+case class DotcomPuzzlePageRenderingDataModel(
     id: String,
     slug: String,
     webTitle: String,
@@ -57,22 +57,22 @@ case class DotcomGamePageRenderingDataModel(
     pageFooter: PageFooter,
     canonicalUrl: String,
     editionId: String,
-    instance: GamePageInstance,
+    instance: PuzzlePageInstance,
 )
 
-object DotcomGamePageRenderingDataModel {
-  implicit val writes: OWrites[DotcomGamePageRenderingDataModel] = Json.writes[DotcomGamePageRenderingDataModel]
+object DotcomPuzzlePageRenderingDataModel {
+  implicit val writes: OWrites[DotcomPuzzlePageRenderingDataModel] = Json.writes[DotcomPuzzlePageRenderingDataModel]
 
   def apply(
       page: Page,
       slug: String,
       webTitle: String,
-      instance: GamePageInstance,
+      instance: PuzzlePageInstance,
       request: RequestHeader,
-  ): DotcomGamePageRenderingDataModel = {
+  ): DotcomPuzzlePageRenderingDataModel = {
     val edition = Edition.edition(request)
 
-    DotcomGamePageRenderingDataModel(
+    DotcomPuzzlePageRenderingDataModel(
       id = page.metadata.id,
       slug = slug,
       webTitle = webTitle,
@@ -85,6 +85,6 @@ object DotcomGamePageRenderingDataModel {
     )
   }
 
-  def toJson(model: DotcomGamePageRenderingDataModel): JsValue =
+  def toJson(model: DotcomPuzzlePageRenderingDataModel): JsValue =
     DotcomRenderingUtils.withoutNull(Json.toJson(model))
 }

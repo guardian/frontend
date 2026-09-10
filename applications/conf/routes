@@ -35,9 +35,9 @@ GET        /crosswords/lookup                                                   
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /crosswords/digital-edition.json                                                                                   controllers.CrosswordEditionsController.digitalEditionJson
 
-# Game Page
-GET        /puzzles/:slug.json                                                                                                controllers.PuzzlesPageController.renderGameJson(slug: String)
-GET        /puzzles/:slug                                                                                                     controllers.PuzzlesPageController.renderGame(slug: String)
+# Puzzle Page
+GET        /puzzles/:slug.json                                                                                                controllers.PuzzlesPageController.renderPuzzlePageJson(slug: String)
+GET        /puzzles/:slug                                                                                                     controllers.PuzzlesPageController.renderPuzzlePage(slug: String)
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)

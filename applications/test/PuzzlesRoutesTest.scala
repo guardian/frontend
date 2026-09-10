@@ -20,15 +20,15 @@ import org.scalatest.matchers.should.Matchers
     route.url should be("/puzzles.json")
   }
 
-  it should "expose the Game Page HTML endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderGame("sudoku-easy")
+  it should "expose the Puzzle Page HTML endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderPuzzlePage("sudoku-easy")
 
     route.method should be("GET")
     route.url should be("/puzzles/sudoku-easy")
   }
 
-  it should "expose the Game Page JSON endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderGameJson("sudoku-easy")
+  it should "expose the Puzzle Page JSON endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderPuzzlePageJson("sudoku-easy")
 
     route.method should be("GET")
     route.url should be("/puzzles/sudoku-easy.json")

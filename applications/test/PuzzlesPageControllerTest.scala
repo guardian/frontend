@@ -149,42 +149,43 @@ import scala.concurrent.{ExecutionContext, Future}
       }
   }
 
-  /** Game Page: a generic page template for iframe-based puzzle/game types, unrelated to the puzzles hub experiment
-    * above - it is not gated behind any AB test (a previous `game-page-experiment` gate was removed at the user's
-    * explicit request, since these routes are expected to be mapped/exposed via a separate project instead), so no
-    * special request header is needed for any of these. Crosswords are explicitly out of scope for Game Page and are
-    * not exercised by these tests.
+  /** Puzzle Page: a generic page template for iframe-based puzzle types, unrelated to the puzzles hub experiment above -
+    * it is not gated behind any AB test (a previous `game-page-experiment` gate was removed at the user's explicit
+    * request, since these routes are expected to be mapped/exposed via a separate project instead), so no special
+    * request header is needed for any of these. Crosswords are explicitly out of scope for Puzzle Page and are not
+    * exercised by these tests.
     */
-  private def stubbedGamePageRenderer(): DotcomRenderingService = {
+  private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
-    when(renderer.getGamePage(any[WSClient], any[JsValue])(any[RequestHeader]))
+    when(renderer.getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
     renderer
   }
 
-  "renderGame" should "render an iframe-based slug via DCR" in {
-    val renderer = stubbedGamePageRenderer()
+  "renderPuzzlePage" should "render an iframe-based slug via DCR" in {
+    val renderer = stubbedPuzzlePageRenderer()
 
-    val result = controller(successfulProvider, renderer).renderGame("sudoku-easy")(request("/puzzles/sudoku-easy"))
+    val result =
+      controller(successfulProvider, renderer).renderPuzzlePage("sudoku-easy")(request("/puzzles/sudoku-easy"))
 
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
-    verify(renderer).getGamePage(any[WSClient], any[JsValue])(any[RequestHeader])
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
   }
 
   it should "return not found for an unrecognised slug" in {
     val renderer = mock[DotcomRenderingService]
 
     val result = controller(successfulProvider, renderer)
-      .renderGame("not-a-real-game")(request("/puzzles/not-a-real-game"))
+      .renderPuzzlePage("not-a-real-puzzle")(request("/puzzles/not-a-real-puzzle"))
 
     status(result) should be(NOT_FOUND)
     verifyNoInteractions(renderer)
   }
 
-  "renderGameJson" should "return the equivalent rendering data as JSON for an iframe-based slug" in {
+  "renderPuzzlePageJson" should "return the equivalent rendering data as JSON for an iframe-based slug" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderGameJson("sudoku-easy")(request("/puzzles/sudoku-easy.json"))
+      .renderPuzzlePageJson("sudoku-easy")(request("/puzzles/sudoku-easy.json"))
 
     status(result) should be(OK)
     contentType(result) should contain("application/json")
@@ -195,7 +196,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
   it should "return not found for an unrecognised slug" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderGameJson("not-a-real-game")(request("/puzzles/not-a-real-game.json"))
+      .renderPuzzlePageJson("not-a-real-puzzle")(request("/puzzles/not-a-real-puzzle.json"))
 
     status(result) should be(NOT_FOUND)
   }

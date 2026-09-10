@@ -4,7 +4,11 @@ import ab.PuzzlesHubExperiment
 import common.ImplicitControllerExecutionContext
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
-import model.dotcomrendering.{DotcomGamePageRenderingDataModel, DotcomPuzzlesPageRenderingDataModel, GamePageInstance}
+import model.dotcomrendering.{
+  DotcomPuzzlePageRenderingDataModel,
+  DotcomPuzzlesPageRenderingDataModel,
+  PuzzlePageInstance,
+}
 import model.{ApplicationContext, CacheTime, Cached}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -66,60 +70,69 @@ class PuzzlesPageController(
         }
     }
 
-  /** Game Page: a generic page template for iframe-based puzzle/game types (sudoku, word games, quizzes/trivia, etc),
-    * rendered by DCR via its `/GamePage` endpoint. There is no per-instance content to fetch for any of these - the
-    * iframe always shows "today's" puzzle according to the third party's own logic - so this repo only needs to provide
-    * a reasonable static title per slug. All structural rendering (iframe URL, flags) is resolved by DCR's own static
-    * registry, keyed by slug. See docs/game-page.md for the full reference.
+  /** Puzzle Page: a generic page template for iframe-based puzzle types (sudoku, word games, etc), rendered by DCR via
+    * its `/PuzzlePage` endpoint. There is no per-instance content to fetch for any of these - the iframe always shows
+    * "today's" puzzle according to the third party's own logic - so this repo only needs to provide a reasonable static
+    * title per slug. All structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed by
+    * slug. See docs/puzzle-page.md for the full reference.
     *
-    * Note: crosswords are explicitly out of scope for Game Page - they remain on their own, separate separate
-    * crossword-only routes/controllers, untouched.
+    * Deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated Puzzles Hub/listing
+    * page) - `renderPuzzlePage(Json)` serves a single puzzle instance, not the hub.
+    *
+    * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
+    * routes/controllers, untouched.
     */
-  def renderGame(slug: String): Action[AnyContent] =
+  def renderPuzzlePage(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
       slug match {
-        case gameSlug if PuzzlesPageController.gameSlugTitles.contains(gameSlug) => renderGamePage(gameSlug)
-        case _                                                                   => notFound
+        case puzzleSlug if PuzzlesPageController.puzzleSlugTitles.contains(puzzleSlug) =>
+          renderPuzzlePageContent(puzzleSlug)
+        case _ => notFound
       }
     }
 
-  def renderGameJson(slug: String): Action[AnyContent] =
+  def renderPuzzlePageJson(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
       slug match {
-        case gameSlug if PuzzlesPageController.gameSlugTitles.contains(gameSlug) => renderGamePageJson(gameSlug)
-        case _                                                                   => notFound
+        case puzzleSlug if PuzzlesPageController.puzzleSlugTitles.contains(puzzleSlug) =>
+          renderPuzzlePageContentJson(puzzleSlug)
+        case _ => notFound
       }
     }
 
-  private def renderGamePage(slug: String)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildGamePageData(slug)
-    remoteRenderer.getGamePage(wsClient, DotcomGamePageRenderingDataModel.toJson(dataModel))
+  private def renderPuzzlePageContent(slug: String)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = buildPuzzlePageData(slug)
+    remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
   }
 
-  private def renderGamePageJson(slug: String)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildGamePageData(slug)
+  private def renderPuzzlePageContentJson(slug: String)(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = buildPuzzlePageData(slug)
     Future.successful(
       Cached(CacheTime.NotFound)(
-        Cached.WithoutRevalidationResult(Ok(DotcomGamePageRenderingDataModel.toJson(dataModel)).as("application/json")),
+        Cached.WithoutRevalidationResult(
+          Ok(DotcomPuzzlePageRenderingDataModel.toJson(dataModel)).as("application/json"),
+        ),
       ),
     )
   }
 
-  private def buildGamePageData(slug: String)(implicit request: RequestHeader): DotcomGamePageRenderingDataModel = {
-    val webTitle = PuzzlesPageController.gameSlugTitles(slug)
-    val page = StaticPages.dcrSimpleGamePage(request.path, webTitle)
-    val instance = GamePageInstance(title = webTitle)
-    DotcomGamePageRenderingDataModel(page, slug, webTitle, instance, request)
+  private def buildPuzzlePageData(
+      slug: String,
+  )(implicit request: RequestHeader): DotcomPuzzlePageRenderingDataModel = {
+    val webTitle = PuzzlesPageController.puzzleSlugTitles(slug)
+    val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
+    val instance = PuzzlePageInstance(title = webTitle)
+    DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
   }
 }
 
 object PuzzlesPageController {
 
-  /** The 11 currently-live, iframe-based Game Page slugs, and a reasonable static title for each. DCR's own static
+  /** The 11 currently-live, iframe-based Puzzle Page slugs, and a reasonable static title for each. DCR's own static
     * registry, keyed by slug, owns the iframe URL and all other structural/rendering behaviour - this repo does not
     * need to know or send any of that.
     */
-  val gameSlugTitles: Map[String, String] = Map(
+  val puzzleSlugTitles: Map[String, String] = Map(
     "sudoku-easy" -> "Sudoku (easy)",
     "sudoku-medium" -> "Sudoku (medium)",
     "sudoku-hard" -> "Sudoku (hard)",
