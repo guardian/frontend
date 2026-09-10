@@ -96,7 +96,7 @@ object UrlHelpers {
 
     val params = Map(
       "INTCMP" -> componentId.toString,
-      "acquisitionData" -> acquisitionData.toString
+      "acquisitionData" -> acquisitionData.toString,
     )
 
     Uri(destination.url).addParams(params).toString
