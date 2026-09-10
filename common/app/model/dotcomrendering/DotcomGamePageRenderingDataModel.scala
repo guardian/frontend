@@ -7,8 +7,8 @@ import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 
 /** Best-effort "more from puzzles and games" recommendation, sent to DCR's `/GamePage` endpoint. This is additional,
-  * isolated data used only by the new Game Page flow (see GamePageController) and does not affect the existing
-  * crossword article rendering.
+  * isolated data used only by the Game Page flow (see PuzzlesPageController) and does not affect the existing crossword
+  * article rendering.
   */
 case class MoreFromPuzzlesAndGamesItem(
     title: String,
@@ -21,9 +21,13 @@ object MoreFromPuzzlesAndGamesItem {
   implicit val writes: OWrites[MoreFromPuzzlesAndGamesItem] = Json.writes[MoreFromPuzzlesAndGamesItem]
 }
 
-/** Per-instance data for a single Game Page. `crosswordData`/`discussionId` are only populated when the page's slug is
-  * "crossword" - for the other (iframe-based) game slugs, DCR's own static registry owns all structural/rendering
-  * behaviour and this repo only needs to provide a reasonable title.
+/** Per-instance data for a single Game Page. Game Page is currently scoped to iframe-based games only (see
+  * PuzzlesPageController), which only ever populate `title` - `puzzleType`/`setterName`/`date`/
+  * `specialInstructions`/`discussionId`/`crosswordData` were added for a crossword-flavoured Game Page slug that has
+  * since been descoped (crosswords remain on their own, separate crossword-only flow). These fields are kept here,
+  * always `None`/unpopulated, only because they are part of the JSON contract already agreed with DCR's `/GamePage`
+  * endpoint - removing them is a DCR-side contract change to coordinate separately, not something to do unilaterally
+  * from this repo.
   */
 case class GamePageInstance(
     title: String,
@@ -40,9 +44,9 @@ object GamePageInstance {
   implicit val writes: OWrites[GamePageInstance] = Json.writes[GamePageInstance]
 }
 
-/** Rendering data model for the new, isolated Game Page flow (POST to DCR's `/GamePage` endpoint). This generalizes
-  * today's single crossword article page to all Guardian puzzle/game types. It is entirely additive and separate from
-  * the existing `DotcomRenderingDataModel.forCrossword` flow used by the crossword routes.
+/** Rendering data model for the Game Page flow (POST to DCR's `/GamePage` endpoint), currently scoped to iframe-based
+  * puzzle/game types only. It is entirely additive and separate from the existing crossword article rendering flow
+  * (`DotcomRenderingDataModel.forCrossword`) used by the crossword-only routes.
   */
 case class DotcomGamePageRenderingDataModel(
     id: String,

@@ -36,10 +36,8 @@ GET        /crosswords/digital-edition                                          
 GET        /crosswords/digital-edition.json                                                                                   controllers.CrosswordEditionsController.digitalEditionJson
 
 # Game Page
-GET        /puzzles/crossword/:crosswordType/:id.json                                                                          controllers.GamePageController.renderCrosswordJson(crosswordType: String, id: Int)
-GET        /puzzles/crossword/:crosswordType/:id                                                                               controllers.GamePageController.renderCrossword(crosswordType: String, id: Int)
-GET        /puzzles/:slug.json                                                                                                controllers.GamePageController.renderGameJson(slug: String)
-GET        /puzzles/:slug                                                                                                     controllers.GamePageController.renderGame(slug: String)
+GET        /puzzles/:slug.json                                                                                                controllers.PuzzlesPageController.renderGameJson(slug: String)
+GET        /puzzles/:slug                                                                                                     controllers.PuzzlesPageController.renderGame(slug: String)
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
