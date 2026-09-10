@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.SearchQuery
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, CrosswordType, SearchResponse}
 import contentapi.ContentApiClient
 import controllers.LocalJsonPuzzlesLayoutProvider
-import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleFilter, PuzzleItem, PuzzlesLayout}
+import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.mockito.invocation.InvocationOnMock
@@ -17,30 +17,112 @@ import play.api.{Environment, Mode}
 
 import java.io.{ByteArrayInputStream, File, InputStream}
 import java.nio.charset.StandardCharsets
+import java.time.{Clock, Instant, ZoneOffset}
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext, Future}
 
 class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSugar {
   private implicit val executionContext: ExecutionContext = ExecutionContext.global
+  private val mondayClock = Clock.fixed(Instant.parse("2026-09-07T12:00:00Z"), ZoneOffset.UTC)
 
   "LocalJsonPuzzlesLayoutProvider" should "load the production layout from the classpath" in {
-    val provider = new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient())
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
 
     val layout = Await.result(provider.getLayout(), 5.seconds)
 
     layout.containers should not be empty
-    layout.filters should not be empty
     layout.containers.flatMap(_.content.nestedContainers) should not be empty
     archives(layout) should not be empty
   }
 
+  it should "load the target hierarchy and its explicit presentation metadata" in {
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+
+    val layout = Await.result(provider.getLayout(), 5.seconds)
+    val featured = layout.containers.head
+    val crosswords = layout.containers.find(_.id == "crosswords").get
+
+    layout.containers
+      .filter(container => container.variant.exists(Set("featured", "standard")))
+      .map(_.title) shouldBe Seq(
+      "Today’s featured puzzles",
+      "Crosswords",
+      "Word games",
+      "Logic puzzles",
+    )
+    layout.containers.filter(_.variant.contains("ad")).map(_.adSlot) shouldBe Seq(
+      Some("inline1"),
+      Some("inline2"),
+      Some("inline3"),
+    )
+    featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
+      ("Quick crossword", "large", Some("Daily")),
+      ("Easy sudoku", "large", Some("Daily")),
+    )
+    crosswords.content.items.map(_.map(item => item.title -> item.cardVariant)) shouldBe Seq(
+      Seq("Quick", "Mini", "Cryptic", "Quick cryptic").map(_ -> "primary"),
+      Seq("Quiptic", "Prize", "Weekend", "Genius").map(_ -> "compact"),
+    )
+    crosswords.content.archiveChoices.map(_.map(_.title)) shouldBe Some(
+      Seq(
+        "Mini",
+        "Quick",
+        "Cryptic",
+        "Quick cryptic",
+        "Quiptic",
+        "Weekend",
+        "Prize",
+        "Sunday quick",
+        "Genius",
+        "Special",
+      ),
+    )
+    layout.containers
+      .find(_.variant.contains("supporting"))
+      .flatMap(_.supporting)
+      .map(_.popularGroups.map(_.title)) shouldBe
+      Some(Seq("Most played", "Most comments"))
+    allItems(layout).find(_.id == "wordiply-daily").flatMap(_.image) shouldBe Some("https://www.wordiply.com/share.png")
+    allItems(layout).map(_.id).distinct should have size allItems(layout).size
+  }
+
+  it should "select the configured featured puzzles for each London weekday" in {
+    val expectedByDate = Seq(
+      "2026-09-07T12:00:00Z" -> Seq("Quick crossword", "Easy sudoku"),
+      "2026-09-08T12:00:00Z" -> Seq("Mini crossword", "Film reveal"),
+      "2026-09-09T12:00:00Z" -> Seq("Cryptic crossword", "Medium sudoku"),
+      "2026-09-10T12:00:00Z" -> Seq("Quick crossword", "Wordiply"),
+      "2026-09-11T12:00:00Z" -> Seq("Mini crossword", "Hard sudoku"),
+      "2026-09-12T12:00:00Z" -> Seq("General knowledge crossword", "Film reveal"),
+      "2026-09-13T12:00:00Z" -> Seq("Quiptic crossword", "On the ball"),
+    )
+
+    expectedByDate.foreach { case (instant, expectedTitles) =>
+      val provider = providerFor(
+        featuredLayout(enabled = true),
+        emptyContentApiClient(),
+        Clock.fixed(Instant.parse(instant), ZoneOffset.UTC),
+      )
+
+      firstItemRow(Await.result(provider.getLayout(), 5.seconds)).map(_.title) shouldBe expectedTitles
+    }
+  }
+
+  it should "omit the featured section when it is disabled" in {
+    val provider = providerFor(featuredLayout(enabled = false), emptyContentApiClient(), mondayClock)
+
+    Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
+  }
+
   it should "close the resource stream after successful loading" in {
-    val json = """{"containers":[],"filters":[]}"""
+    val json = """{"containers":[]}"""
     val stream = new CloseTrackingInputStream(json)
     val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
 
-    Await.result(provider.getLayout(), 5.seconds) shouldBe PuzzlesLayout(Seq.empty, Seq.empty)
+    Await.result(provider.getLayout(), 5.seconds) shouldBe PuzzlesLayout(Seq.empty)
     stream.wasClosed shouldBe true
   }
 
@@ -75,18 +157,20 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     error.getMessage should include("was not found on the classpath")
   }
 
-  it should "replace only URL and image fields after a successful lookup" in {
+  it should "replace the URL while preserving an image configured by the blueprint" in {
     val baseItem = PuzzleItem(
+      id = "crossword-quick-cryptic",
       title = "Editorial title",
       `type` = "crossword",
       set = "quick-cryptic",
+      cardVariant = "primary",
+      cadence = Some("Every Saturday"),
       url = Some("/fallback"),
       image = Some("/fallback.svg"),
       slug = Some("editorial-slug"),
       index = Some(7),
       variant = Some("featured"),
       backgroundColour = Some("#abcdef"),
-      filterId = Some("crosswords"),
     )
     val provider = providerFor(
       layoutWith(items = Seq(baseItem)),
@@ -96,19 +180,38 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val enrichedItem = firstItem(Await.result(provider.getLayout(), 5.seconds))
 
     enrichedItem shouldBe baseItem.copy(
-      url = Some("/puzzles/crosswords/quick-cryptic/321"),
-      image = Some("https://api.nextgen.guardianapps.co.uk/crosswords/quick-cryptic/321.svg"),
+      url = Some("/puzzles-and-games/crosswords/quick-cryptic/321"),
+      image = Some("/fallback.svg"),
+    )
+  }
+
+  it should "use the enriched crossword image when the blueprint does not configure one" in {
+    val baseItem = crossword("quick", "/fallback").copy(image = None)
+    val provider = providerFor(
+      layoutWith(items = Seq(baseItem)),
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123)))),
+    )
+
+    firstItem(Await.result(provider.getLayout(), 5.seconds)).image shouldBe Some(
+      "https://api.nextgen.guardianapps.co.uk/crosswords/quick/123.svg",
     )
   }
 
   it should "discover nested cards recursively and deduplicate lookups by set" in {
     val queries = ListBuffer.empty[SearchQuery]
     val nested = PuzzleContainer(
+      id = "nested",
       title = "Nested",
-      content = PuzzleContent(items = Seq(Seq(crossword("quick", "/nested"))), nestedContainers = Seq.empty),
+      content = PuzzleContent(
+        items = Seq(Seq(crossword("quick", "/nested").copy(id = "crossword-quick-nested"))),
+        nestedContainers = Seq.empty,
+      ),
     )
     val layout = layoutWith(
-      items = Seq(crossword("quick", "/top"), crossword("quick", "/duplicate")),
+      items = Seq(
+        crossword("quick", "/top").copy(id = "crossword-quick-top"),
+        crossword("quick", "/duplicate").copy(id = "crossword-quick-duplicate"),
+      ),
       nestedContainers = Seq(nested),
     )
     val provider = providerFor(
@@ -119,7 +222,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val enriched = Await.result(provider.getLayout(), 5.seconds)
 
     queries should have size 1
-    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/puzzles/crosswords/quick/42"))
+    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/puzzles-and-games/crosswords/quick/42"))
   }
 
   it should "query the corresponding CAPI series tag for every supported crossword set" in {
@@ -180,10 +283,26 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "exclude archive and non-crossword items from lookup and enrichment" in {
     val queries = ListBuffer.empty[SearchQuery]
-    val latestCard = crossword("quick", "/latest-card")
-    val archiveInItems = crossword("quick", "/archive-card").copy(variant = Some("archive-page"))
-    val nonCrossword = PuzzleItem("Sudoku", "sudoku", "quick", url = Some("/sudoku"), image = Some("/sudoku.svg"))
-    val archive = crossword("quick", "/archive")
+    val latestCard = crossword("quick", "/latest-card").copy(id = "crossword-quick-latest")
+    val archiveInItems = crossword("quick", "/archive-card").copy(
+      id = "crossword-quick-archive-card",
+      variant = Some("archive-page"),
+    )
+    val nonCrossword = PuzzleItem(
+      "sudoku-quick",
+      "Sudoku",
+      "sudoku",
+      "quick",
+      "primary",
+      Some("Daily"),
+      url = Some("/sudoku"),
+      image = Some("/sudoku.svg"),
+    )
+    val archive = crossword("quick", "/archive").copy(
+      id = "crosswords-archive",
+      cardVariant = "archive",
+      cadence = None,
+    )
     val layout = layoutWith(items = Seq(latestCard, archiveInItems, nonCrossword), archive = Some(archive))
     val provider = providerFor(
       layout,
@@ -195,8 +314,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     queries should have size 1
     allItems(result) should contain theSameElementsInOrderAs Seq(
       latestCard.copy(
-        url = Some("/puzzles/crosswords/quick/99"),
-        image = Some("https://api.nextgen.guardianapps.co.uk/crosswords/quick/99.svg"),
+        url = Some("/puzzles-and-games/crosswords/quick/99"),
+        image = Some("/latest-card.svg"),
       ),
       archiveInItems,
       nonCrossword,
@@ -219,7 +338,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
     val result = Await.result(provider.getLayout(), 5.seconds)
 
-    allItems(result).find(_.set == "quick").flatMap(_.url) shouldBe Some("/puzzles/crosswords/quick/100")
+    allItems(result).find(_.set == "quick").flatMap(_.url) shouldBe Some("/puzzles-and-games/crosswords/quick/100")
     allItems(result).find(_.set == "cryptic") shouldBe Some(cryptic)
   }
 
@@ -240,9 +359,12 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   private def crossword(set: String, url: String = "/base"): PuzzleItem =
     PuzzleItem(
+      id = s"crossword-$set",
       title = set,
       `type` = "crossword",
       set = set,
+      cardVariant = "primary",
+      cadence = Some("Daily"),
       url = Some(url),
       image = Some(s"$url.svg"),
       backgroundColour = Some("#f0f0f0"),
@@ -256,19 +378,35 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     PuzzlesLayout(
       containers = Seq(
         PuzzleContainer(
+          id = "test-container",
           title = "Test container",
           variant = Some("featured"),
           content = PuzzleContent(Seq(items), nestedContainers, archive),
-          filterId = Some("crosswords"),
           desktopSpan = Some(12),
         ),
       ),
-      filters = Seq(PuzzleFilter("crosswords", "Crosswords", Some("#f0f0f0"))),
     )
 
-  private def providerFor(layout: PuzzlesLayout, client: ContentApiClient): LocalJsonPuzzlesLayoutProvider = {
+  private def featuredLayout(enabled: Boolean): PuzzlesLayout =
+    PuzzlesLayout(
+      Seq(
+        PuzzleContainer(
+          id = "featured-puzzles",
+          title = "Today’s featured puzzles",
+          variant = Some("featured"),
+          content = PuzzleContent(Seq.empty, Seq.empty),
+          enabled = Some(enabled),
+        ),
+      ),
+    )
+
+  private def providerFor(
+      layout: PuzzlesLayout,
+      client: ContentApiClient,
+      clock: Clock = Clock.systemUTC(),
+  ): LocalJsonPuzzlesLayoutProvider = {
     val stream = new CloseTrackingInputStream(Json.stringify(Json.toJson(layout)))
-    new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), client)
+    new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), client, clock = clock)
   }
 
   private def emptyContentApiClient(): ContentApiClient = contentApiClient(Map.empty)
@@ -310,6 +448,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   private def firstItem(layout: PuzzlesLayout): PuzzleItem = allItems(layout).head
 
+  private def firstItemRow(layout: PuzzlesLayout): Seq[PuzzleItem] = layout.containers.head.content.items.head
+
   private def allItems(layout: PuzzlesLayout): Seq[PuzzleItem] =
     layout.containers.flatMap(allItems)
 
@@ -317,10 +457,12 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     container.content.items.flatten ++ container.content.nestedContainers.flatMap(allItems)
 
   private def archives(layout: PuzzlesLayout): Seq[PuzzleItem] =
-    layout.containers.flatMap(container =>
-      container.content.archive.toSeq ++
-        container.content.nestedContainers.flatMap(nested => nested.content.archive.toSeq),
-    )
+    layout.containers.flatMap(archives)
+
+  private def archives(container: PuzzleContainer): Seq[PuzzleItem] =
+    container.content.archive.toSeq ++
+      container.content.archiveChoices.toSeq.flatten ++
+      container.content.nestedContainers.flatMap(archives)
 
   private def environmentReturning(stream: Option[InputStream]): Environment = {
     val classLoader = new ClassLoader(null) {

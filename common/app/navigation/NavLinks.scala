@@ -233,15 +233,7 @@ object NavLinks {
       NavLink("Special", "/crosswords/series/special"),
     ),
   )
-  var puzzles = NavLink(
-    "Puzzles and Games",
-    "/puzzles",
-    children = List(
-      NavLink("Crossword", "/puzzles#crossword"),
-      NavLink("Logic", "/puzzles#logic"),
-      NavLink("Word games", "/puzzles#word-games"),
-    ),
-  )
+  val puzzles = NavLink("Puzzles and games", "/puzzles-and-games")
   val legacyWordiply = NavLink(
     "Wordiply",
     "https://www.wordiply.com",
