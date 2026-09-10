@@ -53,7 +53,7 @@ object StaticPages {
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "puzzles-and-games")),
-        webTitle = "Puzzles and Games",
+        webTitle = "Puzzles and games",
         description = None,
         contentType = Some(DotcomContentType.Tag),
         iosType = None,

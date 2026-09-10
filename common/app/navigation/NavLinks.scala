@@ -233,7 +233,7 @@ object NavLinks {
       NavLink("Special", "/crosswords/series/special"),
     ),
   )
-  val puzzles = NavLink("Puzzles and Games", "/puzzles-and-games")
+  val puzzles = NavLink("Puzzles and games", "/puzzles-and-games")
   val legacyWordiply = NavLink(
     "Wordiply",
     "https://www.wordiply.com",

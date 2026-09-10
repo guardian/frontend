@@ -244,7 +244,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
-  "Puzzles navigation" should "add Puzzles and Games alongside the legacy links in every edition for variant requests" in {
+  "Puzzles navigation" should "add Puzzles and games alongside the legacy links in every edition for variant requests" in {
     val request = requestWithParticipations("puzzles-new-hub:variant")
     puzzles.children shouldBe empty
 

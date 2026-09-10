@@ -44,7 +44,7 @@ import staticpages.StaticPages
     val json = DotcomPuzzlesPageRenderingDataModel.toJson(model)
 
     (json \ "id").as[String] should be("/puzzles-and-games")
-    (json \ "webTitle").as[String] should be("Puzzles and Games")
+    (json \ "webTitle").as[String] should be("Puzzles and games")
     (json \ "editionId").as[String] should not be empty
     (json \ "nav").toOption should not be empty
     (json \ "pageFooter").toOption should not be empty
@@ -55,7 +55,7 @@ import staticpages.StaticPages
     puzzlesNav
       .find(link => (link \ "url").as[String] == "/puzzles-and-games")
       .map(link => (link \ "title").as[String]) should
-      contain("Puzzles and Games")
+      contain("Puzzles and games")
   }
 
   it should "propagate every current server-side AB-test participation" in {
