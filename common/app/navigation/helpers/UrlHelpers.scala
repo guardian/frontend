@@ -1,14 +1,12 @@
 package navigation
 
-import io.lemonlabs.uri.Url
-import io.lemonlabs.uri.config.UriConfig
-import io.lemonlabs.uri.encoding.PercentEncoder
 import navigation.ReaderRevenueSite._
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 
 import scala.PartialFunction.condOpt
 import common.Edition
+import sttp.model.Uri
 
 object UrlHelpers {
 
@@ -83,11 +81,6 @@ object UrlHelpers {
     val componentId = getComponentId(destination, position)
     val componentType = getComponentType(position)
 
-    // Implicit - used when parsing url
-    implicit val uriEncoder = UriConfig.default.copy(
-      // The default encoder does not encode double quotes in the querystring
-      queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"'),
-    )
     val acquisitionData = Json.obj(
       // GUARDIAN_WEB corresponds to a value in the Thrift enum
       // https://dashboard.ophan.co.uk/docs/thrift/acquisition.html#Enum_AcquisitionSource
@@ -101,11 +94,12 @@ object UrlHelpers {
       ),
     )
 
-    import io.lemonlabs.uri.typesafe.dsl._
+    val params = Map(
+      "INTCMP" -> componentId.toString,
+      "acquisitionData" -> acquisitionData.toString
+    )
 
-    // It's set to the most specific thing (componentId) to maximise its usefulness
-    val url = destination.url ? ("INTCMP" -> componentId) & ("acquisitionData" -> acquisitionData.toString)
-    Url.parse(url.toString).toString
+    Uri(destination.url).addParams(params).toString
   }
 
   def getJobUrl(editionId: String): String =
