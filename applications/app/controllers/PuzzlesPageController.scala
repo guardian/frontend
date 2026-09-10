@@ -128,21 +128,16 @@ class PuzzlesPageController(
 
 object PuzzlesPageController {
 
-  /** The 11 currently-live, iframe-based Puzzle Page slugs, and a reasonable static title for each. DCR's own static
-    * registry, keyed by slug, owns the iframe URL and all other structural/rendering behaviour - this repo does not
-    * need to know or send any of that.
+  /** The 6 currently-live, iframe-based Puzzle Page slugs (V0 scope, matching DCR's own registry), and a reasonable
+    * static title for each. DCR's own static registry, keyed by slug, owns the iframe URL and all other
+    * structural/rendering behaviour - this repo does not need to know or send any of that.
     */
   val puzzleSlugTitles: Map[String, String] = Map(
     "sudoku-easy" -> "Sudoku (easy)",
     "sudoku-medium" -> "Sudoku (medium)",
     "sudoku-hard" -> "Sudoku (hard)",
     "sudoku-killer" -> "Killer sudoku",
-    "futoshiki" -> "Futoshiki",
-    "suguru" -> "Suguru",
     "word-wheel" -> "Word wheel",
-    "codeword" -> "Codeword",
     "wordiply" -> "Wordiply",
-    "on-the-ball" -> "On the ball",
-    "film-reveal" -> "Film reveal",
   )
 }
