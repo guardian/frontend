@@ -148,4 +148,55 @@ import scala.concurrent.{ExecutionContext, Future}
         verifyNoInteractions(provider, renderer)
       }
   }
+
+  /** Game Page: a generic page template for iframe-based puzzle/game types, unrelated to the puzzles hub experiment
+    * above - it is not gated behind any AB test (a previous `game-page-experiment` gate was removed at the user's
+    * explicit request, since these routes are expected to be mapped/exposed via a separate project instead), so no
+    * special request header is needed for any of these. Crosswords are explicitly out of scope for Game Page and are
+    * not exercised by these tests.
+    */
+  private def stubbedGamePageRenderer(): DotcomRenderingService = {
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getGamePage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+    renderer
+  }
+
+  "renderGame" should "render an iframe-based slug via DCR" in {
+    val renderer = stubbedGamePageRenderer()
+
+    val result = controller(successfulProvider, renderer).renderGame("sudoku-easy")(request("/puzzles/sudoku-easy"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getGamePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found for an unrecognised slug" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderGame("not-a-real-game")(request("/puzzles/not-a-real-game"))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderGameJson" should "return the equivalent rendering data as JSON for an iframe-based slug" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderGameJson("sudoku-easy")(request("/puzzles/sudoku-easy.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("sudoku-easy")
+    (json \ "instance" \ "title").as[String] should be("Sudoku (easy)")
+  }
+
+  it should "return not found for an unrecognised slug" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderGameJson("not-a-real-game")(request("/puzzles/not-a-real-game.json"))
+
+    status(result) should be(NOT_FOUND)
+  }
 }
