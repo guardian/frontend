@@ -91,7 +91,7 @@ val common = library("common")
       logstash,
       targetingClient,
       scanamo,
-      scalaUri,
+      sttp,
       commercialShared,
       playJson,
       playJsonJoda,
@@ -162,7 +162,7 @@ val admin = application("admin")
       d3,
       awsElasticloadbalancing,
       awsSes,
-      scalaUri,
+      sttp
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
