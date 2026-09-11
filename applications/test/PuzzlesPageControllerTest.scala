@@ -16,6 +16,7 @@ import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
+import java.time.LocalDate
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class PuzzlesPageControllerTest
@@ -65,7 +66,7 @@ import scala.concurrent.{ExecutionContext, Future}
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
 
-    val result = controller(provider, renderer).renderPuzzles()(request("/puzzles"))
+    val result = controller(provider, renderer).renderPuzzles()(request("/puzzles-and-games"))
 
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
@@ -75,7 +76,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
   it should "return not found for an unsupported format" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzles()(request("/puzzles.json"))
+      .renderPuzzles()(request("/puzzles-and-games.json"))
 
     status(result) should be(NOT_FOUND)
   }
@@ -85,7 +86,7 @@ import scala.concurrent.{ExecutionContext, Future}
     val provider = mock[PuzzlesLayoutProvider]
     when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.failed(failure))
 
-    val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(request("/puzzles"))
+    val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(request("/puzzles-and-games"))
 
     result.failed.futureValue should be(failure)
   }
@@ -96,33 +97,33 @@ import scala.concurrent.{ExecutionContext, Future}
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.failed(failure))
 
-    val result = controller(successfulProvider, renderer).renderPuzzles()(request("/puzzles"))
+    val result = controller(successfulProvider, renderer).renderPuzzles()(request("/puzzles-and-games"))
 
     result.failed.futureValue should be(failure)
   }
 
   "renderPuzzlesJson" should "return the equivalent rendering data as JSON" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(request("/puzzles.json"))
+      .renderPuzzlesJson()(request("/puzzles-and-games.json"))
 
     status(result) should be(OK)
     contentType(result) should contain("application/json")
     val json = Json.parse(contentAsString(result))
-    (json \ "id").as[String] should be("/puzzles.json")
+    (json \ "id").as[String] should be("/puzzles-and-games.json")
     (json \ "webTitle").as[String] should be("Puzzles and Games")
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
   it should "return not found when the JSON action receives an HTML request" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(request("/puzzles"))
+      .renderPuzzlesJson()(request("/puzzles-and-games"))
 
     status(result) should be(NOT_FOUND)
   }
 
   it should "return not found for another unsupported format" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlesJson()(request("/puzzles.atom"))
+      .renderPuzzlesJson()(request("/puzzles-and-games.atom"))
 
     status(result) should be(NOT_FOUND)
   }
@@ -140,8 +141,8 @@ import scala.concurrent.{ExecutionContext, Future}
         val renderer = mock[DotcomRenderingService]
         val puzzlesController = controller(provider, renderer)
 
-        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles", participations))
-        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles.json", participations))
+        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))
+        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
 
         status(htmlResult) should be(NOT_FOUND)
         status(jsonResult) should be(NOT_FOUND)
@@ -149,11 +150,9 @@ import scala.concurrent.{ExecutionContext, Future}
       }
   }
 
-  /** Puzzle Page: a generic page template for iframe-based puzzle types, unrelated to the puzzles hub experiment above -
-    * it is not gated behind any AB test (a previous `game-page-experiment` gate was removed at the user's explicit
-    * request, since these routes are expected to be mapped/exposed via a separate project instead), so no special
-    * request header is needed for any of these. Crosswords are explicitly out of scope for Puzzle Page and are not
-    * exercised by these tests.
+  /** Puzzle Page: a generic page template for iframe-based puzzle types, gated behind the same `PuzzlesHubExperiment`
+    * ("puzzles-new-hub") AB test as the hub actions above - reusing the existing experiment rather than a new one.
+    * Crosswords are explicitly out of scope for Puzzle Page and are not exercised by these tests.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
@@ -162,11 +161,53 @@ import scala.concurrent.{ExecutionContext, Future}
     renderer
   }
 
-  "renderPuzzlePage" should "render an iframe-based slug via DCR" in {
+  "renderSudoku" should "render a sudoku variant via DCR, using the flattened sudoku-<variant> slug for DCR" in {
     val renderer = stubbedPuzzlePageRenderer()
 
     val result =
-      controller(successfulProvider, renderer).renderPuzzlePage("sudoku-easy")(request("/puzzles/sudoku-easy"))
+      controller(successfulProvider, renderer).renderSudoku("easy")(request("/puzzles-and-games/sudoku/easy"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found for an unrecognised variant" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderSudoku("not-a-real-variant")(request("/puzzles-and-games/sudoku/not-a-real-variant"))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderSudokuJson" should "return the equivalent rendering data as JSON, with the flattened slug and today's puzzleDate" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderSudokuJson("killer")(request("/puzzles-and-games/sudoku/killer.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("sudoku-killer")
+    (json \ "instance" \ "title").as[String] should be("Killer sudoku")
+    (json \ "instance" \ "puzzleDate").as[String] should be(LocalDate.now().toString)
+  }
+
+  it should "use the ?date= query param for puzzleDate when given, instead of defaulting to today" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderSudokuJson("easy")(request("/puzzles-and-games/sudoku/easy.json?date=2020-01-01"))
+
+    status(result) should be(OK)
+    val json = Json.parse(contentAsString(result))
+    (json \ "instance" \ "puzzleDate").as[String] should be("2020-01-01")
+  }
+
+  "renderPuzzlePage" should "render a flat (single-segment) slug via DCR" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result =
+      controller(successfulProvider, renderer).renderPuzzlePage("word-wheel")(request("/puzzles-and-games/word-wheel"))
 
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
@@ -177,27 +218,58 @@ import scala.concurrent.{ExecutionContext, Future}
     val renderer = mock[DotcomRenderingService]
 
     val result = controller(successfulProvider, renderer)
-      .renderPuzzlePage("not-a-real-puzzle")(request("/puzzles/not-a-real-puzzle"))
+      .renderPuzzlePage("not-a-real-puzzle")(request("/puzzles-and-games/not-a-real-puzzle"))
 
     status(result) should be(NOT_FOUND)
     verifyNoInteractions(renderer)
   }
 
-  "renderPuzzlePageJson" should "return the equivalent rendering data as JSON for an iframe-based slug" in {
+  it should "return not found for the sudoku slug (it is served by renderSudoku instead)" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderPuzzlePage("sudoku-easy")(request("/puzzles-and-games/sudoku-easy"))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderPuzzlePageJson" should "return the equivalent rendering data as JSON for a flat slug" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlePageJson("sudoku-easy")(request("/puzzles/sudoku-easy.json"))
+      .renderPuzzlePageJson("wordiply")(request("/puzzles-and-games/wordiply.json"))
 
     status(result) should be(OK)
     contentType(result) should contain("application/json")
     val json = Json.parse(contentAsString(result))
-    (json \ "slug").as[String] should be("sudoku-easy")
-    (json \ "instance" \ "title").as[String] should be("Sudoku (easy)")
+    (json \ "slug").as[String] should be("wordiply")
+    (json \ "instance" \ "title").as[String] should be("Wordiply")
   }
 
   it should "return not found for an unrecognised slug" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
-      .renderPuzzlePageJson("not-a-real-puzzle")(request("/puzzles/not-a-real-puzzle.json"))
+      .renderPuzzlePageJson("not-a-real-puzzle")(request("/puzzles-and-games/not-a-real-puzzle.json"))
 
     status(result) should be(NOT_FOUND)
+  }
+
+  Seq(
+    "control" -> "puzzles-new-hub:control",
+    "absent" -> "",
+    "unrelated experiment" -> "another-test:variant",
+  ).foreach { case (participationCase, participations) =>
+    s"puzzle page access with $participationCase participation" should
+      "return not found for sudoku and flat puzzle slugs without calling DCR" in {
+        val renderer = mock[DotcomRenderingService]
+        val puzzlesController = controller(successfulProvider, renderer)
+
+        val sudokuResult =
+          puzzlesController.renderSudoku("easy")(request("/puzzles-and-games/sudoku/easy", participations))
+        val flatResult =
+          puzzlesController.renderPuzzlePage("word-wheel")(request("/puzzles-and-games/word-wheel", participations))
+
+        status(sudokuResult) should be(NOT_FOUND)
+        status(flatResult) should be(NOT_FOUND)
+        verifyNoInteractions(renderer)
+      }
   }
 }
