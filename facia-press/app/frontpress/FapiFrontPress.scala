@@ -17,7 +17,8 @@ import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi._
 import services.{ConfigAgent, NewsletterService, S3FrontsApi}
 import services.fronts.FrontsApi
-import model.{PressedPage, _}
+import services.eventgraphic.EventGraphicService
+import model._
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
@@ -32,6 +33,7 @@ class LiveFapiFrontPress(
     val wsClient: WSClient,
     val capiClientForFrontsSeo: ContentApiClient,
     val newsletterService: NewsletterService,
+    val eventGraphicService: EventGraphicService,
 )(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
@@ -66,6 +68,7 @@ class DraftFapiFrontPress(
     val wsClient: WSClient,
     val capiClientForFrontsSeo: ContentApiClient,
     val newsletterService: NewsletterService,
+    val eventGraphicService: EventGraphicService,
 )(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
@@ -215,6 +218,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
   val newsletterService: NewsletterService
+  val eventGraphicService: EventGraphicService
   def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit
   def isLiveContent: Boolean
 
@@ -382,6 +386,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
             if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
             else enrichedContent
           }
+        case eventGraphic: EventGraphic =>
+          enrichEventGraphic(eventGraphic)
         case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
           enrichContent(collection, link, link.enriched).map(updatedFields => link.copy(enriched = Some(updatedFields)))
         case curated: CuratedContent if isHighlights =>
@@ -389,6 +395,24 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         case plain =>
           Response.Right(plain)
       })
+    }
+  }
+
+  private def enrichEventGraphic(
+      eventGraphic: EventGraphic,
+  )(implicit executionContext: ExecutionContext): Response[EventGraphic] = {
+    (eventGraphic.dataUrl, eventGraphic.graphicKind) match {
+      case (Some(dataUrl), Some(_)) =>
+        Response.Async.Right(eventGraphicService.getData(dataUrl.getPath).map {
+          case Right(result) => eventGraphic.copy(eventData = Some(result))
+          case Left(error)   =>
+            log.error(s"Failed to fetch data for event graphic ${eventGraphic.id}: ${error.message}")
+            eventGraphic
+        })
+
+      case _ =>
+        log.error(s"EventGraphic ${eventGraphic.id} is not recognised, skipping enrichment")
+        Response.Right(eventGraphic)
     }
   }
 
@@ -421,7 +445,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
     FAPI
       .backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
-      .map(_.map(((item) => PressedContent.make(item, false))))
+      .map(_.map((item) => PressedContent.make(item, false)))
   }
 
   def generatePressedVersions(
