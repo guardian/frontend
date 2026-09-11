@@ -77,15 +77,19 @@ class PuzzlesPageController(
     * structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed by slug. See
     * docs/puzzle-page.md for the full reference.
     *
-    * Sudoku's public URL is nested (`/puzzles-and-games/sudoku/:variant`, e.g. `.../sudoku/easy`), so it gets its own
-    * dedicated `renderSudoku`/`renderSudokuJson` actions taking a puzzle-type + variant pair, rather than a flattened
-    * `"sudoku-easy"`-style slug - this repo's internal naming should match the public URL shape. Only the outbound
-    * `slug` value actually sent to DCR is flattened back to `sudoku-<variant>`, since that's the key DCR's own registry
-    * still expects.
+    * Public URLs are top-level (no `/puzzles-and-games` prefix), mirroring exactly how crosswords already work
+    * (`/crosswords/{type}/{id}`, also unprefixed) - crosswords can't be restructured, so the other puzzle types follow
+    * the same top-level, nested-by-type convention for consistency, only the hub page itself lives at
+    * `/puzzles-and-games`.
     *
-    * `renderPuzzlePage`/`renderPuzzlePageJson` serve the other, single-segment slugs (`word-wheel`, `wordiply`) at
-    * `/puzzles-and-games/:slug`. All four actions are deliberately named distinctly from `renderPuzzles`/
-    * `renderPuzzlesJson` above (the unrelated Puzzles Hub/listing page).
+    * Each game gets its own explicit, dedicated action(s), mirroring how the crossword controller handles each
+    * crossword type explicitly via a constrained `$crosswordType<...>` route rather than a single generic slug action
+    *   - Play routing isn't well suited to a single "generic slug" action once URLs diverge structurally by game.
+    *     Sudoku takes a `variant` path segment (`renderSudoku`/`renderSudokuJson`, e.g. `/sudoku/easy`); word wheel and
+    *     wordiply each have their own no-argument actions (`renderWordWheel`/`renderWordWheelJson`,
+    *     `renderWordiply`/`renderWordiplyJson`) hardcoding their own slug/title internally, exactly like a dedicated
+    *     crossword-type action would. All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson`
+    *     above (the unrelated Puzzles Hub/listing page).
     *
     * Gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB test already used by the hub actions above -
     * reusing the existing experiment rather than introducing a new one for V0.
@@ -113,24 +117,28 @@ class PuzzlesPageController(
         }
     }
 
-  def renderPuzzlePage(slug: String): Action[AnyContent] =
+  def renderWordWheel(): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else
-        PuzzlesPageController.flatPuzzleTitles.get(slug) match {
-          case Some(webTitle) => renderPuzzlePageContent(slug, webTitle)
-          case None           => notFound
-        }
+      else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle)
     }
 
-  def renderPuzzlePageJson(slug: String): Action[AnyContent] =
+  def renderWordWheelJson(): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else
-        PuzzlesPageController.flatPuzzleTitles.get(slug) match {
-          case Some(webTitle) => renderPuzzlePageContentJson(slug, webTitle)
-          case None           => notFound
-        }
+      else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle)
+    }
+
+  def renderWordiply(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle)
+    }
+
+  def renderWordiplyJson(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle)
     }
 
   private def renderPuzzlePageContent(
@@ -176,7 +184,7 @@ class PuzzlesPageController(
 
 object PuzzlesPageController {
 
-  /** Sudoku variant -> display title, for the nested `/puzzles-and-games/sudoku/:variant` route. */
+  /** Sudoku variant -> display title, for the `/sudoku/:variant` route. */
   val sudokuVariantTitles: Map[String, String] = Map(
     "easy" -> "Sudoku (easy)",
     "medium" -> "Sudoku (medium)",
@@ -184,9 +192,9 @@ object PuzzlesPageController {
     "killer" -> "Killer sudoku",
   )
 
-  /** The other, single-segment Puzzle Page slugs (`/puzzles-and-games/:slug`) and their display titles. */
-  val flatPuzzleTitles: Map[String, String] = Map(
-    "word-wheel" -> "Word wheel",
-    "wordiply" -> "Wordiply",
-  )
+  val WordWheelSlug = "word-wheel"
+  val WordWheelTitle = "Word wheel"
+
+  val WordiplySlug = "wordiply"
+  val WordiplyTitle = "Wordiply"
 }
