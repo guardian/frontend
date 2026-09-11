@@ -20,32 +20,46 @@ import org.scalatest.matchers.should.Matchers
     route.url should be("/puzzles-and-games.json")
   }
 
-  it should "expose the nested Sudoku HTML endpoint" in {
+  it should "expose the top-level Sudoku HTML endpoint" in {
     val route = controllers.routes.PuzzlesPageController.renderSudoku("easy")
 
     route.method should be("GET")
-    route.url should be("/puzzles-and-games/sudoku/easy")
+    route.url should be("/sudoku/easy")
   }
 
-  it should "expose the nested Sudoku JSON endpoint" in {
+  it should "expose the top-level Sudoku JSON endpoint" in {
     val route = controllers.routes.PuzzlesPageController.renderSudokuJson("killer")
 
     route.method should be("GET")
-    route.url should be("/puzzles-and-games/sudoku/killer.json")
+    route.url should be("/sudoku/killer.json")
   }
 
-  it should "expose the flat (single-segment) Puzzle Page HTML endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderPuzzlePage("wordiply")
+  it should "expose the top-level word wheel HTML endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordWheel()
 
     route.method should be("GET")
-    route.url should be("/puzzles-and-games/wordiply")
+    route.url should be("/word-wheel")
   }
 
-  it should "expose the flat (single-segment) Puzzle Page JSON endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderPuzzlePageJson("word-wheel")
+  it should "expose the top-level word wheel JSON endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordWheelJson()
 
     route.method should be("GET")
-    route.url should be("/puzzles-and-games/word-wheel.json")
+    route.url should be("/word-wheel.json")
+  }
+
+  it should "expose the top-level wordiply HTML endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordiply()
+
+    route.method should be("GET")
+    route.url should be("/wordiply")
+  }
+
+  it should "expose the top-level wordiply JSON endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordiplyJson()
+
+    route.method should be("GET")
+    route.url should be("/wordiply.json")
   }
 
   it should "not clash with, or reorder, the existing crossword routes" in {
