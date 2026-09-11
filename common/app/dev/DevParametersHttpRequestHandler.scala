@@ -61,6 +61,9 @@ class DevParametersHttpRequestHandler(
     "dcr", // force page to render in DCR
     "_sp_env", // allow testing of Sourcepoint stage campaign
     "_sp_geo_override", // allow Sourcepoint geolocation override for testing purposes
+    "date", // Puzzle Page's ?date= param (prep for V1 calendar navigation) - CDN/Fastly passthrough for this param
+    // in production is a separate follow-up; added here purely so local dev testing doesn't hit this illegal-
+    // parameter guard
   )
 
   val commercialParams = Seq(

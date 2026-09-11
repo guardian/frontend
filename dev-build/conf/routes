@@ -32,6 +32,14 @@ GET            /crosswords/lookup                                               
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
 
+# Puzzle Page
+GET        /sudoku/$variant<easy|medium|hard|killer>.json                                                                     controllers.PuzzlesPageController.renderSudokuJson(variant: String)
+GET        /sudoku/$variant<easy|medium|hard|killer>                                                                          controllers.PuzzlesPageController.renderSudoku(variant: String)
+GET        /word-wheel.json                                                                                                   controllers.PuzzlesPageController.renderWordWheelJson()
+GET        /word-wheel                                                                                                        controllers.PuzzlesPageController.renderWordWheel()
+GET        /wordiply.json                                                                                                     controllers.PuzzlesPageController.renderWordiplyJson()
+GET        /wordiply                                                                                                          controllers.PuzzlesPageController.renderWordiply()
+
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)

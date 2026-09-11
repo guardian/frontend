@@ -16,6 +16,7 @@ import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
+import java.time.LocalDate
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class PuzzlesPageControllerTest
@@ -149,6 +150,140 @@ import scala.concurrent.{ExecutionContext, Future}
         status(htmlResult) should be(NOT_FOUND)
         status(jsonResult) should be(NOT_FOUND)
         verifyNoInteractions(provider, renderer)
+      }
+  }
+
+  /** Puzzle Page: a generic page template for iframe-based puzzle types, top-level URLs (no `/puzzles-and-games`
+    * prefix), gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB test as the hub actions above -
+    * reusing the existing experiment rather than a new one. Crosswords are explicitly out of scope for Puzzle Page and
+    * are not exercised by these tests.
+    */
+  private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+    renderer
+  }
+
+  "renderSudoku" should "render a sudoku variant via DCR, using the flattened sudoku-<variant> slug for DCR" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result = controller(successfulProvider, renderer).renderSudoku("easy")(request("/sudoku/easy"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found for an unrecognised variant" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderSudoku("not-a-real-variant")(request("/sudoku/not-a-real-variant"))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderSudokuJson" should "return the equivalent rendering data as JSON, with the flattened slug and today's puzzleDate" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderSudokuJson("killer")(request("/sudoku/killer.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("sudoku-killer")
+    (json \ "instance" \ "title").as[String] should be("Killer sudoku")
+    (json \ "instance" \ "puzzleDate").as[String] should be(LocalDate.now().toString)
+  }
+
+  it should "use the ?date= query param for puzzleDate when given, instead of defaulting to today" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderSudokuJson("easy")(request("/sudoku/easy.json?date=2020-01-01"))
+
+    status(result) should be(OK)
+    val json = Json.parse(contentAsString(result))
+    (json \ "instance" \ "puzzleDate").as[String] should be("2020-01-01")
+  }
+
+  "renderWordWheel" should "render word wheel via DCR" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result = controller(successfulProvider, renderer).renderWordWheel()(request("/word-wheel"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found when the experiment is not enabled, without calling DCR" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer).renderWordWheel()(request("/word-wheel", ""))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderWordWheelJson" should "return the equivalent rendering data as JSON" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderWordWheelJson()(request("/word-wheel.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("word-wheel")
+    (json \ "instance" \ "title").as[String] should be("Word wheel")
+  }
+
+  "renderWordiply" should "render wordiply via DCR" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result = controller(successfulProvider, renderer).renderWordiply()(request("/wordiply"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found when the experiment is not enabled, without calling DCR" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer).renderWordiply()(request("/wordiply", ""))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderWordiplyJson" should "return the equivalent rendering data as JSON" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderWordiplyJson()(request("/wordiply.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("wordiply")
+    (json \ "instance" \ "title").as[String] should be("Wordiply")
+  }
+
+  Seq(
+    "control" -> "puzzles-new-hub:control",
+    "absent" -> "",
+    "unrelated experiment" -> "another-test:variant",
+  ).foreach { case (participationCase, participations) =>
+    s"puzzle page access with $participationCase participation" should
+      "return not found for sudoku, word wheel, and wordiply without calling DCR" in {
+        val renderer = mock[DotcomRenderingService]
+        val puzzlesController = controller(successfulProvider, renderer)
+
+        val sudokuResult = puzzlesController.renderSudoku("easy")(request("/sudoku/easy", participations))
+        val wordWheelResult = puzzlesController.renderWordWheel()(request("/word-wheel", participations))
+        val wordiplyResult = puzzlesController.renderWordiply()(request("/wordiply", participations))
+
+        status(sudokuResult) should be(NOT_FOUND)
+        status(wordWheelResult) should be(NOT_FOUND)
+        status(wordiplyResult) should be(NOT_FOUND)
+        verifyNoInteractions(renderer)
       }
   }
 }
