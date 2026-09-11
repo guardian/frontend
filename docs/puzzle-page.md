@@ -12,19 +12,24 @@ third-party iframe URL for each puzzle.
 `/crosswords/*` routes and controllers (`CrosswordsController.scala`, `CrosswordPageController`,
 etc.), untouched by any of this. This is a deliberate product decision.
 
-### Public URL structure: `/puzzles-and-games`
+### Public URL structure: top-level, mirroring crosswords
 
-Per the client's confirmed content-mapping decision, the public URLs are:
+Per confirmed direction, the individual puzzle-page URLs are **top-level** (no `/puzzles-and-games`
+prefix), mirroring exactly how crosswords already work (`/crosswords/{type}/{id}`, also unprefixed).
+Rationale: crosswords can't be restructured, so the other puzzle types follow the same top-level,
+nested-by-type convention for consistency, anticipating what the business will likely confirm
+formally later. **Only the hub page itself stays at `/puzzles-and-games`** - the individual
+single-instance puzzle pages do not live under it:
 
-- Hub: `https://www.theguardian.com/puzzles-and-games/`
-- Sudoku (nested - puzzle type + variant): `https://www.theguardian.com/puzzles-and-games/sudoku/easy`,
+- Hub (unchanged): `https://www.theguardian.com/puzzles-and-games/`
+- Sudoku (nested - puzzle type + variant): `https://www.theguardian.com/sudoku/easy`,
   `.../sudoku/medium`, `.../sudoku/hard`, `.../sudoku/killer`
-- Word wheel (flat): `https://www.theguardian.com/puzzles-and-games/word-wheel`
-- Wordiply (flat): `https://www.theguardian.com/puzzles-and-games/wordiply`
+- Word wheel (flat): `https://www.theguardian.com/word-wheel`
+- Wordiply (flat): `https://www.theguardian.com/wordiply`
 
-There is deliberately **no group prefix** (no `/logic-puzzles` or `/word-games` segment before the
-puzzle name) - confirmed by explicit user decision. Crosswords keep their existing, separate
-`/crosswords/...` URLs, unaffected by this structure.
+There is deliberately **no group prefix** either (no `/logic-puzzles` or `/word-games` segment
+before the puzzle name) - confirmed by explicit user decision. Crosswords keep their existing,
+separate `/crosswords/...` URLs, unaffected by any of this.
 
 Because the public URL for Sudoku is nested, this repo's internal naming matches that shape too -
 Sudoku is represented as a puzzle type + variant pair throughout (`PuzzlesPageController.renderSudoku`/
@@ -32,32 +37,43 @@ Sudoku is represented as a puzzle type + variant pair throughout (`PuzzlesPageCo
 slug used only for internal bookkeeping. Only the `slug` value actually sent to DCR is flattened back
 to `sudoku-<variant>` (e.g. `"sudoku-easy"`), since that's the key DCR's own registry still expects.
 
+Word wheel and wordiply, being flat/single-segment puzzles, each get their own explicit, dedicated,
+no-argument actions (`renderWordWheel`/`renderWordWheelJson`, `renderWordiply`/`renderWordiplyJson`)
+rather than being served through one shared, generic "any slug" action - mirroring how the crossword
+controller handles each crossword type explicitly via its own constrained route, rather than a single
+generic slug action. Play routing isn't well suited to a single generic action once URLs diverge
+structurally by game, exactly the same reason crosswords use a constrained `$crosswordType<...>`
+pattern instead of a generic type parameter.
+
 ### Current scope (V0): 6 puzzles
 
 Matching DCR's own V0 registry:
 
-| Public URL | Internal representation | `slug` sent to DCR | Title sent to DCR |
+| Public URL | Controller action | `slug` sent to DCR | Title sent to DCR |
 |---|---|---|---|
-| `/puzzles-and-games/sudoku/easy` | `renderSudoku("easy")` | `sudoku-easy` | Sudoku (easy) |
-| `/puzzles-and-games/sudoku/medium` | `renderSudoku("medium")` | `sudoku-medium` | Sudoku (medium) |
-| `/puzzles-and-games/sudoku/hard` | `renderSudoku("hard")` | `sudoku-hard` | Sudoku (hard) |
-| `/puzzles-and-games/sudoku/killer` | `renderSudoku("killer")` | `sudoku-killer` | Killer sudoku |
-| `/puzzles-and-games/word-wheel` | `renderPuzzlePage("word-wheel")` | `word-wheel` | Word wheel |
-| `/puzzles-and-games/wordiply` | `renderPuzzlePage("wordiply")` | `wordiply` | Wordiply |
+| `/sudoku/easy` | `renderSudoku("easy")` | `sudoku-easy` | Sudoku (easy) |
+| `/sudoku/medium` | `renderSudoku("medium")` | `sudoku-medium` | Sudoku (medium) |
+| `/sudoku/hard` | `renderSudoku("hard")` | `sudoku-hard` | Sudoku (hard) |
+| `/sudoku/killer` | `renderSudoku("killer")` | `sudoku-killer` | Killer sudoku |
+| `/word-wheel` | `renderWordWheel()` | `word-wheel` | Word wheel |
+| `/wordiply` | `renderWordiply()` | `wordiply` | Wordiply |
 
 For all six, this repo sends **only a static placeholder title** (plus the puzzle date - see
 below) - there is no real per-instance content sourcing on the frontend side for any of these,
 since the iframe itself always shows "today's" puzzle according to the third party's own logic.
 Whatever DCR renders is driven entirely by its own static per-slug config (see "DCR's
-`GameConfig`/`PuzzleConfig` registry" below) plus that placeholder title.
+`PuzzleConfig` registry" below) plus that placeholder title.
 
 ### Code
 
 - `applications/app/controllers/PuzzlesPageController.scala`:
-  - `renderSudoku(variant)`/`renderSudokuJson(variant)` - the nested Sudoku actions.
-  - `renderPuzzlePage(slug)`/`renderPuzzlePageJson(slug)` - the flat word-wheel/wordiply actions.
-  - `sudokuVariantTitles`/`flatPuzzleTitles` - the slug allowlists and title maps.
-  - All four are deliberately named distinctly from this controller's other, pre-existing
+  - `renderSudoku(variant)`/`renderSudokuJson(variant)` - the nested Sudoku actions, backed by
+    `sudokuVariantTitles` (variant -> title map).
+  - `renderWordWheel()`/`renderWordWheelJson()` - dedicated word wheel actions, hardcoding
+    `WordWheelSlug`/`WordWheelTitle` internally.
+  - `renderWordiply()`/`renderWordiplyJson()` - dedicated wordiply actions, hardcoding
+    `WordiplySlug`/`WordiplyTitle` internally.
+  - All six are deliberately named distinctly from this controller's other, pre-existing
     `renderPuzzles()`/`renderPuzzlesJson()` actions, which serve the unrelated Puzzles Hub/listing
     page.
 - `common/app/model/dotcomrendering/DotcomPuzzlePageRenderingDataModel.scala` -
@@ -68,17 +84,22 @@ Whatever DCR renders is driven entirely by its own static per-slug config (see "
 - `common/app/staticpages/StaticPages.scala` - `dcrSimplePuzzlePage` builds the minimal `SimplePage`
   metadata used for each instance.
 - Routes (identical in `applications/conf/routes` and `dev-build/conf/routes`, under the
-  `# Puzzle Page` comment):
+  `# Puzzle Page` comment, positioned right after the crossword routes and well ahead of the
+  generic `IndexController` catch-all further down the file - Play resolves routes in file order,
+  so this positioning is required for these paths to not fall through to the tag/section catch-all,
+  exactly like `/crosswords/*` already relies on):
   ```
-  GET /puzzles-and-games/sudoku/:variant       -> PuzzlesPageController.renderSudoku       (variant constrained to easy|medium|hard|killer)
-  GET /puzzles-and-games/sudoku/:variant.json  -> PuzzlesPageController.renderSudokuJson
-  GET /puzzles-and-games/:slug                 -> PuzzlesPageController.renderPuzzlePage
-  GET /puzzles-and-games/:slug.json            -> PuzzlesPageController.renderPuzzlePageJson
+  GET /sudoku/:variant       -> PuzzlesPageController.renderSudoku       (variant constrained to easy|medium|hard|killer)
+  GET /sudoku/:variant.json  -> PuzzlesPageController.renderSudokuJson
+  GET /word-wheel            -> PuzzlesPageController.renderWordWheel
+  GET /word-wheel.json       -> PuzzlesPageController.renderWordWheelJson
+  GET /wordiply              -> PuzzlesPageController.renderWordiply
+  GET /wordiply.json         -> PuzzlesPageController.renderWordiplyJson
   ```
 
 ### Access gate: reuses the existing Puzzles Hub AB test
 
-All four Puzzle Page actions are gated behind `ab.PuzzlesHubExperiment` ("puzzles-new-hub"), the
+All six Puzzle Page actions are gated behind `ab.PuzzlesHubExperiment` ("puzzles-new-hub"), the
 same server-side AB test already used by this controller's `renderPuzzles`/`renderPuzzlesJson` hub
 actions - no new/separate experiment was introduced for V0. Requests return `404` unless the request
 carries the `X-GU-Server-AB-Tests: puzzles-new-hub:variant` header (via this repo's normal server-side
@@ -86,7 +107,7 @@ AB test framework, `common/app/ab/ABTests.scala`).
 
 ### The `?date=` parameter (prep for V1 calendar navigation)
 
-All four Puzzle Page actions accept an optional `?date=YYYY-MM-DD` query parameter, defaulting to
+All six Puzzle Page actions accept an optional `?date=YYYY-MM-DD` query parameter, defaulting to
 today's date (ISO 8601) when absent. This is forwarded to DCR as `instance.puzzleDate`. For V0 this
 is pure plumbing: no calendar UI exists yet, and DCR does not act on this value - it's preparation
 for a V1 feature where users navigate from a calendar to a specific past date's puzzle rather than
@@ -101,20 +122,23 @@ for this parameter in production is a separate, not-yet-done follow-up.
 
 All per-slug *structural* configuration (iframe URL, render mode, which UI chrome is enabled) lives
 in DCR's `PuzzleConfig` registry, not in this repo - this repo does not duplicate that data. To onboard
-a new **flat** iframe-based slug (like word-wheel/wordiply) on the **frontend side**:
+a new **flat** (single-segment) iframe-based puzzle (like word-wheel/wordiply) on the **frontend
+side**:
 
-1. Add the slug to `PuzzlesPageController.flatPuzzleTitles`, mapping it to a human-readable title.
-   This is currently the *only* thing that determines whether `renderPuzzlePage`/
-   `renderPuzzlePageJson` will serve that slug at all - anything not in this map 404s.
-2. Coordinate with the DCR side to add a matching entry to DCR's `PuzzleConfig` registry for the same
+1. Add a dedicated, no-argument action pair (`renderX`/`renderXJson`) to `PuzzlesPageController`,
+   hardcoding the new puzzle's slug and title as constants (mirroring `renderWordWheel`/
+   `renderWordiply`) - do not add it to a shared generic map/action, since Play routing (and this
+   repo's convention here) treats each top-level puzzle as its own explicit route/action, exactly
+   like each crossword type.
+2. Add the corresponding route(s) to both `applications/conf/routes` and `dev-build/conf/routes`,
+   in the same position as the existing Puzzle Page routes (before the generic catch-all).
+3. Coordinate with the DCR side to add a matching entry to DCR's `PuzzleConfig` registry for the same
    slug - this repo's change alone does nothing without a corresponding DCR-side registry entry.
-3. No routes changes are needed - `GET /puzzles-and-games/:slug(.json)` already matches any slug
-   string.
 
 A new **nested** puzzle type (like Sudoku's variants) would instead need its own dedicated action(s)
-and route(s) taking the appropriate path segments, mirroring `renderSudoku`/`renderSudokuJson` -
-this repo's internal naming/routes should always match the public URL shape, not be flattened
-internally just because that's simpler.
+taking the appropriate path segment(s), mirroring `renderSudoku`/`renderSudokuJson` - this repo's
+internal naming/routes should always match the public URL shape, not be flattened internally just
+because that's simpler.
 
 Puzzle Page is scoped to iframe-based puzzles with no real per-instance content by design - a puzzle
 type that needs real per-instance content fetched from somewhere is a larger change to discuss and
@@ -128,7 +152,7 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-**The AB-test header is required again** (see "Access gate" above) - without
+**The AB-test header is required** (see "Access gate" above) - without
 `X-GU-Server-AB-Tests: puzzles-new-hub:variant`, every URL below 404s. Set it via a browser extension
 (e.g. ModHeader) or `curl -H "X-GU-Server-AB-Tests: puzzles-new-hub:variant" ...`.
 
@@ -137,15 +161,17 @@ needing DCR itself to be reachable.
 
 | Puzzle | URL |
 |---|---|
-| Sudoku (easy) | `http://localhost:9000/puzzles-and-games/sudoku/easy` |
-| Sudoku (medium) | `http://localhost:9000/puzzles-and-games/sudoku/medium` |
-| Sudoku (hard) | `http://localhost:9000/puzzles-and-games/sudoku/hard` |
-| Killer sudoku | `http://localhost:9000/puzzles-and-games/sudoku/killer` |
-| Word wheel | `http://localhost:9000/puzzles-and-games/word-wheel` |
-| Wordiply | `http://localhost:9000/puzzles-and-games/wordiply` |
+| Sudoku (easy) | `http://localhost:9000/sudoku/easy` |
+| Sudoku (medium) | `http://localhost:9000/sudoku/medium` |
+| Sudoku (hard) | `http://localhost:9000/sudoku/hard` |
+| Killer sudoku | `http://localhost:9000/sudoku/killer` |
+| Word wheel | `http://localhost:9000/word-wheel` |
+| Wordiply | `http://localhost:9000/wordiply` |
 
-Append `?date=2024-01-15` (or similar) to any of the above to see a non-default `puzzleDate` value
-in the JSON payload.
+The hub itself: `http://localhost:9000/puzzles-and-games`.
+
+Append `?date=2024-01-15` (or similar) to any of the puzzle URLs above to see a non-default
+`puzzleDate` value in the JSON payload.
 
 ### The DCR endpoint contract
 
@@ -159,7 +185,7 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 | `config` | object | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific. |
 | `nav` | object | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific. |
 | `pageFooter` | object | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific. |
-| `canonicalUrl` | string | The canonical URL for this page. |
+| `canonicalUrl` | string | The canonical URL for this page (e.g. `https://www.theguardian.com/sudoku/easy`, `https://www.theguardian.com/word-wheel`). |
 | `editionId` | string | The edition (e.g. `UK`, `US`, `AU`) resolved from the request. |
 | `instance` | object | Per-instance data - see below. |
 
@@ -185,8 +211,9 @@ Page's iframe-only scope was confirmed.
 - **`?date=` is plumbing only.** The value is accepted, defaulted, and forwarded to DCR, but nothing
   - on either side - actually uses it to fetch a different day's puzzle yet. No calendar UI exists.
   CDN/Fastly passthrough for this query param in production also hasn't been set up yet.
-- **Routes will likely move.** These routes are expected to eventually be mapped/exposed via a
-  different project rather than living here long-term.
+- **Top-level URL structure is not yet formally confirmed by the business.** It mirrors crosswords'
+  existing, unchangeable URL shape for consistency and to anticipate the likely eventual decision -
+  if the business decides differently, these routes/URLs will need to move again.
 - **Deeper technical open items (AmuseLabs archive URLs, the user-id/postMessage mechanism, etc.)
   are tracked on the DCR side**, in that repo's own equivalent consolidated Puzzle Page doc, not
   duplicated here - check the `dotcom-rendering` repo for the current location of that document.
