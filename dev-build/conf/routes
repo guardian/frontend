@@ -13,8 +13,8 @@ GET            /assets/internal/*file                                           
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
 # Puzzles
-GET        /puzzles.json                                                                                                         controllers.PuzzlesPageController.renderPuzzlesJson()
-GET        /puzzles                                                                                                              controllers.PuzzlesPageController.renderPuzzles()
+GET        /puzzles-and-games.json                                                                                                 controllers.PuzzlesPageController.renderPuzzlesJson()
+GET        /puzzles-and-games                                                                                                      controllers.PuzzlesPageController.renderPuzzles()
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -33,8 +33,10 @@ GET        /crosswords/digital-edition                                          
 GET        /crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
 
 # Puzzle Page
-GET        /puzzles/:slug.json                                                                                                controllers.PuzzlesPageController.renderPuzzlePageJson(slug: String)
-GET        /puzzles/:slug                                                                                                     controllers.PuzzlesPageController.renderPuzzlePage(slug: String)
+GET        /puzzles-and-games/sudoku/$variant<easy|medium|hard|killer>.json                                                   controllers.PuzzlesPageController.renderSudokuJson(variant: String)
+GET        /puzzles-and-games/sudoku/$variant<easy|medium|hard|killer>                                                        controllers.PuzzlesPageController.renderSudoku(variant: String)
+GET        /puzzles-and-games/:slug.json                                                                                      controllers.PuzzlesPageController.renderPuzzlePageJson(slug: String)
+GET        /puzzles-and-games/:slug                                                                                           controllers.PuzzlesPageController.renderPuzzlePage(slug: String)
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)

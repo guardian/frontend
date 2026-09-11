@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import common.{CanonicalLink, Edition}
-import model.{CrosswordData, Page}
+import model.Page
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
@@ -21,22 +21,21 @@ object MoreFromPuzzlesAndGamesItem {
   implicit val writes: OWrites[MoreFromPuzzlesAndGamesItem] = Json.writes[MoreFromPuzzlesAndGamesItem]
 }
 
-/** Per-instance data for a single Puzzle Page. Puzzle Page is currently scoped to iframe-based puzzles only (see
-  * PuzzlesPageController), which only ever populate `title` - `puzzleType`/`setterName`/`date`/
-  * `specialInstructions`/`discussionId`/`crosswordData` were added for a crossword-flavoured Puzzle Page slug that has
-  * since been descoped (crosswords remain on their own, separate crossword-only flow). These fields are kept here,
-  * always `None`/unpopulated, only because they are part of the JSON contract already agreed with DCR's `/PuzzlePage`
-  * endpoint - removing them is a DCR-side contract change to coordinate separately, not something to do unilaterally
-  * from this repo.
+/** Per-instance data for a single Puzzle Page. Puzzle Page is scoped to iframe-based puzzles only (see
+  * PuzzlesPageController) - there is no crossword (or other component-rendered) case, so this type carries no
+  * crossword-specific fields. (A set of crossword-flavoured fields - `puzzleType`/`setterName`/`date`/
+  * `specialInstructions`/`discussionId`/`crosswordData` - existed here briefly during early development of a since-
+  * descoped crossword-flavoured Puzzle Page slug, and were removed once that scope was confirmed permanently out, as a
+  * coordinated contract change with DCR's equivalent removal.)
   */
 case class PuzzlePageInstance(
     title: String,
-    puzzleType: Option[String] = None,
-    setterName: Option[String] = None,
-    date: Option[String] = None,
-    specialInstructions: Option[String] = None,
-    discussionId: Option[String] = None,
-    crosswordData: Option[CrosswordData] = None,
+    /** The puzzle date to show, as an ISO-8601 (`yyyy-MM-dd`) date string - prep for V1 calendar navigation (users will
+      * eventually navigate to a specific past date's puzzle rather than always "today's"). Always populated by
+      * `PuzzlesPageController` (defaulting to today when no `?date=` query param is given), but modelled as optional
+      * for JSON forwards/backwards compatibility. DCR does not act on this value yet - V0 is pure plumbing.
+      */
+    puzzleDate: Option[String] = None,
     moreFromPuzzlesAndGames: Seq[MoreFromPuzzlesAndGamesItem] = Nil,
 )
 
@@ -44,9 +43,9 @@ object PuzzlePageInstance {
   implicit val writes: OWrites[PuzzlePageInstance] = Json.writes[PuzzlePageInstance]
 }
 
-/** Rendering data model for the Puzzle Page flow (POST to DCR's `/PuzzlePage` endpoint), currently scoped to
-  * iframe-based puzzle types only. It is entirely additive and separate from the existing crossword article rendering
-  * flow (`DotcomRenderingDataModel.forCrossword`) used by the crossword-only routes.
+/** Rendering data model for the Puzzle Page flow (POST to DCR's `/PuzzlePage` endpoint), scoped to iframe-based puzzle
+  * types only. It is entirely additive and separate from the existing crossword article rendering flow
+  * (`DotcomRenderingDataModel.forCrossword`) used by the crossword-only routes.
   */
 case class DotcomPuzzlePageRenderingDataModel(
     id: String,

@@ -15,6 +15,7 @@ import play.api.mvc._
 import renderers.DotcomRenderingService
 import staticpages.StaticPages
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class PuzzlesPageController(
@@ -70,43 +71,81 @@ class PuzzlesPageController(
         }
     }
 
-  /** Puzzle Page: a generic page template for iframe-based puzzle types (sudoku, word games, etc), rendered by DCR via
-    * its `/PuzzlePage` endpoint. There is no per-instance content to fetch for any of these - the iframe always shows
-    * "today's" puzzle according to the third party's own logic - so this repo only needs to provide a reasonable static
-    * title per slug. All structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed by
-    * slug. See docs/puzzle-page.md for the full reference.
+  /** Puzzle Page: a generic page template for iframe-based puzzle types, rendered by DCR via its `/PuzzlePage`
+    * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows "today's" puzzle
+    * according to the third party's own logic - so this repo only needs to provide a reasonable static title. All
+    * structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed by slug. See
+    * docs/puzzle-page.md for the full reference.
     *
-    * Deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated Puzzles Hub/listing
-    * page) - `renderPuzzlePage(Json)` serves a single puzzle instance, not the hub.
+    * Sudoku's public URL is nested (`/puzzles-and-games/sudoku/:variant`, e.g. `.../sudoku/easy`), so it gets its own
+    * dedicated `renderSudoku`/`renderSudokuJson` actions taking a puzzle-type + variant pair, rather than a flattened
+    * `"sudoku-easy"`-style slug - this repo's internal naming should match the public URL shape. Only the outbound
+    * `slug` value actually sent to DCR is flattened back to `sudoku-<variant>`, since that's the key DCR's own registry
+    * still expects.
+    *
+    * `renderPuzzlePage`/`renderPuzzlePageJson` serve the other, single-segment slugs (`word-wheel`, `wordiply`) at
+    * `/puzzles-and-games/:slug`. All four actions are deliberately named distinctly from `renderPuzzles`/
+    * `renderPuzzlesJson` above (the unrelated Puzzles Hub/listing page).
+    *
+    * Gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB test already used by the hub actions above -
+    * reusing the existing experiment rather than introducing a new one for V0.
     *
     * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
     * routes/controllers, untouched.
     */
+  def renderSudoku(variant: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else
+        PuzzlesPageController.sudokuVariantTitles.get(variant) match {
+          case Some(webTitle) => renderPuzzlePageContent(s"sudoku-$variant", webTitle)
+          case None           => notFound
+        }
+    }
+
+  def renderSudokuJson(variant: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else
+        PuzzlesPageController.sudokuVariantTitles.get(variant) match {
+          case Some(webTitle) => renderPuzzlePageContentJson(s"sudoku-$variant", webTitle)
+          case None           => notFound
+        }
+    }
+
   def renderPuzzlePage(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
-      slug match {
-        case puzzleSlug if PuzzlesPageController.puzzleSlugTitles.contains(puzzleSlug) =>
-          renderPuzzlePageContent(puzzleSlug)
-        case _ => notFound
-      }
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else
+        PuzzlesPageController.flatPuzzleTitles.get(slug) match {
+          case Some(webTitle) => renderPuzzlePageContent(slug, webTitle)
+          case None           => notFound
+        }
     }
 
   def renderPuzzlePageJson(slug: String): Action[AnyContent] =
     Action.async { implicit request =>
-      slug match {
-        case puzzleSlug if PuzzlesPageController.puzzleSlugTitles.contains(puzzleSlug) =>
-          renderPuzzlePageContentJson(puzzleSlug)
-        case _ => notFound
-      }
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else
+        PuzzlesPageController.flatPuzzleTitles.get(slug) match {
+          case Some(webTitle) => renderPuzzlePageContentJson(slug, webTitle)
+          case None           => notFound
+        }
     }
 
-  private def renderPuzzlePageContent(slug: String)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildPuzzlePageData(slug)
+  private def renderPuzzlePageContent(
+      slug: String,
+      webTitle: String,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = buildPuzzlePageData(slug, webTitle)
     remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
   }
 
-  private def renderPuzzlePageContentJson(slug: String)(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildPuzzlePageData(slug)
+  private def renderPuzzlePageContentJson(
+      slug: String,
+      webTitle: String,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val dataModel = buildPuzzlePageData(slug, webTitle)
     Future.successful(
       Cached(CacheTime.NotFound)(
         Cached.WithoutRevalidationResult(
@@ -118,25 +157,35 @@ class PuzzlesPageController(
 
   private def buildPuzzlePageData(
       slug: String,
+      webTitle: String,
   )(implicit request: RequestHeader): DotcomPuzzlePageRenderingDataModel = {
-    val webTitle = PuzzlesPageController.puzzleSlugTitles(slug)
     val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
-    val instance = PuzzlePageInstance(title = webTitle)
+    val instance = PuzzlePageInstance(title = webTitle, puzzleDate = Some(resolvePuzzleDate))
     DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
   }
+
+  /** The puzzle date to show, as an ISO-8601 (`yyyy-MM-dd`) date string. Prep for V1 calendar navigation (per PR review
+    * feedback: users will eventually navigate to a specific past date's puzzle rather than always "today's"). Accepted
+    * as an optional `?date=` query param - not a path segment, to avoid disrupting the URL shapes above - defaulting to
+    * today's date when absent, which preserves current behaviour exactly. This is pure plumbing for V0: no calendar UI
+    * is being built now, and DCR is not expected to act on this value yet.
+    */
+  private def resolvePuzzleDate(implicit request: RequestHeader): String =
+    request.getQueryString("date").getOrElse(LocalDate.now().toString)
 }
 
 object PuzzlesPageController {
 
-  /** The 6 currently-live, iframe-based Puzzle Page slugs (V0 scope, matching DCR's own registry), and a reasonable
-    * static title for each. DCR's own static registry, keyed by slug, owns the iframe URL and all other
-    * structural/rendering behaviour - this repo does not need to know or send any of that.
-    */
-  val puzzleSlugTitles: Map[String, String] = Map(
-    "sudoku-easy" -> "Sudoku (easy)",
-    "sudoku-medium" -> "Sudoku (medium)",
-    "sudoku-hard" -> "Sudoku (hard)",
-    "sudoku-killer" -> "Killer sudoku",
+  /** Sudoku variant -> display title, for the nested `/puzzles-and-games/sudoku/:variant` route. */
+  val sudokuVariantTitles: Map[String, String] = Map(
+    "easy" -> "Sudoku (easy)",
+    "medium" -> "Sudoku (medium)",
+    "hard" -> "Sudoku (hard)",
+    "killer" -> "Killer sudoku",
+  )
+
+  /** The other, single-segment Puzzle Page slugs (`/puzzles-and-games/:slug`) and their display titles. */
+  val flatPuzzleTitles: Map[String, String] = Map(
     "word-wheel" -> "Word wheel",
     "wordiply" -> "Wordiply",
   )
