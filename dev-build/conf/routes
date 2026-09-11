@@ -13,8 +13,8 @@ GET            /assets/internal/*file                                           
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
 # Puzzles
-GET        /puzzles-and-games.json                                                                                                 controllers.PuzzlesPageController.renderPuzzlesJson()
-GET        /puzzles-and-games                                                                                                      controllers.PuzzlesPageController.renderPuzzles()
+GET        /puzzles-and-games.json                                                                                                         controllers.PuzzlesPageController.renderPuzzlesJson()
+GET        /puzzles-and-games                                                                                                              controllers.PuzzlesPageController.renderPuzzles()
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.

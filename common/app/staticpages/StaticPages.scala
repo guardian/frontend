@@ -52,8 +52,8 @@ object StaticPages {
     SimplePage(
       MetaData.make(
         id = id,
-        section = Option(SectionId(value = "puzzles")),
-        webTitle = "Puzzles and Games",
+        section = Option(SectionId(value = "puzzles-and-games")),
+        webTitle = "Puzzles and games",
         description = None,
         contentType = Some(DotcomContentType.Tag),
         iosType = None,

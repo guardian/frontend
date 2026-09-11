@@ -29,9 +29,12 @@ import scala.concurrent.{ExecutionContext, Future}
   private val layout = PuzzlesLayout(
     containers = Seq(
       PuzzleContainer(
+        id = "daily-puzzles",
         title = "Daily puzzles",
         content = PuzzleContent(
-          items = Seq(Seq(PuzzleItem("Quick crossword", "crossword", "quick"))),
+          items = Seq(
+            Seq(PuzzleItem("crossword-quick", "Quick crossword", "crossword", "quick", "primary", Some("Daily"))),
+          ),
           nestedContainers = Seq.empty,
         ),
       ),
@@ -110,7 +113,7 @@ import scala.concurrent.{ExecutionContext, Future}
     contentType(result) should contain("application/json")
     val json = Json.parse(contentAsString(result))
     (json \ "id").as[String] should be("/puzzles-and-games.json")
-    (json \ "webTitle").as[String] should be("Puzzles and Games")
+    (json \ "webTitle").as[String] should be("Puzzles and games")
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 

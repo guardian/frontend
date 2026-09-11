@@ -199,6 +199,23 @@ class EmailSignupController(
       s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
       s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
 
+  private def logFormValidationFailure(actionName: String, formWithErrors: Form[_])(implicit
+      request: Request[AnyContent],
+  ): Unit = {
+    val submittedKeys = request.body.asFormUrlEncoded.map(_.keys.toSeq.sorted).getOrElse(Seq.empty)
+    val hasCaptchaToken = request.body.asFormUrlEncoded.exists(_.contains("g-recaptcha-response"))
+    val hasSecureCookie = request.headers.get("Cookie").exists(_.contains("play_session"))
+
+    logInfoWithRequestId(
+      s"Newsletter signup form validation failed for $actionName. " +
+        s"errors=${formWithErrors.errors.map(e => s"${e.key}:${e.message}").mkString(",")}; " +
+        s"submittedKeys=${submittedKeys.mkString("[", ", ", "]")}; " +
+        s"hasCaptchaToken=$hasCaptchaToken; " +
+        s"hasSecureCookie=$hasSecureCookie; " +
+        s"${requestLogContext}",
+    )
+  }
+
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
@@ -437,7 +454,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logFormValidationFailure("/email/footer", formWithErrors)
             EmailFormError.increment()
             Future.successful(respondFooter(InvalidEmail))
           },
@@ -591,7 +608,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logFormValidationFailure("/email", formWithErrors)
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
@@ -635,7 +652,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logFormValidationFailure("/email/many", formWithErrors)
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },

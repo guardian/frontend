@@ -1,5 +1,6 @@
 package ab
 
+import conf.Configuration
 import play.api.mvc.RequestHeader
 
 /** Request-level access to the Fastly-managed puzzles hub experiment.
@@ -13,5 +14,8 @@ object PuzzlesHubExperiment {
   val VariantGroup = "variant"
 
   def isEnabled(implicit request: RequestHeader): Boolean =
-    ABTests.isUserInTestGroup(TestName, VariantGroup)
+    isEnabled(Configuration.environment.isDev)
+
+  private[ab] def isEnabled(isDevelopment: Boolean)(implicit request: RequestHeader): Boolean =
+    isDevelopment || ABTests.isUserInTestGroup(TestName, VariantGroup)
 }

@@ -36,7 +36,9 @@ object PressedCard {
         supportingCuratedContent => supportingCuratedContent.content.fields.flatMap(_.lastModified),
         _ => None,
         latestSnap => latestSnap.latestContent.flatMap(_.fields.flatMap(_.lastModified)),
+        _ => None,
       ).map(_.toJodaDateTime)
+
     }
 
     def extractGalleryCount(fc: FaciaContent): Option[Int] = {
@@ -48,6 +50,7 @@ object PressedCard {
         supportingCuratedContent => countImagesInGallery(supportingCuratedContent.content),
         _ => None,
         latestSnap => latestSnap.latestContent.flatMap(countImagesInGallery),
+        _ => None,
       )
     }
 
@@ -62,6 +65,7 @@ object PressedCard {
         supportingCuratedContent => getMinutes(supportingCuratedContent.content),
         _ => None,
         latestSnap => latestSnap.latestContent.flatMap(getMinutes),
+        _ => None,
       )
 
       def audioDurationSeconds(fc: FaciaContent) = fold(fc)(
@@ -69,6 +73,7 @@ object PressedCard {
         supportingCuratedContent => getSeconds(supportingCuratedContent.content),
         _ => None,
         latestSnap => latestSnap.latestContent.flatMap(getSeconds),
+        _ => None,
       )
 
       val minutes: Option[Int] = if (audioDurationMinutes(fc).isDefined) {

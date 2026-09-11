@@ -13,9 +13,12 @@ import staticpages.StaticPages
   private val layout = PuzzlesLayout(
     containers = Seq(
       PuzzleContainer(
+        id = "daily-puzzles",
         title = "Daily puzzles",
         content = PuzzleContent(
-          items = Seq(Seq(PuzzleItem("Quick crossword", "crossword", "quick"))),
+          items = Seq(
+            Seq(PuzzleItem("crossword-quick", "Quick crossword", "crossword", "quick", "primary", Some("Daily"))),
+          ),
           nestedContainers = Seq.empty,
         ),
       ),
@@ -23,7 +26,7 @@ import staticpages.StaticPages
   )
 
   private def requestWithParticipations: RequestHeader = {
-    implicit val request: RequestHeader = FakeRequest("GET", "/puzzles")
+    implicit val request: RequestHeader = FakeRequest("GET", "/puzzles-and-games")
       .withHeaders(
         "Host" -> "www.theguardian.com",
         "X-GU-Server-AB-Tests" -> "puzzles-new-hub:variant,another-test:control",
@@ -33,30 +36,31 @@ import staticpages.StaticPages
 
   "DotcomPuzzlesPageRenderingDataModel" should "serialize the complete puzzles rendering payload" in {
     val model = DotcomPuzzlesPageRenderingDataModel(
-      StaticPages.dcrSimplePuzzlesPage("/puzzles"),
+      StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"),
       layout,
       requestWithParticipations,
     )
 
     val json = DotcomPuzzlesPageRenderingDataModel.toJson(model)
 
-    (json \ "id").as[String] should be("/puzzles")
-    (json \ "webTitle").as[String] should be("Puzzles and Games")
+    (json \ "id").as[String] should be("/puzzles-and-games")
+    (json \ "webTitle").as[String] should be("Puzzles and games")
     (json \ "editionId").as[String] should not be empty
     (json \ "nav").toOption should not be empty
     (json \ "pageFooter").toOption should not be empty
     (json \ "commercialProperties").toOption should not be empty
-    (json \ "canonicalUrl").as[String] should endWith("/puzzles")
+    (json \ "canonicalUrl").as[String] should endWith("/puzzles-and-games")
     (json \ "layout").as[PuzzlesLayout] should be(layout)
     val puzzlesNav = (json \ "nav" \ "otherLinks").as[Seq[play.api.libs.json.JsObject]]
     puzzlesNav
-      .find(link => (link \ "url").as[String] == "/puzzles")
-      .map(link => (link \ "title").as[String]) should contain("Puzzles and Games")
+      .find(link => (link \ "url").as[String] == "/puzzles-and-games")
+      .map(link => (link \ "title").as[String]) should
+      contain("Puzzles and games")
   }
 
   it should "propagate every current server-side AB-test participation" in {
     val model = DotcomPuzzlesPageRenderingDataModel(
-      StaticPages.dcrSimplePuzzlesPage("/puzzles"),
+      StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"),
       layout,
       requestWithParticipations,
     )
