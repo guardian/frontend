@@ -47,7 +47,7 @@ object ReturnJourney {
   def apply(returnUrl: Option[String]): Journey =
     (for {
       url <- returnUrl
-      parsedUrl <- Try(Uri(url)).toOption
+      parsedUrl <- Try(Uri.unsafeParse(url)).toOption
       returnJourney <- all.find(_.applies(parsedUrl))
     } yield returnJourney).getOrElse(Other)
 }
