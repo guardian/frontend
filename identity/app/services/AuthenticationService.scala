@@ -1,6 +1,7 @@
 package services
 
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import com.gu.identity.auth.{IdapiAuthService, IdapiUserCredentials}
 import com.gu.identity.cookie.IdentityCookieService
 import com.gu.identity.model.User
