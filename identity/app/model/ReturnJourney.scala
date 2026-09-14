@@ -1,6 +1,5 @@
 package model
 
-//import io.lemonlabs.uri.Url
 import sttp.model.Uri
 import scala.util.Try
 
