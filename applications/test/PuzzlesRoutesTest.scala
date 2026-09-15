@@ -20,46 +20,67 @@ import org.scalatest.matchers.should.Matchers
     route.url should be("/puzzles-and-games.json")
   }
 
-  it should "expose the top-level Sudoku HTML endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderSudoku("easy")
+  it should "expose the nested, dated Sudoku HTML endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderSudoku("easy", "2024-01-15")
 
     route.method should be("GET")
-    route.url should be("/sudoku/easy")
+    route.url should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15")
   }
 
-  it should "expose the top-level Sudoku JSON endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderSudokuJson("killer")
+  it should "expose the nested, dated Sudoku JSON endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderSudokuJson("killer", "2024-01-15")
 
     route.method should be("GET")
-    route.url should be("/sudoku/killer.json")
+    route.url should be("/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-15.json")
   }
 
-  it should "expose the top-level word wheel HTML endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderWordWheel()
+  it should "expose the bare (dateless) Sudoku archive-redirect endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.redirectSudokuArchive("hard")
 
     route.method should be("GET")
-    route.url should be("/word-wheel")
+    route.url should be("/puzzles-and-games/logic-puzzles/sudoku-hard")
   }
 
-  it should "expose the top-level word wheel JSON endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderWordWheelJson()
+  it should "expose the nested, dated word wheel HTML endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordWheel("2024-01-15")
 
     route.method should be("GET")
-    route.url should be("/word-wheel.json")
+    route.url should be("/puzzles-and-games/word-games/word-wheel/2024-01-15")
   }
 
-  it should "expose the top-level wordiply HTML endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderWordiply()
+  it should "expose the nested, dated word wheel JSON endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordWheelJson("2024-01-15")
 
     route.method should be("GET")
-    route.url should be("/wordiply")
+    route.url should be("/puzzles-and-games/word-games/word-wheel/2024-01-15.json")
   }
 
-  it should "expose the top-level wordiply JSON endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.renderWordiplyJson()
+  it should "expose the bare (dateless) word wheel archive-redirect endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.redirectWordWheelArchive()
 
     route.method should be("GET")
-    route.url should be("/wordiply.json")
+    route.url should be("/puzzles-and-games/word-games/word-wheel")
+  }
+
+  it should "expose the nested, dated wordiply HTML endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordiply("2024-01-15")
+
+    route.method should be("GET")
+    route.url should be("/puzzles-and-games/word-games/wordiply/2024-01-15")
+  }
+
+  it should "expose the nested, dated wordiply JSON endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.renderWordiplyJson("2024-01-15")
+
+    route.method should be("GET")
+    route.url should be("/puzzles-and-games/word-games/wordiply/2024-01-15.json")
+  }
+
+  it should "expose the bare (dateless) wordiply archive-redirect endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.redirectWordiplyArchive()
+
+    route.method should be("GET")
+    route.url should be("/puzzles-and-games/word-games/wordiply")
   }
 
   it should "not clash with, or reorder, the existing crossword routes" in {
