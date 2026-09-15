@@ -15,7 +15,6 @@ import play.api.mvc._
 import renderers.DotcomRenderingService
 import staticpages.StaticPages
 
-import java.time.LocalDate
 import scala.concurrent.Future
 
 class PuzzlesPageController(
@@ -72,24 +71,27 @@ class PuzzlesPageController(
     }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, rendered by DCR via its `/PuzzlePage`
-    * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows "today's" puzzle
-    * according to the third party's own logic - so this repo only needs to provide a reasonable static title. All
-    * structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed by slug. See
-    * docs/puzzle-page.md for the full reference.
+    * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows the puzzle for the
+    * requested date according to the third party's own logic - so this repo only needs to provide a reasonable static
+    * title plus that date. All structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed
+    * by slug. See docs/puzzle-page.md for the full reference.
     *
-    * Public URLs are top-level (no `/puzzles-and-games` prefix), mirroring exactly how crosswords already work
-    * (`/crosswords/{type}/{id}`, also unprefixed) - crosswords can't be restructured, so the other puzzle types follow
-    * the same top-level, nested-by-type convention for consistency, only the hub page itself lives at
-    * `/puzzles-and-games`.
+    * Public URLs are nested under `/puzzles-and-games/{group}/{game}/{date}`, where `{group}` is each game's DCR
+    * `puzzleGroup` ("logic-puzzles" or "word-games") as a literal, hardcoded path segment on that game's own dedicated
+    * route/action - not a generic `:group` wildcard - consistent with each game having its own explicit route/action
+    * below (mirroring how the crossword controller handles each crossword type explicitly, rather than a single generic
+    * slug/group action).
     *
-    * Each game gets its own explicit, dedicated action(s), mirroring how the crossword controller handles each
-    * crossword type explicitly via a constrained `$crosswordType<...>` route rather than a single generic slug action
-    *   - Play routing isn't well suited to a single "generic slug" action once URLs diverge structurally by game.
-    *     Sudoku takes a `variant` path segment (`renderSudoku`/`renderSudokuJson`, e.g. `/sudoku/easy`); word wheel and
-    *     wordiply each have their own no-argument actions (`renderWordWheel`/`renderWordWheelJson`,
-    *     `renderWordiply`/`renderWordiplyJson`) hardcoding their own slug/title internally, exactly like a dedicated
-    *     crossword-type action would. All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson`
-    *     above (the unrelated Puzzles Hub/listing page).
+    * `{date}` is a real, always-present `yyyy-MM-dd` path segment (format-validated at the route level via a
+    * `$date<\d{4}-\d{2}-\d{2}>` constraint, so a malformed date 404s before reaching this controller at all - deeper
+    * calendar validity, e.g. rejecting a real Feb 30 or future dates, is intentionally not implemented, see
+    * docs/puzzle-page.md). The bare, dateless URL for each game redirects (temporarily - a real archive page doesn't
+    * exist yet) to that group's not-yet-built archive page, filtered to this puzzle via a `?puzzle=` query param.
+    *
+    * Sudoku takes a `variant` path segment (`renderSudoku`/`renderSudokuJson`, e.g. `.../sudoku-easy/2024-01-15`); word
+    * wheel and wordiply each have their own dedicated actions taking only `date` (their slug/title/group are hardcoded
+    * internally). All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated
+    * Puzzles Hub/listing page).
     *
     * Gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB test already used by the hub actions above -
     * reusing the existing experiment rather than introducing a new one for V0.
@@ -97,63 +99,95 @@ class PuzzlesPageController(
     * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
     * routes/controllers, untouched.
     */
-  def renderSudoku(variant: String): Action[AnyContent] =
+  def renderSudoku(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
       else
         PuzzlesPageController.sudokuVariantTitles.get(variant) match {
-          case Some(webTitle) => renderPuzzlePageContent(s"sudoku-$variant", webTitle)
+          case Some(webTitle) => renderPuzzlePageContent(s"sudoku-$variant", webTitle, date)
           case None           => notFound
         }
     }
 
-  def renderSudokuJson(variant: String): Action[AnyContent] =
+  def renderSudokuJson(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
       else
         PuzzlesPageController.sudokuVariantTitles.get(variant) match {
-          case Some(webTitle) => renderPuzzlePageContentJson(s"sudoku-$variant", webTitle)
+          case Some(webTitle) => renderPuzzlePageContentJson(s"sudoku-$variant", webTitle, date)
           case None           => notFound
         }
     }
 
-  def renderWordWheel(): Action[AnyContent] =
+  def redirectSudokuArchive(variant: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle)
+      else if (PuzzlesPageController.sudokuVariantTitles.contains(variant))
+        redirectToArchive(PuzzlesPageController.LogicPuzzlesGroup, s"sudoku-$variant")
+      else notFound
     }
 
-  def renderWordWheelJson(): Action[AnyContent] =
+  def renderWordWheel(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle)
+      else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle, date)
     }
 
-  def renderWordiply(): Action[AnyContent] =
+  def renderWordWheelJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle)
+      else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle, date)
     }
 
-  def renderWordiplyJson(): Action[AnyContent] =
+  def redirectWordWheelArchive(): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle)
+      else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordWheelSlug)
     }
+
+  def renderWordiply(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle, date)
+    }
+
+  def renderWordiplyJson(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle, date)
+    }
+
+  def redirectWordiplyArchive(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isEnabled) notFound
+      else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordiplySlug)
+    }
+
+  /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. The archive page itself doesn't exist yet
+    * (a V1 feature), so this will 404 downstream until it's built - that's an accepted, explicitly confirmed
+    * limitation. A temporary (not permanent) redirect is used deliberately, so browsers/caches don't lock in a redirect
+    * target that doesn't exist yet.
+    */
+  private def redirectToArchive(group: String, slug: String)(implicit request: RequestHeader): Future[Result] =
+    Future.successful(
+      Redirect(s"/puzzles-and-games/$group/archive", Map("puzzle" -> Seq(slug)), status = FOUND),
+    )
 
   private def renderPuzzlePageContent(
       slug: String,
       webTitle: String,
+      date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildPuzzlePageData(slug, webTitle)
+    val dataModel = buildPuzzlePageData(slug, webTitle, date)
     remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
   }
 
   private def renderPuzzlePageContentJson(
       slug: String,
       webTitle: String,
+      date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildPuzzlePageData(slug, webTitle)
+    val dataModel = buildPuzzlePageData(slug, webTitle, date)
     Future.successful(
       Cached(CacheTime.NotFound)(
         Cached.WithoutRevalidationResult(
@@ -166,25 +200,20 @@ class PuzzlesPageController(
   private def buildPuzzlePageData(
       slug: String,
       webTitle: String,
+      date: String,
   )(implicit request: RequestHeader): DotcomPuzzlePageRenderingDataModel = {
     val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
-    val instance = PuzzlePageInstance(title = webTitle, puzzleDate = Some(resolvePuzzleDate))
+    val instance = PuzzlePageInstance(title = webTitle, puzzleDate = Some(date))
     DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
   }
-
-  /** The puzzle date to show, as an ISO-8601 (`yyyy-MM-dd`) date string. Prep for V1 calendar navigation (per PR review
-    * feedback: users will eventually navigate to a specific past date's puzzle rather than always "today's"). Accepted
-    * as an optional `?date=` query param - not a path segment, to avoid disrupting the URL shapes above - defaulting to
-    * today's date when absent, which preserves current behaviour exactly. This is pure plumbing for V0: no calendar UI
-    * is being built now, and DCR is not expected to act on this value yet.
-    */
-  private def resolvePuzzleDate(implicit request: RequestHeader): String =
-    request.getQueryString("date").getOrElse(LocalDate.now().toString)
 }
 
 object PuzzlesPageController {
 
-  /** Sudoku variant -> display title, for the `/sudoku/:variant` route. */
+  val LogicPuzzlesGroup = "logic-puzzles"
+  val WordGamesGroup = "word-games"
+
+  /** Sudoku variant -> display title, for the `/puzzles-and-games/logic-puzzles/sudoku-:variant/:date` route. */
   val sudokuVariantTitles: Map[String, String] = Map(
     "easy" -> "Sudoku (easy)",
     "medium" -> "Sudoku (medium)",
