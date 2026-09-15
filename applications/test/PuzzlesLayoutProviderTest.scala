@@ -1,7 +1,13 @@
 package test
 
 import com.gu.contentapi.client.model.SearchQuery
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, CrosswordType, SearchResponse}
+import com.gu.contentapi.client.model.v1.{
+  Content => ApiContent,
+  Crossword,
+  CrosswordCreator,
+  CrosswordType,
+  SearchResponse,
+}
 import contentapi.ContentApiClient
 import controllers.LocalJsonPuzzlesLayoutProvider
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
@@ -92,12 +98,12 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   it should "select the configured featured puzzles for each London weekday" in {
     val expectedByDate = Seq(
       "2026-09-07T12:00:00Z" -> Seq("Quick crossword", "Easy sudoku"),
-      "2026-09-08T12:00:00Z" -> Seq("Mini crossword", "Film reveal"),
+      "2026-09-08T12:00:00Z" -> Seq("Mini crossword", "Word wheel"),
       "2026-09-09T12:00:00Z" -> Seq("Cryptic crossword", "Medium sudoku"),
       "2026-09-10T12:00:00Z" -> Seq("Quick crossword", "Wordiply"),
       "2026-09-11T12:00:00Z" -> Seq("Mini crossword", "Hard sudoku"),
-      "2026-09-12T12:00:00Z" -> Seq("General knowledge crossword", "Film reveal"),
-      "2026-09-13T12:00:00Z" -> Seq("Quiptic crossword", "On the ball"),
+      "2026-09-12T12:00:00Z" -> Seq("General knowledge crossword", "Killer sudoku"),
+      "2026-09-13T12:00:00Z" -> Seq("Quiptic crossword", "Word wheel"),
     )
 
     expectedByDate.foreach { case (instant, expectedTitles) =>
@@ -137,7 +143,10 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       "sudoku-hard" -> "logic-puzzles-SUDOKU-HARD",
       "sudoku-killer" -> "logic-puzzles-SUDOKU-KILLER",
     )
-    expectedArtwork.foreach { case (id, filename) => items(id).image shouldBe Some(artwork(filename)) }
+    expectedArtwork.foreach { case (id, filename) =>
+      items(id).image shouldBe Some(artwork(filename))
+      items(id).imageAlt.exists(_.trim.nonEmpty) shouldBe true
+    }
   }
 
   it should "use the matching artwork throughout the weekly featured schedule" in {
@@ -150,6 +159,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       "Easy sudoku" -> "logic-puzzles-SUDOKU-EASY",
       "Medium sudoku" -> "logic-puzzles-SUDOKU-MEDIUM",
       "Hard sudoku" -> "logic-puzzles-SUDOKU-HARD",
+      "Killer sudoku" -> "logic-puzzles-SUDOKU-KILLER",
+      "Word wheel" -> "word-games-WORD-WHEEL",
       "Wordiply" -> "word-games-WORDIPLY",
     )
     val featured = (0 until 7).flatMap { offset =>
@@ -159,8 +170,9 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     }
     featured.filter(item => expectedArtwork.contains(item.title)).foreach { item =>
       item.image shouldBe Some(artwork(expectedArtwork(item.title)))
+      item.imageAlt shouldBe Some(s"${item.title} illustration")
     }
-    expectedArtwork.keySet shouldBe featured.map(_.title).toSet -- Set("Film reveal", "On the ball")
+    expectedArtwork.keySet shouldBe featured.map(_.title).toSet
   }
 
   it should "preserve featured artwork when CAPI supplies the latest crossword destination" in {
@@ -174,8 +186,44 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     quick.image shouldBe Some(artwork("crossword-QUICK"))
   }
 
-  private def artwork(filename: String): String =
-    s"https://i.guim.co.uk/img/uploads/2026/09/15/$filename.png?width=440&dpr=2&s=none"
+  it should "enrich regular and featured crossword cards with the latest CAPI setter name" in {
+    val provider = new LocalJsonPuzzlesLayoutProvider(
+      Environment.simple(),
+      contentApiClient(
+        Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))),
+        setter = Some("  Example setter  "),
+      ),
+      clock = mondayClock,
+    )
+    val layout = Await.result(provider.getLayout(), 5.seconds)
+    val quickCards = allItems(layout).filter(item => item.`type` == "crossword" && item.set == "quick")
+    quickCards should have size 2
+    all(quickCards.map(_.setter)) shouldBe Some("Example setter")
+    all(archives(layout).map(_.setter)) shouldBe None
+  }
+
+  it should "keep the configured setter when CAPI has no usable creator name" in {
+    Seq(None, Some("   ")).foreach { setter =>
+      val baseItem = crossword("quick").copy(setter = Some("Configured setter"))
+      val provider = providerFor(
+        layoutWith(Seq(baseItem)),
+        contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))), setter = setter),
+      )
+      firstItem(Await.result(provider.getLayout(), 5.seconds)).setter shouldBe Some("Configured setter")
+    }
+  }
+
+  it should "prefer the latest CAPI setter over an older configured name" in {
+    val provider = providerFor(
+      layoutWith(Seq(crossword("quick").copy(setter = Some("Previous setter")))),
+      contentApiClient(
+        Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))),
+        setter = Some("Latest setter"),
+      ),
+    )
+    firstItem(Await.result(provider.getLayout(), 5.seconds)).setter shouldBe Some("Latest setter")
+  }
+
   it should "close the resource stream after successful loading" in {
     val json = """{"containers":[]}"""
     val stream = new CloseTrackingInputStream(json)
@@ -226,6 +274,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       cadence = Some("Every Saturday"),
       url = Some("/fallback"),
       image = Some("/fallback.svg"),
+      imageAlt = Some("Custom artwork description"),
       slug = Some("editorial-slug"),
       index = Some(7),
       variant = Some("featured"),
@@ -375,6 +424,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       latestCard.copy(
         url = Some("/puzzles-and-games/crosswords/quick/99"),
         image = Some("/latest-card.svg"),
+        imageAlt = Some("quick illustration"),
       ),
       archiveInItems,
       nonCrossword,
@@ -429,6 +479,9 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       backgroundColour = Some("#f0f0f0"),
     )
 
+  private def artwork(filename: String): String =
+    s"https://i.guim.co.uk/img/uploads/2026/09/15/$filename.png?width=440&dpr=2&s=none"
+
   private def layoutWith(
       items: Seq[PuzzleItem],
       nestedContainers: Seq[PuzzleContainer] = Seq.empty,
@@ -473,6 +526,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   private def contentApiClient(
       responses: Map[String, Either[Throwable, Option[(CrosswordType, Int)]]],
       capturedQueries: ListBuffer[SearchQuery] = ListBuffer.empty,
+      setter: Option[String] = None,
   ): ContentApiClient = {
     val client = mock[ContentApiClient]
 
@@ -482,7 +536,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
         capturedQueries += query
         responses.getOrElse(query.parameters("tag"), Right(None)) match {
           case Left(error)    => Future.failed(error)
-          case Right(content) => Future.successful(searchResponse(content))
+          case Right(content) => Future.successful(searchResponse(content, setter))
         }
       }
     })
@@ -490,12 +544,18 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     client
   }
 
-  private def searchResponse(crosswordData: Option[(CrosswordType, Int)]): SearchResponse = {
+  private def searchResponse(crosswordData: Option[(CrosswordType, Int)], setter: Option[String]): SearchResponse = {
     val response = mock[SearchResponse]
     val results = crosswordData.toSeq.map { case (crosswordType, number) =>
       val crossword = mock[Crossword]
       when(crossword.`type`).thenReturn(crosswordType)
       when(crossword.number).thenReturn(number)
+      val creator = setter.map { name =>
+        val creator = mock[CrosswordCreator]
+        when(creator.name).thenReturn(name)
+        creator
+      }
+      when(crossword.creator).thenReturn(creator)
 
       val content = mock[ApiContent]
       when(content.crossword).thenReturn(Some(crossword))

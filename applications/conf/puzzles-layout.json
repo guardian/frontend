@@ -32,6 +32,7 @@
 							"cardVariant": "primary",
 							"cadence": "Daily",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -42,6 +43,7 @@
 							"cardVariant": "primary",
 							"cadence": "Daily",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-MINI.png?width=440&dpr=2&s=none",
+							"imageAlt": "Mini crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -52,6 +54,7 @@
 							"cardVariant": "primary",
 							"cadence": "Daily",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -62,6 +65,7 @@
 							"cardVariant": "primary",
 							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						}
 					],
@@ -74,6 +78,7 @@
 							"cardVariant": "compact",
 							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUIPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quiptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -84,6 +89,7 @@
 							"cardVariant": "compact",
 							"cadence": "Every Sunday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
+							"imageAlt": "Prize crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -94,6 +100,7 @@
 							"cardVariant": "compact",
 							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
+							"imageAlt": "General knowledge crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -104,6 +111,7 @@
 							"cardVariant": "compact",
 							"cadence": "Monthly",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENIUS.png?width=440&dpr=2&s=none",
+							"imageAlt": "Genius crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						}
 					]
@@ -227,6 +235,7 @@
 										"slug": "word-wheel",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORD-WHEEL.png?width=440&dpr=2&s=none",
+										"imageAlt": "Word wheel illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#F9D4E8"
@@ -253,6 +262,7 @@
 										"slug": "wordiply",
 										"url": "https://www.wordiply.com/",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORDIPLY.png?width=440&dpr=2&s=none",
+										"imageAlt": "Wordiply illustration",
 										"variant": "iframe-page",
 										"backgroundColour": "#F8D0C9"
 									}
@@ -295,6 +305,7 @@
 										"slug": "sudoku-easy",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-EASY.png?width=440&dpr=2&s=none",
+										"imageAlt": "Easy sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -309,6 +320,7 @@
 										"slug": "sudoku-medium",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-MEDIUM.png?width=440&dpr=2&s=none",
+										"imageAlt": "Medium sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -323,6 +335,7 @@
 										"slug": "sudoku-hard",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-HARD.png?width=440&dpr=2&s=none",
+										"imageAlt": "Hard sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -337,6 +350,7 @@
 										"slug": "sudoku-killer",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-KILLER.png?width=440&dpr=2&s=none",
+										"imageAlt": "Killer sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"

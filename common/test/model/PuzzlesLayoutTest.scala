@@ -8,56 +8,57 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
   private val representativeLayoutJson = Json.parse(
     """
- |{
- | "containers": [{
- | "id":"logic-puzzles",
- | "title":"Logic puzzles",
- | "variant":"standard",
- | "content": {
- | "items": [[{
- | "id":"sudoku-easy",
- | "title":"Sudoku",
- | "type":"sudoku",
- | "set":"easy",
- | "cardVariant":"primary",
- | "cadence":"Daily",
- | "url":"https://example.com/sudoku",
- | "image":"https://example.com/sudoku.png",
- | "slug":"sudoku-easy",
- | "index":1,
- | "variant":"iframe-page",
- | "backgroundColour":"#CDECFB"
- | }]],
- | "nestedContainers": [{
- | "id":"more-logic",
- | "title":"More logic",
- | "desktopSpan":6,
- | "content": {
- | "items":[[{
- | "id":"futoshiki-daily",
- | "title":"Futoshiki",
- | "type":"futoshiki",
- | "set":"all",
- | "cardVariant":"compact",
- | "cadence":"Daily"
- | }]],
- | "nestedContainers":[],
- | "archive": {
- | "id":"futoshiki-archive",
- | "title":"Archive",
- | "type":"futoshiki",
- | "set":"all",
- | "cardVariant":"archive",
- | "slug":"futoshiki",
- | "url":"https://example.com/futoshiki/archive",
- | "variant":"archive-page"
- | }
- | }
- | }]
- | }
- | }]
- |}
- |""".stripMargin,
+      |{
+      |  "containers": [{
+      |    "id":"logic-puzzles",
+      |    "title":"Logic puzzles",
+      |    "variant":"standard",
+      |    "content": {
+      |      "items": [[{
+      |        "id":"sudoku-easy",
+      |        "title":"Sudoku",
+      |        "type":"sudoku",
+      |        "set":"easy",
+      |        "cardVariant":"primary",
+      |        "cadence":"Daily",
+      |        "url":"https://example.com/sudoku",
+      |        "image":"https://example.com/sudoku.png",
+      |        "imageAlt":"Easy sudoku illustration",
+      |        "slug":"sudoku-easy",
+      |        "index":1,
+      |        "variant":"iframe-page",
+      |        "backgroundColour":"#CDECFB"
+      |      }]],
+      |      "nestedContainers": [{
+      |        "id":"more-logic",
+      |        "title":"More logic",
+      |        "desktopSpan":6,
+      |        "content": {
+      |          "items":[[{
+      |            "id":"futoshiki-daily",
+      |            "title":"Futoshiki",
+      |            "type":"futoshiki",
+      |            "set":"all",
+      |            "cardVariant":"compact",
+      |            "cadence":"Daily"
+      |          }]],
+      |          "nestedContainers":[],
+      |          "archive": {
+      |            "id":"futoshiki-archive",
+      |            "title":"Archive",
+      |            "type":"futoshiki",
+      |            "set":"all",
+      |            "cardVariant":"archive",
+      |            "slug":"futoshiki",
+      |            "url":"https://example.com/futoshiki/archive",
+      |            "variant":"archive-page"
+      |          }
+      |        }
+      |      }]
+      |    }
+      |  }]
+      |}
+      |""".stripMargin,
   )
 
   "PuzzlesLayout JSON format" should "parse presentation metadata, grouped rows and archives" in {
@@ -72,6 +73,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     item.cardVariant shouldBe "primary"
     item.cadence shouldBe Some("Daily")
     item.image shouldBe Some("https://example.com/sudoku.png")
+    item.imageAlt shouldBe Some("Easy sudoku illustration")
     nested.desktopSpan shouldBe Some(6)
     nested.content.archive.map(_.cardVariant) shouldBe Some("archive")
   }
@@ -100,23 +102,42 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
     Json.toJson(layout) shouldBe Json.parse(
       """{
- | "containers":[{
- | "id":"crosswords",
- | "title":"Crosswords",
- | "content":{
- | "items":[[{
- | "id":"crossword-quick",
- | "title":"Quick",
- | "type":"crossword",
- | "set":"quick",
- | "cardVariant":"primary",
- | "cadence":"Daily"
- | }]],
- | "nestedContainers":[]
- | }
- | }]
- |}""".stripMargin,
+        |  "containers":[{
+        |    "id":"crosswords",
+        |    "title":"Crosswords",
+        |    "content":{
+        |      "items":[[{
+        |        "id":"crossword-quick",
+        |        "title":"Quick",
+        |        "type":"crossword",
+        |        "set":"quick",
+        |        "cardVariant":"primary",
+        |        "cadence":"Daily"
+        |      }]],
+        |      "nestedContainers":[]
+        |    }
+        |  }]
+        |}""".stripMargin,
     )
+  }
+
+  it should "round-trip crossword setter names and artwork descriptions" in {
+    val item = PuzzleItem(
+      "crossword-quick",
+      "Quick",
+      "crossword",
+      "quick",
+      "primary",
+      cadence = Some("Daily"),
+      imageAlt = Some("Quick crossword illustration"),
+      setter = Some("Example setter"),
+    )
+    Json.toJson(item).as[PuzzleItem] shouldBe item
+    (Json.toJson(item) \ "setter").as[String] shouldBe "Example setter"
+    Seq("imageAlt", "setter").foreach { field =>
+      val invalid = Json.toJson(item).as[play.api.libs.json.JsObject] ++ Json.obj(field -> 123)
+      invalid.validate[PuzzleItem] shouldBe a[JsError]
+    }
   }
 
   it should "reject unsupported card variants and missing cadence" in {
@@ -167,13 +188,13 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
   it should "reject unsupported desktop spans" in {
     val json = Json.parse(
       """{
- | "containers":[{
- | "id":"crosswords",
- | "title":"Crosswords",
- | "desktopSpan":13,
- | "content":{"items":[],"nestedContainers":[]}
- | }]
- |}""".stripMargin,
+        |  "containers":[{
+        |    "id":"crosswords",
+        |    "title":"Crosswords",
+        |    "desktopSpan":13,
+        |    "content":{"items":[],"nestedContainers":[]}
+        |  }]
+        |}""".stripMargin,
     )
 
     json.validate[PuzzlesLayout] shouldBe a[JsError]

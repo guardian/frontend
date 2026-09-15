@@ -119,7 +119,12 @@ class LocalJsonPuzzlesLayoutProvider(
       latestCrosswords
         .get(item.set)
         .map(dynamicFields =>
-          item.copy(url = Some(dynamicFields.url), image = item.image.orElse(Some(dynamicFields.image))),
+          item.copy(
+            url = Some(dynamicFields.url),
+            image = item.image.orElse(Some(dynamicFields.image)),
+            imageAlt = item.imageAlt.orElse(Some(s"${item.title} illustration")),
+            setter = dynamicFields.setter.orElse(item.setter),
+          ),
         )
         .getOrElse(item)
     } else {
@@ -160,6 +165,7 @@ class LocalJsonPuzzlesLayoutProvider(
       CrosswordDynamicFields(
         url = s"/puzzles-and-games/crosswords/$crosswordType/$crosswordNumber",
         image = s"https://api.nextgen.guardianapps.co.uk/crosswords/$crosswordType/$crosswordNumber.svg",
+        setter = crossword.creator.map(_.name.trim).filter(_.nonEmpty),
       )
     }
 }
@@ -167,8 +173,6 @@ class LocalJsonPuzzlesLayoutProvider(
 object LocalJsonPuzzlesLayoutProvider {
   val DefaultResourceName = "puzzles-layout.json"
   private val FeaturedScheduleZone: ZoneId = ZoneId.of("Europe/London")
-  private val PreviewImage =
-    "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3"
 
   private def puzzleArtwork(filename: String): String =
     s"https://i.guim.co.uk/img/uploads/2026/09/15/$filename.png?width=440&dpr=2&s=none"
@@ -183,6 +187,7 @@ object LocalJsonPuzzlesLayoutProvider {
       cardVariant = "large",
       cadence = Some("Daily"),
       image = Some(puzzleArtwork(s"crossword-$artworkSet")),
+      imageAlt = Some(s"$title illustration"),
       backgroundColour = Some("#FCE1CE"),
     )
   }
@@ -197,24 +202,27 @@ object LocalJsonPuzzlesLayoutProvider {
       cadence = Some("Daily"),
       url = Some(s"https://tg.amuselabs.com/guardian/date-picker?set=$amuseLabsSet&embed=1&idx=1"),
       image = Some(puzzleArtwork(s"logic-puzzles-SUDOKU-${set.toUpperCase(java.util.Locale.ROOT)}")),
+      imageAlt = Some(s"$title illustration"),
       slug = Some(id),
       index = Some(1),
       variant = Some("iframe-page"),
       backgroundColour = Some("#CDECFB"),
     )
 
-  private val filmReveal = PuzzleItem(
-    id = "featured-film-reveal",
-    title = "Film reveal",
-    `type` = "film-reveal",
+  private val wordWheel = PuzzleItem(
+    id = "featured-word-wheel",
+    title = "Word wheel",
+    `type` = "word-wheel",
     set = "all",
     cardVariant = "large",
     cadence = Some("Daily"),
-    url = Some("https://moviegrid.io/guardian"),
-    image = Some(PreviewImage),
-    slug = Some("film-reveal"),
+    url = Some("https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1"),
+    image = Some(puzzleArtwork("word-games-WORD-WHEEL")),
+    imageAlt = Some("Word wheel illustration"),
+    slug = Some("word-wheel"),
+    index = Some(1),
     variant = Some("iframe-page"),
-    backgroundColour = Some("#EAD8B9"),
+    backgroundColour = Some("#F9D4E8"),
   )
 
   private val wordiply = PuzzleItem(
@@ -226,23 +234,10 @@ object LocalJsonPuzzlesLayoutProvider {
     cadence = Some("Daily"),
     url = Some("https://www.wordiply.com/"),
     image = Some(puzzleArtwork("word-games-WORDIPLY")),
+    imageAlt = Some("Wordiply illustration"),
     slug = Some("wordiply"),
     variant = Some("iframe-page"),
     backgroundColour = Some("#F8D0C9"),
-  )
-
-  private val onTheBall = PuzzleItem(
-    id = "featured-on-the-ball",
-    title = "On the ball",
-    `type` = "on-the-ball",
-    set = "all",
-    cardVariant = "large",
-    cadence = Some("Daily"),
-    url = Some("https://sportsreveal.io/guardian"),
-    image = Some(PreviewImage),
-    slug = Some("on-the-ball"),
-    variant = Some("iframe-page"),
-    backgroundColour = Some("#D5F3F2"),
   )
 
   private[controllers] def featuredPuzzlesFor(day: DayOfWeek): Seq[PuzzleItem] = day match {
@@ -252,7 +247,7 @@ object LocalJsonPuzzlesLayoutProvider {
         featuredSudoku("sudoku-easy", "Easy sudoku", "easy", "guardian-sudoku-easy"),
       )
     case DayOfWeek.TUESDAY =>
-      Seq(featuredCrossword("crossword-mini", "Mini crossword", "mini"), filmReveal)
+      Seq(featuredCrossword("crossword-mini", "Mini crossword", "mini"), wordWheel)
     case DayOfWeek.WEDNESDAY =>
       Seq(
         featuredCrossword("crossword-cryptic", "Cryptic crossword", "cryptic"),
@@ -266,9 +261,12 @@ object LocalJsonPuzzlesLayoutProvider {
         featuredSudoku("sudoku-hard", "Hard sudoku", "hard", "guardian-sudoku-hard"),
       )
     case DayOfWeek.SATURDAY =>
-      Seq(featuredCrossword("crossword-weekend", "General knowledge crossword", "weekend"), filmReveal)
+      Seq(
+        featuredCrossword("crossword-weekend", "General knowledge crossword", "weekend"),
+        featuredSudoku("sudoku-killer", "Killer sudoku", "killer", "guardian-killer-sudoku-medium"),
+      )
     case DayOfWeek.SUNDAY =>
-      Seq(featuredCrossword("crossword-quiptic", "Quiptic crossword", "quiptic"), onTheBall)
+      Seq(featuredCrossword("crossword-quiptic", "Quiptic crossword", "quiptic"), wordWheel)
   }
 
   private[controllers] val CrosswordSeriesTags: Map[String, String] = Map(
@@ -287,5 +285,5 @@ object LocalJsonPuzzlesLayoutProvider {
     "azed" -> "crosswords/series/azed",
   )
 
-  private[controllers] case class CrosswordDynamicFields(url: String, image: String)
+  private[controllers] case class CrosswordDynamicFields(url: String, image: String, setter: Option[String])
 }
