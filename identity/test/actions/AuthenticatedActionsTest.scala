@@ -122,6 +122,7 @@ class AuthenticatedActionsTest
 
       val mockFunc = mock[Int => Result]
       when(mockFunc.apply(1)) thenReturn mock[Result]
+
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
       val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
@@ -140,6 +141,7 @@ class AuthenticatedActionsTest
 
       val mockFunc = mock[Int => Result]
       when(mockFunc.apply(1)) thenReturn mock[Result]
+
       def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
 
       val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(callMock)(request)
