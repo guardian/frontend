@@ -391,18 +391,15 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
           case eventGraphic: EventGraphic =>
             enrichEventGraphic(eventGraphic)
           case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
-            enrichContent(collection, link, link.enriched).map(updatedFields =>
-              link.copy(enriched = Some(updatedFields)),
-            )
+            enrichContent(collection, link, link.enriched)
+              .map(updatedFields => link.copy(enriched = Some(updatedFields)))
           case curated: CuratedContent if isHighlights =>
             Response.Right(NewsletterEnrichment.enrichWithNewsletterData(curated, newsletterService))
           case plain =>
             Response.Right(plain)
         })
       }
-      .flatMap(content =>
-        Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))),
-      )
+      .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
   }
 
   private def enrichEventGraphic(
@@ -445,9 +442,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     FAPI
       .getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
       .map(_.map((item) => PressedContent.make(item, false)))
-      .flatMap(content =>
-        Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))),
-      )
+      .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
   }
 
   private def getBackfill(
@@ -456,9 +451,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     FAPI
       .backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
       .map(_.map(((item) => PressedContent.make(item, false))))
-      .flatMap(content =>
-        Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))),
-      )
+      .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
   }
 
   def generatePressedVersions(
