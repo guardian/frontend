@@ -18,9 +18,10 @@ final case class Atoms(
     reviews: Seq[ReviewAtom],
     timelines: Seq[TimelineAtom],
     callToAction: Seq[CallToActionAtom],
+    multimediaSlideshows: Seq[MultimediaSlideshowAtom],
 ) {
   val all: Seq[Atom] =
-    quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts ++ callToAction
+    quizzes ++ media ++ interactives ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts ++ callToAction ++ multimediaSlideshows
 
   def atomTypes: Map[String, Boolean] =
     Map(
@@ -37,6 +38,7 @@ final case class Atoms(
       "review" -> !reviews.isEmpty,
       "timeline" -> !timelines.isEmpty,
       "callToAction" -> !callToAction.isEmpty,
+      "multimediaSlideshow" -> !multimediaSlideshows.isEmpty,
     )
 }
 
@@ -88,6 +90,9 @@ object Atoms extends common.GuLogging {
 
       val callToAction = extract(atoms.cta.map(_.toSeq), atom => { CallToActionAtom.make(atom) })
 
+      val multimediaSlideshows =
+        extract(atoms.multimediaslideshows.map(_.toSeq), atom => { MultimediaSlideshowAtom.make(atom) })
+
       Atoms(
         quizzes = quizzes,
         media = media,
@@ -102,6 +107,7 @@ object Atoms extends common.GuLogging {
         audios = audios,
         charts = charts,
         callToAction = callToAction,
+        multimediaSlideshows = multimediaSlideshows,
       )
     }
   }

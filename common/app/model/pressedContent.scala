@@ -5,7 +5,7 @@ import com.gu.facia.api.models.EventGraphic
 import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
-import model.content.MediaAtom
+import model.content.{MediaAtom, MultimediaSlideshowAtom}
 import model.{ContentFormat, Pillar}
 import views.support.ContentOldAgeDescriber
 
@@ -114,6 +114,7 @@ final case class CuratedContent(
     supportingContent: List[PressedContent],
     cardStyle: CardStyle,
     mediaAtom: Option[MediaAtom],
+    multimediaSlideshowAtom: Option[MultimediaSlideshowAtom],
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -158,6 +159,13 @@ object CuratedContent {
         atom.data match {
           case mediaAtom: com.gu.contentatom.thrift.AtomData.Media =>
             Some(MediaAtom.makeFromThrift(atom.id, mediaAtom.media))
+          case _ => None
+        }
+      },
+      multimediaSlideshowAtom = content.multimediaSlideshowAtom.flatMap { atom =>
+        atom.data match {
+          case slideshow: com.gu.contentatom.thrift.AtomData.MultimediaSlideshow =>
+            Some(MultimediaSlideshowAtom.makeFromThrift(atom.id, slideshow.multimediaSlideshow))
           case _ => None
         }
       },

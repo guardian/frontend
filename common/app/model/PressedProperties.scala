@@ -11,6 +11,7 @@ case class MediaSelect(
     showMainVideo: Boolean,
     imageSlideshowReplace: Boolean,
     videoReplace: Boolean,
+    multimediaSlideshowReplace: Boolean,
 )
 
 final case class PressedProperties(
@@ -54,6 +55,7 @@ object PressedProperties {
           showMainVideo = contentProperties.showMainVideo,
           imageSlideshowReplace = contentProperties.imageSlideshowReplace,
           videoReplace = contentProperties.videoReplace,
+          multimediaSlideshowReplace = contentProperties.multimediaSlideshowReplace,
         ),
       ),
       showKickerTag = contentProperties.showKickerTag,
@@ -109,6 +111,7 @@ object PressedProperties {
           showQuotedHeadline = false,
           imageSlideshowReplace = false,
           videoReplace = false,
+          multimediaSlideshowReplace = false,
         )
     }
   }

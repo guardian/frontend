@@ -18,6 +18,7 @@ import contentapi._
 import services.{ConfigAgent, NewsletterService, S3FrontsApi}
 import services.fronts.FrontsApi
 import model.{PressedPage, _}
+import model.content.{MediaAtom, MultimediaSlideshowSlide, MultimediaSlideshowVideo}
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
@@ -374,22 +375,25 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     val isHighlights = collection.collectionConfig.collectionType == "scrollable/highlights"
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
-    initialContent.flatMap { content =>
-      Response.traverse(content.map {
-        case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn =>
-          enrichContent(collection, curated, curated.enriched).map { updatedFields =>
-            val enrichedContent = curated.copy(enriched = Some(updatedFields))
-            if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
-            else enrichedContent
-          }
-        case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
-          enrichContent(collection, link, link.enriched).map(updatedFields => link.copy(enriched = Some(updatedFields)))
-        case curated: CuratedContent if isHighlights =>
-          Response.Right(NewsletterEnrichment.enrichWithNewsletterData(curated, newsletterService))
-        case plain =>
-          Response.Right(plain)
-      })
-    }
+    initialContent
+      .flatMap { content =>
+        Response.traverse(content.map {
+          case curated: CuratedContent if FaciaInlineEmbeds.isSwitchedOn =>
+            enrichContent(collection, curated, curated.enriched).map { updatedFields =>
+              val enrichedContent = curated.copy(enriched = Some(updatedFields))
+              if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
+              else enrichedContent
+            }
+          case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
+            enrichContent(collection, link, link.enriched)
+              .map(updatedFields => link.copy(enriched = Some(updatedFields)))
+          case curated: CuratedContent if isHighlights =>
+            Response.Right(NewsletterEnrichment.enrichWithNewsletterData(curated, newsletterService))
+          case plain =>
+            Response.Right(plain)
+        })
+      }
+      .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
   }
 
   private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent])(implicit
@@ -414,6 +418,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     FAPI
       .getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
       .map(_.map((item) => PressedContent.make(item, false)))
+      .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
   }
 
   private def getBackfill(
@@ -422,6 +427,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     FAPI
       .backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
       .map(_.map(((item) => PressedContent.make(item, false))))
+      .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
   }
 
   def generatePressedVersions(
@@ -629,6 +635,52 @@ object Enrichment extends GuLogging {
       case None        => Future.failed(new Throwable(errMsg))
     }
   }
+
+  // On fronts we resolve each multimedia slideshow video slide's referenced media atom at press time,
+  // inlining the full MediaAtom so the pressed JSON carries all the data needed to render the video.
+  def resolveMultimediaSlideshowVideos(
+      content: PressedContent,
+      capiClient: CapiContentApiClient,
+  )(implicit executionContext: ExecutionContext): Response[PressedContent] =
+    content match {
+      case curated: CuratedContent =>
+        curated.multimediaSlideshowAtom match {
+          case Some(slideshow) if slideshow.slides.exists(_.content.isInstanceOf[MultimediaSlideshowVideo]) =>
+            val resolvedSlides = Future.traverse(slideshow.slides)(resolveSlideVideo(_, capiClient))
+            Response(
+              resolvedSlides.map(slides =>
+                scala.Right(curated.copy(multimediaSlideshowAtom = Some(slideshow.copy(slides = slides)))),
+              ),
+            )
+          case _ => Response.Right(curated)
+        }
+      case other => Response.Right(other)
+    }
+
+  private def resolveSlideVideo(
+      slide: MultimediaSlideshowSlide,
+      capiClient: CapiContentApiClient,
+  )(implicit executionContext: ExecutionContext): Future[MultimediaSlideshowSlide] =
+    slide.content match {
+      case video: MultimediaSlideshowVideo =>
+        resolveMediaAtom(video.mediaAtomId, capiClient).map {
+          case Some(atom) => slide.copy(content = video.copy(mediaAtom = Some(atom)))
+          case None       => slide
+        }
+      case _ => Future.successful(slide)
+    }
+
+  private def resolveMediaAtom(
+      mediaAtomId: String,
+      capiClient: CapiContentApiClient,
+  )(implicit executionContext: ExecutionContext): Future[Option[MediaAtom]] =
+    capiClient
+      .getResponse(ItemQuery(s"atom/media/$mediaAtomId"))
+      .map(_.media.map(atom => MediaAtom.make(atom)))
+      .recover { case error =>
+        log.warn(s"Failed to resolve media atom $mediaAtomId for multimedia slideshow: ${error.getMessage}")
+        None
+      }
 }
 
 object NewsletterEnrichment {
