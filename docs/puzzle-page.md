@@ -103,6 +103,18 @@ introduced for V0. Requests return `404` unless the request carries the
 `X-GU-Server-AB-Tests: puzzles-new-hub:variant` header (via this repo's normal server-side AB test
 framework, `common/app/ab/ABTests.scala`).
 
+**Note for future v1/v2 work:** DCR uses a 3-tier, cumulative rollout gating structure for this
+feature (`puzzles-new-hub` v0, `puzzles-new-hub-v1`, `puzzles-new-hub-v2`, defined in
+`ab-testing/config/abTests.ts`, checked via `isPuzzlesHubEnabled`/`isPuzzlesHubV1Enabled`/
+`isPuzzlesHubV2Enabled` in `src/lib/puzzlesHubExperiment.ts`/`puzzlesHubVersionExperiment.ts`), used
+there to gate individual v1/v2-scoped features (currently the "More from Puzzles & Games" rail,
+gated behind v1). This repo only checks the single v0 tier today, since no v1/v2-scoped feature
+exists on the frontend side yet. Confirmed correct for now in product review, but when the first
+v1-scoped frontend feature is built (e.g. the "sign in to track puzzles progress" message, full hub
+sub-nav links, or calendar/archive views), this repo will need its own equivalent cumulative check,
+mirroring DCR's `isPuzzlesHubV1Enabled`/`isPuzzlesHubV2Enabled` pattern, not just continue checking
+the v0 gate alone.
+
 ### The date path segment
 
 Every render action takes `date` as a real, always-present `yyyy-MM-dd` path segment, forwarded to
