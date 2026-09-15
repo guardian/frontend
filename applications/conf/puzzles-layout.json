@@ -373,12 +373,12 @@
 				"usefulLinksTitle": "Useful links",
 				"usefulLinks": [
 					{
-						"title": "Crossword setter A–Z",
-						"url": "/puzzles-and-games/crosswords/archive"
+						"title": "Support the Guardian",
+						"url": "https://support.theguardian.com"
 					},
 					{
-						"title": "Crossword blog",
-						"url": "https://www.theguardian.com/crosswords/crossword-blog"
+						"title": "Help Centre",
+						"url": "https://help.theguardian.com"
 					}
 				],
 				"newsletter": {
