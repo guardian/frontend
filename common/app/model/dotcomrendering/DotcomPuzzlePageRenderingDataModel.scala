@@ -30,10 +30,10 @@ object MoreFromPuzzlesAndGamesItem {
   */
 case class PuzzlePageInstance(
     title: String,
-    /** The puzzle date to show, as an ISO-8601 (`yyyy-MM-dd`) date string - prep for V1 calendar navigation (users will
-      * eventually navigate to a specific past date's puzzle rather than always "today's"). Always populated by
-      * `PuzzlesPageController` (defaulting to today when no `?date=` query param is given), but modelled as optional
-      * for JSON forwards/backwards compatibility. DCR does not act on this value yet - V0 is pure plumbing.
+    /** The puzzle date to show, as an ISO-8601 (`yyyy-MM-dd`) date string - which day's puzzle this instance is for.
+      * Always populated by `PuzzlesPageController` directly from the request URL's date path segment (e.g.
+      * `/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`); modelled as optional for JSON forwards/backwards
+      * compatibility. DCR is being updated in parallel to display this value and forward it to the puzzle iframe.
       */
     puzzleDate: Option[String] = None,
     moreFromPuzzlesAndGames: Seq[MoreFromPuzzlesAndGamesItem] = Nil,

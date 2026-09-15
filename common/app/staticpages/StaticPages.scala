@@ -74,7 +74,11 @@ object StaticPages {
         description = None,
         contentType = Some(DotcomContentType.Tag),
         iosType = None,
-        shouldGoogleIndex = false,
+        // Currently inert for this rendering path: DotcomPuzzlePageRenderingDataModel doesn't read or forward this
+        // value to DCR, so it has no effect today. Set to true to match the confirmed product requirement (all V0
+        // puzzle pages should be indexable), so this doesn't silently start excluding these pages from Google if a
+        // future refactor extends the model to forward it, mirroring other page types.
+        shouldGoogleIndex = true,
       ),
     )
 }
