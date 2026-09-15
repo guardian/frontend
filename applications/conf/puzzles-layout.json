@@ -31,7 +31,7 @@
 							"set": "quick",
 							"cardVariant": "primary",
 							"cadence": "Daily",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -41,7 +41,7 @@
 							"set": "mini",
 							"cardVariant": "primary",
 							"cadence": "Daily",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-MINI.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -51,7 +51,7 @@
 							"set": "cryptic",
 							"cardVariant": "primary",
 							"cadence": "Daily",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-CRYPTIC.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -61,7 +61,7 @@
 							"set": "quick-cryptic",
 							"cardVariant": "primary",
 							"cadence": "Every Saturday",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						}
 					],
@@ -73,6 +73,7 @@
 							"set": "quiptic",
 							"cardVariant": "compact",
 							"cadence": "Every Saturday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUIPTIC.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -82,6 +83,7 @@
 							"set": "prize",
 							"cardVariant": "compact",
 							"cadence": "Every Sunday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -91,6 +93,7 @@
 							"set": "weekend",
 							"cardVariant": "compact",
 							"cadence": "Every Saturday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -100,6 +103,7 @@
 							"set": "genius",
 							"cardVariant": "compact",
 							"cadence": "Monthly",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENIUS.png?width=440&dpr=2&s=none",
 							"backgroundColour": "#FCE1CE"
 						}
 					]
@@ -222,7 +226,7 @@
 										"cadence": "Daily",
 										"slug": "word-wheel",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORD-WHEEL.png?width=440&dpr=2&s=none",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#F9D4E8"
@@ -248,7 +252,7 @@
 										"cadence": "Daily",
 										"slug": "wordiply",
 										"url": "https://www.wordiply.com/",
-										"image": "https://www.wordiply.com/share.png",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORDIPLY.png?width=440&dpr=2&s=none",
 										"variant": "iframe-page",
 										"backgroundColour": "#F8D0C9"
 									}
@@ -290,7 +294,7 @@
 										"cadence": "Daily",
 										"slug": "sudoku-easy",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-EASY.png?width=440&dpr=2&s=none",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -304,7 +308,7 @@
 										"cadence": "Daily",
 										"slug": "sudoku-medium",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-MEDIUM.png?width=440&dpr=2&s=none",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -318,7 +322,7 @@
 										"cadence": "Daily",
 										"slug": "sudoku-hard",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-HARD.png?width=440&dpr=2&s=none",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -332,7 +336,7 @@
 										"cadence": "Daily",
 										"slug": "sudoku-killer",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-KILLER.png?width=440&dpr=2&s=none",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"

@@ -170,7 +170,11 @@ object LocalJsonPuzzlesLayoutProvider {
   private val PreviewImage =
     "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3"
 
-  private def featuredCrossword(id: String, title: String, set: String): PuzzleItem =
+  private def puzzleArtwork(filename: String): String =
+    s"https://i.guim.co.uk/img/uploads/2026/09/15/$filename.png?width=440&dpr=2&s=none"
+
+  private def featuredCrossword(id: String, title: String, set: String): PuzzleItem = {
+    val artworkSet = if (set == "weekend") "GENERAL-KNOWLEDGE" else set.toUpperCase(java.util.Locale.ROOT)
     PuzzleItem(
       id = s"featured-$id",
       title = title,
@@ -178,8 +182,10 @@ object LocalJsonPuzzlesLayoutProvider {
       set = set,
       cardVariant = "large",
       cadence = Some("Daily"),
+      image = Some(puzzleArtwork(s"crossword-$artworkSet")),
       backgroundColour = Some("#FCE1CE"),
     )
+  }
 
   private def featuredSudoku(id: String, title: String, set: String, amuseLabsSet: String): PuzzleItem =
     PuzzleItem(
@@ -190,7 +196,7 @@ object LocalJsonPuzzlesLayoutProvider {
       cardVariant = "large",
       cadence = Some("Daily"),
       url = Some(s"https://tg.amuselabs.com/guardian/date-picker?set=$amuseLabsSet&embed=1&idx=1"),
-      image = Some(PreviewImage),
+      image = Some(puzzleArtwork(s"logic-puzzles-SUDOKU-${set.toUpperCase(java.util.Locale.ROOT)}")),
       slug = Some(id),
       index = Some(1),
       variant = Some("iframe-page"),
@@ -219,7 +225,7 @@ object LocalJsonPuzzlesLayoutProvider {
     cardVariant = "large",
     cadence = Some("Daily"),
     url = Some("https://www.wordiply.com/"),
-    image = Some("https://www.wordiply.com/share.png"),
+    image = Some(puzzleArtwork("word-games-WORDIPLY")),
     slug = Some("wordiply"),
     variant = Some("iframe-page"),
     backgroundColour = Some("#F8D0C9"),

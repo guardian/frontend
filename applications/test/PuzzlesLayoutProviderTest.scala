@@ -85,7 +85,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       .flatMap(_.supporting)
       .map(_.popularGroups.map(_.title)) shouldBe
       Some(Seq("Most played", "Most comments"))
-    allItems(layout).find(_.id == "wordiply-daily").flatMap(_.image) shouldBe Some("https://www.wordiply.com/share.png")
+    allItems(layout).find(_.id == "wordiply-daily").flatMap(_.image) shouldBe Some(artwork("word-games-WORDIPLY"))
     allItems(layout).map(_.id).distinct should have size allItems(layout).size
   }
 
@@ -117,6 +117,65 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
   }
 
+  it should "use the supplied artwork for every configured puzzle card" in {
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val items = allItems(Await.result(provider.getLayout(), 5.seconds)).map(item => item.id -> item).toMap
+    val expectedArtwork = Map(
+      "crossword-quick" -> "crossword-QUICK",
+      "crossword-mini" -> "crossword-MINI",
+      "crossword-cryptic" -> "crossword-CRYPTIC",
+      "crossword-quick-cryptic" -> "crossword-QUICK-CRYPTIC",
+      "crossword-quiptic" -> "crossword-QUIPTIC",
+      "crossword-prize" -> "crossword-PRIZE",
+      "crossword-weekend" -> "crossword-GENERAL-KNOWLEDGE",
+      "crossword-genius" -> "crossword-GENIUS",
+      "word-wheel-daily" -> "word-games-WORD-WHEEL",
+      "wordiply-daily" -> "word-games-WORDIPLY",
+      "sudoku-easy" -> "logic-puzzles-SUDOKU-EASY",
+      "sudoku-medium" -> "logic-puzzles-SUDOKU-MEDIUM",
+      "sudoku-hard" -> "logic-puzzles-SUDOKU-HARD",
+      "sudoku-killer" -> "logic-puzzles-SUDOKU-KILLER",
+    )
+    expectedArtwork.foreach { case (id, filename) => items(id).image shouldBe Some(artwork(filename)) }
+  }
+
+  it should "use the matching artwork throughout the weekly featured schedule" in {
+    val expectedArtwork = Map(
+      "Quick crossword" -> "crossword-QUICK",
+      "Mini crossword" -> "crossword-MINI",
+      "Cryptic crossword" -> "crossword-CRYPTIC",
+      "General knowledge crossword" -> "crossword-GENERAL-KNOWLEDGE",
+      "Quiptic crossword" -> "crossword-QUIPTIC",
+      "Easy sudoku" -> "logic-puzzles-SUDOKU-EASY",
+      "Medium sudoku" -> "logic-puzzles-SUDOKU-MEDIUM",
+      "Hard sudoku" -> "logic-puzzles-SUDOKU-HARD",
+      "Wordiply" -> "word-games-WORDIPLY",
+    )
+    val featured = (0 until 7).flatMap { offset =>
+      val clock = Clock.fixed(mondayClock.instant().plusSeconds(offset * 86400L), ZoneOffset.UTC)
+      val provider = providerFor(featuredLayout(enabled = true), emptyContentApiClient(), clock)
+      allItems(Await.result(provider.getLayout(), 5.seconds))
+    }
+    featured.filter(item => expectedArtwork.contains(item.title)).foreach { item =>
+      item.image shouldBe Some(artwork(expectedArtwork(item.title)))
+    }
+    expectedArtwork.keySet shouldBe featured.map(_.title).toSet -- Set("Film reveal", "On the ball")
+  }
+
+  it should "preserve featured artwork when CAPI supplies the latest crossword destination" in {
+    val provider = providerFor(
+      featuredLayout(enabled = true),
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123)))),
+      mondayClock,
+    )
+    val quick = firstItem(Await.result(provider.getLayout(), 5.seconds))
+    quick.url shouldBe Some("/puzzles-and-games/crosswords/quick/123")
+    quick.image shouldBe Some(artwork("crossword-QUICK"))
+  }
+
+  private def artwork(filename: String): String =
+    s"https://i.guim.co.uk/img/uploads/2026/09/15/$filename.png?width=440&dpr=2&s=none"
   it should "close the resource stream after successful loading" in {
     val json = """{"containers":[]}"""
     val stream = new CloseTrackingInputStream(json)
