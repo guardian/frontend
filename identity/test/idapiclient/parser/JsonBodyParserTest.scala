@@ -1,8 +1,8 @@
 package idapiclient.parser
 
-import net.liftweb.json.JsonAST.JValue
+import org.json4s.JsonAST.JValue
+import org.json4s.DefaultFormats
 import idapiclient.responses.{Error, HttpResponse}
-import net.liftweb.json.DefaultFormats
 import org.scalatest.freespec.PathAnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
