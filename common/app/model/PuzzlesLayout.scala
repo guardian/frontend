@@ -16,6 +16,9 @@ case class PuzzleItem(
     index: Option[Int] = None,
     variant: Option[String] = None,
     backgroundColour: Option[String] = None,
+    imageAlt: Option[String] = None,
+    setter: Option[String] = None,
+    date: Option[String] = None,
 )
 
 object PuzzleItem {
