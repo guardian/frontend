@@ -49,7 +49,6 @@ import scala.concurrent.Future
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc")
-    val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
     val signinService = mock[PlaySigninService]
@@ -57,7 +56,6 @@ import scala.concurrent.Future
       new PrivacyMapping,
     )
 
-    when(authService.fullyAuthenticatedUser(ArgumentMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(ArgumentMatchers.any[RequestHeader])) thenReturn idRequest
@@ -77,8 +75,6 @@ import scala.concurrent.Future
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
-      signinService,
-      newsletterSignupAgent,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,

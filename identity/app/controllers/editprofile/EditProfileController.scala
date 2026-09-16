@@ -18,8 +18,6 @@ class EditProfileController(
     override val csrfAddToken: CSRFAddToken,
     override val returnUrlVerifier: ReturnUrlVerifier,
     override val newsletterService: NewsletterService,
-    override val signinService: PlaySigninService,
-    override val newsletterSignupAgent: NewsletterSignupAgent,
     override implicit val profileFormsMapping: ProfileFormsMapping,
     override implicit val context: ApplicationContext,
     val httpConfiguration: HttpConfiguration,
@@ -27,4 +25,3 @@ class EditProfileController(
 ) extends EditProfileControllerComponents
     with EmailsTab
     with PublicTab
-    with ConsentsJourney
