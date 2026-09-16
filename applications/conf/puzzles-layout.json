@@ -11,13 +11,6 @@
 			}
 		},
 		{
-			"id": "featured-ad",
-			"title": "",
-			"variant": "ad",
-			"adSlot": "inline1",
-			"content": { "items": [], "nestedContainers": [] }
-		},
-		{
 			"id": "crosswords",
 			"title": "Crosswords",
 			"variant": "standard",
@@ -212,6 +205,13 @@
 			}
 		},
 		{
+			"id": "crosswords-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline1",
+			"content": { "items": [], "nestedContainers": [] }
+		},
+		{
 			"id": "word-games",
 			"title": "Word games",
 			"variant": "standard",
@@ -273,13 +273,6 @@
 					}
 				]
 			}
-		},
-		{
-			"id": "word-games-ad",
-			"title": "",
-			"variant": "ad",
-			"adSlot": "inline2",
-			"content": { "items": [], "nestedContainers": [] }
 		},
 		{
 			"id": "logic-puzzles",
@@ -417,7 +410,7 @@
 			"id": "bottom-ad",
 			"title": "",
 			"variant": "ad",
-			"adSlot": "inline3",
+			"adSlot": "inline2",
 			"content": { "items": [], "nestedContainers": [] }
 		}
 	]
