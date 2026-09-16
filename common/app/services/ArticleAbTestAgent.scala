@@ -10,6 +10,8 @@ case class ArticleAbTest(a: String, b: String)
 class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
   private val testsBox = Box[List[ArticleAbTest]](Nil)
 
+  //used for testing locally - remove before merge!!
+  def seedTestData: Unit = upsert("music/2026/sep/16/orville-peck-interview-new-album-mule","p/x62xp3")
   def tests: List[ArticleAbTest] = testsBox.get()
 
   def variantFor(articleAPath: String): Option[String] =

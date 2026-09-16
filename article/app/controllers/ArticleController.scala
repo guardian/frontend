@@ -77,6 +77,9 @@ class ArticleController(
   }
 
   def renderArticle(path: String): Action[AnyContent] = Action.async { implicit request =>
+    //used for testing locally - remove before merge!!
+    articleAbTestAgent.seedTestData
+
     mapAndRender(path, ArticleBlocks)()(request)
   }
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
