@@ -27,6 +27,7 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
     testsBox.alter(_.filterNot(_.a == articleAPath))
 
   private def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
+    log.debug("Refreshing article ab test cache...")
 
     val activeAbTestQuery = contentApiClient
       .search()
@@ -42,17 +43,17 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
       val newTests = content.flatMap { c =>
         val maybeActiveTest = c.abTests.getOrElse(Seq.empty).find(_.ended.isEmpty)
         maybeActiveTest
-          .flatMap(test => test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath })
+          .flatMap(test => test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath.stripPrefix("/") })
           .map(bPath => ArticleAbTest(c.id, bPath))
       }.toList
       setAll(newTests)
+      log.debug("Successfully refreshed article ab test cache.")
+
     }
    }
 }
 
 
 /*todo
-*  make call to capi to request article A/B test data
-*  update box with the fetched article A/B test data
 *  Add lifecycle management for the ArticleAbTestAgent
 * */
