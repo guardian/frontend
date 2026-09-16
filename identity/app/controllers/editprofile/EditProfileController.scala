@@ -1,6 +1,5 @@
 package controllers.editprofile
 
-import actions.AuthenticatedActions
 import controllers.editprofile.tabs.{EmailsTab, PublicTab}
 import form._
 import idapiclient.IdApiClient
@@ -13,7 +12,6 @@ import services._
 
 class EditProfileController(
     override val idUrlBuilder: IdentityUrlBuilder,
-    override val authenticatedActions: AuthenticatedActions,
     override val identityApiClient: IdApiClient,
     override val idRequestParser: IdRequestParser,
     override val csrfCheck: CSRFCheck,

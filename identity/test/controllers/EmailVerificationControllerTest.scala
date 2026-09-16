@@ -1,6 +1,5 @@
 package controllers
 
-import actions.AuthenticatedActions
 import com.gu.identity.model.{StatusFields, User}
 import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import model.PhoneNumbers
@@ -29,10 +28,8 @@ class EmailVerificationControllerTest
   val api = mock[IdApiClient]
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val idRequestParser = mock[IdRequestParser]
-  val authenticationService = mock[AuthenticationService]
   val identityUrlBuilder = mock[IdentityUrlBuilder]
   val testRequest = TestRequest()
-  val authService = mock[AuthenticationService]
   val trackingData = mock[TrackingData]
   val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -47,13 +44,6 @@ class EmailVerificationControllerTest
 
   when(authService.fullyAuthenticatedUser(any[RequestHeader])) thenReturn Some(authenticatedUser)
   when(api.me(testAuth)) thenReturn Future.successful(Right(user))
-
-  val authenticatedActions = new AuthenticatedActions(
-    authService,
-    api,
-    mock[IdentityUrlBuilder],
-    controllerComponent,
-  )
 
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), any[(String, String)]())) thenAnswer returnsFirstArg()

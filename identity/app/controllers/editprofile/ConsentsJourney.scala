@@ -1,6 +1,5 @@
 package controllers.editprofile
 
-import actions.AuthenticatedActions._
 import com.gu.identity.model.{Consent, User}
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
@@ -18,8 +17,6 @@ import scala.concurrent.Future
 
 trait ConsentsJourney extends EditProfileControllerComponents {
 
-  import authenticatedActions._
-
   def signinService: PlaySigninService
 
   def newsletterSignupAgent: NewsletterSignupAgent
@@ -33,61 +30,6 @@ trait ConsentsJourney extends EditProfileControllerComponents {
         Nil
       }
       .merge
-  }
-
-  private def consentCompleteView(
-      page: IdentityPage,
-      user: User,
-      returnUrl: String,
-  )(implicit request: AuthRequest[AnyContent]): Future[Result] = {
-
-    newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData).map { emailFilledForm =>
-      Ok(
-        IdentityHtmlPage.html(
-          views.html.completeConsents(
-            idRequestParser(request),
-            idUrlBuilder,
-            returnUrl,
-            user.primaryEmailAddress,
-            emailFilledForm,
-            newsletterService.getEmailSubscriptions(emailFilledForm),
-            newsletters(),
-          ),
-        )(page, request, context),
-      )
-    }
-  }
-
-  private def consentJourneyView(
-      page: IdentityPage,
-      journey: AnyConsentsJourney,
-      forms: ProfileForms,
-      user: User,
-      consentHint: Option[String],
-  )(implicit request: AuthRequest[AnyContent]): Future[Result] = {
-
-    newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData).map { emailFilledForm =>
-      NoCache(
-        Ok(
-          IdentityHtmlPage.html(content =
-            views.html.consentJourney(
-              user,
-              forms,
-              journey,
-              returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl),
-              idRequestParser(request),
-              idUrlBuilder,
-              emailFilledForm,
-              newsletterService.getEmailSubscriptions(emailFilledForm),
-              newsletters(),
-              consentHint,
-              skin = None,
-            ),
-          )(page, request, context),
-        ),
-      )
-
-    }
   }
 
 }
