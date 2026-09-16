@@ -46,8 +46,11 @@ class ArticleController(
 
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
-  )(implicit req: RequestHeader): Future[Result] =
-    mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+  )(implicit req: RequestHeader): Future[Result] = {
+    val fetchPath = determineABTestPath(path)
+    val isBVariant = path != fetchPath
+    mapModel(path, fetchPath, range, isBVariant) { pageBlocks => render(path, modifier(pageBlocks)) }
+  }
 
   def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
     val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
@@ -74,7 +77,7 @@ class ArticleController(
   }
 
   def renderArticle(path: String): Action[AnyContent] = Action.async { implicit request =>
-    mapAndRender(determineABTestPath(path), ArticleBlocks)()(request)
+    mapAndRender(path, ArticleBlocks)()(request)
   }
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
   def renderEmail(path: String): Action[AnyContent] = renderArticle(path)
@@ -161,12 +164,13 @@ class ArticleController(
     }
   }
 
-  private def mapModel(path: String, range: BlockRange)(
+  private def mapModel(displayPath: String, fetchPath: String, range: BlockRange, skipCanonicalRedirect: Boolean)(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range))
-      .map(responseToModelOrResult)
+      .lookup(fetchPath, Some(range))
+      .map(responseToModelOrResult(_, skipCanonicalRedirect))
+      .map(_.map(maskPathIfVariant(displayPath, fetchPath)))
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
@@ -176,11 +180,12 @@ class ArticleController(
 
   private def responseToModelOrResult(
       response: ItemResponse,
+      skipCanonicalRedirect: Boolean
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    ModelOrResult(supportedContent, response) match {
+    ModelOrResult(supportedContent, response, skipCanonicalRedirect = skipCanonicalRedirect) match {
       case Right(article: Article) =>
         Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Left(r) => Left(r)
