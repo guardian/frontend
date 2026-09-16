@@ -7,7 +7,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
-import services.{NewsletterService}
+import services.{MockSubnavAgent, NewsletterService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class LiveBlogControllerTest
@@ -28,11 +28,12 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     var fakeDcr = new DCRFake()
 
     lazy val liveBlogController = new LiveBlogController(
-      testContentApiClient,
-      play.api.test.Helpers.stubControllerComponents(),
-      wsClient,
-      fakeDcr,
-      new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+      contentApiClient = testContentApiClient,
+      controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+      ws = wsClient,
+      remoteRenderer = fakeDcr,
+      newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
+      subnavAgent = new MockSubnavAgent(),
     )
   }
 

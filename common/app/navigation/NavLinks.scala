@@ -216,7 +216,7 @@ object NavLinks {
   val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/insidetheguardian")
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
   val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
-  val crosswords = NavLink(
+  val legacyCrosswords = NavLink(
     "Crosswords",
     "/crosswords",
     children = List(
@@ -233,7 +233,8 @@ object NavLinks {
       NavLink("Special", "/crosswords/series/special"),
     ),
   )
-  val wordiply = NavLink(
+  val puzzles = NavLink("Puzzles and games", "/puzzles-and-games")
+  val legacyWordiply = NavLink(
     "Wordiply",
     "https://www.wordiply.com",
   )
@@ -640,8 +641,8 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
-    crosswords,
-    wordiply,
+    legacyCrosswords,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -653,8 +654,8 @@ object NavLinks {
     newsletters,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
-    crosswords,
-    wordiply,
+    legacyCrosswords,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -665,8 +666,8 @@ object NavLinks {
     pictures,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
-    crosswords,
-    wordiply,
+    legacyCrosswords,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -679,8 +680,8 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
-    crosswords,
-    wordiply,
+    legacyCrosswords,
+    legacyWordiply,
     corrections,
     tips,
   )
@@ -693,8 +694,8 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
-    crosswords,
-    wordiply,
+    legacyCrosswords,
+    legacyWordiply,
     corrections,
     tips,
   )

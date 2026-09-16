@@ -1,11 +1,13 @@
 package test
 
 import controllers.MediaController
+import model.ApplicationIdentity
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.jsoup.Jsoup
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import services.SubnavAgent
 
 @DoNotDiscover class MediaControllerTest
     extends AnyFlatSpec
@@ -20,7 +22,12 @@ import org.scalatest.matchers.should.Matchers
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val videoUrlWithDodgyOctpusUrl = "football/video/2015/feb/10/manchester-united-louis-van-gaal-long-ball-video"
   lazy val mediaController =
-    new MediaController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
+    new MediaController(
+      contentApiClient = testContentApiClient,
+      controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+      wsClient = wsClient,
+      subnavAgent = new SubnavAgent(ApplicationIdentity("mock")),
+    )
 
   "Media Controller" should "200 when content type is video" in {
     val result = mediaController.render(videoUrl)(TestRequest(videoUrl))

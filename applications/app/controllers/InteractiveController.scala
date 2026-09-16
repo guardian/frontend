@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{DotcomRendering, InteractivePicker, PressedInteractive}
-import services.{CAPILookup, USElection2020AmpPages}
+import services.{CAPILookup, SubnavAgent, USElection2020AmpPages}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -27,6 +27,7 @@ class InteractiveController(
     wsClient: WSClient,
     val controllerComponents: ControllerComponents,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -106,12 +107,19 @@ class InteractiveController(
 
   def renderHtml(pageBlocks: BlocksOn[InteractivePage])(implicit request: RequestHeader): Future[Result] = {
     val pageType = PageType.apply(pageBlocks.page, request, context)
-    remoteRenderer.getInteractive(wsClient, pageBlocks, pageType)
+    val customSubnav = subnavAgent.getSubnavForContent(pageBlocks.page.interactive.content)
+    remoteRenderer.getInteractive(wsClient, pageBlocks, pageType, customSubnav)
   }
 
   def renderJson(pageBlocks: BlocksOn[InteractivePage])(implicit request: RequestHeader): Future[Result] = {
+    val customSubnav = subnavAgent.getSubnavForContent(pageBlocks.page.interactive.content)
     val data =
-      DotcomRenderingDataModel.forInteractive(pageBlocks, request, PageType.apply(pageBlocks.page, request, context))
+      DotcomRenderingDataModel.forInteractive(
+        pageBlocks = pageBlocks,
+        request = request,
+        pageType = PageType.apply(pageBlocks.page, request, context),
+        customSubnav = customSubnav,
+      )
     val dataJson = DotcomRenderingDataModel.toJson(data)
     val res = common.renderJson(dataJson, pageBlocks.page).as("application/json")
     Future.successful(res)

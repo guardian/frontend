@@ -1,10 +1,12 @@
 package test
 
 import controllers.GalleryController
+import model.ApplicationIdentity
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import services.SubnavAgent
 
 @DoNotDiscover class GalleryControllerTest
     extends AnyFlatSpec
@@ -19,7 +21,12 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
 
   lazy val galleryController =
-    new GalleryController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
+    new GalleryController(
+      contentApiClient = testContentApiClient,
+      controllerComponents = play.api.test.Helpers.stubControllerComponents(),
+      wsClient = wsClient,
+      subnavAgent = new SubnavAgent(ApplicationIdentity("mock")),
+    )
 
   "Gallery Controller" should "200 when content type is gallery" in {
     val result = galleryController.render(galleryUrl)(TestRequest(s"/$galleryUrl"))

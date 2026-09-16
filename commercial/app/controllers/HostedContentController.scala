@@ -146,7 +146,7 @@ class HostedContentController(
       pageBlocks: BlocksOn[ArticlePage],
   )(implicit request: RequestHeader): JsValue = {
     val pageType: PageType = PageType(pageBlocks.page, request, context)
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None))
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None, None))
   }
 
   /** Render via dotcom-rendering */

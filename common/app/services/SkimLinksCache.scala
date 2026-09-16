@@ -29,6 +29,9 @@ object SkimLinksCache extends GuLogging {
       .map(_.replace("www.", ""))
       .exists(skimLinkDomains.get().contains)
   }
+
+  /** Allows tests to inject known domains without requiring S3 access. */
+  def setDomains(domains: Set[String]): Unit = skimLinkDomains.set(domains)
 }
 
 class SkimLinksCacheLifeCycle()(implicit ec: ExecutionContext) extends LifecycleComponent {

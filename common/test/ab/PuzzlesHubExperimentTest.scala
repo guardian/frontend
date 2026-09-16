@@ -24,6 +24,11 @@ import play.api.test.FakeRequest
     PuzzlesHubExperiment.isEnabled should be(false)
   }
 
+  it should "return true in local development without experiment participation" in {
+    implicit val request: RequestHeader = FakeRequest()
+    PuzzlesHubExperiment.isEnabled(isDevelopment = true) should be(true)
+  }
+
   it should "return false for an unknown group" in {
     implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub:unknown")
     PuzzlesHubExperiment.isEnabled should be(false)

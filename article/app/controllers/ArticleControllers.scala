@@ -7,7 +7,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import renderers.DotcomRenderingService
 import services.newsletters.NewsletterSignupAgent
-import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
+import services.{NewsletterService, NewspaperBookSectionTagAgent, NewspaperBookTagAgent, SubnavAgent}
 
 trait ArticleControllers {
   def contentApiClient: ContentApiClient
@@ -15,6 +15,7 @@ trait ArticleControllers {
   def wsClient: WSClient
   def remoteRender: DotcomRenderingService
   def newsletterSignupAgent: NewsletterSignupAgent
+  def subnavAgent: SubnavAgent
 
   implicit def appContext: ApplicationContext
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]

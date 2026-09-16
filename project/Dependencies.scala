@@ -3,10 +3,10 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.31"
-  val awsVersion = "2.49.6"
-  val capiVersion = "47.0.0"
-  val faciaVersion = "37.0.0"
+  val identityLibVersion = "8.0.0"
+  val awsVersion = "2.54.12"
+  val capiVersion = "49.0.0"
+  val faciaVersion = "41.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -33,7 +33,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "46.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "50.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -52,10 +52,11 @@ object Dependencies {
     .excludeAll(excludeDirectScalaXMLDependency)
 
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
-  val jodaTime = "joda-time" % "joda-time" % "2.14.2"
+  val jodaTime = "joda-time" % "joda-time" % "2.14.3"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
-  val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
+  val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
+  val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.18"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
@@ -72,13 +73,13 @@ object Dependencies {
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-5-18" % "3.2.19.0" % Test
   val mockito = "org.mockito" % "mockito-core" % "5.23.0" % Test // ensure this matches scalatest + mockito
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
-  val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
+  val sttp = "com.softwaremill.sttp.client4" %% "core" % "4.0.26"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.18"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.34"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.37"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion

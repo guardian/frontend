@@ -1,5 +1,6 @@
 package navigation
 
+import com.gu.facia.client.models.CustomSubnav
 import common.Edition
 import model.Page
 import navigation.ReaderRevenueSite.{PrintCTA, Support, SupportContribute, SupportSubscribe, SupporterCTA}
@@ -82,6 +83,7 @@ case class Nav(
     currentPillarTitle: Option[String],
     subNavSections: Option[Subnav],
     readerRevenueLinks: ReaderRevenueLinks,
+    customSubnav: Option[CustomSubnav],
 )
 
 object Nav {
@@ -94,8 +96,8 @@ object Nav {
 
   implicit val writes: OWrites[Nav] = Json.writes[Nav]
 
-  def apply(page: Page, edition: Edition): Nav = {
-    val navMenu = NavMenu(page, edition)
+  def apply(page: Page, edition: Edition, request: RequestHeader, customSubnav: Option[CustomSubnav]): Nav = {
+    val navMenu = NavMenu(page, edition, request)
     Nav(
       currentUrl = navMenu.currentUrl,
       pillars = navMenu.pillars,
@@ -105,6 +107,7 @@ object Nav {
       currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
       subNavSections = navMenu.subNavSections,
       readerRevenueLinks = ReaderRevenueLinks.all,
+      customSubnav = customSubnav,
     )
   }
 }

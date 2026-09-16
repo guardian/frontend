@@ -2,6 +2,7 @@ package test
 
 import model.meta.BlocksOn
 import com.gu.contentapi.client.model.v1.Block
+import com.gu.facia.client.models.CustomSubnav
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.PageType
 import model.{ApplicationContext, Cached, LiveBlogPage, PageWithStoryPackage}
@@ -25,6 +26,7 @@ class DCRFake(implicit context: ApplicationContext) extends renderers.DotcomRend
       pageType: PageType,
       newsletter: Option[NewsletterData],
       forceLive: Boolean,
+      customSubnav: Option[CustomSubnav],
   )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     val article = pageBlocks.page

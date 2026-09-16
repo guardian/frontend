@@ -194,10 +194,27 @@ class EmailSignupController(
   private val UpstreamBadResponseErrorCode = "upstream-bad-response"
   private val UpstreamUnavailableErrorCode = "upstream-unavailable"
 
-  private def requestLogContext(implicit request: Request[AnyContent]): String =
+  private def requestLogContext(implicit request: RequestHeader): String =
     s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
       s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
       s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
+
+  private def logFormValidationFailure(actionName: String, formWithErrors: Form[_])(implicit
+      request: Request[AnyContent],
+  ): Unit = {
+    val submittedKeys = request.body.asFormUrlEncoded.map(_.keys.toSeq.sorted).getOrElse(Seq.empty)
+    val hasCaptchaToken = request.body.asFormUrlEncoded.exists(_.contains("g-recaptcha-response"))
+    val hasSecureCookie = request.headers.get("Cookie").exists(_.contains("play_session"))
+
+    logInfoWithRequestId(
+      s"Newsletter signup form validation failed for $actionName. " +
+        s"errors=${formWithErrors.errors.map(e => s"${e.key}:${e.message}").mkString(",")}; " +
+        s"submittedKeys=${submittedKeys.mkString("[", ", ", "]")}; " +
+        s"hasCaptchaToken=$hasCaptchaToken; " +
+        s"hasSecureCookie=$hasSecureCookie; " +
+        s"${requestLogContext}",
+    )
+  }
 
   val emailForm: Form[EmailForm] = Form(
     mapping(
@@ -340,8 +357,14 @@ class EmailSignupController(
   }
 
   def logNewsletterNotFoundError(newsletterName: String)(implicit request: RequestHeader): Unit = {
+    val queryStringContext =
+      if (request.rawQueryString.nonEmpty) s", query-string: ${request.rawQueryString}"
+      else ""
+
     logInfoWithRequestId(
-      s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. It may no longer exist or $newsletterName may be an outdated reference number.",
+      s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. " +
+        s"It may no longer exist or $newsletterName may be an outdated reference number. " +
+        s"request-method: ${request.method}, request-uri: ${request.uri}$queryStringContext, $requestLogContext",
     )
   }
 
@@ -437,7 +460,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logFormValidationFailure("/email/footer", formWithErrors)
             EmailFormError.increment()
             Future.successful(respondFooter(InvalidEmail))
           },
@@ -557,12 +580,22 @@ class EmailSignupController(
           RecaptchaAPIUnavailableError.increment()
           Future.failed(CaptchaVerificationUnavailableException(e))
         }
-        googleResponse = wsResponse.json.as[GoogleResponse]
+        googleResponse <- scala.util.Try(wsResponse.json.as[GoogleResponse]) match {
+          case scala.util.Success(r) => Future.successful(r)
+          case scala.util.Failure(e) =>
+            logErrorWithRequestId(
+              s"reCAPTCHA API returned non-JSON response (HTTP ${wsResponse.status}): ${e.getMessage}",
+            )
+            RecaptchaAPIUnavailableError.increment()
+            Future.failed(CaptchaVerificationUnavailableException(e))
+        }
         _ <- {
           if (googleResponse.success) {
             RecaptchaValidationSuccess.increment()
             Future.successful(())
           } else {
+            val errorCodes = googleResponse.`error-codes`.getOrElse(Seq.empty).mkString(",")
+            logErrorWithRequestId(s"reCAPTCHA validation failed. error-codes: [$errorCodes]")
             RecaptchaValidationError.increment()
             Future.failed(InvalidCaptchaTokenException)
           }
@@ -581,7 +614,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logFormValidationFailure("/email", formWithErrors)
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },
@@ -625,7 +658,7 @@ class EmailSignupController(
         .bindFromRequest()
         .fold(
           formWithErrors => {
-            logInfoWithRequestId(s"Form has been submitted with errors: ${formWithErrors.errors}")
+            logFormValidationFailure("/email/many", formWithErrors)
             EmailFormError.increment()
             Future.successful(respond(InvalidEmail))
           },

@@ -8,7 +8,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import mkdirp from 'mkdirp';
-import glob from 'glob';
 import pify from 'pify';
 
 import * as sass from 'sass';
@@ -56,7 +55,7 @@ const REMIFICATIONS = {
 };
 
 /** @param {string} sassGlob */
-const getFiles = (sassGlob) => glob.sync(path.resolve(sassDir, sassGlob));
+const getFiles = (sassGlob) => fs.globSync(path.resolve(sassDir, sassGlob));
 
 /**
  * @param {string} sassGlob

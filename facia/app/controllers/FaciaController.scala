@@ -2,6 +2,8 @@ package controllers
 
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
 import agents.{DeeplyReadAgent, MostViewedAgent}
+import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
+import com.gu.facia.client.models.CustomSubnav
 import common._
 import conf.Configuration
 import conf.switches.Switches.InlineEmailStyles
@@ -24,6 +26,7 @@ import renderers.DotcomRenderingService
 import services.dotcomrendering.{FaciaPicker, RemoteRender}
 import services.fronts.{FrontJsonFapi, FrontJsonFapiLive}
 import services.{CollectionConfigWithId, ConfigAgent}
+import services.SubnavAgent
 import utils.TargetedCollections
 import views.html.fragments.containers.facia_cards.container
 
@@ -40,6 +43,7 @@ trait FaciaController
   val ws: WSClient
   val mostViewedAgent: MostViewedAgent
   val deeplyReadAgent: DeeplyReadAgent
+  val subnavAgent: SubnavAgent
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val assets: Assets
 
@@ -199,6 +203,9 @@ trait FaciaController
       targetedTerritories,
     )
 
+  private def customSubnavForFront(page: PressedPage, pageType: PageType): Option[CustomSubnav] =
+    subnavAgent.getSubnavForFront(page.metadata.id, if (pageType.isPreview) Draft else Live)
+
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val futureFaciaPage = getFaciaPage(path)
 
@@ -223,6 +230,7 @@ trait FaciaController
             pageType = pageType,
             mostViewed = mostViewedAgent.mostViewed(Edition(request)),
             deeplyRead = deeplyRead,
+            subnav = customSubnavForFront(faciaPage, pageType),
           )(request),
           targetedTerritories,
         )
@@ -238,13 +246,15 @@ trait FaciaController
           logDebugWithRequestId(
             s"Front Geo Request (237): ${Edition(request).id} ${request.headers.toSimpleMap.getOrElse("X-GU-GeoLocation", "country:row")}",
           )
+          val pageType = PageType(faciaPage, request, context)
           JsonComponent.fromWritable(
             DotcomFrontsRenderingDataModel(
               page = faciaPage,
               request = request,
-              pageType = PageType(faciaPage, request, context),
+              pageType = pageType,
               mostViewed = mostViewedAgent.mostViewed(Edition(request)),
               deeplyRead = deeplyRead,
+              customSubnav = customSubnavForFront(faciaPage, pageType),
             ),
           )
         } else JsonFront(faciaPage)
@@ -520,6 +530,7 @@ class FaciaControllerImpl(
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
+    val subnavAgent: SubnavAgent,
     val assets: Assets,
 )(implicit val context: ApplicationContext)
     extends FaciaController

@@ -47,9 +47,11 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val ophanApi = wire[OphanApi]
   lazy val mostViewedAgent = wire[MostViewedAgent]
   lazy val deeplyReadAgent = wire[DeeplyReadAgent]
+  lazy val subnavAgent = wire[SubnavAgent]
 
   override lazy val lifecycleComponents = List(
     wire[ConfigAgentLifecycle],
+    wire[SubnavAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SurgingContentAgentLifecycle],
     wire[IndexListingsLifecycle],

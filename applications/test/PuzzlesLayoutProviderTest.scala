@@ -1,0 +1,483 @@
+package test
+
+import com.gu.contentapi.client.model.SearchQuery
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, CrosswordType, SearchResponse}
+import contentapi.ContentApiClient
+import controllers.LocalJsonPuzzlesLayoutProvider
+import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
+import play.api.libs.json.Json
+import play.api.{Environment, Mode}
+
+import java.io.{ByteArrayInputStream, File, InputStream}
+import java.nio.charset.StandardCharsets
+import java.time.{Clock, Instant, ZoneOffset}
+import scala.collection.mutable.ListBuffer
+import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext, Future}
+
+class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSugar {
+  private implicit val executionContext: ExecutionContext = ExecutionContext.global
+  private val mondayClock = Clock.fixed(Instant.parse("2026-09-07T12:00:00Z"), ZoneOffset.UTC)
+
+  "LocalJsonPuzzlesLayoutProvider" should "load the production layout from the classpath" in {
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+
+    val layout = Await.result(provider.getLayout(), 5.seconds)
+
+    layout.containers should not be empty
+    layout.containers.flatMap(_.content.nestedContainers) should not be empty
+    archives(layout) should not be empty
+  }
+
+  it should "load the target hierarchy and its explicit presentation metadata" in {
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+
+    val layout = Await.result(provider.getLayout(), 5.seconds)
+    val featured = layout.containers.head
+    val crosswords = layout.containers.find(_.id == "crosswords").get
+
+    layout.containers
+      .filter(container => container.variant.exists(Set("featured", "standard")))
+      .map(_.title) shouldBe Seq(
+      "Today’s featured puzzles",
+      "Crosswords",
+      "Word games",
+      "Logic puzzles",
+    )
+    layout.containers.filter(_.variant.contains("ad")).map(_.adSlot) shouldBe Seq(
+      Some("inline1"),
+      Some("inline2"),
+      Some("inline3"),
+    )
+    featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
+      ("Quick crossword", "large", Some("Daily")),
+      ("Easy sudoku", "large", Some("Daily")),
+    )
+    crosswords.content.items.map(_.map(item => item.title -> item.cardVariant)) shouldBe Seq(
+      Seq("Quick", "Mini", "Cryptic", "Quick cryptic").map(_ -> "primary"),
+      Seq("Quiptic", "Prize", "Weekend", "Genius").map(_ -> "compact"),
+    )
+    crosswords.content.archiveChoices.map(_.map(_.title)) shouldBe Some(
+      Seq(
+        "Mini",
+        "Quick",
+        "Cryptic",
+        "Quick cryptic",
+        "Quiptic",
+        "Weekend",
+        "Prize",
+        "Sunday quick",
+        "Genius",
+        "Special",
+      ),
+    )
+    layout.containers
+      .find(_.variant.contains("supporting"))
+      .flatMap(_.supporting)
+      .map(_.popularGroups.map(_.title)) shouldBe
+      Some(Seq("Most played", "Most comments"))
+    allItems(layout).find(_.id == "wordiply-daily").flatMap(_.image) shouldBe Some("https://www.wordiply.com/share.png")
+    allItems(layout).map(_.id).distinct should have size allItems(layout).size
+  }
+
+  it should "select the configured featured puzzles for each London weekday" in {
+    val expectedByDate = Seq(
+      "2026-09-07T12:00:00Z" -> Seq("Quick crossword", "Easy sudoku"),
+      "2026-09-08T12:00:00Z" -> Seq("Mini crossword", "Film reveal"),
+      "2026-09-09T12:00:00Z" -> Seq("Cryptic crossword", "Medium sudoku"),
+      "2026-09-10T12:00:00Z" -> Seq("Quick crossword", "Wordiply"),
+      "2026-09-11T12:00:00Z" -> Seq("Mini crossword", "Hard sudoku"),
+      "2026-09-12T12:00:00Z" -> Seq("General knowledge crossword", "Film reveal"),
+      "2026-09-13T12:00:00Z" -> Seq("Quiptic crossword", "On the ball"),
+    )
+
+    expectedByDate.foreach { case (instant, expectedTitles) =>
+      val provider = providerFor(
+        featuredLayout(enabled = true),
+        emptyContentApiClient(),
+        Clock.fixed(Instant.parse(instant), ZoneOffset.UTC),
+      )
+
+      firstItemRow(Await.result(provider.getLayout(), 5.seconds)).map(_.title) shouldBe expectedTitles
+    }
+  }
+
+  it should "omit the featured section when it is disabled" in {
+    val provider = providerFor(featuredLayout(enabled = false), emptyContentApiClient(), mondayClock)
+
+    Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
+  }
+
+  it should "close the resource stream after successful loading" in {
+    val json = """{"containers":[]}"""
+    val stream = new CloseTrackingInputStream(json)
+    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
+
+    Await.result(provider.getLayout(), 5.seconds) shouldBe PuzzlesLayout(Seq.empty)
+    stream.wasClosed shouldBe true
+  }
+
+  it should "fail clearly and close the stream when the blueprint is invalid" in {
+    val stream = new CloseTrackingInputStream("""{"containers":[{"title":"incomplete"}]}""")
+    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
+
+    val error = the[IllegalArgumentException] thrownBy Await.result(provider.getLayout(), 5.seconds)
+
+    error.getMessage should include("puzzles-layout.json")
+    error.getMessage should include("is invalid")
+    stream.wasClosed shouldBe true
+  }
+
+  it should "fail clearly and close the stream when the resource contains malformed JSON" in {
+    val stream = new CloseTrackingInputStream("""{"containers": [""")
+    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
+
+    val error = the[IllegalArgumentException] thrownBy Await.result(provider.getLayout(), 5.seconds)
+
+    error.getMessage should include("puzzles-layout.json")
+    error.getMessage should include("could not be parsed as JSON")
+    stream.wasClosed shouldBe true
+  }
+
+  it should "fail clearly when the classpath resource is missing" in {
+    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(None), emptyContentApiClient())
+
+    val error = the[IllegalStateException] thrownBy Await.result(provider.getLayout(), 5.seconds)
+
+    error.getMessage should include("puzzles-layout.json")
+    error.getMessage should include("was not found on the classpath")
+  }
+
+  it should "replace the URL while preserving an image configured by the blueprint" in {
+    val baseItem = PuzzleItem(
+      id = "crossword-quick-cryptic",
+      title = "Editorial title",
+      `type` = "crossword",
+      set = "quick-cryptic",
+      cardVariant = "primary",
+      cadence = Some("Every Saturday"),
+      url = Some("/fallback"),
+      image = Some("/fallback.svg"),
+      slug = Some("editorial-slug"),
+      index = Some(7),
+      variant = Some("featured"),
+      backgroundColour = Some("#abcdef"),
+    )
+    val provider = providerFor(
+      layoutWith(items = Seq(baseItem)),
+      contentApiClient(Map("crosswords/series/quick-cryptic" -> Right(Some(CrosswordType.QuickCryptic -> 321)))),
+    )
+
+    val enrichedItem = firstItem(Await.result(provider.getLayout(), 5.seconds))
+
+    enrichedItem shouldBe baseItem.copy(
+      url = Some("/puzzles-and-games/crosswords/quick-cryptic/321"),
+      image = Some("/fallback.svg"),
+    )
+  }
+
+  it should "use the enriched crossword image when the blueprint does not configure one" in {
+    val baseItem = crossword("quick", "/fallback").copy(image = None)
+    val provider = providerFor(
+      layoutWith(items = Seq(baseItem)),
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123)))),
+    )
+
+    firstItem(Await.result(provider.getLayout(), 5.seconds)).image shouldBe Some(
+      "https://api.nextgen.guardianapps.co.uk/crosswords/quick/123.svg",
+    )
+  }
+
+  it should "discover nested cards recursively and deduplicate lookups by set" in {
+    val queries = ListBuffer.empty[SearchQuery]
+    val nested = PuzzleContainer(
+      id = "nested",
+      title = "Nested",
+      content = PuzzleContent(
+        items = Seq(Seq(crossword("quick", "/nested").copy(id = "crossword-quick-nested"))),
+        nestedContainers = Seq.empty,
+      ),
+    )
+    val layout = layoutWith(
+      items = Seq(
+        crossword("quick", "/top").copy(id = "crossword-quick-top"),
+        crossword("quick", "/duplicate").copy(id = "crossword-quick-duplicate"),
+      ),
+      nestedContainers = Seq(nested),
+    )
+    val provider = providerFor(
+      layout,
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 42))), queries),
+    )
+
+    val enriched = Await.result(provider.getLayout(), 5.seconds)
+
+    queries should have size 1
+    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/puzzles-and-games/crosswords/quick/42"))
+  }
+
+  it should "query the corresponding CAPI series tag for every supported crossword set" in {
+    val setToSeries = Seq(
+      "mini" -> "crosswords/series/mini-crossword",
+      "weekend" -> "crosswords/series/weekend-crossword",
+      "quick" -> "crosswords/series/quick",
+      "cryptic" -> "crosswords/series/cryptic",
+      "prize" -> "crosswords/series/prize",
+      "sunday-quick" -> "crosswords/series/sunday-quick",
+      "quick-cryptic" -> "crosswords/series/quick-cryptic",
+      "everyman" -> "crosswords/series/everyman",
+      "speedy" -> "crosswords/series/speedy",
+      "quiptic" -> "crosswords/series/quiptic",
+      "genius" -> "crosswords/series/genius",
+      "special" -> "crosswords/series/special",
+      "azed" -> "crosswords/series/azed",
+    )
+    val queries = ListBuffer.empty[SearchQuery]
+    val provider = providerFor(
+      layoutWith(items = setToSeries.map { case (set, _) => crossword(set) }),
+      contentApiClient(setToSeries.map { case (_, tag) => tag -> Right(None) }.toMap, queries),
+    )
+
+    Await.result(provider.getLayout(), 5.seconds)
+
+    queries.map(_.parameters("tag")).toSeq shouldBe setToSeries.map(_._2)
+  }
+
+  it should "request only the latest newspaper-edition crossword and its required fields" in {
+    val queries = ListBuffer.empty[SearchQuery]
+    val provider = providerFor(
+      layoutWith(items = Seq(crossword("mini"))),
+      contentApiClient(Map("crosswords/series/mini-crossword" -> Right(None)), queries),
+    )
+
+    Await.result(provider.getLayout(), 5.seconds)
+
+    queries.toSeq should have size 1
+    queries.head.parameters should contain allOf (
+      "type" -> "crossword",
+      "tag" -> "crosswords/series/mini-crossword",
+      "use-date" -> "newspaper-edition",
+      "order-by" -> "newest",
+      "page-size" -> "1",
+      "show-fields" -> "all",
+    )
+  }
+
+  it should "leave unknown crossword sets unchanged without querying CAPI" in {
+    val queries = ListBuffer.empty[SearchQuery]
+    val baseItem = crossword("not-configured", "/base")
+    val provider = providerFor(layoutWith(items = Seq(baseItem)), contentApiClient(Map.empty, queries))
+
+    firstItem(Await.result(provider.getLayout(), 5.seconds)) shouldBe baseItem
+    queries shouldBe empty
+  }
+
+  it should "exclude archive and non-crossword items from lookup and enrichment" in {
+    val queries = ListBuffer.empty[SearchQuery]
+    val latestCard = crossword("quick", "/latest-card").copy(id = "crossword-quick-latest")
+    val archiveInItems = crossword("quick", "/archive-card").copy(
+      id = "crossword-quick-archive-card",
+      variant = Some("archive-page"),
+    )
+    val nonCrossword = PuzzleItem(
+      "sudoku-quick",
+      "Sudoku",
+      "sudoku",
+      "quick",
+      "primary",
+      Some("Daily"),
+      url = Some("/sudoku"),
+      image = Some("/sudoku.svg"),
+    )
+    val archive = crossword("quick", "/archive").copy(
+      id = "crosswords-archive",
+      cardVariant = "archive",
+      cadence = None,
+    )
+    val layout = layoutWith(items = Seq(latestCard, archiveInItems, nonCrossword), archive = Some(archive))
+    val provider = providerFor(
+      layout,
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 99))), queries),
+    )
+
+    val result = Await.result(provider.getLayout(), 5.seconds)
+
+    queries should have size 1
+    allItems(result) should contain theSameElementsInOrderAs Seq(
+      latestCard.copy(
+        url = Some("/puzzles-and-games/crosswords/quick/99"),
+        image = Some("/latest-card.svg"),
+      ),
+      archiveInItems,
+      nonCrossword,
+    )
+    result.containers.head.content.archive shouldBe Some(archive)
+  }
+
+  it should "keep failed sets at their base values while enriching successful sets" in {
+    val quick = crossword("quick", "/quick-base")
+    val cryptic = crossword("cryptic", "/cryptic-base")
+    val provider = providerFor(
+      layoutWith(items = Seq(quick, cryptic)),
+      contentApiClient(
+        Map(
+          "crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 100)),
+          "crosswords/series/cryptic" -> Left(new RuntimeException("CAPI unavailable")),
+        ),
+      ),
+    )
+
+    val result = Await.result(provider.getLayout(), 5.seconds)
+
+    allItems(result).find(_.set == "quick").flatMap(_.url) shouldBe Some("/puzzles-and-games/crosswords/quick/100")
+    allItems(result).find(_.set == "cryptic") shouldBe Some(cryptic)
+  }
+
+  it should "return the complete base layout when all CAPI lookups fail" in {
+    val baseLayout = layoutWith(items = Seq(crossword("quick", "/quick-base"), crossword("cryptic", "/cryptic-base")))
+    val provider = providerFor(
+      baseLayout,
+      contentApiClient(
+        Map(
+          "crosswords/series/quick" -> Left(new RuntimeException("quick failed")),
+          "crosswords/series/cryptic" -> Left(new RuntimeException("cryptic failed")),
+        ),
+      ),
+    )
+
+    Await.result(provider.getLayout(), 5.seconds) shouldBe baseLayout
+  }
+
+  private def crossword(set: String, url: String = "/base"): PuzzleItem =
+    PuzzleItem(
+      id = s"crossword-$set",
+      title = set,
+      `type` = "crossword",
+      set = set,
+      cardVariant = "primary",
+      cadence = Some("Daily"),
+      url = Some(url),
+      image = Some(s"$url.svg"),
+      backgroundColour = Some("#f0f0f0"),
+    )
+
+  private def layoutWith(
+      items: Seq[PuzzleItem],
+      nestedContainers: Seq[PuzzleContainer] = Seq.empty,
+      archive: Option[PuzzleItem] = None,
+  ): PuzzlesLayout =
+    PuzzlesLayout(
+      containers = Seq(
+        PuzzleContainer(
+          id = "test-container",
+          title = "Test container",
+          variant = Some("featured"),
+          content = PuzzleContent(Seq(items), nestedContainers, archive),
+          desktopSpan = Some(12),
+        ),
+      ),
+    )
+
+  private def featuredLayout(enabled: Boolean): PuzzlesLayout =
+    PuzzlesLayout(
+      Seq(
+        PuzzleContainer(
+          id = "featured-puzzles",
+          title = "Today’s featured puzzles",
+          variant = Some("featured"),
+          content = PuzzleContent(Seq.empty, Seq.empty),
+          enabled = Some(enabled),
+        ),
+      ),
+    )
+
+  private def providerFor(
+      layout: PuzzlesLayout,
+      client: ContentApiClient,
+      clock: Clock = Clock.systemUTC(),
+  ): LocalJsonPuzzlesLayoutProvider = {
+    val stream = new CloseTrackingInputStream(Json.stringify(Json.toJson(layout)))
+    new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), client, clock = clock)
+  }
+
+  private def emptyContentApiClient(): ContentApiClient = contentApiClient(Map.empty)
+
+  private def contentApiClient(
+      responses: Map[String, Either[Throwable, Option[(CrosswordType, Int)]]],
+      capturedQueries: ListBuffer[SearchQuery] = ListBuffer.empty,
+  ): ContentApiClient = {
+    val client = mock[ContentApiClient]
+
+    when(client.getResponse(any[SearchQuery])).thenAnswer(new Answer[Future[SearchResponse]] {
+      override def answer(invocation: InvocationOnMock): Future[SearchResponse] = {
+        val query = invocation.getArgument[SearchQuery](0)
+        capturedQueries += query
+        responses.getOrElse(query.parameters("tag"), Right(None)) match {
+          case Left(error)    => Future.failed(error)
+          case Right(content) => Future.successful(searchResponse(content))
+        }
+      }
+    })
+
+    client
+  }
+
+  private def searchResponse(crosswordData: Option[(CrosswordType, Int)]): SearchResponse = {
+    val response = mock[SearchResponse]
+    val results = crosswordData.toSeq.map { case (crosswordType, number) =>
+      val crossword = mock[Crossword]
+      when(crossword.`type`).thenReturn(crosswordType)
+      when(crossword.number).thenReturn(number)
+
+      val content = mock[ApiContent]
+      when(content.crossword).thenReturn(Some(crossword))
+      content
+    }
+    when(response.results).thenReturn(results)
+    response
+  }
+
+  private def firstItem(layout: PuzzlesLayout): PuzzleItem = allItems(layout).head
+
+  private def firstItemRow(layout: PuzzlesLayout): Seq[PuzzleItem] = layout.containers.head.content.items.head
+
+  private def allItems(layout: PuzzlesLayout): Seq[PuzzleItem] =
+    layout.containers.flatMap(allItems)
+
+  private def allItems(container: PuzzleContainer): Seq[PuzzleItem] =
+    container.content.items.flatten ++ container.content.nestedContainers.flatMap(allItems)
+
+  private def archives(layout: PuzzlesLayout): Seq[PuzzleItem] =
+    layout.containers.flatMap(archives)
+
+  private def archives(container: PuzzleContainer): Seq[PuzzleItem] =
+    container.content.archive.toSeq ++
+      container.content.archiveChoices.toSeq.flatten ++
+      container.content.nestedContainers.flatMap(archives)
+
+  private def environmentReturning(stream: Option[InputStream]): Environment = {
+    val classLoader = new ClassLoader(null) {
+      override def getResourceAsStream(name: String): InputStream = stream.orNull
+    }
+    Environment(new File("."), classLoader, Mode.Test)
+  }
+
+  private class CloseTrackingInputStream(contents: String)
+      extends ByteArrayInputStream(contents.getBytes(StandardCharsets.UTF_8)) {
+    var wasClosed = false
+
+    override def close(): Unit = {
+      wasClosed = true
+      super.close()
+    }
+  }
+}

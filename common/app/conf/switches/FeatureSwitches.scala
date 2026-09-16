@@ -621,7 +621,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "enable-new-server-side-tests-header",
     "Enable new server-side AB tests header and add it to the vary header",
-    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     sellByDate = never,
     safeState = Off,
     exposeClientSide = false,
@@ -637,6 +637,20 @@ trait FeatureSwitches {
     safeState = Off,
     exposeClientSide = true,
     highImpact = false,
+  )
+
+  val AffiliateLinks = Switch(
+    group = SwitchGroup.Feature,
+    name = "affiliate-links",
+    description =
+      "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter'"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from being able to monetize The Filter"),
   )
 
   val DCRHostedContent = Switch(
@@ -661,11 +675,12 @@ trait FeatureSwitches {
     highImpact = false,
   )
 
-  val FilterAtAGlanceTest = Switch(
+  val EditorialABTests = Switch(
     group = SwitchGroup.Feature,
-    name = "filter-at-a-glance",
-    description = "Switch for at a glance A / B / C test",
-    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    name = "editorial-ab-tests",
+    description = "Enables editorial A/B tests to run",
+    owners =
+      Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk"), Owner.withEmail("a.b.test.mission@guardian.co.uk")),
     sellByDate = never,
     safeState = Off,
     exposeClientSide = true,

@@ -12,6 +12,10 @@ GET            /assets/admin/*file                                              
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
 GET            /assets/*path                                                                                                     dev.DevAssetsController.at(path)
 
+# Puzzles
+GET        /puzzles-and-games.json                                                                                                         controllers.PuzzlesPageController.renderPuzzlesJson()
+GET        /puzzles-and-games                                                                                                              controllers.PuzzlesPageController.renderPuzzles()
+
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
@@ -27,6 +31,19 @@ GET            /crosswords/lookup                                               
 # Crosswords digital edition
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /crosswords/digital-edition.json                                                                                 controllers.CrosswordEditionsController.digitalEditionJson
+
+# Puzzle Page
+GET        /puzzles-and-games/logic-puzzles/sudoku-$variant<easy|medium|hard|killer>/$date<\d{4}-\d{2}-\d{2}>.json            controllers.PuzzlesPageController.renderSudokuJson(variant: String, date: String)
+GET        /puzzles-and-games/logic-puzzles/sudoku-$variant<easy|medium|hard|killer>/$date<\d{4}-\d{2}-\d{2}>                 controllers.PuzzlesPageController.renderSudoku(variant: String, date: String)
+GET        /puzzles-and-games/logic-puzzles/sudoku-$variant<easy|medium|hard|killer>                                          controllers.PuzzlesPageController.redirectSudokuArchive(variant: String)
+
+GET        /puzzles-and-games/word-games/word-wheel/$date<\d{4}-\d{2}-\d{2}>.json                                             controllers.PuzzlesPageController.renderWordWheelJson(date: String)
+GET        /puzzles-and-games/word-games/word-wheel/$date<\d{4}-\d{2}-\d{2}>                                                  controllers.PuzzlesPageController.renderWordWheel(date: String)
+GET        /puzzles-and-games/word-games/word-wheel                                                                           controllers.PuzzlesPageController.redirectWordWheelArchive()
+
+GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>.json                                               controllers.PuzzlesPageController.renderWordiplyJson(date: String)
+GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>                                                    controllers.PuzzlesPageController.renderWordiply(date: String)
+GET        /puzzles-and-games/word-games/wordiply                                                                             controllers.PuzzlesPageController.redirectWordiplyArchive()
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
@@ -95,8 +112,6 @@ GET            /embed/card/*path.json                                           
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
 
 # Sport
-GET            /sport/cricket/match-scoreboard/:matchDate/:teamId.json                                                           cricket.controllers.CricketMatchController.renderMatchScoreboardJson(matchDate, teamId)
-
 GET            /football/fixtures/more/:year/:month/:day.json                                                                    football.controllers.FixturesController.moreFixturesForJson(year, month, day)
 GET            /football/fixtures/:year/:month/:day                                                                              football.controllers.FixturesController.allFixturesFor(year, month, day)
 GET            /football/fixtures/:year/:month/:day.json                                                                         football.controllers.FixturesController.allFixturesForJson(year, month, day)
@@ -141,12 +156,6 @@ GET            /football/:competitionTag/overview/embed                         
 GET            /football/:competitionTag/overview                                                                                football.controllers.WallchartController.renderWallchart(competitionTag)
 GET            /football/:competitionTag/groups/embed                                                                            football.controllers.WallchartController.renderGroupTablesEmbed(competitionTag)
 GET            /football/:competitionTag/spider/embed                                                                            football.controllers.WallchartController.renderSpiderEmbed(competitionTag)
-
-GET            /football/api/match-nav/:year/:month/:day/:home/:away.json                                                        football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
-GET            /football/api/match-nav/:year/:month/:day/:home/:away                                                             football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
-GET            /football/api/match-nav/:matchId.json                                                                             football.controllers.MoreOnMatchController.moreOnJson(matchId)
-GET            /football/api/match-nav/:matchId                                                                                  football.controllers.MoreOnMatchController.moreOn(matchId)
-GET            /football/api/big-match-special/:matchId.json                                                                     football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
 
 GET            /football/competitions                                                                                            football.controllers.CompetitionListController.renderCompetitionList()
 GET            /football/competitions.json                                                                                       football.controllers.CompetitionListController.renderCompetitionListJson()
@@ -214,7 +223,6 @@ POST           /admin/football/fronts/matches/redirect                          
 GET            /admin/football/fronts/matches/:competitionId                                                                     controllers.admin.FrontsController.chooseMatchForComp(competitionId)
 GET            /admin/football/fronts/matches/:competitionId/:teamId                                                             controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
 GET            /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                                   controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
-GET            /admin/football/fronts/match/:matchId                                                                             controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET            /admin/football/api/squad/:teamId                                                                                 controllers.admin.PlayerController.squad(teamId: String)
 
@@ -253,9 +261,6 @@ GET         /commercial/adops/ads-txt                                           
 POST        /commercial/adops/ads-txt                                                                                            controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
 GET         /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.renderAppAdsDotText()
 POST        /commercial/adops/app-ads-txt                                                                                        controllers.admin.commercial.AdsDotTextEditController.postAppAdsDotText()
-
-# AMP
-GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)

@@ -9,6 +9,7 @@ import model.{ApplicationContext, PressedPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import services.ConfigAgent
+import services.SubnavAgent
 import services.fronts.FrontJsonFapiDraft
 
 import scala.concurrent.Future
@@ -21,6 +22,7 @@ class FaciaDraftController(
     val ws: WSClient,
     val mostViewedAgent: MostViewedAgent,
     val deeplyReadAgent: DeeplyReadAgent,
+    val subnavAgent: SubnavAgent,
     val assets: Assets,
 )(implicit val context: ApplicationContext)
     extends FaciaController

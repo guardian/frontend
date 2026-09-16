@@ -54,7 +54,7 @@ case class Substitution(
 )
 
 object MatchStats {
-  val reportedEventTypes = List("booking", "dismissal", "substitution")
+  val reportedEventTypes = List("booking", "dismissal", "substitution", "substitution-injury")
 
   def makePlayers(team: LineUpTeamEnhanced): Seq[Player] = {
     team.players.map { player =>

@@ -3,9 +3,12 @@ package model.dotcomrendering.pageElements
 import com.gu.contentapi.client.model.v1.{
   Block,
   BlockAttributes,
+  BlockElement,
   Blocks,
   CapiDateTime,
   ContentFields,
+  ElementType,
+  ImageElementFields,
   Content => ApiContent,
 }
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
@@ -13,6 +16,7 @@ import com.gu.contentapi.client.utils.format.LiveBlogDesign
 import conf.switches.Switches
 import implicits.Dates.jodaToJavaInstant
 import model.dotcomrendering.DotcomRenderingUtils
+import services.SkimLinksCache
 import model.liveblog.{BlockAttributes => LiveblogBlockAttribute, _}
 import model.{
   Article,
@@ -168,8 +172,6 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   }
 
   // --- Affiliate disclaimer tests ---
-  // Testing skimlinks detection (hasAffiliateLinksForDisclaimer) requires a SkimLinksCache refactor
-  // and will be covered in a follow-up PR.
 
   /** Helper to build a minimal Article with a specific body HTML and showAffiliateLinks flag. */
   private def articleWithBody(bodyHtml: String, showAffiliateLinks: Option[Boolean] = Some(true)): Article = {
@@ -242,6 +244,186 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
       DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(false)
     } finally {
       Switches.AffiliateLinks.switchOff()
+    }
+  }
+
+  it should "return true when blocks contain affiliateable skimlinks" in {
+    Switches.AffiliateLinks.switchOn()
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val content = articleWithBody(sampleArticleBody)
+      val blocks = Seq(
+        Block(
+          id = "1",
+          bodyHtml = """<p>Check out <a href="https://www.amazon.co.uk/product/123">this product</a></p>""",
+          bodyTextSummary = "",
+          title = None,
+          attributes = BlockAttributes(),
+          published = true,
+          createdDate = None,
+          firstPublishedDate = None,
+          publishedDate = None,
+          lastModifiedDate = None,
+          createdBy = None,
+          lastModifiedBy = None,
+          elements = Seq(),
+        ),
+      )
+
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(true)
+    } finally {
+      Switches.AffiliateLinks.switchOff()
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  it should "return false when blocks contain links to non-skimlink domains" in {
+    Switches.AffiliateLinks.switchOn()
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val content = articleWithBody(sampleArticleBody)
+      val blocks = Seq(
+        Block(
+          id = "1",
+          bodyHtml = """<p>Read more at <a href="https://www.theguardian.com/article">the guardian</a></p>""",
+          bodyTextSummary = "",
+          title = None,
+          attributes = BlockAttributes(),
+          published = true,
+          createdDate = None,
+          firstPublishedDate = None,
+          publishedDate = None,
+          lastModifiedDate = None,
+          createdBy = None,
+          lastModifiedBy = None,
+          elements = Seq(),
+        ),
+      )
+
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(false)
+    } finally {
+      Switches.AffiliateLinks.switchOff()
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  it should "detect skimlinks across multiple blocks" in {
+    Switches.AffiliateLinks.switchOn()
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val content = articleWithBody(sampleArticleBody)
+      val blocks = Seq(
+        Block(
+          id = "1",
+          bodyHtml = "<p>No links here.</p>",
+          bodyTextSummary = "",
+          title = None,
+          attributes = BlockAttributes(),
+          published = true,
+          createdDate = None,
+          firstPublishedDate = None,
+          publishedDate = None,
+          lastModifiedDate = None,
+          createdBy = None,
+          lastModifiedBy = None,
+          elements = Seq(),
+        ),
+        Block(
+          id = "2",
+          bodyHtml = """<p>Buy <a href="https://amazon.co.uk/item">this</a></p>""",
+          bodyTextSummary = "",
+          title = None,
+          attributes = BlockAttributes(),
+          published = true,
+          createdDate = None,
+          firstPublishedDate = None,
+          publishedDate = None,
+          lastModifiedDate = None,
+          createdBy = None,
+          lastModifiedBy = None,
+          elements = Seq(),
+        ),
+      )
+
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(true)
+    } finally {
+      Switches.AffiliateLinks.switchOff()
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  private def blockWith(id: String, bodyHtml: String, elements: Seq[BlockElement] = Seq.empty): Block =
+    Block(
+      id = id,
+      bodyHtml = bodyHtml,
+      bodyTextSummary = "",
+      title = None,
+      attributes = BlockAttributes(),
+      published = true,
+      createdDate = None,
+      firstPublishedDate = None,
+      publishedDate = None,
+      lastModifiedDate = None,
+      createdBy = None,
+      lastModifiedBy = None,
+      elements = elements,
+    )
+
+  private def imageElement(caption: String): BlockElement =
+    BlockElement(`type` = ElementType.Image, imageTypeData = Some(ImageElementFields(caption = Some(caption))))
+
+  it should "detect skimlinks in image captions when the block body has none" in {
+    Switches.AffiliateLinks.switchOn()
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val content = articleWithBody(sampleArticleBody)
+      val blocks = Seq(
+        blockWith(
+          "1",
+          "<p>No links here.</p>",
+          Seq(imageElement("""Photo of <a href="https://www.amazon.co.uk/product/123">the thing</a>""")),
+        ),
+      )
+
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(true)
+    } finally {
+      Switches.AffiliateLinks.switchOff()
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  it should "return false when image captions only link to non-skimlink domains" in {
+    Switches.AffiliateLinks.switchOn()
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val content = articleWithBody(sampleArticleBody)
+      val blocks = Seq(
+        blockWith(
+          "1",
+          "<p>No links here.</p>",
+          Seq(imageElement("""Photo of <a href="https://www.theguardian.com/help">something</a>""")),
+        ),
+      )
+
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, blocks) should be(false)
+    } finally {
+      Switches.AffiliateLinks.switchOff()
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  it should "detect skimlinks in a main media caption with no body blocks" in {
+    Switches.AffiliateLinks.switchOn()
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val content = articleWithBody(sampleArticleBody)
+      val mainBlock =
+        blockWith("main", "", Seq(imageElement("""<a href="https://amazon.co.uk/item">Buy this</a>""")))
+
+      DotcomRenderingUtils.shouldAddAffiliateLinks(content, Seq(mainBlock)) should be(true)
+    } finally {
+      Switches.AffiliateLinks.switchOff()
+      SkimLinksCache.setDomains(Set.empty)
     }
   }
 

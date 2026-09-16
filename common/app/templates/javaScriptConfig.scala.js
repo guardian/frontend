@@ -11,7 +11,7 @@
     {
         "isDotcomRendering": false,
         "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item, Edition(request), context.isPreview, request)))),
-        "nav": @JavaScript(Json.stringify(Json.toJson(NavMenu(item, edition)))),
+        "nav": @JavaScript(Json.stringify(Json.toJson(NavMenu(item, edition, request)))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },

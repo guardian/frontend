@@ -1,6 +1,8 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
+import com.gu.facia.api.CustomSubnavService
+import com.gu.facia.client.models.CustomSubnav
 import common._
 import contentapi.ContentApiClient
 import implicits._
@@ -14,7 +16,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import services.{CAPILookup, NewsletterService}
+import services.{CAPILookup, NewsletterService, SubnavAgent}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -25,6 +27,7 @@ class ArticleController(
     ws: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -77,12 +80,14 @@ class ArticleController(
 
   /** Returns a JSON representation of the payload that's sent to DCR when rendering the Article.
     */
-  private def getDCRJson(pageBlocks: BlocksOn[ArticlePage])(implicit request: RequestHeader): JsValue = {
+  private def getDCRJson(pageBlocks: BlocksOn[ArticlePage], customSubnav: Option[CustomSubnav])(implicit
+      request: RequestHeader,
+  ): JsValue = {
     val pageType: PageType = PageType(pageBlocks.page, request, context)
     val newsletter = newsletterService.getNewsletterForArticle(pageBlocks.page)
 
     DotcomRenderingDataModel.toJson(
-      DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, newsletter),
+      DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, newsletter, customSubnav),
     )
   }
 
@@ -91,13 +96,14 @@ class ArticleController(
   ): Future[Result] = {
     val article = pageBlocks.page
     val newsletter = newsletterService.getNewsletterForArticle(article)
+    val customSubnav = subnavAgent.getSubnavForContent(pageBlocks.page.article.content)
 
     val tier = ArticlePicker.getTier(article, path)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR =>
-        Future.successful(common.renderJson(getDCRJson(pageBlocks), article).as("application/json"))
+        Future.successful(common.renderJson(getDCRJson(pageBlocks, customSubnav), article).as("application/json"))
       case JsonFormat =>
         Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat =>
@@ -112,6 +118,7 @@ class ArticleController(
           pageBlocks,
           pageType,
           newsletter,
+          customSubnav = customSubnav,
         )
       case HtmlFormat | AmpFormat =>
         Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))

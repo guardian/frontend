@@ -1,6 +1,7 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
+import com.gu.facia.api.models.EventGraphic
 import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
@@ -81,6 +82,8 @@ object PressedContent {
         SupportingCuratedContent.make(supportingCuratedContent)
       case linkSnap: fapi.LinkSnap     => LinkSnap.make(linkSnap)
       case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
+      case _: EventGraphic             =>
+        throw new RuntimeException("EventGraphic FaciaContent is not supported in PressedContent")
     }
 
   def propertiesWithoutTestPII(properties: PressedProperties): PressedProperties =

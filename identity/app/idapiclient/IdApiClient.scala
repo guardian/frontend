@@ -5,9 +5,9 @@ import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
 import idapiclient.parser.IdApiJsonBodyParser
-import net.liftweb.json.Serialization.write
+import org.json4s.native.Serialization.write
+import org.json4s.Formats
 import utils.SafeLogging
-import net.liftweb.json.Formats
 import play.api.libs.ws.WSClient
 
 class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpClient: HttpClient)(implicit

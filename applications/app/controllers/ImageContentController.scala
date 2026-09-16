@@ -14,12 +14,12 @@ import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
-import services.ImageQuery
+import services.{ImageQuery, SubnavAgent}
 import services.dotcomrendering.{ImageContentPicker, RemoteRender}
 import views.support.RenderOtherStatus
-
 import com.gu.contentapi.client.model.Direction.Next
 import com.gu.contentapi.client.model.Direction.Previous
+
 import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 import scala.concurrent.Future
 import scala.util.Try
@@ -29,6 +29,7 @@ class ImageContentController(
     val controllerComponents: ControllerComponents,
     wsClient: WSClient,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
+    subnavAgent: SubnavAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -61,7 +62,15 @@ class ImageContentController(
   private def getDCRJson(content: ImageContentPage, pageType: PageType, mainBlock: Option[Block])(implicit
       request: RequestHeader,
   ): JsValue = {
-    DotcomRenderingDataModel.toJson(DotcomRenderingDataModel.forImageContent(content, request, pageType, mainBlock))
+    DotcomRenderingDataModel.toJson(
+      DotcomRenderingDataModel.forImageContent(
+        imageContentPage = content,
+        request = request,
+        pageType = pageType,
+        mainBlock = mainBlock,
+        customSubnav = subnavAgent.getSubnavForContent(content.image.content),
+      ),
+    )
   }
 
   private def remoteRender(content: ImageContentPage, mainBlock: Option[Block])(implicit
@@ -76,17 +85,19 @@ class ImageContentController(
         )
       case AppsFormat =>
         remoteRenderer.getAppsImageContent(
-          wsClient,
-          content,
-          pageType,
-          mainBlock,
+          ws = wsClient,
+          imageContent = content,
+          pageType = pageType,
+          mainBlock = mainBlock,
+          customSubnav = None,
         )
       case _ =>
         remoteRenderer.getImageContent(
-          wsClient,
-          content,
-          pageType,
-          mainBlock,
+          ws = wsClient,
+          imageContent = content,
+          pageType = pageType,
+          mainBlock = mainBlock,
+          customSubnav = subnavAgent.getSubnavForContent(content.image.content),
         )
     }
   }

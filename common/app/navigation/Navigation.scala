@@ -1,9 +1,11 @@
 package navigation
 
 import _root_.model.{NavItem, Page, Tags}
+import ab.PuzzlesHubExperiment
 import common.{Edition, editions}
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
+import play.api.mvc.RequestHeader
 
 import scala.annotation.tailrec
 
@@ -76,12 +78,17 @@ object NavMenu {
       brandExtensions: Seq[NavLink],
   )
 
-  def apply(page: Page, edition: Edition): NavMenu = {
-    val root = navRoot(edition)
+  def apply(page: Page, edition: Edition, request: RequestHeader): NavMenu = {
+    val useExperimentalPuzzlesNavigation = PuzzlesHubExperiment.isEnabled(request)
+    val root = navRoot(edition, useExperimentalPuzzlesNavigation)
     val currentUrl = getSectionOrPageUrl(page, edition)
-    val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
-    val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
-    val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
+    val currentNavLink =
+      findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks, useExperimentalPuzzlesNavigation)
+    val currentParent = currentNavLink.flatMap(link =>
+      findParent(link, edition, root.children, root.otherLinks, useExperimentalPuzzlesNavigation),
+    )
+    val currentPillar =
+      getPillar(currentParent, edition, root.children, root.otherLinks, useExperimentalPuzzlesNavigation)
     val isWorldCupOverview = page.metadata.id == "football/world-cup-2026/overview"
 
     // On the world cup overview page, we want to show the special football header atom
@@ -112,11 +119,17 @@ object NavMenu {
    * want the Sports Pillar to be highlighted, even though cricket isn't in the
    * UsSportsPillar
    */
-  private[navigation] def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
+  private[navigation] def getChildrenFromOtherEditions(
+      edition: Edition,
+      useExperimentalPuzzlesNavigation: Boolean = false,
+  ): Seq[NavLink] = {
     // This shouldn't be a problem as Europe won't have special NavLinks
     Edition
       .othersWithBetaEditions(edition)
-      .flatMap(edition => NavMenu.navRoot(edition).children ++ NavMenu.navRoot(edition).otherLinks)
+      .flatMap { edition =>
+        val root = NavMenu.navRoot(edition, useExperimentalPuzzlesNavigation)
+        root.children ++ root.otherLinks
+      }
   }
 
   @tailrec
@@ -133,11 +146,12 @@ object NavMenu {
       edition: Edition,
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
+      useExperimentalPuzzlesNavigation: Boolean = false,
   ): Option[NavLink] = {
     def hasUrl(link: NavLink): Boolean = link.url == url
 
     find(pillars ++ otherLinks, hasUrl)
-      .orElse(find(getChildrenFromOtherEditions(edition), hasUrl))
+      .orElse(find(getChildrenFromOtherEditions(edition, useExperimentalPuzzlesNavigation), hasUrl))
   }
 
   def findParent(
@@ -145,6 +159,7 @@ object NavMenu {
       edition: Edition,
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
+      useExperimentalPuzzlesNavigation: Boolean = false,
   ): Option[NavLink] = {
 
     // When nav items can appear in two pillars, we want to ignore the least relevant one
@@ -161,7 +176,7 @@ object NavMenu {
     }
 
     find(pillars ++ otherLinks, isParent)
-      .orElse(find(getChildrenFromOtherEditions(edition), isParent))
+      .orElse(find(getChildrenFromOtherEditions(edition, useExperimentalPuzzlesNavigation), isParent))
   }
 
   def getPillar(
@@ -169,19 +184,29 @@ object NavMenu {
       edition: Edition,
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
+      useExperimentalPuzzlesNavigation: Boolean = false,
   ): Option[NavLink] = {
     currentParent.flatMap(parent =>
       if (otherLinks.contains(parent)) {
         None
       } else if (pillars.contains(parent)) {
         currentParent
-      } else findParent(parent, edition, pillars, otherLinks).orElse(Some(editions.Uk.navigationLinks.newsPillar)),
+      } else
+        findParent(parent, edition, pillars, otherLinks, useExperimentalPuzzlesNavigation).orElse(
+          Some(editions.Uk.navigationLinks.newsPillar),
+        ),
     )
   }
 
-  def navRoot(edition: Edition): NavRoot = {
+  def navRoot(edition: Edition, useExperimentalPuzzlesNavigation: Boolean = false): NavRoot = {
 
     val editionLinks: EditionNavLinks = edition.navigationLinks
+
+    val otherLinks = editionLinks.otherLinks.flatMap {
+      case NavLinks.legacyCrosswords if useExperimentalPuzzlesNavigation =>
+        List(NavLinks.puzzles, NavLinks.legacyCrosswords)
+      case link => List(link)
+    }
 
     NavRoot(
       Seq(
@@ -191,7 +216,7 @@ object NavMenu {
         editionLinks.culturePillar,
         editionLinks.lifestylePillar,
       ),
-      editionLinks.otherLinks,
+      otherLinks,
       editionLinks.brandExtensions,
     )
 
