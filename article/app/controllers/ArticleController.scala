@@ -1,5 +1,6 @@
 package controllers
 
+import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.client.models.CustomSubnav
@@ -16,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import services.{CAPILookup, NewsletterService, SubnavAgent}
+import services.{ArticleAbTestAgent, CAPILookup, NewsletterService, SubnavAgent}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -28,6 +29,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     subnavAgent: SubnavAgent,
+    articleAbTestAgent: ArticleAbTestAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -46,7 +48,14 @@ class ArticleController(
   )(implicit req: RequestHeader): Future[Result] =
     mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
 
-  def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
+  def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
+    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    articleAbTestAgent.variantFor(path).filter(_ => isUserInVariantBBucket).getOrElse(path)
+  }
+
+  def renderArticle(path: String): Action[AnyContent] = Action.async { implicit request =>
+    mapAndRender(determineABTestPath(path), ArticleBlocks)()(request)
+  }
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
   def renderEmail(path: String): Action[AnyContent] = renderArticle(path)
 
