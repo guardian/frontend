@@ -25,9 +25,12 @@
         case _ => {}
     }
 
+    @* Was previously `case _: model.MostPopular` in the match below - a ~2016 copy/paste bug referencing the
+       wrong class, which caused a fruitless-type-test compile error. Corrected to a value/object match against
+       the MostPopular case object imported above. *@
     @containerDefinition.container match {
 
-        case _: model.MostPopular if isPaidFront => {}
+        case MostPopular if isPaidFront => {}
 
         case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, maybeContainerModel) => {
             @maybeContainerModel match {
