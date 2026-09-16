@@ -53,10 +53,9 @@ class ArticleController(
   }
 
   def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
-    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+   val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     articleAbTestAgent.variantFor(path).filter(_ => isUserInVariantBBucket).getOrElse(path)
   }
-
 
   private def maskPathIfVariant(displayPath: String, fetchPath: String)(
       pageBlocks: BlocksOn[ArticlePage],
@@ -77,7 +76,7 @@ class ArticleController(
   }
 
   def renderArticle(path: String): Action[AnyContent] = Action.async { implicit request =>
-    //used for testing locally - remove before merge!!
+    // used for testing locally - remove before merge!!
     articleAbTestAgent.seedTestData
 
     mapAndRender(path, ArticleBlocks)()(request)
@@ -183,7 +182,7 @@ class ArticleController(
 
   private def responseToModelOrResult(
       response: ItemResponse,
-      skipCanonicalRedirect: Boolean
+      skipCanonicalRedirect: Boolean,
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())

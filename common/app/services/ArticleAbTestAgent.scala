@@ -10,8 +10,8 @@ case class ArticleAbTest(a: String, b: String)
 class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
   private val testsBox = Box[List[ArticleAbTest]](Nil)
 
-  //used for testing locally - remove before merge!!
-  def seedTestData: Unit = upsert("music/2026/sep/16/orville-peck-interview-new-album-mule","p/x62xp3")
+  // used for testing locally - remove before merge!!
+  def seedTestData: Unit = upsert("music/2026/sep/16/orville-peck-interview-new-album-mule", "p/x62xp3")
   def tests: List[ArticleAbTest] = testsBox.get()
 
   def variantFor(articleAPath: String): Option[String] =
@@ -45,17 +45,18 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
       val newTests = content.flatMap { c =>
         val maybeActiveTest = c.abTests.getOrElse(Seq.empty).find(_.ended.isEmpty)
         maybeActiveTest
-          .flatMap(test => test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath.stripPrefix("/") })
+          .flatMap(test =>
+            test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath.stripPrefix("/") },
+          )
           .map(bPath => ArticleAbTest(c.id, bPath))
       }.toList
       setAll(newTests)
       log.debug("Successfully refreshed article ab test cache.")
 
     }
-   }
+  }
 }
 
-
 /*todo
-*  Add lifecycle management for the ArticleAbTestAgent
-* */
+ *  Add lifecycle management for the ArticleAbTestAgent
+ * */
