@@ -174,7 +174,7 @@ class ArticleController(
     render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(variantPath, Some(range))
+      .lookup(variantPath, Some(range), Some("feast"))
       .map(responseToModelOrResult(_, skipCanonicalRedirect = true))
       .map(_.map(maskPathIfVariant(displayPath, variantPath)))
       .recover(convertApiExceptions)
