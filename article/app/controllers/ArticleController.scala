@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiCo
 import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.client.models.CustomSubnav
 import common._
+import conf.Configuration
 import contentapi.ContentApiClient
 import implicits._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -51,6 +52,25 @@ class ArticleController(
   def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
     val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     articleAbTestAgent.variantFor(path).filter(_ => isUserInVariantBBucket).getOrElse(path)
+  }
+
+
+  private def maskPathIfVariant(displayPath: String, fetchPath: String)(
+      pageBlocks: BlocksOn[ArticlePage],
+  ): BlocksOn[ArticlePage] = {
+    if (fetchPath == displayPath) pageBlocks
+    else {
+      val maskedUrl = s"/$displayPath"
+      val maskedMetadata = pageBlocks.page.article.content.metadata.copy(
+        id = displayPath,
+        url = maskedUrl,
+        webUrl = s"${Configuration.site.host}$maskedUrl",
+        canonicalUrl = Some(s"${Configuration.site.host}$maskedUrl"),
+      )
+      val maskedContent = pageBlocks.page.article.content.copy(metadata = maskedMetadata)
+      val maskedArticle = pageBlocks.page.article.copy(content = maskedContent)
+      pageBlocks.copy(page = pageBlocks.page.copy(article = maskedArticle))
+    }
   }
 
   def renderArticle(path: String): Action[AnyContent] = Action.async { implicit request =>
