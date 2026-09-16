@@ -258,6 +258,12 @@ object PressedContentFormat {
   implicit val assetDimensionsFormat: OFormat[AssetDimensions] = Json.format[AssetDimensions]
   implicit val mediaAssetFormat: OFormat[MediaAsset] = Json.format[MediaAsset]
   implicit val mediaAtomFormat: OFormat[MediaAtom] = Json.format[MediaAtom]
+  implicit val multimediaSlideshowSlideContentFormat: MultimediaSlideshowSlideContentFormat.format.type =
+    MultimediaSlideshowSlideContentFormat.format
+  implicit val multimediaSlideshowSlideFormat: OFormat[MultimediaSlideshowSlide] =
+    Json.format[MultimediaSlideshowSlide]
+  implicit val multimediaSlideshowAtomFormat: OFormat[MultimediaSlideshowAtom] =
+    Json.format[MultimediaSlideshowAtom]
   implicit val mediaTypeFormat: MediaTypeFormat.type = MediaTypeFormat
   implicit val cardStyleFormat: CardStyleFormat.type = CardStyleFormat
   implicit val faciaImageFormat: FaciaImageFormat.format.type = FaciaImageFormat.format
@@ -363,6 +369,34 @@ object FaciaImageFormat {
           JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
         case imageSlideshow: ImageSlideshow =>
           JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
+      }
+  }
+}
+
+object MultimediaSlideshowSlideContentFormat {
+  private implicit val imageAssetFormat: OFormat[ImageAsset] = Json.format[ImageAsset]
+  private implicit val imageMediaFormat: OFormat[ImageMedia] = Json.format[ImageMedia]
+  private implicit val assetDimensionsFormat: OFormat[AssetDimensions] = Json.format[AssetDimensions]
+  private implicit val mediaAssetFormat: OFormat[MediaAsset] = Json.format[MediaAsset]
+  private implicit val mediaAtomFormat: OFormat[MediaAtom] = Json.format[MediaAtom]
+  private val imageContentFormat: OFormat[MultimediaSlideshowImage] = Json.format[MultimediaSlideshowImage]
+  private val videoContentFormat: OFormat[MultimediaSlideshowVideo] = Json.format[MultimediaSlideshowVideo]
+
+  object format extends Format[MultimediaSlideshowSlideContent] {
+    def reads(json: JsValue): JsResult[MultimediaSlideshowSlideContent] = {
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("Image"), _) => (json \ "item").validate[MultimediaSlideshowImage](imageContentFormat)
+        case JsSuccess(JsString("Video"), _) => (json \ "item").validate[MultimediaSlideshowVideo](videoContentFormat)
+        case _                               => JsError("Could not convert MultimediaSlideshowSlideContent")
+      }
+    }
+
+    def writes(content: MultimediaSlideshowSlideContent): JsObject =
+      content match {
+        case image: MultimediaSlideshowImage =>
+          JsObject(Seq("type" -> JsString("Image"), "item" -> Json.toJson(image)(imageContentFormat)))
+        case video: MultimediaSlideshowVideo =>
+          JsObject(Seq("type" -> JsString("Video"), "item" -> Json.toJson(video)(videoContentFormat)))
       }
   }
 }
