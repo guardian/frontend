@@ -30,11 +30,30 @@ class LocalJsonPuzzlesLayoutProvider(
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
       val scheduledLayout = applyFeaturedSchedule(baseLayout)
-      enrichCrosswordItems(scheduledLayout).recover { case NonFatal(error) =>
+      val datedLayout = applyIframeDate(scheduledLayout)
+      enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
         log.warn("Failed to enrich puzzles layout with latest crosswords from CAPI using the scheduled layout", error)
-        scheduledLayout
+        datedLayout
       }
     }
+
+  private def applyIframeDate(layout: PuzzlesLayout): PuzzlesLayout = {
+    val date = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).toString
+    layout.copy(containers = layout.containers.map(addIframeDate(_, date)))
+  }
+
+  private def addIframeDate(container: PuzzleContainer, date: String): PuzzleContainer =
+    container.copy(content =
+      container.content.copy(
+        items = container.content.items.map(_.map(addIframeDate(_, date))),
+        nestedContainers = container.content.nestedContainers.map(addIframeDate(_, date)),
+        archive = container.content.archive.map(addIframeDate(_, date)),
+        archiveChoices = container.content.archiveChoices.map(_.map(addIframeDate(_, date))),
+      ),
+    )
+
+  private def addIframeDate(item: PuzzleItem, date: String): PuzzleItem =
+    if (item.variant.contains("iframe-page")) item.copy(date = Some(date)) else item
 
   private def applyFeaturedSchedule(layout: PuzzlesLayout): PuzzlesLayout = {
     val day = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).getDayOfWeek
@@ -203,7 +222,7 @@ object LocalJsonPuzzlesLayoutProvider {
       url = Some(s"https://tg.amuselabs.com/guardian/date-picker?set=$amuseLabsSet&embed=1&idx=1"),
       image = Some(puzzleArtwork(s"logic-puzzles-SUDOKU-${set.toUpperCase(java.util.Locale.ROOT)}")),
       imageAlt = Some(s"$title illustration"),
-      slug = Some(id),
+      slug = Some(s"logic-puzzles/$id"),
       index = Some(1),
       variant = Some("iframe-page"),
       backgroundColour = Some("#CDECFB"),
@@ -219,7 +238,7 @@ object LocalJsonPuzzlesLayoutProvider {
     url = Some("https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1"),
     image = Some(puzzleArtwork("word-games-WORD-WHEEL")),
     imageAlt = Some("Word wheel illustration"),
-    slug = Some("word-wheel"),
+    slug = Some("word-games/word-wheel"),
     index = Some(1),
     variant = Some("iframe-page"),
     backgroundColour = Some("#F9D4E8"),
@@ -235,7 +254,7 @@ object LocalJsonPuzzlesLayoutProvider {
     url = Some("https://www.wordiply.com/"),
     image = Some(puzzleArtwork("word-games-WORDIPLY")),
     imageAlt = Some("Wordiply illustration"),
-    slug = Some("wordiply"),
+    slug = Some("word-games/wordiply"),
     variant = Some("iframe-page"),
     backgroundColour = Some("#F8D0C9"),
   )

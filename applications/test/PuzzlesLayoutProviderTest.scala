@@ -123,6 +123,32 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
   }
 
+  it should "add the current London date to every iframe puzzle" in {
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+
+    val items = allItems(Await.result(provider.getLayout(), 5.seconds))
+    val iframeItems = items.filter(_.variant.contains("iframe-page"))
+
+    iframeItems should not be empty
+    all(iframeItems.map(_.date)) shouldBe Some("2026-09-07")
+    all(items.filterNot(_.variant.contains("iframe-page")).map(_.date)) shouldBe None
+  }
+
+  it should "use section-prefixed slugs and daily iframe destinations for word games and sudokus" in {
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val items = allItems(Await.result(provider.getLayout(), 5.seconds)).map(item => item.id -> item).toMap
+
+    items("word-wheel-daily").slug shouldBe Some("word-games/word-wheel")
+    items("wordiply-daily").slug shouldBe Some("word-games/wordiply")
+    Seq("sudoku-easy", "sudoku-medium", "sudoku-hard", "sudoku-killer").foreach { id =>
+      items(id).slug shouldBe Some(s"logic-puzzles/$id")
+      items(id).url.exists(_.contains("idx=1")) shouldBe true
+    }
+    items("word-wheel-daily").url.exists(_.contains("idx=1")) shouldBe true
+  }
+
   it should "use the supplied artwork for every configured puzzle card" in {
     val provider =
       new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
@@ -172,6 +198,14 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       item.image shouldBe Some(artwork(expectedArtwork(item.title)))
       item.imageAlt shouldBe Some(s"${item.title} illustration")
     }
+    featured.filter(_.`type` == "sudoku").foreach { item =>
+      item.slug shouldBe Some(s"logic-puzzles/${item.id.stripPrefix("featured-")}")
+      item.url.exists(_.contains("idx=1")) shouldBe true
+    }
+    featured.filter(item => Set("word-wheel", "wordiply").contains(item.`type`)).foreach { item =>
+      item.slug shouldBe Some(s"word-games/${item.`type`}")
+    }
+    featured.filter(_.`type` == "word-wheel").foreach(_.url.exists(_.contains("idx=1")) shouldBe true)
     expectedArtwork.keySet shouldBe featured.map(_.title).toSet
   }
 

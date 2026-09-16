@@ -131,10 +131,12 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
       cadence = Some("Daily"),
       imageAlt = Some("Quick crossword illustration"),
       setter = Some("Example setter"),
+      date = Some("2026-09-16"),
     )
     Json.toJson(item).as[PuzzleItem] shouldBe item
     (Json.toJson(item) \ "setter").as[String] shouldBe "Example setter"
-    Seq("imageAlt", "setter").foreach { field =>
+    (Json.toJson(item) \ "date").as[String] shouldBe "2026-09-16"
+    Seq("imageAlt", "setter", "date").foreach { field =>
       val invalid = Json.toJson(item).as[play.api.libs.json.JsObject] ++ Json.obj(field -> 123)
       invalid.validate[PuzzleItem] shouldBe a[JsError]
     }
