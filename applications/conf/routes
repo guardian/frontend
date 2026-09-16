@@ -35,6 +35,19 @@ GET        /crosswords/lookup                                                   
 GET        /crosswords/digital-edition                                                                                        controllers.CrosswordEditionsController.digitalEdition
 GET        /crosswords/digital-edition.json                                                                                   controllers.CrosswordEditionsController.digitalEditionJson
 
+# Puzzle Page
+GET        /puzzles-and-games/logic-puzzles/sudoku-$variant<easy|medium|hard|killer>/$date<\d{4}-\d{2}-\d{2}>.json            controllers.PuzzlesPageController.renderSudokuJson(variant: String, date: String)
+GET        /puzzles-and-games/logic-puzzles/sudoku-$variant<easy|medium|hard|killer>/$date<\d{4}-\d{2}-\d{2}>                 controllers.PuzzlesPageController.renderSudoku(variant: String, date: String)
+GET        /puzzles-and-games/logic-puzzles/sudoku-$variant<easy|medium|hard|killer>                                          controllers.PuzzlesPageController.redirectSudokuArchive(variant: String)
+
+GET        /puzzles-and-games/word-games/word-wheel/$date<\d{4}-\d{2}-\d{2}>.json                                             controllers.PuzzlesPageController.renderWordWheelJson(date: String)
+GET        /puzzles-and-games/word-games/word-wheel/$date<\d{4}-\d{2}-\d{2}>                                                  controllers.PuzzlesPageController.renderWordWheel(date: String)
+GET        /puzzles-and-games/word-games/word-wheel                                                                           controllers.PuzzlesPageController.redirectWordWheelArchive()
+
+GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>.json                                               controllers.PuzzlesPageController.renderWordiplyJson(date: String)
+GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>                                                    controllers.PuzzlesPageController.renderWordiply(date: String)
+GET        /puzzles-and-games/word-games/wordiply                                                                             controllers.PuzzlesPageController.redirectWordiplyArchive()
+
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
