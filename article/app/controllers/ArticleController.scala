@@ -49,7 +49,11 @@ class ArticleController(
   )(implicit req: RequestHeader): Future[Result] = {
     val fetchPath = determineABTestPath(path)
     val isBVariant = path != fetchPath
-    mapModel(path, fetchPath, range, isBVariant) { pageBlocks => render(path, modifier(pageBlocks)) }
+    if(isBVariant) {
+      mapVariantModel(path, fetchPath, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+    } else {
+      mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+    }
   }
 
   def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
@@ -166,19 +170,33 @@ class ArticleController(
     }
   }
 
-  private def mapModel(displayPath: String, fetchPath: String, range: BlockRange, skipCanonicalRedirect: Boolean)(
-      render: BlocksOn[ArticlePage] => Future[Result],
+  private def mapVariantModel(displayPath: String, variantPath: String, range: BlockRange)(
+    render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(fetchPath, Some(range))
-      .map(responseToModelOrResult(_, skipCanonicalRedirect))
-      .map(_.map(maskPathIfVariant(displayPath, fetchPath)))
+      .lookup(variantPath, Some(range))
+      .map(responseToModelOrResult(_, skipCanonicalRedirect = true))
+      .map(_.map(maskPathIfVariant(displayPath, variantPath)))
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
         case Left(other)       => Future.successful(RenderOtherStatus(other))
       }
   }
+
+  private def mapModel(path: String, range: BlockRange)(
+    render: BlocksOn[ArticlePage] => Future[Result],
+  )(implicit request: RequestHeader): Future[Result] = {
+    capiLookup
+      .lookup(path, Some(range))
+      .map(responseToModelOrResult(_, skipCanonicalRedirect = false))
+      .recover(convertApiExceptions)
+      .flatMap {
+        case Right(pageBlocks) => render(pageBlocks)
+        case Left(other)       => Future.successful(RenderOtherStatus(other))
+      }
+  }
+
 
   private def responseToModelOrResult(
       response: ItemResponse,
