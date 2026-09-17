@@ -49,6 +49,13 @@ case class DotcomPuzzlePageRenderingDataModel(
     canonicalUrl: String,
     editionId: String,
     instance: PuzzlePageInstance,
+    /** Whether the requesting reader has paid for an ad-free subscription, mirroring the same field already sent on the
+      * sibling Puzzles Hub contract (`DotcomPuzzlesPageRenderingDataModel.isAdFreeUser`) and on every other DCR page
+      * type this repo posts to. DCR's `PuzzlePageLayout` now reads this to gate every ad slot
+      * (`canRenderAds(puzzlePage)`) instead of always rendering ads regardless of the reader's ad-free status - a real
+      * gap this field closes, coordinated with that DCR-side change.
+      */
+    isAdFreeUser: Boolean,
 )
 
 object DotcomPuzzlePageRenderingDataModel {
@@ -73,6 +80,7 @@ object DotcomPuzzlePageRenderingDataModel {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       editionId = edition.id,
       instance = instance,
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
     )
   }
 
