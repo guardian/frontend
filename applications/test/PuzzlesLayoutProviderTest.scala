@@ -51,6 +51,11 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val featured = layout.containers.head
     val crosswords = layout.containers.find(_.id == "crosswords").get
 
+    val firstAdIndex = layout.containers.indexWhere(_.variant.contains("ad"))
+    firstAdIndex shouldBe (layout.containers.indexWhere(_.id == "crosswords") + 1)
+    layout.containers(firstAdIndex).id shouldBe "crosswords-ad"
+    layout.containers(firstAdIndex).adSlot shouldBe Some("inline1")
+
     layout.containers
       .filter(container => container.variant.exists(Set("featured", "standard")))
       .map(_.title) shouldBe Seq(
@@ -62,7 +67,6 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     layout.containers.filter(_.variant.contains("ad")).map(_.adSlot) shouldBe Seq(
       Some("inline1"),
       Some("inline2"),
-      Some("inline3"),
     )
     featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
       ("Quick crossword", "large", Some("Daily")),
