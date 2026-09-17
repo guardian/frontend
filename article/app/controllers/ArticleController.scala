@@ -49,7 +49,7 @@ class ArticleController(
   )(implicit req: RequestHeader): Future[Result] = {
     val fetchPath = determineABTestPath(path)
     val isBVariant = path != fetchPath
-    if(isBVariant) {
+    if (isBVariant) {
       mapVariantModel(path, fetchPath, range) { pageBlocks => render(path, modifier(pageBlocks)) }
     } else {
       mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
@@ -57,7 +57,7 @@ class ArticleController(
   }
 
   def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
-   val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     articleAbTestAgent.variantFor(path).filter(_ => isUserInVariantBBucket).getOrElse(path)
   }
 
@@ -171,8 +171,11 @@ class ArticleController(
   }
 
   private def mapVariantModel(displayPath: String, variantPath: String, range: BlockRange)(
-    render: BlocksOn[ArticlePage] => Future[Result],
+      render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
+    println({
+      variantPath
+    })
     capiLookup
       .lookup(variantPath, Some(range), Some("feast"))
       .map(responseToModelOrResult(_, skipCanonicalRedirect = true))
@@ -185,7 +188,7 @@ class ArticleController(
   }
 
   private def mapModel(path: String, range: BlockRange)(
-    render: BlocksOn[ArticlePage] => Future[Result],
+      render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range))
@@ -196,7 +199,6 @@ class ArticleController(
         case Left(other)       => Future.successful(RenderOtherStatus(other))
       }
   }
-
 
   private def responseToModelOrResult(
       response: ItemResponse,
