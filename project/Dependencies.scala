@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "8.0.0"
+  val identityLibVersion = "4.31"
   val awsVersion = "2.54.12"
   val capiVersion = "49.0.0"
   val faciaVersion = "42.0.0"
@@ -55,8 +55,7 @@ object Dependencies {
   val jodaTime = "joda-time" % "joda-time" % "2.14.3"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
   val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
-  val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
-  val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
+  val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.18"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
@@ -73,7 +72,7 @@ object Dependencies {
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-5-18" % "3.2.19.0" % Test
   val mockito = "org.mockito" % "mockito-core" % "5.23.0" % Test // ensure this matches scalatest + mockito
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
-  val sttp = "com.softwaremill.sttp.client4" %% "core" % "4.0.26"
+  val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.18"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
