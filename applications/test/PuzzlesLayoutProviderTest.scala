@@ -76,6 +76,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       Seq("Quick", "Mini", "Cryptic", "Quick cryptic").map(_ -> "primary"),
       Seq("Quiptic", "Weekend", "Prize", "Genius").map(_ -> "compact"),
     )
+    crosswords.content.items.flatten.find(_.title == "Quiptic").flatMap(_.cadence) shouldBe Some("Every Sunday")
+    crosswords.content.items.flatten.find(_.title == "Prize").flatMap(_.cadence) shouldBe Some("Every Saturday")
     crosswords.content.archiveChoices.map(_.map(_.title)) shouldBe Some(
       Seq(
         "Mini",

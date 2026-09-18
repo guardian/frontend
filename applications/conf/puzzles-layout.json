@@ -69,7 +69,7 @@
 							"type": "crossword",
 							"set": "quiptic",
 							"cardVariant": "compact",
-							"cadence": "Every Saturday",
+							"cadence": "Every Sunday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUIPTIC.png?width=440&dpr=2&s=none",
 							"imageAlt": "Quiptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -91,7 +91,7 @@
 							"type": "crossword",
 							"set": "prize",
 							"cardVariant": "compact",
-							"cadence": "Every Sunday",
+							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
 							"imageAlt": "Prize crossword illustration",
 							"backgroundColour": "#FCE1CE"
