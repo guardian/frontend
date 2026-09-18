@@ -78,7 +78,7 @@ class UrlHelpersTest extends AnyWordSpec with Matchers {
     }
 
     "getReaderRevenueUrl" should {
-      "correctly parse urls with double quotes" in {
+      "correctly parse urls" in {
         UrlHelpers.getReaderRevenueUrl(SupportSubscribe, Footer) should be(
           "https://support.theguardian.com/subscribe?acquisitionData=%7B%22source%22:%22GUARDIAN_WEB%22,%22componentType%22:%22ACQUISITIONS_FOOTER%22,%22componentId%22:%22footer_support_subscribe%22%7D&INTCMP=footer_support_subscribe",
         )
