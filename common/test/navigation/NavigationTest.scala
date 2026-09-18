@@ -244,14 +244,14 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
-  "Puzzles navigation" should "add Puzzles and games alongside the legacy links in every edition for variant requests" in {
+  "Puzzles navigation" should "use Puzzles & games as the variant subnav without adding it to the burger menu" in {
     val request = requestWithParticipations("puzzles-new-hub:variant")
     puzzles.children shouldBe empty
 
     Edition.allEditions.foreach { edition =>
       val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"), edition, request)
 
-      menu.otherLinks should contain(puzzles)
+      menu.otherLinks should not contain puzzles
       menu.otherLinks should contain(legacyCrosswords)
       menu.otherLinks should contain(legacyWordiply)
       menu.currentNavLink should contain(puzzles)
@@ -290,7 +290,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val controlRequest = requestWithParticipations("puzzles-new-hub:control")
     val page = StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games")
 
-    Nav(page, Uk, variantRequest, None).otherLinks should contain(puzzles)
+    Nav(page, Uk, variantRequest, None).otherLinks should not contain puzzles
     Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyCrosswords)
     Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyWordiply)
 
