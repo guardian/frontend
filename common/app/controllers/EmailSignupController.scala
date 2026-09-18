@@ -194,7 +194,7 @@ class EmailSignupController(
   private val UpstreamBadResponseErrorCode = "upstream-bad-response"
   private val UpstreamUnavailableErrorCode = "upstream-unavailable"
 
-  private def requestLogContext(implicit request: Request[AnyContent]): String =
+  private def requestLogContext(implicit request: RequestHeader): String =
     s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
       s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
       s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}"
@@ -357,8 +357,14 @@ class EmailSignupController(
   }
 
   def logNewsletterNotFoundError(newsletterName: String)(implicit request: RequestHeader): Unit = {
+    val queryStringContext =
+      if (request.rawQueryString.nonEmpty) s", query-string: ${request.rawQueryString}"
+      else ""
+
     logInfoWithRequestId(
-      s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. It may no longer exist or $newsletterName may be an outdated reference number.",
+      s"The newsletter $newsletterName used in an email sign-up form could not be found by the NewsletterSignupAgent. " +
+        s"It may no longer exist or $newsletterName may be an outdated reference number. " +
+        s"request-method: ${request.method}, request-uri: ${request.uri}$queryStringContext, $requestLogContext",
     )
   }
 
