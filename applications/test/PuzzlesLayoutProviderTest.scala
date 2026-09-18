@@ -69,12 +69,12 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       Some("inline2"),
     )
     featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
-      ("Quick crossword", "large", Some("Daily")),
-      ("Easy sudoku", "large", Some("Daily")),
+      ("Quick crossword", "large", Some("Today")),
+      ("Easy sudoku", "large", Some("Today")),
     )
     crosswords.content.items.map(_.map(item => item.title -> item.cardVariant)) shouldBe Seq(
       Seq("Quick", "Mini", "Cryptic", "Quick cryptic").map(_ -> "primary"),
-      Seq("Quiptic", "Prize", "Weekend", "Genius").map(_ -> "compact"),
+      Seq("Quiptic", "Weekend", "Prize", "Genius").map(_ -> "compact"),
     )
     crosswords.content.archiveChoices.map(_.map(_.title)) shouldBe Some(
       Seq(
