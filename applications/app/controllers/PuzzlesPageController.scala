@@ -102,27 +102,23 @@ class PuzzlesPageController(
   def renderSudoku(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else
-        PuzzlesPageController.sudokuVariantTitles.get(variant) match {
-          case Some(webTitle) => renderPuzzlePageContent(s"sudoku-$variant", webTitle, date)
-          case None           => notFound
-        }
+      else if (PuzzlesPageController.SudokuVariants.contains(variant))
+        renderPuzzlePageContent(s"sudoku-$variant", PuzzlesPageController.sudokuTitle(variant), date)
+      else notFound
     }
 
   def renderSudokuJson(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else
-        PuzzlesPageController.sudokuVariantTitles.get(variant) match {
-          case Some(webTitle) => renderPuzzlePageContentJson(s"sudoku-$variant", webTitle, date)
-          case None           => notFound
-        }
+      else if (PuzzlesPageController.SudokuVariants.contains(variant))
+        renderPuzzlePageContentJson(s"sudoku-$variant", PuzzlesPageController.sudokuTitle(variant), date)
+      else notFound
     }
 
   def redirectSudokuArchive(variant: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else if (PuzzlesPageController.sudokuVariantTitles.contains(variant))
+      else if (PuzzlesPageController.SudokuVariants.contains(variant))
         redirectToArchive(PuzzlesPageController.LogicPuzzlesGroup, s"sudoku-$variant")
       else notFound
     }
@@ -130,13 +126,13 @@ class PuzzlesPageController(
   def renderWordWheel(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle, date)
+      else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, "Word wheel", date)
     }
 
   def renderWordWheelJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, PuzzlesPageController.WordWheelTitle, date)
+      else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, "Word wheel", date)
     }
 
   def redirectWordWheelArchive(): Action[AnyContent] =
@@ -148,13 +144,13 @@ class PuzzlesPageController(
   def renderWordiply(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle, date)
+      else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, "Wordiply", date)
     }
 
   def renderWordiplyJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubExperiment.isEnabled) notFound
-      else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, PuzzlesPageController.WordiplyTitle, date)
+      else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, "Wordiply", date)
     }
 
   def redirectWordiplyArchive(): Action[AnyContent] =
@@ -213,17 +209,20 @@ object PuzzlesPageController {
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
 
-  /** Sudoku variant -> display title, for the `/puzzles-and-games/logic-puzzles/sudoku-:variant/:date` route. */
-  val sudokuVariantTitles: Map[String, String] = Map(
-    "easy" -> "Sudoku (easy)",
-    "medium" -> "Sudoku (medium)",
-    "hard" -> "Sudoku (hard)",
-    "killer" -> "Killer sudoku",
-  )
+  /** Accepted sudoku variants for the `/puzzles-and-games/logic-puzzles/sudoku-:variant/:date` route. Play's route
+    * regex (`$variant<easy|medium|hard|killer>`) already constrains this at the HTTP layer, but this is re-checked here
+    * too since the controller's actions are also exercised directly (bypassing routing) by unit tests, and to guard
+    * against this action ever being wired up to a less-constrained route in future.
+    */
+  val SudokuVariants: Set[String] = Set("easy", "medium", "hard", "killer")
+
+  /** Display title for a sudoku variant. Kept minimal and derived (rather than a curated per-variant map) since DCR
+    * owns the canonical puzzle titles in its own `puzzleConfigs.ts` registry; this repo only needs a reasonable,
+    * always-correct string for `webTitle` (share-button text) and `instance.title` (the page's rendered heading).
+    */
+  def sudokuTitle(variant: String): String =
+    if (variant == "killer") "Killer sudoku" else s"Sudoku ($variant)"
 
   val WordWheelSlug = "word-wheel"
-  val WordWheelTitle = "Word wheel"
-
   val WordiplySlug = "wordiply"
-  val WordiplyTitle = "Wordiply"
 }
