@@ -14,6 +14,11 @@ https://support.snyk.io/hc/en-us/articles/9590215676189-Deeply-nested-Scala-proj
  */
 ThisBuild / asciiGraphWidth := 999999999
 ThisBuild / scalaVersion := SCALA_VERSION
+ThisBuild / dependencyOverrides ++= Seq(
+  bouncyCastleProv,
+  bouncyCastlePkix,
+  bouncyCastleUtil,
+)
 
 val templateTrackerJar = "template-tracker-agent.jar"
 
@@ -105,11 +110,6 @@ val common = library("common")
       pekkoActorTyped,
       supportInternationalisation,
     ) ++ jackson,
-    dependencyOverrides ++= Seq(
-      bouncyCastleProv,
-      bouncyCastlePkix,
-      bouncyCastleUtil,
-    ),
   )
 
 val commonWithTests = withTests(common)
