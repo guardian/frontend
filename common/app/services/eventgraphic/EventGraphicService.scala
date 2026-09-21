@@ -31,8 +31,8 @@ case class EventGraphicSource(fullUrl: URI, graphicKind: GraphicKind)
 object EventGraphicSource {
   val host = s"${Configuration.zugApi.host.stripSuffix("/")}"
   private val sources: Map[String, EventGraphicSource] = Map(
-    "election-tracker/us-midterms-2026" -> EventGraphicSource(
-      fullUrl = new URI(s"$host/election-tracker/us-midterms-2026"),
+    "election-tracker/us-midterm-2026" -> EventGraphicSource(
+      fullUrl = new URI(s"$host/views/elections/us-midterm-2026/fronts-tracker/all/v1"),
       graphicKind = GraphicKind.ElectionTracker,
     ),
   )
