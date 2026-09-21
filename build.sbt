@@ -105,6 +105,11 @@ val common = library("common")
       pekkoActorTyped,
       supportInternationalisation,
     ) ++ jackson,
+    dependencyOverrides ++= Seq(
+      bouncyCastleProv,
+      bouncyCastlePkix,
+      bouncyCastleUtil,
+    ),
   )
 
 val commonWithTests = withTests(common)
@@ -162,7 +167,7 @@ val admin = application("admin")
       d3,
       awsElasticloadbalancing,
       awsSes,
-      sttp
+      sttp,
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",

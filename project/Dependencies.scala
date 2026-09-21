@@ -135,4 +135,13 @@ object Dependencies {
       jackModule,
       jacksonDatabind,
     )
+
+  /*
+  For a dependency override, TODO remove this when identity-auth-core is updated to v10.0.0 or later
+   */
+  val bouncyCastleVersion = "1.85"
+
+  val bouncyCastleProv = "org.bouncycastle" % "bcprov-jdk18on" % bouncyCastleVersion
+  val bouncyCastlePkix = "org.bouncycastle" % "bcpkix-jdk18on" % bouncyCastleVersion
+  val bouncyCastleUtil = "org.bouncycastle" % "bcutil-jdk18on" % bouncyCastleVersion
 }
