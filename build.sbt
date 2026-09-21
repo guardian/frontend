@@ -49,6 +49,8 @@ val withTwirlInstrumentation: Seq[SettingsDefinition] = Seq(
   bashScriptExtraDefines += s"""addJava "-javaagent:$${app_home}/../agent/${templateTrackerJar}"""",
 )
 
+val bouncyCastleVersion = "1.85"
+
 val common = library("common")
   .settings(
     libraryDependencies ++= Seq(
@@ -105,6 +107,11 @@ val common = library("common")
       pekkoActorTyped,
       supportInternationalisation,
     ) ++ jackson,
+    dependencyOverrides ++= Seq(
+      "org.bouncycastle" % "bcprov-jdk18on" % bouncyCastleVersion,
+      "org.bouncycastle" % "bcpkix-jdk18on" % bouncyCastleVersion,
+      "org.bouncycastle" % "bcutil-jdk18on" % bouncyCastleVersion,
+    ),
   )
 
 val commonWithTests = withTests(common)
@@ -162,7 +169,7 @@ val admin = application("admin")
       d3,
       awsElasticloadbalancing,
       awsSes,
-      sttp
+      sttp,
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",
