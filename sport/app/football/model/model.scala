@@ -193,8 +193,7 @@ object CompetitionDisplayHelpers {
       .replace("Curacao", "Curaçao")
       .replace("Czech Republic", "Czechia")
       .replace("Inter Milan Women", "Inter Women")
-      .replace("HB Koge Women", "HB Køge Women")
-    ;
+      .replace("HB Koge Women", "HB Køge Women");
   }
 
   def cleanTeamNameNextGenApi(teamName: String): String = {
