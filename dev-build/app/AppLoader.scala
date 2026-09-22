@@ -97,6 +97,7 @@ trait AppComponents
       wire[MostViewedLifecycle],
       wire[SkimLinksCacheLifeCycle],
       wire[DfpAgentLifecycle],
+      wire[AffiliateProductPriceCacheLifeCycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

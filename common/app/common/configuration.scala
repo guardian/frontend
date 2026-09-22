@@ -302,6 +302,11 @@ class GuardianConfiguration extends GuLogging {
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
   }
 
+  object affiliateProductPrices {
+    lazy val bucket: Option[String] = configuration.getStringProperty("affiliate-product-directory.bucket")
+    lazy val pricesKey = "product-prices.csv"
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
     lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
