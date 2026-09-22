@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "9.0.0"
+  val identityLibVersion = "10.0.0"
   val awsVersion = "2.54.12"
   val capiVersion = "49.0.0"
   val faciaVersion = "42.0.0"
@@ -59,7 +59,7 @@ object Dependencies {
   val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.18"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "22.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
@@ -135,13 +135,4 @@ object Dependencies {
       jackModule,
       jacksonDatabind,
     )
-
-  /*
-  For a dependency override, TODO remove this when identity-auth-core is updated to v10.0.0 or later
-   */
-  val bouncyCastleVersion = "1.85"
-
-  val bouncyCastleProv = "org.bouncycastle" % "bcprov-jdk18on" % bouncyCastleVersion
-  val bouncyCastlePkix = "org.bouncycastle" % "bcpkix-jdk18on" % bouncyCastleVersion
-  val bouncyCastleUtil = "org.bouncycastle" % "bcutil-jdk18on" % bouncyCastleVersion
 }

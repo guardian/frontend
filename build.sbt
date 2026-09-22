@@ -105,11 +105,6 @@ val common = library("common")
       pekkoActorTyped,
       supportInternationalisation,
     ) ++ jackson,
-    dependencyOverrides ++= Seq(
-      bouncyCastleProv,
-      bouncyCastlePkix,
-      bouncyCastleUtil,
-    ),
   )
 
 val commonWithTests = withTests(common)
