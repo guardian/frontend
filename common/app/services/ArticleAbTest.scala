@@ -4,16 +4,20 @@ import common.{Box, GuLogging}
 import contentapi.ContentApiClient
 
 import scala.concurrent.{ExecutionContext, Future}
-/**
-* a is the CAPI ID of article A (eg "music/2026/sep/16/orville-peck-interview-new-album-mule" )
-* b is the short path of article B (eg "p/x5zkef")
-*/
+
+/** A single running article A/B test, mapping article A to its variant, article B.
+  *
+  * @param a
+  *   the CAPI ID of article A (eg "music/2026/sep/16/orville-peck-interview-new-album-mule")
+  * @param b
+  *   the short path of article B (eg "p/x5zkef")
+  */
 case class ArticleAbTest(a: String, b: String)
 
-/** ArticleAbTestAgent is a cache for the article A/B test config.
- *
- * The cache is built by polling CAPI for active A/B tests
- */
+/** ArticleAbTestAgent is an in-memory cache of the currently active article A/B tests.
+  *
+  * The cache is populated by periodically polling CAPI for content with an active A/B test (see `refresh`).
+  */
 class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
   private val testsBox = Box[List[ArticleAbTest]](Nil)
 
