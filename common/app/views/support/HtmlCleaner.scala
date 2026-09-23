@@ -14,7 +14,7 @@ import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-import services.{SkimLinksCache, AffiliateProductPriceCache}
+import services.SkimLinksCache
 
 import scala.jdk.CollectionConverters._
 import scala.collection.mutable
@@ -927,12 +927,11 @@ object AffiliateLinksCleaner {
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String, abTests: Map[String, String]): String = {
     val urlEncodedLink = URLEncode(ensureHttps(link))
-    val latestPrice = AffiliateProductPriceCache.getLatestPrice(ensureHttps(link))
     val xcustParam = if (abTests.nonEmpty) {
       val xcust = URLEncode("abTestParticipations" + abTests.map { case (k, v) => s"|$k:$v" }.mkString)
       s"&xcust=$xcust"
     } else ""
-    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl$xcustParam&latestPrice=$latestPrice"
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl$xcustParam"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {

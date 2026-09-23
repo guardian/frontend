@@ -6,7 +6,7 @@ import views.support.AffiliateLinksCleaner._
 
 class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
 
-  ignore should "correctly convert a link to a skimlink" in {
+  "linkToSkimLink" should "correctly convert a link to a skimlink" in {
     val link = "https://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
     linkToSkimLink(link, pageUrl, "123", Map.empty) should equal(
@@ -14,7 +14,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
     )
   }
 
-  ignore should "replace http: with https: in the original link" in {
+  "linkToSkimLink" should "replace http: with https: in the original link" in {
     val link = "http://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
     linkToSkimLink(link, pageUrl, "123", Map.empty) should equal(
@@ -22,7 +22,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
     )
   }
 
-  ignore should "replace add xcust with ab test participation" in {
+  "linkToSkimLink" should "replace add xcust with ab test participation" in {
     val link = "http://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
     linkToSkimLink(link, pageUrl, "123", Map("testName" -> "variant")) should equal(
