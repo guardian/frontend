@@ -4,6 +4,7 @@ import common.{Box, GuLogging}
 import contentapi.ContentApiClient
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 /** A single running article A/B test, mapping article A to its variant, article B.
   *
@@ -46,6 +47,11 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
 
     val futureContentWithActiveAbTests = contentApiClient.getResponse(activeAbTestQuery)
 
+    futureContentWithActiveAbTests.onComplete {
+      case Success(_) => log.debug("Successfully got content with active ab tests")
+      case Failure(t) => log.error(s"Getting content with active ab tests failed with $t", t)
+    }
+
     for {
       contentWithActiveAbTests <- futureContentWithActiveAbTests
     } yield {
@@ -64,7 +70,3 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
     }
   }
 }
-
-/*todo
- *  Add lifecycle management for the ArticleAbTestAgent
- * */
