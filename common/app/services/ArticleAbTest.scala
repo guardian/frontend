@@ -1,13 +1,16 @@
 package services
+import com.gu.contentapi.client.model.v1.VariantId.B
 import common.{Box, GuLogging}
+import contentapi.ContentApiClient
 
+import scala.concurrent.{ExecutionContext, Future}
 /*
 * a is the CAPI ID of article A (eg "music/2026/sep/16/orville-peck-interview-new-album-mule" )
 * b is the short path of article B (eg "p/x5zkef")
-* */
+*/
 case class ArticleAbTest(a: String, b: String)
 
-class ArticleAbTestAgent() extends GuLogging {
+class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
   private val testsBox = Box[List[ArticleAbTest]](Nil)
 
   def tests: List[ArticleAbTest] = testsBox.get()
@@ -26,4 +29,34 @@ class ArticleAbTestAgent() extends GuLogging {
   def remove(articleAPath: String): Unit =
     testsBox.alter(_.filterNot(_.a == articleAPath))
 
+  private def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
+    log.debug("Refreshing article ab test cache...")
+
+    val activeAbTestQuery = contentApiClient
+      .search()
+      .containsActiveAbTest()
+
+    val futureContentWithActiveAbTests = contentApiClient.getResponse(activeAbTestQuery)
+
+    for {
+      contentWithActiveAbTests <- futureContentWithActiveAbTests
+    } yield {
+      val content = contentWithActiveAbTests.results
+
+      val newTests = content.flatMap { c =>
+        val maybeActiveTest = c.abTests.getOrElse(Seq.empty).find(_.ended.isEmpty)
+        maybeActiveTest
+          .flatMap(test =>
+            test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath.stripPrefix("/") },
+          )
+          .map(bPath => ArticleAbTest(c.id, bPath))
+      }.toList
+      setAll(newTests)
+      log.debug("Successfully refreshed article ab test cache.")
+    }
+  }
 }
+
+/*todo
+ *  Add lifecycle management for the ArticleAbTestAgent
+ * */
