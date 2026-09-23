@@ -1,6 +1,10 @@
 package services
 import common.{Box, GuLogging}
 
+/*
+* a is the CAPI ID of article A (eg "music/2026/sep/16/orville-peck-interview-new-album-mule" )
+* b is the short path of article B (eg "p/x5zkef")
+* */
 case class ArticleAbTest(a: String, b: String)
 
 class ArticleAbTestAgent() extends GuLogging {
