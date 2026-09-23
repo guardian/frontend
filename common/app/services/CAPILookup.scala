@@ -10,7 +10,9 @@ import scala.concurrent.Future
 
 class CAPILookup(contentApiClient: ContentApiClient) {
 
-  def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
+  def lookup(path: String, range: Option[BlockRange], channel: Option[String] = None)(implicit
+      request: RequestHeader,
+  ): Future[ItemResponse] = {
     val edition = Edition(request)
 
     val capiItem = contentApiClient
@@ -28,7 +30,11 @@ class CAPILookup(contentApiClient: ContentApiClient) {
       }
       .getOrElse(capiItem)
 
-    contentApiClient.getResponse(capiItemWithBlocks)
+    val capiItemWithChannel = channel
+      .map(capiItemWithBlocks.withChannelId)
+      .getOrElse(capiItemWithBlocks)
+
+    contentApiClient.getResponse(capiItemWithChannel)
 
   }
 
