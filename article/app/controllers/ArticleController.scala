@@ -1,5 +1,6 @@
 package controllers
 
+import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.client.models.CustomSubnav
@@ -38,6 +39,12 @@ class ArticleController(
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
+
+  private def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
+    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
+  }
+
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit req: RequestHeader): Future[Result] =
     mapAndRender(path, GenericFallback)()
