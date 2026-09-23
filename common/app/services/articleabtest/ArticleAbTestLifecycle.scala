@@ -25,10 +25,12 @@ class ArticleAbTestLifecycle(
   override def start(): Unit = {
     jobs.deschedule("ArticleAbTestAgentJob")
     jobs.schedule("ArticleAbTestAgentJob", "0/30 * * * * ?") {
+      println(s"[ArticleAbTestLifecycle] polling ArticleAbTestAgent.refresh() at ${new java.util.Date()}")
       articleAbTestAgent.refresh()
     }
 
     pekkoAsync.after1s {
+      println(s"[ArticleAbTestLifecycle] initial ArticleAbTestAgent.refresh() at ${new java.util.Date()}")
       articleAbTestAgent.refresh()
     }
   }

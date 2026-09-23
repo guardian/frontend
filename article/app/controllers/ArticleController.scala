@@ -28,7 +28,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     subnavAgent: SubnavAgent,
-    articleAbTestAgent: ArticleAbTestAgent
+    articleAbTestAgent: ArticleAbTestAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse

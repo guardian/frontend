@@ -70,8 +70,15 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
     val futureContentWithActiveAbTests = contentApiClient.getResponse(activeAbTestQuery)
 
     futureContentWithActiveAbTests.onComplete {
-      case Success(_) => log.debug("Successfully got content with active ab tests")
-      case Failure(t) => log.error(s"Getting content with active ab tests failed with $t", t)
+      case Success(response) =>
+        log.debug("Successfully got content with active ab tests")
+        println(
+          s"[ArticleAbTestAgent] CAPI search succeeded: total=${response.total}, results=${response.results.size}",
+        )
+      case Failure(t) =>
+        log.error(s"Getting content with active ab tests failed with $t", t)
+        println(s"[ArticleAbTestAgent] CAPI search FAILED: $t")
+        t.printStackTrace()
     }
 
     for {
@@ -86,6 +93,7 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
 
       val newTests = ArticleAbTest.fromContentWithActiveAbTests(contentWithActiveAbTests.results)
       setAll(newTests)
+      println(s"[ArticleAbTestAgent] Set ${newTests.size} tests in cache: $newTests")
       log.debug("Successfully refreshed article ab test cache.")
     }
   }
