@@ -18,9 +18,11 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
+import services.articleabtest.ArticleAbTestLifecycle
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 import services.ophan.SurgingContentAgentLifecycle
 import services.{
+  ArticleAbTestAgent,
   NewspaperBooksAndSectionsAutoRefresh,
   OphanApi,
   SkimLinksCacheLifeCycle,
@@ -46,6 +48,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val devAssetsController = wire[DevAssetsController]
 
   lazy val subnavAgent = wire[SubnavAgent]
+  lazy val articleAbTestAgent = wire[ArticleAbTestAgent]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
   override lazy val lifecycleComponents = List(
@@ -61,6 +64,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[StoreNavigationLifecycleComponent],
     wire[NewsletterSignupLifecycle],
     wire[AffiliateProductPriceCacheLifeCycle],
+    wire[ArticleAbTestLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
