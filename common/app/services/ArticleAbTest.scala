@@ -1,4 +1,5 @@
 package services
+import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.model.v1.VariantId.B
 import common.{Box, GuLogging}
 import contentapi.ContentApiClient
@@ -14,6 +15,22 @@ import scala.util.{Failure, Success}
   *   the short path of article B (eg "p/x5zkef")
   */
 case class ArticleAbTest(a: String, b: String)
+
+object ArticleAbTest {
+
+  /** Maps from CAPI content (as returned by the `containsActiveAbTest` search) to the list of currently active article
+    * A/B tests.
+    */
+  def fromContentWithActiveAbTests(content: scala.collection.Seq[Content]): List[ArticleAbTest] =
+    content.flatMap { c =>
+      val maybeActiveTest = c.abTests.getOrElse(Seq.empty).find(_.ended.isEmpty)
+      maybeActiveTest
+        .flatMap(test =>
+          test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath.stripPrefix("/") },
+        )
+        .map(bPath => ArticleAbTest(c.id, bPath))
+    }.toList
+}
 
 /** ArticleAbTestAgent is an in-memory cache of the currently active article A/B tests.
   *
@@ -67,16 +84,7 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
         )
       }
 
-      val content = contentWithActiveAbTests.results
-
-      val newTests = content.flatMap { c =>
-        val maybeActiveTest = c.abTests.getOrElse(Seq.empty).find(_.ended.isEmpty)
-        maybeActiveTest
-          .flatMap(test =>
-            test.variantLinks.collectFirst { case link if link.variantId == B => link.linkedShortPath.stripPrefix("/") },
-          )
-          .map(bPath => ArticleAbTest(c.id, bPath))
-      }.toList
+      val newTests = ArticleAbTest.fromContentWithActiveAbTests(contentWithActiveAbTests.results)
       setAll(newTests)
       log.debug("Successfully refreshed article ab test cache.")
     }
