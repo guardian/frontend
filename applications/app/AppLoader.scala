@@ -21,6 +21,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services._
 import router.Routes
+import services.articleabtest.ArticleAbTestLifecycle
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
 
 import scala.concurrent.ExecutionContext
@@ -52,6 +53,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   lazy val signupPageController = wire[SignupPageController]
 
   override lazy val lifecycleComponents = List(
+    wire[ArticleAbTestLifecycle],
     wire[ConfigAgentLifecycle],
     wire[SubnavAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
