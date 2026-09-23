@@ -43,6 +43,7 @@ trait ApplicationsServices {
   lazy val newsletterApi = wire[NewsletterApi]
   lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   lazy val subnavAgent = wire[SubnavAgent]
+  lazy val articleAbTestAgent = wire[ArticleAbTestAgent]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
