@@ -51,18 +51,29 @@
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"id": "crossword-quick-cryptic",
-							"title": "Quick cryptic",
+							"id": "crossword-weekend",
+							"title": "Weekend",
 							"type": "crossword",
-							"set": "quick-cryptic",
+							"set": "weekend",
 							"cardVariant": "primary",
 							"cadence": "Every Saturday",
-							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
-							"imageAlt": "Quick cryptic crossword illustration",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
+							"imageAlt": "General knowledge crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						}
 					],
 					[
+						{
+							"id": "crossword-quick-cryptic",
+							"title": "Quick cryptic",
+							"type": "crossword",
+							"set": "quick-cryptic",
+							"cardVariant": "compact",
+							"cadence": "Every Saturday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick cryptic crossword illustration",
+							"backgroundColour": "#FCE1CE"
+						},
 						{
 							"id": "crossword-quiptic",
 							"title": "Quiptic",
@@ -75,17 +86,6 @@
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"id": "crossword-weekend",
-							"title": "Weekend",
-							"type": "crossword",
-							"set": "weekend",
-							"cardVariant": "compact",
-							"cadence": "Every Saturday",
-							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
-							"imageAlt": "General knowledge crossword illustration",
-							"backgroundColour": "#FCE1CE"
-						},
-						{
 							"id": "crossword-prize",
 							"title": "Prize",
 							"type": "crossword",
@@ -94,6 +94,15 @@
 							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
 							"imageAlt": "Prize crossword illustration",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"id": "crossword-sunday-quick",
+							"title": "Sunday quick",
+							"type": "crossword",
+							"set": "sunday-quick",
+							"cardVariant": "compact",
+							"cadence": "Every Sunday",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
