@@ -20,6 +20,10 @@ case class ArticleAbTest(a: String, b: String)
   * The cache is populated by periodically polling CAPI for content with an active A/B test (see `refresh`).
   */
 class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
+  // The maximum page size CAPI allows. Set explicitly (rather than relying on CAPI's default page size of 10) so we
+  // don't silently truncate results if the number of active tests grows.
+  private val maxPageSize = 200
+
   private val testsBox = Box[List[ArticleAbTest]](Nil)
 
   def tests: List[ArticleAbTest] = testsBox.get()
@@ -44,6 +48,7 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
     val activeAbTestQuery = contentApiClient
       .search()
       .containsActiveAbTest()
+      .pageSize(maxPageSize)
 
     val futureContentWithActiveAbTests = contentApiClient.getResponse(activeAbTestQuery)
 
@@ -55,6 +60,13 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
     for {
       contentWithActiveAbTests <- futureContentWithActiveAbTests
     } yield {
+      if (contentWithActiveAbTests.total > maxPageSize) {
+        log.warn(
+          s"Found ${contentWithActiveAbTests.total} pieces of content with active ab tests, " +
+            s"but only requested $maxPageSize - some active tests will be missing from the cache.",
+        )
+      }
+
       val content = contentWithActiveAbTests.results
 
       val newTests = content.flatMap { c =>
