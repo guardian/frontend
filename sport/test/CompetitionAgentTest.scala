@@ -107,7 +107,7 @@ import scala.concurrent.duration._
     val parsedTeamNames = teamsToParse.map(team => new TeamNameBuilder(comps).withTeam(team))
 
     eventually(
-      parsedTeamNames.sorted should equal(uncleanToCleanNames.values.toSeq.sorted)
+      parsedTeamNames.sorted should equal(uncleanToCleanNames.values.toSeq.sorted),
     )
   }
 
