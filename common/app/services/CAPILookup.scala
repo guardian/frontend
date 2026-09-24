@@ -40,11 +40,12 @@ class CAPILookup(contentApiClient: ContentApiClient) {
 
     val capiItemWithChannel = channel
       .map {
-        case CAPIChannel.Variant     => capiItemWithBlocks.withChannelId("variant")
-        case CAPIChannel.Feast       => capiItemWithBlocks.withChannelId("feast")
-        case CAPIChannel.Newsletters => capiItemWithBlocks.withChannelId("newsletters")
-        case CAPIChannel.Editions    => capiItemWithBlocks.withChannelId("editions")
+        case CAPIChannel.Variant     => "variant"
+        case CAPIChannel.Feast       => "feast"
+        case CAPIChannel.Newsletters => "newsletters"
+        case CAPIChannel.Editions    => "editions"
       }
+      .map(capiItemWithBlocks.withChannelId)
       .getOrElse(capiItemWithBlocks)
 
     contentApiClient.getResponse(capiItemWithChannel)
