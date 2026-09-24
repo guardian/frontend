@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import services.{CAPILookup, NewsletterService, SubnavAgent, ArticleAbTestAgent}
+import services.{ArticleAbTestAgent, CAPIChannel, CAPILookup, NewsletterService, SubnavAgent}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -41,7 +41,8 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
   private def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
-    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    val isUserInVariantBBucket = true
+    println(articleAbTestAgent.tests)
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 
@@ -59,9 +60,9 @@ class ArticleController(
     val isBVariant = path != pathToRender
     println(s"Rendering path: $path, pathToRender: $pathToRender, isBVariant: $isBVariant")
     if (isBVariant) {
-      mapModel(pathToRender, range) { pageBlocks => render(pathToRender, modifier(pageBlocks)) }
+      mapModel(pathToRender, range, Some(CAPIChannel.Variant)) { pageBlocks => render(pathToRender, modifier(pageBlocks)) }
     } else {
-      mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+      mapModel(path, range, None) { pageBlocks => render(path, modifier(pageBlocks)) }
     }
   }
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
@@ -150,11 +151,12 @@ class ArticleController(
     }
   }
 
-  private def mapModel(path: String, range: BlockRange)(
+  private def mapModel(path: String, range: BlockRange, channelId: Option[CAPIChannel])(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
+
     capiLookup
-      .lookup(path, Some(range))
+      .lookup(path, Some(range), channelId)
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
