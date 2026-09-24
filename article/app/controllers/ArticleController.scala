@@ -41,8 +41,11 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
   private def determineABTestPath(path: String): String = {
+    //hardcoding to make local testing easier
     val isUserInVariantBBucket = true
-    println(articleAbTestAgent.tests)
+
+    println("all tests available in cache:", articleAbTestAgent.tests)
+    println("variant for?: ",articleAbTestAgent.variantFor(path))
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 
@@ -53,16 +56,13 @@ class ArticleController(
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
   )(implicit req: RequestHeader): Future[Result] = {
-    // TODO: work out to warm cache without blocking article load
-    articleAbTestAgent.refresh()
-
     val pathToRender = determineABTestPath(path)
     val isBVariant = path != pathToRender
     println(s"Rendering path: $path, pathToRender: $pathToRender, isBVariant: $isBVariant")
     if (isBVariant) {
-      mapModel(pathToRender, range, Some(CAPIChannel.Variant)) { pageBlocks => render(pathToRender, modifier(pageBlocks)) }
+      mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = true) { pageBlocks => render(pathToRender, modifier(pageBlocks)) }
     } else {
-      mapModel(path, range, None) { pageBlocks => render(path, modifier(pageBlocks)) }
+      mapModel(path, range, None, skipCanonicalRedirect = false) { pageBlocks => render(path, modifier(pageBlocks)) }
     }
   }
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
@@ -151,13 +151,12 @@ class ArticleController(
     }
   }
 
-  private def mapModel(path: String, range: BlockRange, channelId: Option[CAPIChannel])(
+  private def mapModel(path: String, range: BlockRange, channelId: Option[CAPIChannel], skipCanonicalRedirect: Boolean)(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
-
     capiLookup
       .lookup(path, Some(range), channelId)
-      .map(responseToModelOrResult)
+      .map(responseToModelOrResult(_, skipCanonicalRedirect))
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
@@ -167,11 +166,12 @@ class ArticleController(
 
   private def responseToModelOrResult(
       response: ItemResponse,
+      skipCanonicalRedirect: Boolean
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    ModelOrResult(supportedContent, response) match {
+    ModelOrResult(supportedContent, response, skipCanonicalRedirect = skipCanonicalRedirect) match {
       case Right(article: Article) =>
         Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Left(r) => Left(r)
