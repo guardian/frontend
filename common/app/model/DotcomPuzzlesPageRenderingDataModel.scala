@@ -22,7 +22,51 @@ case class DotcomPuzzlesPageRenderingDataModel(
     isAdFreeUser: Boolean,
     canonicalUrl: String,
     layout: PuzzlesLayout,
+    archive: Option[PuzzlesArchive] = None,
 )
+
+case class PuzzlesArchivePuzzle(
+    id: String,
+    title: String,
+    puzzleType: String,
+    slug: Option[String],
+    set: String,
+)
+
+object PuzzlesArchivePuzzle {
+  implicit val writes: OWrites[PuzzlesArchivePuzzle] = Json.writes[PuzzlesArchivePuzzle]
+}
+
+case class PuzzlesArchiveItem(
+    puzzleId: String,
+    puzzleType: String,
+    date: String,
+    progress: Int,
+    setterName: Option[String],
+    url: String,
+)
+
+object PuzzlesArchiveItem {
+  implicit val writes: OWrites[PuzzlesArchiveItem] = Json.writes[PuzzlesArchiveItem]
+}
+
+case class PuzzlesArchive(
+    category: String,
+    title: String,
+    description: String,
+    selectedPuzzle: PuzzlesArchivePuzzle,
+    puzzles: Seq[PuzzlesArchivePuzzle],
+    year: Int,
+    month: Int,
+    items: Seq[PuzzlesArchiveItem],
+    dataUrl: String,
+    hasError: Boolean,
+    moreFrom: Seq[PuzzleItem],
+)
+
+object PuzzlesArchive {
+  implicit val writes: OWrites[PuzzlesArchive] = Json.writes[PuzzlesArchive]
+}
 
 object DotcomPuzzlesPageRenderingDataModel {
   implicit val writes: OWrites[DotcomPuzzlesPageRenderingDataModel] =
@@ -52,8 +96,17 @@ object DotcomPuzzlesPageRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       layout = layout,
+      archive = None,
     )
   }
+
+  def archive(
+      page: SimplePage,
+      layout: PuzzlesLayout,
+      archive: PuzzlesArchive,
+      request: RequestHeader,
+  ): DotcomPuzzlesPageRenderingDataModel =
+    apply(page, layout, request).copy(archive = Some(archive))
 
   def toJson(model: DotcomPuzzlesPageRenderingDataModel): JsValue =
     DotcomRenderingUtils.withoutNull(Json.toJson(model))
