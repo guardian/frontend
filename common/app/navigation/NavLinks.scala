@@ -234,6 +234,15 @@ object NavLinks {
     ),
   )
   val puzzles = NavLink("Puzzles & games", "/puzzles-and-games")
+  val puzzlesV1 = NavLink(
+    "Puzzles & games",
+    "/puzzles-and-games",
+    children = List(
+      NavLink("Crosswords", "/puzzles-and-games/crosswords/archive"),
+      NavLink("Word games", "/puzzles-and-games/word-games/archive"),
+      NavLink("Logic puzzles", "/puzzles-and-games/logic-puzzles/archive"),
+    ),
+  )
   val legacyWordiply = NavLink(
     "Wordiply",
     "https://www.wordiply.com",
