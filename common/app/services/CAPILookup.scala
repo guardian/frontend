@@ -8,12 +8,12 @@ import play.api.mvc.RequestHeader
 
 import scala.concurrent.Future
 
-sealed trait CAPIChannel
+sealed trait CAPIChannel { val name: String }
 object CAPIChannel {
-  case object Variant extends CAPIChannel
-  case object Feast extends CAPIChannel
-  case object Newsletters extends CAPIChannel
-  case object Editions extends CAPIChannel
+  case object Variant extends CAPIChannel { val name = "variant" }
+  case object Feast extends CAPIChannel { val name = "feast" }
+  case object Newsletters extends CAPIChannel { val name = "newsletters" }
+  case object Editions extends CAPIChannel { val name = "editions" }
 }
 
 class CAPILookup(contentApiClient: ContentApiClient) {
@@ -39,12 +39,7 @@ class CAPILookup(contentApiClient: ContentApiClient) {
       .getOrElse(capiItem)
 
     val capiItemWithChannel = channel
-      .map {
-        case CAPIChannel.Variant     => "variant"
-        case CAPIChannel.Feast       => "feast"
-        case CAPIChannel.Newsletters => "newsletters"
-        case CAPIChannel.Editions    => "editions"
-      }
+      .map(_.name)
       .map(capiItemWithBlocks.withChannelId)
       .getOrElse(capiItemWithBlocks)
 
