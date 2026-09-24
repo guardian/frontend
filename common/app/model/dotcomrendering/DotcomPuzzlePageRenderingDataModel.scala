@@ -6,21 +6,6 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 
-/** Best-effort "more from puzzles and games" recommendation, sent to DCR's `/PuzzlePage` endpoint. This is additional,
-  * isolated data used only by the Puzzle Page flow (see PuzzlesPageController) and does not affect the existing
-  * crossword article rendering.
-  */
-case class MoreFromPuzzlesAndGamesItem(
-    title: String,
-    `type`: String,
-    set: String,
-    url: Option[String] = None,
-)
-
-object MoreFromPuzzlesAndGamesItem {
-  implicit val writes: OWrites[MoreFromPuzzlesAndGamesItem] = Json.writes[MoreFromPuzzlesAndGamesItem]
-}
-
 /** Per-instance data for a single Puzzle Page. Puzzle Page is scoped to iframe-based puzzles only (see
   * PuzzlesPageController) - there is no crossword (or other component-rendered) case, so this type carries no
   * crossword-specific fields. (A set of crossword-flavoured fields - `puzzleType`/`setterName`/`date`/
@@ -36,7 +21,14 @@ case class PuzzlePageInstance(
       * compatibility. DCR is being updated in parallel to display this value and forward it to the puzzle iframe.
       */
     puzzleDate: Option[String] = None,
-    moreFromPuzzlesAndGames: Seq[MoreFromPuzzlesAndGamesItem] = Nil,
+    /** Best-effort "more from puzzles and games" recommendations: one related puzzle from each of the other Puzzles &
+      * Games categories (excluding this instance's own game), populated by `PuzzlesPageController`. Reuses the same
+      * `PuzzleItem` shape already used by the (unrelated) Puzzles Hub feature (see `PuzzlesLayout.scala`), rather than
+      * a bespoke type, since DCR's rail consumes the same card fields (id/title/type/set/url/image/etc). DCR gates
+      * actually rendering this rail behind the `puzzles-new-hub-v1` tier (a v1-scoped feature, see
+      * docs/puzzle-page.md), so it's safe/expected for this to be populated ahead of that tier shipping.
+      */
+    moreFromPuzzlesAndGames: Seq[PuzzleItem] = Nil,
 )
 
 object PuzzlePageInstance {
@@ -57,6 +49,13 @@ case class DotcomPuzzlePageRenderingDataModel(
     canonicalUrl: String,
     editionId: String,
     instance: PuzzlePageInstance,
+    /** Whether the requesting reader has paid for an ad-free subscription, mirroring the same field already sent on the
+      * sibling Puzzles Hub contract (`DotcomPuzzlesPageRenderingDataModel.isAdFreeUser`) and on every other DCR page
+      * type this repo posts to. DCR's `PuzzlePageLayout` now reads this to gate every ad slot
+      * (`canRenderAds(puzzlePage)`) instead of always rendering ads regardless of the reader's ad-free status - a real
+      * gap this field closes, coordinated with that DCR-side change.
+      */
+    isAdFreeUser: Boolean,
 )
 
 object DotcomPuzzlePageRenderingDataModel {
@@ -81,6 +80,7 @@ object DotcomPuzzlePageRenderingDataModel {
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       editionId = edition.id,
       instance = instance,
+      isAdFreeUser = views.support.Commercial.isAdFree(request),
     )
   }
 

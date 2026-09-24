@@ -54,8 +54,8 @@ import staticpages.StaticPages
     val puzzlesNav = (json \ "nav" \ "otherLinks").as[Seq[play.api.libs.json.JsObject]]
     puzzlesNav
       .find(link => (link \ "url").as[String] == "/puzzles-and-games")
-      .map(link => (link \ "title").as[String]) should
-      contain("Puzzles and games")
+      .map(link => (link \ "title").as[String]) shouldBe None
+    (json \ "nav" \ "subNavSections" \ "parent" \ "title").as[String] should be("Puzzles & games")
   }
 
   it should "propagate every current server-side AB-test participation" in {

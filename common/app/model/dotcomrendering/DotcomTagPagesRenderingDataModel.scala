@@ -93,7 +93,7 @@ object DotcomTagPagesRenderingDataModel {
     }
 
     DotcomTagPagesRenderingDataModel(
-      contents = page.contents.map(_.faciaItem),
+      contents = page.contents.map(_.faciaItem.withoutCommercial),
       pagination = pagination,
       tags = page.tags,
       date = page.date,
