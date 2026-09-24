@@ -261,6 +261,18 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
+  it should "show the category subnav only for the cumulative V1 variant" in {
+    val request = requestWithParticipations("puzzles-new-hub:variant,puzzles-new-hub-v1:variant")
+
+    Edition.allEditions.foreach { edition =>
+      val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"), edition, request)
+
+      menu.currentNavLink should contain(puzzlesV1)
+      menu.subNavSections should contain(ParentSubnav(puzzlesV1, puzzlesV1.children))
+      menu.otherLinks should not contain puzzlesV1
+    }
+  }
+
   it should "keep the legacy Crosswords and Wordiply navigation in every edition for non-variant requests" in {
     Seq(
       "puzzles-new-hub:control",

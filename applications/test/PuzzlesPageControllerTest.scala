@@ -1,7 +1,7 @@
 package test
 
 import ab.ABTests
-import controllers.{PuzzlesLayoutProvider, PuzzlesPageController}
+import controllers.{PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController}
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
@@ -47,6 +47,7 @@ import scala.concurrent.{ExecutionContext, Future}
     new PuzzlesPageController(
       mock[WSClient],
       provider,
+      mock[PuzzlesArchiveApi],
       renderer,
       stubControllerComponents(),
     )
