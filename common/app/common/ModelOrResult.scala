@@ -10,11 +10,11 @@ import java.net.URI
 
 object ModelOrResult extends Results with GuLogging {
 
-  def apply[T](item: Option[T], response: ItemResponse, maybeSection: Option[ApiSection] = None)(implicit
+  def apply[T](item: Option[T], response: ItemResponse, maybeSection: Option[ApiSection] = None, skipCanonicalRedirect: Boolean = false)(implicit
       request: RequestHeader,
   ): Either[Result, T] =
     item
-      .map(i => ItemOrRedirect(i, response, maybeSection))
+      .map(i => ItemOrRedirect(i, response, maybeSection, skipCanonicalRedirect))
       .orElse(InternalRedirect(response).map(Left(_)))
       .getOrElse(Left(NoCache(NotFound)))
 }
@@ -22,11 +22,12 @@ object ModelOrResult extends Results with GuLogging {
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
 private object ItemOrRedirect extends ItemResponses with GuLogging {
 
-  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit
+  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection], skipCanonicalRedirect: Boolean)(implicit
       request: RequestHeader,
   ): Either[Result, T] =
     maybeSection match {
       case Some(section) => redirectSection(item, request, section)
+      case None if skipCanonicalRedirect => Right(item)
       case None          => redirectArticle(item, response, request)
     }
 
