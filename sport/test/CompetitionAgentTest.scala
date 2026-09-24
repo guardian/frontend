@@ -1,16 +1,17 @@
 package test
 
-import conf.{FootballClient}
+import conf.FootballClient
+
 import scala.concurrent.{Await, Future}
-import feed.CompetitionsService
-import model.Competition
+import feed.{Competitions, CompetitionsService}
+import model.{Competition, TeamNameBuilder}
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.concurrent.{Eventually, ScalaFutures}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Span}
 import test.FootballTestData.{fixture, liveMatch, result}
-import pa.{MatchDay, Result}
+import pa.{MatchDay, Result, Team}
 
 import java.time.{Clock, LocalDate, ZonedDateTime}
 import java.time.ZoneId
@@ -74,6 +75,39 @@ import scala.concurrent.duration._
 
     eventually(
       comps.matches.filter(_.isFixture).map(_.id) should contain("3925232"),
+    )
+  }
+
+  it should "rename teams" in {
+    val comps = testCompetitionsService(
+      Competition(
+        "100",
+        "/football/premierleague",
+        "Premier League",
+        "Premier League",
+        "English",
+      ),
+    )
+
+    val uncleanToCleanNames = Map(
+      "Ladies" -> "",
+      "Holland" -> "The Netherlands",
+      "Ivory Coast" -> "Côte d’Ivoire",
+      "Bialystock" -> "Białystok",
+      "Union Saint Gilloise" -> "Union Saint-Gilloise",
+      "Bosnia-Herzegovina" -> "Bosnia and Herzegovina",
+      "Congo DR" -> "DR Congo",
+      "Curacao" -> "Curaçao",
+      "Czech Republic" -> "Czechia",
+      "Inter Milan Women" -> "Inter Women",
+      "HB Koge Women" -> "HB Køge Women",
+    )
+
+    val teamsToParse = uncleanToCleanNames.keySet.toSeq.map(Team("", _))
+    val parsedTeamNames = teamsToParse.map(team => new TeamNameBuilder(comps).withTeam(team))
+
+    eventually(
+      parsedTeamNames.sorted should equal(uncleanToCleanNames.values.toSeq.sorted)
     )
   }
 

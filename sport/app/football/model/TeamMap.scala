@@ -6,6 +6,7 @@ import _root_.feed.Competitions
 import implicits.Football
 import pa._
 import utils.DateFormatUtils
+import model.CompetitionDisplayHelpers.cleanTeamName
 
 import scala.concurrent.ExecutionContext
 
@@ -135,7 +136,7 @@ object TeamUrl {
 }
 
 class TeamNameBuilder(competitions: Competitions) {
-  def withTeam(team: FootballTeam): String = TeamMap.shortNames.getOrElse(team.id, team.name)
+  def withTeam(team: FootballTeam): String = cleanTeamName(TeamMap.shortNames.getOrElse(team.id, team.name))
 
   def withId(id: String): Option[String] = competitions.findTeam(id).map(withTeam)
 }
