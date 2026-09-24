@@ -51,9 +51,19 @@ class ArticleController(
 
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
-  )(implicit req: RequestHeader): Future[Result] =
-    mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+  )(implicit req: RequestHeader): Future[Result] = {
+    // TODO: work out to warm cache without blocking article load
+    articleAbTestAgent.refresh()
 
+    val pathToRender = determineABTestPath(path)
+    val isBVariant = path != pathToRender
+    println(s"Rendering path: $path, pathToRender: $pathToRender, isBVariant: $isBVariant")
+    if (isBVariant) {
+      mapModel(pathToRender, range) { pageBlocks => render(pathToRender, modifier(pageBlocks)) }
+    } else {
+      mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+    }
+  }
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
   def renderEmail(path: String): Action[AnyContent] = renderArticle(path)
