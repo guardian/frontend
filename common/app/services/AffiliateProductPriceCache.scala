@@ -2,9 +2,9 @@ package services
 
 import java.net.URI
 import java.util.concurrent.atomic.AtomicReference
-
 import app.LifecycleComponent
 import common.{GuLogging, JobScheduler, PekkoAsync}
+import conf.switches.Switches.AffiliateProductLivePricing
 import conf.Configuration.affiliateProductPrices
 
 import play.api.inject.ApplicationLifecycle
@@ -28,6 +28,10 @@ object AffiliateProductPriceCache extends GuLogging {
       .toMap
 
   def populateLatestProductPrices(): Unit = {
+    if (!AffiliateProductLivePricing.isSwitchedOn) {
+      return
+    }
+
     log.debug("Fetching and caching latest affiliate product prices")
     val prices = S3AffiliateProductPrices.get(affiliateProductPrices.pricesKey).getOrElse {
       log.error(
