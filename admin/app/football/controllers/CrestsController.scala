@@ -12,10 +12,10 @@ import services.S3SportsAssets
 import scala.concurrent.Future
 
 class CrestsController(
-                        val wsClient: WSClient,
-                        val controllerComponents: ControllerComponents,
-                      )(implicit val context: ApplicationContext)
-  extends BaseController
+    val wsClient: WSClient,
+    val controllerComponents: ControllerComponents,
+)(implicit val context: ApplicationContext)
+    extends BaseController
     with ImplicitControllerExecutionContext
     with GuLogging {
 
@@ -31,14 +31,15 @@ class CrestsController(
           val image = crest.ref.path.toFile
           val filename = crest.filename
 
-          S3SportsAssets.putObjectAsync(s"test/$filename", image, "image/png").map { _ =>
-            Ok("Success!")
-          }.recover {
-            case exception: Exception =>
+          S3SportsAssets
+            .putObjectAsync(s"test/$filename", image, "image/png")
+            .map { _ =>
+              Ok("Success!")
+            }
+            .recover { case exception: Exception =>
               InternalServerError(s"Upload failed: ${exception.getMessage}")
-          }
+            }
         case None => Future.successful(BadRequest("No 'crest' file to upload."))
       }
-  }
+    }
 }
-
