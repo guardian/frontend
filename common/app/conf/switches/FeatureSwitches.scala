@@ -686,4 +686,18 @@ trait FeatureSwitches {
     exposeClientSide = true,
     highImpact = false,
   )
+
+  val AffiliateProductLivePricing = Switch(
+    group = SwitchGroup.Feature,
+    name = "affiliate-product-live-pricing",
+    description =
+      "Enable live pricing in affiliate product buttons and product cards. If off, the latest affiliate pricing will not be added to content by frontend apps. If on, the latest price from third parties will be added if available",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter' live pricing"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from showing live pricing in The Filter"),
+  )
 }

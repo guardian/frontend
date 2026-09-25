@@ -24,6 +24,7 @@ import services.{
   NewspaperBooksAndSectionsAutoRefresh,
   OphanApi,
   SkimLinksCacheLifeCycle,
+  AffiliateProductPriceCacheLifeCycle,
   SubnavAgent,
   SubnavAgentLifecycle,
 }
@@ -59,6 +60,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[SkimLinksCacheLifeCycle],
     wire[StoreNavigationLifecycleComponent],
     wire[NewsletterSignupLifecycle],
+    wire[AffiliateProductPriceCacheLifeCycle],
   )
 
   lazy val router: Router = wire[Routes]

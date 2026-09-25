@@ -300,6 +300,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val skimlinksUSId = configuration.getMandatoryStringProperty("skimlinks.us.id")
     lazy val alwaysOffTags: Set[String] =
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
+    lazy val latestPricesKey = s"${if (environment.isProd) "PROD" else "CODE"}/affiliates/product-prices.csv"
   }
 
   object frontend {
