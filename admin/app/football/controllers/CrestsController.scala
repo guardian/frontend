@@ -32,7 +32,7 @@ class CrestsController(
           val filename = crest.filename
 
           S3SportsAssets
-            .putObjectAsync(s"test/$filename", image, "image/png")
+            .putObjectAsync(s"football/crests/$filename", image, "image/png")
             .map { _ =>
               Ok("Success!")
             }
