@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicReference
 import app.LifecycleComponent
 import common.{GuLogging, JobScheduler, PekkoAsync}
 import conf.switches.Switches.AffiliateProductLivePricing
-import conf.Configuration.affiliateProductPrices
+import conf.Configuration.affiliateLinks
 
 import play.api.inject.ApplicationLifecycle
 
@@ -28,18 +28,16 @@ object AffiliateProductPriceCache extends GuLogging {
       .toMap
 
   def populateLatestProductPrices(): Unit = {
-    if (!AffiliateProductLivePricing.isSwitchedOn) {
-      return
+    if (AffiliateProductLivePricing.isSwitchedOn) {
+      log.error("Fetching and caching latest affiliate product prices")
+      val prices = S3.get(affiliateLinks.latestPricesKey).getOrElse {
+        log.error(
+          s"Failed to fetch latest product prices from S3: ${S3.bucket}/${affiliateLinks.latestPricesKey}",
+        )
+        ""
+      }
+      latestProductPrices.set(csvToMap(prices))
     }
-
-    log.debug("Fetching and caching latest affiliate product prices")
-    val prices = S3AffiliateProductPrices.get(affiliateProductPrices.pricesKey).getOrElse {
-      log.error(
-        s"Failed to fetch latest product prices from S3: ${S3AffiliateProductPrices.bucket}/${affiliateProductPrices.pricesKey}",
-      )
-      ""
-    }
-    latestProductPrices.set(csvToMap(prices))
   }
 
   def getLatestPrice(productUrl: String): Option[String] = latestProductPrices.get().get(productUrl)

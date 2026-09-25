@@ -159,8 +159,3 @@ object S3Skimlinks extends S3 {
   override lazy val bucket: String =
     Configuration.affiliateLinks.bucket.getOrElse(Configuration.aws.frontendStoreBucket)
 }
-
-object S3AffiliateProductPrices extends S3 {
-  override lazy val bucket: String =
-    Configuration.affiliateProductPrices.bucket.getOrElse(Configuration.aws.frontendStoreBucket)
-}
