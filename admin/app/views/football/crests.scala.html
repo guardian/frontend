@@ -1,0 +1,117 @@
+@(bucket: String = "aws-frontend-sport")(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main("Crest Uploader", isAuthed = true) {
+    <h2>Upload Football Crests</h2>
+    <br>
+    <ul>
+        <li>
+            Ensure filenames are in the format PA_ID.png e.g. 64426.png
+        </li>
+        <li>
+            You can upload multiple crests at the same time.
+        </li>
+        <li>
+            If a crest with the same PA id already exists it will be overwritten.
+        </li>
+        <li>
+            If a crest has been overwritten it may be necessary to <a href="/images/clear">purge it from the cache</a>.
+        </li>
+    </ul>
+    <br>
+    <div class="form-horizontal redirect-form">
+        <div class="form-group">
+            <label for="contentUrl" class="control-label col-sm-1">Crest(s):</label>
+            <div class="col-sm-6">
+                <input type="file" class="form-control" id="crestInput" multiple accept="image/png" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls col-sm-offset-1 col-sm-11" style="display:flex; align-items: center;">
+                <input class="btn btn-default" id="uploadBtn" type="button" value="Upload"/>
+            </div>
+        </div>
+        <div id="progressBarsContainer"></div>
+    </div>
+    <br>
+    <script>
+        const uploadBtn = document.getElementById('uploadBtn');
+        const progressBarsContainer = document.getElementById('progressBarsContainer');
+
+        uploadBtn.addEventListener('click', async () => {
+            uploadBtn.disabled = true;
+            const crestInput = document.getElementById('crestInput');
+            const crests = crestInput.files;
+
+            if (crests.length === 0) return;
+
+            progressBarsContainer.innerHTML = ''; // remove old progress bars
+
+            const uploadPromises = Array.from(crests).map(file => uploadSingleFile(file));
+
+            try {
+                await Promise.all(uploadPromises);
+                console.log("All files uploaded successfully!");
+            } catch (error) {
+                console.error("One or more uploads failed: ", error);
+            }
+
+            crestInput.value = null; // reset file input
+            uploadBtn.disabled = false;
+        });
+
+        function uploadSingleFile(file) {
+            return new Promise((resolve, reject) => {
+                const row = document.createElement('div');
+                row.style.margin = '8px 0';
+
+                const label = document.createElement('span');
+                label.textContent = `${file.name}`;
+
+                const progressBar = document.createElement('progress');
+                progressBar.style.margin = '-4px 4px'
+                progressBar.value = 0;
+                progressBar.max = 100;
+
+                const statusText = document.createElement('span');
+                statusText.content = ' 0%';
+
+                row.appendChild(label);
+                row.appendChild(progressBar);
+                row.appendChild(statusText);
+                progressBarsContainer.appendChild(row);
+
+                const formData = new FormData();
+                formData.append('crest', file);
+
+                const xhr = new XMLHttpRequest();
+
+                xhr.upload.addEventListener("progress", (event) => {
+                    if (event.lengthComputable) {
+                        let progressPercentage = Math.round((event.loaded / event.total) * 100);
+                        progressBar.value = progressPercentage;
+                        statusText.textContent = `${progressPercentage}%`
+                    }
+                });
+
+                xhr.addEventListener('load', () => {
+                    if (xhr.status === 200) {
+                        statusText.textContent = ' Complete!';
+                        resolve();
+                    } else {
+                        statusText.textContent = ' Failed';
+                        reject(new Error(`The server responded with an error for ${file.name}`));
+                    }
+                });
+
+                xhr.addEventListener('error', () => {
+                    statusText.textContent = ' Error';
+                    reject(new Error(`Failed to reach the server for ${file.name}`));
+                });
+
+                xhr.open('POST', '/admin/football/crests/upload')
+                xhr.send(formData);
+            });
+
+        }
+    </script>
+}
