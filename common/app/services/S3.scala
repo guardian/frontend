@@ -10,7 +10,7 @@ import software.amazon.awssdk.core.async.AsyncRequestBody
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL.{PRIVATE, PUBLIC_READ}
 import software.amazon.awssdk.services.s3.model._
-import software.amazon.awssdk.services.s3.presigner.model.{GetObjectPresignRequest, PutObjectPresignRequest}
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 import utils.AWSv2
 
 import java.io._
