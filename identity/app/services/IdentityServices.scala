@@ -43,7 +43,6 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   }
   lazy val identityCookieService: IdentityCookieService =
     IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
-  lazy val authenticationService = wire[AuthenticationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]
   lazy val mdapiService = wire[MembersDataApiService]

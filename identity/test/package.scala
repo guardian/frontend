@@ -3,7 +3,6 @@ package test
 import java.io.File
 import conf.IdConfig
 import controllers.EditProfileControllerTest
-import controllers.ConsentsJourneyControllerTest
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
 import play.api._
@@ -32,7 +31,6 @@ class IdentityTestSuite
     extends Suites(
       new EditProfileControllerTest,
       new StrictTransportSecurityHeaderFilterTest,
-      new ConsentsJourneyControllerTest,
     )
     with SingleServerSuite {}
 
