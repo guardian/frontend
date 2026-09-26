@@ -12,15 +12,19 @@ import model.dotcomrendering.{
 }
 import model.{ApplicationContext, CacheTime, Cached}
 import play.api.libs.ws.WSClient
+import play.api.libs.json.Json
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import staticpages.StaticPages
 
+import java.time.{LocalDate, YearMonth, ZoneId}
 import scala.concurrent.Future
+import scala.util.Try
 
 class PuzzlesPageController(
     wsClient: WSClient,
     puzzlesLayoutProvider: PuzzlesLayoutProvider,
+    puzzlesArchiveApi: PuzzlesArchiveApi,
     remoteRenderer: DotcomRenderingService,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
@@ -70,6 +74,86 @@ class PuzzlesPageController(
           case _ => notFound
         }
     }
+
+  def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
+  def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
+  def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
+
+  private def renderArchive(category: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isV1Enabled || request.getRequestFormat != HtmlFormat) notFound
+      else
+        buildArchive(category)
+          .flatMap { case (layout, archive) =>
+            val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
+            val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
+            remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+          }
+          .recoverWith { case _: NoSuchElementException => notFound }
+    }
+
+  def archiveData(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isV1Enabled) notFound
+      else
+        request.getQueryString("category") match {
+          case Some(category) =>
+            buildArchive(category)
+              .map { case (_, archive) =>
+                Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+              }
+              .recoverWith { case _: NoSuchElementException => notFound }
+          case None => notFound
+        }
+    }
+
+  private def selectedMonth(request: RequestHeader): YearMonth = {
+    val current = YearMonth.from(LocalDate.now(ZoneId.of("Europe/London")))
+    val requested = for {
+      year <- request.getQueryString("year").flatMap(value => Try(value.toInt).toOption)
+      month <- request.getQueryString("month").flatMap(value => Try(value.toInt).toOption)
+      value <- Try(YearMonth.of(year, month)).toOption
+    } yield value
+    requested.getOrElse(current)
+  }
+
+  private def buildArchive(category: String)(implicit
+      request: RequestHeader,
+  ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
+    val yearMonth = selectedMonth(request)
+    puzzlesLayoutProvider.getLayout().flatMap { layout =>
+      PuzzlesArchiveBuilder.select(layout, category, request.getQueryString("puzzle")) match {
+        case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
+        case Some(selection) =>
+          val dataUrl =
+            s"/puzzles-and-games/archive-data?category=$category&puzzle=${selection.puzzle.id}"
+          puzzlesArchiveApi
+            .get(yearMonth.atDay(1), yearMonth.atEndOfMonth(), selection.apiType)
+            .map(items =>
+              layout -> PuzzlesArchiveBuilder.build(
+                selection,
+                layout,
+                yearMonth.getYear,
+                yearMonth.getMonthValue,
+                items,
+                dataUrl,
+                hasError = false,
+              ),
+            )
+            .recover { case _ =>
+              layout -> PuzzlesArchiveBuilder.build(
+                selection,
+                layout,
+                yearMonth.getYear,
+                yearMonth.getMonthValue,
+                Nil,
+                dataUrl,
+                hasError = true,
+              )
+            }
+      }
+    }
+  }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, rendered by DCR via its `/PuzzlePage`
     * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows the puzzle for the
@@ -202,6 +286,7 @@ class PuzzlesPageController(
     val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
     val instance = PuzzlePageInstance(
       title = webTitle,
+      puzzleId = request.getQueryString("puzzleId"),
       puzzleDate = Some(date),
       moreFromPuzzlesAndGames = PuzzlesPageController.moreFromPuzzlesAndGames(slug, date),
     )

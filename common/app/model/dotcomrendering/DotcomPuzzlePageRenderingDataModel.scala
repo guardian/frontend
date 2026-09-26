@@ -15,6 +15,7 @@ import play.api.mvc.RequestHeader
   */
 case class PuzzlePageInstance(
     title: String,
+    puzzleId: Option[String] = None,
     /** The puzzle date to show, as an ISO-8601 (`yyyy-MM-dd`) date string - which day's puzzle this instance is for.
       * Always populated by `PuzzlesPageController` directly from the request URL's date path segment (e.g.
       * `/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`); modelled as optional for JSON forwards/backwards

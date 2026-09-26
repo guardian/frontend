@@ -20,6 +20,24 @@ import org.scalatest.matchers.should.Matchers
     route.url should be("/puzzles-and-games.json")
   }
 
+  it should "expose the three archive endpoints" in {
+    controllers.routes.PuzzlesPageController.renderCrosswordsArchive().url should be(
+      "/puzzles-and-games/crosswords/archive",
+    )
+    controllers.routes.PuzzlesPageController.renderWordGamesArchive().url should be(
+      "/puzzles-and-games/word-games/archive",
+    )
+    controllers.routes.PuzzlesPageController.renderLogicPuzzlesArchive().url should be(
+      "/puzzles-and-games/logic-puzzles/archive",
+    )
+  }
+
+  it should "expose the archive data endpoint" in {
+    val route = controllers.routes.PuzzlesPageController.archiveData()
+    route.method should be("GET")
+    route.url should be("/puzzles-and-games/archive-data")
+  }
+
   it should "expose the nested, dated Sudoku HTML endpoint" in {
     val route = controllers.routes.PuzzlesPageController.renderSudoku("easy", "2024-01-15")
 
