@@ -42,8 +42,6 @@ class ArticleController(
 
   private def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
     val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
-    println("all tests available in cache:", articleAbTestAgent.tests)
-    println("variant for?: ", articleAbTestAgent.variantFor(path))
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 
@@ -56,7 +54,6 @@ class ArticleController(
   )(implicit req: RequestHeader): Future[Result] = {
     val pathToRender = determineABTestPath(path)(req)
     val isBVariant = path != pathToRender
-    println(s"Rendering path: $path, pathToRender: $pathToRender, isBVariant: $isBVariant")
     if (isBVariant) {
       mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = true) { pageBlocks =>
         render(pathToRender, modifier(pageBlocks))
