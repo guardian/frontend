@@ -1,47 +1,51 @@
 package services
 
+import contentapi.ContentApiClient
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 
-class ArticleAbTestTest extends AnyFlatSpec with Matchers {
+class ArticleAbTestTest extends AnyFlatSpec with Matchers with MockitoSugar {
+
+  private def newAgent(): ArticleAbTestAgent = new ArticleAbTestAgent(mock[ContentApiClient])
 
   "ArticleAbTestAgent" should "have no tests initially" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.tests should be(Nil)
   }
 
   it should "return None for variantFor when there are no tests" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.variantFor("music/2026/sep/16/some-article") should be(None)
   }
 
   it should "add a new test via upsert" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.tests should be(List(ArticleAbTest("path/a", "p/b1")))
   }
 
   it should "return the variant for a matching article path" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.variantFor("path/a") should be(Some("p/b1"))
   }
 
   it should "return None for variantFor when the article path does not match" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.variantFor("path/other") should be(None)
   }
 
   it should "replace the variant when upserting an existing article path" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.upsert("path/a", "p/b2")
     agent.tests should be(List(ArticleAbTest("path/a", "p/b2")))
   }
 
   it should "not duplicate entries when upserting the same article path multiple times" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.upsert("path/b", "p/b2")
     agent.upsert("path/a", "p/b3")
@@ -51,7 +55,7 @@ class ArticleAbTestTest extends AnyFlatSpec with Matchers {
   }
 
   it should "replace all tests when setAll is called" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
 
     val newTests = List(ArticleAbTest("path/x", "p/y1"), ArticleAbTest("path/z", "p/y2"))
@@ -64,14 +68,14 @@ class ArticleAbTestTest extends AnyFlatSpec with Matchers {
   }
 
   it should "clear all tests when setAll is called with an empty list" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.setAll(Nil)
     agent.tests should be(Nil)
   }
 
   it should "remove a test matching the given article path" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
     agent.upsert("path/b", "p/b2")
 
@@ -82,7 +86,7 @@ class ArticleAbTestTest extends AnyFlatSpec with Matchers {
   }
 
   it should "do nothing when removing a non-existent article path" in {
-    val agent = new ArticleAbTestAgent()
+    val agent = newAgent()
     agent.upsert("path/a", "p/b1")
 
     agent.remove("path/does-not-exist")
