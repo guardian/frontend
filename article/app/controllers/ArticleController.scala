@@ -41,11 +41,9 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
   private def determineABTestPath(path: String): String = {
-    //hardcoding to make local testing easier
-    val isUserInVariantBBucket = true
-
+    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     println("all tests available in cache:", articleAbTestAgent.tests)
-    println("variant for?: ",articleAbTestAgent.variantFor(path))
+    println("variant for?: ", articleAbTestAgent.variantFor(path))
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 
@@ -60,7 +58,9 @@ class ArticleController(
     val isBVariant = path != pathToRender
     println(s"Rendering path: $path, pathToRender: $pathToRender, isBVariant: $isBVariant")
     if (isBVariant) {
-      mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = true) { pageBlocks => render(pathToRender, modifier(pageBlocks)) }
+      mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = true) { pageBlocks =>
+        render(pathToRender, modifier(pageBlocks))
+      }
     } else {
       mapModel(path, range, None, skipCanonicalRedirect = false) { pageBlocks => render(path, modifier(pageBlocks)) }
     }
@@ -166,7 +166,7 @@ class ArticleController(
 
   private def responseToModelOrResult(
       response: ItemResponse,
-      skipCanonicalRedirect: Boolean
+      skipCanonicalRedirect: Boolean,
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
