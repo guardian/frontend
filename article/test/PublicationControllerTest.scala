@@ -37,6 +37,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
       remoteRenderer = new DCRFake(),
       newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
       subnavAgent = new MockSubnavAgent(),
+      articleAbTestAgent = new MockArticleAbTestAgent(),
     )
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)

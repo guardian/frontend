@@ -32,6 +32,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     remoteRenderer = new DCRFake(),
     newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
     subnavAgent = new MockSubnavAgent(),
+    articleAbTestAgent = new MockArticleAbTestAgent(),
   )
 
   "Article Controller" should "200 when content type is article" in {
