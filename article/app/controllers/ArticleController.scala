@@ -40,7 +40,7 @@ class ArticleController(
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
-  private def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
+  private def determineArticleABTestPath(path: String)(implicit req: RequestHeader): String = {
     val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
@@ -52,15 +52,13 @@ class ArticleController(
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
   )(implicit req: RequestHeader): Future[Result] = {
-    val pathToRender = determineABTestPath(path)(req)
-    val isBVariant = path != pathToRender
-    if (isBVariant) {
-      mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = true) { pageBlocks =>
-        render(pathToRender, modifier(pageBlocks))
-      }
-    } else {
-      mapModel(path, range, None, skipCanonicalRedirect = false) { pageBlocks => render(path, modifier(pageBlocks)) }
+    val pathToRender = determineArticleABTestPath(path)(req)
+    val isVariantArticle = path != pathToRender
+
+    mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = isVariantArticle) { pageBlocks =>
+      render(pathToRender, modifier(pageBlocks))
     }
+
   }
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
