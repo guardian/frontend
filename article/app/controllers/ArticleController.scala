@@ -54,8 +54,9 @@ class ArticleController(
   )(implicit req: RequestHeader): Future[Result] = {
     val pathToRender = determineArticleABTestPath(path)(req)
     val isVariantArticle = path != pathToRender
+    val channelId = if (isVariantArticle) Some(CAPIChannel.Variant) else None
 
-    mapModel(pathToRender, range, Some(CAPIChannel.Variant), skipCanonicalRedirect = isVariantArticle) { pageBlocks =>
+    mapModel(pathToRender, range, channelId, skipCanonicalRedirect = isVariantArticle) { pageBlocks =>
       render(pathToRender, modifier(pageBlocks))
     }
 
