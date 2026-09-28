@@ -40,7 +40,7 @@ class ArticleController(
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
-  private def determineABTestPath(path: String): String = {
+  private def determineABTestPath(path: String)(implicit req: RequestHeader): String = {
     val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     println("all tests available in cache:", articleAbTestAgent.tests)
     println("variant for?: ", articleAbTestAgent.variantFor(path))
@@ -54,7 +54,7 @@ class ArticleController(
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
   )(implicit req: RequestHeader): Future[Result] = {
-    val pathToRender = determineABTestPath(path)
+    val pathToRender = determineABTestPath(path)(req)
     val isBVariant = path != pathToRender
     println(s"Rendering path: $path, pathToRender: $pathToRender, isBVariant: $isBVariant")
     if (isBVariant) {
