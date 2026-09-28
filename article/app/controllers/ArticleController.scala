@@ -44,10 +44,9 @@ class ArticleController(
 
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
-  )(implicit req: RequestHeader): Future[Result] = {
-    println(articleAbTestAgent.tests)
+  )(implicit req: RequestHeader): Future[Result] =
     mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
-  }
+
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
   def renderEmail(path: String): Action[AnyContent] = renderArticle(path)
