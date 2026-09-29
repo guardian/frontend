@@ -16,6 +16,8 @@ class ArticleAbTestLifecycle(
     ec: ExecutionContext,
 ) extends LifecycleComponent {
 
+  private val every30Seconds = "0/30 * * * * ?"
+
   appLifecycle.addStopHook { () =>
     Future {
       jobs.deschedule("ArticleAbTestAgentJob")
@@ -24,7 +26,7 @@ class ArticleAbTestLifecycle(
 
   override def start(): Unit = {
     jobs.deschedule("ArticleAbTestAgentJob")
-    jobs.schedule("ArticleAbTestAgentJob", "0/30 * * * * ?") {
+    jobs.schedule("ArticleAbTestAgentJob", every30Seconds) {
       articleAbTestAgent.refresh()
     }
 
