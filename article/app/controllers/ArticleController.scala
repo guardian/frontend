@@ -16,7 +16,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import services.{CAPILookup, NewsletterService, SubnavAgent}
+import services.{CAPILookup, NewsletterService, SubnavAgent, ArticleAbTestAgent}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -28,6 +28,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     subnavAgent: SubnavAgent,
+    articleAbTestAgent: ArticleAbTestAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
