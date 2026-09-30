@@ -9,6 +9,8 @@ import model.dotcomrendering.{
   PuzzlesLayout,
 }
 
+import java.time.YearMonth
+
 object PuzzlesArchiveBuilder {
   private val apiTypes: Map[(String, String), String] = Map(
     ("crossword", "quick") -> "CROSSWORD_QUICK",
@@ -81,18 +83,21 @@ object PuzzlesArchiveBuilder {
       s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
     }
 
-  def related(layout: PuzzlesLayout, selectedCategory: String): Seq[PuzzleItem] =
-    layout.containers
-      .filter(container =>
-        Set("crosswords", "word-games", "logic-puzzles").contains(container.id) && container.id != selectedCategory,
-      )
-      .flatMap(archiveItems)
-      .filter(item => apiTypes.contains((item.`type`, item.set)))
-      .take(3)
+  private def relatedPuzzleKey(selection: Selection): String =
+    if (selection.category == "crosswords") selection.category
+    else selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
+
+  private def relatedPuzzleDate(year: Int, month: Int, items: Seq[ArchiveApiItem]): String =
+    items.map(_.publishDate.take(10)).sorted.lastOption.getOrElse(YearMonth.of(year, month).atEndOfMonth().toString)
+
+  def related(selection: Selection, year: Int, month: Int, items: Seq[ArchiveApiItem]): Seq[PuzzleItem] =
+    PuzzlesPageController.moreFromPuzzlesAndGames(
+      relatedPuzzleKey(selection),
+      relatedPuzzleDate(year, month, items),
+    )
 
   def build(
       selection: Selection,
-      layout: PuzzlesLayout,
       year: Int,
       month: Int,
       items: Seq[ArchiveApiItem],
@@ -118,6 +123,6 @@ object PuzzlesArchiveBuilder {
       ),
       dataUrl = dataUrl,
       hasError = hasError,
-      moreFrom = related(layout, selection.category),
+      moreFrom = related(selection, year, month, items),
     )
 }

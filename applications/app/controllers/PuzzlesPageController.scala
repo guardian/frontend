@@ -132,7 +132,6 @@ class PuzzlesPageController(
             .map(items =>
               layout -> PuzzlesArchiveBuilder.build(
                 selection,
-                layout,
                 yearMonth.getYear,
                 yearMonth.getMonthValue,
                 items,
@@ -143,7 +142,6 @@ class PuzzlesPageController(
             .recover { case _ =>
               layout -> PuzzlesArchiveBuilder.build(
                 selection,
-                layout,
                 yearMonth.getYear,
                 yearMonth.getMonthValue,
                 Nil,
@@ -412,6 +410,7 @@ object PuzzlesPageController {
     * day's crossword article, which would require an extra CAPI lookup this page doesn't otherwise need).
     */
   private val relatedSlugs: Map[String, Seq[String]] = Map(
+    "crosswords" -> Seq("sudoku-easy", WordWheelSlug, WordiplySlug),
     "sudoku-easy" -> Seq("sudoku-medium", WordWheelSlug, "crossword-quick"),
     "sudoku-medium" -> Seq("sudoku-hard", WordiplySlug, "crossword-quick"),
     "sudoku-hard" -> Seq("sudoku-killer", WordWheelSlug, "crossword-quick"),
