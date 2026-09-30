@@ -47,7 +47,7 @@ import play.api.libs.json.Json
   it should "parse the archive API envelope" in {
     Json
       .parse(
-        """{"items":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","publishDate":"2026-09-02T00:00:00Z","gameStatus":"completed","progress":100,"lastUpdated":null,"gameUrl":"https://www.theguardian.com/crosswords/quick/42"}]}""",
+        """{"results":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","publishDate":"2026-09-02T00:00:00Z","gameStatus":"completed","progress":100,"lastUpdated":null,"gameUrl":"https://www.theguardian.com/crosswords/quick/42"}]}""",
       )
       .as[ArchiveApiResponse] should be(
       ArchiveApiResponse(

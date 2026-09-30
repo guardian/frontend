@@ -22,7 +22,7 @@ object ArchiveApiItem {
   implicit val format: OFormat[ArchiveApiItem] = Json.format[ArchiveApiItem]
 }
 
-case class ArchiveApiResponse(items: Seq[ArchiveApiItem])
+case class ArchiveApiResponse(results: Seq[ArchiveApiItem])
 object ArchiveApiResponse {
   implicit val format: OFormat[ArchiveApiResponse] = Json.format[ArchiveApiResponse]
 }
@@ -36,27 +36,38 @@ trait PuzzlesArchiveApi {
 class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with GuLogging {
   override def get(startDate: LocalDate, endDate: LocalDate, puzzleType: String)(implicit
       executionContext: ExecutionContext,
-  ): Future[Seq[ArchiveApiItem]] =
-    wsClient
-      .url(s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/archive")
-      .withHttpHeaders("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json")
-      .withQueryStringParameters(
-        "startDate" -> startDate.toString,
-        "endDate" -> endDate.toString,
-        "puzzleType" -> puzzleType,
-      )
-      .withRequestTimeout(3.seconds)
-      .get()
-      .flatMap { response =>
-        if (response.status >= 200 && response.status < 300) {
-          response.json
-            .validate[ArchiveApiResponse]
-            .fold(
-              errors => Future.failed(new IllegalArgumentException(s"Invalid puzzles archive response: $errors")),
-              value => Future.successful(value.items),
+  ): Future[Seq[ArchiveApiItem]] = {
+    val archiveUrl = s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/archive"
+
+    errorLoggingF(
+      s"Puzzles archive request failed: url=$archiveUrl, startDate=$startDate, endDate=$endDate, puzzleType=$puzzleType",
+    ) {
+      wsClient
+        .url(archiveUrl)
+        .withHttpHeaders("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json")
+        .withQueryStringParameters(
+          "startDate" -> startDate.toString,
+          "endDate" -> endDate.toString,
+          "puzzleType" -> puzzleType,
+        )
+        .withRequestTimeout(3.seconds)
+        .get()
+        .flatMap { response =>
+          if (response.status >= 200 && response.status < 300) {
+            response.json
+              .validate[ArchiveApiResponse]
+              .fold(
+                errors => Future.failed(new IllegalArgumentException(s"Invalid puzzles archive response: $errors")),
+                value => Future.successful(value.results),
+              )
+          } else {
+            Future.failed(
+              new RuntimeException(
+                s"Puzzles archive returned HTTP ${response.status}: ${response.body.take(500)}",
+              ),
             )
-        } else {
-          Future.failed(new RuntimeException(s"Puzzles archive returned HTTP ${response.status}"))
+          }
         }
-      }
+    }
+  }
 }
