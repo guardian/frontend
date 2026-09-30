@@ -11,7 +11,6 @@ class ArticleAbTestLifecycle(
     articleAbTestAgent: ArticleAbTestAgent,
     appLifecycle: ApplicationLifecycle,
     jobs: JobScheduler,
-    pekkoAsync: PekkoAsync,
 )(implicit
     ec: ExecutionContext,
 ) extends LifecycleComponent {
@@ -30,8 +29,6 @@ class ArticleAbTestLifecycle(
       articleAbTestAgent.refresh()
     }
 
-    pekkoAsync.after1s {
-      articleAbTestAgent.refresh()
-    }
+    articleAbTestAgent.refresh()
   }
 }
