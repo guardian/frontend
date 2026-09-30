@@ -95,6 +95,7 @@ class PageElementTest extends AnyFlatSpec with Matchers {
     val got = PageElement.make(
       element = element,
       addAffiliateLinks = false,
+      isLivePricingEnabled = false,
       pageUrl = "/money/2025/nov/19/test-article",
       atoms = Nil,
       isMainBlock = false,

@@ -1083,6 +1083,7 @@ object PageElement extends GuLogging {
   def make(
       element: ApiBlockElement,
       addAffiliateLinks: Boolean,
+      isLivePricingEnabled: Boolean,
       pageUrl: String,
       atoms: Iterable[Atom],
       isMainBlock: Boolean,
@@ -1614,7 +1615,9 @@ object PageElement extends GuLogging {
             d.label,
             d.linkType.getOrElse(LinkType.ProductButton),
             d.priority,
-            if (linkType == LinkType.ProductButton) d.url.flatMap(AffiliateProductPriceCache.getLatestPrice) else None,
+            if (linkType == LinkType.ProductButton && isLivePricingEnabled)
+              d.url.flatMap(AffiliateProductPriceCache.getLatestPrice)
+            else None,
           )
         }.toList
 
@@ -1702,6 +1705,7 @@ object PageElement extends GuLogging {
             items = listTypeData.items.map { item =>
               makeListItem(
                 addAffiliateLinks,
+                isLivePricingEnabled,
                 pageUrl,
                 atoms,
                 isImmersive,
@@ -1724,6 +1728,7 @@ object PageElement extends GuLogging {
           TimelineBlockElement(
             sections = makeTimelineSection(
               addAffiliateLinks,
+              isLivePricingEnabled,
               pageUrl,
               atoms,
               isImmersive,
@@ -1743,6 +1748,7 @@ object PageElement extends GuLogging {
         element.productTypeData.map { productTypeData =>
           makeProduct(
             addAffiliateLinks,
+            isLivePricingEnabled,
             pageUrl,
             atoms,
             isImmersive,
@@ -1797,6 +1803,7 @@ object PageElement extends GuLogging {
 
   private def makeTimelineSection(
       addAffiliateLinks: Boolean,
+      isLivePricingEnabled: Boolean,
       pageUrl: String,
       atoms: Iterable[Atom],
       isImmersive: Boolean,
@@ -1822,6 +1829,7 @@ object PageElement extends GuLogging {
                 .make(
                   mainBlock,
                   addAffiliateLinks,
+                  isLivePricingEnabled,
                   pageUrl,
                   atoms,
                   isMainBlock = true,
@@ -1841,6 +1849,7 @@ object PageElement extends GuLogging {
               PageElement.make(
                 bodyBlock,
                 addAffiliateLinks,
+                isLivePricingEnabled,
                 pageUrl,
                 atoms,
                 isMainBlock = false,
@@ -1863,6 +1872,7 @@ object PageElement extends GuLogging {
 
   private def makeListItem(
       addAffiliateLinks: Boolean,
+      isLivePricingEnabled: Boolean,
       pageUrl: String,
       atoms: Iterable[Atom],
       isImmersive: Boolean,
@@ -1880,6 +1890,7 @@ object PageElement extends GuLogging {
         PageElement.make(
           element,
           addAffiliateLinks,
+          isLivePricingEnabled,
           pageUrl,
           atoms,
           isMainBlock = false,
@@ -1906,6 +1917,7 @@ object PageElement extends GuLogging {
 
   private def makeProduct(
       addAffiliateLinks: Boolean,
+      isLivePricingEnabled: Boolean,
       pageUrl: String,
       atoms: Iterable[Atom],
       isImmersive: Boolean,
@@ -1939,7 +1951,10 @@ object PageElement extends GuLogging {
         price = cta.price.getOrElse(""),
         retailer = cta.retailer.getOrElse(""),
         url = url,
-        latestPrice = cta.url.flatMap(AffiliateProductPriceCache.getLatestPrice),
+        latestPrice =
+          if (isLivePricingEnabled)
+            cta.url.flatMap(AffiliateProductPriceCache.getLatestPrice)
+          else None,
       )
     }
 
@@ -1979,6 +1994,7 @@ object PageElement extends GuLogging {
           PageElement.make(
             element,
             addAffiliateLinks,
+            isLivePricingEnabled,
             pageUrl,
             atoms,
             isMainBlock = false,
