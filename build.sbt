@@ -162,7 +162,7 @@ val admin = application("admin")
       d3,
       awsElasticloadbalancing,
       awsSes,
-      sttp
+      sttp,
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate",

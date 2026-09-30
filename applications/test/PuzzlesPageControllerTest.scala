@@ -199,6 +199,18 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "slug").as[String] should be("sudoku-killer")
     (json \ "instance" \ "title").as[String] should be("Killer sudoku")
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
+
+    val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
+    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+    related.map(_.url) should be(
+      Seq(
+        Some("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15"),
+        Some("/puzzles-and-games/word-games/wordiply/2024-01-15"),
+        Some("/crosswords/series/quick"),
+      ),
+    )
+    related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
+    related.map(_.cadence) should be(Seq(Some("Daily"), Some("Daily"), Some("Daily")))
   }
 
   "redirectSudokuArchive" should "temporarily redirect to the logic-puzzles archive, filtered to this sudoku variant" in {
@@ -255,6 +267,9 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "slug").as[String] should be("word-wheel")
     (json \ "instance" \ "title").as[String] should be("Word wheel")
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
+
+    val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
+    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
   }
 
   "redirectWordWheelArchive" should "temporarily redirect to the word-games archive, filtered to word wheel" in {
@@ -299,6 +314,9 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "slug").as[String] should be("wordiply")
     (json \ "instance" \ "title").as[String] should be("Wordiply")
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
+
+    val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
+    related.map(_.id) should be(Seq("sudoku-medium", "word-wheel", "crossword-quick"))
   }
 
   "redirectWordiplyArchive" should "temporarily redirect to the word-games archive, filtered to wordiply" in {

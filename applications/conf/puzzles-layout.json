@@ -11,13 +11,6 @@
 			}
 		},
 		{
-			"id": "featured-ad",
-			"title": "",
-			"variant": "ad",
-			"adSlot": "inline1",
-			"content": { "items": [], "nestedContainers": [] }
-		},
-		{
 			"id": "crosswords",
 			"title": "Crosswords",
 			"variant": "standard",
@@ -30,8 +23,9 @@
 							"type": "crossword",
 							"set": "quick",
 							"cardVariant": "primary",
-							"cadence": "Daily",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"cadence": "Today",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -40,8 +34,9 @@
 							"type": "crossword",
 							"set": "mini",
 							"cardVariant": "primary",
-							"cadence": "Daily",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"cadence": "Today",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-MINI.png?width=440&dpr=2&s=none",
+							"imageAlt": "Mini crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -50,29 +45,44 @@
 							"type": "crossword",
 							"set": "cryptic",
 							"cardVariant": "primary",
-							"cadence": "Daily",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"cadence": "Today",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
+						{
+							"id": "crossword-weekend",
+							"title": "Weekend",
+							"type": "crossword",
+							"set": "weekend",
+							"cardVariant": "primary",
+							"cadence": "Every Saturday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
+							"imageAlt": "General knowledge crossword illustration",
+							"backgroundColour": "#FCE1CE"
+						}
+					],
+					[
 						{
 							"id": "crossword-quick-cryptic",
 							"title": "Quick cryptic",
 							"type": "crossword",
 							"set": "quick-cryptic",
-							"cardVariant": "primary",
+							"cardVariant": "compact",
 							"cadence": "Every Saturday",
-							"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
-						}
-					],
-					[
+						},
 						{
 							"id": "crossword-quiptic",
 							"title": "Quiptic",
 							"type": "crossword",
 							"set": "quiptic",
 							"cardVariant": "compact",
-							"cadence": "Every Saturday",
+							"cadence": "Every Sunday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUIPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quiptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -81,16 +91,18 @@
 							"type": "crossword",
 							"set": "prize",
 							"cardVariant": "compact",
-							"cadence": "Every Sunday",
+							"cadence": "Every Saturday",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
+							"imageAlt": "Prize crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"id": "crossword-weekend",
-							"title": "Weekend",
+							"id": "crossword-sunday-quick",
+							"title": "Sunday quick",
 							"type": "crossword",
-							"set": "weekend",
+							"set": "sunday-quick",
 							"cardVariant": "compact",
-							"cadence": "Every Saturday",
+							"cadence": "Every Sunday",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -100,6 +112,8 @@
 							"set": "genius",
 							"cardVariant": "compact",
 							"cadence": "Monthly",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENIUS.png?width=440&dpr=2&s=none",
+							"imageAlt": "Genius crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						}
 					]
@@ -200,6 +214,13 @@
 			}
 		},
 		{
+			"id": "crosswords-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline1",
+			"content": { "items": [], "nestedContainers": [] }
+		},
+		{
 			"id": "word-games",
 			"title": "Word games",
 			"variant": "standard",
@@ -219,10 +240,11 @@
 										"type": "word-wheel",
 										"set": "all",
 										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "word-wheel",
+										"cadence": "Today",
+										"slug": "word-games/word-wheel",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORD-WHEEL.png?width=440&dpr=2&s=none",
+										"imageAlt": "Word wheel illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#F9D4E8"
@@ -245,10 +267,11 @@
 										"type": "wordiply",
 										"set": "all",
 										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "wordiply",
+										"cadence": "Today",
+										"slug": "word-games/wordiply",
 										"url": "https://www.wordiply.com/",
-										"image": "https://www.wordiply.com/share.png",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORDIPLY.png?width=440&dpr=2&s=none",
+										"imageAlt": "Wordiply illustration",
 										"variant": "iframe-page",
 										"backgroundColour": "#F8D0C9"
 									}
@@ -259,13 +282,6 @@
 					}
 				]
 			}
-		},
-		{
-			"id": "word-games-ad",
-			"title": "",
-			"variant": "ad",
-			"adSlot": "inline2",
-			"content": { "items": [], "nestedContainers": [] }
 		},
 		{
 			"id": "logic-puzzles",
@@ -287,10 +303,11 @@
 										"type": "sudoku",
 										"set": "easy",
 										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-easy",
+										"cadence": "Today",
+										"slug": "logic-puzzles/sudoku-easy",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-EASY.png?width=440&dpr=2&s=none",
+										"imageAlt": "Easy sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -301,10 +318,11 @@
 										"type": "sudoku",
 										"set": "medium",
 										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-medium",
+										"cadence": "Today",
+										"slug": "logic-puzzles/sudoku-medium",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-MEDIUM.png?width=440&dpr=2&s=none",
+										"imageAlt": "Medium sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -315,10 +333,11 @@
 										"type": "sudoku",
 										"set": "hard",
 										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-hard",
+										"cadence": "Today",
+										"slug": "logic-puzzles/sudoku-hard",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-HARD.png?width=440&dpr=2&s=none",
+										"imageAlt": "Hard sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -329,10 +348,11 @@
 										"type": "sudoku",
 										"set": "killer",
 										"cardVariant": "primary",
-										"cadence": "Daily",
-										"slug": "sudoku-killer",
+										"cadence": "Today",
+										"slug": "logic-puzzles/sudoku-killer",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
-										"image": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=600&dpr=1&s=none&crop=5%3A3",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-KILLER.png?width=440&dpr=2&s=none",
+										"imageAlt": "Killer sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
@@ -355,12 +375,12 @@
 				"usefulLinksTitle": "Useful links",
 				"usefulLinks": [
 					{
-						"title": "Crossword setter A–Z",
-						"url": "/puzzles-and-games/crosswords/archive"
+						"title": "Support the Guardian",
+						"url": "https://support.theguardian.com"
 					},
 					{
-						"title": "Crossword blog",
-						"url": "https://www.theguardian.com/crosswords/crossword-blog"
+						"title": "Help Centre",
+						"url": "https://help.theguardian.com"
 					}
 				],
 				"newsletter": {
@@ -399,7 +419,7 @@
 			"id": "bottom-ad",
 			"title": "",
 			"variant": "ad",
-			"adSlot": "inline3",
+			"adSlot": "inline2",
 			"content": { "items": [], "nestedContainers": [] }
 		}
 	]

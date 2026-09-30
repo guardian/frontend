@@ -23,15 +23,23 @@ object ImageServices {
     "sport.guim.co.uk" -> "1C2vPr3E26cRb4NXa0wMf3",
   )
 
-  // clear both the origin CDN and Fastly IO service (either i.guim.co.uk or i.guimcode.co.uk)
-  private def fastlyServiceIdsforOrigin(host: String): Seq[String] = Seq(fastlyOriginCdns(host), fastlyIOService)
-
   def clearFastly(originUri: URI, wsClient: WSClient): Unit = {
-    fastlyServiceIdsforOrigin(originUri.getHost).foreach { serviceId =>
-      // This works because the "path" is set as a Surrogate Key for images in i.guim.co.uk
-      // https://www.fastly.com/blog/surrogate-keys-part-1/
+    val host = originUri.getHost
+    val path = originUri.getPath
+    val fastlyIOPurgeUrl = s"https://api.fastly.com/service/$fastlyIOService/purge/$path"
+
+    // clear both the origin CDN and Fastly IO service (either i.guim.co.uk or i.guimcode.co.uk)
+    // This works because the "path" is set as a Surrogate Key for images in i.guim.co.uk
+    // https://www.fastly.com/blog/surrogate-keys-part-1/
+    val purgeUrls =
+      if (stage == "PROD")
+        Seq(s"https://api.fastly.com/service/${fastlyOriginCdns(host)}/purge/$path", fastlyIOPurgeUrl)
+      else
+        Seq(s"https://api.fastly.com/purge/$host$path", fastlyIOPurgeUrl)
+
+    purgeUrls.foreach { url =>
       wsClient
-        .url(s"https://api.fastly.com/service/$serviceId/purge/${originUri.getPath}")
+        .url(url)
         .withHttpHeaders("Fastly-Key" -> fastly.key)
         .post("")
     }

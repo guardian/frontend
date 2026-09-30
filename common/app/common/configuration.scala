@@ -300,6 +300,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val skimlinksUSId = configuration.getMandatoryStringProperty("skimlinks.us.id")
     lazy val alwaysOffTags: Set[String] =
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
+    lazy val latestPricesKey = s"${if (environment.isProd) "PROD" else "CODE"}/affiliates/product-prices.csv"
   }
 
   object frontend {
@@ -704,6 +705,11 @@ class GuardianConfiguration extends GuLogging {
   object newsletterApi {
     lazy val host = configuration.getStringProperty("newsletterApi.host")
     lazy val origin = configuration.getStringProperty("newsletterApi.origin")
+  }
+
+  object zugApi {
+    lazy val host =
+      configuration.getMandatoryStringProperty("zugApi.host")
   }
 }
 

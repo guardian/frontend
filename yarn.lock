@@ -2328,9 +2328,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@guardian/consent-manager@npm:2.1.1":
-  version: 2.1.1
-  resolution: "@guardian/consent-manager@npm:2.1.1"
+"@guardian/consent-manager@npm:2.1.2":
+  version: 2.1.2
+  resolution: "@guardian/consent-manager@npm:2.1.2"
   dependencies:
     "@guardian/libs": "npm:33.0.0"
     "@guardian/ophan-tracker-js": "npm:3.1.0"
@@ -2340,7 +2340,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/751f810c4677e69d729f8eb69fc2c6f030b34c9ade0b390aa2f1814b9cf7007111127d95929c532dba9eaa5e1488062cca44cc1eacffb80f84581c29874f7c7d
+  checksum: 10c0/7d19c01e685d42b3cbfb72290e4986b6bdeff34e479119e7a5b500d15f10b09093c83f93acca0faad6e5be9a4241f0137eb8c830c794f2f1928ccba9b351baa4
   languageName: node
   linkType: hard
 
@@ -2382,7 +2382,7 @@ __metadata:
     "@emotion/styled": "npm:^11.14.0"
     "@guardian/ab-core": "npm:8.0.0"
     "@guardian/commercial-core": "npm:34.0.0"
-    "@guardian/consent-manager": "npm:2.1.1"
+    "@guardian/consent-manager": "npm:2.1.2"
     "@guardian/core-web-vitals": "npm:6.0.0"
     "@guardian/identity-auth": "npm:6.0.1"
     "@guardian/identity-auth-frontend": "npm:8.1.0"
@@ -8268,13 +8268,13 @@ __metadata:
   linkType: hard
 
 "js-yaml@npm:^4.1.0":
-  version: 4.3.1
-  resolution: "js-yaml@npm:4.3.1"
+  version: 4.3.2
+  resolution: "js-yaml@npm:4.3.2"
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10c0/13c500ca322e0c3f8c81686e6ecda96d2ea37b45247a420c17c7db36932d6965cc27391abc2d1a104501600e7f0d947a5f8b7be6db619c4fefa87901b3512807
+  checksum: 10c0/dedd34c2e8fef1d504687f1bc94ed0ee1311a1f78770fa2800352c6d59c635ccf555009d74e9afe529ae62199da2b1ccef30e53dc84dcd8d2d8187c22574bc97
   languageName: node
   linkType: hard
 

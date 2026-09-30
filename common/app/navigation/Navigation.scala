@@ -102,7 +102,9 @@ object NavMenu {
     NavMenu(
       currentUrl = currentUrl,
       pillars = root.children,
-      otherLinks = root.otherLinks,
+      // Keep the puzzles link available while resolving the current page and
+      // its subnav, but do not expose it in the expanded burger menu.
+      otherLinks = root.otherLinks.filterNot(_ == NavLinks.puzzles),
       brandExtensions = root.brandExtensions,
       currentNavLink = currentNavLink,
       currentParent = currentParent,

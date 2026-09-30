@@ -95,11 +95,10 @@ object UrlHelpers {
     )
 
     val params = Map(
-      "INTCMP" -> componentId.toString,
       "acquisitionData" -> acquisitionData.toString,
-    )
+    ) ++ componentId.map("INTCMP" -> _)
 
-    Uri(destination.url).addParams(params).toString
+    Uri.parse(destination.url).map(_.addParams(params).toString()).getOrElse(destination.url)
   }
 
   def getJobUrl(editionId: String): String =

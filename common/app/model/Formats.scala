@@ -144,6 +144,8 @@ object PressedContentFormat {
         case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](curatedContentFormat))
         case JsSuccess(JsString("SupportingCuratedContent"), _) =>
           JsSuccess(json.as[SupportingCuratedContent](supportingCuratedContentFormat))
+        case JsSuccess(JsString("EventGraphic"), _) =>
+          JsSuccess(json.as[EventGraphic](eventGraphicFormat))
         case _ => JsError("Could not convert PressedContent")
       }
     }
@@ -180,6 +182,14 @@ object PressedContentFormat {
             .transform[JsObject](Reads.JsObjectReads) match {
             case JsSuccess(l, _) =>
               l ++ Json.obj("type" -> "SupportingCuratedContent")
+            case JsError(_) => JsNull
+          }
+        case eventGraphic: EventGraphic =>
+          Json
+            .toJson(eventGraphic)(eventGraphicFormat)
+            .transform[JsObject](Reads.JsObjectReads) match {
+            case JsSuccess(l, _) =>
+              l ++ Json.obj("type" -> "EventGraphic")
             case JsError(_) => JsNull
           }
         case _ => JsNull
@@ -281,6 +291,7 @@ object PressedContentFormat {
   val linkSnapFormat = Json.format[LinkSnap]
   val curatedContentFormat = Json.format[CuratedContent]
   val supportingCuratedContentFormat = Json.format[SupportingCuratedContent]
+  val eventGraphicFormat = Json.format[EventGraphic]
 }
 
 object ItemKickerFormat {

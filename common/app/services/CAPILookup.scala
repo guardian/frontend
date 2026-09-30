@@ -8,9 +8,19 @@ import play.api.mvc.RequestHeader
 
 import scala.concurrent.Future
 
+sealed trait CAPIChannel { val name: String }
+object CAPIChannel {
+  case object Variant extends CAPIChannel { val name = "variant" }
+  case object Feast extends CAPIChannel { val name = "feast" }
+  case object Newsletters extends CAPIChannel { val name = "newsletters" }
+  case object Editions extends CAPIChannel { val name = "editions" }
+}
+
 class CAPILookup(contentApiClient: ContentApiClient) {
 
-  def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
+  def lookup(path: String, range: Option[BlockRange], channel: Option[CAPIChannel] = None)(implicit
+      request: RequestHeader,
+  ): Future[ItemResponse] = {
     val edition = Edition(request)
 
     val capiItem = contentApiClient
@@ -28,7 +38,12 @@ class CAPILookup(contentApiClient: ContentApiClient) {
       }
       .getOrElse(capiItem)
 
-    contentApiClient.getResponse(capiItemWithBlocks)
+    val capiItemWithChannel = channel
+      .map(_.name)
+      .map(capiItemWithBlocks.withChannelId)
+      .getOrElse(capiItemWithBlocks)
+
+    contentApiClient.getResponse(capiItemWithChannel)
 
   }
 
