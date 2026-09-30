@@ -4,6 +4,7 @@ import java.net.URI
 import java.util.concurrent.atomic.AtomicReference
 import app.LifecycleComponent
 import common.{GuLogging, JobScheduler, PekkoAsync}
+import model.dotcomrendering.pageElements.AffiliateProductPrice
 import conf.switches.Switches.AffiliateProductLivePricing
 import conf.Configuration.affiliateLinks
 
@@ -15,15 +16,15 @@ import scala.util.Try
 
 object AffiliateProductPriceCache extends GuLogging {
 
-  private val latestProductPrices = new AtomicReference(Map.empty[String, String])
+  private val latestProductPrices = new AtomicReference(Map.empty[String, AffiliateProductPrice])
 
-  def csvToMap(prices: String): Map[String, String] =
+  def csvToMap(prices: String): Map[String, AffiliateProductPrice] =
     prices.linesIterator
       .map(_.trim)
       .filter(_.nonEmpty)
-      .map(_.split(",", 2).map(_.trim))
-      .collect { case Array(url, price) =>
-        url -> price
+      .map(_.split(",", 3).map(_.trim))
+      .collect { case Array(url, currencySymbol, price) =>
+        url -> AffiliateProductPrice(currencySymbol, price)
       }
       .toMap
 
@@ -40,10 +41,10 @@ object AffiliateProductPriceCache extends GuLogging {
     }
   }
 
-  def getLatestPrice(productUrl: String): Option[String] = latestProductPrices.get().get(productUrl)
+  def getLatestPrice(productUrl: String): Option[AffiliateProductPrice] = latestProductPrices.get().get(productUrl)
 
   /** Allows tests to inject prices without requiring S3 access. */
-  def setLatestProductPrices(prices: Map[String, String]): Unit = latestProductPrices.set(prices)
+  def setLatestProductPrices(prices: Map[String, AffiliateProductPrice]): Unit = latestProductPrices.set(prices)
 }
 
 class AffiliateProductPriceCacheLifeCycle(
