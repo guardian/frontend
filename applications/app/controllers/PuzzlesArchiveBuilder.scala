@@ -9,9 +9,6 @@ import model.dotcomrendering.{
   PuzzlesLayout,
 }
 
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
-
 object PuzzlesArchiveBuilder {
   private val apiTypes: Map[(String, String), String] = Map(
     ("crossword", "quick") -> "CROSSWORD_QUICK",
@@ -75,14 +72,13 @@ object PuzzlesArchiveBuilder {
   }
 
   def destination(selection: Selection, item: ArchiveApiItem): String =
-    item.url.filter(url => url.startsWith("/") || url.startsWith("https://")).getOrElse {
-      if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
+    if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
+      item.url.filter(url => url.startsWith("/") || url.startsWith("https://")).getOrElse {
         s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
-      else {
-        val slug = selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
-        val encodedId = URLEncoder.encode(item.puzzleId, StandardCharsets.UTF_8.toString)
-        s"/puzzles-and-games/${selection.category}/$slug/${item.date}?puzzleId=$encodedId"
       }
+    else {
+      val slug = selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
+      s"/puzzles-and-games/${selection.category}/$slug/${item.date}"
     }
 
   def related(layout: PuzzlesLayout, selectedCategory: String): Seq[PuzzleItem] =
@@ -113,7 +109,6 @@ object PuzzlesArchiveBuilder {
       month = month,
       items = items.map(item =>
         PuzzlesArchiveItem(
-          item.puzzleId,
           item.puzzleType,
           item.date,
           item.progress,

@@ -38,7 +38,6 @@ object PuzzlesArchivePuzzle {
 }
 
 case class PuzzlesArchiveItem(
-    puzzleId: String,
     puzzleType: String,
     date: String,
     progress: Int,

@@ -286,7 +286,6 @@ class PuzzlesPageController(
     val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
     val instance = PuzzlePageInstance(
       title = webTitle,
-      puzzleId = request.getQueryString("puzzleId"),
       puzzleDate = Some(date),
       moreFromPuzzlesAndGames = PuzzlesPageController.moreFromPuzzlesAndGames(slug, date),
     )

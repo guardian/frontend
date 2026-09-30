@@ -35,15 +35,13 @@ import play.api.libs.json.Json
     selection.apiType should be("SUDOKU_EASY")
   }
 
-  it should "use an archive item's exact date and provider ID in its destination" in {
+  it should "use an archive item's exact date in its puzzle page destination" in {
     val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", None).get
     val destination = PuzzlesArchiveBuilder.destination(
       selection,
       ArchiveApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02", 0, None, None),
     )
-    destination should be(
-      "/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02?puzzleId=guardian-sudoku-20260902",
-    )
+    destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
   }
 
   it should "parse the archive API envelope" in {
