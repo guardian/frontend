@@ -168,16 +168,14 @@ class GuardianConfiguration extends GuLogging {
   object contributionsService {
     lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
   }
-  object puzzlesArchive {
-    // TODO: Update after configuring Fastly to point to the new API Gateway endpoint.
-    // The current endpoint is a temporary solution until the Fastly configuration is updated.
-    private val codeUrl = "https://5awvcpuexl.execute-api.eu-west-1.amazonaws.com/code/archive"
-    private val prodUrl = "https://gno22cmky8.execute-api.eu-west-1.amazonaws.com/prod/archive"
+  object puzzlesApi {
+    private val codeUrl = "https://5awvcpuexl.execute-api.eu-west-1.amazonaws.com/code"
+    private val prodUrl = "https://gno22cmky8.execute-api.eu-west-1.amazonaws.com/prod"
 
-    lazy val url: String = configuration
-      .getStringProperty("puzzles.archive.url")
+    lazy val baseUrl: String = configuration
+      .getStringProperty("puzzles.api.url")
       .getOrElse(if (environment.isProd) prodUrl else codeUrl)
-    lazy val apiKey: String = configuration.getStringProperty("puzzles.archive.apiKey").getOrElse("test-api")
+    lazy val apiKey: String = configuration.getStringProperty("puzzles.api.key").getOrElse("test-api")
   }
 
   object indexes {

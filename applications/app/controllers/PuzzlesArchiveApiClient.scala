@@ -38,8 +38,8 @@ class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with
       executionContext: ExecutionContext,
   ): Future[Seq[ArchiveApiItem]] =
     wsClient
-      .url(Configuration.puzzlesArchive.url)
-      .withHttpHeaders("X-Api-Key" -> Configuration.puzzlesArchive.apiKey, "Accept" -> "application/json")
+      .url(s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/archive")
+      .withHttpHeaders("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json")
       .withQueryStringParameters(
         "startDate" -> startDate.toString,
         "endDate" -> endDate.toString,
