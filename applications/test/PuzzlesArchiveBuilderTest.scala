@@ -39,7 +39,7 @@ import play.api.libs.json.Json
     val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", None).get
     val destination = PuzzlesArchiveBuilder.destination(
       selection,
-      ArchiveApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02", 0, None, None),
+      ArchiveApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
     )
     destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
   }
@@ -47,10 +47,21 @@ import play.api.libs.json.Json
   it should "parse the archive API envelope" in {
     Json
       .parse(
-        """{"items":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","date":"2026-09-02","progress":100}]}""",
+        """{"items":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","publishDate":"2026-09-02T00:00:00Z","gameStatus":"completed","progress":100,"lastUpdated":null,"gameUrl":"https://www.theguardian.com/crosswords/quick/42"}]}""",
       )
       .as[ArchiveApiResponse] should be(
-      ArchiveApiResponse(Seq(ArchiveApiItem("42", "CROSSWORD_QUICK", "2026-09-02", 100, None, None))),
+      ArchiveApiResponse(
+        Seq(
+          ArchiveApiItem(
+            "42",
+            "CROSSWORD_QUICK",
+            "2026-09-02T00:00:00Z",
+            100,
+            None,
+            Some("https://www.theguardian.com/crosswords/quick/42"),
+          ),
+        ),
+      ),
     )
   }
 }

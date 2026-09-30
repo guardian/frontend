@@ -73,12 +73,12 @@ object PuzzlesArchiveBuilder {
 
   def destination(selection: Selection, item: ArchiveApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
-      item.url.filter(url => url.startsWith("/") || url.startsWith("https://")).getOrElse {
+      item.gameUrl.filter(url => url.startsWith("/") || url.startsWith("https://")).getOrElse {
         s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
       }
     else {
       val slug = selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
-      s"/puzzles-and-games/${selection.category}/$slug/${item.date}"
+      s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
     }
 
   def related(layout: PuzzlesLayout, selectedCategory: String): Seq[PuzzleItem] =
@@ -110,7 +110,7 @@ object PuzzlesArchiveBuilder {
       items = items.map(item =>
         PuzzlesArchiveItem(
           item.puzzleType,
-          item.date,
+          item.publishDate.take(10),
           item.progress,
           item.setterName,
           destination(selection, item),

@@ -12,10 +12,10 @@ import scala.concurrent.{ExecutionContext, Future}
 case class ArchiveApiItem(
     puzzleId: String,
     puzzleType: String,
-    date: String,
+    publishDate: String,
     progress: Int,
     setterName: Option[String],
-    url: Option[String],
+    gameUrl: Option[String],
 )
 
 object ArchiveApiItem {
