@@ -9,6 +9,8 @@ import play.api.libs.json.Json
 
 @DoNotDiscover class PuzzlesArchiveBuilderTest extends AnyFlatSpec with Matchers {
   private val quick = PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive")
+  private val mini = PuzzleItem("archive-mini", "Mini", "crossword", "mini", "archive")
+  private val weekend = PuzzleItem("archive-weekend", "Weekend", "crossword", "weekend", "archive")
   private val sudoku = PuzzleItem(
     "sudoku-easy",
     "Easy sudoku",
@@ -17,15 +19,37 @@ import play.api.libs.json.Json
     "primary",
     slug = Some("logic-puzzles/sudoku-easy"),
   )
+  private val wordWheel = PuzzleItem(
+    "word-wheel",
+    "Word wheel",
+    "word-wheel",
+    "all",
+    "primary",
+    slug = Some("word-games/word-wheel"),
+  )
+  private val wordiply = PuzzleItem(
+    "wordiply",
+    "Wordiply",
+    "wordiply",
+    "all",
+    "primary",
+    slug = Some("word-games/wordiply"),
+  )
   private val layout = PuzzlesLayout(
     Seq(
       PuzzleContainer(
         "crosswords",
         "Crosswords",
         Some("standard"),
-        PuzzleContent(Nil, Nil, archiveChoices = Some(Seq(quick))),
+        PuzzleContent(Nil, Nil, archiveChoices = Some(Seq(quick, mini, weekend))),
       ),
       PuzzleContainer("logic-puzzles", "Logic puzzles", Some("standard"), PuzzleContent(Seq(Seq(sudoku)), Nil)),
+      PuzzleContainer(
+        "word-games",
+        "Word games",
+        Some("standard"),
+        PuzzleContent(Seq(Seq(wordWheel, wordiply)), Nil),
+      ),
     ),
   )
 
@@ -42,6 +66,40 @@ import play.api.libs.json.Json
       ArchiveApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
     )
     destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
+  }
+
+  it should "build canonical crossword destinations instead of using the API game URL" in {
+    val miniSelection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("mini")).get
+    val weekendSelection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("weekend")).get
+
+    PuzzlesArchiveBuilder.destination(
+      miniSelection,
+      ArchiveApiItem(
+        "287",
+        "CROSSWORD_MINI",
+        "2026-09-30T00:00:00Z",
+        0,
+        None,
+        Some("/crosswords/mini-crossword/287"),
+      ),
+    ) should be("/crosswords/mini/287")
+    PuzzlesArchiveBuilder.destination(
+      weekendSelection,
+      ArchiveApiItem(
+        "820",
+        "CROSSWORD_WEEKEND",
+        "2026-09-30T00:00:00Z",
+        0,
+        None,
+        Some("/crosswords/weekend-crossword/820"),
+      ),
+    ) should be("/crosswords/weekend/820")
+  }
+
+  it should "exclude puzzles without an archive from the archive selector" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "word-games", None).get
+
+    selection.puzzles.map(_.id) should be(Seq("word-wheel"))
   }
 
   it should "reuse Puzzle Page recommendations for the selected archive puzzle" in {

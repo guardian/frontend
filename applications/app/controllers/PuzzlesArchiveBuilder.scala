@@ -26,7 +26,6 @@ object PuzzlesArchiveBuilder {
     ("sudoku", "hard") -> "SUDOKU_HARD",
     ("sudoku", "killer") -> "SUDOKU_KILLER",
     ("word-wheel", "all") -> "WORDWHEEL",
-    ("wordiply", "all") -> "WORDIPLY",
   )
 
   case class Selection(
@@ -75,9 +74,7 @@ object PuzzlesArchiveBuilder {
 
   def destination(selection: Selection, item: ArchiveApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
-      item.gameUrl.filter(url => url.startsWith("/") || url.startsWith("https://")).getOrElse {
-        s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
-      }
+      s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
     else {
       val slug = selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
       s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
