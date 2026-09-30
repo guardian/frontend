@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
-import services.{MockSubnavAgent, NewsletterService}
+import services.{MockArticleAbTestAgent, MockSubnavAgent, NewsletterService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest
@@ -32,6 +32,7 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
     remoteRenderer = new DCRFake(),
     newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
     subnavAgent = new MockSubnavAgent(),
+    articleAbTestAgent = new MockArticleAbTestAgent(),
   )
 
   "Article Controller" should "200 when content type is article" in {

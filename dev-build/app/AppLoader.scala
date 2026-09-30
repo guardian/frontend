@@ -24,6 +24,7 @@ import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
+import services.articleabtest.ArticleAbTestLifecycle
 import services.ophan.SurgingContentAgentLifecycle
 import common.dfp.DfpAgentLifecycle
 
@@ -82,6 +83,7 @@ trait AppComponents
   override def lifecycleComponents: List[LifecycleComponent] =
     List(
       wire[AdminLifecycle],
+      wire[ArticleAbTestLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
       wire[SubnavAgentLifecycle],
@@ -97,6 +99,7 @@ trait AppComponents
       wire[MostViewedLifecycle],
       wire[SkimLinksCacheLifeCycle],
       wire[DfpAgentLifecycle],
+      wire[AffiliateProductPriceCacheLifeCycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

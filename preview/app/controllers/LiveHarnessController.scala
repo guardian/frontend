@@ -8,7 +8,7 @@ import play.api.libs.json.{JsError, JsSuccess, JsValue}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, BaseController, ControllerComponents}
 import renderers.DotcomRenderingService
-import services.{CAPILookup, NewsletterService, SubnavAgent}
+import services.{ArticleAbTestAgent, CAPILookup, NewsletterService, SubnavAgent}
 import utils.LiveHarness.inject
 import utils.LiveHarnessInteractiveAtom
 
@@ -20,6 +20,7 @@ class LiveHarnessController(
     ws: WSClient,
     newsletterService: NewsletterService,
     subnavAgent: SubnavAgent,
+    articleAbTestAgent: ArticleAbTestAgent,
 )(implicit val context: ApplicationContext)
     extends BaseController
     with GuLogging
@@ -37,6 +38,7 @@ class LiveHarnessController(
       remoteRenderer = renderingService,
       newsletterService = newsletterService,
       subnavAgent = subnavAgent,
+      articleAbTestAgent = articleAbTestAgent,
     )
 
   private val interactiveController =
