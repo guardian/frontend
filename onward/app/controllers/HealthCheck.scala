@@ -9,5 +9,5 @@ import scala.concurrent.ExecutionContext
 class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     executionContext: ExecutionContext,
 ) extends AllGoodCachedHealthCheck(
-      NeverExpiresSingleHealthCheck("/top-stories.json"),
+      NeverExpiresSingleHealthCheck("/most-read-with-deeply-read.json"),
     )(wsClient, executionContext)
