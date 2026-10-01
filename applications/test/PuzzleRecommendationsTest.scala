@@ -77,14 +77,19 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
       Some("/puzzles-and-games/word-games/word-wheel/2026-09-24")
   }
 
-  it should "label the card of the same puzzle as previous and the others with their own cadence" in {
+  it should "label iframe cards with their day and crossword cards with their number" in {
     val iframes = resolve("sudoku-medium")
     iframes.find(_.id == "sudoku-medium").flatMap(_.cadence) shouldBe Some("Yesterday")
     iframes.find(_.id == "sudoku-hard").flatMap(_.cadence) shouldBe Some("Today")
 
-    val crosswords = resolve("weekend")
-    crosswords.find(_.id == "crossword-weekend").flatMap(_.cadence) shouldBe Some("Previous")
-    crosswords.find(_.id == "crossword-quick").flatMap(_.cadence) shouldBe Some("Today")
+    val crosswords = resolve("weekend", Some("crosswords/weekend/100"))
+    crosswords.find(_.id == "crossword-weekend").flatMap(_.cadence) shouldBe Some("No 99")
+    crosswords.find(_.id == "crossword-quick").flatMap(_.cadence) shouldBe Some("No 100")
+  }
+
+  it should "format crossword numbers with a thousands separator" in {
+    val big: CrosswordLookup = (set, _) => Future.successful(Some(LatestCrossword(set, 17599)))
+    resolve("quick", l = big).head.cadence shouldBe Some("No 17,599")
   }
 
   it should "link crosswords to their most recent puzzle" in {

@@ -6,7 +6,9 @@ import common.GuLogging
 import model.dotcomrendering.PuzzleItem
 import views.support.CamelCase
 
+import java.text.NumberFormat
 import java.time.LocalDate
+import java.util.Locale
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 import scala.util.control.NonFatal
@@ -30,13 +32,11 @@ object PuzzleRecommendations extends GuLogging {
     def key: String
     def title: String
     def backgroundColour: String
-    def cadence: String
   }
 
   private case class CrosswordCard(
       key: String,
       title: String,
-      cadence: String,
   ) extends Card {
     val backgroundColour = "#FCE1CE"
   }
@@ -52,26 +52,25 @@ object PuzzleRecommendations extends GuLogging {
     val cadence = "Today"
   }
 
-  /** Cadence of a card pointing at the previous instance of the puzzle being played, instead of the current one. The
-    * previous crossword is not necessarily from yesterday (e.g. weekend, quiptic), hence the neutral label.
+  /** Cadence of an iframe card pointing at the previous instance of the puzzle being played, instead of the current
+    * one. Crossword cards have no cadence: they are identified by their number (see [[crosswordItem]]).
     */
   private val PreviousIframeCadence = "Yesterday"
-  private val PreviousCrosswordCadence = "Previous"
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
 
   private val crosswordCards: Seq[CrosswordCard] = Seq(
-    CrosswordCard("quick", "Quick crossword", "Today"),
-    CrosswordCard("mini", "Mini crossword", "Today"),
-    CrosswordCard("cryptic", "Cryptic crossword", "Today"),
-    CrosswordCard("quick-cryptic", "Quick cryptic crossword", "Every Saturday"),
-    CrosswordCard("weekend", "Weekend crossword", "Every Saturday"),
-    CrosswordCard("prize", "Prize crossword", "Every Saturday"),
-    CrosswordCard("quiptic", "Quiptic crossword", "Every Sunday"),
-    CrosswordCard("genius", "Genius crossword", "Monthly"),
-    CrosswordCard("sunday-quick", "Sunday quick crossword", "Every Sunday"),
-    CrosswordCard("special", "Special crossword", "Occasional"),
+    CrosswordCard("quick", "Quick crossword"),
+    CrosswordCard("mini", "Mini crossword"),
+    CrosswordCard("cryptic", "Cryptic crossword"),
+    CrosswordCard("quick-cryptic", "Quick cryptic crossword"),
+    CrosswordCard("weekend", "Weekend crossword"),
+    CrosswordCard("prize", "Prize crossword"),
+    CrosswordCard("quiptic", "Quiptic crossword"),
+    CrosswordCard("genius", "Genius crossword"),
+    CrosswordCard("sunday-quick", "Sunday quick crossword"),
+    CrosswordCard("special", "Special crossword"),
   )
 
   private val iframeCards: Seq[IframeCard] = Seq(
@@ -174,7 +173,7 @@ object PuzzleRecommendations extends GuLogging {
     (crosswordCatalogue.get(key), iframeCatalogue.get(key)) match {
       case (Some(card), _) =>
         lookup(card.key, currentId)
-          .map(_.map(latest => crosswordItem(card, latest, isPrevious = key == currentKey)))
+          .map(_.map(latest => crosswordItem(card, latest)))
           .recover { case NonFatal(_) => None }
       case (_, Some(card)) =>
         val isPrevious = key == currentKey
@@ -186,14 +185,17 @@ object PuzzleRecommendations extends GuLogging {
   private def previousDay(date: String): Option[String] =
     Try(LocalDate.parse(date).minusDays(1).toString).toOption
 
-  private def crosswordItem(card: CrosswordCard, latest: LatestCrossword, isPrevious: Boolean): PuzzleItem =
+  /** Crosswords are numbered, not dated, and the card links to the most recent one, so it is labelled with that number
+    * (e.g. "No 17,599") rather than with a day.
+    */
+  private def crosswordItem(card: CrosswordCard, latest: LatestCrossword): PuzzleItem =
     PuzzleItem(
       id = s"crossword-${card.key}",
       title = card.title,
       `type` = "crossword",
       set = card.key,
       cardVariant = "compact",
-      cadence = Some(if (isPrevious) PreviousCrosswordCadence else card.cadence),
+      cadence = Some(s"No ${NumberFormat.getIntegerInstance(Locale.UK).format(latest.number)}"),
       url = Some(s"/crosswords/${latest.crosswordType}/${latest.number}"),
       backgroundColour = Some(card.backgroundColour),
     )
