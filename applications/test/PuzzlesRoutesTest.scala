@@ -32,12 +32,17 @@ import org.scalatest.matchers.should.Matchers
     )
   }
 
-  it should "expose the archive data endpoint" in {
-    val route = controllers.routes.PuzzlesPageController.archiveData()
-    route.method should be("GET")
-    route.url should be("/puzzles-and-games/archive-data")
+  it should "expose the archive data endpoints" in {
+    controllers.routes.PuzzlesPageController.archiveData("crosswords").url should be(
+      "/puzzles-and-games/crosswords/archive-data",
+    )
+    controllers.routes.PuzzlesPageController.archiveData("word-games").url should be(
+      "/puzzles-and-games/word-games/archive-data",
+    )
+    controllers.routes.PuzzlesPageController.archiveData("logic-puzzles").url should be(
+      "/puzzles-and-games/logic-puzzles/archive-data",
+    )
   }
-
   it should "expose the nested, dated Sudoku HTML endpoint" in {
     val route = controllers.routes.PuzzlesPageController.renderSudoku("easy", "2024-01-15")
 

@@ -92,17 +92,13 @@ class PuzzlesPageController(
           .recoverWith { case _: NoSuchElementException => notFound }
     }
 
-  def archiveData(): Action[AnyContent] =
+  def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      request.getQueryString("category") match {
-        case Some(category) =>
-          buildArchive(category)
-            .map { case (_, archive) =>
-              Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
-            }
-            .recoverWith { case _: NoSuchElementException => notFound }
-        case None => notFound
-      }
+      buildArchive(category)
+        .map { case (_, archive) =>
+          Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+        }
+        .recoverWith { case _: NoSuchElementException => notFound }
     }
 
   private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
@@ -128,7 +124,7 @@ class PuzzlesPageController(
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
         case Some(selection) =>
           val dataUrl =
-            s"/puzzles-and-games/archive-data?category=$category&puzzle=${selection.puzzle.id}"
+            s"/puzzles-and-games/$category/archive-data?puzzle=${selection.puzzle.id}"
           puzzlesArchiveApi
             .get(startDate, endDate, selection.apiType)
             .map(items =>

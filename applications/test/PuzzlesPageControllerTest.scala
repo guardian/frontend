@@ -92,9 +92,9 @@ import scala.concurrent.{ExecutionContext, Future}
       .thenReturn(Future.successful(Nil))
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
-      .archiveData()(
+      .archiveData("crosswords")(
         request(
-          "/puzzles-and-games/archive-data?category=crosswords&puzzle=archive-quick&year=2026&month=9",
+          "/puzzles-and-games/crosswords/archive-data?puzzle=archive-quick&year=2026&month=9",
           participations = "",
         ),
       )
@@ -113,9 +113,9 @@ import scala.concurrent.{ExecutionContext, Future}
     val today = LocalDate.now(ZoneId.of("Europe/London"))
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
-      .archiveData()(
+      .archiveData("crosswords")(
         request(
-          "/puzzles-and-games/archive-data?category=crosswords&puzzle=archive-quick&year=2999&month=12",
+          "/puzzles-and-games/crosswords/archive-data?puzzle=archive-quick&year=2999&month=12",
           participations = "",
         ),
       )
