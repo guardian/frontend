@@ -38,6 +38,7 @@ class ApplicationsTestSuite
       new CrosswordDataTest,
       new NewspaperControllerTest,
       new PuzzlesPageControllerTest,
+      new PuzzlesArchiveBuilderTest,
       new PuzzlesLayoutProviderTest,
       new PuzzlesRoutesTest,
       new IndexPageTest,
