@@ -16,6 +16,7 @@ import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
+import java.time.{LocalDate, YearMonth, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class PuzzlesPageControllerTest
@@ -43,11 +44,12 @@ import scala.concurrent.{ExecutionContext, Future}
   private def controller(
       provider: PuzzlesLayoutProvider,
       renderer: DotcomRenderingService,
+      puzzlesArchiveApi: PuzzlesArchiveApi = mock[PuzzlesArchiveApi],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
       provider,
-      mock[PuzzlesArchiveApi],
+      puzzlesArchiveApi,
       renderer,
       stubControllerComponents(),
     )
@@ -58,9 +60,70 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
+  private def archiveProvider: PuzzlesLayoutProvider = {
+    val provider = mock[PuzzlesLayoutProvider]
+    val archiveLayout = PuzzlesLayout(
+      containers = Seq(
+        PuzzleContainer(
+          id = "crosswords",
+          title = "Crosswords",
+          content = PuzzleContent(
+            items = Seq.empty,
+            nestedContainers = Seq.empty,
+            archiveChoices = Some(
+              Seq(PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive")),
+            ),
+          ),
+        ),
+      ),
+    )
+    when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(archiveLayout))
+    provider
+  }
+
   private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
+  }
+
+  "archiveData" should "serve calendar requests without requiring AB participation" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveData()(
+        request(
+          "/puzzles-and-games/archive-data?category=crosswords&puzzle=archive-quick&year=2026&month=9",
+          participations = "",
+        ),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi)
+      .get(eqTo(LocalDate.of(2026, 9, 1)), eqTo(LocalDate.of(2026, 9, 30)), eqTo("CROSSWORD_QUICK"))(
+        any[ExecutionContext],
+      )
+  }
+
+  it should "clamp future requests to the current month and current date" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+    val currentMonth = YearMonth.from(today)
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveData()(
+        request(
+          "/puzzles-and-games/archive-data?category=crosswords&puzzle=archive-quick&year=2999&month=12",
+          participations = "",
+        ),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi)
+      .get(eqTo(currentMonth.atDay(1)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
   }
 
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {

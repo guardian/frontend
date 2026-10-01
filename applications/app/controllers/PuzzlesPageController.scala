@@ -94,33 +94,33 @@ class PuzzlesPageController(
 
   def archiveData(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isV1Enabled) notFound
-      else
-        request.getQueryString("category") match {
-          case Some(category) =>
-            buildArchive(category)
-              .map { case (_, archive) =>
-                Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
-              }
-              .recoverWith { case _: NoSuchElementException => notFound }
-          case None => notFound
-        }
+      request.getQueryString("category") match {
+        case Some(category) =>
+          buildArchive(category)
+            .map { case (_, archive) =>
+              Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+            }
+            .recoverWith { case _: NoSuchElementException => notFound }
+        case None => notFound
+      }
     }
 
-  private def selectedMonth(request: RequestHeader): YearMonth = {
-    val current = YearMonth.from(LocalDate.now(ZoneId.of("Europe/London")))
+  private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
+    val current = YearMonth.from(today)
     val requested = for {
       year <- request.getQueryString("year").flatMap(value => Try(value.toInt).toOption)
       month <- request.getQueryString("month").flatMap(value => Try(value.toInt).toOption)
       value <- Try(YearMonth.of(year, month)).toOption
     } yield value
-    requested.getOrElse(current)
+    requested.filterNot(_.isAfter(current)).getOrElse(current)
   }
 
   private def buildArchive(category: String)(implicit
       request: RequestHeader,
   ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
-    val yearMonth = selectedMonth(request)
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+    val yearMonth = selectedMonth(request, today)
+    val endDate = if (yearMonth == YearMonth.from(today)) today else yearMonth.atEndOfMonth()
     puzzlesLayoutProvider.getLayout().flatMap { layout =>
       PuzzlesArchiveBuilder.select(layout, category, request.getQueryString("puzzle")) match {
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
@@ -128,7 +128,7 @@ class PuzzlesPageController(
           val dataUrl =
             s"/puzzles-and-games/archive-data?category=$category&puzzle=${selection.puzzle.id}"
           puzzlesArchiveApi
-            .get(yearMonth.atDay(1), yearMonth.atEndOfMonth(), selection.apiType)
+            .get(yearMonth.atDay(1), endDate, selection.apiType)
             .map(items =>
               layout -> PuzzlesArchiveBuilder.build(
                 selection,
