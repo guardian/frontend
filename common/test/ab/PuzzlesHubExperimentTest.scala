@@ -57,4 +57,20 @@ import play.api.test.FakeRequest
       "puzzles-new-hub" -> "variant",
     )
   }
+
+  "PuzzlesHubExperiment.isV1Enabled" should "require both the V0 and V1 variants" in {
+    implicit val request: RequestHeader =
+      requestWithParticipation("puzzles-new-hub:variant,puzzles-new-hub-v1:variant")
+    PuzzlesHubExperiment.isV1Enabled should be(true)
+  }
+
+  it should "remain disabled when only V1 is enabled" in {
+    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub-v1:variant")
+    PuzzlesHubExperiment.isV1Enabled should be(false)
+  }
+
+  it should "remain disabled when only V0 is enabled" in {
+    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub:variant")
+    PuzzlesHubExperiment.isV1Enabled should be(false)
+  }
 }
