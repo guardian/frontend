@@ -43,6 +43,15 @@ import org.scalatest.matchers.should.Matchers
       "/puzzles-and-games/logic-puzzles/archive-data",
     )
   }
+
+  it should "keep archive data selections in the path when the CDN strips query parameters" in {
+    Seq("crosswords", "word-games", "logic-puzzles").foreach { category =>
+      controllers.routes.PuzzlesPageController.archiveDataForMonth(category, "test-puzzle", 2020, 8).url should be(
+        s"/puzzles-and-games/$category/archive-data/test-puzzle/2020/8",
+      )
+    }
+  }
+
   it should "expose the nested, dated Sudoku HTML endpoint" in {
     val route = controllers.routes.PuzzlesPageController.renderSudoku("easy", "2024-01-15")
 

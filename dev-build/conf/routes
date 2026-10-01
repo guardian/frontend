@@ -22,6 +22,10 @@ GET        /puzzles-and-games/crosswords/archive-data                           
 GET        /puzzles-and-games/word-games/archive-data                                                                                      controllers.PuzzlesPageController.archiveData(category = "word-games")
 GET        /puzzles-and-games/logic-puzzles/archive-data                                                                                   controllers.PuzzlesPageController.archiveData(category = "logic-puzzles")
 
+GET        /puzzles-and-games/crosswords/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataForMonth(category = "crosswords", puzzle: String, year: Int, month: Int)
+GET        /puzzles-and-games/word-games/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataForMonth(category = "word-games", puzzle: String, year: Int, month: Int)
+GET        /puzzles-and-games/logic-puzzles/archive-data/:puzzle/:year/:month                                                              controllers.PuzzlesPageController.archiveDataForMonth(category = "logic-puzzles", puzzle: String, year: Int, month: Int)
+
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET            /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg               controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)

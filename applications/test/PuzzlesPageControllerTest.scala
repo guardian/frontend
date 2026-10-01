@@ -71,7 +71,10 @@ import scala.concurrent.{ExecutionContext, Future}
             items = Seq.empty,
             nestedContainers = Seq.empty,
             archiveChoices = Some(
-              Seq(PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive")),
+              Seq(
+                PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive"),
+                PuzzleItem("archive-mini", "Mini", "crossword", "mini", "archive"),
+              ),
             ),
           ),
         ),
@@ -123,6 +126,32 @@ import scala.concurrent.{ExecutionContext, Future}
     status(result) should be(OK)
     verify(archiveApi)
       .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
+  }
+
+  "archiveDataForMonth" should "use the path selection without query parameters or AB participation" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 8)(
+        request("/puzzles-and-games/crosswords/archive-data/archive-mini/2020/8", participations = ""),
+      )
+
+    status(result) should be(OK)
+    (contentAsJson(result) \ "selectedPuzzle" \ "id").as[String] should be("archive-mini")
+    (contentAsJson(result) \ "year").as[Int] should be(2020)
+    (contentAsJson(result) \ "month").as[Int] should be(8)
+    verify(archiveApi).get(eqTo(LocalDate.of(2020, 8, 1)), eqTo(LocalDate.of(2020, 8, 31)), eqTo("CROSSWORD_MINI"))(
+      any[ExecutionContext],
+    )
+  }
+
+  it should "reject invalid months before calling the API" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(request("/", participations = ""))
+    status(result) should be(BAD_REQUEST)
+    verifyNoInteractions(archiveApi)
   }
 
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {
