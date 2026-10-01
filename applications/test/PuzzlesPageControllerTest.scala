@@ -16,7 +16,7 @@ import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
-import java.time.{LocalDate, YearMonth, ZoneId}
+import java.time.{LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class PuzzlesPageControllerTest
@@ -111,7 +111,6 @@ import scala.concurrent.{ExecutionContext, Future}
     when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
     val today = LocalDate.now(ZoneId.of("Europe/London"))
-    val currentMonth = YearMonth.from(today)
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
       .archiveData()(
@@ -123,7 +122,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
     status(result) should be(OK)
     verify(archiveApi)
-      .get(eqTo(currentMonth.atDay(1)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
+      .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
   }
 
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {

@@ -120,7 +120,9 @@ class PuzzlesPageController(
   ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
     val today = LocalDate.now(ZoneId.of("Europe/London"))
     val yearMonth = selectedMonth(request, today)
-    val endDate = if (yearMonth == YearMonth.from(today)) today else yearMonth.atEndOfMonth()
+    val isCurrentMonth = yearMonth == YearMonth.from(today)
+    val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
+    val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
     puzzlesLayoutProvider.getLayout().flatMap { layout =>
       PuzzlesArchiveBuilder.select(layout, category, request.getQueryString("puzzle")) match {
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
@@ -128,7 +130,7 @@ class PuzzlesPageController(
           val dataUrl =
             s"/puzzles-and-games/archive-data?category=$category&puzzle=${selection.puzzle.id}"
           puzzlesArchiveApi
-            .get(yearMonth.atDay(1), endDate, selection.apiType)
+            .get(startDate, endDate, selection.apiType)
             .map(items =>
               layout -> PuzzlesArchiveBuilder.build(
                 selection,
