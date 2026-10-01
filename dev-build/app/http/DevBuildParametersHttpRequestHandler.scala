@@ -26,5 +26,5 @@ class DevBuildParametersHttpRequestHandler(
       context = context,
     ) {
   override val allowedParams: Seq[String] =
-    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ Seq("query")
+    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ puzzlesArchiveParams ++ Seq("query")
 }

@@ -61,6 +61,19 @@ object StaticPages {
       ),
     )
 
+  def dcrSimplePuzzlesArchivePage(id: String, title: String, description: String): SimplePage =
+    SimplePage(
+      MetaData.make(
+        id = id,
+        section = Option(SectionId(value = "puzzles-and-games")),
+        webTitle = title,
+        description = Some(description),
+        contentType = Some(DotcomContentType.Tag),
+        iosType = None,
+        shouldGoogleIndex = true,
+      ),
+    )
+
   /** A minimal, static page used for the Puzzle Page flow (see PuzzlesPageController) for the iframe-based puzzle
     * slugs, which have no per-instance CAPI content of their own - the iframe always shows "today's" puzzle from the
     * third party's own logic. Not used by, or shared with, the existing crossword article page flow.
