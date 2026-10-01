@@ -8,6 +8,7 @@ import org.joda.time.DateTime
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
+import services.AffiliateProductPriceCache
 
 class PageElementTest extends AnyFlatSpec with Matchers {
   "PageElement" should "classify capi tracking value correctly" in {
@@ -114,5 +115,48 @@ class PageElementTest extends AnyFlatSpec with Matchers {
       case List(image: ImageBlockElement) => image.data("caption") should equal(caption)
       case other                          => fail(s"expected a single ImageBlockElement but got $other")
     }
+  }
+
+  it should "only add the latest price when live pricing is enabled" in {
+    val productUrl = "https://www.example.com/product"
+    val expectedPrice = AffiliateProductPrice("£", "10.00")
+    val element = BlockElement(
+      `type` = ElementType.Link,
+      linkTypeData = Some(
+        LinkElementFields(
+          url = Some(productUrl),
+          label = Some("Buy now"),
+          linkType = Some(LinkType.ProductButton),
+          priority = None,
+        ),
+      ),
+    )
+
+    AffiliateProductPriceCache.setLatestProductPrices(Map(productUrl -> expectedPrice))
+
+    def render(isLivePricingEnabled: Boolean): LinkBlockElement =
+      PageElement
+        .make(
+          element = element,
+          addAffiliateLinks = false,
+          isLivePricingEnabled = isLivePricingEnabled,
+          pageUrl = "/money/2025/nov/19/test-article",
+          atoms = Nil,
+          isMainBlock = false,
+          isImmersive = false,
+          campaigns = None,
+          calloutsUrl = None,
+          overrideImage = None,
+          edition = Uk,
+          webPublicationDate = new DateTime(),
+          isGallery = false,
+          isUSProductionOffice = false,
+          abTests = Map.empty,
+        )
+        .head
+        .asInstanceOf[LinkBlockElement]
+
+    render(isLivePricingEnabled = true).latestPrice should be(Some(expectedPrice))
+    render(isLivePricingEnabled = false).latestPrice should be(None)
   }
 }
