@@ -312,7 +312,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
     }
   }
 
-  def isLivePricingEnabled(content: ContentType, pageUrl: String): Boolean = {
+  def isLivePricingEnabled(pageUrl: String): Boolean = {
     // Later we will check a flag in the content model
     val enabledForArticle = livePricingAllowList
       .getOrElse(if (Configuration.environment.isProd) "PROD" else "CODE", Set.empty)

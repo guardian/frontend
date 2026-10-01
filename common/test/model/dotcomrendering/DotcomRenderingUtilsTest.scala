@@ -355,7 +355,7 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
   "isLivePricingEnabled" should "return false when live pricing switch is off" in {
     Switches.AffiliateProductLivePricing.switchOff()
     val content = articleWithBody(sampleArticleBody)
-    DotcomRenderingUtils.isLivePricingEnabled(content, "/thefilter/best-widgets") should be(false)
+    DotcomRenderingUtils.isLivePricingEnabled("/thefilter/best-widgets") should be(false)
   }
 
   private def blockWith(id: String, bodyHtml: String, elements: Seq[BlockElement] = Seq.empty): Block =

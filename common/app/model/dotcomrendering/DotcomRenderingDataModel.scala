@@ -480,7 +480,7 @@ object DotcomRenderingDataModel {
 
     val shouldAddAffiliateLinks =
       DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks ++ mainBlock.toSeq ++ pinnedPost.toSeq)
-    val eligibleForLivePricing = DotcomRenderingUtils.isLivePricingEnabled(content, request.uri)
+    val eligibleForLivePricing = DotcomRenderingUtils.isLivePricingEnabled(request.uri)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
