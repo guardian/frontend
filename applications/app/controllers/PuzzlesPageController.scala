@@ -144,8 +144,6 @@ class PuzzlesPageController(
       PuzzlesArchiveBuilder.select(layout, category, puzzle.orElse(request.getQueryString("puzzle"))) match {
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
         case Some(selection) =>
-          val dataUrl =
-            s"/puzzles-and-games/$category/archive-data?puzzle=${selection.puzzle.id}"
           puzzlesArchiveApi
             .get(startDate, endDate, selection.apiType)
             .map(items =>
@@ -154,7 +152,6 @@ class PuzzlesPageController(
                 yearMonth.getYear,
                 yearMonth.getMonthValue,
                 items,
-                dataUrl,
                 hasError = false,
               ),
             )
@@ -164,7 +161,6 @@ class PuzzlesPageController(
                 yearMonth.getYear,
                 yearMonth.getMonthValue,
                 Nil,
-                dataUrl,
                 hasError = true,
               )
             }

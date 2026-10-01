@@ -89,22 +89,22 @@ import scala.concurrent.{ExecutionContext, Future}
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
   }
 
-  "archiveData" should "serve calendar requests without requiring AB participation" in {
+  "archiveDataForMonth" should "serve calendar requests without requiring AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
     when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
-      .archiveData("crosswords")(
+      .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
         request(
-          "/puzzles-and-games/crosswords/archive-data?puzzle=archive-quick&year=2026&month=9",
+          "/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9",
           participations = "",
         ),
       )
 
     status(result) should be(OK)
     verify(archiveApi)
-      .get(eqTo(LocalDate.of(2026, 9, 1)), eqTo(LocalDate.of(2026, 9, 30)), eqTo("CROSSWORD_QUICK"))(
+      .get(eqTo(LocalDate.of(2020, 9, 1)), eqTo(LocalDate.of(2020, 9, 30)), eqTo("CROSSWORD_QUICK"))(
         any[ExecutionContext],
       )
   }
@@ -116,9 +116,9 @@ import scala.concurrent.{ExecutionContext, Future}
     val today = LocalDate.now(ZoneId.of("Europe/London"))
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
-      .archiveData("crosswords")(
+      .archiveDataForMonth("crosswords", "archive-quick", 2999, 12)(
         request(
-          "/puzzles-and-games/crosswords/archive-data?puzzle=archive-quick&year=2999&month=12",
+          "/puzzles-and-games/crosswords/archive-data/archive-quick/2999/12",
           participations = "",
         ),
       )
@@ -128,7 +128,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
   }
 
-  "archiveDataForMonth" should "use the path selection without query parameters or AB participation" in {
+  it should "use the path selection without query parameters or AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
     when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
@@ -141,6 +141,7 @@ import scala.concurrent.{ExecutionContext, Future}
     (contentAsJson(result) \ "selectedPuzzle" \ "id").as[String] should be("archive-mini")
     (contentAsJson(result) \ "year").as[Int] should be(2020)
     (contentAsJson(result) \ "month").as[Int] should be(8)
+    (contentAsJson(result) \ "dataUrl").toOption should be(None)
     verify(archiveApi).get(eqTo(LocalDate.of(2020, 8, 1)), eqTo(LocalDate.of(2020, 8, 31)), eqTo("CROSSWORD_MINI"))(
       any[ExecutionContext],
     )

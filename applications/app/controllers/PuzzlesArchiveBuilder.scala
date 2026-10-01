@@ -98,7 +98,6 @@ object PuzzlesArchiveBuilder {
       year: Int,
       month: Int,
       items: Seq[ArchiveApiItem],
-      dataUrl: String,
       hasError: Boolean,
   ): PuzzlesArchive =
     PuzzlesArchive(
@@ -118,7 +117,6 @@ object PuzzlesArchiveBuilder {
           destination(selection, item),
         ),
       ),
-      dataUrl = dataUrl,
       hasError = hasError,
       moreFrom = related(selection, year, month, items),
     )

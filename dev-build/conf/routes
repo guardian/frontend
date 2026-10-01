@@ -18,10 +18,6 @@ GET        /puzzles-and-games                                                   
 GET        /puzzles-and-games/crosswords/archive                                                                                           controllers.PuzzlesPageController.renderCrosswordsArchive()
 GET        /puzzles-and-games/word-games/archive                                                                                           controllers.PuzzlesPageController.renderWordGamesArchive()
 GET        /puzzles-and-games/logic-puzzles/archive                                                                                        controllers.PuzzlesPageController.renderLogicPuzzlesArchive()
-GET        /puzzles-and-games/crosswords/archive-data                                                                                      controllers.PuzzlesPageController.archiveData(category = "crosswords")
-GET        /puzzles-and-games/word-games/archive-data                                                                                      controllers.PuzzlesPageController.archiveData(category = "word-games")
-GET        /puzzles-and-games/logic-puzzles/archive-data                                                                                   controllers.PuzzlesPageController.archiveData(category = "logic-puzzles")
-
 GET        /puzzles-and-games/crosswords/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataForMonth(category = "crosswords", puzzle: String, year: Int, month: Int)
 GET        /puzzles-and-games/word-games/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataForMonth(category = "word-games", puzzle: String, year: Int, month: Int)
 GET        /puzzles-and-games/logic-puzzles/archive-data/:puzzle/:year/:month                                                              controllers.PuzzlesPageController.archiveDataForMonth(category = "logic-puzzles", puzzle: String, year: Int, month: Int)

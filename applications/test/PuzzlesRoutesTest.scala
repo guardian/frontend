@@ -32,18 +32,6 @@ import org.scalatest.matchers.should.Matchers
     )
   }
 
-  it should "expose the archive data endpoints" in {
-    controllers.routes.PuzzlesPageController.archiveData("crosswords").url should be(
-      "/puzzles-and-games/crosswords/archive-data",
-    )
-    controllers.routes.PuzzlesPageController.archiveData("word-games").url should be(
-      "/puzzles-and-games/word-games/archive-data",
-    )
-    controllers.routes.PuzzlesPageController.archiveData("logic-puzzles").url should be(
-      "/puzzles-and-games/logic-puzzles/archive-data",
-    )
-  }
-
   it should "keep archive data selections in the path when the CDN strips query parameters" in {
     Seq("crosswords", "word-games", "logic-puzzles").foreach { category =>
       controllers.routes.PuzzlesPageController.archiveDataForMonth(category, "test-puzzle", 2020, 8).url should be(
