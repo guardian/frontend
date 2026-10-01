@@ -1,6 +1,6 @@
 package test
 
-import ab.{ABTestsTest, PuzzlesHubExperimentTest}
+import ab.{ABTestsTest, PuzzlesHubExperimentTest, PuzzlesHubV1ExperimentTest}
 import conf.CachedHealthCheckTest
 import conf.audio.FlagshipFrontContainerSpec
 import http.ABTestingFilterTest
@@ -13,6 +13,7 @@ class CommonTestSuite
     extends Suites(
       new ABTestsTest,
       new PuzzlesHubExperimentTest,
+      new PuzzlesHubV1ExperimentTest,
       new ABTestingFilterTest,
       new CachedHealthCheckTest,
       new NavigationTest,

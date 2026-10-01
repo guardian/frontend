@@ -1,5 +1,6 @@
 package controllers
 
+import ab.PuzzlesHubV1Experiment
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -23,7 +24,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType, PuzzleItem}
 import org.joda.time.{DateTime, LocalDate}
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
@@ -53,6 +54,23 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       contentApiClient.item(s"crosswords/$crosswordType/$id", Edition(request)).showFields("all"),
     )
   }
+
+  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests in the puzzles hub
+    * v1 experiment, otherwise `None` so the page renders exactly as before.
+    */
+  def moreFromPuzzlesAndGames(
+      crossword: CrosswordData,
+  )(implicit request: RequestHeader): Future[Option[Seq[PuzzleItem]]] =
+    if (PuzzlesHubV1Experiment.isEnabled)
+      PuzzleRecommendations
+        .resolve(
+          crossword.crosswordType,
+          Some(crossword.id),
+          crossword.date.toString("yyyy-MM-dd"),
+          PuzzleRecommendations.capiLookup(contentApiClient),
+        )
+        .map(Some(_))
+    else Future.successful(None)
 
   def withCrossword(crosswordType: String, id: Int)(
       f: (Crossword, ApiContent) => Future[Result],
@@ -86,7 +104,9 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       )
 
       if (CrosswordsPicker.getTier(page) == RemoteRender)
-        remoteRenderer.getCrossword(wsClient, page, PageType(page, request, context))
+        moreFromPuzzlesAndGames(page.crossword).flatMap { recommendations =>
+          remoteRenderer.getCrossword(wsClient, page, PageType(page, request, context), recommendations)
+        }
       else
         Future.successful(
           Cached(CacheTime.Crosswords)(
@@ -122,17 +142,23 @@ class CrosswordPageController(
         val crosswordPage = new CrosswordPageWithContent(crosswordContent)
 
         val pageType = PageType(crosswordPage, request, context)
-        Future.successful(
-          common.renderJson(getDCRJson(crosswordPage, pageType), crosswordPage).as("application/json"),
-        )
+        moreFromPuzzlesAndGames(crosswordPage.crossword).map { recommendations =>
+          common
+            .renderJson(getDCRJson(crosswordPage, pageType, recommendations), crosswordPage)
+            .as("application/json")
+        }
       }
     }
   }
-  private def getDCRJson(crosswordPage: CrosswordPageWithContent, pageType: PageType)(implicit
+  private def getDCRJson(
+      crosswordPage: CrosswordPageWithContent,
+      pageType: PageType,
+      moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
+  )(implicit
       request: RequestHeader,
   ): JsValue =
     DotcomRenderingDataModel.toJson(
-      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None),
+      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None, moreFromPuzzlesAndGames),
     )
 
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =

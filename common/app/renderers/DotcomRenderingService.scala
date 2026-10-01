@@ -503,8 +503,10 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       crosswordPage: CrosswordPageWithContent,
       pageType: PageType,
+      moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None)
+    val dataModel =
+      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None, moreFromPuzzlesAndGames)
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Crosswords)
   }
