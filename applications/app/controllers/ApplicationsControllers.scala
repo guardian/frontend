@@ -24,6 +24,7 @@ trait ApplicationsControllers {
   lazy val puzzlesLayoutProvider: PuzzlesLayoutProvider =
     new LocalJsonPuzzlesLayoutProvider(environment, contentApiClient)
   lazy val puzzlesPageController = wire[PuzzlesPageController]
+  lazy val puzzlesArchiveApi: PuzzlesArchiveApi = new PuzzlesArchiveApiClient(wsClient)
   lazy val siteMapController = wire[SiteMapController]
   lazy val dCARAssetsController = wire[DCARAssetsController]
   lazy val crosswordPageController = wire[CrosswordPageController]
