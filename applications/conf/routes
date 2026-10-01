@@ -19,6 +19,10 @@ GET        /email-newsletters                                                   
 # Puzzles
 GET        /puzzles-and-games.json                                                        controllers.PuzzlesPageController.renderPuzzlesJson()
 GET        /puzzles-and-games                                                             controllers.PuzzlesPageController.renderPuzzles()
+GET        /puzzles-and-games/crosswords/archive                                          controllers.PuzzlesPageController.renderCrosswordsArchive()
+GET        /puzzles-and-games/word-games/archive                                          controllers.PuzzlesPageController.renderWordGamesArchive()
+GET        /puzzles-and-games/logic-puzzles/archive                                       controllers.PuzzlesPageController.renderLogicPuzzlesArchive()
+GET        /puzzles-and-games/archive-data                                                controllers.PuzzlesPageController.archiveData()
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
