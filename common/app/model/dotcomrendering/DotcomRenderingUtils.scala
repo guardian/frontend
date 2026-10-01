@@ -66,11 +66,6 @@ trait DCARUrlHelper {
 }
 
 object DotcomRenderingUtils extends DCARUrlHelper {
-  private val livePricingAllowList: Map[String, Set[String]] = Map(
-    "CODE" -> Set("/thefilter/2025/nov/15/best-christmas-gifts-ideas-filter-uk-2025"),
-    "PROD" -> Set.empty,
-  )
-
   def makeMatchData(articlePage: ContentPage, pageType: PageType): Option[DotcomRenderingMatchData] = {
     makeFootballMatch(articlePage, pageType).orElse(makeCricketMatch(articlePage.item))
   }
@@ -310,14 +305,6 @@ object DotcomRenderingUtils extends DCARUrlHelper {
       case gallery: Gallery => gallery.lightbox.containsAffiliateableLinks
       case _                => blocks.exists(blockContainsAffiliateableLinks)
     }
-  }
-
-  def isLivePricingEnabled(pageUrl: String): Boolean = {
-    // Later we will check a flag in the content model
-    val enabledForArticle = livePricingAllowList
-      .getOrElse(if (Configuration.environment.isProd) "PROD" else "CODE", Set.empty)
-      .contains(pageUrl)
-    enabledForArticle && Switches.AffiliateProductLivePricing.isSwitchedOn
   }
 
   // Editors put affiliate links in image captions as well as body copy, so check both.
