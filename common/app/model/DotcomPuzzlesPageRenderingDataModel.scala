@@ -58,11 +58,9 @@ case class PuzzlesArchive(
     year: Int,
     month: Int,
     items: Seq[PuzzlesArchiveItem],
-    dataUrl: String,
     hasError: Boolean,
     moreFrom: Seq[PuzzleItem],
 )
-
 object PuzzlesArchive {
   implicit val writes: OWrites[PuzzlesArchive] = Json.writes[PuzzlesArchive]
 }
