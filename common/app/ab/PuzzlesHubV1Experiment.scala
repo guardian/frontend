@@ -3,10 +3,12 @@ package ab
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
-/** Request-level access to the `puzzles-new-hub-v1` tier of the Puzzles & Games rollout.
+/** Request-level access to the Fastly-managed `puzzles-new-hub-v1` experiment, which gates the Puzzles & Games hub, its
+  * pages and its navigation.
   *
-  * The tier is cumulative: it only takes effect when the `puzzles-new-hub` (v0) baseline is also enabled, mirroring
-  * dotcom-rendering's `isPuzzlesHubV1Enabled`.
+  * The experiment is defined in dotcom-rendering's AB-testing configuration. Fastly assigns the request to a group and
+  * passes that participation to Frontend in the server-side AB-tests header, which [[http.ABTestingFilter]] uses to
+  * decorate the request before this helper is called. Mirrors dotcom-rendering's `isPuzzlesHubV1Enabled`.
   */
 object PuzzlesHubV1Experiment {
   val TestName = "puzzles-new-hub-v1"
@@ -16,7 +18,5 @@ object PuzzlesHubV1Experiment {
     isEnabled(Configuration.environment.isDev)
 
   private[ab] def isEnabled(isDevelopment: Boolean)(implicit request: RequestHeader): Boolean =
-    isDevelopment ||
-      (ABTests.isUserInTestGroup(PuzzlesHubExperiment.TestName, PuzzlesHubExperiment.VariantGroup) &&
-        ABTests.isUserInTestGroup(TestName, VariantGroup))
+    isDevelopment || ABTests.isUserInTestGroup(TestName, VariantGroup)
 }

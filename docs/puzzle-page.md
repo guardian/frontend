@@ -39,14 +39,14 @@ to.
 
 Matching DCR's own V0 registry:
 
-| Public URL (dated) | Controller action | `slug` sent to DCR | Title sent to DCR |
-|---|---|---|---|
-| `/puzzles-and-games/logic-puzzles/sudoku-easy/{date}` | `renderSudoku("easy", date)` | `sudoku-easy` | Sudoku (easy) |
-| `/puzzles-and-games/logic-puzzles/sudoku-medium/{date}` | `renderSudoku("medium", date)` | `sudoku-medium` | Sudoku (medium) |
-| `/puzzles-and-games/logic-puzzles/sudoku-hard/{date}` | `renderSudoku("hard", date)` | `sudoku-hard` | Sudoku (hard) |
-| `/puzzles-and-games/logic-puzzles/sudoku-killer/{date}` | `renderSudoku("killer", date)` | `sudoku-killer` | Killer sudoku |
-| `/puzzles-and-games/word-games/word-wheel/{date}` | `renderWordWheel(date)` | `word-wheel` | Word wheel |
-| `/puzzles-and-games/word-games/wordiply/{date}` | `renderWordiply(date)` | `wordiply` | Wordiply |
+| Public URL (dated)                                      | Controller action              | `slug` sent to DCR | Title sent to DCR |
+| ------------------------------------------------------- | ------------------------------ | ------------------ | ----------------- |
+| `/puzzles-and-games/logic-puzzles/sudoku-easy/{date}`   | `renderSudoku("easy", date)`   | `sudoku-easy`      | Sudoku (easy)     |
+| `/puzzles-and-games/logic-puzzles/sudoku-medium/{date}` | `renderSudoku("medium", date)` | `sudoku-medium`    | Sudoku (medium)   |
+| `/puzzles-and-games/logic-puzzles/sudoku-hard/{date}`   | `renderSudoku("hard", date)`   | `sudoku-hard`      | Sudoku (hard)     |
+| `/puzzles-and-games/logic-puzzles/sudoku-killer/{date}` | `renderSudoku("killer", date)` | `sudoku-killer`    | Killer sudoku     |
+| `/puzzles-and-games/word-games/word-wheel/{date}`       | `renderWordWheel(date)`        | `word-wheel`       | Word wheel        |
+| `/puzzles-and-games/word-games/wordiply/{date}`         | `renderWordiply(date)`         | `wordiply`         | Wordiply          |
 
 For all six, this repo sends **only a static placeholder title plus the requested date** - there is
 no real per-instance content sourcing on the frontend side for any of these, since the iframe itself
@@ -57,17 +57,17 @@ plus that placeholder title and date.
 ### Code
 
 - `applications/app/controllers/PuzzlesPageController.scala`:
-  - `renderSudoku(variant, date)`/`renderSudokuJson(variant, date)` - the nested, dated Sudoku
-    actions, backed by `sudokuVariantTitles` (variant -> title map).
-  - `renderWordWheel(date)`/`renderWordWheelJson(date)` - dedicated word wheel actions, hardcoding
-    `WordWheelSlug`/`WordWheelTitle` internally.
-  - `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions, hardcoding
-    `WordiplySlug`/`WordiplyTitle` internally.
-  - `redirectSudokuArchive(variant)`, `redirectWordWheelArchive()`, `redirectWordiplyArchive()` - the
-    bare (dateless) archive-redirect actions (see "Archive redirects" below).
-  - All actions are deliberately named distinctly from this controller's other, pre-existing
-    `renderPuzzles()`/`renderPuzzlesJson()` actions, which serve the unrelated Puzzles Hub/listing
-    page.
+    - `renderSudoku(variant, date)`/`renderSudokuJson(variant, date)` - the nested, dated Sudoku
+      actions, backed by `sudokuVariantTitles` (variant -> title map).
+    - `renderWordWheel(date)`/`renderWordWheelJson(date)` - dedicated word wheel actions, hardcoding
+      `WordWheelSlug`/`WordWheelTitle` internally.
+    - `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions, hardcoding
+      `WordiplySlug`/`WordiplyTitle` internally.
+    - `redirectSudokuArchive(variant)`, `redirectWordWheelArchive()`, `redirectWordiplyArchive()` - the
+      bare (dateless) archive-redirect actions (see "Archive redirects" below).
+    - All actions are deliberately named distinctly from this controller's other, pre-existing
+      `renderPuzzles()`/`renderPuzzlesJson()` actions, which serve the unrelated Puzzles Hub/listing
+      page.
 - `common/app/model/dotcomrendering/DotcomPuzzlePageRenderingDataModel.scala` -
   `DotcomPuzzlePageRenderingDataModel`/`PuzzlePageInstance`, the JSON contract sent to DCR (see field
   reference below).
@@ -80,40 +80,34 @@ plus that placeholder title and date.
   generic `IndexController` catch-all further down the file - Play resolves routes in file order,
   so this positioning is required for these paths to not fall through to the tag/section catch-all,
   exactly like `/crosswords/*` already relies on):
-  ```
-  GET /puzzles-and-games/logic-puzzles/sudoku-:variant/:date       -> PuzzlesPageController.renderSudoku       (variant constrained to easy|medium|hard|killer, date constrained to \d{4}-\d{2}-\d{2})
-  GET /puzzles-and-games/logic-puzzles/sudoku-:variant/:date.json  -> PuzzlesPageController.renderSudokuJson
-  GET /puzzles-and-games/logic-puzzles/sudoku-:variant             -> PuzzlesPageController.redirectSudokuArchive
 
-  GET /puzzles-and-games/word-games/word-wheel/:date       -> PuzzlesPageController.renderWordWheel
-  GET /puzzles-and-games/word-games/word-wheel/:date.json  -> PuzzlesPageController.renderWordWheelJson
-  GET /puzzles-and-games/word-games/word-wheel             -> PuzzlesPageController.redirectWordWheelArchive
+    ```
+    GET /puzzles-and-games/logic-puzzles/sudoku-:variant/:date       -> PuzzlesPageController.renderSudoku       (variant constrained to easy|medium|hard|killer, date constrained to \d{4}-\d{2}-\d{2})
+    GET /puzzles-and-games/logic-puzzles/sudoku-:variant/:date.json  -> PuzzlesPageController.renderSudokuJson
+    GET /puzzles-and-games/logic-puzzles/sudoku-:variant             -> PuzzlesPageController.redirectSudokuArchive
 
-  GET /puzzles-and-games/word-games/wordiply/:date       -> PuzzlesPageController.renderWordiply
-  GET /puzzles-and-games/word-games/wordiply/:date.json  -> PuzzlesPageController.renderWordiplyJson
-  GET /puzzles-and-games/word-games/wordiply             -> PuzzlesPageController.redirectWordiplyArchive
-  ```
+    GET /puzzles-and-games/word-games/word-wheel/:date       -> PuzzlesPageController.renderWordWheel
+    GET /puzzles-and-games/word-games/word-wheel/:date.json  -> PuzzlesPageController.renderWordWheelJson
+    GET /puzzles-and-games/word-games/word-wheel             -> PuzzlesPageController.redirectWordWheelArchive
+
+    GET /puzzles-and-games/word-games/wordiply/:date       -> PuzzlesPageController.renderWordiply
+    GET /puzzles-and-games/word-games/wordiply/:date.json  -> PuzzlesPageController.renderWordiplyJson
+    GET /puzzles-and-games/word-games/wordiply             -> PuzzlesPageController.redirectWordiplyArchive
+    ```
 
 ### Access gate: reuses the existing Puzzles Hub AB test
 
 All Puzzle Page actions (dated render actions and archive redirects alike) are gated behind
-`ab.PuzzlesHubExperiment` ("puzzles-new-hub"), the same server-side AB test already used by this
-controller's `renderPuzzles`/`renderPuzzlesJson` hub actions - no new/separate experiment was
-introduced for V0. Requests return `404` unless the request carries the
-`X-GU-Server-AB-Tests: puzzles-new-hub:variant` header (via this repo's normal server-side AB test
+`ab.PuzzlesHubV1Experiment` ("puzzles-new-hub-v1"), the same server-side AB test used by this
+controller's `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the
+request carries the `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant` header (via this repo's normal server-side AB test
 framework, `common/app/ab/ABTests.scala`).
 
-**Note for future v1/v2 work:** DCR uses a 3-tier, cumulative rollout gating structure for this
-feature (`puzzles-new-hub` v0, `puzzles-new-hub-v1`, `puzzles-new-hub-v2`, defined in
-`ab-testing/config/abTests.ts`, checked via `isPuzzlesHubEnabled`/`isPuzzlesHubV1Enabled`/
-`isPuzzlesHubV2Enabled` in `src/lib/puzzlesHubExperiment.ts`/`puzzlesHubVersionExperiment.ts`), used
-there to gate individual v1/v2-scoped features (currently the "More from Puzzles & Games" rail,
-gated behind v1). This repo only checks the single v0 tier today, since no v1/v2-scoped feature
-exists on the frontend side yet. Confirmed correct for now in product review, but when the first
-v1-scoped frontend feature is built (e.g. the "sign in to track puzzles progress" message, full hub
-sub-nav links, or calendar/archive views), this repo will need its own equivalent cumulative check,
-mirroring DCR's `isPuzzlesHubV1Enabled`/`isPuzzlesHubV2Enabled` pattern, not just continue checking
-the v0 gate alone.
+**Note for future v2 work:** DCR uses a 2-tier, cumulative rollout gating structure for this
+feature (`puzzles-new-hub-v1`, `puzzles-new-hub-v2`, defined in `ab-testing/config/abTests.ts`,
+checked via `isPuzzlesHubV1Enabled`/`isPuzzlesHubV2Enabled` in
+`src/lib/puzzlesHubVersionExperiment.ts`). This repo only checks the v1 tier today; a v2-scoped
+frontend feature will need its own equivalent cumulative check.
 
 ### The date path segment
 
@@ -123,7 +117,7 @@ entirely, along with the `java.time.LocalDate`-based "default to today" fallback
 longer optional plumbing, it's a meaningful part of every puzzle-page URL, since users will navigate
 here from a calendar for a specific day's puzzle.
 
-**Format validation only.** The date's *shape* is validated at the route level via a
+**Format validation only.** The date's _shape_ is validated at the route level via a
 `$date<\d{4}-\d{2}-\d{2}>` constraint - a structurally malformed date (wrong number of digits, missing
 dashes, etc.) fails to match the route and 404s before ever reaching the controller. **Deeper calendar
 validity is intentionally not implemented** - e.g. `2024-02-30` (not a real date) or a future date
@@ -141,12 +135,12 @@ better"), filtering is done via the `?puzzle=` query param.
 
 **The archive page itself does not exist yet** (it's a V1 feature) - it's explicitly confirmed
 acceptable for this redirect target to 404 downstream for now, until the archive is built. A
-*temporary*, not permanent, redirect status is used deliberately, so browsers/CDNs don't cache a
+_temporary_, not permanent, redirect status is used deliberately, so browsers/CDNs don't cache a
 redirect target that isn't ready yet.
 
 ### How to configure/add a new puzzle type
 
-All per-slug *structural* configuration (iframe URL, render mode, which UI chrome is enabled) lives
+All per-slug _structural_ configuration (iframe URL, render mode, which UI chrome is enabled) lives
 in DCR's `PuzzleConfig` registry, not in this repo - this repo does not duplicate that data. To onboard
 a new **flat** (single-segment identity) iframe-based puzzle (like word-wheel/wordiply) on the
 **frontend side**:
@@ -183,20 +177,20 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
 **The AB-test header is required** (see "Access gate" above) - without
-`X-GU-Server-AB-Tests: puzzles-new-hub:variant`, every URL below 404s. Set it via a browser extension
-(e.g. ModHeader) or `curl -H "X-GU-Server-AB-Tests: puzzles-new-hub:variant" ...`.
+`X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant`, every URL below 404s. Set it via a browser extension
+(e.g. ModHeader) or `curl -H "X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant" ...`.
 
 The `.json` route variant returns the exact JSON payload this repo would send to DCR, without
 needing DCR itself to be reachable.
 
-| Puzzle | Dated URL (example date `2024-01-15`) | Bare (archive-redirect) URL |
-|---|---|---|
-| Sudoku (easy) | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15` | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-easy` |
+| Puzzle          | Dated URL (example date `2024-01-15`)                                            | Bare (archive-redirect) URL                                           |
+| --------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Sudoku (easy)   | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`   | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-easy`   |
 | Sudoku (medium) | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-medium/2024-01-15` | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-medium` |
-| Sudoku (hard) | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-hard/2024-01-15` | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-hard` |
-| Killer sudoku | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-15` | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-killer` |
-| Word wheel | `http://localhost:9000/puzzles-and-games/word-games/word-wheel/2024-01-15` | `http://localhost:9000/puzzles-and-games/word-games/word-wheel` |
-| Wordiply | `http://localhost:9000/puzzles-and-games/word-games/wordiply/2024-01-15` | `http://localhost:9000/puzzles-and-games/word-games/wordiply` |
+| Sudoku (hard)   | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-hard/2024-01-15`   | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-hard`   |
+| Killer sudoku   | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-15` | `http://localhost:9000/puzzles-and-games/logic-puzzles/sudoku-killer` |
+| Word wheel      | `http://localhost:9000/puzzles-and-games/word-games/word-wheel/2024-01-15`       | `http://localhost:9000/puzzles-and-games/word-games/word-wheel`       |
+| Wordiply        | `http://localhost:9000/puzzles-and-games/word-games/wordiply/2024-01-15`         | `http://localhost:9000/puzzles-and-games/word-games/wordiply`         |
 
 The hub itself: `http://localhost:9000/puzzles-and-games`.
 
@@ -207,25 +201,25 @@ page doesn't exist yet - see "Archive redirects" above); this is expected.
 
 This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 
-| Field | Type | Meaning |
-|---|---|---|
-| `id` | string | The page's canonical content id. Not Puzzle-Page-specific. |
-| `slug` | string | The puzzle type identifier DCR uses to look up its own `PuzzleConfig` entry (e.g. `"sudoku-easy"`, `"word-wheel"`). Always the flattened form, even for Sudoku. |
-| `webTitle` | string | The page's `<title>`/web title. |
-| `config` | object | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific. |
-| `nav` | object | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific. |
-| `pageFooter` | object | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific. |
-| `canonicalUrl` | string | The canonical URL for this page (e.g. `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`). |
-| `editionId` | string | The edition (e.g. `UK`, `US`, `AU`) resolved from the request. |
-| `instance` | object | Per-instance data - see below. |
+| Field          | Type   | Meaning                                                                                                                                                         |
+| -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | string | The page's canonical content id. Not Puzzle-Page-specific.                                                                                                      |
+| `slug`         | string | The puzzle type identifier DCR uses to look up its own `PuzzleConfig` entry (e.g. `"sudoku-easy"`, `"word-wheel"`). Always the flattened form, even for Sudoku. |
+| `webTitle`     | string | The page's `<title>`/web title.                                                                                                                                 |
+| `config`       | object | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific.                                                  |
+| `nav`          | object | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                     |
+| `pageFooter`   | object | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                   |
+| `canonicalUrl` | string | The canonical URL for this page (e.g. `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`).                                    |
+| `editionId`    | string | The edition (e.g. `UK`, `US`, `AU`) resolved from the request.                                                                                                  |
+| `instance`     | object | Per-instance data - see below.                                                                                                                                  |
 
 `instance` fields (`PuzzlePageInstance`):
 
-| Field | Type | Meaning |
-|---|---|---|
-| `title` | string | Display title for the instance (e.g. `"Sudoku (easy)"`). |
-| `puzzleDate` | string, optional | An ISO-8601 (`yyyy-MM-dd`) date string, sourced directly from the request URL's date path segment (see "The date path segment" above) - which day's puzzle this instance is for. Always populated in practice; modelled as optional for JSON forwards/backwards compatibility. DCR is being updated in parallel (see cross-repo note below) to actually display this value and forward it to the iframe. |
-| `moreFromPuzzlesAndGames` | array | Best-effort "more like this" recommendations. Currently always an empty array - not populated anywhere yet. |
+| Field                     | Type             | Meaning                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`                   | string           | Display title for the instance (e.g. `"Sudoku (easy)"`).                                                                                                                                                                                                                                                                                                                                                 |
+| `puzzleDate`              | string, optional | An ISO-8601 (`yyyy-MM-dd`) date string, sourced directly from the request URL's date path segment (see "The date path segment" above) - which day's puzzle this instance is for. Always populated in practice; modelled as optional for JSON forwards/backwards compatibility. DCR is being updated in parallel (see cross-repo note below) to actually display this value and forward it to the iframe. |
+| `moreFromPuzzlesAndGames` | array            | Best-effort "more like this" recommendations. Currently always an empty array - not populated anywhere yet.                                                                                                                                                                                                                                                                                              |
 
 The crossword-flavoured fields that previously existed on this type (`puzzleType`, `setterName`,
 `date`, `specialInstructions`, `discussionId`, `crosswordData`) have been removed entirely, as a

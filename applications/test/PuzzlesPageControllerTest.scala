@@ -102,7 +102,7 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
-  private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
+  private def request(path: String, participations: String = "puzzles-new-hub-v1:variant"): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
   }
@@ -242,10 +242,10 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub:control",
+    "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
-    "malformed" -> "puzzles-new-hub:,puzzles-new-hub:variant:extra",
-    "unknown group" -> "puzzles-new-hub:unknown",
+    "malformed" -> "puzzles-new-hub-v1:,puzzles-new-hub-v1:variant:extra",
+    "unknown group" -> "puzzles-new-hub-v1:unknown",
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
     s"puzzles hub access with $participationCase participation" should
@@ -264,7 +264,7 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB
+    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB
     * test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are explicitly
     * out of scope for Puzzle Page and are not exercised by these tests.
     */
@@ -449,7 +449,7 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub:control",
+    "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>

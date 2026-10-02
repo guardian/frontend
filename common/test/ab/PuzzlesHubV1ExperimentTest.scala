@@ -14,23 +14,23 @@ import play.api.test.FakeRequest
     ABTests.decorateRequest(abTestHeader)(request)
   }
 
-  "PuzzlesHubV1Experiment.isEnabled" should "return true when both v0 and v1 are in the variant group" in {
-    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub:variant,puzzles-new-hub-v1:variant")
+  "PuzzlesHubV1Experiment.isEnabled" should "return true when the user is in the variant group" in {
+    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub-v1:variant")
     PuzzlesHubV1Experiment.isEnabled should be(true)
   }
 
-  it should "return false when only v1 is in the variant group" in {
-    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub-v1:variant")
+  it should "return false for the control group" in {
+    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub-v1:control")
     PuzzlesHubV1Experiment.isEnabled should be(false)
   }
 
-  it should "return false when only v0 is in the variant group" in {
-    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub:variant")
+  it should "return false for an unknown group" in {
+    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub-v1:unknown")
     PuzzlesHubV1Experiment.isEnabled should be(false)
   }
 
-  it should "return false when v1 is in the control group" in {
-    implicit val request: RequestHeader = requestWithParticipation("puzzles-new-hub:variant,puzzles-new-hub-v1:control")
+  it should "return false when the experiment participation is absent" in {
+    implicit val request: RequestHeader = requestWithParticipation("another-test:variant")
     PuzzlesHubV1Experiment.isEnabled should be(false)
   }
 
