@@ -1,6 +1,5 @@
 package controllers
 
-import actions.AuthenticatedActions
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
@@ -40,7 +39,6 @@ import scala.concurrent.Future
     val idUrlBuilder = mock[IdentityUrlBuilder]
     val api = mock[IdApiClient]
     val idRequestParser = mock[IdRequestParser]
-    val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -51,21 +49,13 @@ import scala.concurrent.Future
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc")
-    val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(
-      authService,
-      api,
-      mock[IdentityUrlBuilder],
-      controllerComponent,
-    )
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new PrivacyMapping,
     )
 
-    when(authService.fullyAuthenticatedUser(ArgumentMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(ArgumentMatchers.any[RequestHeader])) thenReturn idRequest
@@ -79,15 +69,12 @@ import scala.concurrent.Future
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
-      authenticatedActions,
       api,
       idRequestParser,
       csrfCheck,
       csrfAddToken,
       returnUrlVerifier,
       newsletterService,
-      signinService,
-      newsletterSignupAgent,
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
