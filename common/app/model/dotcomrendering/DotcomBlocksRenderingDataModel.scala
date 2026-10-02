@@ -6,7 +6,7 @@ import common.Edition
 import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
 import model.dotcomrendering.pageElements.PageElement
-import model.{ContentFormat, ContentPage}
+import model.{AffiliateProductLivePricing, ContentFormat, ContentPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
@@ -70,7 +70,7 @@ object DotcomBlocksRenderingDataModel {
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
-    val isLivePricingEnabled = DotcomRenderingUtils.isLivePricingEnabled(request.uri)
+    val isLivePricingEnabled = AffiliateProductLivePricing.isEnabledForPage(request.uri)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
     val edition = Edition(request)

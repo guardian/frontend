@@ -92,50 +92,66 @@ class PuzzlesPageController(
           .recoverWith { case _: NoSuchElementException => notFound }
     }
 
-  def archiveData(): Action[AnyContent] =
+  def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isV1Enabled) notFound
-      else
-        request.getQueryString("category") match {
-          case Some(category) =>
-            buildArchive(category)
-              .map { case (_, archive) =>
-                Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
-              }
-              .recoverWith { case _: NoSuchElementException => notFound }
-          case None => notFound
+      buildArchive(category)
+        .map { case (_, archive) =>
+          Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
         }
+        .recoverWith { case _: NoSuchElementException => notFound }
     }
 
-  private def selectedMonth(request: RequestHeader): YearMonth = {
-    val current = YearMonth.from(LocalDate.now(ZoneId.of("Europe/London")))
+  // Fastly strips unrecognised query parameters. Calendar requests must carry
+  // their selection in the path so that CODE/PROD receive the requested month.
+  def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
+    Action.async { implicit request =>
+      Try(YearMonth.of(year, month)).toOption match {
+        case None                 => Future.successful(BadRequest)
+        case Some(requestedMonth) =>
+          buildArchive(category, Some(puzzle), Some(requestedMonth))
+            .map { case (_, archive) =>
+              Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+            }
+            .recoverWith { case _: NoSuchElementException => notFound }
+      }
+    }
+
+  private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
+    val current = YearMonth.from(today)
     val requested = for {
       year <- request.getQueryString("year").flatMap(value => Try(value.toInt).toOption)
       month <- request.getQueryString("month").flatMap(value => Try(value.toInt).toOption)
       value <- Try(YearMonth.of(year, month)).toOption
     } yield value
-    requested.getOrElse(current)
+    requested.filterNot(_.isAfter(current)).getOrElse(current)
   }
 
-  private def buildArchive(category: String)(implicit
+  private def buildArchive(
+      category: String,
+      puzzle: Option[String] = None,
+      requestedMonth: Option[YearMonth] = None,
+  )(implicit
       request: RequestHeader,
   ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
-    val yearMonth = selectedMonth(request)
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+    val yearMonth = requestedMonth
+      .map(month => if (month.isAfter(YearMonth.from(today))) YearMonth.from(today) else month)
+      .getOrElse(selectedMonth(request, today))
+    val isCurrentMonth = yearMonth == YearMonth.from(today)
+    val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
+    val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
     puzzlesLayoutProvider.getLayout().flatMap { layout =>
-      PuzzlesArchiveBuilder.select(layout, category, request.getQueryString("puzzle")) match {
+      PuzzlesArchiveBuilder.select(layout, category, puzzle.orElse(request.getQueryString("puzzle"))) match {
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
         case Some(selection) =>
-          val dataUrl =
-            s"/puzzles-and-games/archive-data?category=$category&puzzle=${selection.puzzle.id}"
           puzzlesArchiveApi
-            .get(yearMonth.atDay(1), yearMonth.atEndOfMonth(), selection.apiType)
+            .get(startDate, endDate, selection.apiType)
             .map(items =>
               layout -> PuzzlesArchiveBuilder.build(
                 selection,
                 yearMonth.getYear,
                 yearMonth.getMonthValue,
                 items,
-                dataUrl,
                 hasError = false,
               ),
             )
@@ -145,7 +161,6 @@ class PuzzlesPageController(
                 yearMonth.getYear,
                 yearMonth.getMonthValue,
                 Nil,
-                dataUrl,
                 hasError = true,
               )
             }

@@ -3,7 +3,7 @@ package test
 import ab.ABTests
 import controllers.{PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController}
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
 import org.scalatest.DoNotDiscover
 import org.scalatest.concurrent.ScalaFutures
@@ -16,6 +16,7 @@ import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
+import java.time.{LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class PuzzlesPageControllerTest
@@ -43,11 +44,12 @@ import scala.concurrent.{ExecutionContext, Future}
   private def controller(
       provider: PuzzlesLayoutProvider,
       renderer: DotcomRenderingService,
+      puzzlesArchiveApi: PuzzlesArchiveApi = mock[PuzzlesArchiveApi],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
       provider,
-      mock[PuzzlesArchiveApi],
+      puzzlesArchiveApi,
       renderer,
       stubControllerComponents(),
     )
@@ -58,9 +60,99 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
+  private def archiveProvider: PuzzlesLayoutProvider = {
+    val provider = mock[PuzzlesLayoutProvider]
+    val archiveLayout = PuzzlesLayout(
+      containers = Seq(
+        PuzzleContainer(
+          id = "crosswords",
+          title = "Crosswords",
+          content = PuzzleContent(
+            items = Seq.empty,
+            nestedContainers = Seq.empty,
+            archiveChoices = Some(
+              Seq(
+                PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive"),
+                PuzzleItem("archive-mini", "Mini", "crossword", "mini", "archive"),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+    when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(archiveLayout))
+    provider
+  }
+
   private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
+  }
+
+  "archiveDataForMonth" should "serve calendar requests without requiring AB participation" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
+        request(
+          "/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9",
+          participations = "",
+        ),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi)
+      .get(eqTo(LocalDate.of(2020, 9, 1)), eqTo(LocalDate.of(2020, 9, 30)), eqTo("CROSSWORD_QUICK"))(
+        any[ExecutionContext],
+      )
+  }
+
+  it should "clamp future requests to the current month and current date" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2999, 12)(
+        request(
+          "/puzzles-and-games/crosswords/archive-data/archive-quick/2999/12",
+          participations = "",
+        ),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi)
+      .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
+  }
+
+  it should "use the path selection without query parameters or AB participation" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 8)(
+        request("/puzzles-and-games/crosswords/archive-data/archive-mini/2020/8", participations = ""),
+      )
+
+    status(result) should be(OK)
+    (contentAsJson(result) \ "selectedPuzzle" \ "id").as[String] should be("archive-mini")
+    (contentAsJson(result) \ "year").as[Int] should be(2020)
+    (contentAsJson(result) \ "month").as[Int] should be(8)
+    (contentAsJson(result) \ "dataUrl").toOption should be(None)
+    verify(archiveApi).get(eqTo(LocalDate.of(2020, 8, 1)), eqTo(LocalDate.of(2020, 8, 31)), eqTo("CROSSWORD_MINI"))(
+      any[ExecutionContext],
+    )
+  }
+
+  it should "reject invalid months before calling the API" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(request("/", participations = ""))
+    status(result) should be(BAD_REQUEST)
+    verifyNoInteractions(archiveApi)
   }
 
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {
