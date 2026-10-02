@@ -12,15 +12,19 @@ import model.dotcomrendering.{
 }
 import model.{ApplicationContext, CacheTime, Cached}
 import play.api.libs.ws.WSClient
+import play.api.libs.json.Json
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import staticpages.StaticPages
 
+import java.time.{LocalDate, YearMonth, ZoneId}
 import scala.concurrent.Future
+import scala.util.Try
 
 class PuzzlesPageController(
     wsClient: WSClient,
     puzzlesLayoutProvider: PuzzlesLayoutProvider,
+    puzzlesArchiveApi: PuzzlesArchiveApi,
     remoteRenderer: DotcomRenderingService,
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
@@ -71,6 +75,110 @@ class PuzzlesPageController(
           case _ => notFound
         }
     }
+
+  def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
+  def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
+  def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
+
+  private def renderArchive(category: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubExperiment.isV1Enabled || request.getRequestFormat != HtmlFormat) notFound
+      else
+        buildArchive(category)
+          .flatMap { case (layout, archive) =>
+            val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
+            val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
+            remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+          }
+          .recoverWith { case _: NoSuchElementException => notFound }
+    }
+
+  def archiveData(category: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      buildArchive(category)
+        .map { case (_, archive) =>
+          Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+        }
+        .recoverWith { case _: NoSuchElementException => notFound }
+    }
+
+  // Fastly strips unrecognised query parameters. Calendar requests must carry
+  // their selection in the path so that CODE/PROD receive the requested month.
+  def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
+    Action.async { implicit request =>
+      Try(YearMonth.of(year, month)).toOption match {
+        case None                 => Future.successful(BadRequest)
+        case Some(requestedMonth) =>
+          buildArchive(category, Some(puzzle), Some(requestedMonth))
+            .map { case (_, archive) =>
+              Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+            }
+            .recoverWith { case _: NoSuchElementException => notFound }
+      }
+    }
+
+  private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
+    val current = YearMonth.from(today)
+    val requested = for {
+      year <- request.getQueryString("year").flatMap(value => Try(value.toInt).toOption)
+      month <- request.getQueryString("month").flatMap(value => Try(value.toInt).toOption)
+      value <- Try(YearMonth.of(year, month)).toOption
+    } yield value
+    requested.filterNot(_.isAfter(current)).getOrElse(current)
+  }
+
+  private def buildArchive(
+      category: String,
+      puzzle: Option[String] = None,
+      requestedMonth: Option[YearMonth] = None,
+  )(implicit
+      request: RequestHeader,
+  ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+    val yearMonth = requestedMonth
+      .map(month => if (month.isAfter(YearMonth.from(today))) YearMonth.from(today) else month)
+      .getOrElse(selectedMonth(request, today))
+    val isCurrentMonth = yearMonth == YearMonth.from(today)
+    val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
+    val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
+    puzzlesLayoutProvider.getLayout().flatMap { layout =>
+      PuzzlesArchiveBuilder.select(layout, category, puzzle.orElse(request.getQueryString("puzzle"))) match {
+        case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
+        case Some(selection) =>
+          PuzzleRecommendations
+            .resolve(
+              PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
+              currentId = None,
+              today.toString,
+              PuzzleRecommendations.capiLookup(contentApiClient),
+            )
+            .flatMap { moreFrom =>
+              puzzlesArchiveApi
+                .get(startDate, endDate, selection.apiType)
+                .map(items =>
+                  layout -> PuzzlesArchiveBuilder.build(
+                    selection,
+                    yearMonth.getYear,
+                    yearMonth.getMonthValue,
+                    items,
+                    hasError = false,
+                    moreFrom,
+                  ),
+                )
+                .recover { case _ =>
+                  layout -> PuzzlesArchiveBuilder.build(
+                    selection,
+                    yearMonth.getYear,
+                    yearMonth.getMonthValue,
+                    Nil,
+                    hasError = true,
+                    moreFrom,
+                  )
+                }
+            }
+      }
+    }
+  }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, rendered by DCR via its `/PuzzlePage`
     * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows the puzzle for the
