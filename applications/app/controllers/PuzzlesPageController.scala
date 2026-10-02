@@ -146,9 +146,8 @@ class PuzzlesPageController(
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
         case Some(selection) =>
           PuzzleRecommendations
-            .resolve(
+            .resolveForArchive(
               PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
-              currentId = None,
               today.toString,
               PuzzleRecommendations.capiLookup(contentApiClient),
             )

@@ -128,4 +128,29 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     all(items.flatMap(_.cadence)) should not be empty
     items.foreach(item => item.id should fullyMatch regex "[a-z0-9]+(?:-[a-z0-9]+)*")
   }
+
+  private def resolveArchive(key: String, l: CrosswordLookup = lookup): Seq[PuzzleItem] =
+    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l), 5.seconds)
+
+  "ArchiveTable" should "have the same 18 rows as the puzzle table, each with 3 slots and never its own puzzle" in {
+    PuzzleRecommendations.ArchiveTable.keySet shouldBe PuzzleRecommendations.Table.keySet
+    all(PuzzleRecommendations.ArchiveTable.values.map(_.size)) shouldBe 3
+    PuzzleRecommendations.ArchiveTable.foreach { case (key, slots) => slots should not contain key }
+  }
+
+  it should "resolve the slots of the archive rows, in order" in {
+    ids(resolveArchive("mini")) shouldBe Seq("crossword-quick", "crossword-cryptic", "crossword-quick-cryptic")
+    ids(resolveArchive("quick-cryptic")) shouldBe Seq("crossword-cryptic", "crossword-quick", "crossword-mini")
+    ids(resolveArchive("weekend")) shouldBe Seq("crossword-quick", "crossword-cryptic", "crossword-mini")
+    ids(resolveArchive("word-wheel")) shouldBe Seq("crossword-mini", "crossword-quick", "sudoku-easy")
+    ids(resolveArchive("wordiply")) shouldBe Seq("word-wheel", "crossword-quick", "sudoku-medium")
+    ids(resolveArchive("sudoku-easy")) shouldBe Seq("sudoku-medium", "sudoku-hard", "crossword-quick")
+    ids(resolveArchive("sudoku-hard")) shouldBe Seq("sudoku-medium", "sudoku-killer", "crossword-quick")
+    ids(resolveArchive("on-the-ball")) shouldBe Seq("crossword-quick", "sudoku-medium")
+  }
+
+  it should "label every iframe card as today and fall back to the default for an unlisted puzzle" in {
+    resolveArchive("sudoku-easy").filter(_.`type` == "sudoku").flatMap(_.cadence).distinct shouldBe Seq("Today")
+    ids(resolveArchive("everyman")) shouldBe Seq("crossword-quick", "sudoku-easy", "word-wheel")
+  }
 }

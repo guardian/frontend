@@ -110,6 +110,31 @@ object PuzzleRecommendations extends GuLogging {
     "film-reveal" -> Seq("film-reveal", "on-the-ball", "quick"),
   )
 
+  /** The design table for archive pages: the archived puzzle -> the 3 puzzles to recommend, in slot order. An archive has
+    * no "current" instance, so a row never repeats its own puzzle.
+    */
+  val ArchiveTable: Map[String, Seq[String]] = Map(
+    "mini" -> Seq("quick", "cryptic", "quick-cryptic"),
+    "quick" -> Seq("mini", "cryptic", "quick-cryptic"),
+    "cryptic" -> Seq("quick", "mini", "quick-cryptic"),
+    "quick-cryptic" -> Seq("cryptic", "quick", "mini"),
+    "weekend" -> Seq("quick", "cryptic", "mini"),
+    "prize" -> Seq("cryptic", "quick", "mini"),
+    "quiptic" -> Seq("cryptic", "quick", "mini"),
+    "genius" -> Seq("cryptic", "quick", "mini"),
+    "special" -> Seq("cryptic", "quick", "mini"),
+    "sunday-quick" -> Seq("quick", "mini", "cryptic"),
+    "word-wheel" -> Seq("mini", "quick", "sudoku-easy"),
+    "wordiply" -> Seq("word-wheel", "quick", "sudoku-medium"),
+    "sudoku-easy" -> Seq("sudoku-medium", "sudoku-hard", "quick"),
+    "sudoku-medium" -> Seq("sudoku-easy", "sudoku-hard", "quick"),
+    "sudoku-hard" -> Seq("sudoku-medium", "sudoku-killer", "quick"),
+    "sudoku-killer" -> Seq("sudoku-medium", "sudoku-hard", "quick"),
+    // Not built yet: only the entries with a catalogue card resolve for now.
+    "on-the-ball" -> Seq("film-reveal", "quick", "sudoku-medium"),
+    "film-reveal" -> Seq("on-the-ball", "quick", "sudoku-medium"),
+  )
+
   /** Used for any puzzle without a row in [[Table]] (e.g. everyman, speedy, azed): one puzzle from each group. */
   val Default: Seq[String] = Seq("quick", "sudoku-easy", "word-wheel")
 
@@ -126,9 +151,25 @@ object PuzzleRecommendations extends GuLogging {
   def resolve(currentKey: String, currentId: Option[String], date: String, lookup: CrosswordLookup)(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] = {
-    val keys = keysFor(currentKey)
-    Future.sequence(keys.map(key => resolveSlot(key, currentKey, currentId, date, lookup))).map(_.flatten)
+    resolveKeys(keysFor(currentKey), currentKey, currentId, date, lookup)
   }
+
+  /** The recommendations for the archive of the puzzle `archivedKey`, as of `date` (yyyy-MM-dd). Uses [[ArchiveTable]]
+    * and, as there is no current page, never excludes an article.
+    */
+  def resolveForArchive(archivedKey: String, date: String, lookup: CrosswordLookup)(implicit
+      ec: ExecutionContext,
+  ): Future[Seq[PuzzleItem]] =
+    resolveKeys(archiveKeysFor(archivedKey), archivedKey, None, date, lookup)
+
+  private def resolveKeys(
+      keys: Seq[String],
+      currentKey: String,
+      currentId: Option[String],
+      date: String,
+      lookup: CrosswordLookup,
+  )(implicit ec: ExecutionContext): Future[Seq[PuzzleItem]] =
+    Future.sequence(keys.map(key => resolveSlot(key, currentKey, currentId, date, lookup))).map(_.flatten)
 
   /** The [[CrosswordLookup]] backed by CAPI. Failures are logged and degrade to "no card". */
   def capiLookup(contentApiClient: ContentApiClient)(implicit ec: ExecutionContext): CrosswordLookup =
@@ -162,6 +203,9 @@ object PuzzleRecommendations extends GuLogging {
 
   private[controllers] def keysFor(currentKey: String): Seq[String] =
     Table.getOrElse(currentKey, Default.filterNot(_ == currentKey))
+
+  private[controllers] def archiveKeysFor(archivedKey: String): Seq[String] =
+    ArchiveTable.getOrElse(archivedKey, Default.filterNot(_ == archivedKey))
 
   private def resolveSlot(
       key: String,
