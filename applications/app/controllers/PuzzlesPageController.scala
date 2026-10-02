@@ -202,8 +202,8 @@ class PuzzlesPageController(
     * internally). All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated
     * Puzzles Hub/listing page).
     *
-    * Gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB test already used by the hub actions above -
-    * reusing the existing experiment rather than introducing a new one.
+    * Gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB test already used by the hub actions
+    * above - reusing the existing experiment rather than introducing a new one.
     *
     * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
     * routes/controllers, untouched.

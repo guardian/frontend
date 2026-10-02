@@ -264,9 +264,9 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB
-    * test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are explicitly
-    * out of scope for Puzzle Page and are not exercised by these tests.
+    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1")
+    * AB test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are
+    * explicitly out of scope for Puzzle Page and are not exercised by these tests.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]

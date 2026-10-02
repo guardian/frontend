@@ -110,8 +110,8 @@ object PuzzleRecommendations extends GuLogging {
     "film-reveal" -> Seq("film-reveal", "on-the-ball", "quick"),
   )
 
-  /** The design table for archive pages: the archived puzzle -> the 3 puzzles to recommend, in slot order. An archive has
-    * no "current" instance, so a row never repeats its own puzzle.
+  /** The design table for archive pages: the archived puzzle -> the 3 puzzles to recommend, in slot order. An archive
+    * has no "current" instance, so a row never repeats its own puzzle.
     */
   val ArchiveTable: Map[String, Seq[String]] = Map(
     "mini" -> Seq("quick", "cryptic", "quick-cryptic"),
