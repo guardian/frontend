@@ -136,6 +136,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       timeout: Duration = Configuration.rendering.timeout,
   )(implicit request: RequestHeader): Future[Result] = {
     val requestId = request.headers.get("x-request-id")
+    println(s"url: ${endpoint}")
     def handler(response: WSResponse): Result = {
       response.status match {
         case 200 =>
@@ -569,12 +570,15 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   def getAppsComponent(
       ws: WSClient,
       path: String,
+      json: JsValue,
+      cacheTime: CacheTime,
   )(implicit request: RequestHeader): Future[Result] = {
+    println("Marji")
     post(
       ws,
-      JsObject.empty, // The component endpoint currently takes no config in the payload
+      json,
       Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
-      CacheTime.Component,
+      cacheTime,
     )
   }
 
