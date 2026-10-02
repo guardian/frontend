@@ -1,9 +1,9 @@
 package test
 
 import ab.ABTests
-import controllers.{PuzzlesLayoutProvider, PuzzlesPageController}
+import controllers.{PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController}
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
 import org.scalatest.DoNotDiscover
 import org.scalatest.concurrent.ScalaFutures
@@ -16,6 +16,7 @@ import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
+import java.time.{LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
 @DoNotDiscover class PuzzlesPageControllerTest
@@ -43,10 +44,12 @@ import scala.concurrent.{ExecutionContext, Future}
   private def controller(
       provider: PuzzlesLayoutProvider,
       renderer: DotcomRenderingService,
+      puzzlesArchiveApi: PuzzlesArchiveApi = mock[PuzzlesArchiveApi],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
       provider,
+      puzzlesArchiveApi,
       renderer,
       stubControllerComponents(),
     )
@@ -57,9 +60,99 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
+  private def archiveProvider: PuzzlesLayoutProvider = {
+    val provider = mock[PuzzlesLayoutProvider]
+    val archiveLayout = PuzzlesLayout(
+      containers = Seq(
+        PuzzleContainer(
+          id = "crosswords",
+          title = "Crosswords",
+          content = PuzzleContent(
+            items = Seq.empty,
+            nestedContainers = Seq.empty,
+            archiveChoices = Some(
+              Seq(
+                PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive"),
+                PuzzleItem("archive-mini", "Mini", "crossword", "mini", "archive"),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+    when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(archiveLayout))
+    provider
+  }
+
   private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
+  }
+
+  "archiveDataForMonth" should "serve calendar requests without requiring AB participation" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
+        request(
+          "/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9",
+          participations = "",
+        ),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi)
+      .get(eqTo(LocalDate.of(2020, 9, 1)), eqTo(LocalDate.of(2020, 9, 30)), eqTo("CROSSWORD_QUICK"))(
+        any[ExecutionContext],
+      )
+  }
+
+  it should "clamp future requests to the current month and current date" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2999, 12)(
+        request(
+          "/puzzles-and-games/crosswords/archive-data/archive-quick/2999/12",
+          participations = "",
+        ),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi)
+      .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
+  }
+
+  it should "use the path selection without query parameters or AB participation" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Nil))
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 8)(
+        request("/puzzles-and-games/crosswords/archive-data/archive-mini/2020/8", participations = ""),
+      )
+
+    status(result) should be(OK)
+    (contentAsJson(result) \ "selectedPuzzle" \ "id").as[String] should be("archive-mini")
+    (contentAsJson(result) \ "year").as[Int] should be(2020)
+    (contentAsJson(result) \ "month").as[Int] should be(8)
+    (contentAsJson(result) \ "dataUrl").toOption should be(None)
+    verify(archiveApi).get(eqTo(LocalDate.of(2020, 8, 1)), eqTo(LocalDate.of(2020, 8, 31)), eqTo("CROSSWORD_MINI"))(
+      any[ExecutionContext],
+    )
+  }
+
+  it should "reject invalid months before calling the API" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(request("/", participations = ""))
+    status(result) should be(BAD_REQUEST)
+    verifyNoInteractions(archiveApi)
   }
 
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {
@@ -149,6 +242,215 @@ import scala.concurrent.{ExecutionContext, Future}
         status(htmlResult) should be(NOT_FOUND)
         status(jsonResult) should be(NOT_FOUND)
         verifyNoInteractions(provider, renderer)
+      }
+  }
+
+  /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
+    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB
+    * test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are explicitly
+    * out of scope for Puzzle Page and are not exercised by these tests.
+    */
+  private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+    renderer
+  }
+
+  "renderSudoku" should "render a sudoku variant via DCR, using the flattened sudoku-<variant> slug and given date" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result = controller(successfulProvider, renderer)
+      .renderSudoku("easy", "2024-01-15")(request("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found for an unrecognised variant" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderSudoku("not-a-real-variant", "2024-01-15")(
+        request("/puzzles-and-games/logic-puzzles/sudoku-not-a-real-variant/2024-01-15"),
+      )
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderSudokuJson" should "return the equivalent rendering data as JSON, with the flattened slug and the given puzzleDate" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderSudokuJson("killer", "2024-01-15")(
+        request("/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-15.json"),
+      )
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("sudoku-killer")
+    (json \ "instance" \ "title").as[String] should be("Killer sudoku")
+    (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
+
+    val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
+    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+    related.map(_.url) should be(
+      Seq(
+        Some("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15"),
+        Some("/puzzles-and-games/word-games/wordiply/2024-01-15"),
+        Some("/crosswords/series/quick"),
+      ),
+    )
+    related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
+    related.map(_.cadence) should be(Seq(Some("Daily"), Some("Daily"), Some("Daily")))
+  }
+
+  "redirectSudokuArchive" should "temporarily redirect to the logic-puzzles archive, filtered to this sudoku variant" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .redirectSudokuArchive("easy")(request("/puzzles-and-games/logic-puzzles/sudoku-easy"))
+
+    status(result) should be(FOUND)
+    redirectLocation(result) should be(Some("/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy"))
+    verifyNoInteractions(renderer)
+  }
+
+  it should "return not found for an unrecognised variant" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .redirectSudokuArchive("not-a-real-variant")(
+        request("/puzzles-and-games/logic-puzzles/sudoku-not-a-real-variant"),
+      )
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderWordWheel" should "render word wheel via DCR with the given date" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result = controller(successfulProvider, renderer)
+      .renderWordWheel("2024-01-15")(request("/puzzles-and-games/word-games/word-wheel/2024-01-15"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found when the experiment is not enabled, without calling DCR" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderWordWheel("2024-01-15")(request("/puzzles-and-games/word-games/word-wheel/2024-01-15", ""))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderWordWheelJson" should "return the equivalent rendering data as JSON, including the given puzzleDate" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderWordWheelJson("2024-01-15")(request("/puzzles-and-games/word-games/word-wheel/2024-01-15.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("word-wheel")
+    (json \ "instance" \ "title").as[String] should be("Word wheel")
+    (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
+
+    val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
+    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+  }
+
+  "redirectWordWheelArchive" should "temporarily redirect to the word-games archive, filtered to word wheel" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .redirectWordWheelArchive()(request("/puzzles-and-games/word-games/word-wheel"))
+
+    status(result) should be(FOUND)
+    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/archive?puzzle=word-wheel"))
+    verifyNoInteractions(renderer)
+  }
+
+  "renderWordiply" should "render wordiply via DCR with the given date" in {
+    val renderer = stubbedPuzzlePageRenderer()
+
+    val result = controller(successfulProvider, renderer)
+      .renderWordiply("2024-01-15")(request("/puzzles-and-games/word-games/wordiply/2024-01-15"))
+
+    status(result) should be(OK)
+    contentAsString(result) should be("rendered by DCR")
+    verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "return not found when the experiment is not enabled, without calling DCR" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .renderWordiply("2024-01-15")(request("/puzzles-and-games/word-games/wordiply/2024-01-15", ""))
+
+    status(result) should be(NOT_FOUND)
+    verifyNoInteractions(renderer)
+  }
+
+  "renderWordiplyJson" should "return the equivalent rendering data as JSON, including the given puzzleDate" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .renderWordiplyJson("2024-01-15")(request("/puzzles-and-games/word-games/wordiply/2024-01-15.json"))
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    val json = Json.parse(contentAsString(result))
+    (json \ "slug").as[String] should be("wordiply")
+    (json \ "instance" \ "title").as[String] should be("Wordiply")
+    (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
+
+    val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
+    related.map(_.id) should be(Seq("sudoku-medium", "word-wheel", "crossword-quick"))
+  }
+
+  "redirectWordiplyArchive" should "temporarily redirect to the word-games archive, filtered to wordiply" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(successfulProvider, renderer)
+      .redirectWordiplyArchive()(request("/puzzles-and-games/word-games/wordiply"))
+
+    status(result) should be(FOUND)
+    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/archive?puzzle=wordiply"))
+    verifyNoInteractions(renderer)
+  }
+
+  Seq(
+    "control" -> "puzzles-new-hub:control",
+    "absent" -> "",
+    "unrelated experiment" -> "another-test:variant",
+  ).foreach { case (participationCase, participations) =>
+    s"puzzle page access with $participationCase participation" should
+      "return not found for sudoku, word wheel, and wordiply (both dated and archive-redirect routes) without calling DCR" in {
+        val renderer = mock[DotcomRenderingService]
+        val puzzlesController = controller(successfulProvider, renderer)
+
+        val sudokuResult = puzzlesController.renderSudoku("easy", "2024-01-15")(
+          request("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15", participations),
+        )
+        val sudokuRedirectResult = puzzlesController.redirectSudokuArchive("easy")(
+          request("/puzzles-and-games/logic-puzzles/sudoku-easy", participations),
+        )
+        val wordWheelResult = puzzlesController.renderWordWheel("2024-01-15")(
+          request("/puzzles-and-games/word-games/word-wheel/2024-01-15", participations),
+        )
+        val wordiplyResult = puzzlesController.renderWordiply("2024-01-15")(
+          request("/puzzles-and-games/word-games/wordiply/2024-01-15", participations),
+        )
+
+        status(sudokuResult) should be(NOT_FOUND)
+        status(sudokuRedirectResult) should be(NOT_FOUND)
+        status(wordWheelResult) should be(NOT_FOUND)
+        status(wordiplyResult) should be(NOT_FOUND)
+        verifyNoInteractions(renderer)
       }
   }
 }

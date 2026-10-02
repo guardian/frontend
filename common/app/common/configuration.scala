@@ -168,6 +168,15 @@ class GuardianConfiguration extends GuLogging {
   object contributionsService {
     lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
   }
+  object puzzlesApi {
+    private val codeUrl = "https://5awvcpuexl.execute-api.eu-west-1.amazonaws.com/code"
+    private val prodUrl = "https://gno22cmky8.execute-api.eu-west-1.amazonaws.com/prod"
+
+    lazy val baseUrl: String = configuration
+      .getStringProperty("puzzles.api.url")
+      .getOrElse(if (environment.isProd) prodUrl else codeUrl)
+    lazy val apiKey: String = configuration.getStringProperty("puzzles.api.key").getOrElse("test-api")
+  }
 
   object indexes {
     lazy val tagIndexesBucket =
@@ -300,6 +309,7 @@ class GuardianConfiguration extends GuLogging {
     lazy val skimlinksUSId = configuration.getMandatoryStringProperty("skimlinks.us.id")
     lazy val alwaysOffTags: Set[String] =
       configuration.getStringProperty("affiliatelinks.always.off.tags").getOrElse("").split(",").toSet
+    lazy val latestPricesKey = s"${if (environment.isProd) "PROD" else "CODE"}/affiliates/product-prices.csv"
   }
 
   object frontend {
@@ -704,6 +714,11 @@ class GuardianConfiguration extends GuLogging {
   object newsletterApi {
     lazy val host = configuration.getStringProperty("newsletterApi.host")
     lazy val origin = configuration.getStringProperty("newsletterApi.origin")
+  }
+
+  object zugApi {
+    lazy val host =
+      configuration.getMandatoryStringProperty("zugApi.host")
   }
 }
 

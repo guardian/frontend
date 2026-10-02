@@ -3,9 +3,9 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "8.0.0"
+  val identityLibVersion = "10.0.0"
   val awsVersion = "2.54.12"
-  val capiVersion = "49.1.2"
+  val capiVersion = "50.0.0"
   val faciaVersion = "43.0.0-PREVIEW.glspike-multimedia-atom.2026-09-14T2312.0048b41e"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -33,7 +33,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "51.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "52.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -59,7 +59,7 @@ object Dependencies {
   val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.18"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "22.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
@@ -112,8 +112,8 @@ object Dependencies {
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.4"
-  val jacksonDatabindVersion = "2.21.4"
+  val jacksonVersion = "2.21.6"
+  val jacksonDatabindVersion = "2.21.6"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion

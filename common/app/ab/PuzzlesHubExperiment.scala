@@ -11,6 +11,7 @@ import play.api.mvc.RequestHeader
   */
 object PuzzlesHubExperiment {
   val TestName = "puzzles-new-hub"
+  val V1TestName = "puzzles-new-hub-v1"
   val VariantGroup = "variant"
 
   def isEnabled(implicit request: RequestHeader): Boolean =
@@ -18,4 +19,12 @@ object PuzzlesHubExperiment {
 
   private[ab] def isEnabled(isDevelopment: Boolean)(implicit request: RequestHeader): Boolean =
     isDevelopment || ABTests.isUserInTestGroup(TestName, VariantGroup)
+
+  def isV1Enabled(implicit request: RequestHeader): Boolean =
+    isV1Enabled(Configuration.environment.isDev)
+
+  private[ab] def isV1Enabled(isDevelopment: Boolean)(implicit request: RequestHeader): Boolean =
+    isDevelopment ||
+      (ABTests.isUserInTestGroup(TestName, VariantGroup) &&
+        ABTests.isUserInTestGroup(V1TestName, VariantGroup))
 }

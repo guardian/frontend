@@ -19,6 +19,7 @@ import services.{ConfigAgent, NewsletterService, S3FrontsApi}
 import services.fronts.FrontsApi
 import model.{PressedPage, _}
 import model.content.{MediaAtom, MultimediaSlideshowSlide, MultimediaSlideshowVideo}
+import services.eventgraphic.EventGraphicService
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
@@ -33,6 +34,7 @@ class LiveFapiFrontPress(
     val wsClient: WSClient,
     val capiClientForFrontsSeo: ContentApiClient,
     val newsletterService: NewsletterService,
+    val eventGraphicService: EventGraphicService,
 )(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
@@ -67,6 +69,7 @@ class DraftFapiFrontPress(
     val wsClient: WSClient,
     val capiClientForFrontsSeo: ContentApiClient,
     val newsletterService: NewsletterService,
+    val eventGraphicService: EventGraphicService,
 )(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
@@ -216,6 +219,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
   val newsletterService: NewsletterService
+  val eventGraphicService: EventGraphicService
   def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit
   def isLiveContent: Boolean
 
@@ -384,6 +388,8 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
               if (isHighlights) NewsletterEnrichment.enrichWithNewsletterData(enrichedContent, newsletterService)
               else enrichedContent
             }
+          case eventGraphic: EventGraphic =>
+            enrichEventGraphic(eventGraphic)
           case link: LinkSnap if FaciaInlineEmbeds.isSwitchedOn =>
             enrichContent(collection, link, link.enriched)
               .map(updatedFields => link.copy(enriched = Some(updatedFields)))
@@ -394,6 +400,24 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
         })
       }
       .flatMap(content => Response.traverse(content.map(Enrichment.resolveMultimediaSlideshowVideos(_, capiClient))))
+  }
+
+  private def enrichEventGraphic(
+      eventGraphic: EventGraphic,
+  )(implicit executionContext: ExecutionContext): Response[EventGraphic] = {
+    (eventGraphic.dataUrl, eventGraphic.graphicKind) match {
+      case (Some(dataUrl), Some(_)) =>
+        Response.Async.Right(eventGraphicService.getData(dataUrl.getPath).map {
+          case Right(result) => eventGraphic.copy(eventData = Some(result))
+          case Left(error)   =>
+            log.error(s"Failed to fetch data for event graphic ${eventGraphic.id}: ${error.message}")
+            eventGraphic
+        })
+
+      case _ =>
+        log.error(s"EventGraphic ${eventGraphic.id} is not recognised, skipping enrichment")
+        Response.Right(eventGraphic)
+    }
   }
 
   private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent])(implicit

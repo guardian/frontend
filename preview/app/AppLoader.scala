@@ -27,7 +27,13 @@ import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
-import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle, SubnavAgentLifecycle}
+import services.{
+  ConfigAgentLifecycle,
+  OphanApi,
+  SkimLinksCacheLifeCycle,
+  SubnavAgentLifecycle,
+  AffiliateProductPriceCacheLifeCycle,
+}
 import utils.AWSv2
 
 trait PreviewLifecycleComponents
@@ -56,6 +62,7 @@ trait PreviewLifecycleComponents
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
       wire[NewsletterSignupLifecycle],
+      wire[AffiliateProductPriceCacheLifeCycle],
     )
 
   def pekkoActorSystem: PekkoActorSystem

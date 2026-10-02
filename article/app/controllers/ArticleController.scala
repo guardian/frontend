@@ -1,5 +1,6 @@
 package controllers
 
+import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.client.models.CustomSubnav
@@ -16,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import services.{CAPILookup, NewsletterService, SubnavAgent}
+import services.{ArticleAbTestAgent, CAPIChannel, CAPILookup, NewsletterService, SubnavAgent}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -28,6 +29,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     subnavAgent: SubnavAgent,
+    articleAbTestAgent: ArticleAbTestAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -37,15 +39,28 @@ class ArticleController(
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
+
+  private def determineArticleABTestPath(path: String)(implicit req: RequestHeader): String = {
+    val isUserInVariantBBucket = !req.isApps && ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
+  }
+
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit req: RequestHeader): Future[Result] =
     mapAndRender(path, GenericFallback)()
 
   def mapAndRender(path: String, range: BlockRange)(
       modifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
-  )(implicit req: RequestHeader): Future[Result] =
-    mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks)) }
+  )(implicit req: RequestHeader): Future[Result] = {
+    val pathToRender = determineArticleABTestPath(path)(req)
+    val isVariantArticle = path != pathToRender
+    val channelId = if (isVariantArticle) Some(CAPIChannel.Variant) else None
 
+    mapModel(pathToRender, range, channelId, skipCanonicalRedirect = isVariantArticle) { pageBlocks =>
+      render(pathToRender, modifier(pageBlocks))
+    }
+
+  }
   def renderArticle(path: String): Action[AnyContent] = Action.async(mapAndRender(path, ArticleBlocks)()(_))
   def renderJson(path: String): Action[AnyContent] = renderArticle(path)
   def renderEmail(path: String): Action[AnyContent] = renderArticle(path)
@@ -132,12 +147,12 @@ class ArticleController(
     }
   }
 
-  private def mapModel(path: String, range: BlockRange)(
+  private def mapModel(path: String, range: BlockRange, channelId: Option[CAPIChannel], skipCanonicalRedirect: Boolean)(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range))
-      .map(responseToModelOrResult)
+      .lookup(path, Some(range), channelId)
+      .map(responseToModelOrResult(_, skipCanonicalRedirect))
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
@@ -147,11 +162,12 @@ class ArticleController(
 
   private def responseToModelOrResult(
       response: ItemResponse,
+      skipCanonicalRedirect: Boolean,
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    ModelOrResult(supportedContent, response) match {
+    ModelOrResult(supportedContent, response, skipCanonicalRedirect = skipCanonicalRedirect) match {
       case Right(article: Article) =>
         Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Left(r) => Left(r)
