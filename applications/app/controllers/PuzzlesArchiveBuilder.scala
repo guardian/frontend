@@ -9,8 +9,6 @@ import model.dotcomrendering.{
   PuzzlesLayout,
 }
 
-import java.time.YearMonth
-
 object PuzzlesArchiveBuilder {
   private val apiTypes: Map[(String, String), String] = Map(
     ("crossword", "quick") -> "CROSSWORD_QUICK",
@@ -80,18 +78,10 @@ object PuzzlesArchiveBuilder {
       s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
     }
 
-  private def relatedPuzzleKey(selection: Selection): String =
-    if (selection.category == "crosswords") selection.category
+  /** The key of the puzzle being browsed, used to look up its "More from Puzzles & games" recommendations. */
+  def relatedPuzzleKey(selection: Selection): String =
+    if (selection.category == "crosswords") selection.puzzle.set
     else selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
-
-  private def relatedPuzzleDate(year: Int, month: Int, items: Seq[ArchiveApiItem]): String =
-    items.map(_.publishDate.take(10)).sorted.lastOption.getOrElse(YearMonth.of(year, month).atEndOfMonth().toString)
-
-  def related(selection: Selection, year: Int, month: Int, items: Seq[ArchiveApiItem]): Seq[PuzzleItem] =
-    PuzzlesPageController.moreFromPuzzlesAndGames(
-      relatedPuzzleKey(selection),
-      relatedPuzzleDate(year, month, items),
-    )
 
   def build(
       selection: Selection,
@@ -99,6 +89,7 @@ object PuzzlesArchiveBuilder {
       month: Int,
       items: Seq[ArchiveApiItem],
       hasError: Boolean,
+      moreFrom: Seq[PuzzleItem],
   ): PuzzlesArchive =
     PuzzlesArchive(
       category = selection.category,
@@ -118,6 +109,6 @@ object PuzzlesArchiveBuilder {
         ),
       ),
       hasError = hasError,
-      moreFrom = related(selection, year, month, items),
+      moreFrom = moreFrom,
     )
 }
