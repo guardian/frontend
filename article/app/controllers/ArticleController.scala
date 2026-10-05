@@ -42,9 +42,7 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
   private def determineArticleABTestPath(path: String)(implicit req: RequestHeader): String = {
-//   val isUserInVariantBBucket = true
-
-        val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 
@@ -59,8 +57,9 @@ class ArticleController(
     val isVariantArticle = path != pathToRender
     val channelId = if (isVariantArticle) Some(CAPIChannel.Variant) else None
 
-    mapModel(pathToRender, range, channelId, skipCanonicalRedirect = isVariantArticle, originalRequestPath = path) { pageBlocks =>
-      render(pathToRender, modifier(pageBlocks))
+    mapModel(pathToRender, range, channelId, skipCanonicalRedirect = isVariantArticle, originalRequestPath = path) {
+      pageBlocks =>
+        render(pathToRender, modifier(pageBlocks))
     }
 
   }
@@ -150,13 +149,10 @@ class ArticleController(
     }
   }
 
-  def maskPathIfVariant(path: String, originalRequestPath: String)(pageBlocks: BlocksOn[ArticlePage]): BlocksOn[ArticlePage] = {
-    println(s"metadata for $path: ${pageBlocks.page.article.content.metadata}")
-    println(s"original path is $originalRequestPath")
-
-    if (path == originalRequestPath) {
-      return pageBlocks
-    }
+  def maskPathIfVariant(path: String, originalRequestPath: String)(
+      pageBlocks: BlocksOn[ArticlePage],
+  ): BlocksOn[ArticlePage] = {
+    if (path == originalRequestPath) pageBlocks
     else {
       val maskedUrl = s"/$originalRequestPath"
       val maskedMetadata = pageBlocks.page.article.content.metadata.copy(
@@ -169,10 +165,15 @@ class ArticleController(
       val maskedArticle = pageBlocks.page.article.copy(content = maskedContent)
       pageBlocks.copy(page = pageBlocks.page.copy(article = maskedArticle))
     }
-    pageBlocks
   }
 
-  private def mapModel(path: String, range: BlockRange, channelId: Option[CAPIChannel], skipCanonicalRedirect: Boolean, originalRequestPath: String)(
+  private def mapModel(
+      path: String,
+      range: BlockRange,
+      channelId: Option[CAPIChannel],
+      skipCanonicalRedirect: Boolean,
+      originalRequestPath: String,
+  )(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
