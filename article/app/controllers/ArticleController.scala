@@ -42,7 +42,7 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
   private def determineArticleABTestPath(path: String)(implicit req: RequestHeader): String = {
-    val isUserInVariantBBucket = ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    val isUserInVariantBBucket = !req.isApps && ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
     if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 

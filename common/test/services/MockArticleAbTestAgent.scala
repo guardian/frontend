@@ -7,4 +7,5 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class MockArticleAbTestAgent extends ArticleAbTestAgent(mock(classOf[ContentApiClient])) {
   override def refresh()(implicit ec: ExecutionContext): Future[Unit] = Future.unit
+  override def isLoaded(): Boolean = true
 }

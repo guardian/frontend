@@ -3,6 +3,7 @@ import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.model.v1.VariantId.B
 import common.{Box, GuLogging}
 import contentapi.ContentApiClient
+import services.ConfigAgent.configAgent
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -41,23 +42,25 @@ class ArticleAbTestAgent(contentApiClient: ContentApiClient) extends GuLogging {
   // don't silently truncate results if the number of active tests grows.
   private val maxPageSize = 200
 
-  private val testsBox = Box[List[ArticleAbTest]](Nil)
+  private val testsBox = Box[Option[List[ArticleAbTest]]](None)
 
-  def tests: List[ArticleAbTest] = testsBox.get()
+  def isLoaded(): Boolean = testsBox.get().isDefined
+
+  def tests: List[ArticleAbTest] = testsBox.get().getOrElse(Nil)
 
   def variantFor(articleAPath: String): Option[String] =
-    testsBox.get().find(_.a == articleAPath).map(_.b)
+    testsBox.get().flatMap(_.find(_.a == articleAPath).map(_.b))
 
   def upsert(articleAPath: String, articleBPath: String): Unit =
     testsBox.alter { existing =>
-      ArticleAbTest(articleAPath, articleBPath) :: existing.filterNot(_.a == articleAPath)
+      Some(ArticleAbTest(articleAPath, articleBPath) :: existing.getOrElse(Nil).filterNot(_.a == articleAPath))
     }
 
   def setAll(newTests: List[ArticleAbTest]): Unit =
-    testsBox.alter(newTests)
+    testsBox.alter(Some(newTests))
 
   def remove(articleAPath: String): Unit =
-    testsBox.alter(_.filterNot(_.a == articleAPath))
+    testsBox.alter(_.map(_.filterNot(_.a == articleAPath)))
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.debug("Refreshing article ab test cache...")
