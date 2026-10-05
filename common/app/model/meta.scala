@@ -12,6 +12,7 @@ import common.dfp._
 import common.{ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
+import model.AffiliateProductLivePricing
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -212,6 +213,7 @@ object MetaData {
       contentType = DotcomContentType(apiContent),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
+        else if (AffiliateProductLivePricing.isEnabledForPage(url)) CacheTime.LivePricing
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated
