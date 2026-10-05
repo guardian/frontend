@@ -568,13 +568,14 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getAppsComponent(
       ws: WSClient,
-      path: String,
+      json: JsValue,
+      cacheTime: CacheTime,
   )(implicit request: RequestHeader): Future[Result] = {
     post(
       ws,
-      JsObject.empty, // The component endpoint currently takes no config in the payload
-      Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
-      CacheTime.Component,
+      json,
+      Configuration.rendering.articleBaseURL + s"/AppsComponent",
+      cacheTime,
     )
   }
 
