@@ -158,6 +158,7 @@ object MetaData {
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
       firstPublicationDate: Option[DateTime] = None,
+      cacheTime: Option[CacheTime] = None,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -188,6 +189,7 @@ object MetaData {
       commercial = commercial,
       isFoundation = isFoundation,
       firstPublicationDate = firstPublicationDate,
+      cacheTime = cacheTime.getOrElse(CacheTime.Default),
     )
   }
 
