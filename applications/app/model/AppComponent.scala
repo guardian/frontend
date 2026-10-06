@@ -1,7 +1,7 @@
 package model
 
 import play.api.libs.json.{JsObject, Json, Writes}
-import services.eventgraphic.GraphicKind
+import services.eventgraphic.{EventGraphicSource, GraphicKind}
 
 import java.net.URI
 
@@ -21,12 +21,8 @@ sealed trait ComponentType {
 final case class EventGraphic private (id: String) extends ComponentType
 
 object EventGraphic {
-  private val acceptedIds = Set(
-    "election-tracker/us-general-2024/congress",
-  )
-
   def fromId(id: String): Option[EventGraphic] =
-    Option.when(acceptedIds.contains(id))(EventGraphic(id))
+    Option.when(EventGraphicSource.isSupported(id))(EventGraphic(id))
 }
 
 final case class Thrasher(id: String) extends ComponentType
