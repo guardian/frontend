@@ -1,6 +1,6 @@
 package controllers
 
-import ab.PuzzlesHubExperiment
+import ab.PuzzlesHubV1Experiment
 import common.{GuLogging, ImplicitControllerExecutionContext}
 import play.api.libs.json.{JsArray, JsValue, Json}
 import play.api.mvc._
@@ -26,7 +26,7 @@ class PuzzlesProgressController(
 
   def save(): Action[JsValue] =
     Action.async(parse.json) { implicit request =>
-      if (!PuzzlesHubExperiment.isV1Enabled) Future.successful(noStore(NotFound))
+      if (!PuzzlesHubV1Experiment.isEnabled) Future.successful(noStore(NotFound))
       else
         request.headers.get(AUTHORIZATION) match {
           case None => Future.successful(noStore(Unauthorized(Json.obj("message" -> "Missing Authorization header"))))
