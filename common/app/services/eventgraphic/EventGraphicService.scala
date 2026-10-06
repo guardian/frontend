@@ -37,6 +37,8 @@ object EventGraphicSource {
     ),
   )
 
+  def isSupported(id: String): Boolean = sources.contains(id)
+
   def byId(id: String): Option[EventGraphicSource] = sources.get(id)
 }
 
