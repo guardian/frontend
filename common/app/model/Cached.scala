@@ -32,6 +32,7 @@ object CacheTime {
   object Cricket extends CacheTime(60)
   object FootballTables extends CacheTime(60)
   object Component extends CacheTime(60)
+  object LivePricing extends CacheTime(60, Some(900))
   def LastDayUpdated = CacheTime(60, Some(longCacheTime))
   def NotRecentlyUpdated = CacheTime(60, Some(longCacheTime))
 }

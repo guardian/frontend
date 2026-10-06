@@ -30,7 +30,7 @@ object AffiliateProductPriceCache extends GuLogging {
 
   def populateLatestProductPrices(): Unit = {
     if (AffiliateProductLivePricing.isSwitchedOn) {
-      log.error("Fetching and caching latest affiliate product prices")
+      log.debug("Fetching and caching latest affiliate product prices")
       val prices = S3.get(affiliateLinks.latestPricesKey).getOrElse {
         log.error(
           s"Failed to fetch latest product prices from S3: ${S3.bucket}/${affiliateLinks.latestPricesKey}",

@@ -2,6 +2,9 @@ package test
 
 import ab.ABTests
 import controllers.{PuzzlesApiItem, PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController, PuzzlesProgressApi}
+import com.gu.contentapi.client.model.SearchQuery
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, CrosswordType, SearchResponse}
+import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
@@ -53,8 +56,23 @@ import scala.concurrent.{ExecutionContext, Future}
       puzzlesArchiveApi,
       puzzlesProgressApi,
       renderer,
+      crosswordContentApiClient,
       stubControllerComponents(),
     )
+
+  /** CAPI stub that returns a single quick crossword (number 100) for every "most recent crossword" query. */
+  private def crosswordContentApiClient: ContentApiClient = {
+    val crossword = mock[Crossword]
+    when(crossword.`type`).thenReturn(CrosswordType.Quick)
+    when(crossword.number).thenReturn(100)
+    val content = mock[ApiContent]
+    when(content.crossword).thenReturn(Some(crossword))
+    val response = mock[SearchResponse]
+    when(response.results).thenReturn(Seq(content))
+    val client = mock[ContentApiClient]
+    when(client.getResponse(any[SearchQuery])).thenReturn(Future.successful(response))
+    client
+  }
 
   private def successfulProvider: PuzzlesLayoutProvider = {
     val provider = mock[PuzzlesLayoutProvider]
@@ -86,7 +104,7 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
-  private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
+  private def request(path: String, participations: String = "puzzles-new-hub-v1:variant"): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
   }
@@ -325,10 +343,10 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub:control",
+    "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
-    "malformed" -> "puzzles-new-hub:,puzzles-new-hub:variant:extra",
-    "unknown group" -> "puzzles-new-hub:unknown",
+    "malformed" -> "puzzles-new-hub-v1:,puzzles-new-hub-v1:variant:extra",
+    "unknown group" -> "puzzles-new-hub-v1:unknown",
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
     s"puzzles hub access with $participationCase participation" should
@@ -347,9 +365,9 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB
-    * test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are explicitly
-    * out of scope for Puzzle Page and are not exercised by these tests.
+    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1")
+    * AB test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are
+    * explicitly out of scope for Puzzle Page and are not exercised by these tests.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
@@ -395,16 +413,16 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
-    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+    related.map(_.id) should be(Seq("sudoku-killer", "sudoku-hard", "sudoku-medium"))
     related.map(_.url) should be(
       Seq(
-        Some("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15"),
-        Some("/puzzles-and-games/word-games/wordiply/2024-01-15"),
-        Some("/crosswords/series/quick"),
+        Some("/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-14"),
+        Some("/puzzles-and-games/logic-puzzles/sudoku-hard/2024-01-15"),
+        Some("/puzzles-and-games/logic-puzzles/sudoku-medium/2024-01-15"),
       ),
     )
     related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
-    related.map(_.cadence) should be(Seq(Some("Daily"), Some("Daily"), Some("Daily")))
+    related.map(_.cadence) should be(Seq(Some("Yesterday"), Some("Today"), Some("Today")))
   }
 
   "redirectSudokuArchive" should "temporarily redirect to the logic-puzzles archive, filtered to this sudoku variant" in {
@@ -463,7 +481,14 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
-    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+    related.map(_.id) should be(Seq("word-wheel", "crossword-quick", "crossword-mini"))
+    related.map(_.url) should be(
+      Seq(
+        Some("/puzzles-and-games/word-games/word-wheel/2024-01-14"),
+        Some("/crosswords/quick/100"),
+        Some("/crosswords/quick/100"),
+      ),
+    )
   }
 
   "redirectWordWheelArchive" should "temporarily redirect to the word-games archive, filtered to word wheel" in {
@@ -510,7 +535,7 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
-    related.map(_.id) should be(Seq("sudoku-medium", "word-wheel", "crossword-quick"))
+    related.map(_.id) should be(Seq("crossword-mini", "word-wheel", "sudoku-easy"))
   }
 
   "redirectWordiplyArchive" should "temporarily redirect to the word-games archive, filtered to wordiply" in {
@@ -525,7 +550,7 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub:control",
+    "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
