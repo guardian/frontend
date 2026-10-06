@@ -41,7 +41,8 @@ class ComponentController(
               Future.successful(Cached(model.page.cacheTime)(JsonComponent.fromWritable(model)))
             // only supported for dcr=apps\
             case AppsFormat =>
-              remoteRenderer.getAppsComponent(wsClient, Json.toJson(model), model.page.cacheTime)
+              val dcarPath = if (path.startsWith("thrasher/")) Some(path) else None
+              remoteRenderer.getAppsComponent(wsClient, Json.toJson(model), dcarPath, model.page.cacheTime)
             case _ => Future.successful(NotFound)
           }
         }
