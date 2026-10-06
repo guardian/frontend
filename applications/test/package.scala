@@ -39,6 +39,7 @@ class ApplicationsTestSuite
       new NewspaperControllerTest,
       new PuzzlesPageControllerTest,
       new PuzzlesArchiveBuilderTest,
+      new PuzzlesProgressApiClientTest,
       new PuzzlesLayoutProviderTest,
       new PuzzlesRoutesTest,
       new IndexPageTest,

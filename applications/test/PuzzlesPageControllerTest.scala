@@ -1,7 +1,7 @@
 package test
 
 import ab.ABTests
-import controllers.{PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController}
+import controllers.{PuzzlesApiItem, PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController, PuzzlesProgressApi}
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
@@ -12,7 +12,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
+import play.api.mvc.{AnyContent, Headers, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
@@ -45,11 +45,13 @@ import scala.concurrent.{ExecutionContext, Future}
       provider: PuzzlesLayoutProvider,
       renderer: DotcomRenderingService,
       puzzlesArchiveApi: PuzzlesArchiveApi = mock[PuzzlesArchiveApi],
+      puzzlesProgressApi: PuzzlesProgressApi = mock[PuzzlesProgressApi],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
       provider,
       puzzlesArchiveApi,
+      puzzlesProgressApi,
       renderer,
       stubControllerComponents(),
     )
@@ -91,7 +93,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
   "archiveDataForMonth" should "serve calendar requests without requiring AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
-    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
@@ -103,15 +105,47 @@ import scala.concurrent.{ExecutionContext, Future}
       )
 
     status(result) should be(OK)
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
     verify(archiveApi)
-      .get(eqTo(LocalDate.of(2020, 9, 1)), eqTo(LocalDate.of(2020, 9, 30)), eqTo("CROSSWORD_QUICK"))(
+      .get(
+        eqTo(LocalDate.of(2020, 9, 1)),
+        eqTo(LocalDate.of(2020, 9, 30)),
+        eqTo("CROSSWORD_QUICK"),
+        eqTo(Option.empty[String]),
+      )(
         any[ExecutionContext],
       )
   }
 
+  it should "forward an authenticated user's token to the archive API" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(
+      archiveApi.get(
+        any[LocalDate],
+        any[LocalDate],
+        any[String],
+        eqTo(Some("Bearer access-token")),
+      )(any[ExecutionContext]),
+    ).thenReturn(Future.successful(Nil))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
+        request("/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9")
+          .withHeaders(Headers("Authorization" -> "Bearer access-token")),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi).get(
+      any[LocalDate],
+      any[LocalDate],
+      eqTo("CROSSWORD_QUICK"),
+      eqTo(Some("Bearer access-token")),
+    )(any[ExecutionContext])
+  }
+
   it should "clamp future requests to the current month and current date" in {
     val archiveApi = mock[PuzzlesArchiveApi]
-    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
     val today = LocalDate.now(ZoneId.of("Europe/London"))
 
@@ -125,12 +159,17 @@ import scala.concurrent.{ExecutionContext, Future}
 
     status(result) should be(OK)
     verify(archiveApi)
-      .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
+      .get(
+        eqTo(today.minusDays(31)),
+        eqTo(today),
+        eqTo("CROSSWORD_QUICK"),
+        eqTo(Option.empty[String]),
+      )(any[ExecutionContext])
   }
 
   it should "use the path selection without query parameters or AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
-    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
       .archiveDataForMonth("crosswords", "archive-mini", 2020, 8)(
@@ -142,7 +181,12 @@ import scala.concurrent.{ExecutionContext, Future}
     (contentAsJson(result) \ "year").as[Int] should be(2020)
     (contentAsJson(result) \ "month").as[Int] should be(8)
     (contentAsJson(result) \ "dataUrl").toOption should be(None)
-    verify(archiveApi).get(eqTo(LocalDate.of(2020, 8, 1)), eqTo(LocalDate.of(2020, 8, 31)), eqTo("CROSSWORD_MINI"))(
+    verify(archiveApi).get(
+      eqTo(LocalDate.of(2020, 8, 1)),
+      eqTo(LocalDate.of(2020, 8, 31)),
+      eqTo("CROSSWORD_MINI"),
+      eqTo(Option.empty[String]),
+    )(
       any[ExecutionContext],
     )
   }
@@ -209,7 +253,64 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
-  it should "return not found when the JSON action receives an HTML request" in {
+  "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
+    val progressApi = mock[PuzzlesProgressApi]
+    val item = PuzzlesApiItem(
+      puzzleId = "123",
+      puzzleType = "CROSSWORD_QUICK",
+      publishDate = "2026-10-02T00:00:00Z",
+      progress = 100,
+      setterName = Some("A setter"),
+      gameUrl = Some("/crosswords/quick/123"),
+    )
+    when(
+      progressApi.query(
+        any[LocalDate],
+        eqTo(PuzzlesPageController.ProgressPuzzleTypes),
+        eqTo(Some("Bearer access-token")),
+      )(any[ExecutionContext]),
+    ).thenReturn(Future.successful(Seq(item)))
+
+    val result = controller(
+      successfulProvider,
+      mock[DotcomRenderingService],
+      puzzlesProgressApi = progressApi,
+    )
+      .puzzlesProgress()(
+        request("/puzzles-and-games/progress").withHeaders(Headers("Authorization" -> "Bearer access-token")),
+      )
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
+    (contentAsJson(result) \ "results").as[Seq[PuzzlesApiItem]] shouldBe Seq(item)
+    verify(progressApi).query(
+      any[LocalDate],
+      eqTo(PuzzlesPageController.ProgressPuzzleTypes),
+      eqTo(Some("Bearer access-token")),
+    )(any[ExecutionContext])
+  }
+
+  it should "query progress for signed-out users without an Authorization header" in {
+    val progressApi = mock[PuzzlesProgressApi]
+    when(
+      progressApi.query(any[LocalDate], any[Seq[String]], eqTo(Option.empty[String]))(any[ExecutionContext]),
+    ).thenReturn(Future.successful(Nil))
+
+    val result = controller(
+      successfulProvider,
+      mock[DotcomRenderingService],
+      puzzlesProgressApi = progressApi,
+    )
+      .puzzlesProgress()(request("/puzzles-and-games/progress"))
+
+    status(result) should be(OK)
+    verify(progressApi).query(any[LocalDate], any[Seq[String]], eqTo(Option.empty[String]))(
+      any[ExecutionContext],
+    )
+  }
+
+  "renderPuzzlesJson" should "return not found when the JSON action receives an HTML request" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
       .renderPuzzlesJson()(request("/puzzles-and-games"))
 

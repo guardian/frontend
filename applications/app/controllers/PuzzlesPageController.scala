@@ -10,7 +10,7 @@ import model.dotcomrendering.{
   PuzzleItem,
   PuzzlePageInstance,
 }
-import model.{ApplicationContext, CacheTime, Cached}
+import model.{ApplicationContext, CacheTime, Cached, NoCache}
 import play.api.libs.ws.WSClient
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -25,6 +25,7 @@ class PuzzlesPageController(
     wsClient: WSClient,
     puzzlesLayoutProvider: PuzzlesLayoutProvider,
     puzzlesArchiveApi: PuzzlesArchiveApi,
+    puzzlesProgressApi: PuzzlesProgressApi,
     remoteRenderer: DotcomRenderingService,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
@@ -75,6 +76,19 @@ class PuzzlesPageController(
         }
     }
 
+  def puzzlesProgress(): Action[AnyContent] =
+    Action.async { implicit request =>
+      val today = LocalDate.now(ZoneId.of("Europe/London"))
+      puzzlesProgressApi
+        .query(
+          today,
+          PuzzlesPageController.ProgressPuzzleTypes,
+          request.headers.get("Authorization"),
+        )
+        .map(items => NoCache(Ok(Json.toJson(PuzzlesApiResponse(items)))))
+        .recover { case _ => NoCache(BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress"))) }
+    }
+
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
   def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
@@ -94,9 +108,9 @@ class PuzzlesPageController(
 
   def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      buildArchive(category)
+      buildArchive(category, authorization = request.headers.get("Authorization"))
         .map { case (_, archive) =>
-          Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+          NoCache(Ok(Json.toJson(archive)))
         }
         .recoverWith { case _: NoSuchElementException => notFound }
     }
@@ -108,9 +122,14 @@ class PuzzlesPageController(
       Try(YearMonth.of(year, month)).toOption match {
         case None                 => Future.successful(BadRequest)
         case Some(requestedMonth) =>
-          buildArchive(category, Some(puzzle), Some(requestedMonth))
+          buildArchive(
+            category,
+            Some(puzzle),
+            Some(requestedMonth),
+            request.headers.get("Authorization"),
+          )
             .map { case (_, archive) =>
-              Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+              NoCache(Ok(Json.toJson(archive)))
             }
             .recoverWith { case _: NoSuchElementException => notFound }
       }
@@ -130,6 +149,7 @@ class PuzzlesPageController(
       category: String,
       puzzle: Option[String] = None,
       requestedMonth: Option[YearMonth] = None,
+      authorization: Option[String] = None,
   )(implicit
       request: RequestHeader,
   ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
@@ -145,7 +165,7 @@ class PuzzlesPageController(
         case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
         case Some(selection) =>
           puzzlesArchiveApi
-            .get(startDate, endDate, selection.apiType)
+            .get(startDate, endDate, selection.apiType, authorization)
             .map(items =>
               layout -> PuzzlesArchiveBuilder.build(
                 selection,
@@ -307,6 +327,23 @@ class PuzzlesPageController(
 }
 
 object PuzzlesPageController {
+
+  val ProgressPuzzleTypes: Seq[String] = Seq(
+    "CROSSWORD_QUICK",
+    "CROSSWORD_MINI",
+    "CROSSWORD_CRYPTIC",
+    "CROSSWORD_QUICKCRYPTIC",
+    "CROSSWORD_WEEKEND",
+    "CROSSWORD_PRIZE",
+    "CROSSWORD_QUIPTIC",
+    "CROSSWORD_SUNDAYQUICK",
+    "SUDOKU_EASY",
+    "SUDOKU_MEDIUM",
+    "SUDOKU_HARD",
+    "SUDOKU_KILLER",
+    "WORDWHEEL",
+    "WORDIPLY",
+  )
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"

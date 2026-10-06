@@ -72,7 +72,7 @@ object PuzzlesArchiveBuilder {
     }
   }
 
-  def destination(selection: Selection, item: ArchiveApiItem): String =
+  def destination(selection: Selection, item: PuzzlesApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
       s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
     else {
@@ -84,10 +84,10 @@ object PuzzlesArchiveBuilder {
     if (selection.category == "crosswords") selection.category
     else selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
 
-  private def relatedPuzzleDate(year: Int, month: Int, items: Seq[ArchiveApiItem]): String =
+  private def relatedPuzzleDate(year: Int, month: Int, items: Seq[PuzzlesApiItem]): String =
     items.map(_.publishDate.take(10)).sorted.lastOption.getOrElse(YearMonth.of(year, month).atEndOfMonth().toString)
 
-  def related(selection: Selection, year: Int, month: Int, items: Seq[ArchiveApiItem]): Seq[PuzzleItem] =
+  def related(selection: Selection, year: Int, month: Int, items: Seq[PuzzlesApiItem]): Seq[PuzzleItem] =
     PuzzlesPageController.moreFromPuzzlesAndGames(
       relatedPuzzleKey(selection),
       relatedPuzzleDate(year, month, items),
@@ -97,7 +97,7 @@ object PuzzlesArchiveBuilder {
       selection: Selection,
       year: Int,
       month: Int,
-      items: Seq[ArchiveApiItem],
+      items: Seq[PuzzlesApiItem],
       hasError: Boolean,
   ): PuzzlesArchive =
     PuzzlesArchive(
