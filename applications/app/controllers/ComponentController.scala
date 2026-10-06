@@ -65,21 +65,27 @@ class ComponentController(
               EventGraphicDataModel(component, eventData, config, Some(source.graphicKind), Some(source.fullUrl))
             }
           case None =>
-            Future.failed(new NoSuchElementException(s"Event graphic source not found for id: $id"))
+            val errorMessage = s"Event graphic source not found for id: $id"
+            logErrorWithRequestId(errorMessage)
+            Future.failed(new NoSuchElementException(errorMessage))
         }
       case Some(Thrasher(id)) =>
         val component = AppComponent(id, CacheTime.Component)
         Future.successful(ThrasherDataModel(component))
       case None =>
-        Future.failed(new NoSuchElementException(s"Component type not found for path: $path"))
+        val errorMessage = s"Component type not found for path: $path"
+        logErrorWithRequestId(errorMessage)
+        Future.failed(new NoSuchElementException(errorMessage))
     }
   }
 
-  private def getEventGraphic(id: String, sourceUrl: URI): Future[JsObject] =
+  private def getEventGraphic(id: String, sourceUrl: URI)(implicit request: RequestHeader): Future[JsObject] =
     eventGraphicService.getData(sourceUrl.getPath).flatMap {
       case Right(result) => Future.successful(result)
       case Left(error)   =>
-        Future.failed(new Exception(s"Failed to fetch data for event graphic $id: ${error.message}"))
+        val errorMessage = s"Failed to fetch data for event graphic $id: ${error.message}"
+        logErrorWithRequestId(errorMessage)
+        Future.failed(new Exception(errorMessage))
     }
 
   private[controllers] def getComponentType(path: String): Option[ComponentType] =
