@@ -9,7 +9,7 @@ import com.gu.contentapi.client.model.v1.{
   SearchResponse,
 }
 import contentapi.ContentApiClient
-import controllers.LocalJsonPuzzlesLayoutProvider
+import controllers.{LocalJsonPuzzlesLayoutProvider, PuzzleRecommendations}
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -101,7 +101,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-sunday-quick"),
     )
     layout.containers.find(_.id == "word-games").flatMap(_.content.archiveChoices).map(_.flatMap(_.url)) shouldBe
-      Some(Seq("/puzzles-and-games/word-games/archive"))
+      Some(Seq("/puzzles-and-games/word-games/archive?puzzle=word-wheel-daily"))
     layout.containers.find(_.id == "logic-puzzles").flatMap(_.content.archiveChoices).map(_.flatMap(_.url)) shouldBe
       Some(
         Seq(
@@ -403,6 +403,17 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     Await.result(provider.getLayout(), 5.seconds)
 
     queries.map(_.parameters("tag")).toSeq shouldBe Seq("crosswords/series/genius")
+  }
+
+  it should "keep non-Genius crossword series available to puzzle recommendations" in {
+    val queries = ListBuffer.empty[SearchQuery]
+    val lookup = PuzzleRecommendations.capiLookup(
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 42))), queries),
+    )
+
+    Await.result(lookup("quick", None), 5.seconds) shouldBe
+      Some(PuzzleRecommendations.LatestCrossword("quick", 42))
+    queries.map(_.parameters("tag")).toSeq shouldBe Seq("crosswords/series/quick")
   }
 
   it should "request only the latest newspaper-edition crossword and its required fields" in {

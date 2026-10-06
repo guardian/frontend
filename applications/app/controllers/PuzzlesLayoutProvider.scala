@@ -264,7 +264,19 @@ object LocalJsonPuzzlesLayoutProvider {
   }
 
   private[controllers] val CrosswordSeriesTags: Map[String, String] = Map(
+    "mini" -> "crosswords/series/mini-crossword",
+    "weekend" -> "crosswords/series/weekend-crossword",
+    "quick" -> "crosswords/series/quick",
+    "cryptic" -> "crosswords/series/cryptic",
+    "prize" -> "crosswords/series/prize",
+    "sunday-quick" -> "crosswords/series/sunday-quick",
+    "quick-cryptic" -> "crosswords/series/quick-cryptic",
+    "everyman" -> "crosswords/series/everyman",
+    "speedy" -> "crosswords/series/speedy",
+    "quiptic" -> "crosswords/series/quiptic",
     "genius" -> "crosswords/series/genius",
+    "special" -> "crosswords/series/special",
+    "azed" -> "crosswords/series/azed",
   )
 
   private[controllers] case class CrosswordDynamicFields(url: String, image: String, setter: Option[String])
