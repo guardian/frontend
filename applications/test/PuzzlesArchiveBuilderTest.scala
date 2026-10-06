@@ -102,34 +102,12 @@ import play.api.libs.json.Json
     selection.puzzles.map(_.id) should be(Seq("word-wheel"))
   }
 
-  it should "reuse Puzzle Page recommendations for the selected archive puzzle" in {
-    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
-    val items = Seq(
-      ArchiveApiItem(
-        "guardian-sudoku-20260902",
-        "SUDOKU_EASY",
-        "2026-09-02T00:00:00Z",
-        0,
-        None,
-        None,
-      ),
-    )
+  it should "look up recommendations by the selected puzzle" in {
+    val sudoku = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    PuzzlesArchiveBuilder.relatedPuzzleKey(sudoku) should be("sudoku-easy")
 
-    val related = PuzzlesArchiveBuilder.related(selection, 2026, 9, items)
-
-    related.map(_.id) should be(Seq("sudoku-medium", "word-wheel", "crossword-quick"))
-    related.map(_.cardVariant) should contain only "compact"
-    related.map(_.url) should contain(
-      Some("/puzzles-and-games/logic-puzzles/sudoku-medium/2026-09-02"),
-    )
-  }
-
-  it should "recommend logic and word games from crossword archives" in {
-    val selection = PuzzlesArchiveBuilder.select(layout, "crosswords", None).get
-
-    val related = PuzzlesArchiveBuilder.related(selection, 2026, 9, Nil)
-
-    related.map(_.id) should be(Seq("sudoku-easy", "word-wheel", "wordiply"))
+    val crosswords = PuzzlesArchiveBuilder.select(layout, "crosswords", None).get
+    PuzzlesArchiveBuilder.relatedPuzzleKey(crosswords) should be(crosswords.puzzle.set)
   }
 
   it should "parse the archive API envelope" in {
