@@ -13,6 +13,7 @@ import model.dotcomrendering.DotcomRenderingUtils._
 import model.dotcomrendering.pageElements._
 import model.meta.BlocksOn
 import model.{
+  AffiliateProductLivePricing,
   ArticleDateTimes,
   Badges,
   CanonicalLiveBlog,
@@ -480,6 +481,7 @@ object DotcomRenderingDataModel {
 
     val shouldAddAffiliateLinks =
       DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks ++ mainBlock.toSeq ++ pinnedPost.toSeq)
+    val eligibleForLivePricing = AffiliateProductLivePricing.isEnabledForPage(request.uri)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -554,6 +556,7 @@ object DotcomRenderingDataModel {
         block = block,
         page = page,
         shouldAddAffiliateLinks = shouldAddAffiliateLinks,
+        eligibleForLivePricing = eligibleForLivePricing,
         request = request,
         isMainBlock = isMainBlock,
         calloutsUrl = calloutsUrl,
