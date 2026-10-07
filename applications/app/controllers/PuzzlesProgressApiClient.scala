@@ -2,59 +2,57 @@ package controllers
 
 import common.GuLogging
 import conf.Configuration
+import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 
 import java.time.LocalDate
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
-trait PuzzlesArchiveApi {
-  def get(
-      startDate: LocalDate,
-      endDate: LocalDate,
-      puzzleType: String,
+trait PuzzlesProgressApi {
+  def query(
+      date: LocalDate,
+      puzzleTypes: Seq[String],
       authorization: Option[String] = None,
   )(implicit
       executionContext: ExecutionContext,
   ): Future[Seq[PuzzlesApiItem]]
 }
 
-class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with GuLogging {
-  override def get(
-      startDate: LocalDate,
-      endDate: LocalDate,
-      puzzleType: String,
+class PuzzlesProgressApiClient(wsClient: WSClient) extends PuzzlesProgressApi with GuLogging {
+  override def query(
+      date: LocalDate,
+      puzzleTypes: Seq[String],
       authorization: Option[String],
   )(implicit
       executionContext: ExecutionContext,
   ): Future[Seq[PuzzlesApiItem]] = {
-    val archiveUrl = s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/archive"
+    val progressUrl = s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/progress/query"
+    val payload = Json.obj(
+      "date" -> s"${date}T00:00:00Z",
+      "puzzleTypes" -> puzzleTypes,
+    )
 
     errorLoggingF(
-      s"Puzzles archive request failed: url=$archiveUrl, startDate=$startDate, endDate=$endDate, puzzleType=$puzzleType",
+      s"Puzzles progress request failed: url=$progressUrl, date=$date, puzzleTypes=${puzzleTypes.mkString(",")}",
     ) {
       wsClient
-        .url(archiveUrl)
+        .url(progressUrl)
         .withHttpHeaders(requestHeaders(authorization): _*)
-        .withQueryStringParameters(
-          "startDate" -> startDate.toString,
-          "endDate" -> endDate.toString,
-          "puzzleType" -> puzzleType,
-        )
         .withRequestTimeout(3.seconds)
-        .get()
+        .post(payload)
         .flatMap { response =>
           if (response.status >= 200 && response.status < 300) {
             response.json
               .validate[PuzzlesApiResponse]
               .fold(
-                errors => Future.failed(new IllegalArgumentException(s"Invalid puzzles archive response: $errors")),
+                errors => Future.failed(new IllegalArgumentException(s"Invalid puzzles progress response: $errors")),
                 value => Future.successful(value.results),
               )
           } else {
             Future.failed(
               new RuntimeException(
-                s"Puzzles archive returned HTTP ${response.status}: ${response.body.take(500)}",
+                s"Puzzles progress returned HTTP ${response.status}: ${response.body.take(500)}",
               ),
             )
           }

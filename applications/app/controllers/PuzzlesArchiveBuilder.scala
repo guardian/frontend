@@ -70,7 +70,7 @@ object PuzzlesArchiveBuilder {
     }
   }
 
-  def destination(selection: Selection, item: ArchiveApiItem): String =
+  def destination(selection: Selection, item: PuzzlesApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
       s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
     else {
@@ -87,7 +87,7 @@ object PuzzlesArchiveBuilder {
       selection: Selection,
       year: Int,
       month: Int,
-      items: Seq[ArchiveApiItem],
+      items: Seq[PuzzlesApiItem],
       hasError: Boolean,
       moreFrom: Seq[PuzzleItem],
   ): PuzzlesArchive =
