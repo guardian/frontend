@@ -59,7 +59,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     layout.containers
       .filter(container => container.variant.exists(Set("featured", "standard")))
       .map(_.title) shouldBe Seq(
-      "Today’s featured puzzles",
+      "Featured today",
       "Crosswords",
       "Word games",
       "Logic puzzles",
@@ -559,7 +559,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       Seq(
         PuzzleContainer(
           id = "featured-puzzles",
-          title = "Today’s featured puzzles",
+          title = "Featured today",
           variant = Some("featured"),
           content = PuzzleContent(Seq.empty, Seq.empty),
           enabled = Some(enabled),
