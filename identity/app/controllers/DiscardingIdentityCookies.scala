@@ -16,7 +16,6 @@ object DiscardingIdentityCookies {
       .discardingCookies(
         discardingCookieForRootDomain("SC_GU_U"),
         discardingCookieForRootDomain("GU_U"),
-        discardingCookieForRootDomain("SC_GU_RP"),
       )
       .withCookies(
         Cookie(
