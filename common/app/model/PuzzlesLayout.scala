@@ -32,9 +32,6 @@ object PuzzleItem {
     .filter(JsonValidationError(s"cardVariant must be one of ${SupportedCardVariants.toSeq.sorted.mkString(", ")}"))(
       item => SupportedCardVariants.contains(item.cardVariant),
     )
-    .filter(JsonValidationError("cadence is required for non-archive puzzle cards"))(item =>
-      item.cardVariant == "archive" || item.cadence.exists(_.trim.nonEmpty),
-    )
   private val writes: OWrites[PuzzleItem] = Json.writes[PuzzleItem].transform(removeNullFields)
   implicit val format: OFormat[PuzzleItem] = OFormat(reads, writes)
 
@@ -230,8 +227,8 @@ object PuzzlesLayout {
       containers.collect {
         case container if container.content.archive.nonEmpty && container.content.archiveChoices.exists(_.nonEmpty) =>
           s"container '${container.id}' cannot define both archive and archiveChoices"
-        case container if container.content.archiveChoices.exists(_.size < 2) =>
-          s"container '${container.id}' archiveChoices must contain at least two destinations"
+        case container if container.content.archiveChoices.exists(_.isEmpty) =>
+          s"container '${container.id}' archiveChoices must contain at least one destination"
       } ++
       items.collect {
         case item

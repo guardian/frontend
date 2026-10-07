@@ -40,6 +40,7 @@ class ApplicationsTestSuite
       new PuzzlesPageControllerTest,
       new PuzzlesProgressControllerTest,
       new PuzzlesArchiveBuilderTest,
+      new PuzzlesProgressApiClientTest,
       new PuzzlesLayoutProviderTest,
       new PuzzlesRoutesTest,
       new IndexPageTest,

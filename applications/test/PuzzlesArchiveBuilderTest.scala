@@ -1,6 +1,6 @@
 package test
 
-import controllers.{ArchiveApiItem, ArchiveApiResponse, PuzzlesArchiveBuilder}
+import controllers.{PuzzlesApiItem, PuzzlesApiResponse, PuzzlesArchiveBuilder}
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
@@ -63,7 +63,7 @@ import play.api.libs.json.Json
     val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", None).get
     val destination = PuzzlesArchiveBuilder.destination(
       selection,
-      ArchiveApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
+      PuzzlesApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
     )
     destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
   }
@@ -74,7 +74,7 @@ import play.api.libs.json.Json
 
     PuzzlesArchiveBuilder.destination(
       miniSelection,
-      ArchiveApiItem(
+      PuzzlesApiItem(
         "287",
         "CROSSWORD_MINI",
         "2026-09-30T00:00:00Z",
@@ -85,7 +85,7 @@ import play.api.libs.json.Json
     ) should be("/crosswords/mini/287")
     PuzzlesArchiveBuilder.destination(
       weekendSelection,
-      ArchiveApiItem(
+      PuzzlesApiItem(
         "820",
         "CROSSWORD_WEEKEND",
         "2026-09-30T00:00:00Z",
@@ -115,10 +115,10 @@ import play.api.libs.json.Json
       .parse(
         """{"results":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","publishDate":"2026-09-02T00:00:00Z","gameStatus":"completed","progress":100,"lastUpdated":null,"gameUrl":"https://www.theguardian.com/crosswords/quick/42"}]}""",
       )
-      .as[ArchiveApiResponse] should be(
-      ArchiveApiResponse(
+      .as[PuzzlesApiResponse] should be(
+      PuzzlesApiResponse(
         Seq(
-          ArchiveApiItem(
+          PuzzlesApiItem(
             "42",
             "CROSSWORD_QUICK",
             "2026-09-02T00:00:00Z",

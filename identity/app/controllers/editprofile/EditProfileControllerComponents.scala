@@ -1,6 +1,5 @@
 package controllers.editprofile
 
-import actions.AuthenticatedActions
 import common.ImplicitControllerExecutionContext
 import form.ProfileFormsMapping
 import idapiclient.IdApiClient
@@ -18,7 +17,6 @@ trait EditProfileControllerComponents
     with I18nSupport
     with implicits.Forms {
 
-  val authenticatedActions: AuthenticatedActions
   val csrfCheck: CSRFCheck
   val csrfAddToken: CSRFAddToken
   val newsletterService: NewsletterService
