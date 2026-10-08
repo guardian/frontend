@@ -148,15 +148,19 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
   }
 
-  it should "leave iframe publication dates for Puzzles API enrichment" in {
+  it should "give Wordiply a London-date fallback and leave other iframe dates for Puzzles API enrichment" in {
     val provider =
       new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
 
     val items = allItems(Await.result(provider.getLayout(), 5.seconds))
     val iframeItems = items.filter(_.variant.contains("iframe-page"))
+    val wordiplyItems = iframeItems.filter(_.`type` == "wordiply")
+    val otherIframeItems = iframeItems.filterNot(_.`type` == "wordiply")
 
-    iframeItems should not be empty
-    all(iframeItems.map(_.date)) shouldBe None
+    wordiplyItems should not be empty
+    all(wordiplyItems.map(_.date)) shouldBe Some("2026-09-07")
+    otherIframeItems should not be empty
+    all(otherIframeItems.map(_.date)) shouldBe None
   }
 
   it should "use section-prefixed slugs and daily iframe destinations for word games and sudokus" in {
