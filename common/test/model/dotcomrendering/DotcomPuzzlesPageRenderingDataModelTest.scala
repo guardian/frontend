@@ -29,7 +29,7 @@ import staticpages.StaticPages
     implicit val request: RequestHeader = FakeRequest("GET", "/puzzles-and-games")
       .withHeaders(
         "Host" -> "www.theguardian.com",
-        "X-GU-Server-AB-Tests" -> "puzzles-new-hub:variant,another-test:control",
+        "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v1:variant,another-test:control",
       )
     ABTests.decorateRequest("X-GU-Server-AB-Tests")
   }
@@ -69,7 +69,7 @@ import staticpages.StaticPages
       .as[Map[String, String]]
 
     participations should contain theSameElementsAs Map(
-      "puzzles-new-hub" -> "variant",
+      "puzzles-new-hub-v1" -> "variant",
       "another-test" -> "control",
     )
   }

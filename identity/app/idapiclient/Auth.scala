@@ -28,10 +28,6 @@ case class ScGuU(scGuUValue: String) extends Auth {
   override def headers: Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
 }
 
-case class ScGuRp(scGuRpValue: String) extends Auth {
-  override def headers: Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-RP" -> scGuRpValue)
-}
-
 case class TrackingData(
     returnUrl: Option[String],
     registrationType: Option[String],
