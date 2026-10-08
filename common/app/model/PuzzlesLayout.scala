@@ -140,6 +140,8 @@ case class PuzzlesSupportingContent(
     newsletter: Option[PuzzlesNewsletter],
     popularTitle: String,
     popularGroups: Seq[PuzzlePopularityGroup],
+    // Set in puzzles-layout.json; resolved into `newsletter` from the newsletters API at request time.
+    newsletterIdentityName: Option[String] = None,
 )
 
 object PuzzlesSupportingContent {
@@ -216,7 +218,7 @@ object PuzzlesLayout {
         val invalidNewsletter = supporting.newsletter.exists(newsletter =>
           newsletter.identityName.trim.isEmpty || newsletter.name.trim.isEmpty || newsletter.frequency.trim.isEmpty ||
             newsletter.description.trim.isEmpty,
-        )
+        ) || supporting.newsletterIdentityName.exists(_.trim.isEmpty)
 
         invalidLinks.map(link => s"supporting link '${link.title}' has an invalid title or URL") ++
           invalidGroups.map(group => s"popular group '${group.title}' must have a title and puzzle IDs") ++
