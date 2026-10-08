@@ -4,9 +4,10 @@ import com.gu.contentapi.client.model.SearchQuery
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.GuLogging
 import contentapi.ContentApiClient
-import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
+import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout, PuzzlesNewsletter}
 import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, Json}
+import services.newsletters.NewsletterSignupAgent
 
 import java.time.{Clock, DayOfWeek, LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future, blocking}
@@ -21,6 +22,7 @@ trait PuzzlesLayoutProvider {
 class LocalJsonPuzzlesLayoutProvider(
     environment: Environment,
     contentApiClient: ContentApiClient,
+    newsletterSignupAgent: NewsletterSignupAgent,
     resourceName: String = LocalJsonPuzzlesLayoutProvider.DefaultResourceName,
     clock: Clock = Clock.systemUTC(),
 ) extends PuzzlesLayoutProvider
@@ -28,7 +30,7 @@ class LocalJsonPuzzlesLayoutProvider(
 
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
-      val scheduledLayout = applyFeaturedSchedule(baseLayout)
+      val scheduledLayout = resolveNewsletters(applyFeaturedSchedule(baseLayout))
       val datedLayout = applyWordiplyDateFallback(scheduledLayout)
       enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
         log.warn("Failed to enrich crossword cards from CAPI using the scheduled layout", error)
@@ -69,6 +71,36 @@ class LocalJsonPuzzlesLayoutProvider(
         nestedContainers = container.content.nestedContainers.map(addWordiplyDate(_, date)),
       ),
     )
+
+  private def resolveNewsletters(layout: PuzzlesLayout): PuzzlesLayout =
+    layout.copy(containers = layout.containers.map { container =>
+      container.copy(supporting = container.supporting.map { supporting =>
+        supporting.newsletterIdentityName.fold(supporting) { identityName =>
+          supporting.copy(newsletter = liveNewsletter(identityName), newsletterIdentityName = None)
+        }
+      })
+    })
+
+  private def liveNewsletter(identityName: String): Option[PuzzlesNewsletter] =
+    newsletterSignupAgent.getV2NewsletterByName(identityName) match {
+      case Right(Some(newsletter)) if !newsletter.restricted && newsletter.status == "live" =>
+        Some(
+          PuzzlesNewsletter(
+            identityName = newsletter.identityName,
+            name = newsletter.name,
+            frequency = newsletter.frequency,
+            description = newsletter.signUpEmbedDescription,
+            // Most newsletters only have the 5:3 card art; DCR crops it to a circle.
+            illustrationSquare = newsletter.illustrationSquare.orElse(newsletter.illustrationCard),
+          ),
+        )
+      case Right(_) =>
+        log.warn(s"Puzzles newsletter '$identityName' is not a live newsletter; omitting it")
+        None
+      case Left(error) =>
+        log.warn(s"Puzzles newsletter '$identityName' could not be looked up; omitting it: $error")
+        None
+    }
 
   private def loadLayout(): PuzzlesLayout = {
     val inputStream = environment
