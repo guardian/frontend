@@ -1,16 +1,16 @@
 package controllers
 
-import ab.PuzzlesHubExperiment
+import ab.PuzzlesHubV1Experiment
 import common.ImplicitControllerExecutionContext
+import contentapi.ContentApiClient
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
 import model.dotcomrendering.{
   DotcomPuzzlePageRenderingDataModel,
   DotcomPuzzlesPageRenderingDataModel,
-  PuzzleItem,
   PuzzlePageInstance,
 }
-import model.{ApplicationContext, CacheTime, Cached}
+import model.{ApplicationContext, CacheTime, Cached, NoCache}
 import play.api.libs.ws.WSClient
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -25,7 +25,9 @@ class PuzzlesPageController(
     wsClient: WSClient,
     puzzlesLayoutProvider: PuzzlesLayoutProvider,
     puzzlesArchiveApi: PuzzlesArchiveApi,
+    puzzlesProgressApi: PuzzlesProgressApi,
     remoteRenderer: DotcomRenderingService,
+    contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -38,7 +40,7 @@ class PuzzlesPageController(
 
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else
         request.getRequestFormat match {
           case HtmlFormat =>
@@ -58,7 +60,7 @@ class PuzzlesPageController(
 
   def renderPuzzlesJson(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else
         request.getRequestFormat match {
           case JsonFormat =>
@@ -75,13 +77,26 @@ class PuzzlesPageController(
         }
     }
 
+  def puzzlesProgress(): Action[AnyContent] =
+    Action.async { implicit request =>
+      val today = LocalDate.now(ZoneId.of("Europe/London"))
+      puzzlesProgressApi
+        .query(
+          today,
+          PuzzlesPageController.ProgressPuzzleTypes,
+          request.headers.get("Authorization"),
+        )
+        .map(items => NoCache(Ok(Json.toJson(PuzzlesApiResponse(items)))))
+        .recover { case _ => NoCache(BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress"))) }
+    }
+
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
   def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
 
   private def renderArchive(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isV1Enabled || request.getRequestFormat != HtmlFormat) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled || request.getRequestFormat != HtmlFormat) notFound
       else
         buildArchive(category)
           .flatMap { case (layout, archive) =>
@@ -94,9 +109,9 @@ class PuzzlesPageController(
 
   def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      buildArchive(category)
+      buildArchive(category, authorization = request.headers.get("Authorization"))
         .map { case (_, archive) =>
-          Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+          NoCache(Ok(Json.toJson(archive)))
         }
         .recoverWith { case _: NoSuchElementException => notFound }
     }
@@ -108,9 +123,14 @@ class PuzzlesPageController(
       Try(YearMonth.of(year, month)).toOption match {
         case None                 => Future.successful(BadRequest)
         case Some(requestedMonth) =>
-          buildArchive(category, Some(puzzle), Some(requestedMonth))
+          buildArchive(
+            category,
+            Some(puzzle),
+            Some(requestedMonth),
+            request.headers.get("Authorization"),
+          )
             .map { case (_, archive) =>
-              Ok(Json.toJson(archive)).withHeaders(CACHE_CONTROL -> "private, max-age=60")
+              NoCache(Ok(Json.toJson(archive)))
             }
             .recoverWith { case _: NoSuchElementException => notFound }
       }
@@ -130,6 +150,7 @@ class PuzzlesPageController(
       category: String,
       puzzle: Option[String] = None,
       requestedMonth: Option[YearMonth] = None,
+      authorization: Option[String] = None,
   )(implicit
       request: RequestHeader,
   ): Future[(model.dotcomrendering.PuzzlesLayout, model.dotcomrendering.PuzzlesArchive)] = {
@@ -137,32 +158,59 @@ class PuzzlesPageController(
     val yearMonth = requestedMonth
       .map(month => if (month.isAfter(YearMonth.from(today))) YearMonth.from(today) else month)
       .getOrElse(selectedMonth(request, today))
+
     val isCurrentMonth = yearMonth == YearMonth.from(today)
     val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
     val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
+
     puzzlesLayoutProvider.getLayout().flatMap { layout =>
-      PuzzlesArchiveBuilder.select(layout, category, puzzle.orElse(request.getQueryString("puzzle"))) match {
-        case None => Future.failed(new NoSuchElementException(s"Unknown puzzles archive category: $category"))
+      PuzzlesArchiveBuilder.select(
+        layout,
+        category,
+        puzzle.orElse(request.getQueryString("puzzle")),
+      ) match {
+        case None =>
+          Future.failed(
+            new NoSuchElementException(
+              s"Unknown puzzles archive category: $category",
+            ),
+          )
+
         case Some(selection) =>
-          puzzlesArchiveApi
-            .get(startDate, endDate, selection.apiType)
-            .map(items =>
-              layout -> PuzzlesArchiveBuilder.build(
-                selection,
-                yearMonth.getYear,
-                yearMonth.getMonthValue,
-                items,
-                hasError = false,
-              ),
+          PuzzleRecommendations
+            .resolveForArchive(
+              PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
+              today.toString,
+              PuzzleRecommendations.capiLookup(contentApiClient),
             )
-            .recover { case _ =>
-              layout -> PuzzlesArchiveBuilder.build(
-                selection,
-                yearMonth.getYear,
-                yearMonth.getMonthValue,
-                Nil,
-                hasError = true,
-              )
+            .flatMap { moreFrom =>
+              puzzlesArchiveApi
+                .get(
+                  startDate,
+                  endDate,
+                  selection.apiType,
+                  authorization,
+                )
+                .map { items =>
+                  layout -> PuzzlesArchiveBuilder.build(
+                    selection,
+                    yearMonth.getYear,
+                    yearMonth.getMonthValue,
+                    items,
+                    hasError = false,
+                    moreFrom = moreFrom,
+                  )
+                }
+                .recover { case _ =>
+                  layout -> PuzzlesArchiveBuilder.build(
+                    selection,
+                    yearMonth.getYear,
+                    yearMonth.getMonthValue,
+                    Nil,
+                    hasError = true,
+                    moreFrom = moreFrom,
+                  )
+                }
             }
       }
     }
@@ -191,15 +239,15 @@ class PuzzlesPageController(
     * internally). All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated
     * Puzzles Hub/listing page).
     *
-    * Gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB test already used by the hub actions above -
-    * reusing the existing experiment rather than introducing a new one for V0.
+    * Gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB test already used by the hub actions
+    * above - reusing the existing experiment rather than introducing a new one.
     *
     * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
     * routes/controllers, untouched.
     */
   def renderSudoku(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
         renderPuzzlePageContent(s"sudoku-$variant", PuzzlesPageController.sudokuTitle(variant), date)
       else notFound
@@ -207,7 +255,7 @@ class PuzzlesPageController(
 
   def renderSudokuJson(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
         renderPuzzlePageContentJson(s"sudoku-$variant", PuzzlesPageController.sudokuTitle(variant), date)
       else notFound
@@ -215,7 +263,7 @@ class PuzzlesPageController(
 
   def redirectSudokuArchive(variant: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
         redirectToArchive(PuzzlesPageController.LogicPuzzlesGroup, s"sudoku-$variant")
       else notFound
@@ -223,37 +271,37 @@ class PuzzlesPageController(
 
   def renderWordWheel(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, "Word wheel", date)
     }
 
   def renderWordWheelJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, "Word wheel", date)
     }
 
   def redirectWordWheelArchive(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordWheelSlug)
     }
 
   def renderWordiply(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, "Wordiply", date)
     }
 
   def renderWordiplyJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, "Wordiply", date)
     }
 
   def redirectWordiplyArchive(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubExperiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) notFound
       else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordiplySlug)
     }
 
@@ -272,8 +320,9 @@ class PuzzlesPageController(
       webTitle: String,
       date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildPuzzlePageData(slug, webTitle, date)
-    remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
+    buildPuzzlePageData(slug, webTitle, date).flatMap { dataModel =>
+      remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
+    }
   }
 
   private def renderPuzzlePageContentJson(
@@ -281,32 +330,51 @@ class PuzzlesPageController(
       webTitle: String,
       date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = buildPuzzlePageData(slug, webTitle, date)
-    Future.successful(
+    buildPuzzlePageData(slug, webTitle, date).map { dataModel =>
       Cached(CacheTime.NotFound)(
         Cached.WithoutRevalidationResult(
           Ok(DotcomPuzzlePageRenderingDataModel.toJson(dataModel)).as("application/json"),
         ),
-      ),
-    )
+      )
+    }
   }
 
   private def buildPuzzlePageData(
       slug: String,
       webTitle: String,
       date: String,
-  )(implicit request: RequestHeader): DotcomPuzzlePageRenderingDataModel = {
-    val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
-    val instance = PuzzlePageInstance(
-      title = webTitle,
-      puzzleDate = Some(date),
-      moreFromPuzzlesAndGames = PuzzlesPageController.moreFromPuzzlesAndGames(slug, date),
-    )
-    DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
-  }
+  )(implicit request: RequestHeader): Future[DotcomPuzzlePageRenderingDataModel] =
+    PuzzleRecommendations
+      .resolve(slug, currentId = None, date, PuzzleRecommendations.capiLookup(contentApiClient))
+      .map { moreFromPuzzlesAndGames =>
+        val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
+        val instance = PuzzlePageInstance(
+          title = webTitle,
+          puzzleDate = Some(date),
+          moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+        )
+        DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
+      }
 }
 
 object PuzzlesPageController {
+
+  val ProgressPuzzleTypes: Seq[String] = Seq(
+    "CROSSWORD_QUICK",
+    "CROSSWORD_MINI",
+    "CROSSWORD_CRYPTIC",
+    "CROSSWORD_QUICKCRYPTIC",
+    "CROSSWORD_WEEKEND",
+    "CROSSWORD_PRIZE",
+    "CROSSWORD_QUIPTIC",
+    "CROSSWORD_SUNDAYQUICK",
+    "SUDOKU_EASY",
+    "SUDOKU_MEDIUM",
+    "SUDOKU_HARD",
+    "SUDOKU_KILLER",
+    "WORDWHEEL",
+    "WORDIPLY",
+  )
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
@@ -327,135 +395,4 @@ object PuzzlesPageController {
 
   val WordWheelSlug = "word-wheel"
   val WordiplySlug = "wordiply"
-
-  /** Static metadata for a single "more from Puzzles & Games" recommendation card. `group` is `None` for crosswords,
-    * whose destination is a fixed series page rather than a group/slug/date Puzzle Page route.
-    */
-  private case class RelatedPuzzleMeta(
-      id: String,
-      title: String,
-      `type`: String,
-      set: String,
-      group: Option[String],
-      image: String,
-      imageAlt: String,
-      backgroundColour: String,
-  )
-
-  /** Curated catalogue of "more from" recommendation cards, keyed by the same slug used by this game's own Puzzle Page
-    * route. Image/colour values reuse the same real assets already used for these puzzles on the Puzzles Hub (see
-    * `applications/conf/puzzles-layout.json`), for visual consistency.
-    */
-  private val relatedPuzzleCatalogue: Map[String, RelatedPuzzleMeta] = Map(
-    "sudoku-easy" -> RelatedPuzzleMeta(
-      id = "sudoku-easy",
-      title = "Easy sudoku",
-      `type` = "sudoku",
-      set = "easy",
-      group = Some(LogicPuzzlesGroup),
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-EASY.png?width=440&dpr=2&s=none",
-      imageAlt = "Easy sudoku illustration",
-      backgroundColour = "#CDECFB",
-    ),
-    "sudoku-medium" -> RelatedPuzzleMeta(
-      id = "sudoku-medium",
-      title = "Medium sudoku",
-      `type` = "sudoku",
-      set = "medium",
-      group = Some(LogicPuzzlesGroup),
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-MEDIUM.png?width=440&dpr=2&s=none",
-      imageAlt = "Medium sudoku illustration",
-      backgroundColour = "#CDECFB",
-    ),
-    "sudoku-hard" -> RelatedPuzzleMeta(
-      id = "sudoku-hard",
-      title = "Hard sudoku",
-      `type` = "sudoku",
-      set = "hard",
-      group = Some(LogicPuzzlesGroup),
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-HARD.png?width=440&dpr=2&s=none",
-      imageAlt = "Hard sudoku illustration",
-      backgroundColour = "#CDECFB",
-    ),
-    "sudoku-killer" -> RelatedPuzzleMeta(
-      id = "sudoku-killer",
-      title = "Killer sudoku",
-      `type` = "sudoku",
-      set = "killer",
-      group = Some(LogicPuzzlesGroup),
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-KILLER.png?width=440&dpr=2&s=none",
-      imageAlt = "Killer sudoku illustration",
-      backgroundColour = "#CDECFB",
-    ),
-    WordWheelSlug -> RelatedPuzzleMeta(
-      id = WordWheelSlug,
-      title = "Word wheel",
-      `type` = "word-wheel",
-      set = "all",
-      group = Some(WordGamesGroup),
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORD-WHEEL.png?width=440&dpr=2&s=none",
-      imageAlt = "Word wheel illustration",
-      backgroundColour = "#F9D4E8",
-    ),
-    WordiplySlug -> RelatedPuzzleMeta(
-      id = WordiplySlug,
-      title = "Wordiply",
-      `type` = "wordiply",
-      set = "all",
-      group = Some(WordGamesGroup),
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORDIPLY.png?width=440&dpr=2&s=none",
-      imageAlt = "Wordiply illustration",
-      backgroundColour = "#F8D0C9",
-    ),
-    "crossword-quick" -> RelatedPuzzleMeta(
-      id = "crossword-quick",
-      title = "Quick crossword",
-      `type` = "crossword",
-      set = "quick",
-      group = None,
-      image = "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK.png?width=440&dpr=2&s=none",
-      imageAlt = "Quick crossword illustration",
-      backgroundColour = "#FCE1CE",
-    ),
-  )
-
-  /** Which other puzzles to recommend from each of this game's own Puzzle Page: one from each of the other Puzzles &
-    * Games categories (excluding this game's own), confirmed with product. Crosswords are represented by the quick
-    * crossword's existing `/crosswords/series/quick` tag/series page (an existing, already-live route - not a specific
-    * day's crossword article, which would require an extra CAPI lookup this page doesn't otherwise need).
-    */
-  private val relatedSlugs: Map[String, Seq[String]] = Map(
-    "crosswords" -> Seq("sudoku-easy", WordWheelSlug, WordiplySlug),
-    "sudoku-easy" -> Seq("sudoku-medium", WordWheelSlug, "crossword-quick"),
-    "sudoku-medium" -> Seq("sudoku-hard", WordiplySlug, "crossword-quick"),
-    "sudoku-hard" -> Seq("sudoku-killer", WordWheelSlug, "crossword-quick"),
-    "sudoku-killer" -> Seq("sudoku-easy", WordiplySlug, "crossword-quick"),
-    WordWheelSlug -> Seq("sudoku-easy", WordiplySlug, "crossword-quick"),
-    WordiplySlug -> Seq("sudoku-medium", WordWheelSlug, "crossword-quick"),
-  )
-
-  /** Builds the "more from Puzzles & Games" recommendation cards for a given Puzzle Page instance. Each recommended
-    * puzzle links to that puzzle's own page for the same `date` (except the crossword card, which links to its fixed
-    * series page). Reuses the Puzzles Hub's own `PuzzleItem` card shape (see `PuzzlesLayout.scala`) so DCR's
-    * `isPuzzleItem` validation (id/title/type/set/cardVariant/cadence) is satisfied without inventing a new shape.
-    */
-  def moreFromPuzzlesAndGames(slug: String, date: String): Seq[PuzzleItem] =
-    relatedSlugs.getOrElse(slug, Nil).flatMap(relatedPuzzleCatalogue.get).map { meta =>
-      val url = meta.group match {
-        case Some(group) => s"/puzzles-and-games/$group/${meta.id}/$date"
-        case None        => "/crosswords/series/quick"
-      }
-      PuzzleItem(
-        id = meta.id,
-        title = meta.title,
-        `type` = meta.`type`,
-        set = meta.set,
-        cardVariant = "compact",
-        cadence = Some("Daily"),
-        url = Some(url),
-        image = Some(meta.image),
-        imageAlt = Some(meta.imageAlt),
-        backgroundColour = Some(meta.backgroundColour),
-      )
-    }
 }

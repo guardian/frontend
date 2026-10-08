@@ -9,7 +9,7 @@ import com.gu.contentapi.client.model.v1.{
   SearchResponse,
 }
 import contentapi.ContentApiClient
-import controllers.LocalJsonPuzzlesLayoutProvider
+import controllers.{LocalJsonPuzzlesLayoutProvider, PuzzleRecommendations}
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -69,16 +69,15 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       Some("inline2"),
     )
     featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
-      ("Quick crossword", "large", Some("Today")),
-      ("Easy sudoku", "large", Some("Today")),
+      ("Quick crossword", "large", None),
+      ("Easy sudoku", "large", None),
     )
     crosswords.content.items.map(_.map(item => item.title -> item.cardVariant)) shouldBe Seq(
       Seq("Quick", "Mini", "Cryptic", "Weekend").map(_ -> "primary"),
       Seq("Quick cryptic", "Quiptic", "Prize", "Sunday quick", "Genius").map(_ -> "compact"),
     )
-    crosswords.content.items.flatten.find(_.title == "Quiptic").flatMap(_.cadence) shouldBe Some("Every Sunday")
-    crosswords.content.items.flatten.find(_.title == "Prize").flatMap(_.cadence) shouldBe Some("Every Saturday")
-    crosswords.content.items.flatten.find(_.title == "Sunday quick").flatMap(_.cadence) shouldBe Some("Every Sunday")
+    crosswords.content.items.flatten.filterNot(_.title == "Genius").flatMap(_.cadence) shouldBe empty
+    crosswords.content.items.flatten.find(_.title == "Genius").flatMap(_.cadence) shouldBe Some("Monthly")
     crosswords.content.archiveChoices.map(_.map(_.title)) shouldBe Some(
       Seq(
         "Mini",
@@ -89,10 +88,29 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
         "Weekend",
         "Prize",
         "Sunday quick",
-        "Genius",
-        "Special",
       ),
     )
+    crosswords.content.archiveChoices.toSeq.flatten.map(_.url) shouldBe Seq(
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-mini"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quick"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-cryptic"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quick-cryptic"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quiptic"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-weekend"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-prize"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-sunday-quick"),
+    )
+    layout.containers.find(_.id == "word-games").flatMap(_.content.archiveChoices).map(_.flatMap(_.url)) shouldBe
+      Some(Seq("/puzzles-and-games/word-games/archive?puzzle=word-wheel-daily"))
+    layout.containers.find(_.id == "logic-puzzles").flatMap(_.content.archiveChoices).map(_.flatMap(_.url)) shouldBe
+      Some(
+        Seq(
+          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy",
+          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-medium",
+          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-hard",
+          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-killer",
+        ),
+      )
     layout.containers
       .find(_.variant.contains("supporting"))
       .flatMap(_.supporting)
@@ -130,7 +148,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
   }
 
-  it should "add the current London date to every iframe puzzle" in {
+  it should "leave iframe publication dates for Puzzles API enrichment" in {
     val provider =
       new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
 
@@ -138,8 +156,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val iframeItems = items.filter(_.variant.contains("iframe-page"))
 
     iframeItems should not be empty
-    all(iframeItems.map(_.date)) shouldBe Some("2026-09-07")
-    all(items.filterNot(_.variant.contains("iframe-page")).map(_.date)) shouldBe None
+    all(iframeItems.map(_.date)) shouldBe None
   }
 
   it should "use section-prefixed slugs and daily iframe destinations for word games and sudokus" in {
@@ -216,39 +233,40 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     expectedArtwork.keySet shouldBe featured.map(_.title).toSet
   }
 
-  it should "preserve featured artwork when CAPI supplies the latest crossword destination" in {
+  it should "leave non-Genius featured cards for Puzzles API enrichment" in {
+    val queries = ListBuffer.empty[SearchQuery]
     val provider = providerFor(
       featuredLayout(enabled = true),
-      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123)))),
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))), queries),
       mondayClock,
     )
     val quick = firstItem(Await.result(provider.getLayout(), 5.seconds))
-    quick.url shouldBe Some("/crosswords/quick/123")
+    quick.url shouldBe None
     quick.image shouldBe Some(artwork("crossword-QUICK"))
+    queries shouldBe empty
   }
 
-  it should "enrich regular and featured crossword cards with the latest CAPI setter name" in {
+  it should "enrich only the Genius card with the latest CAPI setter name" in {
     val provider = new LocalJsonPuzzlesLayoutProvider(
       Environment.simple(),
       contentApiClient(
-        Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))),
+        Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 123))),
         setter = Some("  Example setter  "),
       ),
       clock = mondayClock,
     )
     val layout = Await.result(provider.getLayout(), 5.seconds)
-    val quickCards = allItems(layout).filter(item => item.`type` == "crossword" && item.set == "quick")
-    quickCards should have size 2
-    all(quickCards.map(_.setter)) shouldBe Some("Example setter")
+    allItems(layout).find(_.set == "genius").flatMap(_.setter) shouldBe Some("Example setter")
+    allItems(layout).filter(_.set == "quick").flatMap(_.setter) shouldBe empty
     all(archives(layout).map(_.setter)) shouldBe None
   }
 
   it should "keep the configured setter when CAPI has no usable creator name" in {
     Seq(None, Some("   ")).foreach { setter =>
-      val baseItem = crossword("quick").copy(setter = Some("Configured setter"))
+      val baseItem = crossword("genius").copy(setter = Some("Configured setter"))
       val provider = providerFor(
         layoutWith(Seq(baseItem)),
-        contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))), setter = setter),
+        contentApiClient(Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 123))), setter = setter),
       )
       firstItem(Await.result(provider.getLayout(), 5.seconds)).setter shouldBe Some("Configured setter")
     }
@@ -256,9 +274,9 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "prefer the latest CAPI setter over an older configured name" in {
     val provider = providerFor(
-      layoutWith(Seq(crossword("quick").copy(setter = Some("Previous setter")))),
+      layoutWith(Seq(crossword("genius").copy(setter = Some("Previous setter")))),
       contentApiClient(
-        Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123))),
+        Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 123))),
         setter = Some("Latest setter"),
       ),
     )
@@ -307,10 +325,10 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "replace the URL while preserving an image configured by the blueprint" in {
     val baseItem = PuzzleItem(
-      id = "crossword-quick-cryptic",
+      id = "crossword-genius",
       title = "Editorial title",
       `type` = "crossword",
-      set = "quick-cryptic",
+      set = "genius",
       cardVariant = "primary",
       cadence = Some("Every Saturday"),
       url = Some("/fallback"),
@@ -323,26 +341,26 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     )
     val provider = providerFor(
       layoutWith(items = Seq(baseItem)),
-      contentApiClient(Map("crosswords/series/quick-cryptic" -> Right(Some(CrosswordType.QuickCryptic -> 321)))),
+      contentApiClient(Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 321)))),
     )
 
     val enrichedItem = firstItem(Await.result(provider.getLayout(), 5.seconds))
 
     enrichedItem shouldBe baseItem.copy(
-      url = Some("/crosswords/quick-cryptic/321"),
+      url = Some("/crosswords/genius/321"),
       image = Some("/fallback.svg"),
     )
   }
 
   it should "use the enriched crossword image when the blueprint does not configure one" in {
-    val baseItem = crossword("quick", "/fallback").copy(image = None)
+    val baseItem = crossword("genius", "/fallback").copy(image = None)
     val provider = providerFor(
       layoutWith(items = Seq(baseItem)),
-      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 123)))),
+      contentApiClient(Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 123)))),
     )
 
     firstItem(Await.result(provider.getLayout(), 5.seconds)).image shouldBe Some(
-      "https://api.nextgen.guardianapps.co.uk/crosswords/quick/123.svg",
+      "https://api.nextgen.guardianapps.co.uk/crosswords/genius/123.svg",
     )
   }
 
@@ -352,60 +370,57 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       id = "nested",
       title = "Nested",
       content = PuzzleContent(
-        items = Seq(Seq(crossword("quick", "/nested").copy(id = "crossword-quick-nested"))),
+        items = Seq(Seq(crossword("genius", "/nested").copy(id = "crossword-genius-nested"))),
         nestedContainers = Seq.empty,
       ),
     )
     val layout = layoutWith(
       items = Seq(
-        crossword("quick", "/top").copy(id = "crossword-quick-top"),
-        crossword("quick", "/duplicate").copy(id = "crossword-quick-duplicate"),
+        crossword("genius", "/top").copy(id = "crossword-genius-top"),
+        crossword("genius", "/duplicate").copy(id = "crossword-genius-duplicate"),
       ),
       nestedContainers = Seq(nested),
     )
     val provider = providerFor(
       layout,
-      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 42))), queries),
+      contentApiClient(Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 42))), queries),
     )
 
     val enriched = Await.result(provider.getLayout(), 5.seconds)
 
     queries should have size 1
-    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/crosswords/quick/42"))
+    allItems(enriched).map(_.url).distinct shouldBe Seq(Some("/crosswords/genius/42"))
   }
 
-  it should "query the corresponding CAPI series tag for every supported crossword set" in {
-    val setToSeries = Seq(
-      "mini" -> "crosswords/series/mini-crossword",
-      "weekend" -> "crosswords/series/weekend-crossword",
-      "quick" -> "crosswords/series/quick",
-      "cryptic" -> "crosswords/series/cryptic",
-      "prize" -> "crosswords/series/prize",
-      "sunday-quick" -> "crosswords/series/sunday-quick",
-      "quick-cryptic" -> "crosswords/series/quick-cryptic",
-      "everyman" -> "crosswords/series/everyman",
-      "speedy" -> "crosswords/series/speedy",
-      "quiptic" -> "crosswords/series/quiptic",
-      "genius" -> "crosswords/series/genius",
-      "special" -> "crosswords/series/special",
-      "azed" -> "crosswords/series/azed",
-    )
+  it should "query CAPI only for Genius" in {
+    val sets = Seq("mini", "weekend", "quick", "cryptic", "prize", "sunday-quick", "quick-cryptic", "quiptic", "genius")
     val queries = ListBuffer.empty[SearchQuery]
     val provider = providerFor(
-      layoutWith(items = setToSeries.map { case (set, _) => crossword(set) }),
-      contentApiClient(setToSeries.map { case (_, tag) => tag -> Right(None) }.toMap, queries),
+      layoutWith(items = sets.map(crossword(_))),
+      contentApiClient(Map("crosswords/series/genius" -> Right(None)), queries),
     )
 
     Await.result(provider.getLayout(), 5.seconds)
 
-    queries.map(_.parameters("tag")).toSeq shouldBe setToSeries.map(_._2)
+    queries.map(_.parameters("tag")).toSeq shouldBe Seq("crosswords/series/genius")
+  }
+
+  it should "keep non-Genius crossword series available to puzzle recommendations" in {
+    val queries = ListBuffer.empty[SearchQuery]
+    val lookup = PuzzleRecommendations.capiLookup(
+      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 42))), queries),
+    )
+
+    Await.result(lookup("quick", None), 5.seconds) shouldBe
+      Some(PuzzleRecommendations.LatestCrossword("quick", 42))
+    queries.map(_.parameters("tag")).toSeq shouldBe Seq("crosswords/series/quick")
   }
 
   it should "request only the latest newspaper-edition crossword and its required fields" in {
     val queries = ListBuffer.empty[SearchQuery]
     val provider = providerFor(
-      layoutWith(items = Seq(crossword("mini"))),
-      contentApiClient(Map("crosswords/series/mini-crossword" -> Right(None)), queries),
+      layoutWith(items = Seq(crossword("genius"))),
+      contentApiClient(Map("crosswords/series/genius" -> Right(None)), queries),
     )
 
     Await.result(provider.getLayout(), 5.seconds)
@@ -413,7 +428,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     queries.toSeq should have size 1
     queries.head.parameters should contain allOf (
       "type" -> "crossword",
-      "tag" -> "crosswords/series/mini-crossword",
+      "tag" -> "crosswords/series/genius",
       "use-date" -> "newspaper-edition",
       "order-by" -> "newest",
       "page-size" -> "1",
@@ -432,9 +447,9 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "exclude archive and non-crossword items from lookup and enrichment" in {
     val queries = ListBuffer.empty[SearchQuery]
-    val latestCard = crossword("quick", "/latest-card").copy(id = "crossword-quick-latest")
-    val archiveInItems = crossword("quick", "/archive-card").copy(
-      id = "crossword-quick-archive-card",
+    val latestCard = crossword("genius", "/latest-card").copy(id = "crossword-genius-latest")
+    val archiveInItems = crossword("genius", "/archive-card").copy(
+      id = "crossword-genius-archive-card",
       variant = Some("archive-page"),
     )
     val nonCrossword = PuzzleItem(
@@ -447,7 +462,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       url = Some("/sudoku"),
       image = Some("/sudoku.svg"),
     )
-    val archive = crossword("quick", "/archive").copy(
+    val archive = crossword("genius", "/archive").copy(
       id = "crosswords-archive",
       cardVariant = "archive",
       cadence = None,
@@ -455,7 +470,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val layout = layoutWith(items = Seq(latestCard, archiveInItems, nonCrossword), archive = Some(archive))
     val provider = providerFor(
       layout,
-      contentApiClient(Map("crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 99))), queries),
+      contentApiClient(Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 99))), queries),
     )
 
     val result = Await.result(provider.getLayout(), 5.seconds)
@@ -463,9 +478,9 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     queries should have size 1
     allItems(result) should contain theSameElementsInOrderAs Seq(
       latestCard.copy(
-        url = Some("/crosswords/quick/99"),
+        url = Some("/crosswords/genius/99"),
         image = Some("/latest-card.svg"),
-        imageAlt = Some("quick illustration"),
+        imageAlt = Some("genius illustration"),
       ),
       archiveInItems,
       nonCrossword,
@@ -473,33 +488,32 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     result.containers.head.content.archive shouldBe Some(archive)
   }
 
-  it should "keep failed sets at their base values while enriching successful sets" in {
+  it should "leave API-backed sets unchanged while enriching Genius" in {
     val quick = crossword("quick", "/quick-base")
-    val cryptic = crossword("cryptic", "/cryptic-base")
+    val genius = crossword("genius", "/genius-base")
     val provider = providerFor(
-      layoutWith(items = Seq(quick, cryptic)),
+      layoutWith(items = Seq(quick, genius)),
       contentApiClient(
         Map(
           "crosswords/series/quick" -> Right(Some(CrosswordType.Quick -> 100)),
-          "crosswords/series/cryptic" -> Left(new RuntimeException("CAPI unavailable")),
+          "crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 200)),
         ),
       ),
     )
 
     val result = Await.result(provider.getLayout(), 5.seconds)
 
-    allItems(result).find(_.set == "quick").flatMap(_.url) shouldBe Some("/crosswords/quick/100")
-    allItems(result).find(_.set == "cryptic") shouldBe Some(cryptic)
+    allItems(result).find(_.set == "quick") shouldBe Some(quick)
+    allItems(result).find(_.set == "genius").flatMap(_.url) shouldBe Some("/crosswords/genius/200")
   }
 
   it should "return the complete base layout when all CAPI lookups fail" in {
-    val baseLayout = layoutWith(items = Seq(crossword("quick", "/quick-base"), crossword("cryptic", "/cryptic-base")))
+    val baseLayout = layoutWith(items = Seq(crossword("quick", "/quick-base"), crossword("genius", "/genius-base")))
     val provider = providerFor(
       baseLayout,
       contentApiClient(
         Map(
-          "crosswords/series/quick" -> Left(new RuntimeException("quick failed")),
-          "crosswords/series/cryptic" -> Left(new RuntimeException("cryptic failed")),
+          "crosswords/series/genius" -> Left(new RuntimeException("genius failed")),
         ),
       ),
     )

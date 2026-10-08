@@ -11,15 +11,15 @@ are expected to run.
 
 ## Puzzles hub
 
-The puzzles hub uses the Fastly-managed `puzzles-new-hub` experiment. Frontend code should check
-`PuzzlesHubExperiment.isEnabled`, which is true only for the `variant` group and safely defaults to false for control,
+The puzzles hub uses the Fastly-managed `puzzles-new-hub-v1` experiment. Frontend code should check
+`PuzzlesHubV1Experiment.isEnabled`, which is true only for the `variant` group and safely defaults to false for control,
 excluded, missing, or malformed participations outside local development. In `DEV`, the helper enables the hub without
 a Fastly participation so Frontend can render `/puzzles-and-games` through a locally running dotcom-rendering instance.
 
 The existing Fastly routes can be used to force a group in CODE or PROD:
 
--   `/ab-tests/opt-in/puzzles-new-hub:variant`
--   `/ab-tests/opt-in/puzzles-new-hub:control`
+-   `/ab-tests/opt-in/puzzles-new-hub-v1:variant`
+-   `/ab-tests/opt-in/puzzles-new-hub-v1:control`
 -   `/ab-tests/opt-out`
 
 The `/puzzles-and-games` and `/puzzles-and-games.json` routes, as well as puzzles navigation, are available only to variant requests.

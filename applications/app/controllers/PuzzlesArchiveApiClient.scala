@@ -2,41 +2,32 @@ package controllers
 
 import common.GuLogging
 import conf.Configuration
-import play.api.libs.json.{Json, OFormat}
 import play.api.libs.ws.WSClient
 
 import java.time.LocalDate
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ArchiveApiItem(
-    puzzleId: String,
-    puzzleType: String,
-    publishDate: String,
-    progress: Int,
-    setterName: Option[String],
-    gameUrl: Option[String],
-)
-
-object ArchiveApiItem {
-  implicit val format: OFormat[ArchiveApiItem] = Json.format[ArchiveApiItem]
-}
-
-case class ArchiveApiResponse(results: Seq[ArchiveApiItem])
-object ArchiveApiResponse {
-  implicit val format: OFormat[ArchiveApiResponse] = Json.format[ArchiveApiResponse]
-}
-
 trait PuzzlesArchiveApi {
-  def get(startDate: LocalDate, endDate: LocalDate, puzzleType: String)(implicit
+  def get(
+      startDate: LocalDate,
+      endDate: LocalDate,
+      puzzleType: String,
+      authorization: Option[String] = None,
+  )(implicit
       executionContext: ExecutionContext,
-  ): Future[Seq[ArchiveApiItem]]
+  ): Future[Seq[PuzzlesApiItem]]
 }
 
 class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with GuLogging {
-  override def get(startDate: LocalDate, endDate: LocalDate, puzzleType: String)(implicit
+  override def get(
+      startDate: LocalDate,
+      endDate: LocalDate,
+      puzzleType: String,
+      authorization: Option[String],
+  )(implicit
       executionContext: ExecutionContext,
-  ): Future[Seq[ArchiveApiItem]] = {
+  ): Future[Seq[PuzzlesApiItem]] = {
     val archiveUrl = s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/archive"
 
     errorLoggingF(
@@ -44,7 +35,7 @@ class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with
     ) {
       wsClient
         .url(archiveUrl)
-        .withHttpHeaders("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json")
+        .withHttpHeaders(requestHeaders(authorization): _*)
         .withQueryStringParameters(
           "startDate" -> startDate.toString,
           "endDate" -> endDate.toString,
@@ -55,7 +46,7 @@ class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with
         .flatMap { response =>
           if (response.status >= 200 && response.status < 300) {
             response.json
-              .validate[ArchiveApiResponse]
+              .validate[PuzzlesApiResponse]
               .fold(
                 errors => Future.failed(new IllegalArgumentException(s"Invalid puzzles archive response: $errors")),
                 value => Future.successful(value.results),
@@ -70,4 +61,8 @@ class PuzzlesArchiveApiClient(wsClient: WSClient) extends PuzzlesArchiveApi with
         }
     }
   }
+
+  private def requestHeaders(authorization: Option[String]): Seq[(String, String)] =
+    Seq("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json") ++
+      authorization.map("Authorization" -> _)
 }

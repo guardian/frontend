@@ -23,7 +23,6 @@
 							"type": "crossword",
 							"set": "quick",
 							"cardVariant": "primary",
-							"cadence": "Today",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK.png?width=440&dpr=2&s=none",
 							"imageAlt": "Quick crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -34,7 +33,6 @@
 							"type": "crossword",
 							"set": "mini",
 							"cardVariant": "primary",
-							"cadence": "Today",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-MINI.png?width=440&dpr=2&s=none",
 							"imageAlt": "Mini crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -45,7 +43,6 @@
 							"type": "crossword",
 							"set": "cryptic",
 							"cardVariant": "primary",
-							"cadence": "Today",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-CRYPTIC.png?width=440&dpr=2&s=none",
 							"imageAlt": "Cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -56,7 +53,6 @@
 							"type": "crossword",
 							"set": "weekend",
 							"cardVariant": "primary",
-							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
 							"imageAlt": "General knowledge crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -69,7 +65,6 @@
 							"type": "crossword",
 							"set": "quick-cryptic",
 							"cardVariant": "compact",
-							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
 							"imageAlt": "Quick cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -80,7 +75,6 @@
 							"type": "crossword",
 							"set": "quiptic",
 							"cardVariant": "compact",
-							"cadence": "Every Sunday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUIPTIC.png?width=440&dpr=2&s=none",
 							"imageAlt": "Quiptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -91,7 +85,6 @@
 							"type": "crossword",
 							"set": "prize",
 							"cardVariant": "compact",
-							"cadence": "Every Saturday",
 							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
 							"imageAlt": "Prize crossword illustration",
 							"backgroundColour": "#FCE1CE"
@@ -102,7 +95,6 @@
 							"type": "crossword",
 							"set": "sunday-quick",
 							"cardVariant": "compact",
-							"cadence": "Every Sunday",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
@@ -126,7 +118,7 @@
 						"type": "crossword",
 						"set": "mini",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/mini-crossword",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-mini",
 						"variant": "archive-page"
 					},
 					{
@@ -135,7 +127,7 @@
 						"type": "crossword",
 						"set": "quick",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/quick",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-quick",
 						"variant": "archive-page"
 					},
 					{
@@ -144,7 +136,7 @@
 						"type": "crossword",
 						"set": "cryptic",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/cryptic",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-cryptic",
 						"variant": "archive-page"
 					},
 					{
@@ -153,7 +145,7 @@
 						"type": "crossword",
 						"set": "quick-cryptic",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/quick-cryptic",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-quick-cryptic",
 						"variant": "archive-page"
 					},
 					{
@@ -162,7 +154,7 @@
 						"type": "crossword",
 						"set": "quiptic",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/quiptic",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-quiptic",
 						"variant": "archive-page"
 					},
 					{
@@ -171,7 +163,7 @@
 						"type": "crossword",
 						"set": "weekend",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/weekend-crossword",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-weekend",
 						"variant": "archive-page"
 					},
 					{
@@ -180,7 +172,7 @@
 						"type": "crossword",
 						"set": "prize",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/prize",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-prize",
 						"variant": "archive-page"
 					},
 					{
@@ -189,25 +181,7 @@
 						"type": "crossword",
 						"set": "sunday-quick",
 						"cardVariant": "archive",
-						"url": "/crosswords/series/sunday-quick",
-						"variant": "archive-page"
-					},
-					{
-						"id": "archive-genius",
-						"title": "Genius",
-						"type": "crossword",
-						"set": "genius",
-						"cardVariant": "archive",
-						"url": "/crosswords/series/genius",
-						"variant": "archive-page"
-					},
-					{
-						"id": "archive-special",
-						"title": "Special",
-						"type": "crossword",
-						"set": "special",
-						"cardVariant": "archive",
-						"url": "/crosswords/series/special",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-sunday-quick",
 						"variant": "archive-page"
 					}
 				]
@@ -240,7 +214,6 @@
 										"type": "word-wheel",
 										"set": "all",
 										"cardVariant": "primary",
-										"cadence": "Today",
 										"slug": "word-games/word-wheel",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORD-WHEEL.png?width=440&dpr=2&s=none",
@@ -267,7 +240,6 @@
 										"type": "wordiply",
 										"set": "all",
 										"cardVariant": "primary",
-										"cadence": "Today",
 										"slug": "word-games/wordiply",
 										"url": "https://www.wordiply.com/",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORDIPLY.png?width=440&dpr=2&s=none",
@@ -279,6 +251,17 @@
 							],
 							"nestedContainers": []
 						}
+					}
+				],
+				"archiveChoices": [
+					{
+						"id": "archive-word-games",
+						"title": "Word wheel",
+						"type": "word-wheel",
+						"set": "all",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/word-games/archive?puzzle=word-wheel-daily",
+						"variant": "archive-page"
 					}
 				]
 			}
@@ -303,7 +286,6 @@
 										"type": "sudoku",
 										"set": "easy",
 										"cardVariant": "primary",
-										"cadence": "Today",
 										"slug": "logic-puzzles/sudoku-easy",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-EASY.png?width=440&dpr=2&s=none",
@@ -318,7 +300,6 @@
 										"type": "sudoku",
 										"set": "medium",
 										"cardVariant": "primary",
-										"cadence": "Today",
 										"slug": "logic-puzzles/sudoku-medium",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-MEDIUM.png?width=440&dpr=2&s=none",
@@ -333,7 +314,6 @@
 										"type": "sudoku",
 										"set": "hard",
 										"cardVariant": "primary",
-										"cadence": "Today",
 										"slug": "logic-puzzles/sudoku-hard",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-HARD.png?width=440&dpr=2&s=none",
@@ -348,7 +328,6 @@
 										"type": "sudoku",
 										"set": "killer",
 										"cardVariant": "primary",
-										"cadence": "Today",
 										"slug": "logic-puzzles/sudoku-killer",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
 										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-KILLER.png?width=440&dpr=2&s=none",
@@ -361,6 +340,44 @@
 							],
 							"nestedContainers": []
 						}
+					}
+				],
+				"archiveChoices": [
+					{
+						"id": "archive-sudoku-easy",
+						"title": "Easy sudoku",
+						"type": "sudoku",
+						"set": "easy",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sudoku-medium",
+						"title": "Medium sudoku",
+						"type": "sudoku",
+						"set": "medium",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-medium",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sudoku-hard",
+						"title": "Hard sudoku",
+						"type": "sudoku",
+						"set": "hard",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-hard",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sudoku-killer",
+						"title": "Killer sudoku",
+						"type": "sudoku",
+						"set": "killer",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-killer",
+						"variant": "archive-page"
 					}
 				]
 			}

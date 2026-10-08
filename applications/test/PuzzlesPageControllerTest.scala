@@ -1,7 +1,10 @@
 package test
 
 import ab.ABTests
-import controllers.{PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController}
+import controllers.{PuzzlesApiItem, PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController, PuzzlesProgressApi}
+import com.gu.contentapi.client.model.SearchQuery
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, CrosswordType, SearchResponse}
+import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
@@ -12,7 +15,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{AnyContent, Request, RequestHeader, Results}
+import play.api.mvc.{AnyContent, Headers, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
 
@@ -45,14 +48,31 @@ import scala.concurrent.{ExecutionContext, Future}
       provider: PuzzlesLayoutProvider,
       renderer: DotcomRenderingService,
       puzzlesArchiveApi: PuzzlesArchiveApi = mock[PuzzlesArchiveApi],
+      puzzlesProgressApi: PuzzlesProgressApi = mock[PuzzlesProgressApi],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
       provider,
       puzzlesArchiveApi,
+      puzzlesProgressApi,
       renderer,
+      crosswordContentApiClient,
       stubControllerComponents(),
     )
+
+  /** CAPI stub that returns a single quick crossword (number 100) for every "most recent crossword" query. */
+  private def crosswordContentApiClient: ContentApiClient = {
+    val crossword = mock[Crossword]
+    when(crossword.`type`).thenReturn(CrosswordType.Quick)
+    when(crossword.number).thenReturn(100)
+    val content = mock[ApiContent]
+    when(content.crossword).thenReturn(Some(crossword))
+    val response = mock[SearchResponse]
+    when(response.results).thenReturn(Seq(content))
+    val client = mock[ContentApiClient]
+    when(client.getResponse(any[SearchQuery])).thenReturn(Future.successful(response))
+    client
+  }
 
   private def successfulProvider: PuzzlesLayoutProvider = {
     val provider = mock[PuzzlesLayoutProvider]
@@ -84,14 +104,14 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
-  private def request(path: String, participations: String = "puzzles-new-hub:variant"): Request[AnyContent] = {
+  private def request(path: String, participations: String = "puzzles-new-hub-v1:variant"): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
   }
 
   "archiveDataForMonth" should "serve calendar requests without requiring AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
-    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
 
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
@@ -103,15 +123,47 @@ import scala.concurrent.{ExecutionContext, Future}
       )
 
     status(result) should be(OK)
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
     verify(archiveApi)
-      .get(eqTo(LocalDate.of(2020, 9, 1)), eqTo(LocalDate.of(2020, 9, 30)), eqTo("CROSSWORD_QUICK"))(
+      .get(
+        eqTo(LocalDate.of(2020, 9, 1)),
+        eqTo(LocalDate.of(2020, 9, 30)),
+        eqTo("CROSSWORD_QUICK"),
+        eqTo(Option.empty[String]),
+      )(
         any[ExecutionContext],
       )
   }
 
+  it should "forward an authenticated user's token to the archive API" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    when(
+      archiveApi.get(
+        any[LocalDate],
+        any[LocalDate],
+        any[String],
+        eqTo(Some("Bearer access-token")),
+      )(any[ExecutionContext]),
+    ).thenReturn(Future.successful(Nil))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
+        request("/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9")
+          .withHeaders(Headers("Authorization" -> "Bearer access-token")),
+      )
+
+    status(result) should be(OK)
+    verify(archiveApi).get(
+      any[LocalDate],
+      any[LocalDate],
+      eqTo("CROSSWORD_QUICK"),
+      eqTo(Some("Bearer access-token")),
+    )(any[ExecutionContext])
+  }
+
   it should "clamp future requests to the current month and current date" in {
     val archiveApi = mock[PuzzlesArchiveApi]
-    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
     val today = LocalDate.now(ZoneId.of("Europe/London"))
 
@@ -125,12 +177,17 @@ import scala.concurrent.{ExecutionContext, Future}
 
     status(result) should be(OK)
     verify(archiveApi)
-      .get(eqTo(today.minusDays(31)), eqTo(today), eqTo("CROSSWORD_QUICK"))(any[ExecutionContext])
+      .get(
+        eqTo(today.minusDays(31)),
+        eqTo(today),
+        eqTo("CROSSWORD_QUICK"),
+        eqTo(Option.empty[String]),
+      )(any[ExecutionContext])
   }
 
   it should "use the path selection without query parameters or AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
-    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String])(any[ExecutionContext]))
+    when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
       .thenReturn(Future.successful(Nil))
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
       .archiveDataForMonth("crosswords", "archive-mini", 2020, 8)(
@@ -142,7 +199,12 @@ import scala.concurrent.{ExecutionContext, Future}
     (contentAsJson(result) \ "year").as[Int] should be(2020)
     (contentAsJson(result) \ "month").as[Int] should be(8)
     (contentAsJson(result) \ "dataUrl").toOption should be(None)
-    verify(archiveApi).get(eqTo(LocalDate.of(2020, 8, 1)), eqTo(LocalDate.of(2020, 8, 31)), eqTo("CROSSWORD_MINI"))(
+    verify(archiveApi).get(
+      eqTo(LocalDate.of(2020, 8, 1)),
+      eqTo(LocalDate.of(2020, 8, 31)),
+      eqTo("CROSSWORD_MINI"),
+      eqTo(Option.empty[String]),
+    )(
       any[ExecutionContext],
     )
   }
@@ -209,7 +271,64 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
-  it should "return not found when the JSON action receives an HTML request" in {
+  "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
+    val progressApi = mock[PuzzlesProgressApi]
+    val item = PuzzlesApiItem(
+      puzzleId = "123",
+      puzzleType = "CROSSWORD_QUICK",
+      publishDate = "2026-10-02T00:00:00Z",
+      progress = 100,
+      setterName = Some("A setter"),
+      gameUrl = Some("/crosswords/quick/123"),
+    )
+    when(
+      progressApi.query(
+        any[LocalDate],
+        eqTo(PuzzlesPageController.ProgressPuzzleTypes),
+        eqTo(Some("Bearer access-token")),
+      )(any[ExecutionContext]),
+    ).thenReturn(Future.successful(Seq(item)))
+
+    val result = controller(
+      successfulProvider,
+      mock[DotcomRenderingService],
+      puzzlesProgressApi = progressApi,
+    )
+      .puzzlesProgress()(
+        request("/puzzles-and-games/progress").withHeaders(Headers("Authorization" -> "Bearer access-token")),
+      )
+
+    status(result) should be(OK)
+    contentType(result) should contain("application/json")
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
+    (contentAsJson(result) \ "results").as[Seq[PuzzlesApiItem]] shouldBe Seq(item)
+    verify(progressApi).query(
+      any[LocalDate],
+      eqTo(PuzzlesPageController.ProgressPuzzleTypes),
+      eqTo(Some("Bearer access-token")),
+    )(any[ExecutionContext])
+  }
+
+  it should "query progress for signed-out users without an Authorization header" in {
+    val progressApi = mock[PuzzlesProgressApi]
+    when(
+      progressApi.query(any[LocalDate], any[Seq[String]], eqTo(Option.empty[String]))(any[ExecutionContext]),
+    ).thenReturn(Future.successful(Nil))
+
+    val result = controller(
+      successfulProvider,
+      mock[DotcomRenderingService],
+      puzzlesProgressApi = progressApi,
+    )
+      .puzzlesProgress()(request("/puzzles-and-games/progress"))
+
+    status(result) should be(OK)
+    verify(progressApi).query(any[LocalDate], any[Seq[String]], eqTo(Option.empty[String]))(
+      any[ExecutionContext],
+    )
+  }
+
+  "renderPuzzlesJson" should "return not found when the JSON action receives an HTML request" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
       .renderPuzzlesJson()(request("/puzzles-and-games"))
 
@@ -224,10 +343,10 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub:control",
+    "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
-    "malformed" -> "puzzles-new-hub:,puzzles-new-hub:variant:extra",
-    "unknown group" -> "puzzles-new-hub:unknown",
+    "malformed" -> "puzzles-new-hub-v1:,puzzles-new-hub-v1:variant:extra",
+    "unknown group" -> "puzzles-new-hub-v1:unknown",
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
     s"puzzles hub access with $participationCase participation" should
@@ -246,9 +365,9 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubExperiment` ("puzzles-new-hub") AB
-    * test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are explicitly
-    * out of scope for Puzzle Page and are not exercised by these tests.
+    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1")
+    * AB test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are
+    * explicitly out of scope for Puzzle Page and are not exercised by these tests.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
@@ -294,16 +413,16 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
-    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+    related.map(_.id) should be(Seq("sudoku-killer", "sudoku-hard", "sudoku-medium"))
     related.map(_.url) should be(
       Seq(
-        Some("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15"),
-        Some("/puzzles-and-games/word-games/wordiply/2024-01-15"),
-        Some("/crosswords/series/quick"),
+        Some("/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-14"),
+        Some("/puzzles-and-games/logic-puzzles/sudoku-hard/2024-01-15"),
+        Some("/puzzles-and-games/logic-puzzles/sudoku-medium/2024-01-15"),
       ),
     )
     related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
-    related.map(_.cadence) should be(Seq(Some("Daily"), Some("Daily"), Some("Daily")))
+    related.map(_.cadence) should be(Seq(Some("Yesterday"), Some("Today"), Some("Today")))
   }
 
   "redirectSudokuArchive" should "temporarily redirect to the logic-puzzles archive, filtered to this sudoku variant" in {
@@ -362,7 +481,14 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
-    related.map(_.id) should be(Seq("sudoku-easy", "wordiply", "crossword-quick"))
+    related.map(_.id) should be(Seq("word-wheel", "crossword-quick", "crossword-mini"))
+    related.map(_.url) should be(
+      Seq(
+        Some("/puzzles-and-games/word-games/word-wheel/2024-01-14"),
+        Some("/crosswords/quick/100"),
+        Some("/crosswords/quick/100"),
+      ),
+    )
   }
 
   "redirectWordWheelArchive" should "temporarily redirect to the word-games archive, filtered to word wheel" in {
@@ -409,7 +535,7 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "instance" \ "puzzleDate").as[String] should be("2024-01-15")
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
-    related.map(_.id) should be(Seq("sudoku-medium", "word-wheel", "crossword-quick"))
+    related.map(_.id) should be(Seq("crossword-mini", "word-wheel", "sudoku-easy"))
   }
 
   "redirectWordiplyArchive" should "temporarily redirect to the word-games archive, filtered to wordiply" in {
@@ -424,7 +550,7 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub:control",
+    "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>

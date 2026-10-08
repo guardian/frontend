@@ -19,6 +19,7 @@ GET        /email-newsletters                                                   
 # Puzzles
 GET        /puzzles-and-games.json                                                        controllers.PuzzlesPageController.renderPuzzlesJson()
 GET        /puzzles-and-games                                                             controllers.PuzzlesPageController.renderPuzzles()
+GET        /puzzles-and-games/progress                                                    controllers.PuzzlesPageController.puzzlesProgress()
 GET        /puzzles-and-games/crosswords/archive                                          controllers.PuzzlesPageController.renderCrosswordsArchive()
 GET        /puzzles-and-games/word-games/archive                                          controllers.PuzzlesPageController.renderWordGamesArchive()
 GET        /puzzles-and-games/logic-puzzles/archive                                       controllers.PuzzlesPageController.renderLogicPuzzlesArchive()
@@ -53,6 +54,7 @@ GET        /puzzles-and-games/word-games/word-wheel                             
 GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>.json                                               controllers.PuzzlesPageController.renderWordiplyJson(date: String)
 GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>                                                    controllers.PuzzlesPageController.renderWordiply(date: String)
 GET        /puzzles-and-games/word-games/wordiply                                                                             controllers.PuzzlesPageController.redirectWordiplyArchive()
+PUT        /puzzles-and-games/progress                                                                                        controllers.PuzzlesProgressController.save()
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
