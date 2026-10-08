@@ -59,6 +59,7 @@ case class DotcomRenderingDataModel(
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
+    firstPublicationDate: String,
     editionLongForm: String,
     editionId: String,
     pageId: String,
@@ -140,6 +141,7 @@ object DotcomRenderingDataModel {
         "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
         "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
+        "firstPublicationDate" -> model.firstPublicationDate,
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
@@ -695,6 +697,7 @@ object DotcomRenderingDataModel {
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
+      firstPublicationDate = content.fields.firstPublicationDate.toString,
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
