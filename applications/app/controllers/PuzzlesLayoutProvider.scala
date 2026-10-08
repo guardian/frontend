@@ -30,7 +30,7 @@ class LocalJsonPuzzlesLayoutProvider(
     Future(blocking(loadLayout())).flatMap { baseLayout =>
       val scheduledLayout = applyFeaturedSchedule(baseLayout)
       enrichCrosswordItems(scheduledLayout).recover { case NonFatal(error) =>
-        log.warn("Failed to enrich the Genius card from CAPI using the scheduled layout", error)
+        log.warn("Failed to enrich crossword cards from CAPI using the scheduled layout", error)
         scheduledLayout
       }
     }
@@ -84,7 +84,7 @@ class LocalJsonPuzzlesLayoutProvider(
   ): Future[PuzzlesLayout] = {
     val crosswordSets = layout.containers
       .flatMap(crosswordItems)
-      .filter(isGeniusCrosswordCard)
+      .filter(isPlayableCrosswordCard)
       .map(_.set)
       .distinct
 
@@ -114,7 +114,7 @@ class LocalJsonPuzzlesLayoutProvider(
       item: PuzzleItem,
       latestCrosswords: Map[String, CrosswordDynamicFields],
   ): PuzzleItem =
-    if (isGeniusCrosswordCard(item)) {
+    if (isPlayableCrosswordCard(item)) {
       latestCrosswords
         .get(item.set)
         .map(dynamicFields =>
@@ -130,8 +130,8 @@ class LocalJsonPuzzlesLayoutProvider(
       item
     }
 
-  private def isGeniusCrosswordCard(item: PuzzleItem): Boolean =
-    item.`type` == "crossword" && item.set == "genius" && !item.variant.exists(_.startsWith("archive"))
+  private def isPlayableCrosswordCard(item: PuzzleItem): Boolean =
+    item.`type` == "crossword" && !item.variant.exists(_.startsWith("archive"))
 
   private def latestCrosswordForSet(set: String)(implicit
       executionContext: ExecutionContext,
