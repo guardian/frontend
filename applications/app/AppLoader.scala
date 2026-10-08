@@ -22,7 +22,9 @@ import play.api.routing.Router
 import services._
 import router.Routes
 import services.articleabtest.ArticleAbTestLifecycle
+import services.eventgraphic.EventGraphicService
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
+import services.zug.{ZugClient, ZugClientImpl}
 
 import scala.concurrent.ExecutionContext
 
@@ -52,6 +54,8 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   lazy val healthCheck = wire[HealthCheck]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val signupPageController = wire[SignupPageController]
+  lazy val zugClient: ZugClient = wire[ZugClientImpl]
+  lazy val eventGraphicService = wire[EventGraphicService]
 
   override lazy val lifecycleComponents = List(
     wire[ArticleAbTestLifecycle],

@@ -161,7 +161,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
             .withHeaders("X-GU-Dotcomponents" -> "true")
         case _ =>
-          log.error(s"Request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}")
+          logErrorWithRequestId(
+            s"Request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}",
+          )
           NoCache(
             InternalServerError("Remote renderer error (500)")
               .withHeaders("X-GU-Dotcomponents" -> "true"),
@@ -570,13 +572,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getAppsComponent(
       ws: WSClient,
-      path: String,
+      json: JsValue,
+      path: Option[String],
+      cacheTime: CacheTime,
   )(implicit request: RequestHeader): Future[Result] = {
+    val endpoint = path match {
+      case Some(p) => Configuration.rendering.articleBaseURL + s"/AppsComponent/$p"
+      case None    => Configuration.rendering.articleBaseURL + s"/AppsComponent"
+    }
     post(
       ws,
-      JsObject.empty, // The component endpoint currently takes no config in the payload
-      Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
-      CacheTime.Component,
+      json,
+      endpoint,
+      cacheTime,
     )
   }
 
