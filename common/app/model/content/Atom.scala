@@ -7,6 +7,11 @@ import com.gu.contentatom.thrift.atom.media.{
 }
 import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
+import com.gu.contentatom.thrift.atom.multimediaslideshow.{
+  MultimediaSlideshowAtom => AtomApiMultimediaSlideshowAtom,
+  Slide => AtomApiSlide,
+  SlideContent => AtomApiSlideContent,
+}
 import com.gu.contentatom.thrift.{
   AtomData,
   Atom => AtomApiAtom,
@@ -346,6 +351,66 @@ object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[Med
   case object Dailymotion extends MediaAssetPlatform
   case object Mainstream extends MediaAssetPlatform
   case object Url extends MediaAssetPlatform
+}
+
+// ----------------------------------------
+// MultimediaSlideshowAtom
+// ----------------------------------------
+
+sealed trait MultimediaSlideshowSlideContent
+
+final case class MultimediaSlideshowImage(image: ImageMedia) extends MultimediaSlideshowSlideContent
+
+// References a media (video) atom by its atom id. On fronts the atom is resolved at press time and
+// inlined as `mediaAtom`; it may be None if resolution failed or the referencing surface hasn't resolved it.
+final case class MultimediaSlideshowVideo(mediaAtomId: String, mediaAtom: Option[MediaAtom] = None)
+    extends MultimediaSlideshowSlideContent
+
+final case class MultimediaSlideshowSlide(
+    content: MultimediaSlideshowSlideContent,
+    caption: Option[String],
+    label: Option[String],
+    credit: Option[String],
+)
+
+final case class MultimediaSlideshowAtom(
+    override val id: String,
+    title: Option[String],
+    slides: Seq[MultimediaSlideshowSlide],
+) extends Atom
+
+object MultimediaSlideshowAtom extends common.GuLogging {
+
+  def make(atom: AtomApiAtom): MultimediaSlideshowAtom = {
+    val slideshow = atom.data.asInstanceOf[AtomData.MultimediaSlideshow].multimediaSlideshow
+    makeFromThrift(atom.id, slideshow)
+  }
+
+  def makeFromThrift(id: String, slideshow: AtomApiMultimediaSlideshowAtom): MultimediaSlideshowAtom =
+    MultimediaSlideshowAtom(
+      id = id,
+      title = slideshow.title,
+      slides = slideshow.slides.flatMap(makeSlide).toSeq,
+    )
+
+  private def makeSlide(slide: AtomApiSlide): Option[MultimediaSlideshowSlide] =
+    slideContent(slide.content).map { content =>
+      MultimediaSlideshowSlide(
+        content = content,
+        caption = slide.caption,
+        label = slide.label,
+        credit = slide.credit,
+      )
+    }
+
+  private def slideContent(content: AtomApiSlideContent): Option[MultimediaSlideshowSlideContent] =
+    content match {
+      case AtomApiSlideContent.Image(image) => Some(MultimediaSlideshowImage(Atoms.atomImageToImageMedia(image)))
+      case AtomApiSlideContent.MediaAtom(reference) => Some(MultimediaSlideshowVideo(reference.mediaAtomId))
+      case AtomApiSlideContent.UnknownUnionField(_) =>
+        log.warn("Ignoring unknown MultimediaSlideshow SlideContent field")
+        None
+    }
 }
 
 // ----------------------------------------
