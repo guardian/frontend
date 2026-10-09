@@ -115,6 +115,7 @@ case class PuzzlesNewsletter(
     frequency: String,
     description: String,
     illustrationSquare: Option[String] = None,
+    exampleUrl: Option[String] = None,
 )
 
 object PuzzlesNewsletter {
@@ -146,6 +147,16 @@ case class PuzzlesSupportingContent(
 
 object PuzzlesSupportingContent {
   implicit val format: OFormat[PuzzlesSupportingContent] = Json.format[PuzzlesSupportingContent]
+}
+
+/** Useful links and newsletter shown above the footer on individual game pages. */
+case class PuzzleGameSupporting(
+    usefulLinks: Seq[PuzzleLink],
+    newsletter: Option[PuzzlesNewsletter],
+)
+
+object PuzzleGameSupporting {
+  implicit val writes: OWrites[PuzzleGameSupporting] = Json.writes[PuzzleGameSupporting]
 }
 
 case class PuzzlesLayout(containers: Seq[PuzzleContainer])

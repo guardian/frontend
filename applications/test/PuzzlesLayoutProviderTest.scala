@@ -331,6 +331,24 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       .flatMap(_.illustrationSquare) shouldBe Some("https://example.com/card.png")
   }
 
+  it should "pass the example URL through as a site path or absolute URL" in {
+    Seq(
+      Some("lifeandstyle/series/cluesletter/latest") -> Some("/lifeandstyle/series/cluesletter/latest"),
+      Some("/email/cluesletter") -> Some("/email/cluesletter"),
+      Some("https://example.com/latest") -> Some("https://example.com/latest"),
+      Some("  ") -> None,
+      None -> None,
+    ).foreach { case (configured, expected) =>
+      val provider = providerFor(
+        supportingLayout(Some("cluesletter")),
+        emptyContentApiClient(),
+        newsletterAgent = newsletterAgentReturning(Right(Some(newsletterResponse().copy(exampleUrl = configured)))),
+      )
+      supportingContent(Await.result(provider.getLayout(), 5.seconds)).newsletter
+        .flatMap(_.exampleUrl) shouldBe expected
+    }
+  }
+
   it should "omit the newsletter when it is not live, restricted, unknown or the lookup fails" in {
     Seq(
       Right(Some(newsletterResponse(status = "paused"))),

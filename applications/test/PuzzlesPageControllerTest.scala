@@ -1,7 +1,14 @@
 package test
 
 import ab.ABTests
-import controllers.{PuzzlesApiItem, PuzzlesArchiveApi, PuzzlesLayoutProvider, PuzzlesPageController, PuzzlesProgressApi}
+import controllers.{
+  PuzzlesApiItem,
+  PuzzlesArchiveApi,
+  PuzzlesLayoutProvider,
+  PuzzlesNewsletters,
+  PuzzlesPageController,
+  PuzzlesProgressApi,
+}
 import com.gu.contentapi.client.model.SearchQuery
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, CrosswordType, SearchResponse}
 import contentapi.ContentApiClient
@@ -18,6 +25,8 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{AnyContent, Headers, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import renderers.DotcomRenderingService
+import services.newsletters.model.NewsletterResponseV2
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 import java.time.{LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
@@ -49,6 +58,7 @@ import scala.concurrent.{ExecutionContext, Future}
       renderer: DotcomRenderingService,
       puzzlesArchiveApi: PuzzlesArchiveApi = mock[PuzzlesArchiveApi],
       puzzlesProgressApi: PuzzlesProgressApi = mock[PuzzlesProgressApi],
+      newsletterAgent: NewsletterSignupAgent = new NewsletterSignupAgent(mock[NewsletterApi]),
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
@@ -57,6 +67,7 @@ import scala.concurrent.{ExecutionContext, Future}
       puzzlesProgressApi,
       renderer,
       crosswordContentApiClient,
+      new PuzzlesNewsletters(newsletterAgent),
       stubControllerComponents(),
     )
 
@@ -426,6 +437,47 @@ import scala.concurrent.{ExecutionContext, Future}
     )
     related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
     related.map(_.cadence) should be(Seq(Some("Yesterday"), Some("Today"), Some("Today")))
+    (json \ "instance" \ "puzzlesSupporting").toOption should be(None)
+  }
+
+  it should "include the Cluesletter, with no useful links, when it is live" in {
+    val agent = mock[NewsletterSignupAgent]
+    when(agent.getV2NewsletterByName("cluesletter")).thenReturn(
+      Right(
+        Some(
+          NewsletterResponseV2(
+            identityName = "cluesletter",
+            listId = 6075,
+            name = "Cluesletter",
+            theme = "lifestyle",
+            group = "Culture",
+            status = "live",
+            restricted = false,
+            signUpEmbedDescription = "News and clues",
+            signUpDescription = "Long description",
+            frequency = "Weekly",
+            mailSuccessDescription = None,
+            regionFocus = None,
+            illustrationCard = None,
+            illustrationCircle = None,
+            illustrationSquare = None,
+            seriesTag = None,
+            signupPage = None,
+            exampleUrl = None,
+            category = "article-based",
+            emailConfirmation = false,
+          ),
+        ),
+      ),
+    )
+    val result = controller(successfulProvider, mock[DotcomRenderingService], newsletterAgent = agent)
+      .renderSudokuJson("killer", "2024-01-15")(
+        request("/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-15.json"),
+      )
+
+    val supporting = Json.parse(contentAsString(result)) \ "instance" \ "puzzlesSupporting"
+    (supporting \ "usefulLinks").as[Seq[JsValue]] shouldBe empty
+    (supporting \ "newsletter" \ "identityName").as[String] should be("cluesletter")
   }
 
   "redirectSudokuArchive" should "temporarily redirect to the logic-puzzles archive, filtered to this sudoku variant" in {

@@ -114,6 +114,7 @@ case class DotcomRenderingDataModel(
     isRightToLeftLang: Boolean,
     crossword: Option[CrosswordData],
     moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
+    puzzlesSupporting: Option[PuzzleGameSupporting],
 )
 
 object DotcomRenderingDataModel {
@@ -195,6 +196,7 @@ object DotcomRenderingDataModel {
         "isRightToLeftLang" -> model.isRightToLeftLang,
         "crossword" -> model.crossword,
         "moreFromPuzzlesAndGames" -> model.moreFromPuzzlesAndGames,
+        "puzzlesSupporting" -> model.puzzlesSupporting,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -355,6 +357,7 @@ object DotcomRenderingDataModel {
       pageType: PageType,
       customSubnav: Option[CustomSubnav],
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
+      puzzlesSupporting: Option[PuzzleGameSupporting] = None,
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -372,6 +375,7 @@ object DotcomRenderingDataModel {
       crossword = Some(crosswordPage.crossword),
       customSubnav = customSubnav,
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+      puzzlesSupporting = puzzlesSupporting,
     )
   }
 
@@ -473,6 +477,7 @@ object DotcomRenderingDataModel {
       crossword: Option[CrosswordData] = None,
       customSubnav: Option[CustomSubnav],
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
+      puzzlesSupporting: Option[PuzzleGameSupporting] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -706,6 +711,7 @@ object DotcomRenderingDataModel {
       isRightToLeftLang = content.fields.isRightToLeftLang,
       crossword = crossword,
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+      puzzlesSupporting = puzzlesSupporting,
     )
   }
 }

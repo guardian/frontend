@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.SearchQuery
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.GuLogging
 import contentapi.ContentApiClient
-import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout, PuzzlesNewsletter}
+import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import services.newsletters.NewsletterSignupAgent
@@ -27,6 +27,8 @@ class LocalJsonPuzzlesLayoutProvider(
     clock: Clock = Clock.systemUTC(),
 ) extends PuzzlesLayoutProvider
     with GuLogging {
+
+  private val newsletters = new PuzzlesNewsletters(newsletterSignupAgent)
 
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
@@ -76,31 +78,10 @@ class LocalJsonPuzzlesLayoutProvider(
     layout.copy(containers = layout.containers.map { container =>
       container.copy(supporting = container.supporting.map { supporting =>
         supporting.newsletterIdentityName.fold(supporting) { identityName =>
-          supporting.copy(newsletter = liveNewsletter(identityName), newsletterIdentityName = None)
+          supporting.copy(newsletter = newsletters.live(identityName), newsletterIdentityName = None)
         }
       })
     })
-
-  private def liveNewsletter(identityName: String): Option[PuzzlesNewsletter] =
-    newsletterSignupAgent.getV2NewsletterByName(identityName) match {
-      case Right(Some(newsletter)) if !newsletter.restricted && newsletter.status == "live" =>
-        Some(
-          PuzzlesNewsletter(
-            identityName = newsletter.identityName,
-            name = newsletter.name,
-            frequency = newsletter.frequency,
-            description = newsletter.signUpEmbedDescription,
-            // Most newsletters only have the 5:3 card art; DCR crops it to a circle.
-            illustrationSquare = newsletter.illustrationSquare.orElse(newsletter.illustrationCard),
-          ),
-        )
-      case Right(_) =>
-        log.warn(s"Puzzles newsletter '$identityName' is not a live newsletter; omitting it")
-        None
-      case Left(error) =>
-        log.warn(s"Puzzles newsletter '$identityName' could not be looked up; omitting it: $error")
-        None
-    }
 
   private def loadLayout(): PuzzlesLayout = {
     val inputStream = environment

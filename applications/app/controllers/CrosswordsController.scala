@@ -24,7 +24,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel.toJson
-import model.dotcomrendering.{DotcomRenderingDataModel, PageType, PuzzleItem}
+import model.dotcomrendering.{DotcomRenderingDataModel, PageType, PuzzleGameSupporting, PuzzleItem}
 import org.joda.time.{DateTime, LocalDate}
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import play.api.data.Forms._
@@ -43,11 +43,16 @@ import scala.concurrent.duration._
 trait CrosswordController extends BaseController with GuLogging with ImplicitControllerExecutionContext {
 
   def contentApiClient: ContentApiClient
+  def puzzlesNewsletters: PuzzlesNewsletters
 
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val wsClient: WSClient
 
   def noResults()(implicit request: RequestHeader): Result
+
+  def puzzlesSupporting(implicit request: RequestHeader): Option[PuzzleGameSupporting] =
+    if (PuzzlesHubV1Experiment.isEnabled) puzzlesNewsletters.forGame(PuzzlesNewsletters.CrosswordLinks)
+    else None
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
     contentApiClient.getResponse(
@@ -105,7 +110,13 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
 
       if (CrosswordsPicker.getTier(page) == RemoteRender)
         moreFromPuzzlesAndGames(page.crossword).flatMap { recommendations =>
-          remoteRenderer.getCrossword(wsClient, page, PageType(page, request, context), recommendations)
+          remoteRenderer.getCrossword(
+            wsClient,
+            page,
+            PageType(page, request, context),
+            recommendations,
+            puzzlesSupporting,
+          )
         }
       else
         Future.successful(
@@ -123,6 +134,7 @@ class CrosswordPageController(
     val contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
+    val puzzlesNewsletters: PuzzlesNewsletters,
 )(implicit
     context: ApplicationContext,
 ) extends CrosswordController {
@@ -158,7 +170,14 @@ class CrosswordPageController(
       request: RequestHeader,
   ): JsValue =
     DotcomRenderingDataModel.toJson(
-      DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None, moreFromPuzzlesAndGames),
+      DotcomRenderingDataModel.forCrossword(
+        crosswordPage,
+        request,
+        pageType,
+        None,
+        moreFromPuzzlesAndGames,
+        puzzlesSupporting,
+      ),
     )
 
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] =
@@ -233,6 +252,7 @@ class CrosswordSearchController(
     val contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
+    val puzzlesNewsletters: PuzzlesNewsletters,
 )(implicit context: ApplicationContext)
     extends CrosswordController {
   val searchForm = Form(

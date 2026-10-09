@@ -23,6 +23,7 @@ trait ApplicationsControllers {
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val puzzlesNewsletters = new PuzzlesNewsletters(newsletterSignupAgent)
   lazy val puzzlesLayoutProvider: PuzzlesLayoutProvider =
     new LocalJsonPuzzlesLayoutProvider(environment, contentApiClient, newsletterSignupAgent)
   lazy val puzzlesPageController = wire[PuzzlesPageController]
