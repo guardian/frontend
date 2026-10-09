@@ -184,14 +184,16 @@ class PuzzlesPageController(
               PuzzleRecommendations.capiLookup(contentApiClient),
             )
             .flatMap { moreFrom =>
-              puzzlesArchiveApi
-                .get(
-                  startDate,
-                  endDate,
-                  selection.apiType,
-                  authorization,
-                )
-                .map { items =>
+              val calendarItems = puzzlesArchiveApi.get(startDate, endDate, selection.apiType, authorization)
+              // Recent cards are relative to today, not the calendar's selected month.
+              // Reuse the current month's request, which already includes a 31-day lookback.
+              val recentItems =
+                if (isCurrentMonth) calendarItems
+                else puzzlesArchiveApi.get(today.minusDays(31), today, selection.apiType, authorization)
+
+              calendarItems
+                .zip(recentItems.recover { case _ => Nil })
+                .map { case (items, recent) =>
                   layout -> PuzzlesArchiveBuilder.build(
                     selection,
                     yearMonth.getYear,
@@ -199,6 +201,7 @@ class PuzzlesPageController(
                     items,
                     hasError = false,
                     moreFrom = moreFrom,
+                    recentItems = Some(recent),
                   )
                 }
                 .recover { case _ =>

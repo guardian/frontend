@@ -92,6 +92,7 @@ object PuzzlesArchiveBuilder {
       items: Seq[PuzzlesApiItem],
       hasError: Boolean,
       moreFrom: Seq[PuzzleItem],
+      recentItems: Option[Seq[PuzzlesApiItem]] = None,
   ): PuzzlesArchive =
     PuzzlesArchive(
       category = selection.category,
@@ -112,5 +113,19 @@ object PuzzlesArchiveBuilder {
       ),
       hasError = hasError,
       moreFrom = moreFrom,
+      recentItems = recentItems
+        .getOrElse(items)
+        .sortBy(_.publishDate)
+        .reverse
+        .take(3)
+        .map(item =>
+          PuzzlesArchiveItem(
+            item.puzzleType,
+            item.publishDate.take(10),
+            item.progress,
+            item.setterName,
+            destination(selection, item),
+          ),
+        ),
     )
 }
