@@ -28,6 +28,7 @@ class PuzzlesPageController(
     puzzlesProgressApi: PuzzlesProgressApi,
     remoteRenderer: DotcomRenderingService,
     contentApiClient: ContentApiClient,
+    puzzlesNewsletters: PuzzlesNewsletters,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -352,6 +353,7 @@ class PuzzlesPageController(
           title = webTitle,
           puzzleDate = Some(date),
           moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+          puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = Seq.empty),
         )
         DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
       }

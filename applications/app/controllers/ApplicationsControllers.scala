@@ -8,6 +8,7 @@ import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import services.SubnavAgent
+import services.newsletters.NewsletterSignupAgent
 
 trait ApplicationsControllers {
 
@@ -18,11 +19,13 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   def environment: Environment
   def subnavAgent: SubnavAgent
+  def newsletterSignupAgent: NewsletterSignupAgent
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+  lazy val puzzlesNewsletters = new PuzzlesNewsletters(newsletterSignupAgent)
   lazy val puzzlesLayoutProvider: PuzzlesLayoutProvider =
-    new LocalJsonPuzzlesLayoutProvider(environment, contentApiClient)
+    new LocalJsonPuzzlesLayoutProvider(environment, contentApiClient, newsletterSignupAgent)
   lazy val puzzlesPageController = wire[PuzzlesPageController]
   lazy val puzzlesArchiveApi: PuzzlesArchiveApi = new PuzzlesArchiveApiClient(wsClient)
   lazy val puzzlesProgressApi: PuzzlesProgressApi = new PuzzlesProgressApiClient(wsClient)

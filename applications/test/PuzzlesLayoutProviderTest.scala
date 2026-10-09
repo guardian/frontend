@@ -10,7 +10,14 @@ import com.gu.contentapi.client.model.v1.{
 }
 import contentapi.ContentApiClient
 import controllers.{LocalJsonPuzzlesLayoutProvider, PuzzleRecommendations}
-import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
+import model.dotcomrendering.{
+  PuzzleContainer,
+  PuzzleContent,
+  PuzzleItem,
+  PuzzlesLayout,
+  PuzzlesNewsletter,
+  PuzzlesSupportingContent,
+}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.mockito.invocation.InvocationOnMock
@@ -20,6 +27,8 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.libs.json.Json
 import play.api.{Environment, Mode}
+import services.newsletters.model.NewsletterResponseV2
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 import java.io.{ByteArrayInputStream, File, InputStream}
 import java.nio.charset.StandardCharsets
@@ -33,8 +42,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   private val mondayClock = Clock.fixed(Instant.parse("2026-09-07T12:00:00Z"), ZoneOffset.UTC)
 
   "LocalJsonPuzzlesLayoutProvider" should "load the production layout from the classpath" in {
-    val provider =
-      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val provider = productionProvider()
 
     val layout = Await.result(provider.getLayout(), 5.seconds)
 
@@ -44,8 +52,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   }
 
   it should "load the target hierarchy and its explicit presentation metadata" in {
-    val provider =
-      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val provider = productionProvider()
 
     val layout = Await.result(provider.getLayout(), 5.seconds)
     val featured = layout.containers.head
@@ -149,8 +156,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   }
 
   it should "give Wordiply a London-date fallback and leave other iframe dates for Puzzles API enrichment" in {
-    val provider =
-      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val provider = productionProvider()
 
     val items = allItems(Await.result(provider.getLayout(), 5.seconds))
     val iframeItems = items.filter(_.variant.contains("iframe-page"))
@@ -164,8 +170,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   }
 
   it should "use section-prefixed slugs and daily iframe destinations for word games and sudokus" in {
-    val provider =
-      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val provider = productionProvider()
     val items = allItems(Await.result(provider.getLayout(), 5.seconds)).map(item => item.id -> item).toMap
 
     items("word-wheel-daily").slug shouldBe Some("word-games/word-wheel")
@@ -178,8 +183,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   }
 
   it should "use the supplied artwork for every configured puzzle card" in {
-    val provider =
-      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), emptyContentApiClient(), clock = mondayClock)
+    val provider = productionProvider()
     val items = allItems(Await.result(provider.getLayout(), 5.seconds)).map(item => item.id -> item).toMap
     val expectedArtwork = Map(
       "crossword-quick" -> "crossword-QUICK",
@@ -257,6 +261,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
         Map("crosswords/series/genius" -> Right(Some(CrosswordType.Cryptic -> 123))),
         setter = Some("  Example setter  "),
       ),
+      emptyNewsletterAgent(),
       clock = mondayClock,
     )
     val layout = Await.result(provider.getLayout(), 5.seconds)
@@ -287,10 +292,90 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     firstItem(Await.result(provider.getLayout(), 5.seconds)).setter shouldBe Some("Latest setter")
   }
 
+  it should "configure the hub newsletter by identity name only" in {
+    val stream = Environment.simple().resourceAsStream(LocalJsonPuzzlesLayoutProvider.DefaultResourceName).get
+    val configured =
+      try Json.parse(stream).as[PuzzlesLayout]
+      finally stream.close()
+    configured.containers.flatMap(_.supporting).map(_.newsletterIdentityName) shouldBe Seq(Some("cluesletter"))
+    configured.containers.flatMap(_.supporting).flatMap(_.newsletter) shouldBe empty
+  }
+
+  it should "resolve the configured newsletter from the newsletters API" in {
+    val provider = providerFor(
+      supportingLayout(Some("cluesletter")),
+      emptyContentApiClient(),
+      newsletterAgent = newsletterAgentReturning(Right(Some(newsletterResponse()))),
+    )
+    val supporting = supportingContent(Await.result(provider.getLayout(), 5.seconds))
+
+    supporting.newsletter shouldBe Some(
+      PuzzlesNewsletter(
+        identityName = "cluesletter",
+        name = "Cluesletter",
+        frequency = "Weekly",
+        description = "Get our news, clues and competitions",
+        illustrationSquare = Some("https://example.com/square.png"),
+      ),
+    )
+    supporting.newsletterIdentityName shouldBe None
+  }
+
+  it should "fall back to the card illustration when the newsletter has no square one" in {
+    val provider = providerFor(
+      supportingLayout(Some("cluesletter")),
+      emptyContentApiClient(),
+      newsletterAgent = newsletterAgentReturning(Right(Some(newsletterResponse().copy(illustrationSquare = None)))),
+    )
+    supportingContent(Await.result(provider.getLayout(), 5.seconds)).newsletter
+      .flatMap(_.illustrationSquare) shouldBe Some("https://example.com/card.png")
+  }
+
+  it should "pass the example URL through as a site path or absolute URL" in {
+    Seq(
+      Some("lifeandstyle/series/cluesletter/latest") -> Some("/lifeandstyle/series/cluesletter/latest"),
+      Some("/email/cluesletter") -> Some("/email/cluesletter"),
+      Some("https://example.com/latest") -> Some("https://example.com/latest"),
+      Some("  ") -> None,
+      None -> None,
+    ).foreach { case (configured, expected) =>
+      val provider = providerFor(
+        supportingLayout(Some("cluesletter")),
+        emptyContentApiClient(),
+        newsletterAgent = newsletterAgentReturning(Right(Some(newsletterResponse().copy(exampleUrl = configured)))),
+      )
+      supportingContent(Await.result(provider.getLayout(), 5.seconds)).newsletter
+        .flatMap(_.exampleUrl) shouldBe expected
+    }
+  }
+
+  it should "omit the newsletter when it is not live, restricted, unknown or the lookup fails" in {
+    Seq(
+      Right(Some(newsletterResponse(status = "paused"))),
+      Right(Some(newsletterResponse(restricted = true))),
+      Right(None),
+      Left("Newsletters API unavailable"),
+    ).foreach { result =>
+      val provider = providerFor(
+        supportingLayout(Some("cluesletter")),
+        emptyContentApiClient(),
+        newsletterAgent = newsletterAgentReturning(result),
+      )
+      val supporting = supportingContent(Await.result(provider.getLayout(), 5.seconds))
+      supporting.newsletter shouldBe None
+      supporting.newsletterIdentityName shouldBe None
+    }
+  }
+
   it should "close the resource stream after successful loading" in {
     val json = """{"containers":[]}"""
     val stream = new CloseTrackingInputStream(json)
-    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(
+        environmentReturning(Some(stream)),
+        emptyContentApiClient(),
+        emptyNewsletterAgent(),
+      )
 
     Await.result(provider.getLayout(), 5.seconds) shouldBe PuzzlesLayout(Seq.empty)
     stream.wasClosed shouldBe true
@@ -298,7 +383,12 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "fail clearly and close the stream when the blueprint is invalid" in {
     val stream = new CloseTrackingInputStream("""{"containers":[{"title":"incomplete"}]}""")
-    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(
+        environmentReturning(Some(stream)),
+        emptyContentApiClient(),
+        emptyNewsletterAgent(),
+      )
 
     val error = the[IllegalArgumentException] thrownBy Await.result(provider.getLayout(), 5.seconds)
 
@@ -309,7 +399,12 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "fail clearly and close the stream when the resource contains malformed JSON" in {
     val stream = new CloseTrackingInputStream("""{"containers": [""")
-    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), emptyContentApiClient())
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(
+        environmentReturning(Some(stream)),
+        emptyContentApiClient(),
+        emptyNewsletterAgent(),
+      )
 
     val error = the[IllegalArgumentException] thrownBy Await.result(provider.getLayout(), 5.seconds)
 
@@ -319,7 +414,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   }
 
   it should "fail clearly when the classpath resource is missing" in {
-    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(None), emptyContentApiClient())
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(environmentReturning(None), emptyContentApiClient(), emptyNewsletterAgent())
 
     val error = the[IllegalStateException] thrownBy Await.result(provider.getLayout(), 5.seconds)
 
@@ -585,10 +681,78 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       layout: PuzzlesLayout,
       client: ContentApiClient,
       clock: Clock = Clock.systemUTC(),
+      newsletterAgent: NewsletterSignupAgent = emptyNewsletterAgent(),
   ): LocalJsonPuzzlesLayoutProvider = {
     val stream = new CloseTrackingInputStream(Json.stringify(Json.toJson(layout)))
-    new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), client, clock = clock)
+    new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), client, newsletterAgent, clock = clock)
   }
+
+  private def productionProvider(): LocalJsonPuzzlesLayoutProvider =
+    new LocalJsonPuzzlesLayoutProvider(
+      Environment.simple(),
+      emptyContentApiClient(),
+      emptyNewsletterAgent(),
+      clock = mondayClock,
+    )
+
+  private def emptyNewsletterAgent(): NewsletterSignupAgent = new NewsletterSignupAgent(mock[NewsletterApi])
+
+  private def newsletterAgentReturning(
+      result: Either[String, Option[NewsletterResponseV2]],
+  ): NewsletterSignupAgent = {
+    val agent = mock[NewsletterSignupAgent]
+    when(agent.getV2NewsletterByName(any[String])).thenReturn(result)
+    agent
+  }
+
+  private def newsletterResponse(status: String = "live", restricted: Boolean = false): NewsletterResponseV2 =
+    NewsletterResponseV2(
+      identityName = "cluesletter",
+      listId = 6075,
+      name = "Cluesletter",
+      theme = "lifestyle",
+      group = "Culture",
+      status = status,
+      restricted = restricted,
+      signUpEmbedDescription = "Get our news, clues and competitions",
+      signUpDescription = "Long description",
+      frequency = "Weekly",
+      mailSuccessDescription = None,
+      regionFocus = None,
+      illustrationCard = Some("https://example.com/card.png"),
+      illustrationCircle = None,
+      illustrationSquare = Some("https://example.com/square.png"),
+      seriesTag = None,
+      signupPage = None,
+      exampleUrl = None,
+      category = "article-based",
+      emailConfirmation = false,
+    )
+
+  private def supportingLayout(newsletterIdentityName: Option[String]): PuzzlesLayout =
+    PuzzlesLayout(
+      Seq(
+        PuzzleContainer(
+          id = "puzzles-supporting",
+          title = "",
+          variant = Some("supporting"),
+          content = PuzzleContent(Seq.empty, Seq.empty),
+          supporting = Some(
+            PuzzlesSupportingContent(
+              usefulLinksTitle = "Useful links",
+              usefulLinks = Seq.empty,
+              newsletter = None,
+              popularTitle = "Most popular puzzles",
+              popularGroups = Seq.empty,
+              newsletterIdentityName = newsletterIdentityName,
+            ),
+          ),
+        ),
+      ),
+    )
+
+  private def supportingContent(layout: PuzzlesLayout): PuzzlesSupportingContent =
+    layout.containers.flatMap(_.supporting).head
 
   private def emptyContentApiClient(): ContentApiClient = contentApiClient(Map.empty)
 
