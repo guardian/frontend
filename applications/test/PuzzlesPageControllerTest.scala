@@ -7,7 +7,7 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Cros
 import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
-import org.mockito.Mockito.{verify, verifyNoInteractions, when}
+import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
 import org.scalatest.DoNotDiscover
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
@@ -153,7 +153,7 @@ import scala.concurrent.{ExecutionContext, Future}
       )
 
     status(result) should be(OK)
-    verify(archiveApi).get(
+    verify(archiveApi, times(2)).get(
       any[LocalDate],
       any[LocalDate],
       eqTo("CROSSWORD_QUICK"),
@@ -215,6 +215,55 @@ import scala.concurrent.{ExecutionContext, Future}
       .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(request("/", participations = ""))
     status(result) should be(BAD_REQUEST)
     verifyNoInteractions(archiveApi)
+  }
+
+  it should "return current recent cards separately from a historical calendar month" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
+    val historical = PuzzlesApiItem("old", "CROSSWORD_QUICK", "2020-09-30T00:00:00Z", 0, None, None)
+    val recent = (0 to 3).map { daysAgo =>
+      PuzzlesApiItem(
+        s"recent-$daysAgo",
+        "CROSSWORD_QUICK",
+        s"${today.minusDays(daysAgo)}T00:00:00Z",
+        100,
+        Some("Setter"),
+        None,
+      )
+    }
+    when(
+      archiveApi.get(
+        eqTo(LocalDate.of(2020, 9, 1)),
+        eqTo(LocalDate.of(2020, 9, 30)),
+        eqTo("CROSSWORD_QUICK"),
+        eqTo(Some("Bearer access-token")),
+      )(any[ExecutionContext]),
+    )
+      .thenReturn(Future.successful(Seq(historical)))
+    when(
+      archiveApi.get(
+        eqTo(today.minusDays(31)),
+        eqTo(today),
+        eqTo("CROSSWORD_QUICK"),
+        eqTo(Some("Bearer access-token")),
+      )(any[ExecutionContext]),
+    )
+      .thenReturn(Future.successful(recent.reverse))
+
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
+        request("/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9")
+          .withHeaders(Headers("Authorization" -> "Bearer access-token")),
+      )
+
+    status(result) should be(OK)
+    val json = contentAsJson(result)
+    (json \ "items").as[Seq[JsValue]].map(item => (item \ "date").as[String]) should be(Seq("2020-09-30"))
+    val cards = (json \ "recentItems").as[Seq[JsValue]]
+    cards.map(item => (item \ "date").as[String]) should be((0 to 2).map(today.minusDays(_).toString))
+    cards.map(item => (item \ "progress").as[Int]) should be(Seq(100, 100, 100))
+    (cards.head \ "url").as[String] should be("/crosswords/quick/recent-0")
+    (cards.head \ "setterName").as[String] should be("Setter")
   }
 
   "renderPuzzles" should "load the layout and render the DCR puzzles page" in {
