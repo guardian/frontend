@@ -267,7 +267,10 @@ import scala.concurrent.{ExecutionContext, Future}
     contentType(result) should contain("application/json")
     val json = Json.parse(contentAsString(result))
     (json \ "id").as[String] should be("/puzzles-and-games.json")
-    (json \ "webTitle").as[String] should be("Puzzles and games")
+    (json \ "webTitle").as[String] should be("Puzzles & games | The Guardian")
+    (json \ "description").as[String] should be(
+      "The Guardian's puzzles & games page, where you can play free online daily crosswords, word games, logic puzzles and more",
+    )
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 

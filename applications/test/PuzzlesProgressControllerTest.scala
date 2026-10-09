@@ -40,7 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
       authorization: Option[String] = Some("Bearer reader-token"),
       participations: String = "puzzles-new-hub:variant,puzzles-new-hub-v1:variant",
   ): Request[JsValue] = {
-    val base = FakeRequest("PUT", "/puzzles-and-games/progress")
+    val base = FakeRequest("POST", "/puzzles-and-games/progress/save")
       .withHeaders("X-GU-Server-AB-Tests" -> participations)
     val withAuth = authorization.fold(base)(value => base.withHeaders(AUTHORIZATION -> value))
     val decorated = ABTests.decorateRequest("X-GU-Server-AB-Tests")(withAuth)
