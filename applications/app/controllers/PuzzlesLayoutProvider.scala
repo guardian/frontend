@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.SearchQuery
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent}
 import common.GuLogging
 import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
@@ -138,7 +138,7 @@ class LocalJsonPuzzlesLayoutProvider(
         .map(dynamicFields =>
           item.copy(
             url = Some(dynamicFields.url),
-            image = item.image.orElse(Some(dynamicFields.image)),
+            image = item.image.orElse(dynamicFields.image),
             imageAlt = item.imageAlt.orElse(Some(s"${item.title} illustration")),
             setter = dynamicFields.setter.orElse(item.setter),
           ),
@@ -157,13 +157,17 @@ class LocalJsonPuzzlesLayoutProvider(
     LocalJsonPuzzlesLayoutProvider.CrosswordSeriesTags
       .get(set)
       .fold(Future.successful(Option.empty[CrosswordDynamicFields])) { tag =>
-        val query = SearchQuery()
-          .contentType("crossword")
+        val latestInSeries = SearchQuery()
           .tag(tag)
-          .useDate("newspaper-edition")
           .orderBy("newest")
           .pageSize(1)
           .showFields("all")
+          .showTags("contributor")
+        // Series such as Genius are published as articles linking to a PDF, not as `crossword` content, and their
+        // newspaper-edition date does not order them by recency, so they use the default publication date.
+        val query =
+          if (LocalJsonPuzzlesLayoutProvider.ArticleCrosswordSets.contains(set)) latestInSeries
+          else latestInSeries.contentType("crossword").useDate("newspaper-edition")
 
         contentApiClient
           .getResponse(query)
@@ -175,15 +179,30 @@ class LocalJsonPuzzlesLayoutProvider(
       }
 
   private def toDynamicFields(set: String, content: ApiContent): Option[CrosswordDynamicFields] =
-    content.crossword.map { crossword =>
-      val crosswordNumber = crossword.number
+    content.crossword
+      .map { crossword =>
+        val crosswordNumber = crossword.number
 
-      CrosswordDynamicFields(
-        url = s"/crosswords/$set/$crosswordNumber",
-        image = s"https://api.nextgen.guardianapps.co.uk/crosswords/$set/$crosswordNumber.svg",
-        setter = crossword.creator.map(_.name.trim).filter(_.nonEmpty),
-      )
-    }
+        CrosswordDynamicFields(
+          url = s"/crosswords/$set/$crosswordNumber",
+          image = Some(s"https://api.nextgen.guardianapps.co.uk/crosswords/$set/$crosswordNumber.svg"),
+          setter = crossword.creator.flatMap(creator => nonBlank(creator.name)).orElse(contentSetter(content)),
+        )
+      }
+      .orElse {
+        if (LocalJsonPuzzlesLayoutProvider.ArticleCrosswordSets.contains(set))
+          Some(CrosswordDynamicFields(url = s"/${content.id}", image = None, setter = contentSetter(content)))
+        else None
+      }
+
+  /** The setter as credited on the content itself: the first contributor tag, then the byline. */
+  private def contentSetter(content: ApiContent): Option[String] =
+    content.tags
+      .find(_.`type` == TagType.Contributor)
+      .flatMap(tag => nonBlank(tag.webTitle))
+      .orElse(content.fields.flatMap(_.byline).flatMap(nonBlank))
+
+  private def nonBlank(value: String): Option[String] = Option(value).map(_.trim).filter(_.nonEmpty)
 }
 
 object LocalJsonPuzzlesLayoutProvider {
@@ -297,5 +316,8 @@ object LocalJsonPuzzlesLayoutProvider {
     "azed" -> "crosswords/series/azed",
   )
 
-  private[controllers] case class CrosswordDynamicFields(url: String, image: String, setter: Option[String])
+  /** Series published as articles rather than CAPI `crossword` content, so there is no crossword number or player. */
+  private[controllers] val ArticleCrosswordSets: Set[String] = Set("genius")
+
+  private[controllers] case class CrosswordDynamicFields(url: String, image: Option[String], setter: Option[String])
 }
