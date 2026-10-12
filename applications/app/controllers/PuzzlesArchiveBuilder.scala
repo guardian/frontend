@@ -108,6 +108,7 @@ object PuzzlesArchiveBuilder {
           item.progress,
           item.setterName,
           destination(selection, item),
+          item.gameStatus,
         ),
       ),
       hasError = hasError,

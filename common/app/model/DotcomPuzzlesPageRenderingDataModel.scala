@@ -43,6 +43,7 @@ case class PuzzlesArchiveItem(
     progress: Int,
     setterName: Option[String],
     url: String,
+    gameStatus: Option[String] = None,
 )
 
 object PuzzlesArchiveItem {
