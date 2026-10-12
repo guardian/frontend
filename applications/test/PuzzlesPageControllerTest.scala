@@ -283,6 +283,7 @@ import scala.concurrent.{ExecutionContext, Future}
       progress = 100,
       setterName = Some("A setter"),
       gameUrl = Some("/crosswords/quick/123"),
+      gameStatus = Some("completed"),
     )
     when(
       progressApi.query(

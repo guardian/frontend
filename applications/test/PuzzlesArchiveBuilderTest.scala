@@ -148,6 +148,7 @@ import play.api.libs.json.Json
             100,
             None,
             Some("https://www.theguardian.com/crosswords/quick/42"),
+            Some("completed"),
           ),
         ),
       ),
