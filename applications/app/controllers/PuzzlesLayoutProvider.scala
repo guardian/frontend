@@ -29,9 +29,10 @@ class LocalJsonPuzzlesLayoutProvider(
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
       val scheduledLayout = applyFeaturedSchedule(baseLayout)
-      enrichCrosswordItems(scheduledLayout).recover { case NonFatal(error) =>
-        log.warn("Failed to enrich the Genius card from CAPI using the scheduled layout", error)
-        scheduledLayout
+      val datedLayout = applyWordiplyDateFallback(scheduledLayout)
+      enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
+        log.warn("Failed to enrich crossword cards from CAPI using the scheduled layout", error)
+        datedLayout
       }
     }
 
@@ -51,6 +52,23 @@ class LocalJsonPuzzlesLayoutProvider(
       }
     })
   }
+
+  private def applyWordiplyDateFallback(layout: PuzzlesLayout): PuzzlesLayout = {
+    val today = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).toString
+    layout.copy(containers = layout.containers.map(addWordiplyDate(_, today)))
+  }
+
+  private def addWordiplyDate(container: PuzzleContainer, date: String): PuzzleContainer =
+    container.copy(content =
+      container.content.copy(
+        items = container.content.items.map(_.map { item =>
+          if (item.`type` == "wordiply" && item.variant.contains("iframe-page") && item.date.isEmpty)
+            item.copy(date = Some(date))
+          else item
+        }),
+        nestedContainers = container.content.nestedContainers.map(addWordiplyDate(_, date)),
+      ),
+    )
 
   private def loadLayout(): PuzzlesLayout = {
     val inputStream = environment
@@ -84,7 +102,7 @@ class LocalJsonPuzzlesLayoutProvider(
   ): Future[PuzzlesLayout] = {
     val crosswordSets = layout.containers
       .flatMap(crosswordItems)
-      .filter(isGeniusCrosswordCard)
+      .filter(isPlayableCrosswordCard)
       .map(_.set)
       .distinct
 
@@ -114,7 +132,7 @@ class LocalJsonPuzzlesLayoutProvider(
       item: PuzzleItem,
       latestCrosswords: Map[String, CrosswordDynamicFields],
   ): PuzzleItem =
-    if (isGeniusCrosswordCard(item)) {
+    if (isPlayableCrosswordCard(item)) {
       latestCrosswords
         .get(item.set)
         .map(dynamicFields =>
@@ -130,8 +148,8 @@ class LocalJsonPuzzlesLayoutProvider(
       item
     }
 
-  private def isGeniusCrosswordCard(item: PuzzleItem): Boolean =
-    item.`type` == "crossword" && item.set == "genius" && !item.variant.exists(_.startsWith("archive"))
+  private def isPlayableCrosswordCard(item: PuzzleItem): Boolean =
+    item.`type` == "crossword" && !item.variant.exists(_.startsWith("archive"))
 
   private def latestCrosswordForSet(set: String)(implicit
       executionContext: ExecutionContext,

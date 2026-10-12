@@ -61,10 +61,12 @@ object PuzzlesArchiveBuilder {
     chosen.map { case (puzzle, apiType) =>
       val (title, description) = category match {
         case "crosswords" =>
-          "Crosswords" -> "Choose a crossword from our archive, and track which ones you’ve completed, started or are yet to play."
-        case "word-games"    => "Word games" -> "Choose a word game from our archive."
-        case "logic-puzzles" => "Logic puzzles" -> "Choose a logic puzzle from our archive."
-        case _               => container.map(_.title).getOrElse("Puzzles") -> "Choose a puzzle from our archive."
+          "Crosswords" -> "Play the full archive of crosswords from the Guardian. Track your progress of what you've played and started."
+        case "word-games" =>
+          "Word games" -> "Play the full archive of word games from the Guardian. Track your progress of what you've played and started."
+        case "logic-puzzles" =>
+          "Logic puzzles" -> "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started."
+        case _ => container.map(_.title).getOrElse("Puzzles") -> "Choose a puzzle from our archive."
       }
       Selection(category, title, description, puzzle, candidates.map(_._1), apiType)
     }
@@ -90,6 +92,7 @@ object PuzzlesArchiveBuilder {
       items: Seq[PuzzlesApiItem],
       hasError: Boolean,
       moreFrom: Seq[PuzzleItem],
+      recentItems: Option[Seq[PuzzlesApiItem]] = None,
   ): PuzzlesArchive =
     PuzzlesArchive(
       category = selection.category,
@@ -110,5 +113,19 @@ object PuzzlesArchiveBuilder {
       ),
       hasError = hasError,
       moreFrom = moreFrom,
+      recentItems = recentItems
+        .getOrElse(items)
+        .sortBy(_.publishDate)
+        .reverse
+        .take(3)
+        .map(item =>
+          PuzzlesArchiveItem(
+            item.puzzleType,
+            item.publishDate.take(10),
+            item.progress,
+            item.setterName,
+            destination(selection, item),
+          ),
+        ),
     )
 }

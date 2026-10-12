@@ -59,6 +59,29 @@ import play.api.libs.json.Json
     selection.apiType should be("SUDOKU_EASY")
   }
 
+  it should "use the documented archive titles and meta descriptions" in {
+    val expected = Seq(
+      "crosswords" -> (
+        "Crosswords",
+        "Play the full archive of crosswords from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "word-games" -> (
+        "Word games",
+        "Play the full archive of word games from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "logic-puzzles" -> (
+        "Logic puzzles",
+        "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started.",
+      ),
+    )
+
+    expected.foreach { case (category, (title, description)) =>
+      val selection = PuzzlesArchiveBuilder.select(layout, category, None).get
+      selection.title should be(title)
+      selection.description should be(description)
+    }
+  }
+
   it should "use an archive item's exact date in its puzzle page destination" in {
     val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", None).get
     val destination = PuzzlesArchiveBuilder.destination(

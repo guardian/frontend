@@ -2,7 +2,7 @@
 	"containers": [
 		{
 			"id": "featured-puzzles",
-			"title": "Today’s featured puzzles",
+			"title": "Featured today",
 			"variant": "featured",
 			"enabled": true,
 			"content": {

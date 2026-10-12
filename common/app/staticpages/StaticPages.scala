@@ -53,8 +53,10 @@ object StaticPages {
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "puzzles-and-games")),
-        webTitle = "Puzzles and games",
-        description = None,
+        webTitle = "Puzzles & games | The Guardian",
+        description = Some(
+          "The Guardian's puzzles & games page, where you can play free online daily crosswords, word games, logic puzzles and more",
+        ),
         contentType = Some(DotcomContentType.Tag),
         iosType = None,
         shouldGoogleIndex = true,
@@ -66,7 +68,7 @@ object StaticPages {
       MetaData.make(
         id = id,
         section = Option(SectionId(value = "puzzles-and-games")),
-        webTitle = title,
+        webTitle = s"$title archive - puzzles & games | The Guardian",
         description = Some(description),
         contentType = Some(DotcomContentType.Tag),
         iosType = None,
