@@ -417,15 +417,17 @@ import scala.concurrent.{ExecutionContext, Future}
 
     val related = (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]]
     related.map(_.id) should be(Seq("sudoku-killer", "sudoku-hard", "sudoku-medium"))
+    // The page (2024-01-15) is not today's, so every game is recommended as today's, including the one being played.
+    val today = LocalDate.now(ZoneId.of("Europe/London"))
     related.map(_.url) should be(
       Seq(
-        Some("/puzzles-and-games/logic-puzzles/sudoku-killer/2024-01-14"),
-        Some("/puzzles-and-games/logic-puzzles/sudoku-hard/2024-01-15"),
-        Some("/puzzles-and-games/logic-puzzles/sudoku-medium/2024-01-15"),
+        Some(s"/puzzles-and-games/logic-puzzles/sudoku-killer/$today"),
+        Some(s"/puzzles-and-games/logic-puzzles/sudoku-hard/$today"),
+        Some(s"/puzzles-and-games/logic-puzzles/sudoku-medium/$today"),
       ),
     )
     related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
-    related.map(_.cadence) should be(Seq(Some("Yesterday"), Some("Today"), Some("Today")))
+    related.map(_.cadence) should be(Seq(Some("Today"), Some("Today"), Some("Today")))
   }
 
   "redirectSudokuArchive" should "temporarily redirect to the logic-puzzles archive, filtered to this sudoku variant" in {
@@ -487,7 +489,7 @@ import scala.concurrent.{ExecutionContext, Future}
     related.map(_.id) should be(Seq("word-wheel", "crossword-quick", "crossword-mini"))
     related.map(_.url) should be(
       Seq(
-        Some("/puzzles-and-games/word-games/word-wheel/2024-01-14"),
+        Some(s"/puzzles-and-games/word-games/word-wheel/${LocalDate.now(ZoneId.of("Europe/London"))}"),
         Some("/crosswords/quick/100"),
         Some("/crosswords/quick/100"),
       ),

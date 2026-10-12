@@ -2,12 +2,13 @@ package controllers
 
 import com.gu.contentapi.client.model.SearchQuery
 import contentapi.ContentApiClient
+import implicits.Dates.CapiRichDateTime
 import common.GuLogging
 import model.dotcomrendering.PuzzleItem
 import views.support.CamelCase
 
-import java.text.NumberFormat
-import java.time.LocalDate
+import java.time.format.TextStyle
+import java.time.{LocalDate, ZoneId}
 import java.util.Locale
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
@@ -19,8 +20,8 @@ import scala.util.control.NonFatal
   * that equals the row's own key means "most recent of the same puzzle, excluding the current one". Resolution depends
   * on the kind of puzzle referenced:
   *   - crossword: the most recent crossword of that series, found via CAPI (never the current article)
-  *   - iframe game (sudoku, word wheel, wordiply): date arithmetic, no CAPI. Same puzzle => the day before `date`, any
-  *     other puzzle => the same `date`.
+  *   - iframe game (sudoku, word wheel, wordiply): date arithmetic, no CAPI. Any puzzle => today (London), except the one
+  *     being played when it is itself today's, which would just repeat the page: that one => the day before.
   *
   * A key without a catalogue entry (e.g. `on-the-ball` and `film-reveal`, which are not built yet) is simply left out
   * of the result, so the rail shows fewer cards rather than failing.
@@ -48,14 +49,22 @@ object PuzzleRecommendations extends GuLogging {
       set: String,
       group: String,
       backgroundColour: String,
-  ) extends Card {
-    val cadence = "Today"
-  }
+  ) extends Card
 
-  /** Cadence of an iframe card pointing at the previous instance of the puzzle being played, instead of the current
-    * one. Crossword cards have no cadence: they are identified by their number (see [[crosswordItem]]).
+  private val London = ZoneId.of("Europe/London")
+
+  def londonToday(): LocalDate = LocalDate.now(London)
+
+  /** The label of a card: "Today" for the current day (in London), otherwise the short date, e.g. "Sat 10 Oct". The same
+    * wording as the Puzzles & games archive pages, for every card in the rail: no "Yesterday" and no crossword numbers.
     */
-  private val PreviousIframeCadence = "Yesterday"
+  private[controllers] def cadenceFor(date: LocalDate, today: LocalDate): String =
+    if (date == today) "Today"
+    else {
+      val weekday = date.getDayOfWeek.getDisplayName(TextStyle.SHORT, Locale.UK)
+      val month = date.getMonth.getDisplayName(TextStyle.SHORT, Locale.UK).take(3)
+      s"$weekday ${date.getDayOfMonth} $month"
+    }
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
@@ -139,28 +148,39 @@ object PuzzleRecommendations extends GuLogging {
   val Default: Seq[String] = Seq("quick", "sudoku-easy", "word-wheel")
 
   /** Most recent crossword of a series, as needed to build a card. */
-  case class LatestCrossword(crosswordType: String, number: Int)
+  case class LatestCrossword(crosswordType: String, number: Int, date: Option[LocalDate] = None)
 
   /** Looks up the most recent crossword of `set`, ignoring the article whose CAPI id is `excludeId`. */
   type CrosswordLookup = (String, Option[String]) => Future[Option[LatestCrossword]]
 
   /** The recommendations for the puzzle `currentKey`, with the current crossword article id (if the current page is a
-    * crossword) and the `date` (yyyy-MM-dd) of the current page. Always succeeds: anything that cannot be resolved is
-    * left out.
+    * crossword) and the `date` (yyyy-MM-dd) of the current page. `today` is the current day in London, which the cards'
+    * labels are relative to. Always succeeds: anything that cannot be resolved is left out.
     */
-  def resolve(currentKey: String, currentId: Option[String], date: String, lookup: CrosswordLookup)(implicit
+  def resolve(
+      currentKey: String,
+      currentId: Option[String],
+      date: String,
+      lookup: CrosswordLookup,
+      today: LocalDate = londonToday(),
+  )(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] = {
-    resolveKeys(keysFor(currentKey), currentKey, currentId, date, lookup)
+    resolveKeys(keysFor(currentKey), currentKey, currentId, date, lookup, today)
   }
 
   /** The recommendations for the archive of the puzzle `archivedKey`, as of `date` (yyyy-MM-dd). Uses [[ArchiveTable]]
     * and, as there is no current page, never excludes an article.
     */
-  def resolveForArchive(archivedKey: String, date: String, lookup: CrosswordLookup)(implicit
+  def resolveForArchive(
+      archivedKey: String,
+      date: String,
+      lookup: CrosswordLookup,
+      today: LocalDate = londonToday(),
+  )(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] =
-    resolveKeys(archiveKeysFor(archivedKey), archivedKey, None, date, lookup)
+    resolveKeys(archiveKeysFor(archivedKey), archivedKey, None, date, lookup, today)
 
   private def resolveKeys(
       keys: Seq[String],
@@ -168,8 +188,9 @@ object PuzzleRecommendations extends GuLogging {
       currentId: Option[String],
       date: String,
       lookup: CrosswordLookup,
+      today: LocalDate,
   )(implicit ec: ExecutionContext): Future[Seq[PuzzleItem]] =
-    Future.sequence(keys.map(key => resolveSlot(key, currentKey, currentId, date, lookup))).map(_.flatten)
+    Future.sequence(keys.map(key => resolveSlot(key, currentKey, currentId, date, lookup, today))).map(_.flatten)
 
   /** The [[CrosswordLookup]] backed by CAPI. Failures are logged and degrade to "no card". */
   def capiLookup(contentApiClient: ContentApiClient)(implicit ec: ExecutionContext): CrosswordLookup =
@@ -193,7 +214,13 @@ object PuzzleRecommendations extends GuLogging {
                 .filterNot(content => excludeId.contains(content.id))
                 .flatMap(_.crossword)
                 .headOption
-                .map(crossword => LatestCrossword(CamelCase.toHyphenated(crossword.`type`.name), crossword.number))
+                .map { crossword =>
+                  LatestCrossword(
+                    CamelCase.toHyphenated(crossword.`type`.name),
+                    crossword.number,
+                    Try(LocalDate.parse(crossword.date.toJoda.toString("yyyy-MM-dd"))).toOption,
+                  )
+                }
             }
             .recover { case NonFatal(error) =>
               log.warn(s"Failed to fetch latest '$set' crossword for puzzle recommendations", error)
@@ -213,46 +240,50 @@ object PuzzleRecommendations extends GuLogging {
       currentId: Option[String],
       date: String,
       lookup: CrosswordLookup,
+      today: LocalDate,
   )(implicit ec: ExecutionContext): Future[Option[PuzzleItem]] =
     (crosswordCatalogue.get(key), iframeCatalogue.get(key)) match {
       case (Some(card), _) =>
         lookup(card.key, currentId)
-          .map(_.map(latest => crosswordItem(card, latest)))
+          .map(_.map(latest => crosswordItem(card, latest, today)))
           .recover { case NonFatal(_) => None }
       case (_, Some(card)) =>
-        val isPrevious = key == currentKey
-        val targetDate = if (isPrevious) previousDay(date) else Some(date)
-        Future.successful(targetDate.map(iframeItem(card, _, isPrevious)))
+        // Today's puzzle is what is recommended, unless it is the one already being played.
+        val isPlayingToday = key == currentKey && date == today.toString
+        val targetDate = if (isPlayingToday) previousDay(date) else Some(today.toString)
+        Future.successful(targetDate.map(iframeItem(card, _, today)))
       case _ => Future.successful(None)
     }
 
   private def previousDay(date: String): Option[String] =
     Try(LocalDate.parse(date).minusDays(1).toString).toOption
 
-  /** Crosswords are numbered, not dated, and the card links to the most recent one, so it is labelled with that number
-    * (e.g. "No 17,599") rather than with a day.
+  /** The card links to the most recent crossword of the series (by number), and is labelled with that crossword's date
+    * like every other card. A crossword whose date is unknown has no label rather than a wrong one.
     */
-  private def crosswordItem(card: CrosswordCard, latest: LatestCrossword): PuzzleItem =
+  private def crosswordItem(card: CrosswordCard, latest: LatestCrossword, today: LocalDate): PuzzleItem =
     PuzzleItem(
       id = s"crossword-${card.key}",
       title = card.title,
       `type` = "crossword",
       set = card.key,
       cardVariant = "compact",
-      cadence = Some(s"No ${NumberFormat.getIntegerInstance(Locale.UK).format(latest.number)}"),
+      cadence = latest.date.map(cadenceFor(_, today)),
       url = Some(s"/crosswords/${latest.crosswordType}/${latest.number}"),
       backgroundColour = Some(card.backgroundColour),
+      date = latest.date.map(_.toString),
     )
 
-  private def iframeItem(card: IframeCard, date: String, isPrevious: Boolean): PuzzleItem =
+  private def iframeItem(card: IframeCard, date: String, today: LocalDate): PuzzleItem =
     PuzzleItem(
       id = card.key,
       title = card.title,
       `type` = card.`type`,
       set = card.set,
       cardVariant = "compact",
-      cadence = Some(if (isPrevious) PreviousIframeCadence else card.cadence),
+      cadence = Try(LocalDate.parse(date)).toOption.map(cadenceFor(_, today)),
       url = Some(s"/puzzles-and-games/${card.group}/${card.key}/$date"),
       backgroundColour = Some(card.backgroundColour),
+      date = Some(date),
     )
 }
