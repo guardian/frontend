@@ -208,18 +208,20 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
       webTitle = "Test article",
       webUrl = "http://www.theguardian.com/thefilter/2026/oct/02/test-article",
       apiUrl = "http://content.guardianapis.com/thefilter/2026/oct/02/test-article",
-      tags = tagIds.map(id =>
-        ApiTag(
-          id = id,
-          `type` = TagType.Keyword,
-          webTitle = "",
-          sectionId = None,
-          sectionName = None,
-          webUrl = "",
-          apiUrl = "",
-          references = Nil,
-        ),
-      ).toList,
+      tags = tagIds
+        .map(id =>
+          ApiTag(
+            id = id,
+            `type` = TagType.Keyword,
+            webTitle = "",
+            sectionId = None,
+            sectionName = None,
+            webUrl = "",
+            apiUrl = "",
+            references = Nil,
+          ),
+        )
+        .toList,
       elements = None,
       fields = Some(
         ContentFields(

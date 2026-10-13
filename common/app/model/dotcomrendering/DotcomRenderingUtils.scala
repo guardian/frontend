@@ -248,9 +248,9 @@ object DotcomRenderingUtils extends DCARUrlHelper {
   def isSpecialReport(page: ContentPage): Boolean =
     page.item.content.cardStyle == SpecialReport
 
-  private def isRepublished(content: ContentType): Boolean =
+  def isRepublished(content: ContentType): Boolean =
     content.content.hasBeenModified &&
-      !content.fields.firstPublicationDate.contains(content.trail.webPublicationDate)
+      content.fields.firstPublicationDate.exists(_ != content.trail.webPublicationDate)
 
   // Matches hasFilterTag in DCR: the Filter series tags and commissioning desks
   private val filterTagIds = Set(
@@ -263,11 +263,14 @@ object DotcomRenderingUtils extends DCARUrlHelper {
   def isFilterContent(content: ContentType): Boolean =
     content.tags.tags.exists(tag => filterTagIds.contains(tag.id))
 
+  def isRepublishedFilterContent(content: ContentType): Boolean =
+    isFilterContent(content) && isRepublished(content)
+
   // Filter articles are often evergreen and republished, so make it clear when the date shown is an update
   def primaryDateString(content: ContentType, request: RequestHeader): String = {
     val date = GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request)
 
-    if (isFilterContent(content) && isRepublished(content)) "Updated " + date else date
+    if (isRepublishedFilterContent(content)) "Updated " + date else date
   }
 
   def secondaryDateString(content: ContentType, request: RequestHeader): String = {
