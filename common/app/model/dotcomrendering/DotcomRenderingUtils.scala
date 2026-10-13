@@ -250,7 +250,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
 
   private def isRepublished(content: ContentType): Boolean =
     content.content.hasBeenModified &&
-      !content.fields.firstPublicationDate.contains(content.trail.webPublicationDate)
+      content.fields.firstPublicationDate.exists(_ != content.trail.webPublicationDate)
 
   // Matches hasFilterTag in DCR: the Filter series tags and commissioning desks
   private val filterTagIds = Set(
