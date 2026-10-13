@@ -5,6 +5,7 @@ import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiCo
 import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.client.models.CustomSubnav
 import common._
+import conf.Configuration
 import contentapi.ContentApiClient
 import implicits._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -56,8 +57,9 @@ class ArticleController(
     val isVariantArticle = path != pathToRender
     val channelId = if (isVariantArticle) Some(CAPIChannel.Variant) else None
 
-    mapModel(pathToRender, range, channelId, skipCanonicalRedirect = isVariantArticle) { pageBlocks =>
-      render(pathToRender, modifier(pageBlocks))
+    mapModel(pathToRender, range, channelId, skipCanonicalRedirect = isVariantArticle, originalRequestPath = path) {
+      pageBlocks =>
+        render(pathToRender, modifier(pageBlocks))
     }
 
   }
@@ -147,12 +149,37 @@ class ArticleController(
     }
   }
 
-  private def mapModel(path: String, range: BlockRange, channelId: Option[CAPIChannel], skipCanonicalRedirect: Boolean)(
+  def maskPathIfVariant(path: String, originalRequestPath: String)(
+      pageBlocks: BlocksOn[ArticlePage],
+  ): BlocksOn[ArticlePage] = {
+    if (path == originalRequestPath) pageBlocks
+    else {
+      val maskedUrl = s"/$originalRequestPath"
+      val maskedMetadata = pageBlocks.page.article.content.metadata.copy(
+        id = originalRequestPath,
+        url = maskedUrl,
+        webUrl = s"${Configuration.site.host}$maskedUrl",
+        canonicalUrl = Some(s"${Configuration.site.host}$maskedUrl"),
+      )
+      val maskedContent = pageBlocks.page.article.content.copy(metadata = maskedMetadata)
+      val maskedArticle = pageBlocks.page.article.copy(content = maskedContent)
+      pageBlocks.copy(page = pageBlocks.page.copy(article = maskedArticle))
+    }
+  }
+
+  private def mapModel(
+      path: String,
+      range: BlockRange,
+      channelId: Option[CAPIChannel],
+      skipCanonicalRedirect: Boolean,
+      originalRequestPath: String,
+  )(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
       .lookup(path, Some(range), channelId)
       .map(responseToModelOrResult(_, skipCanonicalRedirect))
+      .map(_.map(maskPathIfVariant(path, originalRequestPath)))
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
