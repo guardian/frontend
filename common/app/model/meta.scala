@@ -498,10 +498,15 @@ trait ContentPage extends Page {
       item.content.javascriptConfig ++
       metadata.javascriptConfigOverrides
 
-  def getOpenGraphProperties: Map[String, String] =
-    metadata.opengraphProperties ++
+  def getOpenGraphProperties: Map[String, String] = {
+    val properties = metadata.opengraphProperties ++
       item.content.opengraphProperties ++
       metadata.opengraphPropertiesOverrides
+
+    if (model.dotcomrendering.DotcomRenderingUtils.isRepublishedFilterContent(item))
+      properties.updated("article:modified_time", item.trail.webPublicationDate.toString())
+    else properties
+  }
 
   def getTwitterProperties: Map[String, String] =
     metadata.twitterProperties ++

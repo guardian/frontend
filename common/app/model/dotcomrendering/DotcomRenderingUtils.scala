@@ -266,20 +266,14 @@ object DotcomRenderingUtils extends DCARUrlHelper {
   def isRepublishedFilterContent(content: ContentType): Boolean =
     isFilterContent(content) && isRepublished(content)
 
-  // Filter articles are often evergreen and republished, so make it clear when the date shown is an update
-  def primaryDateString(content: ContentType, request: RequestHeader): String = {
-    val date = GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request)
-
-    if (isRepublishedFilterContent(content)) "Updated " + date else date
-  }
-
   def secondaryDateString(content: ContentType, request: RequestHeader): String = {
     def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
 
     val firstPublicationDate = content.fields.firstPublicationDate
     val webPublicationDate = content.trail.webPublicationDate
+    val isModified = content.content.hasBeenModified && (!firstPublicationDate.contains(webPublicationDate))
 
-    if (isRepublished(content)) {
+    if (isModified) {
       "First published on " + format(firstPublicationDate.getOrElse(webPublicationDate), request)
     } else {
       "Last modified on " + format(content.fields.lastModified, request)
