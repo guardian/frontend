@@ -86,6 +86,7 @@ object Dependencies {
   val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
   val pekkoSerializationJackson = "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion
   val pekkoActorTyped = "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion
+  val lz4Java = "at.yawk.lz4" % "lz4-java" % "1.11.4"
 
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
